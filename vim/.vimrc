@@ -49,8 +49,6 @@ Plugin 'editorconfig/editorconfig-vim'
 
 "Added nerdcommenter for commenting out text
 Plugin 'scrooloose/nerdcommenter'
-"Added NerdTree Tabs
-Plugin 'jistr/vim-nerdtree-tabs'
 "Added emmet vim plugin
 Plugin 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
@@ -65,8 +63,6 @@ Plugin 'othree/javascript-libraries-syntax.vim'
 " Plugin 'godlygeek/csapprox'
 " Does the same as CS approx ?better
 Plugin 'colorsupport.vim'
-"Added monokai theme
-Plugin 'crusoexia/vim-monokai'
 "Added oceanic next theme
 Plugin 'mhartington/oceanic-next'
 " Added yet another js syntax highlighter
@@ -125,7 +121,11 @@ Plugin 'tyrannicaltoucan/vim-quantum'
 Plugin 'rakr/vim-one'
 "Add Plugin to manage tag files
 Plugin 'ludovicchabant/vim-gutentags'
-
+"Plugin to allow focus events work properly in vim - ?short term till tmux
+"updated
+Plugin 'tmux-plugins/vim-tmux-focus-events'
+"Add Base16 color schemes vim
+Plugin 'chriskempson/base16-vim'
 
 
 
@@ -141,7 +141,7 @@ call vundle#end()            " required
 ":PluginSearch foo - searches for foo; append `!` to refresh local cache
 ":PluginClean      - confirms removal of unused plugins; append `!` to
 "auto-approve removal
-"
+"!!!This line is key to making vim work in tmux
 set term=screen-256color
 "====================================================================================
 "Leader bindings
@@ -157,7 +157,7 @@ let maplocalleader = "\<space>"
 
 
 " Ctrl+N to toggle Nerd Tree
-map <C-n> :NERDTreeTabsToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 "Press enter to complete suggestions - turned off
 let g:SuperTabCrMapping = 0
 
@@ -224,7 +224,6 @@ let g:user_emmet_leader_key='<C-K>'
 augroup END
 "<tab>
 "Set space to visually select a word
-" nnoremap <space> viw
 
 
 "CtrlP config
@@ -286,6 +285,15 @@ set pastetoggle=<F2>
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
 
 "===================================================================================
+"BASE16 Colors - changes a range of colors to appear more vivid 
+"===================================================================================
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+
+
 "Autocommands
 "===================================================================================
 
@@ -381,6 +389,11 @@ setlocal spell spelllang=en_us
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
 
+"Create a horizontal split
+"Not Working ATM!!!
+nnoremap <C--> :sp<CR>
+"Create a vertical split
+nnoremap <C-\> :vsp<CR>
 " Resize window vertically - grow
 nnoremap <Leader>ff 20<c-w>+
 " Resize window vertically  - shrink
@@ -696,7 +709,7 @@ set laststatus=2
 set visualbell
 "Reset color on quitting vim
 " au VimLeave * !echo -ne""\033[0m"
-
+"Setting the t_ variables if a further step to ensure 24bit colors
    if has('termguicolors') && !has('gui_running')
          set termguicolors
          " set Vim-specific sequences for RGB colors
@@ -762,7 +775,7 @@ set nostartofline
 "Show commands being input
 set showcmd
 " Set command line height to two lines
-set cmdheight=2
+set cmdheight=1
 
 "-----------------------------------------------------------------
 "Abbreviations
@@ -819,14 +832,20 @@ highlight link SyntasticStyleWarningSign SignColumn
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
-"colorscheme breezy
-"colorscheme one
-"colorscheme quantum
+" colorscheme breezy
+"Well Supported true color scheme - dark version background brown not
+"black
+" colorscheme one
+" set background=dark
+" Too soft but nice, the dark version is also not a black background vim error? my
+" eyes are terrible??
+" colorscheme quantum
+" The Best and Most stable colorscheme
 colorscheme OceanicNext
-"set background=dark
-
+"Too Dark
+" colorscheme base16-default-dark
 "let g:quantum_contrast = 'high'
-"let g:quantum_black  = 1
+" let g:quantum_black  = 1
 
 "=======================================================================
 "Airline theme
@@ -834,14 +853,14 @@ colorscheme OceanicNext
 let g:airline_theme='oceanicnext'
 " let g:airline_theme='breezy'
 " let g:airline_theme='quantum'
-" let g:quantum_italics = 1
 " let g:airline_theme='one'
+" let g:quantum_italics = 1
 " let g:one_allow_italics = 1
 
 
 " ----------------------------------------------------------------------------
-"  " Tabbing - overridden by editorconfig, after/ftplugin
-"  " ----------------------------------------------------------------------------
+" Tabbing - overridden by editorconfig, after/ftplugin
+" ----------------------------------------------------------------------------
 set expandtab                         " default to spaces instead of tabs
 set shiftwidth=2                      " softtabs are 2 spaces for expandtab
 
