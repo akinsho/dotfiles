@@ -80,7 +80,8 @@ tm_color_feature=colour4
 
 
 # Segments for bar
-tm_tunes="#[bg=colour234,fg=colour033]$tm_right_separator_black#[fg=colour118,bg=colour033]#(osascript ~/.dotfiles/applescripts/tunes.scpt)"
+# separator FG colours the ARROW, variable BACKGROUND colors the BLOCK
+tm_tunes="#[bg=colour234,fg=colour178]$tm_right_separator_black#[fg=black,bg=colour178]#(osascript ~/.dotfiles/applescripts/tunes.scpt)"
 
 tm_spotify="#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/spotify.scpt)"
 
@@ -89,12 +90,12 @@ tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_blac
 tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/.dotfiles/bin/battery_indicator.sh)"
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
-tm_date="#[bg=colour033,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b"
+tm_date="#[bg=colour245,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
 # Host bg = colour245, seperator fg = colour245 (need to match)
-tm_host="#[bg=colour250,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold] #h "
-# tm_host=" 🖥  #h "
+tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold] 🖥  #h "
+# tm_host="  #h "
 tm_session_name="#[bg=colour172,fg=$tm_color_background,bold]$tm_icon #S #[fg=$tm_color_feature,bg=default,nobold]"
-tm_continuum="#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status} " 
+tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status} " 
 
 
 set -g status-position bottom
@@ -102,7 +103,7 @@ set -g status-bg colour234
 set -g status-fg colour137
 set -g status-attr dim
 set -g status-left $tm_session_name
-set -g status-right "$tm_tunes $tm_date $tm_host  $tm_continuum"
+set -g status-right "$tm_tunes $tm_continuum $tm_host  $tm_date"
 # Original Status line if in need to revert
 # set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S '
 set -g status-left-length 100
