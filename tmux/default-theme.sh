@@ -80,7 +80,7 @@ tm_color_feature=colour4
 
 
 # Segments for bar
-tm_tunes="#[bg=colour234,fg=colour033]$tm_right_separator_black#[fg=$tm_color_background,bg=colour033]#(osascript ~/.dotfiles/applescripts/tunes.scpt)"
+tm_tunes="#[bg=colour234,fg=colour033]$tm_right_separator_black#[fg=colour118,bg=colour033]#(osascript ~/.dotfiles/applescripts/tunes.scpt)"
 
 tm_spotify="#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/spotify.scpt)"
 
@@ -89,11 +89,11 @@ tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_blac
 tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/.dotfiles/bin/battery_indicator.sh)"
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
-tm_date="#[bg=colour033,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=colour118,bold]%R %d %b"
+tm_date="#[bg=colour033,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b"
 # Host bg = colour245, seperator fg = colour245 (need to match)
 tm_host="#[bg=colour250,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold] #h "
 # tm_host=" 🖥  #h "
-tm_session_name="#[bg=$tm_color_feature,fg=$tm_color_background,bold]$tm_icon #S #[fg=$tm_color_feature,bg=default,nobold]"
+tm_session_name="#[bg=colour172,fg=$tm_color_background,bold]$tm_icon #S #[fg=$tm_color_feature,bg=default,nobold]"
 tm_continuum="#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status} " 
 
 
