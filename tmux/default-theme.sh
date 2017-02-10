@@ -85,7 +85,8 @@ tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_blac
 tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/.dotfiles/bin/battery_indicator.sh)"
 #[bg=black,fg=$tm_color_background] seperator#[bg=colour255,fg=$tm_color_inactive]$tm_right_separator_black
 tm_date="%R %d %b"
-tm_host="#[bg=$tm_color_inactive,fg=$tm_color_feature]$tm_right_separator_black#[bg=$tm_color_feature,fg=$tm_color_background,bold] #h "
+# tm_host="#[bg=$tm_color_inactive,fg=$tm_color_feature]$tm_right_separator_black#[bg=$tm_color_feature,fg=$tm_color_background,bold] #h "
+tm_host=" #h "
 tm_session_name="#[bg=$tm_color_feature,fg=$tm_color_background,bold]$tm_icon #S #[fg=$tm_color_feature,bg=default,nobold]"
 tm_continuum="Continuum: #{continuum_status} " 
 
@@ -95,7 +96,8 @@ set -g status-bg colour234
 set -g status-fg colour137
 set -g status-attr dim
 set -g status-left $tm_session_name
-set -g status-right "$tm_tunes $tm_battery $tm_date $tm_host #[fg=colour233,bg=colour241,bold] $tm_continuum"
+set -g status-right "$tm_tunes $tm_date #[fg=colour243,bg=color240,bold]$tm_host #[fg=colour233,bg=colour241,bold] $tm_continuum"
+# Original Status line if in need to revert
 # set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S '
 set -g status-left-length 100
 # set -g status-right-length 50

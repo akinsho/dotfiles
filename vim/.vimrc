@@ -124,6 +124,8 @@ Plugin 'ludovicchabant/vim-gutentags'
 "Plugin to allow focus events work properly in vim - ?short term till tmux
 "updated
 Plugin 'tmux-plugins/vim-tmux-focus-events'
+"Navigate panes in vim and tmux with the same bindings
+Plugin 'christoomey/vim-tmux-navigator'
 "Add Base16 color schemes vim
 Plugin 'chriskempson/base16-vim'
 
@@ -220,7 +222,7 @@ augroup Emmet
 autocmd Filetype html,css EmmetInstall
 autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key='<C-K>'
+let g:user_emmet_leader_key='<leader>k'
 augroup END
 "<tab>
 "Set space to visually select a word
@@ -439,10 +441,10 @@ onoremap o a(
 onoremap oo a{
 
 "map window keys to leader
-noremap <leader>h <c-w>h 
-noremap <leader>j <c-w>j
-noremap <leader>k <c-w>k
-noremap <leader>l <c-w>l
+noremap <C-h> <c-w>h 
+noremap <C-j> <c-w>j
+noremap <C-k> <c-w>k
+noremap <C-l> <c-w>l
 
 
 "Remap arrow keys to do nothing
