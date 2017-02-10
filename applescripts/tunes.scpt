@@ -1,4 +1,8 @@
 (* Get the current song from iTunes or Spotify *)
+if application "iTunes" is not running then
+      return " Music 🔈 "
+end if
+
 if application "iTunes" is running then
   tell application "iTunes"
     if exists current track then
