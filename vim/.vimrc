@@ -123,7 +123,7 @@ Plugin 'rakr/vim-one'
 Plugin 'ludovicchabant/vim-gutentags'
 "Plugin to allow focus events work properly in vim - ?short term till tmux
 "updated
-Plugin 'tmux-plugins/vim-tmux-focus-events'
+" Plugin 'tmux-plugins/vim-tmux-focus-events'
 "Navigate panes in vim and tmux with the same bindings
 Plugin 'christoomey/vim-tmux-navigator'
 "Add Base16 color schemes vim

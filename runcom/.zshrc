@@ -166,6 +166,7 @@ export VISUAL=$EDITOR
 # For a full list of active aliases, run `alias`.
 #Moved to .oh-my-zsh/lib/alias.zsh
 source ~/.dotfiles/runcom/alias.zsh
+source ~/.dotfiles/tmux/tmuxinator.zsh
 
 # Autocomplete for 'g' as well
 #complete -o default -o nospace -F _git g
