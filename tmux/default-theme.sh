@@ -91,12 +91,12 @@ tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colo
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
 # Host bg = colour245, seperator fg = colour245 (need to match)
-tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status} " 
+tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
 
 tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold]   #h "
 # uname="#[bg=colour241,fg=colour245]$tm_right_separator_black#[fg=colour16,bg=colour252,bold,noitalics,nounderscore] $(uname -n)"
 #$uname
-tm_date="#[bg=colour245,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
+tm_date="#[bg=colour241,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
 
 
 
