@@ -16,7 +16,10 @@ export RPS1="%{$reset_color%}"
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="spaceship"
 # PROMPT
-SPACESHIP_PROMPT_SYMBOL='➔ 🍕 '
+# ➔ - default arrow
+# ➼ - fun alternative
+# ➪ - fun alternative2
+SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 
 # TIME
@@ -162,7 +165,7 @@ export VISUAL=$EDITOR
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #Moved to .oh-my-zsh/lib/alias.zsh
-source ~/.oh-my-zsh/lib/alias.zsh
+source ~/.dotfiles/runcom/alias.zsh
 
 # Autocomplete for 'g' as well
 #complete -o default -o nospace -F _git g

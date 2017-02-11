@@ -35,8 +35,6 @@ setw -g window-status-bg green
 setw -g window-status-fg black
 setw -g window-status-attr reverse
 
-# Info on left (I don't have a session display for now)
-set -g status-left ''
 
 # loud or quiet?
 set-option -g visual-activity on
@@ -92,9 +90,10 @@ tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colo
 # colors text bg the block (250)
 tm_date="#[bg=colour245,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
 # Host bg = colour245, seperator fg = colour245 (need to match)
-tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold] 🖥  #h "
+tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold]   #h "
 # tm_host="  #h "
-tm_session_name="#[bg=colour172,fg=$tm_color_background,bold]$tm_icon #S #[fg=$tm_color_feature,bg=default,nobold]"
+tm_session_name="$tm_icon #S "
+#[fg=$tm_color_feature,bg=default,nobold] - not sure where this came from
 tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status} " 
 
 
@@ -102,12 +101,13 @@ set -g status-position bottom
 set -g status-bg colour234
 set -g status-fg colour137
 set -g status-attr dim
-set -g status-left $tm_session_name
+# Added functionality to highlight session indicator when the prefix has been
+# pressed using client prefix ternary operator of sorts
+set -g status-left "#{?client_prefix,#[bg=colour039]#[fg=colour226],#[bg=colour172]#[fg=white]#[bold]}$tm_session_name"
 set -g status-right "$tm_tunes $tm_continuum $tm_host  $tm_date"
 # Original Status line if in need to revert
 # set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S '
-set -g status-left-length 100
-# set -g status-right-length 50
+set -g status-right-length 70
 set -g status-left-length 20
 
 setw -g window-status-current-fg colour81
