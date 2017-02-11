@@ -121,13 +121,14 @@ Plugin 'tyrannicaltoucan/vim-quantum'
 Plugin 'rakr/vim-one'
 "Add Plugin to manage tag files
 Plugin 'ludovicchabant/vim-gutentags'
-"Plugin to allow focus events work properly in vim - ?short term till tmux
-"updated
-" Plugin 'tmux-plugins/vim-tmux-focus-events'
 "Navigate panes in vim and tmux with the same bindings
 Plugin 'christoomey/vim-tmux-navigator'
+" A fun start up sceen for vim 
+Plugin 'mhinz/vim-startify'
 "Add Base16 color schemes vim
 Plugin 'chriskempson/base16-vim'
+"Add file type icons to vim
+Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
 
 
 
@@ -682,7 +683,8 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem
 " Display
 " --------------------------------------------------------------------------
 set title                             " wintitle = filename - vim
-
+"Using current terminal font - which is a patched nerd font
+" set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
 "Add relative line numbers
 set number
 "relative add set relativenumber to show numbers relative to the cursor
@@ -723,14 +725,14 @@ set visualbell
 " ------------------------------------
 
 "Set cursorline to the focused window only and change color/styling of cursor line depending on mode
-" augroup CursorLine
-"   au!
-"   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-"   "underline
-"   autocmd VimEnter,InsertEnter * highlight CursorLine cterm=none ctermbg=240 guibg=#0b2a2a
-"   autocmd InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
-"   au WinLeave * setlocal nocursorline
-" augroup END
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  "underline
+  autocmd VimEnter,InsertEnter * highlight CursorLine cterm=none ctermbg=240 guibg=#0b2a2a
+  autocmd InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
+  au WinLeave * setlocal nocursorline
+augroup END
 "         autocmd InsertEnter * highlight guibg=#0b2a2a guifg=NONE
 "         autocmd InsertLeave * highlight CursorLine  guibg=#0129a0 guifg=NONE
 " Show context around current cursor position
