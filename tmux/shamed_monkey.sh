@@ -87,7 +87,8 @@ tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_blac
 
 tm_tunes="#[bg=colour234,fg=colour178]$tm_right_separator_black#[fg=black,bg=colour178]#(osascript ~/.dotfiles/applescripts/tunes.scpt)"
 
-tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/.dotfiles/bin/battery_indicator.sh)"
+# tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/.dotfiles/bin/battery_indicator.sh)"
+batt_plug="#{battery_status_bg} #{battery_icon}   #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M "
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
 # Host bg = colour245, seperator fg = colour245 (need to match)
@@ -112,13 +113,18 @@ set -g status-attr dim
 # pressed using client prefix ternary operator of sorts
 set -g status-left "#{?client_prefix,#[bg=colour039]#[fg=colour226],#[bg=colour172]#[fg=white]#[bold]}$tm_session_name"
 # removed $tm_host from status bar till resizing issue fixed
-set -g status-right "$tm_tunes $tm_continuum $tm_date"
-SMALL=80
-MEDIUM=120
+#[fg=#{battery_status_bg},bg=colour241]$tm_right_separator_black
+set -g status-right "$tm_tunes  $tm_continuum   $batt_plug"
+
+
 # Failed attempts to create a responsive status bar
+
 # window_width=$(tmux display-message -p "#{window_width}")
+
+
 # if-shell "[[ '$window_width' -ge '$MEDIUM' ]]" "set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S $SIZE'"\
 # "set -g status-right '$tm_tunes $tm_continuum $tm_host  $tm_date'"
+
 # set -g status-right '#(eval ./responsive.sh `tmux display -p "#{client_width}"`)'
 # set -g status-right "$tm_tunes $tm_continuum $tm_host $tm_date"
 
@@ -126,7 +132,7 @@ MEDIUM=120
 
 # Original Status line if in need to revert
 # set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S '
-set -g status-right-length 150
+set -g status-right-length 80
 set -g status-left-length 20
 
 setw -g window-status-current-fg colour81

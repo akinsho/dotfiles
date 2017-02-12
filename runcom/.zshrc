@@ -134,7 +134,9 @@ DEFAULT_USER=$USER
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(battery git node npm brew osx web-search common-aliases vi-mode)
+plugins=(vi-mode git node npm colorize brew osx tmux vundle web-search common-aliases)
+#
+ZSH_TMUX_AUTOSTART="true"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -196,9 +198,14 @@ alias ...='cd ../..'
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+# Default vi mode - not compatible with vi mode zsh plugin
+# bindkey -v
+# Binds vim mode terminal esc command to jk  
+# bindkey -M viins ‘jj’ vi-cmd-mode
+# bindkey ‘^R’ history-incremental-search-backward
+
 
 # Saves time cd’ing through dir tree’s you can do z end dir [tab]
-
 # brew install z - the command below since I forgot activates z plugin
 . `brew --prefix`/etc/profile.d/z.sh
 

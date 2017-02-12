@@ -8,8 +8,8 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias session="vim -S"
 alias v="vim"
 alias tmux="tmux -2"
-alias ta="tmux attach -t"
-alias tnew="tmux new -s"
+# alias tnew="tmux new -s"
+# alias ta="tmux attach -t"
 alias tls="tmux ls"
 alias tkill="tmux kill-session -t"
 
@@ -21,7 +21,10 @@ alias pumpitup="osascript -e 'set volume 10'"
 # Open google chrome from terminal
 alias chrome="/Applications/Google\\ \\Chrome.app/Contents/MacOS/Google\\ \\Chrome"
 
-
+alias -s js=vim
+alias -s html=vim
+alias -s css=vim
+alias -s py=vim
 
 # alias tmux="TERM=screen-256color tmux"
 # alias tmux="tmux -CC"
@@ -29,5 +32,4 @@ alias chrome="/Applications/Google\\ \\Chrome.app/Contents/MacOS/Google\\ \\Chro
 alias browse="browser-sync start --server"
 alias ctags="`brew --prefix`/bin/ctags"
 #Git aliases
-alias git='g'
 alias serve='python -m SimpleHTTPServer'
