@@ -232,6 +232,7 @@ augroup END
 
 
 "CtrlP config
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctlp_max_files = 600
 "search by file name by default
 let g:ctrlp_by_filename = 1
@@ -285,7 +286,6 @@ let g:NERDTrimTrailingWhitespace = 1
 
 
 
-set pastetoggle=<F2>
 
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
@@ -390,7 +390,8 @@ setlocal spell spelllang=en_us
 "-----------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------
-
+"Paste mode for large block of external text
+set pastetoggle=<F2>
 "time out on mapping after half a second, time out on key codes after a tenth
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
