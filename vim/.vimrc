@@ -114,11 +114,11 @@ Plugin 'ervandew/supertab'
 "Added JavaScript indent
 Plugin 'vim-scripts/JavaScript-Indent'
 "Added Breezy theme
-Plugin 'fneu/breezy'
+" Plugin 'fneu/breezy'
 "Added Quantum theme (light or dark)
-Plugin 'tyrannicaltoucan/vim-quantum'
+" Plugin 'tyrannicaltoucan/vim-quantum'
 "Added Vim-one colorscheme
-Plugin 'rakr/vim-one'
+" Plugin 'rakr/vim-one'
 "Add Plugin to manage tag files
 Plugin 'ludovicchabant/vim-gutentags'
 "Navigate panes in vim and tmux with the same bindings
@@ -160,7 +160,9 @@ let maplocalleader = "\<space>"
 
 
 " Ctrl+N to toggle Nerd Tree
-map <C-n> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1 "Show hidden files by default
+
 "Press enter to complete suggestions - turned off
 let g:SuperTabCrMapping = 0
 
@@ -230,10 +232,11 @@ augroup END
 
 
 "CtrlP config
+let g:ctlp_max_files = 600
 "search by file name by default
 let g:ctrlp_by_filename = 1
 "Allow CTRL p to show hidden files
-let g:ctrlp_show_hidden = 0
+let g:ctrlp_show_hidden = 1
 "Add mapping for Gundo vim
 nnoremap <F5> :GundoToggle<CR>
 			
