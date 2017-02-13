@@ -2,16 +2,22 @@
 	"segments": {
 		"right": [
             {
-                "function":"powerline.segments.common.env.cwd"
+                "function":"powerline.segments.common.env.user",
+                "priority":10
             },
-			{
-				"function": "powerline.segments.common.time.date"
-			},
+            {
+                "function":"powerline.segments.common.env.cwd",
+                "priority":9
+            },
+            {
+                "function":"powerline.segments.common.net.network_load",
+                "priority":8
+            },
 			{
 				"function": "powerline.segments.common.time.date",
 				"name": "time",
 				"args": {
-					"format": "%H:%M",
+					"format": " %H:%M %d-%m",
 					"istime": true
 				}
 			},
