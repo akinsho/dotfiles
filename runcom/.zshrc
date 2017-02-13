@@ -134,7 +134,7 @@ DEFAULT_USER=$USER
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git node npm colorize brew osx tmux vundle web-search common-aliases)
+plugins=(vi-mode git node npm brew osx tmux vundle yarn git-auto-status web-search fasd common-aliases)
 #
 ZSH_TMUX_AUTOSTART="true"
 
