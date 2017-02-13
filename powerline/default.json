@@ -1,0 +1,42 @@
+{
+	"segments": {
+		"right": [
+            {
+                "function":"powerline.segments.common.env.cwd"
+            },
+			{
+				"function": "powerline.segments.common.time.date"
+			},
+			{
+				"function": "powerline.segments.common.time.date",
+				"name": "time",
+				"args": {
+					"format": "%H:%M",
+					"istime": true
+				}
+			},
+            {
+                "function":"powerline.segments.common.bat.battery",
+                "args": {
+                    "gamify":"true" 
+                }
+			},
+			{
+				"function": "powerline.segments.common.net.hostname",
+                "args": {
+                    "only_if_ssh":"true" 
+                } 
+            },
+            {
+                "function": "powerline.segments.common.wthr.weather",
+                "args":{
+                    "unit":"C" 
+                }
+            },
+            {
+                "function":"powerline.segments.common.players.spotify",
+                "name":"spotify"
+            }
+		]
+	}
+}

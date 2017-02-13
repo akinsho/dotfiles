@@ -1,0 +1,20 @@
+            {
+                "_comment":"Removed from config as it is reportedly unsecure",
+                "function":"powerline.segments.common.mail.email_imap_alert",
+                "args":{
+                    "username":"akin.sowemimo",
+                    "password":"8gQDzbfntAfo",
+                    "server":"imap.gmail.com",
+                    "port":993,
+                    "max_msgs":20
+                }
+            },
+            {
+                "_comment":"Removes as currently irrelevant to me",
+                "function":"powerline.segments.tmux.attached_clients" 
+            },
+			{
+                "_comment":"Shows how long the system has been online for ??why",
+				"function": "powerline.segments.common.sys.uptime",
+				"priority": 10
+			},

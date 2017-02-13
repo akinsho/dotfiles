@@ -142,7 +142,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
  export LANG=en_US.UTF-8
@@ -189,7 +189,9 @@ fi
 # Default code for Base16 Shell
 # BASE16_SHELL=$HOME/.config/base16-shell/
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-#
+#Create powerline env variable
+# powerline-path='./Library/Python/2.7/lib/python/site-packages'
+
 
 #File system aliases
 # alias ea='vim ~/.oh-my-zsh/lib/alias.zsh'
