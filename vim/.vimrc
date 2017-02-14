@@ -8,14 +8,17 @@
 "                                        \|_________|                                                               
                                                                                                                    
                                                                                                                     
-
+"Sections of this vimrc can be folded using za, they are marked with "{{{
+"characters
 
 set nocompatible "IMproved, required
 filetype off " required  Prevents potential side-effects
              " from system ftdetects scripts
+"This command makes vim start a file with all fold closed
+set foldlevelstart=0
 "-----------------------------------------------------------
 "Plugins
-"-----------------------------------------------------------
+"-----------------------------------------------------------{{{
 "set the runtime path to include Vundle and initialise
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -145,6 +148,7 @@ call vundle#end()            " required
 "auto-approve removal
 "!!!This line is key to making vim work in tmux
 set term=screen-256color
+"}}}
 "====================================================================================
 "Leader bindings
 "====================================================================================
@@ -155,7 +159,7 @@ let mapleader = ","
 let maplocalleader = "\<space>"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
-"--------------------------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------------------------{{{
 
 
 " Ctrl+N to toggle Nerd Tree
@@ -176,21 +180,41 @@ let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_toggle=2
 
 
-"EasyMotion overwin mappings
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+"===================================================
+"EasyMotion mappings
+"===================================================
+let g:EasyMotion_do_mapping = 0 "Disable default mappings"
+" Use uppercase target labels and type as a lower case
+" let g:EasyMotion_use_upper  1
+ " type `l` and match `l`&`L`
+let g:EasyMotion_smartcase = 1
+" Smartsign (type `3` and match `3`&`#`)
+let g:EasyMotion_use_smartsign_us = 1
+" keep cursor column when jumping
+let g:EasyMotion_startofline = 0
+"Use easy motion to search
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
 
-" s{char}{char} to move to {char}{char}
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+" Jump to anwhere with only `s{char}{target}`
+" `s<CR>` repeat last find motion.
+nmap s <Plug>(easymotion-s)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
 nmap s <Plug>(easymotion-overwin-f2)
 
-nmap <Leader>w <Plug>(easymotion-overwin-w)
-
-"Jump anywhere with easy motion
-let g:EasyMotion_re_anywhere = 'a' .
-        \       '(<.|^$)' . '|' .
-        \       '(.>|^$)' . '|' .
-        \       '(\l)\zs(\u)' . '|' .
-        \       '(_\zs.)' . '|' .
-        \       '(#\zs.)'
+" Bidirectional & within line 't' motion
+" omap t <Plug>(easymotion-bd-tl)
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+"===================================================
 
 "Mapped yank stack keys
 nmap <leader>p <Plug>yankstack_substitute_older_paste
@@ -288,7 +312,7 @@ let g:NERDTrimTrailingWhitespace = 1
 
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
-
+"}}}
 "===================================================================================
 "BASE16 Colors - changes a range of colors to appear more vivid 
 "===================================================================================
@@ -299,8 +323,9 @@ endif
 
 
 
-"Autocommands
 "===================================================================================
+"Autocommands
+"==================================================================================={{{
 
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
@@ -333,7 +358,18 @@ augroup FileType_markdown
 	autocmd!
 	autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
 	autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
 augroup END
+
+augroup filetype_vim
+  "Vimscript file settings -------------------------{{{
+  au!
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
+"}}}
 
 augroup FileType_text
 	autocmd!
@@ -373,7 +409,7 @@ augroup END
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
+"}}}
 "====================================================================================
 "Spelling
 "====================================================================================
@@ -385,21 +421,22 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 " Autocomplete with dictionary words when spell check is on
 set complete+=kspell
 "Add spell checking local
-setlocal spell spelllang=en_us
+" setlocal spell spelllang=en_us
 "-----------------------------------------------------------------
 "Mappings
-"-----------------------------------------------------------------
+"-----------------------------------------------------------------{{{
 "Paste mode for large block of external text
 set pastetoggle=<F2>
 "time out on mapping after half a second, time out on key codes after a tenth
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
 
+"Default search which isn't necessary as I'm using easy motion
+" nnoremap <localleader>/ /
 "Create a horizontal split
-"Not Working ATM!!!
-nnoremap <C--> :sp<CR>
+nnoremap _ :sp<CR>
 "Create a vertical split
-nnoremap <C-\> :vsp<CR>
+nnoremap \| :vsp<CR>
 " Resize window vertically - grow
 nnoremap <Leader>ff 20<c-w>+
 " Resize window vertically  - shrink
@@ -423,26 +460,30 @@ nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
 nnoremap <localleader>r <C-W>R
 nnoremap <localleader>m :tabnext<CR>
-nnoremap <localleader>/ :tabprev<CR>
+nnoremap <localleader>p :tabprev<CR>
 
 nnoremap <leader>x :lclose<CR>
 
 "Indent a page of HTML (?works for other code)
 nnoremap <C-G> gg=G<CR>
+
 "Change operator arguments to a character representing the desired motion
 "Moves to the previous set of parentheses and operate on its contents
-onoremap il( :<c-u>normal! F)vi(<cr>
+onoremap lp  :<c-u>normal! F)vi(<cr>
 "Moves to the next set of parentheses and operate on its contents
-onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap p :<c-u>normal! f(vi(<cr>
 "Moves to the previous set of braces and operate on its contents
-onoremap lb{ :<c-u>normal! F}vi{<cr>
+onoremap lb :<c-u>normal! F}vi{<cr>
 "Moves to the next set of braces and operate on its contents
-onoremap nb{ :<c-u>normal! f{vi{<cr>
+onoremap b :<c-u>normal! f{vi{<cr>
+"Deletes around next pair of parens - still can't crack it
+" onoremap op :<c-u>normal! F(vT)<cr>
+"Works similarly to the bindings above - finds quotes and operates inside them 
+onoremap q :<c-u>normal! f'vi'<cr>
+onoremap dq :<c-u>normal! f"vi"<cr>
 
-onoremap p i(
-onoremap pp i{
-onoremap o a(
-onoremap oo a{
+
+
 
 "map window keys to leader
 noremap <C-h> <c-w>h 
@@ -472,7 +513,7 @@ inoremap <C-B> <esc>bi
 "escapping insert mode
 inoremap <C-E> <esc>lwi
 "Deletes and moves the line above
-nnoremap _ ddkkp
+" nnoremap _ ddkkp
 "Deletes and replaces the line below
 nnoremap - ddp
 " Map jk to esc key - using jk prevents jump that using ii causes 
@@ -528,6 +569,7 @@ endif
 if has("nvim")
 :tnoremap <ESC> <C-\><C-n>
 endif
+"}}}
 "==============================================================
 "Mouse 
 "==============================================================
@@ -550,7 +592,7 @@ noremap <C-ScrollWheelRight> <nop>
 endif
 "====================================================================================
 "Buffer and Tab settings
-"====================================================================================
+"===================================================================================={{{
 
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
@@ -605,6 +647,7 @@ nnoremap ,q :bp <BAR> bd #<CR>
 " " Show all open buffers and their status
 " nmap <leader>bl :ls<CR>
 
+"}}}
 " ----------------------------------------------------------------------------
 " Message output on vim actions
 " ----------------------------------------------------------------------------
@@ -627,18 +670,19 @@ set switchbuf=useopen
 
 " ----------------------------------------------------------------------------
 " Diffing
-" ----------------------------------------------------------------------------
+" ----------------------------------------------------------------------------{{{
 
 " Note this is += since fillchars was defined in the window config
 set fillchars+=diff:⣿
 set diffopt=vertical                  " Use in vertical diff mode
 set diffopt+=filler                   " blank lines to keep sides aligned
 set diffopt+=iwhite                   " Ignore whitespace changes
+"}}}
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
 " probably update it.
-" ----------------------------------------------------------------------------
+" ----------------------------------------------------------------------------{{{
 set formatoptions=
 set formatoptions+=1
 set formatoptions+=q                  " continue comments with gq"
@@ -649,6 +693,7 @@ set formatoptions+=n                  " Recognize numbered lists
 set formatoptions+=2                  " Use indent from 2nd line of a paragraph
 
 set nrformats-=octal " never use octal when <C-x> or <C-a>"
+"}}}
 " ----------------------------------------------------------------------------
 " Vim Path
 " ----------------------------------------------------------------------------
@@ -657,13 +702,9 @@ set path+=**
 
 
 
-
-
-
-
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode
-" ----------------------------------------------------------------------------
+" ----------------------------------------------------------------------------{{{
 set wildmenu
 set wildmode=list:longest,full        " Complete files using a menu AND list
 set wildignorecase
@@ -682,9 +723,10 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem
 " set wildignore+=*.*~,*~
  set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 
+ "}}}
 " ----------------------------------------------------------------------------
 " Display
-" --------------------------------------------------------------------------
+" --------------------------------------------------------------------------{{{
 set title                             " wintitle = filename - vim
 "Using current terminal font - which is a patched nerd font
 " set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
@@ -723,9 +765,10 @@ set visualbell
          let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
          let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
  	           endif
-" ------------------------------------
+"}}}
+" ---------------------------------------------------------------------
 " Cursor
-" ------------------------------------
+" ---------------------------------------------------------------------{{{
 
 "Set cursorline to the focused window only and change color/styling of cursor line depending on mode
 augroup CursorLine
@@ -744,7 +787,7 @@ set sidescrolloff=16
 
 " Stops some cursor movements from jumping to the start of a line
 set nostartofline
-
+"}}}
 "================================================================================
 "Whitespace
 "================================================================================
@@ -793,7 +836,13 @@ iabbrev w@ www.akin-sowemimo.com
 
 "-----------------------------------------------------------------
 "Plugin configurations
-"-----------------------------------------------------------------
+"-----------------------------------------------------------------{{{
+let g:airline_powerline_fonts = 1
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 "JsBeautify plugin activated here
 noremap <c-f> :call JsBeautify()<cr>
 
@@ -835,6 +884,7 @@ highlight link SyntasticStyleWarningSign SignColumn
  if !has('nvim') && has('syntax') && !exists('g:syntax_on')
    syntax enable
  endif
+ "}}}
 "-----------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------
@@ -867,7 +917,7 @@ let g:airline_theme='oceanicnext'
 
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin
-" ----------------------------------------------------------------------------
+" ----------------------------------------------------------------------------{{{
 set expandtab                         " default to spaces instead of tabs
 set shiftwidth=2                      " softtabs are 2 spaces for expandtab
 
@@ -887,7 +937,6 @@ set noshiftround
 " 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
 set smarttab
 
-"set backspace=indent,eol,start
 
 
 "Add vim sensible config options
@@ -900,7 +949,7 @@ endif
 
 
 
-" Use <C-L> to clear the highlighting of :set hlsearch.
+" Use <C-I> to clear the highlighting of :set hlsearch.
 if maparg('<C-I>', 'n') ==# ''
   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
 endif
@@ -949,12 +998,6 @@ endif
 " set formatoptions=qrn1
 
 
-let g:airline_powerline_fonts = 1
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 
 
 
@@ -974,7 +1017,7 @@ set nobackup
 set backup
 	endif
 set history=50
-
+"}}}
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
@@ -984,5 +1027,5 @@ set showmatch "briefly jump to ?matching parens
 set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
-set hlsearch
+set nohlsearch " -functionality i.e. search highlighting done by easy motion
 
