@@ -1,0 +1,8 @@
+[user]
+	name = Akin909
+	email = akin.sowemimo@gmail.com
+[color]
+	ui = auto
+[core]
+	editor = vim
+	excludesfile = /Users/A_nonymous/.gitignore_global

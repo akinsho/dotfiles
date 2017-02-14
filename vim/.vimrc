@@ -83,8 +83,6 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'jamescarr/snipmate-nodejs'
 "Autocorrects 4,000 common typos
 Plugin 'chip/vim-fat-finger'
-
-
 "Added SyntaxComplete for more syntax completion
 Plugin 'vim-scripts/SyntaxComplete'
 "Added vim javascript
@@ -129,7 +127,8 @@ Plugin 'mhinz/vim-startify'
 Plugin 'chriskempson/base16-vim'
 "Add file type icons to vim
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
-
+"Add focus events plugin to allow these in tmux
+Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 
 " All of your Plugins must be added before the following line
