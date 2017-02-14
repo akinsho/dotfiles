@@ -8,13 +8,12 @@
 "                                        \|_________|                                                               
                                                                                                                    
                                                                                                                     
-"Sections of this vimrc can be folded using za, they are marked with "{{{
-"characters
+"Sections of this vimrc can be folded or unfolded using za, they are marked with 3 curly braces
 
 set nocompatible "IMproved, required
 filetype off " required  Prevents potential side-effects
              " from system ftdetects scripts
-"This command makes vim start a file with all fold closed
+"This command makes vim start a file with all folds closed
 set foldlevelstart=0
 "-----------------------------------------------------------
 "Plugins
@@ -334,6 +333,8 @@ augroup filetype_css
 	autocmd!
 	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 augroup END
+
+
 augroup filetype_javascript
 	autocmd!
 	autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
@@ -345,6 +346,8 @@ augroup filetype_javascript
 
 	autocmd FileType javascript :iabbrev <buffer> und undefined
 	autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
+"don't use cindent for javascript
+  autocmd Filetype javascript setlocal nocindent
 augroup END
 
 
@@ -402,10 +405,13 @@ augroup vimrcEx
     \   exe "normal g`\"" |
     \ endif
 
-  " Set syntax highlighting for specific file types
+" Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
 augroup END
+
+
+
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -431,8 +437,14 @@ set pastetoggle=<F2>
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
 
+"Open command line window 
+nnoremap <localleader>c :<c-f> 
+"Do not move in cmd line with left/right
+"Doesn't work
+" cnoremap <C-H> <left>
 "Default search which isn't necessary as I'm using easy motion
 " nnoremap <localleader>/ /
+nnoremap <localleader>l :redraw!<cr>
 "Create a horizontal split
 nnoremap _ :sp<CR>
 "Create a vertical split
@@ -572,7 +584,7 @@ endif
 "}}}
 "==============================================================
 "Mouse 
-"==============================================================
+"=============================================================={{{
 "Stop mouse scrolling
 if !has('nvim')
 " set  mouse=c
@@ -590,6 +602,7 @@ noremap <ScrollWheelRight>   <nop>
 noremap <S-ScrollWheelRight> <nop>
 noremap <C-ScrollWheelRight> <nop>
 endif
+"}}}
 "====================================================================================
 "Buffer and Tab settings
 "===================================================================================={{{
@@ -754,6 +767,10 @@ set incsearch
 " Always display the status line even if only one window is displayed
 set laststatus=2
 
+" Turns of lazyredraw which postpones redrawing for macros and command
+" execution
+set nolazyredraw
+
 " Use visual bell when there are errors not audio beep
 set visualbell
 "Reset color on quitting vim
@@ -793,6 +810,10 @@ set nostartofline
 "================================================================================
 "Display extra whitespace
 " set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
+function! StripWhiteSpace ()
+ exec ':%/ \+$//gc' 
+endfunction
+map <leader>r :call StripWhiteSpace ()<CR>
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 " set list
 " set listchars=
@@ -804,6 +825,8 @@ set nostartofline
 "Invisible character colors 
 "highlight NonText guifg=#4a4a59
 "highlight SpecialKey guifg=#4a4a59
+
+
 " augroup TrailingWhiteSpace
 "         au!
 " highlight ExtraWhitespace ctermbg=red guibg=red

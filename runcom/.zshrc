@@ -19,7 +19,7 @@ ZSH_THEME="spaceship"
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
+SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 
 # TIME
@@ -134,7 +134,7 @@ DEFAULT_USER=$USER
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git node npm brew osx tmux vundle yarn git-auto-status web-search fasd common-aliases)
+plugins=(vi-mode git npm brew tmux vundle git-auto-status web-search fasd common-aliases command-not-found)
 #
 ZSH_TMUX_AUTOSTART="true"
 
@@ -192,7 +192,59 @@ fi
 #Create powerline env variable
 # powerline-path='./Library/Python/2.7/lib/python/site-packages'
 
+# Persistent reshahing i.e puts new executables in the $PATH
+zstyle ':completion:*' rehash true
 
+# Help helper functions to improve search results for certain topics 
+autoload -Uz run-help-git
+autoload -Uz run-help-ip
+autoload -Uz run-help-openssl
+autoload -Uz run-help-sudo
+
+# File manager like key bindings 
+cdUndoKey(){
+popd > /dev/null
+zle reset-prompt
+echo
+ls
+echo
+}
+
+cdParentKey(){
+  pushd .. > /dev/null
+  zle reset-prompt
+  echo
+  ls
+  echo
+}
+
+zle -N    cdParentKey
+zle -N    cdUndoKey
+
+
+# Tab + k will move back to the parent directory
+bindkey '^Ik'    cdParentKey
+# Tab + h will undo the previous move but show the dir that was just moved into
+bindkey '^Ih'    cdUndoKey
+
+# Shows a dynamic terminal title based on current directory or application
+# using precmd and prexec hooks
+autoload -Uz add-zsh-hook
+
+function xterm_title_precmd(){
+  print -Pn '\e]2;%n@%m %1~\a'
+}
+
+function xterm_title_preexec(){
+  print -Pn '\e]2;%n@%m %1~ %#'
+  print -n "${(q)1}\a"
+
+}
+
+if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
+  add-zsh-hook -Uz precmd xterm_title_precmd
+  add-zsh-hook -Uz preexec xterm_title_preexec
+fi
 #File system aliases
 # alias ea='vim ~/.oh-my-zsh/lib/alias.zsh'
 alias ..='cd ..'
