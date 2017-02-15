@@ -56,8 +56,8 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
 Plugin 'Raimondi/delimitMate'
-"Added further javascript syntax highlighting
-Plugin 'jelera/vim-javascript-syntax'
+"Added further javascript syntax highlighting - breaks jsx highlighting
+" Plugin 'jelera/vim-javascript-syntax'
 "Added node.vim plugin
 Plugin 'moll/vim-node' 
 "Added javascript lib - syntax highlighting for popular libraries
@@ -122,15 +122,16 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'mhinz/vim-startify'
 "Add Base16 color schemes vim
 Plugin 'chriskempson/base16-vim'
-"Add file type icons to vim
-Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
 "Indentation and highlighting for jsx
 Plugin 'mxw/vim-jsx'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+"Closes tags with > command
+Plugin 'alvan/vim-closetag'
 
-
+"Add file type icons to vim
+Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 " if !has('nvim')
@@ -314,7 +315,7 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,han
 "BASE16 Colors - changes a range of colors to appear more vivid 
 "===================================================================================
 if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
+  " let base16colorspace=256
   source ~/.vimrc_background
 endif
 
@@ -873,7 +874,9 @@ iabbrev w@ www.akin-sowemimo.com
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-let g:airline#extensions#tabline#left_sep = ''
+" filenames like *.xml, *.html, *.xhtml, ...
+let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
+let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
@@ -933,20 +936,10 @@ highlight link SyntasticStyleWarningSign SignColumn
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
-" colorscheme breezy
-"Well Supported true color scheme - dark version background brown not
-"black
-" colorscheme one
-" set background=dark
-" Too soft but nice, the dark version is also not a black background vim error? my
-" eyes are terrible??
-" colorscheme quantum
 " The Best and Most stable colorscheme
 colorscheme OceanicNext
-"Too Dark
-" colorscheme base16-default-dark
-"let g:quantum_contrast = 'high'
-" let g:quantum_black  = 1
+
+" colorscheme base16-tomorrow-night
 
 "=======================================================================
 "Airline theme

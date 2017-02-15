@@ -167,7 +167,7 @@ export VISUAL=$EDITOR
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #Moved to .oh-my-zsh/lib/alias.zsh
-source ~/.dotfiles/runcom/alias.zsh
+
 source ~/.dotfiles/tmux/tmuxinator.zsh
 
 # Changed FZF trigger to ~~ from **
@@ -195,56 +195,13 @@ fi
 # Persistent reshahing i.e puts new executables in the $PATH
 zstyle ':completion:*' rehash true
 
-# Help helper functions to improve search results for certain topics 
-autoload -Uz run-help-git
-autoload -Uz run-help-ip
-autoload -Uz run-help-openssl
-autoload -Uz run-help-sudo
 
-# File manager like key bindings 
-cdUndoKey(){
-popd > /dev/null
-zle reset-prompt
-echo
-ls
-echo
-}
+# source all zsh and sh files inside dotfile/runcom/zsh
+export DOTFILES=$HOME/.dotfiles
+export DOTZSH=$DOTFILES/runcom/zsh
+for config ($DOTFILES/**/*.zsh) source $config
+for config ($DOTZSH/**/*.sh) source $config
 
-cdParentKey(){
-  pushd .. > /dev/null
-  zle reset-prompt
-  echo
-  ls
-  echo
-}
-
-zle -N    cdParentKey
-zle -N    cdUndoKey
-
-
-# Tab + k will move back to the parent directory
-bindkey '^Ik'    cdParentKey
-# Tab + h will undo the previous move but show the dir that was just moved into
-bindkey '^Ih'    cdUndoKey
-
-# Shows a dynamic terminal title based on current directory or application
-# using precmd and prexec hooks
-# autoload -Uz add-zsh-hook
-#
-# function xterm_title_precmd(){
-#   print -Pn '\e]2;%n@%m %1~\a'
-# }
-#
-# function xterm_title_preexec(){
-#   print -Pn '\e]2;%n@%m %1~ %#'
-#   print -n "${(q)1}\a"
-#
-# }
-#
-# if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
-#   add-zsh-hook -Uz precmd xterm_title_precmd
-#   add-zsh-hook -Uz preexec xterm_title_preexec
-# fi
 
 # Default vi mode - not compatible with vi mode zsh plugin
 # bindkey -v
@@ -264,7 +221,7 @@ export PATH=~/.rbenv:$PATH
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 # Activates the 'fasd' plugin a more versatile file system traversal plugin
-source $ZSH/plugins/fasd/fasd.plugin.zsh
+# source $ZSH/plugins/fasd/fasd.plugin.zsh
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
