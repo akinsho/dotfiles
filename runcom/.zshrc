@@ -171,6 +171,7 @@ source ~/.dotfiles/runcom/alias.zsh
 source ~/.dotfiles/tmux/tmuxinator.zsh
 
 # Changed FZF trigger to ~~ from **
+export FZF_TMUX=1
 export FZF_COMPLETION_TRIGGER='~~'
 # If no command is set typing in a line will cd by default
 setopt AUTO_CD

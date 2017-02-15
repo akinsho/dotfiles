@@ -8,12 +8,6 @@
             {
                 "function":"powerline.segments.common.sys.cpu_load_percent"
             },
-            {
-                "function":"powerline.segments.common.sys.system_load",
-                "args":{
-                    "short":"true" 
-                }
-            },
 			{
 				"function": "powerline.segments.common.net.hostname",
                 "args": {

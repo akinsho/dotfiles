@@ -10,6 +10,12 @@
                 }
             },
             {
+                "function":"powerline.segments.common.sys.system_load",
+                "args":{
+                    "short":"true" 
+                }
+            },
+            {
                 "_comment":"Need to create a variable to track this",
                 "function":"powerline.segments.common.env.cwd",
                 "priority":9

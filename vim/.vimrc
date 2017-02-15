@@ -33,8 +33,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 "Added vim-airline
 Plugin 'bling/vim-airline'
-"Added ctrlP fuzzy finger
-Plugin 'ctrlpvim/ctrlp.vim'
+"Added ctrlP fuzzy finder - replaced by fzf
+" Plugin 'ctrlpvim/ctrlp.vim'
 "Added syntastic syntax checker
 Plugin 'vim-syntastic/syntastic'
 "Added vim surround for enclosing with parens
@@ -126,6 +126,9 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
 "Indentation and highlighting for jsx
 Plugin 'mxw/vim-jsx'
+"FZF improved wrapper by June Gunn + the man who maintains syntastic
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 
 " All of your Plugins must be added before the following line
@@ -249,12 +252,12 @@ augroup END
 
 
 "CtrlP config
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctlp_max_files = 600
-"search by file name by default
-let g:ctrlp_by_filename = 1
-"Allow CTRL p to show hidden files
-let g:ctrlp_show_hidden = 1
+" let g:ctrlp_working_path_mode = 'ra'
+" let g:ctlp_max_files = 600
+" "search by file name by default
+" let g:ctrlp_by_filename = 1
+" "Allow CTRL p to show hidden files
+" let g:ctrlp_show_hidden = 1
 "Add mapping for Gundo vim
 nnoremap <F5> :GundoToggle<CR>
 			
@@ -323,8 +326,12 @@ endif
 
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
-
+augroup VimResizing
+  au!
+autocmd VimResized * wincmd =
+autocmd VimResized * :redraw!
 augroup filetype_css
+augroup END
 	autocmd!
 	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 augroup END
@@ -432,6 +439,13 @@ set pastetoggle=<F2>
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
 
+nmap œ :confirm quit<CR>
+" clean up any trailing whitespace
+nmap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
+"Save all files - does not appear to be working
+nmap ß :wa<bar>echo'Saved!'<CR>
+"open a new file in the same directory
+nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window 
 nnoremap <localleader>c :<c-f> 
 "Do not move in cmd line with left/right
@@ -445,13 +459,13 @@ nnoremap _ :sp<CR>
 "Create a vertical split
 nnoremap \| :vsp<CR>
 " Resize window vertically - grow
-nnoremap <Leader>ff 20<c-w>+
+nnoremap <Leader>ff 15<c-w>+
 " Resize window vertically  - shrink
-nnoremap <Leader>ee 20<c-w>-
+nnoremap <Leader>ee 15<c-w>-
 " Increase window size horizontally 
-nnoremap <leader>f 20<c-w>>
+nnoremap <leader>f 15<c-w>>
 " Decrease window size horizontally
-nnoremap <leader>e 20<c-w><
+nnoremap <leader>e 15<c-w><
 " Max out the height of the current split
 nnoremap <localleader>f <C-W>_
 " Max out the width of the current split
@@ -577,6 +591,7 @@ if has("nvim")
 :tnoremap <ESC> <C-\><C-n>
 endif
 "}}}
+
 "==============================================================
 "Mouse 
 "=============================================================={{{
@@ -695,7 +710,7 @@ set formatoptions=
 set formatoptions+=1
 set formatoptions+=q                  " continue comments with gq"
 set formatoptions+=c                  " Auto-wrap comments using textwidth
-set formatoptions+=r                  " Continue comments by default
+set formatoptions-=r                  " Do not continue comments by default
 set formatoptions-=o                  " do not continue comment using o or O
 set formatoptions+=n                  " Recognize numbered lists
 set formatoptions+=2                  " Use indent from 2nd line of a paragraph
@@ -740,6 +755,9 @@ set title                             " wintitle = filename - vim
 " set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
 "Add relative line numbers
 set number
+
+" set statusline+=%F%m%r%h%w\  "fullpath and status modified sign
+
 "relative add set relativenumber to show numbers relative to the cursor
 set numberwidth=3
 "Turns on smart indent which can help indent files like html natively
@@ -805,10 +823,10 @@ set nostartofline
 "================================================================================
 "Display extra whitespace
 " set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
-function! StripWhiteSpace ()
- exec ':%/ \+$//gc' 
-endfunction
-map <leader>r :call StripWhiteSpace ()<CR>
+" function! StripWhiteSpace ()
+"  exec ':%/ \+$//gc'
+" endfunction
+" map <leader>r :call StripWhiteSpace ()<CR>
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 " set list
 " set listchars=
@@ -953,7 +971,7 @@ set softtabstop=-2
 
 " real tabs render width. Applicable to HTML, PHP, anything using real tabs.
 " I.e., not applicable to JS.
-set tabstop=2
+set tabstop=8
 
 " use multiple of shiftwidth when shifting indent levels.
 " this is OFF so block comments don't get fudged when using ">>" and "<<"
