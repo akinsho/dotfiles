@@ -1,12 +1,16 @@
 # Aliases
 
+alias b='source ~/.dotfiles/runcom/fzf/fzf-chrome.rb'
+alias restart='exec zsh'
+alias src='. ~/.zshrc'
+alias gphm='git push heroku master'
 alias ea='vim ~/.oh-my-zsh/lib/alias.zsh'
 alias ez="vim ~/.zshrc"
 alias ev="vim ~/.vimrc"
 alias et="vim ~/.tmux.conf"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias session="vim -S"
-alias v="vim"
+# alias v="vim"
 alias tmux="tmux -2"
 # alias tnew="tmux new -s"
 # alias ta="tmux attach -t"

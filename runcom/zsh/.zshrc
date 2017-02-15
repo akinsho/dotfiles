@@ -170,21 +170,8 @@ export VISUAL=$EDITOR
 # For a full list of active aliases, run `alias`.
 #Moved to .oh-my-zsh/lib/alias.zsh
 
-source ~/.dotfiles/tmux/tmuxinator.zsh
-# Feed the output of ag into fzf
-# ag -g "" | fzf
 
-# Setting ag as the default source for fzf
-# export FZF_DEFAULT_COMMAND='ag -g ".gitignore" | fzf'
 
-# sets ag as default source for fzf allow .gitignore to be respected
-# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git "" | fzf'
-# To aply to the command to CTRL-T as well
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# Changed FZF trigger to ~~ from **
-export FZF_TMUX=1
-export FZF_COMPLETION_TRIGGER='~~'
 # If no command is set typing in a line will cd by default
 setopt AUTO_CD
 setopt CORRECT
@@ -210,9 +197,9 @@ zstyle ':completion:*' rehash true
 
 # source all zsh and sh files inside dotfile/runcom/zsh
 export DOTFILES=$HOME/.dotfiles
-export DOTZSH=$DOTFILES/runcom/zsh
-for config ($DOTFILES/**/*.zsh) source $config
-for config ($DOTZSH/**/*.sh) source $config
+export RUNCOM=$DOTFILES/runcom/
+for config ($RUNCOM/**/*) source $config
+# for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
 
 
 # Default vi mode - not compatible with vi mode zsh plugin

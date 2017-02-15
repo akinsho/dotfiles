@@ -170,8 +170,8 @@ let NERDTreeShowHidden=1 "Show hidden files by default
 let g:SuperTabCrMapping = 0
 
 "Vim signature bindings
-nnoremap [[ :call signature#marker#Goto('prev', 1, v:count)
-nnoremap ]] :call signature#marker#Goto('next', 1, v:count)
+" nnoremap [[ :call signature#marker#Goto('prev', 1, v:count)
+" nnoremap ]] :call signature#marker#Goto('next', 1, v:count)
 
 
 
@@ -443,11 +443,19 @@ set pastetoggle=<F2>
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
 
-nmap œ :confirm quit<CR>
+" Launch file search using FZF
+nnoremap <C-P> :FZF ~/<CR>
+" These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
+" single line
+:map ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
+:map ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
+"Remap back tick for jumping to marks more quicly
+nnoremap ' `
+nmap cq :confirm quit<CR>
 " clean up any trailing whitespace
 nmap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 "Save all files - does not appear to be working
-nmap ß :wa<bar>echo'Saved!'<CR>
+nmap cs :wa<bar>echo'Saved!'<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window 
@@ -540,7 +548,7 @@ inoremap <C-E> <esc>lwi
 "Deletes and moves the line above
 " nnoremap _ ddkkp
 "Deletes and replaces the line below
-nnoremap - ddp
+" nnoremap - ddp
 " Map jk to esc key - using jk prevents jump that using ii causes 
 inoremap jk <ESC>
 nnoremap jk <ESC>
@@ -877,6 +885,8 @@ iabbrev w@ www.akin-sowemimo.com
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+" Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 let g:airline#extensions#tabline#left_sep = ' '
