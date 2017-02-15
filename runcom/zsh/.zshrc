@@ -135,8 +135,10 @@ DEFAULT_USER=$USER
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(vi-mode git npm brew tmux vundle git-auto-status web-search  common-aliases command-not-found)
-#
-ZSH_TMUX_AUTOSTART="true"
+
+
+ZSH_TMUX_AUTOSTART="false"
+#ZSH_TMUX_AUTOSTART="true"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -169,6 +171,16 @@ export VISUAL=$EDITOR
 #Moved to .oh-my-zsh/lib/alias.zsh
 
 source ~/.dotfiles/tmux/tmuxinator.zsh
+# Feed the output of ag into fzf
+# ag -g "" | fzf
+
+# Setting ag as the default source for fzf
+# export FZF_DEFAULT_COMMAND='ag -g ".gitignore" | fzf'
+
+# sets ag as default source for fzf allow .gitignore to be respected
+# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git "" | fzf'
+# To aply to the command to CTRL-T as well
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Changed FZF trigger to ~~ from **
 export FZF_TMUX=1

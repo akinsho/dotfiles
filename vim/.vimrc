@@ -123,12 +123,14 @@ Plugin 'mhinz/vim-startify'
 "Add Base16 color schemes vim
 Plugin 'chriskempson/base16-vim'
 "Indentation and highlighting for jsx
-Plugin 'mxw/vim-jsx'
+" Plugin 'mxw/vim-jsx'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 "Closes tags with > command
 Plugin 'alvan/vim-closetag'
+"React Snippets since I can't get the defaults to work
+Plugin 'justinj/vim-react-snippets'
 
 "Add file type icons to vim
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -215,9 +217,10 @@ map <Leader>k <Plug>(easymotion-k)
 "===================================================
 
 "Mapped yank stack keys
+let g:yankstack_map_keys = 0
+let g:yankstack_yank_keys = ['y', 'd']
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
-let g:yankstack_map_keys = 0
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab><tab>"
