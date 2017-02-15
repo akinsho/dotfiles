@@ -120,7 +120,7 @@ DEFAULT_USER=$USER
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
- DISABLE_UNTRACKED_FILES_DIRTY="true"
+ # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -134,7 +134,7 @@ DEFAULT_USER=$USER
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git npm brew tmux vundle git-auto-status web-search fasd common-aliases command-not-found)
+plugins=(vi-mode git npm brew tmux vundle git-auto-status web-search  common-aliases command-not-found)
 #
 ZSH_TMUX_AUTOSTART="true"
 
@@ -170,9 +170,8 @@ export VISUAL=$EDITOR
 source ~/.dotfiles/runcom/alias.zsh
 source ~/.dotfiles/tmux/tmuxinator.zsh
 
-# Autocomplete for 'g' as well
-#complete -o default -o nospace -F _git g
-
+# Changed FZF trigger to ~~ from **
+export FZF_COMPLETION_TRIGGER='~~'
 # If no command is set typing in a line will cd by default
 setopt AUTO_CD
 setopt CORRECT
@@ -229,28 +228,22 @@ bindkey '^Ih'    cdUndoKey
 
 # Shows a dynamic terminal title based on current directory or application
 # using precmd and prexec hooks
-autoload -Uz add-zsh-hook
-
-function xterm_title_precmd(){
-  print -Pn '\e]2;%n@%m %1~\a'
-}
-
-function xterm_title_preexec(){
-  print -Pn '\e]2;%n@%m %1~ %#'
-  print -n "${(q)1}\a"
-
-}
-
-if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
-  add-zsh-hook -Uz precmd xterm_title_precmd
-  add-zsh-hook -Uz preexec xterm_title_preexec
-fi
-#File system aliases
-# alias ea='vim ~/.oh-my-zsh/lib/alias.zsh'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
+# autoload -Uz add-zsh-hook
+#
+# function xterm_title_precmd(){
+#   print -Pn '\e]2;%n@%m %1~\a'
+# }
+#
+# function xterm_title_preexec(){
+#   print -Pn '\e]2;%n@%m %1~ %#'
+#   print -n "${(q)1}\a"
+#
+# }
+#
+# if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
+#   add-zsh-hook -Uz precmd xterm_title_precmd
+#   add-zsh-hook -Uz preexec xterm_title_preexec
+# fi
 
 # Default vi mode - not compatible with vi mode zsh plugin
 # bindkey -v
@@ -269,5 +262,8 @@ export PATH=~/.rbenv:$PATH
 
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
+# Activates the 'fasd' plugin a more versatile file system traversal plugin
+source $ZSH/plugins/fasd/fasd.plugin.zsh
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

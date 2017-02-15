@@ -20,6 +20,7 @@ set foldlevelstart=0
 "-----------------------------------------------------------{{{
 "set the runtime path to include Vundle and initialise
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
 call vundle#begin()
 
 let g:ycm_confirm_extra_conf = 0
@@ -113,12 +114,6 @@ Plugin 'luochen1990/rainbow'
 Plugin 'ervandew/supertab'
 "Added JavaScript indent
 Plugin 'vim-scripts/JavaScript-Indent'
-"Added Breezy theme
-" Plugin 'fneu/breezy'
-"Added Quantum theme (light or dark)
-" Plugin 'tyrannicaltoucan/vim-quantum'
-"Added Vim-one colorscheme
-" Plugin 'rakr/vim-one'
 "Add Plugin to manage tag files
 Plugin 'ludovicchabant/vim-gutentags'
 "Navigate panes in vim and tmux with the same bindings
@@ -129,8 +124,8 @@ Plugin 'mhinz/vim-startify'
 Plugin 'chriskempson/base16-vim'
 "Add file type icons to vim
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
-"Add focus events plugin to allow these in tmux
-Plugin 'tmux-plugins/vim-tmux-focus-events'
+"Indentation and highlighting for jsx
+Plugin 'mxw/vim-jsx'
 
 
 " All of your Plugins must be added before the following line
@@ -860,6 +855,14 @@ iabbrev w@ www.akin-sowemimo.com
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" saves on moving pane but only the currently opened buffer if changed
+let g:tmux_navigator_save_on_switch = 1
+let g:syntastic_full_redraws=1
+" autocmd VimEnter * nnoremap <silent> <C-J> :TmuxNavigateDown<CR>:redraw!<CR>
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 let g:airline_powerline_fonts = 1
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1

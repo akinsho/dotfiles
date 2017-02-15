@@ -10,6 +10,11 @@
                 }
             },
             {
+                "_comment":"Need to create a variable to track this",
+                "function":"powerline.segments.common.env.cwd",
+                "priority":9
+            },
+            {
                 "_comment":"Removes as currently irrelevant to me",
                 "function":"powerline.segments.tmux.attached_clients" 
             },
