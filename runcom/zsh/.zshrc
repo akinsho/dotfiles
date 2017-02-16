@@ -195,10 +195,10 @@ fi
 zstyle ':completion:*' rehash true
 
 
-# source all zsh and sh files inside dotfile/runcom/zsh
+# source all zsh and sh files inside dotfile/runcom
 export DOTFILES=$HOME/.dotfiles
 export RUNCOM=$DOTFILES/runcom/
-for config ($RUNCOM/**/*) source $config
+# for config ($RUNCOM/**/*) source $config
 # for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
 
 
