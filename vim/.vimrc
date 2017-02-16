@@ -57,7 +57,7 @@ Plugin 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
 Plugin 'Raimondi/delimitMate'
 "Added further javascript syntax highlighting - breaks jsx highlighting
-" Plugin 'jelera/vim-javascript-syntax'
+Plugin 'jelera/vim-javascript-syntax'
 "Added node.vim plugin
 Plugin 'moll/vim-node' 
 "Added javascript lib - syntax highlighting for popular libraries
@@ -131,7 +131,8 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'alvan/vim-closetag'
 "React Snippets since I can't get the defaults to work
 Plugin 'justinj/vim-react-snippets'
-
+"Excellent terminal integration for vim
+Plugin 'wincent/terminus'
 "Add file type icons to vim
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " All of your Plugins must be added before the following line
@@ -161,7 +162,6 @@ let maplocalleader = "\<space>"
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
 
-
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1 "Show hidden files by default
@@ -183,7 +183,7 @@ let vim_markdown_preview_toggle=2
 "===================================================
 "EasyMotion mappings
 "===================================================
-let g:EasyMotion_do_mapping = 0 "Disable default mappings"
+let g:EasyMotion_do_mapping = 0 "Disable default mappings
 " Use uppercase target labels and type as a lower case
 " let g:EasyMotion_use_upper  1
  " type `l` and match `l`&`L`
@@ -222,10 +222,10 @@ let g:yankstack_yank_keys = ['y', 'd']
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab><tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab><tab>"
-let g:UltiSnipsJumpB5ckwardTrigger="<s-tab>"
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe. - need to rethink this mapping
+let g:UltiSnipsExpandTrigger="<localleader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -242,15 +242,19 @@ let g:ycm_always_populate_location_list = 1
 "add Vcoolor color picker mapping
 let g:vcoolor_map = '<C-u>'
 
-"Use emmet only for html and css files 
-let g:user_emmet_install_global = 0
-augroup Emmet
-  au!
-autocmd Filetype html,css EmmetInstall
-autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+"=======================================================================
+"                    EMMET for Vim
+"=======================================================================
+"Use emmet only for html and css files - Great config option although having
+"emmet when writing jsx is super helpful, so I just changed the bindings
+" let g:user_emmet_install_global = 0
+" augroup Emmet
+"   au!
+" autocmd Filetype html,css EmmetInstall
+" autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" augroup END
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key='<leader>k'
-augroup END
+let g:user_emmet_leader_key='<localleader>k'
 "<tab>
 "Set space to visually select a word
 
@@ -328,6 +332,7 @@ endif
 "Autocommands
 "==================================================================================={{{
 
+autocmd bufwritepost ~/.vimrc source $MYVIMRC <bar> echo 'Sourced!'
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
 augroup VimResizing
@@ -445,19 +450,24 @@ set timeout timeoutlen=500 ttimeoutlen=100
 
 " Launch file search using FZF
 nnoremap <C-P> :FZF ~/<CR>
+nnoremap \ :Ag<CR>
 " These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
 " single line
 :map ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
 :map ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
 "Remap back tick for jumping to marks more quicly
 nnoremap ' `
+
+
 nmap cq :confirm quit<CR>
 " clean up any trailing whitespace
 nmap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 "Save all files - does not appear to be working
+"
 nmap cs :wa<bar>echo'Saved!'<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
+
 "Open command line window 
 nnoremap <localleader>c :<c-f> 
 "Do not move in cmd line with left/right
@@ -1053,8 +1063,10 @@ endif
 
 
 
-"Turn swap files off - FOR GOD's SAKE they are ruining my life
-set noswapfile
+"Turn swap files off - FOR GOD's SAKE they are ruining my life - addendum
+"editing old files and saving them because I have 5 version of a config open is
+"SUPER ANNOYING thanks TMUX
+set swapfile
 set nobackup
 "This saves all back up files in a vim backup directory
 set backupdir=~/.vim/.backup//

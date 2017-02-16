@@ -10,10 +10,13 @@ export PATH=$HOME/Library/Python/2.7/bin:$PATH
 export ZSH=/Users/A_nonymous/.oh-my-zsh
 
 # Disable the default oh my zsh vi indicator
-export RPS1="%{$reset_color%}"
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# export RPS1="%{$reset_color%}"
+
+
+#=======================================================================
+
+#                 THEME
+#=======================================================================
 ZSH_THEME="spaceship"
 # PROMPT
 # ➔ - default arrow
@@ -32,61 +35,11 @@ SPACESHIP_VI_MODE_INSERT="[Insert]"
 SPACESHIP_VI_MODE_NORMAL="[Normal]"
 # GIT
 SPACESHIP_PREFIX_GIT='  on '
-# ZSH_THEME="powerlevel9k/powerlevel9k"
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-# POWERLEVEL9K_SHORTEN_DELIMITER=".."
-# POWERLEVEL9K_SHORTEN_STRATEGY="truncate_right"
-# POWERLEVEL9K_DISABLE_RPROMPT=true
-# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-# POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-# POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-# POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="\n ↳ 🍕 👍🏾  "
-# #"↳ ""↱"
-# POWERLEVEL9K_MODE='awesome-fontconfig'
-# #Use command spectrum_ls to see available colors and codes
-# POWERLEVEL9K_TIME_BACKGROUND='111'
-# POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND='208'
-# #'220'
-# POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND='black'
-# POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND='154'
-# POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND='black'
-# POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='black'
-# POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND='039'
-# POWERLEVEL9K_BATTERY_LOW_THRESHOLD='20'
-# POWERLEVEL9K_BATTERY_LOW_COLOR='black'
-# POWERLEVEL9K_BATTERY_LOW_BACKGROUND='161'
-# POWERLEVEL9K_OS_ICON_BACKGROUND='red'
-# #009
-# POWERLEVEL9K_DIR_HOME_FOREGROUND='236'
-# POWERLEVEL9K_DIR_HOME_BACKGROUND='009'
-# POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='236'
-# #178
-# POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='009'
-# #'075'
-# POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='236'
-# POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='009'
-# POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='teal'
-# POWERLEVEL9K_STATUS_OK_BACKGROUND='yellow'
-# POWERLEVEL9K_OK_ICON='💯'
-# POWERLEVEL9K_ERROR_ICON='💩'
-# POWERLEVEL9K_STATUS_VERBOSE=false
-# POWERLEVEL9K_BATTERY_ICON="🔌 "
-#
-# zsh_wifi_signal(){
-#         local signal=$(nmcli device wifi | grep yes | awk '{print $8}')
-#         local color='%F{yellow}'
-#         [[ $signal -gt 75 ]] && color='%F{green}'
-#         [[ $signal -lt 50 ]] && color='%F{red}'
-#         echo -n "%{$color%}\uf230  $signal%{%f%}" # \uf230 is 
-# }
-# #custom_wifi_signal
-# POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_joined vcs battery )
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status nodeenv vi_mode time)
-# # Output time, date, and a symbol from the "Awesome Powerline Font" set
-# POWERLEVEL9K_CUSTOM_TIME_FORMAT="%D{\uf017 %H:%M:%S}"
-# POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m.%y}"
-# POWERLEVEL9K_TIME_FORMAT="🕰   %D{%H:%M %d.%m.%y}"
+
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 DEFAULT_USER=$USER
 
 
@@ -134,15 +87,32 @@ DEFAULT_USER=$USER
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git npm brew tmux vundle git-auto-status web-search  common-aliases command-not-found)
+plugins=( vi-mode git npm brew tmux vundle git-auto-status web-search  common-aliases command-not-found)
 
 
-ZSH_TMUX_AUTOSTART="false"
-#ZSH_TMUX_AUTOSTART="true"
+ZSH_TMUX_AUTOSTART="true"
 
 source $ZSH/oh-my-zsh.sh
 
+#=======================================================================
 # User configuration
+#=======================================================================
+
+#=======================================================================
+#               VI-MODE
+#=======================================================================
+# Default vi mode - not compatible with vi mode zsh plugin
+# bindkey -v
+# Binds vim mode terminal esc command to jk
+# bindkey -M viins ‘jk’ vi-cmd-mode
+# bindkey ‘^R’ history-incremental-search-backward
+
+
+
+
+
+
+
 
 export MANPATH="/usr/local/man:$MANPATH"
 
@@ -198,15 +168,10 @@ zstyle ':completion:*' rehash true
 # source all zsh and sh files inside dotfile/runcom
 export DOTFILES=$HOME/.dotfiles
 export RUNCOM=$DOTFILES/runcom/
-# for config ($RUNCOM/**/*) source $config
+for config ($RUNCOM/**/*) source $config
 # for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
 
 
-# Default vi mode - not compatible with vi mode zsh plugin
-# bindkey -v
-# Binds vim mode terminal esc command to jk  
-# bindkey -M viins ‘jj’ vi-cmd-mode
-# bindkey ‘^R’ history-incremental-search-backward
 
 
 # Saves time cd’ing through dir tree’s you can do z end dir [tab]
