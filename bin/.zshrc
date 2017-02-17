@@ -121,78 +121,78 @@ source $ZSH/oh-my-zsh.sh
 
 
 
-export MANPATH="/usr/local/man:$MANPATH"
+export manpath="/usr/local/man:$manpath"
 
-# You may need to manually set your language environment
- export LANG=en_US.UTF-8
+# you may need to manually set your language environment
+ export lang=en_us.utf-8
 
-# Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
+# preferred editor for local and remote sessions
+ if [[ -n $ssh_connection ]]; then
+   export editor='vim'
  else
-   export EDITOR='vim'
+   export editor='vim'
  fi
 
-export USE_EDITOR=$EDITOR
-export VISUAL=$EDITOR
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export use_editor=$editor
+export visual=$editor
+# compilation flags
+# export archflags="-arch x86_64"
 
 # ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
+ export ssh_key_path="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#Moved to .oh-my-zsh/lib/alias.zsh
+# set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the zsh_custom folder.
+# for a full list of active aliases, run `alias`.
+#moved to .oh-my-zsh/lib/alias.zsh
 
 
 
-# If no command is set typing in a line will cd by default
-setopt AUTO_CD
-setopt CORRECT
-setopt RM_STAR_WAIT
+# if no command is set typing in a line will cd by default
+setopt auto_cd
+setopt correct
+setopt rm_star_wait
 
 
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
 
-# BASE16_SHELL="$HOME/.config/base16-shell/base16-ocean.dark.sh"
-# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+# base16_shell="$home/.config/base16-shell/base16-ocean.dark.sh"
+# [[ -s $base16_shell ]] && source $base16_shell
 #
-# Default code for Base16 Shell
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-#Create powerline env variable
-# powerline-path='./Library/Python/2.7/lib/python/site-packages'
+# default code for base16 shell
+# base16_shell=$home/.config/base16-shell/
+# [ -n "$ps1" ] && [ -s $base16_shell/profile_helper.sh ] && eval "$($base16_shell/profile_helper.sh)"
+#create powerline env variable
+# powerline-path='./library/python/2.7/lib/python/site-packages'
 
-# Persistent reshahing i.e puts new executables in the $PATH
+# persistent reshahing i.e puts new executables in the $path
 zstyle ':completion:*' rehash true
 
 
 # source all zsh and sh files inside dotfile/runcom
-export DOTFILES=$HOME/.dotfiles
-export RUNCOM=$DOTFILES/runcom/
-for config ($RUNCOM/**/*) source $config
-# for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
+export dotfiles=$home/.dotfiles
+export runcom=$dotfiles/runcom/
+for config ($runcom/**/*) source $config
+# for fzfscript ($dotfiles/runcom/fzf/*.sh) source $fzfscript
 
 
 
 
-# Saves time cd’ing through dir tree’s you can do z end dir [tab]
-# brew install z - the command below since I forgot activates z plugin
+# saves time cd’ing through dir tree’s you can do z end dir [tab]
+# brew install z - the command below since i forgot activates z plugin
 . `brew --prefix`/etc/profile.d/z.sh
 
 
-export PATH=~/.rbenv:$PATH
+export path=~/.rbenv:$path
 
 
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-# Activates the 'fasd' plugin a more versatile file system traversal plugin
-# source $ZSH/plugins/fasd/fasd.plugin.zsh
+test -e "${home}/.iterm2_shell_integration.zsh" && source "${home}/.iterm2_shell_integration.zsh"
+# activates the 'fasd' plugin a more versatile file system traversal plugin
+# source $zsh/plugins/fasd/fasd.plugin.zsh
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

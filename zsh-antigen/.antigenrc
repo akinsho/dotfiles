@@ -1,0 +1,45 @@
+#!bin/zsh
+#=======================================================================
+#                         ANTIGEN
+#=======================================================================
+
+antigen-use oh-my-zsh
+
+antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
+antigen bundle lukechilds/zsh-nvm
+antigen-bundle git
+antigen bundle pip
+antigen bundle heroku
+antigen bundle command-not-found
+antigen bundle lukechilds/zsh-better-npm-completion
+# Vim like bindings plugin. Need to run after theme, so mode indicator
+# can be set, if the theme didn't already set it.
+antigen-bundle sharat87/zsh-vim-mode
+ZSH_VIM_MODE_NORMAL_MAP=^j
+antigen bundle rupa/z
+add-zsh-hook precmd _z_precmd
+function _z_precmd {
+    _z --add "$PWD"
+}
+antigen bundle ~/labs/zsh-vim-mode
+antigen bundles <<EOBUNDLES
+pyenv
+python
+osx
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-syntax-highlighting
+tmux
+colored-man-pages
+zsh-users/zsh-history-substring-search
+osx
+vundle
+web-search
+common-aliases
+brew
+$dotfiles/runcom/functions.sh
+EOBUNDLES
+# vi-mode
+
+antigen-apply
