@@ -87,7 +87,14 @@ DEFAULT_USER=$USER
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( vi-mode git npm brew tmux vundle git-auto-status web-search  common-aliases command-not-found)
+
+
+export NVM_LAZY_LOAD=true
+export NVM_AUTO_USE=true
+# NB for future notice this tries to install in dotfiles unless explicitly
+# specified here
+export NVM_DIR="$HOME/.nvm"
+plugins=(zsh-nvm vi-mode git npm brew tmux vundle git-auto-status web-search  common-aliases command-not-found)
 
 
 ZSH_TMUX_AUTOSTART="true"
