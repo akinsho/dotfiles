@@ -1,5 +1,6 @@
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
+
 # Jumps
 # function j() {
 #   jump "$@"

@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 start_time="$(date +%s)"
 export NVM_LAZY_LOAD=true
 export NVM_AUTO_USE=true
@@ -13,7 +14,7 @@ export PATH="$PATH:`yarn global bin`"
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# this line puts Python in the Path var
+# this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
 export ZSH=~/.dotfiles/zsh-antigen/.zshrc
@@ -49,10 +50,6 @@ SPACESHIP_PREFIX_NVM=' @ '
 
 
 
-
-
-export NVM_LAZY_LOAD=true
-export NVM_AUTO_USE=true
 #=======================================================================
 #                         ANTIGEN
 #=======================================================================
@@ -131,6 +128,18 @@ for script ($dotfiles/runcom/zsh/*) source $script
 
 
 
+# Setup global bookmarks cdg function
+# ====================================
+# Need to find a way to export this to my cdg function
+unalias cdg 2> /dev/null
+cdg() {
+   local dest_dir=$(cdscuts_glob_echo | fzf )
+   if [[ $dest_dir != '' ]]; then
+      cd "$dest_dir"
+   fi
+}
+# export -f cdg > /dev/null
+
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -141,9 +150,11 @@ bindkey '^ ' autosuggest-accept
 # chpwd_functions=( auto-ls $chpwd_functions )
 
 
+# Fzf ruby fuzzy finder very fast and adaptable
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
 echo load time: $((end_time - start_time)) seconds
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# zprof
