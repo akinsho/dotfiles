@@ -1,0 +1,10 @@
+version='1'; created_on='Fri Feb 17 19:29:01 GMT 2017'; checksum='521175ae5a3550afc59d463a2894758f';
+eb41c6655e5e596ef7ad8580306f67cb2f37ced3 https://github.com/lukechilds/zsh-better-npm-completion.git
+7577d37b7ee941e0bbae46e87ceee0cd912aeb26 https://github.com/lukechilds/zsh-nvm.git
+d2725d44fce59ea7060b4d712c5739512a56882d https://github.com/robbyrussell/oh-my-zsh.git
+1a361f6dc10e54e34e42f1e03850692959c6b413 https://github.com/rupa/z.git
+86a7ddd76fd7c5374b2623b7a95a4e181ab9b94e https://github.com/skuridin/oh-my-zsh-node-theme.git
+fedc22e9bbd046867860e772d7d6787f5dae9d4c https://github.com/zsh-users/zsh-autosuggestions.git
+72af5d08f1c07507d74103af039e98a2791fccb5 https://github.com/zsh-users/zsh-completions.git
+aae3388491c2312c4efb2e86bcb999927bb2900e https://github.com/zsh-users/zsh-history-substring-search.git
+9523d6d49cb3d4db5bd84c3cec6168a2057fe3ab https://github.com/zsh-users/zsh-syntax-highlighting.git

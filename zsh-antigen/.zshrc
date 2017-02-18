@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 start_time="$(date +%s)"
 export NVM_LAZY_LOAD=true
 export NVM_AUTO_USE=true
@@ -17,14 +17,14 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
-export ZSH=~/.dotfiles/zsh-antigen/.zshrc
+# export ZSH=$HOME/.oh-my-zsh
 
 # Turn off default zsh vi mode indicator
 # export RPS1="%{$reset_color%}"
 
 
-#=======================================================================
 
+#=======================================================================
 #                 THEME
 #=======================================================================
 
@@ -32,21 +32,21 @@ export ZSH=~/.dotfiles/zsh-antigen/.zshrc
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
-SPACESHIP_PROMPT_ADD_NEWLINE=true
+# SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
+# SPACESHIP_PROMPT_ADD_NEWLINE=true
 
 # TIME
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_TIME_12HR=true
+# SPACESHIP_TIME_SHOW=true
+# SPACESHIP_TIME_12HR=true
 
 # VI_MODE
-SPACESHIP_VI_MODE_SHOW=true
-SPACESHIP_VI_MODE_INSERT="[Insert]"
-SPACESHIP_VI_MODE_NORMAL="[Normal]"
+# SPACESHIP_VI_MODE_SHOW=true
+# SPACESHIP_VI_MODE_INSERT="[Insert]"
+# SPACESHIP_VI_MODE_NORMAL="[Normal]"
 # GIT
-SPACESHIP_PREFIX_GIT='  on '
-SPACESHIP_PREFIX_NVM=' @ '
-
+# SPACESHIP_PREFIX_GIT='  on '
+# SPACESHIP_PREFIX_NVM=' @ '
+#=======================================================================
 
 
 
@@ -54,15 +54,20 @@ SPACESHIP_PREFIX_NVM=' @ '
 #                         ANTIGEN
 #=======================================================================
 ANTI_ZSH=/Users/A_nonymous/.dotfiles/zsh-antigen/antigen
+
 # This is where antigen lives an where it is run super important
 # Disable antigen's cache to always load latest changes from the plugin
 export _ANTIGEN_CACHE_ENABLED=true
-source /Users/A_nonymous/.dotfiles/zsh-antigen/antigen/antigen.zsh
+source $ANTI_ZSH/antigen.zsh
 antigen init ~/.dotfiles/zsh-antigen/.antigenrc
 #=======================================================================
 # User configuration
 #=======================================================================
 
+add-zsh-hook precmd _z_precmd
+function _z_precmd {
+    _z --add "$PWD"
+}
 #=======================================================================
 #               VI-MODE
 #=======================================================================

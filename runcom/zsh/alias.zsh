@@ -1,5 +1,6 @@
 # Aliases
 
+alias sant='source $HOME/.dotfiles/zsh-antigen/antigen/antigen.zsh'
 alias b='source ~/.dotfiles/runcom/fzf/fzf-chrome.rb'
 alias restart='exec zsh'
 alias src='. ~/.zshrc'

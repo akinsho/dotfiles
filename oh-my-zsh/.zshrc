@@ -121,25 +121,25 @@ source $ZSH/oh-my-zsh.sh
 
 
 
-export manpath="/usr/local/man:$manpath"
+export MANPATH="/usr/local/man:$MANPATH"
 
 # you may need to manually set your language environment
  export lang=en_us.utf-8
 
 # preferred editor for local and remote sessions
- if [[ -n $ssh_connection ]]; then
-   export editor='vim'
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
  else
-   export editor='vim'
+   export EDITOR='vim'
  fi
 
-export use_editor=$editor
-export visual=$editor
+export USE_EDITOR=$EDITOR
+export VISUAL=$EDITOR
 # compilation flags
 # export archflags="-arch x86_64"
 
 # ssh
- export ssh_key_path="~/.ssh/rsa_id"
+ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. aliases can be placed here, though oh-my-zsh
@@ -150,9 +150,9 @@ export visual=$editor
 
 
 # if no command is set typing in a line will cd by default
-setopt auto_cd
-setopt correct
-setopt rm_star_wait
+setopt AUTO_CD
+setopt CORRECT
+setopt RM_STAR_WAIT
 
 
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
@@ -173,9 +173,9 @@ zstyle ':completion:*' rehash true
 
 
 # source all zsh and sh files inside dotfile/runcom
-export dotfiles=$home/.dotfiles
-export runcom=$dotfiles/runcom/
-for config ($runcom/**/*) source $config
+export DOTFILES=$HOME/.dotfiles
+export runcom=$DOTFILES/runcom/
+for config ($RUNCOM/**/*) source $config
 # for fzfscript ($dotfiles/runcom/fzf/*.sh) source $fzfscript
 
 

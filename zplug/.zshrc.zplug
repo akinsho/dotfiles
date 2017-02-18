@@ -1,15 +1,18 @@
 # Check if zplug is installed
-source ~/.zplug/zplug || { curl -sL zplug.sh/installer | zsh && source ~/.zplug/zplug }
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
+source ~/.zplug/init.zsh
 
-
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 start_time="$(date +%s)"
-# export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly
 # specified here
-export NVM_DIR="$HOME/.nvm"
+# export NVM_DIR="$HOME/.nvm"
 
 
 # ZSH_TMUX_AUTOSTART="true"
@@ -22,7 +25,7 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
-export ZSH=/Users/A_nonymous/.oh-my-zsh
+# export ZSH=/Users/A_nonymous/.oh-my-zsh
 
 # Turn off default zsh vi mode indicator
 # export RPS1="%{$reset_color%}"
@@ -37,20 +40,20 @@ export ZSH=/Users/A_nonymous/.oh-my-zsh
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
-SPACESHIP_PROMPT_ADD_NEWLINE=true
+# SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
+# SPACESHIP_PROMPT_ADD_NEWLINE=true
 
 # TIME
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_TIME_12HR=true
+# SPACESHIP_TIME_SHOW=true
+# SPACESHIP_TIME_12HR=true
 
 # VI_MODE
-SPACESHIP_VI_MODE_SHOW=true
-SPACESHIP_VI_MODE_INSERT="[Insert]"
-SPACESHIP_VI_MODE_NORMAL="[Normal]"
+# SPACESHIP_VI_MODE_SHOW=true
+# SPACESHIP_VI_MODE_INSERT="[Insert]"
+# SPACESHIP_VI_MODE_NORMAL="[Normal]"
 # GIT
-SPACESHIP_PREFIX_GIT='  on '
-SPACESHIP_PREFIX_NVM=' @ '
+# SPACESHIP_PREFIX_GIT='  on '
+# SPACESHIP_PREFIX_NVM=' @ '
 
 
 
@@ -64,27 +67,26 @@ SPACESHIP_PREFIX_NVM=' @ '
 
 # Make sure to use double quotes
 zplug "zsh-users/zsh-history-substring-search"
-# zplug "lukechilds/zsh-nvm"
-
+zplug "lukechilds/zsh-nvm"
+zplug "k4rthik/git-cal", as:command
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/pip", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "lukechilds/zsh-better-npm-completion"
-# Vim like bindings plugin. Need to run after theme, so mode indicator
-# can be set, if the theme didn't already set it.
-# antigen-bundle sharat87/zsh-vim-mode
-# ZSH_VIM_MODE_NORMAL_MAP=^j
-# antigen bundle rupa/z
+
 # add-zsh-hook precmd _z_precmd
 # function _z_precmd {
 #     _z --add "$PWD"
 # }
+zplug "rupa/z", use:z.sh
 zplug "plugins/pyenv", from:oh-my-zsh
 zplug "plugins/python", from:oh-my-zsh
 zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/zsh-users/zsh-completions", from:oh-my-zsh
 zplug "plugins/zsh-users/zsh-autosuggestions", from:oh-my-zsh
+# Source after compinit to enable completion
+zplug "knu/z", use:z.sh, defer:3
 zplug "plugins/zsh-users/zsh-history-substring-search", from:oh-my-zsh
 zplug "plugins/zsh-users/zsh-syntax-highlighting", from:oh-my-zsh
 zplug "plugins/tmux", from:oh-my-zsh
@@ -95,17 +97,7 @@ zplug "plugins/vundle", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
-# zplug "$dotfiles/runcom/functions.sh", from:local
-
-# Use the package as a command
-# And accept glob patterns (e.g., brace, wildcard, ...)
-# zplug "Jxck/dotfiles", as:command, use:"bin/{histuniq,color}"
-
-# Can manage everything e.g., other person's zshrc
-# zplug "tcnksm/docker-alias", use:zshrc
-
-# Disable updates using the "frozen" tag
-# zplug "k4rthik/git-cal", as:command, frozen:1
+# zplug "$DOTFILES/runcom/functions.sh", from:local
 
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
@@ -114,18 +106,15 @@ zplug "junegunn/fzf-bin", \
     as:command, \
     rename-to:fzf, \
     use:"*darwin*amd64*"
-
-# Supports oh-my-zsh plugins and the like
-zplug "plugins/git",   from:oh-my-zsh
-
-# Also prezto
-zplug "modules/prompt", from:prezto
+#
+# # Also prezto
+# zplug "modules/prompt", from:prezto
 
 # Load if "if" tag returns true
 zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
-
-# Run a command after a plugin is installed/updated
-# Provided, it requires to set the variable like the following:
+#
+# # Run a command after a plugin is installed/updated
+# # Provided, it requires to set the variable like the following:
 # ZPLUG_SUDO_PASSWORD="********"
 # zplug "jhawthorn/fzy", \
 #     as:command, \
@@ -142,7 +131,7 @@ zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
 #     as:command, \
 #     use:get_last_pane_path.sh
 
-# Support bitbucket
+# Add all .sh files to the $PATH and make them executable
 zplug "b4b4r07/hello_bitbucket", \
     from:bitbucket, \
     as:command, \
@@ -175,12 +164,14 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 # zplug "~/.zsh", from:local
 
 # Load theme file
-# zplug 'dracula/zsh', as:theme
-zplug "sindresorhus/pure"
-# zplug "themes/robbyrussell", \
-#   from:oh-my-zsh, \
-#   as:theme
-# zplug "denysdovhan/spaceship-zsh-theme", from:oh-my-zsh as:theme
+# zplug "arialdomartini/oh-my-git-themes", from:gh-r, use:"oppa-lana-style.zsh-theme"
+# zplug "dracula/zsh", as:theme
+zplug "skuridin/oh-my-zsh-node-theme", as:theme, from:github
+# zplug "lib/theme-and-appearance", from:oh-my-zsh
+# zplug "sindresorhus/pure", as:theme
+# zplug "themes/bureau", from:oh-my-zsh, as:theme
+# zplug "themes/robbyrussell" from:oh-my-zsh, as:theme
+# zplug "denysdovhan/spaceship-zsh-theme", as:theme
 
 
 # zplug check returns true if the given repository exists
@@ -262,13 +253,13 @@ zstyle ':completion:*' rehash true
 
 
 # source all zsh and sh files inside dotfile/runcom
-export dotfiles=$HOME/.dotfiles
-export runcom=$DOTFILES/runcom/
-source $dotfiles/runcom/functions.sh
-source $dotfiles/runcom/zsh/alias.zsh
+export DOTFILES=$HOME/Dotfiles
+export RUNCOM=$DOTFILES/runcom/
+source $DOTFILES/runcom/functions.sh
+source $DOTFILES/runcom/zsh/alias.zsh
 # for config ($RUNCOM/**/*) source $config - too dangerous
-for fzfscript ($dotfiles/runcom/fzf/*.sh) source $fzfscript
-for script ($dotfiles/runcom/zsh/*) source $script
+for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
+for script ($DOTFILES/runcom/zsh/*) source $script
 
 
 
