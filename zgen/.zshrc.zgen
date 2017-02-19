@@ -1,8 +1,33 @@
-# Check if zplug is installed
 zmodload zsh/zprof
 
 start_time="$(date +%s)"
 
+
+#=======================================================================
+#       ENVIRONMENT VARIABLES 
+#=======================================================================
+DEFAULT_USER=$USER
+
+export MANPATH="/usr/local/man:$MANPATH"
+export PATH=~/.rbenv:$PATH
+# you may need to manually set your language environment
+ export LANG=en_us.utf-8
+
+# preferred editor for local and remote sessions
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='vim'
+ fi
+
+export USE_EDITOR=$EDITOR
+export VISUAL=$EDITOR
+
+# compilation flags
+# export archflags="-arch x86_64"
+
+# ssh
+ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true
@@ -24,9 +49,6 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
-# export ZSH=/Users/A_nonymous/.oh-my-zsh
-
-# export ZPLUG_LOADFILE=$DOTFILES/zplug/packages.zsh
 
 
 #=======================================================================
@@ -61,14 +83,7 @@ GEOMETRY_SYMBOL_PROMPT="▲"
 GEOMETRY_PROMPT_SUFFIX="\n ➜  🍕 👾  "
 GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 
-#=======================================================================
-# User configuration
-#=======================================================================
 
-# add-zsh-hook precmd _z_precmd
-# function _z_precmd {
-#     _z --add "$PWD"
-# }
 #=======================================================================
 #                  ZGEN
 #=======================================================================
@@ -138,16 +153,31 @@ ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc ${DOTFILES}/zgen/.zshrc.zgen)
 
 
 
+#=================================================================================================
+#         NATIVE SHELL OPTIONS
+#=================================================================================================
+# if no command is set typing in a line will cd by default
+setopt AUTO_CD
+setopt CORRECT
+setopt RM_STAR_WAIT
+# persistent reshahing i.e puts new executables in the $path
+zstyle ':completion:*' rehash true
+# Highlights autocompletion selections
+zstyle ':completion:*' menu select 
+
 #=======================================================================
-#               VI-MODE
+#               VI-MODE & Other BINDINGS
 #=======================================================================
 source ~/Dotfiles/bin/vim_mode.zsh
+
+
 # Default vi mode - not compatible with vi mode zsh plugin
 bindkey -v
 # Binds vim mode terminal esc command to jk
 bindkey -M viins ‘jk’ vi-cmd-mode
 export KEYTIMEOUT=1
-# bindkey ‘^R’ history-incremental-search-backward
+
+bindkey ‘^R’ history-incremental-search-backward
 # function zle-line-init zle-keymap-select {
 #     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
 #     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
@@ -159,43 +189,23 @@ export KEYTIMEOUT=1
 # #Use vim cli mode (C-P and C-N to navigate history)
 bindkey '^P' up-history
 bindkey '^N' down-history
+bindkey '^ ' autosuggest-accept
 
-
-
-
-DEFAULT_USER=$USER
-
-export MANPATH="/usr/local/man:$MANPATH"
-export PATH=~/.rbenv:$PATH
-# you may need to manually set your language environment
- export LANG=en_us.utf-8
-
-# preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
-
-export USE_EDITOR=$EDITOR
-export VISUAL=$EDITOR
-
-# compilation flags
-# export archflags="-arch x86_64"
-
-# ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-
-# if no command is set typing in a line will cd by default
-setopt AUTO_CD
-setopt CORRECT
-setopt RM_STAR_WAIT
-
+#=================================================================================================
+#  PLUGIN VARIABLES
+#=================================================================================================
+add-zsh-hook precmd _z_precmd
+function _z_precmd {
+    _z --add "$PWD"
+}
 # Change the path where project plugin creates projects
 export PROJECTS_HOME=~/Desktop/Coding
 # Aliases 'hub' to git to allow for greater git powah!!
 eval "$(hub alias -s)"
+
+export ZSH_PLUGINS_ALIAS_TIPS_TEXT="Alias tip: "
+
+
 
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
@@ -205,10 +215,11 @@ fi
 base16_shell=$home/.config/base16-shell/
 [ -n "$ps1" ] && [ -s $base16_shell/profile_helper.sh ] && eval "$($base16_shell/profile_helper.sh)"
 
-# persistent reshahing i.e puts new executables in the $path
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' menu select 
 
+
+#=================================================================================================
+#               LOCAL SCRIPTS
+#=================================================================================================
 # source all zsh and sh files inside dotfile/runcom
 source $DOTFILES/runcom/functions.sh
 source $DOTFILES/runcom/zsh/alias.zsh
@@ -217,7 +228,9 @@ for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
 for script ($DOTFILES/runcom/zsh/*) source $script
 
 
-
+#=================================================================================================
+# Functions (to be exported to a separate file)
+#=================================================================================================
 # Setup global bookmarks cdg function
 # ====================================
 # Need to find a way to export this to my cdg function
@@ -230,15 +243,15 @@ cdg() {
 }
 # export -f cdg > /dev/null
 
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-bindkey '^ ' autosuggest-accept
 # Automatically list directory contents on `cd`. slow things down
 # unnecessarily
 auto-ls () { ls -GC; }
 chpwd_functions=( auto-ls $chpwd_functions )
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+#=================================================================================================
+#                     STARTUP TIME
+#=================================================================================================
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
