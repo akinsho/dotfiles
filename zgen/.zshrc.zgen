@@ -1,8 +1,14 @@
+#=======================================================================
+#      STARTUP TIMES 
+#=======================================================================
 zmodload zsh/zprof
 
 start_time="$(date +%s)"
 
-
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen" 
+  source $HOME/.zgen/zgen.zsh
+fi
 #=======================================================================
 #       ENVIRONMENT VARIABLES 
 #=======================================================================
@@ -98,6 +104,7 @@ GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 #=======================================================================
 #                  ZGEN
 #=======================================================================
+# if [[-f ~/.zgen]]
 # Make sure to use double quotes
 # load zgen
 source $HOME/.zgen/zgen.zsh
@@ -121,8 +128,6 @@ zgen oh-my-zsh plugins/brew
 zgen oh-my-zsh plugins/python
 zgen oh-my-zsh plugins/osx
 
-
-
 zgen loadall <<EOPLUGINS
 lukechilds/zsh-better-npm-completion
 b4b4r07/enhancd
@@ -144,7 +149,6 @@ unixorn/autoupdate-zgen
 frmendes/geometry
 EOPLUGINS
 # zgen oshybystyi/git-auto-status.plugin.zsh
-
 
 
 # Load theme file
