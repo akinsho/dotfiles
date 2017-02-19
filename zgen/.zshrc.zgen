@@ -27,16 +27,8 @@ export VISUAL=$EDITOR
 # export archflags="-arch x86_64"
 
 # ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-export NVM_LAZY_LOAD=true
-# export NVM_AUTO_USE=true
-# NB for future notice this tries to install in dotfiles unless explicitly
-# specified here
-export NVM_DIR="$HOME/.nvm"
-
-
-# ZSH_TMUX_AUTOSTART="true"
 
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
@@ -46,11 +38,30 @@ export PATH="$PATH:`yarn global bin`"
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+export NVM_LAZY_LOAD=true
+# export NVM_AUTO_USE=true
+# NB for future notice this tries to install in dotfiles unless explicitly
+# specified here
+export NVM_DIR="$HOME/.nvm"
+
+
+# ZSH_TMUX_AUTOSTART="true"
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
 
+ZGEN_PLUGIN_UPDATE_DAYS=3
+# Auto run zgen reset if these files change
+ZGEN_RESET_ON_CHANGE=($DOTFILES/zgen/.zshrc.zgen)
 
+export NVM_LAZY_LOAD=true
+# export NVM_AUTO_USE=true
+# NB for future notice this tries to install in dotfiles unless explicitly
+# specified here
+export NVM_DIR="$HOME/.nvm"
+
+
+# ZSH_TMUX_AUTOSTART="true"
 #=======================================================================
 
 #                 THEME
@@ -90,7 +101,6 @@ GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 # Make sure to use double quotes
 # load zgen
 source $HOME/.zgen/zgen.zsh
-
 # if the init scipt doesn't exist
 if ! zgen saved; then
     echo "Creating a zgen save"
@@ -107,7 +117,7 @@ zgen oh-my-zsh plugins/osx
 zgen oh-my-zsh plugins/web-search
 zgen oh-my-zsh plugins/common-aliases
 zgen oh-my-zsh plugins/brew
-zgen oh-my-zsh plugins/pyenv
+# zgen oh-my-zsh plugins/pyenv ??Slow
 zgen oh-my-zsh plugins/python
 zgen oh-my-zsh plugins/osx
 
@@ -120,7 +130,8 @@ zsh-users/zsh-completions src
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 lukechilds/zsh-nvm
-k4rthik/git-cal
+k4rthik/git-cal 
+uvaes/fzf-marks
 djui/alias-tips
 rupa/z
 knu/z
@@ -128,7 +139,7 @@ gko/project
 zsh-users/zsh-syntax-highlighting
 junegunn/fzf-bin
 supercrabtree/k
-
+unixorn/autoupdate-zgen
 # THEME
 frmendes/geometry
 EOPLUGINS
@@ -147,8 +158,6 @@ EOPLUGINS
 zgen save
 
 fi
-# Auto run zgen reset if these files change
-ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc ${DOTFILES}/zgen/.zshrc.zgen)
 
 
 
@@ -160,6 +169,24 @@ ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc ${DOTFILES}/zgen/.zshrc.zgen)
 setopt AUTO_CD
 setopt CORRECT
 setopt RM_STAR_WAIT
+
+# set some history options
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
+
+# Share your history across all your terminal windows
+setopt share_history
+# Keep a ton of history.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
 # persistent reshahing i.e puts new executables in the $path
 zstyle ':completion:*' rehash true
 # Highlights autocompletion selections
@@ -168,7 +195,7 @@ zstyle ':completion:*' menu select
 #=======================================================================
 #               VI-MODE & Other BINDINGS
 #=======================================================================
-source ~/Dotfiles/bin/vim_mode.zsh
+# source ~/Dotfiles/bin/vim_mode.zsh
 
 
 # Default vi mode - not compatible with vi mode zsh plugin
@@ -192,7 +219,7 @@ bindkey '^N' down-history
 bindkey '^ ' autosuggest-accept
 
 #=================================================================================================
-#  PLUGIN VARIABLES
+#  PLUGIN VARIABLES & FUNCTIONS
 #=================================================================================================
 add-zsh-hook precmd _z_precmd
 function _z_precmd {
@@ -233,14 +260,15 @@ for script ($DOTFILES/runcom/zsh/*) source $script
 #=================================================================================================
 # Setup global bookmarks cdg function
 # ====================================
-# Need to find a way to export this to my cdg function
-unalias cdg 2> /dev/null
-cdg() {
-   local dest_dir=$(cdscuts_glob_echo | fzf )
-   if [[ $dest_dir != '' ]]; then
-      cd "$dest_dir"
-   fi
-}
+# Need to find a way to export this to my cdg function - found a plugin to do
+# this less hackily
+# unalias cdg 2> /dev/null
+# cdg() {
+#    local dest_dir=$(cdscuts_glob_echo | fzf )
+#    if [[ $dest_dir != '' ]]; then
+#       cd "$dest_dir"
+#    fi
+# }
 # export -f cdg > /dev/null
 
 # Automatically list directory contents on `cd`. slow things down

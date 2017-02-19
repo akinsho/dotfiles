@@ -101,7 +101,7 @@ Plugin 'ternjs/tern_for_vim'
 "Add Gundo - undo plugin for vim
 Plugin 'sjl/gundo.vim'
 "Add buffergator for better buffer control
-Plugin 'jeetsukumaran/vim-buffergator'
+" Plugin 'jeetsukumaran/vim-buffergator'
 "Add vim-signature which higlights and shows marks for a file
 Plugin 'kshenoy/vim-signature'
 "Tim pope's surround plugin allows . to repeat more actions
@@ -353,7 +353,7 @@ augroup END
 
 augroup filetype_javascript
 	autocmd!
-	autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+	" autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
 	autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
 	autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
 	
@@ -361,7 +361,7 @@ augroup filetype_javascript
 	autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
 	autocmd FileType javascript :iabbrev <buffer> und undefined
-        autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
+        " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
 	autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
 "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
@@ -455,31 +455,47 @@ set pastetoggle=<F2>
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
   " Yank from the cursor to the end of the line, to be consistent with C and D.
-" FZF bindings
-nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap Y y$
+"--------------------------------------------
+" FZF bindings
+"--------------------------------------------
+nnoremap <silent> <localleader>o :Buffers<CR>
 " Launch file search using FZF
 nnoremap <C-P> :FZF ~/<CR>
 nnoremap \ :Ag<CR>
+"--------------------------------------------
 " These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
 " single line
 nnoremap ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
 nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
 
 " Zoom current split
-nnoremap <Leader>- <C-W><Bar>
-nnoremap <Leader>` <C-W>_
+nnoremap <localleader>- <C-W><Bar>
+nnoremap <localleader>` <C-W>_
 " Quick find/replace
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 
+"--------------------------------------------
+"Absolutely fantastic function from stoeffel/.dotfiles which allow you to
+"repeat macros across a visual range
+"--------------------------------------------
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+"--------------------------------------------
+
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+"--------------------------------------------
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
+"--------------------------------------------
 "Remap back tick for jumping to marks more quickly
 nnoremap ' `
 
@@ -494,12 +510,12 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
 "Open command line window 
 nnoremap <localleader>c :<c-f> 
-"Do not move in cmd line with left/right
-"Doesn't work
-" cnoremap <C-H> <left>
-"Default search which isn't necessary as I'm using easy motion
-" nnoremap <localleader>/ /
+
 nnoremap <localleader>l :redraw!<cr>
+"--------------------------------------------
+" Window resizing bindings
+"--------------------------------------------
+"
 "Create a horizontal split
 nnoremap _ :sp<CR>
 "Create a vertical split
@@ -526,6 +542,7 @@ nnoremap <leader>t <C-W>T
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
 nnoremap <localleader>r <C-W>R
+"--------------------------------------------
 nnoremap <localleader>m :tabnext<CR>
 nnoremap <localleader>p :tabprev<CR>
 
@@ -579,10 +596,7 @@ inoremap <C-B> <esc>bi
 "Move to the end of a word in insert mode - added l due to jump back on
 "escapping insert mode
 inoremap <C-E> <esc>lwi
-"Deletes and moves the line above
-" nnoremap _ ddkkp
-"Deletes and replaces the line below
-" nnoremap - ddp
+
 " Map jk to esc key - using jk prevents jump that using ii causes 
 inoremap jk <ESC>
 nnoremap jk <ESC>
@@ -600,22 +614,18 @@ noremap .l  @='6l'<CR>
 noremap .h  @='6h'<CR>
 
 "This line opens the vimrc in a vertical split
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 "This maps leader quote (single or double to wrap the word in quotes)
-:nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-:nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
-" :vnoremap <leader>' `><esc>a'<esc>v`>i'<esc>v
-"Remap high and low keys to go to beginning and end of lines
-:nnoremap H 0
-:nnoremap L $
-"Remapped high to hh low to ll middle is unchanged
-" :nnoremap bu H 
-:nnoremap ¬ L
-:nnoremap ˙ H
+nnoremap <leader>< viw<esc>a ><esc>bi<<esc>lel
+" Remap high and low keys to go to beginning and end of lines
+nnoremap H 0
+nnoremap L $
 "Map Q to remove a CR
 :nnoremap Q J
 
@@ -676,27 +686,6 @@ set nohidden
 nnoremap <leader>n :enew<cr>
 " Opens a new tab
 nnoremap <localleader>n :tabnew<CR> 
-" Use the right side of the screen
-let g:buffergator_viewport_split_policy = 'R'
-
-" I want my own keymappings...
-let g:buffergator_suppress_keymaps = 1
-
-" Looper buffers
-let g:buffergator_mru_cycle_loop = 1
-
-nnoremap <Leader><LEFT> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR> 
-nnoremap <Leader><UP> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
-nnoremap <Leader><RIGHT> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
-nnoremap <Leader><DOWN> :BuffergatorMruCyclePrev rightbelow sbuffer<CR> 
-" Go to the previous buffer open
-nmap <leader>/ :BuffergatorMruCyclePrev<cr>
-
-" Go to the next buffer open
-nmap <leader>m :BuffergatorMruCycleNext<cr>
-
-" View the entire list of buffers open
-nmap <leader>o :BuffergatorToggle<cr>
 
 " Shared bindings from Solution #1 from earlier
 nmap <leader>bq :bp <BAR> bd #<cr>
@@ -706,11 +695,11 @@ nmap <leader>bq :bp <BAR> bd #<cr>
 
 
 "Bindings for using buffers without buffergator
-" " Move to the next buffer
-" nmap ,m :bnext<CR>
+"  Move to the next buffer
+nnoremap <leader>m :bnext<CR>
 "
-" " Move to the previous buffer
-" nmap ,k :bprevious<CR>
+" Move to the previous buffer
+nmap <leader>k :bprevious<CR>
 "
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
@@ -738,7 +727,7 @@ set splitright "Open a vertical split to the right of the window
 set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
 " reveal already opened files from the quickfix window instead of opening new
 " buffers
-set switchbuf=useopen
+" set switchbuf=useopen
 
 " ----------------------------------------------------------------------------
 " Diffing
@@ -919,6 +908,7 @@ iabbrev w@ www.akin-sowemimo.com
         " set laststatus=2
 
 " Broken down into easily includeable segments
+"       
         set statusline=%<%f\                     " Filename
         set statusline+=%w%h%m%r                 " Options
         set statusline+=%{fugitive#statusline()} " Git Hotness
@@ -1010,11 +1000,6 @@ colorscheme OceanicNext
 "=======================================================================
 let g:airline_theme='oceanicnext'
 
-" let g:airline_theme='breezy'
-" let g:airline_theme='quantum'
-" let g:airline_theme='one'
-" let g:quantum_italics = 1
-" let g:one_allow_italics = 1
 
 
 " ----------------------------------------------------------------------------
