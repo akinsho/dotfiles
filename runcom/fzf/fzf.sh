@@ -1,18 +1,16 @@
-#!/bin/bash
-
-
+#!/bin/sh
 # Setting ag as the default source for fzf
 # sets ag as default source for fzf allow .gitignore to be respected this
 # breaks the tabbing function : (
 
-# FZF_DEFAULT_COMMAND='ag -g ""'
+FZF_DEFAULT_COMMAND='ag -g ""'
 
 
 # export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # export FZF_DEFAULT_COMMAND='ag --nobreak --nonumbers --noheading . | fzf'
 
 # Changed FZF trigger to ; from **
-export FZF_COMPLETION_TRIGGER=';'
+# export FZF_COMPLETION_TRIGGER=';'
 
 #Options to fzf command
 # export FZF_COMPLETION_OPTS='+c -x'

@@ -223,8 +223,8 @@ nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe. - need to rethink this mapping
-let g:UltiSnipsExpandTrigger="<localleader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
@@ -468,7 +468,7 @@ nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
 
 " Zoom current split
 nnoremap <Leader>- <C-W><Bar>
-nnoremap <Leader>] <C-W>_
+nnoremap <Leader>` <C-W>_
 " Quick find/replace
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
@@ -1109,10 +1109,10 @@ endif
 "editing old files and saving them because I have 5 version of a config open is
 "SUPER ANNOYING thanks TMUX
 set swapfile
-set nobackup
+" set nobackup
 "This saves all back up files in a vim backup directory
 set backupdir=~/.vim/.backup//
-" set directory=~/.vim/.swp//
+set directory=~/.vim/.swp//
 set undodir=~/.vim/.undo//
 
 if has("vms")
