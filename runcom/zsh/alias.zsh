@@ -1,15 +1,18 @@
+# ================================================================================
 # Aliases
-
+# ================================================================================
 alias sant='source $HOME/.dotfiles/zsh-antigen/antigen/antigen.zsh'
-alias b='source ~/.dotfiles/runcom/fzf/fzf-chrome.rb'
+alias b='source ~/Dotfiles/bin/fzf-chrome.rb'
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
-alias ea='vim $dotfiles/runcom/zsh/alias.zsh'
-alias eant='vim $dotfiles/zsh-antigen/.antigenrc'
+alias ea='vim ~/Dotfiles/runcom/zsh/alias.zsh'
+alias eant='vim $DOTFILES/zsh-antigen/.antigenrc'
 alias ez="vim ~/.zshrc"
 alias ev="vim ~/.vimrc"
 alias et="vim ~/.tmux.conf"
+
+
 # alias ohmyzsh="vim ~/.oh-my-zsh"
 alias sesh="vim -S"
 # alias v="vim"

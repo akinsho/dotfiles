@@ -331,6 +331,11 @@ endif
 "===================================================================================
 "Autocommands
 "==================================================================================={{{
+augroup formatting
+            autocmd!
+" automatically check for changed files outside vim
+            autocmd bufread,bufenter,focusgained * silent! checktime
+augroup end
 
 autocmd bufwritepost ~/.vimrc source $MYVIMRC <bar> echo 'Sourced!'
 "Saves files on switching tabs i.e losing focus
@@ -356,6 +361,7 @@ augroup filetype_javascript
 	autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
 	autocmd FileType javascript :iabbrev <buffer> und undefined
+        autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
 	autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
 "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
@@ -442,29 +448,47 @@ set complete+=kspell
 "-----------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------{{{
+
 "Paste mode for large block of external text
 set pastetoggle=<F2>
 "time out on mapping after half a second, time out on key codes after a tenth
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
-
+  " Yank from the cursor to the end of the line, to be consistent with C and D.
+" FZF bindings
+nnoremap <silent> <localleader>o :Buffers<CR>
+nnoremap Y y$
 " Launch file search using FZF
 nnoremap <C-P> :FZF ~/<CR>
 nnoremap \ :Ag<CR>
 " These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
 " single line
-:map ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
-:map ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
-"Remap back tick for jumping to marks more quicly
+nnoremap ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
+nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
+
+" Zoom current split
+nnoremap <Leader>- <C-W><Bar>
+nnoremap <Leader>] <C-W>_
+" Quick find/replace
+nnoremap <Leader>[ :%s/<C-r><C-w>/
+vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+"Fugitive bindings
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gc :Gcommit<CR>
+"Remap back tick for jumping to marks more quickly
 nnoremap ' `
 
-
-nmap cq :confirm quit<CR>
+nnoremap rs ^d0
+nnoremap cq :confirm quit<CR>
 " clean up any trailing whitespace
-nmap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-"Save all files - does not appear to be working
-"
-nmap cs :wa<bar>echo'Saved!'<CR>
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
+"Save all files
+nnoremap cs :wa<bar>echo'Saved!'<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
@@ -617,6 +641,9 @@ endif
 "==============================================================
 "Mouse 
 "=============================================================={{{
+set mousehide
+
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 "Stop mouse scrolling
 if !has('nvim')
 " set  mouse=c
@@ -641,7 +668,7 @@ endif
 
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
-set hidden
+set nohidden
 
 
 " To open a new empty buffer
@@ -778,8 +805,6 @@ set title                             " wintitle = filename - vim
 "Add relative line numbers
 set number
 
-" set statusline+=%F%m%r%h%w\  "fullpath and status modified sign
-
 "relative add set relativenumber to show numbers relative to the cursor
 set numberwidth=3
 "Turns on smart indent which can help indent files like html natively
@@ -890,7 +915,24 @@ set cmdheight=1
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
 
+  if has('statusline')
+        " set laststatus=2
 
+" Broken down into easily includeable segments
+        set statusline=%<%f\                     " Filename
+        set statusline+=%w%h%m%r                 " Options
+        set statusline+=%{fugitive#statusline()} " Git Hotness
+        set statusline+=%#warningmsg#
+        set statusline+={SyntasticStatuslineFlag()}
+        set statusline+=\ [%{&ff}/%Y]            " Filetype
+        set statusline+=\ [%{getcwd()}]          " Current dir
+        set statusline+=%w%h%m%r
+        set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+        set statusline+=%*
+endif
+"fugitive plugin 
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+"Syntastic config
 
 "-----------------------------------------------------------------
 "Plugin configurations
@@ -899,32 +941,31 @@ iabbrev w@ www.akin-sowemimo.com
 let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+
+let g:airline_detect_iminsert                  = 1
+let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+let g:airline_powerline_fonts                  = 1
+let g:airline#extensions#tabline#enabled       = 1
+let g:airline#extensions#tabline#show_tabs     = 1
+let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 1
+" Makes airline tabs rectangular
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
 let g:syntastic_full_redraws=1
-" autocmd VimEnter * nnoremap <silent> <C-J> :TmuxNavigateDown<CR>:redraw!<CR>
 
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-let g:airline_powerline_fonts = 1
+" let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 "JsBeautify plugin activated here
 noremap <c-f> :call JsBeautify()<cr>
 
-"fugitive plugin 
-set statusline+=%{fugitive#statusline()}
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 
-"Syntastic config
-set statusline+=%#warningmsg#
-set statusline+={SyntasticStatuslineFlag()}
-set statusline+=%*
 " Change the syntastic windows height
 let g:syntastic_loc_list_height = 2
 let g:syntastic_enable_ballons=has('ballon_eval')
@@ -968,6 +1009,7 @@ colorscheme OceanicNext
 "Airline theme
 "=======================================================================
 let g:airline_theme='oceanicnext'
+
 " let g:airline_theme='breezy'
 " let g:airline_theme='quantum'
 " let g:airline_theme='one'
