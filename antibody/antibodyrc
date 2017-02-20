@@ -1,19 +1,12 @@
 #=======================================================================
+#              Source Antibody 
+#=======================================================================
+source <(antibody init)
+#=======================================================================
 #               STARTUP TIMES
 #=======================================================================
 zmodload zsh/zprof
 start_time="$(date +%s)"
-
-#=======================================================================
-#               SOURCE ZPLUG
-#=======================================================================
-# Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-  git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
-fi
-source ~/.zplug/init.zsh
-
 
 #=======================================================================
 #       ENV VARIABLES
@@ -108,111 +101,10 @@ GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 # User configuration
 #=======================================================================
 
-add-zsh-hook precmd _z_precmd
-function _z_precmd {
-    _z --add "$PWD"
-}
-#=======================================================================
-#                  ZPLUG
-#=======================================================================
-# Make sure to use double quotes
-# zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/pip", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/heroku", from:oh-my-zsh
-zplug "plugins/command-not-found", from:oh-my-zsh
-zplug "lukechilds/zsh-better-npm-completion"
-zplug "plugins/tmux", from:oh-my-zsh
-zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh
-zplug "plugins/web-search", from:oh-my-zsh
-zplug "plugins/common-aliases", from:oh-my-zsh
-zplug "plugins/brew", from:oh-my-zsh
-zplug "plugins/pyenv", from:oh-my-zsh, lazy:true
-zplug "plugins/python", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "lukechilds/zsh-nvm", lazy:true
-zplug "k4rthik/git-cal"
-zplug "djui/alias-tips"
-zplug "rupa/z", use:z.sh
-zplug "knu/z", use:zsh, defer:3
-zplug "gko/project", use:project.sh
-zplug "supercrabtree/k"
-zplug "urbainvaes/fzf-marks"
-
-
-# Set the priority when loading
-# e.g., zsh-syntax-highlighting must be loaded
-# after executing compinit command and sourcing other plugins
-# (If the defer tag is given 2 or above, run after compinit command)
-zplug "zsh-users/zsh-syntax-highlighting", defer:3
-# Group dependencies
-# Load "emoji-cli" if "jq" is installed in this example
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "b4b4r07/emoji-cli", \
-    on:"stedolan/jq"
-
-
-zplug "modules/prompt", from:prezto
-# zplug "chauncey-garrett/zsh-prompt-garrett", from:prezto, as:theme
-
-# Load theme file
-# zplug "skuridin/oh-my-zsh-node-theme", as:theme, from:github
-# zplug mafredri/zsh-async, from:github
-# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-# zplug "denysdovhan/spaceship-zsh-theme", as:theme
-
-
-
-
-zplug "$DOTFILES/runcom/functions.sh", from:local
-# Grab binaries from GitHub Releases
-# and rename with the "rename-to:" tag
-zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf, \
-    use:"*darwin*amd64*"
-
-
-# Add all .sh files to the $PATH and make them executable
-# zplug "b4b4r07/hello_bitbucket", \
-#     from:bitbucket, \
-#     as:command, \
-#     use:"*.sh"
-
-# THEME
-zplug "frmendes/geometry"
-
-
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# source plugins and add commands to the PATH
-zplug load
-
-
-# zplug check returns true if the given repository exists
-if zplug check b4b4r07/enhancd; then
-    # setting if enhancd is available
-    export ENHANCD_FILTER=fzf-tmux
-  fi
-
+# add-zsh-hook precmd _z_precmd */
+# function _z_precmd { */
+#     _z --add "$PWD" */
+# } 
 
 #=======================================================================
 #               VI-MODE

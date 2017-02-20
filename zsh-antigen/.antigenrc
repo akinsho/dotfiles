@@ -35,10 +35,14 @@ common-aliases
 brew
 $dotfiles/runcom/functions.sh
 rupa/z
+gko/project
+supercrabtree/k
+urbainvaes/fzf-marks
 EOBUNDLES
 
+antigen theme frmendes/geometry
 # antigen theme skuridin/oh-my-zsh-node-theme
-antigen theme robbyrussell
+# antigen theme robbyrussell
 
 # vi-mode
 

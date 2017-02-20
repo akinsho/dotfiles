@@ -1,11 +1,16 @@
 # zmodload zsh/zprof
+# if [[ ! -d $ANTI_HOME/antigen.zsh]]; then
+  #git clone
+# fi
 start_time="$(date +%s)"
 export NVM_LAZY_LOAD=true
 export NVM_AUTO_USE=true
-# NB for future notice this tries to install in dotfiles unless explicitly
+# NB for future notice this tries to install inDotfiles unless explicitly
 # specified here
 export NVM_DIR="$HOME/.nvm"
 
+export DOTFILES=$HOME/Dotfiles
+export RUNCOM=~/Dotfiles/runcom/
 
 # ZSH_TMUX_AUTOSTART="true"
 
@@ -17,10 +22,33 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
-# export ZSH=$HOME/.oh-my-zsh
 
 # Turn off default zsh vi mode indicator
 # export RPS1="%{$reset_color%}"
+
+
+DEFAULT_USER=$USER
+
+export MANPATH="/usr/local/man:$MANPATH"
+export PATH=~/.rbenv:$PATH
+# you may need to manually set your language environment
+ export LANG=en_us.utf-8
+
+# preferred editor for local and remote sessions
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='vim'
+ fi
+
+export USE_EDITOR=$EDITOR
+export VISUAL=$EDITOR
+
+# compilation flags
+# export archflags="-arch x86_64"
+
+# ssh
+ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 
 
@@ -53,13 +81,13 @@ export PATH=$HOME/Library/Python/2.7/bin:$PATH
 #=======================================================================
 #                         ANTIGEN
 #=======================================================================
-ANTI_ZSH=/Users/A_nonymous/.dotfiles/zsh-antigen/antigen
+ANTI_ZSH=/Users/A_nonymous/Dotfiles/zsh-antigen/antigen
 
 # This is where antigen lives an where it is run super important
 # Disable antigen's cache to always load latest changes from the plugin
 export _ANTIGEN_CACHE_ENABLED=true
 source $ANTI_ZSH/antigen.zsh
-antigen init ~/.dotfiles/zsh-antigen/.antigenrc
+antigen init ~/Dotfiles/zsh-antigen/.antigenrc
 #=======================================================================
 # User configuration
 #=======================================================================
@@ -76,60 +104,58 @@ function _z_precmd {
 # Binds vim mode terminal esc command to jk
 # bindkey -M viins ‘jk’ vi-cmd-mode
 # bindkey ‘^R’ history-incremental-search-backward
+bindkey '^ ' autosuggest-accept
 
-
-DEFAULT_USER=$USER
-
-export MANPATH="/usr/local/man:$MANPATH"
-export PATH=~/.rbenv:$PATH
-# you may need to manually set your language environment
- export LANG=en_us.utf-8
-
-# preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
-
-export USE_EDITOR=$EDITOR
-export VISUAL=$EDITOR
-
-# compilation flags
-# export archflags="-arch x86_64"
-
-# ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-
+#======================================================================
+# NATIVE SETTINGS
+#======================================================================
+# persistent reshahing i.e puts new executables in the $path
+zstyle ':completion:*' menu select 
+zstyle ':completion:*' rehash true
 # if no command is set typing in a line will cd by default
 setopt AUTO_CD
 setopt CORRECT
 setopt RM_STAR_WAIT
 
+# set some history options
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
 
+# Share your history across all your terminal windows
+setopt share_history
+# Keep a ton of history.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+
+# POWERLINE ==========================================================
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
 
+# BASE16===============================================================
 # default code for base16 shell
-# base16_shell=$home/.config/base16-shell/
-# [ -n "$ps1" ] && [ -s $base16_shell/profile_helper.sh ] && eval "$($base16_shell/profile_helper.sh)"
-#create powerline env variable
-# powerline-path='./library/python/2.7/lib/python/site-packages'
-
-# persistent reshahing i.e puts new executables in the $path
-zstyle ':completion:*' rehash true
+base16_shell=$home/.config/base16-shell/
+[ -n "$ps1" ] && [ -s $base16_shell/profile_helper.sh ] && eval "$($base16_shell/profile_helper.sh)"
 
 
+
+#=======================================================================
+#   LOCAL SCRIPTS
+#=======================================================================
 # source all zsh and sh files inside dotfile/runcom
-export dotfiles=$HOME/.dotfiles
-export runcom=$DOTFILES/runcom/
-source $dotfiles/runcom/functions.sh
-source $dotfiles/runcom/zsh/alias.zsh
+source ~/Dotfiles/runcom/functions.sh
+source ~/Dotfiles/runcom/zsh/alias.zsh
 # for config ($RUNCOM/**/*) source $config - too dangerous
-for fzfscript ($dotfiles/runcom/fzf/*.sh) source $fzfscript
-for script ($dotfiles/runcom/zsh/*) source $script
+for fzfscript (~/Dotfiles/runcom/fzf/*.sh) source $fzfscript
+for script (~/Dotfiles/runcom/zsh/*) source $script
 
 
 
@@ -145,19 +171,18 @@ cdg() {
 }
 # export -f cdg > /dev/null
 
-
+# iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-bindkey '^ ' autosuggest-accept
-# Automatically list directory contents on `cd`. slow things down
-# unnecessarily
-# auto-ls () { ls -m; }
-# chpwd_functions=( auto-ls $chpwd_functions )
+# Automatically list directory contents on `cd`.
+auto-ls () { ls -m; }
+chpwd_functions=( auto-ls $chpwd_functions )
 
-
+#FZF=====================================================================================
 # Fzf ruby fuzzy finder very fast and adaptable
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# STARTUP TIMES (CONTD)================================================
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference

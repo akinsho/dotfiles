@@ -79,7 +79,8 @@ Plugin 'sheerun/vim-polyglot'
 "Added vim snippets for code autofilling
 " Track the engine.
 Plugin 'SirVer/ultisnips'
-
+" NVIM colorscheme
+" Plugin 'rakr/vim-one'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 Plugin 'isRuslan/vim-es6'
@@ -148,7 +149,9 @@ call vundle#end()            " required
 ":PluginClean      - confirms removal of unused plugins; append `!` to
 "auto-approve removal
 "!!!This line is key to making vim work in tmux
-set term=screen-256color
+if !has('nvim')
+  set term=screen-256color
+endif
 "}}}
 "====================================================================================
 "Leader bindings
@@ -275,6 +278,7 @@ highlight SignColumn guibg=darkgrey
 "Rainbow parens always on
 let g:rainbow_active = 1 "0 is off by default and can be toggled
 "Advanced rainbow parens config for future reference
+if !has('nvim')
     let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
     \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
@@ -295,6 +299,7 @@ let g:rainbow_active = 1 "0 is off by default and can be toggled
     \       'css': 0,
     \   }
     \}
+  endif
 
 "NerdCommenter config
 " Add spaces after comment delimiters by default
@@ -905,7 +910,7 @@ set cmdheight=1
 iabbrev w@ www.akin-sowemimo.com
 
   if has('statusline')
-        " set laststatus=2
+      set laststatus=2
 
 " Broken down into easily includeable segments
 "       
@@ -991,7 +996,11 @@ highlight link SyntasticStyleWarningSign SignColumn
 "-----------------------------------------------------------
 "Set color Scheme
 " The Best and Most stable colorscheme
-colorscheme OceanicNext
+  colorscheme OceanicNext
+
+" if has('nvim')
+"   colorscheme one
+" endif
 
 " colorscheme base16-tomorrow-night
 
