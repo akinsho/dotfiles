@@ -80,7 +80,7 @@ export VISUAL=$EDITOR
 
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
 GEOMETRY_SYMBOL_PROMPT="▲"
-GEOMETRY_PROMPT_SUFFIX="\n ➜  🍕 👾  "
+GEOMETRY_PROMPT_SUFFIX="\n %{$fg[red]%}➜  🍕 👾  "
 GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 
 #=======================================================================
@@ -105,10 +105,10 @@ function _z_precmd {
 #               VI-MODE
 #=======================================================================
 # Default vi mode - not compatible with vi mode zsh plugin
-# bindkey -v
+bindkey -v
 # Binds vim mode terminal esc command to jk
-# bindkey -M viins ‘jk’ vi-cmd-mode
-# bindkey ‘^R’ history-incremental-search-backward
+bindkey -M viins ‘jk’ vi-cmd-mode
+bindkey ‘^R’ history-incremental-search-backward
 bindkey '^ ' autosuggest-accept
 
 #======================================================================

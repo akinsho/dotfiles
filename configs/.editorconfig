@@ -1,0 +1,30 @@
+;.editorconfig
+
+root = true
+
+[**.js]
+indent_style = tab
+indent_size = 1
+; Javascript interpreter to be invoked by default 'node'
+bin=node
+
+[**.json]
+indent_style = space
+indent_size = 4
+
+[**.jsx]
+e4x = true
+indent_style = space
+indent_size = 4
+
+[**.css]
+path=~/.vim/bundle/js-beautify/js/lib/beautify-css.js
+indent_style = space
+indent_size = 4
+
+[**.html]
+vim:path=~/.vim/bundle/js-beautify/js/lib/beautify-html.js
+indent_style = space
+indent_size = 4
+max_char = 78
+brace_style = expand

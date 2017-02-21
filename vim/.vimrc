@@ -336,6 +336,16 @@ endif
 "===================================================================================
 "Autocommands
 "==================================================================================={{{
+"JS Beautifier commands
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+" for json
+autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
+" for jsx
+autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
+" for html
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 augroup formatting
             autocmd!
 " automatically check for changed files outside vim
@@ -955,9 +965,8 @@ let g:syntastic_full_redraws=1
 " let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " Enable the list of buffers
 
-" Show just the filename
 "JsBeautify plugin activated here
-noremap <c-f> :call JsBeautify()<cr>
+" noremap <c-f> :call JsBeautify()<cr>
 
 
 
