@@ -15,12 +15,6 @@
                 } 
             },
             {
-                "function": "powerline.segments.common.wthr.weather",
-                "args":{
-                    "unit":"C" 
-                }
-            },
-            {
                 "function":"powerline.segments.common.players.spotify",
                 "name":"spotify"
             },

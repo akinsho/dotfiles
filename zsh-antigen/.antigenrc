@@ -45,6 +45,8 @@ EOBUNDLES
 
 
 antigen theme frmendes/geometry
+# antigen bundle mafredri/zsh-async
+# antigen bundle marszall87/lambda-pure
 
 # antigen theme skuridin/oh-my-zsh-node-theme
 # antigen theme robbyrussell

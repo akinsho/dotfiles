@@ -3,3 +3,5 @@ tags
 *~
 *swp
 *.vim
+.localrc
+node

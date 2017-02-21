@@ -337,6 +337,13 @@ endif
 "Autocommands
 "==================================================================================={{{
 "JS Beautifier commands
+"Visual mode mappings to beautify a range of files
+autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
+autocmd FileType jsx vnoremap <buffer> <c-f> :call RangeJsxBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+"Normal mode mappings to beautify all of a file 
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 " for json
 autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
@@ -937,7 +944,6 @@ iabbrev w@ www.akin-sowemimo.com
 endif
 "fugitive plugin 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-"Syntastic config
 
 "-----------------------------------------------------------------
 "Plugin configurations
@@ -965,8 +971,6 @@ let g:syntastic_full_redraws=1
 " let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " Enable the list of buffers
 
-"JsBeautify plugin activated here
-" noremap <c-f> :call JsBeautify()<cr>
 
 
 

@@ -5,34 +5,10 @@
 start_time="$(date +%s)"
 export NVM_LAZY_LOAD=true
 export NVM_AUTO_USE=true
-# NB for future notice this tries to install inDotfiles unless explicitly
+# NB for future notice this tries to install in dot unless explicitly
 # specified here
 export NVM_DIR="$HOME/.nvm"
 
-export DOTFILES=$HOME/Dotfiles
-export RUNCOM=~/Dotfiles/runcom/
-
-# ZSH_TMUX_AUTOSTART="true"
-
-export PATH="$PATH:`yarn global bin`"
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# this line puts Python in the PATH
-export PATH=$HOME/Library/Python/2.7/bin:$PATH
-
-
-# Turn off default zsh vi mode indicator
-# export RPS1="%{$reset_color%}"
-
-
-DEFAULT_USER=$USER
-
-export MANPATH="/usr/local/man:$MANPATH"
-export PATH=~/.rbenv:$PATH
-# you may need to manually set your language environment
- export LANG=en_us.utf-8
 
 # preferred editor for local and remote sessions
  if [[ -n $SSH_CONNECTION ]]; then
@@ -50,6 +26,7 @@ export VISUAL=$EDITOR
 # ssh
  export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+EMOJI_CLI_KEYBIND='^E'
 
 
 #=======================================================================
@@ -80,8 +57,8 @@ export VISUAL=$EDITOR
 
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
 GEOMETRY_SYMBOL_PROMPT="▲"
-GEOMETRY_PROMPT_SUFFIX="\n %{$fg[red]%}➜  🍕 👾  "
-GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
+# GEOMETRY_PROMPT_SUFFIX=" \n  🍕 👾  "
+GEOMETRY_PROMPT_PLUGIN==(virtualenv node )
 
 #=======================================================================
 #                         ANTIGEN
@@ -96,6 +73,13 @@ antigen init ~/Dotfiles/zsh-antigen/.antigenrc
 #=======================================================================
 # User configuration
 #=======================================================================
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
 
 add-zsh-hook precmd _z_precmd
 function _z_precmd {
@@ -105,9 +89,9 @@ function _z_precmd {
 #               VI-MODE
 #=======================================================================
 # Default vi mode - not compatible with vi mode zsh plugin
-bindkey -v
+# bindkey -v
 # Binds vim mode terminal esc command to jk
-bindkey -M viins ‘jk’ vi-cmd-mode
+# bindkey -M viins ‘jk’ vi-cmd-mode
 bindkey ‘^R’ history-incremental-search-backward
 bindkey '^ ' autosuggest-accept
 
@@ -117,6 +101,8 @@ bindkey '^ ' autosuggest-accept
 # persistent reshahing i.e puts new executables in the $path
 zstyle ':completion:*' menu select 
 zstyle ':completion:*' rehash true
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+setopt LOCAL_OPTIONS # allow functions to have local options
 # if no command is set typing in a line will cd by default
 setopt AUTO_CD
 setopt CORRECT
@@ -132,6 +118,9 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
+setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
+setopt HIST_REDUCE_BLANKS
 
 # Share your history across all your terminal windows
 setopt share_history

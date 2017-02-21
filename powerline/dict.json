@@ -10,6 +10,13 @@
                 }
             },
             {
+                "_comment":"Generates too many errors when the segment's call fails",
+                "function": "powerline.segments.common.wthr.weather",
+                "args":{
+                    "unit":"C" 
+                }
+            },
+            {
                 "function":"powerline.segments.common.sys.system_load",
                 "args":{
                     "short":"true" 
