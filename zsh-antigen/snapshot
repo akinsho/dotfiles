@@ -1,10 +1,34 @@
-version='1'; created_on='Fri Feb 17 19:29:01 GMT 2017'; checksum='521175ae5a3550afc59d463a2894758f';
+version='1'; created_on='Tue Feb 21 00:02:59 GMT 2017'; checksum='50e89ccbfc51dd16c7311731e0100125';
+CHANGELOG.md, README.md, dict, emoji-cli.plugin.zsh, emoji-cli.zsh
+5179c1ee4c4eb4c82d025d20eb5acb1d58af6389 https://github.com/b4b4r07/emoji-cli.git
+README.md, geometry.plugin.zsh, geometry.zsh, geometry.zsh-theme, lib, 
+plugins, screenshots
+025b2a6eddff8d35fb319d6a3e47709157d05482 https://github.com/frmendes/geometry.git
+LICENSE.md, README.md, demo.gif, listbox, project.sh
+de1a3968c82b35724da9ebd8a34bf1610b91442e https://github.com/gko/project.git
+Makefile, README, src, z.1, z.sh
+15649b6f38e8515e132ab3b7fbb78e996de212bc https://github.com/knu/z.git
+LICENSE, README.md, demo.gif, zsh-better-npm-completion.plugin.zsh
 eb41c6655e5e596ef7ad8580306f67cb2f37ced3 https://github.com/lukechilds/zsh-better-npm-completion.git
+LICENSE, README.md, tests, zsh-nvm.plugin.zsh
 7577d37b7ee941e0bbae46e87ceee0cd912aeb26 https://github.com/lukechilds/zsh-nvm.git
-d2725d44fce59ea7060b4d712c5739512a56882d https://github.com/robbyrussell/oh-my-zsh.git
+LICENSE.txt, README.md, cache, custom, lib, log, oh-my-zsh.sh, plugins, 
+templates, themes, tools
+98d8d3429f8b9fc2c4c109fb199a31c8d1735699 https://github.com/robbyrussell/oh-my-zsh.git
+Makefile, README, z.1, z.sh
 1a361f6dc10e54e34e42f1e03850692959c6b413 https://github.com/rupa/z.git
-86a7ddd76fd7c5374b2623b7a95a4e181ab9b94e https://github.com/skuridin/oh-my-zsh-node-theme.git
+k.plugin.zsh, k.sh, readme.md
+1fa7c039d40684d39cb225599bda4a86a62e765d https://github.com/supercrabtree/k.git
+LICENSE, README.md, fzf-marks.plugin.bash, fzf-marks.plugin.zsh
+e4322cd5adda782bc33ca30f4c466748c05096ab https://github.com/urbainvaes/fzf-marks.git
+CHANGELOG.md, DESCRIPTION, LICENSE, Makefile, README.md, URL, VERSION, script, 
+src, test, vendor, zsh-autosuggestions.plugin.zsh, zsh-autosuggestions.zsh
 fedc22e9bbd046867860e772d7d6787f5dae9d4c https://github.com/zsh-users/zsh-autosuggestions.git
+README.md, src, zsh-completions-howto.org, zsh-completions.plugin.zsh
 72af5d08f1c07507d74103af039e98a2791fccb5 https://github.com/zsh-users/zsh-completions.git
+README.md, zsh-history-substring-search.zsh
 aae3388491c2312c4efb2e86bcb999927bb2900e https://github.com/zsh-users/zsh-history-substring-search.git
+COPYING.md, HACKING.md, INSTALL.md, Makefile, README.md, changelog.md, docs, 
+highlighters, images, release.md, tests, zsh-syntax-highlighting.plugin.zsh, 
+zsh-syntax-highlighting.zsh
 9523d6d49cb3d4db5bd84c3cec6168a2057fe3ab https://github.com/zsh-users/zsh-syntax-highlighting.git

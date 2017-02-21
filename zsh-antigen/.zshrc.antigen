@@ -75,8 +75,13 @@ export VISUAL=$EDITOR
 # SPACESHIP_PREFIX_GIT='  on '
 # SPACESHIP_PREFIX_NVM=' @ '
 #=======================================================================
+#                       GEOMETRY THEME
+#=======================================================================
 
-
+PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
+GEOMETRY_SYMBOL_PROMPT="▲"
+GEOMETRY_PROMPT_SUFFIX="\n ➜  🍕 👾  "
+GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 
 #=======================================================================
 #                         ANTIGEN

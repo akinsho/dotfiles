@@ -29,21 +29,25 @@ tmux
 colored-man-pages
 zsh-users/zsh-history-substring-search
 osx
-vundle
 web-search
 common-aliases
 brew
 $dotfiles/runcom/functions.sh
+git-cal
+knu/z
 rupa/z
+b4b4r07/emoji-cli
+b4b4r07/enhancd
 gko/project
 supercrabtree/k
 urbainvaes/fzf-marks
 EOBUNDLES
 
+
 antigen theme frmendes/geometry
+
 # antigen theme skuridin/oh-my-zsh-node-theme
 # antigen theme robbyrussell
 
-# vi-mode
 
 antigen apply
