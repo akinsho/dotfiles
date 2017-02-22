@@ -1,4 +1,4 @@
-# zmodload zsh/zprof
+zmodload zsh/zprof
 # if [[ ! -d $ANTI_HOME/antigen.zsh]]; then
   #git clone
 # fi
@@ -57,7 +57,8 @@ EMOJI_CLI_KEYBIND='^E'
 
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
 GEOMETRY_SYMBOL_PROMPT="▲"
-# GEOMETRY_PROMPT_SUFFIX=" \n  🍕 👾  "
+GEOMETRY_PROMPT_SUFFIX=" \n ➪  🍕 👾  "
+# ➪ - fun alternative2
 GEOMETRY_PROMPT_PLUGIN==(virtualenv node )
 
 #=======================================================================
