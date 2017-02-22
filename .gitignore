@@ -5,3 +5,4 @@ tags
 *.vim
 .localrc
 node
+vim-markdown-preview.html
