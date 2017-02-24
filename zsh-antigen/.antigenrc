@@ -9,7 +9,7 @@ antigen-use oh-my-zsh
 
 # Vim like bindings plugin. Need to run after theme, so mode indicator
 # can be set, if the theme didn't already set it.
-# antigen-bundle 
+# antigen-bundle
 
 _ANTIGEN_CACHE_ENABLED=true
 antigen bundles <<EOBUNDLES
@@ -32,7 +32,6 @@ osx
 web-search
 common-aliases
 brew
-$dotfiles/runcom/functions.sh
 git-cal
 knu/z
 rupa/z
@@ -41,14 +40,14 @@ b4b4r07/enhancd
 gko/project
 supercrabtree/k
 urbainvaes/fzf-marks
-sharat87/zsh-vim-mode
 EOBUNDLES
 
 
-antigen theme frmendes/geometry
+# antigen theme frmendes/geometry
 # antigen bundle mafredri/zsh-async
 # antigen bundle marszall87/lambda-pure
 
+antigen theme denysdovhan/spaceship-zsh-theme
 # antigen theme skuridin/oh-my-zsh-node-theme
 # antigen theme robbyrussell
 

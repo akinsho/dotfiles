@@ -1,6 +1,6 @@
 zmodload zsh/zprof
 # if [[ ! -d $ANTI_HOME/antigen.zsh]]; then
-  #git clone
+#git clone
 # fi
 start_time="$(date +%s)"
 export NVM_LAZY_LOAD=true
@@ -11,11 +11,11 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
@@ -24,7 +24,7 @@ export VISUAL=$EDITOR
 # export archflags="-arch x86_64"
 
 # ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 EMOJI_CLI_KEYBIND='^E'
 
@@ -37,27 +37,27 @@ EMOJI_CLI_KEYBIND='^E'
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-# SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
-# SPACESHIP_PROMPT_ADD_NEWLINE=true
+SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
+SPACESHIP_PROMPT_ADD_NEWLINE=true
 
 # TIME
-# SPACESHIP_TIME_SHOW=true
-# SPACESHIP_TIME_12HR=true
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_TIME_12HR=true
 
 # VI_MODE
-# SPACESHIP_VI_MODE_SHOW=true
-# SPACESHIP_VI_MODE_INSERT="[Insert]"
-# SPACESHIP_VI_MODE_NORMAL="[Normal]"
+SPACESHIP_VI_MODE_SHOW=true
+SPACESHIP_VI_MODE_INSERT="[Insert]"
+SPACESHIP_VI_MODE_NORMAL="[Normal]"
 # GIT
-# SPACESHIP_PREFIX_GIT='  on '
-# SPACESHIP_PREFIX_NVM=' @ '
+SPACESHIP_PREFIX_GIT='  on '
+SPACESHIP_PREFIX_NVM=' @ '
 #=======================================================================
 #                       GEOMETRY THEME
 #=======================================================================
 
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=true
 GEOMETRY_SYMBOL_PROMPT="▲"
-GEOMETRY_PROMPT_SUFFIX=" \n ➪  🍕 👾  "
+GEOMETRY_PROMPT_SUFFIX=" \n ↳  🍕 👾  "
 # ➪ - fun alternative2
 GEOMETRY_PROMPT_PLUGIN==(virtualenv node )
 
@@ -84,7 +84,7 @@ fi
 
 add-zsh-hook precmd _z_precmd
 function _z_precmd {
-    _z --add "$PWD"
+  _z --add "$PWD"
 }
 #=======================================================================
 #               VI-MODE
@@ -100,7 +100,7 @@ bindkey '^ ' autosuggest-accept
 # NATIVE SETTINGS
 #======================================================================
 # persistent reshahing i.e puts new executables in the $path
-zstyle ':completion:*' menu select 
+zstyle ':completion:*' menu select
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 setopt LOCAL_OPTIONS # allow functions to have local options
@@ -132,7 +132,7 @@ HISTFILE=~/.zsh_history
 
 # POWERLINE ==========================================================
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
-    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+  source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
 
 # BASE16===============================================================
@@ -149,37 +149,40 @@ base16_shell=$home/.config/base16-shell/
 source ~/Dotfiles/runcom/functions.sh
 source ~/Dotfiles/runcom/zsh/alias.zsh
 # for config ($RUNCOM/**/*) source $config - too dangerous
+source ~/Dotfiles/runcom/functions.sh
 for fzfscript (~/Dotfiles/runcom/fzf/*.sh) source $fzfscript
-for script (~/Dotfiles/runcom/zsh/*) source $script
+  # for script (~/Dotfiles/runcom/zsh/*) source $script
 
 
 
-# Setup global bookmarks cdg function
-# ====================================
-# Need to find a way to export this to my cdg function
-unalias cdg 2> /dev/null
-cdg() {
-   local dest_dir=$(cdscuts_glob_echo | fzf )
-   if [[ $dest_dir != '' ]]; then
+  # Setup global bookmarks cdg function
+  # ====================================
+  # Need to find a way to export this to my cdg function
+  unalias cdg 2> /dev/null
+  cdg() {
+    local dest_dir=$(cdscuts_glob_echo | fzf )
+    if [[ $dest_dir != '' ]]; then
       cd "$dest_dir"
-   fi
-}
-# export -f cdg > /dev/null
+    fi
+  }
+  # export -f cdg > /dev/null
 
-# iTERM Integration ==================================================
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+  # iTERM Integration ==================================================
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# Automatically list directory contents on `cd`.
-auto-ls () { ls -m; }
-chpwd_functions=( auto-ls $chpwd_functions )
+  # Automatically list directory contents on `cd`.
+  auto-ls () { ls -m; }
+  chpwd_functions=( auto-ls $chpwd_functions )
 
-#FZF=====================================================================================
-# Fzf ruby fuzzy finder very fast and adaptable
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  #FZF=====================================================================================
+  # Fzf ruby fuzzy finder very fast and adaptable
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# STARTUP TIMES (CONTD)================================================
-end_time="$(date +%s)"
-# Compares start time defined above with end time above and prints the
-# difference
-echo load time: $((end_time - start_time)) seconds
-# zprof
+  # STARTUP TIMES (CONTD)================================================
+  end_time="$(date +%s)"
+  # Compares start time defined above with end time above and prints the
+  # difference
+  echo load time: $((end_time - start_time)) seconds
+  # zprof
+
+  export PATH="$HOME/.yarn/bin:$PATH"

@@ -48,14 +48,14 @@ DEFAULT_USER=$USER
 export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH
 # you may need to manually set your language environment
- export LANG=en_us.utf-8
+export LANG=en_us.utf-8
 
 # preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
@@ -64,7 +64,7 @@ export VISUAL=$EDITOR
 # export archflags="-arch x86_64"
 
 # ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Change the path where project plugin creates projects
 export PROJECTS_HOME=~/Desktop/Coding
@@ -85,16 +85,27 @@ SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 
 # TIME
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_TIME_12HR=true
+# SPACESHIP_TIME_SHOW=true
+# SPACESHIP_TIME_12HR=true
 
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
-SPACESHIP_VI_MODE_INSERT="[Insert]"
-SPACESHIP_VI_MODE_NORMAL="[Normal]"
+SPACESHIP_VI_MODE_INSERT="[i]"
+# "[Insert]"
+SPACESHIP_VI_MODE_NORMAL="[n]"
+# "[Normal]"
 # GIT
 SPACESHIP_PREFIX_GIT='  on '
+SPACESHIP_GIT_STASHED='💰'
+SPACESHIP_GIT_UNTRACKED='😰'
+
+
 SPACESHIP_PREFIX_NVM=' @ '
+SPACESHIP_RUBY_SHOW=false
+# PYENV
+SPACESHIP_PYENV_SHOW=true
+SPACESHIP_PYENV_SYMBOL='🐍'
+
 
 #=======================================================================
 # GEOMETRY SETTINGS
@@ -110,7 +121,7 @@ GEOMETRY_PROMPT_PLUGIN==(virtualenv node git exec_time)
 
 add-zsh-hook precmd _z_precmd
 function _z_precmd {
-    _z --add "$PWD"
+  _z --add "$PWD"
 }
 #=======================================================================
 #                  ZPLUG
@@ -143,6 +154,7 @@ zplug "knu/z", use:zsh, defer:3
 zplug "gko/project", use:project.sh
 zplug "supercrabtree/k"
 zplug "urbainvaes/fzf-marks"
+zplug "b4b4r07/emoji-cli"
 
 
 # Set the priority when loading
@@ -152,44 +164,44 @@ zplug "urbainvaes/fzf-marks"
 zplug "zsh-users/zsh-syntax-highlighting", defer:3
 # Group dependencies
 # Load "emoji-cli" if "jq" is installed in this example
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "b4b4r07/emoji-cli", \
-    on:"stedolan/jq"
+# zplug "stedolan/jq", \
+  #     from:gh-r, \
+  #     as:command, \
+  #     rename-to:jq
+# zplug "b4b4r07/emoji-cli", \
+  #     on:"stedolan/jq"
 
 
-zplug "modules/prompt", from:prezto
+# zplug "modules/prompt", from:prezto
 # zplug "chauncey-garrett/zsh-prompt-garrett", from:prezto, as:theme
+# zplug "arialdomartini/oh-my-git", use:"*sh"
 
 # Load theme file
 # zplug "skuridin/oh-my-zsh-node-theme", as:theme, from:github
 # zplug mafredri/zsh-async, from:github
 # zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-# zplug "denysdovhan/spaceship-zsh-theme", as:theme
+zplug "denysdovhan/spaceship-zsh-theme", as:theme
 
 
 
 
-zplug "$DOTFILES/runcom/functions.sh", from:local
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
 zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf, \
-    use:"*darwin*amd64*"
+  from:gh-r, \
+  as:command, \
+  rename-to:fzf, \
+  use:"*darwin*amd64*"
 
 
 # Add all .sh files to the $PATH and make them executable
 # zplug "b4b4r07/hello_bitbucket", \
-#     from:bitbucket, \
-#     as:command, \
-#     use:"*.sh"
+  #     from:bitbucket, \
+  #     as:command, \
+  #     use:"*.sh"
 
 # THEME
-zplug "frmendes/geometry"
+# zplug "frmendes/geometry"
 
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -197,10 +209,10 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
 fi
 
 # source plugins and add commands to the PATH
@@ -209,29 +221,44 @@ zplug load
 
 # zplug check returns true if the given repository exists
 if zplug check b4b4r07/enhancd; then
-    # setting if enhancd is available
-    export ENHANCD_FILTER=fzf-tmux
-  fi
+  # setting if enhancd is available
+  export ENHANCD_FILTER=fzf-tmux
+fi
 
 
 #=======================================================================
 #               VI-MODE
 #=======================================================================
-source ~/Dotfiles/bin/vim_mode.zsh
+# precmd() {
+#   RPROMPT=""
+# }
+# zle-keymap-select() {
+#   RPROMPT=""
+#   [[ $KEYMAP = vicmd ]] && RPROMPT="(CMD)"
+#   () { return $__prompt_status }
+#   zle reset-prompt
+# }
+# zle-line-init() {
+#   typeset -g __prompt_status="$?"
+# }
+# zle -N zle-keymap-select
+# zle -N zle-line-init
+
+# source ~/Dotfiles/bin/vim_mode.zsh
 # Default vi mode - not compatible with vi mode zsh plugin
 bindkey -v
 # Binds vim mode terminal esc command to jk
 bindkey -M viins ‘jk’ vi-cmd-mode
 export KEYTIMEOUT=1
 # bindkey ‘^R’ history-incremental-search-backward
-# function zle-line-init zle-keymap-select {
-#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
-#     zle reset-prompt
-# }
-# #
-# zle -N zle-line-init
-# zle -N zle-keymap-select
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
+    zle reset-prompt
+}
+#
+zle -N zle-line-init
+zle -N zle-keymap-select
 # #Use vim cli mode (C-P and C-N to navigate history)
 bindkey '^P' up-history
 bindkey '^N' down-history
@@ -243,7 +270,7 @@ bindkey '^ ' autosuggest-accept
 #======================================================================
 # persistent reshahing i.e puts new executables in the $path
 zstyle ':completion:*' rehash true
-zstyle ':completion:*' menu select 
+zstyle ':completion:*' menu select
 
 
 # if no command is set typing in a line will cd by default
@@ -270,7 +297,7 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 # POWERLINE ==========================================================
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
-    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+  source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
 # BASE16===============================================================
 # default code for base16 shell
@@ -285,37 +312,37 @@ base16_shell=$home/.config/base16-shell/
 source $DOTFILES/runcom/functions.sh
 source $DOTFILES/runcom/zsh/alias.zsh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
-for script ($DOTFILES/runcom/zsh/*) source $script
+  for script ($DOTFILES/runcom/zsh/*) source $script
 
 
-#=======================================================================
-#       FUNCTIONS
-#=======================================================================
+    #=======================================================================
+    #       FUNCTIONS
+    #=======================================================================
 
-# Setup global bookmarks cdg function
-# ====================================
-# Need to find a way to export this to my cdg function
-unalias cdg 2> /dev/null
-cdg() {
-   local dest_dir=$(cdscuts_glob_echo | fzf )
-   if [[ $dest_dir != '' ]]; then
-      cd "$dest_dir"
-   fi
-}
-# export -f cdg > /dev/null
-# Automatically list directory contents on `cd`. slow things down
-# unnecessarily
-auto-ls () { ls -GC; }
-chpwd_functions=( auto-ls $chpwd_functions )
+    # Setup global bookmarks cdg function
+    # ====================================
+    # Need to find a way to export this to my cdg function
+    unalias cdg 2> /dev/null
+    cdg() {
+      local dest_dir=$(cdscuts_glob_echo | fzf )
+      if [[ $dest_dir != '' ]]; then
+        cd "$dest_dir"
+      fi
+    }
+    # export -f cdg > /dev/null
+    # Automatically list directory contents on `cd`. slow things down
+    # unnecessarily
+    auto-ls () { ls -GC; }
+    chpwd_functions=( auto-ls $chpwd_functions )
 
 
-# iTERM Integration ==================================================
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+    # iTERM Integration ==================================================
+    test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# STARTUP TIMES (CONTD)================================================
-end_time="$(date +%s)"
-# Compares start time defined above with end time above and prints the
-# difference
-echo load time: $((end_time - start_time)) seconds
-# zprof
+    # STARTUP TIMES (CONTD)================================================
+    end_time="$(date +%s)"
+    # Compares start time defined above with end time above and prints the
+    # difference
+    echo load time: $((end_time - start_time)) seconds
+    # zprof
 
