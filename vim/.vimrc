@@ -33,8 +33,6 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 "Added vim-airline
 Plugin 'bling/vim-airline'
-"Added ctrlP fuzzy finder - replaced by fzf
-" Plugin 'ctrlpvim/ctrlp.vim'
 "Added syntastic syntax checker
 Plugin 'vim-syntastic/syntastic'
 "Added vim surround for enclosing with parens
@@ -884,10 +882,10 @@ set visualbell
 if has('termguicolors')
   " && !has('gui_running')
   set termguicolors
-  " set Vim-specific sequences for RGB colors
-  "Super important for truecolor support in vim
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  " set vim-specific sequences for rgb colors
+  "super important for truecolor support in vim
+  let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
 endif
 "}}}
 " ---------------------------------------------------------------------
@@ -1069,14 +1067,16 @@ highlight link SyntasticStyleWarningSign SignColumn
 " colorscheme quantum
 
 " Spring Night ==============================================
-" colorscheme spring-night
-" set g:spring_night_low_contrast=['cui']
+" This variable needs to be set, and set to nothing to maintain a light
+" contrast
+let g:spring_night_high_contrast=[]
+colorscheme spring-night
 
 " Deep Space ================================================ 
-set background=dark
-colorscheme deep-space
-let g:deepspace_italics = 1
-let g:airline_theme='deep_space'
+" set background=dark
+" colorscheme deep-space
+" let g:deepspace_italics = 1
+" let g:airline_theme='deep_space'
 
 
 "=======================================================================
@@ -1084,7 +1084,7 @@ let g:airline_theme='deep_space'
 "=======================================================================
 if !has('gui_running')
   " adding to vim-airline's statusline 
-  " let g:airline_theme='spring_night'
+  let g:airline_theme='spring_night'
   " let g:airline_theme='quantum'
 endif
 

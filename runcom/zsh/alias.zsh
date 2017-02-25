@@ -4,6 +4,7 @@
 alias cl='clear'
 alias sant='source $HOME/.dotfiles/zsh-antigen/antigen/antigen.zsh'
 alias b='source ~/Dotfiles/bin/fzf-chrome.rb'
+alias rn='ranger'
 alias sho='ls -aC'
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
