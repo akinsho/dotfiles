@@ -132,6 +132,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/vim-color-spring-night'
 "Add sialoquent theme
 Plugin 'davidklsn/vim-sialoquent'
+" Deep space theme
+Plugin 'tyrannicaltoucan/vim-deep-space'
 "Add lightline a more light weight airline alternative
 Plugin 'itchyny/lightline.vim'
 
@@ -163,12 +165,11 @@ filetype plugin indent on
 ":PluginClean      - confirms removal of unused plugins; append `!` to
 "auto-approve removal
 "!!!This line is key to making vim work in tmux
-if has('vim')
+if !has('gui_running')
   set term=screen-256color
 endif
 
-if !has('nvim') && has('syntax')
-  " && !exists('g:syntax_on')
+if !has('nvim')
   syntax enable
 endif
 "}}}
@@ -880,7 +881,8 @@ set visualbell
 "Reset color on quitting vim
 " au VimLeave * !echo -ne""\033[0m"
 "Setting the t_ variables if a further step to ensure 24bit colors
-if has('termguicolors') && !has('gui_running')
+if has('termguicolors')
+  " && !has('gui_running')
   set termguicolors
   " set Vim-specific sequences for RGB colors
   "Super important for truecolor support in vim
@@ -1054,23 +1056,27 @@ highlight link SyntasticStyleWarningSign SignColumn
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
+
+
+
+"Oceanic Next ===============================================
 " The Best and Most stable colorscheme
 " colorscheme OceanicNext
 
-colorscheme spring-night
-" set background=light
 
-"gvim config fonts
-" if has('gui_running')
-"   colorscheme sialoquent
-"   set guifont=Roboto\ Mono\ Light\ for\ Powerline:h14
-"   let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
-"    let g:gitgutter_sign_modified = '•'
-"    let g:gitgutter_sign_added = '❖'
-"   highlight GitGutterAdd guifg = '#A3E28B'
-"
-" endif
+"Quantum ====================================================
+" set background=dark
+" colorscheme quantum
 
+" Spring Night ==============================================
+" colorscheme spring-night
+" set g:spring_night_low_contrast=['cui']
+
+" Deep Space ================================================ 
+set background=dark
+colorscheme deep-space
+let g:deepspace_italics = 1
+let g:airline_theme='deep_space'
 
 
 "=======================================================================
@@ -1079,6 +1085,7 @@ colorscheme spring-night
 if !has('gui_running')
   " adding to vim-airline's statusline 
   let g:airline_theme='spring_night'
+  " let g:airline_theme='quantum'
 endif
 
 
