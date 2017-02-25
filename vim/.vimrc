@@ -103,8 +103,6 @@ Plugin 'ternjs/tern_for_vim'
 Plugin 'sjl/gundo.vim'
 "Add buffergator for better buffer control
 Plugin 'jeetsukumaran/vim-buffergator'
-"Add vim-signature which higlights and shows marks for a file
-" Plugin 'kshenoy/vim-signature'
 "Tim pope's surround plugin allows . to repeat more actions
 Plugin 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
@@ -113,18 +111,10 @@ Plugin 'maxbrunsfeld/vim-yankstack'
 Plugin 'luochen1990/rainbow'
 "Add supertab to use tab for all insert mode completions
 Plugin 'ervandew/supertab'
-"Added JavaScript indent
-" Plugin 'vim-scripts/JavaScript-Indent'
-"Add Plugin to manage tag files
-" Plugin 'ludovicchabant/vim-gutentags'
 "Navigate panes in vim and tmux with the same bindings
 Plugin 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
 Plugin 'mhinz/vim-startify'
-"Add Base16 color schemes vim
-" Plugin 'chriskempson/base16-vim'
-"Indentation and highlighting for jsx
-" Plugin 'mxw/vim-jsx'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
@@ -140,9 +130,23 @@ Plugin 'Chiel92/vim-autoformat'
 Plugin 'airblade/vim-gitgutter'
 " Add new theme trial purposes ofc
 Plugin 'rhysd/vim-color-spring-night'
+"Add sialoquent theme
+Plugin 'davidklsn/vim-sialoquent'
+"Add lightline a more light weight airline alternative
+Plugin 'itchyny/lightline.vim'
 
 
 
+"Add Base16 color schemes vim
+" Plugin 'chriskempson/base16-vim'
+"Indentation and highlighting for jsx
+" Plugin 'mxw/vim-jsx'
+"Add vim-signature which higlights and shows marks for a file
+" Plugin 'kshenoy/vim-signature'
+"Added JavaScript indent
+" Plugin 'vim-scripts/JavaScript-Indent'
+"Add Plugin to manage tag files
+" Plugin 'ludovicchabant/vim-gutentags'
 
 "Add file type icons to vim
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -159,8 +163,13 @@ filetype plugin indent on
 ":PluginClean      - confirms removal of unused plugins; append `!` to
 "auto-approve removal
 "!!!This line is key to making vim work in tmux
-if !has('nvim')
+if has('vim')
   set term=screen-256color
+endif
+
+if !has('nvim') && has('syntax')
+  " && !exists('g:syntax_on')
+  syntax enable
 endif
 "}}}
 "====================================================================================
@@ -182,16 +191,32 @@ let NERDTreeShowHidden=1 "Show hidden files by default
 "Press enter to complete suggestions - turned off
 let g:SuperTabCrMapping = 0
 
-"Vim signature bindings
-" nnoremap [[ :call signature#marker#Goto('prev', 1, v:count)
-" nnoremap ]] :call signature#marker#Goto('next', 1, v:count)
-
-
 
 let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_toggle=2
 
+if has("gui_running")
+  let g:lightline = {
+    \ 'colorscheme': 'sialoquent',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'component': {
+    \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
+    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+    \ },
+    \ 'component_visible_condition': {
+    \   'readonly': '(&filetype!="help"&& &readonly)',
+    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '∿', 'right': '❂' }
+    \ }
+endif
 
 "===================================================
 "EasyMotion mappings
@@ -268,22 +293,13 @@ let g:vcoolor_map = '<C-u>'
 " augroup END
 "Emmet for vim leader keymap
 let g:user_emmet_leader_key='<localleader>k'
-"<tab>
-"Set space to visually select a word
 
 
-"CtrlP config
-" let g:ctrlp_working_path_mode = 'ra'
-" let g:ctlp_max_files = 600
-" "search by file name by default
-" let g:ctrlp_by_filename = 1
-" "Allow CTRL p to show hidden files
-" let g:ctrlp_show_hidden = 1
 "Add mapping for Gundo vim
 nnoremap <F5> :GundoToggle<CR>
 
 "Color the sign column dark grey by default
-highlight SignColumn guibg=darkgrey
+" highlight SignColumn guibg=darkgrey
 
 "Rainbow parens always on
 let g:rainbow_active = 1 "0 is off by default and can be toggled
@@ -327,23 +343,20 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 
-
-
-
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
 "}}}
 "===================================================================================
 "BASE16 Colors - changes a range of colors to appear more vivid
-"===================================================================================
+"==================================================================================={{{
 " if filereadable(expand("~/.vimrc_background"))
   " let base16colorspace=256
   " source ~/.vimrc_background
 " endif
 
 
-
-"===================================================================================
+"}}}
+"====================================================================================
 "Autocommands
 "==================================================================================={{{
 "JS Beautifier commands
@@ -480,9 +493,9 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 set complete+=kspell
 "Add spell checking local
 " setlocal spell spelllang=en_us
-"-----------------------------------------------------------------
+"-----------------------------------------------------------------------------------
 "Mappings
-"-----------------------------------------------------------------{{{
+"-----------------------------------------------------------------------------------{{{
 
 "Paste mode for large block of external text
 set pastetoggle=<F2>
@@ -493,6 +506,7 @@ set timeout timeoutlen=500 ttimeoutlen=100
 " Remap jumping to the lask spot you were editing previously to bk as this is
 " easier form me to remember
 nnoremap bk `.
+
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 "--------------------------------------------
@@ -662,9 +676,11 @@ nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 nnoremap <leader>< viw<esc>a ><esc>bi<<esc>lel
-" Remap high and low keys to go to beginning and end of lines
-nnoremap H 0
-nnoremap L $
+" Remap going to beginning and end of lines
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
+
 "Map Q to remove a CR
 :nnoremap Q J
 
@@ -687,9 +703,9 @@ if has("nvim")
 endif
 "}}}
 
-"==============================================================
+"===================================================================================
 "Mouse
-"=============================================================={{{
+"==================================================================================={{{
 set mousehide
 
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
@@ -857,7 +873,7 @@ set laststatus=2
 
 " Turns of lazyredraw which postpones redrawing for macros and command
 " execution
-set nolazyredraw
+set lazyredraw
 
 " Use visual bell when there are errors not audio beep
 set visualbell
@@ -867,6 +883,7 @@ set visualbell
 if has('termguicolors') && !has('gui_running')
   set termguicolors
   " set Vim-specific sequences for RGB colors
+  "Super important for truecolor support in vim
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
@@ -883,7 +900,7 @@ augroup CursorLine
   " autocmd VimEnter,InsertEnter * highlight CursorLine cterm=none ctermbg=240 guibg=#0b2a2a
   autocmd InsertEnter * set nocursorline
   autocmd InsertLeave * set cursorline 
-  autocmd InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
+  autocmd VimEnter,InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
   au WinLeave * setlocal nocursorline
 augroup END
 "         autocmd InsertEnter * highlight guibg=#0b2a2a guifg=NONE
@@ -905,13 +922,13 @@ set nostartofline
 " endfunction
 " map <leader>r :call StripWhiteSpace ()<CR>
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
-" set list
-" set listchars=
-" set listchars+=tab:▸\
-" set listchars+=trail:·
-" set listchars+=nbsp:⣿
-" set listchars+=extends:»              " show cut off when nowrap
-" set listchars+=precedes:«
+set list
+set listchars=
+set listchars+=tab:▸\
+set listchars+=trail:·
+set listchars+=nbsp:⣿
+set listchars+=extends:»              " show cut off when nowrap
+set listchars+=precedes:«
 "Invisible character colors
 "highlight NonText guifg=#4a4a59
 "highlight SpecialKey guifg=#4a4a59
@@ -935,7 +952,7 @@ set cmdheight=1
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
 
-set statusline
+set statusline=
 if has('statusline')
   set laststatus=2
 
@@ -985,9 +1002,9 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-let g:airline_detect_iminsert                  = 1
-let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-let g:airline_powerline_fonts                  = 1
+" let g:airline_detect_iminsert                  = 1
+" let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+" let g:airline_powerline_fonts                  = 1
 let g:airline#extensions#tabline#enabled       = 1
 let g:airline#extensions#tabline#show_tabs     = 1
 let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
@@ -1015,7 +1032,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_aggregate_errors=1
-" let g:syntastic_auto_jump=1
+let g:syntastic_auto_jump=1
 let g:syntastic_error_symbol='☠️'
 let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
@@ -1032,9 +1049,6 @@ highlight link SyntasticStyleWarningSign SignColumn
 
 
 
-if !has('nvim') && has('syntax') && !exists('g:syntax_on')
-  syntax enable
-endif
 "}}}
 "-----------------------------------------------------------
 "Colorscheme
@@ -1042,18 +1056,30 @@ endif
 "Set color Scheme
 " The Best and Most stable colorscheme
 " colorscheme OceanicNext
+
 colorscheme spring-night
-" let g:spring_night_high_contrast='cui'
+" set background=light
+
+"gvim config fonts
+" if has('gui_running')
+"   colorscheme sialoquent
+"   set guifont=Roboto\ Mono\ Light\ for\ Powerline:h14
+"   let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+"    let g:gitgutter_sign_modified = '•'
+"    let g:gitgutter_sign_added = '❖'
+"   highlight GitGutterAdd guifg = '#A3E28B'
+"
+" endif
 
 
-
-" colorscheme base16-tomorrow-night
 
 "=======================================================================
 "Airline theme
 "=======================================================================
-" let g:airline_theme='oceanicnext'
-let g:airline_theme='spring_night'
+if !has('gui_running')
+  " adding to vim-airline's statusline 
+  let g:airline_theme='spring_night'
+endif
 
 
 " ----------------------------------------------------------------------------
@@ -1106,10 +1132,11 @@ set display+=lastline
 if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
 endif
+scriptencoding utf-8
 
-" if &listchars ==# 'eol:$'
-"   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-"     endif
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+    endif
 
 
 
@@ -1135,13 +1162,6 @@ set sessionoptions-=options
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
 endif
-
-" set formatoptions=qrn1
-
-
-
-
-
 
 
 "Turn swap files off - FOR GOD's SAKE they are ruining my life - addendum

@@ -26,6 +26,8 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # ZSH_TMUX_AUTOSTART="true"
+ZSH_TMUX_FIXTERM_WITH_256COLOR=false
+
 
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
@@ -96,8 +98,8 @@ SPACESHIP_VI_MODE_NORMAL="[n]"
 # "[Normal]"
 # GIT
 SPACESHIP_PREFIX_GIT='  on '
-SPACESHIP_GIT_STASHED='💰'
-SPACESHIP_GIT_UNTRACKED='😰'
+SPACESHIP_GIT_STASHED=' 💰 '
+SPACESHIP_GIT_UNTRACKED=' 😰 '
 
 
 SPACESHIP_PREFIX_NVM=' @ '
@@ -127,7 +129,6 @@ function _z_precmd {
 #                  ZPLUG
 #=======================================================================
 # Make sure to use double quotes
-# zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/pip", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
@@ -229,20 +230,20 @@ fi
 #=======================================================================
 #               VI-MODE
 #=======================================================================
-# precmd() {
-#   RPROMPT=""
-# }
-# zle-keymap-select() {
-#   RPROMPT=""
-#   [[ $KEYMAP = vicmd ]] && RPROMPT="(CMD)"
-#   () { return $__prompt_status }
-#   zle reset-prompt
-# }
-# zle-line-init() {
-#   typeset -g __prompt_status="$?"
-# }
-# zle -N zle-keymap-select
-# zle -N zle-line-init
+precmd() {
+  RPROMPT=""
+}
+zle-keymap-select() {
+  RPROMPT=""
+  [[ $KEYMAP = vicmd ]] && RPROMPT="(CMD)"
+  () { return $__prompt_status }
+  zle reset-prompt
+}
+zle-line-init() {
+  typeset -g __prompt_status="$?"
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
 
 # source ~/Dotfiles/bin/vim_mode.zsh
 # Default vi mode - not compatible with vi mode zsh plugin
@@ -251,14 +252,14 @@ bindkey -v
 bindkey -M viins ‘jk’ vi-cmd-mode
 export KEYTIMEOUT=1
 # bindkey ‘^R’ history-incremental-search-backward
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
-    zle reset-prompt
-}
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
+#     zle reset-prompt
+# }
 #
-zle -N zle-line-init
-zle -N zle-keymap-select
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 # #Use vim cli mode (C-P and C-N to navigate history)
 bindkey '^P' up-history
 bindkey '^N' down-history

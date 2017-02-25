@@ -19,8 +19,6 @@ alias et="vim ~/.tmux.conf"
 alias sesh="vim -S"
 # alias v="vim"
 alias tmux="tmux -2"
-# alias tnew="tmux new -s"
-# alias ta="tmux attach -t"
 alias tls="tmux ls"
 alias tkill="tmux kill-session -t"
 
