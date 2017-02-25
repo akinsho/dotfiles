@@ -3,19 +3,26 @@ tap 'caskroom/fonts'
 tap 'caskroom/versions'
 tap 'homebrew/bundle'
 tap 'homebrew/core'
+tap 'iveney/mocha'
 tap 'neovim/neovim'
 tap 'tomanthony/brews'
+brew 'antigen'
 brew 'autoconf'
 brew 'automake'
 brew 'readline'
 brew 'bash'
 brew 'cmake'
+brew 'cscope'
 brew 'ctags'
 brew 'pcre'
 brew 'editorconfig'
+brew 'fasd'
+brew 'fzf'
 brew 'gdbm'
 brew 'gettext'
+brew 'hub'
 brew 'jemalloc'
+brew 'jq'
 brew 'openssl'
 brew 'libevent'
 brew 'libssh2'
@@ -24,30 +31,38 @@ brew 'libtool'
 brew 'libuv'
 brew 'libvterm'
 brew 'libyaml'
+brew 'mackup'
+brew 'sqlite'
+brew 'python'
+brew 'xz'
+brew 'python3'
+brew 'macvim'
 brew 'markdown'
 brew 'mas'
 brew 'mongodb'
 brew 'msgpack'
 brew 'node'
+brew 'node@6'
 brew 'perl'
 brew 'pkg-config'
-brew 'sqlite'
-brew 'python'
-brew 'xz'
-brew 'python3'
+brew 'pyenv'
+brew 'ranger'
 brew 'ruby-build'
 brew 'rbenv'
 brew 'reattach-to-user-namespace'
 brew 'ruby'
 brew 'rust'
+brew 'the_silver_searcher'
 brew 'tmux'
 brew 'unibilium'
 brew 'vim'
 brew 'yarn'
 brew 'z'
 brew 'zsh'
+brew 'iveney/mocha/realpath'
 brew 'neovim/neovim/neovim'
 brew 'tomanthony/brews/itermocil'
+cask 'alfred'
 cask 'font-firacode-nerd-font-mono'
 cask 'font-firamono-nerd-font'
 cask 'font-hack-nerd-font'
@@ -56,23 +71,24 @@ cask 'font-meslo-nerd-font'
 cask 'iterm2'
 cask 'mongodb-compass'
 cask 'robomongo'
+cask 'sdformatter'
+cask 'spectacle'
 mas 'MemoryBooster', id: 592647907
 mas 'Evernote', id: 406056744
 mas 'Keynote', id: 409183694
 mas 'Magnet', id: 441258766
-mas 'Twitter', id: 409789998
-mas 'The Unarchiver', id: 425424353
 mas 'iPhoto', id: 408981381
-mas 'Pixelmator', id: 407963104
+mas 'The Unarchiver', id: 425424353
 mas 'Caffeine', id: 411246225
+mas 'Twitter', id: 409789998
+mas 'Pixelmator', id: 407963104
 mas 'Numbers', id: 409203825
-mas 'Xcode', id: 497799835
 mas 'Wunderlist', id: 410628904
+mas 'Xcode', id: 497799835
 mas 'Pages', id: 409201541
 mas 'Fantastical', id: 435003921
 mas 'feedly', id: 865500966
 mas 'iMovie', id: 408981434
 mas 'Spark', id: 1176895641
-mas 'Alfred', id: 405843582
 mas 'Pocket', id: 568494494
 mas 'Shazam', id: 897118787

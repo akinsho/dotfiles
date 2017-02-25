@@ -1084,7 +1084,7 @@ let g:airline_theme='deep_space'
 "=======================================================================
 if !has('gui_running')
   " adding to vim-airline's statusline 
-  let g:airline_theme='spring_night'
+  " let g:airline_theme='spring_night'
   " let g:airline_theme='quantum'
 endif
 
