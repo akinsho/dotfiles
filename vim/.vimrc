@@ -130,8 +130,6 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/vim-color-spring-night'
 "Add sialoquent theme
 Plugin 'davidklsn/vim-sialoquent'
-"Add lightline a more light weight airline alternative
-Plugin 'itchyny/lightline.vim'
 "Plugin to create diff window and Gstatus window on commit
 Plugin 'rhysd/committia.vim'
 "Vimux i.e send commands to a tmux split
@@ -140,6 +138,8 @@ Plugin 'benmills/vimux'
 Plugin 'kshenoy/vim-signature'
 "Vim obsession Tpope's amazing plugin for managing sessions
 Plugin 'tpope/vim-obsession'
+"Indent Line
+Plugin 'Yggdroot/indentLine'
 
 
 
@@ -193,9 +193,33 @@ let maplocalleader = "\<space>"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
+"Indent line
+let g:indentLine_loaded=1
+let g:indentLine_enabled=1
+" let g:indentLine_setColors=0
 
 "Vimux ==========================================================
+"Tell vimux to run commands in a new split
+let VimuxUseNearest = 0
 " nnoremap <F5> :call VimuxRunCommand("browser-sync start")<CR>
+" Prompt for a command to run
+ nnoremap <Leader>vp :VimuxPromptCommand<CR>
+
+ " Run last command executed by VimuxRunCommand
+ nnoremap <Leader>vl :VimuxRunLastCommand<CR>
+
+ " Inspect runner pane
+ nnoremap <Leader>vi :VimuxInspectRunner<CR>
+
+ " Close vim tmux runner opened by VimuxRunCommand
+ nnoremap <Leader>vq :VimuxCloseRunner<CR>
+
+ " Interrupt any command running in the runner pane
+ nnoremap <Leader>vx :VimuxInterruptRunner<CR>
+
+ " Zoom the runner pane (use <bind-key> z to restore runner pane)
+ nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
+
 
 
 "Vim-Signature ==================================================
@@ -217,28 +241,6 @@ let g:SuperTabCrMapping = 0
 let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_toggle=2
-
-if has("gui_running")
-  let g:lightline = {
-    \ 'colorscheme': 'sialoquent',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'component': {
-    \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
-    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-    \ },
-    \ 'component_visible_condition': {
-    \   'readonly': '(&filetype!="help"&& &readonly)',
-    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-    \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '∿', 'right': '❂' }
-    \ }
-endif
 
 "===================================================
 "EasyMotion mappings
@@ -583,11 +585,11 @@ nnoremap <leader>gc :Gcommit<CR>
 nnoremap ' `
 
 nnoremap rs ^d0
-nnoremap cq :confirm quit<CR>
+nnoremap qa :wqa<CR>
 " clean up any trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 "Save all files
-nnoremap cs :wa<bar>echo'Saved!'<CR>
+nnoremap <localleader>s :wa<bar>echo'Saved!'<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
@@ -924,16 +926,16 @@ endif
 " ---------------------------------------------------------------------{{{
 
 "Set cursorline to the focused window only and change color/styling of cursor line depending on mode
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  "underline
-  " autocmd VimEnter,InsertEnter * highlight CursorLine cterm=none ctermbg=240 guibg=#0b2a2a
-  autocmd InsertEnter * set nocursorline
-  autocmd InsertLeave * set cursorline 
-  autocmd VimEnter,InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
-  au WinLeave * setlocal nocursorline
-augroup END
+" augroup CursorLine
+"   au!
+"   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+"   "underline
+"   " autocmd VimEnter,InsertEnter * highlight CursorLine cterm=none ctermbg=240 guibg=#0b2a2a
+"   autocmd InsertEnter * set nocursorline
+"   autocmd InsertLeave * set cursorline
+"   autocmd VimEnter,InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
+"   au WinLeave * setlocal nocursorline
+" augroup END
 "         autocmd InsertEnter * highlight guibg=#0b2a2a guifg=NONE
 "         autocmd InsertLeave * highlight CursorLine  guibg=#0129a0 guifg=NONE
 " Show context around current cursor position
@@ -955,19 +957,20 @@ set nostartofline
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 set list
 set listchars=
-" set listchars+=tab:▸\
 "This sets list tab chars to invisible
-set listchars=tab:\ \
+" set listchars=tab:\ \
+" set listchars+=tab:▸\
+set listchars+=tab:\┆\
 set listchars+=trail:·
-" set listchars+=nbsp:⣿
+" " set listchars+=nbsp:⣿
 set listchars+=extends:»              " show cut off when nowrap
 set listchars+=precedes:«
-"Invisible character colors
-"highlight NonText guifg=#4a4a59
-"highlight SpecialKey guifg=#4a4a59
-
-" ------------------------------------
-" Tab line
+" "Invisible character colors
+" highlight NonText guifg=#4a4a59
+" highlight SpecialKey guifg=#4a4a59
+"
+" " ------------------------------------
+" " Tab line
 " ------------------------------------
 " set tabline
 " set showtabline=2
@@ -1021,7 +1024,7 @@ nnoremap <Leader><DOWN> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
 nmap <leader>/ :BuffergatorMruCyclePrev<cr>
 
 " Go to the next buffer open
-nmap <leader>m :BuffergatorMruCycleNext<cr>
+nmap <leader><tab>  :BuffergatorMruCycleNext<cr>
 
 " View the entire list of buffers open
 nmap <leader>o :BuffergatorToggle<cr>
