@@ -230,20 +230,20 @@ fi
 #=======================================================================
 #               VI-MODE
 #=======================================================================
-precmd() {
-  RPROMPT=""
-}
-zle-keymap-select() {
-  RPROMPT=""
-  [[ $KEYMAP = vicmd ]] && RPROMPT="(CMD)"
-  () { return $__prompt_status }
-  zle reset-prompt
-}
-zle-line-init() {
-  typeset -g __prompt_status="$?"
-}
-zle -N zle-keymap-select
-zle -N zle-line-init
+# precmd() {
+#   RPROMPT=""
+# }
+# zle-keymap-select() {
+#   RPROMPT=""
+#   [[ $KEYMAP = vicmd ]] && RPROMPT="(CMD)"
+#   () { return $__prompt_status }
+#   zle reset-prompt
+# }
+# zle-line-init() {
+#   typeset -g __prompt_status="$?"
+# }
+# zle -N zle-keymap-select
+# zle -N zle-line-init
 
 # source ~/Dotfiles/bin/vim_mode.zsh
 # Default vi mode - not compatible with vi mode zsh plugin
@@ -251,15 +251,17 @@ bindkey -v
 # Binds vim mode terminal esc command to jk
 bindkey -M viins ‘jk’ vi-cmd-mode
 export KEYTIMEOUT=1
-# bindkey ‘^R’ history-incremental-search-backward
-# function zle-line-init zle-keymap-select {
-#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
-#     zle reset-prompt
-# }
-#
-# zle -N zle-line-init
-# zle -N zle-keymap-select
+
+bindkey ‘^R’ history-incremental-search-backward
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
 # #Use vim cli mode (C-P and C-N to navigate history)
 bindkey '^P' up-history
 bindkey '^N' down-history

@@ -130,10 +130,17 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rhysd/vim-color-spring-night'
 "Add sialoquent theme
 Plugin 'davidklsn/vim-sialoquent'
-" Deep space theme
-Plugin 'tyrannicaltoucan/vim-deep-space'
 "Add lightline a more light weight airline alternative
 Plugin 'itchyny/lightline.vim'
+"Plugin to create diff window and Gstatus window on commit
+Plugin 'rhysd/committia.vim'
+"Vimux i.e send commands to a tmux split
+Plugin 'benmills/vimux'
+"Vim signature re-added because I need to see my bloody marks
+Plugin 'kshenoy/vim-signature'
+"Vim obsession Tpope's amazing plugin for managing sessions
+Plugin 'tpope/vim-obsession'
+
 
 
 
@@ -147,7 +154,11 @@ Plugin 'itchyny/lightline.vim'
 " Plugin 'vim-scripts/JavaScript-Indent'
 "Add Plugin to manage tag files
 " Plugin 'ludovicchabant/vim-gutentags'
+" Deep space theme
+" Plugin 'tyrannicaltoucan/vim-deep-space'
 
+" Deep space theme
+" Plugin 'tyrannicaltoucan/vim-deep-space'
 "Add file type icons to vim
 Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " All of your Plugins must be added before the following line
@@ -183,8 +194,20 @@ let maplocalleader = "\<space>"
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
 
+"Vimux ==========================================================
+" nnoremap <F5> :call VimuxRunCommand("browser-sync start")<CR>
+
+
+"Vim-Signature ==================================================
+" let g:SignatureMap['Leader'] = '<LocalLeader>'
+
+let g:SignatureMarkTextHLDynamic=1
+nnoremap [1 :call signature#marker#Goto('next', 1, v:count)
+nnoremap ]1 :call signature#marker#Goto('prev', 1, v:count)
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-n> :NERDTreeToggle<CR>
+
+
 let NERDTreeShowHidden=1 "Show hidden files by default
 
 "Press enter to complete suggestions - turned off
@@ -295,7 +318,7 @@ let g:user_emmet_leader_key='<localleader>k'
 
 
 "Add mapping for Gundo vim
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <leader>u :GundoToggle<CR>
 
 "Color the sign column dark grey by default
 " highlight SignColumn guibg=darkgrey
@@ -495,9 +518,13 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+nnoremap <F5> :!browser-sync start<CR>
 
-"Paste mode for large block of external text
-set pastetoggle=<F2>
+nnoremap <F4> :! open %<CR><CR>
+nnoremap <F3> :!open -a safari %<CR><CR>
+"Paste mode for large block of external text - Terminus plugin doees this
+"automatically at present
+" set pastetoggle=<F2>
 "time out on mapping after half a second, time out on key codes after a tenth
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
@@ -528,8 +555,12 @@ nnoremap <localleader>` <C-W>_
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 
+"This allows me to use control-j to jump out of a newly matched pair (courtesty
+"of delimitmate)
+imap <C-j> <C-g>g
+
 "--------------------------------------------
-"Absolutely fantastic function from stoeffel/.dotfiles which allow you to
+"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 "repeat macros across a visual range
 "--------------------------------------------
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
@@ -924,9 +955,11 @@ set nostartofline
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 set list
 set listchars=
-set listchars+=tab:▸\
+" set listchars+=tab:▸\
+"This sets list tab chars to invisible
+set listchars=tab:\ \
 set listchars+=trail:·
-set listchars+=nbsp:⣿
+" set listchars+=nbsp:⣿
 set listchars+=extends:»              " show cut off when nowrap
 set listchars+=precedes:«
 "Invisible character colors
@@ -958,6 +991,7 @@ if has('statusline')
 
   " Broken down into easily includeable segments
   set statusline+=%{fugitive#statusline()} " Git Hotness
+  set statusline+=%{ObsessionStatus()} "Tpope's sessions management
   set statusline+=%#warningmsg#
 endif
 "fugitive plugin
@@ -1002,9 +1036,9 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-" let g:airline_detect_iminsert                  = 1
-" let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-" let g:airline_powerline_fonts                  = 1
+let g:airline_detect_iminsert                  = 1
+let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+let g:airline_powerline_fonts                  = 1
 let g:airline#extensions#tabline#enabled       = 1
 let g:airline#extensions#tabline#show_tabs     = 1
 let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
@@ -1013,17 +1047,22 @@ let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
+"
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
-let g:syntastic_full_redraws=1
 
 " let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " Enable the list of buffers
 
-
-
-
+"==========================================================
+"           Syntastic 
+"==========================================================
 " Change the syntastic windows height
+" highlight SyntasticError guibg=#66CCFF
+" highlight SyntasticErrorSign guibg=#66CCFF
+" highlight Visual ctermfg=189 ctermbg=238 gui=bold guifg=#e7d5ff guibg=#536273
+
+let g:syntastic_full_redraws=1
 let g:syntastic_loc_list_height = 2
 let g:syntastic_enable_ballons=has('ballon_eval')
 let g:syntastic_always_populate_loc_list = 1
@@ -1031,14 +1070,16 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_html_checkers = ['tidy']
 let g:syntastic_aggregate_errors=1
 let g:syntastic_auto_jump=1
-let g:syntastic_error_symbol='☠️'
+let g:syntastic_error_symbol='✗'
+"☠️
 let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
 " '⚠'
 let g:syntastic_style_warning_symbol =  '💩'
-"'✗'
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
