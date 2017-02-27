@@ -18,6 +18,7 @@ source ~/.zplug/init.zsh
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
+export TERM=xterm-256color
 export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly
@@ -134,7 +135,7 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "lukechilds/zsh-better-npm-completion"
-zplug "plugins/tmux", from:oh-my-zsh
+# zplug "plugins/tmux", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
