@@ -140,13 +140,13 @@ Plugin 'tpope/vim-obsession'
 Plugin 'Yggdroot/indentLine'
 "Colorsheme Material Dark
 Plugin 'lifepillar/vim-solarized8'
+" Light Line becaise its more configurable than airline
+" Plugin 'itchyny/lightline.vim'
 
 "Add Base16 color schemes vim
 " Plugin 'chriskempson/base16-vim'
 "Indentation and highlighting for jsx
 " Plugin 'mxw/vim-jsx'
-"Add vim-signature which higlights and shows marks for a file
-" Plugin 'kshenoy/vim-signature'
 "Added JavaScript indent
 " Plugin 'vim-scripts/JavaScript-Indent'
 "Add Plugin to manage tag files
@@ -175,9 +175,7 @@ if !has('gui_running') && !has('nvim')
   set term=screen-256color
 endif
 
-" if !has('nvim')
   syntax enable
-" endif
 "}}}
 "====================================================================================
 "Leader bindings
@@ -186,11 +184,13 @@ endif
 "Remap leader key
 let mapleader = ","
 "Local leader key
-let maplocalleader = "\<space>"
+let maplocalleader = "/"
+"\<space>"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
 "Indent line
+set conceallevel=1
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
 let g:indentLine_loaded=1
@@ -405,7 +405,12 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "   autocmd bufread,bufenter,focusgained * silent! checktime
 " augroup end
 
-" autocmd bufwritepost ~/.vimrc source $MYVIMRC | :echo 'Sourced!'
+augroup reload_vimrc
+autocmd!
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
 augroup VimResizing
@@ -1051,8 +1056,10 @@ let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 "
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
@@ -1079,7 +1086,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_html_checkers = ['tidy']
 let g:syntastic_aggregate_errors=1
-let g:syntastic_auto_jump=1
+let g:syntastic_auto_jump=0
 let g:syntastic_error_symbol='✗'
 "☠️
 let g:syntastic_style_error_symbol = '⁉️'
@@ -1101,23 +1108,24 @@ highlight link SyntasticStyleWarningSign SignColumn
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
-if has('nvim')
+" if has('nvim')
   colorscheme solarized8_dark
-  let g:solarized_visibility="high"
-  let g:solarized_statusline="normal"
-  let g:solarized_term_italics=1
+
   fun! Solarized8Contrast(delta)
   let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
   exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
 endf
+  let g:solarized_visibility="high"
+  let g:solarized_statusline="normal"
+  let g:solarized_term_italics=1
 
 nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
 nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
-else
-  let g:spring_night_high_contrast=[]
-  colorscheme spring-night
-endif
-
+" else
+  " let g:spring_night_high_contrast=[]
+  " colorscheme spring-night
+" endif
+"
 "Oceanic Next ===============================================
 " The Best and Most stable colorscheme
 " colorscheme OceanicNext
@@ -1128,13 +1136,12 @@ endif
 " colorscheme quantum
 
 
-" set background=dark
-" colorscheme nova
-
 
 " Spring Night ==============================================
 " This variable needs to be set, and set to nothing to maintain a light
 " contrast
+  " let g:spring_night_high_contrast=[]
+  " colorscheme spring-night
 
 
 " Deep Space ================================================ 
@@ -1147,13 +1154,33 @@ endif
 "=======================================================================
 "Airline theme
 "=======================================================================
-if !has('gui_running') && !has('nvim')
-  " adding to vim-airline's statusline 
-  let g:airline_theme='spring_night'
-  " let g:airline_theme='quantum'
-else
   let g:airline_theme='solarized'
-endif
+" if !has('gui_running') && !has('nvim')
+  " adding to vim-airline's statusline 
+  " let g:airline_theme='spring_night'
+  " let g:airline_theme='quantum'
+" else
+"   let g:airline_theme='solarized'
+" endif
+"=======================================================================
+"Lightline theme
+"=======================================================================
+
+" let g:lightline = {
+"       \ 'colorscheme': 'solarized',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'fugitive': 'LightlineFugitive',
+"       \   'readonly': 'LightlineReadonly',
+"       \   'modified': 'LightlineModified'
+"       \ },
+"       \ 'separator': { 'left': '⮀', 'right': '⮂' },
+"       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+"       \ }
+
 
 
 " ----------------------------------------------------------------------------
