@@ -313,8 +313,7 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_always_populate_location_list = 1
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '<C-u>'
-
+let g:vcoolor_map = '<C-c>'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -540,6 +539,10 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+" select last paste in visual mode
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+
 nnoremap <F5> :!browser-sync start<CR>
 
 nnoremap <F4> :! open %<CR><CR>
