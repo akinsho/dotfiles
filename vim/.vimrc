@@ -34,7 +34,7 @@ Plugin 'scrooloose/nerdtree'
 "Added vim-airline
 Plugin 'bling/vim-airline'
 "Added syntastic syntax checker
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 "Added vim surround for enclosing with parens
 Plugin 'tpope/vim-surround'
 "Added jsbeautify
@@ -47,7 +47,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-eunuch'
 "Added Editor Config plugin to maintain style choices
 Plugin 'editorconfig/editorconfig-vim'
-
 "Added nerdcommenter for commenting out text
 Plugin 'scrooloose/nerdcommenter'
 "Added emmet vim plugin
@@ -126,8 +125,6 @@ Plugin 'Chiel92/vim-autoformat'
 Plugin 'airblade/vim-gitgutter'
 " Add new theme trial purposes ofc
 Plugin 'rhysd/vim-color-spring-night'
-"Add sialoquent theme
-Plugin 'davidklsn/vim-sialoquent'
 "Plugin to create diff window and Gstatus window on commit
 Plugin 'rhysd/committia.vim'
 "Vimux i.e send commands to a tmux split
@@ -136,12 +133,18 @@ Plugin 'benmills/vimux'
 Plugin 'kshenoy/vim-signature'
 "Vim obsession Tpope's amazing plugin for managing sessions
 Plugin 'tpope/vim-obsession'
-"Indent Line
-Plugin 'Yggdroot/indentLine'
 "Colorsheme Material Dark
 Plugin 'lifepillar/vim-solarized8'
-" Light Line becaise its more configurable than airline
-" Plugin 'itchyny/lightline.vim'
+" Asynchronous linter for vim - Not working, not sure why 
+" Plugin 'w0rp/ale'
+" Neomake async linting
+Plugin 'neomake/neomake'
+
+
+
+
+
+
 
 "Add Base16 color schemes vim
 " Plugin 'chriskempson/base16-vim'
@@ -189,7 +192,9 @@ let maplocalleader = "/"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
+let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
 "Indent line
+nnoremap <F6> :RainbowToggle<CR>
 set conceallevel=1
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
@@ -399,6 +404,8 @@ autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
 autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " for css or scss
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+
 " augroup formatting - excellent function but implemented by terminus
   " autocmd!
   " automatically check for changed files outside vim
@@ -408,6 +415,8 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 augroup reload_vimrc
 autocmd!
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" Supposed to help with airline going wonky
+" autocmd BufWritePost $MYVIMRC :AirlineRefresh<CR>
 augroup END
 
 
@@ -882,8 +891,12 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 set title                             " wintitle = filename - vim
 "Using current terminal font - which is a patched nerd font
 " set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
+
+
 "Add relative line numbers and relative = absolute line numbers i.e current
 "lines shows absolute and all others are relative
+set ttyfast " Improves smoothness of redrawing when there are multiple windows 
+
 set relativenumber
 set number
 
@@ -958,10 +971,14 @@ set nostartofline
 "================================================================================
 "Display extra whitespace
 " set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
+
+
 " function! StripWhiteSpace ()
 "  exec ':%/ \+$//gc'
 " endfunction
 " map <leader>r :call StripWhiteSpace ()<CR>
+
+
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 " set list
 " set listchars=
@@ -1056,10 +1073,10 @@ let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline_left_sep = ' '
+" let g:airline_right_sep = ' '
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
 "
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
@@ -1075,32 +1092,44 @@ let g:tmux_navigator_save_on_switch = 1
 " highlight SyntasticErrorSign guibg=#66CCFF
 " highlight Visual ctermfg=189 ctermbg=238 gui=bold guifg=#e7d5ff guibg=#536273
 
-let g:syntastic_full_redraws=1
-let g:syntastic_loc_list_height = 2
-let g:syntastic_enable_ballons=has('ballon_eval')
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_html_checkers = ['tidy']
-let g:syntastic_aggregate_errors=1
-let g:syntastic_auto_jump=0
-let g:syntastic_error_symbol='✗'
-"☠️
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-" '⚠'
-let g:syntastic_style_warning_symbol =  '💩'
+" let g:syntastic_full_redraws=1
+" let g:syntastic_loc_list_height = 2
+" let g:syntastic_enable_ballons=has('ballon_eval')
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_python_checkers = ['pylint']
+" let g:syntastic_html_checkers = ['tidy']
+" let g:syntastic_aggregate_errors=1
+" let g:syntastic_auto_jump=0
+" let g:syntastic_error_symbol='✗'
+" "☠️
+" let g:syntastic_style_error_symbol = '⁉️'
+" let g:syntastic_warning_symbol = '⚠️'
+" " '⚠'
+" let g:syntastic_style_warning_symbol =  '💩'
 
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
+" highlight link SyntasticErrorSign SignColumn
+" highlight link SyntasticWarningSign SignColumn
+" highlight link SyntasticStyleErrorSign SignColumn
+" highlight link SyntasticStyleWarningSign SignColumn
 
+"-----------------------------------------------------------
+"     NEOMAKE 
+"-----------------------------------------------------------
+autocmd! BufWritePost,BufReadPost * Neomake
+let g:neomake_open_list = 2
 
-
+" let g:neomake_warning_sign = {
+"   \ 'text': 'W',
+"   \ 'texthl': 'WarningMsg',
+"   \ }
+" let g:neomake_error_sign = {
+"   \ 'text': 'E',
+"   \ 'texthl': 'ErrorMsg',
+"   \ }
 
 
 "}}}
@@ -1117,7 +1146,7 @@ highlight link SyntasticStyleWarningSign SignColumn
 endf
   let g:solarized_visibility="high"
   let g:solarized_statusline="normal"
-  let g:solarized_term_italics=1
+  " let g:solarized_term_italics=1
 
 nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
 nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
@@ -1154,7 +1183,8 @@ nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 "=======================================================================
 "Airline theme
 "=======================================================================
-  let g:airline_theme='solarized'
+  " let g:airline_theme='solarized'
+  let g:airline_theme='luna'
 " if !has('gui_running') && !has('nvim')
   " adding to vim-airline's statusline 
   " let g:airline_theme='spring_night'
