@@ -139,6 +139,13 @@ Plugin 'lifepillar/vim-solarized8'
 " Plugin 'w0rp/ale'
 " Neomake async linting
 Plugin 'neomake/neomake'
+" Add text objects form camel cased strings (should be native imho)
+Plugin 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
+" Add text objects for function arguments = a i.e caa change an argument
+Plugin 'vim-scripts/argtextobj.vim'
+" Add text object for indented code = 'i' i.e dii delete inner indented block
+Plugin 'michaeljsmith/vim-indent-object'
+
 
 
 
@@ -650,14 +657,15 @@ nnoremap <leader>x :lclose<CR>
 nnoremap <C-G> gg=G<CR>
 
 "Change operator arguments to a character representing the desired motion
+"- there are native text motions with do this - "b i.e cib - change inner block
 "Moves to the previous set of parentheses and operate on its contents
-onoremap lp  :<c-u>normal! F)vi(<cr>
+" onoremap lp  :<c-u>normal! F)vi(<cr>
 "Moves to the next set of parentheses and operate on its contents
-onoremap p :<c-u>normal! f(vi(<cr>
+" onoremap p :<c-u>normal! f(vi(<cr>
 "Moves to the previous set of braces and operate on its contents
-onoremap lb :<c-u>normal! F}vi{<cr>
+" onoremap lb :<c-u>normal! F}vi{<cr>
 "Moves to the next set of braces and operate on its contents
-onoremap b :<c-u>normal! f{vi{<cr>
+" onoremap b :<c-u>normal! f{vi{<cr>
 "Deletes around next pair of parens - still can't crack it
 " onoremap op :<c-u>normal! F(vT)<cr>
 "Works similarly to the bindings above - finds quotes and operates inside them
@@ -687,10 +695,7 @@ nnoremap j gj
 nnoremap k gk
 
 "key mappings
-"Add delete in insert mode
-inoremap <C-D> <esc>caw
-"Move to the beginning of a word in insert mode
-inoremap <C-B> <esc>bi
+inoremap <C-B> <esc>I
 "Move to the end of a word in insert mode - added l due to jump back on
 "escapping insert mode
 inoremap <C-E> <esc>lwi
@@ -1035,6 +1040,8 @@ let vim_markdown_preview_temp_file=1
 " Use right side of the screen for opening splits
 let g:buffergator_viewport_split_policy = 'R'
 
+"This sets default mapping for camel case text object
+call camelcasemotion#CreateMotionMappings('<leader>')
 " I want my own keymappings...
 let g:buffergator_suppress_keymaps = 1
  

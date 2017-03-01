@@ -109,7 +109,6 @@ SPACESHIP_RUBY_SHOW=false
 SPACESHIP_PYENV_SHOW=true
 SPACESHIP_PYENV_SYMBOL='🐍'
 
-
 #=======================================================================
 # GEOMETRY SETTINGS
 #=======================================================================
@@ -326,18 +325,23 @@ for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
     # Setup global bookmarks cdg function
     # ====================================
     # Need to find a way to export this to my cdg function
-    unalias cdg 2> /dev/null
-    cdg() {
-      local dest_dir=$(cdscuts_glob_echo | fzf )
-      if [[ $dest_dir != '' ]]; then
-        cd "$dest_dir"
-      fi
-    }
-    # export -f cdg > /dev/null
+    # Not necessary anymore
+    # unalias cdg 2> /dev/null
+    # cdg() {
+    #   local dest_dir=$(cdscuts_glob_echo | fzf )
+    #   if [[ $dest_dir != '' ]]; then
+    #     cd "$dest_dir"
+    #   fi
+    # }
+    # # export -f cdg > /dev/null
     # Automatically list directory contents on `cd`. slow things down
     # unnecessarily
     auto-ls () { ls -GC; }
     chpwd_functions=( auto-ls $chpwd_functions )
+
+
+# Plugin that autocorrects when you type fuck or whatever alias you intended
+    eval "$(thefuck --alias fuck)"
 
 
     # iTERM Integration ==================================================
