@@ -18,7 +18,7 @@ source ~/.zplug/init.zsh
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly
@@ -26,7 +26,7 @@ export NVM_LAZY_LOAD=true
 export NVM_DIR="$HOME/.nvm"
 
 
-# ZSH_TMUX_AUTOSTART="true"
+ZSH_TMUX_AUTOSTART="true"
 ZSH_TMUX_FIXTERM_WITH_256COLOR=false
 
 
@@ -136,25 +136,23 @@ zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "lukechilds/zsh-better-npm-completion"
 # zplug "plugins/tmux", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh
+# zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
-zplug "plugins/pyenv", from:oh-my-zsh, lazy:true
+# zplug "plugins/pyenv", from:oh-my-zsh, lazy:true
 zplug "plugins/python", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "lukechilds/zsh-nvm", lazy:true
-zplug "k4rthik/git-cal"
 zplug "djui/alias-tips"
 zplug "rupa/z", use:z.sh
 zplug "knu/z", use:zsh, defer:3
 zplug "gko/project", use:project.sh
 zplug "supercrabtree/k"
-zplug "urbainvaes/fzf-marks"
+# zplug "urbainvaes/fzf-marks"
 zplug "b4b4r07/emoji-cli"
 
 
@@ -354,3 +352,5 @@ for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
     echo load time: $((end_time - start_time)) seconds
     # zprof
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

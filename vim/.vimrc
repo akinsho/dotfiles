@@ -19,133 +19,146 @@ set foldlevelstart=0
 "Plugins
 "-----------------------------------------------------------{{{
 "set the runtime path to include Vundle and initialise
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=/usr/local/opt/fzf
-call vundle#begin()
-
+call plug#begin('~/.vim/plugged')
 let g:ycm_confirm_extra_conf = 0
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'VundleVim/Vundle.vim'
 "Added YouCompleteMe autocompleter
-Plugin 'Valloric/YouCompleteMe'
+" function! BuildYCM(info)
+"   if a:info.status == 'installed' || a:info.force
+"     !./install.sh
+"   endif
+" endfunction
+" {'do':function('BuildYCM')}
+Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }       
 "Added vim-airline
-Plugin 'bling/vim-airline'
+" Plug 'bling/vim-airline'
 "Added syntastic syntax checker
-" Plugin 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 "Added vim surround for enclosing with parens
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 "Added jsbeautify
-Plugin 'maksimr/vim-jsbeautify'
+Plug 'maksimr/vim-jsbeautify'
 "Added airline themes"
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline-themes'
 " Add fugitive git status and command plugins
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " Adds file manipulation functionality
-Plugin 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'
 "Added Editor Config plugin to maintain style choices
-Plugin 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim'
 "Added nerdcommenter for commenting out text
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 "Added emmet vim plugin
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 "Added further javascript syntax highlighting - breaks jsx highlighting
-Plugin 'jelera/vim-javascript-syntax'
+Plug 'jelera/vim-javascript-syntax'
 "Added node.vim plugin
-Plugin 'moll/vim-node'
+Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
-Plugin 'othree/javascript-libraries-syntax.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
 "Added CS approx to allow gvim colorschemes to work in terminal
-" Plugin 'godlygeek/csapprox'
+" Plug 'godlygeek/csapprox'
 "Added oceanic next theme
-Plugin 'mhartington/oceanic-next'
+Plug 'mhartington/oceanic-next'
 " Added yet another js syntax highlighter
-Plugin 'othree/yajs.vim',{'for':'javascript'}
+Plug 'othree/yajs.vim',{'for':'javascript'}
 " Added html5 syntax highlighter
-Plugin 'othree/html5.vim'
+Plug 'othree/html5.vim'
 "Added easy motions
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
-Plugin 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 "Added vim snippets for code autofilling
 " Track the engine.
-Plugin 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " NVIM colorscheme
-" Plugin 'rakr/vim-one'
+" Plug 'rakr/vim-one'
 " Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-Plugin 'isRuslan/vim-es6'
-Plugin 'jamescarr/snipmate-nodejs'
+Plug 'honza/vim-snippets'
+Plug 'isRuslan/vim-es6'
+Plug 'jamescarr/snipmate-nodejs'
 "Autocorrects 4,000 common typos
-Plugin 'chip/vim-fat-finger'
+Plug 'chip/vim-fat-finger'
 "Added SyntaxComplete for more syntax completion
-Plugin 'vim-scripts/SyntaxComplete'
+Plug 'vim-scripts/SyntaxComplete'
 "Added vim javascript
-Plugin 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 "Add proper markdown syntax and indentation plugin
-Plugin 'gabrielelana/vim-markdown'
+Plug 'gabrielelana/vim-markdown'
 "Markdown previewer
-Plugin 'JamshedVesuna/vim-markdown-preview'
+Plug 'JamshedVesuna/vim-markdown-preview'
 "Added color picker plugin
-Plugin 'KabbAmine/vCoolor.vim'
+Plug 'KabbAmine/vCoolor.vim'
 "Add Tern for autocompletion
-Plugin 'ternjs/tern_for_vim'
+function! BuildTern(info)
+  if a:info.status == 'installed' || a:info.force
+   !npm install
+  endif
+endfunction
+Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
 "Add Gundo - undo plugin for vim
-Plugin 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim'
 "Add buffergator for better buffer control
-Plugin 'jeetsukumaran/vim-buffergator'
+Plug 'jeetsukumaran/vim-buffergator'
 "Tim pope's surround plugin allows . to repeat more actions
-Plugin 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
-Plugin 'maxbrunsfeld/vim-yankstack'
+Plug 'maxbrunsfeld/vim-yankstack'
 "Added rainbow parentheses plugin colorizes parens depending on depth
-Plugin 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 "Add supertab to use tab for all insert mode completions
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 "Navigate panes in vim and tmux with the same bindings
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
-Plugin 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 "Closes tags with > command
-Plugin 'alvan/vim-closetag'
+Plug 'alvan/vim-closetag'
 "React Snippets since I can't get the defaults to work
-Plugin 'justinj/vim-react-snippets'
+Plug 'justinj/vim-react-snippets'
 "Excellent terminal integration for vim
-Plugin 'wincent/terminus'
+Plug 'wincent/terminus'
 " Autoformatter
-Plugin 'Chiel92/vim-autoformat'
+Plug 'Chiel92/vim-autoformat'
 "Add a GitGutter to track new lines re git file
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " Add new theme trial purposes ofc
-Plugin 'rhysd/vim-color-spring-night'
-"Plugin to create diff window and Gstatus window on commit
-Plugin 'rhysd/committia.vim'
+" Plug 'rhysd/vim-color-spring-night'
+"Plug to create diff window and Gstatus window on commit
+Plug 'rhysd/committia.vim'
 "Vimux i.e send commands to a tmux split
-Plugin 'benmills/vimux'
+Plug 'benmills/vimux'
 "Vim signature re-added because I need to see my bloody marks
-Plugin 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature'
 "Vim obsession Tpope's amazing plugin for managing sessions
-Plugin 'tpope/vim-obsession'
+Plug 'tpope/vim-obsession'
 "Colorsheme Material Dark
-Plugin 'lifepillar/vim-solarized8'
-" Asynchronous linter for vim - Not working, not sure why 
-" Plugin 'w0rp/ale'
-" Neomake async linting
-Plugin 'neomake/neomake'
-" Add text objects form camel cased strings (should be native imho)
-Plugin 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
-" Add text objects for function arguments = a i.e caa change an argument
-Plugin 'vim-scripts/argtextobj.vim'
-" Add text object for indented code = 'i' i.e dii delete inner indented block
-Plugin 'michaeljsmith/vim-indent-object'
+Plug 'lifepillar/vim-solarized8'
+"Add ligtline buffers
+Plug 'taohex/lightline-buffer'
 
+"Colorscheme - OneDark
+Plug 'joshdick/onedark.vim'
+
+" Neomake async linting
+Plug 'neomake/neomake'
+" Add text objects form camel cased strings (should be native imho)
+Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
+" Add text objects for function arguments = a i.e caa change an argument
+Plug 'vim-scripts/argtextobj.vim'
+" Add text object for indented code = 'i' i.e dii delete inner indented block
+Plug 'michaeljsmith/vim-indent-object'
+"Another attempt at implementing lightline
+Plug 'itchyny/lightline.vim'
 
 
 
@@ -164,22 +177,16 @@ Plugin 'michaeljsmith/vim-indent-object'
 " Deep space theme
 " Plugin 'tyrannicaltoucan/vim-deep-space'
 
-" Deep space theme
-" Plugin 'tyrannicaltoucan/vim-deep-space'
 "Add file type icons to vim
-Plugin 'ryanoasis/vim-devicons' " This Plugin must load after the others
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-" if !has('nvim')
+Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
+
+
+
+call plug#end()
+
 filetype plugin indent on
-" endif
-"Brief help
-":PluginList       - lists configured plugins
-":PluginInstall    - installs plugins; append `!` to update or just
-":PluginUpdate
-":PluginSearch foo - searches for foo; append `!` to refresh local cache
-":PluginClean      - confirms removal of unused plugins; append `!` to
-"auto-approve removal
+
+
 "!!!This line is key to making vim work in tmux
 if !has('gui_running') && !has('nvim')
   set term=screen-256color
@@ -199,15 +206,9 @@ let maplocalleader = "/"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
-let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
+" let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
 "Indent line
-nnoremap <F6> :RainbowToggle<CR>
-set conceallevel=1
-let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 2
-let g:indentLine_loaded=1
-let g:indentLine_enabled=1
-" let g:indentLine_setColors=0
+" nnoremap <F6> :RainbowToggle<CR>
 
 "Vimux ==========================================================
 "Tell vimux to run commands in a new split
@@ -539,6 +540,14 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+"Ctrl-O in insert mode allows you to perform one normal mode command then
+"returns to insert mode
+inoremap <C-h> <C-o><left>
+inoremap <C-j> <C-o><down>
+inoremap <C-k> <C-o><up>
+inoremap <C-l> <C-o><right>
+
+
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -582,7 +591,7 @@ vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 
 "This allows me to use control-j to jump out of a newly matched pair (courtesty
 "of delimitmate)
-imap <C-j> <C-g>g
+imap <C-j>j <C-g>g
 
 "--------------------------------------------
 "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
@@ -908,6 +917,7 @@ set ttyfast " Improves smoothness of redrawing when there are multiple windows
 set relativenumber
 set number
 
+
 "relative add set relativenumber to show numbers relative to the cursor
 set numberwidth=3
 "Turns on smart indent which can help indent files like html natively
@@ -1005,8 +1015,8 @@ set nostartofline
 "------------------------------------
 "  Tab line
 "------------------------------------
-" set tabline
-" set showtabline=2
+set tabline=
+set showtabline=2
 
 " ------------------------------------
 " Command line
@@ -1024,12 +1034,12 @@ iabbrev w@ www.akin-sowemimo.com
 set statusline=
 if has('statusline')
   set laststatus=2
+endif
 
   " Broken down into easily includeable segments
-  set statusline+=%{fugitive#statusline()} " Git Hotness
-  set statusline+=%{ObsessionStatus()} "Tpope's sessions management
-  set statusline+=%#warningmsg#
-endif
+ "set statusline+=%{fugitive#statusline()} " Git Hotness
+ "set statusline+=%{ObsessionStatus()} "Tpope's sessions management
+ "set statusline+=%#warningmsg#
 "fugitive plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -1038,6 +1048,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------{{{
 set updatetime=250
 let g:TerminusAssumeITerm=1
+
 " vim_markdown plugin should clean up after itself
 let vim_markdown_preview_temp_file=1
 " Use right side of the screen for opening splits
@@ -1051,10 +1062,10 @@ let g:buffergator_suppress_keymaps = 1
 " Looper buffers
 let g:buffergator_mru_cycle_loop = 1
  
-nnoremap <Leader><LEFT> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR> 
-nnoremap <Leader><UP> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
-nnoremap <Leader><RIGHT> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
-nnoremap <Leader><DOWN> :BuffergatorMruCyclePrev rightbelow sbuffer<CR> 
+" nnoremap <Leader><LEFT> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
+" nnoremap <Leader><UP> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
+" nnoremap <Leader><RIGHT> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
+" nnoremap <Leader><DOWN> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
 " Go to the previous buffer open
 nmap <leader>/ :BuffergatorMruCyclePrev<cr>
 
@@ -1074,14 +1085,14 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-let g:airline_detect_iminsert                  = 1
-let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-let g:airline_powerline_fonts                  = 1
-let g:airline#extensions#tabline#enabled       = 1
-let g:airline#extensions#tabline#show_tabs     = 1
-let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 1
+" let g:airline_detect_iminsert                  = 1
+" let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+" let g:airline_powerline_fonts                  = 1
+" let g:airline#extensions#tabline#enabled       = 1
+" let g:airline#extensions#tabline#show_tabs     = 1
+" let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
 " let g:airline_left_sep = ' '
 " let g:airline_right_sep = ' '
@@ -1131,6 +1142,7 @@ let g:tmux_navigator_save_on_switch = 1
 "-----------------------------------------------------------
 autocmd! BufWritePost,BufReadPost * Neomake
 let g:neomake_open_list = 2
+let g:quickfixsigns_protect_sign_rx = '^neomake_'
 
 " let g:neomake_warning_sign = {
 "   \ 'text': 'W',
@@ -1147,8 +1159,8 @@ let g:neomake_open_list = 2
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
-" if has('nvim')
-  colorscheme solarized8_dark
+if has('nvim')
+  colorscheme solarized8_dark_high
 
   fun! Solarized8Contrast(delta)
   let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
@@ -1160,11 +1172,19 @@ endf
 
 nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
 nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
-" else
+else
+  colorscheme onedark
+endif
+
+"This sets the search highlighting which actually changes the appearance of
+"neomake/ any linters warnings
+hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=#073642
+
+
+"Spring Night ===============================================
   " let g:spring_night_high_contrast=[]
   " colorscheme spring-night
-" endif
-"
+
 "Oceanic Next ===============================================
 " The Best and Most stable colorscheme
 " colorscheme OceanicNext
@@ -1194,7 +1214,7 @@ nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 "Airline theme
 "=======================================================================
   " let g:airline_theme='solarized'
-  let g:airline_theme='luna'
+  " let g:airline_theme='luna'
 " if !has('gui_running') && !has('nvim')
   " adding to vim-airline's statusline 
   " let g:airline_theme='spring_night'
@@ -1206,23 +1226,125 @@ nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 "Lightline theme
 "=======================================================================
 
-" let g:lightline = {
-"       \ 'colorscheme': 'solarized',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ],
-"       \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'fugitive': 'LightlineFugitive',
-"       \   'readonly': 'LightlineReadonly',
-"       \   'modified': 'LightlineModified'
-"       \ },
-"       \ 'separator': { 'left': '⮀', 'right': '⮂' },
-"       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-"       \ }
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive',
+      \   'readonly': 'LightlineReadonly',
+      \   'modified': 'LightlineModified',
+      \   'filetype': 'LightlineFiletype',
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
 
 
+      " \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      " \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+function! LightlineModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
 
+function! LightlineReadonly()
+  if &filetype == "help"
+      return ""
+    elseif &readonly
+      return ""
+    else
+      return ""
+    endif
+  endfunction
+
+
+function! LightlineFugitive()
+  if exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? ''.branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightlineFiletype()
+    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  endfunction
+
+function! LightlineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+
+function! LightlineFilename()
+    let fname = expand('%:t')
+      return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+              \ fname == '__Tagbar__' ? g:lightline.fname :
+              \ fname =~ '__Gundo\|NERD_tree' ? '' :
+              \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+              \ &ft == 'unite' ? unite#get_status_string() :
+              \ &ft == 'vimshell' ? vimshell#get_status_string() :
+              \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+              \ ('' != fname ? fname : '[No Name]') .
+              \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+    endfunction
+
+" use lightline-buffer in lightline
+let g:lightline = {
+    \ 'tabline': {
+        \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+        \ 'right': [ [ 'close' ], ],
+        \ },
+    \ 'component_expand': {
+        \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
+        \ },
+    \ 'component_type': {
+        \ 'buffercurrent': 'tabsel',
+        \ },
+    \ 'component_function': {
+        \ 'bufferbefore': 'lightline#buffer#bufferbefore',
+        \ 'bufferafter': 'lightline#buffer#bufferafter',
+        \ 'bufferinfo': 'lightline#buffer#bufferinfo',
+        \ },
+    \ }
+
+" remap arrow keys
+nnoremap <Leader><Leader> :bprev<CR>
+nnoremap <Leader>. :bnext<CR>
+
+" lightline-buffer ui settings
+" replace these symbols with ascii characters if your environment does not
+" support unicode
+let g:lightline_buffer_logo = ' '
+let g:lightline_buffer_readonly_icon = ''
+let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_git_icon = ' '
+let g:lightline_buffer_ellipsis_icon = '..'
+let g:lightline_buffer_expand_left_icon = '◀ '
+let g:lightline_buffer_expand_right_icon = ' ▶'
+let g:lightline_buffer_active_buffer_left_icon = ''
+let g:lightline_buffer_active_buffer_right_icon = ''
+let g:lightline_buffer_separator_icon = ' '
+
+" lightline-buffer function settings
+let g:lightline_buffer_show_bufnr = 1
+let g:lightline_buffer_rotate = 0
+let g:lightline_buffer_fname_mod = ':t'
+let g:lightline_buffer_excludes = ['vimfiler']
+
+let g:lightline_buffer_maxflen = 30
+let g:lightline_buffer_maxfextlen = 3
+let g:lightline_buffer_minflen = 16
+let g:lightline_buffer_minfextlen = 3
+let g:lightline_buffer_reservelen = 20
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin
 " ----------------------------------------------------------------------------{{{
@@ -1306,13 +1428,11 @@ endif
 
 
 "Turn swap files off - FOR GOD's SAKE they are ruining my life - addendum
-"editing old files and saving them because I have 5 version of a config open is
-"SUPER ANNOYING thanks TMUX
-set swapfile
+" set swapfile
 " set nobackup
 "This saves all back up files in a vim backup directory
 set backupdir=~/.vim/.backup//
-set directory=~/.vim/.swp//
+" set directory=~/.vim/.swp//
 set undodir=~/.vim/.undo//
 
 if has("vms")
