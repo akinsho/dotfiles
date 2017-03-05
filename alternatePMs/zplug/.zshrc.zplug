@@ -86,16 +86,16 @@ eval "$(hub alias -s)"
 # ➪ - fun alternative2
 SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
-
+SPACESHIP_PROMPT_SEPARATE_LINE=true
 # TIME
 # SPACESHIP_TIME_SHOW=true
 # SPACESHIP_TIME_12HR=true
 
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
-SPACESHIP_VI_MODE_INSERT="[i]"
+SPACESHIP_VI_MODE_INSERT="[Insert]"
 # "[Insert]"
-SPACESHIP_VI_MODE_NORMAL="[n]"
+SPACESHIP_VI_MODE_NORMAL="[Normal]"
 # "[Normal]"
 # GIT
 SPACESHIP_PREFIX_GIT='  on '
@@ -104,9 +104,12 @@ SPACESHIP_GIT_UNTRACKED=' 😰 '
 
 
 SPACESHIP_PREFIX_NVM=' @ '
+SPACESHIP_NVM_SHOW=true
+
+
 SPACESHIP_RUBY_SHOW=false
 # PYENV
-SPACESHIP_PYENV_SHOW=true
+SPACESHIP_PYENV_SHOW=	false
 SPACESHIP_PYENV_SYMBOL='🐍'
 
 #=======================================================================

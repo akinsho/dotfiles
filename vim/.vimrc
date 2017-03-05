@@ -179,6 +179,8 @@ call plug#end()
 
 filetype plugin indent on
 
+"Added built in match it plugin to vim
+packadd! matchit
 
 "!!!This line is key to making vim work in tmux
 if !has('gui_running') && !has('nvim')
@@ -320,7 +322,7 @@ let g:vcoolor_map = '¨'
 " autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 " augroup END
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key='<localleader>k'
+let g:user_emmet_leader_key="<C-Z>"
 
 
 "Add mapping for Gundo vim
@@ -531,9 +533,20 @@ set complete+=kspell
 "Add spell checking local
 " setlocal spell spelllang=en_us
 "-----------------------------------------------------------------------------------
-"Mappings
+  "Mappings
 "-----------------------------------------------------------------------------------{{{
-"Ctrl-O in insert mode allows you to perform one normal mode command then
+"Maps moving to match as moving and visually selecting along the way
+nnoremap wa% v%
+" inoremap ß <esc>:execute 'wa' | echo 'Saved!'
+"This mapping alternates between variants of number and relative number
+nnoremap <F2> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
+"This mapping allows yanking all of a line without taking the new line
+"character as well can be with our without spaces
+vnoremap <silent> al :<c-u>norm!0v$h<cr>
+vnoremap <silent> il :<c-u>norm!^vg_<cr>
+onoremap <silent> al :norm val<cr>
+onoremap <silent> il :norm vil<cr>
+"ctrl-o in insert mode allows you to perform one normal mode command then
 "returns to insert mode
 inoremap <C-h> <C-o><left>
 inoremap <C-j> <C-o><down>
@@ -649,7 +662,7 @@ nnoremap <leader>t <C-W>T
 "Close every window in the current tabview but the current one
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
-nnoremap <localleader>r <C-W>R
+nnoremap <leader>r <C-W>R
 "--------------------------------------------
 nnoremap gn :tabnext<CR>
 nnoremap gl :tabprev<CR>
@@ -904,7 +917,12 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 set title                             " wintitle = filename - vim
 "Using current terminal font - which is a patched nerd font
 " set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
-
+" augroup MatchParens
+"   au!
+"   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+"   autocmd VimEnter * :DoMatchParen<CR>
+" augroup END
+highlight MatchParen ctermbg=blue guibg=lightgreen 
 
 "Add relative line numbers and relative = absolute line numbers i.e current
 "lines shows absolute and all others are relative
@@ -915,7 +933,7 @@ set number
 
 
 "relative add set relativenumber to show numbers relative to the cursor
-set numberwidth=3
+set numberwidth=5
 "Turns on smart indent which can help indent files like html natively
 set smartindent
 set wrap
@@ -938,7 +956,7 @@ set laststatus=2
 
 " Turns of lazyredraw which postpones redrawing for macros and command
 " execution
-set lazyredraw
+set nolazyredraw
 
 " Use visual bell when there are errors not audio beep
 set visualbell
@@ -1145,7 +1163,9 @@ let g:lightline_buffer_reservelen = 20
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
 
-set statusline=
+if &statusline ==# ''
+    set statusline=...
+  endif
 if has('statusline')
   set laststatus=2
 endif
@@ -1447,7 +1467,7 @@ set history=50
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
-set matchtime=1 " tenths of a second
+set matchtime=3 " tenths of a second
 set showmatch "briefly jump to ?matching parens
 " Sets a case insensitive search except when using Caps
 set ignorecase

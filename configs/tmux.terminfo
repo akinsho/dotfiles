@@ -1,0 +1,5 @@
+# A screen-256color based TERMINFO that adds the escape sequences for italic.
+# run to add to term db: tic tmux.terminfo
+xterm-256color-italic|xterm with 256 colors and italic,
+	sitm=\E[3m, ritm=\E[23m,
+	use=xterm-256color,
