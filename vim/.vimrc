@@ -34,8 +34,6 @@ Plug 'VundleVim/Vundle.vim'
 Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }       
-"Added vim-airline
-" Plug 'bling/vim-airline'
 "Added syntastic syntax checker
 " Plug 'vim-syntastic/syntastic'
 "Added vim surround for enclosing with parens
@@ -62,8 +60,6 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
-"Added CS approx to allow gvim colorschemes to work in terminal
-" Plug 'godlygeek/csapprox'
 "Added oceanic next theme
 Plug 'mhartington/oceanic-next'
 " Added yet another js syntax highlighter
@@ -75,7 +71,6 @@ Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
 Plug 'sheerun/vim-polyglot'
 "Added vim snippets for code autofilling
-" Track the engine.
 Plug 'SirVer/ultisnips'
 " NVIM colorscheme
 " Plug 'rakr/vim-one'
@@ -145,10 +140,8 @@ Plug 'tpope/vim-obsession'
 Plug 'lifepillar/vim-solarized8'
 "Add ligtline buffers
 Plug 'taohex/lightline-buffer'
-
 "Colorscheme - OneDark
 Plug 'joshdick/onedark.vim'
-
 " Neomake async linting
 Plug 'neomake/neomake'
 " Add text objects form camel cased strings (should be native imho)
@@ -314,7 +307,7 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_always_populate_location_list = 1
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '<C-c>'
+let g:vcoolor_map = '¨'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -551,9 +544,6 @@ inoremap <C-l> <C-o><right>
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-
-nnoremap <F5> :!browser-sync start<CR>
-
 nnoremap <F4> :! open %<CR><CR>
 nnoremap <F3> :!open -a safari %<CR><CR>
 "Paste mode for large block of external text - Terminus plugin doees this
@@ -615,6 +605,7 @@ nnoremap <leader>gc :Gcommit<CR>
 "--------------------------------------------
 "Remap back tick for jumping to marks more quickly
 nnoremap ' `
+nnoremap ` '
 
 nnoremap rs ^d0
 nnoremap qa :wqa<CR>
@@ -638,13 +629,13 @@ nnoremap _ :sp<CR>
 "Create a vertical split
 nnoremap \| :vsp<CR>
 " Resize window vertically - grow
-nnoremap <Leader>ff 15<c-w>+
+" nnoremap <Leader>ff 15<c-w>+
 " Resize window vertically  - shrink
 nnoremap <Leader>ee 15<c-w>-
 " Increase window size horizontally
 nnoremap <leader>f 15<c-w>>
 " Decrease window size horizontally
-nnoremap <leader>e 15<c-w><
+nnoremap <leader>ff 15<c-w><
 " Max out the height of the current split
 nnoremap <localleader>f <C-W>_
 " Max out the width of the current split
@@ -660,8 +651,8 @@ nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
 nnoremap <localleader>r <C-W>R
 "--------------------------------------------
-nnoremap <localleader>m :tabnext<CR>
-nnoremap <localleader>p :tabprev<CR>
+nnoremap gn :tabnext<CR>
+nnoremap gl :tabprev<CR>
 
 nnoremap <leader>x :lclose<CR>
 
@@ -671,9 +662,9 @@ nnoremap <C-G> gg=G<CR>
 "Change operator arguments to a character representing the desired motion
 "- there are native text motions with do this - "b i.e cib - change inner block
 "Moves to the previous set of parentheses and operate on its contents
-" onoremap lp  :<c-u>normal! F)vi(<cr>
+onoremap lp  :<c-u>normal! F)vi(<cr>
 "Moves to the next set of parentheses and operate on its contents
-" onoremap p :<c-u>normal! f(vi(<cr>
+onoremap p :<c-u>normal! f(vi(<cr>
 "Moves to the previous set of braces and operate on its contents
 " onoremap lb :<c-u>normal! F}vi{<cr>
 "Moves to the next set of braces and operate on its contents
@@ -683,7 +674,6 @@ nnoremap <C-G> gg=G<CR>
 "Works similarly to the bindings above - finds quotes and operates inside them
 onoremap q :<c-u>normal! f'vi'<cr>
 onoremap dq :<c-u>normal! f"vi"<cr>
-
 
 
 
@@ -706,11 +696,19 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-"key mappings
-inoremap <C-B> <esc>I
-"Move to the end of a word in insert mode - added l due to jump back on
-"escapping insert mode
-inoremap <C-E> <esc>lwi
+"key mappings 
+"Remaps the binding to increment numbers to <leader>a and to decrement to å
+
+nnoremap <silent> <Leader>a <C-A>
+nnoremap <silent> å <C-X>
+
+
+
+inoremap <C-B> <C-O>I
+"Remaps native ctrl h - emulates backspace to ctrl d
+inoremap <C-D> <C-H>
+"Remaps native ctrl k - deleting to the end of a line to control e
+inoremap <C-E> <C-K>
 
 " Map jk to esc key - using jk prevents jump that using ii causes
 inoremap jk <ESC>
@@ -725,14 +723,12 @@ noremap <leader>yy "*Y
 "a word I know
 noremap K  @='10k'<CR>
 noremap J  @='10j'<CR>
-noremap .l  @='6l'<CR>
-noremap .h  @='6h'<CR>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
-:nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 "This maps leader quote (single or double to wrap the word in quotes)
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
@@ -744,18 +740,18 @@ nnoremap B ^
 nnoremap E $
 
 "Map Q to remove a CR
-:nnoremap Q J
+nnoremap Q J
 
 "Terminal mappings to allow changing windows with Alt-h,j,k,l
 if has("nvim")
-  :tnoremap <A-h> <C-\><C-n><C-w>h
-  :tnoremap <A-j> <C-\><C-n><C-w>j
-  :tnoremap <A-k> <C-\><C-n><C-w>k
-  :tnoremap <A-l> <C-\><C-n><C-w>l
-  :nnoremap <A-h> <C-w>h
-  :nnoremap <A-j> <C-w>j
-  :nnoremap <A-k> <C-w>k
-  :nnoremap <A-l> <C-w>l
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <A-j> <C-\><C-n><C-w>j
+  tnoremap <A-k> <C-\><C-n><C-w>k
+  tnoremap <A-l> <C-\><C-n><C-w>l
+  nnoremap <A-h> <C-w>h
+  nnoremap <A-j> <C-w>j
+  nnoremap <A-k> <C-w>k
+  nnoremap <A-l> <C-w>l
 endif
 
 
@@ -1026,6 +1022,124 @@ set showcmd
 " Set command line height to two lines
 set cmdheight=1
 
+"=======================================================================
+"Lightline theme
+"=======================================================================
+
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive',
+      \   'readonly': 'LightlineReadonly',
+      \   'modified': 'LightlineModified',
+      \   'filetype': 'LightlineFiletype',
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+
+      " \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      " \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+function! LightlineModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! LightlineReadonly()
+  if &filetype == "help"
+      return ""
+    elseif &readonly
+      return ""
+    else
+      return ""
+    endif
+  endfunction
+
+
+function! LightlineFugitive()
+  if exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? ''.branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightlineFiletype()
+    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  endfunction
+
+function! LightlineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+
+function! LightlineFilename()
+    let fname = expand('%:t')
+      return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+              \ fname == '__Tagbar__' ? g:lightline.fname :
+              \ fname =~ '__Gundo\|NERD_tree' ? '' :
+              \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+              \ &ft == 'unite' ? unite#get_status_string() :
+              \ &ft == 'vimshell' ? vimshell#get_status_string() :
+              \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+              \ ('' != fname ? fname : '[No Name]') .
+              \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+    endfunction
+
+" use lightline-buffer in lightline
+let g:lightline = {
+    \ 'tabline': {
+        \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+        \ 'right': [ [ 'close' ], ],
+        \ },
+    \ 'component_expand': {
+        \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
+        \ },
+    \ 'component_type': {
+        \ 'buffercurrent': 'tabsel',
+        \ },
+    \ 'component_function': {
+        \ 'bufferbefore': 'lightline#buffer#bufferbefore',
+        \ 'bufferafter': 'lightline#buffer#bufferafter',
+        \ 'bufferinfo': 'lightline#buffer#bufferinfo',
+        \ },
+    \ }
+" lightline-buffer ui settings
+" replace these symbols with ascii characters if your environment does not
+" support unicode
+let g:lightline_buffer_logo = ' '
+let g:lightline_buffer_readonly_icon = ''
+let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_git_icon = ' '
+let g:lightline_buffer_ellipsis_icon = '..'
+let g:lightline_buffer_expand_left_icon = '◀ '
+let g:lightline_buffer_expand_right_icon = ' ▶'
+let g:lightline_buffer_active_buffer_left_icon = ''
+let g:lightline_buffer_active_buffer_right_icon = ''
+let g:lightline_buffer_separator_icon = ' '
+
+" lightline-buffer function settings
+let g:lightline_buffer_show_bufnr = 1
+let g:lightline_buffer_rotate = 0
+let g:lightline_buffer_fname_mod = ':t'
+let g:lightline_buffer_excludes = ['vimfiler']
+
+let g:lightline_buffer_maxflen = 30
+let g:lightline_buffer_maxfextlen = 3
+let g:lightline_buffer_minflen = 16
+let g:lightline_buffer_minfextlen = 3
+let g:lightline_buffer_reservelen = 20
 "-----------------------------------------------------------------
 "Abbreviations
 "-----------------------------------------------------------------
@@ -1175,6 +1289,12 @@ nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 else
   colorscheme onedark
 endif
+"One (Dark) Atom theme =====================================
+"The theme below is essentially a variant of the one above, they look identical
+  " colorscheme one
+  " set background=dark
+  " let g:one_allow_italics = 1 " I love italic for comments
+
 
 "This sets the search highlighting which actually changes the appearance of
 "neomake/ any linters warnings
@@ -1222,129 +1342,11 @@ hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=
 " else
 "   let g:airline_theme='solarized'
 " endif
-"=======================================================================
-"Lightline theme
-"=======================================================================
-
-let g:lightline = {
-      \ 'colorscheme': 'onedark',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive',
-      \   'readonly': 'LightlineReadonly',
-      \   'modified': 'LightlineModified',
-      \   'filetype': 'LightlineFiletype',
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
-
-
-      " \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      " \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-function! LightlineModified()
-  if &filetype == "help"
-    return ""
-  elseif &modified
-    return "+"
-  elseif &modifiable
-    return ""
-  else
-    return ""
-  endif
-endfunction
-
-function! LightlineReadonly()
-  if &filetype == "help"
-      return ""
-    elseif &readonly
-      return ""
-    else
-      return ""
-    endif
-  endfunction
-
-
-function! LightlineFugitive()
-  if exists("*fugitive#head")
-    let branch = fugitive#head()
-    return branch !=# '' ? ''.branch : ''
-  endif
-  return ''
-endfunction
-
-function! LightlineFiletype()
-    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-  endfunction
-
-function! LightlineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-
-function! LightlineFilename()
-    let fname = expand('%:t')
-      return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-              \ fname == '__Tagbar__' ? g:lightline.fname :
-              \ fname =~ '__Gundo\|NERD_tree' ? '' :
-              \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-              \ &ft == 'unite' ? unite#get_status_string() :
-              \ &ft == 'vimshell' ? vimshell#get_status_string() :
-              \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-              \ ('' != fname ? fname : '[No Name]') .
-              \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-    endfunction
-
-" use lightline-buffer in lightline
-let g:lightline = {
-    \ 'tabline': {
-        \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-        \ 'right': [ [ 'close' ], ],
-        \ },
-    \ 'component_expand': {
-        \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
-        \ },
-    \ 'component_type': {
-        \ 'buffercurrent': 'tabsel',
-        \ },
-    \ 'component_function': {
-        \ 'bufferbefore': 'lightline#buffer#bufferbefore',
-        \ 'bufferafter': 'lightline#buffer#bufferafter',
-        \ 'bufferinfo': 'lightline#buffer#bufferinfo',
-        \ },
-    \ }
 
 " remap arrow keys
 nnoremap <Leader><Leader> :bprev<CR>
 nnoremap <Leader>. :bnext<CR>
 
-" lightline-buffer ui settings
-" replace these symbols with ascii characters if your environment does not
-" support unicode
-let g:lightline_buffer_logo = ' '
-let g:lightline_buffer_readonly_icon = ''
-let g:lightline_buffer_modified_icon = '✭'
-let g:lightline_buffer_git_icon = ' '
-let g:lightline_buffer_ellipsis_icon = '..'
-let g:lightline_buffer_expand_left_icon = '◀ '
-let g:lightline_buffer_expand_right_icon = ' ▶'
-let g:lightline_buffer_active_buffer_left_icon = ''
-let g:lightline_buffer_active_buffer_right_icon = ''
-let g:lightline_buffer_separator_icon = ' '
-
-" lightline-buffer function settings
-let g:lightline_buffer_show_bufnr = 1
-let g:lightline_buffer_rotate = 0
-let g:lightline_buffer_fname_mod = ':t'
-let g:lightline_buffer_excludes = ['vimfiler']
-
-let g:lightline_buffer_maxflen = 30
-let g:lightline_buffer_maxfextlen = 3
-let g:lightline_buffer_minflen = 16
-let g:lightline_buffer_minfextlen = 3
-let g:lightline_buffer_reservelen = 20
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin
 " ----------------------------------------------------------------------------{{{
