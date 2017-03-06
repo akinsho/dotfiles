@@ -152,6 +152,8 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'michaeljsmith/vim-indent-object'
 "Another attempt at implementing lightline
 Plug 'itchyny/lightline.vim'
+"Jsx highlighting for react
+Plug 'maxmellon/vim-jsx-pretty'
 
 
 
@@ -535,6 +537,14 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
   "Mappings
 "-----------------------------------------------------------------------------------{{{
+"Toggle case in insert and normal mode
+" nnoremap ;u mzg~iw`z
+" inoremap ;u _<Esc>mza<C-Right><Esc>bg~iw`zi<Del>
+" make last typed word uppercase
+inoremap ;u <esc>viwUea
+" make . work with visually selected lines
+vnoremap . :norm.<CR>
+
 "Maps moving to match as moving and visually selecting along the way
 nnoremap wa% v%
 " inoremap ß <esc>:execute 'wa' | echo 'Saved!'
@@ -578,7 +588,7 @@ nnoremap Y y$
 nnoremap <silent> <localleader>o :Buffers<CR>
 " Launch file search using FZF
 nnoremap <C-P> :FZF ~/<CR>
-nnoremap \ :Ag<CR>
+nnoremap <leader>\ :Ag<CR>
 "--------------------------------------------
 " These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
 " single line
@@ -675,9 +685,9 @@ nnoremap <C-G> gg=G<CR>
 "Change operator arguments to a character representing the desired motion
 "- there are native text motions with do this - "b i.e cib - change inner block
 "Moves to the previous set of parentheses and operate on its contents
-onoremap lp  :<c-u>normal! F)vi(<cr>
+" onoremap lp  :<c-u>normal! F)vi(<cr>
 "Moves to the next set of parentheses and operate on its contents
-onoremap p :<c-u>normal! f(vi(<cr>
+" onoremap p :<c-u>normal! f(vi(<cr>
 "Moves to the previous set of braces and operate on its contents
 " onoremap lb :<c-u>normal! F}vi{<cr>
 "Moves to the next set of braces and operate on its contents
@@ -685,9 +695,17 @@ onoremap p :<c-u>normal! f(vi(<cr>
 "Deletes around next pair of parens - still can't crack it
 " onoremap op :<c-u>normal! F(vT)<cr>
 "Works similarly to the bindings above - finds quotes and operates inside them
-onoremap q :<c-u>normal! f'vi'<cr>
-onoremap dq :<c-u>normal! f"vi"<cr>
+" onoremap q :<c-u>normal! f'vi'<cr>
+" onoremap dq :<c-u>normal! f"vi"<cr>
 
+"For each char her it applies a remap deleting all occurrences of the car with
+"an a operator or the things past it with an i operator
+for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
+    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+endfor
 
 
 "map window keys to leader
@@ -919,7 +937,6 @@ set title                             " wintitle = filename - vim
 " set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
 " augroup MatchParens
 "   au!
-"   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 "   autocmd VimEnter * :DoMatchParen<CR>
 " augroup END
 highlight MatchParen ctermbg=blue guibg=lightgreen 
@@ -978,19 +995,18 @@ endif
 " Cursor
 " ---------------------------------------------------------------------{{{
 
-"Set cursorline to the focused window only and change color/styling of cursor line depending on mode
-" augroup CursorLine
-"   au!
-"   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-"   "underline
-"   " autocmd VimEnter,InsertEnter * highlight CursorLine cterm=none ctermbg=240 guibg=#0b2a2a
-"   autocmd InsertEnter * set nocursorline
-"   autocmd InsertLeave * set cursorline
-"   autocmd VimEnter,InsertLeave * highlight CursorLine cterm=none ctermbg=240 guibg=#1C3956
-"   au WinLeave * setlocal nocursorline
-" augroup END
-"         autocmd InsertEnter * highlight guibg=#0b2a2a guifg=NONE
-"         autocmd InsertLeave * highlight CursorLine  guibg=#0129a0 guifg=NONE
+"Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
+augroup highlight_follows_focus
+  autocmd!
+  autocmd WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
+augroup END
+
+augroup highligh_follows_vim
+  autocmd!
+  autocmd FocusGained * set cursorline
+  autocmd FocusLost * set nocursorline
+augroup END
 " Show context around current cursor position
 set scrolloff=8
 set sidescrolloff=16
@@ -1450,11 +1466,11 @@ endif
 
 
 "Turn swap files off - FOR GOD's SAKE they are ruining my life - addendum
-" set swapfile
-" set nobackup
+set noswapfile
 "This saves all back up files in a vim backup directory
 set backupdir=~/.vim/.backup//
 " set directory=~/.vim/.swp//
+set undofile
 set undodir=~/.vim/.undo//
 
 if has("vms")
