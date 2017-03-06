@@ -203,6 +203,24 @@ let maplocalleader = "/"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
+
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+    " Additional settings
+    setlocal spell
+
+    " If no commit message, start with insert mode
+    if a:info.vcs ==# 'git' && getline(1) ==# ''
+        startinsert
+    end
+
+    " Scroll the diff window from insert mode
+    " Map <C-n> and <C-p>
+    inoremap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+    inoremap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+
+  endfunction
+
 " let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
 "Indent line
 " nnoremap <F6> :RainbowToggle<CR>
