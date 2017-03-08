@@ -34,8 +34,6 @@ Plug 'VundleVim/Vundle.vim'
 Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }       
-"Added syntastic syntax checker
-" Plug 'vim-syntastic/syntastic'
 "Added vim surround for enclosing with parens
 Plug 'tpope/vim-surround'
 "Added jsbeautify
@@ -61,7 +59,7 @@ Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 "Added oceanic next theme
-Plug 'mhartington/oceanic-next'
+" Plug 'mhartington/oceanic-next'
 " Added yet another js syntax highlighter
 Plug 'othree/yajs.vim',{'for':'javascript'}
 " Added html5 syntax highlighter
@@ -106,7 +104,7 @@ Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
 Plug 'maxbrunsfeld/vim-yankstack'
 "Added rainbow parentheses plugin colorizes parens depending on depth
-" Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 "Add supertab to use tab for all insert mode completions
 Plug 'ervandew/supertab'
 "Navigate panes in vim and tmux with the same bindings
@@ -115,6 +113,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 Plug 'junegunn/fzf.vim'
 "Closes tags with > command
 Plug 'alvan/vim-closetag'
@@ -158,7 +157,14 @@ Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text o
 Plug 'vim-scripts/argtextobj.vim'
 " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'michaeljsmith/vim-indent-object'
-
+" Text object for manipulating chunks
+Plug 'Chun-Yang/vim-textobj-chunk'
+"Add JSDocs plugin
+Plug 'heavenshell/vim-jsdoc'
+"Add Tagbar Plugin
+Plug 'majutsushi/tagbar'
+"Add Plugin to manage tag files
+Plug 'ludovicchabant/vim-gutentags'
 
 
 
@@ -168,8 +174,6 @@ Plug 'michaeljsmith/vim-indent-object'
 " Plugin 'mxw/vim-jsx'
 "Added JavaScript indent
 " Plugin 'vim-scripts/JavaScript-Indent'
-"Add Plugin to manage tag files
-Plug 'ludovicchabant/vim-gutentags'
 " Deep space theme
 " Plugin 'tyrannicaltoucan/vim-deep-space'
 
@@ -207,24 +211,26 @@ let maplocalleader = "/"
 
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
-    " Additional settings
-    setlocal spell
+  " Additional settings
+  setlocal spell
 
-    " If no commit message, start with insert mode
-    if a:info.vcs ==# 'git' && getline(1) ==# ''
-        startinsert
-    end
+  " If no commit message, start with insert mode
+  if a:info.vcs ==# 'git' && getline(1) ==# ''
+    startinsert
+  end
 
-    " Scroll the diff window from insert mode
-    " Map <C-n> and <C-p>
-    inoremap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-    inoremap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+" Scroll the diff window from insert mode
+" Map <C-n> and <C-p>
+inoremap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+inoremap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 
   endfunction
 
-" let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
-"Indent line
-" nnoremap <F6> :RainbowToggle<CR>
+let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
+nnoremap <F6> :RainbowToggle<CR>
+
+"Toggle Tagbar
+nnoremap <leader>2 :TagbarToggle<CR>
 
 "Vimux ==========================================================
 "Tell vimux to run commands in a new split
@@ -556,7 +562,12 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
   "Mappings
 "-----------------------------------------------------------------------------------{{{
+"Close a buffer
+nnoremap <leader>cl <C-W>q
+"Replace current word with last deleted word
+nnoremap S diw"0P
 "Toggle case in insert and normal mode
+
 " nnoremap ;u mzg~iw`z
 " inoremap ;u _<Esc>mza<C-Right><Esc>bg~iw`zi<Del>
 " make last typed word uppercase
@@ -606,7 +617,7 @@ nnoremap Y y$
 "--------------------------------------------
 nnoremap <silent> <localleader>o :Buffers<CR>
 " Launch file search using FZF
-nnoremap <C-P> :FZF ~/<CR>
+nnoremap <C-P> :FZF <CR>
 nnoremap <leader>\ :Ag<CR>
 "--------------------------------------------
 " These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
@@ -615,8 +626,8 @@ nnoremap ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
 nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
 
 " Zoom current split
-nnoremap <localleader>- <C-W><Bar>
-nnoremap <localleader>` <C-W>_
+nnoremap <leader>1 <C-W><Bar>
+" nnoremap  <leader>2 <C-W>_
 " Quick find/replace
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
@@ -758,7 +769,7 @@ nnoremap <silent> <Leader>a <C-A>
 nnoremap <silent> å <C-X>
 
 
-
+"Moves cursor back to the start of a line
 inoremap <C-B> <C-O>I
 "Remaps native ctrl h - emulates backspace to ctrl d
 inoremap <C-D> <C-H>
@@ -843,7 +854,8 @@ endif
 "====================================================================================
 "Buffer and Tab settings
 "===================================================================================={{{
-
+"Could potentially break everything but should change vim dir to files dir
+set autochdir
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
 set nohidden
@@ -907,14 +919,14 @@ set diffopt=vertical                  " Use in vertical diff mode
 set diffopt+=filler                   " blank lines to keep sides aligned
 set diffopt+=iwhite                   " Ignore whitespace changes
 "}}}
+" ----------------------------------------------------------------------------{{{
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
 " probably update it.
-" ----------------------------------------------------------------------------{{{
 set formatoptions=
 set formatoptions+=1
-set formatoptions+=q                  " continue comments with gq"
+set formatoptions-=q                  " continue comments with gq"
 set formatoptions+=c                  " Auto-wrap comments using textwidth
 set formatoptions-=r                  " Do not continue comments by default
 set formatoptions-=o                  " do not continue comment using o or O
@@ -1093,8 +1105,12 @@ let g:lightline = {
       \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \             ['fugitive', 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ 'obsession']
       \ },
+      \ 'component': {
+      \    'obsession':'%{ObsessionStatus()}'
+      \    },
       \ 'component_function': {
       \   'fugitive': 'LightlineFugitive',
       \   'readonly': 'LightlineReadonly',
@@ -1225,7 +1241,48 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-"
+
+let g:textobj_comment_no_default_key_mappings = 1
+xmap ax <Plug>(textobj-comment-a)
+omap ax <Plug>(textobj-comment-a)
+xmap ix <Plug>(textobj-comment-i)
+omap ix <Plug>(textobj-comment-i)
+
+
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_enable_es6 = 1
+" nmap <silent> co <Plug>(jsdoc)
+nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
+
+" let g:gutentags_enabled = 0
+" Save tags files somewhere, not terrible like project roots
+" let g:gutentags_cache_dir = './Desktop/Coding/Tags'
+
+
+
 set updatetime=250
 let g:TerminusAssumeITerm=1
 

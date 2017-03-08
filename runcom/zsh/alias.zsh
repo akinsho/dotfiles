@@ -1,12 +1,13 @@
 # ================================================================================
 # Aliases
 # ================================================================================
+alias ls='ls -aG'
 alias nv='nvim'
 alias cl='clear'
 alias sant='source $HOME/.dotfiles/zsh-antigen/antigen/antigen.zsh'
 alias b='source ~/Dotfiles/bin/fzf-chrome.rb'
 alias rn='ranger'
-alias sho='ls -aC'
+# alias sho='ls -aC'
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
@@ -25,6 +26,8 @@ alias net="nvim ~/.tmux.conf"
 alias sesh="vim -S"
 # alias v="vim"
 alias tmux="tmux -2"
+alias ta="tmux attach -t"
+alias td="tmux detach"
 alias tls="tmux ls"
 alias tkill="tmux kill-session -t"
 
