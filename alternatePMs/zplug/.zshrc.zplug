@@ -18,7 +18,7 @@ source ~/.zplug/init.zsh
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
-# export TERM=xterm-256color
+export TERM=xterm-256color
 export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly

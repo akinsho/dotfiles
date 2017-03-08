@@ -3,6 +3,7 @@
 root = true
 
 [**.js]
+e4x = true
 indent_style = space
 indent_size = 4
 ; Javascript interpreter to be invoked by default 'node'

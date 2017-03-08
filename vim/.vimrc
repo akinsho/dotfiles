@@ -144,19 +144,20 @@ Plug 'taohex/lightline-buffer'
 Plug 'joshdick/onedark.vim'
 " Neomake async linting
 Plug 'neomake/neomake'
+"Another attempt at implementing lightline
+Plug 'itchyny/lightline.vim'
+"Text object library plugin for defining your own text objects
+Plug 'kana/vim-textobj-user'
+"Text object for closest inner (),{} or [] 
+Plug 'Julian/vim-textobj-brace'
+"Text obj for comments 
+Plug 'glts/vim-textobj-comment'
 " Add text objects form camel cased strings (should be native imho)
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
 " Add text objects for function arguments = a i.e caa change an argument
 Plug 'vim-scripts/argtextobj.vim'
 " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'michaeljsmith/vim-indent-object'
-"Another attempt at implementing lightline
-Plug 'itchyny/lightline.vim'
-"Jsx highlighting for react
-Plug 'maxmellon/vim-jsx-pretty'
-
-
-
 
 
 
@@ -168,7 +169,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 "Added JavaScript indent
 " Plugin 'vim-scripts/JavaScript-Indent'
 "Add Plugin to manage tag files
-" Plugin 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 " Deep space theme
 " Plugin 'tyrannicaltoucan/vim-deep-space'
 
@@ -342,7 +343,7 @@ let g:vcoolor_map = '¨'
 " autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 " augroup END
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key="<C-Z>"
+let g:user_emmet_leader_key="<C-.>"
 
 
 "Add mapping for Gundo vim
@@ -434,12 +435,12 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "   autocmd bufread,bufenter,focusgained * silent! checktime
 " augroup end
 
-augroup reload_vimrc
-autocmd!
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
-" Supposed to help with airline going wonky
+"Causes statusline not to load???
+" augroup reload_vimrc
+" autocmd!
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " autocmd BufWritePost $MYVIMRC :AirlineRefresh<CR>
-augroup END
+" augroup END
 
 
 "Saves files on switching tabs i.e losing focus
@@ -622,8 +623,7 @@ vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 
 "This allows me to use control-j to jump out of a newly matched pair (courtesty
 "of delimitmate)
-imap <C-j>j <C-g>g
-
+imap <C-F> <C-g>g
 "--------------------------------------------
 "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 "repeat macros across a visual range
@@ -638,6 +638,12 @@ endfunction
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+"Help Command - vertical split
+command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
+function! VerticalHelp(topic)
+    execute "vertical botright help " . a:topic
+    execute "vertical resize 78"
+  endfunction
 "--------------------------------------------
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
@@ -705,15 +711,15 @@ nnoremap <C-G> gg=G<CR>
 "Moves to the previous set of parentheses and operate on its contents
 " onoremap lp  :<c-u>normal! F)vi(<cr>
 "Moves to the next set of parentheses and operate on its contents
-" onoremap p :<c-u>normal! f(vi(<cr>
+" onoremap np :<c-u>normal! f(vi(<cr>
 "Moves to the previous set of braces and operate on its contents
 " onoremap lb :<c-u>normal! F}vi{<cr>
 "Moves to the next set of braces and operate on its contents
-" onoremap b :<c-u>normal! f{vi{<cr>
+" onoremap nb :<c-u>normal! f{vi{<cr>
 "Deletes around next pair of parens - still can't crack it
 " onoremap op :<c-u>normal! F(vT)<cr>
 "Works similarly to the bindings above - finds quotes and operates inside them
-" onoremap q :<c-u>normal! f'vi'<cr>
+" onoremap sq :<c-u>normal! f'vi'<cr>
 " onoremap dq :<c-u>normal! f"vi"<cr>
 
 "For each char her it applies a remap deleting all occurrences of the car with
@@ -757,7 +763,7 @@ inoremap <C-B> <C-O>I
 "Remaps native ctrl h - emulates backspace to ctrl d
 inoremap <C-D> <C-H>
 "Remaps native ctrl k - deleting to the end of a line to control e
-inoremap <C-E> <C-K>
+inoremap <C-1> <C-K>
 
 " Map jk to esc key - using jk prevents jump that using ii causes
 inoremap jk <ESC>
@@ -1026,7 +1032,9 @@ augroup highligh_follows_vim
   autocmd FocusLost * set nocursorline
 augroup END
 " Show context around current cursor position
-set scrolloff=8
+"As this is set to a large number the cursor will remain in the middle of the
+"page on scroll (8 ) was the previous value
+set scrolloff=20
 set sidescrolloff=16
 
 " Stops some cursor movements from jumping to the start of a line
@@ -1063,7 +1071,10 @@ set nostartofline
 "------------------------------------
 "  Tab line
 "------------------------------------
-set tabline=
+" set tabline=
+if &tabline ==# ''
+  set tabline=
+endif
 set showtabline=2
 
 " ------------------------------------
@@ -1214,8 +1225,25 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+"
 set updatetime=250
 let g:TerminusAssumeITerm=1
+
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('NERDTree')
+  if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+  endif
+endif
+
+
+
+"Rebound git commands to manipulate hunks that are staged to allow comment
+"object to work
+omap ig <Plug>GitGutterTextObjectInnerPending
+omap ag <Plug>GitGutterTextObjectOuterPending
+xmap ig <Plug>GitGutterTextObjectInnerVisual
+xmap ag <Plug>GitGutterTextObjectOuterVisual
 
 " vim_markdown plugin should clean up after itself
 let vim_markdown_preview_temp_file=1
@@ -1440,12 +1468,6 @@ if maparg('<C-I>', 'n') ==# ''
   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
 endif
 
-" if !&scrolloff
-"           set scrolloff=1
-"                   endif
-" if !&sidescrolloff
-"         set sidescrolloff=5
-"                     endif
 set display+=lastline
 
 if &encoding ==# 'latin1' && has('gui_running')
