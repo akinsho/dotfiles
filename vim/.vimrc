@@ -38,6 +38,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-surround'
 "Added jsbeautify
 Plug 'maksimr/vim-jsbeautify'
+"Added vim airline
+Plug 'vim-airline/vim-airline'
 "Added airline themes"
 Plug 'vim-airline/vim-airline-themes'
 " Add fugitive git status and command plugins
@@ -104,7 +106,7 @@ Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
 Plug 'maxbrunsfeld/vim-yankstack'
 "Added rainbow parentheses plugin colorizes parens depending on depth
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 "Add supertab to use tab for all insert mode completions
 Plug 'ervandew/supertab'
 "Navigate panes in vim and tmux with the same bindings
@@ -144,7 +146,7 @@ Plug 'joshdick/onedark.vim'
 " Neomake async linting
 Plug 'neomake/neomake'
 "Another attempt at implementing lightline
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 "Text object library plugin for defining your own text objects
 Plug 'kana/vim-textobj-user'
 "Text object for closest inner (),{} or [] 
@@ -226,8 +228,8 @@ inoremap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 
   endfunction
 
-let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
-nnoremap <F6> :RainbowToggle<CR>
+" let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
+" nnoremap <F6> :RainbowToggle<CR>
 
 "Toggle Tagbar
 nnoremap <leader>2 :TagbarToggle<CR>
@@ -441,13 +443,10 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "   autocmd bufread,bufenter,focusgained * silent! checktime
 " augroup end
 
-"Causes statusline not to load???
-" augroup reload_vimrc
-" autocmd!
-" autocmd BufWritePost $MYVIMRC source $MYVIMRC
-" autocmd BufWritePost $MYVIMRC :AirlineRefresh<CR>
-" augroup END
-
+augroup reload_vimrc
+  autocmd!
+  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+augroup END
 
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
@@ -1083,7 +1082,7 @@ set nostartofline
 "------------------------------------
 "  Tab line
 "------------------------------------
-" set tabline=
+set tabline=
 if &tabline ==# ''
   set tabline=
 endif
@@ -1101,140 +1100,141 @@ set cmdheight=1
 "Lightline theme
 "=======================================================================
 
-let g:lightline = {
-      \ 'colorscheme': 'onedark',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             ['fugitive', 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ 'obsession']
-      \ },
-      \ 'component': {
-      \    'obsession':'%{ObsessionStatus()}'
-      \    },
-      \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive',
-      \   'readonly': 'LightlineReadonly',
-      \   'modified': 'LightlineModified',
-      \   'filetype': 'LightlineFiletype',
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
+" let g:lightline = {
+"       \ 'colorscheme': 'onedark',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste'],
+"       \             ['fugitive', 'readonly', 'filename', 'modified' ] ],
+"       \   'right': [ 'obsession','gutentags']
+"       \ },
+"       \ 'component': {
+"       \    'obsession':'%{ObsessionStatus()}',
+"       \    'gutentags':'%{gutentags#statusline()}'
+"       \    },
+"       \ 'component_function': {
+"       \   'fugitive': 'LightlineFugitive',
+"       \   'readonly': 'LightlineReadonly',
+"       \   'modified': 'LightlineModified',
+"       \   'filetype': 'LightlineFiletype',
+"       \   'filename': 'LightlineFilename',
+"       \ },
+"       \ }
 
 
       " \ 'separator': { 'left': '⮀', 'right': '⮂' },
       " \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-function! LightlineModified()
-  if &filetype == "help"
-    return ""
-  elseif &modified
-    return "+"
-  elseif &modifiable
-    return ""
-  else
-    return ""
-  endif
-endfunction
+" function! LightlineModified()
+"   if &filetype == "help"
+"     return ""
+"   elseif &modified
+"     return "+"
+"   elseif &modifiable
+"     return ""
+"   else
+"     return ""
+"   endif
+" endfunction
+"
+" function! LightlineReadonly()
+"   if &filetype == "help"
+"       return ""
+"     elseif &readonly
+"       return ""
+"     else
+"       return ""
+"     endif
+"   endfunction
+"
+"
+" function! LightlineFugitive()
+"   if exists("*fugitive#head")
+"     let branch = fugitive#head()
+"     return branch !=# '' ? ''.branch : ''
+"   endif
+"   return ''
+" endfunction
+"
+" function! LightlineFiletype()
+"     return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+"   endfunction
+"
+" function! LightlineMode()
+"   return winwidth(0) > 60 ? lightline#mode() : ''
+" endfunction
 
-function! LightlineReadonly()
-  if &filetype == "help"
-      return ""
-    elseif &readonly
-      return ""
-    else
-      return ""
-    endif
-  endfunction
 
-
-function! LightlineFugitive()
-  if exists("*fugitive#head")
-    let branch = fugitive#head()
-    return branch !=# '' ? ''.branch : ''
-  endif
-  return ''
-endfunction
-
-function! LightlineFiletype()
-    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-  endfunction
-
-function! LightlineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-
-function! LightlineFilename()
-    let fname = expand('%:t')
-      return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-              \ fname == '__Tagbar__' ? g:lightline.fname :
-              \ fname =~ '__Gundo\|NERD_tree' ? '' :
-              \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-              \ &ft == 'unite' ? unite#get_status_string() :
-              \ &ft == 'vimshell' ? vimshell#get_status_string() :
-              \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-              \ ('' != fname ? fname : '[No Name]') .
-              \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-    endfunction
-
-" use lightline-buffer in lightline
-let g:lightline = {
-    \ 'tabline': {
-        \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-        \ 'right': [ [ 'close' ], ],
-        \ },
-    \ 'component_expand': {
-        \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
-        \ },
-    \ 'component_type': {
-        \ 'buffercurrent': 'tabsel',
-        \ },
-    \ 'component_function': {
-        \ 'bufferbefore': 'lightline#buffer#bufferbefore',
-        \ 'bufferafter': 'lightline#buffer#bufferafter',
-        \ 'bufferinfo': 'lightline#buffer#bufferinfo',
-        \ },
-    \ }
-" lightline-buffer ui settings
-" replace these symbols with ascii characters if your environment does not
-" support unicode
-let g:lightline_buffer_logo = ' '
-let g:lightline_buffer_readonly_icon = ''
-let g:lightline_buffer_modified_icon = '✭'
-let g:lightline_buffer_git_icon = ' '
-let g:lightline_buffer_ellipsis_icon = '..'
-let g:lightline_buffer_expand_left_icon = '◀ '
-let g:lightline_buffer_expand_right_icon = ' ▶'
-let g:lightline_buffer_active_buffer_left_icon = ''
-let g:lightline_buffer_active_buffer_right_icon = ''
-let g:lightline_buffer_separator_icon = ' '
+" function! LightlineFilename()
+"     let fname = expand('%:t')
+"       return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+"               \ fname == '__Tagbar__' ? g:lightline.fname :
+"               \ fname =~ '__Gundo\|NERD_tree' ? '' :
+"               \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+"               \ &ft == 'unite' ? unite#get_status_string() :
+"               \ &ft == 'vimshell' ? vimshell#get_status_string() :
+"               \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+"               \ ('' != fname ? fname : '[No Name]') .
+"               \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+"     endfunction
+"
+" " use lightline-buffer in lightline
+" let g:lightline = {
+"     \ 'tabline': {
+"         \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+"         \ 'right': [ [ 'close' ], ],
+"         \ },
+"     \ 'component_expand': {
+"         \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
+"         \ },
+"     \ 'component_type': {
+"         \ 'buffercurrent': 'tabsel',
+"         \ },
+"     \ 'component_function': {
+"         \ 'bufferbefore': 'lightline#buffer#bufferbefore',
+"         \ 'bufferafter': 'lightline#buffer#bufferafter',
+"         \ 'bufferinfo': 'lightline#buffer#bufferinfo',
+"         \ },
+"     \ }
+" " lightline-buffer ui settings
+" " replace these symbols with ascii characters if your environment does not
+" " support unicode
+" let g:lightline_buffer_logo = ' '
+" let g:lightline_buffer_readonly_icon = ''
+" let g:lightline_buffer_modified_icon = '✭'
+" let g:lightline_buffer_git_icon = ' '
+" let g:lightline_buffer_ellipsis_icon = '..'
+" let g:lightline_buffer_expand_left_icon = '◀ '
+" let g:lightline_buffer_expand_right_icon = ' ▶'
+" let g:lightline_buffer_active_buffer_left_icon = ''
+" let g:lightline_buffer_active_buffer_right_icon = ''
+" let g:lightline_buffer_separator_icon = ' '
 
 " lightline-buffer function settings
-let g:lightline_buffer_show_bufnr = 1
-let g:lightline_buffer_rotate = 0
-let g:lightline_buffer_fname_mod = ':t'
-let g:lightline_buffer_excludes = ['vimfiler']
+" let g:lightline_buffer_show_bufnr = 1
+" let g:lightline_buffer_rotate = 0
+" let g:lightline_buffer_fname_mod = ':t'
+" let g:lightline_buffer_excludes = ['vimfiler']
 
-let g:lightline_buffer_maxflen = 30
-let g:lightline_buffer_maxfextlen = 3
-let g:lightline_buffer_minflen = 16
-let g:lightline_buffer_minfextlen = 3
-let g:lightline_buffer_reservelen = 20
+" let g:lightline_buffer_maxflen = 30
+" let g:lightline_buffer_maxfextlen = 3
+" let g:lightline_buffer_minflen = 16
+" let g:lightline_buffer_minfextlen = 3
+" let g:lightline_buffer_reservelen = 20
 "-----------------------------------------------------------------
 "Abbreviations
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
 
 if &statusline ==# ''
-    set statusline=...
+    set statusline=
   endif
 if has('statusline')
   set laststatus=2
 endif
 
   " Broken down into easily includeable segments
- "set statusline+=%{fugitive#statusline()} " Git Hotness
- "set statusline+=%{ObsessionStatus()} "Tpope's sessions management
- "set statusline+=%#warningmsg#
+ set statusline+=%{fugitive#statusline()} " Git Hotness
+ set statusline+=%{ObsessionStatus()} "Tpope's sessions management
+ set statusline+=%#warningmsg#
 "fugitive plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -1277,9 +1277,9 @@ let g:jsdoc_enable_es6 = 1
 " nmap <silent> co <Plug>(jsdoc)
 nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
 
-" let g:gutentags_enabled = 0
 " Save tags files somewhere, not terrible like project roots
 " let g:gutentags_cache_dir = './Desktop/Coding/Tags'
+" let g:gutentags_enabled = 0
 
 
 
@@ -1314,16 +1314,24 @@ let g:buffergator_suppress_keymaps = 1
  
 " Looper buffers
 let g:buffergator_mru_cycle_loop = 1
- 
-" nnoremap <Leader><LEFT> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
-" nnoremap <Leader><UP> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
-" nnoremap <Leader><RIGHT> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
-" nnoremap <Leader><DOWN> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
-" Go to the previous buffer open
-nmap <leader>/ :BuffergatorMruCyclePrev<cr>
+"Bound to Alt-H,J,K,L to open splits with MRU buffers 
+nnoremap ˚ :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
+nnoremap ˙ :BuffergatorMruCyclePrev leftabove sbuffer<CR>
+nnoremap ¬ :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
+nnoremap ∆ :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
+
+
+" nnoremap <Left> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
+" nnoremap <Up> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
+" nnoremap <Right> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
+" nnoremap <Down> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
 
 " Go to the next buffer open
 nmap <leader><tab>  :BuffergatorMruCycleNext<cr>
+
+" Go to the previous buffer open
+nmap <leader>/ :BuffergatorMruCyclePrev<cr>
+
 
 " View the entire list of buffers open
 nmap <leader>o :BuffergatorToggle<cr>
@@ -1338,20 +1346,20 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-" let g:airline_detect_iminsert                  = 1
-" let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-" let g:airline_powerline_fonts                  = 1
-" let g:airline#extensions#tabline#enabled       = 1
-" let g:airline#extensions#tabline#show_tabs     = 1
-" let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-" let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline_detect_iminsert                  = 1
+let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+let g:airline_powerline_fonts                  = 1
+let g:airline#extensions#tabline#enabled       = 1
+let g:airline#extensions#tabline#show_tabs     = 1
+let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
 " let g:airline_left_sep = ' '
 " let g:airline_right_sep = ' '
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
-"
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
 
@@ -1472,8 +1480,10 @@ hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=
 "=======================================================================
 "Airline theme
 "=======================================================================
-  " let g:airline_theme='solarized'
   " let g:airline_theme='luna'
+  " let g:airline_theme='molokai'
+  " let g:airline_theme='solarized'
+  let g:airline_theme='onedark'
 " if !has('gui_running') && !has('nvim')
   " adding to vim-airline's statusline 
   " let g:airline_theme='spring_night'
