@@ -1,7 +1,7 @@
 # ================================================================================
 # Aliases
 # ================================================================================
-alias ls='ls -aG'
+alias la='ls -aG'
 alias nv='nvim'
 alias cl='clear'
 alias sant='source $HOME/.dotfiles/zsh-antigen/antigen/antigen.zsh'

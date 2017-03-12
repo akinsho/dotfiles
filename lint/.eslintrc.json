@@ -1,24 +1,19 @@
 {
     "rules": {
-        "indent": [
-            2,
-            "tab"
-        ],
-        "linebreak-style": [
-            "off",
-            "unix"
-        ],
-        "quotes": [
-            2,
-            "single"
-        ],
-        "semi": [
-            2,
-            "always"
-        ],
-        "no-console": "off"
+        "indent":0,
+        //"indent": [ "warn" , 4],
+        "linebreak-style": [ "off", "unix" ],
+        "quotes": [ "error", "single" ],
+        "semi": [ "error", "always" ],
+        "no-console": "off",
+        "strict": 0,
+        "no-unused-vars": 0,
+        "no-undef":0,
+        "no-undefined":0,
+        "camelcase": 1,
+        "no-underscore-dangle": 0,
+        "no-console": 0
     },
-    "globals": {},
     "env": {
         "es6": true,
         "browser": true,
@@ -40,14 +35,6 @@
     "plugins": [
         "react"
     ],
-    "rules": {
-        "strict": 0,
-        "quotes": 0,
-        "no-unused-vars": 0,
-        "camelcase": 0,
-        "no-underscore-dangle": 0,
-        "no-console": 0
-    },
     "globals": {
         "_": false,
         "remote": false,

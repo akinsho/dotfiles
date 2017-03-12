@@ -18,12 +18,16 @@ set foldlevelstart=0
 "-----------------------------------------------------------
 "Plugins
 "-----------------------------------------------------------{{{
+"This will autoinstall vim plug if not already installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 let g:ycm_confirm_extra_conf = 0
 
-" let Vundle manage Vundle, required
-Plug 'VundleVim/Vundle.vim'
 "Added YouCompleteMe autocompleter
 " function! BuildYCM(info)
 "   if a:info.status == 'installed' || a:info.force
@@ -33,7 +37,8 @@ Plug 'VundleVim/Vundle.vim'
 " {'do':function('BuildYCM')}
 Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }       
+Plug 'scrooloose/nerdtree'
+" , { 'on':  'NERDTreeToggle' }
 "Added vim surround for enclosing with parens
 Plug 'tpope/vim-surround'
 "Added jsbeautify
@@ -54,36 +59,32 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
 Plug 'Raimondi/delimitMate'
-"Added further javascript syntax highlighting - breaks jsx highlighting
-Plug 'jelera/vim-javascript-syntax'
+"Added further javascript syntax highlighting
+" Plug 'jelera/vim-javascript-syntax'
 "Added node.vim plugin
 Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
-"Added oceanic next theme
-" Plug 'mhartington/oceanic-next'
 " Added yet another js syntax highlighter
 Plug 'othree/yajs.vim',{'for':'javascript'}
-" Added html5 syntax highlighter
-Plug 'othree/html5.vim'
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
 Plug 'sheerun/vim-polyglot'
 "Added vim snippets for code autofilling
 Plug 'SirVer/ultisnips'
-" NVIM colorscheme
-" Plug 'rakr/vim-one'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
 Plug 'jamescarr/snipmate-nodejs'
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
+"Autosuggestions for function parameters like click, mouseover
+Plug 'othree/jspc.vim'
+" Adds syntax completion for things like canvas and chrome APIs
+Plug '1995eaton/vim-better-javascript-completion'
 "Added SyntaxComplete for more syntax completion
 Plug 'vim-scripts/SyntaxComplete'
-"Added vim javascript
-Plug 'pangloss/vim-javascript'
 "Add proper markdown syntax and indentation plugin
 Plug 'gabrielelana/vim-markdown'
 "Markdown previewer
@@ -105,8 +106,6 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
 Plug 'maxbrunsfeld/vim-yankstack'
-"Added rainbow parentheses plugin colorizes parens depending on depth
-" Plug 'luochen1990/rainbow'
 "Add supertab to use tab for all insert mode completions
 Plug 'ervandew/supertab'
 "Navigate panes in vim and tmux with the same bindings
@@ -117,8 +116,6 @@ Plug 'mhinz/vim-startify'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 Plug 'junegunn/fzf.vim'
-"Closes tags with > command
-Plug 'alvan/vim-closetag'
 "React Snippets since I can't get the defaults to work
 Plug 'justinj/vim-react-snippets'
 "Excellent terminal integration for vim
@@ -127,8 +124,6 @@ Plug 'wincent/terminus'
 Plug 'Chiel92/vim-autoformat'
 "Add a GitGutter to track new lines re git file
 Plug 'airblade/vim-gitgutter'
-" Add new theme trial purposes ofc
-" Plug 'rhysd/vim-color-spring-night'
 "Plug to create diff window and Gstatus window on commit
 Plug 'rhysd/committia.vim'
 "Vimux i.e send commands to a tmux split
@@ -137,16 +132,17 @@ Plug 'benmills/vimux'
 Plug 'kshenoy/vim-signature'
 "Vim obsession Tpope's amazing plugin for managing sessions
 Plug 'tpope/vim-obsession'
-"Colorsheme Material Dark
+"TPope tag plugin
+Plug 'tpope/vim-ragtag'
+"Colorsheme solarized 8
 Plug 'lifepillar/vim-solarized8'
-"Add ligtline buffers
-Plug 'taohex/lightline-buffer'
 "Colorscheme - OneDark
 Plug 'joshdick/onedark.vim'
 " Neomake async linting
 Plug 'neomake/neomake'
-"Another attempt at implementing lightline
-" Plug 'itchyny/lightline.vim'
+
+
+
 "Text object library plugin for defining your own text objects
 Plug 'kana/vim-textobj-user'
 "Text object for closest inner (),{} or [] 
@@ -169,15 +165,30 @@ Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
 
 
-
+" NVIM colorscheme
+" Plug 'rakr/vim-one'
+"Closes tags with > command
+" Plug 'alvan/vim-closetag'
+"Added vim javascript - this is automatically included in vim polyglot
+" Plug 'pangloss/vim-javascript'
+" Add new theme trial purposes ofc
+" Plug 'rhysd/vim-color-spring-night'
+"Added oceanic next theme
+" Plug 'mhartington/oceanic-next'
 "Add Base16 color schemes vim
 " Plugin 'chriskempson/base16-vim'
-"Indentation and highlighting for jsx
-" Plugin 'mxw/vim-jsx'
-"Added JavaScript indent
-" Plugin 'vim-scripts/JavaScript-Indent'
+" Added html5 syntax highlighter - vim polyglot includes this by default
+" Plug 'othree/html5.vim'
+"Add context higlighting for JS depending on function scope
+" Plug 'bigfish/vim-js-context-coloring',{'do': 'npm install --update'}
+"Added rainbow parentheses plugin colorizes parens depending on depth
+" Plug 'luochen1990/rainbow'
 " Deep space theme
 " Plugin 'tyrannicaltoucan/vim-deep-space'
+"Another attempt at implementing lightline
+" Plug 'itchyny/lightline.vim'
+"Add ligtline buffers
+" Plug 'taohex/lightline-buffer'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -338,7 +349,8 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_always_populate_location_list = 1
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '¨'
+let g:vcoolor_map = '∆'
+
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -351,7 +363,7 @@ let g:vcoolor_map = '¨'
 " autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 " augroup END
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key="<C-.>"
+let g:user_emmet_leader_key="ƒ"
 
 
 "Add mapping for Gundo vim
@@ -562,7 +574,7 @@ set complete+=kspell
   "Mappings
 "-----------------------------------------------------------------------------------{{{
 "Close a buffer
-nnoremap <leader>cl <C-W>q
+nnoremap œ <C-W>q
 "Replace current word with last deleted word
 nnoremap S diw"0P
 "Toggle case in insert and normal mode
@@ -575,8 +587,15 @@ inoremap ;u <esc>viwUea
 vnoremap . :norm.<CR>
 
 "Maps moving to match as moving and visually selecting along the way
-nnoremap wa% v%
-" inoremap ß <esc>:execute 'wa' | echo 'Saved!'
+nnoremap % v%
+nnoremap ß :update<CR>
+inoremap ß <esc>:update<CR>
+
+"Control-m has this functionality natively
+" inoremap <M-o>       <Esc>o
+" inoremap ø       <Esc>o
+let g:ragtag_global_maps = 1
+
 "This mapping alternates between variants of number and relative number
 nnoremap <F2> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
 "This mapping allows yanking all of a line without taking the new line
@@ -587,10 +606,10 @@ onoremap <silent> al :norm val<cr>
 onoremap <silent> il :norm vil<cr>
 "ctrl-o in insert mode allows you to perform one normal mode command then
 "returns to insert mode
-inoremap <C-h> <C-o><left>
-inoremap <C-j> <C-o><down>
-inoremap <C-k> <C-o><up>
-inoremap <C-l> <C-o><right>
+inoremap <C-j> <Down>
+inoremap <C-h> <left>
+inoremap <C-k> <up>
+inoremap <C-l> <right>
 
 
 " select last paste in visual mode
@@ -600,7 +619,7 @@ nnoremap <F4> :! open %<CR><CR>
 nnoremap <F3> :!open -a safari %<CR><CR>
 "Paste mode for large block of external text - Terminus plugin doees this
 "automatically at present
-" set pastetoggle=<F2>
+set pastetoggle=<F1>
 "time out on mapping after half a second, time out on key codes after a tenth
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
@@ -873,13 +892,6 @@ nmap <leader>bq :bp <BAR> bd #<cr>
 " hi LineNr   cterm=bold ctermbg=gray ctermfg=black gui=bold guibg=gray guifg=white
 
 
-"Bindings for using buffers without buffergator
-"  Move to the next buffer
-" nnoremap <leader>m :bnext<CR>
-"
-" Move to the previous buffer
-" nmap <leader>k :bprevious<CR>
-"
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nnoremap ,q :bp <BAR> bd #<CR>
@@ -906,7 +918,7 @@ set splitright "Open a vertical split to the right of the window
 set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
 " reveal already opened files from the quickfix window instead of opening new
 " buffers
-" set switchbuf=useopen
+set switchbuf=useopen
 
 " ----------------------------------------------------------------------------
 " Diffing
@@ -1082,11 +1094,11 @@ set nostartofline
 "------------------------------------
 "  Tab line
 "------------------------------------
-set tabline=
-if &tabline ==# ''
-  set tabline=
-endif
-set showtabline=2
+" set tabline=
+" if &tabline ==# ''
+"   set tabline=
+" endif
+" set showtabline=2
 
 " ------------------------------------
 " Command line
@@ -1096,129 +1108,6 @@ set showcmd
 " Set command line height to two lines
 set cmdheight=1
 
-"=======================================================================
-"Lightline theme
-"=======================================================================
-
-" let g:lightline = {
-"       \ 'colorscheme': 'onedark',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste'],
-"       \             ['fugitive', 'readonly', 'filename', 'modified' ] ],
-"       \   'right': [ 'obsession','gutentags']
-"       \ },
-"       \ 'component': {
-"       \    'obsession':'%{ObsessionStatus()}',
-"       \    'gutentags':'%{gutentags#statusline()}'
-"       \    },
-"       \ 'component_function': {
-"       \   'fugitive': 'LightlineFugitive',
-"       \   'readonly': 'LightlineReadonly',
-"       \   'modified': 'LightlineModified',
-"       \   'filetype': 'LightlineFiletype',
-"       \   'filename': 'LightlineFilename',
-"       \ },
-"       \ }
-
-
-      " \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      " \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-" function! LightlineModified()
-"   if &filetype == "help"
-"     return ""
-"   elseif &modified
-"     return "+"
-"   elseif &modifiable
-"     return ""
-"   else
-"     return ""
-"   endif
-" endfunction
-"
-" function! LightlineReadonly()
-"   if &filetype == "help"
-"       return ""
-"     elseif &readonly
-"       return ""
-"     else
-"       return ""
-"     endif
-"   endfunction
-"
-"
-" function! LightlineFugitive()
-"   if exists("*fugitive#head")
-"     let branch = fugitive#head()
-"     return branch !=# '' ? ''.branch : ''
-"   endif
-"   return ''
-" endfunction
-"
-" function! LightlineFiletype()
-"     return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-"   endfunction
-"
-" function! LightlineMode()
-"   return winwidth(0) > 60 ? lightline#mode() : ''
-" endfunction
-
-
-" function! LightlineFilename()
-"     let fname = expand('%:t')
-"       return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-"               \ fname == '__Tagbar__' ? g:lightline.fname :
-"               \ fname =~ '__Gundo\|NERD_tree' ? '' :
-"               \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-"               \ &ft == 'unite' ? unite#get_status_string() :
-"               \ &ft == 'vimshell' ? vimshell#get_status_string() :
-"               \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-"               \ ('' != fname ? fname : '[No Name]') .
-"               \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-"     endfunction
-"
-" " use lightline-buffer in lightline
-" let g:lightline = {
-"     \ 'tabline': {
-"         \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-"         \ 'right': [ [ 'close' ], ],
-"         \ },
-"     \ 'component_expand': {
-"         \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
-"         \ },
-"     \ 'component_type': {
-"         \ 'buffercurrent': 'tabsel',
-"         \ },
-"     \ 'component_function': {
-"         \ 'bufferbefore': 'lightline#buffer#bufferbefore',
-"         \ 'bufferafter': 'lightline#buffer#bufferafter',
-"         \ 'bufferinfo': 'lightline#buffer#bufferinfo',
-"         \ },
-"     \ }
-" " lightline-buffer ui settings
-" " replace these symbols with ascii characters if your environment does not
-" " support unicode
-" let g:lightline_buffer_logo = ' '
-" let g:lightline_buffer_readonly_icon = ''
-" let g:lightline_buffer_modified_icon = '✭'
-" let g:lightline_buffer_git_icon = ' '
-" let g:lightline_buffer_ellipsis_icon = '..'
-" let g:lightline_buffer_expand_left_icon = '◀ '
-" let g:lightline_buffer_expand_right_icon = ' ▶'
-" let g:lightline_buffer_active_buffer_left_icon = ''
-" let g:lightline_buffer_active_buffer_right_icon = ''
-" let g:lightline_buffer_separator_icon = ' '
-
-" lightline-buffer function settings
-" let g:lightline_buffer_show_bufnr = 1
-" let g:lightline_buffer_rotate = 0
-" let g:lightline_buffer_fname_mod = ':t'
-" let g:lightline_buffer_excludes = ['vimfiler']
-
-" let g:lightline_buffer_maxflen = 30
-" let g:lightline_buffer_maxfextlen = 3
-" let g:lightline_buffer_minflen = 16
-" let g:lightline_buffer_minfextlen = 3
-" let g:lightline_buffer_reservelen = 20
 "-----------------------------------------------------------------
 "Abbreviations
 "-----------------------------------------------------------------
@@ -1281,7 +1170,12 @@ nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
 " let g:gutentags_cache_dir = './Desktop/Coding/Tags'
 " let g:gutentags_enabled = 0
 
+let g:vimjs#smartcomplete = 1
+" Disabled by default. Enabling this will let vim complete matches at any location
+" e.g. typing 'ocument' will suggest 'document' if enabled.
 
+let g:vimjs#chromeapis = 1
+" Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
 set updatetime=250
 let g:TerminusAssumeITerm=1
@@ -1346,6 +1240,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
+let g:airline_extensions = ['fugitive','branch','tabline','obsession']
 let g:airline_detect_iminsert                  = 1
 let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
 let g:airline_powerline_fonts                  = 1
@@ -1355,8 +1250,8 @@ let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
-" let g:airline_left_sep = ' '
-" let g:airline_right_sep = ' '
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
@@ -1366,42 +1261,17 @@ let g:tmux_navigator_save_on_switch = 1
 " let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " Enable the list of buffers
 
-"==========================================================
-"           Syntastic 
-"==========================================================
-" Change the syntastic windows height
-" highlight SyntasticError guibg=#66CCFF
-" highlight SyntasticErrorSign guibg=#66CCFF
-" highlight Visual ctermfg=189 ctermbg=238 gui=bold guifg=#e7d5ff guibg=#536273
-
-" let g:syntastic_full_redraws=1
-" let g:syntastic_loc_list_height = 2
-" let g:syntastic_enable_ballons=has('ballon_eval')
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_python_checkers = ['pylint']
-" let g:syntastic_html_checkers = ['tidy']
-" let g:syntastic_aggregate_errors=1
-" let g:syntastic_auto_jump=0
-" let g:syntastic_error_symbol='✗'
-" "☠️
-" let g:syntastic_style_error_symbol = '⁉️'
-" let g:syntastic_warning_symbol = '⚠️'
-" " '⚠'
-" let g:syntastic_style_warning_symbol =  '💩'
-
-" highlight link SyntasticErrorSign SignColumn
-" highlight link SyntasticWarningSign SignColumn
-" highlight link SyntasticStyleErrorSign SignColumn
-" highlight link SyntasticStyleWarningSign SignColumn
 
 "-----------------------------------------------------------
 "     NEOMAKE 
 "-----------------------------------------------------------
-autocmd! BufWritePost,BufReadPost * Neomake
+augroup Neomake
+  au!
+autocmd BufWritePost * Neomake
+augroup END
+" autocmd! BufWritePost,BufReadPost * Neomake
+let g:neomake_verbose = 0
+let g:neomake_list_height = 6
 let g:neomake_open_list = 2
 let g:quickfixsigns_protect_sign_rx = '^neomake_'
 
@@ -1480,10 +1350,10 @@ hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=
 "=======================================================================
 "Airline theme
 "=======================================================================
+  let g:airline_theme='onedark'
   " let g:airline_theme='luna'
   " let g:airline_theme='molokai'
   " let g:airline_theme='solarized'
-  let g:airline_theme='onedark'
 " if !has('gui_running') && !has('nvim')
   " adding to vim-airline's statusline 
   " let g:airline_theme='spring_night'
@@ -1590,7 +1460,7 @@ set history=50
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
-set matchtime=3 " tenths of a second
+set matchtime=1 " tenths of a second
 set showmatch "briefly jump to ?matching parens
 " Sets a case insensitive search except when using Caps
 set ignorecase
