@@ -18,7 +18,7 @@ source ~/.zplug/init.zsh
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly
@@ -133,6 +133,7 @@ function _z_precmd {
 #=======================================================================
 # Make sure to use double quotes
 zplug "plugins/pip", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
@@ -248,21 +249,21 @@ fi
 
 # source ~/Dotfiles/bin/vim_mode.zsh
 # Default vi mode - not compatible with vi mode zsh plugin
-bindkey -v
+# bindkey -v
 # Binds vim mode terminal esc command to jk
-bindkey -M viins ‘jk’ vi-cmd-mode
+# bindkey -M viins ‘jk’ vi-cmd-mode
 export KEYTIMEOUT=1
 
 bindkey ‘^R’ history-incremental-search-backward
 
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
-    zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
+#     zle reset-prompt
+# }
+#
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 # #Use vim cli mode (C-P and C-N to navigate history)
 bindkey '^P' up-history
 bindkey '^N' down-history

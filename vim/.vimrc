@@ -44,9 +44,9 @@ Plug 'tpope/vim-surround'
 "Added jsbeautify
 Plug 'maksimr/vim-jsbeautify'
 "Added vim airline
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 "Added airline themes"
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 " Add fugitive git status and command plugins
 Plug 'tpope/vim-fugitive'
 " Adds file manipulation functionality
@@ -119,7 +119,7 @@ Plug 'junegunn/fzf.vim'
 "React Snippets since I can't get the defaults to work
 Plug 'justinj/vim-react-snippets'
 "Excellent terminal integration for vim
-Plug 'wincent/terminus'
+" Plug 'wincent/terminus'
 " Autoformatter
 Plug 'Chiel92/vim-autoformat'
 "Add a GitGutter to track new lines re git file
@@ -134,6 +134,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-obsession'
 "TPope tag plugin
 Plug 'tpope/vim-ragtag'
+"vim sialoquent theme
+Plug 'davidklsn/vim-sialoquent'
 "Colorsheme solarized 8
 Plug 'lifepillar/vim-solarized8'
 "Colorscheme - OneDark
@@ -159,10 +161,20 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'Chun-Yang/vim-textobj-chunk'
 "Add JSDocs plugin
 Plug 'heavenshell/vim-jsdoc'
+"Add Fold plugin for speedier folding
+Plug 'Konfekt/FastFold'
 "Add Tagbar Plugin
 Plug 'majutsushi/tagbar'
 "Add Plugin to manage tag files
 Plug 'ludovicchabant/vim-gutentags'
+"Vim HARDMODE ----------------------
+Plug 'wikitopian/hardmode'
+"Another attempt at implementing lightline
+Plug 'itchyny/lightline.vim'
+"Add ligtline buffers
+Plug 'taohex/lightline-buffer'
+"Add Vim-Quickfix window plugin for managing basic qf functionality
+" Plug 'romainl/vim-qf'
 
 
 " NVIM colorscheme
@@ -185,10 +197,6 @@ Plug 'ludovicchabant/vim-gutentags'
 " Plug 'luochen1990/rainbow'
 " Deep space theme
 " Plugin 'tyrannicaltoucan/vim-deep-space'
-"Another attempt at implementing lightline
-" Plug 'itchyny/lightline.vim'
-"Add ligtline buffers
-" Plug 'taohex/lightline-buffer'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -216,38 +224,41 @@ endif
 "Remap leader key
 let mapleader = ","
 "Local leader key
-let maplocalleader = "/"
-"\<space>"
+let maplocalleader = "\<space>"
+"/"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
+set conceallevel=1
+" set foldmethod=manual
+nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+let g:javascript_conceal_arrow_function = "⇒"
+
 
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
-  " Additional settings
-  setlocal spell
+    " Additional settings
+    setlocal spell
 
-  " If no commit message, start with insert mode
-  if a:info.vcs ==# 'git' && getline(1) ==# ''
-    startinsert
-  end
+    " If no commit message, start with insert mode
+    if a:info.vcs ==# 'git' && getline(1) ==# ''
+        startinsert
+    end
 
-" Scroll the diff window from insert mode
-" Map <C-n> and <C-p>
-inoremap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-inoremap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+    " Scroll the diff window from insert mode
+    " Map <C-n> and <C-p>
+    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 
-  endfunction
+endfunction
 
-" let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
-" nnoremap <F6> :RainbowToggle<CR>
 
 "Toggle Tagbar
 nnoremap <leader>2 :TagbarToggle<CR>
 
 "Vimux ==========================================================
 "Tell vimux to run commands in a new split
-let VimuxUseNearest = 0
+let VimuxUseNearest = 1
 nnoremap <F5> :call VimuxRunCommand('browse')<CR>
 " Prompt for a command to run
 nnoremap <Leader>vp :VimuxPromptCommand<CR>
@@ -282,7 +293,7 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1 "Show hidden files by default
 
 "Press enter to complete suggestions - turned off
-let g:SuperTabCrMapping = 0
+let g:SuperTabCrMapping = 1
 
 
 let vim_markdown_preview_hotkey='<C-m>'
@@ -333,7 +344,7 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe. - need to rethink this mapping
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
@@ -448,17 +459,24 @@ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " for css or scss
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
-
-" augroup formatting - excellent function but implemented by terminus
-  " autocmd!
+augroup textobj_quote
+  autocmd!
+  autocmd FileType markdown call textobj#quote#init()
+  autocmd FileType textile call textobj#quote#init()
+  autocmd FileType text call textobj#quote#init({'educate': 0})
+augroup END
+augroup formatting - excellent function but implemented by terminus
+  autocmd!
   " automatically check for changed files outside vim
-"   autocmd bufread,bufenter,focusgained * silent! checktime
-" augroup end
+  autocmd bufread,bufenter,focusgained * silent! checktime
+augroup end
 
 augroup reload_vimrc
   autocmd!
   autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 augroup END
+
+
 
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
@@ -490,6 +508,7 @@ augroup filetype_javascript
   autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
   "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
+  autocmd Filetype javascript setlocal foldlevelstart=1
 augroup END
 
 
@@ -510,11 +529,10 @@ augroup FileType_markdown
 augroup END
 
 augroup filetype_vim
-  "Vimscript file settings -------------------------{{{
+  "Vimscript file settings -------------------------
   au!
   autocmd FileType vim setlocal foldmethod=marker
 augroup END
-"}}}
 
 augroup FileType_text
   autocmd!
@@ -792,7 +810,7 @@ inoremap <C-B> <C-O>I
 "Remaps native ctrl h - emulates backspace to ctrl d
 inoremap <C-D> <C-H>
 "Remaps native ctrl k - deleting to the end of a line to control e
-inoremap <C-1> <C-K>
+inoremap <C-Q> <C-K>
 
 " Map jk to esc key - using jk prevents jump that using ii causes
 inoremap jk <ESC>
@@ -1001,6 +1019,8 @@ set numberwidth=5
 "Turns on smart indent which can help indent files like html natively
 set smartindent
 set wrap
+" This should cause lines to wrap around words rather than random characters
+set linebreak
 set textwidth=79
 "Use one space, not two, after punctuation
 set nojoinspaces
@@ -1120,16 +1140,20 @@ if has('statusline')
   set laststatus=2
 endif
 
-  " Broken down into easily includeable segments
- set statusline+=%{fugitive#statusline()} " Git Hotness
- set statusline+=%{ObsessionStatus()} "Tpope's sessions management
- set statusline+=%#warningmsg#
+" Broken down into easily includeable segments
+" set statusline=%f
+set statusline+=%{fugitive#statusline()} " Git Hotness
+set statusline+=%{ObsessionStatus()} "Tpope's sessions management
+set statusline+=\ %#ErrorMsg#%{neomake#statusline#QflistStatus('qf:\ ')}
+" set statusline+=%#warningmsg#
 "fugitive plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+nnoremap <localleader>h <Esc>:call ToggleHardMode()<CR>
+
 
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ax <Plug>(textobj-comment-a)
@@ -1166,19 +1190,16 @@ let g:jsdoc_enable_es6 = 1
 " nmap <silent> co <Plug>(jsdoc)
 nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
 
-" Save tags files somewhere, not terrible like project roots
-" let g:gutentags_cache_dir = './Desktop/Coding/Tags'
-" let g:gutentags_enabled = 0
 
 let g:vimjs#smartcomplete = 1
 " Disabled by default. Enabling this will let vim complete matches at any location
-" e.g. typing 'ocument' will suggest 'document' if enabled.
+" e.g. typing 'document' will suggest 'document' if enabled.
 
 let g:vimjs#chromeapis = 1
 " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
 set updatetime=250
-let g:TerminusAssumeITerm=1
+" let g:TerminusAssumeITerm=1
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('NERDTree')
@@ -1215,11 +1236,6 @@ nnoremap ¬ :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
 nnoremap ∆ :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
 
 
-" nnoremap <Left> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
-" nnoremap <Up> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
-" nnoremap <Right> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
-" nnoremap <Down> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
-
 " Go to the next buffer open
 nmap <leader><tab>  :BuffergatorMruCycleNext<cr>
 
@@ -1240,27 +1256,135 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-let g:airline_extensions = ['fugitive','branch','tabline','obsession']
-let g:airline_detect_iminsert                  = 1
-let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-let g:airline_powerline_fonts                  = 1
-let g:airline#extensions#tabline#enabled       = 1
-let g:airline#extensions#tabline#show_tabs     = 1
-let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 1
-" Makes airline tabs rectangular
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+"=============================================================
+"               Lightline
+"=============================================================
+let g:lightline = {
+  \ 'colorscheme': 'sialoquent',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ 'component': {
+  \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+  \ },
+  \ 'component_visible_condition': {
+  \   'readonly': '(&filetype!="help"&& &readonly)',
+  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+  \ },
+  \ 'separator': { 'left': '', 'right': '' },
+  \ 'subseparator': { 'left': '∿', 'right': '❂' }
+  \ }
 
+" use lightline-buffer in lightline
+" let g:lightline = {
+"     \ 'tabline': {
+"         \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+"         \ 'right': [ [ 'close' ], ],
+"         \ },
+"     \ 'component_expand': {
+"         \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
+"         \ },
+"     \ 'component_type': {
+"         \ 'buffercurrent': 'tabsel',
+"         \ },
+"     \ 'component_function': {
+"         \ 'bufferbefore': 'lightline#buffer#bufferbefore',
+"         \ 'bufferafter': 'lightline#buffer#bufferafter',
+"         \ 'bufferinfo': 'lightline#buffer#bufferinfo',
+"         \ },
+"     \ }
+
+" remap arrow keys
+nnoremap <Left> :bprev<CR>
+nnoremap <Right> :bnext<CR>
+
+" lightline-buffer ui settings
+" replace these symbols with ascii characters if your environment does not support unicode
+let g:lightline_buffer_logo = ' '
+let g:lightline_buffer_readonly_icon = ''
+let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_git_icon = ' '
+let g:lightline_buffer_ellipsis_icon = '..'
+let g:lightline_buffer_expand_left_icon = '◀ '
+let g:lightline_buffer_expand_right_icon = ' ▶'
+let g:lightline_buffer_active_buffer_left_icon = ''
+let g:lightline_buffer_active_buffer_right_icon = ''
+let g:lightline_buffer_separator_icon = ' '
+
+" lightline-buffer function settings
+let g:lightline_buffer_show_bufnr = 1
+let g:lightline_buffer_rotate = 0
+let g:lightline_buffer_fname_mod = ':t'
+let g:lightline_buffer_excludes = ['vimfiler']
+
+let g:lightline_buffer_maxflen = 30
+let g:lightline_buffer_maxfextlen = 3
+let g:lightline_buffer_minflen = 16
+let g:lightline_buffer_minfextlen = 3
+let g:lightline_buffer_reservelen = 20
+
+"=============================================================
+"               Airline
+"=============================================================
+" let g:airline_extensions = ['branch','tabline','obsession']
+" let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" " let g:airline#extensions#tagbar#enabled = 1
+" let g:airline_detect_iminsert                  = 1
+" let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+" let g:airline_powerline_fonts                  = 1
+" let g:airline#extensions#tabline#enabled       = 1
+" " let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
+" let g:airline#extensions#tabline#show_tabs     = 1
+" let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#show_tab_type = 1
+" " Makes airline tabs rectangular
+" let g:airline_left_sep = ' '
+" let g:airline_right_sep = ' '
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+"
+" let g:airline#extensions#tabline#right_sep = ''
+" let g:airline#extensions#tabline#right_alt_sep = '|'
+" "This defines the separators for airline changes them from the default arrows
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_alt_sep = ''
+"
+" " configure whether close button should be shown: >
+" let g:airline#extensions#tabline#show_close_button = 1
+"
+" " determine whether inactive windows should have the left section collapsed to
+" " only the filename of that buffer.  >
+" let g:airline_inactive_collapse=1
+" " * configure symbol used to represent close button >
+" " let g:airline#extensions#tabline#close_symbol = 'X'
+" " * configure pattern to be ignored on BufAdd autocommand >
+"   " fixes unnecessary redraw, when e.g. opening Gundo window
+" let airline#extensions#tabline#ignore_bufadd_pat =
+"       \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+"
+" let g:airline#extensions#tabline#buffer_idx_mode = 1
+" nmap <localleader>1 <Plug>AirlineSelectTab1
+" nmap <localleader>2 <Plug>AirlineSelectTab2
+" nmap <localleader>3 <Plug>AirlineSelectTab3
+" nmap <localleader>4 <Plug>AirlineSelectTab4
+" nmap <localleader>5 <Plug>AirlineSelectTab5
+" nmap <localleader>6 <Plug>AirlineSelectTab6
+" nmap <localleader>7 <Plug>AirlineSelectTab7
+" nmap <localleader>8 <Plug>AirlineSelectTab8
+" nmap <localleader>9 <Plug>AirlineSelectTab9
+" nmap <localleader>- <Plug>AirlineSelectPrevTab
+" nmap <localleader>+ <Plug>AirlineSelectNextTab
+"
+"Remaps native insert mode paste binding to alt-p
+inoremap π <C-R>0
+inoremap … <C-R><C-P>0
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 1
-
-" let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-" Enable the list of buffers
-
 
 "-----------------------------------------------------------
 "     NEOMAKE 
@@ -1274,7 +1398,6 @@ let g:neomake_verbose = 0
 let g:neomake_list_height = 6
 let g:neomake_open_list = 2
 let g:quickfixsigns_protect_sign_rx = '^neomake_'
-
 " let g:neomake_warning_sign = {
 "   \ 'text': 'W',
 "   \ 'texthl': 'WarningMsg',
@@ -1283,6 +1406,10 @@ let g:quickfixsigns_protect_sign_rx = '^neomake_'
 "   \ 'text': 'E',
 "   \ 'texthl': 'ErrorMsg',
 "   \ }
+let g:neomake_cpp_enabled_makers = ['clang']
+let g:neomake_cpp_clang_maker = {
+    \ 'args': ['-std=c++14', '-Wall', '-Wextra', '-Weverything', '-pedantic']
+    \ }
 
 
 "}}}
@@ -1304,7 +1431,8 @@ endf
 nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
 nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 else
-  colorscheme onedark
+  " colorscheme onedark
+  colorscheme sialoquent
 endif
 "One (Dark) Atom theme =====================================
 "The theme below is essentially a variant of the one above, they look identical
@@ -1315,7 +1443,7 @@ endif
 
 "This sets the search highlighting which actually changes the appearance of
 "neomake/ any linters warnings
-hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=#073642
+" hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=#073642
 
 
 "Spring Night ===============================================
@@ -1350,7 +1478,8 @@ hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=
 "=======================================================================
 "Airline theme
 "=======================================================================
-  let g:airline_theme='onedark'
+  " let g:airline_theme='onedark'
+  " let g:airline_theme='one'
   " let g:airline_theme='luna'
   " let g:airline_theme='molokai'
   " let g:airline_theme='solarized'
@@ -1381,7 +1510,7 @@ set softtabstop=-2
 set tabstop=8
 
 " use multiple of shiftwidth when shifting indent levels.
-" this is OFF so block comments don't get fudged when using ">>" and "<<"
+" this is OFF so block comments don't get fudged when using \">>" and \"<<"
 set noshiftround
 
 " When on, a <Tab> in front of a line inserts blanks according to
@@ -1401,10 +1530,10 @@ endif
 
 
 " Use <C-I> to clear the highlighting of :set hlsearch.
-if maparg('<C-I>', 'n') ==# ''
-  nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
-endif
-
+" if maparg('<C-I>', 'n') ==# ''
+"   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
+" endif
+"
 set display+=lastline
 
 if &encoding ==# 'latin1' && has('gui_running')
@@ -1442,7 +1571,7 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
 endif
 
 
-"Turn swap files off - FOR GOD's SAKE they are ruining my life - addendum
+"Turn swap files off - FOR GOD's SAKE they are ruining my life
 set noswapfile
 "This saves all back up files in a vim backup directory
 set backupdir=~/.vim/.backup//

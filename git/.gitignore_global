@@ -2,6 +2,7 @@ node_modules
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *~
+tags
 vim-markdown-preview.html
 *.un~
 Session.vim 

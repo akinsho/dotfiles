@@ -5,7 +5,7 @@ root = true
 [**.js]
 e4x = true
 indent_style = space
-indent_size = 4
+indent_size = 2
 ; Javascript interpreter to be invoked by default 'node'
 bin=node
 
@@ -16,7 +16,7 @@ indent_size = 4
 [**.jsx]
 e4x = true
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 [**.css]
 path=~/.vim/bundle/js-beautify/js/lib/beautify-css.js
