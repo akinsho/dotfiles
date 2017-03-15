@@ -43,10 +43,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 "Added jsbeautify
 Plug 'maksimr/vim-jsbeautify'
-"Added vim airline
-" Plug 'vim-airline/vim-airline'
-"Added airline themes"
-" Plug 'vim-airline/vim-airline-themes'
 " Add fugitive git status and command plugins
 Plug 'tpope/vim-fugitive'
 " Adds file manipulation functionality
@@ -161,8 +157,6 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'Chun-Yang/vim-textobj-chunk'
 "Add JSDocs plugin
 Plug 'heavenshell/vim-jsdoc'
-"Add Fold plugin for speedier folding
-Plug 'Konfekt/FastFold'
 "Add Tagbar Plugin
 Plug 'majutsushi/tagbar'
 "Add Plugin to manage tag files
@@ -173,8 +167,17 @@ Plug 'wikitopian/hardmode'
 Plug 'itchyny/lightline.vim'
 "Add ligtline buffers
 Plug 'taohex/lightline-buffer'
+" A plugin for managing vim themes
+Plug 'reedes/vim-thematic'
+" toggles line numbering depending on current mode
+Plug 'myusuf3/numbers.vim'
+
 "Add Vim-Quickfix window plugin for managing basic qf functionality
 " Plug 'romainl/vim-qf'
+"Added vim airline
+" Plug 'vim-airline/vim-airline'
+"Added airline themes"
+" Plug 'vim-airline/vim-airline-themes'
 
 
 " NVIM colorscheme
@@ -187,16 +190,10 @@ Plug 'taohex/lightline-buffer'
 " Plug 'rhysd/vim-color-spring-night'
 "Added oceanic next theme
 " Plug 'mhartington/oceanic-next'
-"Add Base16 color schemes vim
-" Plugin 'chriskempson/base16-vim'
 " Added html5 syntax highlighter - vim polyglot includes this by default
 " Plug 'othree/html5.vim'
 "Add context higlighting for JS depending on function scope
 " Plug 'bigfish/vim-js-context-coloring',{'do': 'npm install --update'}
-"Added rainbow parentheses plugin colorizes parens depending on depth
-" Plug 'luochen1990/rainbow'
-" Deep space theme
-" Plugin 'tyrannicaltoucan/vim-deep-space'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -383,32 +380,6 @@ nnoremap <leader>u :GundoToggle<CR>
 "Color the sign column dark grey by default
 " highlight SignColumn guibg=darkgrey
 
-"Rainbow parens always on
-let g:rainbow_active = 1 "0 is off by default and can be toggled
-"Advanced rainbow parens config for future reference
-if !has('nvim')
-  let g:rainbow_conf = {
-        \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-        \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-        \   'operators': '_,_',
-        \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-        \   'separately': {
-        \       '*': {},
-        \       'tex': {
-        \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-        \       },
-        \       'lisp': {
-        \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-        \       },
-        \       'vim': {
-        \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-        \       },
-        \       'html': 0,
-        \       'css': 0,
-        \   }
-        \}
-endif
-
 "NerdCommenter config
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -427,16 +398,6 @@ let g:NERDTrimTrailingWhitespace = 1
 
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
-"}}}
-"===================================================================================
-"BASE16 Colors - changes a range of colors to appear more vivid
-"==================================================================================={{{
-" if filereadable(expand("~/.vimrc_background"))
-  " let base16colorspace=256
-  " source ~/.vimrc_background
-" endif
-
-
 "}}}
 "====================================================================================
 "Autocommands
@@ -949,6 +910,7 @@ set diffopt+=filler                   " blank lines to keep sides aligned
 set diffopt+=iwhite                   " Ignore whitespace changes
 "}}}
 " ----------------------------------------------------------------------------{{{
+"             Format options
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
@@ -969,8 +931,6 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 "Vim searches recursively through all directories and subdirectories
 set path+=**
-
-
 
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode
@@ -1111,15 +1071,7 @@ set nostartofline
 " highlight NonText guifg=#4a4a59
 " highlight SpecialKey guifg=#4a4a59
 "
-"------------------------------------
-"  Tab line
-"------------------------------------
-" set tabline=
-" if &tabline ==# ''
-"   set tabline=
-" endif
-" set showtabline=2
-
+set omnifunc=syntaxcomplete#Complete
 " ------------------------------------
 " Command line
 " ------------------------------------
@@ -1136,9 +1088,6 @@ iabbrev w@ www.akin-sowemimo.com
 if &statusline ==# ''
     set statusline=
   endif
-if has('statusline')
-  set laststatus=2
-endif
 
 " Broken down into easily includeable segments
 " set statusline=%f
@@ -1146,6 +1095,11 @@ set statusline+=%{fugitive#statusline()} " Git Hotness
 set statusline+=%{ObsessionStatus()} "Tpope's sessions management
 set statusline+=\ %#ErrorMsg#%{neomake#statusline#QflistStatus('qf:\ ')}
 " set statusline+=%#warningmsg#
+"------------------------------------
+"  Tab line
+"------------------------------------
+"Setting show tabline causes tabline to redraw without highlighting
+set showtabline=2
 "fugitive plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -1160,8 +1114,6 @@ xmap ax <Plug>(textobj-comment-a)
 omap ax <Plug>(textobj-comment-a)
 xmap ix <Plug>(textobj-comment-i)
 omap ix <Plug>(textobj-comment-i)
-
-
 
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -1187,8 +1139,8 @@ let g:fzf_colors =
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
-" nmap <silent> co <Plug>(jsdoc)
-nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
+nmap <silent> co <Plug>(jsdoc)
+" nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
 
 
 let g:vimjs#smartcomplete = 1
@@ -1199,7 +1151,6 @@ let g:vimjs#chromeapis = 1
 " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
 set updatetime=250
-" let g:TerminusAssumeITerm=1
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('NERDTree')
@@ -1245,6 +1196,8 @@ nmap <leader>/ :BuffergatorMruCyclePrev<cr>
 
 " View the entire list of buffers open
 nmap <leader>o :BuffergatorToggle<cr>
+
+
 " augroup FormatText
 "   au!
 "   au BufWrite * :Autoformat "sets vim auto format to run on save
@@ -1261,7 +1214,22 @@ let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 "=============================================================
 let g:lightline = {
   \ 'colorscheme': 'sialoquent',
-  \ 'active': {
+  \ 'tabline': {
+      \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+      \ 'right': [ [ 'close' ], ],
+      \ },
+  \ 'component_expand': {
+      \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
+      \ },
+  \ 'component_type': {
+      \ 'buffercurrent': 'tabsel',
+      \ },
+  \ 'component_function': {
+      \ 'bufferbefore': 'lightline#buffer#bufferbefore',
+      \ 'bufferafter': 'lightline#buffer#bufferafter',
+      \ 'bufferinfo': 'lightline#buffer#bufferinfo',
+      \ },
+\ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
   \ },
@@ -1280,7 +1248,7 @@ let g:lightline = {
   \ }
 
 " use lightline-buffer in lightline
-" let g:lightline = {
+" let g:lightline.tabline = {
 "     \ 'tabline': {
 "         \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
 "         \ 'right': [ [ 'close' ], ],
@@ -1297,6 +1265,78 @@ let g:lightline = {
 "         \ 'bufferinfo': 'lightline#buffer#bufferinfo',
 "         \ },
 "     \ }
+
+
+function! LightlineModified()
+  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! LightlineFilename()
+  let fname = expand('%:t')
+  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let mark = ''  " edit here for cool mark
+      let branch = fugitive#head()
+      return branch !=# '' ? mark.branch : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! CtrlPStatusFunc_2(str)
+  return lightline#statusline(0)
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, ...) abort
+    let g:lightline.fname = a:fname
+  return lightline#statusline(0)
+endfunction
+
+
 
 " remap arrow keys
 nnoremap <Left> :bprev<CR>
@@ -1392,8 +1432,8 @@ let g:tmux_navigator_save_on_switch = 1
 augroup Neomake
   au!
 autocmd BufWritePost * Neomake
-augroup END
 " autocmd! BufWritePost,BufReadPost * Neomake
+augroup END
 let g:neomake_verbose = 0
 let g:neomake_list_height = 6
 let g:neomake_open_list = 2
@@ -1416,6 +1456,18 @@ let g:neomake_cpp_clang_maker = {
 "-----------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------
+" let g:thematic#themes = {
+"       \ 'onedark' : { 'colorscheme':'onedark',
+"       \               'background': 'dark',
+"       \               'laststatus': 2,
+"       \               'airline-theme': 'onedark',
+"       \                },
+"       \ 'solarized' :{'colorscheme': 'solarized8_dark_high',
+"       \                 'background': 'dark',
+"       \                 'airline-theme': 'badwolf',
+"       \                 'ruler': 1,
+"       \                },
+" }
 "Set color Scheme
 if has('nvim')
   colorscheme solarized8_dark_high
@@ -1426,14 +1478,19 @@ if has('nvim')
 endf
   let g:solarized_visibility="high"
   let g:solarized_statusline="normal"
-  " let g:solarized_term_italics=1
 
 nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
 nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 else
-  " colorscheme onedark
   colorscheme sialoquent
+  let g:gitgutter_sign_modified = '•'
+  let g:gitgutter_sign_added = '❖'
+  highlight GitGutterAdd guifg = '#A3E28B'
 endif
+" OneDark =================================================
+" colorscheme onedark
+
+
 "One (Dark) Atom theme =====================================
 "The theme below is essentially a variant of the one above, they look identical
   " colorscheme one
@@ -1455,11 +1512,6 @@ endif
 " colorscheme OceanicNext
 
 
-"Quantum ====================================================
-" set background=dark
-" colorscheme quantum
-
-
 
 " Spring Night ==============================================
 " This variable needs to be set, and set to nothing to maintain a light
@@ -1467,26 +1519,14 @@ endif
   " let g:spring_night_high_contrast=[]
   " colorscheme spring-night
 
-
-" Deep Space ================================================ 
-" set background=dark
-" colorscheme deep-space
-" let g:deepspace_italics = 1
-" let g:airline_theme='deep_space'
-
-
 "=======================================================================
 "Airline theme
 "=======================================================================
-  " let g:airline_theme='onedark'
-  " let g:airline_theme='one'
-  " let g:airline_theme='luna'
-  " let g:airline_theme='molokai'
-  " let g:airline_theme='solarized'
 " if !has('gui_running') && !has('nvim')
   " adding to vim-airline's statusline 
+  " let g:airline_theme='onedark'
+  " let g:airline_theme='solarized'
   " let g:airline_theme='spring_night'
-  " let g:airline_theme='quantum'
 " else
 "   let g:airline_theme='solarized'
 " endif
@@ -1517,17 +1557,12 @@ set noshiftround
 " 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
 set smarttab
 
-
-
 "Add vim sensible config options
 
 if !has('nvim')
   set complete-=i
   set autoindent
 endif
-
-
-
 
 " Use <C-I> to clear the highlighting of :set hlsearch.
 " if maparg('<C-I>', 'n') ==# ''
