@@ -49,20 +49,22 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 "Added Editor Config plugin to maintain style choices
 Plug 'editorconfig/editorconfig-vim'
-"Added nerdcommenter for commenting out text
-Plug 'scrooloose/nerdcommenter'
+"Commenting plugin
+Plug 'tomtom/tcomment_vim'
+"Added nerdcommenter for commenting out text - currently not working
+" Plug 'scrooloose/nerdcommenter' 
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
 Plug 'Raimondi/delimitMate'
 "Added further javascript syntax highlighting
-" Plug 'jelera/vim-javascript-syntax'
+Plug 'jelera/vim-javascript-syntax',{'for':'javascript'}
 "Added node.vim plugin
 Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
-" Added yet another js syntax highlighter
-Plug 'othree/yajs.vim',{'for':'javascript'}
+" Added yet another js syntax highlighter - Better performance
+" Plug 'othree/yajs.vim',{'for':'javascript'}
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
@@ -103,7 +105,7 @@ Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
 Plug 'maxbrunsfeld/vim-yankstack'
 "Add supertab to use tab for all insert mode completions
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
@@ -178,8 +180,6 @@ Plug 'myusuf3/numbers.vim'
 " Plug 'vim-airline/vim-airline'
 "Added airline themes"
 " Plug 'vim-airline/vim-airline-themes'
-
-
 " NVIM colorscheme
 " Plug 'rakr/vim-one'
 "Closes tags with > command
@@ -283,10 +283,13 @@ nnoremap <Leader>vx :VimuxInterruptRunner<CR>
 let g:SignatureMarkTextHLDynamic=1
 nnoremap [1 :call signature#marker#Goto('next', 1, v:count)
 nnoremap ]1 :call signature#marker#Goto('prev', 1, v:count)
+"NERDTree
+" =============================================
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-n> :NERDTreeToggle<CR>
-
-
+let NERDTreeCascadeOpenSingleChildDir=1
+let g:NERDTreeShowBookmarks = 1
+let NERDTreeAutoDeleteBuffer=1
 let NERDTreeShowHidden=1 "Show hidden files by default
 
 "Press enter to complete suggestions - turned off
@@ -340,24 +343,46 @@ nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe. - need to rethink this mapping
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+" this mapping Enter key to <C-y> to chose the current highlight item 
+" and close the selection list, same as other IDEs.
+" CONFLICT with some plugins like tpope/Endwise
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
 "YouCompleteMe configurations
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-"SuperTab default completion type
-let g:SuperTabDefaultCompletionType = '<C-n>'
 
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_always_populate_location_list = 1
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '∆'
+let g:vcoolor_map = '<C-0>'
 
 "=======================================================================
 "                    EMMET for Vim
@@ -371,7 +396,7 @@ let g:vcoolor_map = '∆'
 " autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 " augroup END
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key="ƒ"
+let g:user_emmet_leader_key="<c-y>"
 
 
 "Add mapping for Gundo vim
@@ -382,18 +407,18 @@ nnoremap <leader>u :GundoToggle<CR>
 
 "NerdCommenter config
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+" let g:NERDSpaceDelims = 1
 
 " Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
+" let g:NERDCompactSexyComs = 0
 
 " Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
+" let g:NERDDefaultAlign = 'left'
 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
+" let g:NERDCommentEmptyLines = 1
 
 " Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
+" let g:NERDTrimTrailingWhitespace = 1
 
 
 "Set up libraries to highlight with library syntax highlighter
@@ -420,12 +445,12 @@ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " for css or scss
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
-augroup textobj_quote
-  autocmd!
-  autocmd FileType markdown call textobj#quote#init()
-  autocmd FileType textile call textobj#quote#init()
-  autocmd FileType text call textobj#quote#init({'educate': 0})
-augroup END
+" augroup textobj_quote
+"   autocmd!
+"   autocmd FileType markdown call textobj#quote#init()
+"   autocmd FileType textile call textobj#quote#init()
+"   autocmd FileType text call textobj#quote#init({'educate': 0})
+" augroup END
 augroup formatting - excellent function but implemented by terminus
   autocmd!
   " automatically check for changed files outside vim
@@ -465,7 +490,7 @@ augroup filetype_javascript
   autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
   autocmd FileType javascript :iabbrev <buffer> und undefined
-  " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
+  autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
   autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
   "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
@@ -552,6 +577,8 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
   "Mappings
 "-----------------------------------------------------------------------------------{{{
+" Line completion - native vim
+inoremap ç <C-X><C-L>
 "Close a buffer
 nnoremap œ <C-W>q
 "Replace current word with last deleted word
@@ -1018,31 +1045,6 @@ if has('termguicolors')
   " set t_8f="^[[38;2;%lu;%lu;%lum"
 endif
 "}}}
-" ---------------------------------------------------------------------
-" Cursor
-" ---------------------------------------------------------------------{{{
-
-"Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
-augroup highlight_follows_focus
-  autocmd!
-  autocmd WinEnter * set cursorline
-  autocmd WinLeave * set nocursorline
-augroup END
-
-augroup highligh_follows_vim
-  autocmd!
-  autocmd FocusGained * set cursorline
-  autocmd FocusLost * set nocursorline
-augroup END
-" Show context around current cursor position
-"As this is set to a large number the cursor will remain in the middle of the
-"page on scroll (8 ) was the previous value
-set scrolloff=20
-set sidescrolloff=16
-
-" Stops some cursor movements from jumping to the start of a line
-set nostartofline
-"}}}
 "================================================================================
 "Whitespace
 "================================================================================
@@ -1107,8 +1109,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "Plugin configurations
 "-----------------------------------------------------------------{{{
 nnoremap <localleader>h <Esc>:call ToggleHardMode()<CR>
+" imap <C-c> <plug>NERDCommenterInsert
 
-
+let delimitMate_balance_matchpairs = 1
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ax <Plug>(textobj-comment-a)
 omap ax <Plug>(textobj-comment-a)
@@ -1212,11 +1215,12 @@ let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 "=============================================================
 "               Lightline
 "=============================================================
+" \ 'right': [ [ 'close' ], ],
+" use lightline-buffer in lightline
 let g:lightline = {
   \ 'colorscheme': 'sialoquent',
   \ 'tabline': {
       \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-      \ 'right': [ [ 'close' ], ],
       \ },
   \ 'component_expand': {
       \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
@@ -1234,7 +1238,7 @@ let g:lightline = {
   \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
   \ },
   \ 'component': {
-  \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+  \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
   \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
   \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
   \ },
@@ -1246,25 +1250,6 @@ let g:lightline = {
   \ 'separator': { 'left': '', 'right': '' },
   \ 'subseparator': { 'left': '∿', 'right': '❂' }
   \ }
-
-" use lightline-buffer in lightline
-" let g:lightline.tabline = {
-"     \ 'tabline': {
-"         \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-"         \ 'right': [ [ 'close' ], ],
-"         \ },
-"     \ 'component_expand': {
-"         \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
-"         \ },
-"     \ 'component_type': {
-"         \ 'buffercurrent': 'tabsel',
-"         \ },
-"     \ 'component_function': {
-"         \ 'bufferbefore': 'lightline#buffer#bufferbefore',
-"         \ 'bufferafter': 'lightline#buffer#bufferafter',
-"         \ 'bufferinfo': 'lightline#buffer#bufferinfo',
-"         \ },
-"     \ }
 
 
 function! LightlineModified()
@@ -1346,7 +1331,8 @@ nnoremap <Right> :bnext<CR>
 " replace these symbols with ascii characters if your environment does not support unicode
 let g:lightline_buffer_logo = ' '
 let g:lightline_buffer_readonly_icon = ''
-let g:lightline_buffer_modified_icon = '✭'
+" let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_modified_icon = '+'
 let g:lightline_buffer_git_icon = ' '
 let g:lightline_buffer_ellipsis_icon = '..'
 let g:lightline_buffer_expand_left_icon = '◀ '
@@ -1487,6 +1473,9 @@ else
   let g:gitgutter_sign_added = '❖'
   highlight GitGutterAdd guifg = '#A3E28B'
 endif
+
+"Sets no highlighting for conceal
+hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
 " OneDark =================================================
 " colorscheme onedark
 
@@ -1624,11 +1613,34 @@ set history=50
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
-set matchtime=1 " tenths of a second
-set showmatch "briefly jump to ?matching parens
 " Sets a case insensitive search except when using Caps
 set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
 set nohlsearch " -functionality i.e. search highlighting done by easy motion
 
+" ---------------------------------------------------------------------
+" Cursor
+" ---------------------------------------------------------------------{{{
+
+" Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
+" augroup highlight_follows_focus
+"   autocmd!
+"   autocmd WinEnter * set cursorline ctermbg=238
+"   autocmd WinLeave * set nocursorline
+" augroup END
+"
+" augroup highlight_follows_vim
+"   autocmd!
+"   autocmd FocusGained * set hi cursorline ctermbg=238
+"   autocmd FocusLost * set nocursorline
+" augroup END
+" Show context around current cursor position
+"As this is set to a large number the cursor will remain in the middle of the
+"page on scroll (8 ) was the previous value
+set scrolloff=20
+set sidescrolloff=16
+
+" Stops some cursor movements from jumping to the start of a line
+set nostartofline
+"}}}
