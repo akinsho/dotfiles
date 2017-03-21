@@ -1,0 +1,203 @@
+"Prev abandoned VIMRC settings
+"========================================================================
+
+"Change operator arguments to a character representing the desired motion
+"- there are native text motions with do this - "b i.e cib - change inner block
+"Moves to the previous set of parentheses and operate on its contents
+" onoremap lp  :<c-u>normal! F)vi(<cr>
+"Moves to the next set of parentheses and operate on its contents
+" onoremap np :<c-u>normal! f(vi(<cr>
+"Moves to the previous set of braces and operate on its contents
+" onoremap lb :<c-u>normal! F}vi{<cr>
+"Moves to the next set of braces and operate on its contents
+" onoremap nb :<c-u>normal! f{vi{<cr>
+"Deletes around next pair of parens - still can't crack it
+" onoremap op :<c-u>normal! F(vT)<cr>
+"Works similarly to the bindings above - finds quotes and operates inside them
+" onoremap sq :<c-u>normal! f'vi'<cr>
+" onoremap dq :<c-u>normal! f"vi"<cr>
+
+
+"This sets the search highlighting which actually changes the appearance of
+"neomake/ any linters warnings
+" hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=#073642
+
+" Broken down into easily includeable segments
+" set statusline=%f
+" set statusline+=%{fugitive#statusline()} " Git Hotness
+" set statusline+=%{ObsessionStatus()} "Tpope's sessions management
+" set statusline+=\ %#ErrorMsg#%{neomake#statusline#QflistStatus('qf:\ ')}
+" set statusline+=%#warningmsg#
+
+"Display extra whitespace
+" set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
+
+
+"Using current terminal font - which is a patched nerd font
+" set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
+" augroup MatchParens
+"   au!
+"   autocmd VimEnter * :DoMatchParen<CR>
+" augroup END
+"================================================================================
+"Whitespace
+"================================================================================
+" function! StripWhiteSpace ()
+"  exec ':%/ \+$//gc'
+" endfunction
+" map <leader>r :call StripWhiteSpace ()<CR>
+
+
+"Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
+" set list
+" set listchars=
+"This sets list tab chars to invisible
+" set listchars=tab:\ \
+" set listchars+=tab:▸\
+" set listchars+=tab:\┆\
+" set listchars+=trail:·
+" set listchars+=nbsp:⣿
+" set listchars+=extends:»              " show cut off when nowrap
+" set listchars+=precedes:«
+" "Invisible character colors
+" highlight NonText guifg=#4a4a59
+" highlight SpecialKey guifg=#4a4a59
+"
+" set omnifunc=syntaxcomplete#Complete
+
+"=============================================================
+"               Lightline
+"=============================================================
+" \ 'right': [ [ 'close' ], ],
+" use lightline-buffer in lightline
+"let g:lightline = {
+"  \ 'colorscheme': 'sialoquent',
+"  \ 'tabline': {
+"      \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+"      \ },
+"  \ 'component_expand': {
+"      \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
+"      \ },
+"  \ 'component_type': {
+"      \ 'buffercurrent': 'tabsel',
+"      \ },
+"  \ 'component_function': {
+"      \ 'bufferbefore': 'lightline#buffer#bufferbefore',
+"      \ 'bufferafter': 'lightline#buffer#bufferafter',
+"      \ 'bufferinfo': 'lightline#buffer#bufferinfo',
+"      \ },
+"\ 'active': {
+"  \   'left': [ [ 'mode', 'paste' ],
+"  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+"  \ },
+"  \ 'component': {
+"  \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
+"  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+"  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+"  \ },
+"  \ 'component_visible_condition': {
+"  \   'readonly': '(&filetype!="help"&& &readonly)',
+"  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+"  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+"  \ },
+"  \ 'separator': { 'left': '', 'right': '' },
+"  \ 'subseparator': { 'left': '∿', 'right': '❂' }
+"  \ }
+"
+"
+"function! LightlineModified()
+"  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+"endfunction
+"
+"function! LightlineReadonly()
+"  return &ft !~? 'help' && &readonly ? 'RO' : ''
+"endfunction
+"
+"function! LightlineFilename()
+"  let fname = expand('%:t')
+"  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+"        \ fname == '__Tagbar__' ? g:lightline.fname :
+"        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+"        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+"        \ &ft == 'unite' ? unite#get_status_string() :
+"        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+"        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+"        \ ('' != fname ? fname : '[No Name]') .
+"        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+"endfunction
+"
+"function! LightlineFugitive()
+"  try
+"    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+"      let mark = ''  " edit here for cool mark
+"      let branch = fugitive#head()
+"      return branch !=# '' ? mark.branch : ''
+"    endif
+"  catch
+"  endtry
+"  return ''
+"endfunction
+"
+"function! LightlineFileformat()
+"  return winwidth(0) > 70 ? &fileformat : ''
+"endfunction
+"
+"function! LightlineFiletype()
+"  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+"endfunction
+"
+"function! LightlineFileencoding()
+"  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+"endfunction
+"
+"function! LightlineMode()
+"  let fname = expand('%:t')
+"  return fname == '__Tagbar__' ? 'Tagbar' :
+"        \ fname == 'ControlP' ? 'CtrlP' :
+"        \ fname == '__Gundo__' ? 'Gundo' :
+"        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+"        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+"        \ &ft == 'unite' ? 'Unite' :
+"        \ &ft == 'vimfiler' ? 'VimFiler' :
+"        \ &ft == 'vimshell' ? 'VimShell' :
+"        \ winwidth(0) > 60 ? lightline#mode() : ''
+"endfunction
+"
+"function! CtrlPStatusFunc_2(str)
+"  return lightline#statusline(0)
+"endfunction
+"
+"let g:tagbar_status_func = 'TagbarStatusFunc'
+"
+"function! TagbarStatusFunc(current, sort, fname, ...) abort
+"    let g:lightline.fname = a:fname
+"  return lightline#statusline(0)
+"endfunction
+
+
+" lightline-buffer ui settings
+" replace these symbols with ascii characters if your environment does not support unicode
+"
+"let g:lightline_buffer_logo = ' '
+"let g:lightline_buffer_readonly_icon = ''
+"" let g:lightline_buffer_modified_icon = '✭'
+"let g:lightline_buffer_modified_icon = '+'
+"let g:lightline_buffer_git_icon = ' '
+"let g:lightline_buffer_ellipsis_icon = '..'
+"let g:lightline_buffer_expand_left_icon = '◀ '
+"let g:lightline_buffer_expand_right_icon = ' ▶'
+"let g:lightline_buffer_active_buffer_left_icon = ''
+"let g:lightline_buffer_active_buffer_right_icon = ''
+"let g:lightline_buffer_separator_icon = ' '
+"
+"" lightline-buffer function settings
+"let g:lightline_buffer_show_bufnr = 1
+"let g:lightline_buffer_rotate = 0
+"let g:lightline_buffer_fname_mod = ':t'
+"let g:lightline_buffer_excludes = ['vimfiler']
+"
+"let g:lightline_buffer_maxflen = 30
+"let g:lightline_buffer_maxfextlen = 3
+"let g:lightline_buffer_minflen = 16
+"let g:lightline_buffer_minfextlen = 3
+"let g:lightline_buffer_reservelen = 20

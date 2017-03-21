@@ -20,10 +20,10 @@ set foldlevelstart=0
 "-----------------------------------------------------------{{{
 "This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    endif
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 let g:ycm_confirm_extra_conf = 0
@@ -51,8 +51,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'editorconfig/editorconfig-vim'
 "Commenting plugin
 Plug 'tomtom/tcomment_vim'
-"Added nerdcommenter for commenting out text - currently not working
-" Plug 'scrooloose/nerdcommenter' 
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
@@ -64,7 +62,7 @@ Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 " Added yet another js syntax highlighter - Better performance
-" Plug 'othree/yajs.vim'
+Plug 'othree/yajs.vim'
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
@@ -81,8 +79,6 @@ Plug 'chip/vim-fat-finger'
 Plug 'othree/jspc.vim'
 " Adds syntax completion for things like canvas and chrome APIs
 Plug '1995eaton/vim-better-javascript-completion'
-"Added SyntaxComplete for more syntax completion
-Plug 'vim-scripts/SyntaxComplete'
 "Add proper markdown syntax and indentation plugin
 Plug 'gabrielelana/vim-markdown'
 "Added color picker plugin
@@ -90,7 +86,7 @@ Plug 'KabbAmine/vCoolor.vim'
 "Add Tern for autocompletion
 function! BuildTern(info)
   if a:info.status == 'installed' || a:info.force
-   !npm install
+    !npm install
   endif
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
@@ -107,7 +103,8 @@ Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf'
+", { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "React Snippets since I can't get the defaults to work
 Plug 'justinj/vim-react-snippets'
@@ -125,20 +122,15 @@ Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-obsession'
 "TPope tag plugin
 Plug 'tpope/vim-ragtag'
-"vim sialoquent theme
-Plug 'davidklsn/vim-sialoquent'
-"Colorsheme solarized 8
-Plug 'lifepillar/vim-solarized8'
-"Colorscheme - OneDark
-Plug 'joshdick/onedark.vim'
 " Neomake async linting
 Plug 'neomake/neomake'
 
+"Text Objects =====================
 "Text object library plugin for defining your own text objects
 Plug 'kana/vim-textobj-user'
-"Text object for closest inner (),{} or [] 
+"Text object for closest inner (),{} or []
 Plug 'Julian/vim-textobj-brace'
-"Text obj for comments 
+"Text obj for comments
 Plug 'glts/vim-textobj-comment'
 " Add text objects form camel cased strings (should be native imho)
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
@@ -148,6 +140,8 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'michaeljsmith/vim-indent-object'
 " Text object for manipulating chunks
 Plug 'Chun-Yang/vim-textobj-chunk'
+
+"Coding tools =======================
 "Add JSDocs plugin
 Plug 'heavenshell/vim-jsdoc'
 "Add Tagbar Plugin
@@ -156,39 +150,52 @@ Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
 "Vim HARDMODE ----------------------
 Plug 'wikitopian/hardmode'
-"Another attempt at implementing lightline
-Plug 'itchyny/lightline.vim'
-"Add ligtline buffers
-Plug 'taohex/lightline-buffer'
-" A plugin for managing vim themes
-Plug 'reedes/vim-thematic'
+
+"Visuals ===============================
 " toggles line numbering depending on current mode
 Plug 'myusuf3/numbers.vim'
+"Filetype Plugins ======================
 "Add better markdown previewer
 Plug 'shime/vim-livedown'
 
+
+"Status/bufferline =====================
+"Another attempt at implementing lightline
+"Plug 'itchyny/lightline.vim'
+"Add ligtline buffers
+"Plug 'taohex/lightline-buffer'
+"Added vim airline
+Plug 'vim-airline/vim-airline'
+"Added airline themes"
+Plug 'vim-airline/vim-airline-themes'
+"Themes ===============================
+" A plugin for managing vim themes
+Plug 'reedes/vim-thematic'
+"vim sialoquent theme
+Plug 'davidklsn/vim-sialoquent'
+"Colorsheme solarized 8
+Plug 'lifepillar/vim-solarized8'
+"Colorscheme - OneDark
+Plug 'joshdick/onedark.vim'
+" Add new theme trial purposes ofc
+Plug 'rhysd/vim-color-spring-night'
+"Added oceanic next theme
+Plug 'mhartington/oceanic-next'
+
+"Added SyntaxComplete for more syntax completion
+" Plug 'vim-scripts/SyntaxComplete'
+"Added nerdcommenter for commenting out text - currently not working
+" Plug 'scrooloose/nerdcommenter'
 "Add supertab to use tab for all insert mode completions
 " Plug 'ervandew/supertab'
 "Excellent terminal integration for vim
 " Plug 'wincent/terminus'
 "Add Vim-Quickfix window plugin for managing basic qf functionality
 " Plug 'romainl/vim-qf'
-"Added vim airline
-" Plug 'vim-airline/vim-airline'
-"Added airline themes"
-" Plug 'vim-airline/vim-airline-themes'
 " NVIM colorscheme
 " Plug 'rakr/vim-one'
 "Closes tags with > command
 " Plug 'alvan/vim-closetag'
-"Added vim javascript - this is automatically included in vim polyglot
-" Plug 'pangloss/vim-javascript'
-" Add new theme trial purposes ofc
-" Plug 'rhysd/vim-color-spring-night'
-"Added oceanic next theme
-" Plug 'mhartington/oceanic-next'
-" Added html5 syntax highlighter - vim polyglot includes this by default
-" Plug 'othree/html5.vim'
 "Add context higlighting for JS depending on function scope
 " Plug 'bigfish/vim-js-context-coloring',{'do': 'npm install --update'}
 
@@ -209,7 +216,7 @@ if !has('gui_running') && !has('nvim')
   set term=screen-256color
 endif
 
-  syntax enable
+syntax enable
 "}}}
 "====================================================================================
 "Leader bindings
@@ -229,18 +236,18 @@ let g:javascript_conceal_arrow_function = "⇒"
 
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
-    " Additional settings
-    setlocal spell
+  " Additional settings
+  setlocal spell
 
-    " If no commit message, start with insert mode
-    if a:info.vcs ==# 'git' && getline(1) ==# ''
-        startinsert
-    end
+  " If no commit message, start with insert mode
+  if a:info.vcs ==# 'git' && getline(1) ==# ''
+    startinsert
+  end
 
-    " Scroll the diff window from insert mode
-    " Map <C-n> and <C-p>
-    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+  " Scroll the diff window from insert mode
+  " Map <C-n> and <C-p>
+  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 
 endfunction
 
@@ -268,7 +275,7 @@ nnoremap <Leader>vq :VimuxCloseRunner<CR>
 nnoremap <Leader>vx :VimuxInterruptRunner<CR>
 
 " Zoom the runner pane (use <bind-key> z to restore runner pane)
- nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
+nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
 
 
 
@@ -282,6 +289,10 @@ nnoremap ]1 :call signature#marker#Goto('prev', 1, v:count)
 " =============================================
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-N>n :NERDTreeFind<CR>
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 let NERDTreeCascadeOpenSingleChildDir=1
 let g:NERDTreeShowBookmarks = 1
 let NERDTreeAutoDeleteBuffer=1
@@ -335,24 +346,24 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
+  call UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips#JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
     endif
-    return ""
+  endif
+  return ""
 endfunction
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-e>"
-" this mapping Enter key to <C-y> to chose the current highlight item 
+" this mapping Enter key to <C-y> to chose the current highlight item
 " and close the selection list, same as other IDEs.
 " CONFLICT with some plugins like tpope/Endwise
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -455,7 +466,7 @@ augroup VimResizing
 augroup END
 
 
-  augroup filetype_css
+augroup filetype_css
   autocmd!
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 augroup END
@@ -557,7 +568,7 @@ set complete+=kspell
 "Add spell checking local
 " setlocal spell spelllang=en_us
 "-----------------------------------------------------------------------------------
-  "Mappings
+"Mappings
 "-----------------------------------------------------------------------------------{{{
 " Line completion - native vim
 inoremap ç <C-X><C-L>
@@ -566,9 +577,9 @@ inoremap ç <C-X><C-L>
 "Replace current word with last deleted word
 nnoremap S diw"0P
 "Toggle case in insert and normal mode
-
 " nnoremap ;u mzg~iw`z
 " inoremap ;u _<Esc>mza<C-Right><Esc>bg~iw`zi<Del>
+
 " make last typed word uppercase
 inoremap ;u <esc>viwUea
 " make . work with visually selected lines
@@ -579,9 +590,6 @@ nnoremap % v%
 nnoremap ß :update<CR>
 inoremap ß <esc>:update<CR>
 
-"Control-m has this functionality natively
-" inoremap <M-o>       <Esc>o
-" inoremap ø       <Esc>o
 let g:ragtag_global_maps = 1
 
 "This mapping alternates between variants of number and relative number
@@ -663,9 +671,9 @@ vnoremap > >gv
 "Help Command - vertical split
 command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
 function! VerticalHelp(topic)
-    execute "vertical botright help " . a:topic
-    execute "vertical resize 78"
-  endfunction
+  execute "vertical botright help " . a:topic
+  execute "vertical resize 78"
+endfunction
 "--------------------------------------------
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
@@ -697,8 +705,6 @@ nnoremap <localleader>l :redraw!<cr>
 nnoremap _ :sp<CR>
 "Create a vertical split
 nnoremap \| :vsp<CR>
-" Resize window vertically - grow
-" nnoremap <Leader>ff 15<c-w>+
 " Resize window vertically  - shrink
 nnoremap <Leader>ee 15<c-w>-
 " Increase window size horizontally
@@ -709,6 +715,8 @@ nnoremap <leader>ff 15<c-w><
 nnoremap <localleader>f <C-W>_
 " Max out the width of the current split
 nnoremap <localleader>e <C-W>|
+" Resize window vertically - grow
+" nnoremap <Leader>ff 15<c-w>+
 
 
 "Normalize all split sizes, which is very handy when resizing terminal
@@ -728,29 +736,14 @@ nnoremap <leader>x :lclose<CR>
 "Indent a page of HTML (?works for other code)
 nnoremap <C-G> gg=G<CR>
 
-"Change operator arguments to a character representing the desired motion
-"- there are native text motions with do this - "b i.e cib - change inner block
-"Moves to the previous set of parentheses and operate on its contents
-" onoremap lp  :<c-u>normal! F)vi(<cr>
-"Moves to the next set of parentheses and operate on its contents
-" onoremap np :<c-u>normal! f(vi(<cr>
-"Moves to the previous set of braces and operate on its contents
-" onoremap lb :<c-u>normal! F}vi{<cr>
-"Moves to the next set of braces and operate on its contents
-" onoremap nb :<c-u>normal! f{vi{<cr>
-"Deletes around next pair of parens - still can't crack it
-" onoremap op :<c-u>normal! F(vT)<cr>
-"Works similarly to the bindings above - finds quotes and operates inside them
-" onoremap sq :<c-u>normal! f'vi'<cr>
-" onoremap dq :<c-u>normal! f"vi"<cr>
 
 "For each char her it applies a remap deleting all occurrences of the car with
 "an a operator or the things past it with an i operator
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
-    execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
-    execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
-    execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
-    execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+  execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+  execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+  execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+  execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
 endfor
 
 
@@ -773,7 +766,7 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-"key mappings 
+"key mappings
 "Remaps the binding to increment numbers to <leader>a and to decrement to å
 
 nnoremap <silent> <Leader>a <C-A>
@@ -966,17 +959,11 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " Display
 " --------------------------------------------------------------------------{{{
 set title                             " wintitle = filename - vim
-"Using current terminal font - which is a patched nerd font
-" set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
-" augroup MatchParens
-"   au!
-"   autocmd VimEnter * :DoMatchParen<CR>
-" augroup END
-highlight MatchParen ctermbg=blue guibg=lightgreen 
+highlight MatchParen ctermbg=blue guibg=lightgreen
 
 "Add relative line numbers and relative = absolute line numbers i.e current
 "lines shows absolute and all others are relative
-set ttyfast " Improves smoothness of redrawing when there are multiple windows 
+set ttyfast " Improves smoothness of redrawing when there are multiple windows
 
 set relativenumber
 set number
@@ -1029,32 +1016,6 @@ endif
 "================================================================================
 "Whitespace
 "================================================================================
-"Display extra whitespace
-" set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
-
-
-" function! StripWhiteSpace ()
-"  exec ':%/ \+$//gc'
-" endfunction
-" map <leader>r :call StripWhiteSpace ()<CR>
-
-
-"Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
-" set list
-" set listchars=
-"This sets list tab chars to invisible
-" set listchars=tab:\ \
-" set listchars+=tab:▸\
-" set listchars+=tab:\┆\
-" set listchars+=trail:·
-" set listchars+=nbsp:⣿
-" set listchars+=extends:»              " show cut off when nowrap
-" set listchars+=precedes:«
-" "Invisible character colors
-" highlight NonText guifg=#4a4a59
-" highlight SpecialKey guifg=#4a4a59
-"
-set omnifunc=syntaxcomplete#Complete
 " ------------------------------------
 " Command line
 " ------------------------------------
@@ -1069,15 +1030,9 @@ set cmdheight=1
 iabbrev w@ www.akin-sowemimo.com
 
 if &statusline ==# ''
-    set statusline=
-  endif
+  set statusline=
+endif
 
-" Broken down into easily includeable segments
-" set statusline=%f
-set statusline+=%{fugitive#statusline()} " Git Hotness
-set statusline+=%{ObsessionStatus()} "Tpope's sessions management
-set statusline+=\ %#ErrorMsg#%{neomake#statusline#QflistStatus('qf:\ ')}
-" set statusline+=%#warningmsg#
 "------------------------------------
 "  Tab line
 "------------------------------------
@@ -1093,7 +1048,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " buffer
 let g:livedown_autorun = 1
 " should the browser window pop-up upon previewing
-let g:livedown_open = 1 
+let g:livedown_open = 1
 " the port on which Livedown server will run
 let g:livedown_port = 1337
 nnoremap gm :LivedownToggle<CR>
@@ -1109,24 +1064,24 @@ xmap ix <Plug>(textobj-comment-i)
 omap ix <Plug>(textobj-comment-i)
 
 let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit' }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+      \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
 
 
 let g:jsdoc_allow_input_prompt = 1
@@ -1161,8 +1116,6 @@ omap ag <Plug>GitGutterTextObjectOuterPending
 xmap ig <Plug>GitGutterTextObjectInnerVisual
 xmap ag <Plug>GitGutterTextObjectOuterVisual
 
-" vim_markdown plugin should clean up after itself
-let vim_markdown_preview_temp_file=1
 " Use right side of the screen for opening splits
 let g:buffergator_viewport_split_policy = 'R'
 
@@ -1170,24 +1123,16 @@ let g:buffergator_viewport_split_policy = 'R'
 call camelcasemotion#CreateMotionMappings('<leader>')
 " I want my own keymappings...
 let g:buffergator_suppress_keymaps = 1
- 
+
 " Looper buffers
 let g:buffergator_mru_cycle_loop = 1
 
 
-"Bound to arrow keys to open splits with MRU buffers 
+"Bound to arrow keys to open splits with MRU buffers
 nnoremap <left> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
 " nnoremap <C-right> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
 nnoremap <right> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
 " nnoremap <C-left> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
-
-
-" Go to the next buffer open
-" nmap <leader><tab>  :BuffergatorMruCycleNext<cr>
-
-" Go to the previous buffer open
-" nmap <leader>/ :BuffergatorMruCyclePrev<cr>
-
 
 " View the entire list of buffers open
 nmap <leader>o :BuffergatorToggle<cr>
@@ -1204,201 +1149,64 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-"=============================================================
-"               Lightline
-"=============================================================
-" \ 'right': [ [ 'close' ], ],
-" use lightline-buffer in lightline
-let g:lightline = {
-  \ 'colorscheme': 'sialoquent',
-  \ 'tabline': {
-      \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-      \ },
-  \ 'component_expand': {
-      \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
-      \ },
-  \ 'component_type': {
-      \ 'buffercurrent': 'tabsel',
-      \ },
-  \ 'component_function': {
-      \ 'bufferbefore': 'lightline#buffer#bufferbefore',
-      \ 'bufferafter': 'lightline#buffer#bufferafter',
-      \ 'bufferinfo': 'lightline#buffer#bufferinfo',
-      \ },
-\ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-  \ },
-  \ 'component': {
-  \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
-  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-  \ },
-  \ 'component_visible_condition': {
-  \   'readonly': '(&filetype!="help"&& &readonly)',
-  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-  \ },
-  \ 'separator': { 'left': '', 'right': '' },
-  \ 'subseparator': { 'left': '∿', 'right': '❂' }
-  \ }
-
-
-function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! LightlineReadonly()
-  return &ft !~? 'help' && &readonly ? 'RO' : ''
-endfunction
-
-function! LightlineFilename()
-  let fname = expand('%:t')
-  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlineFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let branch = fugitive#head()
-      return branch !=# '' ? mark.branch : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
-endfunction
-
-function! LightlineMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! CtrlPStatusFunc_2(str)
-  return lightline#statusline(0)
-endfunction
-
-let g:tagbar_status_func = 'TagbarStatusFunc'
-
-function! TagbarStatusFunc(current, sort, fname, ...) abort
-    let g:lightline.fname = a:fname
-  return lightline#statusline(0)
-endfunction
-
-
 
 " remap alt-H,J to change buffers
 nnoremap ¬ :bprev<CR>
 nnoremap ˙ :bnext<CR>
 
-" lightline-buffer ui settings
-" replace these symbols with ascii characters if your environment does not support unicode
-"
-let g:lightline_buffer_logo = ' '
-let g:lightline_buffer_readonly_icon = ''
-" let g:lightline_buffer_modified_icon = '✭'
-let g:lightline_buffer_modified_icon = '+'
-let g:lightline_buffer_git_icon = ' '
-let g:lightline_buffer_ellipsis_icon = '..'
-let g:lightline_buffer_expand_left_icon = '◀ '
-let g:lightline_buffer_expand_right_icon = ' ▶'
-let g:lightline_buffer_active_buffer_left_icon = ''
-let g:lightline_buffer_active_buffer_right_icon = ''
-let g:lightline_buffer_separator_icon = ' '
-
-" lightline-buffer function settings
-let g:lightline_buffer_show_bufnr = 1
-let g:lightline_buffer_rotate = 0
-let g:lightline_buffer_fname_mod = ':t'
-let g:lightline_buffer_excludes = ['vimfiler']
-
-let g:lightline_buffer_maxflen = 30
-let g:lightline_buffer_maxfextlen = 3
-let g:lightline_buffer_minflen = 16
-let g:lightline_buffer_minfextlen = 3
-let g:lightline_buffer_reservelen = 20
-
 "=============================================================
 "               Airline
 "=============================================================
-" let g:airline_extensions = ['branch','tabline','obsession']
-" let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-" " let g:airline#extensions#tagbar#enabled = 1
-" let g:airline_detect_iminsert                  = 1
-" let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-" let g:airline_powerline_fonts                  = 1
-" let g:airline#extensions#tabline#enabled       = 1
-" " let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
-" let g:airline#extensions#tabline#show_tabs     = 1
-" let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-" let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline#extensions#tabline#show_tab_type = 1
-" " Makes airline tabs rectangular
-" let g:airline_left_sep = ' '
-" let g:airline_right_sep = ' '
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
-"
-" let g:airline#extensions#tabline#right_sep = ''
-" let g:airline#extensions#tabline#right_alt_sep = '|'
-" "This defines the separators for airline changes them from the default arrows
-" let g:airline_left_alt_sep = ''
-" let g:airline_right_alt_sep = ''
-"
-" " configure whether close button should be shown: >
-" let g:airline#extensions#tabline#show_close_button = 1
-"
-" " determine whether inactive windows should have the left section collapsed to
-" " only the filename of that buffer.  >
-" let g:airline_inactive_collapse=1
-" " * configure symbol used to represent close button >
-" " let g:airline#extensions#tabline#close_symbol = 'X'
-" " * configure pattern to be ignored on BufAdd autocommand >
-"   " fixes unnecessary redraw, when e.g. opening Gundo window
-" let airline#extensions#tabline#ignore_bufadd_pat =
-"       \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
-"
-" let g:airline#extensions#tabline#buffer_idx_mode = 1
-" nmap <localleader>1 <Plug>AirlineSelectTab1
-" nmap <localleader>2 <Plug>AirlineSelectTab2
-" nmap <localleader>3 <Plug>AirlineSelectTab3
-" nmap <localleader>4 <Plug>AirlineSelectTab4
-" nmap <localleader>5 <Plug>AirlineSelectTab5
-" nmap <localleader>6 <Plug>AirlineSelectTab6
-" nmap <localleader>7 <Plug>AirlineSelectTab7
-" nmap <localleader>8 <Plug>AirlineSelectTab8
-" nmap <localleader>9 <Plug>AirlineSelectTab9
-" nmap <localleader>- <Plug>AirlineSelectPrevTab
-" nmap <localleader>+ <Plug>AirlineSelectNextTab
-"
+let g:airline_extensions = ['branch','tabline','obsession']
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_detect_iminsert                  = 1
+let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+let g:airline_powerline_fonts                  = 1
+let g:airline#extensions#tabline#enabled       = 1
+" let g:airline#extensions#tagbar#enabled = 1
+" let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
+let g:airline#extensions#tabline#show_tabs     = 1
+let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 1
+" Makes airline tabs rectangular
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+"This defines the separators for airline changes them from the default arrows
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+
+" configure whether close button should be shown: >
+let g:airline#extensions#tabline#show_close_button = 1
+
+" determine whether inactive windows should have the left section collapsed to
+" only the filename of that buffer.  >
+let g:airline_inactive_collapse=1
+" * configure symbol used to represent close button >
+" let g:airline#extensions#tabline#close_symbol = 'X'
+" * configure pattern to be ignored on BufAdd autocommand >
+" fixes unnecessary redraw, when e.g. opening Gundo window
+let airline#extensions#tabline#ignore_bufadd_pat =
+      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <localleader>1 <Plug>AirlineSelectTab1
+nmap <localleader>2 <Plug>AirlineSelectTab2
+nmap <localleader>3 <Plug>AirlineSelectTab3
+nmap <localleader>4 <Plug>AirlineSelectTab4
+nmap <localleader>5 <Plug>AirlineSelectTab5
+nmap <localleader>6 <Plug>AirlineSelectTab6
+nmap <localleader>7 <Plug>AirlineSelectTab7
+nmap <localleader>8 <Plug>AirlineSelectTab8
+nmap <localleader>9 <Plug>AirlineSelectTab9
+nmap <localleader>- <Plug>AirlineSelectPrevTab
+nmap <localleader>+ <Plug>AirlineSelectNextTab
+
 "Remaps native insert mode paste binding to alt-p
 inoremap π <C-R>0
 inoremap … <C-R><C-P>0
@@ -1406,12 +1214,12 @@ inoremap … <C-R><C-P>0
 let g:tmux_navigator_save_on_switch = 1
 
 "-----------------------------------------------------------
-"     NEOMAKE 
+"     NEOMAKE
 "-----------------------------------------------------------
 augroup Neomake
   au!
-autocmd BufWritePost * Neomake
-" autocmd! BufWritePost,BufReadPost * Neomake
+  autocmd BufWritePost * Neomake
+  " autocmd! BufWritePost,BufReadPost * Neomake
 augroup END
 let g:neomake_verbose = 0
 let g:neomake_list_height = 6
@@ -1427,91 +1235,68 @@ let g:quickfixsigns_protect_sign_rx = '^neomake_'
 "   \ }
 let g:neomake_cpp_enabled_makers = ['clang']
 let g:neomake_cpp_clang_maker = {
-    \ 'args': ['-std=c++14', '-Wall', '-Wextra', '-Weverything', '-pedantic']
-    \ }
+      \ 'args': ['-std=c++14', '-Wall', '-Wextra', '-Weverything', '-pedantic']
+      \ }
 
 
 "}}}
 "-----------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------
-" let g:thematic#themes = {
-"       \ 'onedark' : { 'colorscheme':'onedark',
-"       \               'background': 'dark',
-"       \               'laststatus': 2,
-"       \               'airline-theme': 'onedark',
-"       \                },
-"       \ 'solarized' :{'colorscheme': 'solarized8_dark_high',
-"       \                 'background': 'dark',
-"       \                 'airline-theme': 'badwolf',
-"       \                 'ruler': 1,
-"       \                },
-" }
+let g:thematic#themes = {
+      \ 'onedark' : { 'colorscheme':'onedark',
+      \               'background': 'dark',
+      \               'laststatus': 2,
+      \               'airline-theme': 'onedark',
+      \                },
+      \ 'solarized' :{'colorscheme': 'solarized8_dark_high',
+      \                 'background': 'dark',
+      \                 'airline-theme': 'solarized',
+      \                 'ruler': 1,
+      \                },
+      \ 'sialoquent' :{'colorscheme': 'sialoquent',
+      \                 'airline-theme': 'bubblegum',
+      \                },
+      \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
+      \                 'airline-theme': 'oceanicnext',
+      \                },
+      \ 'spring-night' :{'colorscheme': 'spring-night',
+      \                 'airline-theme': 'spring_night',
+      \                },
+      \}
 "Set color Scheme
-if has('nvim')
-  colorscheme solarized8_dark_high
+let g:thematic#theme_name = 'sialoquent'
+nnoremap <Leader>ch :ThematicNext<CR>
 
-  fun! Solarized8Contrast(delta)
+
+fun! Solarized8Contrast(delta)
   let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
   exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
 endf
-  let g:solarized_visibility="high"
-  let g:solarized_statusline="normal"
+let g:solarized_visibility="high"
+let g:solarized_statusline="normal"
 
 nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
 nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
-else
-  colorscheme sialoquent
+" endif
+
+
+"if g:colors_name ==# 'sialoquent'
   let g:gitgutter_sign_modified = '•'
   let g:gitgutter_sign_added = '❖'
-  highlight GitGutterAdd guifg = '#A3E28B'
-endif
+  "highlight GitGutterAdd guifg = '#A3E28B'
+"endif
 
 "Sets no highlighting for conceal
 hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
-" OneDark =================================================
-" colorscheme onedark
-
-
-"One (Dark) Atom theme =====================================
-"The theme below is essentially a variant of the one above, they look identical
-  " colorscheme one
-  " set background=dark
-  " let g:one_allow_italics = 1 " I love italic for comments
-
-
-"This sets the search highlighting which actually changes the appearance of
-"neomake/ any linters warnings
-" hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=#073642
-
-
-"Spring Night ===============================================
-  " let g:spring_night_high_contrast=[]
-  " colorscheme spring-night
-
-"Oceanic Next ===============================================
-" The Best and Most stable colorscheme
-" colorscheme OceanicNext
-
 
 
 " Spring Night ==============================================
 " This variable needs to be set, and set to nothing to maintain a light
 " contrast
-  " let g:spring_night_high_contrast=[]
-  " colorscheme spring-night
-
-"=======================================================================
-"Airline theme
-"=======================================================================
-" if !has('gui_running') && !has('nvim')
-  " adding to vim-airline's statusline 
-  " let g:airline_theme='onedark'
-  " let g:airline_theme='solarized'
-  " let g:airline_theme='spring_night'
-" else
-"   let g:airline_theme='solarized'
-" endif
+let g:spring_night_high_contrast=[]
+" The theme is set by thematic plugin but the above line is needed to ensure it
+" renders properly
 
 " remap arrow keys
 nnoremap <Leader><Leader> :bprev<CR>
@@ -1560,7 +1345,7 @@ scriptencoding utf-8
 
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-    endif
+endif
 
 
 
