@@ -28,14 +28,15 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 call plug#begin('~/.vim/plugged')
 let g:ycm_confirm_extra_conf = 0
 
-"Added YouCompleteMe autocompleter
-" function! BuildYCM(info)
-"   if a:info.status == 'installed' || a:info.force
-"     !./install.sh
-"   endif
-" endfunction
-" {'do':function('BuildYCM')}
-Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
+" Added YouCompleteMe autocompleter
+function! BuildYCM(info)
+  if a:info.status == 'installed' || a:info.force
+    !./install.sh
+  endif
+endfunction
+
+Plug 'Valloric/YouCompleteMe',{'do':function('BuildYCM')}
+" ,{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree'
 " , { 'on':  'NERDTreeToggle' }
@@ -58,13 +59,13 @@ Plug 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
 Plug 'Raimondi/delimitMate'
 "Added further javascript syntax highlighting
-Plug 'jelera/vim-javascript-syntax',{'for':'javascript'}
+Plug 'jelera/vim-javascript-syntax'
 "Added node.vim plugin
 Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 " Added yet another js syntax highlighter - Better performance
-" Plug 'othree/yajs.vim',{'for':'javascript'}
+" Plug 'othree/yajs.vim'
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
@@ -85,8 +86,6 @@ Plug '1995eaton/vim-better-javascript-completion'
 Plug 'vim-scripts/SyntaxComplete'
 "Add proper markdown syntax and indentation plugin
 Plug 'gabrielelana/vim-markdown'
-"Markdown previewer
-Plug 'JamshedVesuna/vim-markdown-preview'
 "Added color picker plugin
 Plug 'KabbAmine/vCoolor.vim'
 "Add Tern for autocompletion
@@ -104,20 +103,15 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
 Plug 'maxbrunsfeld/vim-yankstack'
-"Add supertab to use tab for all insert mode completions
-" Plug 'ervandew/supertab'
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
 Plug 'junegunn/fzf.vim'
 "React Snippets since I can't get the defaults to work
 Plug 'justinj/vim-react-snippets'
-"Excellent terminal integration for vim
-" Plug 'wincent/terminus'
 " Autoformatter
 Plug 'Chiel92/vim-autoformat'
 "Add a GitGutter to track new lines re git file
@@ -140,8 +134,6 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'joshdick/onedark.vim'
 " Neomake async linting
 Plug 'neomake/neomake'
-
-
 
 "Text object library plugin for defining your own text objects
 Plug 'kana/vim-textobj-user'
@@ -173,7 +165,20 @@ Plug 'taohex/lightline-buffer'
 Plug 'reedes/vim-thematic'
 " toggles line numbering depending on current mode
 Plug 'myusuf3/numbers.vim'
+"Add better markdown previewer
+Plug 'shime/vim-livedown'
+"Add indent guide
+Plug 'yggdroot/indentline'
+" Plug 'nathanaelkane/vim-indent-guides'
 
+
+Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
+"Add supertab to use tab for all insert mode completions
+" Plug 'ervandew/supertab'
+"Markdown previewer
+" Plug 'JamshedVesuna/vim-markdown-preview'
+"Excellent terminal integration for vim
+" Plug 'wincent/terminus'
 "Add Vim-Quickfix window plugin for managing basic qf functionality
 " Plug 'romainl/vim-qf'
 "Added vim airline
@@ -192,11 +197,7 @@ Plug 'myusuf3/numbers.vim'
 " Plug 'mhartington/oceanic-next'
 " Added html5 syntax highlighter - vim polyglot includes this by default
 " Plug 'othree/html5.vim'
-"Add context higlighting for JS depending on function scope
-" Plug 'bigfish/vim-js-context-coloring',{'do': 'npm install --update'}
-
 "Add file type icons to vim
-Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 
 
 
@@ -362,15 +363,17 @@ function! g:UltiSnips_Complete()
     return ""
 endfunction
 
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
+" au BufEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
 " this mapping Enter key to <C-y> to chose the current highlight item 
 " and close the selection list, same as other IDEs.
 " CONFLICT with some plugins like tpope/Endwise
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" inoremap <expr> <CR> pumvisible() ? '\<C-y>' : '\<C-g>u\<CR>'
+
+
+let g:UltiSnipsListSnippets="<C-E>"
+
+
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
@@ -445,13 +448,7 @@ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " for css or scss
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
-" augroup textobj_quote
-"   autocmd!
-"   autocmd FileType markdown call textobj#quote#init()
-"   autocmd FileType textile call textobj#quote#init()
-"   autocmd FileType text call textobj#quote#init({'educate': 0})
-" augroup END
-augroup formatting - excellent function but implemented by terminus
+augroup formatting - "excellent function but implemented by terminus
   autocmd!
   " automatically check for changed files outside vim
   autocmd bufread,bufenter,focusgained * silent! checktime
@@ -490,11 +487,12 @@ augroup filetype_javascript
   autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
   autocmd FileType javascript :iabbrev <buffer> und undefined
-  autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
   autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
   "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
-  autocmd Filetype javascript setlocal foldlevelstart=1
+  "Folding autocommands for javascript
+  " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
+  " autocmd Filetype javascript setlocal foldlevelstart=1
 augroup END
 
 
@@ -580,7 +578,7 @@ set complete+=kspell
 " Line completion - native vim
 inoremap ç <C-X><C-L>
 "Close a buffer
-nnoremap œ <C-W>q
+" nnoremap œ <C-W>q - native binding is ZZ
 "Replace current word with last deleted word
 nnoremap S diw"0P
 "Toggle case in insert and normal mode
@@ -640,6 +638,11 @@ nnoremap Y y$
 " FZF bindings
 "--------------------------------------------
 nnoremap <silent> <localleader>o :Buffers<CR>
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
 " Launch file search using FZF
 nnoremap <C-P> :FZF <CR>
 nnoremap <leader>\ :Ag<CR>
@@ -878,8 +881,6 @@ endif
 "====================================================================================
 "Buffer and Tab settings
 "===================================================================================={{{
-"Could potentially break everything but should change vim dir to files dir
-set autochdir
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
 set nohidden
@@ -1052,12 +1053,6 @@ endif
 " set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
 
 
-" function! StripWhiteSpace ()
-"  exec ':%/ \+$//gc'
-" endfunction
-" map <leader>r :call StripWhiteSpace ()<CR>
-
-
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 " set list
 " set listchars=
@@ -1108,6 +1103,16 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+let g:indentLine_char = '┆'
+" should markdown preview get shown automatically upon opening markdown
+" buffer
+let g:livedown_autorun = 1
+" should the browser window pop-up upon previewing
+let g:livedown_open = 1 
+" the port on which Livedown server will run
+let g:livedown_port = 1337
+nnoremap gm :LivedownToggle<CR>
+
 nnoremap <localleader>h <Esc>:call ToggleHardMode()<CR>
 " imap <C-c> <plug>NERDCommenterInsert
 
@@ -1183,18 +1188,20 @@ let g:buffergator_suppress_keymaps = 1
  
 " Looper buffers
 let g:buffergator_mru_cycle_loop = 1
-"Bound to Alt-H,J,K,L to open splits with MRU buffers 
-nnoremap ˚ :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
-nnoremap ˙ :BuffergatorMruCyclePrev leftabove sbuffer<CR>
-nnoremap ¬ :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
-nnoremap ∆ :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
+
+
+"Bound to arrow keys to open splits with MRU buffers 
+nnoremap <left> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
+" nnoremap <C-right> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
+nnoremap <right> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
+" nnoremap <C-left> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
 
 
 " Go to the next buffer open
-nmap <leader><tab>  :BuffergatorMruCycleNext<cr>
+" nmap <leader><tab>  :BuffergatorMruCycleNext<cr>
 
 " Go to the previous buffer open
-nmap <leader>/ :BuffergatorMruCyclePrev<cr>
+" nmap <leader>/ :BuffergatorMruCyclePrev<cr>
 
 
 " View the entire list of buffers open
@@ -1323,15 +1330,16 @@ endfunction
 
 
 
-" remap arrow keys
-nnoremap <Left> :bprev<CR>
-nnoremap <Right> :bnext<CR>
+" remap alt-H,J to change buffers
+nnoremap ¬ :bprev<CR>
+nnoremap ˙ :bnext<CR>
 
 " lightline-buffer ui settings
 " replace these symbols with ascii characters if your environment does not support unicode
-let g:lightline_buffer_logo = ' '
-let g:lightline_buffer_readonly_icon = ''
 " let g:lightline_buffer_modified_icon = '✭'
+""''
+let g:lightline_buffer_logo = ' '
+let g:lightline_buffer_readonly_icon = ''
 let g:lightline_buffer_modified_icon = '+'
 let g:lightline_buffer_git_icon = ' '
 let g:lightline_buffer_ellipsis_icon = '..'
@@ -1476,8 +1484,11 @@ endif
 
 "Sets no highlighting for conceal
 hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
-" OneDark =================================================
-" colorscheme onedark
+
+" hi IndentGuidesOdd  ctermbg=black
+" hi IndentGuidesEven ctermbg=darkgrey
+" " OneDark =================================================
+" " colorscheme onedark
 
 
 "One (Dark) Atom theme =====================================
