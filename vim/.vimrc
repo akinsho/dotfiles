@@ -39,7 +39,6 @@ Plug 'Valloric/YouCompleteMe',{'do':function('BuildYCM')}
 " ,{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree'
-" , { 'on':  'NERDTreeToggle' }
 "Added vim surround for enclosing with parens
 Plug 'tpope/vim-surround'
 "Added jsbeautify
@@ -167,16 +166,9 @@ Plug 'reedes/vim-thematic'
 Plug 'myusuf3/numbers.vim'
 "Add better markdown previewer
 Plug 'shime/vim-livedown'
-"Add indent guide
-Plug 'yggdroot/indentline'
-" Plug 'nathanaelkane/vim-indent-guides'
 
-
-Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 "Add supertab to use tab for all insert mode completions
 " Plug 'ervandew/supertab'
-"Markdown previewer
-" Plug 'JamshedVesuna/vim-markdown-preview'
 "Excellent terminal integration for vim
 " Plug 'wincent/terminus'
 "Add Vim-Quickfix window plugin for managing basic qf functionality
@@ -197,7 +189,11 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " Plug 'mhartington/oceanic-next'
 " Added html5 syntax highlighter - vim polyglot includes this by default
 " Plug 'othree/html5.vim'
+"Add context higlighting for JS depending on function scope
+" Plug 'bigfish/vim-js-context-coloring',{'do': 'npm install --update'}
+
 "Add file type icons to vim
+Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 
 
 
@@ -223,12 +219,10 @@ endif
 let mapleader = ","
 "Local leader key
 let maplocalleader = "\<space>"
-"/"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
 set conceallevel=1
-" set foldmethod=manual
 nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 let g:javascript_conceal_arrow_function = "⇒"
 
@@ -293,14 +287,6 @@ let g:NERDTreeShowBookmarks = 1
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeShowHidden=1 "Show hidden files by default
 
-"Press enter to complete suggestions - turned off
-let g:SuperTabCrMapping = 1
-
-
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_browser='Google Chrome'
-let vim_markdown_preview_toggle=2
-
 "===================================================
 "EasyMotion mappings
 "===================================================
@@ -363,17 +349,15 @@ function! g:UltiSnips_Complete()
     return ""
 endfunction
 
-" au BufEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
 " this mapping Enter key to <C-y> to chose the current highlight item 
 " and close the selection list, same as other IDEs.
 " CONFLICT with some plugins like tpope/Endwise
-" inoremap <expr> <CR> pumvisible() ? '\<C-y>' : '\<C-g>u\<CR>'
-
-
-let g:UltiSnipsListSnippets="<C-E>"
-
-
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
@@ -895,10 +879,6 @@ nnoremap <localleader>n :tabnew<CR>
 " Shared bindings from Solution #1 from earlier
 nmap <leader>bq :bp <BAR> bd #<cr>
 
-"The line below will re color the line numbers column if you want to
-" hi LineNr   cterm=bold ctermbg=gray ctermfg=black gui=bold guibg=gray guifg=white
-
-
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nnoremap ,q :bp <BAR> bd #<CR>
@@ -1053,6 +1033,12 @@ endif
 " set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
 
 
+" function! StripWhiteSpace ()
+"  exec ':%/ \+$//gc'
+" endfunction
+" map <leader>r :call StripWhiteSpace ()<CR>
+
+
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
 " set list
 " set listchars=
@@ -1103,7 +1089,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-let g:indentLine_char = '┆'
 " should markdown preview get shown automatically upon opening markdown
 " buffer
 let g:livedown_autorun = 1
@@ -1113,8 +1098,8 @@ let g:livedown_open = 1
 let g:livedown_port = 1337
 nnoremap gm :LivedownToggle<CR>
 
+
 nnoremap <localleader>h <Esc>:call ToggleHardMode()<CR>
-" imap <C-c> <plug>NERDCommenterInsert
 
 let delimitMate_balance_matchpairs = 1
 let g:textobj_comment_no_default_key_mappings = 1
@@ -1336,10 +1321,10 @@ nnoremap ˙ :bnext<CR>
 
 " lightline-buffer ui settings
 " replace these symbols with ascii characters if your environment does not support unicode
-" let g:lightline_buffer_modified_icon = '✭'
-""''
+"
 let g:lightline_buffer_logo = ' '
 let g:lightline_buffer_readonly_icon = ''
+" let g:lightline_buffer_modified_icon = '✭'
 let g:lightline_buffer_modified_icon = '+'
 let g:lightline_buffer_git_icon = ' '
 let g:lightline_buffer_ellipsis_icon = '..'
@@ -1484,11 +1469,8 @@ endif
 
 "Sets no highlighting for conceal
 hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
-
-" hi IndentGuidesOdd  ctermbg=black
-" hi IndentGuidesEven ctermbg=darkgrey
-" " OneDark =================================================
-" " colorscheme onedark
+" OneDark =================================================
+" colorscheme onedark
 
 
 "One (Dark) Atom theme =====================================
