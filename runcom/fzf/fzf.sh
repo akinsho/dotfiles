@@ -3,7 +3,8 @@
 # sets ag as default source for fzf allow .gitignore to be respected this
 # breaks the tabbing function : (
 
-FZF_DEFAULT_COMMAND='ag -g ""'
+# FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
 
 # export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
@@ -32,13 +33,13 @@ export FZF_TMUX=1
 # fshow - git commit browser
 fshow() {
   git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
-FZF-EOF"
+    --bind "ctrl-m:execute:
+  (grep -o '[a-f0-9]\{7\}' | head -1 |
+  xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+  {}
+  FZF-EOF"
 }
 
 # Use ag instead of the default find command for listing candidates.
@@ -52,9 +53,9 @@ FZF-EOF"
 
 # Another function which is not based on grep or locate
 cdf() {
-   local file
-   local dir
-   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+  local file
+  local dir
+  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
 
@@ -88,7 +89,7 @@ fs() {
   local session
   session=$(tmux list-sessions -F "#{session_name}" | \
     fzf --query="$1" --select-1 --exit-0) &&
-  tmux switch-client -t "$session"
+    tmux switch-client -t "$session"
 }
 
 # unalias z

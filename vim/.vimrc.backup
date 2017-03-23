@@ -1,6 +1,48 @@
 "Prev abandoned VIMRC settings
 "========================================================================
 
+"===================================================================
+"     YouCompleteMe
+"===================================================================
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe. - need to rethink this mapping
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+"function! g:UltiSnips_Complete()
+"  call UltiSnips#ExpandSnippet()
+"  if g:ulti_expand_res == 0
+"    if pumvisible()
+"      return "\<C-n>"
+"    else
+"      call UltiSnips#JumpForwards()
+"      if g:ulti_jump_forwards_res == 0
+"        return "\<TAB>"
+"      endif
+"    endif
+"  endif
+"  return ""
+"endfunction
+"
+"au BufEnter * exec \"inoremap <silent> \" . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsListSnippets="<c-e>"
+" this mapping Enter key to <C-y> to chose the current highlight item
+" and close the selection list, same as other IDEs.
+" CONFLICT with some plugins like tpope/Endwise
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+"YouCompleteMe configurations
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_always_populate_location_list = 1
 "Change operator arguments to a character representing the desired motion
 "- there are native text motions with do this - "b i.e cib - change inner block
 "Moves to the previous set of parentheses and operate on its contents

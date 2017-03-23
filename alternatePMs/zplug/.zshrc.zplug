@@ -109,7 +109,7 @@ SPACESHIP_NVM_SHOW=true
 
 SPACESHIP_RUBY_SHOW=false
 # PYENV
-SPACESHIP_PYENV_SHOW=	false
+SPACESHIP_PYENV_SHOW=   false
 SPACESHIP_PYENV_SYMBOL='🐍'
 
 #=======================================================================
@@ -138,24 +138,24 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "lukechilds/zsh-better-npm-completion"
-# zplug "plugins/tmux", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-# zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
-# zplug "plugins/pyenv", from:oh-my-zsh, lazy:true
 zplug "plugins/python", from:oh-my-zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "lukechilds/zsh-nvm", lazy:true
-zplug "djui/alias-tips"
 zplug "rupa/z", use:z.sh
 zplug "knu/z", use:zsh, defer:3
 zplug "gko/project", use:project.sh
 zplug "supercrabtree/k"
+# zplug "plugins/pyenv", from:oh-my-zsh, lazy:true
+# zplug "plugins/osx", from:oh-my-zsh
+# zplug "plugins/tmux", from:oh-my-zsh
+# zplug "djui/alias-tips"
 # zplug "urbainvaes/fzf-marks"
 zplug "b4b4r07/emoji-cli"
 
@@ -342,7 +342,7 @@ for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
     chpwd_functions=( auto-ls $chpwd_functions )
 
 
-# Plugin that autocorrects when you type fuck or whatever alias you intended
+    # Plugin that autocorrects when you type fuck or whatever alias you intended
     eval "$(thefuck --alias fuck)"
 
 
@@ -357,4 +357,4 @@ for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
     # zprof
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

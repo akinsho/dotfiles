@@ -24,25 +24,32 @@ if empty(glob('~/.vim/autoload/plug.vim'))
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 let g:ycm_confirm_extra_conf = 0
 
 " Added YouCompleteMe autocompleter
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.force
-    !./install.sh
-  endif
-endfunction
-
-Plug 'Valloric/YouCompleteMe',{'do':function('BuildYCM')}
-" ,{ 'do': './install.py' }
+"Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
 "Added nerdtree filetree omnitool : )
+" Neomake async linting
+Plug 'neomake/neomake'
+"Neocomplete less bulky than YCM
+Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/vimproc', {'do' : 'make'}
+Plug 'Shougo/context_filetype.vim'
+"Added vim snippets for code autofilling
+"Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+Plug 'isRuslan/vim-es6'
+Plug 'jamescarr/snipmate-nodejs'
 Plug 'scrooloose/nerdtree'
 "Added vim surround for enclosing with parens
 Plug 'tpope/vim-surround'
-"Added jsbeautify
-Plug 'maksimr/vim-jsbeautify'
 " Add fugitive git status and command plugins
 Plug 'tpope/vim-fugitive'
 " Adds file manipulation functionality
@@ -57,22 +64,16 @@ Plug 'mattn/emmet-vim'
 Plug 'Raimondi/delimitMate'
 "Added further javascript syntax highlighting
 Plug 'jelera/vim-javascript-syntax'
-"Added node.vim plugin
-Plug 'moll/vim-node'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
-" Added yet another js syntax highlighter - Better performance
+" Added yet another js syntax highlighter - Not greater for performance
 Plug 'othree/yajs.vim'
+"Added node.vim plugin
+Plug 'moll/vim-node'
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
 Plug 'sheerun/vim-polyglot'
-"Added vim snippets for code autofilling
-Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-Plug 'isRuslan/vim-es6'
-Plug 'jamescarr/snipmate-nodejs'
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
 "Autosuggestions for function parameters like click, mouseover
@@ -103,9 +104,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
-Plug 'junegunn/fzf'
-", { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 "React Snippets since I can't get the defaults to work
 Plug 'justinj/vim-react-snippets'
 " Autoformatter
@@ -122,8 +123,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-obsession'
 "TPope tag plugin
 Plug 'tpope/vim-ragtag'
-" Neomake async linting
-Plug 'neomake/neomake'
+"Adds cursor change and focus events to tmux vim
+Plug 'sjl/vitality.vim'
 
 "Text Objects =====================
 "Text object library plugin for defining your own text objects
@@ -140,6 +141,10 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'michaeljsmith/vim-indent-object'
 " Text object for manipulating chunks
 Plug 'Chun-Yang/vim-textobj-chunk'
+"Added June Gunn's alignment plugin
+Plug 'junegunn/vim-easy-align'
+"Very handy plugins and functionality by Tpope (ofc)
+Plug 'tpope/vim-unimpaired'
 
 "Coding tools =======================
 "Add JSDocs plugin
@@ -161,8 +166,8 @@ Plug 'shime/vim-livedown'
 
 "Status/bufferline =====================
 "Another attempt at implementing lightline
-"Plug 'itchyny/lightline.vim'
 "Add ligtline buffers
+"Plug 'itchyny/lightline.vim'
 "Plug 'taohex/lightline-buffer'
 "Added vim airline
 Plug 'vim-airline/vim-airline'
@@ -181,6 +186,11 @@ Plug 'joshdick/onedark.vim'
 Plug 'rhysd/vim-color-spring-night'
 "Added oceanic next theme
 Plug 'mhartington/oceanic-next'
+"Quantum theme
+Plug 'tyrannicaltoucan/vim-quantum'
+
+
+
 
 "Added SyntaxComplete for more syntax completion
 " Plug 'vim-scripts/SyntaxComplete'
@@ -229,6 +239,14 @@ let maplocalleader = "\<space>"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
+nnoremap <C-F> :Autoformat<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vnoremap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nnoremap ga <Plug>(EasyAlign)
+
 set conceallevel=1
 nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 let g:javascript_conceal_arrow_function = "⇒"
@@ -340,48 +358,9 @@ let g:yankstack_yank_keys = ['y', 'd']
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe. - need to rethink this mapping
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<localleader><tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-function! g:UltiSnips_Complete()
-  call UltiSnips#ExpandSnippet()
-  if g:ulti_expand_res == 0
-    if pumvisible()
-      return "\<C-n>"
-    else
-      call UltiSnips#JumpForwards()
-      if g:ulti_jump_forwards_res == 0
-        return "\<TAB>"
-      endif
-    endif
-  endif
-  return ""
-endfunction
-
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
-" this mapping Enter key to <C-y> to chose the current highlight item
-" and close the selection list, same as other IDEs.
-" CONFLICT with some plugins like tpope/Endwise
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-"YouCompleteMe configurations
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_always_populate_location_list = 1
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '<C-0>'
-
+let g:vcoolor_map = '<leader>vc'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -425,28 +404,35 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,han
 "====================================================================================
 "Autocommands
 "==================================================================================={{{
-"JS Beautifier commands
-"Visual mode mappings to beautify a range of files
-autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
-autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
-autocmd FileType jsx vnoremap <buffer> <c-f> :call RangeJsxBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
-autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
-"Normal mode mappings to beautify all of a file
-autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-" for json
-autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
-" for jsx
-autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
-" for html
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-" for css or scss
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+" autocmd CursorHold,CursorHoldI * call NERDTreeFocus() | call g:NERDTree.ForCurrentTab().getRoot().refresh() | call g:NERDTree.ForCurrentTab().render()
+" augroup NerdTree
+"   au!
+"   au VimEnter * NERDTreeFind
+" augroup END
+" Saves file when Vim window loses focus
 
-augroup formatting - "excellent function but implemented by terminus
+
+"JS Beautifier commands
+" autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+" autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
+" autocmd FileType jsx vnoremap <buffer> <c-f> :call RangeJsxBeautify()<cr>
+" autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+" autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+"Normal mode mappings to beautify all of a file
+" autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+" " for json
+" autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
+" " for jsx
+" autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
+" " for html
+" autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" " for css or scss
+" autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+"
+augroup CheckOutsideTime - "excellent function but implemented by terminus
   autocmd!
   " automatically check for changed files outside vim
-  autocmd bufread,bufenter,focusgained * silent! checktime
+  autocmd BufRead,BufEnter,FocusGained * silent! checktime
 augroup end
 
 augroup reload_vimrc
@@ -462,19 +448,22 @@ augroup VimResizing
   au!
   "Command below makes the windows the same size on resizing !? Why
   " autocmd VimResized * wincmd =
+  autocmd FocusLost * :wa
   autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
 
-augroup filetype_css
-  autocmd!
-  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+augroup filetype_completion
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
 
 augroup filetype_javascript
   autocmd!
-  " autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+  autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
   autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
 
@@ -482,7 +471,8 @@ augroup filetype_javascript
   autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
   autocmd FileType javascript :iabbrev <buffer> und undefined
-  autocmd FileType js UltiSnipsAddFiletypes javascript-mocha javascript.es6.react
+
+
   "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
   "Folding autocommands for javascript
@@ -570,14 +560,26 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
+"nnoremap ∆ ddp
+"nnoremap ˚ ddkP
+vnoremap ∆ xp`[V`]
+vnoremap ˚ xkP`[V`]
+
+
+nmap ˚ [e
+nmap ∆ ]e
+"vmap ˚ [e
+"vmap ∆ ]e
+
 " Line completion - native vim
 inoremap ç <C-X><C-L>
-"Close a buffer
-" nnoremap œ <C-W>q - native binding is ZZ
+
 "Replace current word with last deleted word
 nnoremap S diw"0P
+
+
 "Toggle case in insert and normal mode
-" nnoremap ;u mzg~iw`z
 " inoremap ;u _<Esc>mza<C-Right><Esc>bg~iw`zi<Del>
 
 " make last typed word uppercase
@@ -606,6 +608,12 @@ inoremap <C-j> <Down>
 inoremap <C-h> <left>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
+
+" <c-l> to clear the highlight, as well as redraw the screen
+" nnoremap <silent> ®  :<C-u>nohlsearch<cr><C-l>
+" inoremap <silent> ®  <C-o>:nohlsearch<cr>
+
+
 
 
 " select last paste in visual mode
@@ -636,7 +644,7 @@ imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Launch file search using FZF
-nnoremap <C-P> :FZF <CR>
+nnoremap <C-P> :FZFR <CR>
 nnoremap <leader>\ :Ag<CR>
 "--------------------------------------------
 " These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
@@ -737,7 +745,7 @@ nnoremap <leader>x :lclose<CR>
 nnoremap <C-G> gg=G<CR>
 
 
-"For each char her it applies a remap deleting all occurrences of the car with
+"For each char here it applies a remap deleting all occurrences of the car with
 "an a operator or the things past it with an i operator
 for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
   execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
@@ -932,6 +940,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 "Vim searches recursively through all directories and subdirectories
 set path+=**
+set autochdir
 
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode
@@ -958,9 +967,10 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display
 " --------------------------------------------------------------------------{{{
+" This prevents a scratch buffer from being opened
+set completeopt-=preview
 set title                             " wintitle = filename - vim
-highlight MatchParen ctermbg=blue guibg=lightgreen
-
+highlight MatchParen ctermbg=blue guibg=grey term=bold cterm=bold gui=bold
 "Add relative line numbers and relative = absolute line numbers i.e current
 "lines shows absolute and all others are relative
 set ttyfast " Improves smoothness of redrawing when there are multiple windows
@@ -968,7 +978,7 @@ set ttyfast " Improves smoothness of redrawing when there are multiple windows
 set relativenumber
 set number
 
-
+set linespace=4
 "relative add set relativenumber to show numbers relative to the cursor
 set numberwidth=5
 "Turns on smart indent which can help indent files like html natively
@@ -991,7 +1001,7 @@ set ruler
 set incsearch
 
 " Always display the status line even if only one window is displayed
-set laststatus=2
+" set laststatus=2
 
 " Turns of lazyredraw which postpones redrawing for macros and command
 " execution
@@ -1044,6 +1054,67 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+
+"------------------------------------
+" Neocomplete
+"------------------------------------
+"  Tab line
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+
+let g:neocomplete#enable_auto_select = 0
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#enable_refresh_always = 1
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+" Recommended key-mappings.
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+inoremap <expr><C-l> neocomplete#undo_completion()
+"------------------------------------
+" Neosnippet
+"------------------------------------
+imap ˚  <Plug>(neosnippet_expand_or_jump)
+smap ˚  <Plug>(neosnippet_expand_or_jump)
+xmap ˚  <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap ˚  <Plug>(neosnippet_expand_or_jump)
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+"let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+
+
 " should markdown preview get shown automatically upon opening markdown
 " buffer
 let g:livedown_autorun = 1
@@ -1083,6 +1154,18 @@ let g:fzf_colors =
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
 
+function! s:find_root()
+  for vcs in ['.git', '.svn', '.hg']
+    let dir = finddir(vcs.'/..', ';')
+    if !empty(dir)
+      execute 'FZF' dir
+      return
+    endif
+  endfor
+  FZF
+endfunction
+
+command! FZFR call s:find_root()
 
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
@@ -1138,11 +1221,10 @@ nnoremap <right> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
 nmap <leader>o :BuffergatorToggle<cr>
 
 
-" augroup FormatText
-"   au!
-"   au BufWrite * :Autoformat "sets vim auto format to run on save
-" augroup END
-noremap <F3> :Autoformat<CR>
+augroup FormatText
+  au!
+  au BufWrite Filetype javascript :Autoformat "sets vim auto format to run on save
+augroup END
 
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
@@ -1164,7 +1246,7 @@ let g:airline_detect_crypt                     = 0 " https://github.com/vim-airl
 let g:airline_powerline_fonts                  = 1
 let g:airline#extensions#tabline#enabled       = 1
 " let g:airline#extensions#tagbar#enabled = 1
-" let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
 let g:airline#extensions#tabline#show_tabs     = 1
 let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -1244,15 +1326,17 @@ let g:neomake_cpp_clang_maker = {
 "Colorscheme
 "-----------------------------------------------------------
 let g:thematic#themes = {
-      \ 'onedark' : { 'colorscheme':'onedark',
-      \               'background': 'dark',
-      \               'laststatus': 2,
-      \               'airline-theme': 'onedark',
+      \ 'quantum' : { 'background': 'dark',
+      \               'colorscheme':'quantum',
+      \               'airline-theme': 'quantum',
       \                },
-      \ 'solarized' :{'colorscheme': 'solarized8_dark_high',
+      \ 'onedark' : { 'colorscheme':'onedark',
+      \               'airline-theme': 'onedark',
       \                 'background': 'dark',
+      \                },
+      \ 'solarized' :{ 'background': 'dark',
+      \                'colorscheme': 'solarized8_dark_high',
       \                 'airline-theme': 'solarized',
-      \                 'ruler': 1,
       \                },
       \ 'sialoquent' :{'colorscheme': 'sialoquent',
       \                 'airline-theme': 'bubblegum',
@@ -1264,9 +1348,15 @@ let g:thematic#themes = {
       \                 'airline-theme': 'spring_night',
       \                },
       \}
+
+
+let g:thematic#defaults = {
+      \ 'laststatus': 2,
+      \ }
 "Set color Scheme
-let g:thematic#theme_name = 'sialoquent'
-nnoremap <Leader>ch :ThematicNext<CR>
+" let g:thematic#theme_name = 'sialoquent'
+let g:thematic#theme_name = 'quantum'
+nnoremap <F10> :ThematicNext<CR>
 
 
 fun! Solarized8Contrast(delta)
@@ -1282,9 +1372,9 @@ nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
 
 
 "if g:colors_name ==# 'sialoquent'
-  let g:gitgutter_sign_modified = '•'
-  let g:gitgutter_sign_added = '❖'
-  "highlight GitGutterAdd guifg = '#A3E28B'
+" let g:gitgutter_sign_modified = '•'
+" let g:gitgutter_sign_added = '❖'
+"highlight GitGutterAdd guifg = '#A3E28B'
 "endif
 
 "Sets no highlighting for conceal
@@ -1343,9 +1433,9 @@ if &encoding ==# 'latin1' && has('gui_running')
 endif
 scriptencoding utf-8
 
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
+" if &listchars ==# 'eol:$'
+"   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+" endif
 
 
 
@@ -1396,23 +1486,23 @@ set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
 set nohlsearch " -functionality i.e. search highlighting done by easy motion
-
+" hi Search guibg=LightGreen  ctermbg=NONE
 " ---------------------------------------------------------------------
 " Cursor
 " ---------------------------------------------------------------------{{{
 
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
-" augroup highlight_follows_focus
-"   autocmd!
-"   autocmd WinEnter * set cursorline ctermbg=238
-"   autocmd WinLeave * set nocursorline
-" augroup END
-"
-" augroup highlight_follows_vim
-"   autocmd!
-"   autocmd FocusGained * set hi cursorline ctermbg=238
-"   autocmd FocusLost * set nocursorline
-" augroup END
+augroup highlight_follows_focus
+  autocmd!
+  autocmd WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
+augroup END
+
+augroup highlight_follows_vim
+  autocmd!
+  autocmd FocusGained * set hi cursorline
+  autocmd FocusLost * set nocursorline
+augroup END
 " Show context around current cursor position
 "As this is set to a large number the cursor will remain in the middle of the
 "page on scroll (8 ) was the previous value
