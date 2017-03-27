@@ -37,12 +37,12 @@ let g:ycm_confirm_extra_conf = 0
 Plug 'neomake/neomake'
 "Neocomplete less bulky than YCM
 Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/vimproc', {'do' : 'make'}
 Plug 'Shougo/context_filetype.vim'
+Plug 'Shougo/neopairs.vim'
 "Added vim snippets for code autofilling
-"Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
@@ -56,14 +56,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 "Added Editor Config plugin to maintain style choices
 Plug 'editorconfig/editorconfig-vim'
-"Commenting plugin
-Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Added delimit me auto parens plugin
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
+"Add autopairs - improvement over delimitmate
+Plug 'jiangmiao/auto-pairs'
 "Added further javascript syntax highlighting
-Plug 'jelera/vim-javascript-syntax'
+"Plug 'jelera/vim-javascript-syntax'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 " Added yet another js syntax highlighter - Not greater for performance
@@ -105,10 +106,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-"React Snippets since I can't get the defaults to work
-Plug 'justinj/vim-react-snippets'
 " Autoformatter
 Plug 'Chiel92/vim-autoformat'
 "Add a GitGutter to track new lines re git file
@@ -129,14 +127,10 @@ Plug 'sjl/vitality.vim'
 "Text Objects =====================
 "Text object library plugin for defining your own text objects
 Plug 'kana/vim-textobj-user'
-"Text object for closest inner (),{} or []
-Plug 'Julian/vim-textobj-brace'
 "Text obj for comments
 Plug 'glts/vim-textobj-comment'
 " Add text objects form camel cased strings (should be native imho)
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
-" Add text objects for function arguments = a i.e caa change an argument
-Plug 'vim-scripts/argtextobj.vim'
 " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'michaeljsmith/vim-indent-object'
 " Text object for manipulating chunks
@@ -145,6 +139,10 @@ Plug 'Chun-Yang/vim-textobj-chunk'
 Plug 'junegunn/vim-easy-align'
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-unimpaired'
+"Peace and Quiet thanks JGunn
+Plug 'junegunn/goyo.vim'
+
+
 
 "Coding tools =======================
 "Add JSDocs plugin
@@ -165,14 +163,12 @@ Plug 'shime/vim-livedown'
 
 
 "Status/bufferline =====================
-"Another attempt at implementing lightline
-"Add ligtline buffers
-"Plug 'itchyny/lightline.vim'
-"Plug 'taohex/lightline-buffer'
 "Added vim airline
 Plug 'vim-airline/vim-airline'
 "Added airline themes"
 Plug 'vim-airline/vim-airline-themes'
+
+
 "Themes ===============================
 " A plugin for managing vim themes
 Plug 'reedes/vim-thematic'
@@ -196,12 +192,8 @@ Plug 'tyrannicaltoucan/vim-quantum'
 " Plug 'vim-scripts/SyntaxComplete'
 "Added nerdcommenter for commenting out text - currently not working
 " Plug 'scrooloose/nerdcommenter'
-"Add supertab to use tab for all insert mode completions
-" Plug 'ervandew/supertab'
 "Excellent terminal integration for vim
 " Plug 'wincent/terminus'
-"Add Vim-Quickfix window plugin for managing basic qf functionality
-" Plug 'romainl/vim-qf'
 " NVIM colorscheme
 " Plug 'rakr/vim-one'
 "Closes tags with > command
@@ -211,7 +203,6 @@ Plug 'tyrannicaltoucan/vim-quantum'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
-
 
 
 call plug#end()
@@ -247,7 +238,6 @@ vnoremap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nnoremap ga <Plug>(EasyAlign)
 
-set conceallevel=1
 nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 let g:javascript_conceal_arrow_function = "⇒"
 
@@ -360,7 +350,7 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '<leader>vc'
+let g:vcoolor_map = 'œ'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -382,21 +372,6 @@ nnoremap <leader>u :GundoToggle<CR>
 "Color the sign column dark grey by default
 " highlight SignColumn guibg=darkgrey
 
-"NerdCommenter config
-" Add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-" let g:NERDCompactSexyComs = 0
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-" let g:NERDDefaultAlign = 'left'
-" Allow commenting and inverting empty lines (useful when commenting a region)
-" let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-" let g:NERDTrimTrailingWhitespace = 1
-
 
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
@@ -404,12 +379,6 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,han
 "====================================================================================
 "Autocommands
 "==================================================================================={{{
-" autocmd CursorHold,CursorHoldI * call NERDTreeFocus() | call g:NERDTree.ForCurrentTab().getRoot().refresh() | call g:NERDTree.ForCurrentTab().render()
-" augroup NerdTree
-"   au!
-"   au VimEnter * NERDTreeFind
-" augroup END
-" Saves file when Vim window loses focus
 
 
 "JS Beautifier commands
@@ -428,7 +397,12 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,han
 " autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " " for css or scss
 " autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
-"
+augroup mySQL
+  au!
+autocmd BufNewFile,BufRead psql* set filetype=sql
+augroup END
+
+
 augroup CheckOutsideTime - "excellent function but implemented by terminus
   autocmd!
   " automatically check for changed files outside vim
@@ -446,8 +420,9 @@ augroup END
 au FocusLost * :wa
 augroup VimResizing
   au!
-  "Command below makes the windows the same size on resizing !? Why
-  " autocmd VimResized * wincmd =
+  "Command below makes the windows the same size on resizing !? Why?? because
+  "its tidier
+  autocmd VimResized * wincmd =
   autocmd FocusLost * :wa
   autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
@@ -560,17 +535,27 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+"Change two vertically split windows to horizontal splits
+nnoremap <LocalLeader>h <C-W>t <C-W>K
+nnoremap <LocalLeader>v <C-W>t <C-W>H
+"Change two horizontally split windows to vertical splits
+
+
+
+"Select txt that has just been read or pasted in
+nnoremap gV `[V`]
+
 "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
+" vnoremap ∆ xp`[V`]
+" vnoremap ˚ xkP`[V`]
 "nnoremap ∆ ddp
 "nnoremap ˚ ddkP
-vnoremap ∆ xp`[V`]
-vnoremap ˚ xkP`[V`]
 
 
 nmap ˚ [e
 nmap ∆ ]e
-"vmap ˚ [e
-"vmap ∆ ]e
+vmap ˚ [egv
+vmap ∆ ]egv
 
 " Line completion - native vim
 inoremap ç <C-X><C-L>
@@ -578,9 +563,9 @@ inoremap ç <C-X><C-L>
 "Replace current word with last deleted word
 nnoremap S diw"0P
 
-
 "Toggle case in insert and normal mode
 " inoremap ;u _<Esc>mza<C-Right><Esc>bg~iw`zi<Del>
+
 
 " make last typed word uppercase
 inoremap ;u <esc>viwUea
@@ -609,19 +594,13 @@ inoremap <C-h> <left>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
 
-" <c-l> to clear the highlight, as well as redraw the screen
-" nnoremap <silent> ®  :<C-u>nohlsearch<cr><C-l>
-" inoremap <silent> ®  <C-o>:nohlsearch<cr>
-
-
-
 
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-nnoremap <F4> :! open %<CR><CR>
-nnoremap <F3> :!open -a safari %<CR><CR>
-"Paste mode for large block of external text - Terminus plugin doees this
+nnoremap <F4> :! open %<CR>
+"nnoremap <F3> :!open -a safari %<CR>
+
 "automatically at present
 set pastetoggle=<F1>
 "time out on mapping after half a second, time out on key codes after a tenth
@@ -970,7 +949,9 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " This prevents a scratch buffer from being opened
 set completeopt-=preview
 set title                             " wintitle = filename - vim
-highlight MatchParen ctermbg=blue guibg=grey term=bold cterm=bold gui=bold
+" Match parentheses coloring
+" highlight MatchParen  guibg=#658494 gui=bold
+
 "Add relative line numbers and relative = absolute line numbers i.e current
 "lines shows absolute and all others are relative
 set ttyfast " Improves smoothness of redrawing when there are multiple windows
@@ -1054,16 +1035,44 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '´'
+let g:AutoPairsShortcutFastWrap = '∑'
+let g:AutoPairsShortcutJump = '˜'
 
+"------------------------------------
+" Goyo
+"------------------------------------
+nnoremap <F3> :Goyo<CR>
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+endfunction
+
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
+  set showcmd
+  set scrolloff=5
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 "------------------------------------
 " Neocomplete
 "------------------------------------
-"  Tab line
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#auto_completion_start_length = 2
+let g:neopairs#enable = 1
 let g:neocomplete#enable_auto_select = 0
 let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#enable_refresh_always = 1
@@ -1071,7 +1080,12 @@ let g:neocomplete#enable_refresh_always = 1
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
 " Recommended key-mappings.
 
 " <CR>: close popup and save indent.
@@ -1084,36 +1098,36 @@ endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
-inoremap <expr><C-l> neocomplete#undo_completion()
-"------------------------------------
-" Neosnippet
-"------------------------------------
-imap ˚  <Plug>(neosnippet_expand_or_jump)
-smap ˚  <Plug>(neosnippet_expand_or_jump)
-xmap ˚  <Plug>(neosnippet_expand_target)
+inoremap <expr><C-D> neocomplete#undo_completion()
 
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap ˚  <Plug>(neosnippet_expand_or_jump)
-imap <expr><TAB>
- \ pumvisible() ? "\<C-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-"let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
+function! s:check_back_space()
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+let g:ulti_expand_res = 0 "default value, just set once
+function! Tab_Snippet_Complete()
+  let snippet = UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res > 0
+    return snippet
+  endif
+  if <SID>check_back_space()
+    return "\<TAB>"
+  endif
+  let manualcomplete = neocomplete#start_manual_complete()
+  return manualcomplete
+endfunction
 
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
+
+let g:UltiSnipsJumpForwardTrigger="<C-U>"
+let g:UltiSnipsJumpBackwardTrigger="¨"
 
 " should markdown preview get shown automatically upon opening markdown
 " buffer
@@ -1125,7 +1139,7 @@ let g:livedown_port = 1337
 nnoremap gm :LivedownToggle<CR>
 
 
-nnoremap <localleader>h <Esc>:call ToggleHardMode()<CR>
+nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
 
 let delimitMate_balance_matchpairs = 1
 let g:textobj_comment_no_default_key_mappings = 1
@@ -1154,6 +1168,8 @@ let g:fzf_colors =
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
 
+
+"This  function makes FZF start from the root of a git dir
 function! s:find_root()
   for vcs in ['.git', '.svn', '.hg']
     let dir = finddir(vcs.'/..', ';')
@@ -1354,6 +1370,7 @@ let g:thematic#defaults = {
       \ 'laststatus': 2,
       \ }
 "Set color Scheme
+"let g:quantum_black = 1
 " let g:thematic#theme_name = 'sialoquent'
 let g:thematic#theme_name = 'quantum'
 nnoremap <F10> :ThematicNext<CR>

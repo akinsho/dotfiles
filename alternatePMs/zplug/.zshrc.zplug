@@ -43,7 +43,10 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 
-
+# GEM ==========================================================
+if which ruby >/dev/null && which gem >/dev/null; then
+  PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
 export ZPLUG_LOADFILE=$DOTFILES/zplug/packages.zsh
 
 DEFAULT_USER=$USER
@@ -300,6 +303,9 @@ setopt share_history
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
+
+
+
 # POWERLINE ==========================================================
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
   source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh

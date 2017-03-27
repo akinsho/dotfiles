@@ -58,7 +58,13 @@ cdf() {
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
-
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+    branch=$(echo "$branches" | fzf +s +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //")
+}
 
 # cf - fuzzy cd from anywhere
 # ex: cf word1 word2 ... (even part of a file name)

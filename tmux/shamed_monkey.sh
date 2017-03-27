@@ -7,7 +7,6 @@ set -g pane-active-border-fg brightred
 
 ## Status bar design
 # status line
-set -g status-utf8 on
 set -g status-justify left
 set -g status-bg default
 set -g status-fg colour12
@@ -45,7 +44,7 @@ set-option -g visual-silence off
 set-window-option -g monitor-activity off
 set-option -g bell-action none
 
-set -g default-terminal "screen-256color"
+# set -g default-terminal "screen-256color"
 
 # The modes {
 setw -g clock-mode-colour colour135
@@ -81,18 +80,22 @@ tm_right_separator_black=''
 tm_session_symbol=''
 tm_color_feature=colour4
 
-tm_spotify="#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/spotify.scpt)"
+tm_spotify="#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/Dotfiles/applescripts/spotify.scpt)"
 
-tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_black#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/.dotfiles/applescripts/itunes.scpt)"
+tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_black#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/Dotfiles/applescripts/itunes.scpt)"
 
-tm_tunes="#[bg=colour234,fg=colour178]$tm_right_separator_black#[fg=black,bg=colour178]#(osascript ~/.dotfiles/applescripts/tunes.scpt)"
+# tm_tunes="#[bg=colour234,fg=colour178]$tm_right_separator_black#[fg=black,bg=colour178]#(osascript ~/Dotfiles/applescripts/tunes.scpt)"
+tm_tunes="#[fg=black,bg=colour178]#(osascript ~/Dotfiles/applescripts/tunes.scpt)"
 
-# tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/.dotfiles/bin/battery_indicator.sh)"
+# tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/Dotfiles/bin/battery_indicator.sh)"
 batt_plug="#{battery_status_bg} #{battery_icon}   #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M "
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
 # Host bg = colour245, seperator fg = colour245 (need to match)
-tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
+
+
+# tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
+tm_continuum="#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
 
 tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold]   #h "
 # uname="#[bg=colour241,fg=colour245]$tm_right_separator_black#[fg=colour16,bg=colour252,bold,noitalics,nounderscore] $(uname -n)"
