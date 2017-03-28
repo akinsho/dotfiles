@@ -3,7 +3,7 @@
         "indent":0,
         //"indent": [ "warn" , 4],
         "linebreak-style": [ "off", "unix" ],
-        "quotes": [ "error", "single" ],
+        "quotes": [ "error", "single",{ "allowTemplateLiterals": true  }],
         "semi": [ "error", "always" ],
         "no-console": "off",
         "strict": 0,
