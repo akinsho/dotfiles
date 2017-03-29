@@ -30,9 +30,6 @@ endif
 call plug#begin('~/.vim/plugged')
 let g:ycm_confirm_extra_conf = 0
 
-" Added YouCompleteMe autocompleter
-"Plug 'Valloric/YouCompleteMe',{ 'do': './install.py' }
-"Added nerdtree filetree omnitool : )
 " Neomake async linting
 Plug 'neomake/neomake'
 "Neocomplete less bulky than YCM
@@ -46,7 +43,8 @@ Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
-Plug 'jamescarr/snipmate-nodejs'
+Plug 'epilande/vim-react-snippets'
+"Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree'
 "Added vim surround for enclosing with parens
 Plug 'tpope/vim-surround'
@@ -57,10 +55,10 @@ Plug 'tpope/vim-eunuch'
 "Added Editor Config plugin to maintain style choices
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
+"Paste externally straight into vim
+Plug 'ConradIrwin/vim-bracketed-paste'
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
-"Added delimit me auto parens plugin
-" Plug 'Raimondi/delimitMate'
 "Add autopairs - improvement over delimitmate
 Plug 'jiangmiao/auto-pairs'
 "Added further javascript syntax highlighting
@@ -118,11 +116,13 @@ Plug 'benmills/vimux'
 "Vim signature re-added because I need to see my bloody marks
 Plug 'kshenoy/vim-signature'
 "Vim obsession Tpope's amazing plugin for managing sessions
-Plug 'tpope/vim-obsession'
+" Plug 'tpope/vim-obsession'
 "TPope tag plugin
 Plug 'tpope/vim-ragtag'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
+"Better indentation in JS
+Plug 'vim-scripts/JavaScript-Indent'
 
 "Text Objects =====================
 "Text object library plugin for defining your own text objects
@@ -759,13 +759,12 @@ nnoremap k gk
 nnoremap <silent> <Leader>a <C-A>
 nnoremap <silent> å <C-X>
 
-
 "Moves cursor back to the start of a line
 inoremap <C-B> <C-O>I
 "Remaps native ctrl h - emulates backspace to ctrl d
 inoremap <C-D> <C-H>
 "Remaps native ctrl k - deleting to the end of a line to control e
-inoremap <C-Q> <C-K>
+" inoremap <C-Q> <C-K>
 
 " Map jk to esc key - using jk prevents jump that using ii causes
 inoremap jk <ESC>
@@ -783,6 +782,7 @@ noremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <localleader>ev :e $MYVIMRC<cr>
 
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -906,7 +906,7 @@ set diffopt+=iwhite                   " Ignore whitespace changes
 set formatoptions=
 set formatoptions+=1
 set formatoptions-=q                  " continue comments with gq"
-set formatoptions+=c                  " Auto-wrap comments using textwidth
+set formatoptions-=c                  " Auto-wrap comments using textwidth
 set formatoptions-=r                  " Do not continue comments by default
 set formatoptions-=o                  " do not continue comment using o or O
 set formatoptions+=n                  " Recognize numbered lists
@@ -984,9 +984,9 @@ set incsearch
 " Always display the status line even if only one window is displayed
 " set laststatus=2
 
-" Turns of lazyredraw which postpones redrawing for macros and command
+" Turns on lazyredraw which postpones redrawing for macros and command
 " execution
-set nolazyredraw
+set lazyredraw
 
 " Use visual bell when there are errors not audio beep
 set visualbell
@@ -1106,28 +1106,32 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-D> neocomplete#undo_completion()
 
 
-function! s:check_back_space()
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" function! s:check_back_space()
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
 
-let g:ulti_expand_res = 0 "default value, just set once
-function! Tab_Snippet_Complete()
-  let snippet = UltiSnips#ExpandSnippet()
-  if g:ulti_expand_res > 0
-    return snippet
-  endif
-  if <SID>check_back_space()
-    return "\<TAB>"
-  endif
-  let manualcomplete = neocomplete#start_manual_complete()
-  return manualcomplete
-endfunction
+" let g:ulti_expand_res = 0 "default value, just set once
+" function! Tab_Snippet_Complete()
+"   let snippet = UltiSnips#ExpandSnippet()
+"   if g:ulti_expand_res > 0
+"     return snippet
+"   endif
+"   if <SID>check_back_space()
+"     return "\<TAB>"
+"   endif
+"   let manualcomplete = neocomplete#start_manual_complete()
+"   return manualcomplete
+" endfunction
 
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
 
-let g:UltiSnipsJumpForwardTrigger="<C-U>"
+let g:UltiSnipsExpandTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<s-tab>"
+let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpBackwardTrigger="¨"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " should markdown preview get shown automatically upon opening markdown
 " buffer
@@ -1141,7 +1145,6 @@ nnoremap gm :LivedownToggle<CR>
 
 nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
 
-let delimitMate_balance_matchpairs = 1
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ax <Plug>(textobj-comment-a)
 omap ax <Plug>(textobj-comment-a)
@@ -1206,7 +1209,10 @@ if exists('NERDTree')
   endif
 endif
 
-
+let g:startify_session_dir = '~/.vim/session'
+let g:startify_session_autoload = 1
+let g:startify_session_persistence = 1
+let g:startify_change_to_vcs_root = 0
 
 "Rebound git commands to manipulate hunks that are staged to allow comment
 "object to work
@@ -1255,7 +1261,8 @@ nnoremap ˙ :bnext<CR>
 "=============================================================
 "               Airline
 "=============================================================
-let g:airline_extensions = ['branch','tabline','obsession']
+" 'obsession'
+let g:airline_extensions = ['branch','tabline',]
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
 let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
