@@ -28,7 +28,6 @@ endif
 
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
-let g:ycm_confirm_extra_conf = 0
 
 " Neomake async linting
 Plug 'neomake/neomake'
@@ -55,18 +54,17 @@ Plug 'tpope/vim-eunuch'
 "Added Editor Config plugin to maintain style choices
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
-"Paste externally straight into vim
-Plug 'ConradIrwin/vim-bracketed-paste'
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Add autopairs - improvement over delimitmate
-Plug 'jiangmiao/auto-pairs'
+Plug 'Raimondi/delimitMate'
 "Added further javascript syntax highlighting
-"Plug 'jelera/vim-javascript-syntax'
+Plug 'jelera/vim-javascript-syntax'
+
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 " Added yet another js syntax highlighter - Not greater for performance
-Plug 'othree/yajs.vim'
+" Plug 'othree/yajs.vim'
 "Added node.vim plugin
 Plug 'moll/vim-node'
 "Added easy motions
@@ -92,8 +90,6 @@ endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
 "Add Gundo - undo plugin for vim
 Plug 'sjl/gundo.vim'
-"Add buffergator for better buffer control
-Plug 'jeetsukumaran/vim-buffergator'
 "Tim pope's surround plugin allows . to repeat more actions
 Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
@@ -103,7 +99,6 @@ Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 " Autoformatter
 Plug 'Chiel92/vim-autoformat'
@@ -115,10 +110,6 @@ Plug 'rhysd/committia.vim'
 Plug 'benmills/vimux'
 "Vim signature re-added because I need to see my bloody marks
 Plug 'kshenoy/vim-signature'
-"Vim obsession Tpope's amazing plugin for managing sessions
-" Plug 'tpope/vim-obsession'
-"TPope tag plugin
-Plug 'tpope/vim-ragtag'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
 "Better indentation in JS
@@ -141,7 +132,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-unimpaired'
 "Peace and Quiet thanks JGunn
 Plug 'junegunn/goyo.vim'
-
+"Closes tags with > command
+Plug 'alvan/vim-closetag'
 
 
 "Coding tools =======================
@@ -190,16 +182,16 @@ Plug 'tyrannicaltoucan/vim-quantum'
 
 "Added SyntaxComplete for more syntax completion
 " Plug 'vim-scripts/SyntaxComplete'
-"Added nerdcommenter for commenting out text - currently not working
-" Plug 'scrooloose/nerdcommenter'
-"Excellent terminal integration for vim
-" Plug 'wincent/terminus'
 " NVIM colorscheme
 " Plug 'rakr/vim-one'
-"Closes tags with > command
-" Plug 'alvan/vim-closetag'
 "Add context higlighting for JS depending on function scope
 " Plug 'bigfish/vim-js-context-coloring',{'do': 'npm install --update'}
+"Vim obsession Tpope's amazing plugin for managing sessions
+" Plug 'tpope/vim-obsession'
+"TPope tag plugin
+" Plug 'tpope/vim-ragtag'
+"Add buffergator for better buffer control
+" Plug 'jeetsukumaran/vim-buffergator'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -334,7 +326,8 @@ nmap s <Plug>(easymotion-s)
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
 nmap s <Plug>(easymotion-overwin-f2)
-
+map f <Plug>(easymotion-bd-f)
+nmap f <Plug>(easymotion-overwin-f)
 " Bidirectional & within line 't' motion
 " omap t <Plug>(easymotion-bd-tl)
 " JK motions: Line motions
@@ -369,52 +362,61 @@ let g:user_emmet_leader_key="<c-y>"
 "Add mapping for Gundo vim
 nnoremap <leader>u :GundoToggle<CR>
 
-"Color the sign column dark grey by default
-" highlight SignColumn guibg=darkgrey
-
 
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
+" let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
 "}}}
 "====================================================================================
 "Autocommands
 "==================================================================================={{{
+" Close help and git window by pressing q.
+autocmd FileType help,git-status,git-log,qf,
+      \gitcommit,quickrun,qfreplace,ref,
+      \simpletap-summary,vcs-commit,vcs-status,vim-hacks
+      \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
+autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
+      \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
 
-"JS Beautifier commands
-" autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
-" autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
-" autocmd FileType jsx vnoremap <buffer> <c-f> :call RangeJsxBeautify()<cr>
-" autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
-" autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
-"Normal mode mappings to beautify all of a file
-" autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-" " for json
-" autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
-" " for jsx
-" autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
-" " for html
-" autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-" " for css or scss
-" autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+function! s:smart_close()
+  if winnr('$') != 1
+    close
+  endif
+endfunction
+"this is is intended to stop insert mode bindings slowing down <bs> and <cr>
+augroup Map_timings
+  au!
+autocmd InsertEnter * set timeoutlen=200
+autocmd InsertLeave * set timeoutlen=500
+augroup END
+
 augroup mySQL
   au!
 autocmd BufNewFile,BufRead psql* set filetype=sql
 augroup END
-
-
+                          
 augroup CheckOutsideTime - "excellent function but implemented by terminus
   autocmd!
   " automatically check for changed files outside vim
-  autocmd BufRead,BufEnter,FocusGained * silent! checktime
+  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
 augroup end
+
+" Disable paste.
+augroup Cancel_Paste
+au!
+autocmd InsertLeave *
+      \ if &paste | set nopaste | echo 'nopaste' | endif
+augroup END
 
 augroup reload_vimrc
   autocmd!
   autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 augroup END
 
-
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+au! InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+au! InsertLeave * let &updatetime=updaterestore
 
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
@@ -424,7 +426,7 @@ augroup VimResizing
   "its tidier
   autocmd VimResized * wincmd =
   autocmd FocusLost * :wa
-  autocmd VimResized * :redraw! | :echo 'Redrew'
+  " autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
 
@@ -535,6 +537,56 @@ set complete+=kspell
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+nnoremap ; :
+nnoremap : ;
+
+nnoremap [Alt]   <Nop>
+xnoremap [Alt]   <Nop>
+" nmap    e  [Alt]
+" xmap    e  [Alt]
+" Like gv, but select the last changed text.
+nnoremap gi  `[v`]
+" Specify the last changed text as {motion}.
+" vnoremap <silent> gi  :<C-u>normal gc<CR>
+" onoremap <silent> gi  :<C-u>normal gc<CR>"`
+" Capitalize.
+nnoremap gu <ESC>gUiw`]
+inoremap <C-u> <ESC>gUiw`]a
+
+" Smart }."
+nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
+onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
+xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
+function! ForwardParagraph()
+  let cnt = v:count ? v:count : 1
+  let i = 0
+  while i < cnt
+    if !search('^\s*\n.*\S','W')
+      normal! G$
+      return
+    endif
+    let i = i + 1
+  endwhile
+endfunction
+" Select rectangle.
+xnoremap r <C-v>
+" 'quote'
+onoremap aq  a'
+xnoremap aq  a'
+onoremap iq  i'
+xnoremap iq  i'
+
+" "double quote"
+onoremap ad  a"
+xnoremap ad  a"
+onoremap id  i"
+xnoremap id  i"
+
+" <angle>
+onoremap aa  a>
+xnoremap aa  a>
+onoremap ia  i>
+xnoremap ia  i>
 "Change two vertically split windows to horizontal splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 nnoremap <LocalLeader>v <C-W>t <C-W>H
@@ -568,16 +620,14 @@ nnoremap S diw"0P
 
 
 " make last typed word uppercase
-inoremap ;u <esc>viwUea
+inoremap :u <esc>viwUea
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 
 "Maps moving to match as moving and visually selecting along the way
-nnoremap % v%
+" nnoremap % v%
 nnoremap ß :update<CR>
 inoremap ß <esc>:update<CR>
-
-let g:ragtag_global_maps = 1
 
 "This mapping alternates between variants of number and relative number
 nnoremap <F2> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
@@ -638,7 +688,7 @@ nnoremap <leader>1 <C-W><Bar>
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 
-"This allows me to use control-j to jump out of a newly matched pair (courtesty
+"This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
 imap <C-F> <C-g>g
 "--------------------------------------------
@@ -719,7 +769,6 @@ nnoremap gn :tabnext<CR>
 nnoremap gl :tabprev<CR>
 
 nnoremap <leader>x :lclose<CR>
-
 "Indent a page of HTML (?works for other code)
 nnoremap <C-G> gg=G<CR>
 
@@ -828,6 +877,7 @@ set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 if !has('nvim')
   " set  mouse=c
   set mouse=a "this is the command that works for mousepad
+  "Disable this to allow scrolling in vim
   noremap <ScrollWheelUp>      <nop>
   noremap <S-ScrollWheelUp>    <nop>
   noremap <C-ScrollWheelUp>    <nop>
@@ -880,6 +930,8 @@ endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
+" Set minimal width for current window.
+set winwidth=30
 set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
 set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
@@ -1035,11 +1087,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '´'
-let g:AutoPairsShortcutFastWrap = '∑'
-let g:AutoPairsShortcutJump = '˜'
 
+let g:vitality_insert_cursor = 0
 "------------------------------------
 " Goyo
 "------------------------------------
@@ -1067,19 +1116,25 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 "------------------------------------
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#auto_complete_delay = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#auto_completion_start_length = 2
 let g:neopairs#enable = 1
 let g:neocomplete#enable_auto_select = 0
 let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#enable_refresh_always = 1
+let g:neocomplete#skip_auto_completion_time = "0.2" 
+" let g:neocomplete#enable_refresh_always = 1
+" Search from neocomplete, omni candidates, vim keywords.
+let g:neocomplete#fallback_mappings =
+      \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
 " Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
@@ -1087,24 +1142,22 @@ let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
 " Recommended key-mappings.
-
+inoremap <expr><C-D> neocomplete#undo_completion()
+  
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
   "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
   " For no inserting <CR> key.
-  return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
+  " return pumvisible() ? "\<C-y>" : "\<CR>"
+" endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-c> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-inoremap <expr><C-D> neocomplete#undo_completion()
-
 
 " function! s:check_back_space()
 "   let col = col('.') - 1
@@ -1123,9 +1176,9 @@ inoremap <expr><C-D> neocomplete#undo_completion()
 "   let manualcomplete = neocomplete#start_manual_complete()
 "   return manualcomplete
 " endfunction
-
 " inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
 
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 let g:UltiSnipsExpandTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<s-tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
@@ -1142,6 +1195,10 @@ let g:livedown_open = 1
 let g:livedown_port = 1337
 nnoremap gm :LivedownToggle<CR>
 
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 0
+let delimitMate_jump_expansion = 1
+let delimitMate_balance_matchpairs = 1
 
 nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
 
@@ -1221,23 +1278,10 @@ omap ag <Plug>GitGutterTextObjectOuterPending
 xmap ig <Plug>GitGutterTextObjectInnerVisual
 xmap ag <Plug>GitGutterTextObjectOuterVisual
 
-" Use right side of the screen for opening splits
-let g:buffergator_viewport_split_policy = 'R'
-
 "This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
-" I want my own keymappings...
-let g:buffergator_suppress_keymaps = 1
-
-" Looper buffers
-let g:buffergator_mru_cycle_loop = 1
 
 
-"Bound to arrow keys to open splits with MRU buffers
-nnoremap <left> :BuffergatorMruCyclePrev leftabove vert sbuffer<CR>
-" nnoremap <C-right> :BuffergatorMruCyclePrev leftabove sbuffer<CR>
-nnoremap <right> :BuffergatorMruCyclePrev rightbelow vert sbuffer<CR>
-" nnoremap <C-left> :BuffergatorMruCyclePrev rightbelow sbuffer<CR>
 
 " View the entire list of buffers open
 nmap <leader>o :BuffergatorToggle<cr>
@@ -1536,3 +1580,4 @@ set sidescrolloff=16
 " Stops some cursor movements from jumping to the start of a line
 set nostartofline
 "}}}
+
