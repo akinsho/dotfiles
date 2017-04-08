@@ -1,6 +1,72 @@
 "Prev abandoned VIMRC settings
 "========================================================================
+" function! s:check_back_space()
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
 
+" let g:ulti_expand_res = 0 "default value, just set once
+" function! Tab_Snippet_Complete()
+"   let snippet = UltiSnips#ExpandSnippet()
+"   if g:ulti_expand_res > 0
+"     return snippet
+"   endif
+"   if <SID>check_back_space()
+"     return "\<TAB>"
+"   endif
+"   let manualcomplete = neocomplete#start_manual_complete()
+"   return manualcomplete
+" endfunction
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
+"-----------------------------------------------------------
+"     NEOMAKE
+"-----------------------------------------------------------
+" augroup Neomake
+"   au!
+"   autocmd BufWritePost * Neomake
+  " autocmd! BufWritePost,BufReadPost * Neomake
+" augroup END
+" let g:neomake_verbose = 0
+" let g:neomake_list_height = 6
+" let g:neomake_open_list = 2
+" let g:quickfixsigns_protect_sign_rx = '^neomake_'
+" let g:neomake_warning_sign = {
+"   \ 'text': 'W',
+"   \ 'texthl': 'WarningMsg',
+"   \ }
+" let g:neomake_error_sign = {
+"   \ 'text': 'E',
+"   \ 'texthl': 'ErrorMsg',
+"   \ }
+" let g:neomake_html_enabled_makers = ['']
+" let g:neomake_cpp_enabled_makers = ['clang']
+" let g:neomake_cpp_clang_maker = {
+"       \ 'args': ['-std=c++14', '-Wall', '-Wextra', '-Weverything', '-pedantic']
+"       \ }
+
+"Moves to the previous set of parentheses and operate on its contents
+onoremap lp :<c-u>normal! F)vi(<cr>
+"Moves to the next set of parentheses and operate on its contents
+onoremap pa :<c-u>normal! f(vi(<cr>
+"Moves to the previous set of braces and operate on its contents
+onoremap lc :<c-u>normal! F}vi{<cr>
+"Moves to the next set of braces and operate on its contents
+onoremap cb :<c-u>normal! f{vi{<cr>
+" These two mappings reduce a sequence of empty (;b) or blank (;n) lines into a
+" single line
+nnoremap ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
+nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
+" make last typed word uppercase
+inoremap :u <esc>viwUea
+
+"For each char here it applies a remap deleting all occurrences of the car with
+"an a operator or the things past it with an i operator
+" for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
+"   execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+"   execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+"   execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+"   execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+" endfor
 " "------------------------------------
 " " Neosnippet
 " "------------------------------------
@@ -61,9 +127,6 @@
 " and close the selection list, same as other IDEs.
 " CONFLICT with some plugins like tpope/Endwise
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
 "YouCompleteMe configurations
@@ -73,16 +136,54 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_always_populate_location_list = 1
-"Change operator arguments to a character representing the desired motion
+"------------------------------------
+" Neocomplete
+"------------------------------------
+" Use neocomplete.
+" let g:neocomplete#enable_at_startup = 1
+" Disable AutoComplPop.
+" let g:acp_enableAtStartup = 0
+" Use smartcase.
+" let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#auto_complete_delay = 1
+" Set minimum syntax keyword length.
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:neopairs#enable = 1
+" let g:neocomplete#enable_auto_select = 0
+" let g:neocomplete#enable_auto_delimiter = 1
+" let g:neocomplete#skip_auto_completion_time = "0.2" 
+" let g:neocomplete#enable_refresh_always = 1
+" Search from neocomplete, omni candidates, vim keywords.
+" let g:neocomplete#fallback_mappings =
+      " \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
+" Enable heavy omni completion.
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
+" Define dictionary.
+" let g:neocomplete#sources#dictionary#dictionaries = {
+    " \ 'default' : '',
+    " \ 'vimshell' : $HOME.'/.vimshell_hist',
+    " \ 'scheme' : $HOME.'/.gosh_completions'
+        " \ }
+" Recommended key-mappings.
+" inoremap <expr><C-D> neocomplete#undo_completion()
+  
+" <CR>: close popup and save indent.
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+  "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  " return pumvisible() ? "\<C-y>" : "\<CR>"
+" endfunction
+" <TAB>: completion.
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-c> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 "- there are native text motions with do this - "b i.e cib - change inner block
-"Moves to the previous set of parentheses and operate on its contents
-" onoremap lp  :<c-u>normal! F)vi(<cr>
-"Moves to the next set of parentheses and operate on its contents
-" onoremap np :<c-u>normal! f(vi(<cr>
-"Moves to the previous set of braces and operate on its contents
-" onoremap lb :<c-u>normal! F}vi{<cr>
-"Moves to the next set of braces and operate on its contents
-" onoremap nb :<c-u>normal! f{vi{<cr>
 "Deletes around next pair of parens - still can't crack it
 " onoremap op :<c-u>normal! F(vT)<cr>
 "Works similarly to the bindings above - finds quotes and operates inside them

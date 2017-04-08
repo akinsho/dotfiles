@@ -2,10 +2,6 @@
 	"segments": {
 		"right": [
             {
-                "function":"powerline.segments.common.net.network_load",
-                "priority":8
-            },
-            {
                 "function":"powerline.segments.common.sys.cpu_load_percent"
             },
 			{

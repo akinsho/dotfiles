@@ -1,4 +1,9 @@
             {
+                "_comment":"Too much info",
+                "function":"powerline.segments.common.net.network_load",
+                "priority":8
+            },
+            {
                 "_comment":"Removed from config as it is reportedly unsecure",
                 "function":"powerline.segments.common.mail.email_imap_alert",
                 "args":{

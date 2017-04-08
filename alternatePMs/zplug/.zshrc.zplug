@@ -160,6 +160,7 @@ zplug "supercrabtree/k"
 # zplug "plugins/tmux", from:oh-my-zsh
 # zplug "djui/alias-tips"
 # zplug "urbainvaes/fzf-marks"
+zplug "Fakerr/goto"
 zplug "b4b4r07/emoji-cli"
 
 
@@ -178,14 +179,10 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:3
   #     on:"stedolan/jq"
 
 
-# zplug "modules/prompt", from:prezto
 # zplug "chauncey-garrett/zsh-prompt-garrett", from:prezto, as:theme
-# zplug "arialdomartini/oh-my-git", use:"*sh"
 
 # Load theme file
 # zplug "skuridin/oh-my-zsh-node-theme", as:theme, from:github
-# zplug mafredri/zsh-async, from:github
-# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "denysdovhan/spaceship-zsh-theme", as:theme
 
 
@@ -325,10 +322,22 @@ source $DOTFILES/runcom/zsh/alias.zsh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
   for script ($DOTFILES/runcom/zsh/*) source $script
 
+source $DOTFILES/local/.localrc
+#=======================================================================
+#       FUNCTIONS
+#=======================================================================
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
-    #=======================================================================
-    #       FUNCTIONS
-    #=======================================================================
 
     # Setup global bookmarks cdg function
     # ====================================
