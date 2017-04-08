@@ -59,6 +59,10 @@ nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
 " make last typed word uppercase
 inoremap :u <esc>viwUea
 
+vnoremap ∆ xp`[V`]
+vnoremap ˚ xkP`[V`]
+nnoremap ∆ ddp
+nnoremap ˚ ddkP
 "For each char here it applies a remap deleting all occurrences of the car with
 "an a operator or the things past it with an i operator
 " for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]

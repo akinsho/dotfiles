@@ -41,12 +41,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "         \| autocmd! load_ultisnips_YouCompleteMe
 " augroup END
 
-" augroup load_ycm
-"   autocmd!
-"   autocmd CursorHold, CursorHoldI * call plug#load()
-"                                 \ | autocmd! load_ycm
-" augroup END
-
 " Ale  Async Linting as you type
 Plug 'w0rp/ale'
 "Added vim snippets for code autofilling
@@ -122,13 +116,17 @@ Plug 'sjl/vitality.vim'
 "Added June Gunn's alignment plugin
 Plug 'junegunn/vim-easy-align'
 "Github dashboard for vim
-Plug 'junegunn/vim-github-dashboard'
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
 "Start up time monitor
-Plug 'tweekmonster/startuptime.vim'
+" Plug 'tweekmonster/startuptime.vim'
 "Database manipulation in vim
 Plug 'vim-scripts/dbext.vim'
 "Capslock without a capslock key in vim
 Plug 'tpope/vim-capslock'
+"ES-lint fix
+Plug 'josudoey/vim-eslint-fix'
+"Google in vim
+Plug 'szw/vim-g'
 
 "Text Objects =====================
 "Text object library plugin for defining your own text objects
@@ -142,11 +140,13 @@ Plug 'michaeljsmith/vim-indent-object'
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-unimpaired'
 "Peace and Quiet thanks JGunn
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 " All encompasing v
 Plug 'terryma/vim-expand-region'
 "Moar textobjs
 Plug 'wellle/targets.vim'
+"Function text object js
+Plug 'thinca/vim-textobj-function-javascript'
 "Block object courtesy of JGunn
 " Plug 'rhysd/vim-textobj-anyblock'
 
@@ -163,7 +163,7 @@ Plug 'wikitopian/hardmode'
 
 "Visuals ===============================
 " toggles line numbering depending on current mode
-Plug 'myusuf3/numbers.vim'
+" Plug 'myusuf3/numbers.vim'
 "Filetype Plugins ======================
 "Add better markdown previewer
 Plug 'shime/vim-livedown'
@@ -200,9 +200,6 @@ Plug 'vim-scripts/SyntaxComplete'
 " Plug 'tpope/vim-obsession'
 "Closes tags with > command
 " Plug 'alvan/vim-closetag'
-" Adds syntax completion for things like canvas and chrome APIs
-" Plug '1995eaton/vim-better-javascript-completion' - Doesn't work currently as
-" it conflicts with Tern Js for example
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -259,7 +256,8 @@ vnoremap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+" nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+set conceallevel=1
 let g:javascript_conceal_arrow_function = "⇒"
 
 
@@ -318,6 +316,8 @@ nnoremap ]1 :call signature#marker#Goto('prev', 1, v:count)
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
+let g:NERDTreeDirArrowExpandable      = '├'
+let g:NERDTreeDirArrowCollapsible     = '└'
 let NERDTreeQuitOnOpen                = 1
 let NERDTreeMinimalUI                 = 1
 let NERDTreeDirArrows                 = 1
@@ -325,6 +325,7 @@ let NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks           = 1
 let NERDTreeAutoDeleteBuffer          = 1
 let NERDTreeShowHidden                = 1 "Show hidden files by default
+let NERDTreeChDirMode                 = 2
 
 "===================================================
 "EasyMotion mappings
@@ -567,7 +568,7 @@ augroup END
   "Mappings
   "-----------------------------------------------------------------------------------{{{
 
-  nnoremap <CR> G
+  " nnoremap <CR> G
   nnoremap <BS> gg
   "Change operator arguments to a character representing the desired motion
   nnoremap ; :
@@ -616,10 +617,10 @@ augroup END
   " xnoremap id  i"
 
   " <angle>
-  " onoremap aa  a>
-  " xnoremap aa  a>
-  " onoremap ia  i>
-  " xnoremap ia  i>
+  onoremap aa  a>
+  xnoremap aa  a>
+  onoremap ia  i>
+  xnoremap ia  i>
   "Change two vertically split windows to horizontal splits
   nnoremap <LocalLeader>h <C-W>t <C-W>K
   nnoremap <LocalLeader>v <C-W>t <C-W>H
@@ -629,10 +630,6 @@ augroup END
   nnoremap gV `[V`]
 
   "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-  " vnoremap ∆ xp`[V`]
-  " vnoremap ˚ xkP`[V`]
-  "nnoremap ∆ ddp
-  "nnoremap ˚ ddkP
   " Better bubbling a la Tpope's unimpaired vim
   nmap ˚ [e
   nmap ∆ ]e
@@ -766,17 +763,17 @@ augroup END
   "Create a vertical split
   nnoremap \| :vsp<CR>
   " Resize window vertically  - shrink
-  nnoremap <Leader>ee 15<c-w>-
+  nnoremap <down> 15<c-w>-
+  " Resize window vertically - grow
+  nnoremap <up>ff 15<c-w>+
   " Increase window size horizontally
-  nnoremap <leader>f 15<c-w>>
+  nnoremap <left> 15<c-w>>
   " Decrease window size horizontally
-  nnoremap <leader>ff 15<c-w><
+  nnoremap <right> 15<c-w><
   " Max out the height of the current split
   nnoremap <localleader>f <C-W>_
   " Max out the width of the current split
   nnoremap <localleader>e <C-W>|
-  " Resize window vertically - grow
-  " nnoremap <Leader>ff 15<c-w>+
 
 
   "Normalize all split sizes, which is very handy when resizing terminal
@@ -788,8 +785,6 @@ augroup END
   "Swap top/bottom or left/right split
   nnoremap <leader>r <C-W>R
   "--------------------------------------------
-  nnoremap <leader>gn :tabnext<CR>
-  nnoremap <leader>gl :tabprev<CR>
 
   nnoremap <leader>x :lclose<CR>
   "Indent a page of HTML (?works for other code)
@@ -803,10 +798,10 @@ augroup END
 
 
   "Remap arrow keys to do nothing
-  nnoremap <up> <nop>
-  nnoremap <down> <nop>
-  nnoremap <left> <nop>
-  nnoremap <right> <nop>
+  " nnoremap <up> <nop>
+  " nnoremap <down> <nop>
+  " nnoremap <left> <nop>
+  " nnoremap <right> <nop>
   inoremap <up> <nop>
   inoremap <down> <nop>
   inoremap <left> <nop>
@@ -832,8 +827,8 @@ augroup END
   nnoremap jk <ESC>
 
   " Yank text to the OS X clipboard
-  noremap <leader>y "*y
-  noremap <leader>yy "*Y
+  noremap <localleader>y "*y
+  noremap <localleader>yy "*Y
 
 
   "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
@@ -854,8 +849,8 @@ augroup END
   nnoremap <leader>< viw<esc>a ><esc>bi<<esc>lel
   " Remap going to beginning and end of lines
   " move to beginning/end of line
-  nnoremap B ^
-  nnoremap E $
+  nnoremap H ^
+  nnoremap L $
 
   "Map Q to remove a CR
   nnoremap Q J
@@ -1106,7 +1101,20 @@ augroup END
         \}
   nnoremap <F1> :GHDashboard! Akin909<CR>
 
+".vimrc
+function! PrettyFile()
+  if &filetype=="javascript"
+    if exists('g:loaded_Beautifier')
+      call JsBeautify()
+    endif
+    if exists('g:loaded_ESLintFix')
+      call ESLintFix()
+    endif
+  end
+endfunction
 
+"pretty the file before saving.
+autocmd BufWritePre * execute 'call PrettyFile()'
 
 
   " let g:vitality_insert_cursor = 0
