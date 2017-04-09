@@ -29,9 +29,6 @@ endif
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
-"youcomplete me trial
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
-" autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "Premature optimisation -_-
@@ -40,6 +37,9 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "   autocmd InsertEnter * call plug#load('ultisnips')
 "         \| autocmd! load_ultisnips_YouCompleteMe
 " augroup END
+"youcomplete me trial
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
+" autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
 
 " Ale  Async Linting as you type
 Plug 'w0rp/ale'
@@ -66,10 +66,8 @@ Plug 'mattn/emmet-vim'
 Plug 'Raimondi/delimitMate'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
-" Added yet another js syntax highlighter - Not greater for performance
-" Plug 'othree/yajs.vim',{ 'for': 'javascript' }  "THIS PLUGIN IS A FORK of jelera vim-javascript-syntax don't install both!!!!
 "Added node.vim plugin
-Plug 'moll/vim-node'
+Plug 'moll/vim-node', { 'for':'javascript'}
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
@@ -88,7 +86,7 @@ function! BuildTern(info)
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
 "Add Gundo - undo plugin for vim
-Plug 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
 "Tim pope's surround plugin allows . to repeat more actions
 Plug 'tpope/vim-repeat'
 "Added yankstack a lighter weight version of yankring
@@ -111,14 +109,12 @@ Plug 'benmills/vimux'
 Plug 'kshenoy/vim-signature'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
-"Better indentation in JS
-" Plug 'vim-scripts/JavaScript-Indent', { 'for': 'javascript' }
 "Added June Gunn's alignment plugin
 Plug 'junegunn/vim-easy-align'
 "Github dashboard for vim
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
 "Start up time monitor
-" Plug 'tweekmonster/startuptime.vim'
+Plug 'tweekmonster/startuptime.vim'
 "Database manipulation in vim
 Plug 'vim-scripts/dbext.vim'
 "Capslock without a capslock key in vim
@@ -127,6 +123,16 @@ Plug 'tpope/vim-capslock'
 Plug 'josudoey/vim-eslint-fix'
 "Google in vim
 Plug 'szw/vim-g'
+"Colors for hexcode in vim
+Plug 'gko/vim-coloresque'
+"Bookmarks for vim
+Plug 'MattesGroeger/vim-bookmarks'
+"Go for Vim
+Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
+"Need this for styled components
+" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
+
+
 
 "Text Objects =====================
 "Text object library plugin for defining your own text objects
@@ -147,8 +153,6 @@ Plug 'terryma/vim-expand-region'
 Plug 'wellle/targets.vim'
 "Function text object js
 Plug 'thinca/vim-textobj-function-javascript'
-"Block object courtesy of JGunn
-" Plug 'rhysd/vim-textobj-anyblock'
 
 
 "Coding tools =======================
@@ -162,8 +166,6 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'wikitopian/hardmode'
 
 "Visuals ===============================
-" toggles line numbering depending on current mode
-" Plug 'myusuf3/numbers.vim'
 "Filetype Plugins ======================
 "Add better markdown previewer
 Plug 'shime/vim-livedown'
@@ -181,16 +183,16 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'reedes/vim-thematic'
 "vim sialoquent theme
 Plug 'davidklsn/vim-sialoquent'
-"Colorsheme solarized 8
-Plug 'lifepillar/vim-solarized8'
 "Colorscheme - OneDark
 Plug 'joshdick/onedark.vim'
-" Add new theme trial purposes ofc
-Plug 'rhysd/vim-color-spring-night'
-"Added oceanic next theme
-Plug 'mhartington/oceanic-next'
-"Quantum theme
 Plug 'tyrannicaltoucan/vim-quantum'
+"Colorsheme solarized 8
+" Plug 'lifepillar/vim-solarized8'
+" Add new theme trial purposes ofc
+" Plug 'rhysd/vim-color-spring-night'
+"Added oceanic next theme
+" Plug 'mhartington/oceanic-next'
+"Quantum theme
 
 "Added SyntaxComplete for more syntax completion
 Plug 'vim-scripts/SyntaxComplete'
@@ -198,8 +200,6 @@ Plug 'vim-scripts/SyntaxComplete'
 " Plug 'rakr/vim-one'
 "Vim obsession Tpope's amazing plugin for managing sessions
 " Plug 'tpope/vim-obsession'
-"Closes tags with > command
-" Plug 'alvan/vim-closetag'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -236,6 +236,8 @@ let maplocalleader = "\<space>"
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✖️'
 let g:ale_sign_warning       = '⚠️'
+let g:ale_linters            = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linter_aliases     = {'jsx': 'css'}
 " '>>'
 " highlight clear ALEErrorSign
 " highlight clear ALEWarningSig
@@ -243,6 +245,17 @@ let g:ale_set_highlights = 0
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
+
+imap <C-L> <C-O><Plug>CapsLockToggle
+
+"highlight GitGutterAdd guifg = '#A3E28B'
+let g:gitgutter_sign_modified = '•'
+let g:gitgutter_sign_added    = '❖'
+let g:gitgutter_sign_column_always = 1
+let g:gitgutter_eager              = 0
+let g:gitgutter_grep_command = 'ag --nocolor'
+"-----------------------------------------------------------
+" Colorizer
 "-----------------------------------------------------------
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -309,13 +322,11 @@ nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
 "Vim-Signature ==================================================
 
 let g:SignatureMarkTextHLDynamic=1
-nnoremap [1 :call signature#marker#Goto('next', 1, v:count)
-nnoremap ]1 :call signature#marker#Goto('prev', 1, v:count)
 "NERDTree
 " =============================================
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-N> :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
+nnoremap <localleader>nf :NERDTreeFind<CR>
 let g:NERDTreeDirArrowExpandable      = '├'
 let g:NERDTreeDirArrowCollapsible     = '└'
 let NERDTreeQuitOnOpen                = 1
@@ -325,7 +336,6 @@ let NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks           = 1
 let NERDTreeAutoDeleteBuffer          = 1
 let NERDTreeShowHidden                = 1 "Show hidden files by default
-let NERDTreeChDirMode                 = 2
 
 "===================================================
 "EasyMotion mappings
@@ -371,7 +381,7 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 
 "add Vcoolor color picker mapping
-let g:vcoolor_map = '§'
+let g:vcoolor_map = '<F8>'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -564,563 +574,554 @@ augroup END
   set complete+=kspell
   "Add spell checking local
   " setlocal spell spelllang=en_us
-  "-----------------------------------------------------------------------------------
-  "Mappings
-  "-----------------------------------------------------------------------------------{{{
-
-  " nnoremap <CR> G
-  nnoremap <BS> gg
-  "Change operator arguments to a character representing the desired motion
-  nnoremap ; :
-  nnoremap : ;
-
-  nnoremap [Alt]   <Nop>
-  xnoremap [Alt]   <Nop>
-  " nmap    e  [Alt]
-  " xmap    e  [Alt]
-  " Like gv, but select the last changed text.
-  nnoremap gi  `[v`]
-  " Specify the last changed text as {motion}.
-  " vnoremap <silent> gi  :<C-u>normal gc<CR>
-  " onoremap <silent> gi  :<C-u>normal gc<CR>"`
-  " Capitalize.
-  nnoremap gu <ESC>gUiw`]
-  inoremap <C-u> <ESC>gUiw`]a
-
-  " Smart }."
-  nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
-  onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
-  xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
-  function! ForwardParagraph()
-    let cnt = v:count ? v:count : 1
-    let i = 0
-    while i < cnt
-      if !search('^\s*\n.*\S','W')
-        normal! G$
-        return
-      endif
-      let i = i + 1
-    endwhile
-  endfunction
-  " Select rectangle.
-  xnoremap r <C-v>
-  " 'quote'
-  " onoremap aq  a'
-  " xnoremap aq  a'
-  " onoremap iq  i'
-  " xnoremap iq  i'
-
-  " \"double quote"
-  " onoremap ad  a"
-  " xnoremap ad  a"
-  " onoremap id  i"
-  " xnoremap id  i"
-
-  " <angle>
-  onoremap aa  a>
-  xnoremap aa  a>
-  onoremap ia  i>
-  xnoremap ia  i>
-  "Change two vertically split windows to horizontal splits
-  nnoremap <LocalLeader>h <C-W>t <C-W>K
-  nnoremap <LocalLeader>v <C-W>t <C-W>H
-  "Change two horizontally split windows to vertical splits
-
-  "Select txt that has just been read or pasted in
-  nnoremap gV `[V`]
-
-  "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-  " Better bubbling a la Tpope's unimpaired vim
-  nmap ˚ [e
-  nmap ∆ ]e
-  vmap ˚ [egv
-  vmap ∆ ]egv
-
-
-  " Line completion - native vim
-  inoremap ç <C-X><C-L>
-
-  "Replace current word with last deleted word
-  nnoremap S diw"0P
-
-  " make . work with visually selected lines
-  vnoremap . :norm.<CR>
-
-  "Maps moving to match as moving and visually selecting along the way
-  " nnoremap % v%
-  nnoremap <LocalLeader>s :update<CR>
-  inoremap ß <esc>:update<CR>
-
-  "This mapping alternates between variants of number and relative number
-  nnoremap <F4> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
-  "This mapping allows yanking all of a line without taking the new line
-  "character as well can be with our without spaces
-  vnoremap <silent> al :<c-u>norm!0v$h<cr>
-  vnoremap <silent> il :<c-u>norm!^vg_<cr>
-  onoremap <silent> al :norm val<cr>
-  onoremap <silent> il :norm vil<cr>
-
-  "ctrl-o in insert mode allows you to perform one normal mode command then
-  "returns to insert mode
-  " inoremap <C-j> <Down>
-  inoremap ∆ <Down>
-  inoremap <C-h> <left>
-  inoremap ˚ <up>
-  inoremap <C-l> <right>
-
-  " select last paste in visual mode
-  " nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-  nnoremap <F6> :! open %<CR>
-  "nnoremap <F3> :!open -a safari %<CR>
-
-  "automatically at present
-  set pastetoggle=<F2>
-  "time out on mapping after half a second, time out on key codes after a tenth
-  "of a second
-  set timeout timeoutlen=500 ttimeoutlen=100
-
-  " Remap jumping to the lask spot you were editing previously to bk as this is
-  " easier form me to remember
-  nnoremap bk `.
-
-  " Yank from the cursor to the end of the line, to be consistent with C and D.
-  nnoremap Y y$
-  nnoremap <leader>sw :b#<CR>
-  "--------------------------------------------
-  " FZF bindings
-  "--------------------------------------------
-  nnoremap <silent> <localleader>o :Buffers<CR>
-  imap <c-x><c-k> <plug>(fzf-complete-word)
-  imap <c-x><c-f> <plug>(fzf-complete-path)
-  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-  imap <c-x><c-l> <plug>(fzf-complete-line)
-
-  " Launch file search using FZF
-  nnoremap <C-P> :FZFR <CR>
-  nnoremap \ :Ag<CR>
-  "--------------------------------------------
-
-  " Zoom current split
-  nnoremap <leader>1 <C-W><Bar>
-  " nnoremap  <leader>2 <C-W>_
-  " Quick find/replace
-  nnoremap <Leader>[ :%s/<C-r><C-w>/
-  vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
-
-  "This allows me to use control-f to jump out of a newly matched pair (courtesty
-  "of delimitmate)
-  imap <C-F> <C-g>g
-  "--------------------------------------------
-  "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
-  "repeat macros across a visual range
-  "--------------------------------------------
-  xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-  function! ExecuteMacroOverVisualRange()
-    echo "@".getcmdline()
-    execute ":'<,'>normal @".nr2char(getchar())
-  endfunction
-  "--------------------------------------------
-
-  " Visual shifting (does not exit Visual mode)
-  vnoremap < <gv
-  vnoremap > >gv
-  "Help Command - vertical split
-  command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
-  function! VerticalHelp(topic)
-    execute "vertical botright help " . a:topic
-    execute "vertical resize 78"
-  endfunction
-  "--------------------------------------------
-  "Fugitive bindings
-  nnoremap <leader>gs :Gstatus<CR>
-  nnoremap <leader>gd :Gdiff<CR>
-  nnoremap <leader>gc :Gcommit<CR>
-  nnoremap <leader>gp :Gpush<CR>
-  "--------------------------------------------
-  "Remap back tick for jumping to marks more quickly
-  nnoremap ' `
-  nnoremap ` '
-
-  nnoremap rs ^d0
-  nnoremap qa :wqa<CR>
-  " clean up any trailing whitespace
-  nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-  "Save all files
-  "open a new file in the same directory
-  nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
-
-  "Open command line window
-  nnoremap <localleader>c :<c-f>
-
-  nnoremap <localleader>l :redraw!<cr>
-  "--------------------------------------------
-  " Window resizing bindings
-  "--------------------------------------------
-  "
-  "Create a horizontal split
-  nnoremap _ :sp<CR>
-  "Create a vertical split
-  nnoremap \| :vsp<CR>
-  " Resize window vertically  - shrink
-  nnoremap <down> 15<c-w>-
-  " Resize window vertically - grow
-  nnoremap <up>ff 15<c-w>+
-  " Increase window size horizontally
-  nnoremap <left> 15<c-w>>
-  " Decrease window size horizontally
-  nnoremap <right> 15<c-w><
-  " Max out the height of the current split
-  nnoremap <localleader>f <C-W>_
-  " Max out the width of the current split
-  nnoremap <localleader>e <C-W>|
-
-
-  "Normalize all split sizes, which is very handy when resizing terminal
-  nnoremap <leader>= <C-W>=
-  "Break out current window into new tabview
-  nnoremap <leader>t <C-W>T
-  "Close every window in the current tabview but the current one
-  nnoremap <localleader>q <C-W>o
-  "Swap top/bottom or left/right split
-  nnoremap <leader>r <C-W>R
-  "--------------------------------------------
-
-  nnoremap <leader>x :lclose<CR>
-  "Indent a page of HTML (?works for other code)
-  nnoremap <C-G> gg=G<CR>
-
-  "map window keys to leader - Interfere with tmux navigator
-  " noremap <C-h> <c-w>h
-  " noremap <C-j> <c-w>j
-  " noremap <C-k> <c-w>k
-  " noremap <C-l> <c-w>l
-
-
-  "Remap arrow keys to do nothing
-  " nnoremap <up> <nop>
-  " nnoremap <down> <nop>
-  " nnoremap <left> <nop>
-  " nnoremap <right> <nop>
-  inoremap <up> <nop>
-  inoremap <down> <nop>
-  inoremap <left> <nop>
-  inoremap <right> <nop>
-  nnoremap j gj
-  nnoremap k gk
-
-  "key mappings
-  "Remaps the binding to increment numbers to <leader>a and to decrement to å
-
-  nnoremap <silent> <Leader>a <C-A>
-  nnoremap <silent> å <C-X>
-
-  "Moves cursor back to the start of a line
-  inoremap <C-B> <C-O>I
-  "Remaps native ctrl h - emulates backspace to ctrl d
-  inoremap <C-D> <C-H>
-  "Remaps native ctrl k - deleting to the end of a line to control e
-  " inoremap <C-Q> <C-K>
-
-  " Map jk to esc key - using jk prevents jump that using ii causes
-  inoremap jk <ESC>
-  nnoremap jk <ESC>
-
-  " Yank text to the OS X clipboard
-  noremap <localleader>y "*y
-  noremap <localleader>yy "*Y
-
-
-  "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
-  "a word I know
-  noremap K  @='10k'<CR>
-  noremap J  @='10j'<CR>
-
-  "This line opens the vimrc in a vertical split
-  nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-  nnoremap <localleader>ev :e $MYVIMRC<cr>
-
-  "This line allows the current file to source the vimrc allowing me use bindings as they're added
-  nnoremap <leader>sv :source $MYVIMRC<cr>
-  "This maps leader quote (single or double to wrap the word in quotes)
-  nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-  nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-
-  nnoremap <leader>< viw<esc>a ><esc>bi<<esc>lel
-  " Remap going to beginning and end of lines
-  " move to beginning/end of line
-  nnoremap H ^
-  nnoremap L $
-
-  "Map Q to remove a CR
-  nnoremap Q J
-
-  "Terminal mappings to allow changing windows with Alt-h,j,k,l
-  if has("nvim")
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
-    nnoremap <A-h> <C-w>h
-    nnoremap <A-j> <C-w>j
-    nnoremap <A-k> <C-w>k
-    nnoremap <A-l> <C-w>l
-  endif
-
-
-  "Add neovim terminal escape with ESC mapping
-  if has("nvim")
-    :tnoremap <ESC> <C-\><C-n>
-  endif
-  "}}}
-
-  "===================================================================================
-  "Mouse
-  "==================================================================================={{{
-  set mousehide
-
-  set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-  "Stop mouse scrolling
-  if !has('nvim')
-    " set  mouse=c
-    set mouse=a "this is the command that works for mousepad
-    "Disable this to allow scrolling in vim
-    noremap <ScrollWheelUp>      <nop>
-    noremap <S-ScrollWheelUp>    <nop>
-    noremap <C-ScrollWheelUp>    <nop>
-    noremap <ScrollWheelDown>    <nop>
-    noremap <S-ScrollWheelDown>  <nop>
-    noremap <C-ScrollWheelDown>  <nop>
-    noremap <ScrollWheelLeft>    <nop>
-    noremap <S-ScrollWheelLeft>  <nop>
-    noremap <C-ScrollWheelLeft>  <nop>
-    noremap <ScrollWheelRight>   <nop>
-    noremap <S-ScrollWheelRight> <nop>
-    noremap <C-ScrollWheelRight> <nop>
-  endif
-  "}}}
-  "====================================================================================
-  "Buffer and Tab settings
-  "===================================================================================={{{
-  " This allows buffers to be hidden if you've modified a buffer.
-  " This is almost a must if you wish to use buffers in this way.
-  set nohidden
-
-
-  " To open a new empty buffer
-  " This replaces :tabnew which I used to bind to this mapping
-  nnoremap <leader>n :enew<cr>
-  " Opens a new tab
-  nnoremap <localleader>n :tabnew<CR>
-
-  " Shared bindings from Solution #1 from earlier
-  nmap <leader>bq :bp <BAR> bd #<cr>
-
-  " Close the current buffer and move to the previous one
-  " This replicates the idea of closing a tab
-  nnoremap ,q :bp <BAR> bd #<CR>
-
-  " " Show all open buffers and their status
-  " nmap <leader>bl :ls<CR>
-
-  "}}}
-  " ----------------------------------------------------------------------------
-  " Message output on vim actions
-  " ----------------------------------------------------------------------------
-
-  set shortmess=at
-  " set shortmess+=mnrxoOta
-  " set shortmess-=f                      " (file x of x) instead of just (x of x)
-  if has('patch-7.4.314')
-    set shortmess+=c                    " Disable 'Pattern not found' messages
-  endif
-
-  " ----------------------------------------------------------------------------
-  " Window splitting and buffers
-  " ----------------------------------------------------------------------------
-  " Set minimal width for current window.
-  set winwidth=30
-  set splitbelow "Open a horizontal split below current window
-  set splitright "Open a vertical split to the right of the window
-  set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
-  " reveal already opened files from the quickfix window instead of opening new
-  " buffers
-  set switchbuf=useopen
-
-  " ----------------------------------------------------------------------------
-  " Diffing
-  " ----------------------------------------------------------------------------{{{
-
-  " Note this is += since fillchars was defined in the window config
-  set fillchars+=diff:⣿
-  set diffopt=vertical                  " Use in vertical diff mode
-  set diffopt+=filler                   " blank lines to keep sides aligned
-  set diffopt+=iwhite                   " Ignore whitespace changes
-  "}}}
-  " ----------------------------------------------------------------------------{{{
-  "             Format options
-  " ----------------------------------------------------------------------------
-  " Input auto-formatting (global defaults)
-  " Probably need to update these in after/ftplugin too since ftplugins will
-  " probably update it.
-  set formatoptions=
-  set formatoptions+=1
-  set formatoptions-=q                  " continue comments with gq"
-  set formatoptions-=c                  " Auto-wrap comments using textwidth
-  set formatoptions-=r                  " Do not continue comments by default
-  set formatoptions-=o                  " do not continue comment using o or O
-  set formatoptions+=n                  " Recognize numbered lists
-  set formatoptions+=2                  " Use indent from 2nd line of a paragraph
-
-  set nrformats-=octal " never use octal when <C-x> or <C-a>"
-  "}}}
-  " ----------------------------------------------------------------------------
-  " Vim Path
-  " ----------------------------------------------------------------------------
-  "Vim searches recursively through all directories and subdirectories
-  set path+=**
-  " set autochdir
-
-  " ----------------------------------------------------------------------------
-  " Wild and file globbing stuff in command mode
-  " ----------------------------------------------------------------------------{{{
-  set wildmenu
-  set wildmode=list:longest,full        " Complete files using a menu AND list
-  set wildignorecase
-  " Binary
-  set wildignore+=*.aux,*.out,*.toc
-  set wildignore+=*.o,*.obj,*.exe,*.dll,*.jar,*.pyc,*.rbc,*.class
-  set wildignore+=*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
-  set wildignore+=*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm
-  set wildignore+=*.eot,*.otf,*.ttf,*.woff
-  set wildignore+=*.doc,*.pdf
-  set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
-  " Cache
-  set wildignore+=.sass-cache
-  set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem
-  " Temp/System
-  " set wildignore+=*.*~,*~
-  set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
-
-  "}}}
-  " ----------------------------------------------------------------------------
-  " Display
-  " --------------------------------------------------------------------------{{{
-  " This prevents a scratch buffer from being opened
-  set completeopt-=preview
-  set title                             " wintitle = filename - vim
-  " Match parentheses coloring
-  " highlight MatchParen  guibg=#658494 gui=bold
-
-  "Add relative line numbers and relative = absolute line numbers i.e current
-  "lines shows absolute and all others are relative
-  set ttyfast " Improves smoothness of redrawing when there are multiple windows
-
-  set relativenumber
-  set number
-
-  set linespace=4
-  "relative add set relativenumber to show numbers relative to the cursor
-  set numberwidth=5
-  "Turns on smart indent which can help indent files like html natively
-  set smartindent
-  set wrap
-  " This should cause lines to wrap around words rather than random characters
-  set linebreak
-  set textwidth=79
-  "Use one space, not two, after punctuation
-  set nojoinspaces
-
-  set autowrite "Automatically :write before running commands
-
-  set backspace=2 "Back space deletes like most programs in insert mode
-  if has('vim')
-    set signcolumn=yes "enables column that shows signs and error symbols
-  endif
-
-  set ruler
-  set incsearch
-
-  " Always display the status line even if only one window is displayed
-  " set laststatus=2
-
-  " Turns on lazyredraw which postpones redrawing for macros and command
-  " execution
-  set lazyredraw
-
-  " Use visual bell when there are errors not audio beep
-  set visualbell
-  "Reset color on quitting vim
-  " au VimLeave * !echo -ne""\033[0m"
-  "Setting the t_ variables if a further step to ensure 24bit colors
-  if has('termguicolors')
-    " && !has('gui_running')
-    set termguicolors
-    " set vim-specific sequences for rgb colors
-    "super important for truecolor support in vim
-    let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-    let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
-    " set t_8b="^[[48;2;%lu;%lu;%lum"
-    " set t_8f="^[[38;2;%lu;%lu;%lum"
-  endif
-  "}}}
-  "================================================================================
-  "Whitespace
-  "================================================================================
-  " ------------------------------------
-  " Command line
-  " ------------------------------------
-  "Show commands being input
-  set showcmd
-  " Set command line height to two lines
-  set cmdheight=2
-
-  "-----------------------------------------------------------------
-  "Abbreviations
-  "-----------------------------------------------------------------
-  iabbrev w@ www.akin-sowemimo.com
-
-  if &statusline ==# ''
-    set statusline=
-  endif
-
-  "------------------------------------
-  "  Tab line
-  "------------------------------------
-  "Setting show tabline causes tabline to redraw without highlighting
-  set showtabline=2
-  "fugitive plugin
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+"-----------------------------------------------------------------------------------
+"Mappings
+"-----------------------------------------------------------------------------------{{{
+" remap arrow keys
+nnoremap <Leader><Leader> :bprev<CR>
+nnoremap <Leader>. :bnext<CR>
+" nnoremap <CR> G
+nnoremap <BS> gg
+"Change operator arguments to a character representing the desired motion
+nnoremap ; :
+nnoremap : ;
+
+nnoremap [Alt]   <Nop>
+xnoremap [Alt]   <Nop>
+" nmap    e  [Alt]
+" xmap    e  [Alt]
+" Like gv, but select the last changed text.
+nnoremap gi  `[v`]
+" Specify the last changed text as {motion}.
+" vnoremap <silent> gi  :<C-u>normal gc<CR>
+" onoremap <silent> gi  :<C-u>normal gc<CR>"`
+" Capitalize.
+nnoremap gu <ESC>gUiw`]
+inoremap <C-u> <ESC>gUiw`]a
+
+" Smart }."
+nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
+onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
+xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
+function! ForwardParagraph()
+  let cnt = v:count ? v:count : 1
+  let i = 0
+  while i < cnt
+    if !search('^\s*\n.*\S','W')
+      normal! G$
+      return
+    endif
+    let i = i + 1
+  endwhile
+endfunction
+" Select rectangle.
+xnoremap r <C-v>
+" 'quote'
+" onoremap aq  a'
+" xnoremap aq  a'
+" onoremap iq  i'
+" xnoremap iq  i'
+
+" \"double quote"
+" onoremap ad  a"
+" xnoremap ad  a"
+" onoremap id  i"
+" xnoremap id  i"
+
+" <angle>
+" onoremap aa  a>
+" xnoremap aa  a>
+" onoremap ia  i>
+" xnoremap ia  i>
+"Change two vertically split windows to horizontal splits
+nnoremap <LocalLeader>h <C-W>t <C-W>K
+nnoremap <LocalLeader>v <C-W>t <C-W>H
+"Change two horizontally split windows to vertical splits
+
+"Select txt that has just been read or pasted in
+nnoremap gV `[V`]
+
+"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
+" Better bubbling a la Tpope's unimpaired vim
+nmap ˚ [e
+nmap ∆ ]e
+vmap ˚ [egv
+vmap ∆ ]egv
+
+
+" Line completion - native vim
+inoremap ç <C-X><C-L>
+
+"Replace current word with last deleted word
+nnoremap S diw"0P
+
+" make . work with visually selected lines
+vnoremap . :norm.<CR>
+
+nnoremap <LocalLeader>s :update<CR>
+inoremap ß <esc>:update<CR>
+
+"This mapping alternates between variants of number and relative number
+nnoremap <F4> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
+"This mapping allows yanking all of a line without taking the new line
+"character as well can be with our without spaces
+vnoremap <silent> al :<c-u>norm!0v$h<cr>
+vnoremap <silent> il :<c-u>norm!^vg_<cr>
+onoremap <silent> al :norm val<cr>
+onoremap <silent> il :norm vil<cr>
+
+"ctrl-o in insert mode allows you to perform one normal mode command then
+"returns to insert mode
+" inoremap <C-j> <Down>
+inoremap ∆ <Down>
+inoremap ˙ <left>
+inoremap ˚ <up>
+inoremap ¬ <right>
+
+" select last paste in visual mode
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+nnoremap <F6> :! open %<CR>
+"nnoremap <F3> :!open -a safari %<CR>
+
+"automatically at present
+set pastetoggle=<F2>
+"time out on mapping after half a second, time out on key codes after a tenth
+"of a second
+set timeout timeoutlen=500 ttimeoutlen=100
+
+" Remap jumping to the lask spot you were editing previously to bk as this is
+" easier form me to remember
+nnoremap bk `.
+
+" Yank from the cursor to the end of the line, to be consistent with C and D.
+nnoremap Y y$
+nnoremap <leader>sw :b#<CR>
+"--------------------------------------------
+" FZF bindings
+"--------------------------------------------
+nnoremap <silent> <localleader>o :Buffers<CR>
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Launch file search using FZF
+nnoremap <C-P> :FZFR <CR>
+nnoremap \ :Ag<CR>
+"--------------------------------------------
+
+" Zoom current split
+nnoremap <leader>1 <C-W><Bar>
+" nnoremap  <leader>2 <C-W>_
+" Quick find/replace
+nnoremap <Leader>[ :%s/<C-r><C-w>/
+vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
+
+"This allows me to use control-f to jump out of a newly matched pair (courtesty
+"of delimitmate)
+imap <C-F> <C-g>g
+"--------------------------------------------
+"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
+"repeat macros across a visual range
+"--------------------------------------------
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+"--------------------------------------------
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+"Help Command - vertical split
+command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
+function! VerticalHelp(topic)
+  execute "vertical botright help " . a:topic
+  execute "vertical resize 78"
+endfunction
+"--------------------------------------------
+"Fugitive bindings
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gp :Gpush<CR>
+"--------------------------------------------
+"Remap back tick for jumping to marks more quickly
+nnoremap ' `
+nnoremap ` '
+
+nnoremap rs ^d0
+nnoremap qa :wqa<CR>
+" clean up any trailing whitespace
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
+"Save all files
+"open a new file in the same directory
+nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
+
+"Open command line window
+nnoremap <localleader>c :<c-f>
+
+nnoremap <localleader>l :redraw!<cr>
+"--------------------------------------------
+" Window resizing bindings
+"--------------------------------------------
+"
+"Create a horizontal split
+nnoremap _ :sp<CR>
+"Create a vertical split
+nnoremap \| :vsp<CR>
+" Resize window vertically  - shrink
+nnoremap <down> 15<c-w>-
+" Resize window vertically - grow
+nnoremap <up>ff 15<c-w>+
+" Increase window size horizontally
+nnoremap <left> 15<c-w>>
+" Decrease window size horizontally
+nnoremap <right> 15<c-w><
+" Max out the height of the current split
+nnoremap <localleader>f <C-W>_
+" Max out the width of the current split
+nnoremap <localleader>e <C-W>|
+
+
+"Normalize all split sizes, which is very handy when resizing terminal
+nnoremap <leader>= <C-W>=
+"Break out current window into new tabview
+nnoremap <leader>t <C-W>T
+"Close every window in the current tabview but the current one
+nnoremap <localleader>q <C-W>o
+"Swap top/bottom or left/right split
+nnoremap <leader>r <C-W>R
+"--------------------------------------------
+
+nnoremap <leader>x :lclose<CR>
+"Indent a page of HTML (?works for other code)
+nnoremap <C-G>f gg=G<CR>
+
+"map window keys to leader - Interfere with tmux navigator
+" noremap <C-h> <c-w>h
+" noremap <C-j> <c-w>j
+" noremap <C-k> <c-w>k
+" noremap <C-l> <c-w>l
+
+
+"Remap arrow keys to do nothing
+" nnoremap <up> <nop>
+" nnoremap <down> <nop>
+" nnoremap <left> <nop>
+" nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap j gj
+nnoremap k gk
+
+"key mappings
+"Remaps the binding to increment numbers to <leader>a and to decrement to å
+
+nnoremap <silent> <Leader>a <C-A>
+nnoremap <silent> å <C-X>
+
+"Moves cursor back to the start of a line
+inoremap <C-B> <C-O>I
+"Remaps native ctrl h - emulates backspace to ctrl d
+inoremap <C-D> <C-H>
+"Remaps native ctrl k - deleting to the end of a line to control e
+" inoremap <C-Q> <C-K>
+
+" Map jk to esc key - using jk prevents jump that using ii causes
+inoremap jk <ESC>
+nnoremap jk <ESC>
+
+" Yank text to the OS X clipboard
+noremap <localleader>y "*y
+noremap <localleader>yy "*Y
+
+
+"Maps K and J to a 10 k and j but @= makes the motions multipliable - not
+"a word I know
+noremap K  @='10k'<CR>
+noremap J  @='10j'<CR>
+
+"This line opens the vimrc in a vertical split
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <localleader>ev :e $MYVIMRC<cr>
+
+"This line allows the current file to source the vimrc allowing me use bindings as they're added
+nnoremap <leader>sv :source $MYVIMRC<cr>
+"This maps leader quote (single or double to wrap the word in quotes)
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+
+nnoremap <leader>< viw<esc>a ><esc>bi<<esc>lel
+" Remap going to beginning and end of lines
+" move to beginning/end of line
+nnoremap H ^
+nnoremap L $
+
+"Map Q to remove a CR
+nnoremap Q J
+
+"Terminal mappings to allow changing windows with Alt-h,j,k,l
+if has("nvim")
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <A-j> <C-\><C-n><C-w>j
+  tnoremap <A-k> <C-\><C-n><C-w>k
+  tnoremap <A-l> <C-\><C-n><C-w>l
+  nnoremap <A-h> <C-w>h
+  nnoremap <A-j> <C-w>j
+  nnoremap <A-k> <C-w>k
+  nnoremap <A-l> <C-w>l
+endif
+
+
+"Add neovim terminal escape with ESC mapping
+if has("nvim")
+  :tnoremap <ESC> <C-\><C-n>
+endif
+"}}}
+
+"===================================================================================
+"Mouse
+"==================================================================================={{{
+set mousehide
+
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+"Stop mouse scrolling
+if !has('nvim')
+  " set  mouse=c
+  set mouse=a "this is the command that works for mousepad
+  "Disable this to allow scrolling in vim
+  noremap <ScrollWheelUp>      <nop>
+  noremap <S-ScrollWheelUp>    <nop>
+  noremap <C-ScrollWheelUp>    <nop>
+  noremap <ScrollWheelDown>    <nop>
+  noremap <S-ScrollWheelDown>  <nop>
+  noremap <C-ScrollWheelDown>  <nop>
+  noremap <ScrollWheelLeft>    <nop>
+  noremap <S-ScrollWheelLeft>  <nop>
+  noremap <C-ScrollWheelLeft>  <nop>
+  noremap <ScrollWheelRight>   <nop>
+  noremap <S-ScrollWheelRight> <nop>
+  noremap <C-ScrollWheelRight> <nop>
+endif
+"}}}
+"====================================================================================
+"Buffer and Tab settings
+"===================================================================================={{{
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set nohidden
+
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nnoremap <leader>n :enew<cr>
+" Opens a new tab
+nnoremap <localleader>n :tabnew<CR>
+
+" Shared bindings from Solution #1 from earlier
+nmap <leader>bq :bp <BAR> bd #<cr>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nnoremap ,q :bp <BAR> bd #<CR>
+
+" " Show all open buffers and their status
+" nmap <leader>bl :ls<CR>
+
+"}}}
+" ----------------------------------------------------------------------------
+" Message output on vim actions
+" ----------------------------------------------------------------------------
+
+set shortmess=at
+" set shortmess+=mnrxoOta
+" set shortmess-=f                      " (file x of x) instead of just (x of x)
+if has('patch-7.4.314')
+  set shortmess+=c                    " Disable 'Pattern not found' messages
+endif
+
+" ----------------------------------------------------------------------------
+" Window splitting and buffers
+" ----------------------------------------------------------------------------
+" Set minimal width for current window.
+set winwidth=30
+set splitbelow "Open a horizontal split below current window
+set splitright "Open a vertical split to the right of the window
+set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
+" reveal already opened files from the quickfix window instead of opening new
+" buffers
+set switchbuf=useopen
+
+" ----------------------------------------------------------------------------
+" Diffing
+" ----------------------------------------------------------------------------{{{
+
+" Note this is += since fillchars was defined in the window config
+set fillchars+=diff:⣿
+set diffopt=vertical                  " Use in vertical diff mode
+set diffopt+=filler                   " blank lines to keep sides aligned
+set diffopt+=iwhite                   " Ignore whitespace changes
+"}}}
+" ----------------------------------------------------------------------------{{{
+"             Format options
+" ----------------------------------------------------------------------------
+" Input auto-formatting (global defaults)
+" Probably need to update these in after/ftplugin too since ftplugins will
+" probably update it.
+set formatoptions=
+set formatoptions+=1
+set formatoptions-=q                  " continue comments with gq"
+set formatoptions-=c                  " Auto-wrap comments using textwidth
+set formatoptions-=r                  " Do not continue comments by default
+set formatoptions-=o                  " do not continue comment using o or O
+set formatoptions+=n                  " Recognize numbered lists
+set formatoptions+=2                  " Use indent from 2nd line of a paragraph
+
+set nrformats-=octal " never use octal when <C-x> or <C-a>"
+"}}}
+" ----------------------------------------------------------------------------
+" Vim Path
+" ----------------------------------------------------------------------------
+"Vim searches recursively through all directories and subdirectories
+set path+=**
+" set autochdir
+
+" ----------------------------------------------------------------------------
+" Wild and file globbing stuff in command mode
+" ----------------------------------------------------------------------------{{{
+set wildmenu
+set wildmode=list:longest,full        " Complete files using a menu AND list
+set wildignorecase
+" Binary
+set wildignore+=*.aux,*.out,*.toc
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.jar,*.pyc,*.rbc,*.class
+set wildignore+=*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
+set wildignore+=*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm
+set wildignore+=*.eot,*.otf,*.ttf,*.woff
+set wildignore+=*.doc,*.pdf
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+" Cache
+set wildignore+=.sass-cache
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem
+" Temp/System
+" set wildignore+=*.*~,*~
+set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
+
+"}}}
+" ----------------------------------------------------------------------------
+" Display
+" --------------------------------------------------------------------------{{{
+" This prevents a scratch buffer from being opened
+set completeopt-=preview
+set title                             " wintitle = filename - vim
+" Match parentheses coloring
+" highlight MatchParen  guibg=#658494 gui=bold
+
+"lines shows absolute and all others are relative
+set ttyfast " Improves smoothness of redrawing when there are multiple windows
+
+"Add relative line numbers and relative = absolute line numbers i.e current
+set relativenumber
+set number
+
+set linespace=4
+"relative add set relativenumber to show numbers relative to the cursor
+set numberwidth=5
+"Turns on smart indent which can help indent files like html natively
+set smartindent
+set wrap
+" This should cause lines to wrap around words rather than random characters
+set linebreak
+set textwidth=79
+"Use one space, not two, after punctuation
+set nojoinspaces
+
+set autowrite "Automatically :write before running commands
+
+set backspace=2 "Back space deletes like most programs in insert mode
+if has('vim')
+  set signcolumn=yes "enables column that shows signs and error symbols
+endif
+
+set ruler
+set incsearch
+
+" Always display the status line even if only one window is displayed
+" set laststatus=2
+
+" Turns on lazyredraw which postpones redrawing for macros and command
+" execution
+set lazyredraw
+
+" Use visual bell when there are errors not audio beep
+set visualbell
+"Reset color on quitting vim
+" au VimLeave * !echo -ne""\033[0m"
+"Setting the t_ variables if a further step to ensure 24bit colors
+if has('termguicolors')
+  " && !has('gui_running')
+  set termguicolors
+  " set vim-specific sequences for rgb colors
+  "super important for truecolor support in vim
+  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+endif
+"}}}
+"================================================================================
+"Whitespace
+"================================================================================
+" ------------------------------------
+" Command line
+" ------------------------------------
+"Show commands being input
+set showcmd
+" Set command line height to two lines
+set cmdheight=2
+
+"-----------------------------------------------------------------
+"Abbreviations
+"-----------------------------------------------------------------
+iabbrev w@ www.akin-sowemimo.com
+
+if &statusline ==# ''
+  set statusline=
+endif
+
+"------------------------------------
+"  Tab line
+"------------------------------------
+"Setting show tabline causes tabline to redraw without highlighting
+set showtabline=2
+"fugitive plugin
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
   "-----------------------------------------------------------------
   "Plugin configurations
   "-----------------------------------------------------------------{{{
+  let g:vim_g_command = "Go"
+
+
   let g:github_dashboard = {
         \'username': 'Akin909',
         \'password': $GITHUB_TOKEN
         \}
   nnoremap <F1> :GHDashboard! Akin909<CR>
 
-".vimrc
-function! PrettyFile()
-  if &filetype=="javascript"
-    if exists('g:loaded_Beautifier')
-      call JsBeautify()
-    endif
-    if exists('g:loaded_ESLintFix')
-      call ESLintFix()
-    endif
-  end
-endfunction
 
 "pretty the file before saving.
-autocmd BufWritePre * execute 'call PrettyFile()'
+" autocmd BufWritePre *.js execute 'call ESLintFix()'
+nnoremap <leader>l :call ESLintFix()<CR>
 
-
+"Vitality vim
   " let g:vitality_insert_cursor = 0
-  "------------------------------------
-  " Goyo
-  "------------------------------------
+"------------------------------------
+" Goyo
+"------------------------------------
   nnoremap <F3> :Goyo<CR>
   function! s:goyo_enter()
     silent !tmux set status off
@@ -1260,11 +1261,12 @@ autocmd BufWritePre * execute 'call PrettyFile()'
   let g:startify_change_to_vcs_root = 1
 
   "Rebound git commands to manipulate hunks that are staged to allow comment
+  "- I never use these.
   "object to work
-  omap ig <Plug>GitGutterTextObjectInnerPending
-  omap ag <Plug>GitGutterTextObjectOuterPending
-  xmap ig <Plug>GitGutterTextObjectInnerVisual
-  xmap ag <Plug>GitGutterTextObjectOuterVisual
+  " omap ig <Plug>GitGutterTextObjectInnerPending
+  " omap ag <Plug>GitGutterTextObjectOuterPending
+  " xmap ig <Plug>GitGutterTextObjectInnerVisual
+  " xmap ag <Plug>GitGutterTextObjectOuterVisual
 
   "This sets default mapping for camel case text object
   call camelcasemotion#CreateMotionMappings('<leader>')
@@ -1370,68 +1372,67 @@ autocmd BufWritePre * execute 'call PrettyFile()'
   "-----------------------------------------------------------
   "Colorscheme
   "-----------------------------------------------------------
-  let g:thematic#themes = {
-        \ 'quantum' : { 'background': 'dark',
-        \               'colorscheme':'quantum',
-        \               'airline-theme': 'quantum',
-        \                },
-        \ 'onedark' : { 'colorscheme':'onedark',
-        \               'airline-theme': 'onedark',
-        \                 'background': 'dark',
-        \                },
-        \ 'solarized' :{ 'background': 'dark',
-        \                'colorscheme': 'solarized8_dark_high',
-        \                 'airline-theme': 'solarized',
-        \                },
-        \ 'sialoquent' :{'colorscheme': 'sialoquent',
-        \                 'airline-theme': 'bubblegum',
-        \                },
-        \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
-        \                 'airline-theme': 'oceanicnext',
-        \                },
-        \ 'spring-night' :{'colorscheme': 'spring-night',
-        \                 'airline-theme': 'spring_night',
-        \                },
-        \}
+"Set color Scheme
+colorscheme quantum
+set laststatus=2
 
 
-  let g:thematic#defaults = {
-        \ 'laststatus': 2,
-        \ }
-  "Set color Scheme
-  let g:thematic#theme_name = 'quantum'
-  nnoremap <F10> :ThematicNext<CR>
+
+" highlight Comment cterm=italic
+let g:thematic#themes = {
+      \ 'quantum' : { 'background': 'dark',
+      \               'colorscheme':'quantum',
+      \               'airline-theme': 'quantum',
+      \                },
+      \ 'onedark' : { 'colorscheme':'onedark',
+      \               'airline-theme': 'onedark',
+      \                 'background': 'dark',
+      \                },
+      \ 'sialoquent' :{'colorscheme': 'sialoquent',
+      \                 'airline-theme': 'bubblegum',
+      \                },
+      \}
+
+      " \ 'spring-night' :{'colorscheme': 'spring-night',
+      " \                 'airline-theme': 'spring_night',
+      " \                },
+      " \ 'solarized' :{ 'background': 'dark',
+      " \                'colorscheme': 'solarized8_dark_high',
+      " \                 'airline-theme': 'solarized',
+      " \                },
+      " \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
+      " \                 'airline-theme': 'oceanicnext',
+      " \                },
+let g:thematic#defaults = {
+      \ 'laststatus': 2,
+      \ }
+" let g:thematic#theme_name = 'quantum'
+nnoremap <F10> :ThematicNext<CR>
 
 
-  fun! Solarized8Contrast(delta)
-    let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
-    exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
-  endf
-  let g:solarized_visibility="high"
-  let g:solarized_statusline="normal"
+fun! Solarized8Contrast(delta)
+  let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
+  exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
+endf
+let g:solarized_visibility="high"
+let g:solarized_statusline="normal"
 
-  nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
-  nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
-  " endif
-
-  let g:gitgutter_sign_modified = '•'
-  let g:gitgutter_sign_added    = '❖'
-  "highlight GitGutterAdd guifg = '#A3E28B'
-
-  "Sets no highlighting for conceal
-  hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
+" nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
+" nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
+" endif
 
 
-  " Spring Night ==============================================
-  " This variable needs to be set, and set to nothing to maintain a light
-  " contrast
-  let g:spring_night_high_contrast=[]
-  " The theme is set by thematic plugin but the above line is needed to ensure it
-  " renders properly
+"Sets no highlighting for conceal
+hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
 
-  " remap arrow keys
-  nnoremap <Leader><Leader> :bprev<CR>
-  nnoremap <Leader>. :bnext<CR>
+
+" Spring Night ==============================================
+" This variable needs to be set, and set to nothing to maintain a light
+" contrast
+let g:spring_night_high_contrast=[]
+" The theme is set by thematic plugin but the above line is needed to ensure it
+" renders properly
+
 
   " ----------------------------------------------------------------------------
   " Tabbing - overridden by editorconfig, after/ftplugin

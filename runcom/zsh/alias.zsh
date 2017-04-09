@@ -4,17 +4,16 @@
 alias la='ls -aG'
 alias nv='nvim'
 alias cl='clear'
-alias sant='source $HOME/.dotfiles/zsh-antigen/antigen/antigen.zsh'
+alias c='fasd_cd -d'
+alias v='f -t -e vim -b viminfo' # quick opening files with vim
+alias o='a -e xdg-open' # quick opening files with xdg-open
 alias b='source ~/Dotfiles/bin/fzf-chrome.rb'
 alias rn='ranger'
 alias gbs="git branch | fzf-tmux -d 15"
-# alias sho='ls -aC'
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
 alias ea='vim ~/Dotfiles/runcom/zsh/alias.zsh'
-alias nea='vim ~/Dotfiles/runcom/zsh/alias.zsh'
-alias eant='vim $DOTFILES/zsh-antigen/.antigenrc'
 alias ez="vim ~/.zshrc"
 alias nez="nvim ~/.zshrc"
 alias ev="vim ~/.vimrc"
@@ -45,7 +44,6 @@ alias -s html=vim
 alias -s css=vim
 alias -s py=vim
 
-# alias tmux="TERM=screen-256color tmux"
 # alias tmux="tmux -CC"
 # alias attach="tmux -CC attach"
 alias browse="browser-sync start --server"

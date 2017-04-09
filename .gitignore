@@ -1,8 +1,6 @@
+plugins
+themes
 tags
-tags
-*~
-*swp
-*.vim
-.localrc
+node_modules
 node
-vim-markdown-preview.html
+local

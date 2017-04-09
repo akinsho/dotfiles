@@ -42,8 +42,12 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 
 # this line puts Python in the PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
+# GO ============================================================
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/.go
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
 
-# GEM ==========================================================
+# RUBY ==========================================================
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
@@ -140,27 +144,27 @@ zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
-zplug "lukechilds/zsh-better-npm-completion"
+zplug "lukechilds/zsh-better-npm-completion", defer:2
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/web-search", from:oh-my-zsh
+zplug "plugins/web-search", from:oh-my-zsh, defer:2
 zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
-zplug "plugins/python", from:oh-my-zsh
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "zsh-users/zsh-completions"
+zplug "plugins/python", from:oh-my-zsh, defer:2
+zplug "b4b4r07/enhancd", use:init.sh, lazy:true
+zplug "zsh-users/zsh-completions", lazy:true
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "lukechilds/zsh-nvm", lazy:true
 zplug "rupa/z", use:z.sh
 zplug "knu/z", use:zsh, defer:3
-zplug "gko/project", use:project.sh
+zplug "gko/project", use:project.sh, lazy:true
 zplug "supercrabtree/k"
 # zplug "plugins/pyenv", from:oh-my-zsh, lazy:true
 # zplug "plugins/osx", from:oh-my-zsh
 # zplug "plugins/tmux", from:oh-my-zsh
 # zplug "djui/alias-tips"
 # zplug "urbainvaes/fzf-marks"
-zplug "Fakerr/goto"
+zplug "Fakerr/goto", lazy:true
 zplug "b4b4r07/emoji-cli"
 
 
@@ -169,14 +173,6 @@ zplug "b4b4r07/emoji-cli"
 # after executing compinit command and sourcing other plugins
 # (If the defer tag is given 2 or above, run after compinit command)
 zplug "zsh-users/zsh-syntax-highlighting", defer:3
-# Group dependencies
-# Load "emoji-cli" if "jq" is installed in this example
-# zplug "stedolan/jq", \
-  #     from:gh-r, \
-  #     as:command, \
-  #     rename-to:jq
-# zplug "b4b4r07/emoji-cli", \
-  #     on:"stedolan/jq"
 
 
 # zplug "chauncey-garrett/zsh-prompt-garrett", from:prezto, as:theme
@@ -265,6 +261,7 @@ bindkey ‘^R’ history-incremental-search-backward
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 # #Use vim cli mode (C-P and C-N to navigate history)
+
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^ ' autosuggest-accept
@@ -312,7 +309,10 @@ fi
 base16_shell=$home/.config/base16-shell/
 [ -n "$ps1" ] && [ -s $base16_shell/profile_helper.sh ] && eval "$($base16_shell/profile_helper.sh)"
 
-
+if [[ -s "~/path/to/goto.sh" ]]; then
+  source ~/path/to/goto.sh
+fi
+GOTO_KEY='^M'
 #=======================================================================
 #   LOCAL SCRIPTS
 #=======================================================================
