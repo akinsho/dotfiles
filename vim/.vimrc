@@ -20,9 +20,9 @@ set foldlevelstart=0
 "-----------------------------------------------------------{{{
 "This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 
@@ -47,8 +47,8 @@ Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-  Plug 'isRuslan/vim-es6'
-  Plug 'epilande/vim-react-snippets'
+Plug 'isRuslan/vim-es6'
+Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree'
 "Added vim surround for enclosing with parens
@@ -64,6 +64,8 @@ Plug 'tpope/vim-commentary'
 Plug 'mattn/emmet-vim'
 "Add delimitmate
 Plug 'Raimondi/delimitMate'
+"The syntax highlighting wars continue
+Plug 'othree/yajs.vim', {'for':'javascript'}
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 "Added node.vim plugin
@@ -75,14 +77,15 @@ Plug 'sheerun/vim-polyglot'
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
 "Add proper markdown syntax and indentation plugin
-Plug 'gabrielelana/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 "Added color picker plugin
 Plug 'KabbAmine/vCoolor.vim'
 "Add Tern for autocompletion
 function! BuildTern(info)
-  if a:info.status == 'installed' || a:info.force
-    !npm install
-  endif
+if a:info.status == 'installed' || a:info.force
+  !npm install
+endif
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
 "Add Gundo - undo plugin for vim
@@ -276,18 +279,18 @@ let g:javascript_conceal_arrow_function = "⇒"
 
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
-  " Additional settings
-  setlocal spell
+" Additional settings
+setlocal spell
 
-  " If no commit message, start with insert mode
-  if a:info.vcs ==# 'git' && getline(1) ==# ''
-    startinsert
-  end
+" If no commit message, start with insert mode
+if a:info.vcs ==# 'git' && getline(1) ==# ''
+  startinsert
+end
 
-  " Scroll the diff window from insert mode
-  " Map <C-n> and <C-p>
-  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+" Scroll the diff window from insert mode
+" Map <C-n> and <C-p>
+imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 
 endfunction
 
@@ -409,64 +412,64 @@ nnoremap <leader>u :GundoToggle<CR>
 "==================================================================================={{{
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
-  au!
-  autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,quickrun,qfreplace,ref,
-        \simpletap-summary,vcs-commit,vcs-status,vim-hacks
-        \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
-  autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
-        \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
+au!
+autocmd FileType help,git-status,git-log,qf,
+      \gitcommit,quickrun,qfreplace,ref,
+      \simpletap-summary,vcs-commit,vcs-status,vim-hacks
+      \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
+autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
+      \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 augroup END
 
 
 
-  function! s:smart_close()
-    if winnr('$') != 1
-      close
-    endif
-  endfunction
-
-  "this is is intended to stop insert mode bindings slowing down <bs> and <cr>
-  augroup Map_timings
-    au!
-    autocmd InsertEnter * set timeoutlen=200
-    autocmd InsertLeave * set timeoutlen=500
-  augroup END
-
-  " run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#cmd#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
+function! s:smart_close()
+  if winnr('$') != 1
+    close
   endif
 endfunction
 
-augroup Go_Mappings
+"this is is intended to stop insert mode bindings slowing down <bs> and <cr>
+augroup Map_timings
   au!
-  autocmd FileType go nmap <leader>t  <Plug>(go-test)
-  autocmd FileType go nmap <leader>r  <Plug>(go-run)
-  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+  autocmd InsertEnter * set timeoutlen=200
+  autocmd InsertLeave * set timeoutlen=500
+augroup END
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+let l:file = expand('%')
+if l:file =~# '^\f\+_test\.go$'
+  call go#cmd#Test(0, 1)
+elseif l:file =~# '^\f\+\.go$'
+  call go#cmd#Build(0)
+endif
+endfunction
+
+augroup Go_Mappings
+au!
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 augroup END
 
 
 augroup CheckOutsideTime - "excellent function but implemented by terminus
-  autocmd!
-  " automatically check for changed files outside vim
-  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
+autocmd!
+" automatically check for changed files outside vim
+autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
 augroup end
 
 " Disable paste.
 augroup Cancel_Paste
-  au!
-  autocmd InsertLeave *
-        \ if &paste | set nopaste | echo 'nopaste' | endif
+au!
+autocmd InsertLeave *
+      \ if &paste | set nopaste | echo 'nopaste' | endif
 augroup END
 
 augroup reload_vimrc
-  autocmd!
-  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+autocmd!
+autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 augroup END
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
@@ -476,12 +479,12 @@ au! InsertLeave * let &updatetime=updaterestore
 "Saves files on switching tabs i.e losing focus
 au FocusLost * :wa
 augroup VimResizing
-  au!
-  "Command below makes the windows the same size on resizing !? Why?? because
-  "its tidier
-  autocmd VimResized * wincmd =
-  autocmd FocusLost * :wa
-  " autocmd VimResized * :redraw! | :echo 'Redrew'
+au!
+"Command below makes the windows the same size on resizing !? Why?? because
+"its tidier
+autocmd VimResized * wincmd =
+autocmd FocusLost * :wa
+" autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
 
@@ -493,7 +496,7 @@ augroup END
 
 
 augroup filetype_completion
-  au!
+au!
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=tern#Complete
@@ -501,82 +504,82 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
 
-  augroup filetype_javascript
-    autocmd!
-    autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
-    autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
-    autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
+augroup filetype_javascript
+  autocmd!
+  autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+  autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
+  autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
 
-    autocmd FileType javascript :iabbrev <buffer> els else {<CR>}<esc>hi
-    autocmd FileType javascript :iabbrev <buffer> cons console.log()
+  autocmd FileType javascript :iabbrev <buffer> els else {<CR>}<esc>hi
+  autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
-    autocmd FileType javascript :iabbrev <buffer> und undefined
+  autocmd FileType javascript :iabbrev <buffer> und undefined
 
 
-    "don't use cindent for javascript
-    autocmd Filetype javascript setlocal nocindent
-    "Folding autocommands for javascript
-    " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
-    " autocmd Filetype javascript setlocal foldlevelstart=1
-  augroup END
+  "don't use cindent for javascript
+  autocmd Filetype javascript setlocal nocindent
+  "Folding autocommands for javascript
+  " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
+  " autocmd Filetype javascript setlocal foldlevelstart=1
+augroup END
 
 
 augroup FileType_html
-  autocmd!
-  autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
-  autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
+autocmd!
+autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
 
 augroup FileType_markdown
-  autocmd!
-  autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
-  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
+autocmd!
+autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
+autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
+autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
 augroup END
 
 augroup filetype_vim
-  "Vimscript file settings -------------------------
-  au!
-  autocmd FileType vim setlocal foldmethod=marker
+"Vimscript file settings -------------------------
+au!
+autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
 augroup FileType_text
-  autocmd!
-  autocmd FileType text setlocal textwidth=78
+autocmd!
+autocmd FileType text setlocal textwidth=78
 augroup END
 
 augroup FileType_all
-  autocmd!
-  autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
+autocmd!
+autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 augroup END
 
 "Close vim if only window is a Nerd Tree
 augroup FileType_all
-  autocmd!
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd!
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 
 
 augroup vimrcEx
-  autocmd!
+autocmd!
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it for commit messages, when the position is invalid, or when
-  " inside an event handler (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
-        \ endif
+" When editing a file, always jump to the last known cursor position.
+" Don't do it for commit messages, when the position is invalid, or when
+" inside an event handler (happens when dropping a file on gvim).
+autocmd BufReadPost *
+      \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal g`\"" |
+      \ endif
 
-  " Set syntax highlighting for specific file types
-  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
-  autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
+" Set syntax highlighting for specific file types
+autocmd BufRead,BufNewFile Appraisals set filetype=ruby
+autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
 augroup END
 
 
@@ -584,19 +587,19 @@ augroup END
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-  "}}}
-  "====================================================================================
-  "Spelling
-  "====================================================================================
+"}}}
+"====================================================================================
+"Spelling
+"====================================================================================
 
-  " Set spellfile to location that is guaranteed to exist, can be symlinked to
-  " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
+" Set spellfile to location that is guaranteed to exist, can be symlinked to
+" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,dos,mac
-  " Autocomplete with dictionary words when spell check is on
+" Autocomplete with dictionary words when spell check is on
 set complete+=kspell
-  "Add spell checking local
-  " setlocal spell spelllang=en_us
+"Add spell checking local
+" setlocal spell spelllang=en_us
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
@@ -637,15 +640,15 @@ nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
 function! ForwardParagraph()
-  let cnt = v:count ? v:count : 1
-  let i = 0
-  while i < cnt
-    if !search('^\s*\n.*\S','W')
-      normal! G$
-      return
-    endif
-    let i = i + 1
-  endwhile
+let cnt = v:count ? v:count : 1
+let i = 0
+while i < cnt
+  if !search('^\s*\n.*\S','W')
+    normal! G$
+    return
+  endif
+  let i = i + 1
+endwhile
 endfunction
 " Select rectangle.
 xnoremap r <C-v>
@@ -760,8 +763,8 @@ imap <C-F> <C-g>g
 "--------------------------------------------
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
+echo "@".getcmdline()
+execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 "--------------------------------------------
 
@@ -771,8 +774,8 @@ vnoremap > >gv
 "Help Command - vertical split
 command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
 function! VerticalHelp(topic)
-  execute "vertical botright help " . a:topic
-  execute "vertical resize 78"
+execute "vertical botright help " . a:topic
+execute "vertical resize 78"
 endfunction
 "--------------------------------------------
 "Fugitive bindings
@@ -900,20 +903,20 @@ nnoremap Q J
 
 "Terminal mappings to allow changing windows with Alt-h,j,k,l
 if has("nvim")
-  tnoremap <A-h> <C-\><C-n><C-w>h
-  tnoremap <A-j> <C-\><C-n><C-w>j
-  tnoremap <A-k> <C-\><C-n><C-w>k
-  tnoremap <A-l> <C-\><C-n><C-w>l
-  nnoremap <A-h> <C-w>h
-  nnoremap <A-j> <C-w>j
-  nnoremap <A-k> <C-w>k
-  nnoremap <A-l> <C-w>l
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 endif
 
 
 "Add neovim terminal escape with ESC mapping
 if has("nvim")
-  :tnoremap <ESC> <C-\><C-n>
+:tnoremap <ESC> <C-\><C-n>
 endif
 "}}}
 
@@ -925,21 +928,21 @@ set mousehide
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 "Stop mouse scrolling
 if !has('nvim')
-  " set  mouse=c
-  set mouse=a "this is the command that works for mousepad
-  "Disable this to allow scrolling in vim
-  noremap <ScrollWheelUp>      <nop>
-  noremap <S-ScrollWheelUp>    <nop>
-  noremap <C-ScrollWheelUp>    <nop>
-  noremap <ScrollWheelDown>    <nop>
-  noremap <S-ScrollWheelDown>  <nop>
-  noremap <C-ScrollWheelDown>  <nop>
-  noremap <ScrollWheelLeft>    <nop>
-  noremap <S-ScrollWheelLeft>  <nop>
-  noremap <C-ScrollWheelLeft>  <nop>
-  noremap <ScrollWheelRight>   <nop>
-  noremap <S-ScrollWheelRight> <nop>
-  noremap <C-ScrollWheelRight> <nop>
+" set  mouse=c
+set mouse=a "this is the command that works for mousepad
+"Disable this to allow scrolling in vim
+noremap <ScrollWheelUp>      <nop>
+noremap <S-ScrollWheelUp>    <nop>
+noremap <C-ScrollWheelUp>    <nop>
+noremap <ScrollWheelDown>    <nop>
+noremap <S-ScrollWheelDown>  <nop>
+noremap <C-ScrollWheelDown>  <nop>
+noremap <ScrollWheelLeft>    <nop>
+noremap <S-ScrollWheelLeft>  <nop>
+noremap <C-ScrollWheelLeft>  <nop>
+noremap <ScrollWheelRight>   <nop>
+noremap <S-ScrollWheelRight> <nop>
+noremap <C-ScrollWheelRight> <nop>
 endif
 "}}}
 "====================================================================================
@@ -975,7 +978,7 @@ nnoremap ,q :bp <BAR> bd #<CR>
 set shortmess+=mnrxoOt
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
 if has('patch-7.4.314')
-  set shortmess+=c                    " Disable 'Pattern not found' messages
+set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
 
 " ----------------------------------------------------------------------------
@@ -1029,11 +1032,11 @@ set path+=**
 " ----------------------------------------------------------------------------{{{
 " Use faster grep alternatives if possible
 if executable('rg')
-  set grepprg=rg\ --vimgrep\ --no-heading
-  set grepformat^=%f:%l:%c:%m
+set grepprg=rg\ --vimgrep\ --no-heading
+set grepformat^=%f:%l:%c:%m
 elseif executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
-  set grepformat^=%f:%l:%c:%m
+set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
+set grepformat^=%f:%l:%c:%m
 endif
 
 
@@ -1091,7 +1094,7 @@ set autowrite "Automatically :write before running commands
 
 set backspace=2 "Back space deletes like most programs in insert mode
 if has('vim')
-  set signcolumn=yes "enables column that shows signs and error symbols
+set signcolumn=yes "enables column that shows signs and error symbols
 endif
 
 set ruler
@@ -1110,12 +1113,12 @@ set visualbell
 " au VimLeave * !echo -ne""\033[0m"
 "Setting the t_ variables if a further step to ensure 24bit colors
 if has('termguicolors')
-  " && !has('gui_running')
-  set termguicolors
-  " set vim-specific sequences for rgb colors
-  "super important for truecolor support in vim
-  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+" && !has('gui_running')
+set termguicolors
+" set vim-specific sequences for rgb colors
+"super important for truecolor support in vim
+let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
 endif
 "}}}
 "================================================================================
@@ -1135,7 +1138,7 @@ set cmdheight=2
 iabbrev w@ www.akin-sowemimo.com
 
 if &statusline ==# ''
-  set statusline=
+set statusline=
 endif
 
 "------------------------------------
@@ -1147,10 +1150,12 @@ set showtabline=2
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-  "-----------------------------------------------------------------
-  "Plugin configurations
-  "-----------------------------------------------------------------{{{
-" "Completor vim
+"-----------------------------------------------------------------
+"Plugin configurations
+"-----------------------------------------------------------------{{{
+" Stop folding markdown please
+let g:vim_markdown_folding_disabled = 1
+" Completor vim
 let g:completor_node_binary = '/usr/local/Cellar/node/7.7.1/bin/node'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -1161,9 +1166,9 @@ let g:vim_g_command = "Go"
 
 
 let g:github_dashboard = {
-      \'username': 'Akin909',
-      \'password': $GITHUB_TOKEN
-      \}
+    \'username': 'Akin909',
+    \'password': $GITHUB_TOKEN
+    \}
 nnoremap <F1> :GHDashboard! Akin909<CR>
 
 
@@ -1172,301 +1177,303 @@ nnoremap <F1> :GHDashboard! Akin909<CR>
 nnoremap <leader>l :call ESLintFix()<CR>
 
 "Vitality vim
-  " let g:vitality_insert_cursor = 0
+" let g:vitality_insert_cursor = 0
 "------------------------------------
 " Goyo
 "------------------------------------
-  nnoremap <F3> :Goyo<CR>
-  function! s:goyo_enter()
-    silent !tmux set status off
-    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-    set noshowmode
-    set noshowcmd
-    set scrolloff=999
-  endfunction
+nnoremap <F3> :Goyo<CR>
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+endfunction
 
-  function! s:goyo_leave()
-    silent !tmux set status on
-    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-    set showmode
-    set showcmd
-    set scrolloff=5
-  endfunction
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
+  set showcmd
+  set scrolloff=5
+endfunction
 
-  autocmd! User GoyoEnter nested call <SID>goyo_enter()
-  autocmd! User GoyoLeave nested call <SID>goyo_leave()
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
-  " Goyo
-  function! s:auto_goyo()
-    if &ft == 'markdown' && winnr('$') == 1
-      Goyo 100
-    elseif exists('#goyo')
-      Goyo!
+" Goyo
+function! s:auto_goyo()
+  if &ft == 'markdown' && winnr('$') == 1
+    Goyo 100
+  elseif exists('#goyo')
+    Goyo!
+  endif
+endfunction
+
+function! s:goyo_markdown_leave()
+  if winnr('$') < 2
+    silent! :q
+  endif
+endfunction
+
+"Not Working as intended at the moment as ?Loading Ultisnips on opening
+"insert mode cancels goyo
+augroup goyo_markdown
+  autocmd!
+  autocmd BufNewFile,BufRead * call s:auto_goyo()
+  autocmd! User GoyoLeave nested call s:goyo_leave()
+augroup END
+
+" let g:markdown_fenced_languages = ['javascript', 'sql']
+let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh','javascript=js','sql=sql']
+let g:vim_markdown_toml_frontmatter = 1
+
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
+let g:UltiSnipsExpandTrigger="<C-J>"
+" let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-J>"
+let g:UltiSnipsListSnippets="<s-tab>"
+let g:UltiSnipsJumpBackwardTrigger="<C-K>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" should markdown preview get shown automatically upon opening markdown
+" buffer
+let g:livedown_autorun = 1
+" should the browser window pop-up upon previewing
+let g:livedown_open = 1
+" the port on which Livedown server will run
+let g:livedown_port = 1337
+nnoremap gm :LivedownToggle<CR>
+
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 0
+let delimitMate_jump_expansion = 1
+let delimitMate_balance_matchpairs = 1
+
+nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
+
+let g:textobj_comment_no_default_key_mappings = 1
+xmap ac <Plug>(textobj-comment-a)
+omap ac <Plug>(textobj-comment-a)
+xmap ic <Plug>(textobj-comment-i)
+omap ic <Plug>(textobj-comment-i)
+
+let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+      \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+
+
+"This  function makes FZF start from the root of a git dir
+function! s:find_root()
+  for vcs in ['.git', '.svn', '.hg']
+    let dir = finddir(vcs.'/..', ';')
+    if !empty(dir)
+      execute 'FZF' dir
+      return
     endif
-  endfunction
+  endfor
+  FZF
+endfunction
 
-  function! s:goyo_markdown_leave()
-    if winnr('$') < 2
-      silent! :q
-    endif
-  endfunction
+command! FZFR call s:find_root()
 
-  "Not Working as intended at the moment as ?Loading Ultisnips on opening
-  "insert mode cancels goyo
-  augroup goyo_markdown
-    autocmd!
-    autocmd BufNewFile,BufRead * call s:auto_goyo()
-    autocmd! User GoyoLeave nested call s:goyo_leave()
-  augroup END
-
-  let g:markdown_fenced_languages = ['javascript', 'sql']
-
-  let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
-  let g:UltiSnipsExpandTrigger="<C-J>"
-  " let g:UltiSnipsExpandTrigger="<c-tab>"
-  let g:UltiSnipsJumpForwardTrigger="<C-J>"
-  let g:UltiSnipsListSnippets="<s-tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<C-K>"
-  " If you want :UltiSnipsEdit to split your window.
-  let g:UltiSnipsEditSplit="vertical"
-
-  " should markdown preview get shown automatically upon opening markdown
-  " buffer
-  let g:livedown_autorun = 1
-  " should the browser window pop-up upon previewing
-  let g:livedown_open = 1
-  " the port on which Livedown server will run
-  let g:livedown_port = 1337
-  nnoremap gm :LivedownToggle<CR>
-
-  let delimitMate_expand_cr = 1
-  let delimitMate_expand_space = 0
-  let delimitMate_jump_expansion = 1
-  let delimitMate_balance_matchpairs = 1
-
-  nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
-
-  let g:textobj_comment_no_default_key_mappings = 1
-  xmap ac <Plug>(textobj-comment-a)
-  omap ac <Plug>(textobj-comment-a)
-  xmap ic <Plug>(textobj-comment-i)
-  omap ic <Plug>(textobj-comment-i)
-
-  let g:fzf_action = {
-        \ 'ctrl-t': 'tab split',
-        \ 'ctrl-s': 'split',
-        \ 'ctrl-v': 'vsplit' }
-
-  " Customize fzf colors to match your color scheme
-  let g:fzf_colors =
-        \ { 'fg':      ['fg', 'Normal'],
-        \ 'bg':      ['bg', 'Normal'],
-        \ 'hl':      ['fg', 'Comment'],
-        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-        \ 'hl+':     ['fg', 'Statement'],
-        \ 'info':    ['fg', 'PreProc'],
-        \ 'prompt':  ['fg', 'Conditional'],
-        \ 'pointer': ['fg', 'Exception'],
-        \ 'marker':  ['fg', 'Keyword'],
-        \ 'spinner': ['fg', 'Label'],
-        \ 'header':  ['fg', 'Comment'] }
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_enable_es6 = 1
+nmap <silent> co <Plug>(jsdoc)
+" nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
 
 
-  "This  function makes FZF start from the root of a git dir
-  function! s:find_root()
-    for vcs in ['.git', '.svn', '.hg']
-      let dir = finddir(vcs.'/..', ';')
-      if !empty(dir)
-        execute 'FZF' dir
-        return
-      endif
-    endfor
-    FZF
-  endfunction
+let g:vimjs#smartcomplete = 1
+" Disabled by default. Enabling this will let vim complete matches at any location
+" e.g. typing 'document' will suggest 'document' if enabled.
+let g:vimjs#chromeapis = 1
+" Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
-  command! FZFR call s:find_root()
+set updatetime=250
 
-  let g:jsdoc_allow_input_prompt = 1
-  let g:jsdoc_input_description = 1
-  let g:jsdoc_enable_es6 = 1
-  nmap <silent> co <Plug>(jsdoc)
-  " nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('NERDTree')
+  if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+  endif
+endif
 
+let g:startify_session_dir = '~/.vim/session'
+let g:startify_session_autoload = 1
+let g:startify_session_persistence = 1
+let g:startify_change_to_vcs_root = 1
 
-  let g:vimjs#smartcomplete = 1
-  " Disabled by default. Enabling this will let vim complete matches at any location
-  " e.g. typing 'document' will suggest 'document' if enabled.
-  let g:vimjs#chromeapis = 1
-  " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
+"Rebound git commands to manipulate hunks that are staged to allow comment
+"- I never use these.
+"object to work
+" omap ig <Plug>GitGutterTextObjectInnerPending
+" omap ag <Plug>GitGutterTextObjectOuterPending
+" xmap ig <Plug>GitGutterTextObjectInnerVisual
+" xmap ag <Plug>GitGutterTextObjectOuterVisual
 
-  set updatetime=250
+"This sets default mapping for camel case text object
+call camelcasemotion#CreateMotionMappings('<leader>')
 
-  " after a re-source, fix syntax matching issues (concealing brackets):
-  if exists('NERDTree')
-    if exists('g:loaded_webdevicons')
-      call webdevicons#refresh()
-    endif
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
   endif
 
-  let g:startify_session_dir = '~/.vim/session'
-  let g:startify_session_autoload = 1
-  let g:startify_session_persistence = 1
-  let g:startify_change_to_vcs_root = 1
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
 
-  "Rebound git commands to manipulate hunks that are staged to allow comment
-  "- I never use these.
-  "object to work
-  " omap ig <Plug>GitGutterTextObjectInnerPending
-  " omap ag <Plug>GitGutterTextObjectOuterPending
-  " xmap ig <Plug>GitGutterTextObjectInnerVisual
-  " xmap ag <Plug>GitGutterTextObjectOuterVisual
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
 
-  "This sets default mapping for camel case text object
-  call camelcasemotion#CreateMotionMappings('<leader>')
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
 
-  function! WrapForTmux(s)
-    if !exists('$TMUX')
-      return a:s
-    endif
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
-    let tmux_start = "\<Esc>Ptmux;"
-    let tmux_end = "\<Esc>\\"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-    return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-  endfunction
-
-  let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-  let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-
-  function! XTermPasteBegin()
-    set pastetoggle=<Esc>[201~
-    set paste
-    return ""
-  endfunction
-
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-  " View the entire list of buffers open
-  nmap <leader>o :BuffergatorToggle<cr>
+" View the entire list of buffers open
+nmap <leader>o :BuffergatorToggle<cr>
 
 
 
-  "   Disable tmux navigator when zooming the Vim pane
-  let g:tmux_navigator_disable_when_zoomed = 1
-  "   saves on moving pane but only the currently opened buffer if changed
-  let g:tmux_navigator_save_on_switch = 2
-  "   filenames like *.xml, *.html, *.xhtml, ...
-  let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
+"   Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
+"   saves on moving pane but only the currently opened buffer if changed
+let g:tmux_navigator_save_on_switch = 2
+"   filenames like *.xml, *.html, *.xhtml, ...
+let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
 
-  " remap alt-H,J to change buffers
-  nnoremap ¬ :bprev<CR>
-  nnoremap ˙ :bnext<CR>
+" remap alt-H,J to change buffers
+nnoremap ¬ :bprev<CR>
+nnoremap ˙ :bnext<CR>
 
-  "=============================================================
-  "               Airline
-  "=============================================================
-  " 'obsession'
-  let g:airline_extensions = ['branch','tabline','ale']
-  let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-  let g:airline_detect_iminsert                  = 1
-  let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-  let g:airline_powerline_fonts                  = 1
-  let g:airline#extensions#tabline#enabled       = 1
-  " let g:airline#extensions#tagbar#enabled = 1
-  let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-  let g:airline#extensions#tabline#show_tabs     = 1
-  let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-  let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline#extensions#tabline#show_tab_type = 1
-  " Makes airline tabs rectangular
-  let g:airline_left_sep = ' '
-  let g:airline_right_sep = ' '
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
+"=============================================================
+"               Airline
+"=============================================================
+" 'obsession'
+let g:airline_extensions = ['branch','tabline','ale']
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_detect_iminsert                  = 1
+let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+let g:airline_powerline_fonts                  = 1
+let g:airline#extensions#tabline#enabled       = 1
+" let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
+let g:airline#extensions#tabline#show_tabs     = 1
+let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 1
+" Makes airline tabs rectangular
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
-  let g:airline#extensions#tabline#right_sep = ''
-  let g:airline#extensions#tabline#right_alt_sep = '|'
-  "This defines the separators for airline changes them from the default arrows
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+"This defines the separators for airline changes them from the default arrows
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
 
-  " configure whether close button should be shown: >
-  let g:airline#extensions#tabline#show_close_button = 1
+" configure whether close button should be shown: >
+let g:airline#extensions#tabline#show_close_button = 1
 
-  " determine whether inactive windows should have the left section collapsed to
-  " only the filename of that buffer.  >
-  let g:airline_inactive_collapse=1
-  " * configure symbol used to represent close button >
-  " let g:airline#extensions#tabline#close_symbol = 'X'
-  " * configure pattern to be ignored on BufAdd autocommand >
-  " fixes unnecessary redraw, when e.g. opening Gundo window
-  let airline#extensions#tabline#ignore_bufadd_pat =
-        \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+" determine whether inactive windows should have the left section collapsed to
+" only the filename of that buffer.  >
+let g:airline_inactive_collapse=1
+" * configure symbol used to represent close button >
+" let g:airline#extensions#tabline#close_symbol = 'X'
+" * configure pattern to be ignored on BufAdd autocommand >
+" fixes unnecessary redraw, when e.g. opening Gundo window
+let airline#extensions#tabline#ignore_bufadd_pat =
+      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
 
-  let g:airline#extensions#tabline#buffer_idx_mode = 1
-  nmap <localleader>1 <Plug>AirlineSelectTab1
-  nmap <localleader>2 <Plug>AirlineSelectTab2
-  nmap <localleader>3 <Plug>AirlineSelectTab3
-  nmap <localleader>4 <Plug>AirlineSelectTab4
-  nmap <localleader>5 <Plug>AirlineSelectTab5
-  nmap <localleader>6 <Plug>AirlineSelectTab6
-  nmap <localleader>7 <Plug>AirlineSelectTab7
-  nmap <localleader>8 <Plug>AirlineSelectTab8
-  nmap <localleader>9 <Plug>AirlineSelectTab9
-  nmap <localleader>- <Plug>AirlineSelectPrevTab
-  nmap <localleader>+ <Plug>AirlineSelectNextTab
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <localleader>1 <Plug>AirlineSelectTab1
+nmap <localleader>2 <Plug>AirlineSelectTab2
+nmap <localleader>3 <Plug>AirlineSelectTab3
+nmap <localleader>4 <Plug>AirlineSelectTab4
+nmap <localleader>5 <Plug>AirlineSelectTab5
+nmap <localleader>6 <Plug>AirlineSelectTab6
+nmap <localleader>7 <Plug>AirlineSelectTab7
+nmap <localleader>8 <Plug>AirlineSelectTab8
+nmap <localleader>9 <Plug>AirlineSelectTab9
+nmap <localleader>- <Plug>AirlineSelectPrevTab
+nmap <localleader>+ <Plug>AirlineSelectNextTab
 
-  "Remaps native insert mode paste binding to alt-p
-  inoremap π <C-R>0
-  inoremap … <C-R><C-P>0
+"Remaps native insert mode paste binding to alt-p
+inoremap π <C-R>0
+inoremap … <C-R><C-P>0
 
-  "}}}
-  "-----------------------------------------------------------
-  "Colorscheme
-  "-----------------------------------------------------------
+"}}}
+"-----------------------------------------------------------
+"Colorscheme
+"-----------------------------------------------------------
 "Set color Scheme
 colorscheme quantum
 set laststatus=2
 
 
 
-" highlight Comment cterm=italic
+highlight Comment cterm=italic
 let g:thematic#themes = {
-      \ 'quantum' : { 'background': 'dark',
-      \               'colorscheme':'quantum',
-      \               'airline-theme': 'quantum',
-      \                },
-      \ 'onedark' : { 'colorscheme':'onedark',
-      \               'airline-theme': 'onedark',
-      \                 'background': 'dark',
-      \                },
-      \ 'sialoquent' :{'colorscheme': 'sialoquent',
-      \                 'airline-theme': 'bubblegum',
-      \                },
-      \}
+    \ 'quantum' : { 'background': 'dark',
+    \               'colorscheme':'quantum',
+    \               'airline-theme': 'quantum',
+    \                },
+    \ 'onedark' : { 'colorscheme':'onedark',
+    \               'airline-theme': 'onedark',
+    \                 'background': 'dark',
+    \                },
+    \ 'sialoquent' :{'colorscheme': 'sialoquent',
+    \                 'airline-theme': 'bubblegum',
+    \                },
+    \}
 
-      " \ 'spring-night' :{'colorscheme': 'spring-night',
-      " \                 'airline-theme': 'spring_night',
-      " \                },
-      " \ 'solarized' :{ 'background': 'dark',
-      " \                'colorscheme': 'solarized8_dark_high',
-      " \                 'airline-theme': 'solarized',
-      " \                },
-      " \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
-      " \                 'airline-theme': 'oceanicnext',
-      " \                },
+    " \ 'spring-night' :{'colorscheme': 'spring-night',
+    " \                 'airline-theme': 'spring_night',
+    " \                },
+    " \ 'solarized' :{ 'background': 'dark',
+    " \                'colorscheme': 'solarized8_dark_high',
+    " \                 'airline-theme': 'solarized',
+    " \                },
+    " \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
+    " \                 'airline-theme': 'oceanicnext',
+    " \                },
 let g:thematic#defaults = {
-      \ 'laststatus': 2,
-      \ }
+    \ 'laststatus': 2,
+    \ }
 " let g:thematic#theme_name = 'quantum'
 nnoremap <F10> :ThematicNext<CR>
 
 
 fun! Solarized8Contrast(delta)
-  let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
-  exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
+let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
+exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
 endf
 let g:solarized_visibility="high"
 let g:solarized_statusline="normal"
@@ -1488,124 +1495,124 @@ let g:spring_night_high_contrast=[]
 " renders properly
 
 
-  " ----------------------------------------------------------------------------
-  " Tabbing - overridden by editorconfig, after/ftplugin
-  " ----------------------------------------------------------------------------{{{
-  set expandtab                         " default to spaces instead of tabs
-  set shiftwidth=2                      " softtabs are 2 spaces for expandtab
+" ----------------------------------------------------------------------------
+" Tabbing - overridden by editorconfig, after/ftplugin
+" ----------------------------------------------------------------------------{{{
+set expandtab                         " default to spaces instead of tabs
+set shiftwidth=2                      " softtabs are 2 spaces for expandtab
 
-  " Alignment tabs are two spaces, and never tabs. Negative means use same as
-  " shiftwidth (so the 2 actually doesn't matter).
-  set softtabstop=-2
+" Alignment tabs are two spaces, and never tabs. Negative means use same as
+" shiftwidth (so the 2 actually doesn't matter).
+set softtabstop=-2
 
-  " real tabs render width. Applicable to HTML, PHP, anything using real tabs.
-  " I.e., not applicable to JS.
-  set tabstop=8
+" real tabs render width. Applicable to HTML, PHP, anything using real tabs.
+" I.e., not applicable to JS.
+set tabstop=8
 
-  " use multiple of shiftwidth when shifting indent levels.
-  " this is OFF so block comments don't get fudged when using \">>" and \"<<"
-  set noshiftround
+" use multiple of shiftwidth when shifting indent levels.
+" this is OFF so block comments don't get fudged when using \">>" and \"<<"
+set noshiftround
 
-  " When on, a <Tab> in front of a line inserts blanks according to
-  " 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
-  set smarttab
+" When on, a <Tab> in front of a line inserts blanks according to
+" 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
+set smarttab
 
-  "Add vim sensible config options
+"Add vim sensible config options
 
-  if !has('nvim')
-    set complete-=i
-    set autoindent
-  endif
+if !has('nvim')
+set complete-=i
+set autoindent
+endif
 
-  " Use <C-I> to clear the highlighting of :set hlsearch.
-  " if maparg('<C-I>', 'n') ==# ''
-  "   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
-  " endif
-  "
-  set display+=lastline
+" Use <C-I> to clear the highlighting of :set hlsearch.
+" if maparg('<C-I>', 'n') ==# ''
+"   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
+" endif
+"
+set display+=lastline
 
-  if &encoding ==# 'latin1' && has('gui_running')
-    set encoding=utf-8
-  endif
-  scriptencoding utf-8
+if &encoding ==# 'latin1' && has('gui_running')
+set encoding=utf-8
+endif
+scriptencoding utf-8
 
-  " if &listchars ==# 'eol:$'
-  "   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-  " endif
-
-
+" if &listchars ==# 'eol:$'
+"   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+" endif
 
 
-  if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
-    set shell=/bin/bash
-  endif
-
-  set autoread " reload files if they were edited elsewhere
-
-  if &history < 1000
-    set history=1000
-  endif
-  if &tabpagemax < 50
-    set tabpagemax=50
-  endif
-  if !empty(&viminfo)
-    set viminfo^=!
-  endif
-  set sessionoptions-=options
-
-  " Allow color schemes to do bright colors without forcing bold.
-  if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-    set t_Co=16
-  endif
 
 
-  "Turn swap files off - FOR GOD's SAKE they are ruining my life
-  set noswapfile
-  "This saves all back up files in a vim backup directory
-  set backupdir=~/.vim/.backup//
-  " set directory=~/.vim/.swp//
-  set undofile
-  set undodir=~/.vim/.undo//
+if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
+set shell=/bin/bash
+endif
 
-  if has("vms")
-    set nobackup
-  else
-    set backup
-  endif
-  set history=50
-  "}}}
-  " ----------------------------------------------------------------------------
-  " Match and search
-  " ----------------------------------------------------------------------------
-  " Sets a case insensitive search except when using Caps
-  set ignorecase
-  set smartcase
-  set wrapscan " Searches wrap around the end of the file
-  set nohlsearch " -functionality i.e. search highlighting done by easy motion
-  " hi Search guibg=LightGreen  ctermbg=NONE
-  " ---------------------------------------------------------------------
-  " Cursor
-  " ---------------------------------------------------------------------{{{
+set autoread " reload files if they were edited elsewhere
 
-  " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
-  augroup highlight_follows_focus
-    autocmd!
-    autocmd WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
-  augroup END
+if &history < 1000
+set history=1000
+endif
+if &tabpagemax < 50
+set tabpagemax=50
+endif
+if !empty(&viminfo)
+set viminfo^=!
+endif
+set sessionoptions-=options
 
-  augroup highlight_follows_vim
-    autocmd!
-    autocmd FocusGained * set hi cursorline
-    autocmd FocusLost * set nocursorline
-  augroup END
-  " Show context around current cursor position
-  "As this is set to a large number the cursor will remain in the middle of the
-  "page on scroll (8 ) was the previous value
-  set scrolloff=20
-  set sidescrolloff=16
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+set t_Co=16
+endif
 
-  " Stops some cursor movements from jumping to the start of a line
-  set nostartofline
-  "}}}
+
+"Turn swap files off - FOR GOD's SAKE they are ruining my life
+set noswapfile
+"This saves all back up files in a vim backup directory
+set backupdir=~/.vim/.backup//
+" set directory=~/.vim/.swp//
+set undofile
+set undodir=~/.vim/.undo//
+
+if has("vms")
+set nobackup
+else
+set backup
+endif
+set history=50
+"}}}
+" ----------------------------------------------------------------------------
+" Match and search
+" ----------------------------------------------------------------------------
+" Sets a case insensitive search except when using Caps
+set ignorecase
+set smartcase
+set wrapscan " Searches wrap around the end of the file
+set nohlsearch " -functionality i.e. search highlighting done by easy motion
+" hi Search guibg=LightGreen  ctermbg=NONE
+" ---------------------------------------------------------------------
+" Cursor
+" ---------------------------------------------------------------------{{{
+
+" Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
+augroup highlight_follows_focus
+autocmd!
+autocmd WinEnter * set cursorline
+autocmd WinLeave * set nocursorline
+augroup END
+
+augroup highlight_follows_vim
+autocmd!
+autocmd FocusGained * set hi cursorline
+autocmd FocusLost * set nocursorline
+augroup END
+" Show context around current cursor position
+"As this is set to a large number the cursor will remain in the middle of the
+"page on scroll (8 ) was the previous value
+set scrolloff=20
+set sidescrolloff=16
+
+" Stops some cursor movements from jumping to the start of a line
+set nostartofline
+"}}}
 

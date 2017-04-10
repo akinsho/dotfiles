@@ -292,7 +292,7 @@ end_time="$(date +%s)"
 #   plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
 # fi
 if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
-	printf "autosuggestions loaded"
+	# printf "autosuggestions loaded"
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi
