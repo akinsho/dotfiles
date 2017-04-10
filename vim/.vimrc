@@ -30,7 +30,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "Premature optimisation -_-
 " augroup load_ultisnips_YouCompleteMe
 "   autocmd!
@@ -40,7 +40,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "youcomplete me trial
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
 " autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
-
+Plug 'maralla/completor.vim', {'do': 'cd pythonx/completers/javascript && npm install'}
 " Ale  Async Linting as you type
 Plug 'w0rp/ale'
 "Added vim snippets for code autofilling
@@ -433,49 +433,72 @@ augroup END
     autocmd InsertLeave * set timeoutlen=500
   augroup END
 
+  " run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#cmd#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+augroup Go_Mappings
+  au!
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+augroup END
 
 
-  augroup CheckOutsideTime - "excellent function but implemented by terminus
-    autocmd!
-    " automatically check for changed files outside vim
-    autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
-  augroup end
+augroup CheckOutsideTime - "excellent function but implemented by terminus
+  autocmd!
+  " automatically check for changed files outside vim
+  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
+augroup end
 
-  " Disable paste.
-  augroup Cancel_Paste
-    au!
-    autocmd InsertLeave *
-          \ if &paste | set nopaste | echo 'nopaste' | endif
-  augroup END
+" Disable paste.
+augroup Cancel_Paste
+  au!
+  autocmd InsertLeave *
+        \ if &paste | set nopaste | echo 'nopaste' | endif
+augroup END
 
-  augroup reload_vimrc
-    autocmd!
-    autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
-  augroup END
+augroup reload_vimrc
+  autocmd!
+  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+augroup END
 
-  " automatically leave insert mode after 'updatetime' milliseconds of inaction
-  au! InsertEnter * let updaterestore=&updatetime | set updatetime=10000
-  au! InsertLeave * let &updatetime=updaterestore
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+au! InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+au! InsertLeave * let &updatetime=updaterestore
 
-  "Saves files on switching tabs i.e losing focus
-  au FocusLost * :wa
-  augroup VimResizing
-    au!
-    "Command below makes the windows the same size on resizing !? Why?? because
-    "its tidier
-    autocmd VimResized * wincmd =
-    autocmd FocusLost * :wa
-    " autocmd VimResized * :redraw! | :echo 'Redrew'
-  augroup END
+"Saves files on switching tabs i.e losing focus
+au FocusLost * :wa
+augroup VimResizing
+  au!
+  "Command below makes the windows the same size on resizing !? Why?? because
+  "its tidier
+  autocmd VimResized * wincmd =
+  autocmd FocusLost * :wa
+  " autocmd VimResized * :redraw! | :echo 'Redrew'
+augroup END
 
 
-  augroup filetype_completion
-    au!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  augroup END
+" use syntax complete if nothing else available
+" autocmd VimRc FileType *
+"       \  if &omnifunc == ""
+"       \|   setlocal omnifunc=syntaxcomplete#Complete
+"       \| endif
+
+
+augroup filetype_completion
+  au!
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+augroup END
 
 
   augroup filetype_javascript
@@ -498,69 +521,69 @@ augroup END
   augroup END
 
 
-  augroup FileType_html
-    autocmd!
-    autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
-    autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
-  augroup END
+augroup FileType_html
+  autocmd!
+  autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+  autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
+augroup END
 
-  augroup FileType_markdown
-    autocmd!
-    autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-    autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-    autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-    autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
-    autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
-  augroup END
+augroup FileType_markdown
+  autocmd!
+  autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
+augroup END
 
-  augroup filetype_vim
-    "Vimscript file settings -------------------------
-    au!
-    autocmd FileType vim setlocal foldmethod=marker
-  augroup END
+augroup filetype_vim
+  "Vimscript file settings -------------------------
+  au!
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
 
-  augroup FileType_text
-    autocmd!
-    autocmd FileType text setlocal textwidth=78
-  augroup END
+augroup FileType_text
+  autocmd!
+  autocmd FileType text setlocal textwidth=78
+augroup END
 
-  augroup FileType_all
-    autocmd!
-    autocmd BufReadPost *
-          \ if line("'\"") > 1 && line("'\"") <= line("$") |
-          \   exe "normal! g`\"" |
-          \ endif
-  augroup END
+augroup FileType_all
+  autocmd!
+  autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+augroup END
 
-  "Close vim if only window is a Nerd Tree
-  augroup FileType_all
-    autocmd!
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-  augroup END
-
-
-  augroup vimrcEx
-    autocmd!
-
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it for commit messages, when the position is invalid, or when
-    " inside an event handler (happens when dropping a file on gvim).
-    autocmd BufReadPost *
-          \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-          \   exe "normal g`\"" |
-          \ endif
-
-    " Set syntax highlighting for specific file types
-    autocmd BufRead,BufNewFile Appraisals set filetype=ruby
-    autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
-  augroup END
+"Close vim if only window is a Nerd Tree
+augroup FileType_all
+  autocmd!
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 
+augroup vimrcEx
+  autocmd!
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+
+  " Set syntax highlighting for specific file types
+  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
+  autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
+augroup END
 
 
-  " Treat <li> and <p> tags like the block tags they are
-  let g:html_indent_tags = 'li\|p'
+
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
   "}}}
   "====================================================================================
   "Spelling
@@ -568,16 +591,26 @@ augroup END
 
   " Set spellfile to location that is guaranteed to exist, can be symlinked to
   " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
-  set spellfile=$HOME/.vim-spell-en.utf-8.add
-
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+set fileformats=unix,dos,mac
   " Autocomplete with dictionary words when spell check is on
-  set complete+=kspell
+set complete+=kspell
   "Add spell checking local
   " setlocal spell spelllang=en_us
 "-----------------------------------------------------------------------------------
 "Mappings
 "-----------------------------------------------------------------------------------{{{
+" Emacs like keybindings for the command line (:) are better
+" and we cannot use Vi style-binding here anyway, because ESC
+" just closes the command line and using Home and End..
 " remap arrow keys
+cnoremap <C-S>    <Home>
+cnoremap <C-E>    <End>
+cnoremap <C-K>    <C-U>
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+
+
 nnoremap <Leader><Leader> :bprev<CR>
 nnoremap <Leader>. :bnext<CR>
 " nnoremap <CR> G
@@ -938,8 +971,8 @@ nnoremap ,q :bp <BAR> bd #<CR>
 " Message output on vim actions
 " ----------------------------------------------------------------------------
 
-set shortmess=at
-" set shortmess+=mnrxoOta
+" set shortmess=at
+set shortmess+=mnrxoOt
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
 if has('patch-7.4.314')
   set shortmess+=c                    " Disable 'Pattern not found' messages
@@ -994,6 +1027,16 @@ set path+=**
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode
 " ----------------------------------------------------------------------------{{{
+" Use faster grep alternatives if possible
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepformat^=%f:%l:%c:%m
+elseif executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
+  set grepformat^=%f:%l:%c:%m
+endif
+
+
 set wildmenu
 set wildmode=list:longest,full        " Complete files using a menu AND list
 set wildignorecase
@@ -1016,6 +1059,9 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display
 " --------------------------------------------------------------------------{{{
+" Limit horizontal and vertical syntax rendering (for better performance)
+syntax sync minlines=256
+set synmaxcol=256
 " This prevents a scratch buffer from being opened
 set completeopt-=preview
 set title                             " wintitle = filename - vim
@@ -1098,19 +1144,27 @@ endif
 "Setting show tabline causes tabline to redraw without highlighting
 set showtabline=2
 "fugitive plugin
+let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
   "-----------------------------------------------------------------
   "Plugin configurations
   "-----------------------------------------------------------------{{{
-  let g:vim_g_command = "Go"
+" "Completor vim
+let g:completor_node_binary = '/usr/local/Cellar/node/7.7.1/bin/node'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
 
 
-  let g:github_dashboard = {
-        \'username': 'Akin909',
-        \'password': $GITHUB_TOKEN
-        \}
-  nnoremap <F1> :GHDashboard! Akin909<CR>
+let g:vim_g_command = "Go"
+
+
+let g:github_dashboard = {
+      \'username': 'Akin909',
+      \'password': $GITHUB_TOKEN
+      \}
+nnoremap <F1> :GHDashboard! Akin909<CR>
 
 
 "pretty the file before saving.
@@ -1145,7 +1199,7 @@ nnoremap <leader>l :call ESLintFix()<CR>
   " Goyo
   function! s:auto_goyo()
     if &ft == 'markdown' && winnr('$') == 1
-      Goyo 80
+      Goyo 100
     elseif exists('#goyo')
       Goyo!
     endif

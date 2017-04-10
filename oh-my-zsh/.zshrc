@@ -2,7 +2,7 @@
 #               STARTUP TIMES
 #=======================================================================
 # zmodload zsh/zprof
-start_time="$(date +%s)"
+# start_time="$(date +%s)"
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
@@ -33,6 +33,7 @@ export GOROOT=/usr/local/opt/go/libexec
 # export GOPATH=$HOME/.go
 export GOPATH=$HOME/Desktop/Coding/Go
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export PATH=$PATH:$(go env GOPATH)/bin
 
 # RUBY ==========================================================
 if which ruby >/dev/null && which gem >/dev/null; then
@@ -44,9 +45,6 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/A_nonymous/.oh-my-zsh
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -91,7 +89,7 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
+plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
 # zsh-autosuggestions - Potentially faster to load outside of oh-my-zsh
 
 
@@ -281,7 +279,7 @@ eval "$(thefuck --alias fuck)"
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
-echo load time: $((end_time - start_time)) seconds
+# echo load time: $((end_time - start_time)) seconds
 # zprof
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -289,6 +287,10 @@ echo load time: $((end_time - start_time)) seconds
 #Syntax Highlighting for ZSH
 #IMPORTANT NOTE TO SELF - These plugins if reloaded on sourcing zshrc will
 #crash the shell 
+# if [ -z "$_zsh_custom_scripts_loaded" ]; then
+#   _zsh_custom_scripts_loaded=1
+#   plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
+# fi
 if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
 	printf "autosuggestions loaded"
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
