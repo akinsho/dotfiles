@@ -89,7 +89,7 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
+plugins=(git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
 # zsh-autosuggestions - Potentially faster to load outside of oh-my-zsh
 
 
@@ -185,7 +185,8 @@ export KEYTIMEOUT=1
 bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
-bindkey '^ ' autosuggest-accept
+bindkey '^Q' autosuggest-accept
+# bindkey '^Z' 
 #======================================================================
 # NATIVE SETTINGS
 #======================================================================

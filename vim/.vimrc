@@ -256,6 +256,7 @@ xmap ga <Plug>(EasyAlign)
 " nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 set conceallevel=1
 let g:javascript_conceal_arrow_function = "⇒"
+let g:javascript_plugin_jsdoc           = 1
 
 
 let g:committia_hooks = {}
@@ -663,10 +664,10 @@ nnoremap gV `[V`]
 
 "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
 " Better bubbling a la Tpope's unimpaired vim
-nmap ˚ [e
-nmap ∆ ]e
-vmap ˚ [egv
-vmap ∆ ]egv
+nmap ë [e
+nmap ê ]e
+vmap ë [egv
+vmap ê ]egv
 
 
 " Line completion - native vim
@@ -678,8 +679,9 @@ nnoremap S diw"0P
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 
-nnoremap <LocalLeader>s :update<CR>
-inoremap ß <esc>:update<CR>
+
+nnoremap ó :update<CR>
+inoremap ó <esc>:update<CR>
 
 "This mapping alternates between variants of number and relative number
 nnoremap <F4> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
@@ -1133,17 +1135,12 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-let g:tern_map_keys                 = 1
-let g:tern_show_signature_in_pum    = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
+let g:tern_map_keys                    = 1
+let g:tern_show_signature_in_pum       = 1
 " Stop folding markdown please
-let g:vim_markdown_folding_disabled = 1
-" Completor vim
-let g:completor_node_binary = '/usr/local/Cellar/node/7.7.1/bin/node'
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-
-let g:vim_g_command = "Go"
+let g:vim_markdown_folding_disabled    = 1
 
 
 let g:github_dashboard = {
@@ -1205,7 +1202,6 @@ augroup goyo_markdown
   autocmd! User GoyoLeave nested call s:goyo_leave()
 augroup END
 
-" let g:markdown_fenced_languages = ['javascript', 'sql']
 let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh','javascript=js','sql=sql']
 let g:vim_markdown_toml_frontmatter = 1
 
@@ -1275,11 +1271,11 @@ endfunction
 
 command! FZFR call s:find_root()
 
+"JS Docs plugin
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 nmap <silent> co <Plug>(jsdoc)
-" nmap <silent> co ?function<cr>:noh<cr><Plug>(jsdoc)
 
 
 let g:vimjs#smartcomplete = 1
@@ -1302,13 +1298,6 @@ let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
 
-"Rebound git commands to manipulate hunks that are staged to allow comment
-"- I never use these.
-"object to work
-" omap ig <Plug>GitGutterTextObjectInnerPending
-" omap ag <Plug>GitGutterTextObjectOuterPending
-" xmap ig <Plug>GitGutterTextObjectInnerVisual
-" xmap ag <Plug>GitGutterTextObjectOuterVisual
 
 "This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
@@ -1335,22 +1324,12 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-" View the entire list of buffers open
-nmap <leader>o :BuffergatorToggle<cr>
-
-
 
 "   Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
 "   saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 2
-"   filenames like *.xml, *.html, *.xhtml, ...
-let g:closetag_filenames = "*.js,*.html,*.xhtml,*.phtml"
 
-
-" remap alt-H,J to change buffers
-nnoremap ¬ :bprev<CR>
-nnoremap ˙ :bnext<CR>
 
 "=============================================================
 "               Airline
@@ -1407,7 +1386,7 @@ nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
 
 "Remaps native insert mode paste binding to alt-p
-inoremap π <C-R>0
+inoremap ð <C-R>0
 inoremap … <C-R><C-P>0
 
 "}}}
@@ -1438,10 +1417,6 @@ let g:thematic#themes = {
     " \ 'spring-night' :{'colorscheme': 'spring-night',
     " \                 'airline-theme': 'spring_night',
     " \                },
-    " \ 'solarized' :{ 'background': 'dark',
-    " \                'colorscheme': 'solarized8_dark_high',
-    " \                 'airline-theme': 'solarized',
-    " \                },
     " \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
     " \                 'airline-theme': 'oceanicnext',
     " \                },
@@ -1450,18 +1425,6 @@ let g:thematic#defaults = {
     \ }
 " let g:thematic#theme_name = 'quantum'
 nnoremap <F10> :ThematicNext<CR>
-
-
-fun! Solarized8Contrast(delta)
-let l:schemes = map(["_low", "_flat", "", "_high"], '"solarized8_".(&background).v:val')
-exe "colors" l:schemes[((a:delta+index(l:schemes, g:colors_name)) % 4 + 4) % 4]
-endf
-let g:solarized_visibility="high"
-let g:solarized_statusline="normal"
-
-" nnoremap <F8> :<c-u>call Solarized8Contrast(-v:count1)<cr>
-" nnoremap <F7> :<c-u>call Solarized8Contrast(+v:count1)<cr>
-" endif
 
 
 "Sets no highlighting for conceal

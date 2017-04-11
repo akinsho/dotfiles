@@ -24,7 +24,7 @@ alias net="nvim ~/.tmux.conf"
 
 # alias ohmyzsh="vim ~/.oh-my-zsh"
 alias sesh="vim -S"
-# alias v="vim"
+alias vi="vim"
 alias tmux="tmux -2"
 alias ta="tmux attach -t"
 alias td="tmux detach"
