@@ -44,8 +44,6 @@ set-option -g visual-silence off
 set-window-option -g monitor-activity off
 set-option -g bell-action none
 
-# set -g default-terminal "screen-256color"
-
 # The modes {
 setw -g clock-mode-colour colour135
 setw -g mode-attr bold
@@ -88,7 +86,9 @@ tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_blac
 tm_tunes="#[fg=black,bg=colour178]#(osascript ~/Dotfiles/applescripts/tunes.scpt)"
 
 # tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/Dotfiles/bin/battery_indicator.sh)"
-batt_plug="#{battery_status_bg} #{battery_icon}   #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M "
+# batt_plug="#{battery_status_bg} #{battery_icon}   #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M "
+batt_plug="#{battery_status_fg} #{battery_icon}   #{battery_percentage} #{battery_remain}"
+ # | %a %h-%d %H:%M 
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
 # Host bg = colour245, seperator fg = colour245 (need to match)
@@ -99,8 +99,8 @@ tm_continuum="#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}"
 
 tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold]   #h "
 # uname="#[bg=colour241,fg=colour245]$tm_right_separator_black#[fg=colour16,bg=colour252,bold,noitalics,nounderscore] $(uname -n)"
-#$uname
-tm_date="#[bg=colour241,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
+# tm_date_power="#[bg=colour241,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
+tm_date="#[bg=colour250,fg=black,bold] %R %d %b "
 
 
 
@@ -117,7 +117,7 @@ set -g status-attr dim
 set -g status-left "#{?client_prefix,#[bg=colour039]#[fg=colour226],#[bg=colour172]#[fg=white]#[bold]}$tm_session_name"
 # removed $tm_host from status bar till resizing issue fixed
 #[fg=#{battery_status_bg},bg=colour241]$tm_right_separator_black
-set -g status-right "$tm_tunes  $tm_continuum   $batt_plug"
+set -g status-right "$tm_tunes  $tm_continuum   $batt_plug  $tm_date"
 
 
 # Failed attempts to create a responsive status bar

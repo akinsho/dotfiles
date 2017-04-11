@@ -29,18 +29,8 @@ endif
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
-
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-"Premature optimisation -_-
-" augroup load_ultisnips_YouCompleteMe
-"   autocmd!
-"   autocmd InsertEnter * call plug#load('ultisnips')
-"         \| autocmd! load_ultisnips_YouCompleteMe
-" augroup END
-"youcomplete me trial
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
-" autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
-Plug 'maralla/completor.vim', {'do': 'cd pythonx/completers/javascript && npm install'}
+" Plug 'maralla/completor.vim', {'do': 'make js'}
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 " Ale  Async Linting as you type
 Plug 'w0rp/ale'
 "Added vim snippets for code autofilling
@@ -65,7 +55,7 @@ Plug 'mattn/emmet-vim'
 "Add delimitmate
 Plug 'Raimondi/delimitMate'
 "The syntax highlighting wars continue
-Plug 'othree/yajs.vim', {'for':'javascript'}
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 "Added node.vim plugin
@@ -77,7 +67,6 @@ Plug 'sheerun/vim-polyglot'
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
 "Add proper markdown syntax and indentation plugin
-" Plug 'gabrielelana/vim-markdown'
 Plug 'plasticboy/vim-markdown'
 "Added color picker plugin
 Plug 'KabbAmine/vCoolor.vim'
@@ -92,8 +81,8 @@ Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
 "Tim pope's surround plugin allows . to repeat more actions
 Plug 'tpope/vim-repeat'
-"Added yankstack a lighter weight version of yankring
-Plug 'maxbrunsfeld/vim-yankstack'
+" "Added yankstack a lighter weight version of yankring
+" Plug 'maxbrunsfeld/vim-yankstack'
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
@@ -116,22 +105,22 @@ Plug 'sjl/vitality.vim'
 Plug 'junegunn/vim-easy-align'
 "Github dashboard for vim
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
-"Start up time monitor
-Plug 'tweekmonster/startuptime.vim'
+" "Start up time monitor
+" Plug 'tweekmonster/startuptime.vim'
 "Database manipulation in vim
 Plug 'vim-scripts/dbext.vim'
 "Capslock without a capslock key in vim
 Plug 'tpope/vim-capslock'
 "ES-lint fix
 Plug 'josudoey/vim-eslint-fix'
-"Google in vim
-Plug 'szw/vim-g'
 "Colors for hexcode in vim
-Plug 'gko/vim-coloresque'
+Plug 'ap/vim-css-color'
 "Bookmarks for vim
 Plug 'MattesGroeger/vim-bookmarks'
 "Go for Vim
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
+"Codi - A REPL in vim
+Plug 'metakirby5/codi.vim'
 "Need this for styled components
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
 
@@ -189,18 +178,13 @@ Plug 'davidklsn/vim-sialoquent'
 "Colorscheme - OneDark
 Plug 'joshdick/onedark.vim'
 Plug 'tyrannicaltoucan/vim-quantum'
-"Colorsheme solarized 8
-" Plug 'lifepillar/vim-solarized8'
-" Add new theme trial purposes ofc
 " Plug 'rhysd/vim-color-spring-night'
 "Added oceanic next theme
 " Plug 'mhartington/oceanic-next'
 "Quantum theme
 
 "Added SyntaxComplete for more syntax completion
-Plug 'vim-scripts/SyntaxComplete'
-" NVIM colorscheme
-" Plug 'rakr/vim-one'
+" Plug 'vim-scripts/SyntaxComplete'
 "Vim obsession Tpope's amazing plugin for managing sessions
 " Plug 'tpope/vim-obsession'
 
@@ -215,10 +199,6 @@ filetype plugin indent on
 "Added built in match it plugin to vim
 packadd! matchit
 
-"!!!This line is key to making vim work in tmux
-" if !has('gui_running') && !has('nvim')
-"   set term=screen-256color
-" endif
 
 syntax enable
 "}}}
@@ -236,6 +216,7 @@ let maplocalleader = "\<space>"
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✖️'
 let g:ale_sign_warning       = '⚠️'
@@ -330,6 +311,9 @@ let g:SignatureMarkTextHLDynamic=1
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
+
+let g:NERDTreeHijackNetrw             = 1
+let g:NERDTreeAutoDeleteBuffer        = 1
 let g:NERDTreeDirArrowExpandable      = '├'
 let g:NERDTreeDirArrowCollapsible     = '└'
 let NERDTreeQuitOnOpen                = 1
@@ -709,10 +693,10 @@ onoremap <silent> il :norm vil<cr>
 "ctrl-o in insert mode allows you to perform one normal mode command then
 "returns to insert mode
 " inoremap <C-j> <Down>
-inoremap ∆ <Down>
-inoremap ˙ <left>
-inoremap ˚ <up>
-inoremap ¬ <right>
+inoremap ê <Down>
+inoremap è <left>
+inoremap ë <up>
+inoremap ì <right>
 
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -811,7 +795,7 @@ nnoremap \| :vsp<CR>
 " Resize window vertically  - shrink
 nnoremap <down> 15<c-w>-
 " Resize window vertically - grow
-nnoremap <up>ff 15<c-w>+
+nnoremap <up> 15<c-w>+
 " Increase window size horizontally
 nnoremap <left> 15<c-w>>
 " Decrease window size horizontally
@@ -844,10 +828,6 @@ nnoremap <C-G>f gg=G<CR>
 
 
 "Remap arrow keys to do nothing
-" nnoremap <up> <nop>
-" nnoremap <down> <nop>
-" nnoremap <left> <nop>
-" nnoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
@@ -858,8 +838,8 @@ nnoremap k gk
 "key mappings
 "Remaps the binding to increment numbers to <leader>a and to decrement to å
 
-nnoremap <silent> <Leader>a <C-A>
-nnoremap <silent> å <C-X>
+" nnoremap <silent> <Leader>a <C-A>
+" nnoremap <silent> å <C-X>
 
 "Moves cursor back to the start of a line
 inoremap <C-B> <C-O>I
@@ -1153,13 +1133,14 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+let g:tern_map_keys                 = 1
+let g:tern_show_signature_in_pum    = 1
 " Stop folding markdown please
 let g:vim_markdown_folding_disabled = 1
 " Completor vim
 let g:completor_node_binary = '/usr/local/Cellar/node/7.7.1/bin/node'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
 
 
 let g:vim_g_command = "Go"
@@ -1438,7 +1419,7 @@ colorscheme quantum
 set laststatus=2
 
 
-
+" Comments in ITALICS YASSSSS!!!
 highlight Comment cterm=italic
 let g:thematic#themes = {
     \ 'quantum' : { 'background': 'dark',

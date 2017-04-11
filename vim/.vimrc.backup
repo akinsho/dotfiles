@@ -1,5 +1,15 @@
 "Prev abandoned VIMRC settings
 "========================================================================
+
+"Premature optimisation -_-
+" augroup load_ultisnips_YouCompleteMe
+"   autocmd!
+"   autocmd InsertEnter * call plug#load('ultisnips')
+"         \| autocmd! load_ultisnips_YouCompleteMe
+" augroup END
+"youcomplete me trial
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
+" autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
 " function! s:check_back_space()
 "   let col = col('.') - 1
 "   return !col || getline('.')[col - 1]  =~ '\s'
