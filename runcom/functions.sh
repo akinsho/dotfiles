@@ -86,8 +86,8 @@ _cdls_chpwd_handler () {
   ls -A
 }
 
-autoload -U add-zsh-hook
-add-zsh-hook chpwd _cdls_chpwd_handler
+# autoload -U add-zsh-hook
+# add-zsh-hook chpwd _cdls_chpwd_handler
 # Codi
 # Usage: codi [filetype] [filename]
 codi() {

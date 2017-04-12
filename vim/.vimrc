@@ -54,10 +54,6 @@ Plug 'tpope/vim-commentary'
 Plug 'mattn/emmet-vim'
 "Add delimitmate
 Plug 'Raimondi/delimitMate'
-"The syntax highlighting wars continue
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}
-"Added javascript lib - syntax highlighting for popular libraries
-Plug 'othree/javascript-libraries-syntax.vim'
 "Added node.vim plugin
 Plug 'moll/vim-node', { 'for':'javascript'}
 "Added easy motions
@@ -67,7 +63,7 @@ Plug 'sheerun/vim-polyglot'
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
 "Add proper markdown syntax and indentation plugin
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for':'markdown'}
 "Added color picker plugin
 Plug 'KabbAmine/vCoolor.vim'
 "Add Tern for autocompletion
@@ -81,8 +77,6 @@ Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
 "Tim pope's surround plugin allows . to repeat more actions
 Plug 'tpope/vim-repeat'
-" "Added yankstack a lighter weight version of yankring
-" Plug 'maxbrunsfeld/vim-yankstack'
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
@@ -91,20 +85,12 @@ Plug 'mhinz/vim-startify'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 " Autoformatter
 Plug 'Chiel92/vim-autoformat'
-"Add a GitGutter to track new lines re git file
-Plug 'airblade/vim-gitgutter'
-"Plug to create diff window and Gstatus window on commit
-Plug 'rhysd/committia.vim'
 "Vimux i.e send commands to a tmux split
 Plug 'benmills/vimux'
-"Vim signature re-added because I need to see my bloody marks
-Plug 'kshenoy/vim-signature'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
 "Added June Gunn's alignment plugin
 Plug 'junegunn/vim-easy-align'
-"Github dashboard for vim
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
 " "Start up time monitor
 " Plug 'tweekmonster/startuptime.vim'
 "Database manipulation in vim
@@ -113,18 +99,38 @@ Plug 'vim-scripts/dbext.vim'
 Plug 'tpope/vim-capslock'
 "ES-lint fix
 Plug 'josudoey/vim-eslint-fix'
-"Colors for hexcode in vim
-Plug 'ap/vim-css-color'
-"Bookmarks for vim
-Plug 'MattesGroeger/vim-bookmarks'
 "Go for Vim
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
 "Codi - A REPL in vim
 Plug 'metakirby5/codi.vim'
+"css related
+"Colors for hexcode in vim
+Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
 "Need this for styled components
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
 
 
+"Syntax ============================
+"The syntax highlighting wars continue
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}
+"Added javascript lib - syntax highlighting for popular libraries
+Plug 'othree/javascript-libraries-syntax.vim'
+
+"Marks =============================
+"Bookmarks for vim
+Plug 'MattesGroeger/vim-bookmarks'
+"Vim signature re-added because I need to see my bloody marks
+Plug 'kshenoy/vim-signature'
+
+"Git ===============================
+"Git repo  manipulation plugin
+Plug 'gregsexton/gitv'
+"Github dashboard for vim
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
+"Add a GitGutter to track new lines re git file
+Plug 'airblade/vim-gitgutter'
+"Plug to create diff window and Gstatus window on commit
+Plug 'rhysd/committia.vim'
 
 "Text Objects =====================
 "Text object library plugin for defining your own text objects
@@ -157,7 +163,6 @@ Plug 'ludovicchabant/vim-gutentags'
 "Vim HARDMODE ----------------------
 Plug 'wikitopian/hardmode'
 
-"Visuals ===============================
 "Filetype Plugins ======================
 "Add better markdown previewer
 Plug 'shime/vim-livedown'
@@ -177,11 +182,11 @@ Plug 'reedes/vim-thematic'
 Plug 'davidklsn/vim-sialoquent'
 "Colorscheme - OneDark
 Plug 'joshdick/onedark.vim'
-Plug 'tyrannicaltoucan/vim-quantum'
-" Plug 'rhysd/vim-color-spring-night'
-"Added oceanic next theme
-" Plug 'mhartington/oceanic-next'
 "Quantum theme
+Plug 'tyrannicaltoucan/vim-quantum'
+"Highlighting for NerdTree icons
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'rhysd/vim-color-spring-night'
 
 "Added SyntaxComplete for more syntax completion
 " Plug 'vim-scripts/SyntaxComplete'
@@ -197,8 +202,10 @@ call plug#end()
 filetype plugin indent on
 
 "Added built in match it plugin to vim
-packadd! matchit
-
+" packadd! matchit
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
 
 syntax enable
 "}}}
@@ -313,6 +320,8 @@ let g:SignatureMarkTextHLDynamic=1
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
 
+"NERDTree highlight plugin
+let g:NERDTreeLimitedSyntax           = 1
 let g:NERDTreeHijackNetrw             = 1
 let g:NERDTreeAutoDeleteBuffer        = 1
 let g:NERDTreeDirArrowExpandable      = '├'
@@ -440,9 +449,11 @@ augroup END
 
 
 augroup CheckOutsideTime - "excellent function but implemented by terminus
-autocmd!
-" automatically check for changed files outside vim
-autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
+  autocmd!
+  " automatically check for changed files outside vim
+  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
+  "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
+  au FocusLost * silent! wa
 augroup end
 
 " Disable paste.
@@ -461,8 +472,8 @@ augroup END
 au! InsertEnter * let updaterestore=&updatetime | set updatetime=10000
 au! InsertLeave * let &updatetime=updaterestore
 
-"Saves files on switching tabs i.e losing focus
-au FocusLost * :wa
+
+
 augroup VimResizing
 au!
 "Command below makes the windows the same size on resizing !? Why?? because
@@ -481,11 +492,11 @@ augroup END
 
 
 augroup filetype_completion
-au!
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  au!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
 
@@ -499,8 +510,6 @@ augroup filetype_javascript
   autocmd FileType javascript :iabbrev <buffer> cons console.log()
 
   autocmd FileType javascript :iabbrev <buffer> und undefined
-
-
   "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
   "Folding autocommands for javascript
@@ -568,7 +577,12 @@ autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
 augroup END
 
 
-
+augroup Toggle_number
+  au!
+  " toggle relativenumber according to mode
+  autocmd InsertEnter * set relativenumber!
+  autocmd InsertLeave * set relativenumber
+augroup END
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -906,13 +920,23 @@ endif
 "Mouse
 "==================================================================================={{{
 set mousehide
+set mouse=a "this is the command that works for mousepad
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-"Stop mouse scrolling
-if !has('nvim')
-" set  mouse=c
-set mouse=a "this is the command that works for mousepad
-"Disable this to allow scrolling in vim
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=a
+    endif
+  endfunc
+nnoremap <F7> :call ToggleMouse()<CR>
 noremap <ScrollWheelUp>      <nop>
 noremap <S-ScrollWheelUp>    <nop>
 noremap <C-ScrollWheelUp>    <nop>
@@ -925,8 +949,11 @@ noremap <C-ScrollWheelLeft>  <nop>
 noremap <ScrollWheelRight>   <nop>
 noremap <S-ScrollWheelRight> <nop>
 noremap <C-ScrollWheelRight> <nop>
-endif
+"Stop mouse scrolling
+" if !has('nvim')
+"Disable this to allow scrolling in vim
 "}}}
+" endif
 "====================================================================================
 "Buffer and Tab settings
 "===================================================================================={{{
@@ -1135,7 +1162,10 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
+
+
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 let g:tern_map_keys                    = 1
 let g:tern_show_signature_in_pum       = 1
@@ -1297,6 +1327,8 @@ let g:startify_session_dir = '~/.vim/session'
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
+let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
+
 
 
 "This sets default mapping for camel case text object
@@ -1414,12 +1446,7 @@ let g:thematic#themes = {
     \                },
     \}
 
-    " \ 'spring-night' :{'colorscheme': 'spring-night',
-    " \                 'airline-theme': 'spring_night',
-    " \                },
-    " \ 'oceanic-next' :{'colorscheme': 'OceanicNext',
-    " \                 'airline-theme': 'oceanicnext',
-    " \                },
+
 let g:thematic#defaults = {
     \ 'laststatus': 2,
     \ }

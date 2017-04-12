@@ -89,14 +89,12 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
+plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
 # zsh-autosuggestions - Potentially faster to load outside of oh-my-zsh
 
 
 
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
 
 export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH
@@ -113,9 +111,6 @@ fi
 
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
-
-# compilation flags
-# export archflags="-arch x86_64"
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -185,7 +180,7 @@ export KEYTIMEOUT=1
 bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
-bindkey '^Q' autosuggest-accept
+bindkey '^U' autosuggest-accept
 # bindkey '^Z' 
 #======================================================================
 # NATIVE SETTINGS
