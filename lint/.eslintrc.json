@@ -20,7 +20,7 @@
         "no-useless-return": "error",
         "callback-return": "error",
         "global-require": "error",
-        "comma-dangle": "error",
+        "comma-dangle": ["error", "only-multiline"],
         "comma-spacing": ["error", { "before": false, "after": true }]
     },
     "env": {

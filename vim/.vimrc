@@ -25,12 +25,20 @@ silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Install Plugins for the first time
+if empty(glob('~/.vim/autoload/plug.vim'))
+  let g:doPlugInstall = "set"
+endif
 
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
 " Plug 'maralla/completor.vim', {'do': 'make js'}
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+if !has('nvim')
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+else
+  Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
+endif
 " Ale  Async Linting as you type
 Plug 'w0rp/ale'
 "Added vim snippets for code autofilling
@@ -40,16 +48,7 @@ Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
 Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
-Plug 'scrooloose/nerdtree'
-"Added vim surround for enclosing with parens
-Plug 'tpope/vim-surround'
-" Add fugitive git status and command plugins
-Plug 'tpope/vim-fugitive'
-" Adds file manipulation functionality
-Plug 'tpope/vim-eunuch'
-"Added Editor Config plugin to maintain style choices
-Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree' "| Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Add delimitmate
@@ -60,8 +59,6 @@ Plug 'moll/vim-node', { 'for':'javascript'}
 Plug 'easymotion/vim-easymotion'
 "Added vim polyglot a collection of language packs for vim
 Plug 'sheerun/vim-polyglot'
-"Autocorrects 4,000 common typos
-Plug 'chip/vim-fat-finger'
 "Add proper markdown syntax and indentation plugin
 Plug 'plasticboy/vim-markdown', { 'for':'markdown'}
 "Added color picker plugin
@@ -73,10 +70,6 @@ if a:info.status == 'installed' || a:info.force
 endif
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
-"Add Gundo - undo plugin for vim
-Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
-"Tim pope's surround plugin allows . to repeat more actions
-Plug 'tpope/vim-repeat'
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
@@ -91,30 +84,41 @@ Plug 'benmills/vimux'
 Plug 'sjl/vitality.vim'
 "Added June Gunn's alignment plugin
 Plug 'junegunn/vim-easy-align'
-" "Start up time monitor
-" Plug 'tweekmonster/startuptime.vim'
-"Database manipulation in vim
-Plug 'vim-scripts/dbext.vim'
 "Capslock without a capslock key in vim
 Plug 'tpope/vim-capslock'
-"ES-lint fix
-Plug 'josudoey/vim-eslint-fix'
 "Go for Vim
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
-"Codi - A REPL in vim
-Plug 'metakirby5/codi.vim'
 "css related
 "Colors for hexcode in vim
 Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
-"Need this for styled components
-" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
+
+"Utilities============================
+"Add Gundo - undo plugin for vim
+Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
+"ES-lint fix
+Plug 'josudoey/vim-eslint-fix'
+"Autocorrects 4,000 common typos
+Plug 'chip/vim-fat-finger'
+"Highlighting for substitution in Vim
+Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'}
+
+"TPOPE ====================================
+"Added vim surround for enclosing with parens
+Plug 'tpope/vim-surround'
+" Add fugitive git status and command plugins
+Plug 'tpope/vim-fugitive'
+" Adds file manipulation functionality
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-commentary'
+"Tim pope's surround plugin allows . to repeat more actions
+Plug 'tpope/vim-repeat'
 
 
 "Syntax ============================
-"The syntax highlighting wars continue
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
+"Added Editor Config plugin to maintain style choices
+Plug 'editorconfig/editorconfig-vim'
 
 "Marks =============================
 "Bookmarks for vim
@@ -145,21 +149,21 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-unimpaired'
 "Peace and Quiet thanks JGunn
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-" All encompasing v
-Plug 'terryma/vim-expand-region'
+Plug 'gorkunov/smartpairs.vim'
 "Moar textobjs
 Plug 'wellle/targets.vim'
 "Function text object js
 Plug 'thinca/vim-textobj-function-javascript'
 
 
+"Search Tools =======================
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
+
 "Coding tools =======================
 "Add JSDocs plugin
 Plug 'heavenshell/vim-jsdoc'
-"Add Tagbar Plugin
-Plug 'majutsushi/tagbar'
-"Add Plugin to manage tag files
-Plug 'ludovicchabant/vim-gutentags'
 "Vim HARDMODE ----------------------
 Plug 'wikitopian/hardmode'
 
@@ -176,28 +180,43 @@ Plug 'vim-airline/vim-airline-themes'
 
 
 "Themes ===============================
-" A plugin for managing vim themes
-Plug 'reedes/vim-thematic'
-"vim sialoquent theme
-Plug 'davidklsn/vim-sialoquent'
-"Colorscheme - OneDark
-Plug 'joshdick/onedark.vim'
 "Quantum theme
 Plug 'tyrannicaltoucan/vim-quantum'
-"Highlighting for NerdTree icons
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Plug 'rhysd/vim-color-spring-night'
-
-"Added SyntaxComplete for more syntax completion
-" Plug 'vim-scripts/SyntaxComplete'
-"Vim obsession Tpope's amazing plugin for managing sessions
-" Plug 'tpope/vim-obsession'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 
 
+"Plugins I think I need yet never use ===============================
+"Need this for styled components
+" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
+" "Start up time monitor
+" Plug 'tweekmonster/startuptime.vim'
+"The syntax highlighting wars continue
+" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']} "?Not
+" performant
+" All encompasing v
+" Plug 'terryma/vim-expand-region'
+"vim sialoquent theme
+" Plug 'davidklsn/vim-sialoquent'
+"Colorscheme - OneDark
+" Plug 'joshdick/onedark.vim'
+"Add Tagbar Plugin
+" Plug 'majutsushi/tagbar'
+"Add Plugin to manage tag files
+" Plug 'ludovicchabant/vim-gutentags'
+"Database manipulation in vim
+" Plug 'vim-scripts/dbext.vim'
+"Codi - A REPL in vim
+" Plug 'metakirby5/codi.vim'
+
+
 call plug#end()
+
+" Install Plugins
+if exists('doPlugInstall')
+    PlugInstall | q
+  endif
 
 filetype plugin indent on
 
@@ -320,8 +339,16 @@ let g:SignatureMarkTextHLDynamic=1
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
 
-"NERDTree highlight plugin
-let g:NERDTreeLimitedSyntax           = 1
+" let s:salmon = "EE6E73"
+" let s:git_orange = 'F54D27'
+" let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+" let g:NERDTreeExtensionHighlightColor['css'] = s:salmon " sets the color of css files to blue
+" "NERDTree highlight plugin
+" let g:NERDTreeLimitedSyntax           = 1
+" let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+" let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
+
+
 let g:NERDTreeHijackNetrw             = 1
 let g:NERDTreeAutoDeleteBuffer        = 1
 let g:NERDTreeDirArrowExpandable      = '├'
@@ -333,6 +360,41 @@ let NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks           = 1
 let NERDTreeAutoDeleteBuffer          = 1
 let NERDTreeShowHidden                = 1 "Show hidden files by default
+"===================================================
+" Incsearch
+"===================================================
+" incsearch.vim x fuzzy x vim-easymotion
+
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzy#converter()],
+  \   'modules': [incsearch#config#easymotion#module()],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
+
+function! s:config_fuzzyall(...) abort
+  return extend(copy({
+  \   'converters': [
+  \     incsearch#config#fuzzy#converter(),
+  \     incsearch#config#fuzzyspell#converter()
+  \   ],
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
+noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+
+
+" map /  <Plug>(incsearch-forward)
+" map ?  <Plug>(incsearch-backward)
+" map g/ <Plug>(incsearch-stay)
 
 "===================================================
 "EasyMotion mappings
@@ -346,26 +408,17 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 " keep cursor column when jumping
 let g:EasyMotion_startofline = 0
-"Use easy motion to search
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
 
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 " Jump to anwhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.
-nmap s <Plug>(easymotion-s)
+" nmap s <Plug>(easymotion-s)
 " or
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
-map <leader>f <Plug>(easymotion-f)
-nmap <leader>f <Plug>(easymotion-overwin-f)
-" Bidirectional & within line 't' motion
-" omap t <Plug>(easymotion-bd-tl)
+" nmap s <Plug>(easymotion-overwin-f2)
+
+map s <Plug>(easymotion-f)
+nmap s <Plug>(easymotion-overwin-f)
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
@@ -382,14 +435,6 @@ let g:vcoolor_map = '<F8>'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
-"Use emmet only for html and css files - Great config option although having
-"emmet when writing jsx is super helpful, so I just changed the bindings
-" let g:user_emmet_install_global = 0
-" augroup Emmet
-"   au!
-" autocmd Filetype html,css EmmetInstall
-" autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-" augroup END
 "Emmet for vim leader keymap
 let g:user_emmet_leader_key     = "<s-tab>"
 let g:user_emmet_expandabbr_key = '<C-y>'
@@ -399,7 +444,7 @@ nnoremap <leader>u :GundoToggle<CR>
 
 
 "Set up libraries to highlight with library syntax highlighter
-" let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
+let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
 "}}}
 "====================================================================================
 "Autocommands
@@ -482,13 +527,6 @@ autocmd VimResized * wincmd =
 autocmd FocusLost * :wa
 " autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
-
-
-" use syntax complete if nothing else available
-" autocmd VimRc FileType *
-"       \  if &omnifunc == ""
-"       \|   setlocal omnifunc=syntaxcomplete#Complete
-"       \| endif
 
 
 augroup filetype_completion
@@ -836,6 +874,11 @@ nnoremap <leader>x :lclose<CR>
 "Indent a page of HTML (?works for other code)
 nnoremap <C-G>f gg=G<CR>
 
+" function! StripWhiteSpace()
+"  exec ':%/ \+$//gc'
+" endfunction
+" map <leader>re :call StripWhiteSpace()<CR>
+
 "map window keys to leader - Interfere with tmux navigator
 " noremap <C-h> <c-w>h
 " noremap <C-j> <c-w>j
@@ -1162,7 +1205,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-
+let g:smartpairs_start_from_word = 1
 
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -1432,38 +1475,9 @@ set laststatus=2
 
 " Comments in ITALICS YASSSSS!!!
 highlight Comment cterm=italic
-let g:thematic#themes = {
-    \ 'quantum' : { 'background': 'dark',
-    \               'colorscheme':'quantum',
-    \               'airline-theme': 'quantum',
-    \                },
-    \ 'onedark' : { 'colorscheme':'onedark',
-    \               'airline-theme': 'onedark',
-    \                 'background': 'dark',
-    \                },
-    \ 'sialoquent' :{'colorscheme': 'sialoquent',
-    \                 'airline-theme': 'bubblegum',
-    \                },
-    \}
-
-
-let g:thematic#defaults = {
-    \ 'laststatus': 2,
-    \ }
-" let g:thematic#theme_name = 'quantum'
-nnoremap <F10> :ThematicNext<CR>
-
 
 "Sets no highlighting for conceal
 hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
-
-
-" Spring Night ==============================================
-" This variable needs to be set, and set to nothing to maintain a light
-" contrast
-let g:spring_night_high_contrast=[]
-" The theme is set by thematic plugin but the above line is needed to ensure it
-" renders properly
 
 
 " ----------------------------------------------------------------------------

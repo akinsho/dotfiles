@@ -1,33 +1,45 @@
 "Prev abandoned VIMRC settings
 "========================================================================
+" A plugin for managing vim themes
+Plug 'reedes/vim-thematic'
+
+
+"Use emmet only for html and css files - Great config option although having
+"emmet when writing jsx is super helpful, so I just changed the bindings
+let g:user_emmet_install_global = 0
+augroup Emmet
+  au!
+autocmd Filetype html,css EmmetInstall
+autocmd Filetype html,css imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+augroup END
 
 "Premature optimisation -_-
-" augroup load_ultisnips_YouCompleteMe
-"   autocmd!
-"   autocmd InsertEnter * call plug#load('ultisnips')
-"         \| autocmd! load_ultisnips_YouCompleteMe
-" augroup END
-"youcomplete me trial
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
-" autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
-" function! s:check_back_space()
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
+augroup load_ultisnips_YouCompleteMe
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips')
+        \| autocmd! load_ultisnips_YouCompleteMe
+augroup END
+oucomplete me trial
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py','on': [] }
+autocmd InsertEnter * call plug#load('YouCompleteMe','ultisnips')
+function! s:check_back_space()
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
 " let g:ulti_expand_res = 0 "default value, just set once
-" function! Tab_Snippet_Complete()
-"   let snippet = UltiSnips#ExpandSnippet()
-"   if g:ulti_expand_res > 0
-"     return snippet
-"   endif
-"   if <SID>check_back_space()
-"     return "\<TAB>"
-"   endif
-"   let manualcomplete = neocomplete#start_manual_complete()
-"   return manualcomplete
-" endfunction
-" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
+function! Tab_Snippet_Complete()
+  let snippet = UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res > 0
+    return snippet
+  endif
+  if <SID>check_back_space()
+    return "\<TAB>"
+  endif
+  let manualcomplete = neocomplete#start_manual_complete()
+  return manualcomplete
+endfunction
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<CR>"
 "-----------------------------------------------------------
 "     NEOMAKE
 "-----------------------------------------------------------
@@ -229,10 +241,6 @@ let g:ycm_always_populate_location_list = 1
 "================================================================================
 "Whitespace
 "================================================================================
-" function! StripWhiteSpace ()
-"  exec ':%/ \+$//gc'
-" endfunction
-" map <leader>r :call StripWhiteSpace ()<CR>
 
 
 "Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
