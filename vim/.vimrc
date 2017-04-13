@@ -258,6 +258,8 @@ nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
 imap <C-L> <C-O><Plug>CapsLockToggle
 
+
+
 "highlight GitGutterAdd guifg = '#A3E28B'
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_added    = '❖'
@@ -360,6 +362,13 @@ let NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks           = 1
 let NERDTreeAutoDeleteBuffer          = 1
 let NERDTreeShowHidden                = 1 "Show hidden files by default
+
+"===================================================
+" Vim-Over - Highlight substitution parameters
+"===================================================
+nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
+
+
 "===================================================
 " Incsearch
 "===================================================
@@ -375,7 +384,7 @@ function! s:config_easyfuzzymotion(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
-noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+noremap <silent><expr> / incsearch#go(<SID>config_easyfuzzymotion())
 
 
 function! s:config_fuzzyall(...) abort
@@ -387,9 +396,9 @@ function! s:config_fuzzyall(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
-noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
-noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+" noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
+" noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+" noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 
 " map /  <Plug>(incsearch-forward)
