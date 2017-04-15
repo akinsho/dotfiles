@@ -25,17 +25,12 @@ silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Install Plugins for the first time
-if empty(glob('~/.vim/autoload/plug.vim'))
-  let g:doPlugInstall = "set"
-endif
-
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
-" Plug 'maralla/completor.vim', {'do': 'make js'}
 if !has('nvim')
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'maralla/completor.vim', {'do': 'make js'}
+  " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
@@ -48,7 +43,7 @@ Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
 Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
-Plug 'scrooloose/nerdtree' "| Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdtree' | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Add delimitmate
@@ -57,10 +52,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'moll/vim-node', { 'for':'javascript'}
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
-"Added vim polyglot a collection of language packs for vim
-Plug 'sheerun/vim-polyglot'
-"Add proper markdown syntax and indentation plugin
-Plug 'plasticboy/vim-markdown', { 'for':'markdown'}
 "Added color picker plugin
 Plug 'KabbAmine/vCoolor.vim'
 "Add Tern for autocompletion
@@ -70,18 +61,13 @@ if a:info.status == 'installed' || a:info.force
 endif
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
-"Navigate panes in vim and tmux with the same bindings
-Plug 'christoomey/vim-tmux-navigator'
 " A fun start up sceen for vim
 Plug 'mhinz/vim-startify'
 "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 " Autoformatter
-Plug 'Chiel92/vim-autoformat'
-"Vimux i.e send commands to a tmux split
-Plug 'benmills/vimux'
-"Adds cursor change and focus events to tmux vim
-Plug 'sjl/vitality.vim'
+Plug 'sbdchd/neoformat'
+" Plug 'Chiel92/vim-autoformat'
 "Added June Gunn's alignment plugin
 Plug 'junegunn/vim-easy-align'
 "Capslock without a capslock key in vim
@@ -92,11 +78,22 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
 "Colors for hexcode in vim
 Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
 
+
+"TMUX ============================
+if executable("tmux")
+"Vimux i.e send commands to a tmux split
+Plug 'benmills/vimux'
+"Navigate panes in vim and tmux with the same bindings
+Plug 'christoomey/vim-tmux-navigator'
+endif
+
 "Utilities============================
+"Adds cursor change and focus events to tmux vim
+Plug 'sjl/vitality.vim'
+"Does what it says on the tin - accelerates j and k
+Plug 'rhysd/accelerated-jk'
 "Add Gundo - undo plugin for vim
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
-"ES-lint fix
-Plug 'josudoey/vim-eslint-fix'
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
 "Highlighting for substitution in Vim
@@ -115,10 +112,14 @@ Plug 'tpope/vim-repeat'
 
 
 "Syntax ============================
+"Added vim polyglot a collection of language packs for vim
+Plug 'sheerun/vim-polyglot'
 "Added javascript lib - syntax highlighting for popular libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 "Added Editor Config plugin to maintain style choices
 Plug 'editorconfig/editorconfig-vim'
+"Add proper markdown syntax and indentation plugin
+Plug 'plasticboy/vim-markdown', { 'for':'markdown'}
 
 "Marks =============================
 "Bookmarks for vim
@@ -141,6 +142,8 @@ Plug 'rhysd/committia.vim'
 Plug 'kana/vim-textobj-user'
 "Text obj for comments
 Plug 'glts/vim-textobj-comment'
+"Conflict marker text objects
+Plug 'rhysd/vim-textobj-conflict'
 " Add text objects form camel cased strings (should be native imho)
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
 " Add text object for indented code = 'i' i.e dii delete inner indented block
@@ -149,6 +152,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-unimpaired'
 "Peace and Quiet thanks JGunn
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+"select inside pairs by pressing v
 Plug 'gorkunov/smartpairs.vim'
 "Moar textobjs
 Plug 'wellle/targets.vim'
@@ -157,6 +161,8 @@ Plug 'thinca/vim-textobj-function-javascript'
 
 
 "Search Tools =======================
+Plug 'bronson/vim-visual-star-search'
+Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
@@ -180,6 +186,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 
 "Themes ===============================
+Plug 'rhysd/try-colorscheme.vim'
 "Quantum theme
 Plug 'tyrannicaltoucan/vim-quantum'
 
@@ -213,11 +220,6 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 
 call plug#end()
 
-" Install Plugins
-if exists('doPlugInstall')
-    PlugInstall | q
-  endif
-
 filetype plugin indent on
 
 "Added built in match it plugin to vim
@@ -239,10 +241,15 @@ let maplocalleader = "\<space>"
 "--------------------------------------------------------------------------------------------------
 "Plugin Mappings
 "--------------------------------------------------------------------------------------------------{{{
+" Use formatprg when available
+let g:neoformat_try_formatprg = 1
+" Enable trimmming of trailing whitespace
+let g:neoformat_basic_format_trim = 1
+" let g:polyglot_disabled = ['javascript']
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✖️'
 let g:ale_sign_warning       = '⚠️'
@@ -269,10 +276,13 @@ let g:gitgutter_grep_command = 'ag --nocolor'
 "-----------------------------------------------------------
 " Colorizer
 "-----------------------------------------------------------
+
+
+
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-nnoremap <C-F> :Autoformat<CR>
+nnoremap <C-F> :Neoformat<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vnoremap <Enter> <Plug>(EasyAlign)
@@ -341,14 +351,14 @@ let g:SignatureMarkTextHLDynamic=1
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
 
-" let s:salmon = "EE6E73"
-" let s:git_orange = 'F54D27'
-" let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
-" let g:NERDTreeExtensionHighlightColor['css'] = s:salmon " sets the color of css files to blue
-" "NERDTree highlight plugin
-" let g:NERDTreeLimitedSyntax           = 1
-" let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
-" let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
+let s:salmon = "EE6E73"
+let s:git_orange = 'F54D27'
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor['css'] = s:salmon " sets the color of css files to blue
+"NERDTree highlight plugin
+let g:NERDTreeLimitedSyntax           = 1
+let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
 
 
 let g:NERDTreeHijackNetrw             = 1
@@ -372,6 +382,11 @@ nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
 "===================================================
 " Incsearch
 "===================================================
+let g:vim_search_pulse_mode = 'cursor_line'
+
+let g:accelerated_jk_acceleration_table = [4,8,17,21,24,26,28,30]
+nmap j <Plug>(accelerated_jk_gj_position)
+nmap k <Plug>(accelerated_jk_gk_position)
 " incsearch.vim x fuzzy x vim-easymotion
 
 function! s:config_easyfuzzymotion(...) abort
@@ -384,7 +399,7 @@ function! s:config_easyfuzzymotion(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
-noremap <silent><expr> / incsearch#go(<SID>config_easyfuzzymotion())
+noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
 
 
 function! s:config_fuzzyall(...) abort
@@ -396,15 +411,35 @@ function! s:config_fuzzyall(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
-" noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
-" noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-" noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
+noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 
 " map /  <Plug>(incsearch-forward)
 " map ?  <Plug>(incsearch-backward)
 " map g/ <Plug>(incsearch-stay)
+" incsearch and vim search pulse
+let g:vim_search_pulse_disable_auto_mappings = 1
+let g:incsearch#auto_nohlsearch = 1
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
+" Next or previous match is followed by a Pulse
+map n <Plug>(incsearch-nohl-n)<Plug>Pulse
+map N <Plug>(incsearch-nohl-N)<Plug>Pulse
+map * <Plug>(incsearch-nohl-*)<Plug>Pulse
+map # <Plug>(incsearch-nohl-#)<Plug>Pulse
+map g* <Plug>(incsearch-nohl-g*)<Plug>Pulse
+map g# <Plug>(incsearch-nohl-g#)<Plug>Pulse
+
+" Pulses the first match after hitting the enter keyan
+augroup inc_search
+  autocmd!
+  autocmd! User IncSearchExecute
+  autocmd User IncSearchExecute :call search_pulse#Pulse()
+augroup END
 "===================================================
 "EasyMotion mappings
 "===================================================
@@ -460,7 +495,7 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,han
 "==================================================================================={{{
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
-au!
+autocmd!
 autocmd FileType help,git-status,git-log,qf,
       \gitcommit,quickrun,qfreplace,ref,
       \simpletap-summary,vcs-commit,vcs-status,vim-hacks
@@ -479,7 +514,7 @@ endfunction
 
 "this is is intended to stop insert mode bindings slowing down <bs> and <cr>
 augroup Map_timings
-  au!
+  autocmd!
   autocmd InsertEnter * set timeoutlen=200
   autocmd InsertLeave * set timeoutlen=500
 augroup END
@@ -495,10 +530,10 @@ endif
 endfunction
 
 augroup Go_Mappings
-au!
-autocmd FileType go nmap <leader>t  <Plug>(go-test)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+  autocmd!
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 augroup END
 
 
@@ -512,34 +547,37 @@ augroup end
 
 " Disable paste.
 augroup Cancel_Paste
-au!
-autocmd InsertLeave *
-      \ if &paste | set nopaste | echo 'nopaste' | endif
+  autocmd!
+  autocmd InsertLeave *
+        \ if &paste | set nopaste | echo 'nopaste' | endif
 augroup END
 
 augroup reload_vimrc
-autocmd!
-autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+  autocmd!
+  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 augroup END
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
-au! InsertEnter * let updaterestore=&updatetime | set updatetime=10000
-au! InsertLeave * let &updatetime=updaterestore
+augroup updating_time
+  autocmd!
+  autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+  autocmd InsertLeave * let &updatetime=updaterestore
+augroup END
 
 
 
 augroup VimResizing
-au!
-"Command below makes the windows the same size on resizing !? Why?? because
-"its tidier
-autocmd VimResized * wincmd =
-autocmd FocusLost * :wa
-" autocmd VimResized * :redraw! | :echo 'Redrew'
+  autocmd!
+  "Command below makes the windows the same size on resizing !? Why?? because
+  "its tidier
+  autocmd VimResized * wincmd =
+  autocmd FocusLost * :wa
+  " autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
 
 augroup filetype_completion
-  au!
+  autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=tern#Complete
@@ -549,6 +587,10 @@ augroup END
 
 augroup filetype_javascript
   autocmd!
+  "PRETTIER FOR VIM  ================
+  autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
+  autocmd BufWritePre *.js Neoformat
+  "==================================
   autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
   autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
@@ -562,70 +604,66 @@ augroup filetype_javascript
   "Folding autocommands for javascript
   " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
   " autocmd Filetype javascript setlocal foldlevelstart=1
+  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
+  autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
 augroup END
 
 
 augroup FileType_html
-autocmd!
-autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
-autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
+  autocmd!
+  autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+  autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
 
 augroup FileType_markdown
-autocmd!
-autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
-autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
+  autocmd!
+  autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
+  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
 augroup END
 
 augroup filetype_vim
-"Vimscript file settings -------------------------
-au!
-autocmd FileType vim setlocal foldmethod=marker
+  "Vimscript file settings -------------------------
+  autocmd!
+  autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
 augroup FileType_text
-autocmd!
-autocmd FileType text setlocal textwidth=78
+  autocmd!
+  autocmd FileType text setlocal textwidth=78
 augroup END
 
 augroup FileType_all
-autocmd!
-autocmd BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
+  autocmd!
+  autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  " Set syntax highlighting for specific file types
+  autocmd BufReadPost *
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+
 augroup END
 
 "Close vim if only window is a Nerd Tree
-augroup FileType_all
-autocmd!
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup NERDTree
+  autocmd!
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 
-
-augroup vimrcEx
-autocmd!
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it for commit messages, when the position is invalid, or when
-" inside an event handler (happens when dropping a file on gvim).
-autocmd BufReadPost *
-      \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal g`\"" |
-      \ endif
-
-" Set syntax highlighting for specific file types
-autocmd BufRead,BufNewFile Appraisals set filetype=ruby
-autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
-augroup END
 
 
 augroup Toggle_number
-  au!
+  autocmd!
   " toggle relativenumber according to mode
   autocmd InsertEnter * set relativenumber!
   autocmd InsertLeave * set relativenumber
@@ -639,7 +677,7 @@ let g:html_indent_tags = 'li\|p'
 "====================================================================================
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
-" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
+" Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,dos,mac
 " Autocomplete with dictionary words when spell check is on
@@ -650,10 +688,10 @@ set complete+=kspell
 "Mappings
 "-----------------------------------------------------------------------------------{{{
 " Emacs like keybindings for the command line (:) are better
-" and we cannot use Vi style-binding here anyway, because ESC
+" and you cannot use Vi style-binding here anyway, because ESC
 " just closes the command line and using Home and End..
 " remap arrow keys
-cnoremap <C-S>    <Home>
+cnoremap <C-A>    <Home>
 cnoremap <C-E>    <End>
 cnoremap <C-K>    <C-U>
 cnoremap <C-P> <Up>
@@ -773,7 +811,7 @@ set pastetoggle=<F2>
 "of a second
 set timeout timeoutlen=500 ttimeoutlen=100
 
-" Remap jumping to the lask spot you were editing previously to bk as this is
+" Remap jumping to the last spot you were editing previously to bk as this is
 " easier form me to remember
 nnoremap bk `.
 
@@ -900,8 +938,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
 
 "key mappings
 "Remaps the binding to increment numbers to <leader>a and to decrement to å
@@ -1123,6 +1161,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display
 " --------------------------------------------------------------------------{{{
+set listchars=tab:>-,trail:·
 " Limit horizontal and vertical syntax rendering (for better performance)
 syntax sync minlines=256
 set synmaxcol=256
@@ -1166,7 +1205,7 @@ set incsearch
 
 " Turns on lazyredraw which postpones redrawing for macros and command
 " execution
-set lazyredraw
+" set lazyredraw
 
 " Use visual bell when there are errors not audio beep
 set visualbell
@@ -1174,12 +1213,11 @@ set visualbell
 " au VimLeave * !echo -ne""\033[0m"
 "Setting the t_ variables if a further step to ensure 24bit colors
 if has('termguicolors')
-" && !has('gui_running')
-set termguicolors
-" set vim-specific sequences for rgb colors
-"super important for truecolor support in vim
-let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+  " set vim-specific sequences for rgb colors
+  "super important for truecolor support in vim
+  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
 endif
 "}}}
 "================================================================================
@@ -1230,11 +1268,6 @@ let g:github_dashboard = {
     \'password': $GITHUB_TOKEN
     \}
 nnoremap <F1> :GHDashboard! Akin909<CR>
-
-
-"pretty the file before saving.
-" autocmd BufWritePre *.js execute 'call ESLintFix()'
-nnoremap <leader>l :call ESLintFix()<CR>
 
 "Vitality vim
 " let g:vitality_insert_cursor = 0
@@ -1481,13 +1514,11 @@ inoremap … <C-R><C-P>0
 colorscheme quantum
 set laststatus=2
 
-
 " Comments in ITALICS YASSSSS!!!
 highlight Comment cterm=italic
 
 "Sets no highlighting for conceal
 hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
-
 
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin
