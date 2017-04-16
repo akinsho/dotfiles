@@ -29,8 +29,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
-Plug 'maralla/completor.vim', {'do': 'make js'}
-  " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'maralla/completor.vim', {'do': 'make js'}
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
@@ -43,7 +43,8 @@ Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
 Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
-Plug 'scrooloose/nerdtree' | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdtree'
+" | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Add delimitmate
@@ -54,7 +55,7 @@ Plug 'moll/vim-node', { 'for':'javascript'}
 Plug 'easymotion/vim-easymotion'
 "Added color picker plugin
 Plug 'KabbAmine/vCoolor.vim'
-"Add Tern for autocompletion
+" "Add Tern for autocompletion
 function! BuildTern(info)
 if a:info.status == 'installed' || a:info.force
   !npm install
@@ -76,7 +77,7 @@ Plug 'tpope/vim-capslock'
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
 "css related
 "Colors for hexcode in vim
-Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
+" Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
 
 
 "TMUX ============================
@@ -90,14 +91,14 @@ endif
 "Utilities============================
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
-"Does what it says on the tin - accelerates j and k
-Plug 'rhysd/accelerated-jk'
 "Add Gundo - undo plugin for vim
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
 "Autocorrects 4,000 common typos
 Plug 'chip/vim-fat-finger'
 "Highlighting for substitution in Vim
 Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'}
+"Underlines instances of word under the cursor
+Plug 'itchyny/vim-cursorword'
 
 "TPOPE ====================================
 "Added vim surround for enclosing with parens
@@ -115,7 +116,7 @@ Plug 'tpope/vim-repeat'
 "Added vim polyglot a collection of language packs for vim
 Plug 'sheerun/vim-polyglot'
 "Added javascript lib - syntax highlighting for popular libraries
-Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'}
 "Added Editor Config plugin to maintain style choices
 Plug 'editorconfig/editorconfig-vim'
 "Add proper markdown syntax and indentation plugin
@@ -216,6 +217,8 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " Plug 'vim-scripts/dbext.vim'
 "Codi - A REPL in vim
 " Plug 'metakirby5/codi.vim'
+"Does what it says on the tin - accelerates j and k
+" Plug 'rhysd/accelerated-jk'
 
 
 call plug#end()
@@ -384,9 +387,9 @@ nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
 "===================================================
 let g:vim_search_pulse_mode = 'cursor_line'
 
-let g:accelerated_jk_acceleration_table = [4,8,17,21,24,26,28,30]
-nmap j <Plug>(accelerated_jk_gj_position)
-nmap k <Plug>(accelerated_jk_gk_position)
+" let g:accelerated_jk_acceleration_table = [4,8,17,21,24,26,28,30]
+" nmap j <Plug>(accelerated_jk_gj_position)
+" nmap k <Plug>(accelerated_jk_gk_position)
 " incsearch.vim x fuzzy x vim-easymotion
 
 function! s:config_easyfuzzymotion(...) abort
@@ -580,7 +583,7 @@ augroup filetype_completion
   autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType javascript,javascript.jsx setlocal omnifunc=tern#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
@@ -1163,8 +1166,8 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " --------------------------------------------------------------------------{{{
 set listchars=tab:>-,trail:·
 " Limit horizontal and vertical syntax rendering (for better performance)
-syntax sync minlines=256
-set synmaxcol=256
+" syntax sync minlines=256
+" set synmaxcol=256
 " This prevents a scratch buffer from being opened
 set completeopt-=preview
 set title                             " wintitle = filename - vim
@@ -1200,12 +1203,9 @@ endif
 set ruler
 set incsearch
 
-" Always display the status line even if only one window is displayed
-" set laststatus=2
-
 " Turns on lazyredraw which postpones redrawing for macros and command
 " execution
-" set lazyredraw
+set lazyredraw
 
 " Use visual bell when there are errors not audio beep
 set visualbell
@@ -1451,7 +1451,6 @@ let g:tmux_navigator_save_on_switch = 2
 "=============================================================
 "               Airline
 "=============================================================
-" 'obsession'
 let g:airline_extensions = ['branch','tabline','ale']
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
@@ -1481,7 +1480,7 @@ let g:airline#extensions#tabline#show_close_button = 1
 
 " determine whether inactive windows should have the left section collapsed to
 " only the filename of that buffer.  >
-let g:airline_inactive_collapse=1
+let g:airline_inactive_collapse=0
 " * configure symbol used to represent close button >
 " let g:airline#extensions#tabline#close_symbol = 'X'
 " * configure pattern to be ignored on BufAdd autocommand >
@@ -1512,6 +1511,7 @@ inoremap … <C-R><C-P>0
 "-----------------------------------------------------------
 "Set color Scheme
 colorscheme quantum
+" Always display the status line even if only one window is displayed
 set laststatus=2
 
 " Comments in ITALICS YASSSSS!!!
