@@ -177,17 +177,16 @@ Plug 'shime/vim-livedown'
 
 "Status/bufferline =====================
 "Airline is soooooo slow..... not worth it unfortunately
-Plug 'itchyny/lightline.vim'
-"Added vim airline
-" Plug 'vim-airline/vim-airline'
-"Added airline themes"
-" Plug 'vim-airline/vim-airline-themes'
+" Plug 'itchyny/lightline.vim'
+" Plug 'taohex/lightline-buffer'
 
 
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim'
 "Quantum theme
+Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'tyrannicaltoucan/vim-quantum'
+" Plug 'KeitaNakamura/neodark.vim'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -674,9 +673,9 @@ set complete+=kspell
 " and you cannot use Vi style-binding here anyway, because ESC
 " just closes the command line and using Home and End..
 " remap arrow keys
-cnoremap <C-A>    <Home>
-cnoremap <C-E>    <End>
-cnoremap <C-K>    <C-U>
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
@@ -1167,29 +1166,154 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 " =====================================================================
 
 " =====================================================================
-"Status Line
+"Status Line - DIY STATUS AND TABLINE stolen from https://gabri.me/blog/diy-vim-statusline
 " =====================================================================
-if &statusline ==# ''
-set statusline=
-endif
+" if &statusline ==# ''
+" set statusline=
+" endif
 
-let g:lightline = {
-      \ 'colorscheme': 'powerline',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&readonly?"⭤":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ }
+let g:currentmode={
+    \ 'n'  : 'Normal ',
+    \ 'no' : 'N·Operator Pending ',
+    \ 'v'  : 'Visual ',
+    \ 'V'  : 'V·Line ',
+    \ '^V' : 'V·Block ',
+    \ 's'  : 'Select ',
+    \ 'S'  : 'S·Line ',
+    \ '^S' : 'S·Block ',
+    \ 'i'  : 'Insert ',
+    \ 'R'  : 'Replace ',
+    \ 'Rv' : 'V·Replace ',
+    \ 'c'  : 'Command ',
+    \ 'cv' : 'Vim Ex ',
+    \ 'ce' : 'Ex ',
+    \ 'r'  : 'Prompt ',
+    \ 'rm' : 'More ',
+    \ 'r?' : 'Confirm ',
+    \ '!'  : 'Shell ',
+    \ 't'  : 'Terminal '
+    \}
+
+" Automatically change the statusline color depending on mode
+function! ChangeStatuslineColor()
+  if (mode() =~# '\v(n|no)')
+    exe 'hi! StatusLine ctermfg=008'
+  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
+    exe 'hi! StatusLine ctermfg=005'
+  elseif (mode() ==# 'i')
+    exe 'hi! StatusLine ctermfg=004'
+  else
+    exe 'hi! StatusLine ctermfg=006'
+  endif
+
+  return ''
+endfunction
+
+" Find out current buffer's size and output it.
+function! FileSize()
+  let bytes = getfsize(expand('%:p'))
+  if (bytes >= 1024)
+    let kbytes = bytes / 1024
+  endif
+  if (exists('kbytes') && kbytes >= 1000)
+    let mbytes = kbytes / 1000
+  endif
+
+  if bytes <= 0
+    return '0'
+  endif
+
+  if (exists('mbytes'))
+    return mbytes . 'MB '
+  elseif (exists('kbytes'))
+    return kbytes . 'KB '
+  else
+    return bytes . 'B '
+  endif
+endfunction
+
+function! ReadOnly()
+  if &readonly || !&modifiable
+    return ''
+  else
+    return ''
+endfunction
+
+function! GitInfo()
+  let git = fugitive#head()
+  if git != ''
+    return ' '.fugitive#head()
+  else
+    return ''
+  endfunction
+
+" Always display the status line even if only one window is displayed
+set laststatus=2
+set statusline=
+set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
+set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+set statusline+=%8*\ [%n]                                " buffernr
+set statusline+=%8*\ %{GitInfo()}                        " Git Branch name
+set statusline+=%8*\ %<%F\ %{ReadOnly()}\ %m\ %w\        " File+path
+set statusline+=%#warningmsg#
+set statusline+=%*
+set statusline+=%9*\ %=                                  " Space
+set statusline+=%8*\ %y\                                 " FileType
+set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat
+set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
+set statusline+=%0*\ %3p%%\ \ %l:\ %3c\      
+set statusline+=%{ale#statusline#Status()}\ 
+
+hi User1 ctermfg=007
+hi User2 ctermfg=008
+hi User3 ctermfg=008
+hi User4 ctermfg=008
+hi User5 ctermfg=008
+hi User7 ctermfg=008
+hi User8 ctermfg=008
+hi User9 ctermfg=007
+
+" MyTabLine ========================================================================================={{{
+" This is an attempt to emulate the default Vim-7 tabs as closely as possible but with numbered tabs.
+
+if exists("+showtabline")
+  function! MyTabLine()
+    let s = ''
+    for i in range(tabpagenr('$'))
+      " set up some oft-used variables
+      let tab = i + 1 " range() starts at 0
+      let winnr = tabpagewinnr(tab) " gets current window of current tab
+      let buflist = tabpagebuflist(tab) " list of buffers associated with the windows in the current tab
+      let bufnr = buflist[winnr - 1] " current buffer number
+      let bufname = bufname(bufnr) " gets the name of the current buffer in the current window of the current tab
+
+      let s .= '%' . tab . 'T' " start a tab
+      let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#') " if this tab is the current tab...set the right highlighting
+      let s .= ' ' . tab " current tab number
+      let n = tabpagewinnr(tab,'$') " get the number of windows in the current tab
+      if n > 1
+        let s .= ':' . n " if there's more than one, add a colon and display the count
+      endif
+      let bufmodified = getbufvar(bufnr, "&mod")
+      if bufmodified
+        let s .= ' +'
+      endif
+      if bufname != ''
+        let s .= ' ' . pathshorten(bufname) . ' ' " outputs the one-letter-path shorthand & filename
+      else
+        let s .= ' [No Name] '
+      endif
+    endfor
+    let s .= '%#TabLineFill#' " blank highlighting between the tabs and the righthand close 'X'
+    let s .= '%T' " resets tab page number?
+    let s .= '%=' " seperate left-aligned from right-aligned
+    let s .= '%#TabLine#' " set highlight for the 'X' below
+    let s .= '%999XX' " places an 'X' at the far-right
+    return s
+  endfunction
+  set tabline=%!MyTabLine()
+endif
+"===============================================================================================}}}
 
 set number                            " show line numbers in gutter
 " This prevents a scratch buffer from being opened
@@ -1221,7 +1345,7 @@ set autowrite "Automatically :write before running commands
 
 set backspace=2 "Back space deletes like most programs in insert mode
 if has('vim')
-set signcolumn=yes "enables column that shows signs and error symbols
+  set signcolumn=yes "enables column that shows signs and error symbols
 endif
 
 set ruler
@@ -1472,58 +1596,6 @@ let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_save_on_switch = 2
 
 
-"=============================================================
-"               Airline
-"=============================================================
-let g:airline_extensions = ['branch','tabline','ale']
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline_detect_iminsert                  = 1
-let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-let g:airline_powerline_fonts                  = 1
-let g:airline#extensions#tabline#enabled       = 1
-" let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-let g:airline#extensions#tabline#show_tabs     = 1
-let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 1
-" Makes airline tabs rectangular
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = '|'
-"This defines the separators for airline changes them from the default arrows
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-
-" configure whether close button should be shown: >
-let g:airline#extensions#tabline#show_close_button = 1
-
-" determine whether inactive windows should have the left section collapsed to
-" only the filename of that buffer.  >
-let g:airline_inactive_collapse=0
-" * configure symbol used to represent close button >
-" let g:airline#extensions#tabline#close_symbol = 'X'
-" * configure pattern to be ignored on BufAdd autocommand >
-" fixes unnecessary redraw, when e.g. opening Gundo window
-let airline#extensions#tabline#ignore_bufadd_pat =
-      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
-
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <localleader>1 <Plug>AirlineSelectTab1
-nmap <localleader>2 <Plug>AirlineSelectTab2
-nmap <localleader>3 <Plug>AirlineSelectTab3
-nmap <localleader>4 <Plug>AirlineSelectTab4
-nmap <localleader>5 <Plug>AirlineSelectTab5
-nmap <localleader>6 <Plug>AirlineSelectTab6
-nmap <localleader>7 <Plug>AirlineSelectTab7
-nmap <localleader>8 <Plug>AirlineSelectTab8
-nmap <localleader>9 <Plug>AirlineSelectTab9
-nmap <localleader>- <Plug>AirlineSelectPrevTab
-nmap <localleader>+ <Plug>AirlineSelectNextTab
 
 "Remaps native insert mode paste binding to alt-p
 inoremap ð <C-R>0
@@ -1534,9 +1606,9 @@ inoremap … <C-R><C-P>0
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
+" colorscheme deep-space
 colorscheme quantum
-" Always display the status line even if only one window is displayed
-set laststatus=2
+
 
 " Comments in ITALICS YASSSSS!!!
 highlight Comment cterm=italic

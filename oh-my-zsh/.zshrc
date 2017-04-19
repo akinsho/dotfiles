@@ -151,9 +151,7 @@ SPACESHIP_PROMPT_SEPARATE_LINE=true
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
 SPACESHIP_VI_MODE_INSERT="[Insert]"
-# "[Insert]"
 SPACESHIP_VI_MODE_NORMAL="[Normal]"
-# "[Normal]"
 # GIT
 SPACESHIP_PREFIX_GIT='  on '
 SPACESHIP_GIT_STASHED=' 💰 '
@@ -173,10 +171,10 @@ SPACESHIP_PYENV_SYMBOL='🐍'
 # User configuration
 #=======================================================================
 
-# add-zsh-hook precmd _z_precmd
-# function _z_precmd {
-#   _z --add "$PWD"
-# }
+add-zsh-hook precmd _z_precmd
+function _z_precmd {
+  _z --add "$PWD"
+}
 export KEYTIMEOUT=1
 
 bindkey ‘^R’ history-incremental-search-backward
@@ -223,8 +221,8 @@ if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.z
 fi
 # BASE16===============================================================
 # default code for base16 shell
-base16_shell=$home/.config/base16-shell/
-[ -n "$ps2" ] && [ -s $base16_shell/profile_helper.sh ] && eval "$($base16_shell/profile_helper.sh)"
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 
 # EMOJI-CLI 
@@ -259,8 +257,8 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-auto-ls () { ls -GC; }
-chpwd_functions=( auto-ls $chpwd_functions )
+# auto-ls () { ls -GC; }
+# chpwd_functions=( auto-ls $chpwd_functions )
 
 
     # Plugin that autocorrects when you type fuck or whatever alias you intended
