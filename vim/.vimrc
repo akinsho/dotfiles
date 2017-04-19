@@ -29,8 +29,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
-" Plug 'maralla/completor.vim', {'do': 'make js'}
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
@@ -43,8 +42,7 @@ Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
 Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
-Plug 'scrooloose/nerdtree'
-" | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdtree' 
 "Added emmet vim plugin
 Plug 'mattn/emmet-vim'
 "Add delimitmate
@@ -68,7 +66,6 @@ Plug 'mhinz/vim-startify'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 " Autoformatter
 Plug 'sbdchd/neoformat'
-" Plug 'Chiel92/vim-autoformat'
 "Added June Gunn's alignment plugin
 Plug 'junegunn/vim-easy-align'
 "Capslock without a capslock key in vim
@@ -77,7 +74,7 @@ Plug 'tpope/vim-capslock'
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
 "css related
 "Colors for hexcode in vim
-" Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
+Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
 
 
 "TMUX ============================
@@ -110,6 +107,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 "Tim pope's surround plugin allows . to repeat more actions
 Plug 'tpope/vim-repeat'
+"Very handy plugins and functionality by Tpope (ofc)
+Plug 'tpope/vim-unimpaired'
 
 
 "Syntax ============================
@@ -123,14 +122,12 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'plasticboy/vim-markdown', { 'for':'markdown'}
 
 "Marks =============================
-"Bookmarks for vim
-Plug 'MattesGroeger/vim-bookmarks'
 "Vim signature re-added because I need to see my bloody marks
 Plug 'kshenoy/vim-signature'
 
 "Git ===============================
 "Git repo  manipulation plugin
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv',{'on':'Gitv'}
 "Github dashboard for vim
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
 "Add a GitGutter to track new lines re git file
@@ -149,20 +146,15 @@ Plug 'rhysd/vim-textobj-conflict'
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
 " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'michaeljsmith/vim-indent-object'
-"Very handy plugins and functionality by Tpope (ofc)
-Plug 'tpope/vim-unimpaired'
 "Peace and Quiet thanks JGunn
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-"select inside pairs by pressing v
-Plug 'gorkunov/smartpairs.vim'
+" All encompasing v
+Plug 'terryma/vim-expand-region'
 "Moar textobjs
 Plug 'wellle/targets.vim'
-"Function text object js
-Plug 'thinca/vim-textobj-function-javascript'
 
 
 "Search Tools =======================
-Plug 'bronson/vim-visual-star-search'
 Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -171,6 +163,10 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 "Coding tools =======================
 "Add JSDocs plugin
 Plug 'heavenshell/vim-jsdoc'
+"Add Tagbar Plugin
+Plug 'majutsushi/tagbar'
+"Add Plugin to manage tag files
+Plug 'ludovicchabant/vim-gutentags'
 "Vim HARDMODE ----------------------
 Plug 'wikitopian/hardmode'
 
@@ -180,10 +176,12 @@ Plug 'shime/vim-livedown'
 
 
 "Status/bufferline =====================
+"Airline is soooooo slow..... not worth it unfortunately
+Plug 'itchyny/lightline.vim'
 "Added vim airline
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 "Added airline themes"
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 
 
 "Themes ===============================
@@ -200,25 +198,12 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
 " "Start up time monitor
 " Plug 'tweekmonster/startuptime.vim'
-"The syntax highlighting wars continue
-" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']} "?Not
-" performant
-" All encompasing v
-" Plug 'terryma/vim-expand-region'
 "vim sialoquent theme
 " Plug 'davidklsn/vim-sialoquent'
 "Colorscheme - OneDark
 " Plug 'joshdick/onedark.vim'
-"Add Tagbar Plugin
-" Plug 'majutsushi/tagbar'
-"Add Plugin to manage tag files
-" Plug 'ludovicchabant/vim-gutentags'
-"Database manipulation in vim
-" Plug 'vim-scripts/dbext.vim'
 "Codi - A REPL in vim
 " Plug 'metakirby5/codi.vim'
-"Does what it says on the tin - accelerates j and k
-" Plug 'rhysd/accelerated-jk'
 
 
 call plug#end()
@@ -248,7 +233,6 @@ let maplocalleader = "\<space>"
 let g:neoformat_try_formatprg = 1
 " Enable trimmming of trailing whitespace
 let g:neoformat_basic_format_trim = 1
-" let g:polyglot_disabled = ['javascript']
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
@@ -258,9 +242,6 @@ let g:ale_sign_error         = '✖️'
 let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {'jsx': ['stylelint', 'eslint']}
 let g:ale_linter_aliases     = {'jsx': 'css'}
-" '>>'
-" highlight clear ALEErrorSign
-" highlight clear ALEWarningSig
 let g:ale_set_highlights = 0
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
@@ -270,7 +251,6 @@ imap <C-L> <C-O><Plug>CapsLockToggle
 
 
 
-"highlight GitGutterAdd guifg = '#A3E28B'
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_added    = '❖'
 let g:gitgutter_sign_column_always = 1
@@ -323,7 +303,8 @@ nnoremap <leader>2 :TagbarToggle<CR>
 
 "Vimux ==========================================================
 "Tell vimux to run commands in a new split
-let VimuxUseNearest = 1
+let VimuxUseNearest = 0
+let VimuxResetSequence = ""
 nnoremap <F5> :call VimuxRunCommand('browse')<CR>
 " Prompt for a command to run
 nnoremap <Leader>vp :VimuxPromptCommand<CR>
@@ -354,15 +335,6 @@ let g:SignatureMarkTextHLDynamic=1
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
 
-let s:salmon = "EE6E73"
-let s:git_orange = 'F54D27'
-let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExtensionHighlightColor['css'] = s:salmon " sets the color of css files to blue
-"NERDTree highlight plugin
-let g:NERDTreeLimitedSyntax           = 1
-let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
-
 
 let g:NERDTreeHijackNetrw             = 1
 let g:NERDTreeAutoDeleteBuffer        = 1
@@ -387,11 +359,6 @@ nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
 "===================================================
 let g:vim_search_pulse_mode = 'cursor_line'
 
-" let g:accelerated_jk_acceleration_table = [4,8,17,21,24,26,28,30]
-" nmap j <Plug>(accelerated_jk_gj_position)
-" nmap k <Plug>(accelerated_jk_gk_position)
-" incsearch.vim x fuzzy x vim-easymotion
-
 function! s:config_easyfuzzymotion(...) abort
   return extend(copy({
   \   'converters': [incsearch#config#fuzzy#converter()],
@@ -414,20 +381,17 @@ function! s:config_fuzzyall(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
-noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
-noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+" noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
+" noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+" noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 
-" map /  <Plug>(incsearch-forward)
-" map ?  <Plug>(incsearch-backward)
-" map g/ <Plug>(incsearch-stay)
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 " incsearch and vim search pulse
 let g:vim_search_pulse_disable_auto_mappings = 1
 let g:incsearch#auto_nohlsearch = 1
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
 
 " Next or previous match is followed by a Pulse
 map n <Plug>(incsearch-nohl-n)<Plug>Pulse
@@ -470,11 +434,6 @@ nmap s <Plug>(easymotion-overwin-f)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-"Mapped yank stack keys
-let g:yankstack_map_keys = 0
-let g:yankstack_yank_keys = ['y', 'd']
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 
 "add Vcoolor color picker mapping
@@ -491,7 +450,7 @@ nnoremap <leader>u :GundoToggle<CR>
 
 
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars'
+let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars,requirejs'
 "}}}
 "====================================================================================
 "Autocommands
@@ -614,9 +573,30 @@ augroup END
 
 augroup FileType_html
   autocmd!
+  "for emmet
+  autocmd FileType html imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
+
+" for better tab response for emmet
+function! s:expand_html_tab()
+    " try to determine if we're within quotes or tags.
+    " if so, assume we're in an emmet fill area.
+    let line = getline('.')
+    if col('.') < len(line)
+        let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+        if len(line) >= 2
+            return "\<C-n>"
+        endif
+    endif
+    " expand anything emmet thinks is expandable.
+    if emmet#isExpandable()
+        return "\<C-y>,"
+    endif
+    " return a regular tab character
+    return "\<tab>"
+  endfunction
 
 augroup FileType_markdown
   autocmd!
@@ -701,8 +681,9 @@ cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
 
-nnoremap <Leader><Leader> :bprev<CR>
-nnoremap <Leader>. :bnext<CR>
+nnoremap <Leader><Leader> :update<CR>
+nnoremap <Leader>h :bprev<CR>
+nnoremap <Leader>l :bnext<CR>
 " nnoremap <CR> G
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
@@ -782,11 +763,11 @@ nnoremap S diw"0P
 vnoremap . :norm.<CR>
 
 
-nnoremap ó :update<CR>
-inoremap ó <esc>:update<CR>
+" nnoremap ó :update<CR>
+inoremap ó <C-O>:update<CR>
 
 "This mapping alternates between variants of number and relative number
-nnoremap <F4> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
+" nnoremap <F4> :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
 "This mapping allows yanking all of a line without taking the new line
 "character as well can be with our without spaces
 vnoremap <silent> al :<c-u>norm!0v$h<cr>
@@ -824,6 +805,16 @@ nnoremap <leader>sw :b#<CR>
 "--------------------------------------------
 " FZF bindings
 "--------------------------------------------
+" Advanced customization using autoload functions
+" inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+" Replace the default dictionary completion with fzf-based fuzzy completion
+inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
 nnoremap <silent> <localleader>o :Buffers<CR>
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -870,7 +861,9 @@ endfunction
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gp :Gpush<CR>
+" nnoremap <leader>gp :Gpush<CR>
+" Push the repository of the currently opened file
+nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 "Remap back tick for jumping to marks more quickly
 nnoremap ' `
@@ -878,8 +871,8 @@ nnoremap ` '
 
 nnoremap rs ^d0
 nnoremap qa :wqa<CR>
-" clean up any trailing whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
+" clean up any trailing whitespace - neoformat does this
+" nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 "Save all files
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -921,13 +914,8 @@ nnoremap <leader>r <C-W>R
 "--------------------------------------------
 
 nnoremap <leader>x :lclose<CR>
-"Indent a page of HTML (?works for other code)
+"Indent a page 
 nnoremap <C-G>f gg=G<CR>
-
-" function! StripWhiteSpace()
-"  exec ':%/ \+$//gc'
-" endfunction
-" map <leader>re :call StripWhiteSpace()<CR>
 
 "map window keys to leader - Interfere with tmux navigator
 " noremap <C-h> <c-w>h
@@ -941,8 +929,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-" nnoremap j gj
-" nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 
 "key mappings
 "Remaps the binding to increment numbers to <leader>a and to decrement to å
@@ -958,8 +946,9 @@ inoremap <C-D> <C-H>
 " inoremap <C-Q> <C-K>
 
 " Map jk to esc key - using jk prevents jump that using ii causes
+" inoremap jk <ESC>:w<CR>
 inoremap jk <ESC>
-nnoremap jk <ESC>
+inoremap ;; <End>;<Esc>:w<CR>
 
 " Yank text to the OS X clipboard
 noremap <localleader>y "*y
@@ -990,19 +979,6 @@ nnoremap L $
 "Map Q to remove a CR
 nnoremap Q J
 
-"Terminal mappings to allow changing windows with Alt-h,j,k,l
-if has("nvim")
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-endif
-
-
 "Add neovim terminal escape with ESC mapping
 if has("nvim")
 :tnoremap <ESC> <C-\><C-n>
@@ -1020,28 +996,29 @@ endif
 
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 function! ToggleMouse()
-    " check if mouse is enabled
-    if &mouse == 'a'
-        " disable mouse
-        set mouse=
-    else
-        " enable mouse everywhere
-        set mouse=a
-    endif
-  endfunc
+  " check if mouse is enabled
+  if &mouse == 'a'
+    " disable mouse
+    set mouse=
+  else
+    " enable mouse everywhere
+    set mouse=a
+  endif
+endfunc
+"Try being more lenient
+" noremap <ScrollWheelUp>      <nop>
+" noremap <S-ScrollWheelUp>    <nop>
+" noremap <C-ScrollWheelUp>    <nop>
+" noremap <ScrollWheelDown>    <nop>
+" noremap <S-ScrollWheelDown>  <nop>
+" noremap <C-ScrollWheelDown>  <nop>
+" noremap <ScrollWheelLeft>    <nop>
+" noremap <S-ScrollWheelLeft>  <nop>
+" noremap <C-ScrollWheelLeft>  <nop>
+" noremap <ScrollWheelRight>   <nop>
+" noremap <S-ScrollWheelRight> <nop>
+" noremap <C-ScrollWheelRight> <nop>
 nnoremap <F7> :call ToggleMouse()<CR>
-noremap <ScrollWheelUp>      <nop>
-noremap <S-ScrollWheelUp>    <nop>
-noremap <C-ScrollWheelUp>    <nop>
-noremap <ScrollWheelDown>    <nop>
-noremap <S-ScrollWheelDown>  <nop>
-noremap <C-ScrollWheelDown>  <nop>
-noremap <ScrollWheelLeft>    <nop>
-noremap <S-ScrollWheelLeft>  <nop>
-noremap <C-ScrollWheelLeft>  <nop>
-noremap <ScrollWheelRight>   <nop>
-noremap <S-ScrollWheelRight> <nop>
-noremap <C-ScrollWheelRight> <nop>
 "Stop mouse scrolling
 " if !has('nvim')
 "Disable this to allow scrolling in vim
@@ -1075,9 +1052,14 @@ nnoremap ,q :bp <BAR> bd #<CR>
 " ----------------------------------------------------------------------------
 " Message output on vim actions
 " ----------------------------------------------------------------------------
-
-" set shortmess=at
+set shortmess+=t                      " truncate file messages at start
+set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 set shortmess+=mnrxoOt
+set shortmess+=A                      " ignore annoying swapfile messages
+set shortmess+=I                      " no splash screen
+set shortmess+=O                      " file-read message overwrites previous
+set shortmess+=T                      " truncate non-file messages in middle
+set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
 if has('patch-7.4.314')
 set shortmess+=c                    " Disable 'Pattern not found' messages
@@ -1164,10 +1146,52 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display
 " --------------------------------------------------------------------------{{{
-set listchars=tab:>-,trail:·
-" Limit horizontal and vertical syntax rendering (for better performance)
-" syntax sync minlines=256
-" set synmaxcol=256
+set emoji
+
+if has('linebreak') "Causes wrapped line to keep same indentation
+  let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+  if exists('&breakindentopt')
+    set breakindentopt=shift:2 
+  endif
+endif
+
+" LIST =============================================================
+" set list                              " show whitespace
+" set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+" set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
+"                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
+" set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+" set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+" set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
+set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
+" =====================================================================
+
+" =====================================================================
+"Status Line
+" =====================================================================
+if &statusline ==# ''
+set statusline=
+endif
+
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ }
+
+set number                            " show line numbers in gutter
 " This prevents a scratch buffer from being opened
 set completeopt-=preview
 set title                             " wintitle = filename - vim
@@ -1207,17 +1231,23 @@ set incsearch
 " execution
 set lazyredraw
 
-" Use visual bell when there are errors not audio beep
-set visualbell
-"Reset color on quitting vim
-" au VimLeave * !echo -ne""\033[0m"
-"Setting the t_ variables if a further step to ensure 24bit colors
+
+if exists('&belloff')
+  set belloff=all                     " never ring the bell for any reason
+endif
+
+
 if has('termguicolors')
+  " Don't need this in xterm-256color, but do need it inside tmux.
+  " (See `:h xterm-true-color`.)
   set termguicolors
   " set vim-specific sequences for rgb colors
   "super important for truecolor support in vim
-  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  "Setting the t_ variables if a further step to ensure 24bit colors
+  if &term =~# 'tmux-256color'
+    let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+    let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  endif
 endif
 "}}}
 "================================================================================
@@ -1236,9 +1266,6 @@ set cmdheight=2
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
 
-if &statusline ==# ''
-set statusline=
-endif
 
 "------------------------------------
 "  Tab line
@@ -1252,11 +1279,11 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "Plugin configurations
 "-----------------------------------------------------------------{{{
-let g:smartpairs_start_from_word = 1
+noremap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
-
+let g:tern_show_argument_hints='on_hold'
 let g:tern_map_keys                    = 1
 let g:tern_show_signature_in_pum       = 1
 " Stop folding markdown please
@@ -1269,8 +1296,6 @@ let g:github_dashboard = {
     \}
 nnoremap <F1> :GHDashboard! Akin909<CR>
 
-"Vitality vim
-" let g:vitality_insert_cursor = 0
 "------------------------------------
 " Goyo
 "------------------------------------
@@ -1338,9 +1363,9 @@ let g:livedown_open = 1
 let g:livedown_port = 1337
 nnoremap gm :LivedownToggle<CR>
 
-let delimitMate_expand_cr = 1
-let delimitMate_expand_space = 0
-let delimitMate_jump_expansion = 1
+let delimitMate_expand_cr          = 1
+let delimitMate_expand_space       = 1
+let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
 
 nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
@@ -1399,7 +1424,6 @@ let g:vimjs#smartcomplete = 1
 let g:vimjs#chromeapis = 1
 " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
-set updatetime=250
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('NERDTree')
@@ -1520,6 +1544,14 @@ highlight Comment cterm=italic
 "Sets no highlighting for conceal
 hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
 
+"---------------------------------------------------------------------
+" CORE FUNCTIONALITY
+"---------------------------------------------------------------------
+set updatetime=2000
+
+if has('virtualedit')
+  set virtualedit=block               " allow cursor to move where there is no text in visual block mode
+endif
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin
 " ----------------------------------------------------------------------------{{{
@@ -1544,6 +1576,8 @@ set smarttab
 
 "Add vim sensible config options
 
+" Add dictionary to vim's autocompletion
+set complete+=k
 if !has('nvim')
 set complete-=i
 set autoindent
@@ -1561,11 +1595,10 @@ set encoding=utf-8
 endif
 scriptencoding utf-8
 
-" if &listchars ==# 'eol:$'
-"   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-" endif
-
-
+" =======================================================
+"  DICTIONARY
+" =======================================================
+set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 
 
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
@@ -1591,13 +1624,34 @@ set t_Co=16
 endif
 
 
+"-----------------------------------------------------------------------------
+" BACKUP AND SWAPS
+"-----------------------------------------------------------------------------
 "Turn swap files off - FOR GOD's SAKE they are ruining my life
 set noswapfile
 "This saves all back up files in a vim backup directory
-set backupdir=~/.vim/.backup//
+if exists('$SUDO_USER')
+  set nobackup                        " don't create root-owned files
+  set nowritebackup                   " don't create root-owned files
+else
+  set backupdir=~/.vim/.backup//
+  set backupdir=~/local/.vim/tmp/backup
+  set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
+  set backupdir+=.
+endif
+
 " set directory=~/.vim/.swp//
-set undofile
-set undodir=~/.vim/.undo//
+if has ('persistent_undo')
+  if exists('$SUDO_USER')
+    set noundofile "Dont add root owned files which I will need to sudo to remove
+  else
+    set undodir=~/.vim/.undo//
+    set undodir+=~/local/.vim/tmp/undo
+    set undodir+=.
+    set undofile
+  endif
+endif
+  
 
 if has("vms")
 set nobackup

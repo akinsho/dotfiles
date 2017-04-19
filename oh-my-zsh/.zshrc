@@ -58,7 +58,7 @@ HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=5
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -89,7 +89,9 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku web-search)
+plugins=(exercism alias-tips git gitfast zsh-completions command-not-found colored-man-pages fasd common-aliases brew heroku )
+# web-search - great plugin, google from the command line although I never use
+# it soo...
 # zsh-autosuggestions - Potentially faster to load outside of oh-my-zsh
 
 

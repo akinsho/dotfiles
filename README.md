@@ -24,3 +24,15 @@ tic -o /path/to/terminfo_folder /path/to/xterm-256color.terminfo/
 tic -o /path/to/terminfo_folder /path/to/tmux-256color.terminfo/
 tic -o /path/to/terminfo_folder /path/to/tmux.terminfo/
 ```
+
+### Great Plugins I've Abandoned for now
+So My Vimrc is arguably overloaded with plugins so I've decided to make
+a little list of plugins I use which I find really helpful but am currently
+not using just to get back into the feel of doing these things without these
+awesome tools
+
+* Bookmarks for vim - `Plug 'MattesGroeger/vim-bookmarks'`
+* The syntax highlighting wars continue - `Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}`
+* Database manipulation in vim - `Plug 'vim-scripts/dbext.vim'`
+* `Plug 'tiagofumo/vim-nerdtree-syntax-highlight'`
+* `Plug 'bronson/vim-visual-star-search'`

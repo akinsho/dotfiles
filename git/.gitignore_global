@@ -3,6 +3,8 @@ node_modules
 [._]s[a-w][a-z]
 *~
 tags
+tags.lock
+tags.temp
 vim-markdown-preview.html
 *.un~
 Session.vim 
@@ -32,7 +34,6 @@ Session.vim
 # Logs and databases #
 ######################
 *.log
-*.sql
 *.sqlite
 
 # OS generated files #
