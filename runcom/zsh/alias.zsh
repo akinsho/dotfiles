@@ -23,6 +23,8 @@ alias net="nvim ~/.tmux.conf"
 
 
 # alias ohmyzsh="vim ~/.oh-my-zsh"
+alias lip="lsof -Pn -i4"
+alias ports=" _ lsof -i -P | grep -i 'listen'"
 alias sesh="vim -S"
 alias vi="vim"
 alias tmux="tmux -2"

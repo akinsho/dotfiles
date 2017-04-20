@@ -16,8 +16,8 @@ filetype off " required  Prevents potential side-effects
 "This command makes vim start a file with all folds closed
 set foldlevelstart=0
 "-----------------------------------------------------------
-"Plugins
-"-----------------------------------------------------------{{{
+"PLUGINS {{{
+"-----------------------------------------------------------
 "This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
 silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -38,8 +38,8 @@ Plug 'w0rp/ale'
 "Added vim snippets for code autofilling
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-Plug 'isRuslan/vim-es6'
+  Plug 'honza/vim-snippets'
+  Plug 'isRuslan/vim-es6'
 Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree' 
@@ -52,7 +52,7 @@ Plug 'moll/vim-node', { 'for':'javascript'}
 "Added easy motions
 Plug 'easymotion/vim-easymotion'
 "Added color picker plugin
-Plug 'KabbAmine/vCoolor.vim'
+" Plug 'KabbAmine/vCoolor.vim'
 " "Add Tern for autocompletion
 function! BuildTern(info)
 if a:info.status == 'installed' || a:info.force
@@ -86,6 +86,8 @@ Plug 'christoomey/vim-tmux-navigator'
 endif
 
 "Utilities============================
+" Buffers in the tabline because ....why... tabs
+Plug 'ap/vim-buftabline'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
 "Add Gundo - undo plugin for vim
@@ -175,16 +177,10 @@ Plug 'wikitopian/hardmode'
 Plug 'shime/vim-livedown'
 
 
-"Status/bufferline =====================
-"Airline is soooooo slow..... not worth it unfortunately
-" Plug 'itchyny/lightline.vim'
-" Plug 'taohex/lightline-buffer'
-
-
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim'
 "Quantum theme
-Plug 'tyrannicaltoucan/vim-deep-space'
+" Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'tyrannicaltoucan/vim-quantum'
 " Plug 'KeitaNakamura/neodark.vim'
 
@@ -210,10 +206,10 @@ call plug#end()
 filetype plugin indent on
 
 "Added built in match it plugin to vim
-" packadd! matchit
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
+packadd! matchit
+" if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+"   runtime! macros/matchit.vim
+" endif
 
 syntax enable
 "}}}
@@ -226,8 +222,8 @@ let mapleader = ","
 "Local leader key
 let maplocalleader = "\<space>"
 "--------------------------------------------------------------------------------------------------
-"Plugin Mappings
-"--------------------------------------------------------------------------------------------------{{{
+"PLUGIN MAPPINGS {{{
+"--------------------------------------------------------------------------------------------------
 " Use formatprg when available
 let g:neoformat_try_formatprg = 1
 " Enable trimmming of trailing whitespace
@@ -325,9 +321,10 @@ nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
 
 
 
-"Vim-Signature ==================================================
 
+"Vim-Signature ==================================================
 let g:SignatureMarkTextHLDynamic=1
+
 "NERDTree
 " =============================================
 " Ctrl+N to toggle Nerd Tree
@@ -452,8 +449,8 @@ nnoremap <leader>u :GundoToggle<CR>
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars,requirejs'
 "}}}
 "====================================================================================
-"Autocommands
-"==================================================================================={{{
+"AUTOCOMMANDS {{{
+"===================================================================================
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
 autocmd!
@@ -667,8 +664,8 @@ set complete+=kspell
 "Add spell checking local
 " setlocal spell spelllang=en_us
 "-----------------------------------------------------------------------------------
-"Mappings
-"-----------------------------------------------------------------------------------{{{
+"MAPPINGS {{{
+"-----------------------------------------------------------------------------------
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
 " just closes the command line and using Home and End..
@@ -810,9 +807,9 @@ nnoremap <leader>sw :b#<CR>
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 
 " Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
+" nmap <leader><tab> <plug>(fzf-maps-n)
+" xmap <leader><tab> <plug>(fzf-maps-x)
+" omap <leader><tab> <plug>(fzf-maps-o)
 
 nnoremap <silent> <localleader>o :Buffers<CR>
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -860,19 +857,19 @@ endfunction
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
-" nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gp :Gpush<CR>
 " Push the repository of the currently opened file
-nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
+" nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 "Remap back tick for jumping to marks more quickly
 nnoremap ' `
 nnoremap ` '
 
 nnoremap rs ^d0
+"Save all files
 nnoremap qa :wqa<CR>
 " clean up any trailing whitespace - neoformat does this
 " nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-"Save all files
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
@@ -931,11 +928,6 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-"key mappings
-"Remaps the binding to increment numbers to <leader>a and to decrement to å
-
-" nnoremap <silent> <Leader>a <C-A>
-" nnoremap <silent> å <C-X>
 
 "Moves cursor back to the start of a line
 inoremap <C-B> <C-O>I
@@ -985,8 +977,8 @@ endif
 "}}}
 
 "===================================================================================
-"Mouse
-"==================================================================================={{{
+"Mouse {{{
+"===================================================================================
 set mousehide
 set mouse=a "this is the command that works for mousepad
 if !has('nvim')
@@ -994,6 +986,7 @@ if !has('nvim')
 endif
 
 set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+if !has('nvim')
 function! ToggleMouse()
   " check if mouse is enabled
   if &mouse == 'a'
@@ -1018,18 +1011,14 @@ endfunc
 " noremap <S-ScrollWheelRight> <nop>
 " noremap <C-ScrollWheelRight> <nop>
 nnoremap <F7> :call ToggleMouse()<CR>
-"Stop mouse scrolling
-" if !has('nvim')
-"Disable this to allow scrolling in vim
+endif
 "}}}
-" endif
 "====================================================================================
-"Buffer and Tab settings
-"===================================================================================={{{
+"Buffer and Tab settings {{{
+"====================================================================================
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
 set nohidden
-
 
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -1052,13 +1041,13 @@ nnoremap ,q :bp <BAR> bd #<CR>
 " Message output on vim actions
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start
-set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 set shortmess+=mnrxoOt
 set shortmess+=A                      " ignore annoying swapfile messages
-set shortmess+=I                      " no splash screen
 set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
+" set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
+" set shortmess+=I                      " no splash screen
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
 if has('patch-7.4.314')
 set shortmess+=c                    " Disable 'Pattern not found' messages
@@ -1077,8 +1066,8 @@ set fillchars=vert:│                  " Vertical sep between windows (unicode)
 set switchbuf=useopen
 
 " ----------------------------------------------------------------------------
-" Diffing
-" ----------------------------------------------------------------------------{{{
+" DIFFING {{{
+" ----------------------------------------------------------------------------
 
 " Note this is += since fillchars was defined in the window config
 set fillchars+=diff:⣿
@@ -1086,8 +1075,8 @@ set diffopt=vertical                  " Use in vertical diff mode
 set diffopt+=filler                   " blank lines to keep sides aligned
 set diffopt+=iwhite                   " Ignore whitespace changes
 "}}}
-" ----------------------------------------------------------------------------{{{
-"             Format options
+" ----------------------------------------------------------------------------
+"             FORMAT OPTIONS {{{
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
@@ -1111,8 +1100,8 @@ set path+=**
 " set autochdir
 
 " ----------------------------------------------------------------------------
-" Wild and file globbing stuff in command mode
-" ----------------------------------------------------------------------------{{{
+" Wild and file globbing stuff in command mode {{{
+" ----------------------------------------------------------------------------
 " Use faster grep alternatives if possible
 if executable('rg')
 set grepprg=rg\ --vimgrep\ --no-heading
@@ -1122,9 +1111,12 @@ set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
 set grepformat^=%f:%l:%c:%m
 endif
 
-
+"pressing Tab on the command line will show a menu to complete buffer and file names
+set wildchar=<Tab>
 set wildmenu
-set wildmode=list:longest,full        " Complete files using a menu AND list
+set wildmode=full       " Shows a menu bar as opposed to an enormous list
+set wildcharm=<C-Z>
+nnoremap <leader><tab> :b <C-Z>
 set wildignorecase
 " Binary
 set wildignore+=*.aux,*.out,*.toc
@@ -1143,8 +1135,8 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 
 "}}}
 " ----------------------------------------------------------------------------
-" Display
-" --------------------------------------------------------------------------{{{
+" Display {{{
+" --------------------------------------------------------------------------
 set emoji
 
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -1166,7 +1158,7 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 " =====================================================================
 
 " =====================================================================
-"Status Line - DIY STATUS AND TABLINE stolen from https://gabri.me/blog/diy-vim-statusline
+"Status Line - DIY STATUS (AND TABLINE no longer being used) stolen from https://gabri.me/blog/diy-vim-statusline
 " =====================================================================
 " if &statusline ==# ''
 " set statusline=
@@ -1177,7 +1169,7 @@ let g:currentmode={
     \ 'no' : 'N·Operator Pending ',
     \ 'v'  : 'Visual ',
     \ 'V'  : 'V·Line ',
-    \ '^V' : 'V·Block ',
+    \ '' : 'V·Block ',
     \ 's'  : 'Select ',
     \ 'S'  : 'S·Line ',
     \ '^S' : 'S·Block ',
@@ -1194,18 +1186,17 @@ let g:currentmode={
     \ 't'  : 'Terminal '
     \}
 
-" Automatically change the statusline color depending on mode
+" Automatically change the statusline color depending on mode - requires gui colors as using termguicolors
 function! ChangeStatuslineColor()
   if (mode() =~# '\v(n|no)')
-    exe 'hi! StatusLine ctermfg=008'
+    exe 'hi! StatusLine guibg=#425762'
   elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
-    exe 'hi! StatusLine ctermfg=005'
+    exe 'hi! StatusLine guibg=#5f5fd7'
   elseif (mode() ==# 'i')
-    exe 'hi! StatusLine ctermfg=004'
+    exe 'hi! StatusLine guibg=#005f87'
   else
     exe 'hi! StatusLine ctermfg=006'
   endif
-
   return ''
 endfunction
 
@@ -1254,14 +1245,14 @@ set statusline+=%{ChangeStatuslineColor()}               " Changing the statusli
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
 set statusline+=%8*\ [%n]                                " buffernr
 set statusline+=%8*\ %{GitInfo()}                        " Git Branch name
-set statusline+=%8*\ %<%F\ %{ReadOnly()}\ %m\ %w\        " File+path
+set statusline+=%8*\ %<%.20F\ %{ReadOnly()}\ %m\ %w\        " File+path .20 prefix is for the degree of truncation
 set statusline+=%#warningmsg#
 set statusline+=%*
 set statusline+=%9*\ %=                                  " Space
 set statusline+=%8*\ %y\                                 " FileType
-set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat
+" set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
 set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
-set statusline+=%0*\ %3p%%\ \ %l:\ %3c\      
+set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\      " The numbers after the % represent degrees of padding
 set statusline+=%{ale#statusline#Status()}\ 
 
 hi User1 ctermfg=007
@@ -1272,10 +1263,12 @@ hi User5 ctermfg=008
 hi User7 ctermfg=008
 hi User8 ctermfg=008
 hi User9 ctermfg=007
-
-" MyTabLine ========================================================================================={{{
+" =========================================================
+" MyTabLine {{{
+" =========================================================
 " This is an attempt to emulate the default Vim-7 tabs as closely as possible but with numbered tabs.
 
+set showtabline=2
 if exists("+showtabline")
   function! MyTabLine()
     let s = ''
@@ -1311,7 +1304,7 @@ if exists("+showtabline")
     let s .= '%999XX' " places an 'X' at the far-right
     return s
   endfunction
-  set tabline=%!MyTabLine()
+  " set tabline=%!MyTabLine()
 endif
 "===============================================================================================}}}
 
@@ -1367,16 +1360,15 @@ if has('termguicolors')
   set termguicolors
   " set vim-specific sequences for rgb colors
   "super important for truecolor support in vim
-  "Setting the t_ variables if a further step to ensure 24bit colors
+"Setting the t_ variables is a further step to ensure 24bit colors
   if &term =~# 'tmux-256color'
     let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
     let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   endif
 endif
 "}}}
-"================================================================================
-"Whitespace
-"================================================================================
+" ----------------------------------------------------------------------------
+
 " ------------------------------------
 " Command line
 " ------------------------------------
@@ -1391,18 +1383,13 @@ set cmdheight=2
 iabbrev w@ www.akin-sowemimo.com
 
 
-"------------------------------------
-"  Tab line
-"------------------------------------
-"Setting show tabline causes tabline to redraw without highlighting
-set showtabline=2
 "fugitive plugin
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
+"-----------------------------------------------------------
+"Plugin configurations "{{{
 "-----------------------------------------------------------------
-"Plugin configurations
-"-----------------------------------------------------------------{{{
 noremap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -1562,6 +1549,21 @@ let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
 
+let g:buftabline_numbers = 2
+let g:buftabline_indicators = 1
+let g:buftabline_separators = 1
+
+
+nmap <localleader>1 <Plug>BufTabLine.Go(1)
+nmap <localleader>2 <Plug>BufTabLine.Go(2)
+nmap <localleader>3 <Plug>BufTabLine.Go(3)
+nmap <localleader>4 <Plug>BufTabLine.Go(4)
+nmap <localleader>5 <Plug>BufTabLine.Go(5)
+nmap <localleader>6 <Plug>BufTabLine.Go(6)
+nmap <localleader>7 <Plug>BufTabLine.Go(7)
+nmap <localleader>8 <Plug>BufTabLine.Go(8)
+nmap <localleader>9 <Plug>BufTabLine.Go(9)
+nmap <localleader>0 <Plug>BufTabLine.Go(10)
 
 
 "This sets default mapping for camel case text object
@@ -1625,8 +1627,8 @@ if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
 " ----------------------------------------------------------------------------
-" Tabbing - overridden by editorconfig, after/ftplugin
-" ----------------------------------------------------------------------------{{{
+" Tabbing - overridden by editorconfig, after/ftplugin {{{
+" ----------------------------------------------------------------------------
 set expandtab                         " default to spaces instead of tabs
 set shiftwidth=2                      " softtabs are 2 spaces for expandtab
 
@@ -1735,15 +1737,17 @@ set history=50
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
+" hi Search guibg=LightGreen  ctermbg=NONE
 " Sets a case insensitive search except when using Caps
 set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
 set nohlsearch " -functionality i.e. search highlighting done by easy motion
-" hi Search guibg=LightGreen  ctermbg=NONE
-" ---------------------------------------------------------------------
-" Cursor
-" ---------------------------------------------------------------------{{{
+
+" ----------------------------------------------------------------------------
+" CURSOR  "{{{
+" ----------------------------------------------------------------------------
+
 
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
 augroup highlight_follows_focus
@@ -1766,4 +1770,5 @@ set sidescrolloff=16
 " Stops some cursor movements from jumping to the start of a line
 set nostartofline
 "}}}
+" ----------------------------------------------------------------------------
 
