@@ -1,0 +1,181 @@
+" =====================================================================
+"STATUS LINE
+"DIY STATUS (AND TABLINE no longer being used) stolen from https://gabri.me/blog/diy-vim-statusline
+" =====================================================================
+ " Dynamically getting the fg/bg colors from the current colorscheme, returns hex 
+let fgcolor=synIDattr(synIDtrans(hlID("Normal")), "fg", "gui")
+let bgcolor=synIDattr(synIDtrans(hlID("Normal")), "bg", "gui")
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+
+let g:currentmode={
+    \ 'n'  : 'Normal ',
+    \ 'no' : 'N·Operator Pending ',
+    \ 'v'  : 'Visual ',
+    \ 'V'  : 'V·Line ',
+    \ '' : 'V·Block ',
+    \ 's'  : 'Select ',
+    \ 'S'  : 'S·Line ',
+    \ '^S' : 'S·Block ',
+    \ 'i'  : 'Insert ',
+    \ 'R'  : 'Replace ',
+    \ 'Rv' : 'V·Replace ',
+    \ 'c'  : 'Command ',
+    \ 'cv' : 'Vim Ex ',
+    \ 'ce' : 'Ex ',
+    \ 'r'  : 'Prompt ',
+    \ 'rm' : 'More ',
+    \ 'r?' : 'Confirm ',
+    \ '!'  : 'Shell ',
+    \ 't'  : 'Terminal '
+    \}
+
+" Automatically change the statusline color depending on mode - requires gui colors as using termguicolors
+function! ChangeStatuslineColor()
+  if (mode() =~# '\v(n|no)')
+    exe 'hi! StatusLine guibg=#425762'
+  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
+    exe 'hi! StatusLine guibg=#5f5fd7'
+  elseif (mode() ==# 'i')
+    exe 'hi! StatusLine guibg=#005f87'
+  else
+    exe 'hi! StatusLine ctermfg=006'
+  endif
+  return ''
+endfunction
+
+" Find out current buffer's size and output it.
+function! FileSize()
+  let bytes = getfsize(expand('%:p'))
+  if (bytes >= 1024)
+    let kbytes = bytes / 1024
+  endif
+  if (exists('kbytes') && kbytes >= 1000)
+    let mbytes = kbytes / 1000
+  endif
+
+  if bytes <= 0
+    return '0'
+  endif
+
+  if (exists('mbytes'))
+    return mbytes . 'MB '
+  elseif (exists('kbytes'))
+    return kbytes . 'KB '
+  else
+    return bytes . 'B '
+  endif
+endfunction
+
+function! ReadOnly()
+  if &readonly || !&modifiable
+    return ''
+  else
+    return ''
+endfunction
+
+function! GitInfo()
+  let git = fugitive#head()
+  if git != ''
+    return ' '.fugitive#head()
+  else
+    return ''
+  endfunction
+
+" Always display the status line even if only one window is displayed
+set laststatus=2
+set statusline=
+set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
+set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+set statusline+=%5*\ %{g:session}%0*
+set statusline+=%8*\ \BUF:\%n                                " buffernr
+set statusline+=%8*\ %{GitInfo()}                        " Git Branch name
+set statusline+=%8*\ %<%.30F\ %{ReadOnly()}\ %m\ %w\        " File+path .20 prefix is for the degree of truncation
+set statusline+=%#warningmsg#
+set statusline+=%*
+set statusline+=%9*\ %=                                  " Space
+set statusline+=%8*\ %y\                                 " FileType
+"Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
+set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
+set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\      " The numbers after the % represent degrees of padding
+set statusline+=%{ale#statusline#Status()}\ 
+
+" Determine the name of the session or terminal
+if (strlen(v:servername)>0)
+  if v:servername =~ 'nvim'
+    let g:session = 'neovim'
+  else
+    " If running a GUI vim with servername, then use that
+    let g:session = v:servername
+  endif
+elseif !has('gui_running')
+  " If running CLI vim say TMUX or use the terminal name.
+  if (exists("$TMUX"))
+    let g:session = 'TMUX'
+  else
+    " Giving preference to color-term because that might be more
+    " meaningful in graphical environments. Eg. my $TERM is
+    " usually screen256-color 90% of the time.
+    let g:session = exists("$COLORTERM") ? $COLORTERM : $TERM
+  endif
+else
+  " idk, my bff jill
+  let g:session = 'NARNIA'
+endif
+" set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
+if has('termguicolors')
+  hi User2 ctermfg=008 " guifg=bgcolor
+  hi User1 ctermfg=007 " guifg=fgcolor
+  hi User3 ctermfg=008 " guifg=fgcolor
+  hi User4 ctermfg=008 " guifg=fgcolor
+  hi User5 guibg=#005faf "ctermfg=008  guifg=fgcolor
+  hi User7 ctermfg=008 " guifg=fgcolor
+  hi User8 ctermfg=008 " guifg=fgcolor
+  hi User9 ctermfg=007 " guifg=fgcolor
+endif
+" =========================================================
+" MyTabLine {{{
+" =========================================================
+" This is an attempt to emulate the default Vim-7 tabs as closely as possible but with numbered tabs.
+
+if exists("+showtabline")
+set showtabline=2
+" set tabline="%1T"
+  function! MyTabLine()
+    let s = ''
+    for i in range(tabpagenr('$'))
+      " set up some oft-used variables
+      let tab = i + 1 " range() starts at 0
+      let winnr = tabpagewinnr(tab) " gets current window of current tab
+      let buflist = tabpagebuflist(tab) " list of buffers associated with the windows in the current tab
+      let bufnr = buflist[winnr - 1] " current buffer number
+      let bufname = bufname(bufnr) " gets the name of the current buffer in the current window of the current tab
+
+      let s .= '%' . tab . 'T' " start a tab
+      let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#') " if this tab is the current tab...set the right highlighting
+      let s .= ' ' . tab " current tab number
+      let n = tabpagewinnr(tab,'$') " get the number of windows in the current tab
+      if n > 1
+        let s .= ':' . n " if there's more than one, add a colon and display the count
+      endif
+      let bufmodified = getbufvar(bufnr, "&mod")
+      if bufmodified
+        let s .= ' +'
+      endif
+      if bufname != ''
+        let s .= ' ' . pathshorten(bufname) . ' ' " outputs the one-letter-path shorthand & filename
+      else
+        let s .= ' [No Name] '
+      endif
+    endfor
+    let s .= '%#TabLineFill#' " blank highlighting between the tabs and the righthand close 'X'
+    let s .= '%T' " resets tab page number?
+    let s .= '%=' " seperate left-aligned from right-aligned
+    let s .= '%#TabLine#' " set highlight for the 'X' below
+    let s .= '%999XX' " places an 'X' at the far-right
+    return s
+  endfunction
+  " set tabline=%!MyTabLine()
+endif
+"===============================================================================================}}}
