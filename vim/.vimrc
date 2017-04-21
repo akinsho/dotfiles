@@ -38,10 +38,9 @@ endif
 Plug 'w0rp/ale'
 "Added vim snippets for code autofilling
 Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
   Plug 'honza/vim-snippets'
   Plug 'isRuslan/vim-es6'
-Plug 'epilande/vim-react-snippets'
+  Plug 'epilande/vim-react-snippets'
 "Added nerdtree filetree omnitool : )
 Plug 'scrooloose/nerdtree'
 "Added emmet vim plugin
@@ -100,7 +99,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 
 "TPOPE ====================================
-"Added vim surround for enclosing with parens
+"Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
 " Add fugitive git status and command plugins
 Plug 'tpope/vim-fugitive'
@@ -109,7 +108,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-commentary'
 "Tim pope's surround plugin allows . to repeat more actions
 Plug 'tpope/vim-repeat'
-"Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-unimpaired'
 
 
@@ -159,16 +157,17 @@ Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'wincent/ferret'
 
 "Coding tools =======================
 "Add JSDocs plugin
 Plug 'heavenshell/vim-jsdoc'
+"Vim HARDMODE ----------------------
+Plug 'wikitopian/hardmode'
 "Add Tagbar Plugin
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] }
 "Add Plugin to manage tag files
-" Plug 'ludovicchabant/vim-gutentags'
-"Vim HARDMODE ----------------------
-Plug 'wikitopian/hardmode'
+Plug 'ludovicchabant/vim-gutentags'
 
 "Filetype Plugins ======================
 "Add better markdown previewer
@@ -180,7 +179,6 @@ Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 "Quantum theme
 " Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'KeitaNakamura/neodark.vim'
 
 "Add file type icons to vim
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
@@ -235,12 +233,12 @@ inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 " nmap <leader><tab> <plug>(fzf-maps-n)
 " xmap <leader><tab> <plug>(fzf-maps-x)
 " omap <leader><tab> <plug>(fzf-maps-o)
+" imap <c-x><c-k> <plug>(fzf-complete-word)
+" imap <c-x><c-f> <plug>(fzf-complete-path)
+" imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+" imap <c-x><c-l> <plug>(fzf-complete-line)
 
 nnoremap <silent> <localleader>o :Buffers<CR>
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Launch file search using FZF
 nnoremap <C-P> :FZFR <CR>
@@ -831,6 +829,7 @@ set fillchars=vert:│                  " Vertical sep between windows (unicode)
   endif
   set foldmethod=indent
   set foldlevelstart=99
+  set foldnestmax=3           " deepest fold is 3 levels
 endif
 " reveal already opened files from the quickfix window instead of opening new
 " buffers
@@ -921,12 +920,14 @@ endif
 " LIST =============================================================
 set list                              " show whitespace
 " set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
+" set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
+set listchars+=tab:▹\ ,
 set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
 set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
-  set listchars+=eol:\ 
+set listchars+=eol:\ 
+set fillchars=fold:-
 set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
 " =====================================================================
 " STATUS LINE --------------------
@@ -1175,6 +1176,8 @@ let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
 
+" BUFTABLINE
+" =====================================================================
 let g:buftabline_numbers = 2
 let g:buftabline_indicators = 1
 let g:buftabline_separators = 1
@@ -1190,7 +1193,7 @@ nmap <localleader>7 <Plug>BufTabLine.Go(7)
 nmap <localleader>8 <Plug>BufTabLine.Go(8)
 nmap <localleader>9 <Plug>BufTabLine.Go(9)
 nmap <localleader>0 <Plug>BufTabLine.Go(10)
-
+" =========================================================================
 
 "This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')

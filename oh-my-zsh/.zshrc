@@ -89,7 +89,10 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(exercism alias-tips git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew heroku )
+
+# PLUGINS =======================================================================
+plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew heroku )
+
 # web-search - great plugin, google from the command line although I never use
 # it soo...
 # zsh-autosuggestions - Potentially faster to load outside of oh-my-zsh
@@ -205,6 +208,8 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
+setopt autoparamslash       # tab completing directory appends a slash
+setopt correct              # command auto-correction
 
 # Share your history across all your terminal windows
 setopt share_history
@@ -223,7 +228,9 @@ fi
 # default code for base16 shell
 # BASE16_SHELL=$HOME/.config/base16-shell/
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  . ~/.config/exercism/exercism_completion.zsh
+fi
 
 # EMOJI-CLI 
 source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
@@ -266,7 +273,7 @@ eval "$(thefuck --alias fuck)"
 
     # iTERM Integration ==================================================
     test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-   
+
 # zsh: Place this in .zshrc after "source /Users/user/.iterm2_shell_integration.zsh".
 # function iterm2_print_user_vars() {
 #   iterm2_set_user_var gitBranch $((git branch 2> /dev/null) | grep \* | cut -c3-)
@@ -282,13 +289,13 @@ end_time="$(date +%s)"
 
 #Syntax Highlighting for ZSH
 #IMPORTANT NOTE TO SELF - These plugins if reloaded on sourcing zshrc will
-#crash the shell 
+#crash the shell
 # if [ -z "$_zsh_custom_scripts_loaded" ]; then
 #   _zsh_custom_scripts_loaded=1
 #   plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
 # fi
 if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
-	# printf "autosuggestions loaded"
+  # printf "autosuggestions loaded"
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi

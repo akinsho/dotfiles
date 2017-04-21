@@ -38,7 +38,7 @@ function! ChangeStatuslineColor()
   elseif (mode() ==# 'i')
     exe 'hi! StatusLine guibg=#005f87'
   else
-    exe 'hi! StatusLine ctermfg=006'
+    exe 'hi! StatusLine guibg=grey'
   endif
   return ''
 endfunction
@@ -81,15 +81,38 @@ function! GitInfo()
     return ''
   endfunction
 
+" Shamelessly stolen from statline plugin, shows buffer count and buffer number
+function! BufCount()
+  if !exists("s:statline_n_buffers")
+    let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
+  endif
+  return s:statline_n_buffers
+endfunction
+
+if !exists('g:statline_show_n_buffers')
+  let g:statline_show_n_buffers = 1
+endif
+
 " Always display the status line even if only one window is displayed
 set laststatus=2
 set statusline=
 set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+" ---- number of buffers : buffer number ----
+if g:statline_show_n_buffers
+  set statusline+=%{BufCount()}\:%n\ %<
+  " only calculate buffers after adding/removing buffers
+  augroup statline_nbuf
+    autocmd!
+    autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
+  augroup END
+else
+  set statusline=[%n]\ %<
+endif
 set statusline+=%5*\ %{g:session}%0*
-set statusline+=%8*\ \BUF:\%n                                " buffernr
-set statusline+=%8*\ %{GitInfo()}                        " Git Branch name
-set statusline+=%8*\ %<%.30F\ %{ReadOnly()}\ %m\ %w\        " File+path .20 prefix is for the degree of truncation
+" set statusline+=%8*\ \BUF:\%n                                " buffernr
+set statusline+=%4*\ %{GitInfo()}%*                        " Git Branch name
+set statusline+=%8*\ %<%.30F\ %{ReadOnly()}\ %m\ %w\        " File+path .30 prefix is for the degree of truncation
 set statusline+=%#warningmsg#
 set statusline+=%*
 set statusline+=%9*\ %=                                  " Space
@@ -124,20 +147,33 @@ else
   let g:session = 'NARNIA'
 endif
 " set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
+
+"Need to figure this our in order to change statusline colors
 if has('termguicolors')
-  hi User2 ctermfg=008 " guifg=bgcolor
-  hi User1 ctermfg=007 " guifg=fgcolor
-  hi User3 ctermfg=008 " guifg=fgcolor
-  hi User4 ctermfg=008 " guifg=fgcolor
-  hi User5 guibg=#005faf "ctermfg=008  guifg=fgcolor
-  hi User7 ctermfg=008 " guifg=fgcolor
-  hi User8 ctermfg=008 " guifg=fgcolor
-  hi User9 ctermfg=007 " guifg=fgcolor
+  "filename
+  hi default link User1 Identifier
+  " flags
+  hi default link User2 Statement
+  " errors
+  hi default link User3 Error
+  " fugitive
+  hi default link User4 Special
+
+  " hi User2 ctermfg=008 " guifg=bgcolor
+  " hi User1 ctermfg=007 " guifg=fgcolor
+  " hi User3 ctermfg=008 " guifg=fgcolor
+  " hi User4 ctermfg=008 " guifg=fgcolor
+  " hi User5 guifg=#005faf "ctermfg=008  guifg=fgcolor
+  " hi User7 guibg=#005faf
+  " hi User8 ctermfg=008 " guifg=fgcolor
+  " hi User9 ctermfg=007 " guifg=fgcolor
 endif
+
+
 " =========================================================
 " MyTabLine {{{
 " =========================================================
-" This is an attempt to emulate the default Vim-7 tabs as closely as possible but with numbered tabs.
+" This is an attempt to emulate the default Vim-7 tabs as closely as possible but with numbered tabs.- Not currently in use
 
 if exists("+showtabline")
 set showtabline=2
