@@ -36,3 +36,4 @@ awesome tools
 * Database manipulation in vim - `Plug 'vim-scripts/dbext.vim'`
 * `Plug 'tiagofumo/vim-nerdtree-syntax-highlight'`
 * `Plug 'bronson/vim-visual-star-search'`
+*  Buffers in the tabline because ....why... tabs  `Plug 'ap/vim-buftabline'` - Think my pc is too encumbered for this plugin

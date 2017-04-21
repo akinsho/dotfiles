@@ -84,7 +84,7 @@ endif
 
 "Utilities============================
 " Buffers in the tabline because ....why... tabs
-Plug 'ap/vim-buftabline'
+" Plug 'ap/vim-buftabline'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
 "Add Gundo - undo plugin for vim
@@ -225,18 +225,8 @@ let maplocalleader = "\<space>"
 " FZF bindings
 "--------------------------------------------
 " Advanced customization using autoload functions
-" inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " Replace the default dictionary completion with fzf-based fuzzy completion
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
-
-" Mapping selecting mappings
-" nmap <leader><tab> <plug>(fzf-maps-n)
-" xmap <leader><tab> <plug>(fzf-maps-x)
-" omap <leader><tab> <plug>(fzf-maps-o)
-" imap <c-x><c-k> <plug>(fzf-complete-word)
-" imap <c-x><c-f> <plug>(fzf-complete-path)
-" imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-" imap <c-x><c-l> <plug>(fzf-complete-line)
 
 nnoremap <silent> <localleader>o :Buffers<CR>
 
@@ -310,7 +300,6 @@ set conceallevel=1
 let g:javascript_conceal_arrow_function = "⇒"
 let g:javascript_plugin_jsdoc           = 1
 
-
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
 " Additional settings
@@ -327,7 +316,6 @@ imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
 imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 
 endfunction
-
 
 "Toggle Tagbar
 nnoremap <leader>2 :TagbarToggle<CR>
@@ -366,7 +354,7 @@ nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
 
 
-let g:NERDTreeHijackNetrw             = 1
+let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer        = 1
 let g:NERDTreeDirArrowExpandable      = '├'
 let g:NERDTreeDirArrowCollapsible     = '└'
@@ -382,7 +370,6 @@ let NERDTreeShowHidden                = 1 "Show hidden files by default
 " Vim-Over - Highlight substitution parameters
 "===================================================
 nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
-
 
 "===================================================
 " Incsearch
@@ -464,10 +451,6 @@ nmap s <Plug>(easymotion-overwin-f)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-
-
-"add Vcoolor color picker mapping
-let g:vcoolor_map = '<F8>'
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
@@ -477,7 +460,6 @@ let g:user_emmet_expandabbr_key = '<C-y>'
 
 "Add mapping for Gundo vim
 nnoremap <leader>u :GundoToggle<CR>
-
 
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars,requirejs'
@@ -495,8 +477,6 @@ autocmd FileType help,git-status,git-log,qf,
 autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
       \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 augroup END
-
-
 
 function! s:smart_close()
   if winnr('$') != 1
@@ -528,7 +508,6 @@ augroup Go_Mappings
   autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 augroup END
 
-
 augroup CheckOutsideTime - "excellent function but implemented by terminus
   autocmd!
   " automatically check for changed files outside vim
@@ -556,8 +535,6 @@ augroup updating_time
   autocmd InsertLeave * let &updatetime=updaterestore
 augroup END
 
-
-
 augroup VimResizing
   autocmd!
   "Command below makes the windows the same size on resizing !? Why?? because
@@ -567,7 +544,6 @@ augroup VimResizing
   " autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
-
 augroup filetype_completion
   autocmd!
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
@@ -575,7 +551,6 @@ augroup filetype_completion
   autocmd FileType javascript,javascript.jsx,jsx setlocal omnifunc=tern#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
-
 
 augroup filetype_javascript
   autocmd!
@@ -586,10 +561,8 @@ augroup filetype_javascript
   autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
   autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
-
   autocmd FileType javascript :iabbrev <buffer> els else {<CR>}<esc>hi
   autocmd FileType javascript :iabbrev <buffer> cons console.log()
-
   autocmd FileType javascript :iabbrev <buffer> und undefined
   "don't use cindent for javascript
   autocmd Filetype javascript setlocal nocindent
@@ -599,7 +572,6 @@ augroup filetype_javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
 augroup END
-
 
 augroup FileType_html
   autocmd!
@@ -679,8 +651,6 @@ augroup NERDTree
   autocmd!
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
-
-
 
 augroup Toggle_number
   autocmd!
@@ -826,6 +796,7 @@ set splitright "Open a vertical split to the right of the window
 if has('folding')
   if has('windows')
 set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
+set fillchars+=fold:-
   endif
   set foldmethod=indent
   set foldlevelstart=99
@@ -927,7 +898,6 @@ set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION M
 set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
-set fillchars=fold:-
 set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
 " =====================================================================
 " STATUS LINE --------------------
@@ -1174,6 +1144,7 @@ let g:startify_session_dir = '~/.vim/session'
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
+let g:startify_session_sort = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
 
 " BUFTABLINE
@@ -1338,9 +1309,8 @@ if exists('$SUDO_USER')
   set nowritebackup                   " don't create root-owned files
 else
   set backupdir=~/.vim/.backup//
-  set backupdir=~/local/.vim/tmp/backup
+  set backupdir+=~/local/.vim/tmp/backup
   set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
-  set backupdir+=.
 endif
 
 " set directory=~/.vim/.swp//
@@ -1354,12 +1324,11 @@ if has ('persistent_undo')
     set undofile
   endif
 endif
-  
 
 if has("vms")
-set nobackup
+  set nobackup
 else
-set backup
+  set backup
 endif
 set history=50
 "}}}

@@ -38,7 +38,7 @@ function! ChangeStatuslineColor()
   elseif (mode() ==# 'i')
     exe 'hi! StatusLine guibg=#005f87'
   else
-    exe 'hi! StatusLine guibg=grey'
+    exe 'hi! StatusLine guibg=#005faf'
   endif
   return ''
 endfunction
@@ -212,6 +212,6 @@ set showtabline=2
     let s .= '%999XX' " places an 'X' at the far-right
     return s
   endfunction
-  " set tabline=%!MyTabLine()
+  set tabline=%!MyTabLine()
 endif
 "===============================================================================================}}}

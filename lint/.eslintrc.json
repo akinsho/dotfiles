@@ -19,7 +19,7 @@
         "no-self-compare": "error",
         "no-useless-return": "error",
         "callback-return": "error",
-        "global-require": "error",
+        "global-require": "off",
         "comma-dangle": ["error", "only-multiline"],
         "comma-spacing": ["error", { "before": false, "after": true }]
     },
