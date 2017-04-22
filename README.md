@@ -37,3 +37,8 @@ awesome tools
 * `Plug 'tiagofumo/vim-nerdtree-syntax-highlight'`
 * `Plug 'bronson/vim-visual-star-search'`
 *  Buffers in the tabline because ....why... tabs  `Plug 'ap/vim-buftabline'` - Think my pc is too encumbered for this plugin
+* Colors for hexcode in vim `Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}` - really great idea incredibly slow sadly
+#### Excellent colorschemes I'll definitely be trying again i'm just capricious
+:shrug:
+* vim sialoquent theme  `Plug 'davidklsn/vim-sialoquent'`
+* OneDark  `Plug 'joshdick/onedark.vim'`

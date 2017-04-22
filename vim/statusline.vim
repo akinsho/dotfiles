@@ -119,6 +119,7 @@ set statusline+=%9*\ %=                                  " Space
 set statusline+=%8*\ %y\                                 " FileType
 "Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
 set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+" set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
 " set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
 set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
 set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\      " The numbers after the % represent degrees of padding

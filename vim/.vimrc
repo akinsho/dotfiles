@@ -71,8 +71,6 @@ Plug 'tpope/vim-capslock'
 "Go for Vim
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
 "css related
-"Colors for hexcode in vim
-Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}
 
 "TMUX ============================
 if executable("tmux")
@@ -187,13 +185,8 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
 " "Start up time monitor
 " Plug 'tweekmonster/startuptime.vim'
-"vim sialoquent theme
-" Plug 'davidklsn/vim-sialoquent'
-"Colorscheme - OneDark
-" Plug 'joshdick/onedark.vim'
 "Codi - A REPL in vim
 " Plug 'metakirby5/codi.vim'
-
 
 call plug#end()
 
@@ -211,7 +204,6 @@ syntax enable
 "====================================================================================
 "Leader bindings
 "====================================================================================
-
 "Remap leader key
 let mapleader = ","
 "Local leader key
@@ -233,6 +225,14 @@ let maplocalleader = "\<space>"
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+" Use ripgrep instead of ag:
+command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 " Advanced customization using autoload functions
 " Replace the default dictionary completion with fzf-based fuzzy completion
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
@@ -241,12 +241,22 @@ nnoremap <silent> <localleader>o :Buffers<CR>
 
 " Launch file search using FZF
 nnoremap <C-P> :FZFR <CR>
-nnoremap \ :Ag<CR>
+nnoremap \ :Rg<CR>
 nnoremap <space>\ :Find<space>
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
 imap <C-F> <C-g>g
+
+nnoremap gm :LivedownToggle<CR>
+
+nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
+
+let g:textobj_comment_no_default_key_mappings = 1
+xmap ac <Plug>(textobj-comment-a)
+omap ac <Plug>(textobj-comment-a)
+xmap ic <Plug>(textobj-comment-i)
+omap ic <Plug>(textobj-comment-i)
 "--------------------------------------------
 " Use formatprg when available
 let g:neoformat_try_formatprg = 1
@@ -265,9 +275,7 @@ let g:ale_set_highlights = 0
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
-
 imap <C-L> <C-O><Plug>CapsLockToggle
-
 "--------------------------------------------
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
@@ -279,7 +287,6 @@ vnoremap <leader>gb :Gbrowse<CR> " Make it work in Visual mode to open with high
 " Push the repository of the currently opened file
 " nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
-
 " JSX
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
@@ -289,9 +296,6 @@ let g:gitgutter_sign_added    = '❖'
 let g:gitgutter_sign_column_always = 1
 let g:gitgutter_eager              = 0
 let g:gitgutter_grep_command = 'ag --nocolor'
-"-----------------------------------------------------------
-" Colorizer
-"-----------------------------------------------------------
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -305,26 +309,24 @@ vnoremap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-" nnoremap ¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 set conceallevel=1
 let g:javascript_conceal_arrow_function = "⇒"
 let g:javascript_plugin_jsdoc           = 1
 
 let g:committia_hooks = {}
+
 function! g:committia_hooks.edit_open(info)
-" Additional settings
-setlocal spell
+  " Additional settings
+  setlocal spell
 
-" If no commit message, start with insert mode
-if a:info.vcs ==# 'git' && getline(1) ==# ''
-  startinsert
-end
-
-" Scroll the diff window from insert mode
-" Map <C-n> and <C-p>
-imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
-
+  " If no commit message, start with insert mode
+  if a:info.vcs ==# 'git' && getline(1) ==# ''
+    startinsert
+  end
+  " Scroll the diff window from insert mode
+  " Map <C-n> and <C-p>
+  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
 "Toggle Tagbar
@@ -334,35 +336,29 @@ nnoremap <leader>2 :TagbarToggle<CR>
 "Tell vimux to run commands in a new split
 let VimuxUseNearest = 0
 let VimuxResetSequence = ""
+
 nnoremap <F5> :call VimuxRunCommand('browse')<CR>
 " Prompt for a command to run
 nnoremap <Leader>vp :VimuxPromptCommand<CR>
-
 " Run last command executed by VimuxRunCommand
 nnoremap <Leader>vl :VimuxRunLastCommand<CR>
-
 " Inspect runner pane
 nnoremap <Leader>vi :VimuxInspectRunner<CR>
-
 " Close vim tmux runner opened by VimuxRunCommand
 nnoremap <Leader>vq :VimuxCloseRunner<CR>
-
 " Interrupt any command running in the runner pane
 nnoremap <Leader>vx :VimuxInterruptRunner<CR>
-
 " Zoom the runner pane (use <bind-key> z to restore runner pane)
 nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
 
 
 "Vim-Signature ==================================================
 let g:SignatureMarkTextHLDynamic=1
-
 "NERDTree
 " =============================================
 " Ctrl+N to toggle Nerd Tree
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>nf :NERDTreeFind<CR>
-
 
 let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer        = 1
@@ -380,7 +376,6 @@ let NERDTreeShowHidden                = 1 "Show hidden files by default
 " Vim-Over - Highlight substitution parameters
 "===================================================
 nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
-
 "===================================================
 " Incsearch
 "===================================================
@@ -398,7 +393,6 @@ endfunction
 
 noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
 
-
 function! s:config_fuzzyall(...) abort
   return extend(copy({
   \   'converters': [
@@ -411,8 +405,6 @@ endfunction
 " noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
 " noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
 " noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
-
-
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
@@ -423,8 +415,8 @@ let g:incsearch#auto_nohlsearch = 1
 " Next or previous match is followed by a Pulse
 map n <Plug>(incsearch-nohl-n)<Plug>Pulse
 map N <Plug>(incsearch-nohl-N)<Plug>Pulse
-map * <Plug>(incsearch-nohl-*)<Plug>Pulse
-map # <Plug>(incsearch-nohl-#)<Plug>Pulse
+map <leader>* <Plug>(incsearch-nohl-*)<Plug>Pulse
+map <leader># <Plug>(incsearch-nohl-#)<Plug>Pulse
 map g* <Plug>(incsearch-nohl-g*)<Plug>Pulse
 map g# <Plug>(incsearch-nohl-g#)<Plug>Pulse
 
@@ -446,15 +438,9 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 " keep cursor column when jumping
 let g:EasyMotion_startofline = 0
-
+" nmap s <Plug>(easymotion-s)
 " Jump to anwhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.
-" nmap s <Plug>(easymotion-s)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-" nmap s <Plug>(easymotion-overwin-f2)
-
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
 " JK motions: Line motions
@@ -591,24 +577,6 @@ augroup FileType_html
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
 
-" for better tab response for emmet
-function! s:expand_html_tab()
-    " try to determine if we're within quotes or tags.
-    " if so, assume we're in an emmet fill area.
-    let line = getline('.')
-    if col('.') < len(line)
-        let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-        if len(line) >= 2
-            return "\<C-n>"
-        endif
-    endif
-    " expand anything emmet thinks is expandable.
-    if emmet#isExpandable()
-        return "\<C-y>,"
-    endif
-    " return a regular tab character
-    return "\<tab>"
-  endfunction
 
 augroup FileType_markdown
   autocmd!
@@ -814,7 +782,11 @@ set fillchars+=fold:-
 endif
 " reveal already opened files from the quickfix window instead of opening new
 " buffers
-set switchbuf=useopen
+" Specify the behavior when switching between buffers
+try
+  set switchbuf=useopen,usetab,newtab
+catch
+endtry
 
 " ----------------------------------------------------------------------------
 " DIFFING {{{
@@ -848,8 +820,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Vim Path
 " ----------------------------------------------------------------------------
-"Vim searches recursively through all directories and subdirectories
-set path+=**
+set path+=** "Vim searches recursively through all directories and subdirectories
 " set autochdir
 
 " ----------------------------------------------------------------------------
@@ -892,6 +863,8 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " --------------------------------------------------------------------------
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
+" This should cause lines to wrap around words rather than random characters
+set linebreak
   let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   if exists('&breakindentopt')
     set breakindentopt=shift:2 
@@ -913,82 +886,58 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 " STATUS LINE --------------------
 " see statuline.vim file
 source ~/Dotfiles/vim/statusline.vim
+"-----------------------------------
+" highlight MatchParen  guibg=#658494 gui=bold "Match parentheses Coloring
 
-set number                            " show line numbers in gutter
-" This prevents a scratch buffer from being opened
-set completeopt-=preview
+set magic " For regular expressions turn magic on
+set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
-" Match parentheses coloring
-" highlight MatchParen  guibg=#658494 gui=bold
-
-"lines shows absolute and all others are relative
 set ttyfast " Improves smoothness of redrawing when there are multiple windows
-
-"Add relative line numbers and relative = absolute line numbers i.e current
-set relativenumber
+if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
+  set relativenumber
+endif
 set number
-
 set linespace=4
-"relative add set relativenumber to show numbers relative to the cursor
 set numberwidth=5
 "Turns on smart indent which can help indent files like html natively
 set smartindent
 set wrap
-" This should cause lines to wrap around words rather than random characters
-set linebreak
 set textwidth=79
 "Use one space, not two, after punctuation
 set nojoinspaces
-
 set autowrite "Automatically :write before running commands
-
 set backspace=2 "Back space deletes like most programs in insert mode
 if has('vim')
   if has('+signcolumn')
     set signcolumn=yes "enables column that shows signs and error symbols
   endif
 endif
-
 set ruler
 set incsearch
-
-" Turns on lazyredraw which postpones redrawing for macros and command
-" execution
-set lazyredraw
-
+set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
-
-
-if has('termguicolors')
-  " Don't need this in xterm-256color, but do need it inside tmux.
-  " (See `:h xterm-true-color`.)
-  set termguicolors
-  " set vim-specific sequences for rgb colors
-  "super important for truecolor support in vim
-"Setting the t_ variables is a further step to ensure 24bit colors
-  if &term =~# 'tmux-256color'
+if has('termguicolors') " Don't need this in xterm-256color, but do need it inside tmux. (See `:h xterm-true-color`.)
+  set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
+  if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
     let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
     let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   endif
 endif
+
 "}}}
 " ----------------------------------------------------------------------------
 
 " ------------------------------------
 " Command line
 " ------------------------------------
-"Show commands being input
-set showcmd
-" Set command line height to two lines
-set cmdheight=2
-
+set showcmd "Show commands being input
+set cmdheight=2 " Set command line height to two lines
 "-----------------------------------------------------------------
 "Abbreviations
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
-
 
 "fugitive plugin
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
@@ -1006,7 +955,6 @@ let g:tern_map_keys                    = 1
 let g:tern_show_signature_in_pum       = 1
 " Stop folding markdown please
 let g:vim_markdown_folding_disabled    = 1
-
 
 let g:github_dashboard = {
     \'username': 'Akin909',
@@ -1065,34 +1013,20 @@ let g:vim_markdown_toml_frontmatter = 1
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 let g:UltiSnipsExpandTrigger="<C-J>"
-" let g:UltiSnipsExpandTrigger="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-J>"
 let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-K>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your window.
 
-" should markdown preview get shown automatically upon opening markdown
-" buffer
-let g:livedown_autorun = 1
-" should the browser window pop-up upon previewing
-let g:livedown_open = 1
-" the port on which Livedown server will run
-let g:livedown_port = 1337
-nnoremap gm :LivedownToggle<CR>
+let g:livedown_autorun = 1 " should markdown preview get shown automatically upon opening markdown buffer
+let g:livedown_open = 1 " should the browser window pop-up upon previewing
+let g:livedown_port = 1337 " the port on which Livedown server will run
 
 let delimitMate_expand_cr          = 1
 let delimitMate_expand_space       = 1
 let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
 
-nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
-
-let g:textobj_comment_no_default_key_mappings = 1
-xmap ac <Plug>(textobj-comment-a)
-omap ac <Plug>(textobj-comment-a)
-xmap ic <Plug>(textobj-comment-i)
-omap ic <Plug>(textobj-comment-i)
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -1135,16 +1069,11 @@ let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 nmap <silent> co <Plug>(jsdoc)
 
-
-let g:vimjs#smartcomplete = 1
-" Disabled by default. Enabling this will let vim complete matches at any location
-" e.g. typing 'document' will suggest 'document' if enabled.
-let g:vimjs#chromeapis = 1
-" Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
+let g:vimjs#smartcomplete = 1 " Disabled by default. Enabling this will let vim complete matches at any location e.g. typing 'document' will suggest 'document' if enabled.
+let g:vimjs#chromeapis = 1 " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
 
-" after a re-source, fix syntax matching issues (concealing brackets):
-if exists('NERDTree')
+if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')
     call webdevicons#refresh()
   endif
@@ -1157,27 +1086,64 @@ let g:startify_change_to_vcs_root = 1
 let g:startify_session_sort = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
 
-" BUFTABLINE
-" =====================================================================
-let g:buftabline_numbers = 2
-let g:buftabline_indicators = 1
-let g:buftabline_separators = 1
-
-
-nmap <localleader>1 <Plug>BufTabLine.Go(1)
-nmap <localleader>2 <Plug>BufTabLine.Go(2)
-nmap <localleader>3 <Plug>BufTabLine.Go(3)
-nmap <localleader>4 <Plug>BufTabLine.Go(4)
-nmap <localleader>5 <Plug>BufTabLine.Go(5)
-nmap <localleader>6 <Plug>BufTabLine.Go(6)
-nmap <localleader>7 <Plug>BufTabLine.Go(7)
-nmap <localleader>8 <Plug>BufTabLine.Go(8)
-nmap <localleader>9 <Plug>BufTabLine.Go(9)
-nmap <localleader>0 <Plug>BufTabLine.Go(10)
 " =========================================================================
 
 "This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
+
+"   Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
+"   saves on moving pane but only the currently opened buffer if changed
+let g:tmux_navigator_save_on_switch = 2
+
+"Remaps native insert mode paste binding to alt-p
+inoremap ð <C-R>0
+inoremap … <C-R><C-P>0
+
+"}}}
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" => HELPER FUNCTIONS
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" for better tab response for emmet
+function! s:expand_html_tab()
+    " try to determine if we're within quotes or tags.
+    " if so, assume we're in an emmet fill area.
+    let line = getline('.')
+    if col('.') < len(line)
+        let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+        if len(line) >= 2
+            return "\<C-n>"
+        endif
+    endif
+    " expand anything emmet thinks is expandable.
+    if emmet#isExpandable()
+        return "\<C-y>,"
+    endif
+    " return a regular tab character
+    return "\<tab>"
+  endfunction
+
+" Function to use f to search backwards and forwards courtesy of help docs
+" [WIP] see section H getpwd()
+" function FindChar()
+"   let c = nr2char(getchar())
+"   while col('.') < col('$') - 1
+"     normal l
+"     if getline('.')[col('.') - 1] ==? c
+"       break
+"     endif
+"   endwhile
+" endfunction
+
+" function GetKey()
+"   let c = getchar()
+"   while c == "\<CursorHold>"
+"     let c = getchar()
+"   endwhile
+"   return c
+" endfunction
+
+" nmap f :call GetKey()<CR>
 
 function! WrapForTmux(s)
   if !exists('$TMUX')
@@ -1201,19 +1167,27 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
+"Currently stalls vim!!!
+function! VisualSelection(direction, extra_filter) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
 
-"   Disable tmux navigator when zooming the Vim pane
-let g:tmux_navigator_disable_when_zoomed = 1
-"   saves on moving pane but only the currently opened buffer if changed
-let g:tmux_navigator_save_on_switch = 2
+  let l:pattern = escape(@", '\\/.*$^~[]')
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
 
+  if a:direction == 'b'
+    execute "normal ?" . l:pattern . "^M"
+  elseif a:direction == 'f'
+    execute "normal /" . l:pattern . "^M"
+  endif
 
-
-"Remaps native insert mode paste binding to alt-p
-inoremap ð <C-R>0
-inoremap … <C-R><C-P>0
-
-"}}}
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "-----------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------
@@ -1232,7 +1206,6 @@ hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
 " CORE FUNCTIONALITY
 "---------------------------------------------------------------------
 set updatetime=2000
-
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
@@ -1241,41 +1214,22 @@ endif
 " ----------------------------------------------------------------------------
 set expandtab                         " default to spaces instead of tabs
 set shiftwidth=2                      " softtabs are 2 spaces for expandtab
-
-" Alignment tabs are two spaces, and never tabs. Negative means use same as
-" shiftwidth (so the 2 actually doesn't matter).
-set softtabstop=-2
-
-" real tabs render width. Applicable to HTML, PHP, anything using real tabs.
-" I.e., not applicable to JS.
-set tabstop=8
-
-" use multiple of shiftwidth when shifting indent levels.
-" this is OFF so block comments don't get fudged when using \">>" and \"<<"
-set noshiftround
-
-" When on, a <Tab> in front of a line inserts blanks according to
-" 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
-set smarttab
-
-"Add vim sensible config options
-
-" Add dictionary to vim's autocompletion
-set complete+=k
+set softtabstop=-2 " Alignment tabs are two spaces, and never tabs. Negative means use same as shiftwidth (so the 2 actually doesn't matter).
+set tabstop=8 " real tabs render width. Applicable to HTML, PHP, anything using real tabs. I.e., not applicable to JS.
+set noshiftround " use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
+set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
+set complete+=k " Add dictionary to vim's autocompletion
 if !has('nvim')
-set complete-=i
-set autoindent
+  set complete-=i
+  set autoindent
 endif
-
 " Use <C-I> to clear the highlighting of :set hlsearch.
 " if maparg('<C-I>', 'n') ==# ''
 "   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
 " endif
-"
 set display+=lastline
-
 if &encoding ==# 'latin1' && has('gui_running')
-set encoding=utf-8
+  set encoding=utf-8
 endif
 scriptencoding utf-8
 
@@ -1283,31 +1237,23 @@ scriptencoding utf-8
 "  DICTIONARY
 " =======================================================
 set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
-
-
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
-set shell=/bin/bash
+  set shell=/bin/bash
 endif
-
 set autoread " reload files if they were edited elsewhere
 
-if &history < 1000
 set history=1000
-endif
 if &tabpagemax < 50
-set tabpagemax=50
+  set tabpagemax=50
 endif
 if !empty(&viminfo)
-set viminfo^=!
+  set viminfo^=!
 endif
 set sessionoptions-=options
-
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
 set t_Co=16
 endif
-
-
 "-----------------------------------------------------------------------------
 " BACKUP AND SWAPS
 "-----------------------------------------------------------------------------
@@ -1340,7 +1286,6 @@ if has("vms")
 else
   set backup
 endif
-set history=50
 "}}}
 " ----------------------------------------------------------------------------
 " Match and search
@@ -1355,29 +1300,23 @@ set nohlsearch " -functionality i.e. search highlighting done by easy motion and
 " ----------------------------------------------------------------------------
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
-
-
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
 augroup highlight_follows_focus
-autocmd!
-autocmd WinEnter * set cursorline
-autocmd WinLeave * set nocursorline
+  autocmd!
+  autocmd WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
+  autocmd FocusGained * set hi cursorline
+  autocmd FocusLost * set nocursorline
 augroup END
 
 augroup highlight_follows_vim
-autocmd!
-autocmd FocusGained * set hi cursorline
-autocmd FocusLost * set nocursorline
+  autocmd!
 augroup END
-" Show context around current cursor position i.e. cursor lines remaining
-" whilst moving up or down
-"As this is set to a large number the cursor will remain in the middle of the
-"page on scroll (8 ) was the previous value
-set scrolloff=10
-set sidescrolloff=10
 
-" Stops some cursor movements from jumping to the start of a line
-set nostartofline
+set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
+set sidescrolloff=10
+set nostartofline " Stops some cursor movements from jumping to the start of a line
+
 "}}}
 " ----------------------------------------------------------------------------
 
