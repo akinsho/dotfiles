@@ -21,7 +21,6 @@ export RUNCOM=$DOTFILES/runcom/
 
 export PATH="$PATH:`yarn global bin`"
 
-
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -271,8 +270,8 @@ bindkey '^Z' fancy-ctrl-z
     # Plugin that autocorrects when you type fuck or whatever alias you intended
 eval "$(thefuck --alias fuck)"
 
-    # iTERM Integration ==================================================
-    test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# iTERM Integration ==================================================
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # zsh: Place this in .zshrc after "source /Users/user/.iterm2_shell_integration.zsh".
 # function iterm2_print_user_vars() {

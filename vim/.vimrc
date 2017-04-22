@@ -83,8 +83,6 @@ Plug 'christoomey/vim-tmux-navigator'
 endif
 
 "Utilities============================
-" Buffers in the tabline because ....why... tabs
-" Plug 'ap/vim-buftabline'
 "Adds cursor change and focus events to tmux vim
 Plug 'sjl/vitality.vim'
 "Add Gundo - undo plugin for vim
@@ -224,6 +222,17 @@ let maplocalleader = "\<space>"
 "--------------------------------------------
 " FZF bindings
 "--------------------------------------------
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 " Advanced customization using autoload functions
 " Replace the default dictionary completion with fzf-based fuzzy completion
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
@@ -233,6 +242,7 @@ nnoremap <silent> <localleader>o :Buffers<CR>
 " Launch file search using FZF
 nnoremap <C-P> :FZFR <CR>
 nnoremap \ :Ag<CR>
+nnoremap <space>\ :Find<space>
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
