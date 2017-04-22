@@ -1,11 +1,12 @@
 # ================================================================================
 # Aliases
 # ================================================================================
-# alias v='f -t -e vim -b viminfo' # quick opening files with vim
+alias x="exit" # Exit Terminal
+alias dots="cd ~/Dotfiles"
+alias code="cd ~/Desktop/Coding"
 alias la='ls -aG'
 alias nv='nvim'
 alias cl='clear'
-alias c='fasd_cd -d'
 alias o='a -e xdg-open' # quick opening files with xdg-open
 alias b='source ~/Dotfiles/bin/fzf-chrome.rb'
 alias rn='ranger'
@@ -26,7 +27,7 @@ alias net="nvim ~/.tmux.conf"
 alias lip="lsof -Pn -i4"
 alias ports=" _ lsof -i -P | grep -i 'listen'"
 alias sesh="vim -S"
-alias vi="vim"
+alias v="vim"
 alias tmux="tmux -2"
 alias ta="tmux attach -t"
 alias td="tmux detach"

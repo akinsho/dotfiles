@@ -81,6 +81,38 @@ function! GitInfo()
     return ''
   endfunction
 
+" Returns true if paste mode is enabled
+function! HasPaste()
+  if &paste
+    exe 'hi! StatusLine guibg=#00875f'
+    return 'PASTE MODE  '
+  endif
+  return ''
+endfunction
+
+" Determine the name of the session or terminal
+if (strlen(v:servername)>0)
+  if v:servername =~ 'nvim'
+    let g:session = 'neovim'
+  else
+    " If running a GUI vim with servername, then use that
+    let g:session = v:servername
+  endif
+elseif !has('gui_running')
+  " If running CLI vim say TMUX or use the terminal name.
+  if (exists("$TMUX"))
+    let g:session = 'TMUX'
+  else
+    " Giving preference to color-term because that might be more
+    " meaningful in graphical environments. Eg. my $TERM is
+    " usually screen256-color 90% of the time.
+    let g:session = exists("$COLORTERM") ? $COLORTERM : $TERM
+  endif
+else
+  " idk, my bff jill
+  let g:session = 'NARNIA'
+endif
+
 " Shamelessly stolen from statline plugin, shows buffer count and buffer number
 function! BufCount()
   if !exists("s:statline_n_buffers")
@@ -109,8 +141,8 @@ if g:statline_show_n_buffers
 else
   set statusline=[%n]\ %<
 endif
+set statusline+=\ %{HasPaste()}
 set statusline+=%5*\ %{g:session}%0*
-" set statusline+=%8*\ \BUF:\%n                                " buffernr
 set statusline+=%4*\ %{GitInfo()}%*                        " Git Branch name
 set statusline+=%8*\ %<%.30F\ %{ReadOnly()}\ %m\ %w\        " File+path .30 prefix is for the degree of truncation
 set statusline+=%#warningmsg#
@@ -119,35 +151,13 @@ set statusline+=%9*\ %=                                  " Space
 set statusline+=%8*\ %y\                                 " FileType
 "Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
 set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
-" set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
-" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
 set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
 set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\      " The numbers after the % represent degrees of padding
 set statusline+=%{ale#statusline#Status()}\ 
 
-" Determine the name of the session or terminal
-if (strlen(v:servername)>0)
-  if v:servername =~ 'nvim'
-    let g:session = 'neovim'
-  else
-    " If running a GUI vim with servername, then use that
-    let g:session = v:servername
-  endif
-elseif !has('gui_running')
-  " If running CLI vim say TMUX or use the terminal name.
-  if (exists("$TMUX"))
-    let g:session = 'TMUX'
-  else
-    " Giving preference to color-term because that might be more
-    " meaningful in graphical environments. Eg. my $TERM is
-    " usually screen256-color 90% of the time.
-    let g:session = exists("$COLORTERM") ? $COLORTERM : $TERM
-  endif
-else
-  " idk, my bff jill
-  let g:session = 'NARNIA'
-endif
+" set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
 " set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
+" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
 
 "Need to figure this our in order to change statusline colors
 if has('termguicolors')

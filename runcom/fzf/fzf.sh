@@ -1,7 +1,5 @@
 #!/bin/sh
 # Setting ag as the default source for fzf
-# sets ag as default source for fzf allow .gitignore to be respected this
-# breaks the tabbing function : (
 
 # FZF_DEFAULT_COMMAND='ag -g ""'
 # export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
@@ -13,7 +11,8 @@
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 # Need to escape the "!" and "*" characters using /
 # --no-ignore = this flag shows node modules etc
-export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow --glob "/!.git/*"'
+# export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow -g "!{.git,node_modules,vendor}/*"'
 
 # export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # export FZF_DEFAULT_COMMAND='ag --nobreak --nonumbers --noheading . | fzf'
@@ -21,22 +20,29 @@ export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow --glob "/!.git/*"'
 # Changed FZF trigger to ; from **
 # export FZF_COMPLETION_TRIGGER=';'
 
-#Options to fzf command
-# export FZF_COMPLETION_OPTS='+c -x'
 
 # To apply to the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export FZF_TMUX=1
 
-# Similar ish functionality with find as with ag??
-# export FZF_DEFAULT_COMMAND="find . -type f -print -o -type l -print 2>
-# /dev/null | sed s/^..//"
 
 
 #=============================================================================================================
 #                           FUNCTIONS
 #=============================================================================================================
+# tm with no sessions open it will create a session called "new".
+# tm irc it will attach to the irc session (if it exists), else it will create it.
+# tm with one session open, it will attach to that session.
+# tm with more than one session open it will let you select the session via fzf.
+tm() {
+  local session
+  newsession=${1:-new}
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+    tmux attach-session -t "$session" || tmux new-session -s $newsession
+}
+
 
 # fshow - git commit browser
 fshow() {
