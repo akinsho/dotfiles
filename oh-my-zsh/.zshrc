@@ -94,9 +94,6 @@ plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pa
 
 # web-search - great plugin, google from the command line although I never use
 # it soo...
-# zsh-autosuggestions - Potentially faster to load outside of oh-my-zsh
-
-
 
 source $ZSH/oh-my-zsh.sh
 
@@ -172,11 +169,13 @@ SPACESHIP_PYENV_SYMBOL='🐍'
 #=======================================================================
 # User configuration
 #=======================================================================
+# auto-ls () { ls -GC; }
+# chpwd_functions=( auto-ls $chpwd_functions )
 
-add-zsh-hook precmd _z_precmd
-function _z_precmd {
-  _z --add "$PWD"
-}
+# add-zsh-hook precmd _z_precmd
+# function _z_precmd {
+#   _z --add "$PWD"
+# }
 export KEYTIMEOUT=1
 
 bindkey ‘^R’ history-incremental-search-backward
@@ -225,8 +224,8 @@ if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.z
 fi
 # BASE16===============================================================
 # default code for base16 shell
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
 fi
@@ -263,8 +262,6 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# auto-ls () { ls -GC; }
-# chpwd_functions=( auto-ls $chpwd_functions )
 
 
     # Plugin that autocorrects when you type fuck or whatever alias you intended

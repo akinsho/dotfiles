@@ -177,7 +177,7 @@ endif
 " This is an attempt to emulate the default Vim-7 tabs as closely as possible but with numbered tabs.- Not currently in use
 
 if exists("+showtabline")
-set showtabline=2
+set showtabline=1
 " set tabline="%1T"
   function! MyTabLine()
     let s = ''

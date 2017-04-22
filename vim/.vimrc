@@ -34,159 +34,104 @@ if !has('nvim')
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
-" Ale  Async Linting as you type
-Plug 'w0rp/ale'
-"Added vim snippets for code autofilling
-Plug 'SirVer/ultisnips'
+
+Plug 'w0rp/ale' " Ale  Async Linting as you type
+Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
   Plug 'honza/vim-snippets'
   Plug 'isRuslan/vim-es6'
   Plug 'epilande/vim-react-snippets'
-"Added nerdtree filetree omnitool : )
-Plug 'scrooloose/nerdtree'
-"Added emmet vim plugin
-Plug 'mattn/emmet-vim'
-"Add delimitmate
-Plug 'Raimondi/delimitMate'
-"Added node.vim plugin
-Plug 'moll/vim-node', { 'for':'javascript'}
-"Added easy motions
-Plug 'easymotion/vim-easymotion'
-" "Add Tern for autocompletion
+"================================
+Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
+Plug 'mattn/emmet-vim' "Added emmet vim plugin
+Plug 'Raimondi/delimitMate' "Add delimitmate
+Plug 'moll/vim-node', { 'for':'javascript'} "Added node.vim plugin
+Plug 'easymotion/vim-easymotion' "Added easy motions
 function! BuildTern(info)
 if a:info.status == 'installed' || a:info.force
   !npm install
 endif
 endfunction
-Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
-" A fun start up sceen for vim
-Plug 'mhinz/vim-startify'
-"FZF improved wrapper by June Gunn + the man who maintains syntastic
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-" Autoformatter
-Plug 'sbdchd/neoformat'
-"Added June Gunn's alignment plugin
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
-"Capslock without a capslock key in vim
-Plug 'tpope/vim-capslock'
-"Go for Vim
-Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' }
-"css related
-
+Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')} " "Add Tern for autocompletion
+Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' "FZF improved wrapper by June Gunn + the man who maintains syntastic
+Plug 'sbdchd/neoformat' " Autoformatter
+Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
+Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
+Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "TMUX ============================
 if executable("tmux")
-"Vimux i.e send commands to a tmux split
-Plug 'benmills/vimux'
-"Navigate panes in vim and tmux with the same bindings
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
+Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 endif
-
 "Utilities============================
-"Adds cursor change and focus events to tmux vim
-Plug 'sjl/vitality.vim'
-"Add Gundo - undo plugin for vim
-Plug 'sjl/gundo.vim',{'on':'GundoToggle'}
-"Autocorrects 4,000 common typos
-Plug 'chip/vim-fat-finger'
-"Highlighting for substitution in Vim
-Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'}
-"Underlines instances of word under the cursor
-Plug 'itchyny/vim-cursorword'
-"Peace and Quiet thanks JGunn
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-
+Plug 'sjl/vitality.vim' "Adds cursor change and focus events to tmux vim
+Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
+Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
+Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'} "Highlighting for substitution in Vim
+Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
-" Add fugitive git status and command plugins
-Plug 'tpope/vim-fugitive'
-" Adds file manipulation functionality
-Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
+Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-commentary'
-"Tim pope's surround plugin allows . to repeat more actions
-Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
-
-
 "Syntax ============================
-"Added vim polyglot a collection of language packs for vim
-Plug 'sheerun/vim-polyglot'
-"Added javascript lib - syntax highlighting for popular libraries
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'}
-"Added Editor Config plugin to maintain style choices
-Plug 'editorconfig/editorconfig-vim'
-"Add proper markdown syntax and indentation plugin
-Plug 'plasticboy/vim-markdown', { 'for':'markdown'}
-
+Plug 'sheerun/vim-polyglot' "Added vim polyglot a collection of language packs for vim
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'} "Added javascript lib - syntax highlighting for popular libraries
+Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
+Plug 'plasticboy/vim-markdown', { 'for':'markdown'} "Add proper markdown syntax and indentation plugin
 "Marks =============================
-"Vim signature re-added because I need to see my bloody marks
-Plug 'kshenoy/vim-signature'
-
+Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 "Git ===============================
-"Git repo  manipulation plugin
-Plug 'gregsexton/gitv',{'on':'Gitv'}
-"Github dashboard for vim
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
-"Add a GitGutter to track new lines re git file
-Plug 'airblade/vim-gitgutter'
-"Plug to create diff window and Gstatus window on commit
-Plug 'rhysd/committia.vim'
+Plug 'gregsexton/gitv',{'on':'Gitv'} "Git repo  manipulation plugin
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
+Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
+Plug 'rhysd/committia.vim' "create diff window and Gstatus window on commit
 
 "Text Objects =====================
-"Text object library plugin for defining your own text objects
-Plug 'kana/vim-textobj-user'
-"Text obj for comments
-Plug 'glts/vim-textobj-comment'
-"Conflict marker text objects
-Plug 'rhysd/vim-textobj-conflict'
+Plug 'kana/vim-textobj-user' "Text object library plugin for defining your own text objects
+Plug 'glts/vim-textobj-comment' "Text obj for comments
+Plug 'rhysd/vim-textobj-conflict' "Conflict marker text objects
 " Add text objects form camel cased strings (should be native imho)
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
-" Add text object for indented code = 'i' i.e dii delete inner indented block
-Plug 'michaeljsmith/vim-indent-object'
-" All encompasing v
-Plug 'terryma/vim-expand-region'
-"Moar textobjs
-Plug 'wellle/targets.vim'
-
+Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
+Plug 'terryma/vim-expand-region' " All encompasing v
+Plug 'wellle/targets.vim' "Moar textobjs
 
 "Search Tools =======================
 Plug 'inside/vim-search-pulse'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
-Plug 'wincent/ferret'
 
 "Coding tools =======================
-"Add JSDocs plugin
-Plug 'heavenshell/vim-jsdoc'
+Plug 'heavenshell/vim-jsdoc' "Add JSDocs plugin
 "Vim HARDMODE ----------------------
 Plug 'wikitopian/hardmode'
-"Add Tagbar Plugin
-Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] }
-"Add Plugin to manage tag files
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
+Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 "Filetype Plugins ======================
-"Add better markdown previewer
-Plug 'shime/vim-livedown'
-
+Plug 'shime/vim-livedown' "Add better markdown previewer
 
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 "Quantum theme
-" Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'tyrannicaltoucan/vim-quantum'
-
-"Add file type icons to vim
-Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others
-
+Plug 'chriskempson/base16-vim'
+Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
 "Need this for styled components
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
-" "Start up time monitor
+"Start up time monitor
 " Plug 'tweekmonster/startuptime.vim'
 "Codi - A REPL in vim
 " Plug 'metakirby5/codi.vim'
+" Plug 'wincent/ferret'
 
 call plug#end()
 
@@ -552,7 +497,7 @@ augroup filetype_javascript
   autocmd!
   "PRETTIER FOR VIM  ================
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
-  autocmd BufWritePre *.js Neoformat
+  autocmd BufWritePost *.js Neoformat
   "==================================
   autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
@@ -876,7 +821,8 @@ set list                              " show whitespace
 " set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
 " set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
-set listchars+=tab:▹\ ,
+" set listchars+=tab:▹\ ,
+set listchars+=tab:┆\ ,
 set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
 set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
@@ -1192,8 +1138,13 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "Colorscheme
 "-----------------------------------------------------------
 "Set color Scheme
-" colorscheme deep-space
+set background=dark
 colorscheme quantum
+"BASE16 VIM I GO BACK AND FORTH WITH THIS
+" if filereadable(expand("~/.vimrc_background"))
+"   let base16colorspace=256
+"   source ~/.vimrc_background
+" endif
 
 
 " Comments in ITALICS YASSSSS!!!
@@ -1242,7 +1193,7 @@ if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'
 endif
 set autoread " reload files if they were edited elsewhere
 
-set history=1000
+set history=100
 if &tabpagemax < 50
   set tabpagemax=50
 endif
