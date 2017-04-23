@@ -65,7 +65,7 @@ Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 endif
 "Utilities============================
-Plug 'sjl/vitality.vim' "Adds cursor change and focus events to tmux vim
+" Plug 'sjl/vitality.vim' "Adds cursor change and focus events to tmux vim
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
@@ -110,18 +110,23 @@ Plug 'wellle/targets.vim' "Moar textobjs
 "Search Tools =======================
 
 "Coding tools =======================
+"Codi - A REPL in vim
+Plug 'metakirby5/codi.vim'
 Plug 'heavenshell/vim-jsdoc' "Add JSDocs plugin
 Plug 'konfekt/fastfold'
 "Start up time monitor
-Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
+" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
 "Vim HARDMODE ----------------------
-Plug 'wikitopian/hardmode'
+" Plug 'wikitopian/hardmode'
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
-
+" Preview colors in source code
+Plug 'ap/vim-css-color'
+"Need this for styled components
+" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 "Quantum theme
@@ -130,10 +135,6 @@ Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
-"Need this for styled components
-" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
-"Codi - A REPL in vim
-" Plug 'metakirby5/codi.vim'
 " Plug 'wincent/ferret'
 
 call plug#end()
@@ -173,7 +174,8 @@ let maplocalleader = "\<space>"
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
+let g:fzf_files_options =
+  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
@@ -186,13 +188,21 @@ command! -bang -nargs=* Rg
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 
 nnoremap <silent> <localleader>o :Buffers<CR>
+nnoremap <silent> <localleader>a :Windows<CR>
+nnoremap <silent> <localleader>a :Windows<CR>
+nnoremap <silent> <localleader>H :History<CR>
+nnoremap <silent> <localleader>C :Commits<CR>
 
+function! SearchWordWithRg()
+    execute 'Rg' expand('<cword>')
+  endfunction
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
-nnoremap <C-P> :FZFR <CR> 
+" nnoremap <C-P> :FZFR <CR> 
 " Uses the pwd
 nnoremap <C-P> :Files <CR>
 nnoremap \ :Rg<CR>
-nnoremap <space>\ :Find<space>
+" nnoremap <space>\ :Find<space>
+nnoremap <space>\ :call SearchWordWithRg()<CR>
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
@@ -903,15 +913,18 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+let g:vimsyn_folding          = 'af'
+let g:javascript_folding      = 1
+let g:fastfold_skip_filetypes = [ 'taglist' ]
 noremap <F4> :Gitv<CR>
 
-let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:tern_show_argument_hints='on_hold'
-let g:tern_map_keys                    = 1
-let g:tern_show_signature_in_pum       = 1
+let g:tern_show_argument_hints                = 'on_hold'
+let g:tern_map_keys                           = 1
+let g:tern_show_signature_in_pum              = 1
 " Stop folding markdown please
-let g:vim_markdown_folding_disabled    = 1
+let g:vim_markdown_folding_disabled           = 1
 
 let g:github_dashboard = {
     \'username': 'Akin909',
@@ -984,6 +997,23 @@ let delimitMate_expand_space       = 1
 let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
 
+""""""""""""""""""""""""""""""
+" Codi
+""""""""""""""""""""""""""""""
+function! Scratch(ft)
+  execute 'edit Scratch-' . strftime('%FT%T')
+  execute 'set filetype=' . a:ft
+  execute 'Codi ' . a:ft
+endfunction
+
+" command! -nargs=? Scratch execute s:Scratch("<args>")
+nnoremap <silent> <leader>JS :call Scratch('javascript')<CR>
+
+" ================================================
+" FZF
+" ================================================
+nnoremap <localleader>m :Marks<CR>
+nnoremap <localleader>mm :Maps<CR>
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -1157,8 +1187,8 @@ call NERDTreeHighlightFile('hbs', 202, 'none', '#FC4709')
 call NERDTreeHighlightFile('jade', 149, 'none', '#A0D24D')
 call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
 call NERDTreeHighlightFile('scss', 44, 'none', '#1AD0CE')
-call NERDTreeHighlightFile('css', 44, 'none', '#1AD0CE')
-call NERDTreeHighlightFile('js', 226, 'none', '#FFFF0D')
+call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
+call NERDTreeHighlightFile('js', 226, 'none', '#db7093')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
 call NERDTreeHighlightFile('php', 140, 'none', '#9E6FCD')
@@ -1186,8 +1216,9 @@ highlight Comment cterm=italic
 " hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
 
 "---------------------------------------------------------------------
-" CORE FUNCTIONALITY
+" Utilities
 "---------------------------------------------------------------------
+set noshowmode "No mode showing in command pane
 set updatetime=2000
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode

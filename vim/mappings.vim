@@ -1,6 +1,12 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
+" Close all the buffers
+nnoremap <leader>ba :1,1000 bd!<cr>
+" Quickly edit your macros
+" Usage <leader>m or "q<leader>m
+nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " => VISUAL MODE RELATED
 """"""""""""""""""""""""""""""""""""""""""""""""""
