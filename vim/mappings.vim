@@ -212,8 +212,11 @@ inoremap <right> <nop>
 
 "Moves cursor back to the start of a line
 inoremap <C-B> <C-O>I
-"Remaps native ctrl h - emulates backspace to ctrl d
-inoremap <C-D> <C-H>
+" Make Ctrl-e jump to the end of the current line in the insert mode. This is
+" handy when you are in the middle of a line and would like to go to its end
+" without switching to the normal mode.
+" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
+inoremap <C-e> <C-o>$
 "Remaps native ctrl k - deleting to the end of a line to control e
 " inoremap <C-Q> <C-K>
 " Map jk to esc key - using jk prevents jump that using ii causes

@@ -51,9 +51,10 @@ if a:info.status == 'installed' || a:info.force
   !npm install
 endif
 endfunction
-Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')} " "Add Tern for autocompletion
+Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' "FZF improved wrapper by June Gunn + the man who maintains syntastic
+" Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' "FZF improved wrapper by June Gunn + the man who maintains syntastic
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'sbdchd/neoformat' " Autoformatter
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
 Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
@@ -66,7 +67,12 @@ endif
 "Utilities============================
 Plug 'sjl/vitality.vim' "Adds cursor change and focus events to tmux vim
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
-Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
+Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
+augroup load_fat_finger
+  autocmd!
+  autocmd InsertEnter * call plug#load('vim-fat-finger')
+        \| autocmd! load_fat_finger
+augroup END
 Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'} "Highlighting for substitution in Vim
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
@@ -102,10 +108,6 @@ Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
 
 "Search Tools =======================
-Plug 'inside/vim-search-pulse'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'haya14busa/incsearch-easymotion.vim'
 
 "Coding tools =======================
 Plug 'heavenshell/vim-jsdoc' "Add JSDocs plugin
@@ -185,8 +187,8 @@ inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 
 nnoremap <silent> <localleader>o :Buffers<CR>
 
-" Launch file search using FZF
-" nnoremap <C-P> :FZFR <CR> "Uses the project's root regardless of where vim is
+" Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
+nnoremap <C-P> :FZFR <CR> 
 " Uses the pwd
 nnoremap <C-P> :Files <CR>
 nnoremap \ :Rg<CR>
@@ -325,56 +327,6 @@ let NERDTreeShowHidden                = 1 "Show hidden files by default
 "===================================================
 nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
 "===================================================
-" Incsearch
-"===================================================
-let g:vim_search_pulse_mode = 'cursor_line'
-
-function! s:config_easyfuzzymotion(...) abort
-  return extend(copy({
-  \   'converters': [incsearch#config#fuzzy#converter()],
-  \   'modules': [incsearch#config#easymotion#module()],
-  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-  \   'is_expr': 0,
-  \   'is_stay': 1
-  \ }), get(a:, 1, {}))
-endfunction
-
-noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
-
-function! s:config_fuzzyall(...) abort
-  return extend(copy({
-  \   'converters': [
-  \     incsearch#config#fuzzy#converter(),
-  \     incsearch#config#fuzzyspell#converter()
-  \   ],
-  \ }), get(a:, 1, {}))
-endfunction
-
-" noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
-" noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-" noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-" incsearch and vim search pulse
-let g:vim_search_pulse_disable_auto_mappings = 1
-let g:incsearch#auto_nohlsearch = 1
-
-" Next or previous match is followed by a Pulse
-map n <Plug>(incsearch-nohl-n)<Plug>Pulse
-map N <Plug>(incsearch-nohl-N)<Plug>Pulse
-map <leader>* <Plug>(incsearch-nohl-*)<Plug>Pulse
-map <leader># <Plug>(incsearch-nohl-#)<Plug>Pulse
-map g* <Plug>(incsearch-nohl-g*)<Plug>Pulse
-map g# <Plug>(incsearch-nohl-g#)<Plug>Pulse
-
-" Pulses the first match after hitting the enter keyan
-augroup inc_search
-  autocmd!
-  autocmd! User IncSearchExecute
-  autocmd User IncSearchExecute :call search_pulse#Pulse()
-augroup END
-"===================================================
 "EasyMotion mappings
 "===================================================
 let g:EasyMotion_do_mapping = 0 "Disable default mappings
@@ -386,6 +338,8 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 " keep cursor column when jumping
 let g:EasyMotion_startofline = 0
+" Bidirectional & within line 't' motion
+omap t <Plug>(easymotion-bd-tl)
 " nmap s <Plug>(easymotion-s)
 " Jump to anwhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.
@@ -394,6 +348,15 @@ nmap s <Plug>(easymotion-overwin-f)
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
+"Search with easy motion
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 
 "=======================================================================
 "                    EMMET for Vim
@@ -609,7 +572,7 @@ function! FoldText()
 endfunction
 augroup jsfolding
   autocmd!
-  autocmd FileType javascript setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
+  autocmd FileType javascript,javascript.jsx setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
 augroup END
 " }}}
 " CSS {{{
@@ -1052,6 +1015,7 @@ function! s:find_root()
       return
     endif
   endfor
+  FZF
 endfunction
 
 command! FZFR call s:find_root()
@@ -1181,6 +1145,27 @@ endfunction
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
 vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+" NERDTrees File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg)
+  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
+  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('html', 202, 'none', '#FC4709')
+call NERDTreeHighlightFile('hbs', 202, 'none', '#FC4709')
+call NERDTreeHighlightFile('jade', 149, 'none', '#A0D24D')
+call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
+call NERDTreeHighlightFile('scss', 44, 'none', '#1AD0CE')
+call NERDTreeHighlightFile('css', 44, 'none', '#1AD0CE')
+call NERDTreeHighlightFile('js', 226, 'none', '#FFFF0D')
+call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
+call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
+call NERDTreeHighlightFile('php', 140, 'none', '#9E6FCD')
+call NERDTreeHighlightFile('svg', 178, 'none', '#CDA109')
+call NERDTreeHighlightFile('gif', 36, 'none', '#15A274')
+call NERDTreeHighlightFile('jpg', 36, 'none', '#15A274')
+call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------
@@ -1198,7 +1183,7 @@ colorscheme quantum
 highlight Comment cterm=italic
 
 "Sets no highlighting for conceal
-hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
+" hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
 
 "---------------------------------------------------------------------
 " CORE FUNCTIONALITY
