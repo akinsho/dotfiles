@@ -109,6 +109,9 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 
 "Coding tools =======================
 Plug 'heavenshell/vim-jsdoc' "Add JSDocs plugin
+Plug 'konfekt/fastfold'
+"Start up time monitor
+Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
 "Vim HARDMODE ----------------------
 Plug 'wikitopian/hardmode'
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
@@ -127,8 +130,6 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add fil
 "Plugins I think I need yet never use ===============================
 "Need this for styled components
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
-"Start up time monitor
-" Plug 'tweekmonster/startuptime.vim'
 "Codi - A REPL in vim
 " Plug 'metakirby5/codi.vim'
 " Plug 'wincent/ferret'
@@ -169,7 +170,7 @@ let maplocalleader = "\<space>"
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
@@ -185,7 +186,9 @@ inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 nnoremap <silent> <localleader>o :Buffers<CR>
 
 " Launch file search using FZF
-nnoremap <C-P> :FZFR <CR>
+" nnoremap <C-P> :FZFR <CR> "Uses the project's root regardless of where vim is
+" Uses the pwd
+nnoremap <C-P> :Files <CR>
 nnoremap \ :Rg<CR>
 nnoremap <space>\ :Find<space>
 
@@ -212,7 +215,7 @@ let g:neoformat_basic_format_trim = 1
 "-----------------------------------------------------------
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '✖️'
+let g:ale_sign_error         = '✘' "✖️
 let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {'jsx': ['stylelint', 'eslint']}
 let g:ale_linter_aliases     = {'jsx': 'css'}
@@ -482,7 +485,7 @@ augroup VimResizing
   "its tidier
   autocmd VimResized * wincmd =
   autocmd FocusLost * :wa
-  " autocmd VimResized * :redraw! | :echo 'Redrew'
+  autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
 augroup filetype_completion
@@ -500,13 +503,8 @@ augroup filetype_javascript
   autocmd BufWritePost *.js Neoformat
   "==================================
   autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
-  autocmd FileType javascript :iabbrev <buffer> elif else if(){<CR>}<esc>3hi
-  autocmd FileType javascript :iabbrev <buffer> iff if(){<CR>}<esc>hi
-  autocmd FileType javascript :iabbrev <buffer> els else {<CR>}<esc>hi
-  autocmd FileType javascript :iabbrev <buffer> cons console.log()
   autocmd FileType javascript :iabbrev <buffer> und undefined
-  "don't use cindent for javascript
-  autocmd Filetype javascript setlocal nocindent
+  autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   "Folding autocommands for javascript
   " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
   " autocmd Filetype javascript setlocal foldlevelstart=1
@@ -569,6 +567,11 @@ if exists("*mkdir") "auto-create directories for new files
 endif
 augroup END
 
+augroup fugitiveSettings
+  autocmd!
+  autocmd FileType gitcommit setlocal nolist
+  autocmd BufReadPost fugitive://* setlocal bufhidden=delete
+augroup END
 "Close vim if only window is a Nerd Tree
 augroup NERDTree
   autocmd!
@@ -582,6 +585,50 @@ augroup Toggle_number
   autocmd InsertLeave * set relativenumber
 augroup END
 
+function! NeatFoldText()
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '(' . ( lines_count ) . ')'
+  let foldtextstart = strpart('✦' . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(' ', 2 )
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend 
+endfunction
+set foldtext=NeatFoldText()
+" }}}
+" Javascript {{{
+function! FoldText()
+  let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '(' . ( lines_count ) . ')'
+  let foldchar = matchstr(&fillchars, 'fold:\')
+  let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(' ', 2 )
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
+endfunction
+augroup jsfolding
+  autocmd!
+  autocmd FileType javascript setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
+augroup END
+" }}}
+" CSS {{{
+function! CSSFoldText()
+  let line = substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '(' . ( lines_count ) . ')'
+  let foldchar = matchstr(&fillchars, 'fold:\')
+  let foldtextstart = strpart('✦ ' . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(' ', 2 )
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
+endfunction
+augroup ft_css
+  au! 
+  au Filetype css setlocal foldmethod=marker
+  au Filetype css setlocal foldmarker={,}
+  au FileType css setlocal foldtext=CSSFoldText()
+augroup END
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 "}}}
@@ -721,7 +768,7 @@ if has('folding')
 set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
 set fillchars+=fold:-
   endif
-  set foldmethod=indent
+  " set foldmethod=indent "fast fold plugin requires specific filetype folding
   set foldlevelstart=99
   set foldnestmax=3           " deepest fold is 3 levels
 endif
@@ -835,6 +882,7 @@ source ~/Dotfiles/vim/statusline.vim
 "-----------------------------------
 " highlight MatchParen  guibg=#658494 gui=bold "Match parentheses Coloring
 
+set clipboard=unnamed,unnamedplus
 set magic " For regular expressions turn magic on
 set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
@@ -1004,7 +1052,6 @@ function! s:find_root()
       return
     endif
   endfor
-  FZF
 endfunction
 
 command! FZFR call s:find_root()

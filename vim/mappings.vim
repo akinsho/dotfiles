@@ -249,6 +249,6 @@ nnoremap Q J
 
 "Add neovim terminal escape with ESC mapping
 if has("nvim")
-:tnoremap <ESC> <C-\><C-n>
+  tnoremap <ESC> <C-\><C-n>
 endif
 "}}}

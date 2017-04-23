@@ -11,21 +11,18 @@
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 # Need to escape the "!" and "*" characters using /
 # --no-ignore = this flag shows node modules etc
-# export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow --glob "!.git/*"'
-export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow -g "!{.git,node_modules,vendor}/*"'
+
+export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow --glob "!.git/*"'
+# export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow -g "!{.git,node_modules,vendor}/*"'
 
 # export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # export FZF_DEFAULT_COMMAND='ag --nobreak --nonumbers --noheading . | fzf'
 
 # Changed FZF trigger to ; from **
 # export FZF_COMPLETION_TRIGGER=';'
-
-
 # To apply to the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
 export FZF_TMUX=1
-
 
 
 #=============================================================================================================
