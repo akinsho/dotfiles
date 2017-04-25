@@ -142,13 +142,14 @@ else
   set statusline=[%n]\ %<
 endif
 set statusline+=\ %{HasPaste()}
-set statusline+=%5*\ %{g:session}%0*
+set statusline+=%4*\ %{g:session}%0*
 set statusline+=%4*\ %{GitInfo()}%*                        " Git Branch name
-set statusline+=%8*\ %<%.30F\ %{ReadOnly()}\ %m\ %w\        " File+path .30 prefix is for the degree of truncation
+set statusline+=%2*\ %<%.30F\ %{ReadOnly()}\ %M\ %w\        " File+path .30 prefix is for the degree of truncation
+set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
 set statusline+=%#warningmsg#
 set statusline+=%*
 set statusline+=%9*\ %=                                  " Space
-set statusline+=%8*\ %y\                                 " FileType
+set statusline+=%8*\ %Y\ %q\                                " FileType & quick fix or loclist
 "Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
 set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
 set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
@@ -158,6 +159,7 @@ set statusline+=%{ale#statusline#Status()}\
 " set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
 " set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
 " set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+" set statusline+=%t       "tail of the filename
 
 "Need to figure this our in order to change statusline colors
 if has('termguicolors')
@@ -169,12 +171,11 @@ if has('termguicolors')
   hi default link User3 Error
   " fugitive
   hi default link User4 Special
-
-  " hi User2 ctermfg=008 " guifg=bgcolor
-  " hi User1 ctermfg=007 " guifg=fgcolor
-  " hi User3 ctermfg=008 " guifg=fgcolor
+  " hi User1 ctermbg=green ctermfg=red   guibg=green guifg=red
+  " hi User2 ctermbg=red   ctermfg=blue  guibg=red   guifg=blue
+  " hi User3 ctermbg=blue  ctermfg=green guibg=blue  guifg=green
+  " hi User5 guifg=Blue guibg=White
   " hi User4 ctermfg=008 " guifg=fgcolor
-  " hi User5 guifg=#005faf "ctermfg=008  guifg=fgcolor
   " hi User7 guibg=#005faf
   " hi User8 ctermfg=008 " guifg=fgcolor
   " hi User9 ctermfg=007 " guifg=fgcolor

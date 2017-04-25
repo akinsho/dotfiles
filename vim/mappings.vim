@@ -24,6 +24,7 @@ noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
 " and you cannot use Vi style-binding here anyway, because ESC
 " just closes the command line and using Home and End..
 " remap arrow keys
+" c-a / c-e everywhere
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
@@ -47,8 +48,8 @@ xnoremap [Alt]   <Nop>
 " Like gv, but select the last changed text.
 nnoremap gi  `[v`]
 " Specify the last changed text as {motion}.
-vnoremap <silent> gi  :<C-u>normal gc<CR>
 onoremap <silent> gi  :<C-u>normal gc<CR>"`
+vnoremap <silent> gi  :<C-u>normal gc<CR>
 " Capitalize.
 nnoremap gu <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
@@ -87,11 +88,10 @@ xnoremap r <C-v>
 " xnoremap aa  a>
 " onoremap ia  i>
 " xnoremap ia  i>
-"Change two vertically split windows to horizontal splits
-nnoremap <LocalLeader>h <C-W>t <C-W>K
-nnoremap <LocalLeader>v <C-W>t <C-W>H
 "Change two horizontally split windows to vertical splits
-
+nnoremap <LocalLeader>h <C-W>t <C-W>K
+"Change two vertically split windows to horizontal splits
+nnoremap <LocalLeader>v <C-W>t <C-W>H
 "Select txt that has just been read or pasted in
 nnoremap gV `[V`]
 
@@ -200,11 +200,16 @@ nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
 nnoremap <leader>r <C-W>R
 "--------------------------------------------
+"Open Common files
+nnoremap <leader>ez :e ~/.zshrc<cr>
+nnoremap <leader>et :e ~/.tmux.conf<cr>
 
 nnoremap <leader>x :lclose<CR>
 "Indent a page 
 nnoremap <C-G>f gg=G<CR>
-
+" duplicate line and comment (requires vim-commentary)
+nmap <leader>cc yygccp
+xmap <leader>cc m'ygvgc''jp
 "map window keys to leader - Interfere with tmux navigator
 " noremap <C-h> <c-w>h
 " noremap <C-j> <c-w>j
@@ -223,6 +228,9 @@ inoremap <C-B> <C-O>I
 " without switching to the normal mode.
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 inoremap <C-e> <C-o>$
+"Move to beginning of a line in insert mode
+inoremap <c-a> <c-o>0
+inoremap <c-e> <c-o>$
 "Remaps native ctrl k - deleting to the end of a line to control e
 " inoremap <C-Q> <C-K>
 " Map jk to esc key - using jk prevents jump that using ii causes

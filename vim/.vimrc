@@ -14,8 +14,6 @@
 set nocompatible "IMproved, required
 filetype off " required  Prevents potential side-effects
 " from system ftdetects scripts
-"This command makes vim start a file with all folds closed
-set foldlevelstart=0
 "-----------------------------------------------------------
 "PLUGINS {{{
 "-----------------------------------------------------------
@@ -63,9 +61,9 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 if executable("tmux")
 Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
+Plug 'sjl/vitality.vim'
 endif
 "Utilities============================
-" Plug 'sjl/vitality.vim' "Adds cursor change and focus events to tmux vim
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
@@ -87,9 +85,9 @@ Plug 'tpope/vim-unimpaired'
 "Syntax ============================
 Plug 'sheerun/vim-polyglot' "Added vim polyglot a collection of language packs for vim
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'} "Added javascript lib - syntax highlighting for popular libraries
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
-Plug 'plasticboy/vim-markdown', { 'for':'markdown'} "Add proper markdown syntax and indentation plugin
-"Marks =============================
+"'Marks =============================
 Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 "Git ===============================
 Plug 'gregsexton/gitv',{'on':'Gitv'} "Git repo  manipulation plugin
@@ -108,6 +106,7 @@ Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
 
 "Search Tools =======================
+Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
 "Codi - A REPL in vim
@@ -115,27 +114,27 @@ Plug 'metakirby5/codi.vim'
 Plug 'heavenshell/vim-jsdoc' "Add JSDocs plugin
 Plug 'konfekt/fastfold'
 "Start up time monitor
-" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
-"Vim HARDMODE ----------------------
-" Plug 'wikitopian/hardmode'
+Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
 " Preview colors in source code
-Plug 'ap/vim-css-color'
-"Need this for styled components
-" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
+" Plug 'ap/vim-css-color'
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 "Quantum theme
 Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
+" Plug 'chriskempson/base16-vim'
 
+"Vim HARDMODE ----------------------
+" Plug 'wikitopian/hardmode'
 "Plugins I think I need yet never use ===============================
 " Plug 'wincent/ferret'
+"Need this for styled components
+" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
 
 call plug#end()
 
@@ -160,6 +159,19 @@ let maplocalleader = "\<space>"
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
+"--------------------------------------------
+" CTRLSF - CTRL-SHIFT-F
+"--------------------------------------------
+let g:ctrlsf_default_root = 'project' "Search at the project root i.e git or hg folder
+nmap     <C-F>f <Plug>CtrlSFPrompt
+vmap     <C-F>f <Plug>CtrlSFVwordPath
+vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-F>n <Plug>CtrlSFCwordPath
+nmap     <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>o :CtrlSFOpen<CR>
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+
 "--------------------------------------------
 " FZF bindings
 "--------------------------------------------
@@ -197,7 +209,7 @@ function! SearchWordWithRg()
     execute 'Rg' expand('<cword>')
   endfunction
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
-" nnoremap <C-P> :FZFR <CR> 
+" nnoremap <C-P> :FZFR <CR>
 " Uses the pwd
 nnoremap <C-P> :Files <CR>
 nnoremap \ :Rg<CR>
@@ -242,13 +254,14 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gb :Gbrowse<CR> " Open current file on github.com
-vnoremap <leader>gb :Gbrowse<CR> " Make it work in Visual mode to open with highlighted linenumbers
+nnoremap <leader>gb :Gbrowse<CR> "Open current file on github.com
+vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highlighted linenumbers
 " Push the repository of the currently opened file
 " nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 " JSX
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let g:polyglot_disabled = ['jsx', 'markdown'] "Setting I might need in the future
+let g:jsx_ext_required = 1 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 0
@@ -269,9 +282,10 @@ vnoremap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-set conceallevel=1
-let g:javascript_conceal_arrow_function = "⇒"
-let g:javascript_plugin_jsdoc           = 1
+" highlight folded text in gui and cterm
+let g:javascript_conceal_arrow_function="⇒"
+let g:javascript_conceal_null           = "ø"
+let g:javascript_plugin_jsdoc=1
 
 let g:committia_hooks = {}
 
@@ -361,7 +375,6 @@ map <Leader>k <Plug>(easymotion-k)
 "Search with easy motion
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-
 " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
 " Without these mappings, `n` & `N` works fine. (These mappings just provide
 " different highlight method and have some other features )
@@ -478,11 +491,9 @@ augroup filetype_javascript
   autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
-  "Folding autocommands for javascript
-  " autocmd FileType javascript,javascript.jsx setlocal foldmethod=indent foldlevel=1
-  " autocmd Filetype javascript setlocal foldlevelstart=1
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
+  autocmd FileType javascript setlocal concealcursor=nvic
 augroup END
 
 augroup FileType_html
@@ -507,7 +518,9 @@ augroup END
 augroup filetype_vim
   "Vimscript file settings -------------------------
   autocmd!
+"This command makes vim start a file with all folds closed
   autocmd FileType vim setlocal foldmethod=marker
+  autocmd FileType vim setlocal foldlevelstart=0
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
 augroup END
 
@@ -565,7 +578,7 @@ function! NeatFoldText()
   let foldtextstart = strpart('✦' . line, 0, (winwidth(0)*2)/3)
   let foldtextend = lines_count_text . repeat(' ', 2 )
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend 
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend
 endfunction
 set foldtext=NeatFoldText()
 " }}}
@@ -582,7 +595,8 @@ function! FoldText()
 endfunction
 augroup jsfolding
   autocmd!
-  autocmd FileType javascript,javascript.jsx setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
+  autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
+  " autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable
 augroup END
 " }}}
 " CSS {{{
@@ -597,7 +611,7 @@ function! CSSFoldText()
   return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
 endfunction
 augroup ft_css
-  au! 
+  au!
   au Filetype css setlocal foldmethod=marker
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
@@ -702,8 +716,8 @@ nnoremap <leader>n :enew<cr>
 " Opens a new tab
 nnoremap <localleader>n :tabnew<CR>
 
-" Shared bindings from Solution #1 from earlier
-nmap <leader>bq :bp <BAR> bd #<cr>
+" Delete a  buffer
+nnoremap <leader>bq :bp <BAR> bd #<cr>
 
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
@@ -793,7 +807,8 @@ set path+=** "Vim searches recursively through all directories and subdirectorie
 " ----------------------------------------------------------------------------
 " Use faster grep alternatives if possible
 if executable('rg')
-  set grepprg=rg\ --vimgrep\ --no-heading
+  " set grepprg=rg\ --vimgrep\ --no-heading
+  set grepprg=rg\ --smart-case\ --vimgrep\ $*
   set grepformat^=%f:%l:%c:%m
 elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
@@ -826,13 +841,15 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
+" syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
 " This should cause lines to wrap around words rather than random characters
 set linebreak
   let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   if exists('&breakindentopt')
-    set breakindentopt=shift:2 
+    set breakindentopt=shift:2
   endif
 endif
 
@@ -841,8 +858,8 @@ set list                              " show whitespace
 " set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
 " set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
-" set listchars+=tab:▹\ ,
-set listchars+=tab:┆\ ,
+set listchars+=tab:▹\ ,
+" set listchars+=tab:┆\ ,
 set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
 set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
@@ -857,9 +874,13 @@ source ~/Dotfiles/vim/statusline.vim
 
 set clipboard=unnamed,unnamedplus
 set magic " For regular expressions turn magic on
+set gdefault "Makes the g flag available by default so it doesn't have to be specified
+" insert completion height and options
+set pumheight=10
 set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
 set ttyfast " Improves smoothness of redrawing when there are multiple windows
+set ttyscroll=3
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
   set relativenumber
 endif
@@ -913,10 +934,10 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+" let g:vim_jsx_pretty_colorful_config = 1
 let g:vimsyn_folding          = 'af'
-let g:javascript_folding      = 1
 let g:fastfold_skip_filetypes = [ 'taglist' ]
-noremap <F4> :Gitv<CR>
+nmap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -988,7 +1009,7 @@ let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your window.
 
-let g:livedown_autorun = 1 " should markdown preview get shown automatically upon opening markdown buffer
+" let g:livedown_autorun = 1 " should markdown preview get shown automatically upon opening markdown buffer
 let g:livedown_open = 1 " should the browser window pop-up upon previewing
 let g:livedown_port = 1337 " the port on which Livedown server will run
 
@@ -1173,8 +1194,8 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f', '')<CR>
-vnoremap <silent> # :call VisualSelection('b', '')<CR>
+" vnoremap <silent> * :call VisualSelection('f', '')<CR>
+" vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
@@ -1186,9 +1207,9 @@ call NERDTreeHighlightFile('html', 202, 'none', '#FC4709')
 call NERDTreeHighlightFile('hbs', 202, 'none', '#FC4709')
 call NERDTreeHighlightFile('jade', 149, 'none', '#A0D24D')
 call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
-call NERDTreeHighlightFile('scss', 44, 'none', '#1AD0CE')
+call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
-call NERDTreeHighlightFile('js', 226, 'none', '#db7093')
+call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
 call NERDTreeHighlightFile('php', 140, 'none', '#9E6FCD')
@@ -1202,19 +1223,22 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "Set color Scheme
 set background=dark
 colorscheme quantum
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  set t_ut=
+endif
 "BASE16 VIM I GO BACK AND FORTH WITH THIS
 " if filereadable(expand("~/.vimrc_background"))
 "   let base16colorspace=256
 "   source ~/.vimrc_background
 " endif
-
-
 " Comments in ITALICS YASSSSS!!!
 highlight Comment cterm=italic
-
 "Sets no highlighting for conceal
-" hi Conceal ctermbg=none ctermfg=none guifg=NONE guibg=NONE
-
+hi clear Conceal
+hi Folded guifg=#FFC66D
+set conceallevel=1
 "---------------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
