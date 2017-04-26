@@ -17,7 +17,7 @@
         "no-console": 0,
         "no-invalid-this": "error",
         "no-self-compare": "error",
-        "no-useless-return": "error",
+        "no-useless-return": "off",
         "callback-return": "error",
         "global-require": "off",
         "comma-dangle": ["error", "only-multiline"],

@@ -31,11 +31,12 @@ cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-nnoremap <Leader><Leader> :update<CR>
+nnoremap <Leader>s :update<CR>
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>   :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
-" nnoremap <CR> G
+"20 enter to go to line 20
+nnoremap <CR> G
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
 nnoremap ; :

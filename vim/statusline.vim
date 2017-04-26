@@ -1,6 +1,6 @@
+"DIY STATUS LINE ==========================={{{
 " =====================================================================
-"STATUS LINE
-"DIY STATUS (AND TABLINE no longer being used) stolen from https://gabri.me/blog/diy-vim-statusline
+" stolen from https://gabri.me/blog/diy-vim-statusline
 " =====================================================================
  " Dynamically getting the fg/bg colors from the current colorscheme, returns hex 
 let fgcolor=synIDattr(synIDtrans(hlID("Normal")), "fg", "gui")
@@ -126,41 +126,41 @@ if !exists('g:statline_show_n_buffers')
 endif
 
 " Always display the status line even if only one window is displayed
-set laststatus=2
-set statusline=
-set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
-set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
-" ---- number of buffers : buffer number ----
-if g:statline_show_n_buffers
-  set statusline+=%{BufCount()}\:%n\ %<
-  " only calculate buffers after adding/removing buffers
-  augroup statline_nbuf
-    autocmd!
-    autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
-  augroup END
-else
-  set statusline=[%n]\ %<
-endif
-set statusline+=\ %{HasPaste()}
-set statusline+=%4*\ %{g:session}%0*
-set statusline+=%4*\ %{GitInfo()}%*                        " Git Branch name
-set statusline+=%2*\ %<%.30F\ %{ReadOnly()}\ %M\ %w\        " File+path .30 prefix is for the degree of truncation
-set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
-set statusline+=%#warningmsg#
-set statusline+=%*
-set statusline+=%9*\ %=                                  " Space
-set statusline+=%8*\ %Y\ %q\                                " FileType & quick fix or loclist
-"Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
-set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
-set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
-set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\      " The numbers after the % represent degrees of padding
-set statusline+=%{ale#statusline#Status()}\ 
-
-" set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
-" set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
-" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+" set laststatus=2
+" set statusline=
+" set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
+" set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+" " ---- number of buffers : buffer number ----
+" if g:statline_show_n_buffers
+"   set statusline+=%{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
+"   augroup statline_nbuf
+"     autocmd!
+"     autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
+"   augroup END
+" else
+"   set statusline=[%n]\ %<
+" endif
+" set statusline+=\ %{HasPaste()}
+" set statusline+=%4*\ %{g:session}%0*
+" set statusline+=%4*\ %{GitInfo()}%*                         " Git Branch name
+" set statusline+=%2*\ %<%.30F\ %{ReadOnly()}\ %M\ %w\        " File+path .30 prefix is for the degree of truncation
+" set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
+" set statusline+=%#warningmsg#
+" set statusline+=%*
+" set statusline+=%9*\ %=                                     " Space
+" set statusline+=%8*\ %Y\ %q\                                " FileType & quick fix or loclist
+" "Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
+" set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+" set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
+" set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\                 " The numbers after the % represent degrees of padding
+" set statusline+=%{ale#statusline#Status()}\ 
+"==============================================================
 " set statusline+=%t       "tail of the filename
+" set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
+" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
+" set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
 
+"==============================================================
 "Need to figure this our in order to change statusline colors
 if has('termguicolors')
   "filename
@@ -171,15 +171,92 @@ if has('termguicolors')
   hi default link User3 Error
   " fugitive
   hi default link User4 Special
+endif
   " hi User1 ctermbg=green ctermfg=red   guibg=green guifg=red
   " hi User2 ctermbg=red   ctermfg=blue  guibg=red   guifg=blue
   " hi User3 ctermbg=blue  ctermfg=green guibg=blue  guifg=green
-  " hi User5 guifg=Blue guibg=White
   " hi User4 ctermfg=008 " guifg=fgcolor
-  " hi User7 guibg=#005faf
   " hi User8 ctermfg=008 " guifg=fgcolor
   " hi User9 ctermfg=007 " guifg=fgcolor
-endif
+  " hi User5 guifg=Blue guibg=White
+  " hi User7 guibg=#005faf
+"==============================================================}}}
+
+"ALTERNATE STATUSLINE ==============================={{{
+" Statusline (requires Powerline font, with highlight groups using Solarized theme)
+" set statusline=
+" set statusline+=%(%{'help'!=&filetype?bufnr('%'):''}\ \ %)
+" set statusline+=%< " Where to truncate line
+" set statusline+=%f " Path to the file in the buffer, as typed or relative to current directory
+" set statusline+=%{&modified?'\ +':''}
+" set statusline+=%{&readonly?'\ ':''}
+" set statusline+=\ %1*%= " Separation point between left and right aligned items.
+" set statusline+=\ %{''!=#&filetype?&filetype:'none'}
+" set statusline+=%(\ %{(&bomb\|\|'^$\|utf-8'!~#&fileencoding?'\ '.&fileencoding.(&bomb?'-bom':''):'')
+"   \.('unix'!=#&fileformat?'\ '.&fileformat:'')}%)
+" set statusline+=%(\ \ %{&modifiable?(&expandtab?'et\ ':'noet\ ').&shiftwidth:''}%)
+" set statusline+=\ %*\ %2v " Virtual column number.
+" set statusline+=\ %3p%% " Percentage through file in lines as in |CTRL-G|
+""}}}
+
+"LIFEPILLAR'S STATUSLINE ============================{{{
+" Logic for customizing the User1 highlight group is the following
+" - fg = StatusLine fg (if StatusLine colors are reverse)
+" - bg = StatusLineNC bg (if StatusLineNC colors are reverse)
+hi StatusLine term=reverse cterm=reverse gui=reverse ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#002b36
+hi StatusLineNC term=reverse cterm=reverse gui=reverse ctermfg=11 ctermbg=0 guifg=#657b83 guibg=#073642
+hi User1 ctermfg=14 ctermbg=0 guifg=#93a1a1 guibg=#073642
+let g:mode_map = {
+        \  'n': ['NORMAL',  'NormalMode' ],     'no': ['PENDING', 'NormalMode'  ],  'v': ['VISUAL',  'VisualMode' ],
+        \  'V': ['V-LINE',  'VisualMode' ], "\<c-v>": ['V-BLOCK', 'VisualMode'  ],  's': ['SELECT',  'VisualMode' ],
+        \  'S': ['S-LINE',  'VisualMode' ], "\<c-s>": ['S-BLOCK', 'VisualMode'  ],  'i': ['INSERT',  'InsertMode' ],
+        \ 'ic': ['COMPLETE','InsertMode' ],     'ix': ['CTRL-X',  'InsertMode'  ],  'R': ['REPLACE', 'ReplaceMode'],
+        \ 'Rc': ['COMPLETE','ReplaceMode'],     'Rv': ['REPLACE', 'ReplaceMode' ], 'Rx': ['CTRL-X',  'ReplaceMode'],
+        \  'c': ['COMMAND', 'CommandMode'],     'cv': ['COMMAND', 'CommandMode' ], 'ce': ['COMMAND', 'CommandMode'],
+        \  'r': ['PROMPT',  'CommandMode'],     'rm': ['-MORE-',  'CommandMode' ], 'r?': ['CONFIRM', 'CommandMode'],
+        \  '!': ['SHELL',   'CommandMode'],      't': ['TERMINAL', 'CommandMode']}
+
+  let g:ro_sym  = "RO"
+  let g:ma_sym  = "✗"
+  let g:mod_sym = "◇"
+  let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+
+  " newMode may be a value as returned by mode(1) or the name of a highlight group
+  fun! s:updateStatusLineHighlight(newMode)
+    execute 'hi! link CurrMode' get(g:mode_map, a:newMode, ["", a:newMode])[1]
+    return 1
+  endf
+
+  " Setting highlight groups while computing the status line may cause the
+  " startup screen to disappear. See: https://github.com/powerline/powerline/issues/250
+  fun! SetupStl(nr)
+    " In a %{} context, winnr() always refers to the window to which the status line being drawn belongs.
+    return get(extend(w:, {
+          \ "lf_active": winnr() != a:nr
+            \ ? 0
+            \ : (mode(1) ==# get(g:, "lf_cached_mode", "")
+              \ ? 1
+              \ : s:updateStatusLineHighlight(get(extend(g:, { "lf_cached_mode": mode(1) }), "lf_cached_mode"))
+              \ ),
+          \ "lf_winwd": winwidth(winnr())
+          \ }), "", "")
+  endf
+
+set statusline=%!BuildStatusLine(winnr())
+" Build the status line the way I want - no fat light plugins!
+fun! BuildStatusLine(nr)
+  return '%{SetupStl('.a:nr.')}
+        \%#CurrMode#%{w:["lf_active"] ? "  " . get(g:mode_map, mode(1), [mode(1)])[0] . (&paste ? " PASTE " : " ") : ""}%*
+        \ %n %t %{&modified ? g:mod_sym : " "} %{&modifiable ? (&readonly ? g:ro_sym : "  ") : g:ma_sym}
+        \ %<%{w:["lf_winwd"] < 80 ? (w:["lf_winwd"] < 50 ? "" : expand("%:p:h:t")) : expand("%:p:h")}
+        \ %=
+        \ %w %{&ft} %{w:["lf_winwd"] < 80 ? "" : " " . (strlen(&fenc) ? &fenc : &enc) . (&bomb ? ",BOM " : " ")
+        \ . get(g:ff_map, &ff, "?") . (&expandtab ? " ˽ " : " ⇥ ") . &tabstop}
+        \ %#CurrMode#%{w:["lf_active"] ? (w:["lf_winwd"] < 60 ? ""
+        \ : printf(" %d:%-2d %2d%% ", line("."), virtcol("."), 100 * line(".") / line("$"))) : ""}
+        \%#Warnings#%{w:["lf_active"] ? get(b:, "lf_stl_warnings", "") : ""}%*'
+endf
+" ========================================================= {{{{
 
 
 " =========================================================
@@ -224,6 +301,23 @@ set showtabline=1
     let s .= '%999XX' " places an 'X' at the far-right
     return s
   endfunction
-  set tabline=%!MyTabLine()
+  " set tabline=%!MyTabLine()
 endif
+
+  fun! BuildTabLabel(nr)
+    return " " . a:nr
+          \ . (empty(filter(tabpagebuflist(a:nr), 'getbufvar(v:val, "&modified")')) ? " " : " " . g:mod_sym . " ")
+          \ . (get(extend(t:, {
+          \ "tablabel": fnamemodify(bufname(tabpagebuflist(a:nr)[tabpagewinnr(a:nr) - 1]), ":t")
+          \ }), "tablabel") == "" ? "[No Name]" : get(t:, "tablabel")) . "  "
+  endf
+
+  fun! BuildTabLine()
+    return join(map(
+          \ range(1, tabpagenr('$')),
+          \ '(v:val == tabpagenr() ? "%#TabLineSel#" : "%#TabLine#") . "%".v:val."T %{BuildTabLabel(".v:val.")}"'
+          \), '') . "%#TabLineFill#%T" . (tabpagenr('$') > 1 ? "%=%999X✕ " : "")
+  endf
+
+  set tabline=%!BuildTabLine()
 "===============================================================================================}}}

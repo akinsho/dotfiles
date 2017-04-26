@@ -51,7 +51,6 @@ endif
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
-" Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' "FZF improved wrapper by June Gunn + the man who maintains syntastic
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'sbdchd/neoformat' " Autoformatter
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
@@ -61,7 +60,7 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 if executable("tmux")
 Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-Plug 'sjl/vitality.vim'
+" Plug 'sjl/vitality.vim'
 endif
 "Utilities============================
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
@@ -110,11 +109,10 @@ Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
 "Codi - A REPL in vim
-Plug 'metakirby5/codi.vim'
-Plug 'heavenshell/vim-jsdoc' "Add JSDocs plugin
+" Plug 'metakirby5/codi.vim'
+Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'konfekt/fastfold'
-"Start up time monitor
-Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
+Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
@@ -124,14 +122,13 @@ Plug 'shime/vim-livedown' "Add better markdown previewer
 " Plug 'ap/vim-css-color'
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
-"Quantum theme
-Plug 'tyrannicaltoucan/vim-quantum'
+Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
+Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
-" Plug 'chriskempson/base16-vim'
 
+"Plugins I think I need yet never use ===============================
 "Vim HARDMODE ----------------------
 " Plug 'wikitopian/hardmode'
-"Plugins I think I need yet never use ===============================
 " Plug 'wincent/ferret'
 "Need this for styled components
 " Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
@@ -277,15 +274,18 @@ nnoremap <C-F> :Neoformat<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vnoremap <Enter> <Plug>(EasyAlign)
-
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-" highlight folded text in gui and cterm
-let g:javascript_conceal_arrow_function="⇒"
+let g:javascript_conceal_arrow_function = "⇒"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_this                 = "@"
+let g:javascript_conceal_return               = "⇚"
+let g:javascript_conceal_undefined            = "¿"
+let g:javascript_conceal_NaN                  = "ℕ"
 let g:javascript_conceal_null           = "ø"
-let g:javascript_plugin_jsdoc=1
+let g:javascript_plugin_jsdoc           = 1
 
 let g:committia_hooks = {}
 
@@ -386,7 +386,8 @@ map  N <Plug>(easymotion-prev)
 "=======================================================================
 "Emmet for vim leader keymap
 let g:user_emmet_leader_key     = "<s-tab>"
-let g:user_emmet_expandabbr_key = '<C-y>'
+let g:user_emmet_expandabbr_key = "<s-tab>"
+" let g:user_emmet_expandabbr_key = '<C-y>'
 
 "Add mapping for Gundo vim
 nnoremap <leader>u :GundoToggle<CR>
@@ -570,7 +571,7 @@ augroup Toggle_number
   autocmd InsertEnter * set relativenumber!
   autocmd InsertLeave * set relativenumber
 augroup END
-
+"Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
   let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
   let lines_count = v:foldend - v:foldstart + 1
@@ -715,17 +716,11 @@ nnoremap <silent> <leader>z :ZoomToggle<CR>
 nnoremap <leader>n :enew<cr>
 " Opens a new tab
 nnoremap <localleader>n :tabnew<CR>
-
-" Delete a  buffer
-nnoremap <leader>bq :bp <BAR> bd #<cr>
-
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nnoremap ,q :bp <BAR> bd #<CR>
-
 " " Show all open buffers and their status
-" nmap <leader>bl :ls<CR>
-
+nnoremap <leader>bl :ls<CR>
 "}}}
 " ----------------------------------------------------------------------------
 " Message output on vim actions
@@ -847,7 +842,8 @@ set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
 " This should cause lines to wrap around words rather than random characters
 set linebreak
-  let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+  " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+  let &showbreak='↪ '
   if exists('&breakindentopt')
     set breakindentopt=shift:2
   endif
@@ -858,10 +854,12 @@ set list                              " show whitespace
 " set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
 " set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
-set listchars+=tab:▹\ ,
 " set listchars+=tab:┆\ ,
-set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+" set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+" set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+set listchars+=tab:▹\ ,
+set listchars+=precedes:←
+set listchars+=extends:→
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
@@ -871,7 +869,6 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 source ~/Dotfiles/vim/statusline.vim
 "-----------------------------------
 " highlight MatchParen  guibg=#658494 gui=bold "Match parentheses Coloring
-
 set clipboard=unnamed,unnamedplus
 set magic " For regular expressions turn magic on
 set gdefault "Makes the g flag available by default so it doesn't have to be specified
@@ -934,9 +931,10 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
-" let g:vim_jsx_pretty_colorful_config = 1
+let g:vim_jsx_pretty_colorful_config = 1
 let g:vimsyn_folding          = 'af'
 let g:fastfold_skip_filetypes = [ 'taglist' ]
+
 nmap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax        = 1
@@ -952,7 +950,6 @@ let g:github_dashboard = {
     \'password': $GITHUB_TOKEN
     \}
 nnoremap <F1> :GHDashboard! Akin909<CR>
-
 "------------------------------------
 " Goyo
 "------------------------------------
@@ -1112,6 +1109,21 @@ inoremap … <C-R><C-P>0
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+" See http://stackoverflow.com/questions/4064651/what-is-the-best-way-to-do-smooth-scrolling-in-vim
+  fun! s:smoothScroll(up)
+    execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+    redraw
+    for l:count in range(3, &scroll, 2)
+      sleep 10m
+      execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+      redraw
+    endfor
+  endf
+nnoremap <silent> <c-b> :call <sid>smoothScroll(1)<cr>
+nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
+" nnoremap <silent> K :call <sid>smoothScroll(1)<cr>
+" nnoremap <silent> J :call <sid>smoothScroll(0)<cr>
+
 " for better tab response for emmet
 function! s:expand_html_tab()
     " try to determine if we're within quotes or tags.
@@ -1125,7 +1137,7 @@ function! s:expand_html_tab()
     endif
     " expand anything emmet thinks is expandable.
     if emmet#isExpandable()
-        return "\<C-y>,"
+        return "\<s-tab>,"
     endif
     " return a regular tab character
     return "\<tab>"
@@ -1238,7 +1250,7 @@ highlight Comment cterm=italic
 "Sets no highlighting for conceal
 hi clear Conceal
 hi Folded guifg=#FFC66D
-set conceallevel=1
+set conceallevel=2
 "---------------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
