@@ -69,6 +69,8 @@ endfunction
 function! ReadOnly()
   if &readonly || !&modifiable
     return ''
+  elseif &modified
+    return g:mod_sym
   else
     return ''
 endfunction
@@ -126,40 +128,42 @@ if !exists('g:statline_show_n_buffers')
 endif
 
 " Always display the status line even if only one window is displayed
-" set laststatus=2
-" set statusline=
-" set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
-" set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
-" " ---- number of buffers : buffer number ----
-" if g:statline_show_n_buffers
-"   set statusline+=%{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
-"   augroup statline_nbuf
-"     autocmd!
-"     autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
-"   augroup END
-" else
-"   set statusline=[%n]\ %<
-" endif
-" set statusline+=\ %{HasPaste()}
-" set statusline+=%4*\ %{g:session}%0*
-" set statusline+=%4*\ %{GitInfo()}%*                         " Git Branch name
+set laststatus=2
+set statusline=
+set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
+set statusline+=\ %{toupper(g:currentmode[mode()])}   " Current mode
+" ---- number of buffers : buffer number ----
+if g:statline_show_n_buffers
+  set statusline+=%{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
+  augroup statline_nbuf
+    autocmd!
+    autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
+  augroup END
+else
+  set statusline=[%n]\ %<
+endif
+" --------------------------------------------
+set statusline+=\ %{HasPaste()}
+set statusline+=\ %{g:session}
+set statusline+=\ %{GitInfo()}
+set statusline+=\ %<%.30F\ %w
+set statusline+=%{ReadOnly()}\ 
+set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
+set statusline+=%#warningmsg#
+set statusline+=%*
+set statusline+=\ %=                                     " Space
+set statusline+=\ %Y\ %q\                                " FileType & quick fix or loclist
+"Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
+set statusline+=%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}
+set statusline+=\ %-3(%{FileSize()}%)                 " File size
+set statusline+=\ %3p%%\ \ %l\ of\ %1L\                 " The numbers after the % represent degrees of padding
+set statusline+=%{ale#statusline#Status()}\ 
+" =============================================================
+"Truncated file path %<%t
+" set statusline+=\CWD:\ %r%.35{getcwd(winnr)}%h\ 
 " set statusline+=%2*\ %<%.30F\ %{ReadOnly()}\ %M\ %w\        " File+path .30 prefix is for the degree of truncation
-" set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
-" set statusline+=%#warningmsg#
-" set statusline+=%*
-" set statusline+=%9*\ %=                                     " Space
-" set statusline+=%8*\ %Y\ %q\                                " FileType & quick fix or loclist
-" "Wrote this one myself expecting it to bug out any day now... stops needless utf8 flag but will point out hopefully if something weird shows up
-" set statusline+=%{(&fenc==#'utf-8')?'':(&fenc!=#'utf-8')?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
-" set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
-" set statusline+=%0*\ %3p%%\ \ %l\ of\ %1L\                 " The numbers after the % represent degrees of padding
-" set statusline+=%{ale#statusline#Status()}\ 
-"==============================================================
-" set statusline+=%t       "tail of the filename
-" set statusline+=\CWD:\ %r%.20{getcwd()}%h\ 
-" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
 " set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
-
+" set statusline+=%{strlen(&fenc)?&fenc:&enc}\ %{(&ff==#'unix')?'':(&ff==#'dos')?'CRLF':&ff}
 "==============================================================
 "Need to figure this our in order to change statusline colors
 if has('termguicolors')
@@ -197,7 +201,7 @@ endif
 " set statusline+=%(\ \ %{&modifiable?(&expandtab?'et\ ':'noet\ ').&shiftwidth:''}%)
 " set statusline+=\ %*\ %2v " Virtual column number.
 " set statusline+=\ %3p%% " Percentage through file in lines as in |CTRL-G|
-""}}}
+"}}}
 
 "LIFEPILLAR'S STATUSLINE ============================{{{
 " Logic for customizing the User1 highlight group is the following
@@ -216,7 +220,7 @@ let g:mode_map = {
         \  'r': ['PROMPT',  'CommandMode'],     'rm': ['-MORE-',  'CommandMode' ], 'r?': ['CONFIRM', 'CommandMode'],
         \  '!': ['SHELL',   'CommandMode'],      't': ['TERMINAL', 'CommandMode']}
 
-  let g:ro_sym  = "RO"
+  let g:ro_sym  = ''
   let g:ma_sym  = "✗"
   let g:mod_sym = "◇"
   let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
@@ -242,7 +246,7 @@ let g:mode_map = {
           \ }), "", "")
   endf
 
-set statusline=%!BuildStatusLine(winnr())
+" set statusline=%!BuildStatusLine(winnr())
 " Build the status line the way I want - no fat light plugins!
 fun! BuildStatusLine(nr)
   return '%{SetupStl('.a:nr.')}
@@ -266,7 +270,6 @@ endf
 
 if exists("+showtabline")
 set showtabline=1
-" set tabline="%1T"
   function! MyTabLine()
     let s = ''
     for i in range(tabpagenr('$'))
@@ -320,4 +323,5 @@ endif
   endf
 
   set tabline=%!BuildTabLine()
+  set showtabline=2
 "===============================================================================================}}}

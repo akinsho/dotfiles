@@ -1,6 +1,10 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
+"Use this to ensure mappings dont already exist
+" if !hasmapto('\ABCdoit')
+"    map <Leader>d \ABCdoit
+" endif
 " Close all the buffers
 nnoremap <leader>ba :1,1000 bd!<cr>
 " Quickly edit your macros
@@ -35,8 +39,7 @@ nnoremap <Leader>s :update<CR>
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>   :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
-"20 enter to go to line 20
-nnoremap <CR> G
+" nnoremap <CR> G "20 enter to go to line 20
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
 nnoremap ; :
@@ -52,7 +55,7 @@ nnoremap gi  `[v`]
 onoremap <silent> gi  :<C-u>normal gc<CR>"`
 vnoremap <silent> gi  :<C-u>normal gc<CR>
 " Capitalize.
-nnoremap gu <ESC>gUiw`]
+nnoremap õ <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
 
 " Smart }."

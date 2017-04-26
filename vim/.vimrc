@@ -617,8 +617,7 @@ augroup ft_css
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
 augroup END
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
+let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 "}}}
 "====================================================================================
 "Spelling
@@ -816,7 +815,7 @@ set wildmenu
 set wildmode=full       " Shows a menu bar as opposed to an enormous list
 set wildcharm=<C-Z>
 nnoremap <leader><tab> :b <C-Z>
-set wildignorecase
+set wildignorecase " Ignore case when completing file names and directories
 " Binary
 set wildignore+=*.aux,*.out,*.toc
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.jar,*.pyc,*.rbc,*.class
@@ -884,12 +883,11 @@ endif
 set number
 set linespace=4
 set numberwidth=5
-"Turns on smart indent which can help indent files like html natively
-set smartindent
+set report=0 " Always show # number yanked/deleted lines
+set smartindent "Turns on smart indent which can help indent files like html natively
 set wrap
 set textwidth=79
-"Use one space, not two, after punctuation
-set nojoinspaces
+set nojoinspaces "Use one space, not two, after punctuation
 set autowrite "Automatically :write before running commands
 set backspace=2 "Back space deletes like most programs in insert mode
 if has('vim')
@@ -903,7 +901,7 @@ set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and co
 if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
-if has('termguicolors') " Don't need this in xterm-256color, but do need it inside tmux. (See `:h xterm-true-color`.)
+if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app' " Don't need this in xterm-256color, but do need it inside tmux. (See `:h xterm-true-color`.)
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
   if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
     let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
