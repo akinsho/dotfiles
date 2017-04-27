@@ -103,7 +103,7 @@ if (strlen(v:servername)>0)
 elseif !has('gui_running')
   " If running CLI vim say TMUX or use the terminal name.
   if (exists("$TMUX"))
-    let g:session = 'TMUX'
+    let g:session = 'Tmux'
   else
     " Giving preference to color-term because that might be more
     " meaningful in graphical environments. Eg. my $TERM is
@@ -131,10 +131,10 @@ endif
 set laststatus=2
 set statusline=
 set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
-set statusline+=\ %{toupper(g:currentmode[mode()])}   " Current mode
+set statusline+=\ %{toupper(g:currentmode[mode()])} " Current mode
 " ---- number of buffers : buffer number ----
 if g:statline_show_n_buffers
-  set statusline+=%{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
+  set statusline+=\ %{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
   augroup statline_nbuf
     autocmd!
     autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
@@ -152,9 +152,8 @@ set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
 set statusline+=%#warningmsg#
 set statusline+=%*
 set statusline+=\ %=                                     " Space
-set statusline+=\ %Y\ %q\                                " FileType & quick fix or loclist
-"Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
-set statusline+=%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}
+set statusline+=\ %{&ft}\ %q\   " FileType & quick fix or loclist given as variable with '&' so nice and lowercase
+set statusline+=%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop} "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 set statusline+=\ %-3(%{FileSize()}%)                 " File size
 set statusline+=\ %3p%%\ \ %l\ of\ %1L\                 " The numbers after the % represent degrees of padding
 set statusline+=%{ale#statusline#Status()}\ 
@@ -201,7 +200,7 @@ endif
 " set statusline+=%(\ \ %{&modifiable?(&expandtab?'et\ ':'noet\ ').&shiftwidth:''}%)
 " set statusline+=\ %*\ %2v " Virtual column number.
 " set statusline+=\ %3p%% " Percentage through file in lines as in |CTRL-G|
-"}}}
+"====================================================}}}
 
 "LIFEPILLAR'S STATUSLINE ============================{{{
 " Logic for customizing the User1 highlight group is the following

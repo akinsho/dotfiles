@@ -83,8 +83,9 @@ Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
 "Syntax ============================
 Plug 'sheerun/vim-polyglot' "Added vim polyglot a collection of language packs for vim
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'} "Added javascript lib - syntax highlighting for popular libraries
 Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'} "Added javascript lib - syntax highlighting for popular libraries
+Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 "'Marks =============================
 Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
@@ -93,50 +94,39 @@ Plug 'gregsexton/gitv',{'on':'Gitv'} "Git repo  manipulation plugin
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
 Plug 'rhysd/committia.vim' "create diff window and Gstatus window on commit
-
 "Text Objects =====================
 Plug 'kana/vim-textobj-user' "Text object library plugin for defining your own text objects
 Plug 'glts/vim-textobj-comment' "Text obj for comments
 Plug 'rhysd/vim-textobj-conflict' "Conflict marker text objects
-" Add text objects form camel cased strings (should be native imho)
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
-
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
-
 "Coding tools =======================
-"Codi - A REPL in vim
-" Plug 'metakirby5/codi.vim'
-Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'konfekt/fastfold'
-Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
+Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
-
+Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
+Plug 'lifepillar/vim-cheat40'
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
-" Preview colors in source code
-" Plug 'ap/vim-css-color'
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
-Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
 "Vim HARDMODE ----------------------
 " Plug 'wikitopian/hardmode'
-" Plug 'wincent/ferret'
-"Need this for styled components
-" Plug 'fleischie/vim-styled-components' "in Alpha ergo Buggy AF ATM
-
+" Preview colors in source code
+" Plug 'ap/vim-css-color'
+"Codi - A REPL in vim
 call plug#end()
 
 filetype plugin indent on
-
 "Added built in match it plugin to vim the longer command a la tpope only loads
 "this the user has not already installed a new version of matchit
 " packadd! matchit
@@ -149,10 +139,8 @@ syntax enable
 "====================================================================================
 "Leader bindings
 "====================================================================================
-"Remap leader key
-let mapleader = ","
-"Local leader key
-let maplocalleader = "\<space>"
+let mapleader = "," "Remap leader key
+let maplocalleader = "\<space>" "Local leader key
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
@@ -208,8 +196,15 @@ function! SearchWordWithRg()
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
 " nnoremap <C-P> :FZFR <CR>
 " Uses the pwd
-nnoremap <C-P> :Files <CR>
+
+fun! s:fzf_root()
+  let path = finddir(".git", expand("%:p:h").";")
+  return fnamemodify(substitute(path, ".git", "", ""), ":p:h")
+endfun
+
+nnoremap <silent> <C-P>:exe 'Files ' . <SID>fzf_root()<CR>
 nnoremap \ :Rg<CR>
+" nnoremap <C-P> :Files <CR>
 " nnoremap <space>\ :Find<space>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
 
@@ -227,10 +222,6 @@ omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 "--------------------------------------------
-" Use formatprg when available
-let g:neoformat_try_formatprg = 1
-" Enable trimmming of trailing whitespace
-let g:neoformat_basic_format_trim = 1
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
@@ -257,11 +248,11 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 " nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 " JSX
-let g:polyglot_disabled = ['jsx', 'markdown'] "Setting I might need in the future
-let g:jsx_ext_required = 1 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
+let g:polyglot_disabled = ['jsx'] "Setting I might need in the future
+let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
 let g:gitgutter_sign_modified = '•'
-let g:gitgutter_eager = 0
+let g:gitgutter_eager = 1
 let g:gitgutter_sign_added    = '❖'
 let g:gitgutter_sign_column_always = 1
 let g:gitgutter_eager              = 0
@@ -279,12 +270,9 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
 let g:javascript_conceal_arrow_function = "⇒"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_this                 = "@"
-let g:javascript_conceal_return               = "⇚"
-let g:javascript_conceal_undefined            = "¿"
-let g:javascript_conceal_NaN                  = "ℕ"
 let g:javascript_conceal_null           = "ø"
+let g:javascript_conceal_return         = "⇚"
+let g:javascript_conceal_undefined      = "¿"
 let g:javascript_plugin_jsdoc           = 1
 
 let g:committia_hooks = {}
@@ -292,7 +280,6 @@ let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
   " Additional settings
   setlocal spell
-
   " If no commit message, start with insert mode
   if a:info.vcs ==# 'git' && getline(1) ==# ''
     startinsert
@@ -324,7 +311,6 @@ nnoremap <Leader>vq :VimuxCloseRunner<CR>
 nnoremap <Leader>vx :VimuxInterruptRunner<CR>
 " Zoom the runner pane (use <bind-key> z to restore runner pane)
 nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
-
 
 "Vim-Signature ==================================================
 let g:SignatureMarkTextHLDynamic=1
@@ -385,11 +371,10 @@ map  N <Plug>(easymotion-prev)
 "                    EMMET for Vim
 "=======================================================================
 "Emmet for vim leader keymap
-let g:user_emmet_leader_key     = "<s-tab>"
-let g:user_emmet_expandabbr_key = "<s-tab>"
-" let g:user_emmet_expandabbr_key = '<C-y>'
+let g:user_emmet_leader_key     = "<C-Y>"
+let g:user_emmet_expandabbr_key =  "<C-Y>"
+" let g:user_emmet_leader_key     = "<s-tab>"
 
-"Add mapping for Gundo vim
 nnoremap <leader>u :GundoToggle<CR>
 
 "Set up libraries to highlight with library syntax highlighter
@@ -489,7 +474,7 @@ augroup filetype_javascript
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
   autocmd BufWritePost *.js Neoformat
   "==================================
-  autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+  " autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
@@ -501,7 +486,10 @@ augroup FileType_html
   autocmd!
   "for emmet
   autocmd FileType html imap <buffer><expr><tab> <sid>expand_html_tab()
-  autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+  autocmd Filetype html noremap <buffer> <C-G> :Neoformat<CR>
+
+  autocmd BufWritePost *.html Neoformat
+  autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
 
@@ -567,9 +555,11 @@ augroup END
 
 augroup Toggle_number
   autocmd!
-  " toggle relativenumber according to mode
+  " toggle relativenumber according to mode, don't do this for markdown
+  if &ft != 'markdown'
   autocmd InsertEnter * set relativenumber!
   autocmd InsertLeave * set relativenumber
+endif
 augroup END
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
@@ -616,6 +606,7 @@ augroup ft_css
   au Filetype css setlocal foldmethod=marker
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
+  au BufWritePost *.css Neoformat
 augroup END
 let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 "}}}
@@ -660,7 +651,6 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-
 if !has('nvim')
 function! ToggleMouse()
   " check if mouse is enabled
@@ -673,18 +663,18 @@ function! ToggleMouse()
   endif
 endfunc
 "Try being more lenient
-" noremap <ScrollWheelUp>      <nop>
-" noremap <S-ScrollWheelUp>    <nop>
-" noremap <C-ScrollWheelUp>    <nop>
-" noremap <ScrollWheelDown>    <nop>
-" noremap <S-ScrollWheelDown>  <nop>
-" noremap <C-ScrollWheelDown>  <nop>
-" noremap <ScrollWheelLeft>    <nop>
-" noremap <S-ScrollWheelLeft>  <nop>
-" noremap <C-ScrollWheelLeft>  <nop>
-" noremap <ScrollWheelRight>   <nop>
-" noremap <S-ScrollWheelRight> <nop>
-" noremap <C-ScrollWheelRight> <nop>
+noremap <ScrollWheelUp>      <nop>
+noremap <S-ScrollWheelUp>    <nop>
+noremap <C-ScrollWheelUp>    <nop>
+noremap <ScrollWheelDown>    <nop>
+noremap <S-ScrollWheelDown>  <nop>
+noremap <C-ScrollWheelDown>  <nop>
+noremap <ScrollWheelLeft>    <nop>
+noremap <S-ScrollWheelLeft>  <nop>
+noremap <C-ScrollWheelLeft>  <nop>
+noremap <ScrollWheelRight>   <nop>
+noremap <S-ScrollWheelRight> <nop>
+noremap <C-ScrollWheelRight> <nop>
 nnoremap <F7> :call ToggleMouse()<CR>
 endif
 "}}}
@@ -730,6 +720,7 @@ set shortmess+=A                      " ignore annoying swapfile messages
 set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
+set shortmess-=l
 " set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 " set shortmess+=I                      " no splash screen
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
@@ -793,7 +784,9 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Vim Path
 " ----------------------------------------------------------------------------
-set path+=** "Vim searches recursively through all directories and subdirectories
+" set path+=** "Vim searches recursively through all directories and subdirectories
+set path+=**/src/main/**,** " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
+set suffixesadd+=.js
 " set autochdir
 
 " ----------------------------------------------------------------------------
@@ -849,26 +842,22 @@ set linebreak
 endif
 
 " LIST =============================================================
-set list                              " show whitespace
-" set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-" set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
-                                      " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
-" set listchars+=tab:┆\ ,
-" set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-" set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-set listchars+=tab:▹\ ,
+set list                              " show invisible chars
+set listchars+=tab:▷\ ,
 set listchars+=precedes:←
 set listchars+=extends:→
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
-set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
 " =====================================================================
 " STATUS LINE --------------------
 " see statuline.vim file
 source ~/Dotfiles/vim/statusline.vim
 "-----------------------------------
 " highlight MatchParen  guibg=#658494 gui=bold "Match parentheses Coloring
-set clipboard=unnamed,unnamedplus
+if has('unnamed')
+  set clipboard=unnamed,unnamedplus
+endif
+set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
 set magic " For regular expressions turn magic on
 set gdefault "Makes the g flag available by default so it doesn't have to be specified
 " insert completion height and options
@@ -929,6 +918,23 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+let g:neoformat_html_jsbeautify = {
+      \ 'exe': 'htmlbeautify',
+      \ 'args': [],
+      \ 'stdin': 1,
+      \ }
+let g:neoformat_enabled_html = ['htmlbeautify']
+
+let g:neoformat_css_jsbeautify = {
+      \ 'exe': 'cssbeautify',
+      \ 'stdin': 1,
+      \ }
+let g:neoformat_enabled_css = ['cssbeautify']
+
+let g:neoformat_try_formatprg = 1 " Use formatprg when available
+let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
+let g:neoformat_only_msg_on_error = 1
+
 let g:vim_jsx_pretty_colorful_config = 1
 let g:vimsyn_folding          = 'af'
 let g:fastfold_skip_filetypes = [ 'taglist' ]
@@ -937,11 +943,11 @@ nmap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
+
 let g:tern_show_argument_hints                = 'on_hold'
 let g:tern_map_keys                           = 1
 let g:tern_show_signature_in_pum              = 1
-" Stop folding markdown please
-let g:vim_markdown_folding_disabled           = 1
+let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
 
 let g:github_dashboard = {
     \'username': 'Akin909',
@@ -957,6 +963,7 @@ function! s:goyo_enter()
   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
   set noshowmode
   set noshowcmd
+  set nonumber
   set scrolloff=999
 endfunction
 
@@ -965,6 +972,8 @@ function! s:goyo_leave()
   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
   set showmode
   set showcmd
+  set number
+  set relativenumber
   set scrolloff=5
 endfunction
 
@@ -1007,8 +1016,7 @@ let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your wi
 " let g:livedown_autorun = 1 " should markdown preview get shown automatically upon opening markdown buffer
 let g:livedown_open = 1 " should the browser window pop-up upon previewing
 let g:livedown_port = 1337 " the port on which Livedown server will run
-
-let delimitMate_expand_cr          = 1
+let delimitMate_expand_cr          = 2
 let delimitMate_expand_space       = 1
 let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
@@ -1022,9 +1030,7 @@ function! Scratch(ft)
   execute 'Codi ' . a:ft
 endfunction
 
-" command! -nargs=? Scratch execute s:Scratch("<args>")
 nnoremap <silent> <leader>JS :call Scratch('javascript')<CR>
-
 " ================================================
 " FZF
 " ================================================
@@ -1075,7 +1081,6 @@ nmap <silent> co <Plug>(jsdoc)
 let g:vimjs#smartcomplete = 1 " Disabled by default. Enabling this will let vim complete matches at any location e.g. typing 'document' will suggest 'document' if enabled.
 let g:vimjs#chromeapis = 1 " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
-
 if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')
     call webdevicons#refresh()
@@ -1093,7 +1098,6 @@ let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands'
 
 "This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
-
 "   Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
 "   saves on moving pane but only the currently opened buffer if changed
@@ -1119,28 +1123,15 @@ inoremap … <C-R><C-P>0
   endf
 nnoremap <silent> <c-b> :call <sid>smoothScroll(1)<cr>
 nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
-" nnoremap <silent> K :call <sid>smoothScroll(1)<cr>
-" nnoremap <silent> J :call <sid>smoothScroll(0)<cr>
 
 " for better tab response for emmet
-function! s:expand_html_tab()
-    " try to determine if we're within quotes or tags.
-    " if so, assume we're in an emmet fill area.
-    let line = getline('.')
-    if col('.') < len(line)
-        let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-        if len(line) >= 2
-            return "\<C-n>"
-        endif
-    endif
-    " expand anything emmet thinks is expandable.
-    if emmet#isExpandable()
-        return "\<s-tab>,"
-    endif
-    " return a regular tab character
-    return "\<tab>"
-  endfunction
-
+function! s:emmet_html_tab()
+  let line = getline('.')
+  if match(line, '<.*>') >= 0
+    return "\<c-y>n"
+  endif
+  return "\<c-y>"
+endfunction
 " Function to use f to search backwards and forwards courtesy of help docs
 " [WIP] see section H getpwd()
 " function FindChar()
@@ -1160,8 +1151,6 @@ function! s:expand_html_tab()
 "   endwhile
 "   return c
 " endfunction
-
-" nmap f :call GetKey()<CR>
 
 function! WrapForTmux(s)
   if !exists('$TMUX')
@@ -1238,11 +1227,6 @@ if &term =~ '256color'
   " render properly when inside 256-color tmux and GNU screen.
   set t_ut=
 endif
-"BASE16 VIM I GO BACK AND FORTH WITH THIS
-" if filereadable(expand("~/.vimrc_background"))
-"   let base16colorspace=256
-"   source ~/.vimrc_background
-" endif
 " Comments in ITALICS YASSSSS!!!
 highlight Comment cterm=italic
 "Sets no highlighting for conceal
@@ -1344,6 +1328,7 @@ set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
 set nohlsearch " -functionality i.e. search highlighting done by easy motion and incsearch
+set matchpairs+=<:>
 
 " ----------------------------------------------------------------------------
 " CURSOR  "{{{

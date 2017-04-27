@@ -10,15 +10,21 @@ nnoremap <leader>ba :1,1000 bd!<cr>
 " Quickly edit your macros
 " Usage <leader>m or "q<leader>m
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+ " Shortcuts
+ " Change Working Directory to that of the current file
+ cmap cwd lcd %:p:h
+ cmap cd. lcd %:p:h
+ " For when you forget to sudo.. Really Write the file.
+ cmap w!! w !sudo tee % >/dev/null
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " => VISUAL MODE RELATED
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " ; and , search
 " forward/backward regardless of the direction of the previous
-" character search: 
-nnoremap <expr> : getcharsearch().forward ? ';' : ','
-nnoremap <expr> , getcharsearch().forward ? ',' : ';'
+" character search: doesn't work
+" nnoremap <expr> : getcharsearch().forward ? ';' : ','
+" nnoremap <expr> , getcharsearch().forward ? ',' : ';'
 " Treat long lines as break lines (useful when moving around in them).
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
@@ -75,23 +81,24 @@ endwhile
 endfunction
 " Select rectangle.
 xnoremap r <C-v>
+" Made mappings recursize to work with targets plugin
 " 'quote'
-" onoremap aq  a'
-" xnoremap aq  a'
-" onoremap iq  i'
-" xnoremap iq  i'
+omap aq  a'
+xmap aq  a'
+omap iq  i'
+xmap iq  i'
 
 " \"double quote"
-" onoremap ad  a"
-" xnoremap ad  a"
-" onoremap id  i"
-" xnoremap id  i"
+omap ad  a"
+xmap ad  a"
+omap id  i"
+xmap id  i"
 
-" <angle>
-" onoremap aa  a>
-" xnoremap aa  a>
-" onoremap ia  i>
-" xnoremap ia  i>
+" <angle> 
+omap aa  a>
+xmap aa  a>
+omap ia  i>
+xmap ia  i>
 "Change two horizontally split windows to vertical splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
@@ -108,8 +115,10 @@ vmap ê ]egv
 
 "Line completion - native vim
 inoremap ç <C-X><C-L>
-"Replace current word with last deleted word
-nnoremap S diw"0P
+" find visually selected text
+vnoremap * y/<C-R>"<CR>
+" replace word under cursor
+nnoremap S :%s/\<<C-R><C-W>\>//gc<Left><Left><Left>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 " nnoremap ó :update<CR>
@@ -259,7 +268,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 "This maps leader quote (single or double to wrap the word in quotes)
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-nnoremap <leader>< viw<esc>a ><esc>bi<<esc>lel
 " Remap going to beginning and end of lines
 " move to beginning/end of line
 nnoremap H ^
