@@ -42,7 +42,6 @@ Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
 Plug 'Raimondi/delimitMate' "Add delimitmate
-Plug 'moll/vim-node', { 'for':'javascript'} "Added node.vim plugin
 Plug 'easymotion/vim-easymotion' "Added easy motions
 function! BuildTern(info)
 if a:info.status == 'installed' || a:info.force
@@ -53,9 +52,8 @@ Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompl
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'sbdchd/neoformat' " Autoformatter
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
 Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
-Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
+Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
 "TMUX ============================
 if executable("tmux")
 Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
@@ -81,16 +79,16 @@ Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-abolish'
 "Syntax ============================
-Plug 'sheerun/vim-polyglot' "Added vim polyglot a collection of language packs for vim
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'} "Added javascript lib - syntax highlighting for popular libraries
+" Plug 'sheerun/vim-polyglot' "Added vim polyglot a collection of language packs for vim
+Plug 'pangloss/vim-javascript', { 'for': 'javascript'} | Plug 'MaxMEllon/vim-jsx-pretty' | Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 "'Marks =============================
 Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 "Git ===============================
-Plug 'gregsexton/gitv',{'on':'Gitv'} "Git repo  manipulation plugin
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
 Plug 'rhysd/committia.vim' "create diff window and Gstatus window on commit
@@ -110,9 +108,10 @@ Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
-Plug 'lifepillar/vim-cheat40'
+" Plug 'lifepillar/vim-cheat40'
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
+Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
@@ -202,11 +201,11 @@ fun! s:fzf_root()
   return fnamemodify(substitute(path, ".git", "", ""), ":p:h")
 endfun
 
-nnoremap <silent> <C-P>:exe 'Files ' . <SID>fzf_root()<CR>
-nnoremap \ :Rg<CR>
-" nnoremap <C-P> :Files <CR>
+" nnoremap <silent> <C-P>:exe 'Files ' . <SID>fzf_root()<CR>
 " nnoremap <space>\ :Find<space>
+nnoremap \ :Rg<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
+nnoremap <C-P> :Files <CR>
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
@@ -222,6 +221,7 @@ omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 "--------------------------------------------
+
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
@@ -248,8 +248,8 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 " nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 " JSX
-let g:polyglot_disabled = ['jsx'] "Setting I might need in the future
-let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
+" let g:polyglot_disabled = ['jsx'] "Setting I might need in the future
+" let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
@@ -373,6 +373,8 @@ map  N <Plug>(easymotion-prev)
 "Emmet for vim leader keymap
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 " let g:user_emmet_leader_key     = "<s-tab>"
 
 nnoremap <leader>u :GundoToggle<CR>
@@ -485,9 +487,8 @@ augroup END
 augroup FileType_html
   autocmd!
   "for emmet
-  autocmd FileType html imap <buffer><expr><tab> <sid>expand_html_tab()
+  autocmd FileType html inoremap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd Filetype html noremap <buffer> <C-G> :Neoformat<CR>
-
   autocmd BufWritePost *.html Neoformat
   autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
@@ -502,6 +503,8 @@ augroup FileType_markdown
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
+  autocmd BufNewFile,BufRead *.md :nnoremap <buffer><leader>+ :HeaderIncrease<cr>
+  autocmd BufNewFile,BufRead *.md :nnoremap <buffer><leader>- :HeaderDecrease<cr>
 augroup END
 
 augroup filetype_vim
@@ -1020,21 +1023,10 @@ let delimitMate_expand_cr          = 2
 let delimitMate_expand_space       = 1
 let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
-
-""""""""""""""""""""""""""""""
-" Codi
-""""""""""""""""""""""""""""""
-function! Scratch(ft)
-  execute 'edit Scratch-' . strftime('%FT%T')
-  execute 'set filetype=' . a:ft
-  execute 'Codi ' . a:ft
-endfunction
-
-nnoremap <silent> <leader>JS :call Scratch('javascript')<CR>
 " ================================================
 " FZF
 " ================================================
-nnoremap <localleader>m :Marks<CR>
+nnoremap <localleader>m  :Marks<CR>
 nnoremap <localleader>mm :Maps<CR>
 
 let g:fzf_action = {
@@ -1121,7 +1113,7 @@ inoremap … <C-R><C-P>0
       redraw
     endfor
   endf
-nnoremap <silent> <c-b> :call <sid>smoothScroll(1)<cr>
+nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
 nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
 
 " for better tab response for emmet
@@ -1132,6 +1124,7 @@ function! s:emmet_html_tab()
   endif
   return "\<c-y>"
 endfunction
+
 " Function to use f to search backwards and forwards courtesy of help docs
 " [WIP] see section H getpwd()
 " function FindChar()
@@ -1328,7 +1321,9 @@ set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
 set nohlsearch " -functionality i.e. search highlighting done by easy motion and incsearch
-set matchpairs+=<:>
+if &ft ==# 'html'
+  set matchpairs+=<:> "setting is super annoying if not html
+endif
 
 " ----------------------------------------------------------------------------
 " CURSOR  "{{{

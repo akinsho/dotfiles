@@ -44,6 +44,8 @@ awesome tools
 * OneDark  `Plug 'joshdick/onedark.vim'`
 
 #### ...Easymotion....four plugins for the price of one, these are excellent regardless
+* `Plug 'polyglot'` - an excellent language pack but I think i need more
+  specificity
 * `Plug 'inside/vim-search-pulse'`
 * `Plug 'haya14busa/incsearch.vim'`
 * `Plug 'haya14busa/incsearch-fuzzy.vim'`
