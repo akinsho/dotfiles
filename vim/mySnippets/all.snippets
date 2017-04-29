@@ -1,0 +1,8 @@
+snippet "(\w+).p" "Parenthesis (postfix)" r
+(`!p snip.rv = match.group(1)`$1)$0
+endsnippet
+
+
+snippet "([^\s].*)\.r" "Return (postfix)" r
+return `!p snip.rv = match.group(1)`$0
+endsnippet

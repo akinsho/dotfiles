@@ -36,8 +36,8 @@ endif
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
   Plug 'honza/vim-snippets'
-  Plug 'isRuslan/vim-es6'
-  Plug 'epilande/vim-react-snippets'
+  " Plug 'isRuslan/vim-es6'
+  " Plug 'epilande/vim-react-snippets'
 "================================
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
@@ -54,12 +54,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'sbdchd/neoformat' " Autoformatter
 Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
+
 "TMUX ============================
 if executable("tmux")
 Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 " Plug 'sjl/vitality.vim'
 endif
+
 "Utilities============================
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
@@ -71,6 +73,7 @@ augroup END
 Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'} "Highlighting for substitution in Vim
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
+
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
@@ -80,18 +83,23 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
+
 "Syntax ============================
-" Plug 'sheerun/vim-polyglot' "Added vim polyglot a collection of language packs for vim
-Plug 'pangloss/vim-javascript', { 'for': 'javascript'} | Plug 'MaxMEllon/vim-jsx-pretty' | Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+"Added vim polyglot a collection of language packs for vim
+"Plug 'sheerun/vim-polyglot' |
+Plug 'othree/yajs', {'for': 'javascript'} | Plug 'othree/javascript-libraries-syntax.vim'| Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
-"'Marks =============================
+Plug 'plasticboy/vim-markdown'
+
+"Marks =============================
 Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
+
 "Git ===============================
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
 Plug 'rhysd/committia.vim' "create diff window and Gstatus window on commit
+
 "Text Objects =====================
 Plug 'kana/vim-textobj-user' "Text object library plugin for defining your own text objects
 Plug 'glts/vim-textobj-comment' "Text obj for comments
@@ -100,18 +108,23 @@ Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text o
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
+
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
+
 "Coding tools =======================
 Plug 'konfekt/fastfold'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
-Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
+Plug 'Yggdroot/indentLine'
+" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
 " Plug 'lifepillar/vim-cheat40'
+
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
+
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
@@ -213,8 +226,6 @@ imap <C-F> <C-g>g
 
 nnoremap gm :LivedownToggle<CR>
 
-nnoremap <F9> <Esc>:call ToggleHardMode()<CR>
-
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
 omap ac <Plug>(textobj-comment-a)
@@ -248,8 +259,17 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 " nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 " JSX
+"--------------------------------------------
 " let g:polyglot_disabled = ['jsx'] "Setting I might need in the future
 " let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
+
+
+"--------------------------------------------
+" Indent guides
+"--------------------------------------------
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+let g:indentLine_fileType = ['c', 'cpp','javascript','javascript.jsx']
+let g:indentLine_char = '┆'
 
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
@@ -269,11 +289,11 @@ vnoremap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-let g:javascript_conceal_arrow_function = "⇒"
-let g:javascript_conceal_null           = "ø"
-let g:javascript_conceal_return         = "⇚"
-let g:javascript_conceal_undefined      = "¿"
-let g:javascript_plugin_jsdoc           = 1
+" let g:javascript_conceal_arrow_function = "⇒"
+" let g:javascript_conceal_null           = "ø"
+" let g:javascript_conceal_return         = "⇚"
+" let g:javascript_conceal_undefined      = "¿"
+" let g:javascript_plugin_jsdoc           = 1
 
 let g:committia_hooks = {}
 
@@ -361,9 +381,6 @@ map <Leader>k <Plug>(easymotion-k)
 "Search with easy motion
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 
@@ -374,13 +391,13 @@ map  N <Plug>(easymotion-prev)
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+autocmd FileType html,css,js EmmetInstall
 " let g:user_emmet_leader_key     = "<s-tab>"
 
 nnoremap <leader>u :GundoToggle<CR>
 
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,jquery,angularjs,react,jasmine,chai,handlebars,requirejs'
+let g:used_javascript_libs = 'underscore,jquery,angularjs,mocha,react,jasmine,chai,handlebars,requirejs'
 "}}}
 "====================================================================================
 "AUTOCOMMANDS {{{
@@ -401,13 +418,6 @@ function! s:smart_close()
     close
   endif
 endfunction
-
-"this is is intended to stop insert mode bindings slowing down <bs> and <cr>
-augroup Map_timings
-  autocmd!
-  autocmd InsertEnter * set timeoutlen=200
-  autocmd InsertLeave * set timeoutlen=500
-augroup END
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -474,7 +484,7 @@ augroup filetype_javascript
   autocmd!
   "PRETTIER FOR VIM  ================
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
-  autocmd BufWritePost *.js Neoformat
+  autocmd BufWritePost *.js,*.jsx Neoformat
   "==================================
   " autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
@@ -590,7 +600,6 @@ endfunction
 augroup jsfolding
   autocmd!
   autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
-  " autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable
 augroup END
 " }}}
 " CSS {{{
@@ -831,7 +840,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-" syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+" syntax sync minlines=150 " update syntax highlighting for more lines increased scrolling performance
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -846,7 +855,7 @@ endif
 
 " LIST =============================================================
 set list                              " show invisible chars
-set listchars+=tab:▷\ ,
+set listchars+=tab:▷\ 
 set listchars+=precedes:←
 set listchars+=extends:→
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
@@ -921,6 +930,15 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+let g:tagbar_autofocus = 1
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
 let g:neoformat_html_jsbeautify = {
       \ 'exe': 'htmlbeautify',
       \ 'args': [],
@@ -938,7 +956,7 @@ let g:neoformat_try_formatprg = 1 " Use formatprg when available
 let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
 let g:neoformat_only_msg_on_error = 1
 
-let g:vim_jsx_pretty_colorful_config = 1
+" let g:vim_jsx_pretty_colorful_config = 1
 let g:vimsyn_folding          = 'af'
 let g:fastfold_skip_filetypes = [ 'taglist' ]
 
@@ -1079,12 +1097,24 @@ if exists('NERDTree') " after a re-source, fix syntax matching issues (concealin
   endif
 endif
 
+let g:startify_list_order = [
+      \ ['   😇 My Sessions:'],
+      \ 'sessions',
+      \ ['   MRU Files:'],
+      \ 'files',
+      \ ['   MRU files in current directory:'],
+      \ 'dir',
+      \ ['   My Bookmarks:'],
+      \ 'bookmarks',
+      \ ['   Commands:'],
+      \ 'commands',
+      \ ]
+
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
 let g:startify_session_sort = 1
-let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
 
 " =========================================================================
 
@@ -1135,14 +1165,6 @@ endfunction
 "       break
 "     endif
 "   endwhile
-" endfunction
-
-" function GetKey()
-"   let c = getchar()
-"   while c == "\<CursorHold>"
-"     let c = getchar()
-"   endwhile
-"   return c
 " endfunction
 
 function! WrapForTmux(s)

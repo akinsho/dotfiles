@@ -1,0 +1,244 @@
+priority 0
+snippet me "module.exports" b
+module.exports = ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`};$0
+endsnippet
+
+snippet re "require" b
+const `!p
+def formatVariableName(path):
+    lastPart = path.split('/')[-1]
+    if lastPart == 'underscore':
+        return '_'
+    elif lastPart == 'jquery':
+        return '$'
+    else:
+        return re.sub(r'[_\-]', '', lastPart.title())
+snip.rv = formatVariableName(t[1])
+` = require('${1}');$0
+endsnippet
+
+snippet fm "function with dynamic docblock" b
+`!p
+# Currently Ultisnips does not support dynamic tabstops, so we cannot add
+# tabstops to the datatype for these param tags until that feature is added.
+def formatTag(argument):
+	return " * @param {{}} {0}".format(argument)
+
+arguments = t[2].split(',')
+arguments = [argument.strip() for argument in arguments if argument]
+
+if len(arguments):
+	tags = map(formatTag, arguments)
+	snip.rv = "/**"
+	for tag in tags:
+		snip += tag
+	snip += ' */'
+	snip += ''
+else:
+	snip.rv = ''
+`${1}: function(${2}) {
+	${0:${VISUAL}}
+},
+endsnippet
+
+#ES6 Snippets
+snippet class "Class"
+class ${1:Name} {
+  constructor(${2:arg}) {
+      $3
+        
+  }
+    $4
+
+}
+endsnippet
+
+snippet expf "Export function" b
+export ${1:default }function($2) {
+  $3
+
+};
+endsnippet
+
+snippet =>c "Const Function" b
+const ${1:name} = (${2:args}) => {
+  return $4;
+
+}${3:;}
+endsnippet
+
+snippet =>> "Inline arrow function"
+(${1:args}) => ($2);
+endsnippet
+
+snippet "\.(map|filter|forEach|reduce)=" "Array method with an arrow function inline" rA
+.`!p snip.rv = match.group(1)`(${1:(c, i)} => $2);
+endsnippet
+
+snippet "\.(map|filter|forEach|reduce)" "Array method with an arrow function" r
+.`!p snip.rv = match.group(1)`(${1:(c, i)} => {
+  return $2;
+
+});
+endsnippet
+
+snippet : "Object Value JS"
+${1:key}: ${0:value},
+endsnippet
+
+
+
+snippet react "Import React from react"
+import React from 'react';
+endsnippet
+
+snippet reactC "Import React & Component from react"
+import React, { Component } from 'react';
+endsnippet
+
+
+snippet redux "Import redux" b
+import redux from 'redux';
+endsnippet
+
+snippet store "redux store import" b
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+endsnippet
+
+snippet impst "Import styled components" b
+import styled from 'styled-components';
+$1
+endsnippet
+
+snippet inj "Inject global style" b
+import styled,{ injectGlobal } from 'styled-components';
+$1
+endsnippet
+
+snippet styc "Styled component" b
+const $1 = styled.$2\`
+  $3
+\`;$4
+endsnippet
+
+snippet "req(u|ui|uir|uire)?" "require" !br
+const ${1:ModuleName} = require('${2}$1${3}');
+endsnippet
+###########################################
+#    VIM-SNIPPETS
+###########################################
+snippet get "Get Elements"
+getElement${1/(T)|.*/(?1:s)/}By${1:T}${1/(T)|(I)|.*/(?1:agName)(?2:d)/}('$2')
+endsnippet
+
+snippet :, "Object Value JS"
+${1:value_name}: ${0:value},
+endsnippet
+
+
+snippet af "Anonymous Function" i
+function($1) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet iife "Immediately-Invoked Function Expression (iife)"
+(function(${1:window}) {
+	${VISUAL}$0
+}(${2:$1}))
+endsnippet
+
+snippet timeout "setTimeout function"
+setTimeout(function() {
+	${VISUAL}$0
+}${2:.bind(${3:this})}, ${1:10})
+endsnippet
+
+snippet fi "for prop in obj using hasOwnProperty" b
+for(${1:prop} in ${2:obj}){
+	if($2.hasOwnProperty($1)) {
+		${VISUAL}$0
+	}
+}
+endsnippet
+
+snippet if "if (condition) { ... }"
+if(${1:true}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ife "if (condition) { ... } else { ... }"
+if(${1:true}) {
+	${VISUAL}$0
+}else {
+	${2}
+}
+endsnippet
+
+snippet switch
+switch (${VISUAL}${0:expression}) {
+	case '${VISUAL}${2:case}':
+		${3}
+	default:
+		${1}
+}
+endsnippet
+
+snippet case "case 'xyz': ... break"
+case '${VISUAL}${1:case}':
+	${VISUAL}$0
+endsnippet
+
+snippet ret "Return statement"
+return ${VISUAL}$0;
+endsnippet
+
+####################################
+#           ES6                    #
+####################################
+# Generator function
+snippet gfn
+function* ${1:name}(${2}) {
+	yield ${3};
+}
+endsnippet
+
+# Arrow function
+snippet => "Arrow function" i
+(${1}) => {
+	${2}
+}
+endsnippet
+
+# Class
+snippet class "class + constructor"
+class ${1:name} {
+	constructor(${2:arg}) {
+		${3:// init}
+	}
+	${4}
+}
+endsnippet
+
+# For of loop
+snippet forof "for of loop"
+for (let ${1:s} of ${2:sequence}) {
+	${3}
+}
+endsnippet
+
+# Import
+snippet im "import from"
+import ${1:foo} from '${2:bar}'
+endsnippet
+
+# Export
+snippet ex "export default"
+export ${1:default} ${2:bar}
+endsnippet
+
+snippet spo "spread object"
+{...${1:props}}
+endsnippet
