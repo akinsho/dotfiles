@@ -19,9 +19,9 @@ filetype off " required  Prevents potential side-effects
 "-----------------------------------------------------------
 "This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
-silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 "set the runtime path to include Vundle and initialise
@@ -29,10 +29,10 @@ call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
   if has('unix')
-  if empty($SSH_CONNECTION)
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+    if empty($SSH_CONNECTION)
+      Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+    endif
   endif
-endif
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
@@ -44,9 +44,9 @@ Plug 'mattn/emmet-vim' "Added emmet vim plugin
 Plug 'Raimondi/delimitMate' "Add delimitmate
 Plug 'easymotion/vim-easymotion' "Added easy motions
 function! BuildTern(info)
-if a:info.status == 'installed' || a:info.force
-  !npm install
-endif
+  if a:info.status == 'installed' || a:info.force
+    !npm install
+  endif
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
@@ -57,9 +57,9 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gu
 
 "TMUX ============================
 if executable("tmux")
-Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
-Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-" Plug 'sjl/vitality.vim'
+  Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
+  Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
+  " Plug 'sjl/vitality.vim'
 endif
 
 " "Utilities============================
@@ -91,7 +91,7 @@ Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 
 "Marks =============================
-Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
+" Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 
 "Git ===============================
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
@@ -128,6 +128,11 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add fil
 
 "Plugins I think I need yet never use ===============================
 Plug 'Yggdroot/indentLine'
+"MAPPINGS =================================================
+" Plug '~/Dotfiles/vim/mappings.vim'
+" STATUS LINE --------------------
+" see statuline.vim file
+" Plug '~/Dotfiles/vim/statusline.vim'
 " Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
 " Plug 'lifepillar/vim-cheat40'
 
@@ -139,7 +144,8 @@ Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
-filetype plugin indent on
+" filetype plugin indent on - ESSENTIAL but initialised by vim-plug
+" syntax enable
 "Added built in match it plugin to vim the longer command a la tpope only loads
 "this the user has not already installed a new version of matchit
 " packadd! matchit
@@ -147,7 +153,6 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
 
-syntax enable
 "}}}
 "====================================================================================
 "Leader bindings
@@ -188,7 +193,7 @@ inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 " --color: Search color options
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 let g:fzf_files_options =
-  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+      \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
@@ -207,8 +212,8 @@ nnoremap <silent> <localleader>H :History<CR>
 nnoremap <silent> <localleader>C :Commits<CR>
 
 function! SearchWordWithRg()
-    execute 'Rg' expand('<cword>')
-  endfunction
+  execute 'Rg' expand('<cword>')
+endfunction
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
 nnoremap <C-P> :FZFR <CR>
 " nnoremap <space>\ :Find<space>
@@ -239,7 +244,7 @@ let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {'jsx': ['stylelint', 'eslint']}
 let g:ale_linter_aliases     = {'jsx': 'css'}
 let g:ale_set_highlights = 0
-nmap <silent> <C-/> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
 imap <C-L> <C-O><Plug>CapsLockToggle
@@ -356,7 +361,7 @@ let NERDTreeShowHidden                = 1 "Show hidden files by default
 "===================================================
 " Vim-Over - Highlight substitution parameters
 "===================================================
-nnoremap <localleader>/ <esc>:OverCommandLine<CR>:%s/
+nmap <C-/> <esc>:OverCommandLine<CR>:s/
 "===================================================
 "EasyMotion mappings
 "===================================================
@@ -404,13 +409,13 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,mocha,react,jasmine,ch
 "===================================================================================
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
-autocmd!
-autocmd FileType help,git-status,git-log,qf,
-      \gitcommit,quickrun,qfreplace,ref,
-      \simpletap-summary,vcs-commit,vcs-status,vim-hacks
-      \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
-autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
-      \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
+  autocmd!
+  autocmd FileType help,git-status,git-log,qf,
+        \gitcommit,quickrun,qfreplace,ref,
+        \simpletap-summary,vcs-commit,vcs-status,vim-hacks
+        \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
+  autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
+        \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 augroup END
 
 function! s:smart_close()
@@ -421,18 +426,18 @@ endfunction
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
-let l:file = expand('%')
-if l:file =~# '^\f\+_test\.go$'
-  call go#cmd#Test(0, 1)
-elseif l:file =~# '^\f\+\.go$'
-  call go#cmd#Build(0)
-endif
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#cmd#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
 endfunction
 
 augroup Go_Mappings
   autocmd!
-  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 nolist
-  autocmd FileType go nnoremap <C-[>  @='10k'<CR>
+  autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 nolist
+  autocmd BufNewFile,WinEnter,BufRead *.go setlocal nolist
   autocmd FileType go nmap <leader>t  <Plug>(go-test)
   autocmd FileType go nmap <Leader>d <Plug>(go-doc)
   autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -522,7 +527,7 @@ augroup END
 augroup filetype_vim
   "Vimscript file settings -------------------------
   autocmd!
-"This command makes vim start a file with all folds closed
+  "This command makes vim start a file with all folds closed
   autocmd FileType vim setlocal foldmethod=marker
   " autocmd FileType vim setlocal foldlevelstart=0
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
@@ -546,9 +551,9 @@ augroup FileType_all
         \   exe "normal g`\"" |
         \ endif
 
-if exists("*mkdir") "auto-create directories for new files
+  if exists("*mkdir") "auto-create directories for new files
     au BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
-endif
+  endif
 augroup END
 
 augroup fugitiveSettings
@@ -566,9 +571,9 @@ augroup Toggle_number
   autocmd!
   " toggle relativenumber according to mode, don't do this for markdown
   if &ft != 'markdown'
-  autocmd InsertEnter * set relativenumber!
-  autocmd InsertLeave * set relativenumber
-endif
+    autocmd InsertEnter * set relativenumber!
+    autocmd InsertLeave * set relativenumber
+  endif
 augroup END
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
@@ -640,8 +645,6 @@ set complete+=kspell
 "Add spell checking local
 " setlocal spell spelllang=en_us
 
-"MAPPINGS =================================================
-source ~/Dotfiles/vim/mappings.vim
 "===================================================================================
 "Mouse {{{
 "===================================================================================
@@ -661,30 +664,30 @@ else
 endif
 
 if !has('nvim')
-function! ToggleMouse()
-  " check if mouse is enabled
-  if &mouse == 'a'
-    " disable mouse
-    set mouse=
-  else
-    " enable mouse everywhere
-    set mouse=a
-  endif
-endfunc
-"Try being more lenient
-noremap <ScrollWheelUp>      <nop>
-noremap <S-ScrollWheelUp>    <nop>
-noremap <C-ScrollWheelUp>    <nop>
-noremap <ScrollWheelDown>    <nop>
-noremap <S-ScrollWheelDown>  <nop>
-noremap <C-ScrollWheelDown>  <nop>
-noremap <ScrollWheelLeft>    <nop>
-noremap <S-ScrollWheelLeft>  <nop>
-noremap <C-ScrollWheelLeft>  <nop>
-noremap <ScrollWheelRight>   <nop>
-noremap <S-ScrollWheelRight> <nop>
-noremap <C-ScrollWheelRight> <nop>
-nnoremap <F7> :call ToggleMouse()<CR>
+  function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+      " disable mouse
+      set mouse=
+    else
+      " enable mouse everywhere
+      set mouse=a
+    endif
+  endfunc
+  "Try being more lenient
+  noremap <ScrollWheelUp>      <nop>
+  noremap <S-ScrollWheelUp>    <nop>
+  noremap <C-ScrollWheelUp>    <nop>
+  noremap <ScrollWheelDown>    <nop>
+  noremap <S-ScrollWheelDown>  <nop>
+  noremap <C-ScrollWheelDown>  <nop>
+  noremap <ScrollWheelLeft>    <nop>
+  noremap <S-ScrollWheelLeft>  <nop>
+  noremap <C-ScrollWheelLeft>  <nop>
+  noremap <ScrollWheelRight>   <nop>
+  noremap <S-ScrollWheelRight> <nop>
+  noremap <C-ScrollWheelRight> <nop>
+  nnoremap <F7> :call ToggleMouse()<CR>
 endif
 "}}}
 "====================================================================================
@@ -696,15 +699,15 @@ set nohidden
 
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
-    if exists('t:zoomed') && t:zoomed
-        exec t:zoom_winrestcmd
-        let t:zoomed = 0
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
-    endif
+  if exists('t:zoomed') && t:zoomed
+    exec t:zoom_winrestcmd
+    let t:zoomed = 0
+  else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let t:zoomed = 1
+  endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
@@ -734,7 +737,7 @@ set shortmess+=a                      " use abbreviations in messages eg. `[RO]`
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
 " set shortmess+=mnrxoOt
 if has('patch-7.4.314')
-set shortmess+=c                    " Disable 'Pattern not found' messages
+  set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
 
 " ----------------------------------------------------------------------------
@@ -746,8 +749,8 @@ set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
 if has('folding')
   if has('windows')
-set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
-set fillchars+=fold:-
+    set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
+    set fillchars+=fold:-
   endif
   " set foldmethod=indent "fast fold plugin requires specific filetype folding
   set foldlevelstart=99
@@ -841,8 +844,8 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
-" This should cause lines to wrap around words rather than random characters
-set linebreak
+  " This should cause lines to wrap around words rather than random characters
+  set linebreak
   " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   let &showbreak='↪ '
   if exists('&breakindentopt')
@@ -858,9 +861,6 @@ set listchars+=extends:→
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 " =====================================================================
-" STATUS LINE --------------------
-" see statuline.vim file
-source ~/Dotfiles/vim/statusline.vim
 "-----------------------------------
 " highlight MatchParen  guibg=#658494 gui=bold "Match parentheses Coloring
 if has('unnamed')
@@ -901,8 +901,8 @@ endif
 if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app' " Don't need this in xterm-256color, but do need it inside tmux. (See `:h xterm-true-color`.)
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
   " if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
-    let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-    let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   " endif
 endif
 set scrolljump=5
@@ -928,13 +928,13 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 let g:tagbar_autofocus = 1
 let g:tagbar_type_css = {
-\ 'ctagstype' : 'Css',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 's:selectors',
-        \ 'i:identities'
-    \ ]
-\ }
+      \ 'ctagstype' : 'Css',
+      \ 'kinds'     : [
+      \ 'c:classes',
+      \ 's:selectors',
+      \ 'i:identities'
+      \ ]
+      \ }
 let g:neoformat_html_jsbeautify = {
       \ 'exe': 'htmlbeautify',
       \ 'args': [],
@@ -966,9 +966,9 @@ let g:tern_show_signature_in_pum              = 1
 let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
 
 let g:github_dashboard = {
-    \'username': 'Akin909',
-    \'password': $GITHUB_TOKEN
-    \}
+      \'username': 'Akin909',
+      \'password': $GITHUB_TOKEN
+      \}
 nnoremap <F1> :GHDashboard! Akin909<CR>
 "------------------------------------
 " Goyo
@@ -1132,15 +1132,15 @@ inoremap … <C-R><C-P>0
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " See http://stackoverflow.com/questions/4064651/what-is-the-best-way-to-do-smooth-scrolling-in-vim
-  fun! s:smoothScroll(up)
+fun! s:smoothScroll(up)
+  execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
+  redraw
+  for l:count in range(3, &scroll, 2)
+    sleep 10m
     execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
     redraw
-    for l:count in range(3, &scroll, 2)
-      sleep 10m
-      execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-      redraw
-    endfor
-  endf
+  endfor
+endf
 nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
 nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
 
@@ -1234,10 +1234,10 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
- colorscheme quantum
+colorscheme quantum
 " let g:one_allow_italics = 1
 nnoremap <silent><F9> :exec "color " .
-  \((g:colors_name=="quantum") ?"one":"quantum")<CR>
+      \((g:colors_name=="quantum") ?"one":"quantum")<CR>
 " if g:colors_name=="one"
 "   call one#highlight('Normal', '', '203038', 'none')
 "   call one#highlight('Cursorline','', '273B45', 'none')
@@ -1307,7 +1307,7 @@ endif
 set sessionoptions-=options
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-set t_Co=16
+  set t_Co=16
 endif
 "-----------------------------------------------------------------------------
 " BACKUP AND SWAPS
@@ -1336,10 +1336,10 @@ if has ('persistent_undo')
   endif
 endif
 
-if has("vms")
-  set nobackup
+if has("vms") 
+  set nobackup 
 else
-  set backup
+  set backup 
 endif
 "}}}
 " ----------------------------------------------------------------------------
@@ -1359,11 +1359,11 @@ endif
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-augroup cursorline
-  autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  autocmd WinLeave * setlocal nocursorline
-augroup END
+" augroup cursorline
+"   autocmd!
+"   autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+"   autocmd WinLeave * setlocal nocursorline
+" augroup END
 
 set scrolloff=20 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
@@ -1371,4 +1371,468 @@ set nostartofline " Stops some cursor movements from jumping to the start of a l
 
 "}}}
 " ----------------------------------------------------------------------------
+"-----------------------------------------------------------------------------------
+"DIY STATUS LINE ==========================={{{
+" =====================================================================
+" stolen from https://gabri.me/blog/diy-vim-statusline
+" =====================================================================
+ " Dynamically getting the fg/bg colors from the current colorscheme, returns hex 
+" set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+
+  let g:ro_sym  = ''
+  let g:ma_sym  = "✗"
+  let g:mod_sym = "◇"
+  let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+let g:currentmode={
+    \ 'n'  : 'Normal ',
+    \ 'no' : 'N·Operator Pending ',
+    \ 'v'  : 'Visual ',
+    \ 'V'  : 'V·Line ',
+    \ '' : 'V·Block ',
+    \ 's'  : 'Select ',
+    \ 'S'  : 'S·Line ',
+    \ '^S' : 'S·Block ',
+    \ 'i'  : 'Insert ',
+    \ 'R'  : 'Replace ',
+    \ 'Rv' : 'V·Replace ',
+    \ 'c'  : 'Command ',
+    \ 'cv' : 'Vim Ex ',
+    \ 'ce' : 'Ex ',
+    \ 'r'  : 'Prompt ',
+    \ 'rm' : 'More ',
+    \ 'r?' : 'Confirm ',
+    \ '!'  : 'Shell ',
+    \ 't'  : 'Terminal '
+    \}
+
+" Automatically change the statusline color depending on mode - requires gui colors as using termguicolors
+function! ChangeStatuslineColor()
+  if (mode() =~# '\v(n|no)')
+    exe 'hi! StatusLine guibg=#425762'
+  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
+    exe 'hi! StatusLine guibg=#5f5fd7'
+  elseif (mode() ==# 'i')
+    exe 'hi! StatusLine guibg=#005f87'
+  else
+    exe 'hi! StatusLine guibg=#005faf'
+  endif
+  return ''
+endfunction
+
+" Find out current buffer's size and output it.
+function! FileSize()
+  let bytes = getfsize(expand('%:p'))
+  if (bytes >= 1024)
+    let kbytes = bytes / 1024
+  endif
+  if (exists('kbytes') && kbytes >= 1000)
+    let mbytes = kbytes / 1000
+  endif
+
+  if bytes <= 0
+    return '0'
+  endif
+
+  if (exists('mbytes'))
+    return mbytes . 'MB '
+  elseif (exists('kbytes'))
+    return kbytes . 'KB '
+  else
+    return bytes . 'B '
+  endif
+endfunction
+
+function! ReadOnly()
+  if &readonly || !&modifiable
+    return ''
+  elseif &modified
+    return g:mod_sym
+  else
+    return ''
+endfunction
+
+function! GitInfo()
+  let git = fugitive#head()
+  if git != ''
+    return ' '.fugitive#head()
+  else
+    return ''
+  endfunction
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+  if &paste
+    exe 'hi! StatusLine guibg=#00875f'
+    return 'PASTE MODE  '
+  endif
+  return ''
+endfunction
+
+" Determine the name of the session or terminal
+if (strlen(v:servername)>0)
+  if v:servername =~ 'nvim'
+    let g:session = 'neovim'
+  else
+    " If running a GUI vim with servername, then use that
+    let g:session = v:servername
+  endif
+elseif !has('gui_running')
+  " If running CLI vim say TMUX or use the terminal name.
+  if (exists("$TMUX"))
+    let g:session = 'Tmux'
+  else
+    " Giving preference to color-term because that might be more
+    " meaningful in graphical environments. Eg. my $TERM is
+    " usually screen256-color 90% of the time.
+    let g:session = exists("$COLORTERM") ? $COLORTERM : $TERM
+  endif
+else
+  " idk, my bff jill
+  let g:session = 'NARNIA'
+endif
+
+" Shamelessly stolen from statline plugin, shows buffer count and buffer number
+" function! BufCount()
+"   if !exists("s:statline_n_buffers")
+"     let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
+"   endif
+"   return s:statline_n_buffers
+" endfunction
+
+" if !exists('g:statline_show_n_buffers')
+"   let g:statline_show_n_buffers = 1
+" endif
+
+" Always display the status line even if only one window is displayed
+set laststatus=2
+set statusline=
+set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
+set statusline+=\ %{toupper(g:currentmode[mode()])} " Current mode
+" ---- number of buffers : buffer number ----
+" if g:statline_show_n_buffers
+"   set statusline+=\ %{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
+"   augroup statline_nbuf
+"     autocmd!
+"     autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
+"   augroup END
+" else
+"   set statusline=[%n]\ %<
+" endif
+" --------------------------------------------
+set statusline+=\ %{HasPaste()}
+set statusline+=\ %{g:session}
+set statusline+=\ %{GitInfo()}
+set statusline+=\ %<%.30F\ %w
+set statusline+=%{ReadOnly()}\ 
+set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
+set statusline+=%#warningmsg#
+set statusline+=%*
+set statusline+=\ %=                                     " Space
+" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=\ %{&ft}\ %q\   " FileType & quick fix or loclist given as variable with '&' so nice and lowercase
+set statusline+=%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop} "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
+set statusline+=\ %-3(%{FileSize()}%)                 " File size
+set statusline+=\ %3p%%\ \ %l\ of\ %1L\                 " The numbers after the % represent degrees of padding
+set statusline+=%{ale#statusline#Status()}\ 
+"==============================================================
+"Need to figure this our in order to change statusline colors
+if has('termguicolors')
+  "filename
+  hi default link User1 Identifier
+  " flags
+  hi default link User2 Statement
+  " errors
+  hi default link User3 Error
+  " fugitive
+  hi default link User4 Special
+endif
+  " hi User8 ctermfg=008 " guifg=fgcolor
+  " hi User9 ctermfg=007 " guifg=fgcolor
+  " hi User5 guifg=Blue guibg=White
+  " hi User7 guibg=#005faf
+"==============================================================}}}
+"MAPPINGS {{{
+"-----------------------------------------------------------------------------------
+nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+"Evaluates whether there is a fold on the current line if so unfold it else return a normal space
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+"Use this to ensure mappings dont already exist
+" if !hasmapto('\ABCdoit')
+"    map <Leader>d \ABCdoit
+" endif
+" Close all the buffers
+nnoremap <leader>ba :1,1000 bd!<cr>
+" Quickly edit your macros
+" Usage <leader>m or "q<leader>m
+nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+" Shortcuts
+" Change Working Directory to that of the current file
+cmap cwd lcd %:p:h
+cmap cd. lcd %:p:h
+" For when you forget to sudo.. Really Write the file.
+cmap w!! w !sudo tee % >/dev/null
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VISUAL MODE RELATED
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" ; and , search
+" forward/backward regardless of the direction of the previous
+" character search: doesn't work
+" nnoremap <expr> : getcharsearch().forward ? ';' : ','
+" nnoremap <expr> , getcharsearch().forward ? ',' : ';'
+" Treat long lines as break lines (useful when moving around in them).
+" Store relative line number jumps in the jumplist.
+noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
+noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
+
+" Emacs like keybindings for the command line (:) are better
+" and you cannot use Vi style-binding here anyway, because ESC
+" just closes the command line and using Home and End..
+" remap arrow keys
+" c-a / c-e everywhere
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> <C-U>
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+
+nnoremap <Leader>s :update<CR>
+" Tab and Shift + Tab Circular buffer navigation
+nnoremap <tab>   :bnext<CR>
+nnoremap <S-tab> :bprevious<CR>
+" nnoremap <CR> G "20 enter to go to line 20
+nnoremap <BS> gg
+"Change operator arguments to a character representing the desired motion
+nnoremap ; :
+nnoremap : ;
+
+nnoremap [Alt]   <Nop>
+xnoremap [Alt]   <Nop>
+" nmap    e  [Alt]
+" xmap    e  [Alt]
+" Like gv, but select the last changed text.
+nnoremap gi  `[v`]
+" Specify the last changed text as {motion}.
+onoremap <silent> gi  :<C-u>normal gc<CR>"`
+vnoremap <silent> gi  :<C-u>normal gc<CR>
+" Capitalize.
+nnoremap õ <ESC>gUiw`]
+inoremap <C-u> <ESC>gUiw`]a
+
+" Smart }."
+nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
+onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
+xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
+function! ForwardParagraph()
+  let cnt = v:count ? v:count : 1
+  let i = 0
+  while i < cnt
+    if !search('^\s*\n.*\S','W')
+      normal! G$
+      return
+    endif
+    let i = i + 1
+  endwhile
+endfunction
+" Select block.
+xnoremap r <C-v>
+" Made mappings recursize to work with targets plugin
+" 'quote'
+omap aq  a'
+xmap aq  a'
+omap iq  i'
+xmap iq  i'
+
+" \"double quote"
+omap ad  a"
+xmap ad  a"
+omap id  i"
+xmap id  i"
+
+" <angle> 
+" omap aa  a>
+" xmap aa  a>
+" omap ia  i>
+" xmap ia  i>
+"Change two horizontally split windows to vertical splits
+nnoremap <LocalLeader>h <C-W>t <C-W>K
+"Change two vertically split windows to horizontal splits
+nnoremap <LocalLeader>v <C-W>t <C-W>H
+"Select txt that has just been read or pasted in
+nnoremap gV `[V`]
+
+"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
+" Better bubbling a la Tpope's unimpaired vim
+nmap ë [e
+nmap ê ]e
+vmap ë [egv
+vmap ê ]egv
+
+"Line completion - native vim
+inoremap ç <C-X><C-L>
+" find visually selected text
+vnoremap * y/<C-R>"<CR>
+" replace word under cursor
+nnoremap S :%s/\<<C-R><C-W>\>//gc<Left><Left><Left>
+" make . work with visually selected lines
+vnoremap . :norm.<CR>
+inoremap ó <C-O>:update<CR>
+"This mapping allows yanking all of a line without taking the new line
+"character as well can be with our without spaces
+vnoremap <silent> al :<c-u>norm!0v$h<cr>
+vnoremap <silent> il :<c-u>norm!^vg_<cr>
+onoremap <silent> al :norm val<cr>
+onoremap <silent> il :norm vil<cr>
+"ctrl-o in insert mode allows you to perform one normal mode command then
+"returns to insert mode
+" inoremap <C-j> <Down>
+inoremap ê <Down>
+inoremap è <left>
+inoremap ë <up>
+inoremap ì <right>
+" select last paste in visual mode
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <F6> :! open %<CR>
+set pastetoggle=<F2>
+set timeout timeoutlen=500 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
+" Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
+nnoremap bk `.
+" Yank from the cursor to the end of the line, to be consistent with C and D.
+nnoremap Y y$
+nnoremap <leader>sw :b#<CR>
+" Quick find/replace
+nnoremap <Leader>[ :%s/<C-r><C-w>/
+vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
+"--------------------------------------------
+"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
+"repeat macros across a visual range
+"--------------------------------------------
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+"--------------------------------------------
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+"Help Command - vertical split
+command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
+function! VerticalHelp(topic)
+  execute "vertical botright help " . a:topic
+  execute "vertical resize 78"
+endfunction
+"Remap back tick for jumping to marks more quickly
+nnoremap ' `
+nnoremap ` '
+
+nnoremap rs ^d0
+"Save all files
+nnoremap qa :wqa<CR>
+" clean up any trailing whitespace - neoformat does this
+" nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
+"open a new file in the same directory
+nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
+
+nnoremap <localleader>c :<c-f>
+"Open command line window
+nnoremap <localleader>l :redraw!<cr>
+"--------------------------------------------
+" Window resizing bindings
+"--------------------------------------------
+"Create a horizontal split
+nnoremap _ :sp<CR>
+"Create a vertical split
+nnoremap \| :vsp<CR>
+" Resize window vertically  - shrink
+nnoremap <down> 15<c-w>-
+" Resize window vertically - grow
+nnoremap <up> 15<c-w>+
+" Increase window size horizontally
+nnoremap <left> 15<c-w>>
+" Decrease window size horizontally
+nnoremap <right> 15<c-w><
+" Max out the height of the current split
+nnoremap <localleader>f <C-W>_
+" Max out the width of the current split
+nnoremap <localleader>e <C-W>|
+
+"Normalize all split sizes, which is very handy when resizing terminal
+nnoremap <leader>= <C-W>=
+"Break out current window into new tabview
+nnoremap <leader>t <C-W>T
+"Close every window in the current tabview but the current one
+nnoremap <localleader>q <C-W>o
+"Swap top/bottom or left/right split
+nnoremap <leader>r <C-W>R
+"--------------------------------------------
+"Open Common files
+nnoremap <leader>ez :e ~/.zshrc<cr>
+nnoremap <leader>et :e ~/.tmux.conf<cr>
+
+nnoremap <leader>x :lclose<CR>
+"Indent a page
+nnoremap <C-G>f gg=G<CR>
+" duplicate line and comment (requires vim-commentary)
+nmap <leader>cc yygccp
+xmap <leader>cc m'ygvgc''jp
+"map window keys to leader - Interfere with tmux navigator
+" noremap <C-h> <c-w>h
+" noremap <C-j> <c-w>j
+" noremap <C-k> <c-w>k
+" noremap <C-l> <c-w>l
+"Remap arrow keys to do nothing
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+"Moves cursor back to the start of a line
+inoremap <C-B> <C-O>I
+" Make Ctrl-e jump to the end of the current line in the insert mode. This is
+" handy when you are in the middle of a line and would like to go to its end
+" without switching to the normal mode.
+" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
+inoremap <C-e> <C-o>$
+"Move to beginning of a line in insert mode
+inoremap <c-a> <c-o>0
+inoremap <c-e> <c-o>$
+"Remaps native ctrl k - deleting to the end of a line to control e
+" inoremap <C-Q> <C-K>
+" Map jk to esc key - using jk prevents jump that using ii causes
+" inoremap jk <ESC>:w<CR>
+inoremap jk <ESC>
+inoremap ;; <End>;<Esc>:w<CR>
+
+" Yank text to the OS X clipboard
+noremap <localleader>y "*y
+noremap <localleader>yy "*Y
+"Maps K and J to a 10 k and j but @= makes the motions multipliable - not
+"a word I know
+noremap K  @='10k'<CR>
+noremap J  @='10j'<CR>
+
+"This line opens the vimrc in a vertical split
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
+
+"This line allows the current file to source the vimrc allowing me use bindings as they're added
+nnoremap <leader>sv :source $MYVIMRC<cr>
+"This maps leader quote (single or double to wrap the word in quotes)
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+" Remap going to beginning and end of lines
+" move to beginning/end of line
+nnoremap H ^
+nnoremap L $
+
+"Map Q to remove a CR
+nnoremap Q J
+
+"Add neovim terminal escape with ESC mapping
+if has("nvim")
+  tnoremap <ESC> <C-\><C-n>
+endif
+"}}}
 
