@@ -5,7 +5,7 @@
  " Dynamically getting the fg/bg colors from the current colorscheme, returns hex 
 let fgcolor=synIDattr(synIDtrans(hlID("Normal")), "fg", "gui")
 let bgcolor=synIDattr(synIDtrans(hlID("Normal")), "bg", "gui")
-set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+" set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
 
 let g:currentmode={
     \ 'n'  : 'Normal ',
@@ -152,6 +152,7 @@ set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
 set statusline+=%#warningmsg#
 set statusline+=%*
 set statusline+=\ %=                                     " Space
+" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=\ %{&ft}\ %q\   " FileType & quick fix or loclist given as variable with '&' so nice and lowercase
 set statusline+=%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop} "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 set statusline+=\ %-3(%{FileSize()}%)                 " File size
@@ -176,10 +177,6 @@ if has('termguicolors')
   " fugitive
   hi default link User4 Special
 endif
-  " hi User1 ctermbg=green ctermfg=red   guibg=green guifg=red
-  " hi User2 ctermbg=red   ctermfg=blue  guibg=red   guifg=blue
-  " hi User3 ctermbg=blue  ctermfg=green guibg=blue  guifg=green
-  " hi User4 ctermfg=008 " guifg=fgcolor
   " hi User8 ctermfg=008 " guifg=fgcolor
   " hi User9 ctermfg=007 " guifg=fgcolor
   " hi User5 guifg=Blue guibg=White
@@ -207,7 +204,7 @@ endif
 " Logic for customizing the User1 highlight group is the following
 " - fg = StatusLine fg (if StatusLine colors are reverse)
 " - bg = StatusLineNC bg (if StatusLineNC colors are reverse)
-hi StatusLine term=reverse cterm=reverse gui=reverse ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#002b36
+hi StatusLine term=reverse cterm=reverse gui=reverse ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#4f778c
 hi StatusLineNC term=reverse cterm=reverse gui=reverse ctermfg=11 ctermbg=0 guifg=#657b83 guibg=#073642
 hi User1 ctermfg=14 ctermbg=0 guifg=#93a1a1 guibg=#073642
 let g:mode_map = {
@@ -226,40 +223,40 @@ let g:mode_map = {
   let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 
   " newMode may be a value as returned by mode(1) or the name of a highlight group
-  fun! s:updateStatusLineHighlight(newMode)
-    execute 'hi! link CurrMode' get(g:mode_map, a:newMode, ["", a:newMode])[1]
-    return 1
-  endf
+  " fun! s:updateStatusLineHighlight(newMode)
+  "   execute 'hi! link CurrMode' get(g:mode_map, a:newMode, ["", a:newMode])[1]
+  "   return 1
+  " endf
 
   " Setting highlight groups while computing the status line may cause the
   " startup screen to disappear. See: https://github.com/powerline/powerline/issues/250
-  fun! SetupStl(nr)
-    " In a %{} context, winnr() always refers to the window to which the status line being drawn belongs.
-    return get(extend(w:, {
-          \ "lf_active": winnr() != a:nr
-            \ ? 0
-            \ : (mode(1) ==# get(g:, "lf_cached_mode", "")
-              \ ? 1
-              \ : s:updateStatusLineHighlight(get(extend(g:, { "lf_cached_mode": mode(1) }), "lf_cached_mode"))
-              \ ),
-          \ "lf_winwd": winwidth(winnr())
-          \ }), "", "")
-  endf
+  " fun! SetupStl(nr)
+  "   " In a %{} context, winnr() always refers to the window to which the status line being drawn belongs.
+  "   return get(extend(w:, {
+  "         \ "lf_active": winnr() != a:nr
+  "           \ ? 0
+  "           \ : (mode(1) ==# get(g:, "lf_cached_mode", "")
+  "             \ ? 1
+  "             \ : s:updateStatusLineHighlight(get(extend(g:, { "lf_cached_mode": mode(1) }), "lf_cached_mode"))
+  "             \ ),
+  "         \ "lf_winwd": winwidth(winnr())
+  "         \ }), "", "")
+  " endf
 
 " set statusline=%!BuildStatusLine(winnr())
 " Build the status line the way I want - no fat light plugins!
-fun! BuildStatusLine(nr)
-  return '%{SetupStl('.a:nr.')}
-        \%#CurrMode#%{w:["lf_active"] ? "  " . get(g:mode_map, mode(1), [mode(1)])[0] . (&paste ? " PASTE " : " ") : ""}%*
-        \ %n %t %{&modified ? g:mod_sym : " "} %{&modifiable ? (&readonly ? g:ro_sym : "  ") : g:ma_sym}
-        \ %<%{w:["lf_winwd"] < 80 ? (w:["lf_winwd"] < 50 ? "" : expand("%:p:h:t")) : expand("%:p:h")}
-        \ %=
-        \ %w %{&ft} %{w:["lf_winwd"] < 80 ? "" : " " . (strlen(&fenc) ? &fenc : &enc) . (&bomb ? ",BOM " : " ")
-        \ . get(g:ff_map, &ff, "?") . (&expandtab ? " ˽ " : " ⇥ ") . &tabstop}
-        \ %#CurrMode#%{w:["lf_active"] ? (w:["lf_winwd"] < 60 ? ""
-        \ : printf(" %d:%-2d %2d%% ", line("."), virtcol("."), 100 * line(".") / line("$"))) : ""}
-        \%#Warnings#%{w:["lf_active"] ? get(b:, "lf_stl_warnings", "") : ""}%*'
-endf
+" fun! BuildStatusLine(nr)
+"   return '%{SetupStl('.a:nr.')}
+"         \%#CurrMode#%{w:["lf_active"] ? "  " . get(g:mode_map, mode(1), [mode(1)])[0] . (&paste ? " PASTE " : " ") : ""}%*
+"         \ %n %t %{&modified ? g:mod_sym : " "} %{&modifiable ? (&readonly ? g:ro_sym : "  ") : g:ma_sym}
+"         \ %<%{w:["lf_winwd"] < 80 ? (w:["lf_winwd"] < 50 ? "" : expand("%:p:h:t")) : expand("%:p:h")}
+"         \ %=
+"         \ %w %{&ft} %{w:["lf_winwd"] < 80 ? "" : " " . (strlen(&fenc) ? &fenc : &enc) . (&bomb ? ",BOM " : " ")
+"         \ . get(g:ff_map, &ff, "?") . (&expandtab ? " ˽ " : " ⇥ ") . &tabstop}
+"         \ %#CurrMode#%{w:["lf_active"] ? (w:["lf_winwd"] < 60 ? ""
+"         \ : printf(" %d:%-2d %2d%% ", line("."), virtcol("."), 100 * line(".") / line("$"))) : ""}
+"         \%#Warnings#%{w:["lf_active"] ? get(b:, "lf_stl_warnings", "") : ""}%*'
+" endf
 " ========================================================= {{{{
 
 

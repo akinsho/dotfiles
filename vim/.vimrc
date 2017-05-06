@@ -28,16 +28,16 @@ endif
 call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+  if has('unix')
+  if empty($SSH_CONNECTION)
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+  endif
+endif
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
-
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
-  Plug 'honza/vim-snippets'
-  " Plug 'isRuslan/vim-es6'
-  " Plug 'epilande/vim-react-snippets'
 "================================
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
@@ -62,7 +62,7 @@ Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the s
 " Plug 'sjl/vitality.vim'
 endif
 
-"Utilities============================
+" "Utilities============================
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
@@ -70,7 +70,8 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'} "Highlighting for substitution in Vim
+Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
+" , {'on': 'OverCommandLine'} - premature optimisation
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 
@@ -85,12 +86,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 
 "Syntax ============================
-"Added vim polyglot a collection of language packs for vim
-"Plug 'sheerun/vim-polyglot' |
-Plug 'othree/yajs', {'for': 'javascript'} | Plug 'othree/javascript-libraries-syntax.vim'| Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
-Plug 'plasticboy/vim-markdown'
 
 "Marks =============================
 Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
@@ -117,9 +115,6 @@ Plug 'konfekt/fastfold'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
-Plug 'Yggdroot/indentLine'
-" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
-" Plug 'lifepillar/vim-cheat40'
 
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
@@ -128,14 +123,20 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
+Plug 'rakr/vim-one'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
+Plug 'Yggdroot/indentLine'
+" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
+" Plug 'lifepillar/vim-cheat40'
+
 "Vim HARDMODE ----------------------
 " Plug 'wikitopian/hardmode'
 " Preview colors in source code
 " Plug 'ap/vim-css-color'
 "Codi - A REPL in vim
+
 call plug#end()
 
 filetype plugin indent on
@@ -153,6 +154,9 @@ syntax enable
 "====================================================================================
 let mapleader = "," "Remap leader key
 let maplocalleader = "\<space>" "Local leader key
+"--------------------------------------------------------------------------------------------------
+"COMMANDS {{{
+"--------------------------------------------------------------------------------------------------
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
@@ -206,19 +210,11 @@ function! SearchWordWithRg()
     execute 'Rg' expand('<cword>')
   endfunction
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
-" nnoremap <C-P> :FZFR <CR>
-" Uses the pwd
-
-fun! s:fzf_root()
-  let path = finddir(".git", expand("%:p:h").";")
-  return fnamemodify(substitute(path, ".git", "", ""), ":p:h")
-endfun
-
-" nnoremap <silent> <C-P>:exe 'Files ' . <SID>fzf_root()<CR>
+nnoremap <C-P> :FZFR <CR>
 " nnoremap <space>\ :Find<space>
 nnoremap \ :Rg<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
-nnoremap <C-P> :Files <CR>
+" nnoremap <C-P> :Files <CR> " Uses the pwd
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
@@ -258,11 +254,15 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 " Push the repository of the currently opened file
 " nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
-" JSX
+" JSX & POLYGLOT
 "--------------------------------------------
 " let g:polyglot_disabled = ['jsx'] "Setting I might need in the future
-" let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
+let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
+"VIM-GO
+let g:go_doc_keywordprg_enabled = 0
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
 
 "--------------------------------------------
 " Indent guides
@@ -275,7 +275,7 @@ let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
 let g:gitgutter_sign_added    = '❖'
 let g:gitgutter_sign_column_always = 1
-let g:gitgutter_eager              = 0
+let g:gitgutter_eager              = 1
 let g:gitgutter_grep_command = 'ag --nocolor'
 
 vmap v <Plug>(expand_region_expand)
@@ -290,10 +290,11 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
 " let g:javascript_conceal_arrow_function = "⇒"
-" let g:javascript_conceal_null           = "ø"
 " let g:javascript_conceal_return         = "⇚"
-" let g:javascript_conceal_undefined      = "¿"
-" let g:javascript_plugin_jsdoc           = 1
+let g:javascript_conceal_undefined = "¿"
+let g:javascript_conceal_super     = "Ω"
+let g:javascript_conceal_null      = "ø"
+let g:javascript_plugin_jsdoc      = 1
 
 let g:committia_hooks = {}
 
@@ -391,7 +392,6 @@ map  N <Plug>(easymotion-prev)
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,js EmmetInstall
 " let g:user_emmet_leader_key     = "<s-tab>"
 
 nnoremap <leader>u :GundoToggle<CR>
@@ -431,17 +431,18 @@ endfunction
 
 augroup Go_Mappings
   autocmd!
+  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 nolist
+  autocmd FileType go nnoremap <C-[>  @='10k'<CR>
   autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
   autocmd FileType go nmap <leader>r  <Plug>(go-run)
   autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 augroup END
 
 augroup CheckOutsideTime - "excellent function but implemented by terminus
   autocmd!
-  " automatically check for changed files outside vim
-  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime
-  "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
-  au FocusLost * silent! wa
+  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
+  au FocusLost * silent! wa "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
 augroup end
 
 " Disable paste.
@@ -474,6 +475,7 @@ augroup END
 
 augroup filetype_completion
   autocmd!
+  autocmd FileType html,css,javascript,javascript.jsx EmmetInstall
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript,javascript.jsx,jsx setlocal omnifunc=tern#Complete
@@ -486,18 +488,17 @@ augroup filetype_javascript
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
   autocmd BufWritePost *.js,*.jsx Neoformat
   "==================================
-  " autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+  autocmd FileType javascript nnoremap <buffer> <leader>cc I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
-  autocmd FileType javascript setlocal concealcursor=nvic
+  " autocmd FileType javascript setlocal concealcursor=nvic
 augroup END
 
 augroup FileType_html
   autocmd!
   "for emmet
-  autocmd FileType html inoremap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd Filetype html noremap <buffer> <C-G> :Neoformat<CR>
   autocmd BufWritePost *.html Neoformat
   autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
@@ -507,6 +508,7 @@ augroup END
 
 augroup FileType_markdown
   autocmd!
+  au Filetype markdown setlocal nonumber
   autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
@@ -522,7 +524,7 @@ augroup filetype_vim
   autocmd!
 "This command makes vim start a file with all folds closed
   autocmd FileType vim setlocal foldmethod=marker
-  autocmd FileType vim setlocal foldlevelstart=0
+  " autocmd FileType vim setlocal foldlevelstart=0
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
 augroup END
 
@@ -533,6 +535,8 @@ augroup END
 
 augroup FileType_all
   autocmd!
+  au FileType python setl ts=4
+  au FileType rust setl sw=0 sts=0
   autocmd BufReadPost *
         \ if line("'\"") > 1 && line("'\"") <= line("$") |
         \   exe "normal! g`\"" |
@@ -548,10 +552,8 @@ augroup FileType_all
         \ endif
 
 if exists("*mkdir") "auto-create directories for new files
-  augroup makedir
     autocmd!
     au BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
-  augroup END
 endif
 augroup END
 
@@ -600,6 +602,7 @@ endfunction
 augroup jsfolding
   autocmd!
   autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
+  au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=20 | norm zR
 augroup END
 " }}}
 " CSS {{{
@@ -625,15 +628,15 @@ let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags t
 "====================================================================================
 "Spelling
 "====================================================================================
-" Someone elses color scheme, the default is really bad
+" Chang default highlighting for spellbad, the default is really bad
 highlight clear SpellBad
-highlight SpellBad term=standout term=underline cterm=italic ctermfg=Red
+highlight SpellBad  term=underline cterm=italic ctermfg=Red
 highlight clear SpellCap
-highlight SpellCap term=standout term=underline cterm=italic ctermfg=Blue
+highlight SpellCap  term=underline cterm=italic ctermfg=Blue
 highlight clear SpellLocal
-highlight SpellLocal term=standout term=underline cterm=italic ctermfg=Blue
+highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
 highlight clear SpellRare
-highlight SpellRare term=standout term=underline cterm=italic ctermfg=Blue
+highlight SpellRare  term=underline cterm=italic ctermfg=Blue
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -715,8 +718,8 @@ nnoremap <silent> <leader>z :ZoomToggle<CR>
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
 nnoremap <leader>n :enew<cr>
-" Opens a new tab
-nnoremap <localleader>n :tabnew<CR>
+" Close a tab
+nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nnoremap ,q :bp <BAR> bd #<CR>
@@ -727,15 +730,15 @@ nnoremap <leader>bl :ls<CR>
 " Message output on vim actions
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start
-set shortmess+=mnrxoOt
 set shortmess+=A                      " ignore annoying swapfile messages
 set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
 set shortmess-=l
-" set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
+set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 " set shortmess+=I                      " no splash screen
 " set shortmess-=f                      " (file x of x) instead of just (x of x)
+" set shortmess+=mnrxoOt
 if has('patch-7.4.314')
 set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
@@ -840,7 +843,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-" syntax sync minlines=150 " update syntax highlighting for more lines increased scrolling performance
+" syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -876,8 +879,7 @@ set gdefault "Makes the g flag available by default so it doesn't have to be spe
 set pumheight=10
 set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
-set ttyfast " Improves smoothness of redrawing when there are multiple windows
-set ttyscroll=3
+" set ttyfast " Improves smoothness of redrawing when there are multiple windows
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
   set relativenumber
 endif
@@ -909,7 +911,7 @@ if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app' " Don't need this in xt
     let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   endif
 endif
-
+set scrolljump=5
 "}}}
 " ----------------------------------------------------------------------------
 
@@ -956,11 +958,10 @@ let g:neoformat_try_formatprg = 1 " Use formatprg when available
 let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
 let g:neoformat_only_msg_on_error = 1
 
-" let g:vim_jsx_pretty_colorful_config = 1
 let g:vimsyn_folding          = 'af'
 let g:fastfold_skip_filetypes = [ 'taglist' ]
 
-nmap <F4> :Gitv<CR>
+" nmap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -978,6 +979,9 @@ nnoremap <F1> :GHDashboard! Akin909<CR>
 "------------------------------------
 " Goyo
 "------------------------------------
+let g:goyo_width=100
+let g:goyo_margin_top = 2
+let g:goyo_margin_bottom = 2
 nnoremap <F3> :Goyo<CR>
 function! s:goyo_enter()
   silent !tmux set status off
@@ -1039,7 +1043,7 @@ let g:livedown_open = 1 " should the browser window pop-up upon previewing
 let g:livedown_port = 1337 " the port on which Livedown server will run
 let delimitMate_expand_cr          = 2
 let delimitMate_expand_space       = 1
-let delimitMate_jump_expansion     = 1
+" let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
 " ================================================
 " FZF
@@ -1073,7 +1077,7 @@ function! s:find_root()
   for vcs in ['.git', '.svn', '.hg']
     let dir = finddir(vcs.'/..', ';')
     if !empty(dir)
-      execute 'FZF' dir
+      execute 'Files' dir
       return
     endif
   endfor
@@ -1147,13 +1151,13 @@ nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
 nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
 
 " for better tab response for emmet
-function! s:emmet_html_tab()
-  let line = getline('.')
-  if match(line, '<.*>') >= 0
-    return "\<c-y>n"
-  endif
-  return "\<c-y>"
-endfunction
+" function! s:emmet_html_tab()
+"   let line = getline('.')
+"   if match(line, '<.*>') >= 0
+"     return "\<c-y>n"
+"   endif
+"   return "\<c-y>"
+" endfunction
 
 " Function to use f to search backwards and forwards courtesy of help docs
 " [WIP] see section H getpwd()
@@ -1236,17 +1240,27 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
-colorscheme quantum
+ colorscheme quantum
+" let g:one_allow_italics = 1
+nnoremap <silent><F9> :exec "color " .
+  \((g:colors_name=="quantum") ?"one":"quantum")<CR>
+" if g:colors_name=="one"
+"   call one#highlight('Normal', '', '203038', 'none')
+"   call one#highlight('Cursorline','', '273B45', 'none')
+"   call one#highlight('FoldColumn', '', '', 'none')
+"   call one#highlight('PmenuSel', '', '203038', 'none')
+"   call one#highlight('PmenuSbar', '', '203038', 'none')
+" endif
+
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
   " render properly when inside 256-color tmux and GNU screen.
   set t_ut=
 endif
 " Comments in ITALICS YASSSSS!!!
-highlight Comment cterm=italic
-"Sets no highlighting for conceal
-hi clear Conceal
-hi Folded guifg=#FFC66D
+hi Comment cterm=italic
+hi clear Conceal "Sets no highlighting for conceal
+hi Folded guifg=#FFC66D guibg=NONE
 set conceallevel=2
 "---------------------------------------------------------------------
 " Utilities
@@ -1265,7 +1279,7 @@ set softtabstop=-2 " Alignment tabs are two spaces, and never tabs. Negative mea
 set tabstop=8 " real tabs render width. Applicable to HTML, PHP, anything using real tabs. I.e., not applicable to JS.
 set noshiftround " use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
 set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
-set complete+=k " Add dictionary to vim's autocompletion
+" set complete+=k " Add dictionary to vim's autocompletion
 if !has('nvim')
   set complete-=i
   set autoindent
@@ -1283,7 +1297,7 @@ scriptencoding utf-8
 " =======================================================
 "  DICTIONARY
 " =======================================================
-set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+" set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif
@@ -1350,20 +1364,14 @@ endif
 " ----------------------------------------------------------------------------
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
-" Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode
-augroup highlight_follows_focus
+" Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
+augroup cursorline
   autocmd!
-  autocmd WinEnter * set cursorline
-  autocmd WinLeave * set nocursorline
-  autocmd FocusGained * set hi cursorline
-  autocmd FocusLost * set nocursorline
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
 augroup END
 
-augroup highlight_follows_vim
-  autocmd!
-augroup END
-
-set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
+set scrolloff=20 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 

@@ -2,7 +2,7 @@
 #               STARTUP TIMES
 #=======================================================================
 # zmodload zsh/zprof
-# start_time="$(date +%s)"
+start_time="$(date +%s)"
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
@@ -90,7 +90,7 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 
 # PLUGINS =======================================================================
-plugins=(alias-tips git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew heroku )
+plugins=(alias-tips last-working-dir git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew heroku )
 
 # web-search - great plugin, google from the command line although I never use
 # it soo...
@@ -117,7 +117,7 @@ export VISUAL=$EDITOR
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Change the path where project plugin creates projects
-export PROJECTS_HOME=~/Desktop/Coding
+# export PROJECTS_HOME=~/Desktop/Coding
 # Aliases 'hub' to git to allow for greater git powah!!
 eval "$(hub alias -s)"
 
@@ -274,7 +274,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
-# echo load time: $((end_time - start_time)) seconds
+echo load time: $((end_time - start_time)) seconds
 # zprof
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

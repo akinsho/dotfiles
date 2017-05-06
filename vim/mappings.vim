@@ -1,6 +1,9 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
+nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+"Evaluates whether there is a fold on the current line if so unfold it else return a normal space
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 "Use this to ensure mappings dont already exist
 " if !hasmapto('\ABCdoit')
 "    map <Leader>d \ABCdoit
@@ -95,10 +98,10 @@ omap id  i"
 xmap id  i"
 
 " <angle> 
-omap aa  a>
-xmap aa  a>
-omap ia  i>
-xmap ia  i>
+" omap aa  a>
+" xmap aa  a>
+" omap ia  i>
+" xmap ia  i>
 "Change two horizontally split windows to vertical splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
@@ -121,7 +124,6 @@ vnoremap * y/<C-R>"<CR>
 nnoremap S :%s/\<<C-R><C-W>\>//gc<Left><Left><Left>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
-" nnoremap ó :update<CR>
 inoremap ó <C-O>:update<CR>
 "This mapping allows yanking all of a line without taking the new line
 "character as well can be with our without spaces
