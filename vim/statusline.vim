@@ -1,3 +1,62 @@
+"LIFEPILLAR'S STATUSLINE ============================{{{
+" Logic for customizing the User1 highlight group is the following
+" - fg = StatusLine fg (if StatusLine colors are reverse)
+" - bg = StatusLineNC bg (if StatusLineNC colors are reverse)
+hi StatusLine term=reverse cterm=reverse gui=reverse ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#4f778c
+hi StatusLineNC term=reverse cterm=reverse gui=reverse ctermfg=11 ctermbg=0 guifg=#657b83 guibg=#073642
+hi User1 ctermfg=14 ctermbg=0 guifg=#93a1a1 guibg=#073642
+let g:mode_map = {
+        \  'n': ['NORMAL',  'NormalMode' ],     'no': ['PENDING', 'NormalMode'  ],  'v': ['VISUAL',  'VisualMode' ],
+        \  'V': ['V-LINE',  'VisualMode' ], "\<c-v>": ['V-BLOCK', 'VisualMode'  ],  's': ['SELECT',  'VisualMode' ],
+        \  'S': ['S-LINE',  'VisualMode' ], "\<c-s>": ['S-BLOCK', 'VisualMode'  ],  'i': ['INSERT',  'InsertMode' ],
+        \ 'ic': ['COMPLETE','InsertMode' ],     'ix': ['CTRL-X',  'InsertMode'  ],  'R': ['REPLACE', 'ReplaceMode'],
+        \ 'Rc': ['COMPLETE','ReplaceMode'],     'Rv': ['REPLACE', 'ReplaceMode' ], 'Rx': ['CTRL-X',  'ReplaceMode'],
+        \  'c': ['COMMAND', 'CommandMode'],     'cv': ['COMMAND', 'CommandMode' ], 'ce': ['COMMAND', 'CommandMode'],
+        \  'r': ['PROMPT',  'CommandMode'],     'rm': ['-MORE-',  'CommandMode' ], 'r?': ['CONFIRM', 'CommandMode'],
+        \  '!': ['SHELL',   'CommandMode'],      't': ['TERMINAL', 'CommandMode']}
+
+  let g:ro_sym  = ''
+  let g:ma_sym  = "✗"
+  let g:mod_sym = "◇"
+  let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+
+  " newMode may be a value as returned by mode(1) or the name of a highlight group
+  " fun! s:updateStatusLineHighlight(newMode)
+  "   execute 'hi! link CurrMode' get(g:mode_map, a:newMode, ["", a:newMode])[1]
+  "   return 1
+  " endf
+
+  " Setting highlight groups while computing the status line may cause the
+  " startup screen to disappear. See: https://github.com/powerline/powerline/issues/250
+  " fun! SetupStl(nr)
+  "   " In a %{} context, winnr() always refers to the window to which the status line being drawn belongs.
+  "   return get(extend(w:, {
+  "         \ "lf_active": winnr() != a:nr
+  "           \ ? 0
+  "           \ : (mode(1) ==# get(g:, "lf_cached_mode", "")
+  "             \ ? 1
+  "             \ : s:updateStatusLineHighlight(get(extend(g:, { "lf_cached_mode": mode(1) }), "lf_cached_mode"))
+  "             \ ),
+  "         \ "lf_winwd": winwidth(winnr())
+  "         \ }), "", "")
+  " endf
+
+" set statusline=%!BuildStatusLine(winnr())
+" Build the status line the way I want - no fat light plugins!
+" fun! BuildStatusLine(nr)
+"   return '%{SetupStl('.a:nr.')}
+"         \%#CurrMode#%{w:["lf_active"] ? "  " . get(g:mode_map, mode(1), [mode(1)])[0] . (&paste ? " PASTE " : " ") : ""}%*
+"         \ %n %t %{&modified ? g:mod_sym : " "} %{&modifiable ? (&readonly ? g:ro_sym : "  ") : g:ma_sym}
+"         \ %<%{w:["lf_winwd"] < 80 ? (w:["lf_winwd"] < 50 ? "" : expand("%:p:h:t")) : expand("%:p:h")}
+"         \ %=
+"         \ %w %{&ft} %{w:["lf_winwd"] < 80 ? "" : " " . (strlen(&fenc) ? &fenc : &enc) . (&bomb ? ",BOM " : " ")
+"         \ . get(g:ff_map, &ff, "?") . (&expandtab ? " ˽ " : " ⇥ ") . &tabstop}
+"         \ %#CurrMode#%{w:["lf_active"] ? (w:["lf_winwd"] < 60 ? ""
+"         \ : printf(" %d:%-2d %2d%% ", line("."), virtcol("."), 100 * line(".") / line("$"))) : ""}
+"         \%#Warnings#%{w:["lf_active"] ? get(b:, "lf_stl_warnings", "") : ""}%*'
+" endf
+" ========================================================= {{{{
+
 "DIY STATUS LINE ==========================={{{
 " =====================================================================
 " stolen from https://gabri.me/blog/diy-vim-statusline
@@ -200,65 +259,6 @@ endif
 " set statusline+=\ %3p%% " Percentage through file in lines as in |CTRL-G|
 "====================================================}}}
 
-"LIFEPILLAR'S STATUSLINE ============================{{{
-" Logic for customizing the User1 highlight group is the following
-" - fg = StatusLine fg (if StatusLine colors are reverse)
-" - bg = StatusLineNC bg (if StatusLineNC colors are reverse)
-hi StatusLine term=reverse cterm=reverse gui=reverse ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#4f778c
-hi StatusLineNC term=reverse cterm=reverse gui=reverse ctermfg=11 ctermbg=0 guifg=#657b83 guibg=#073642
-hi User1 ctermfg=14 ctermbg=0 guifg=#93a1a1 guibg=#073642
-let g:mode_map = {
-        \  'n': ['NORMAL',  'NormalMode' ],     'no': ['PENDING', 'NormalMode'  ],  'v': ['VISUAL',  'VisualMode' ],
-        \  'V': ['V-LINE',  'VisualMode' ], "\<c-v>": ['V-BLOCK', 'VisualMode'  ],  's': ['SELECT',  'VisualMode' ],
-        \  'S': ['S-LINE',  'VisualMode' ], "\<c-s>": ['S-BLOCK', 'VisualMode'  ],  'i': ['INSERT',  'InsertMode' ],
-        \ 'ic': ['COMPLETE','InsertMode' ],     'ix': ['CTRL-X',  'InsertMode'  ],  'R': ['REPLACE', 'ReplaceMode'],
-        \ 'Rc': ['COMPLETE','ReplaceMode'],     'Rv': ['REPLACE', 'ReplaceMode' ], 'Rx': ['CTRL-X',  'ReplaceMode'],
-        \  'c': ['COMMAND', 'CommandMode'],     'cv': ['COMMAND', 'CommandMode' ], 'ce': ['COMMAND', 'CommandMode'],
-        \  'r': ['PROMPT',  'CommandMode'],     'rm': ['-MORE-',  'CommandMode' ], 'r?': ['CONFIRM', 'CommandMode'],
-        \  '!': ['SHELL',   'CommandMode'],      't': ['TERMINAL', 'CommandMode']}
-
-  let g:ro_sym  = ''
-  let g:ma_sym  = "✗"
-  let g:mod_sym = "◇"
-  let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
-
-  " newMode may be a value as returned by mode(1) or the name of a highlight group
-  " fun! s:updateStatusLineHighlight(newMode)
-  "   execute 'hi! link CurrMode' get(g:mode_map, a:newMode, ["", a:newMode])[1]
-  "   return 1
-  " endf
-
-  " Setting highlight groups while computing the status line may cause the
-  " startup screen to disappear. See: https://github.com/powerline/powerline/issues/250
-  " fun! SetupStl(nr)
-  "   " In a %{} context, winnr() always refers to the window to which the status line being drawn belongs.
-  "   return get(extend(w:, {
-  "         \ "lf_active": winnr() != a:nr
-  "           \ ? 0
-  "           \ : (mode(1) ==# get(g:, "lf_cached_mode", "")
-  "             \ ? 1
-  "             \ : s:updateStatusLineHighlight(get(extend(g:, { "lf_cached_mode": mode(1) }), "lf_cached_mode"))
-  "             \ ),
-  "         \ "lf_winwd": winwidth(winnr())
-  "         \ }), "", "")
-  " endf
-
-" set statusline=%!BuildStatusLine(winnr())
-" Build the status line the way I want - no fat light plugins!
-" fun! BuildStatusLine(nr)
-"   return '%{SetupStl('.a:nr.')}
-"         \%#CurrMode#%{w:["lf_active"] ? "  " . get(g:mode_map, mode(1), [mode(1)])[0] . (&paste ? " PASTE " : " ") : ""}%*
-"         \ %n %t %{&modified ? g:mod_sym : " "} %{&modifiable ? (&readonly ? g:ro_sym : "  ") : g:ma_sym}
-"         \ %<%{w:["lf_winwd"] < 80 ? (w:["lf_winwd"] < 50 ? "" : expand("%:p:h:t")) : expand("%:p:h")}
-"         \ %=
-"         \ %w %{&ft} %{w:["lf_winwd"] < 80 ? "" : " " . (strlen(&fenc) ? &fenc : &enc) . (&bomb ? ",BOM " : " ")
-"         \ . get(g:ff_map, &ff, "?") . (&expandtab ? " ˽ " : " ⇥ ") . &tabstop}
-"         \ %#CurrMode#%{w:["lf_active"] ? (w:["lf_winwd"] < 60 ? ""
-"         \ : printf(" %d:%-2d %2d%% ", line("."), virtcol("."), 100 * line(".") / line("$"))) : ""}
-"         \%#Warnings#%{w:["lf_active"] ? get(b:, "lf_stl_warnings", "") : ""}%*'
-" endf
-" ========================================================= {{{{
-
 
 " =========================================================
 " MyTabLine {{{
@@ -301,24 +301,24 @@ set showtabline=1
     let s .= '%999XX' " places an 'X' at the far-right
     return s
   endfunction
-  " set tabline=%!MyTabLine()
+  set tabline=%!MyTabLine()
 endif
 
-  fun! BuildTabLabel(nr)
-    return " " . a:nr
-          \ . (empty(filter(tabpagebuflist(a:nr), 'getbufvar(v:val, "&modified")')) ? " " : " " . g:mod_sym . " ")
-          \ . (get(extend(t:, {
-          \ "tablabel": fnamemodify(bufname(tabpagebuflist(a:nr)[tabpagewinnr(a:nr) - 1]), ":t")
-          \ }), "tablabel") == "" ? "[No Name]" : get(t:, "tablabel")) . "  "
-  endf
+  " fun! BuildTabLabel(nr)
+  "   return " " . a:nr
+  "         \ . (empty(filter(tabpagebuflist(a:nr), 'getbufvar(v:val, "&modified")')) ? " " : " " . g:mod_sym . " ")
+  "         \ . (get(extend(t:, {
+  "         \ "tablabel": fnamemodify(bufname(tabpagebuflist(a:nr)[tabpagewinnr(a:nr) - 1]), ":t")
+  "         \ }), "tablabel") == "" ? "[No Name]" : get(t:, "tablabel")) . "  "
+  " endf
 
-  fun! BuildTabLine()
-    return join(map(
-          \ range(1, tabpagenr('$')),
-          \ '(v:val == tabpagenr() ? "%#TabLineSel#" : "%#TabLine#") . "%".v:val."T %{BuildTabLabel(".v:val.")}"'
-          \), '') . "%#TabLineFill#%T" . (tabpagenr('$') > 1 ? "%=%999X✕ " : "")
-  endf
+  " fun! BuildTabLine()
+  "   return join(map(
+  "         \ range(1, tabpagenr('$')),
+  "         \ '(v:val == tabpagenr() ? "%#TabLineSel#" : "%#TabLine#") . "%".v:val."T %{BuildTabLabel(".v:val.")}"'
+  "         \), '') . "%#TabLineFill#%T" . (tabpagenr('$') > 1 ? "%=%999X✕ " : "")
+  " endf
 
-  set tabline=%!BuildTabLine()
-  set showtabline=2
+  " set tabline=%!BuildTabLine()
+  " set showtabline=2
 "===============================================================================================}}}

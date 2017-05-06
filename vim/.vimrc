@@ -537,11 +537,6 @@ augroup FileType_all
   autocmd!
   au FileType python setl ts=4
   au FileType rust setl sw=0 sts=0
-  autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
@@ -552,7 +547,6 @@ augroup FileType_all
         \ endif
 
 if exists("*mkdir") "auto-create directories for new files
-    autocmd!
     au BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
 endif
 augroup END
@@ -844,7 +838,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " Display {{{
 " --------------------------------------------------------------------------
 " syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
-set synmaxcol=1024 " don't syntax highlight long lines
+" set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
 " This should cause lines to wrap around words rather than random characters
@@ -906,10 +900,10 @@ if exists('&belloff')
 endif
 if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app' " Don't need this in xterm-256color, but do need it inside tmux. (See `:h xterm-true-color`.)
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
-  if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
+  " if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
     let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
     let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
-  endif
+  " endif
 endif
 set scrolljump=5
 "}}}
