@@ -87,11 +87,11 @@ Plug 'tpope/vim-abolish'
 
 "Syntax ============================
 Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
-Plug 'Valloric/MatchTagAlways', { 'for':'html' }
+" Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 
 "Marks =============================
-" Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
+Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 
 "Git ===============================
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
@@ -111,7 +111,7 @@ Plug 'wellle/targets.vim' "Moar textobjs
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
-Plug 'konfekt/fastfold'
+" Plug 'konfekt/fastfold'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
@@ -127,20 +127,12 @@ Plug 'rakr/vim-one'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
-Plug 'Yggdroot/indentLine'
-"MAPPINGS =================================================
-" Plug '~/Dotfiles/vim/mappings.vim'
-" STATUS LINE --------------------
-" see statuline.vim file
-" Plug '~/Dotfiles/vim/statusline.vim'
+" Plug 'Yggdroot/indentLine'
 " Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
-" Plug 'lifepillar/vim-cheat40'
 
-"Vim HARDMODE ----------------------
-" Plug 'wikitopian/hardmode'
 " Preview colors in source code
 " Plug 'ap/vim-css-color'
-"Codi - A REPL in vim
+" Codi - A REPL in vim
 
 call plug#end()
 
@@ -168,7 +160,8 @@ let maplocalleader = "\<space>" "Local leader key
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
-let g:ctrlsf_default_root = 'project' "Search at the project root i.e git or hg folder
+let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
+let g:ctrlsf_ignore_dir = ['bower_components', 'node_modules']
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
 vmap     <C-F>F <Plug>CtrlSFVwordExec
@@ -280,7 +273,6 @@ let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
 let g:gitgutter_sign_added    = '❖'
 let g:gitgutter_sign_column_always = 1
-let g:gitgutter_eager              = 1
 let g:gitgutter_grep_command = 'ag --nocolor'
 
 vmap v <Plug>(expand_region_expand)
@@ -529,7 +521,7 @@ augroup filetype_vim
   autocmd!
   "This command makes vim start a file with all folds closed
   autocmd FileType vim setlocal foldmethod=marker
-  " autocmd FileType vim setlocal foldlevelstart=0
+  autocmd FileType vim setlocal foldlevelstart=0
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
 augroup END
 
@@ -600,8 +592,8 @@ function! FoldText()
 endfunction
 augroup jsfolding
   autocmd!
-  autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=syntax |setlocal foldtext=FoldText()
-  au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=20 | norm zR
+  autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=indent|setlocal foldtext=FoldText()
+  au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=99 | norm zR
 augroup END
 " }}}
 " CSS {{{
@@ -617,7 +609,7 @@ function! CSSFoldText()
 endfunction
 augroup ft_css
   au!
-  au Filetype css setlocal foldmethod=marker
+  au Filetype css setlocal foldmethod=indent | setlocal foldlevelstart=99
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
   au BufWritePost *.css Neoformat
@@ -840,7 +832,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-" syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
 " set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -852,7 +844,7 @@ if has('linebreak') "Causes wrapped line to keep same indentation
     set breakindentopt=shift:2
   endif
 endif
-
+" set regexpengine=1     "Sets regexp engine to the previous version as it was more perfomant??
 " LIST =============================================================
 set list                              " show invisible chars
 set listchars+=tab:▷\ 
@@ -867,13 +859,13 @@ if has('unnamed')
   set clipboard=unnamed,unnamedplus
 endif
 set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
-set magic " For regular expressions turn magic on
+" set magic " For regular expressions turn magic on
 set gdefault "Makes the g flag available by default so it doesn't have to be specified
 " insert completion height and options
-set pumheight=10
+" set pumheight=10
 set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
-" set ttyfast " Improves smoothness of redrawing when there are multiple windows
+set ttyfast " Improves smoothness of redrawing when there are multiple windows
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
   set relativenumber
 endif
@@ -905,7 +897,6 @@ if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app' " Don't need this in xt
   let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   " endif
 endif
-set scrolljump=5
 "}}}
 " ----------------------------------------------------------------------------
 
@@ -950,7 +941,7 @@ let g:neoformat_enabled_css = ['cssbeautify']
 
 let g:neoformat_try_formatprg = 1 " Use formatprg when available
 let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
-let g:neoformat_only_msg_on_error = 1
+" let g:neoformat_only_msg_on_error = 1
 
 let g:vimsyn_folding          = 'af'
 let g:fastfold_skip_filetypes = [ 'taglist' ]
@@ -1037,7 +1028,6 @@ let g:livedown_open = 1 " should the browser window pop-up upon previewing
 let g:livedown_port = 1337 " the port on which Livedown server will run
 let delimitMate_expand_cr          = 2
 let delimitMate_expand_space       = 1
-" let delimitMate_jump_expansion     = 1
 let delimitMate_balance_matchpairs = 1
 " ================================================
 " FZF
@@ -1354,25 +1344,26 @@ set nohlsearch " -functionality i.e. search highlighting done by easy motion and
 if &ft ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
-
 " ----------------------------------------------------------------------------
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-" augroup cursorline
-"   autocmd!
-"   autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-"   autocmd WinLeave * setlocal nocursorline
-" augroup END
+augroup cursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
 
-set scrolloff=20 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
+set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 
 "}}}
-" ----------------------------------------------------------------------------
 "-----------------------------------------------------------------------------------
 "DIY STATUS LINE ==========================={{{
+"-----------------------------------------------------------------------------------
+
+" finish
 " =====================================================================
 " stolen from https://gabri.me/blog/diy-vim-statusline
 " =====================================================================
@@ -1492,16 +1483,16 @@ else
 endif
 
 " Shamelessly stolen from statline plugin, shows buffer count and buffer number
-" function! BufCount()
-"   if !exists("s:statline_n_buffers")
-"     let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
-"   endif
-"   return s:statline_n_buffers
-" endfunction
+function! BufCount()
+  if !exists("s:statline_n_buffers")
+    let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
+  endif
+  return s:statline_n_buffers
+endfunction
 
-" if !exists('g:statline_show_n_buffers')
-"   let g:statline_show_n_buffers = 1
-" endif
+if !exists('g:statline_show_n_buffers')
+  let g:statline_show_n_buffers = 1
+endif
 
 " Always display the status line even if only one window is displayed
 set laststatus=2
@@ -1509,15 +1500,15 @@ set statusline=
 set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
 set statusline+=\ %{toupper(g:currentmode[mode()])} " Current mode
 " ---- number of buffers : buffer number ----
-" if g:statline_show_n_buffers
-"   set statusline+=\ %{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
-"   augroup statline_nbuf
-"     autocmd!
-"     autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
-"   augroup END
-" else
-"   set statusline=[%n]\ %<
-" endif
+if g:statline_show_n_buffers
+  set statusline+=\ %{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
+  augroup statline_nbuf
+    autocmd!
+    autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
+  augroup END
+else
+  set statusline=[%n]\ %<
+endif
 " --------------------------------------------
 set statusline+=\ %{HasPaste()}
 set statusline+=\ %{g:session}
@@ -1814,7 +1805,8 @@ noremap K  @='10k'<CR>
 noremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
 
 "This line allows the current file to source the vimrc allowing me use bindings as they're added

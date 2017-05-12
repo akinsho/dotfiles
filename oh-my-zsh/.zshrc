@@ -140,7 +140,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-SPACESHIP_PROMPT_SYMBOL='➜ 🍕 👾 '
+SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 SPACESHIP_PROMPT_SEPARATE_LINE=true
 # TIME
