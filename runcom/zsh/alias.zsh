@@ -4,6 +4,7 @@
 alias x="exit" # Exit Terminal
 alias dots="cd ~/Dotfiles"
 alias code="cd ~/Desktop/Coding"
+alias l="lsp"
 alias la='ls -aG'
 alias nv='nvim'
 alias cl='clear'

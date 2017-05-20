@@ -59,7 +59,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gu
 if executable("tmux")
   Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-  " Plug 'sjl/vitality.vim'
+  Plug 'sjl/vitality.vim'
 endif
 
 " "Utilities============================
@@ -71,8 +71,7 @@ augroup load_fat_finger
         \| autocmd! load_fat_finger
 augroup END
 Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
-" , {'on': 'OverCommandLine'} - premature optimisation
-Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
+"Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 
 "TPOPE ====================================
@@ -80,10 +79,10 @@ Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
 Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
+" Plug 'tpope/vim-commentary'
 
 "Syntax ============================
 Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
@@ -111,10 +110,12 @@ Plug 'wellle/targets.vim' "Moar textobjs
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
-" Plug 'konfekt/fastfold'
+Plug 'scrooloose/nerdcommenter'
+Plug 'mvolkmann/vim-react'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
-Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
-Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
+" Plug 'konfekt/fastfold'
+" Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
+" Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
@@ -123,7 +124,6 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
-Plug 'rakr/vim-one'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
@@ -232,11 +232,15 @@ omap ic <Plug>(textobj-comment-i)
 "-----------------------------------------------------------
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '✘' "✖️
+let g:ale_sign_error         = '✘'
 let g:ale_sign_warning       = '⚠️'
-let g:ale_linters            = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linters            = {
+      \'jsx': ['stylelint', 'eslint'],
+      \'sql': ['sqlint']
+      \}
 let g:ale_linter_aliases     = {'jsx': 'css'}
 let g:ale_set_highlights = 0
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 " nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
@@ -455,11 +459,11 @@ augroup reload_vimrc
 augroup END
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
-augroup updating_time
-  autocmd!
-  autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=10000
-  autocmd InsertLeave * let &updatetime=updaterestore
-augroup END
+" augroup updating_time
+"   autocmd!
+"   autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+"   autocmd InsertLeave * let &updatetime=updaterestore
+" augroup END
 
 augroup VimResizing
   autocmd!
@@ -485,7 +489,8 @@ augroup filetype_javascript
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
   autocmd BufWritePost *.js,*.jsx Neoformat
   "==================================
-  autocmd FileType javascript nnoremap <buffer> <leader>cc I{/*<C-O>A */}<esc>
+  autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+  " autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
@@ -561,11 +566,8 @@ augroup END
 
 augroup Toggle_number
   autocmd!
-  " toggle relativenumber according to mode, don't do this for markdown
-  if &ft != 'markdown'
     autocmd InsertEnter * set relativenumber!
     autocmd InsertLeave * set relativenumber
-  endif
 augroup END
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
@@ -619,15 +621,15 @@ let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags t
 "====================================================================================
 "Spelling
 "====================================================================================
-" Chang default highlighting for spellbad, the default is really bad
-highlight clear SpellBad
-highlight SpellBad  term=underline cterm=italic ctermfg=Red
-highlight clear SpellCap
-highlight SpellCap  term=underline cterm=italic ctermfg=Blue
-highlight clear SpellLocal
-highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
-highlight clear SpellRare
-highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+" Change default highlighting for spellbad, the default is really bad
+ highlight clear SpellBad
+ highlight SpellBad  term=underline cterm=italic ctermfg=Red
+ highlight clear SpellCap
+ highlight SpellCap  term=underline cterm=italic ctermfg=Blue
+ highlight clear SpellLocal
+ highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
+ highlight clear SpellRare
+ highlight SpellRare  term=underline cterm=italic ctermfg=Blue
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -736,7 +738,7 @@ endif
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
 " Set minimal width for current window.
-set winwidth=30
+"set winwidth=30
 set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
 if has('folding')
@@ -832,7 +834,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+"syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
 " set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -862,7 +864,7 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 " set magic " For regular expressions turn magic on
 set gdefault "Makes the g flag available by default so it doesn't have to be specified
 " insert completion height and options
-" set pumheight=10
+set pumheight=10
 set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
 set ttyfast " Improves smoothness of redrawing when there are multiple windows
@@ -917,6 +919,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+"let g:NERDCustomDelimiters = { 'javascript': { 'left': '{/*','right': '*/}'  }  }
+
 let g:tagbar_autofocus = 1
 let g:tagbar_type_css = {
       \ 'ctagstype' : 'Css',
@@ -941,10 +945,10 @@ let g:neoformat_enabled_css = ['cssbeautify']
 
 let g:neoformat_try_formatprg = 1 " Use formatprg when available
 let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
-" let g:neoformat_only_msg_on_error = 1
+let g:neoformat_only_msg_on_error = 1
 
-let g:vimsyn_folding          = 'af'
-let g:fastfold_skip_filetypes = [ 'taglist' ]
+" let g:vimsyn_folding          = 'af'
+" let g:fastfold_skip_filetypes = [ 'taglist' ]
 
 " nmap <F4> :Gitv<CR>
 
@@ -1134,27 +1138,6 @@ endf
 nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
 nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
 
-" for better tab response for emmet
-" function! s:emmet_html_tab()
-"   let line = getline('.')
-"   if match(line, '<.*>') >= 0
-"     return "\<c-y>n"
-"   endif
-"   return "\<c-y>"
-" endfunction
-
-" Function to use f to search backwards and forwards courtesy of help docs
-" [WIP] see section H getpwd()
-" function FindChar()
-"   let c = nr2char(getchar())
-"   while col('.') < col('$') - 1
-"     normal l
-"     if getline('.')[col('.') - 1] ==? c
-"       break
-"     endif
-"   endwhile
-" endfunction
-
 function! WrapForTmux(s)
   if !exists('$TMUX')
     return a:s
@@ -1225,16 +1208,6 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "Set color Scheme
 set background=dark
 colorscheme quantum
-" let g:one_allow_italics = 1
-nnoremap <silent><F9> :exec "color " .
-      \((g:colors_name=="quantum") ?"one":"quantum")<CR>
-" if g:colors_name=="one"
-"   call one#highlight('Normal', '', '203038', 'none')
-"   call one#highlight('Cursorline','', '273B45', 'none')
-"   call one#highlight('FoldColumn', '', '', 'none')
-"   call one#highlight('PmenuSel', '', '203038', 'none')
-"   call one#highlight('PmenuSbar', '', '203038', 'none')
-" endif
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -1566,12 +1539,6 @@ cmap w!! w !sudo tee % >/dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " => VISUAL MODE RELATED
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" ; and , search
-" forward/backward regardless of the direction of the previous
-" character search: doesn't work
-" nnoremap <expr> : getcharsearch().forward ? ';' : ','
-" nnoremap <expr> , getcharsearch().forward ? ',' : ';'
-" Treat long lines as break lines (useful when moving around in them).
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'

@@ -117,7 +117,8 @@ set -g status-attr dim
 set -g status-left "#{?client_prefix,#[bg=colour039]#[fg=colour226],#[bg=colour172]#[fg=white]#[bold]}$tm_session_name"
 # removed $tm_host from status bar till resizing issue fixed
 #[fg=#{battery_status_bg},bg=colour241]$tm_right_separator_black
-set -g status-right "$tm_tunes  #[bg=colour241]$batt_plug  $tm_date"
+# set -g status-right "$tm_tunes  #[bg=colour241]$batt_plug  $tm_date"
+set -g status-right " #[bg=colour241]$batt_plug  $tm_date"
 
 
 # Failed attempts to create a responsive status bar
