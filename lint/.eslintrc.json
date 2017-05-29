@@ -1,7 +1,6 @@
 {
     "rules": {
         "indent":0,
-        //"indent": [ "warn" , 4],
         "linebreak-style": [ "off", "unix" ],
         "quotes": [ "error", "single",{ "allowTemplateLiterals": true  }],
         "semi": [ "error", "always" ],
@@ -15,7 +14,7 @@
         "camelcase": 1,
         "no-underscore-dangle": 0,
         "no-console": 0,
-        "no-invalid-this": "error",
+        "no-invalid-this": "off",
         "no-self-compare": "error",
         "no-useless-return": "off",
         "callback-return": "error",

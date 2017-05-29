@@ -51,7 +51,6 @@ endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-Plug 'sbdchd/neoformat' " Autoformatter
 Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
 
@@ -70,8 +69,8 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
-"Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
+"Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
+Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 
 "TPOPE ====================================
@@ -82,7 +81,6 @@ Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
-" Plug 'tpope/vim-commentary'
 
 "Syntax ============================
 Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
@@ -90,7 +88,7 @@ Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'f
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 
 "Marks =============================
-Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
+"Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 
 "Git ===============================
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
@@ -105,17 +103,18 @@ Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text o
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
+Plug 'AndrewRadev/sideways.vim'
 
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
+"Plug 'konfekt/fastfold'
+"Plug 'mvolkmann/vim-react'
 Plug 'scrooloose/nerdcommenter'
-Plug 'mvolkmann/vim-react'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
-" Plug 'konfekt/fastfold'
-" Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
-" Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
+Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
+Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
@@ -154,7 +153,15 @@ let maplocalleader = "\<space>" "Local leader key
 "--------------------------------------------------------------------------------------------------
 "COMMANDS {{{
 "--------------------------------------------------------------------------------------------------
+"==============================================================
+"MAPPINGS {{{
+"==============================================================
+source ~/Dotfiles/vim/mappings.vim
 "--------------------------------------------------------------------------------------------------
+"==============================================================
+"STATUSLINE {{{
+"==============================================================
+source ~/Dotfiles/vim/statusline.vim
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
 "--------------------------------------------
@@ -230,10 +237,17 @@ omap ic <Plug>(textobj-comment-i)
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
+let g:ale_fixers = {}
+let g:ale_fixers.javascript = [
+  \ 'prettier',
+  \]
+"let g:ale_javascript_prettier_options ='prettier\ --stdin\ --single-quote\ --trailing-comma\ es5'
+let g:ale_javascript_prettier_options ='--single-quote'
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
-let g:ale_sign_warning       = '⚠️'
+let g:ale_sign_warning       = '🔸'
+"let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'jsx': ['stylelint', 'eslint'],
       \'sql': ['sqlint']
@@ -241,7 +255,7 @@ let g:ale_linters            = {
 let g:ale_linter_aliases     = {'jsx': 'css'}
 let g:ale_set_highlights = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
-" nmap <silent> <C-/> <Plug>(ale_previous_wrap)
+nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
 imap <C-L> <C-O><Plug>CapsLockToggle
@@ -282,7 +296,8 @@ let g:gitgutter_grep_command = 'ag --nocolor'
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-nnoremap <C-F> :Neoformat<CR>
+"nnoremap <C-F> :ALEFix<CR>
+nnoremap <C-F> :SidewaysLeft<cr>
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vnoremap <Enter> <Plug>(EasyAlign)
@@ -354,10 +369,6 @@ let g:NERDTreeShowBookmarks           = 1
 let NERDTreeAutoDeleteBuffer          = 1
 let NERDTreeShowHidden                = 1 "Show hidden files by default
 
-"===================================================
-" Vim-Over - Highlight substitution parameters
-"===================================================
-nmap <C-/> <esc>:OverCommandLine<CR>:s/
 "===================================================
 "EasyMotion mappings
 "===================================================
@@ -458,12 +469,6 @@ augroup reload_vimrc
   autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 augroup END
 
-" automatically leave insert mode after 'updatetime' milliseconds of inaction
-" augroup updating_time
-"   autocmd!
-"   autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=10000
-"   autocmd InsertLeave * let &updatetime=updaterestore
-" augroup END
 
 augroup VimResizing
   autocmd!
@@ -487,7 +492,7 @@ augroup filetype_javascript
   autocmd!
   "PRETTIER FOR VIM  ================
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
-  autocmd BufWritePost *.js,*.jsx Neoformat
+  autocmd BufWritePost *.js,*.jsx ALEFix
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   " autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
@@ -501,8 +506,7 @@ augroup END
 augroup FileType_html
   autocmd!
   "for emmet
-  autocmd Filetype html noremap <buffer> <C-G> :Neoformat<CR>
-  autocmd BufWritePost *.html Neoformat
+  "autocmd BufWritePost *.html Neoformat
   autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
@@ -537,8 +541,8 @@ augroup END
 
 augroup FileType_all
   autocmd!
-  au FileType python setl ts=4
-  au FileType rust setl sw=0 sts=0
+  autocmd FileType python setl ts=4
+  autocmd FileType rust setl sw=0 sts=0
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
@@ -549,7 +553,7 @@ augroup FileType_all
         \ endif
 
   if exists("*mkdir") "auto-create directories for new files
-    au BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
+    autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
 augroup END
 
@@ -614,7 +618,7 @@ augroup ft_css
   au Filetype css setlocal foldmethod=indent | setlocal foldlevelstart=99
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
-  au BufWritePost *.css Neoformat
+  "au BufWritePost *.css Neoformat
 augroup END
 let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 "}}}
@@ -658,30 +662,7 @@ else
 endif
 
 if !has('nvim')
-  function! ToggleMouse()
-    " check if mouse is enabled
-    if &mouse == 'a'
-      " disable mouse
-      set mouse=
-    else
-      " enable mouse everywhere
-      set mouse=a
-    endif
-  endfunc
-  "Try being more lenient
-  noremap <ScrollWheelUp>      <nop>
-  noremap <S-ScrollWheelUp>    <nop>
-  noremap <C-ScrollWheelUp>    <nop>
-  noremap <ScrollWheelDown>    <nop>
-  noremap <S-ScrollWheelDown>  <nop>
-  noremap <C-ScrollWheelDown>  <nop>
-  noremap <ScrollWheelLeft>    <nop>
-  noremap <S-ScrollWheelLeft>  <nop>
-  noremap <C-ScrollWheelLeft>  <nop>
-  noremap <ScrollWheelRight>   <nop>
-  noremap <S-ScrollWheelRight> <nop>
-  noremap <C-ScrollWheelRight> <nop>
-  nnoremap <F7> :call ToggleMouse()<CR>
+    set mouse=a
 endif
 "}}}
 "====================================================================================
@@ -846,7 +827,6 @@ if has('linebreak') "Causes wrapped line to keep same indentation
     set breakindentopt=shift:2
   endif
 endif
-" set regexpengine=1     "Sets regexp engine to the previous version as it was more perfomant??
 " LIST =============================================================
 set list                              " show invisible chars
 set listchars+=tab:▷\ 
@@ -856,9 +836,13 @@ set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 " =====================================================================
 "-----------------------------------
-" highlight MatchParen  guibg=#658494 gui=bold "Match parentheses Coloring
-if has('unnamed')
-  set clipboard=unnamed,unnamedplus
+"Match parentheses Coloring
+highlight MatchParen  guibg=#658494 gui=bold 
+" link to system clipboard
+if has("unnamedplus")
+  set clipboard=unnamedplus
+elseif has("clipboard")
+  set clipboard=unnamed
 endif
 set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
 " set magic " For regular expressions turn magic on
@@ -921,6 +905,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "let g:NERDCustomDelimiters = { 'javascript': { 'left': '{/*','right': '*/}'  }  }
 
+" Disable linting for all minified JS files.
+let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
+
 let g:tagbar_autofocus = 1
 let g:tagbar_type_css = {
       \ 'ctagstype' : 'Css',
@@ -930,27 +917,23 @@ let g:tagbar_type_css = {
       \ 'i:identities'
       \ ]
       \ }
-let g:neoformat_html_jsbeautify = {
-      \ 'exe': 'htmlbeautify',
-      \ 'args': [],
-      \ 'stdin': 1,
-      \ }
-let g:neoformat_enabled_html = ['htmlbeautify']
+"let g:neoformat_html_jsbeautify = {
+      "\ 'exe': 'htmlbeautify',
+      "\ 'args': [],
+      "\ 'stdin': 1,
+      "\ }
+"let g:neoformat_enabled_html = ['htmlbeautify']
 
-let g:neoformat_css_jsbeautify = {
-      \ 'exe': 'cssbeautify',
-      \ 'stdin': 1,
-      \ }
-let g:neoformat_enabled_css = ['cssbeautify']
+"let g:neoformat_css_jsbeautify = {
+      "\ 'exe': 'cssbeautify',
+      "\ 'stdin': 1,
+      "\ }
+"let g:neoformat_enabled_css = ['cssbeautify']
 
-let g:neoformat_try_formatprg = 1 " Use formatprg when available
-let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
-let g:neoformat_only_msg_on_error = 1
+"let g:neoformat_try_formatprg = 1 " Use formatprg when available
+"let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
+"let g:neoformat_only_msg_on_error = 1
 
-" let g:vimsyn_folding          = 'af'
-" let g:fastfold_skip_filetypes = [ 'taglist' ]
-
-" nmap <F4> :Gitv<CR>
 
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -1079,9 +1062,6 @@ let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 nmap <silent> co <Plug>(jsdoc)
-
-let g:vimjs#smartcomplete = 1 " Disabled by default. Enabling this will let vim complete matches at any location e.g. typing 'document' will suggest 'document' if enabled.
-let g:vimjs#chromeapis = 1 " Disabled by default. Toggling this will enable completion for a number of Chrome's JavaScript extension APIs
 
 if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')
@@ -1254,7 +1234,7 @@ scriptencoding utf-8
 " =======================================================
 "  DICTIONARY
 " =======================================================
-" set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+ set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif
@@ -1299,10 +1279,10 @@ if has ('persistent_undo')
   endif
 endif
 
-if has("vms") 
-  set nobackup 
+if has("vms")
+  set nobackup
 else
-  set backup 
+  set backup
 endif
 "}}}
 " ----------------------------------------------------------------------------
@@ -1331,467 +1311,5 @@ set scrolloff=10 " Show context around current cursor position i.e. cursor lines
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 
-"}}}
-"-----------------------------------------------------------------------------------
-"DIY STATUS LINE ==========================={{{
-"-----------------------------------------------------------------------------------
-
-" finish
-" =====================================================================
-" stolen from https://gabri.me/blog/diy-vim-statusline
-" =====================================================================
- " Dynamically getting the fg/bg colors from the current colorscheme, returns hex 
-" set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-
-  let g:ro_sym  = ''
-  let g:ma_sym  = "✗"
-  let g:mod_sym = "◇"
-  let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
-let g:currentmode={
-    \ 'n'  : 'Normal ',
-    \ 'no' : 'N·Operator Pending ',
-    \ 'v'  : 'Visual ',
-    \ 'V'  : 'V·Line ',
-    \ '' : 'V·Block ',
-    \ 's'  : 'Select ',
-    \ 'S'  : 'S·Line ',
-    \ '^S' : 'S·Block ',
-    \ 'i'  : 'Insert ',
-    \ 'R'  : 'Replace ',
-    \ 'Rv' : 'V·Replace ',
-    \ 'c'  : 'Command ',
-    \ 'cv' : 'Vim Ex ',
-    \ 'ce' : 'Ex ',
-    \ 'r'  : 'Prompt ',
-    \ 'rm' : 'More ',
-    \ 'r?' : 'Confirm ',
-    \ '!'  : 'Shell ',
-    \ 't'  : 'Terminal '
-    \}
-
-" Automatically change the statusline color depending on mode - requires gui colors as using termguicolors
-function! ChangeStatuslineColor()
-  if (mode() =~# '\v(n|no)')
-    exe 'hi! StatusLine guibg=#425762'
-  elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
-    exe 'hi! StatusLine guibg=#5f5fd7'
-  elseif (mode() ==# 'i')
-    exe 'hi! StatusLine guibg=#005f87'
-  else
-    exe 'hi! StatusLine guibg=#005faf'
-  endif
-  return ''
-endfunction
-
-" Find out current buffer's size and output it.
-function! FileSize()
-  let bytes = getfsize(expand('%:p'))
-  if (bytes >= 1024)
-    let kbytes = bytes / 1024
-  endif
-  if (exists('kbytes') && kbytes >= 1000)
-    let mbytes = kbytes / 1000
-  endif
-
-  if bytes <= 0
-    return '0'
-  endif
-
-  if (exists('mbytes'))
-    return mbytes . 'MB '
-  elseif (exists('kbytes'))
-    return kbytes . 'KB '
-  else
-    return bytes . 'B '
-  endif
-endfunction
-
-function! ReadOnly()
-  if &readonly || !&modifiable
-    return ''
-  elseif &modified
-    return g:mod_sym
-  else
-    return ''
-endfunction
-
-function! GitInfo()
-  let git = fugitive#head()
-  if git != ''
-    return ' '.fugitive#head()
-  else
-    return ''
-  endfunction
-
-" Returns true if paste mode is enabled
-function! HasPaste()
-  if &paste
-    exe 'hi! StatusLine guibg=#00875f'
-    return 'PASTE MODE  '
-  endif
-  return ''
-endfunction
-
-" Determine the name of the session or terminal
-if (strlen(v:servername)>0)
-  if v:servername =~ 'nvim'
-    let g:session = 'neovim'
-  else
-    " If running a GUI vim with servername, then use that
-    let g:session = v:servername
-  endif
-elseif !has('gui_running')
-  " If running CLI vim say TMUX or use the terminal name.
-  if (exists("$TMUX"))
-    let g:session = 'Tmux'
-  else
-    " Giving preference to color-term because that might be more
-    " meaningful in graphical environments. Eg. my $TERM is
-    " usually screen256-color 90% of the time.
-    let g:session = exists("$COLORTERM") ? $COLORTERM : $TERM
-  endif
-else
-  " idk, my bff jill
-  let g:session = 'NARNIA'
-endif
-
-" Shamelessly stolen from statline plugin, shows buffer count and buffer number
-function! BufCount()
-  if !exists("s:statline_n_buffers")
-    let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
-  endif
-  return s:statline_n_buffers
-endfunction
-
-if !exists('g:statline_show_n_buffers')
-  let g:statline_show_n_buffers = 1
-endif
-
-" Always display the status line even if only one window is displayed
-set laststatus=2
-set statusline=
-set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
-set statusline+=\ %{toupper(g:currentmode[mode()])} " Current mode
-" ---- number of buffers : buffer number ----
-if g:statline_show_n_buffers
-  set statusline+=\ %{BufCount()}\:%n\ %< " only calculate buffers after adding/removing buffers
-  augroup statline_nbuf
-    autocmd!
-    autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
-  augroup END
-else
-  set statusline=[%n]\ %<
-endif
-" --------------------------------------------
-set statusline+=\ %{HasPaste()}
-set statusline+=\ %{g:session}
-set statusline+=\ %{GitInfo()}
-set statusline+=\ %<%.30F\ %w
-set statusline+=%{ReadOnly()}\ 
-set statusline+=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
-set statusline+=%#warningmsg#
-set statusline+=%*
-set statusline+=\ %=                                     " Space
-" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
-set statusline+=\ %{&ft}\ %q\   " FileType & quick fix or loclist given as variable with '&' so nice and lowercase
-set statusline+=%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop} "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
-set statusline+=\ %-3(%{FileSize()}%)                 " File size
-set statusline+=\ %3p%%\ \ %l\ of\ %1L\                 " The numbers after the % represent degrees of padding
-set statusline+=%{ale#statusline#Status()}\ 
-"==============================================================
-"Need to figure this our in order to change statusline colors
-if has('termguicolors')
-  "filename
-  hi default link User1 Identifier
-  " flags
-  hi default link User2 Statement
-  " errors
-  hi default link User3 Error
-  " fugitive
-  hi default link User4 Special
-endif
-  " hi User8 ctermfg=008 " guifg=fgcolor
-  " hi User9 ctermfg=007 " guifg=fgcolor
-  " hi User5 guifg=Blue guibg=White
-  " hi User7 guibg=#005faf
-"==============================================================}}}
-"MAPPINGS {{{
-"-----------------------------------------------------------------------------------
-nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
-"Evaluates whether there is a fold on the current line if so unfold it else return a normal space
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-"Use this to ensure mappings dont already exist
-" if !hasmapto('\ABCdoit')
-"    map <Leader>d \ABCdoit
-" endif
-" Close all the buffers
-nnoremap <leader>ba :1,1000 bd!<cr>
-" Quickly edit your macros
-" Usage <leader>m or "q<leader>m
-nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-" Shortcuts
-" Change Working Directory to that of the current file
-cmap cwd lcd %:p:h
-cmap cd. lcd %:p:h
-" For when you forget to sudo.. Really Write the file.
-cmap w!! w !sudo tee % >/dev/null
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VISUAL MODE RELATED
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" Store relative line number jumps in the jumplist.
-noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
-noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
-
-" Emacs like keybindings for the command line (:) are better
-" and you cannot use Vi style-binding here anyway, because ESC
-" just closes the command line and using Home and End..
-" remap arrow keys
-" c-a / c-e everywhere
-cnoremap <C-A> <Home>
-cnoremap <C-E> <End>
-cnoremap <C-K> <C-U>
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
-
-nnoremap <Leader>s :update<CR>
-" Tab and Shift + Tab Circular buffer navigation
-nnoremap <tab>   :bnext<CR>
-nnoremap <S-tab> :bprevious<CR>
-" nnoremap <CR> G "20 enter to go to line 20
-nnoremap <BS> gg
-"Change operator arguments to a character representing the desired motion
-nnoremap ; :
-nnoremap : ;
-
-nnoremap [Alt]   <Nop>
-xnoremap [Alt]   <Nop>
-" nmap    e  [Alt]
-" xmap    e  [Alt]
-" Like gv, but select the last changed text.
-nnoremap gi  `[v`]
-" Specify the last changed text as {motion}.
-onoremap <silent> gi  :<C-u>normal gc<CR>"`
-vnoremap <silent> gi  :<C-u>normal gc<CR>
-" Capitalize.
-nnoremap õ <ESC>gUiw`]
-inoremap <C-u> <ESC>gUiw`]a
-
-" Smart }."
-nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
-onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
-xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
-function! ForwardParagraph()
-  let cnt = v:count ? v:count : 1
-  let i = 0
-  while i < cnt
-    if !search('^\s*\n.*\S','W')
-      normal! G$
-      return
-    endif
-    let i = i + 1
-  endwhile
-endfunction
-" Select block.
-xnoremap r <C-v>
-" Made mappings recursize to work with targets plugin
-" 'quote'
-omap aq  a'
-xmap aq  a'
-omap iq  i'
-xmap iq  i'
-
-" \"double quote"
-omap ad  a"
-xmap ad  a"
-omap id  i"
-xmap id  i"
-
-" <angle> 
-" omap aa  a>
-" xmap aa  a>
-" omap ia  i>
-" xmap ia  i>
-"Change two horizontally split windows to vertical splits
-nnoremap <LocalLeader>h <C-W>t <C-W>K
-"Change two vertically split windows to horizontal splits
-nnoremap <LocalLeader>v <C-W>t <C-W>H
-"Select txt that has just been read or pasted in
-nnoremap gV `[V`]
-
-"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-" Better bubbling a la Tpope's unimpaired vim
-nmap ë [e
-nmap ê ]e
-vmap ë [egv
-vmap ê ]egv
-
-"Line completion - native vim
-inoremap ç <C-X><C-L>
-" find visually selected text
-vnoremap * y/<C-R>"<CR>
-" replace word under cursor
-nnoremap S :%s/\<<C-R><C-W>\>//gc<Left><Left><Left>
-" make . work with visually selected lines
-vnoremap . :norm.<CR>
-inoremap ó <C-O>:update<CR>
-"This mapping allows yanking all of a line without taking the new line
-"character as well can be with our without spaces
-vnoremap <silent> al :<c-u>norm!0v$h<cr>
-vnoremap <silent> il :<c-u>norm!^vg_<cr>
-onoremap <silent> al :norm val<cr>
-onoremap <silent> il :norm vil<cr>
-"ctrl-o in insert mode allows you to perform one normal mode command then
-"returns to insert mode
-" inoremap <C-j> <Down>
-inoremap ê <Down>
-inoremap è <left>
-inoremap ë <up>
-inoremap ì <right>
-" select last paste in visual mode
-nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
-nnoremap <F6> :! open %<CR>
-set pastetoggle=<F2>
-set timeout timeoutlen=500 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
-" Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
-nnoremap bk `.
-" Yank from the cursor to the end of the line, to be consistent with C and D.
-nnoremap Y y$
-nnoremap <leader>sw :b#<CR>
-" Quick find/replace
-nnoremap <Leader>[ :%s/<C-r><C-w>/
-vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
-"--------------------------------------------
-"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
-"repeat macros across a visual range
-"--------------------------------------------
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-"--------------------------------------------
-
-" Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-"Help Command - vertical split
-command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
-function! VerticalHelp(topic)
-  execute "vertical botright help " . a:topic
-  execute "vertical resize 78"
-endfunction
-"Remap back tick for jumping to marks more quickly
-nnoremap ' `
-nnoremap ` '
-
-nnoremap rs ^d0
-"Save all files
-nnoremap qa :wqa<CR>
-" clean up any trailing whitespace - neoformat does this
-" nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-"open a new file in the same directory
-nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
-
-nnoremap <localleader>c :<c-f>
-"Open command line window
-nnoremap <localleader>l :redraw!<cr>
-"--------------------------------------------
-" Window resizing bindings
-"--------------------------------------------
-"Create a horizontal split
-nnoremap _ :sp<CR>
-"Create a vertical split
-nnoremap \| :vsp<CR>
-" Resize window vertically  - shrink
-nnoremap <down> 15<c-w>-
-" Resize window vertically - grow
-nnoremap <up> 15<c-w>+
-" Increase window size horizontally
-nnoremap <left> 15<c-w>>
-" Decrease window size horizontally
-nnoremap <right> 15<c-w><
-" Max out the height of the current split
-nnoremap <localleader>f <C-W>_
-" Max out the width of the current split
-nnoremap <localleader>e <C-W>|
-
-"Normalize all split sizes, which is very handy when resizing terminal
-nnoremap <leader>= <C-W>=
-"Break out current window into new tabview
-nnoremap <leader>t <C-W>T
-"Close every window in the current tabview but the current one
-nnoremap <localleader>q <C-W>o
-"Swap top/bottom or left/right split
-nnoremap <leader>r <C-W>R
-"--------------------------------------------
-"Open Common files
-nnoremap <leader>ez :e ~/.zshrc<cr>
-nnoremap <leader>et :e ~/.tmux.conf<cr>
-
-nnoremap <leader>x :lclose<CR>
-"Indent a page
-nnoremap <C-G>f gg=G<CR>
-" duplicate line and comment (requires vim-commentary)
-nmap <leader>cc yygccp
-xmap <leader>cc m'ygvgc''jp
-"map window keys to leader - Interfere with tmux navigator
-" noremap <C-h> <c-w>h
-" noremap <C-j> <c-w>j
-" noremap <C-k> <c-w>k
-" noremap <C-l> <c-w>l
-"Remap arrow keys to do nothing
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
-"Moves cursor back to the start of a line
-inoremap <C-B> <C-O>I
-" Make Ctrl-e jump to the end of the current line in the insert mode. This is
-" handy when you are in the middle of a line and would like to go to its end
-" without switching to the normal mode.
-" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
-inoremap <C-e> <C-o>$
-"Move to beginning of a line in insert mode
-inoremap <c-a> <c-o>0
-inoremap <c-e> <c-o>$
-"Remaps native ctrl k - deleting to the end of a line to control e
-" inoremap <C-Q> <C-K>
-" Map jk to esc key - using jk prevents jump that using ii causes
-" inoremap jk <ESC>:w<CR>
-inoremap jk <ESC>
-inoremap ;; <End>;<Esc>:w<CR>
-
-" Yank text to the OS X clipboard
-noremap <localleader>y "*y
-noremap <localleader>yy "*Y
-"Maps K and J to a 10 k and j but @= makes the motions multipliable - not
-"a word I know
-noremap K  @='10k'<CR>
-noremap J  @='10j'<CR>
-
-"This line opens the vimrc in a vertical split
-" nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>ev :e $MYVIMRC<cr>
-nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
-
-"This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap <leader>sv :source $MYVIMRC<cr>
-"This maps leader quote (single or double to wrap the word in quotes)
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-" Remap going to beginning and end of lines
-" move to beginning/end of line
-nnoremap H ^
-nnoremap L $
-
-"Map Q to remove a CR
-nnoremap Q J
-
-"Add neovim terminal escape with ESC mapping
-if has("nvim")
-  tnoremap <ESC> <C-\><C-n>
-endif
 "}}}
 

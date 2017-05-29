@@ -13,22 +13,16 @@ nnoremap <leader>ba :1,1000 bd!<cr>
 " Quickly edit your macros
 " Usage <leader>m or "q<leader>m
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
- " Shortcuts
- " Change Working Directory to that of the current file
- cmap cwd lcd %:p:h
- cmap cd. lcd %:p:h
- " For when you forget to sudo.. Really Write the file.
- cmap w!! w !sudo tee % >/dev/null
+" Shortcuts
+" Change Working Directory to that of the current file
+cmap cwd lcd %:p:h
+cmap cd. lcd %:p:h
+" For when you forget to sudo.. Really Write the file.
+cmap w!! w !sudo tee % >/dev/null
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " => VISUAL MODE RELATED
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" ; and , search
-" forward/backward regardless of the direction of the previous
-" character search: doesn't work
-" nnoremap <expr> : getcharsearch().forward ? ';' : ','
-" nnoremap <expr> , getcharsearch().forward ? ',' : ';'
-" Treat long lines as break lines (useful when moving around in them).
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
@@ -72,17 +66,17 @@ nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
 function! ForwardParagraph()
-let cnt = v:count ? v:count : 1
-let i = 0
-while i < cnt
-  if !search('^\s*\n.*\S','W')
-    normal! G$
-    return
-  endif
-  let i = i + 1
-endwhile
+  let cnt = v:count ? v:count : 1
+  let i = 0
+  while i < cnt
+    if !search('^\s*\n.*\S','W')
+      normal! G$
+      return
+    endif
+    let i = i + 1
+  endwhile
 endfunction
-" Select rectangle.
+" Select block.
 xnoremap r <C-v>
 " Made mappings recursize to work with targets plugin
 " 'quote'
@@ -157,8 +151,8 @@ vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 "--------------------------------------------
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
-echo "@".getcmdline()
-execute ":'<,'>normal @".nr2char(getchar())
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 "--------------------------------------------
 
@@ -220,7 +214,7 @@ nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
 
 nnoremap <leader>x :lclose<CR>
-"Indent a page 
+"Indent a page
 nnoremap <C-G>f gg=G<CR>
 " duplicate line and comment (requires vim-commentary)
 nmap <leader>cc yygccp
@@ -262,7 +256,8 @@ noremap K  @='10k'<CR>
 noremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
 
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
