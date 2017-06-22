@@ -72,6 +72,7 @@ augroup END
 "Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
+Plug 'chiel92/vim-autoformat'
 
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
@@ -84,6 +85,7 @@ Plug 'tpope/vim-abolish'
 
 "Syntax ============================
 Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
+Plug 'ElmCast/elm-vim'
 " Plug 'Valloric/MatchTagAlways', { 'for':'html' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 
@@ -131,7 +133,6 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add fil
 
 " Preview colors in source code
 " Plug 'ap/vim-css-color'
-" Codi - A REPL in vim
 
 call plug#end()
 
@@ -241,6 +242,12 @@ let g:ale_fixers = {}
 let g:ale_fixers.javascript = [
   \ 'prettier',
   \]
+let g:ale_fixers.python = [
+  \ 'flake8',
+  \]
+let g:ale_fixers.html = [
+  \ 'tidy',
+  \]
 "let g:ale_javascript_prettier_options ='prettier\ --stdin\ --single-quote\ --trailing-comma\ es5'
 let g:ale_javascript_prettier_options ='--single-quote'
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
@@ -249,6 +256,7 @@ let g:ale_sign_error         = '✘'
 let g:ale_sign_warning       = '🔸'
 "let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
+      \'python': ['flake8'],
       \'jsx': ['stylelint', 'eslint'],
       \'sql': ['sqlint']
       \}
@@ -272,7 +280,7 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 "--------------------------------------------
 " JSX & POLYGLOT
 "--------------------------------------------
-" let g:polyglot_disabled = ['jsx'] "Setting I might need in the future
+ let g:polyglot_disabled = ['elm'] "Setting I might need in the future
 let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
 "VIM-GO
@@ -640,8 +648,6 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,dos,mac
 " Autocomplete with dictionary words when spell check is on
 set complete+=kspell
-"Add spell checking local
-" setlocal spell spelllang=en_us
 
 "===================================================================================
 "Mouse {{{
@@ -917,24 +923,15 @@ let g:tagbar_type_css = {
       \ 'i:identities'
       \ ]
       \ }
-"let g:neoformat_html_jsbeautify = {
-      "\ 'exe': 'htmlbeautify',
-      "\ 'args': [],
-      "\ 'stdin': 1,
-      "\ }
-"let g:neoformat_enabled_html = ['htmlbeautify']
 
-"let g:neoformat_css_jsbeautify = {
-      "\ 'exe': 'cssbeautify',
-      "\ 'stdin': 1,
-      "\ }
-"let g:neoformat_enabled_css = ['cssbeautify']
-
-"let g:neoformat_try_formatprg = 1 " Use formatprg when available
-"let g:neoformat_basic_format_trim = 1 " Enable trimmming of trailing whitespace
-"let g:neoformat_only_msg_on_error = 1
-
-
+let g:elm_format_autosave = 1
+let g:elm_jump_to_error = 1
+let g:elm_detailed_complete = 1
+let g:elm_setup_keybindings = 0
+let g:elm_make_output_file = "index.html"
+"let g:ycm_semantic_triggers = {
+     "\ 'elm' : ['.'],
+     "\}
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 
@@ -943,11 +940,6 @@ let g:tern_map_keys                           = 1
 let g:tern_show_signature_in_pum              = 1
 let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
 
-let g:github_dashboard = {
-      \'username': 'Akin909',
-      \'password': $GITHUB_TOKEN
-      \}
-nnoremap <F1> :GHDashboard! Akin909<CR>
 "------------------------------------
 " Goyo
 "------------------------------------
@@ -1177,7 +1169,7 @@ call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
-call NERDTreeHighlightFile('php', 140, 'none', '#9E6FCD')
+call NERDTreeHighlightFile('jsx', 140, 'none', '#9E6FCD')
 call NERDTreeHighlightFile('svg', 178, 'none', '#CDA109')
 call NERDTreeHighlightFile('gif', 36, 'none', '#15A274')
 call NERDTreeHighlightFile('jpg', 36, 'none', '#15A274')

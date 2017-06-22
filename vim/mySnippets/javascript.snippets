@@ -1,5 +1,23 @@
 priority 0
 
+snippet af "Anonymous Function" i
+function($1) {
+    ${VISUAL}$0
+}
+endsnippet
+
+snippet fun "function (fun)" w
+function ${1:function_name}(${2:argument}) {
+    ${VISUAL}$0
+}
+endsnippet
+
+snippet for "For Loop"
+for (let i = 0; i< $0; i++){
+  $1
+};
+endsnippet
+
 snippet cl "console log"
 console.log('${1:log}', $2);
 endsnippet
