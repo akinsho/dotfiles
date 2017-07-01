@@ -169,6 +169,7 @@ SPACESHIP_PYENV_SYMBOL='🐍'
 #=======================================================================
 # User configuration
 #=======================================================================
+
 # auto-ls () { ls -GC; }
 # chpwd_functions=( auto-ls $chpwd_functions )
 
@@ -182,7 +183,6 @@ bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
-# bindkey '^Z' 
 #======================================================================
 # NATIVE SETTINGS
 #======================================================================

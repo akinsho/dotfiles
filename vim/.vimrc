@@ -28,11 +28,12 @@ endif
 call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
-  if has('unix')
-    if empty($SSH_CONNECTION)
-      Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
-    endif
-  endif
+  Plug 'lifepillar/vim-mucomplete'
+  "if has('unix')
+    "if empty($SSH_CONNECTION)
+      "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+    "endif
+  "endif
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
@@ -82,18 +83,19 @@ Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-fireplace'
 
 "Syntax ============================
 Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
-" Plug 'Valloric/MatchTagAlways', { 'for':'html' }
+Plug 'venantius/vim-cljfmt' "Autoformatting for clojure
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
+"Plug 'SevereOverfl0w/clojure-check', {'do': './install'}
 
 "Marks =============================
-"Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
+Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
 
 "Git ===============================
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Github dashboard for vim
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
 Plug 'rhysd/committia.vim' "create diff window and Gstatus window on commit
 
@@ -106,17 +108,14 @@ Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i'
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
 Plug 'AndrewRadev/sideways.vim'
+Plug 'vim-scripts/paredit.vim'
 
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
-"Plug 'konfekt/fastfold'
-"Plug 'mvolkmann/vim-react'
 Plug 'scrooloose/nerdcommenter'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
-Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
-Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
@@ -128,8 +127,9 @@ Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
-" Plug 'Yggdroot/indentLine'
-" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
+"Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
+"Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
+"Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 " Preview colors in source code
 " Plug 'ap/vim-css-color'
@@ -313,8 +313,7 @@ vnoremap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-" let g:javascript_conceal_arrow_function = "⇒"
-" let g:javascript_conceal_return         = "⇚"
+let g:javascript_plugin_flow = 1
 let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
@@ -503,12 +502,12 @@ augroup filetype_javascript
   autocmd BufWritePost *.js,*.jsx ALEFix
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-  " autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
+   autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
-  " autocmd FileType javascript setlocal concealcursor=nvic
+   autocmd FileType javascript setlocal concealcursor=nvic
 augroup END
 
 augroup FileType_html
@@ -714,8 +713,8 @@ set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
 set shortmess-=l
 set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
+ set shortmess-=f                      " (file x of x) instead of just (x of x)
 " set shortmess+=I                      " no splash screen
-" set shortmess-=f                      " (file x of x) instead of just (x of x)
 " set shortmess+=mnrxoOt
 if has('patch-7.4.314')
   set shortmess+=c                    " Disable 'Pattern not found' messages
@@ -733,7 +732,7 @@ if has('folding')
     set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
     set fillchars+=fold:-
   endif
-  " set foldmethod=indent "fast fold plugin requires specific filetype folding
+  set foldmethod=indent
   set foldlevelstart=99
   set foldnestmax=3           " deepest fold is 3 levels
 endif
@@ -909,7 +908,15 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
-"let g:NERDCustomDelimiters = { 'javascript': { 'left': '{/*','right': '*/}'  }  }
+set completeopt+=menuone
+set belloff+=ctrlg
+let g:mucomplete#enable_auto_at_startup = 1
+
+inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
+inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
+inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
+let g:mucomplete#chains = {}
+let g:mucomplete#chains.default = ['file', 'omni', 'keyn', 'dict', 'ulti']
 
 " Disable linting for all minified JS files.
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
@@ -929,11 +936,9 @@ let g:elm_jump_to_error = 1
 let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 0
 let g:elm_make_output_file = "index.html"
-"let g:ycm_semantic_triggers = {
-     "\ 'elm' : ['.'],
-     "\}
-let g:ycm_seed_identifiers_with_syntax        = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
+
+"let g:ycm_seed_identifiers_with_syntax        = 1
+"let g:ycm_collect_identifiers_from_tags_files = 1
 
 let g:tern_show_argument_hints                = 'on_hold'
 let g:tern_map_keys                           = 1
