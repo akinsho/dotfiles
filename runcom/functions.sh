@@ -1,10 +1,14 @@
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 
+function tr(){
+  #Defaults to 3 levels deep
+  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
+}
 # Jumps
-# function j() {
-#   jump "$@"
-# }
+ function j() {
+   jump "$@"
+ }
 
 # Vim
 function v() {
