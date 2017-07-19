@@ -28,12 +28,11 @@ endif
 call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
-  Plug 'lifepillar/vim-mucomplete'
-  "if has('unix')
-    "if empty($SSH_CONNECTION)
-      "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
-    "endif
-  "endif
+  if has('unix')
+    if empty($SSH_CONNECTION)
+      Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+    endif
+  endif
 else
   Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 endif
@@ -73,7 +72,7 @@ augroup END
 "Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
-Plug 'chiel92/vim-autoformat'
+"Plug 'chiel92/vim-autoformat'
 
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
@@ -86,14 +85,14 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace'
 
 "Syntax ============================
-Plug 'sheerun/vim-polyglot'| Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
+"Plug 'sheerun/vim-polyglot'|
+Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
 Plug 'venantius/vim-cljfmt' "Autoformatting for clojure
+Plug 'guns/vim-clojure-highlight'
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
-"Plug 'SevereOverfl0w/clojure-check', {'do': './install'}
-
-"Marks =============================
-Plug 'kshenoy/vim-signature' "Vim signature re-added because I need to see my bloody marks
+Plug 'vim-scripts/dbext.vim'
 
 "Git ===============================
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
@@ -108,7 +107,9 @@ Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i'
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
 Plug 'AndrewRadev/sideways.vim'
-Plug 'vim-scripts/paredit.vim'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'guns/vim-sexp'
+"Plug 'vim-scripts/paredit.vim'
 
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
@@ -120,6 +121,7 @@ Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
+Plug 'tpope/vim-salve'
 
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
@@ -130,9 +132,9 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add fil
 "Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
 "Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 "Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
-
 " Preview colors in source code
 " Plug 'ap/vim-css-color'
+
 
 call plug#end()
 
@@ -205,7 +207,6 @@ command! -bang -nargs=* Rg
 " Advanced customization using autoload functions
 " Replace the default dictionary completion with fzf-based fuzzy completion
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
-
 nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
@@ -245,20 +246,25 @@ let g:ale_fixers.javascript = [
 let g:ale_fixers.python = [
   \ 'flake8',
   \]
+let g:ale_fixers.typescript = [
+  \ 'prettier',
+  \]
 let g:ale_fixers.html = [
   \ 'tidy',
   \]
-"let g:ale_javascript_prettier_options ='prettier\ --stdin\ --single-quote\ --trailing-comma\ es5'
+
+
+"let g:ale_javascript_prettier_options ='--stdin\ --single-quote\ --trailing-comma\ es5'
 let g:ale_javascript_prettier_options ='--single-quote'
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
-let g:ale_sign_warning       = '🔸'
-"let g:ale_sign_warning       = '⚠️'
+let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'python': ['flake8'],
       \'jsx': ['stylelint', 'eslint'],
-      \'sql': ['sqlint']
+      \'sql': ['sqlint'],
+      \'typescript':['tslint']
       \}
 let g:ale_linter_aliases     = {'jsx': 'css'}
 let g:ale_set_highlights = 0
@@ -280,7 +286,7 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 "--------------------------------------------
 " JSX & POLYGLOT
 "--------------------------------------------
- let g:polyglot_disabled = ['elm'] "Setting I might need in the future
+ "let g:polyglot_disabled = ['elm'] "Setting I might need in the future
 let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
 "VIM-GO
@@ -291,9 +297,9 @@ let g:go_highlight_methods = 1
 "--------------------------------------------
 " Indent guides
 "--------------------------------------------
-let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
-let g:indentLine_fileType = ['c', 'cpp','javascript','javascript.jsx']
-let g:indentLine_char = '┆'
+"let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+"let g:indentLine_fileType = ['c', 'cpp','javascript','javascript.jsx']
+"let g:indentLine_char = '┆'
 
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
@@ -499,7 +505,7 @@ augroup filetype_javascript
   autocmd!
   "PRETTIER FOR VIM  ================
   autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
-  autocmd BufWritePost *.js,*.jsx ALEFix
+  autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
    autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
@@ -510,10 +516,15 @@ augroup filetype_javascript
    autocmd FileType javascript setlocal concealcursor=nvic
 augroup END
 
+augroup FileType_Clojure
+  autocmd!
+  " Evaluate Clojure buffers on load
+  autocmd BufRead *.clj, *cljs try | silent! Require | catch /^Fireplace/ | endtry
+augroup END
+
 augroup FileType_html
   autocmd!
   "for emmet
-  "autocmd BufWritePost *.html Neoformat
   autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
 augroup END
@@ -606,7 +617,7 @@ endfunction
 augroup jsfolding
   autocmd!
   autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=indent|setlocal foldtext=FoldText()
-  au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=99 | norm zR
+  au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=99
 augroup END
 " }}}
 " CSS {{{
@@ -732,7 +743,7 @@ if has('folding')
     set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
     set fillchars+=fold:-
   endif
-  set foldmethod=indent
+  "set foldmethod=indent
   set foldlevelstart=99
   set foldnestmax=3           " deepest fold is 3 levels
 endif
@@ -908,15 +919,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
-set completeopt+=menuone
-set belloff+=ctrlg
-let g:mucomplete#enable_auto_at_startup = 1
-
-"inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
-"inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
-"inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
-let g:mucomplete#chains = {}
-let g:mucomplete#chains.default = ['file', 'omni', 'keyn', 'dict', 'ulti']
 
 " Disable linting for all minified JS files.
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
@@ -1060,6 +1062,8 @@ let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 nmap <silent> co <Plug>(jsdoc)
 
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')
     call webdevicons#refresh()
