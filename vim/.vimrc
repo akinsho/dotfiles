@@ -72,6 +72,7 @@ augroup END
 "Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
+Plug 'vim-airline/vim-airline'
 "Plug 'chiel92/vim-autoformat'
 
 "TPOPE ====================================
@@ -89,8 +90,8 @@ Plug 'tpope/vim-fireplace'
 Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
-Plug 'venantius/vim-cljfmt' "Autoformatting for clojure
 Plug 'guns/vim-clojure-highlight'
+"Plug 'venantius/vim-cljfmt' "Autoformatting for clojure
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 Plug 'vim-scripts/dbext.vim'
 
@@ -161,12 +162,60 @@ let maplocalleader = "\<space>" "Local leader key
 "==============================================================
 source ~/Dotfiles/vim/mappings.vim
 "--------------------------------------------------------------------------------------------------
-"==============================================================
-"STATUSLINE {{{
-"==============================================================
-source ~/Dotfiles/vim/statusline.vim
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
+"=============================================================
+"               Airline
+"=============================================================
+let g:airline_extensions = ['branch','tabline','ale']
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_detect_iminsert                  = 1
+let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
+let g:airline_powerline_fonts                  = 1
+let g:airline#extensions#tabline#enabled       = 1
+" let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
+let g:airline#extensions#tabline#show_tabs     = 1
+let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_tab_type = 1
+" Makes airline tabs rectangular
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+"This defines the separators for airline changes them from the default arrows
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+
+" configure whether close button should be shown: >
+let g:airline#extensions#tabline#show_close_button = 1
+
+" determine whether inactive windows should have the left section collapsed to
+" only the filename of that buffer.  >
+let g:airline_inactive_collapse=0
+" * configure symbol used to represent close button >
+" let g:airline#extensions#tabline#close_symbol = 'X'
+" * configure pattern to be ignored on BufAdd autocommand >
+" fixes unnecessary redraw, when e.g. opening Gundo window
+let airline#extensions#tabline#ignore_bufadd_pat =
+      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <localleader>1 <Plug>AirlineSelectTab1
+nmap <localleader>2 <Plug>AirlineSelectTab2
+nmap <localleader>3 <Plug>AirlineSelectTab3
+nmap <localleader>4 <Plug>AirlineSelectTab4
+nmap <localleader>5 <Plug>AirlineSelectTab5
+nmap <localleader>6 <Plug>AirlineSelectTab6
+nmap <localleader>7 <Plug>AirlineSelectTab7
+nmap <localleader>8 <Plug>AirlineSelectTab8
+nmap <localleader>9 <Plug>AirlineSelectTab9
+nmap <localleader>- <Plug>AirlineSelectPrevTab
+nmap <localleader>+ <Plug>AirlineSelectNextTab
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
@@ -282,11 +331,9 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gb :Gbrowse<CR> "Open current file on github.com
 vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highlighted linenumbers
 " Push the repository of the currently opened file
-" nnoremap <leader>gp :call VimuxRunCommandInDir("git push", 0)<CR>
 "--------------------------------------------
 " JSX & POLYGLOT
 "--------------------------------------------
- "let g:polyglot_disabled = ['elm'] "Setting I might need in the future
 let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
 
 "VIM-GO
@@ -297,10 +344,8 @@ let g:go_highlight_methods = 1
 "--------------------------------------------
 " Indent guides
 "--------------------------------------------
-"let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
-"let g:indentLine_fileType = ['c', 'cpp','javascript','javascript.jsx']
-"let g:indentLine_char = '┆'
-
+nnoremap <leader>gg :GitGutterToggle<CR>
+let g:gitgutter_enabled = 0
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
 let g:gitgutter_sign_added    = '❖'
@@ -310,8 +355,8 @@ let g:gitgutter_grep_command = 'ag --nocolor'
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-"nnoremap <C-F> :ALEFix<CR>
 nnoremap <C-F> :SidewaysLeft<cr>
+nnoremap <C-F>r :SidewaysRight<cr>
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vnoremap <Enter> <Plug>(EasyAlign)
@@ -508,12 +553,13 @@ augroup filetype_javascript
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-   autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
+  autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
-   autocmd FileType javascript setlocal concealcursor=nvic
+  autocmd FileType javascript setlocal concealcursor=nvic
+  autocmd FileType typescript setlocal completeopt+=menu,preview
 augroup END
 
 augroup FileType_Clojure
@@ -941,6 +987,7 @@ let g:elm_make_output_file = "index.html"
 
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
+"Removes highlighting in typescript
 highlight YcmErrorSection term=underline
 
 let g:tern_show_argument_hints                = 'on_hold'
