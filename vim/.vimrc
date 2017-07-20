@@ -939,8 +939,9 @@ let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 0
 let g:elm_make_output_file = "index.html"
 
-"let g:ycm_seed_identifiers_with_syntax        = 1
-"let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax        = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+highlight YcmErrorSection term=underline
 
 let g:tern_show_argument_hints                = 'on_hold'
 let g:tern_map_keys                           = 1
