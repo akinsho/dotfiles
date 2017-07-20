@@ -173,7 +173,6 @@ let g:airline_detect_iminsert                  = 1
 let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
 let g:airline_powerline_fonts                  = 1
 let g:airline#extensions#tabline#enabled       = 1
-" let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
 let g:airline#extensions#tabline#show_tabs     = 1
 let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
@@ -193,10 +192,10 @@ let g:airline_right_alt_sep = ''
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
-
+"let g:airline#extensions#ale#enabled = 1
 " determine whether inactive windows should have the left section collapsed to
 " only the filename of that buffer.  >
-let g:airline_inactive_collapse=0
+let g:airline_inactive_collapse = 1
 " * configure symbol used to represent close button >
 " let g:airline#extensions#tabline#close_symbol = 'X'
 " * configure pattern to be ignored on BufAdd autocommand >
@@ -987,6 +986,9 @@ let g:elm_make_output_file = "index.html"
 
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
+nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
+nnoremap <leader>gt :YcmCompleter GetType<CR>
 "Removes highlighting in typescript
 highlight YcmErrorSection term=underline
 
