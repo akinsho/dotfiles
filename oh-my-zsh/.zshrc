@@ -20,7 +20,8 @@ export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
 
 #This is not working
-export PATH="$(yarn global bin):$PATH"
+#export PATH="$(yarn global bin):$PATH"
+export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
