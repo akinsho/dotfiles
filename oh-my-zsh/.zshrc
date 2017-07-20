@@ -19,7 +19,8 @@ export NVM_DIR="$HOME/.nvm"
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
 
-export PATH="$PATH:`yarn global bin`"
+#This is not working
+export PATH="$(yarn global bin):$PATH"
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
@@ -38,8 +39,6 @@ export PATH=$PATH:$(go env GOPATH)/bin
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/A_nonymous/.oh-my-zsh

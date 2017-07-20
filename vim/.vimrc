@@ -73,6 +73,7 @@ augroup END
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 "Plug 'chiel92/vim-autoformat'
 
 "TPOPE ====================================
@@ -86,12 +87,10 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace'
 
 "Syntax ============================
-"Plug 'sheerun/vim-polyglot'|
 Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
+Plug 'sheerun/vim-polyglot' | Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
 Plug 'guns/vim-clojure-highlight'
-"Plug 'venantius/vim-cljfmt' "Autoformatting for clojure
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 Plug 'vim-scripts/dbext.vim'
 
@@ -110,7 +109,6 @@ Plug 'wellle/targets.vim' "Moar textobjs
 Plug 'AndrewRadev/sideways.vim'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'guns/vim-sexp'
-"Plug 'vim-scripts/paredit.vim'
 
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
@@ -122,7 +120,6 @@ Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 "Filetype Plugins ======================
 Plug 'shime/vim-livedown' "Add better markdown previewer
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
-Plug 'tpope/vim-salve'
 
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
@@ -167,7 +164,8 @@ source ~/Dotfiles/vim/mappings.vim
 "=============================================================
 "               Airline
 "=============================================================
-let g:airline_extensions = ['branch','tabline','ale']
+"let g:airline_extensions = ['branch','tabline','ale']
+let g:airline_theme = 'quantum'
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
 let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
@@ -192,12 +190,12 @@ let g:airline_right_alt_sep = ''
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
-"let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 " determine whether inactive windows should have the left section collapsed to
 " only the filename of that buffer.  >
 let g:airline_inactive_collapse = 1
 " * configure symbol used to represent close button >
-" let g:airline#extensions#tabline#close_symbol = 'X'
+ let g:airline#extensions#tabline#close_symbol = 'x'
 " * configure pattern to be ignored on BufAdd autocommand >
 " fixes unnecessary redraw, when e.g. opening Gundo window
 let airline#extensions#tabline#ignore_bufadd_pat =
@@ -458,6 +456,7 @@ map  N <Plug>(easymotion-prev)
 "                    EMMET for Vim
 "=======================================================================
 "Emmet for vim leader keymap
+let g:user_emmet_settings = {'javascript': {'extends': 'jsx'}}
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
@@ -466,7 +465,7 @@ let g:user_emmet_install_global = 0
 nnoremap <leader>u :GundoToggle<CR>
 
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,jquery,angularjs,mocha,react,jasmine,chai,handlebars,requirejs'
+let g:used_javascript_libs = 'underscore,jquery,angularjs,mocha,redux,react-apollo,express,react,jasmine,chai,handlebars,requirejs'
 "}}}
 "====================================================================================
 "AUTOCOMMANDS {{{
@@ -984,6 +983,7 @@ let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 0
 let g:elm_make_output_file = "index.html"
 
+let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_seed_identifiers_with_syntax        = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
