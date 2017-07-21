@@ -1268,8 +1268,8 @@ set conceallevel=2
  highlight jsFuncCall ctermfg=cyan
  highlight jsComment ctermfg=245 ctermbg=none
  highlight jsClassProperty ctermfg=14 cterm=bold
- "Bolding of html args and types etc
- highlight VertSplit ctermfg=black
+ "Highlighing = Bolding of html args and types etc
+ highlight VertSplit guifg=black ctermfg=black
  highlight htmlArg gui=italic,bold
  highlight Comment gui=italic
  highlight Type    gui=italic
@@ -1282,7 +1282,7 @@ set conceallevel=2
  highlight PmenuSel ctermbg=white ctermfg=black
  highlight Pmenu ctermbg=black ctermfg=white
  " so it's clear which paren I'm on and which is matched
- highlight MatchParen cterm=none ctermbg=none ctermfg=yellow
+ highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 "---------------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
@@ -1368,7 +1368,6 @@ endif
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
-" hi Search guibg=LightGreen  ctermbg=NONE
 " Sets a case insensitive search except when using Caps
 set ignorecase
 set smartcase
