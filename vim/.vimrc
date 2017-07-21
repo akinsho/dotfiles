@@ -1262,7 +1262,7 @@ set conceallevel=2
  highlight clear SpellRare
  highlight SpellRare  term=underline cterm=italic ctermfg=Blue
  "few nicer JS colours
- highlight xmlAttrib ctermfg=121
+ highlight xmlAttrib cterm=italic,bold ctermfg=121
  highlight jsThis ctermfg=224
  highlight jsSuper ctermfg=13
  highlight jsFuncCall ctermfg=cyan
@@ -1270,10 +1270,10 @@ set conceallevel=2
  highlight jsClassProperty ctermfg=14 cterm=bold
  "Highlighing = Bolding of html args and types etc
  highlight VertSplit guifg=black ctermfg=black
- highlight htmlArg gui=italic,bold
+ highlight htmlArg gui=italic
  highlight Comment gui=italic
  highlight Type    gui=italic
- highlight htmlArg cterm=italic,bold
+ highlight htmlArg cterm=italic
  highlight Comment cterm=italic
  highlight Type    cterm=italic
  highlight clear Conceal "Sets no highlighting for conceal

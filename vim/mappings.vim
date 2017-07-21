@@ -173,8 +173,7 @@ nnoremap ` '
 nnoremap rs ^d0
 "Save all files
 nnoremap qa :wqa<CR>
-" clean up any trailing whitespace - neoformat does this
-" nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
+vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
