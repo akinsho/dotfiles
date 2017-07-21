@@ -1,6 +1,7 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -91,7 +92,7 @@ xmap ad  a"
 omap id  i"
 xmap id  i"
 
-" <angle> 
+" <angle>
 " omap aa  a>
 " xmap aa  a>
 " omap ia  i>

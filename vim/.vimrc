@@ -69,12 +69,12 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-"Plug 'osyo-manga/vim-over' "Highlighting for substitution in Vim
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'chiel92/vim-autoformat'
+Plug 'AndrewRadev/sideways.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
@@ -87,8 +87,15 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace'
 
 "Syntax ============================
-Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
-Plug 'sheerun/vim-polyglot' | Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
+"Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
+"Plug 'othree/html5.vim'
+"Plug 'leshill/vim-json'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'pangloss/vim-javascript', { 'for':'javascript' }
+"Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'sheerun/vim-polyglot'
+Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
 Plug 'guns/vim-clojure-highlight'
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
@@ -106,8 +113,6 @@ Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text o
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
-Plug 'AndrewRadev/sideways.vim'
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'guns/vim-sexp'
 
 "Search Tools =======================
@@ -124,14 +129,12 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
+Plug 'rakr/vim-one'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
-"Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'} "Start up time monitor
 "Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
 "Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
-" Preview colors in source code
-" Plug 'ap/vim-css-color'
 
 
 call plug#end()
@@ -165,7 +168,7 @@ source ~/Dotfiles/vim/mappings.vim
 "               Airline
 "=============================================================
 "let g:airline_extensions = ['branch','tabline','ale']
-let g:airline_theme = 'quantum'
+"let g:airline_theme = 'one'
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
 let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
@@ -177,16 +180,16 @@ let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+"let g:airline_left_sep = ' '
+"let g:airline_right_sep = ' '
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
 
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = '|'
-"This defines the separators for airline changes them from the default arrows
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
+"let g:airline#extensions#tabline#right_sep = ''
+"let g:airline#extensions#tabline#right_alt_sep = '|'
+""This defines the separators for airline changes them from the default arrows
+"let g:airline_left_alt_sep = ''
+"let g:airline_right_alt_sep = ''
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
@@ -285,9 +288,11 @@ omap ic <Plug>(textobj-comment-i)
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
+" Disable linting for all minified JS files.
+let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = [
-  \ 'prettier',
+  \ 'prettier', 'eslint'
   \]
 let g:ale_fixers.python = [
   \ 'flake8',
@@ -300,17 +305,19 @@ let g:ale_fixers.html = [
   \]
 
 
-"let g:ale_javascript_prettier_options ='--stdin\ --single-quote\ --trailing-comma\ es5'
-let g:ale_javascript_prettier_options ='--single-quote'
+"let g:ale_javascript_prettier_options='--trailing-comma es5 --single-quote'
+let g:ale_javascript_prettier_options = '--single-quote'
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
 let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'python': ['flake8'],
-      \'jsx': ['stylelint', 'eslint'],
+      \'css': ['stylelint'],
+      \'jsx': ['eslint'],
       \'sql': ['sqlint'],
-      \'typescript':['tslint']
+      \'typescript':['tslint'],
+      \'html':[]
       \}
 let g:ale_linter_aliases     = {'jsx': 'css'}
 let g:ale_set_highlights = 0
@@ -537,7 +544,7 @@ augroup END
 
 augroup filetype_completion
   autocmd!
-  autocmd FileType html,css,javascript,javascript.jsx EmmetInstall
+  autocmd FileType html,css,javascript,typescript,javascript.jsx EmmetInstall
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript,javascript.jsx,jsx setlocal omnifunc=tern#Complete
@@ -547,7 +554,7 @@ augroup END
 augroup filetype_javascript
   autocmd!
   "PRETTIER FOR VIM  ================
-  autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
+  "autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
@@ -555,7 +562,7 @@ augroup filetype_javascript
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
-  autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
+  autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   autocmd FileType javascript setlocal concealcursor=nvic
   autocmd FileType typescript setlocal completeopt+=menu,preview
 augroup END
@@ -570,7 +577,7 @@ augroup FileType_html
   autocmd!
   "for emmet
   autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
-  autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg:G
+  autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg=G
 augroup END
 
 
@@ -680,22 +687,15 @@ augroup ft_css
   au Filetype css setlocal foldmethod=indent | setlocal foldlevelstart=99
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
-  "au BufWritePost *.css Neoformat
+  "au BufWritePost *.css :normal gg=G
+
 augroup END
 let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 "}}}
 "====================================================================================
 "Spelling
 "====================================================================================
-" Change default highlighting for spellbad, the default is really bad
- highlight clear SpellBad
- highlight SpellBad  term=underline cterm=italic ctermfg=Red
- highlight clear SpellCap
- highlight SpellCap  term=underline cterm=italic ctermfg=Blue
- highlight clear SpellLocal
- highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
- highlight clear SpellRare
- highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -779,7 +779,7 @@ endif
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
 " Set minimal width for current window.
-"set winwidth=30
+set winwidth=30
 set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
 if has('folding')
@@ -875,8 +875,8 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-"syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
-" set synmaxcol=1024 " don't syntax highlight long lines
+syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+ set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
@@ -896,8 +896,6 @@ set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 " =====================================================================
 "-----------------------------------
-"Match parentheses Coloring
-highlight MatchParen  guibg=#658494 gui=bold 
 " link to system clipboard
 if has("unnamedplus")
   set clipboard=unnamedplus
@@ -909,7 +907,7 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 set gdefault "Makes the g flag available by default so it doesn't have to be specified
 " insert completion height and options
 set pumheight=10
-set completeopt-=preview " This prevents a scratch buffer from being opened
+"set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
 set ttyfast " Improves smoothness of redrawing when there are multiple windows
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
@@ -964,8 +962,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
 
-" Disable linting for all minified JS files.
-let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 
 let g:tagbar_autofocus = 1
 let g:tagbar_type_css = {
@@ -992,6 +988,12 @@ nnoremap <leader>gt :YcmCompleter GetType<CR>
 "Removes highlighting in typescript
 highlight YcmErrorSection term=underline
 
+let g:tern_request_timeout = 1
+"Add extra filetypes
+let g:tern#filetypes = [
+      \ 'jsx',
+      \ 'javascript.jsx',
+      \ ]
 let g:tern_show_argument_hints                = 'on_hold'
 let g:tern_map_keys                           = 1
 let g:tern_show_signature_in_pum              = 1
@@ -1238,6 +1240,7 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
+"colorscheme one
 colorscheme quantum
 
 if &term =~ '256color'
@@ -1245,11 +1248,41 @@ if &term =~ '256color'
   " render properly when inside 256-color tmux and GNU screen.
   set t_ut=
 endif
-" Comments in ITALICS YASSSSS!!!
-hi Comment cterm=italic
-hi clear Conceal "Sets no highlighting for conceal
-hi Folded guifg=#FFC66D guibg=NONE
 set conceallevel=2
+"====================================================================================
+"Spelling & Highlights
+"====================================================================================
+" Change default highlighting for spellbad, the default is really bad
+ highlight clear SpellBad
+ highlight SpellBad  term=underline cterm=italic ctermfg=Red
+ highlight clear SpellCap
+ highlight SpellCap  term=underline cterm=italic ctermfg=Blue
+ highlight clear SpellLocal
+ highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
+ highlight clear SpellRare
+ highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+ "few nicer JS colours
+ highlight xmlAttrib ctermfg=121
+ highlight jsThis ctermfg=224
+ highlight jsSuper ctermfg=13
+ highlight jsFuncCall ctermfg=cyan
+ highlight jsComment ctermfg=245 ctermbg=none
+ highlight jsClassProperty ctermfg=14 cterm=bold
+ "Bolding of html args and types etc
+ highlight VertSplit ctermfg=black
+ highlight htmlArg gui=italic,bold
+ highlight Comment gui=italic
+ highlight Type    gui=italic
+ highlight htmlArg cterm=italic,bold
+ highlight Comment cterm=italic
+ highlight Type    cterm=italic
+ highlight clear Conceal "Sets no highlighting for conceal
+ highlight Folded guifg=#FFC66D guibg=NONE
+  "make the completion menu a bit more readable
+ highlight PmenuSel ctermbg=white ctermfg=black
+ highlight Pmenu ctermbg=black ctermfg=white
+ " so it's clear which paren I'm on and which is matched
+ highlight MatchParen cterm=none ctermbg=none ctermfg=yellow
 "---------------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
@@ -1272,10 +1305,6 @@ if !has('nvim')
   set complete-=i
   set autoindent
 endif
-" Use <C-I> to clear the highlighting of :set hlsearch.
-" if maparg('<C-I>', 'n') ==# ''
-"   nnoremap <silent> <C-I> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-I>
-" endif
 set display+=lastline
 if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
