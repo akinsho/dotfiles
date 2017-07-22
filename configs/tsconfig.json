@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "lib": [ "es2015", "es6", "dom" ],
+        "outDir": "./build/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "module": "es6",
+        "target": "es6",
+        "jsx": "react"
+    },
+    "include": [
+        "./client/src/**/*"
+    ]
+}

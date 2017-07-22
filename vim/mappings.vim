@@ -2,7 +2,7 @@
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+"nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 "Use this to ensure mappings dont already exist
@@ -173,6 +173,9 @@ nnoremap ` '
 nnoremap rs ^d0
 "Save all files
 nnoremap qa :wqa<CR>
+" press enter for newline without insert
+nnoremap <cr> o<esc>
+"Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>

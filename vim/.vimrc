@@ -87,13 +87,8 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace'
 
 "Syntax ============================
-"Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
-"Plug 'othree/html5.vim'
-"Plug 'leshill/vim-json'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'pangloss/vim-javascript', { 'for':'javascript' }
-"Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'sheerun/vim-polyglot'
+"Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
@@ -167,8 +162,8 @@ source ~/Dotfiles/vim/mappings.vim
 "=============================================================
 "               Airline
 "=============================================================
-"let g:airline_extensions = ['branch','tabline','ale']
 "let g:airline_theme = 'one'
+let g:airline_extensions = ['branch','tabline','ale']
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
 let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
@@ -180,16 +175,14 @@ let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
-"let g:airline_left_sep = ' '
-"let g:airline_right_sep = ' '
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-
-"let g:airline#extensions#tabline#right_sep = ''
-"let g:airline#extensions#tabline#right_alt_sep = '|'
-""This defines the separators for airline changes them from the default arrows
-"let g:airline_left_alt_sep = ''
-"let g:airline_right_alt_sep = ''
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+let g:airline_left_alt_sep = '' "This defines the separators for airline changes them from the default arrows
+let g:airline_right_alt_sep = ''
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
@@ -197,8 +190,7 @@ let g:airline#extensions#ale#enabled = 1
 " determine whether inactive windows should have the left section collapsed to
 " only the filename of that buffer.  >
 let g:airline_inactive_collapse = 1
-" * configure symbol used to represent close button >
- let g:airline#extensions#tabline#close_symbol = 'x'
+ let g:airline#extensions#tabline#close_symbol = 'x' " * configure symbol used to represent close button >
 " * configure pattern to be ignored on BufAdd autocommand >
 " fixes unnecessary redraw, when e.g. opening Gundo window
 let airline#extensions#tabline#ignore_bufadd_pat =
@@ -300,13 +292,15 @@ let g:ale_fixers.python = [
 let g:ale_fixers.typescript = [
   \ 'prettier',
   \]
+let g:ale_fixers.css = [
+  \ 'stylelint',
+  \]
 let g:ale_fixers.html = [
   \ 'tidy',
   \]
 
 
-"let g:ale_javascript_prettier_options='--trailing-comma es5 --single-quote'
-let g:ale_javascript_prettier_options = '--single-quote'
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
@@ -558,6 +552,7 @@ augroup filetype_javascript
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
@@ -961,7 +956,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
-
+let g:polyglot_disabled = ['elm', 'clojure' ]
+"let g:polyglot_disabled = ['elm', 'clojure', 'typescript' ]
 
 let g:tagbar_autofocus = 1
 let g:tagbar_type_css = {
@@ -986,18 +982,19 @@ nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>gt :YcmCompleter GetType<CR>
 "Removes highlighting in typescript
-highlight YcmErrorSection term=underline
+highlight YcmErrorSection cterm=underline
 
 let g:tern_request_timeout = 1
 "Add extra filetypes
 let g:tern#filetypes = [
+      \ 'tsx',
+      \ 'typescript.jsx',
       \ 'jsx',
       \ 'javascript.jsx',
       \ ]
 let g:tern_show_argument_hints                = 'on_hold'
 let g:tern_map_keys                           = 1
 let g:tern_show_signature_in_pum              = 1
-let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
 
 "------------------------------------
 " Goyo
@@ -1053,6 +1050,7 @@ augroup END
 
 let g:vim_markdown_fenced_languages =['css', 'erb=eruby', 'javascript', 'js=javascript', 'json=json', 'ruby', 'sass', 'scss=sass', 'xml', 'html', 'python', 'stylus=css', 'less=css', 'sql']
 let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 let g:UltiSnipsExpandTrigger="<C-J>"
@@ -1080,7 +1078,7 @@ let g:fzf_action = {
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
-      \ { 'fg':      ['fg', 'Normal'],
+      \ { 'fg':    ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
       \ 'hl':      ['fg', 'Comment'],
       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -1261,6 +1259,7 @@ set conceallevel=2
  highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
  highlight clear SpellRare
  highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+ highlight clear Conceal "Sets no highlighting for conceal
  "few nicer JS colours
  highlight xmlAttrib cterm=italic,bold ctermfg=121
  highlight jsThis ctermfg=224
@@ -1270,18 +1269,17 @@ set conceallevel=2
  highlight jsClassProperty ctermfg=14 cterm=bold
  "Highlighing = Bolding of html args and types etc
  highlight VertSplit guifg=black ctermfg=black
- highlight htmlArg gui=italic
+ highlight htmlArg gui=italic,bold
  highlight Comment gui=italic
  highlight Type    gui=italic
- highlight htmlArg cterm=italic
+ highlight htmlArg cterm=italic,bold
  highlight Comment cterm=italic
  highlight Type    cterm=italic
- highlight clear Conceal "Sets no highlighting for conceal
  highlight Folded guifg=#FFC66D guibg=NONE
-  "make the completion menu a bit more readable
- highlight PmenuSel ctermbg=white ctermfg=black
- highlight Pmenu ctermbg=black ctermfg=white
- " so it's clear which paren I'm on and which is matched
+"make the completion menu a bit more readable
+"highlight PmenuSel guibg=white guifg=black
+"highlight Pmenu guibg=black guifg=white
+"so it's clear which paren I'm on and which is matched
  highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 "---------------------------------------------------------------------
 " Utilities
