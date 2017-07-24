@@ -38,8 +38,16 @@ cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
+"Save
+nnoremap <C-S> :update<CR>
+nnoremap <leader>s :update<cr>
+inoremap <C-s> <C-O>:update<cr>
 
-nnoremap <Leader>s :update<CR>
+"Quit
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>   :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
@@ -245,10 +253,11 @@ inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 "Remaps native ctrl k - deleting to the end of a line to control e
 " inoremap <C-Q> <C-K>
-" Map jk to esc key - using jk prevents jump that using ii causes
-" inoremap jk <ESC>:w<CR>
+" Map jk to esc key
 inoremap jk <ESC>
-inoremap ;; <End>;<Esc>:w<CR>
+xnoremap jk <ESC>
+cnoremap jk <C-C>
+"inoremap ;; <End>;<Esc>:w<CR>
 
 " Yank text to the OS X clipboard
 noremap <localleader>y "*y
