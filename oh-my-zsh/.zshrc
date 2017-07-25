@@ -7,7 +7,7 @@ start_time="$(date +%s)"
 #       ENV VARIABLES
 #=======================================================================
 export NVM_LAZY_LOAD=true
-# export NVM_AUTO_USE=true
+export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly
 # specified here
 export NVM_DIR="$HOME/.nvm"
@@ -90,7 +90,7 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 
 # PLUGINS =======================================================================
-plugins=(alias-tips last-working-dir git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew heroku )
+plugins=(alias-tips nvm last-working-dir git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew)
 
 # web-search - great plugin, google from the command line although I never use
 # it soo...
@@ -173,10 +173,6 @@ SPACESHIP_PYENV_SYMBOL='🐍'
 # auto-ls () { ls -GC; }
 # chpwd_functions=( auto-ls $chpwd_functions )
 
-# add-zsh-hook precmd _z_precmd
-# function _z_precmd {
-#   _z --add "$PWD"
-# }
 export KEYTIMEOUT=1
 
 bindkey ‘^R’ history-incremental-search-backward

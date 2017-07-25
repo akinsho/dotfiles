@@ -92,7 +92,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
-Plug 'guns/vim-clojure-highlight'
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 Plug 'vim-scripts/dbext.vim'
 
@@ -124,12 +123,12 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
-Plug 'rakr/vim-one'
+Plug 'hzchirs/vim-material'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 
 "Plugins I think I need yet never use ===============================
-"Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
-"Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
+Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
+Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 
 call plug#end()
@@ -162,7 +161,7 @@ source ~/Dotfiles/vim/mappings.vim
 "=============================================================
 "               Airline
 "=============================================================
-"let g:airline_theme = 'one'
+let g:airline_theme = 'material'
 let g:airline_extensions = ['branch','tabline','ale']
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
@@ -466,7 +465,7 @@ let g:user_emmet_install_global = 0
 nnoremap <leader>u :GundoToggle<CR>
 
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,jquery,angularjs,mocha,redux,react-apollo,express,react,jasmine,chai,handlebars,requirejs'
+let g:used_javascript_libs = 'underscore,jquery,hapi,mocha,redux,react-apollo,express,react,jasmine,chai,handlebars,requirejs'
 "}}}
 "====================================================================================
 "AUTOCOMMANDS {{{
@@ -529,8 +528,6 @@ augroup END
 
 augroup VimResizing
   autocmd!
-  "Command below makes the windows the same size on resizing !? Why?? because
-  "its tidier
   autocmd VimResized * wincmd =
   autocmd FocusLost * :wa
   autocmd VimResized * :redraw! | :echo 'Redrew'
@@ -538,21 +535,27 @@ augroup END
 
 augroup filetype_completion
   autocmd!
-  autocmd FileType html,css,javascript,typescript,javascript.jsx EmmetInstall
+  autocmd FileType html,css,javascript,typescript,typscript.tsx,javascript.jsx EmmetInstall
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript,javascript.jsx,jsx setlocal omnifunc=tern#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
-augroup filetype_javascript
+augroup filetype_javascript_typescript
   autocmd!
-  "PRETTIER FOR VIM  ================
-  "autocmd FileType javascript.jsx,javascript setlocal formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
+  "==================================
+  "TypeScript
+  "==================================
+  autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
+  autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
+  "The next line forces four spaces to appear as two which helps maintain my sanity at work
+  autocmd FileType typescript,*.tsx syntax match spaces /    / conceal cchar=  "there is a space here on purpose
+  autocmd FileType typescript,*.tsx set concealcursor=nvi
+  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
   autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
@@ -578,7 +581,6 @@ augroup END
 
 augroup FileType_markdown
   autocmd!
-  au Filetype markdown setlocal nonumber
   autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
@@ -634,8 +636,10 @@ augroup END
 
 augroup Toggle_number
   autocmd!
-    autocmd InsertEnter * set relativenumber!
-    autocmd InsertLeave * set relativenumber
+    if &ft!~?'markdown' "Unless file is markdown toggle number on insert
+      autocmd InsertEnter * set relativenumber!
+      autocmd InsertLeave * set relativenumber
+    endif
 augroup END
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
@@ -870,7 +874,14 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+if has('gui_running')
+  set guioptions=
+  set guifont=Fira\ Code:h14
+  "set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
+  "set guifont=Fira\ Code\ for\ Powerline\ Plus\ Nerd\ File\ Types:h14
+  let g:webdevicons_enable = 0
+endif
+"syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
  set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -1028,20 +1039,18 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " Goyo
 function! s:auto_goyo()
   if &ft == 'markdown' && winnr('$') == 1
-    Goyo 100
+    Goyo
   elseif exists('#goyo')
     Goyo!
   endif
 endfunction
 
-function! s:goyo_markdown_leave()
+function! s:goyo_leave()
   if winnr('$') < 2
     silent! :q
   endif
 endfunction
 
-"Not Working as intended at the moment as ?Loading Ultisnips on opening
-"insert mode cancels goyo
 augroup goyo_markdown
   autocmd!
   autocmd BufNewFile,BufRead * call s:auto_goyo()
@@ -1191,28 +1200,6 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-"Currently stalls vim!!!
-function! VisualSelection(direction, extra_filter) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-  if a:direction == 'b'
-    execute "normal ?" . l:pattern . "^M"
-  elseif a:direction == 'f'
-    execute "normal /" . l:pattern . "^M"
-  endif
-
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-" vnoremap <silent> * :call VisualSelection('f', '')<CR>
-" vnoremap <silent> # :call VisualSelection('b', '')<CR>
-
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
@@ -1238,8 +1225,8 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
-"colorscheme one
 colorscheme quantum
+"colorscheme vim-material
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -1265,17 +1252,15 @@ set conceallevel=2
  highlight jsThis ctermfg=224
  highlight jsSuper ctermfg=13
  highlight jsFuncCall ctermfg=cyan
- highlight jsComment ctermfg=245 ctermbg=none
  highlight jsClassProperty ctermfg=14 cterm=bold
+ "highlight jsComment ctermfg=245 ctermbg=none
  "Highlighing = Bolding of html args and types etc
- highlight VertSplit guifg=black ctermfg=black
- highlight htmlArg gui=italic,bold
- highlight Comment gui=italic
- highlight Type    gui=italic
- highlight htmlArg cterm=italic,bold
- highlight Comment cterm=italic
- highlight Type    cterm=italic
+ "highlight VertSplit guifg=black ctermfg=black
+ highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
+ highlight Comment gui=italic cterm=italic
+ highlight Type    gui=italic cterm=italic
  highlight Folded guifg=#FFC66D guibg=NONE
+ highlight CursorLine term=none cterm=none
 "make the completion menu a bit more readable
 "highlight PmenuSel guibg=white guifg=black
 "highlight Pmenu guibg=black guifg=white
@@ -1378,11 +1363,11 @@ endif
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-augroup cursorline
-  autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  autocmd WinLeave * setlocal nocursorline
-augroup END
+"augroup cursorline
+  "autocmd!
+  "autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline 
+  "autocmd WinLeave * setlocal nocursorline
+"augroup END
 
 set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10

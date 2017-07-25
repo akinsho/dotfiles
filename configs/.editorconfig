@@ -2,6 +2,12 @@
 
 root = true
 
+[**.ts]
+e4x = true
+indent_style = space
+indent_size = 4
+bin=node
+
 [**.js]
 e4x = true
 indent_style = space
