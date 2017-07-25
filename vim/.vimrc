@@ -1256,6 +1256,7 @@ set conceallevel=2
  "highlight jsComment ctermfg=245 ctermbg=none
  "Highlighing = Bolding of html args and types etc
  "highlight VertSplit guifg=black ctermfg=black
+ highlight VertSplit guifg=black ctermfg=black
  highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
  highlight Comment gui=italic cterm=italic
  highlight Type    gui=italic cterm=italic
