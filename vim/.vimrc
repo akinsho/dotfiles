@@ -50,7 +50,11 @@ function! BuildTern(info)
 endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+if !has('gui_running')
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+else
+  Plug 'ctrlpvim/ctrlp.vim'
+endif
 Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
 
@@ -61,7 +65,7 @@ if executable("tmux")
   Plug 'sjl/vitality.vim'
 endif
 
-" "Utilities============================
+" "Utilities ============================
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
@@ -87,9 +91,12 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace'
 
 "Syntax ============================
-Plug 'sheerun/vim-polyglot'
 "Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
+Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
+if !has('gui_running')
+  Plug 'Quramy/tsuquyomi'
+endif
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
@@ -124,11 +131,14 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
 Plug 'hzchirs/vim-material'
-Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
+Plug 'jacoborus/tender.vim'
+if !has('gui_running')
+  Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
+endif
 
 "Plugins I think I need yet never use ===============================
-Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
-Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
+"Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
+"Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
 
 
 call plug#end()
@@ -161,7 +171,6 @@ source ~/Dotfiles/vim/mappings.vim
 "=============================================================
 "               Airline
 "=============================================================
-let g:airline_theme = 'material'
 let g:airline_extensions = ['branch','tabline','ale']
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_detect_iminsert                  = 1
@@ -234,6 +243,7 @@ inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
+if !has('gui_running')
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 let g:fzf_files_options =
       \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
@@ -262,6 +272,7 @@ nnoremap <C-P> :FZFR <CR>
 nnoremap \ :Rg<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
 " nnoremap <C-P> :Files <CR> " Uses the pwd
+endif
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
@@ -523,6 +534,9 @@ augroup END
 augroup reload_vimrc
   autocmd!
   autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+  if has('gui_running')
+    source $MYGVIMRC | echo 'Source .gvimrc'
+  endif
 augroup END
 
 
@@ -551,7 +565,7 @@ augroup filetype_javascript_typescript
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
   "The next line forces four spaces to appear as two which helps maintain my sanity at work
-  autocmd FileType typescript,*.tsx syntax match spaces /    / conceal cchar=  "there is a space here on purpose
+  "autocmd FileType typescript,*.tsx syntax match spaces /    / conceal cchar=  "there is a space here on purpose
   autocmd FileType typescript,*.tsx set concealcursor=nvi
   autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   "==================================
@@ -874,13 +888,6 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-if has('gui_running')
-  set guioptions=
-  set guifont=Fira\ Code:h14
-  "set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
-  "set guifont=Fira\ Code\ for\ Powerline\ Plus\ Nerd\ File\ Types:h14
-  let g:webdevicons_enable = 0
-endif
 "syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
  set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
@@ -1077,44 +1084,45 @@ let delimitMate_balance_matchpairs = 1
 " ================================================
 " FZF
 " ================================================
-nnoremap <localleader>m  :Marks<CR>
-nnoremap <localleader>mm :Maps<CR>
+if !has('gui_running')
+  nnoremap <localleader>m  :Marks<CR>
+  nnoremap <localleader>mm :Maps<CR>
 
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit' }
+  let g:fzf_action = {
+        \ 'ctrl-t': 'tab split',
+        \ 'ctrl-s': 'split',
+        \ 'ctrl-v': 'vsplit' }
 
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-      \ { 'fg':    ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
+  " Customize fzf colors to match your color scheme
+  let g:fzf_colors =
+        \ { 'fg':    ['fg', 'Normal'],
+        \ 'bg':      ['bg', 'Normal'],
+        \ 'hl':      ['fg', 'Comment'],
+        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+        \ 'hl+':     ['fg', 'Statement'],
+        \ 'info':    ['fg', 'PreProc'],
+        \ 'prompt':  ['fg', 'Conditional'],
+        \ 'pointer': ['fg', 'Exception'],
+        \ 'marker':  ['fg', 'Keyword'],
+        \ 'spinner': ['fg', 'Label'],
+        \ 'header':  ['fg', 'Comment'] }
 
 
-"This  function makes FZF start from the root of a git dir
-function! s:find_root()
-  for vcs in ['.git', '.svn', '.hg']
-    let dir = finddir(vcs.'/..', ';')
-    if !empty(dir)
-      execute 'Files' dir
-      return
-    endif
-  endfor
-  FZF
-endfunction
+  "This  function makes FZF start from the root of a git dir
+  function! s:find_root()
+    for vcs in ['.git', '.svn', '.hg']
+      let dir = finddir(vcs.'/..', ';')
+      if !empty(dir)
+        execute 'Files' dir
+        return
+      endif
+    endfor
+    FZF
+  endfunction
 
-command! FZFR call s:find_root()
-
+  command! FZFR call s:find_root()
+endif
 "JS Docs plugin
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
@@ -1225,7 +1233,10 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
-colorscheme quantum
+colorscheme tender
+"let g:airline_theme = 'tenderplus'
+"let g:airline_theme = 'material'
+"colorscheme quantum
 "colorscheme vim-material
 
 if &term =~ '256color'

@@ -23,9 +23,8 @@ alias nev="nvim ~/.vimrc"
 alias et="vim ~/.tmux.conf"
 alias net="nvim ~/.tmux.conf"
 
-
-# alias ohmyzsh="vim ~/.oh-my-zsh"
-#alias v="vim"
+#alias ctags if you used homebrew
+alias ctags="`brew --prefix`/bin/ctags"
 alias lip="lsof -Pn -i4"
 alias ports=" _ lsof -i -P | grep -i 'listen'"
 alias sesh="vim -S"
