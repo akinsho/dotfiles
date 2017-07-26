@@ -302,13 +302,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>83 37 814 289 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>253 218 796 473 0 0 1280 777 </string>
+	<string>253 230 918 485 0 0 1280 777 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 193 592 584 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 1280 773 0 0 1280 777 </string>
+	<string>0 5 1280 772 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-960 -275 960 1052 -1920 -280 1920 1057 </string>
+	<string>-960 -271 954 1048 -1920 -280 1920 1057 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -904,8 +904,10 @@
 			<string>DroidSansMonoForPowerlineNerdFontC- 15</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>FiraCode-Medium 15</string>
+			<string>Hasklig-Regular 15</string>
 			<key>Option Key Sends</key>
 			<integer>1</integer>
 			<key>Prompt Before Closing 2</key>
@@ -991,7 +993,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>4210C9AE-A932-475D-9516-1BFB547EECAA</string>
 	<key>NoSyncLastTipTime</key>
-	<real>521145549.53890097</real>
+	<real>522751342.05565798</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1069,6 +1071,7 @@
 		<string>0063</string>
 		<string>0064</string>
 		<string>0065</string>
+		<string>0066</string>
 	</array>
 	<key>PasteTabToStringTabStopSize</key>
 	<integer>4</integer>
@@ -1118,15 +1121,23 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-07-24T16:04:52Z</date>
+	<date>2017-07-26T08:42:22Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
 	<true/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
+	<key>SmartPlacement</key>
+	<true/>
 	<key>StretchTabsToFillBar</key>
 	<true/>
+	<key>SwitchPaneModifier</key>
+	<integer>4</integer>
+	<key>SwitchTabModifier</key>
+	<integer>4</integer>
+	<key>SwitchWindowModifier</key>
+	<integer>4</integer>
 	<key>TabStyle</key>
 	<integer>0</integer>
 	<key>TabViewType</key>
@@ -1140,6 +1151,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.1.20170629-nightly</string>
+	<string>3.1.20170724-nightly</string>
 </dict>
 </plist>

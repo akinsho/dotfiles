@@ -772,11 +772,13 @@ set mousehide
 set mouse=a "this is the command that works for mousepad
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
 if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  if !has('nvim')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
 endif
 
 if !has('nvim')
@@ -820,20 +822,21 @@ nnoremap <leader>bl :ls<CR>
 "---------------------------------------------------------------------------
 " NEOVIM
 "---------------------------------------------------------------------------
-" Window split settings
- highlight TermCursor ctermfg=red guifg=red
+" Terminal settings
+if has('nvim')
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+        \,sm:block-blinkwait175-blinkoff150-blinkon175
 
- " Terminal settings
- if has('nvim')
-   tnoremap <Leader>e <C-\><C-n>
-   tnoremap <C-h> <C-\><C-n><C-h>
-   tnoremap <C-j> <C-\><C-n><C-j>
-   tnoremap <C-k> <C-\><C-n><C-k>
-   tnoremap <C-l> <C-\><C-n><C-l>
-   nnoremap T :50VTerm<CR>
-   nnoremap <leader>npm :2Term yarn install
-   nnoremap <leader>r :50VTerm node<CR>
- endif
+  tnoremap <Leader>e <C-\><C-n>
+  tnoremap <C-h> <C-\><C-n><C-h>
+  tnoremap <C-j> <C-\><C-n><C-j>
+  tnoremap <C-k> <C-\><C-n><C-k>
+  tnoremap <C-l> <C-\><C-n><C-l>
+  nnoremap T :50VTerm<CR>
+  nnoremap <leader>npm :2Term yarn install
+  nnoremap <leader>r :50VTerm node<CR>
+endif
 
 " ----------------------------------------------------------------------------
 " Message output on vim actions
@@ -1334,6 +1337,9 @@ set conceallevel=2
 "so it's clear which paren I'm on and which is matched
  highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
  highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+if has('nvim')
+  highlight TermCursor ctermfg=red guifg=red
+endif
 "---------------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------

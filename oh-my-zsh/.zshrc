@@ -14,7 +14,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # ZSH_TMUX_AUTOSTART="true"
-
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
@@ -105,9 +105,9 @@ export LANG=en_us.utf-8
 
 # preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='vim'
+  export EDITOR='nvim'
 fi
 
 export USE_EDITOR=$EDITOR

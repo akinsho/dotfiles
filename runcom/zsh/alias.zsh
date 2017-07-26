@@ -6,6 +6,7 @@ alias dots="cd ~/Dotfiles"
 alias code="cd ~/Desktop/Coding"
 alias l="lsp"
 alias la='ls -aG'
+alias v='nvim'
 alias nv='nvim'
 alias cl='clear'
 alias o='a -e xdg-open' # quick opening files with xdg-open
@@ -15,13 +16,13 @@ alias gbs="git branch | fzf-tmux -d 15"
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
-alias ea='vim ~/Dotfiles/runcom/zsh/alias.zsh'
-alias ez="vim ~/.zshrc"
+alias ea='nvim ~/Dotfiles/runcom/zsh/alias.zsh'
+alias ez="nvim ~/.zshrc"
 alias nez="nvim ~/.zshrc"
-alias ev="vim ~/.vimrc"
-alias nev="nvim ~/.vimrc"
-alias et="vim ~/.tmux.conf"
-alias net="nvim ~/.tmux.conf"
+alias ev="nvim ~/.vimrc"
+alias et="nvim ~/.tmux.conf"
+#alias nev="nvim ~/.vimrc"
+#alias net="nvim ~/.tmux.conf"
 
 #alias ctags if you used homebrew
 alias ctags="`brew --prefix`/bin/ctags"
@@ -42,10 +43,10 @@ alias pumpitup="osascript -e 'set volume 10'"
 # Open google chrome from terminal
 alias chrome="/Applications/Google\\ \\Chrome.app/Contents/MacOS/Google\\ \\Chrome"
 
-alias -s js=vim
-alias -s html=vim
-alias -s css=vim
-alias -s py=vim
+alias -s js=nvim
+alias -s html=nvim
+alias -s css=nvim
+alias -s py=nvim
 
 # alias tmux="tmux -CC"
 # alias attach="tmux -CC attach"
