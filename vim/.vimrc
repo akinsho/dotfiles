@@ -40,7 +40,7 @@ Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
 "================================
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
-Plug 'mattn/em et-vim' "Added em et vim plugin
+Plug 'mattn/emmet-vim' "Added emmet vim plugin
 Plug 'Raimondi/delimitMate' "Add delimitmate
 Plug 'easymotion/vim-easymotion' "Added easy motions
 function! BuildTern(info)
@@ -79,7 +79,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-
+"NVIM ====================================
+if has('nvim')
+  Plug 'vimlab/split-term.vim'
+endif
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
@@ -120,6 +123,8 @@ Plug 'guns/vim-sexp', { 'for': 'clojure' }
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
+Plug 'Shougo/vimshell.vim'
+Plug 'Shougo/vimproc.vim'
 Plug 'janko-m/vim-test'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -658,9 +663,13 @@ augroup FileType_text
   autocmd FileType text setlocal textwidth=78
 augroup END
 
+augroup nvim
+  au!
+  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+augroup END
+
 augroup FileType_all
   autocmd!
-  autocmd BufRead * normal zz "Center cursor on file load
   autocmd FileType python setl ts=4
   autocmd FileType rust setl sw=0 sts=0
   " When editing a file, always jump to the last known cursor position.
@@ -761,10 +770,6 @@ set complete+=kspell
 "===================================================================================
 set mousehide
 set mouse=a "this is the command that works for mousepad
-if !has('nvim')
-  set ttymouse=xterm2
-endif
-
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -775,7 +780,8 @@ else
 endif
 
 if !has('nvim')
-    set mouse=a
+  set ttymouse=xterm2
+  set mouse=a
 endif
 "}}}
 "====================================================================================
@@ -811,6 +817,24 @@ nnoremap ,q :bp <BAR> bd #<CR>
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
 "}}}
+"---------------------------------------------------------------------------
+" NEOVIM
+"---------------------------------------------------------------------------
+" Window split settings
+ highlight TermCursor ctermfg=red guifg=red
+
+ " Terminal settings
+ if has('nvim')
+   tnoremap <Leader>e <C-\><C-n>
+   tnoremap <C-h> <C-\><C-n><C-h>
+   tnoremap <C-j> <C-\><C-n><C-j>
+   tnoremap <C-k> <C-\><C-n><C-k>
+   tnoremap <C-l> <C-\><C-n><C-l>
+   nnoremap T :50VTerm<CR>
+   nnoremap <leader>npm :2Term yarn install
+   nnoremap <leader>r :50VTerm node<CR>
+ endif
+
 " ----------------------------------------------------------------------------
 " Message output on vim actions
 " ----------------------------------------------------------------------------
