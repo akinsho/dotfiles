@@ -40,7 +40,7 @@ Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
 "================================
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
-Plug 'mattn/emmet-vim' "Added emmet vim plugin
+Plug 'mattn/em et-vim' "Added em et vim plugin
 Plug 'Raimondi/delimitMate' "Add delimitmate
 Plug 'easymotion/vim-easymotion' "Added easy motions
 function! BuildTern(info)
@@ -62,7 +62,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gu
 if executable("tmux")
   Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-  Plug 'sjl/vitality.vim'
+  "Plug 'sjl/vitality.vim'
 endif
 
 " "Utilities ============================
@@ -100,7 +100,7 @@ endif
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim'
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
-Plug 'vim-scripts/dbext.vim'
+Plug 'vim-scripts/dbext.vim' "Need this to run SQL Lint
 
 "Git ===============================
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
@@ -114,17 +114,19 @@ Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text o
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
-Plug 'guns/vim-sexp'
+Plug 'guns/vim-sexp', { 'for': 'clojure' }
 
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
+Plug 'janko-m/vim-test'
+Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 
 "Filetype Plugins ======================
-Plug 'shime/vim-livedown' "Add better markdown previewer
+Plug 'junegunn/vim-xmark', { 'do': 'make' } "Add better markdown previewer
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 
 "Themes ===============================
@@ -135,11 +137,6 @@ Plug 'jacoborus/tender.vim'
 if !has('gui_running')
   Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 endif
-
-"Plugins I think I need yet never use ===============================
-"Plug 'majutsushi/tagbar', { 'on': [ 'TagbarToggle' ] } "Add Tagbar Plugin
-"Plug 'ludovicchabant/vim-gutentags' "Add Plugin to manage tag files
-
 
 call plug#end()
 
@@ -171,10 +168,7 @@ source ~/Dotfiles/vim/mappings.vim
 "=============================================================
 "               Airline
 "=============================================================
-let g:airline_extensions = ['branch','tabline','ale']
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline_detect_iminsert                  = 1
-let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
 let g:airline_powerline_fonts                  = 1
 let g:airline#extensions#tabline#enabled       = 1
 let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
@@ -182,15 +176,6 @@ let g:airline#extensions#tabline#show_tabs     = 1
 let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
-" Makes airline tabs rectangular
-"let g:airline_left_sep = ' '
-"let g:airline_right_sep = ' '
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-"let g:airline#extensions#tabline#right_sep = ''
-"let g:airline#extensions#tabline#right_alt_sep = '|'
-"let g:airline_left_alt_sep = '' "This defines the separators for airline changes them from the default arrows
-"let g:airline_right_alt_sep = ''
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
@@ -278,7 +263,7 @@ endif
 "of delimitmate)
 imap <C-F> <C-g>g
 
-nnoremap gm :LivedownToggle<CR>
+nnoremap gm :Xmark<CR>
 
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
@@ -467,11 +452,47 @@ map  N <Plug>(easymotion-prev)
 "                    EMMET for Vim
 "=======================================================================
 "Emmet for vim leader keymap
+  function! s:expand_html_tab()
+" try to determine if we're within quotes or tags.
+" if so, assume we're in an emmet fill area.
+   let line = getline('.')
+   if col('.') < len(line)
+     let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+     if len(line) >= 2
+        return "\<C-n>"
+     endif
+   endif
+    " try to determine if we're within quotes or tags.
+  " if so, assume we're in an emmet fill area.
+  let line = getline('.')
+  if col('.') < len(line)
+    let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+
+    if len(line) >= 2
+      return "\<Plug>(emmet-move-next)"
+    endif
+  endif
+
+  " go to next item in a popup menu.
+  if pumvisible()
+    return "\<C-n>"
+  endif
+
+  " expand anything emmet thinks is expandable.
+  " I'm not sure control ever reaches below this block.
+  if emmet#isExpandable()
+    return "\<Plug>(emmet-expand-abbr)"
+  endif
+
+  " return a regular tab character
+  return "\<tab>"
+  endfunction
+let g:user_emmet_mode='a'
+let g:user_emmet_complete_tag = 1
 let g:user_emmet_settings = {'javascript': {'extends': 'jsx'}}
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
-" let g:user_emmet_leader_key     = "<s-tab>"
 
 nnoremap <leader>u :GundoToggle<CR>
 
@@ -481,6 +502,22 @@ let g:used_javascript_libs = 'underscore,jquery,hapi,mocha,redux,react-apollo,ex
 "====================================================================================
 "AUTOCOMMANDS {{{
 "===================================================================================
+
+au FileType qf call AdjustWindowHeight(3, 10)
+function! AdjustWindowHeight(minheight, maxheight)
+   let l = 1
+   let n_lines = 0
+   let w_width = winwidth(0)
+   while l <= line('$')
+       " number to float for division
+       let l_len = strlen(getline(l)) + 0.0
+       let line_width = l_len/w_width
+       let n_lines += float2nr(ceil(line_width))
+       let l += 1
+   endw
+   exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
   autocmd!
@@ -550,9 +587,11 @@ augroup END
 augroup filetype_completion
   autocmd!
   autocmd FileType html,css,javascript,typescript,typscript.tsx,javascript.jsx EmmetInstall
+  autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript,javascript.jsx,jsx setlocal omnifunc=tern#Complete
+  "autocmd FileType typescript,typescript.jsx setlocal omnifunc=tsuquyomi#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
@@ -564,6 +603,7 @@ augroup filetype_javascript_typescript
   autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
+  autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
   "The next line forces four spaces to appear as two which helps maintain my sanity at work
   "autocmd FileType typescript,*.tsx syntax match spaces /    / conceal cchar=  "there is a space here on purpose
   autocmd FileType typescript,*.tsx set concealcursor=nvi
@@ -587,14 +627,13 @@ augroup END
 
 augroup FileType_html
   autocmd!
-  "for emmet
-  autocmd FileType html nnoremap <buffer> <localleader>G Vatzf
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg=G
 augroup END
 
 
 augroup FileType_markdown
   autocmd!
+  autocmd BufNewFile,VimEnter *.md :Xmark<<CR>
   autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
@@ -621,6 +660,7 @@ augroup END
 
 augroup FileType_all
   autocmd!
+  autocmd BufRead * normal zz "Center cursor on file load
   autocmd FileType python setl ts=4
   autocmd FileType rust setl sw=0 sts=0
   " When editing a file, always jump to the last known cursor position.
@@ -974,6 +1014,12 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+"TypeScript Tsuqoyomi settings
+let g:tsuquyomi_definition_split = 2
+nnoremap <leader>td <Plug>(TsuquyomiTypeDefinition)
+
+
+
 let g:polyglot_disabled = ['elm', 'clojure' ]
 "let g:polyglot_disabled = ['elm', 'clojure', 'typescript' ]
 
@@ -1035,8 +1081,7 @@ function! s:goyo_leave()
   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
   set showmode
   set showcmd
-  set number
-  set relativenumber
+  set number relativenumber
   set scrolloff=5
 endfunction
 
@@ -1075,9 +1120,8 @@ let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your window.
 
-" let g:livedown_autorun = 1 " should markdown preview get shown automatically upon opening markdown buffer
-let g:livedown_open = 1 " should the browser window pop-up upon previewing
-let g:livedown_port = 1337 " the port on which Livedown server will run
+
+
 let delimitMate_expand_cr          = 2
 let delimitMate_expand_space       = 1
 let delimitMate_balance_matchpairs = 1
@@ -1131,6 +1175,7 @@ nmap <silent> co <Plug>(jsdoc)
 
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
+let g:DevIconsEnableFoldersOpenClose = 1
 if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')
     call webdevicons#refresh()
@@ -1173,19 +1218,6 @@ inoremap … <C-R><C-P>0
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" See http://stackoverflow.com/questions/4064651/what-is-the-best-way-to-do-smooth-scrolling-in-vim
-fun! s:smoothScroll(up)
-  execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-  redraw
-  for l:count in range(3, &scroll, 2)
-    sleep 10m
-    execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-    redraw
-  endfor
-endf
-nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
-nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
-
 function! WrapForTmux(s)
   if !exists('$TMUX')
     return a:s
@@ -1234,11 +1266,11 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
-colorscheme tender
+colorscheme quantum
+"colorscheme vim-material
+"colorscheme tender
 "let g:airline_theme = 'tenderplus'
 "let g:airline_theme = 'material'
-"colorscheme quantum
-"colorscheme vim-material
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -1266,9 +1298,7 @@ set conceallevel=2
  highlight jsFuncCall ctermfg=cyan
  highlight jsClassProperty ctermfg=14 cterm=bold
  "highlight jsComment ctermfg=245 ctermbg=none
- "Highlighing = Bolding of html args and types etc
  "highlight VertSplit guifg=black ctermfg=black
- highlight VertSplit guifg=black ctermfg=black
  highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
  highlight Comment gui=italic cterm=italic
  highlight Type    gui=italic cterm=italic
@@ -1279,6 +1309,7 @@ set conceallevel=2
 "highlight Pmenu guibg=black guifg=white
 "so it's clear which paren I'm on and which is matched
  highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
+ highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 "---------------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
