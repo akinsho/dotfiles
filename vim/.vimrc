@@ -27,15 +27,16 @@ endif
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
-if !has('nvim')
+"if !has('nvim')
   if has('unix')
     if empty($SSH_CONNECTION)
       Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
     endif
   endif
-else
-  Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
-endif
+"else
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "Plug 'mhartington/nvim-typescript'
+"endif
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
 "================================
@@ -60,9 +61,8 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gu
 
 "TMUX ============================
 if executable("tmux")
-  Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
+  "Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-  "Plug 'sjl/vitality.vim'
 endif
 
 " "Utilities ============================
@@ -299,7 +299,7 @@ let g:ale_fixers.html = [
   \ 'tidy',
   \]
 
-
+let g:ale_typescript_tsserver_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
@@ -1045,6 +1045,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:tsuquyomi_definition_split = 2
 nnoremap <leader>td <Plug>(TsuquyomiTypeDefinition)
 
+let g:deoplete#enable_at_startup = 1
 
 
 let g:polyglot_disabled = ['elm', 'clojure' ]
