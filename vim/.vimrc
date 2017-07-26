@@ -183,14 +183,14 @@ let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = '|'
-let g:airline_left_alt_sep = '' "This defines the separators for airline changes them from the default arrows
-let g:airline_right_alt_sep = ''
+"let g:airline_left_sep = ' '
+"let g:airline_right_sep = ' '
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+"let g:airline#extensions#tabline#right_sep = ''
+"let g:airline#extensions#tabline#right_alt_sep = '|'
+"let g:airline_left_alt_sep = '' "This defines the separators for airline changes them from the default arrows
+"let g:airline_right_alt_sep = ''
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
@@ -1221,6 +1221,7 @@ call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
 call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
+call NERDTreeHighlightFile('ts', 226, 'none', '#FFD700')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
 call NERDTreeHighlightFile('jsx', 140, 'none', '#9E6FCD')

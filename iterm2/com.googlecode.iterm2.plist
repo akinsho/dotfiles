@@ -2,12 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AllowClipboardAccess</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>CopyLastNewline</key>
+	<true/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>hybrid</key>
@@ -250,9 +254,9 @@
 	<key>HotkeyModifiers</key>
 	<integer>262144</integer>
 	<key>LeftCommand</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>LeftOption</key>
-	<integer>7</integer>
+	<integer>2</integer>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSNavLastRootDirectory</key>
@@ -274,7 +278,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAdCGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAdKGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -298,11 +302,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>83 37 814 289 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>90 60 796 473 0 0 1280 777 </string>
+	<string>253 218 796 473 0 0 1280 777 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 193 592 584 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 5 1280 772 0 0 1280 777 </string>
+	<string>0 4 1280 773 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-960 -275 960 1052 -1920 -280 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -554,6 +558,8 @@
 				<key>Red Component</key>
 				<real>0.11772145330905914</real>
 			</dict>
+			<key>Cursor Type</key>
+			<integer>0</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
@@ -888,16 +894,18 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Minimum Contrast</key>
+			<real>0.0</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
 			<string>MyDefault</string>
 			<key>Non Ascii Font</key>
-			<string>FuraMonoForPowerlineNerdFontC-Medium 15</string>
+			<string>DroidSansMonoForPowerlineNerdFontC- 15</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FiraCode-Light 15</string>
+			<string>FiraCode-Medium 15</string>
 			<key>Option Key Sends</key>
 			<integer>1</integer>
 			<key>Prompt Before Closing 2</key>
@@ -944,6 +952,8 @@
 			<array/>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
+			<key>Thin Strokes</key>
+			<integer>2</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unicode Normalization</key>
@@ -1097,6 +1107,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/A_nonymous/Dotfiles/iterm2</string>
+	<key>QuitWhenAllWindowsClosed</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -1106,9 +1118,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-07-20T08:59:24Z</date>
+	<date>2017-07-24T16:04:52Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>SavePasteHistory</key>
+	<true/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
 	<key>StretchTabsToFillBar</key>
