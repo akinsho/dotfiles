@@ -989,7 +989,6 @@ set gdefault "Makes the g flag available by default so it doesn't have to be spe
 set pumheight=10
 "set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
-set ttyfast " Improves smoothness of redrawing when there are multiple windows
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
   set relativenumber
 endif
@@ -1010,7 +1009,10 @@ if has('vim')
 endif
 set ruler
 set incsearch
-set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
+if !has('nvim')
+  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
+  set ttyfast " Improves smoothness of redrawing when there are multiple windows
+endif
 if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
