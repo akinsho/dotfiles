@@ -14,7 +14,6 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # ZSH_TMUX_AUTOSTART="true"
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
@@ -105,7 +104,7 @@ export LANG=en_us.utf-8
 
 # preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+  export EDITOR='vim'
 else
   export EDITOR='nvim'
 fi
@@ -220,8 +219,8 @@ if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.z
 fi
 # BASE16===============================================================
 # default code for base16 shell
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+#BASE16_SHELL=$HOME/.config/base16-shell/
+#[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
 fi
@@ -240,7 +239,7 @@ source ~/enhancd/init.sh
 source $DOTFILES/runcom/functions.sh
 source $DOTFILES/runcom/zsh/alias.zsh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
-  for script ($DOTFILES/runcom/zsh/*) source $script
+for script ($DOTFILES/runcom/zsh/*) source $script
 
 source $DOTFILES/local/.localrc
 #=======================================================================

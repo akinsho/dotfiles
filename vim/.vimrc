@@ -28,14 +28,14 @@ endif
 call plug#begin('~/.vim/plugged')
 
 "if !has('nvim')
-  if has('unix')
-    if empty($SSH_CONNECTION)
-      Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
-    endif
+if has('unix')
+  if empty($SSH_CONNECTION)
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
   endif
+endif
 "else
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  "Plug 'mhartington/nvim-typescript'
+  ""Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  ""Plug 'mhartington/nvim-typescript'
 "endif
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
@@ -61,7 +61,6 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gu
 
 "TMUX ============================
 if executable("tmux")
-  "Plug 'benmills/vimux' "Vimux i.e send commands to a tmux split
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 endif
 
@@ -79,6 +78,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/switch.vim'
 "NVIM ====================================
 if has('nvim')
   Plug 'vimlab/split-term.vim'
@@ -112,7 +112,6 @@ Plug 'rhysd/committia.vim' "create diff window and Gstatus window on commit
 "Text Objects =====================
 Plug 'kana/vim-textobj-user' "Text object library plugin for defining your own text objects
 Plug 'glts/vim-textobj-comment' "Text obj for comments
-Plug 'rhysd/vim-textobj-conflict' "Conflict marker text objects
 Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text objects e.g. ci<leader>w will change all of one camelcased word
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
@@ -123,8 +122,6 @@ Plug 'guns/vim-sexp', { 'for': 'clojure' }
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
-Plug 'Shougo/vimshell.vim'
-Plug 'Shougo/vimproc.vim'
 Plug 'janko-m/vim-test'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -136,9 +133,8 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
-Plug 'tyrannicaltoucan/vim-quantum' "Quantum theme
-Plug 'hzchirs/vim-material'
-Plug 'jacoborus/tender.vim'
+Plug 'tyrannicaltoucan/vim-quantum'
+Plug 'rakr/vim-one'
 if !has('gui_running')
   Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 endif
@@ -386,35 +382,24 @@ endfunction
 "Toggle Tagbar
 nnoremap <leader>2 :TagbarToggle<CR>
 
-"Vimux ==========================================================
-"Tell vimux to run commands in a new split
-let VimuxUseNearest = 0
-let VimuxResetSequence = ""
-
-nnoremap <F5> :call VimuxRunCommand('browse')<CR>
-" Prompt for a command to run
-nnoremap <Leader>vp :VimuxPromptCommand<CR>
-" Run last command executed by VimuxRunCommand
-nnoremap <Leader>vl :VimuxRunLastCommand<CR>
-" Inspect runner pane
-nnoremap <Leader>vi :VimuxInspectRunner<CR>
-" Close vim tmux runner opened by VimuxRunCommand
-nnoremap <Leader>vq :VimuxCloseRunner<CR>
-" Interrupt any command running in the runner pane
-nnoremap <Leader>vx :VimuxInterruptRunner<CR>
-" Zoom the runner pane (use <bind-key> z to restore runner pane)
-nnoremap <Leader>vz :call VimuxZoomRunner()<CR>
-
 "Vim-Signature ==================================================
 let g:SignatureMarkTextHLDynamic=1
 "NERDTree
 " =============================================
 " Ctrl+N to toggle Nerd Tree
-nnoremap <C-N> :NERDTreeToggle<CR>
-nnoremap <localleader>nf :NERDTreeFind<CR>
+ function! NERDTreeToggleAndFind()
+    if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+      execute ':NERDTreeClose'
+    else
+      execute ':NERDTreeFind'
+    endif
+  endfunction
+nnoremap <C-N> :call NERDTreeToggleAndFind()<CR>
+nnoremap <localleader>n :NERDTreeToggle<CR>
 
 let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer        = 1
+let g:NERDTreeWinSize                 = 30
 let g:NERDTreeDirArrowExpandable      = '├'
 let g:NERDTreeDirArrowCollapsible     = '└'
 let NERDTreeQuitOnOpen                = 1
@@ -808,6 +793,8 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
+set termsize="0x30"
+
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
 nnoremap <leader>n :enew<cr>
@@ -824,7 +811,7 @@ nnoremap <leader>bl :ls<CR>
 "---------------------------------------------------------------------------
 " Terminal settings
 if has('nvim')
-  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  set guicursor=n-v-c:block,i-ci-ve:ver10,r-cr:hor20,o:hor50
         \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
         \,sm:block-blinkwait175-blinkoff150-blinkon175
 
@@ -1259,8 +1246,8 @@ function! WrapForTmux(s)
   return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
 endfunction
 
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+"let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+"let &t_EI .= WrapForTmux("\<Esc>[?2004l")
 
 function! XTermPasteBegin()
   set pastetoggle=<Esc>[201~
@@ -1296,11 +1283,9 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Set color Scheme
 set background=dark
-colorscheme quantum
-"colorscheme vim-material
-"colorscheme tender
-"let g:airline_theme = 'tenderplus'
-"let g:airline_theme = 'material'
+"colorscheme quantum
+colorscheme one
+call one#highlight('Normal', '', '242e3d', 'none') "Change bgcolor
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -1440,11 +1425,11 @@ endif
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-"augroup cursorline
-  "autocmd!
-  "autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline 
-  "autocmd WinLeave * setlocal nocursorline
-"augroup END
+augroup cursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline 
+  autocmd WinLeave * setlocal nocursorline
+augroup END
 
 set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10

@@ -1,6 +1,7 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
+
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -289,7 +290,10 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " move to beginning/end of line
 nnoremap H ^
 nnoremap L $
-
+nnoremap <leader>vl :vertical resize +10<cr>
+nnoremap <leader>vh :vertical resize -10<cr>
+nnoremap <leader>vj :res +10<cr>
+nnoremap <leader>vk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
 

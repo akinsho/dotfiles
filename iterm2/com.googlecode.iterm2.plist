@@ -278,7 +278,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAdKGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAc7Gdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -302,11 +302,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>83 37 814 289 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>253 230 918 485 0 0 1280 777 </string>
+	<string>297 319 770 429 0 0 1280 777 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 193 592 584 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 5 1280 772 0 0 1280 777 </string>
+	<string>640 5 640 772 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-960 -271 954 1048 -1920 -280 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -478,12 +478,16 @@
 			<true/>
 			<key>Background Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.097707755863666534</real>
+				<real>0.20392156862745098</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.092142701148986816</real>
+				<real>0.17254901960784313</real>
 				<key>Red Component</key>
-				<real>0.086937598884105682</real>
+				<real>0.15294117647058825</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -975,7 +979,7 @@
 			<key>Use Non-ASCII Font</key>
 			<true/>
 			<key>Use Underline Color</key>
-			<false/>
+			<true/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -993,7 +997,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>4210C9AE-A932-475D-9516-1BFB547EECAA</string>
 	<key>NoSyncLastTipTime</key>
-	<real>522751342.05565798</real>
+	<real>522837777.35029298</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1072,6 +1076,7 @@
 		<string>0064</string>
 		<string>0065</string>
 		<string>0066</string>
+		<string>0067</string>
 	</array>
 	<key>PasteTabToStringTabStopSize</key>
 	<integer>4</integer>
@@ -1121,7 +1126,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-07-26T08:42:22Z</date>
+	<date>2017-07-27T16:24:42Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -1152,5 +1157,9 @@
 	<integer>0</integer>
 	<key>iTerm Version</key>
 	<string>3.1.20170724-nightly</string>
+	<key>kCPKSelectionViewPreferredModeKey</key>
+	<integer>0</integer>
+	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
 </dict>
 </plist>
