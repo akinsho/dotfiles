@@ -793,7 +793,6 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
-set termsize="0x30"
 
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -866,6 +865,9 @@ try
 catch
 endtry
 
+if !has('nvim')
+  set termsize="0x30"
+endif
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------
