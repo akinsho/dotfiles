@@ -81,7 +81,8 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
 "NVIM ====================================
 if has('nvim')
-  Plug 'vimlab/split-term.vim'
+  "Plug 'vimlab/split-term.vim'
+  Plug 'Shougo/vimproc.vim'
 endif
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
@@ -819,11 +820,17 @@ if has('nvim')
   tnoremap <C-j> <C-\><C-n><C-j>
   tnoremap <C-k> <C-\><C-n><C-k>
   tnoremap <C-l> <C-\><C-n><C-l>
-  nnoremap T :50VTerm<CR>
-  nnoremap <leader>npm :2Term yarn install
-  nnoremap <leader>r :50VTerm node<CR>
 endif
+" Terminal {{{
+" ====================================================================
+  nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
 
+" Opening splits with terminal in all directions
+  nnoremap <leader>h<CR> :leftabove vnew<CR>:terminal<CR>
+  nnoremap <leader>l<CR> :rightbelow vnew<CR>:terminal<CR>
+  nnoremap <leader>k<CR> :leftabove new<CR>:terminal<CR>
+  nnoremap <leader>j<CR> :rightbelow new<CR>:terminal<CR>
+  "}}}
 " ----------------------------------------------------------------------------
 " Message output on vim actions
 " ----------------------------------------------------------------------------
@@ -1247,9 +1254,10 @@ function! WrapForTmux(s)
 
   return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
 endfunction
-
-"let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-"let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+if !has("nvim")
+  let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+  let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+endif
 
 function! XTermPasteBegin()
   set pastetoggle=<Esc>[201~
@@ -1287,7 +1295,7 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 set background=dark
 "colorscheme quantum
 colorscheme one
-call one#highlight('Normal', '', '242e3d', 'none') "Change bgcolor
+"call one#highlight('Normal', '', '242e3d', 'none') "Change bgcolor
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -1328,7 +1336,7 @@ set conceallevel=2
  highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
  highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 if has('nvim')
-  highlight TermCursor ctermfg=red guifg=red
+  highlight TermCursor ctermfg=white guifg=white
 endif
 "---------------------------------------------------------------------
 " Utilities

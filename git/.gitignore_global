@@ -8,7 +8,7 @@ tags.temp
 vim-markdown-preview.html
 *.un~
 Session.vim 
-
+.xmark.README.md.html
 # Compiled source #
 ###################
 *.com
