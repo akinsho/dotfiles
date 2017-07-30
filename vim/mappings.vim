@@ -1,7 +1,17 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
-
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nnoremap <leader>n :enew<cr>
+" Close a tab
+nnoremap <leader>tc :tabclose<CR>
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nnoremap ,q :bp <BAR> bd #<CR>
+" " Show all open buffers and their status
+nnoremap <leader>bl :ls<CR>
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -277,7 +287,7 @@ noremap K  @='10k'<CR>
 noremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
-" nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>tev :vsplit $MYVIMRC<cr>
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
 
@@ -292,8 +302,8 @@ nnoremap H ^
 nnoremap L $
 nnoremap <leader>vl :vertical resize +10<cr>
 nnoremap <leader>vh :vertical resize -10<cr>
-nnoremap <leader>vj :res +10<cr>
-nnoremap <leader>vk :res -10<cr>
+nnoremap <leader>jj :res +10<cr>
+nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
 

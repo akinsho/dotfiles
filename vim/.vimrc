@@ -27,16 +27,20 @@ endif
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
-"if !has('nvim')
+if !has('nvim')
 if has('unix')
   if empty($SSH_CONNECTION)
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
   endif
 endif
-"else
-  ""Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  ""Plug 'mhartington/nvim-typescript'
-"endif
+else
+"NVIM ====================================
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'mhartington/nvim-typescript'
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+  Plug 'Shougo/vimproc.vim'
+  Plug 'ervandew/supertab'
+endif
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
 "================================
@@ -79,11 +83,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
-"NVIM ====================================
-if has('nvim')
-  "Plug 'vimlab/split-term.vim'
-  Plug 'Shougo/vimproc.vim'
-endif
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
@@ -98,11 +97,12 @@ Plug 'tpope/vim-fireplace'
 "Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
+"Plug 'fleischie/vim-styled-components'
 if !has('gui_running')
   Plug 'Quramy/tsuquyomi'
 endif
-Plug 'othree/javascript-libraries-syntax.vim', { 'for':'javascript' } "Added vim polyglot a collection of language packs for vim
-Plug 'ElmCast/elm-vim'
+Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] } "Added vim polyglot a collection of language packs for vim
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 Plug 'vim-scripts/dbext.vim' "Need this to run SQL Lint
 
@@ -117,7 +117,6 @@ Plug 'bkad/CamelCaseMotion' "uses a prefix of the leader key to implement text o
 Plug 'michaeljsmith/vim-indent-object' " Add text object for indented code = 'i' i.e dii delete inner indented block
 Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
-Plug 'guns/vim-sexp', { 'for': 'clojure' }
 
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
@@ -126,6 +125,7 @@ Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 Plug 'janko-m/vim-test'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'othree/jspc.vim'
 Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 
 "Filetype Plugins ======================
@@ -307,7 +307,7 @@ let g:ale_linters            = {
       \'css': ['stylelint'],
       \'jsx': ['eslint'],
       \'sql': ['sqlint'],
-      \'typescript':['tslint'],
+      \'typescript':['tslint', 'tsserver', 'typecheck'],
       \'html':[]
       \}
 let g:ale_linter_aliases     = {'jsx': 'css'}
@@ -380,10 +380,6 @@ function! g:committia_hooks.edit_open(info)
   imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-"Toggle Tagbar
-nnoremap <leader>2 :TagbarToggle<CR>
-
-"Vim-Signature ==================================================
 let g:SignatureMarkTextHLDynamic=1
 "NERDTree
 " =============================================
@@ -591,7 +587,7 @@ augroup filetype_javascript_typescript
   "==================================
   "TypeScript
   "==================================
-  autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4'
+  autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
   autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
@@ -600,6 +596,7 @@ augroup filetype_javascript_typescript
   autocmd FileType typescript,*.tsx set concealcursor=nvi
   autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   "==================================
+  autocmd FileType typescript,javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined
@@ -795,16 +792,6 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 
-" To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
-nnoremap <leader>n :enew<cr>
-" Close a tab
-nnoremap <leader>tc :tabclose<CR>
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-nnoremap ,q :bp <BAR> bd #<CR>
-" " Show all open buffers and their status
-nnoremap <leader>bl :ls<CR>
 "}}}
 "---------------------------------------------------------------------------
 " NEOVIM
@@ -820,7 +807,9 @@ if has('nvim')
   tnoremap <C-j> <C-\><C-n><C-j>
   tnoremap <C-k> <C-\><C-n><C-k>
   tnoremap <C-l> <C-\><C-n><C-l>
+  let g:terminal_color_0 = '#928374'
 endif
+
 " Terminal {{{
 " ====================================================================
   nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
@@ -1041,23 +1030,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------------
 "TypeScript Tsuqoyomi settings
 let g:tsuquyomi_definition_split = 2
-nnoremap <leader>td <Plug>(TsuquyomiTypeDefinition)
-
-let g:deoplete#enable_at_startup = 1
-
 
 let g:polyglot_disabled = ['elm', 'clojure' ]
-"let g:polyglot_disabled = ['elm', 'clojure', 'typescript' ]
-
-let g:tagbar_autofocus = 1
-let g:tagbar_type_css = {
-      \ 'ctagstype' : 'Css',
-      \ 'kinds'     : [
-      \ 'c:classes',
-      \ 's:selectors',
-      \ 'i:identities'
-      \ ]
-      \ }
 
 let g:elm_format_autosave = 1
 let g:elm_jump_to_error = 1
@@ -1065,15 +1039,38 @@ let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 0
 let g:elm_make_output_file = "index.html"
 
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_seed_identifiers_with_syntax        = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
-nnoremap <leader>gt :YcmCompleter GetType<CR>
 "Removes highlighting in typescript
 highlight YcmErrorSection cterm=underline
 
+if has("nvim")
+  let g:deoplete#sources = {}
+  let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
+  "let g:deoplete#sources['typescript.jsx'] = ['file', 'ultisnips', 'ternjs']
+  let g:deoplete#omni#functions = {}
+  let g:deoplete#omni#functions.javascript = [
+        \ 'tern#Complete',
+        \ 'jspc#omni'
+        \]
+  let g:deoplete#omni#functions.typescript = [
+        \ 'tern#Complete',
+        \ 'jspc#omni'
+        \]
+
+  let g:deoplete#enable_at_startup = 1
+  nnoremap <leader>tsp :TSDefPreview<CR>
+  nnoremap <leader>tsr :TSRefs<CR>
+  nnoremap <leader>tsd :TSDocs<CR>
+  nnoremap <leader>tst :TSType<CR>
+  nnoremap <leader>ets :TSEditConfig<CR>
+  nnoremap <leader>tsi :TSImport<CR>
+else
+  let g:ycm_add_preview_to_completeopt = 1
+  let g:ycm_seed_identifiers_with_syntax        = 1
+  let g:ycm_collect_identifiers_from_tags_files = 1
+  nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+  nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
+  nnoremap <leader>gt :YcmCompleter GetType<CR>
+endif
 let g:tern_request_timeout = 1
 "Add extra filetypes
 let g:tern#filetypes = [
@@ -1082,9 +1079,18 @@ let g:tern#filetypes = [
       \ 'jsx',
       \ 'javascript.jsx',
       \ ]
-let g:tern_show_argument_hints                = 'on_hold'
+let g:tern_show_argument_hints                = '0'
 let g:tern_map_keys                           = 1
 let g:tern_show_signature_in_pum              = 1
+" Use tern_for_vim.
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+
+" close the preview window when you're not using it
+let g:SuperTabClosePreviewOnPopupClose = 1
+let g:SuperTabLongestHighlight = 1
+" or just disable the preview entirely
+"set completeopt-=preview
 
 "------------------------------------
 " Goyo
@@ -1202,11 +1208,7 @@ nmap <silent> co <Plug>(jsdoc)
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 let g:DevIconsEnableFoldersOpenClose = 1
-if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
-  if exists('g:loaded_webdevicons')
-    call webdevicons#refresh()
-  endif
-endif
+let g:webdevicons_conceal_nerdtree_brackets = 1
 
 let g:startify_list_order = [
       \ ['   😇 My Sessions:'],
@@ -1291,10 +1293,13 @@ call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
 "-----------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------
-"Set color Scheme
 set background=dark
-"colorscheme quantum
-colorscheme one
+colorscheme quantum
+if has('nvim')
+  let g:terminal_color_0  = '#ffffff'
+  let g:terminal_color_15 = '#eeeeec'
+endif
+"colorscheme one
 "call one#highlight('Normal', '', '242e3d', 'none') "Change bgcolor
 
 if &term =~ '256color'
@@ -1307,34 +1312,36 @@ set conceallevel=2
 "Spelling & Highlights
 "====================================================================================
 " Change default highlighting for spellbad, the default is really bad
- highlight clear SpellBad
- highlight SpellBad  term=underline cterm=italic ctermfg=Red
- highlight clear SpellCap
- highlight SpellCap  term=underline cterm=italic ctermfg=Blue
- highlight clear SpellLocal
- highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
- highlight clear SpellRare
- highlight SpellRare  term=underline cterm=italic ctermfg=Blue
- highlight clear Conceal "Sets no highlighting for conceal
- "few nicer JS colours
- highlight xmlAttrib cterm=italic,bold ctermfg=121
- highlight jsThis ctermfg=224
- highlight jsSuper ctermfg=13
- highlight jsFuncCall ctermfg=cyan
- highlight jsClassProperty ctermfg=14 cterm=bold
- "highlight jsComment ctermfg=245 ctermbg=none
- "highlight VertSplit guifg=black ctermfg=black
- highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
- highlight Comment gui=italic cterm=italic
- highlight Type    gui=italic cterm=italic
- highlight Folded guifg=#FFC66D guibg=NONE
- highlight CursorLine term=none cterm=none
+highlight clear SpellBad
+highlight SpellBad  term=underline cterm=italic ctermfg=Red
+highlight clear SpellCap
+highlight SpellCap  term=underline cterm=italic ctermfg=Blue
+highlight clear SpellLocal
+highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
+highlight clear SpellRare
+highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+highlight clear Conceal "Sets no highlighting for conceal
+"few nicer JS colours
+highlight xmlAttrib cterm=italic,bold ctermfg=121
+highlight jsThis ctermfg=224
+highlight jsSuper ctermfg=13
+highlight jsFuncCall ctermfg=cyan
+highlight jsClassProperty ctermfg=14 cterm=bold
+"highlight jsComment ctermfg=245 ctermbg=none
+"highlight VertSplit guifg=black ctermfg=black
+highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
+highlight Comment gui=italic cterm=italic
+highlight Type    gui=italic cterm=italic
+highlight Folded guifg=#FFC66D guibg=NONE
+highlight CursorLine term=none cterm=none
 "make the completion menu a bit more readable
-"highlight PmenuSel guibg=white guifg=black
-"highlight Pmenu guibg=black guifg=white
+highlight PmenuSel guibg=black guifg=white
+highlight Pmenu guibg=white guifg=black
 "so it's clear which paren I'm on and which is matched
- highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
- highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
+highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+"Remove Background color
+"highlight Normal ctermbg=NONE guibg=NONE
 if has('nvim')
   highlight TermCursor ctermfg=white guifg=white
 endif
