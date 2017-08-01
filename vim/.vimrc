@@ -43,6 +43,7 @@ else
 endif
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
+Plug 'Shougo/echodoc.vim'
 "================================
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
@@ -97,7 +98,6 @@ Plug 'tpope/vim-fireplace'
 "Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
-"Plug 'fleischie/vim-styled-components'
 if !has('gui_running')
   Plug 'Quramy/tsuquyomi'
 endif
@@ -126,7 +126,6 @@ Plug 'janko-m/vim-test'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'othree/jspc.vim'
-Plug 'heavenshell/vim-jsdoc', { 'on': '<Plug>(jsdoc)' } "Add JSDocs plugin
 
 "Filetype Plugins ======================
 Plug 'junegunn/vim-xmark', { 'do': 'make' } "Add better markdown previewer
@@ -143,7 +142,7 @@ endif
 call plug#end()
 
 " filetype plugin indent on - ESSENTIAL but initialised by vim-plug
-" syntax enable
+ syntax enable
 "Added built in match it plugin to vim the longer command a la tpope only loads
 "this the user has not already installed a new version of matchit
 " packadd! matchit
@@ -254,18 +253,18 @@ function! SearchWordWithRg()
   execute 'Rg' expand('<cword>')
 endfunction
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
-nnoremap <C-P> :FZFR <CR>
+nnoremap <localleader>p :GitFiles <CR>
+nnoremap <C-P> :call Fzf_dev()<CR>
 " nnoremap <space>\ :Find<space>
 nnoremap \ :Rg<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
-" nnoremap <C-P> :Files <CR> " Uses the pwd
 endif
 
 "This allows me to use control-f to jump out of a newly matched pair (courtesty
 "of delimitmate)
 imap <C-F> <C-g>g
 
-nnoremap gm :Xmark<CR>
+nnoremap gm :Xmark<<CR>
 
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
@@ -278,6 +277,7 @@ omap ic <Plug>(textobj-comment-i)
 "     ALE
 "-----------------------------------------------------------
 " Disable linting for all minified JS files.
+"let g:ale_open_list = 1
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = [
@@ -359,7 +359,7 @@ vnoremap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-let g:javascript_plugin_flow = 1
+let g:javascript_plugin_flow       = 1
 let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
@@ -391,8 +391,8 @@ let g:SignatureMarkTextHLDynamic=1
       execute ':NERDTreeFind'
     endif
   endfunction
-nnoremap <C-N> :call NERDTreeToggleAndFind()<CR>
-nnoremap <localleader>n :NERDTreeToggle<CR>
+nnoremap <C-N> :NERDTreeToggle<CR>
+nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
 let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer        = 1
@@ -474,9 +474,12 @@ map  N <Plug>(easymotion-prev)
   " return a regular tab character
   return "\<tab>"
   endfunction
-let g:user_emmet_mode='a'
+let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
-let g:user_emmet_settings = {'javascript': {'extends': 'jsx'}}
+let g:user_emmet_settings     = {
+          \'javascript': {'extends': 'jsx'},
+          \'typescript':{'extends': 'tsx'}
+          \}
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
@@ -604,7 +607,7 @@ augroup filetype_javascript_typescript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   autocmd FileType javascript setlocal concealcursor=nvic
-  autocmd FileType typescript setlocal completeopt+=menu,preview
+  autocmd FileType typescript setlocal completeopt+=menu
 augroup END
 
 augroup FileType_Clojure
@@ -646,10 +649,10 @@ augroup FileType_text
   autocmd FileType text setlocal textwidth=78
 augroup END
 
-augroup nvim
-  au!
-  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-augroup END
+"augroup nvim
+  "au!
+  "au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+"augroup END
 
 augroup FileType_all
   autocmd!
@@ -674,19 +677,13 @@ augroup fugitiveSettings
   autocmd FileType gitcommit setlocal nolist
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
+
 "Close vim if only window is a Nerd Tree
 augroup NERDTree
   autocmd!
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 
-augroup Toggle_number
-  autocmd!
-    if &ft!~?'markdown' "Unless file is markdown toggle number on insert
-      autocmd InsertEnter * set relativenumber!
-      autocmd InsertLeave * set relativenumber
-    endif
-augroup END
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
   let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
@@ -1043,7 +1040,10 @@ let g:elm_make_output_file = "index.html"
 highlight YcmErrorSection cterm=underline
 
 if has("nvim")
-  let g:deoplete#sources = {}
+  let g:echodoc#enable_at_startup          = 1
+  let g:nvim_typescript#javascript_support = 1
+  let g:nvim_typescript#type_info_on_hold  = 1
+  let g:deoplete#sources                   = {}
   let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   "let g:deoplete#sources['typescript.jsx'] = ['file', 'ultisnips', 'ternjs']
   let g:deoplete#omni#functions = {}
@@ -1087,10 +1087,10 @@ let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 
 " close the preview window when you're not using it
-let g:SuperTabClosePreviewOnPopupClose = 1
+"let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
 " or just disable the preview entirely
-"set completeopt-=preview
+set completeopt-=preview
 
 "------------------------------------
 " Goyo
@@ -1152,8 +1152,6 @@ let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your window.
 
-
-
 let delimitMate_expand_cr          = 2
 let delimitMate_expand_space       = 1
 let delimitMate_balance_matchpairs = 1
@@ -1184,20 +1182,37 @@ if !has('gui_running')
         \ 'spinner': ['fg', 'Label'],
         \ 'header':  ['fg', 'Comment'] }
 
-
-  "This  function makes FZF start from the root of a git dir
-  function! s:find_root()
-    for vcs in ['.git', '.svn', '.hg']
-      let dir = finddir(vcs.'/..', ';')
-      if !empty(dir)
-        execute 'Files' dir
-        return
-      endif
-    endfor
-    FZF
+" Files + devicons
+function! Fzf_dev()
+  function! s:files()
+    let files = split(system($FZF_DEFAULT_COMMAND), '\n')
+    return s:prepend_icon(files)
   endfunction
 
-  command! FZFR call s:find_root()
+  function! s:prepend_icon(candidates)
+    let result = []
+    for candidate in a:candidates
+      let filename = fnamemodify(candidate, ':p:t')
+      let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
+      call add(result, printf("%s %s", icon, candidate))
+    endfor
+
+    return result
+  endfunction
+
+  function! s:edit_file(item)
+    let parts = split(a:item, ' ')
+    let file_path = get(parts, 1, '')
+    execute 'silent e' file_path
+  endfunction
+
+  call fzf#run({
+        \ 'source': <sid>files(),
+        \ 'sink':   function('s:edit_file'),
+        \ 'options': '-m -x +s',
+        \ 'down':    '40%' })
+endfunction
+
 endif
 "JS Docs plugin
 let g:jsdoc_allow_input_prompt = 1
@@ -1205,10 +1220,14 @@ let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 nmap <silent> co <Plug>(jsdoc)
 
+if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
+  if exists('g:loaded_webdevicons')
+    call webdevicons#hardRefresh()
+  endif
+endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 let g:DevIconsEnableFoldersOpenClose = 1
-let g:webdevicons_conceal_nerdtree_brackets = 1
 
 let g:startify_list_order = [
       \ ['   😇 My Sessions:'],
@@ -1299,8 +1318,6 @@ if has('nvim')
   let g:terminal_color_0  = '#ffffff'
   let g:terminal_color_15 = '#eeeeec'
 endif
-"colorscheme one
-"call one#highlight('Normal', '', '242e3d', 'none') "Change bgcolor
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes

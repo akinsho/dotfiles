@@ -1,6 +1,8 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
 "-----------------------------------------------------------------------------------
+noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(20)<CR>
+noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-20)<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -260,13 +262,10 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-"Moves cursor back to the start of a line
-inoremap <C-B> <C-O>I
 " Make Ctrl-e jump to the end of the current line in the insert mode. This is
 " handy when you are in the middle of a line and would like to go to its end
 " without switching to the normal mode.
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
-inoremap <C-e> <C-o>$
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
@@ -300,8 +299,8 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " move to beginning/end of line
 nnoremap H ^
 nnoremap L $
-nnoremap <leader>vl :vertical resize +10<cr>
-nnoremap <leader>vh :vertical resize -10<cr>
+nnoremap <leader>ll :vertical resize +10<cr>
+nnoremap <leader>hh :vertical resize -10<cr>
 nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR

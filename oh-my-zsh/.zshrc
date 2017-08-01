@@ -212,7 +212,7 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 
-
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
 # POWERLINE ==========================================================
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
   source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
@@ -286,3 +286,4 @@ if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
