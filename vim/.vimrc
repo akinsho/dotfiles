@@ -69,7 +69,7 @@ if executable("tmux")
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 endif
 
-" "Utilities ============================
+"Utilities ============================
 Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
@@ -79,6 +79,7 @@ augroup load_fat_finger
 augroup END
 Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
+Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'AndrewRadev/sideways.vim'
@@ -97,13 +98,12 @@ Plug 'tpope/vim-fireplace'
 "Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
-if !has('gui_running')
-  Plug 'Quramy/tsuquyomi'
-endif
+Plug 'Quramy/tsuquyomi'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 Plug 'vim-scripts/dbext.vim' "Need this to run SQL Lint
+Plug 'lilydjwg/colorizer', { 'for':['css', 'js', 'ts'] }
 
 "Git ===============================
 Plug 'airblade/vim-gitgutter' "Add a GitGutter to track new lines re git file
@@ -118,15 +118,17 @@ Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
 
 "Search Tools =======================
-Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
+Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] } "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
 Plug 'janko-m/vim-test'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
 if !has('gui_running')
+  Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
   Plug 'othree/jspc.vim'
 endif
+
 
 "Filetype Plugins ======================
 Plug 'junegunn/vim-xmark', { 'do': 'make' } "Add better markdown previewer
@@ -135,10 +137,7 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
-if !has('gui_running')
-  Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
-endif
-
+Plug 'rakr/vim-one'
 call plug#end()
 
 " filetype plugin indent on - ESSENTIAL but initialised by vim-plug
@@ -206,6 +205,7 @@ nmap <localleader>+ <Plug>AirlineSelectNextTab
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
 let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
+let g:ctrlsf_win_size = "30%"
 let g:ctrlsf_ignore_dir = ['bower_components', 'node_modules']
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
@@ -277,7 +277,6 @@ omap ic <Plug>(textobj-comment-i)
 "     ALE
 "-----------------------------------------------------------
 " Disable linting for all minified JS files.
-"let g:ale_open_list = 1
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = [
@@ -330,14 +329,13 @@ vnoremap <leader>gb :Gbrowse<CR> "Make it work in Visual mode to open with highl
 " JSX & POLYGLOT
 "--------------------------------------------
 let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
-
 "VIM-GO
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 
 "--------------------------------------------
-" Indent guides
+" Git Gutter
 "--------------------------------------------
 nnoremap <leader>gg :GitGutterToggle<CR>
 let g:gitgutter_enabled = 0
@@ -366,7 +364,6 @@ let g:javascript_conceal_null      = "ø"
 let g:javascript_plugin_jsdoc      = 1
 
 let g:committia_hooks = {}
-
 function! g:committia_hooks.edit_open(info)
   " Additional settings
   setlocal spell
@@ -380,7 +377,6 @@ function! g:committia_hooks.edit_open(info)
   imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-let g:SignatureMarkTextHLDynamic=1
 "NERDTree
 " =============================================
 " Ctrl+N to toggle Nerd Tree
@@ -859,7 +855,7 @@ catch
 endtry
 
 if !has('nvim')
-  set termsize="0x30"
+  set termsize="10x30"
 endif
 " ----------------------------------------------------------------------------
 " DIFFING {{{
@@ -906,9 +902,16 @@ if executable('rg')
   " set grepprg=rg\ --vimgrep\ --no-heading
   set grepprg=rg\ --smart-case\ --vimgrep\ $*
   set grepformat^=%f:%l:%c:%m
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
 elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
   set grepformat^=%f:%l:%c:%m
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 
 "pressing Tab on the command line will show a menu to complete buffer and file names
@@ -971,11 +974,15 @@ set gdefault "Makes the g flag available by default so it doesn't have to be spe
 set pumheight=10
 "set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
+set number
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
   set relativenumber
 endif
-set number
-set linespace=4
+if !has('gui_running')
+  set linespace=4
+else
+  set linespace=2
+endif
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
 set smartindent "Turns on smart indent which can help indent files like html natively
@@ -998,7 +1005,7 @@ endif
 if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
-if has('termguicolors') && $TERM_PROGRAM ==# 'iTerm.app' " Don't need this in xterm-256color, but do need it inside tmux. (See `:h xterm-true-color`.)
+if has('termguicolors')
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
   " if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
   let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
@@ -1044,9 +1051,9 @@ let g:elm_setup_keybindings = 0
 let g:elm_make_output_file = "index.html"
 
 "Removes highlighting in typescript
-highlight YcmErrorSection cterm=underline
+highlight YcmErrorSection gui=underline cterm=underline
 
-  let g:echodoc#enable_at_startup          = 1
+let g:echodoc#enable_at_startup          = 1
 if has("nvim")
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#auto_complete_delay = 0
@@ -1075,7 +1082,8 @@ if has("nvim")
   nnoremap <leader>ets :TSEditConfig<CR>
   nnoremap <leader>tsi :TSImport<CR>
 else
-  let g:ycm_add_preview_to_completeopt = 1
+  let g:ycm_add_preview_to_completeopt          = 1
+  let g:ycm_autoclose_preview_window_after_completion = 1
   let g:ycm_seed_identifiers_with_syntax        = 1
   let g:ycm_collect_identifiers_from_tags_files = 1
   nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
@@ -1358,7 +1366,6 @@ highlight jsSuper ctermfg=13
 highlight jsFuncCall ctermfg=cyan
 highlight jsClassProperty ctermfg=14 cterm=bold
 "highlight jsComment ctermfg=245 ctermbg=none
-"highlight VertSplit guifg=black ctermfg=black
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic cterm=italic
@@ -1370,16 +1377,16 @@ highlight Pmenu guibg=white guifg=black
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+"highlight VertSplit guifg=black ctermfg=black
 "Remove Background color
 if !has('gui_running')
   highlight Normal ctermbg=NONE guibg=NONE
 endif
 if has('gui_running')
-  "hi VertSplit guibg=bg guifg=bg
+  hi VertSplit guibg=bg guifg=bg
 endif
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-
 " Highlight term cursor differently
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
