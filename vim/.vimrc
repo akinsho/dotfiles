@@ -90,7 +90,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
 Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
-Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace'
 
@@ -125,7 +124,9 @@ Plug 'dyng/ctrlsf.vim' "Excellent for multiple search and replace functionality
 Plug 'janko-m/vim-test'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'othree/jspc.vim'
+if !has('gui_running')
+  Plug 'othree/jspc.vim'
+endif
 
 "Filetype Plugins ======================
 Plug 'junegunn/vim-xmark', { 'do': 'make' } "Add better markdown previewer
@@ -134,7 +135,6 @@ Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'rakr/vim-one'
 if !has('gui_running')
   Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 endif
@@ -991,8 +991,8 @@ if has('vim')
 endif
 set ruler
 set incsearch
+set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
-  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set ttyfast " Improves smoothness of redrawing when there are multiple windows
 endif
 if exists('&belloff')
@@ -1025,6 +1025,13 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+nmap <silent> <leader>vt :TestNearest<CR>
+nmap <silent> <leader>vT :TestFile<CR>
+nmap <silent> <leader>va :TestSuite<CR>
+nmap <silent> <leader>vl :TestLast<CR>
+nmap <silent> <leader>vg :TestVisit<CR>
+
+
 "TypeScript Tsuqoyomi settings
 let g:tsuquyomi_definition_split = 2
 
@@ -1039,13 +1046,17 @@ let g:elm_make_output_file = "index.html"
 "Removes highlighting in typescript
 highlight YcmErrorSection cterm=underline
 
-if has("nvim")
   let g:echodoc#enable_at_startup          = 1
+if has("nvim")
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#auto_complete_delay = 0
   let g:nvim_typescript#javascript_support = 1
+  let g:deoplete#file#enable_buffer_path   = 1
   let g:nvim_typescript#type_info_on_hold  = 1
   let g:deoplete#sources                   = {}
+  let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
   let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
-  "let g:deoplete#sources['typescript.jsx'] = ['file', 'ultisnips', 'ternjs']
+  let g:deoplete#sources.css  = ['buffer', 'member', 'file', 'omni', 'ultisnips']
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
@@ -1076,6 +1087,8 @@ let g:tern_request_timeout = 1
 let g:tern#filetypes = [
       \ 'tsx',
       \ 'typescript.jsx',
+      \ 'typescript',
+      \ 'javascript',
       \ 'jsx',
       \ 'javascript.jsx',
       \ ]
@@ -1087,10 +1100,10 @@ let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 
 " close the preview window when you're not using it
-"let g:SuperTabClosePreviewOnPopupClose = 1
+let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
 " or just disable the preview entirely
-set completeopt-=preview
+"set completeopt-=preview
 
 "------------------------------------
 " Goyo
@@ -1358,9 +1371,18 @@ highlight Pmenu guibg=white guifg=black
 highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 "Remove Background color
-"highlight Normal ctermbg=NONE guibg=NONE
+if !has('gui_running')
+  highlight Normal ctermbg=NONE guibg=NONE
+endif
+if has('gui_running')
+  "hi VertSplit guibg=bg guifg=bg
+endif
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+" Highlight term cursor differently
 if has('nvim')
-  highlight TermCursor ctermfg=white guifg=white
+  highlight TermCursor ctermfg=green guifg=green
 endif
 "---------------------------------------------------------------------
 " Utilities

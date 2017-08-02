@@ -1,6 +1,8 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
-"-----------------------------------------------------------------------------------
+"------------------------------------------------------------------" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(20)<CR>
 noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-20)<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -134,11 +136,7 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 nnoremap gV `[V`]
 
 "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-" Better bubbling a la Tpope's unimpaired vim
-nmap ë [e
-nmap ê ]e
-vmap ë [egv
-vmap ê ]egv
+"TODO
 
 "Line completion - native vim
 inoremap ç <C-X><C-L>

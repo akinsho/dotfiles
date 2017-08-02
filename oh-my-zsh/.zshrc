@@ -286,4 +286,4 @@ if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=yellow'
