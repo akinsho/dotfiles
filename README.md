@@ -1,7 +1,13 @@
 # Dotfiles
-My Various zsh/bash(coming soon), vim and Tmux config files (stashed away in case of laptop armageddon).
+My dotfiles including zsh, vim and Tmux config files (stashed away in case of laptop armageddon).
 
 I plan on adding an install script as well as macos preferences either saved using mackup or getting the terminal defaults.
+
+## Amazing Tools
+A list of amazing tools I've discorvered but cannot hide away
+1. **Vimr** - An absolutely astounding project to create a gui for neovim. It's
+   a wonder to behold and really hits the nail on the head although its still
+   new so not perfect but is under active developement.
 
 
 I thought I'd document for myself and for others potentially some of the setup

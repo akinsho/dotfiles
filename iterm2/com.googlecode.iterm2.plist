@@ -437,10 +437,16 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>9D1B5F3F-E936-495F-A39A-94EA9D753E55</string>
+	<key>DimBackgroundWindows</key>
+	<true/>
 	<key>DimInactiveSplitPanes</key>
 	<false/>
+	<key>DimOnlyText</key>
+	<true/>
 	<key>DisableWindowSizeSnap</key>
 	<true/>
+	<key>EnableDivisionView</key>
+	<false/>
 	<key>EnableProxyIcon</key>
 	<true/>
 	<key>FocusFollowsMouse</key>
@@ -463,6 +469,8 @@
 	<true/>
 	<key>HotkeyModifiers</key>
 	<integer>262144</integer>
+	<key>JobName</key>
+	<false/>
 	<key>LeftCommand</key>
 	<integer>7</integer>
 	<key>LeftOption</key>
@@ -488,7 +496,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAc7Gdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAdKGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -512,11 +520,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>83 37 814 289 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>242 182 796 473 0 0 1280 777 </string>
+	<string>242 143 796 473 0 0 1280 777 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 193 592 584 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 1280 773 0 0 1280 777 </string>
+	<string>0 5 1280 772 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-960 -271 954 1048 -1920 -280 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -1102,13 +1110,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.73423302173614502</real>
+				<real>0.883941650390625</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.35916060209274292</real>
+				<real>0.73448182160438902</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.59136257506906986</real>
 			</dict>
 			<key>Minimum Contrast</key>
 			<real>0.0</real>
@@ -1166,6 +1174,19 @@
 			<true/>
 			<key>Sync Title</key>
 			<false/>
+			<key>Tab Color</key>
+			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
+				<key>Blue Component</key>
+				<real>0.2196078431372549</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
+				<key>Green Component</key>
+				<real>0.19607843137254902</real>
+				<key>Red Component</key>
+				<real>0.14901960784313725</real>
+			</dict>
 			<key>Tags</key>
 			<array/>
 			<key>Terminal Type</key>
@@ -1189,6 +1210,8 @@
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
+			<true/>
+			<key>Use Tab Color</key>
 			<true/>
 			<key>Use Underline Color</key>
 			<true/>
@@ -1342,15 +1365,19 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-02T14:34:23Z</date>
+	<date>2017-08-03T18:21:20Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
 	<true/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
+	<key>ShowBookmarkName</key>
+	<false/>
 	<key>SmartPlacement</key>
 	<true/>
+	<key>SplitPaneDimmingAmount</key>
+	<real>0.31689202724358989</real>
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>SwitchPaneModifier</key>
@@ -1366,6 +1393,8 @@
 	<key>UKCrashReporterLastCrashReportDate</key>
 	<real>1493374592</real>
 	<key>UseBorder</key>
+	<false/>
+	<key>WindowNumber</key>
 	<false/>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>

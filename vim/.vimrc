@@ -135,9 +135,17 @@ if !has('gui_running')
   Plug 'othree/jspc.vim'
 endif
 
-
 "Filetype Plugins ======================
-Plug 'junegunn/vim-xmark', { 'do': 'make' } "Add better markdown previewer
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release
+    else
+      !cargo build --release --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 
 "Themes ===============================
@@ -600,9 +608,7 @@ augroup filetype_javascript_typescript
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
   autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
   "The next line forces four spaces to appear as two which helps maintain my sanity at work
-  "autocmd FileType typescript,*.tsx syntax match spaces /    / conceal cchar=  "there is a space here on purpose
   "autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
-  "autocmd FileType typescript,*.tsx set concealcursor=nvi
   "==================================
   autocmd FileType typescript,javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
@@ -760,9 +766,9 @@ if exists('$TMUX')
   if !has('nvim')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  "else
+    "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 endif
 
@@ -1007,9 +1013,11 @@ if has('vim')
 endif
 set ruler
 set incsearch
-set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
   set ttyfast " Improves smoothness of redrawing when there are multiple windows
+  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
+else
+  set nolazyredraw "Broken on neovim
 endif
 if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
@@ -1499,7 +1507,7 @@ endif
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
 augroup cursorline
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline 
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   autocmd WinLeave * setlocal nocursorline
 augroup END
 
