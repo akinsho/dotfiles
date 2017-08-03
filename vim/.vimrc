@@ -23,24 +23,27 @@ if empty(glob('~/.vim/autoload/plug.vim'))
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
 if !has('nvim')
-if has('unix')
-  if empty($SSH_CONNECTION)
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+  if has('unix')
+    if empty($SSH_CONNECTION)
+      Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
+    endif
   endif
 endif
-else
 "NVIM ====================================
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'mhartington/nvim-typescript'
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-  Plug 'Shougo/vimproc.vim'
-  Plug 'ervandew/supertab'
-endif
+Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
+Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'do': 'npm install -g tern' })
+Plug 'Shougo/vimproc.vim', Cond(has('vim'))
+Plug 'ervandew/supertab', Cond(has('nvim'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
 Plug 'Shougo/echodoc.vim'
@@ -57,10 +60,9 @@ endfunction
 Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
 Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
 if !has('gui_running')
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-else
-  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'
 endif
+Plug 'ctrlpvim/ctrlp.vim', Cond(has('gui_running'))
 Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
 
@@ -98,7 +100,11 @@ Plug 'tpope/vim-fireplace'
 "Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
-Plug 'Quramy/tsuquyomi'
+if !has('nvim')
+  if !has('gui_running')
+    Plug 'Quramy/tsuquyomi'
+  endif
+endif
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] } "Added vim polyglot a collection of language packs for vim
 Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
@@ -165,6 +171,7 @@ source ~/Dotfiles/vim/mappings.vim
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
+command! PU PlugUpdate | PlugUpgrade
 "=============================================================
 "               Airline
 "=============================================================
@@ -295,12 +302,13 @@ let g:ale_fixers.html = [
   \ 'tidy',
   \]
 
-let g:ale_typescript_tsserver_use_global = 1
+"let g:ale_typescript_tsserver_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
 let g:ale_sign_warning       = '⚠️'
+"\'typescript.jsx':['tslint', 'tsserver', 'typecheck'],
 let g:ale_linters            = {
       \'python': ['flake8'],
       \'css': ['stylelint'],
@@ -342,7 +350,7 @@ let g:gitgutter_enabled = 0
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
 let g:gitgutter_sign_added    = '❖'
-let g:gitgutter_sign_column_always = 1
+set signcolumn="yes"
 let g:gitgutter_grep_command = 'ag --nocolor'
 
 vmap v <Plug>(expand_region_expand)
@@ -576,7 +584,7 @@ augroup filetype_completion
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript,javascript.jsx,jsx setlocal omnifunc=tern#Complete
+  autocmd FileType javascript,javascript.jsx,jsx,tsx,typescript.tsx setlocal omnifunc=tern#Complete
   "autocmd FileType typescript,typescript.jsx setlocal omnifunc=tsuquyomi#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
@@ -588,12 +596,13 @@ augroup filetype_javascript_typescript
   "==================================
   autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
+  "autocmd 
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
   autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
   "The next line forces four spaces to appear as two which helps maintain my sanity at work
   "autocmd FileType typescript,*.tsx syntax match spaces /    / conceal cchar=  "there is a space here on purpose
-  autocmd FileType typescript,*.tsx set concealcursor=nvi
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
+  "autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
+  "autocmd FileType typescript,*.tsx set concealcursor=nvi
   "==================================
   autocmd FileType typescript,javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
@@ -1340,11 +1349,11 @@ if has('nvim')
   let g:terminal_color_15 = '#eeeeec'
 endif
 
-if &term =~ '256color'
+"if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
   " render properly when inside 256-color tmux and GNU screen.
-  set t_ut=
-endif
+  "set t_ut=
+"endif
 set conceallevel=2
 "====================================================================================
 "Spelling & Highlights

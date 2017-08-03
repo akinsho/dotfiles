@@ -2,7 +2,7 @@ set guioptions+=aAc
 set guioptions-=rL
 set macligatures
 set guifont=Hasklig\ Light:h15
-"set guifont=Hasklug\ Light\ Nerd\ Font:h14
+"set guifont=Hasklug\  Nerd\ Font:h14
 "set guifont=FuraCode\ Nerd\ Font:h14
 set macthinstrokes
 set macmeta

@@ -23,6 +23,8 @@ alias ev="vim ~/.vimrc"
 alias et="vim ~/.tmux.conf"
 alias nev="nvim ~/.vimrc"
 alias net="nvim ~/.tmux.conf"
+alias yt="clear && yarn test"
+alias ys="clear && yarn start"
 
 #alias ctags if you used homebrew
 alias ctags="`brew --prefix`/bin/ctags"
