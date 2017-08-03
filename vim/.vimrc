@@ -84,9 +84,6 @@ Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'AndrewRadev/sideways.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/switch.vim'
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
@@ -100,13 +97,7 @@ Plug 'tpope/vim-fireplace'
 "Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'sheerun/vim-polyglot'
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
-if !has('nvim')
-  if !has('gui_running')
-    Plug 'Quramy/tsuquyomi'
-  endif
-endif
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] } "Added vim polyglot a collection of language packs for vim
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'editorconfig/editorconfig-vim' "Added Editor Config plugin to maintain style choices
 Plug 'vim-scripts/dbext.vim' "Need this to run SQL Lint
 Plug 'lilydjwg/colorizer', { 'for':['css', 'js', 'ts'] }
@@ -124,12 +115,16 @@ Plug 'terryma/vim-expand-region' " All encompasing v
 Plug 'wellle/targets.vim' "Moar textobjs
 
 "Search Tools =======================
-Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] } "Excellent for multiple search and replace functionality
+Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFPrompt', 'CtrlSFToggle'] } "Excellent for multiple search and replace functionality
 
 "Coding tools =======================
 Plug 'janko-m/vim-test'
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'AndrewRadev/sideways.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/switch.vim'
 if !has('gui_running')
   Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
   Plug 'othree/jspc.vim'
@@ -220,7 +215,7 @@ nmap <localleader>+ <Plug>AirlineSelectNextTab
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
 let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
-let g:ctrlsf_win_size = "30%"
+let g:ctrlsf_winsize = "30%"
 let g:ctrlsf_ignore_dir = ['bower_components', 'node_modules']
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
@@ -288,6 +283,11 @@ xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 "--------------------------------------------
 
+"============================================================
+" Sayonara
+"============================================================
+nnoremap <leader>q :Sayonara!<CR>
+nnoremap <C-Q> :Sayonara<CR>
 "-----------------------------------------------------------
 "     ALE
 "-----------------------------------------------------------
@@ -354,11 +354,11 @@ let g:go_highlight_methods = 1
 " Git Gutter
 "--------------------------------------------
 nnoremap <leader>gg :GitGutterToggle<CR>
+set signcolumn="yes"
 let g:gitgutter_enabled = 0
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
 let g:gitgutter_sign_added    = '❖'
-set signcolumn="yes"
 let g:gitgutter_grep_command = 'ag --nocolor'
 
 vmap v <Plug>(expand_region_expand)
@@ -593,7 +593,6 @@ augroup filetype_completion
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript,javascript.jsx,jsx,tsx,typescript.tsx setlocal omnifunc=tern#Complete
-  "autocmd FileType typescript,typescript.jsx setlocal omnifunc=tsuquyomi#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
@@ -606,7 +605,6 @@ augroup filetype_javascript_typescript
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   "autocmd 
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
-  autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
   "The next line forces four spaces to appear as two which helps maintain my sanity at work
   "autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   "==================================
@@ -906,7 +904,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " set path+=** "Vim searches recursively through all directories and subdirectories
 set path+=**/src/main/**,** " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
-set suffixesadd+=.js
+set suffixesadd+=.js,.ts
 " set autochdir
 
 " ----------------------------------------------------------------------------
@@ -1049,15 +1047,16 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
+let g:comfortable_motion_no_default_key_mappings = 1
+nnoremap <silent> <C-d> :call comfortable_motion#flick(100)<CR>
+nnoremap <silent> <C-u> :call comfortable_motion#flick(-100)<CR>
+
+
 nmap <silent> <leader>vt :TestNearest<CR>
 nmap <silent> <leader>vT :TestFile<CR>
 nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
-
-
-"TypeScript Tsuqoyomi settings
-let g:tsuquyomi_definition_split = 2
 
 let g:polyglot_disabled = ['elm', 'clojure' ]
 
@@ -1072,6 +1071,9 @@ highlight YcmErrorSection gui=underline cterm=underline
 
 let g:echodoc#enable_at_startup          = 1
 if has("nvim")
+"=======================================================
+" Deoplete Options
+"=======================================================
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#auto_complete_delay = 0
   let g:nvim_typescript#javascript_support = 1

@@ -7,7 +7,8 @@ I plan on adding an install script as well as macos preferences either saved usi
 A list of amazing tools I've discorvered but cannot hide away
 1. **Vimr** - An absolutely astounding project to create a gui for neovim. It's
    a wonder to behold and really hits the nail on the head although its still
-   new so not perfect but is under active developement.
+   new so not perfect but is under active developement. Has file broswer
+   markdown preview etc.
 
 
 I thought I'd document for myself and for others potentially some of the setup

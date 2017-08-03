@@ -67,8 +67,8 @@ nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
 
 "Quit
-inoremap <C-Q>     <esc>:q<cr>
-nnoremap <C-Q>     :q<cr>
+"inoremap <C-Q>     <esc>:q<cr>
+"nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
 
 " Tab and Shift + Tab Circular buffer navigation
@@ -80,8 +80,8 @@ nnoremap <BS> gg
 nnoremap ; :
 nnoremap : ;
 
-nnoremap [Alt]   <Nop>
-xnoremap [Alt]   <Nop>
+"nnoremap [Alt]   <Nop>
+"xnoremap [Alt]   <Nop>
 " nmap    e  [Alt]
 " xmap    e  [Alt]
 " Like gv, but select the last changed text.
@@ -197,7 +197,6 @@ endfunction
 nnoremap ' `
 nnoremap ` '
 
-nnoremap rs ^d0
 "Save all files
 nnoremap qa :wqa<CR>
 " press enter for newline without insert

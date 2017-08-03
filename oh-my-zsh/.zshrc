@@ -12,9 +12,6 @@ export NVM_AUTO_USE=true
 # specified here
 export NVM_DIR="$HOME/.nvm"
 
-
-# ZSH_TMUX_AUTOSTART="true"
-
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
 
@@ -89,7 +86,7 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 
 # PLUGINS =======================================================================
-plugins=(alias-tips nvm last-working-dir git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew)
+plugins=(alias-tips yarn nvm git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew)
 
 # web-search - great plugin, google from the command line although I never use
 # it soo...
@@ -143,8 +140,8 @@ SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 SPACESHIP_PROMPT_SEPARATE_LINE=true
 # TIME
-# SPACESHIP_TIME_SHOW=true
-# SPACESHIP_TIME_12HR=true
+#SPACESHIP_TIME_SHOW=true
+#SPACESHIP_TIME_12HR=true
 
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
@@ -274,16 +271,9 @@ echo load time: $((end_time - start_time)) seconds
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#Syntax Highlighting for ZSH
-#IMPORTANT NOTE TO SELF - These plugins if reloaded on sourcing zshrc will
-#crash the shell
-# if [ -z "$_zsh_custom_scripts_loaded" ]; then
-#   _zsh_custom_scripts_loaded=1
-#   plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
-# fi
 if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
   # printf "autosuggestions loaded"
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=yellow'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=grey'

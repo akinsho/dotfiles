@@ -3,6 +3,7 @@
 # ================================================================================
 alias x="exit" # Exit Terminal
 alias dots="cd ~/Dotfiles"
+alias work="cd ~/Desktop/Coding/Work/"
 alias code="cd ~/Desktop/Coding"
 alias l="lsp"
 alias la='ls -aG'
