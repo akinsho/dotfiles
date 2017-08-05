@@ -5,67 +5,55 @@
 "===================================================
 let g:vim_search_pulse_mode = 'cursor_line'
 
-" function! s:config_easyfuzzymotion(...) abort
-"   return extend(copy({
-"   \   'converters': [incsearch#config#fuzzy#converter()],
-"   \   'modules': [incsearch#config#easymotion#module()],
-"   \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-"   \   'is_expr': 0,
-"   \   'is_stay': 1
-"   \ }), get(a:, 1, {}))
-" endfunction
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzy#converter()],
+  \   'modules': [incsearch#config#easymotion#module()],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
 
-" noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
+noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
 
-" function! s:config_fuzzyall(...) abort
-"   return extend(copy({
-"   \   'converters': [
-"   \     incsearch#config#fuzzy#converter(),
-"   \     incsearch#config#fuzzyspell#converter()
-"   \   ],
-"   \ }), get(a:, 1, {}))
-" endfunction
+function! s:config_fuzzyall(...) abort
+  return extend(copy({
+  \   'converters': [
+  \     incsearch#config#fuzzy#converter(),
+  \     incsearch#config#fuzzyspell#converter()
+  \   ],
+  \ }), get(a:, 1, {}))
+endfunction
 
-" noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
-" noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-" noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
-" map /  <Plug>(incsearch-forward)
-" map ?  <Plug>(incsearch-backward)
-" map g/ <Plug>(incsearch-stay)
-" incsearch and vim search pulse
-" let g:vim_search_pulse_disable_auto_mappings = 1
-" let g:incsearch#auto_nohlsearch = 1
+noremap <silent><expr> / incsearch#go(<SID>config_fuzzyall())
+noremap <silent><expr> ? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+noremap <silent><expr> g? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+incsearch and vim search pulse
+let g:vim_search_pulse_disable_auto_mappings = 1
+let g:incsearch#auto_nohlsearch = 1
 
-" " Next or previous match is followed by a Pulse
-" map n <Plug>(incsearch-nohl-n)<Plug>Pulse
-" map N <Plug>(incsearch-nohl-N)<Plug>Pulse
-" map <leader>* <Plug>(incsearch-nohl-*)<Plug>Pulse
-" map <leader># <Plug>(incsearch-nohl-#)<Plug>Pulse
-" map g* <Plug>(incsearch-nohl-g*)<Plug>Pulse
-" map g# <Plug>(incsearch-nohl-g#)<Plug>Pulse
+" Next or previous match is followed by a Pulse
+map n <Plug>(incsearch-nohl-n)<Plug>Pulse
+map N <Plug>(incsearch-nohl-N)<Plug>Pulse
+map <leader>* <Plug>(incsearch-nohl-*)<Plug>Pulse
+map <leader># <Plug>(incsearch-nohl-#)<Plug>Pulse
+map g* <Plug>(incsearch-nohl-g*)<Plug>Pulse
+map g# <Plug>(incsearch-nohl-g#)<Plug>Pulse
 
-" Pulses the first match after hitting the enter keyan
-" augroup inc_search
-"   autocmd!
-"   autocmd! User IncSearchExecute
-"   autocmd User IncSearchExecute :call search_pulse#Pulse()
-" augroup END
+Pulses the first match after hitting the enter keyan
+augroup inc_search
+  autocmd!
+  autocmd! User IncSearchExecute
+  autocmd User IncSearchExecute :call search_pulse#Pulse()
+augroup END
 
 "=============================================================
 "               Airline
 "=============================================================
-let g:airline_extensions = ['branch','tabline','ale']
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline_detect_iminsert                  = 1
-let g:airline_detect_crypt                     = 0 " https://github.com/vim-airline/vim-airline/issues/792
-let g:airline_powerline_fonts                  = 1
-let g:airline#extensions#tabline#enabled       = 1
-" let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-let g:airline#extensions#tabline#show_tabs     = 1
-let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 1
 " Makes airline tabs rectangular
 let g:airline_left_sep = ' '
 let g:airline_right_sep = ' '
@@ -78,38 +66,10 @@ let g:airline#extensions#tabline#right_alt_sep = '|'
 let g:airline_left_alt_sep = ''
 let g:airline_right_alt_sep = ''
 
-" configure whether close button should be shown: >
-let g:airline#extensions#tabline#show_close_button = 1
-
-" determine whether inactive windows should have the left section collapsed to
-" only the filename of that buffer.  >
-let g:airline_inactive_collapse=0
-" * configure symbol used to represent close button >
-" let g:airline#extensions#tabline#close_symbol = 'X'
-" * configure pattern to be ignored on BufAdd autocommand >
-" fixes unnecessary redraw, when e.g. opening Gundo window
-let airline#extensions#tabline#ignore_bufadd_pat =
-      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
-
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <localleader>1 <Plug>AirlineSelectTab1
-nmap <localleader>2 <Plug>AirlineSelectTab2
-nmap <localleader>3 <Plug>AirlineSelectTab3
-nmap <localleader>4 <Plug>AirlineSelectTab4
-nmap <localleader>5 <Plug>AirlineSelectTab5
-nmap <localleader>6 <Plug>AirlineSelectTab6
-nmap <localleader>7 <Plug>AirlineSelectTab7
-nmap <localleader>8 <Plug>AirlineSelectTab8
-nmap <localleader>9 <Plug>AirlineSelectTab9
-nmap <localleader>- <Plug>AirlineSelectPrevTab
-nmap <localleader>+ <Plug>AirlineSelectNextTab
 " A plugin for managing vim themes
 Plug 'reedes/vim-thematic'
-
-
 "Use emmet only for html and css files - Great config option although having
 "emmet when writing jsx is super helpful, so I just changed the bindings
-let g:user_emmet_install_global = 0
 augroup Emmet
   au!
 autocmd Filetype html,css EmmetInstall
@@ -145,28 +105,28 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-R>=Tab_Snippet_Complete()\<C
 "-----------------------------------------------------------
 "     NEOMAKE
 "-----------------------------------------------------------
-" augroup Neomake
-"   au!
-"   autocmd BufWritePost * Neomake
-  " autocmd! BufWritePost,BufReadPost * Neomake
-" augroup END
-" let g:neomake_verbose = 0
-" let g:neomake_list_height = 6
-" let g:neomake_open_list = 2
-" let g:quickfixsigns_protect_sign_rx = '^neomake_'
-" let g:neomake_warning_sign = {
-"   \ 'text': 'W',
-"   \ 'texthl': 'WarningMsg',
-"   \ }
-" let g:neomake_error_sign = {
-"   \ 'text': 'E',
-"   \ 'texthl': 'ErrorMsg',
-"   \ }
-" let g:neomake_html_enabled_makers = ['']
-" let g:neomake_cpp_enabled_makers = ['clang']
-" let g:neomake_cpp_clang_maker = {
-"       \ 'args': ['-std=c++14', '-Wall', '-Wextra', '-Weverything', '-pedantic']
-"       \ }
+augroup Neomake
+  au!
+  autocmd BufWritePost * Neomake
+  autocmd! BufWritePost,BufReadPost * Neomake
+augroup END
+let g:neomake_verbose = 0
+let g:neomake_list_height = 6
+let g:neomake_open_list = 2
+let g:quickfixsigns_protect_sign_rx = '^neomake_'
+let g:neomake_warning_sign = {
+  \ 'text': 'W',
+  \ 'texthl': 'WarningMsg',
+  \ }
+let g:neomake_error_sign = {
+  \ 'text': 'E',
+  \ 'texthl': 'ErrorMsg',
+  \ }
+let g:neomake_html_enabled_makers = ['']
+let g:neomake_cpp_enabled_makers = ['clang']
+let g:neomake_cpp_clang_maker = {
+      \ 'args': ['-std=c++14', '-Wall', '-Wextra', '-Weverything', '-pedantic']
+      \ }
 
 "Moves to the previous set of parentheses and operate on its contents
 onoremap lp :<c-u>normal! F)vi(<cr>
@@ -180,51 +140,46 @@ onoremap cb :<c-u>normal! f{vi{<cr>
 " single line
 nnoremap ;b   GoZ<Esc>:g/^$/.,/./-j<CR>Gdd
 nnoremap ;n   GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
-" make last typed word uppercase
-inoremap :u <esc>viwUea
-
-vnoremap ∆ xp`[V`]
-vnoremap ˚ xkP`[V`]
-nnoremap ∆ ddp
-nnoremap ˚ ddkP
-"For each char here it applies a remap deleting all occurrences of the car with
-"an a operator or the things past it with an i operator
-" for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
-"   execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
-"   execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
-"   execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
-"   execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
-" endfor
-" "------------------------------------
-" " Neosnippet
-" "------------------------------------
-" let g:neosnippet#enable_conceal_markers = 1
 
 
-" imap <C-U> <Plug>(neosnippet_expand_or_jump)
-" smap <C-U> <Plug>(neosnippet_expand_or_jump)
-" xmap <C-U> <Plug>(neosnippet_expand_target)
+" For each char here it applies a remap deleting all occurrences of the car with
+an a operator or the things past it with an i operator
+ for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '%', '`' ]
+   execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
+   execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
+   execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
+   execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
+ endfor
+ "------------------------------------
+ " Neosnippet
+ "------------------------------------
+ let g:neosnippet#enable_conceal_markers = 1
 
-" " SuperTab like snippets behavior.
-" " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-" imap <c-u> <Plug>(neosnippet_expand_or_jump)
-" " imap <expr><TAB>
-" " \ pumvisible() ? "\<C-n>" :
-" " \ neosnippet#expandable_or_jumpable() ?
-" " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-"       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-" " For conceal markers.
-" if has('conceal')
-"   set conceallevel=2 concealcursor=niv
-" endif
-" "let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
-" " Enable snipMate compatibility feature.
-" let g:neosnippet#enable_snipmate_compatibility = 1
+ imap <C-U> <Plug>(neosnippet_expand_or_jump)
+ smap <C-U> <Plug>(neosnippet_expand_or_jump)
+ xmap <C-U> <Plug>(neosnippet_expand_target)
 
-" " Tell Neosnippet about the other snippets
-" " let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+ " SuperTab like snippets behavior.
+ " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+ imap <c-u> <Plug>(neosnippet_expand_or_jump)
+ " imap <expr><TAB>
+ " \ pumvisible() ? "\<C-n>" :
+ " \ neosnippet#expandable_or_jumpable() ?
+ " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+ " For conceal markers.
+ if has('conceal')
+   set conceallevel=2 concealcursor=niv
+ endif
+ "let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
+ " Enable snipMate compatibility feature.
+ let g:neosnippet#enable_snipmate_compatibility = 1
+
+ " Tell Neosnippet about the other snippets
+ " let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 
 "===================================================================
 "     YouCompleteMe
@@ -264,237 +219,66 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_always_populate_location_list = 1
-"------------------------------------
+" ------------------------------------
 " Neocomplete
-"------------------------------------
-" Use neocomplete.
-" let g:neocomplete#enable_at_startup = 1
-" Disable AutoComplPop.
-" let g:acp_enableAtStartup = 0
-" Use smartcase.
-" let g:neocomplete#enable_smart_case = 1
-" let g:neocomplete#auto_complete_delay = 1
-" Set minimum syntax keyword length.
-" let g:neocomplete#sources#syntax#min_keyword_length = 3
-" let g:neopairs#enable = 1
-" let g:neocomplete#enable_auto_select = 0
-" let g:neocomplete#enable_auto_delimiter = 1
-" let g:neocomplete#skip_auto_completion_time = "0.2" 
-" let g:neocomplete#enable_refresh_always = 1
-" Search from neocomplete, omni candidates, vim keywords.
-" let g:neocomplete#fallback_mappings =
-      " \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
-" Enable heavy omni completion.
-" if !exists('g:neocomplete#sources#omni#input_patterns')
-"   let g:neocomplete#sources#omni#input_patterns = {}
-" endif
-" Define dictionary.
-" let g:neocomplete#sources#dictionary#dictionaries = {
-    " \ 'default' : '',
-    " \ 'vimshell' : $HOME.'/.vimshell_hist',
-    " \ 'scheme' : $HOME.'/.gosh_completions'
-        " \ }
-" Recommended key-mappings.
-" inoremap <expr><C-D> neocomplete#undo_completion()
+" ------------------------------------
+Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#auto_complete_delay = 1
+Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neopairs#enable = 1
+let g:neocomplete#enable_auto_select = 0
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#skip_auto_completion_time = "0.2" 
+let g:neocomplete#enable_refresh_always = 1
+Search from neocomplete, omni candidates, vim keywords.
+let g:neocomplete#fallback_mappings =
+      \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
+Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+Recommended key-mappings.
+inoremap <expr><C-D> neocomplete#undo_completion()
   
 " <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-  "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  " return pumvisible() ? "\<C-y>" : "\<CR>"
-" endfunction
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-c> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-"- there are native text motions with do this - "b i.e cib - change inner block
-"Deletes around next pair of parens - still can't crack it
-" onoremap op :<c-u>normal! F(vT)<cr>
-"Works similarly to the bindings above - finds quotes and operates inside them
-" onoremap sq :<c-u>normal! f'vi'<cr>
-" onoremap dq :<c-u>normal! f"vi"<cr>
 
-
-"This sets the search highlighting which actually changes the appearance of
-"neomake/ any linters warnings
-" hi Search term=bold cterm=bold ctermfg=9 ctermbg=0 gui=bold guifg=#cb4b16 guibg=#073642
-
-" Broken down into easily includeable segments
-" set statusline=%f
-" set statusline+=%{fugitive#statusline()} " Git Hotness
-" set statusline+=%{ObsessionStatus()} "Tpope's sessions management
-" set statusline+=\ %#ErrorMsg#%{neomake#statusline#QflistStatus('qf:\ ')}
-" set statusline+=%#warningmsg#
-
-"Display extra whitespace
-" set list listchars=tab:»·,trail:·,nbsp:·,trail:·,nbsp:·
-
-
-"Using current terminal font - which is a patched nerd font
-" set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types:14
-" augroup MatchParens
-"   au!
-"   autocmd VimEnter * :DoMatchParen<CR>
-" augroup END
-"================================================================================
-"Whitespace
-"================================================================================
-
-
-"Courtesy of vim casts - http://vimcasts.org/episodes/show-invisibles/
-" set list
-" set listchars=
-"This sets list tab chars to invisible
-" set listchars=tab:\ \
-" set listchars+=tab:▸\
-" set listchars+=tab:\┆\
-" set listchars+=trail:·
-" set listchars+=nbsp:⣿
-" set listchars+=extends:»              " show cut off when nowrap
-" set listchars+=precedes:«
-" "Invisible character colors
-" highlight NonText guifg=#4a4a59
-" highlight SpecialKey guifg=#4a4a59
-"
-" set omnifunc=syntaxcomplete#Complete
-
-"=============================================================
-"               Lightline
-"=============================================================
-" \ 'right': [ [ 'close' ], ],
-" use lightline-buffer in lightline
-"let g:lightline = {
-"  \ 'colorscheme': 'sialoquent',
-"  \ 'tabline': {
-"      \ 'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
-"      \ },
-"  \ 'component_expand': {
-"      \ 'buffercurrent': 'lightline#buffer#buffercurrent2',
-"      \ },
-"  \ 'component_type': {
-"      \ 'buffercurrent': 'tabsel',
-"      \ },
-"  \ 'component_function': {
-"      \ 'bufferbefore': 'lightline#buffer#bufferbefore',
-"      \ 'bufferafter': 'lightline#buffer#bufferafter',
-"      \ 'bufferinfo': 'lightline#buffer#bufferinfo',
-"      \ },
-"\ 'active': {
-"  \   'left': [ [ 'mode', 'paste' ],
-"  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-"  \ },
-"  \ 'component': {
-"  \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
-"  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-"  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-"  \ },
-"  \ 'component_visible_condition': {
-"  \   'readonly': '(&filetype!="help"&& &readonly)',
-"  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-"  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-"  \ },
-"  \ 'separator': { 'left': '', 'right': '' },
-"  \ 'subseparator': { 'left': '∿', 'right': '❂' }
-"  \ }
-"
-"
-"function! LightlineModified()
-"  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-"endfunction
-"
-"function! LightlineReadonly()
-"  return &ft !~? 'help' && &readonly ? 'RO' : ''
-"endfunction
-"
-"function! LightlineFilename()
-"  let fname = expand('%:t')
-"  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-"        \ fname == '__Tagbar__' ? g:lightline.fname :
-"        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-"        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-"        \ &ft == 'unite' ? unite#get_status_string() :
-"        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-"        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-"        \ ('' != fname ? fname : '[No Name]') .
-"        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-"endfunction
-"
-"function! LightlineFugitive()
-"  try
-"    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-"      let mark = ''  " edit here for cool mark
-"      let branch = fugitive#head()
-"      return branch !=# '' ? mark.branch : ''
-"    endif
-"  catch
-"  endtry
-"  return ''
-"endfunction
-"
-"function! LightlineFileformat()
-"  return winwidth(0) > 70 ? &fileformat : ''
-"endfunction
-"
-"function! LightlineFiletype()
-"  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-"endfunction
-"
-"function! LightlineFileencoding()
-"  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
-"endfunction
-"
-"function! LightlineMode()
-"  let fname = expand('%:t')
-"  return fname == '__Tagbar__' ? 'Tagbar' :
-"        \ fname == 'ControlP' ? 'CtrlP' :
-"        \ fname == '__Gundo__' ? 'Gundo' :
-"        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-"        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-"        \ &ft == 'unite' ? 'Unite' :
-"        \ &ft == 'vimfiler' ? 'VimFiler' :
-"        \ &ft == 'vimshell' ? 'VimShell' :
-"        \ winwidth(0) > 60 ? lightline#mode() : ''
-"endfunction
-"
-"function! CtrlPStatusFunc_2(str)
-"  return lightline#statusline(0)
-"endfunction
-"
-"let g:tagbar_status_func = 'TagbarStatusFunc'
-"
-"function! TagbarStatusFunc(current, sort, fname, ...) abort
-"    let g:lightline.fname = a:fname
-"  return lightline#statusline(0)
-"endfunction
 
 
 " lightline-buffer ui settings
 " replace these symbols with ascii characters if your environment does not support unicode
-"
-"let g:lightline_buffer_logo = ' '
-"let g:lightline_buffer_readonly_icon = ''
-"" let g:lightline_buffer_modified_icon = '✭'
-"let g:lightline_buffer_modified_icon = '+'
-"let g:lightline_buffer_git_icon = ' '
-"let g:lightline_buffer_ellipsis_icon = '..'
-"let g:lightline_buffer_expand_left_icon = '◀ '
-"let g:lightline_buffer_expand_right_icon = ' ▶'
-"let g:lightline_buffer_active_buffer_left_icon = ''
-"let g:lightline_buffer_active_buffer_right_icon = ''
-"let g:lightline_buffer_separator_icon = ' '
-"
-"" lightline-buffer function settings
-"let g:lightline_buffer_show_bufnr = 1
-"let g:lightline_buffer_rotate = 0
-"let g:lightline_buffer_fname_mod = ':t'
-"let g:lightline_buffer_excludes = ['vimfiler']
-"
-"let g:lightline_buffer_maxflen = 30
-"let g:lightline_buffer_maxfextlen = 3
-"let g:lightline_buffer_minflen = 16
-"let g:lightline_buffer_minfextlen = 3
-"let g:lightline_buffer_reservelen = 20
+
+let g:lightline_buffer_logo = ' '
+let g:lightline_buffer_readonly_icon = ''
+" let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_modified_icon = '+'
+let g:lightline_buffer_git_icon = ' '
+let g:lightline_buffer_ellipsis_icon = '..'
+let g:lightline_buffer_expand_left_icon = '◀ '
+let g:lightline_buffer_expand_right_icon = ' ▶'
+let g:lightline_buffer_active_buffer_left_icon = ''
+let g:lightline_buffer_active_buffer_right_icon = ''
+let g:lightline_buffer_separator_icon = ' '
+
+" lightline-buffer function settings
+let g:lightline_buffer_show_bufnr = 1
+let g:lightline_buffer_rotate = 0
+let g:lightline_buffer_fname_mod = ':t'
+let g:lightline_buffer_excludes = ['vimfiler']
+
+let g:lightline_buffer_maxflen = 30
+let g:lightline_buffer_maxfextlen = 3
+let g:lightline_buffer_minflen = 16
+let g:lightline_buffer_minfextlen = 3
+let g:lightline_buffer_reservelen = 20

@@ -6,18 +6,13 @@
 "   \ \__\ \__\ \__\\ \__\ \__\ \__\\ \__\____\_\  \        \ \_______\ \_______\ \__\\ \__\ \__\   \ \__\ \_______\
 "    \|__|\|__|\|__| \|__|\|__|\|__| \|__|\_________\        \|_______|\|_______|\|__| \|__|\|__|    \|__|\|_______|
 "                                        \|_________|
-
-
-"Sections of this vimrc can be folded or unfolded using za, they are marked with 3 curly braces
-
-
-set nocompatible "IMproved, required
-filetype off " required  Prevents potential side-effects
-" from system ftdetects scripts
+" Each section of my config has been separated out into subsections in
+" ./configs/
+filetype off " required  Prevents potential side-effects from system ftdetects scripts
 "----------------------------------------------------------------------
 " Plugins
 "----------------------------------------------------------------------
-source $HOME/Dotfiles/vim/configs/plugins.vimrc
+source $HOME/Dotfiles/vim/configs/plugins.vim
 "-----------------------------------------------------------------------
 syntax enable
 "-----------------------------------------------------------------------
@@ -28,11 +23,11 @@ let maplocalleader = "\<space>" "Local leader key
 "-----------------------------------------------------------------------
 " General Settings
 "-----------------------------------------------------------------------
-source $HOME/Dotfiles/vim/configs/general.vimrc
+source $HOME/Dotfiles/vim/configs/general.vim
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-source $HOME/Dotfiles/vim/configs/configurations.vimrc
+source $HOME/Dotfiles/vim/configs/configurations.vim
 "-----------------------------------------------------------------------
 " Mappings
 "-----------------------------------------------------------------------

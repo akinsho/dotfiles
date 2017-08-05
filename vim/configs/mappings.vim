@@ -163,8 +163,14 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 "Select txt that has just been read or pasted in
 nnoremap gV `[V`]
 
+" make last typed word uppercase
+inoremap :u <esc>viwUea
+
 "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-"TODO
+vnoremap é xp`[V`]
+vnoremap ï xkP`[V`]
+nnoremap é ddp
+nnoremap ï ddkP
 
 "Line completion - native vim
 inoremap ç <C-X><C-L>
@@ -300,7 +306,6 @@ inoremap <c-e> <c-o>$
 inoremap jk <ESC>
 xnoremap jk <ESC>
 cnoremap jk <C-C>
-"inoremap ;; <End>;<Esc>:w<CR>
 
 " Yank text to the OS X clipboard
 noremap <localleader>y "*y
@@ -330,6 +335,7 @@ nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
+
 
 "Add neovim terminal escape with ESC mapping
 if has("nvim")
