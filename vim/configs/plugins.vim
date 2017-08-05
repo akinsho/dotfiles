@@ -31,7 +31,6 @@ Plug 'ervandew/supertab', Cond(has('nvim'))
 "================================
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
-  Plug 'honza/vim-snippets'
 Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
@@ -87,12 +86,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/dbext.vim' "Need this to run SQL Lint
 Plug 'lilydjwg/colorizer', { 'for':['css','jsx', 'js', 'ts', 'tsx'] }
 Plug 'fleischie/vim-styled-components'
-
-
 "Git ===============================
-Plug 'airblade/vim-gitgutter' 
+Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
-
 "Text Objects =====================
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
@@ -100,10 +96,8 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-expand-region'
 Plug 'wellle/targets.vim'
-
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFPrompt', 'CtrlSFToggle'] }
-
 "Coding tools =======================
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
@@ -118,7 +112,6 @@ if !has('gui_running')
   Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
   Plug 'othree/jspc.vim'
 endif
-
 "Filetype Plugins ======================
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
@@ -130,7 +123,7 @@ function! BuildComposer(info)
   endif
 endfunction
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-Plug 'fatih/vim-go',{ 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 
 "Themes ===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}

@@ -32,13 +32,3 @@ source $HOME/Dotfiles/vim/configs/configurations.vim
 " Mappings
 "-----------------------------------------------------------------------
 source $HOME/Dotfiles/vim/configs/mappings.vim
-"-----------------------------------------------------------------------
-"Colorscheme
-"-----------------------------------------------------------------------
-set background=dark
-"colorscheme nova
-colorscheme quantum
-if has('nvim')
-  let g:terminal_color_0  = '#ffffff'
-  let g:terminal_color_15 = '#eeeeec'
-endif

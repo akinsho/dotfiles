@@ -676,5 +676,4 @@ let g:tmux_navigator_save_on_switch = 2
 "Remaps native insert mode paste binding to alt-p
 inoremap ð <C-R>0
 inoremap … <C-R><C-P>0
-
 "}}}

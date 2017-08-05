@@ -308,7 +308,6 @@ try
   set switchbuf=useopen,usetab,newtab
 catch
 endtry
-
 if !has('nvim')
   set termsize="10x30"
 endif
@@ -386,6 +385,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
+set conceallevel=2
 "syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
  set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
@@ -475,7 +475,16 @@ set cmdheight=2 " Set command line height to two lines
 iabbrev w@ www.akin-sowemimo.com
 
 "}}}
-set conceallevel=2
+"-----------------------------------------------------------------------
+"Colorscheme
+"-----------------------------------------------------------------------
+set background=dark
+"colorscheme nova
+colorscheme quantum
+if has('nvim')
+  let g:terminal_color_0  = '#ffffff'
+  let g:terminal_color_15 = '#eeeeec'
+endif
 "====================================================================================
 "Spelling & Highlights
 "====================================================================================
@@ -556,8 +565,6 @@ scriptencoding utf-8
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif
-set autoread " reload files if they were edited elsewhere
-
 set history=100
 if &tabpagemax < 50
   set tabpagemax=50
@@ -584,23 +591,18 @@ else
   set backupdir+=~/local/.vim/tmp/backup
   set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
 endif
-
-" set directory=~/.vim/.swp//
-if has ('persistent_undo')
-  if exists('$SUDO_USER')
-    set noundofile "Dont add root owned files which I will need to sudo to remove
-  else
-    set undodir=~/.vim/.undo//
-    set undodir+=~/local/.vim/tmp/undo
-    set undodir+=.
-    set undofile
+if !has('nvim')
+set autoread " reload files if they were edited elsewhere
+  if has ('persistent_undo')
+    if exists('$SUDO_USER')
+      set noundofile "Dont add root owned files which I will need to sudo to remove
+    else
+      set undodir=~/.vim/.undo//
+      set undodir+=~/local/.vim/tmp/undo
+      set undodir+=.
+      set undofile
+    endif
   endif
-endif
-
-if has("vms")
-  set nobackup
-else
-  set backup
 endif
 "}}}
 " ----------------------------------------------------------------------------
@@ -623,7 +625,6 @@ endif
   "autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   "autocmd WinLeave * setlocal nocursorline
 "augroup END
-
 set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
