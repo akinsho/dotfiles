@@ -3,6 +3,10 @@ My dotfiles including zsh, vim and Tmux config files (stashed away in case of la
 
 I plan on adding an install script as well as macos preferences either saved using mackup or getting the terminal defaults.
 
+I thought I'd document for myself and for others potentially some of the setup
+involved in the various programs my dotfiles cover. I'm no pro and some of
+this stuff has worked for me but may not be universal.
+
 ## Amazing Tools
 A list of amazing tools I've discorvered but cannot hide away
 1. **Vimr** - An absolutely astounding project to create a gui for neovim. It's
@@ -11,9 +15,6 @@ A list of amazing tools I've discorvered but cannot hide away
    markdown preview etc.
 
 
-I thought I'd document for myself and for others potentially some of the setup
-involved in the various programs my dotfiles cover. I'm no pro and some of
-this stuff has worked for me but may not be universal.
 ## Tmux Setup
 
 *italics*
@@ -38,19 +39,19 @@ a little list of plugins I use which I find really helpful but am currently
 not using just to get back into the feel of doing these things without these
 awesome tools
 
-* Bookmarks for vim - `Plug 'MattesGroeger/vim-bookmarks'`
 * The syntax highlighting wars continue - `Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}`
 * Database manipulation in vim - `Plug 'vim-scripts/dbext.vim'`
+* `Plug 'MattesGroeger/vim-bookmarks'`
 * `Plug 'tiagofumo/vim-nerdtree-syntax-highlight'`
 * `Plug 'bronson/vim-visual-star-search'`
-*  Buffers in the tabline because ....why... tabs  `Plug 'ap/vim-buftabline'` - Think my pc is too encumbered for this plugin
+* `Plug 'ap/vim-buftabline'`
 * Colors for hexcode in vim `Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}` - really great idea incredibly slow sadly
-#### Excellent colorschemes I'll definitely be trying again i'm just capricious
-:shrug:
-* vim sialoquent theme  `Plug 'davidklsn/vim-sialoquent'`
-* OneDark  `Plug 'joshdick/onedark.vim'`
 
-#### ...Easymotion....four plugins for the price of one, these are excellent regardless
+### Excellent colorschemes
+* `Plug 'davidklsn/vim-sialoquent'`
+* `Plug 'joshdick/onedark.vim'`
+
+### ...Easymotion....four plugins for the price of one, these are excellent regardless
 * `Plug 'inside/vim-search-pulse'`
 * `Plug 'haya14busa/incsearch.vim'`
 * `Plug 'haya14busa/incsearch-fuzzy.vim'`
