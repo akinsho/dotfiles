@@ -1,0 +1,25 @@
+cmdargs:
+  # Checking more strictly
+  severity: style_problem
+
+  # Enable coloring
+  color: true
+
+  # Enable Neovim syntax
+  env:
+    neovim: true
+  policies:
+    ProhibitAutocmdWithNoGroup:
+      enabled: true
+    ProhibitEncodingOptionAfterScriptEncoding:
+      enabled: true
+    ProhibitMissingScriptEncoding:
+      enabled: true
+    ProhibitNoAbortFunction:
+      enable: true
+    ProhibitSetNoCompatible:
+      enable: true
+    ProhibitUnnecessaryDoubleQuote:
+      enable: true
+    ProhibitUnusedVariable:
+      enable: true

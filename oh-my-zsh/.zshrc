@@ -272,8 +272,8 @@ echo load time: $((end_time - start_time)) seconds
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
-  # printf "autosuggestions loaded"
+   #printf "autosuggestions loaded"
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=grey'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'

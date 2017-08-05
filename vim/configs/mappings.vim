@@ -1,6 +1,34 @@
 "-----------------------------------------------------------------------------------
 "MAPPINGS {{{
-"------------------------------------------------------------------" Move visual block
+"------------------------------------------------------------------"
+"---------------------------------------------------------------------------
+" NEOVIM
+"---------------------------------------------------------------------------
+" Terminal settings
+if has('nvim')
+  "set guicursor=n-v-c:block,i-ci-ve:ver10,r-cr:hor20,o:hor50
+        "\,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+        "\,sm:block-blinkwait175-blinkoff150-blinkon175
+  set inccommand=nosplit
+  tnoremap <Leader>e <C-\><C-n>
+  tnoremap <C-h> <C-\><C-n><C-h>
+  tnoremap <C-j> <C-\><C-n><C-j>
+  tnoremap <C-k> <C-\><C-n><C-k>
+  tnoremap <C-l> <C-\><C-n><C-l>
+  let g:terminal_color_0 = '#928374'
+endif
+
+"Terminal {{{
+"====================================================================
+nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
+
+"Opening splits with terminal in all directions
+nnoremap <leader>h<CR> :leftabove vnew<CR>:terminal<CR>
+nnoremap <leader>l<CR> :rightbelow vnew<CR>:terminal<CR>
+nnoremap <leader>k<CR> :leftabove new<CR>:terminal<CR>
+nnoremap <leader>j<CR> :rightbelow new<CR>:terminal<CR>
+"}}}
+" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(20)<CR>
