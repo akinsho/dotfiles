@@ -483,22 +483,27 @@ let g:echodoc#enable_at_startup          = 1
 if has("nvim")
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#enable_smart_case       = 1
-  let g:deoplete#auto_complete_delay     = 0
+  let g:deoplete#auto_complete_delay     = 30
   let g:deoplete#file#enable_buffer_path = 1
+  " let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
   let g:deoplete#sources                 = {}
-  let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
-  " let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
-  "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
-  let g:deoplete#sources.css  = ['buffer', 'member', 'file', 'omni', 'ultisnips']
+  let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
         \ 'jspc#omni'
         \]
-let g:deoplete#omni#functions.typescript = [
+  let g:deoplete#omni#functions.typescript = [
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
+  " Disable the truncate feature.
+  call deoplete#custom#source('nvim-typescript',
+        \ 'max_abbr_width', 0)
+  call deoplete#custom#source('nvim-typescript',
+        \ 'max_menu_width', 0)
+  call deoplete#custom#source('ultisnips', 'rank', 1000)
+  "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#type_info_on_hold  = 1
   call deoplete#custom#set('buffer', 'mark', '')

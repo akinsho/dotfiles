@@ -101,12 +101,8 @@ endsnippet
 snippet rrcc "React Redux Class Component" b
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styles from './${2:$1}.css';
 
 class ${1:`!v expand('%:t:r')`} extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	render() {
 		return (
@@ -140,12 +136,8 @@ endsnippet
 
 snippet rcc "React Class Component" b
 import React, { Component } from 'react';
-import styles from './${2:$1}.css';
 
 class ${1:`!v expand('%:t:r')`} extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	render() {
 		return (

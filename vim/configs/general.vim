@@ -116,6 +116,8 @@ augroup filetype_completion
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   if !has('nvim')
     autocmd FileType javascript,javascript.jsx,jsx,tsx,typescript.tsx setlocal omnifunc=tern#Complete
+  else
+  autocmd CompleteDone * silent! pclose!
   endif
 augroup END
 
@@ -433,6 +435,7 @@ if has('vim')
 endif
 set ruler
 set incsearch
+set completeopt+=noinsert
 if !has('nvim')
   set complete-=i
   set autoindent
@@ -573,6 +576,7 @@ endif
   "autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   "autocmd WinLeave * setlocal nocursorline
 "augroup END
+"
 set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
