@@ -150,11 +150,8 @@ augroup filetype_completion
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  if !has('nvim')
-    autocmd FileType javascript,javascript.jsx,jsx,tsx,typescript.tsx setlocal omnifunc=tern#Complete
-  else
+  autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=tern#Complete
   autocmd CompleteDone * silent! pclose!
-  endif
 augroup END
 
 augroup filetype_javascript_typescript
