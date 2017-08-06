@@ -205,6 +205,9 @@ nnoremap <C-Q> :Sayonara<CR>
 "     ALE
 "-----------------------------------------------------------
 " Disable linting for all minified JS files.
+if has('gui_running')
+  let g:ale_set_balloons = 1
+endif
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = [
@@ -478,7 +481,9 @@ if has("nvim")
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#enable_smart_case       = 1
   let g:deoplete#auto_complete_delay     = 30
-  let g:deoplete#max_menu_width          = 100
+  let g:deoplete#enable_refresh_always   = 0
+  let g:deoplete#max_abbr_width          = 0
+  let g:deoplete#max_menu_width          = 0
   let g:deoplete#file#enable_buffer_path = 1
   let g:deoplete#sources                 = {}
   " let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
@@ -496,11 +501,6 @@ if has("nvim")
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
-  " Disable the truncate feature.
-  call deoplete#custom#source('TSComplete',
-        \ 'max_abbr_width', 0)
-  call deoplete#custom#source('TSComplete',
-        \ 'max_menu_width', 0)
   call deoplete#custom#source('ultisnips', 'rank', 1000)
   "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
   let g:nvim_typescript#javascript_support = 1
@@ -549,7 +549,7 @@ let g:tern_show_signature_in_pum              = 1
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 " close the preview window when you're not using it
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType = "<c-p>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
 " or just disable the preview entirely

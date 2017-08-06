@@ -43,7 +43,7 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
+Plug 'ternjs/tern_for_vim', {'for': ['javascript.jsx', 'javascript'], 'do':function('BuildTern')}
 Plug 'mhinz/vim-startify'
 if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'

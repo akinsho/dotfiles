@@ -171,7 +171,6 @@ augroup filetype_javascript_typescript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   autocmd FileType javascript setlocal concealcursor=nvic
-  autocmd FileType typescript setlocal completeopt+=menu
 augroup END
 
 augroup FileType_Clojure
@@ -339,6 +338,7 @@ if !has('nvim')
   set sessionoptions-=options
   set termsize="10x30"
 endif
+set completeopt+=menu,noselect
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------
@@ -425,6 +425,8 @@ if has('linebreak') "Causes wrapped line to keep same indentation
     set breakindentopt=shift:2
   endif
 endif
+set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
+set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
 set list                              " show invisible chars
 set listchars+=tab:▷\ 
