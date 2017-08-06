@@ -113,8 +113,10 @@ augroup filetype_completion
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript,javascript.jsx,jsx,tsx,typescript.tsx setlocal omnifunc=tern#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  if !has('nvim')
+    autocmd FileType javascript,javascript.jsx,jsx,tsx,typescript.tsx setlocal omnifunc=tern#Complete
+  endif
 augroup END
 
 augroup filetype_javascript_typescript
@@ -124,10 +126,8 @@ augroup filetype_javascript_typescript
   "==================================
   autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
-  "autocmd 
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
-  "The next line forces four spaces to appear as two which helps maintain my sanity at work
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+  " autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
   "==================================
   autocmd FileType typescript,javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
@@ -154,7 +154,6 @@ augroup END
 
 augroup FileType_markdown
   autocmd!
-  autocmd BufNewFile,VimEnter *.md :Xmark<<CR>
   autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
@@ -172,6 +171,7 @@ augroup filetype_vim
   autocmd FileType vim setlocal foldmethod=marker
   autocmd FileType vim nnoremap <leader>pi :PlugInstall<CR>
   autocmd FileType vim nnoremap <leader>ps :PlugStatus<CR>
+  autocmd FileType vim nnoremap <leader>pc :PlugClean<CR>
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
 augroup END
 
@@ -180,12 +180,14 @@ augroup FileType_text
   autocmd FileType text setlocal textwidth=78
 augroup END
 
-augroup nvim
-  au!
-  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-  autocmd BufEnter term://* startinsert
-  autocmd TermOpen * set bufhidden=hide
-augroup END
+if has('nvim')
+  augroup nvim
+    au!
+    au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+    autocmd BufEnter term://* startinsert
+    autocmd TermOpen * set bufhidden=hide
+  augroup END
+endif
 
 augroup FileType_all
   autocmd!
@@ -194,7 +196,6 @@ augroup FileType_all
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
-  " Set syntax highlighting for specific file types
   autocmd BufReadPost *
         \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
@@ -215,6 +216,7 @@ augroup END
 augroup NERDTree
   autocmd!
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  autocmd FileType nerdtree setlocal nolist
 augroup END
 
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
@@ -262,8 +264,6 @@ augroup ft_css
   au Filetype css setlocal foldmethod=indent | setlocal foldlevelstart=99
   au Filetype css setlocal foldmarker={,}
   au FileType css setlocal foldtext=CSSFoldText()
-  "au BufWritePost *.css :normal gg=G
-
 augroup END
 
 " ----------------------------------------------------------------------------
@@ -286,30 +286,23 @@ endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
+set timeout timeoutlen=500 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
+set pastetoggle=<F2>
 set nohidden
-" Set minimal width for current window.
 set winwidth=30
 set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
 if has('folding')
   if has('windows')
-    set fillchars=vert:│                  " Vertical sep between windows (unicode)- ⣿
+    set fillchars=vert:│
     set fillchars+=fold:-
   endif
-  "set foldmethod=indent
   set foldlevelstart=99
-  set foldnestmax=3           " deepest fold is 3 levels
+  set foldnestmax=3
 endif
-" reveal already opened files from the quickfix window instead of opening new
-" buffers
-" Specify the behavior when switching between buffers
-try
-  set switchbuf=useopen,usetab,newtab
-catch
-endtry
+set switchbuf=useopen,usetab,newtab
 if !has('nvim')
+  set sessionoptions-=options
   set termsize="10x30"
 endif
 " ----------------------------------------------------------------------------
@@ -347,7 +340,6 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " set path+=** "Vim searches recursively through all directories and subdirectories
 set path+=**/src/main/**,** " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
 set suffixesadd+=.js,.jsx,.ts,.tsx
-" set autochdir
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{
 " ----------------------------------------------------------------------------
@@ -415,12 +407,10 @@ if has("unnamedplus")
 elseif has("clipboard")
   set clipboard=unnamed
 endif
-set nojoinspaces                      " don't autoinsert two spaces after '.', '?', '!' for join command
-" set magic " For regular expressions turn magic on
+set nojoinspaces
 set gdefault "Makes the g flag available by default so it doesn't have to be specified
 " insert completion height and options
 set pumheight=10
-"set completeopt-=preview " This prevents a scratch buffer from being opened
 set title                             " wintitle = filename - vim
 set number
 if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
@@ -433,12 +423,9 @@ else
 endif
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
-set smartindent "Turns on smart indent which can help indent files like html natively
+set smartindent
 set wrap
 set textwidth=79
-set nojoinspaces "Use one space, not two, after punctuation
-set autowrite "Automatically :write before running commands
-set backspace=2 "Back space deletes like most programs in insert mode
 if has('vim')
   if has('+signcolumn')
     set signcolumn=yes "enables column that shows signs and error symbols
@@ -447,24 +434,25 @@ endif
 set ruler
 set incsearch
 if !has('nvim')
+  set complete-=i
+  set autoindent
+  set autowrite "Automatically :write before running commands
+  set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast " Improves smoothness of redrawing when there are multiple windows
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 else
   set nolazyredraw "Broken on neovim
 endif
 if exists('&belloff')
-  set belloff=all                     " never ring the bell for any reason
+  set belloff=all
 endif
 if has('termguicolors')
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
-  " if &term =~# 'tmux-256color' "Setting the t_ variables is a further step to ensure 24bit colors
   let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
   let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
-  " endif
 endif
 "}}}
 " ----------------------------------------------------------------------------
-
 " ------------------------------------
 " Command line
 " ------------------------------------
@@ -512,11 +500,7 @@ set softtabstop=-2 " Alignment tabs are two spaces, and never tabs. Negative mea
 set tabstop=8 " real tabs render width. Applicable to HTML, PHP, anything using real tabs. I.e., not applicable to JS.
 set noshiftround " use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
 set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
-" set complete+=k " Add dictionary to vim's autocompletion
-if !has('nvim')
-  set complete-=i
-  set autoindent
-endif
+set complete+=k " Add dictionary to vim's autocompletion
 set display+=lastline
 if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
@@ -526,7 +510,7 @@ scriptencoding utf-8
 " =======================================================
 "  DICTIONARY
 " =======================================================
- set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+set dictionary+=/usr/share/dict/words
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif
@@ -537,7 +521,6 @@ endif
 if !empty(&viminfo)
   set viminfo^=!
 endif
-set sessionoptions-=options
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16

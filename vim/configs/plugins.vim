@@ -27,15 +27,14 @@ endif
 " ----------------------------------------
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'do': 'npm install -g tern' })
-Plug 'ujihisa/neco-look' "English completion
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
+Plug 'ujihisa/neco-look' "English completion
 Plug 'ervandew/supertab', Cond(has('nvim'))
-Plug 'Shougo/deol.nvim', Cond(has('nvim'))
 "================================
 Plug 'w0rp/ale' " Ale  Async Linting as you type
-Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
+Plug 'SirVer/ultisnips' 
 Plug 'Shougo/echodoc.vim'
-Plug 'scrooloose/nerdtree' "Added nerdtree filetree omnitool : )
+Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
 Plug 'Raimondi/delimitMate' "Add delimitmate
 Plug 'easymotion/vim-easymotion' "Added easy motions
@@ -44,14 +43,14 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}  "Add Tern for autocompletion
-Plug 'mhinz/vim-startify' " A fun start up sceen for vim + session management to boot
+Plug 'ternjs/tern_for_vim',{'do':function('BuildTern')}
+Plug 'mhinz/vim-startify'
 if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'
 endif
 Plug 'ctrlpvim/ctrlp.vim', Cond(has('gui_running'))
-Plug 'tpope/vim-capslock' "Capslock without a capslock key in vim
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] } "Added June Gunn's alignment plugin
+Plug 'tpope/vim-capslock'
+Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 
 "TMUX ============================
 if executable("tmux")
@@ -66,7 +65,7 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-Plug 'itchyny/vim-cursorword'
+" Plug 'itchyny/vim-cursorword'
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -78,16 +77,15 @@ Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
 "Syntax ============================
-Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
-" Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
+" Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
+Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/dbext.vim'
-Plug 'lilydjwg/colorizer', { 'for':['css','jsx', 'js', 'ts', 'tsx'] }
-Plug 'fleischie/vim-styled-components'
+Plug 'lilydjwg/colorizer', { 'on': 'Colorize' }
+" Plug 'fleischie/vim-styled-components'
 "Git ===============================
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
@@ -108,15 +106,14 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-
+" Color picker
+Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
+"Git -------------------------------
 Plug 'christoomey/vim-conflicted'
 Plug 'lambdalisue/gina.vim'
 
-" Color picker
-Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 if !has('gui_running')
-  Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
-  Plug 'othree/jspc.vim'
+  Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
 endif
 "Filetype Plugins ======================
 function! BuildComposer(info)
@@ -135,6 +132,7 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'trevordmiller/nova-vim'
+Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''

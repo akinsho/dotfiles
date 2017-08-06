@@ -78,9 +78,22 @@ elseif executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 command! PU PlugUpdate | PlugUpgrade
+
+if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
+  if exists('g:loaded_webdevicons')
+    call webdevicons#hardRefresh()
+  endif
+endif
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js'] = ''
+let g:DevIconsEnableFoldersOpenClose = 1
+
 "=============================================================
 "               Airline
 "=============================================================
+let g:webdevicons_enable_airline_tabline = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_powerline_fonts                  = 1
 let g:airline#extensions#tabline#enabled       = 1
@@ -168,7 +181,6 @@ endfunction
 " Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
 nnoremap <localleader>p :GitFiles <CR>
 nnoremap <C-P> :call Fzf_dev()<CR>
-" nnoremap <space>\ :Find<space>
 nnoremap \ :Rg<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
 endif
@@ -177,17 +189,11 @@ endif
 "of delimitmate)
 imap <C-F> <C-g>g
 
-nnoremap gm :Xmark<<CR>
-
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
 omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
-"-----------------------------------------------------------
-" DEOL - Dark Powered terminal for configuration
-"-----------------------------------------------------------
-let g:deol#prompt_pattern = '% \|%$'
 
 "============================================================
 " Sayonara
@@ -218,7 +224,6 @@ let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
 let g:ale_sign_warning       = '⚠️'
-
 let g:ale_linters            = {
       \'python': ['flake8'],
       \'css': ['stylelint'],
@@ -227,8 +232,8 @@ let g:ale_linters            = {
       \'typescript':['tslint', 'tsserver', 'typecheck'],
       \'html':[]
       \}
-let g:ale_linter_aliases     = {'jsx': 'css'}
-let g:ale_set_highlights = 0
+let g:ale_linter_aliases    = {'jsx': 'css'}
+let g:ale_set_highlights    = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
@@ -244,25 +249,24 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
-" Push the repository of the currently opened file
 "--------------------------------------------
 " JSX & POLYGLOT
 "--------------------------------------------
-let g:jsx_ext_required = 0
+let g:jsx_ext_required          = 0
 "VIM-GO
 let g:go_doc_keywordprg_enabled = 0
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
+let g:go_highlight_functions    = 1
+let g:go_highlight_methods      = 1
 
 "--------------------------------------------
 " Git Gutter
 "--------------------------------------------
 nnoremap <leader>gg :GitGutterToggle<CR>
-let g:gitgutter_enabled = 0
+let g:gitgutter_enabled       = 0
 let g:gitgutter_sign_modified = '•'
-let g:gitgutter_eager = 1
+let g:gitgutter_eager         = 1
 let g:gitgutter_sign_added    = '❖'
-let g:gitgutter_grep_command = 'ag --nocolor'
+let g:gitgutter_grep_command  = 'ag --nocolor'
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -326,26 +330,18 @@ let NERDTreeShowHidden                = 1 "Show hidden files by default
 "===================================================
 "EasyMotion mappings
 "===================================================
-let g:EasyMotion_do_mapping = 0 "Disable default mappings
-" Use uppercase target labels and type as a lower case
-" let g:EasyMotion_use_upper  1
-" type `l` and match `l`&`L`
+let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
-" Smartsign (type `3` and match `3`&`#`)
 let g:EasyMotion_use_smartsign_us = 1
-" keep cursor column when jumping
 let g:EasyMotion_startofline = 0
-" Bidirectional & within line 't' motion
 omap t <Plug>(easymotion-bd-tl)
 " nmap s <Plug>(easymotion-s)
 " Jump to anwhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
-" JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
-"Search with easy motion
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
@@ -410,14 +406,10 @@ let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags t
 "====================================================================================
 "Spelling
 "====================================================================================
-
-" Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,dos,mac
-" Autocomplete with dictionary words when spell check is on
 set complete+=kspell
-
 "===================================================================================
 "Mouse {{{
 "===================================================================================
@@ -467,16 +459,11 @@ let test#runners = {'Typescript': ['Jest', 'Mocha']}
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
-let g:NERDCustomDelimiters = { 
+let g:NERDCustomDelimiters = {
   \    'jsx': { 'left': '{/*','right': '*/}' }, 
   \    'typescript.tsx': { 'left': '{/*','right': '*/}' } 
   \  }
 let g:NERDCommentEmptyLines = 1
-
-let g:comfortable_motion_no_default_key_mappings = 1
-nnoremap <silent> <C-d> :call comfortable_motion#flick(100)<CR>
-nnoremap <silent> <C-u> :call comfortable_motion#flick(-100)<CR>
-
 
 nmap <silent> <leader>vt :TestNearest<CR>
 nmap <silent> <leader>vT :TestFile<CR>
@@ -484,7 +471,7 @@ nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
 
-let g:polyglot_disabled = ['elm', 'clojure', 'typescript']
+let g:polyglot_disabled = ['elm', 'clojure']
 
 "Removes highlighting in typescript
 highlight YcmErrorSection gui=underline cterm=underline
@@ -494,34 +481,33 @@ let g:echodoc#enable_at_startup          = 1
 " Deoplete Options
 "=======================================================
 if has("nvim")
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#auto_complete_delay = 0
-  let g:nvim_typescript#javascript_support = 1
+  let g:deoplete#enable_at_startup       = 1
+  let g:deoplete#enable_smart_case       = 1
+  let g:deoplete#auto_complete_delay     = 0
+  let g:deoplete#file#enable_buffer_path = 1
+  let g:deoplete#sources                 = {}
+  let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
+  " let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
-  let g:deoplete#file#enable_buffer_path   = 1
-  let g:nvim_typescript#type_info_on_hold  = 1
-  let g:deoplete#sources                   = {}
-  let g:deoplete#sources._    = ['buffer', 'file', 'ultisnips']
-  let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   let g:deoplete#sources.css  = ['buffer', 'member', 'file', 'omni', 'ultisnips']
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
         \ 'jspc#omni'
         \]
-" let g:deoplete#omni#functions.typescript = [
-"       \ 'tern#Complete',
-"       \ 'jspc#omni'
-"       \]
-"
+let g:deoplete#omni#functions.typescript = [
+      \ 'tern#Complete',
+      \ 'jspc#omni'
+      \]
+  let g:nvim_typescript#javascript_support = 1
+  let g:nvim_typescript#type_info_on_hold  = 1
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
   call deoplete#custom#set('file', 'mark', 'file')
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
-  call deoplete#custom#set('neosnippet', 'mark', '')
+  call deoplete#custom#set('ultisnips', 'mark', '')
 
   nnoremap <localleader>d :TSDefPreview<CR>
   nnoremap <localleader>r :TSRefs<CR>
@@ -530,12 +516,12 @@ if has("nvim")
   nnoremap <localleader>i :TSImport<CR>
   let g:deoplete#enable_debug = 1
   let g:deoplete#enable_profile = 1
-  call deoplete#enable_logging('DEBUG', '~/Desktop/Coding/deoplete.log')
+  call deoplete#enable_logging('DEBUG', 'deoplete.log')
 else
-  let g:ycm_add_preview_to_completeopt          = 1
+  let g:ycm_add_preview_to_completeopt                = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
-  let g:ycm_seed_identifiers_with_syntax        = 1
-  let g:ycm_collect_identifiers_from_tags_files = 1
+  let g:ycm_seed_identifiers_with_syntax              = 1
+  let g:ycm_collect_identifiers_from_tags_files       = 1
   nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
   nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
   nnoremap <leader>gt :YcmCompleter GetType<CR>
@@ -557,7 +543,6 @@ let g:tern_show_signature_in_pum              = 1
 " Use tern_for_vim.
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
-
 " close the preview window when you're not using it
 let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
@@ -687,17 +672,6 @@ function! Fzf_dev()
 endfunction
 
 endif
-
-if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
-  if exists('g:loaded_webdevicons')
-    call webdevicons#hardRefresh()
-  endif
-endif
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js'] = ''
-let g:DevIconsEnableFoldersOpenClose = 1
 
 let g:startify_list_order = [
       \ ['   😇 My Sessions:'],

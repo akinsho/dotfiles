@@ -33,8 +33,6 @@ nnoremap <leader>j<CR> :rightbelow new<CR>:terminal<CR>
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(20)<CR>
-noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-20)<CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -95,12 +93,8 @@ cnoremap <C-N> <Down>
 nnoremap <C-S> :update<CR>
 nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
-
 "Quit
-"inoremap <C-Q>     <esc>:q<cr>
-"nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
-
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>   :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
@@ -122,7 +116,6 @@ vnoremap <silent> gi  :<C-u>normal gc<CR>
 " Capitalize.
 nnoremap õ <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
-
 " Smart }."
 nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
@@ -199,8 +192,6 @@ inoremap ì <right>
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <F6> :! open %<CR>
-set pastetoggle=<F2>
-set timeout timeoutlen=500 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
