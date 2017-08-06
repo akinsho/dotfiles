@@ -88,6 +88,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 let g:DevIconsEnableFoldersOpenClose = 1
 
 "=============================================================
@@ -350,42 +351,6 @@ map  N <Plug>(easymotion-prev)
 "=======================================================================
 "                    EMMET for Vim
 "=======================================================================
-"Emmet for vim leader keymap
-  function! s:expand_html_tab()
-" try to determine if we're within quotes or tags.
-" if so, assume we're in an emmet fill area.
-   let line = getline('.')
-   if col('.') < len(line)
-     let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-     if len(line) >= 2
-        return "\<C-n>"
-     endif
-   endif
-    " try to determine if we're within quotes or tags.
-  " if so, assume we're in an emmet fill area.
-  let line = getline('.')
-  if col('.') < len(line)
-    let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-
-    if len(line) >= 2
-      return "\<Plug>(emmet-move-next)"
-    endif
-  endif
-
-  " go to next item in a popup menu.
-  if pumvisible()
-    return "\<C-n>"
-  endif
-
-  " expand anything emmet thinks is expandable.
-  " I'm not sure control ever reaches below this block.
-  if emmet#isExpandable()
-    return "\<Plug>(emmet-expand-abbr)"
-  endif
-
-  " return a regular tab character
-  return "\<tab>"
-  endfunction
 let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
 let g:user_emmet_settings     = {
@@ -481,12 +446,42 @@ let g:echodoc#enable_at_startup          = 1
 " Deoplete Options
 "=======================================================
 if has("nvim")
+  let g:nvim_typescript#kind_symbols = {
+      \ 'keyword': 'keyword',
+      \ 'class': '',
+      \ 'interface': 'interface',
+      \ 'script': 'script',
+      \ 'module': '',
+      \ 'local class': 'local class',
+      \ 'type': 'type',
+      \ 'enum': '',
+      \ 'enum member': '',
+      \ 'alias': '',
+      \ 'type parameter': 'type param',
+      \ 'primitive type': 'primitive type',
+      \ 'var': '',
+      \ 'local var': '',
+      \ 'property': '',
+      \ 'let': '',
+      \ 'const': '',
+      \ 'label': 'label',
+      \ 'parameter': 'param',
+      \ 'index': 'index',
+      \ 'function': '',
+      \ 'local function': 'local function',
+      \ 'method': '',
+      \ 'getter': '',
+      \ 'setter': '',
+      \ 'call': 'call',
+      \ 'constructor': '',
+      \}
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#enable_smart_case       = 1
   let g:deoplete#auto_complete_delay     = 30
+  let g:deoplete#max_menu_width          = 100
   let g:deoplete#file#enable_buffer_path = 1
-  " let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
   let g:deoplete#sources                 = {}
+  " let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
   let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#functions.javascript = [
@@ -497,10 +492,14 @@ if has("nvim")
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
+  let g:deoplete#omni#functions['typescript.jsx'] = [
+      \ 'tern#Complete',
+      \ 'jspc#omni'
+      \]
   " Disable the truncate feature.
-  call deoplete#custom#source('nvim-typescript',
+  call deoplete#custom#source('TSComplete',
         \ 'max_abbr_width', 0)
-  call deoplete#custom#source('nvim-typescript',
+  call deoplete#custom#source('TSComplete',
         \ 'max_menu_width', 0)
   call deoplete#custom#source('ultisnips', 'rank', 1000)
   "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
@@ -519,9 +518,9 @@ if has("nvim")
   nnoremap <localleader>t :TSType<CR>
   nnoremap <localleader>tc :TSEditConfig<CR>
   nnoremap <localleader>i :TSImport<CR>
-  let g:deoplete#enable_debug = 1
-  let g:deoplete#enable_profile = 1
-  call deoplete#enable_logging('DEBUG', 'deoplete.log')
+  " let g:deoplete#enable_debug = 1
+  " let g:deoplete#enable_profile = 1
+  " call deoplete#enable_logging('DEBUG', 'deoplete.log')
 else
   let g:ycm_add_preview_to_completeopt                = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
@@ -537,6 +536,7 @@ let g:tern_request_timeout = 1
 let g:tern#filetypes = [
       \ 'tsx',
       \ 'typescript.tsx',
+      \ 'typescript.jsx',
       \ 'typescript',
       \ 'javascript',
       \ 'jsx',
@@ -549,6 +549,7 @@ let g:tern_show_signature_in_pum              = 1
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 " close the preview window when you're not using it
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
 " or just disable the preview entirely

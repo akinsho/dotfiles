@@ -107,6 +107,42 @@ augroup VimResizing
   autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
 
+  function! s:expand_html_tab()
+" try to determine if we're within quotes or tags.
+" if so, assume we're in an emmet fill area.
+   let line = getline('.')
+   if col('.') < len(line)
+     let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+     if len(line) >= 2
+        return "\<C-n>"
+     endif
+   endif
+    " try to determine if we're within quotes or tags.
+  " if so, assume we're in an emmet fill area.
+  let line = getline('.')
+  if col('.') < len(line)
+    let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+
+    if len(line) >= 2
+      return "\<Plug>(emmet-move-next)"
+    endif
+  endif
+
+  " go to next item in a popup menu.
+  if pumvisible()
+    return "\<C-n>"
+  endif
+
+  " expand anything emmet thinks is expandable.
+  " I'm not sure control ever reaches below this block.
+  if emmet#isExpandable()
+    return "\<Plug>(emmet-expand-abbr)"
+  endif
+
+  " return a regular tab character
+  return "\<tab>"
+  endfunction
+
 augroup filetype_completion
   autocmd!
   autocmd FileType html,css,javascript,typescript,typscript.tsx,javascript.jsx EmmetInstall
@@ -131,7 +167,6 @@ augroup filetype_javascript_typescript
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
   " autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
   "==================================
-  autocmd FileType typescript,javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd FileType javascript :iabbrev <buffer> und undefined

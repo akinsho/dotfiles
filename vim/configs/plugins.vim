@@ -111,6 +111,7 @@ Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 "Git -------------------------------
 Plug 'christoomey/vim-conflicted'
 Plug 'lambdalisue/gina.vim'
+Plug 'jreybert/vimagit'
 
 if !has('gui_running')
   Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
