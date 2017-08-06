@@ -9,13 +9,15 @@ if has('nvim')
   "set guicursor=n-v-c:block,i-ci-ve:ver10,r-cr:hor20,o:hor50
         "\,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
         "\,sm:block-blinkwait175-blinkoff150-blinkon175
-  set inccommand=nosplit
   tnoremap <Leader>e <C-\><C-n>
   tnoremap <C-h> <C-\><C-n><C-h>
   tnoremap <C-j> <C-\><C-n><C-j>
   tnoremap <C-k> <C-\><C-n><C-k>
   tnoremap <C-l> <C-\><C-n><C-l>
-  let g:terminal_color_0 = '#928374'
+  tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
+  nmap <leader>t :term<cr>
+  nmap <leader>, :bnext<CR>
+  tmap <leader>, <C-\><C-n>:bnext<cr>
 endif
 
 "Terminal {{{
@@ -266,7 +268,7 @@ nnoremap <localleader>e <C-W>|
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
 "Break out current window into new tabview
-nnoremap <leader>t <C-W>T
+nnoremap <leader>nt <C-W>T
 "Close every window in the current tabview but the current one
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
@@ -316,8 +318,7 @@ noremap K  @='10k'<CR>
 noremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
-nnoremap <leader>tev :vsplit $MYVIMRC<cr>
-nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
 
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
@@ -335,7 +336,6 @@ nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
-
 
 "Add neovim terminal escape with ESC mapping
 if has("nvim")

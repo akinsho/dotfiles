@@ -23,11 +23,14 @@ if !has('nvim')
   endif
 endif
 "NVIM ====================================
+" Deoplete
+" ----------------------------------------
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'do': 'npm install -g tern' })
+Plug 'ujihisa/neco-look' "English completion
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
-Plug 'Shougo/vimproc.vim', Cond(has('vim'))
 Plug 'ervandew/supertab', Cond(has('nvim'))
+Plug 'Shougo/deol.nvim', Cond(has('nvim'))
 "================================
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips' "Added vim snippets for code autofilling
@@ -63,8 +66,7 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-Plug 'itchyny/vim-cursorword' "Underlines instances of word under the cursor
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' } "Peace and Quiet thanks JGunn
+Plug 'itchyny/vim-cursorword'
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -75,15 +77,15 @@ Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
 Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 "Syntax ============================
 Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
+" Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'sheerun/vim-polyglot'
-"Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'vim-scripts/dbext.vim' "Need this to run SQL Lint
+Plug 'vim-scripts/dbext.vim'
 Plug 'lilydjwg/colorizer', { 'for':['css','jsx', 'js', 'ts', 'tsx'] }
 Plug 'fleischie/vim-styled-components'
 "Git ===============================
@@ -101,11 +103,15 @@ Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFPrompt', 'CtrlSFToggle'] }
 "Coding tools =======================
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'yuttie/comfortable-motion.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+
+Plug 'christoomey/vim-conflicted'
+Plug 'lambdalisue/gina.vim'
+
 " Color picker
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 if !has('gui_running')
@@ -129,7 +135,6 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'trevordmiller/nova-vim'
-Plug 'rakr/vim-one'
 call plug#end()
 
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''

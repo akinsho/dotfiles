@@ -1,3 +1,48 @@
+"====================================================================================
+" Highlights
+"====================================================================================
+" Change default highlighting for spellbad, the default is really bad
+highlight clear SpellBad
+highlight SpellBad  term=underline cterm=italic ctermfg=Red
+highlight clear SpellCap
+highlight SpellCap  term=underline cterm=italic ctermfg=Blue
+highlight clear SpellLocal
+highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
+highlight clear SpellRare
+highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+highlight clear Conceal "Sets no highlighting for conceal
+"few nicer JS colours
+highlight xmlAttrib cterm=italic,bold ctermfg=121
+highlight jsThis ctermfg=224
+highlight jsSuper ctermfg=13
+highlight jsFuncCall ctermfg=cyan
+highlight jsClassProperty ctermfg=14 cterm=bold
+"highlight jsComment ctermfg=245 ctermbg=none
+highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
+highlight Comment gui=italic cterm=italic
+highlight Type    gui=italic cterm=italic
+highlight Folded guifg=#FFC66D guibg=NONE
+highlight CursorLine term=none cterm=none
+"make the completion menu a bit more readable
+highlight PmenuSel guibg=black guifg=white
+highlight Pmenu guibg=white guifg=black
+"so it's clear which paren I'm on and which is matched
+highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
+highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+"highlight VertSplit guifg=black ctermfg=black
+"Remove Background color
+if !has('gui_running')
+  "highlight Normal ctermbg=NONE guibg=NONE
+endif
+if has('gui_running')
+  hi VertSplit guibg=bg guifg=bg
+endif
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+" Highlight term cursor differently
+if has('nvim')
+  highlight TermCursor ctermfg=green guifg=green
+endif
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
@@ -139,7 +184,10 @@ xmap ac <Plug>(textobj-comment-a)
 omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
-"--------------------------------------------
+"-----------------------------------------------------------
+" DEOL - Dark Powered terminal for configuration
+"-----------------------------------------------------------
+let g:deol#prompt_pattern = '% \|%$'
 
 "============================================================
 " Sayonara
@@ -165,7 +213,6 @@ let g:ale_fixers.css = [
   \ 'stylelint',
   \]
 
-let g:ale_typescript_tsserver_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
@@ -201,7 +248,7 @@ vnoremap <leader>gb :Gbrowse<CR>
 "--------------------------------------------
 " JSX & POLYGLOT
 "--------------------------------------------
-let g:jsx_ext_required = 0 "JSX files are not treated as js - so vim-jsx does not auto apply, fixes folding issues
+let g:jsx_ext_required = 0
 "VIM-GO
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_functions = 1
@@ -211,7 +258,6 @@ let g:go_highlight_methods = 1
 " Git Gutter
 "--------------------------------------------
 nnoremap <leader>gg :GitGutterToggle<CR>
-set signcolumn="yes"
 let g:gitgutter_enabled = 0
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager = 1
@@ -263,6 +309,7 @@ endfunction
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
+let g:NERDTreeHeader = 'Happy Hacking'
 let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer        = 1
 let g:NERDTreeWinSize                 = 30
@@ -356,7 +403,7 @@ let g:user_emmet_install_global = 0
 nnoremap <leader>u :GundoToggle<CR>
 
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,jquery,hapi,mocha,redux,react-apollo,express,react,jasmine,chai,handlebars,requirejs'
+let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
 "}}}
 let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 "}}}
@@ -439,12 +486,6 @@ nmap <silent> <leader>vg :TestVisit<CR>
 
 let g:polyglot_disabled = ['elm', 'clojure', 'typescript']
 
-let g:elm_format_autosave = 1
-let g:elm_jump_to_error = 1
-let g:elm_detailed_complete = 1
-let g:elm_setup_keybindings = 0
-let g:elm_make_output_file = "index.html"
-
 "Removes highlighting in typescript
 highlight YcmErrorSection gui=underline cterm=underline
 
@@ -453,9 +494,10 @@ let g:echodoc#enable_at_startup          = 1
 " Deoplete Options
 "=======================================================
 if has("nvim")
+  let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
   let g:deoplete#auto_complete_delay = 0
-  "let g:nvim_typescript#javascript_support = 1
+  let g:nvim_typescript#javascript_support = 1
   "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
   let g:deoplete#file#enable_buffer_path   = 1
   let g:nvim_typescript#type_info_on_hold  = 1
@@ -468,18 +510,27 @@ if has("nvim")
         \ 'tern#Complete',
         \ 'jspc#omni'
         \]
-  let g:deoplete#omni#functions.typescript = [
-        \ 'tern#Complete',
-        \ 'jspc#omni'
-        \]
+" let g:deoplete#omni#functions.typescript = [
+"       \ 'tern#Complete',
+"       \ 'jspc#omni'
+"       \]
+"
+  call deoplete#custom#set('buffer', 'mark', '')
+  call deoplete#custom#set('ternjs', 'mark', '')
+  call deoplete#custom#set('omni', 'mark', '⌾')
+  call deoplete#custom#set('file', 'mark', 'file')
+  call deoplete#custom#set('jedi', 'mark', '')
+  call deoplete#custom#set('typescript', 'mark', '')
+  call deoplete#custom#set('neosnippet', 'mark', '')
 
-  let g:deoplete#enable_at_startup = 1
   nnoremap <localleader>d :TSDefPreview<CR>
   nnoremap <localleader>r :TSRefs<CR>
   nnoremap <localleader>t :TSType<CR>
   nnoremap <localleader>tc :TSEditConfig<CR>
   nnoremap <localleader>i :TSImport<CR>
-  "nnoremap <leader>tsd :TSDocs<CR>
+  let g:deoplete#enable_debug = 1
+  let g:deoplete#enable_profile = 1
+  call deoplete#enable_logging('DEBUG', '~/Desktop/Coding/deoplete.log')
 else
   let g:ycm_add_preview_to_completeopt          = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
@@ -489,11 +540,12 @@ else
   nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
   nnoremap <leader>gt :YcmCompleter GetType<CR>
 endif
+
 let g:tern_request_timeout = 1
 "Add extra filetypes
 let g:tern#filetypes = [
       \ 'tsx',
-      \ 'typescript.jsx',
+      \ 'typescript.tsx',
       \ 'typescript',
       \ 'javascript',
       \ 'jsx',
@@ -642,7 +694,9 @@ if exists('NERDTree') " after a re-source, fix syntax matching issues (concealin
   endif
 endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js'] = ''
 let g:DevIconsEnableFoldersOpenClose = 1
 
 let g:startify_list_order = [
@@ -666,14 +720,11 @@ let g:startify_session_sort = 1
 
 " =========================================================================
 
-"This sets default mapping for camel case text object
+" This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
-"   Disable tmux navigator when zooming the Vim pane
+" Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
-"   saves on moving pane but only the currently opened buffer if changed
+" saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 2
-
-"Remaps native insert mode paste binding to alt-p
-inoremap ð <C-R>0
-inoremap … <C-R><C-P>0
 "}}}
+"---------------------------------------------------------------------

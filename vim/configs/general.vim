@@ -170,7 +170,6 @@ augroup filetype_vim
   autocmd!
   "This command makes vim start a file with all folds closed
   autocmd FileType vim setlocal foldmethod=marker
-  "autocmd FileType vim setlocal foldlevelstart=0
   autocmd FileType vim nnoremap <leader>pi :PlugInstall<CR>
   autocmd FileType vim nnoremap <leader>ps :PlugStatus<CR>
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
@@ -181,10 +180,12 @@ augroup FileType_text
   autocmd FileType text setlocal textwidth=78
 augroup END
 
-"augroup nvim
-  "au!
-  "au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-"augroup END
+augroup nvim
+  au!
+  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  autocmd BufEnter term://* startinsert
+  autocmd TermOpen * set bufhidden=hide
+augroup END
 
 augroup FileType_all
   autocmd!
@@ -473,64 +474,28 @@ set cmdheight=2 " Set command line height to two lines
 "Abbreviations
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
+iabbrev fn function
+iabbrev fl false
+iabbrev tr true
 
 "}}}
+"
+"--------------------------------------------------------------
+"NVIM
+"--------------------------------------------------------------
+if has('nvim')
+  set inccommand=nosplit
+  let g:terminal_color_0  = '#ffffff'
+  let g:terminal_color_15 = '#eeeeec'
+endif
 "-----------------------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------------------
 set background=dark
-"colorscheme nova
+" colorscheme nova
+" colorscheme jellybeans
 colorscheme quantum
-if has('nvim')
-  let g:terminal_color_0  = '#ffffff'
-  let g:terminal_color_15 = '#eeeeec'
-endif
-"====================================================================================
-"Spelling & Highlights
-"====================================================================================
-" Change default highlighting for spellbad, the default is really bad
-highlight clear SpellBad
-highlight SpellBad  term=underline cterm=italic ctermfg=Red
-highlight clear SpellCap
-highlight SpellCap  term=underline cterm=italic ctermfg=Blue
-highlight clear SpellLocal
-highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
-highlight clear SpellRare
-highlight SpellRare  term=underline cterm=italic ctermfg=Blue
-highlight clear Conceal "Sets no highlighting for conceal
-"few nicer JS colours
-highlight xmlAttrib cterm=italic,bold ctermfg=121
-highlight jsThis ctermfg=224
-highlight jsSuper ctermfg=13
-highlight jsFuncCall ctermfg=cyan
-highlight jsClassProperty ctermfg=14 cterm=bold
-"highlight jsComment ctermfg=245 ctermbg=none
-highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
-highlight Comment gui=italic cterm=italic
-highlight Type    gui=italic cterm=italic
-highlight Folded guifg=#FFC66D guibg=NONE
-highlight CursorLine term=none cterm=none
-"make the completion menu a bit more readable
-highlight PmenuSel guibg=black guifg=white
-highlight Pmenu guibg=white guifg=black
-"so it's clear which paren I'm on and which is matched
-highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
-highlight Search ctermbg=NONE guifg=NONE guibg=NONE
-"highlight VertSplit guifg=black ctermfg=black
-"Remove Background color
-if !has('gui_running')
-  "highlight Normal ctermbg=NONE guibg=NONE
-endif
-if has('gui_running')
-  hi VertSplit guibg=bg guifg=bg
-endif
-" Highlight VCS conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-" Highlight term cursor differently
-if has('nvim')
-  highlight TermCursor ctermfg=green guifg=green
-endif
-"---------------------------------------------------------------------
+"-------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
 set noshowmode "No mode showing in command pane
