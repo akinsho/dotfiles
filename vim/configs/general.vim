@@ -319,7 +319,7 @@ endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
-set timeout timeoutlen=500 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
+set timeout timeoutlen=300 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
 set pastetoggle=<F2>
 set nohidden
 set winwidth=30
@@ -387,6 +387,7 @@ elseif executable('ag')
   set grepformat^=%f:%l:%c:%m
 endif
 "pressing Tab on the command line will show a menu to complete buffer and file names
+set noshowcmd
 set wildchar=<Tab>
 set wildmenu
 set wildmode=full       " Shows a menu bar as opposed to an enormous list

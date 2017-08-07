@@ -28,7 +28,7 @@ endif
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
-Plug 'ujihisa/neco-look' "English completion
+Plug 'ujihisa/neco-look', Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'ervandew/supertab', Cond(has('nvim'))
 Plug 'Shougo/neoinclude.vim', Cond(has('nvim'))
 "================================

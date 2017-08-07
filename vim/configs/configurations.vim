@@ -84,36 +84,38 @@ if exists('NERDTree') " after a re-source, fix syntax matching issues (concealin
     call webdevicons#hardRefresh()
   endif
 endif
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {} " needed
+let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
+let g:DevIconsEnableFoldersOpenClose                             = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
+let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
-let g:DevIconsEnableFoldersOpenClose = 1
 
 "=============================================================
 "               Airline
 "=============================================================
-let g:webdevicons_enable_airline_tabline = 1
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline_powerline_fonts                  = 1
-let g:airline#extensions#tabline#enabled       = 1
+let g:webdevicons_enable_airline_tabline                 = 1
+let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
+let g:airline_powerline_fonts                            = 1
+let g:airline#extensions#tabline#enabled                 = 1
 let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-let g:airline#extensions#tabline#show_tabs     = 1
-let g:airline#extensions#tabline#tab_nr_type   = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#show_tabs               = 1
+let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod                = ':t'
+let g:airline#extensions#tabline#show_tab_type           = 1
 
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled               = 1
 " determine whether inactive windows should have the left section collapsed to
 " only the filename of that buffer.  >
-let g:airline_inactive_collapse = 1
- let g:airline#extensions#tabline#close_symbol = 'x' " * configure symbol used to represent close button >
+let g:airline_inactive_collapse                    = 1
+ let g:airline#extensions#tabline#close_symbol     = 'x' " * configure symbol used to represent close button >
 " * configure pattern to be ignored on BufAdd autocommand >
 " fixes unnecessary redraw, when e.g. opening Gundo window
-let airline#extensions#tabline#ignore_bufadd_pat =
+let airline#extensions#tabline#ignore_bufadd_pat   =
       \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
 
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -132,8 +134,8 @@ nmap <localleader>+ <Plug>AirlineSelectNextTab
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
 let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
-let g:ctrlsf_winsize = "30%"
-let g:ctrlsf_ignore_dir = ['bower_components', 'node_modules']
+let g:ctrlsf_winsize      = "30%"
+let g:ctrlsf_ignore_dir   = ['bower_components', 'node_modules']
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
 vmap     <C-F>F <Plug>CtrlSFVwordExec
@@ -213,16 +215,9 @@ let g:ale_fixers = {}
 let g:ale_fixers.javascript = [
   \ 'prettier', 'eslint'
   \]
-let g:ale_fixers.python = [
-  \ 'flake8',
-  \]
-let g:ale_fixers.typescript = [
-  \ 'prettier',
-  \]
-let g:ale_fixers.css = [
-  \ 'stylelint',
-  \]
-
+let g:ale_fixers.python = ['flake8']
+let g:ale_fixers.typescript = ['prettier']
+let g:ale_fixers.css = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
@@ -231,12 +226,12 @@ let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'python': ['flake8'],
       \'css': ['stylelint'],
-      \'jsx': ['eslint'],
+      \'jsx': ['stylelint', 'eslint'],
       \'sql': ['sqlint'],
-      \'typescript':['tslint', 'tsserver', 'typecheck'],
+      \'typescript':['tslint', 'tsserver', 'typecheck', 'stylelint'],
       \'html':[]
       \}
-let g:ale_linter_aliases    = {'jsx': 'css'}
+let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
 let g:ale_set_highlights    = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
@@ -261,7 +256,6 @@ let g:jsx_ext_required          = 0
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
-
 "--------------------------------------------
 " Git Gutter
 "--------------------------------------------
@@ -317,12 +311,13 @@ endfunction
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
-let g:NERDTreeHeader = 'Happy Hacking'
+let g:NERDTreeHeader                  = 'Happy Hacking'
 let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer        = 1
 let g:NERDTreeWinSize                 = 30
-let g:NERDTreeDirArrowExpandable      = '├'
-let g:NERDTreeDirArrowCollapsible     = '└'
+" Expandable ideas = ['','']
+" let g:NERDTreeDirArrowExpandable      = '├'
+" let g:NERDTreeDirArrowCollapsible     = '└'
 let NERDTreeQuitOnOpen                = 1
 let NERDTreeMinimalUI                 = 1
 let NERDTreeDirArrows                 = 1
@@ -388,9 +383,6 @@ if exists('$TMUX')
   if !has('nvim')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  "else
-    "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 endif
 
@@ -480,13 +472,11 @@ if has("nvim")
       \}
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#enable_smart_case       = 1
-  let g:deoplete#auto_complete_delay     = 30
+  let g:deoplete#auto_complete_delay     = 0
   let g:deoplete#enable_refresh_always   = 0
   let g:deoplete#max_abbr_width          = 0
   let g:deoplete#max_menu_width          = 0
   let g:deoplete#file#enable_buffer_path = 1
-  let g:deoplete#sources                 = {}
-  let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
@@ -540,7 +530,7 @@ let g:tern_show_signature_in_pum              = 1
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 " close the preview window when you're not using it
-let g:SuperTabDefaultCompletionType = "<c-p>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
 
@@ -593,12 +583,26 @@ augroup goyo_markdown
   autocmd! User GoyoLeave nested call s:goyo_leave()
 augroup END
 
-let g:vim_markdown_fenced_languages =['css', 'erb=eruby', 'javascript', 'js=javascript', 'json=json', 'ruby', 'sass', 'scss=sass', 'xml', 'html', 'python', 'stylus=css', 'less=css', 'sql']
+let g:vim_markdown_fenced_languages =[
+  \'css',
+  \'erb=eruby',
+  \'javascript',
+  \'js=javascript',
+  \'json=json',
+  \'ruby',
+  \'sass',
+  \'scss=sass',
+  \'xml',
+  \'html',
+  \'python',
+  \'stylus=css',
+  \'less=css',
+  \'sql'
+  \]
 let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
-
-" let g:UltiSnipsSnippetsDir="~/Dotfiles/vim/mySnippets"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
+let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
+let g:UltiSnipsSnippetsDir="~/Dotfiles/vim/mySnippets"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 let g:UltiSnipsExpandTrigger="<C-J>"
 let g:UltiSnipsJumpForwardTrigger="<C-J>"
 let g:UltiSnipsListSnippets="<space>ls"
@@ -610,7 +614,6 @@ let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your wi
 if !has('gui_running')
   nnoremap <localleader>m  :Marks<CR>
   nnoremap <localleader>mm :Maps<CR>
-
   let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-s': 'split',
@@ -631,7 +634,6 @@ if !has('gui_running')
         \ 'spinner': ['fg', 'Label'],
         \ 'header':  ['fg', 'Comment']
         \}
-
 " Files + devicons
 function! Fzf_dev()
   function! s:files()
@@ -678,11 +680,11 @@ let g:startify_list_order = [
       \ 'commands',
       \ ]
 
-let g:startify_session_dir = '~/.vim/session'
-let g:startify_session_autoload = 1
+let g:startify_session_dir         = '~/.vim/session'
+let g:startify_session_autoload    = 1
 let g:startify_session_persistence = 1
-let g:startify_change_to_vcs_root = 1
-let g:startify_session_sort = 1
+let g:startify_change_to_vcs_root  = 1
+let g:startify_session_sort        = 1
 
 " =========================================================================
 
