@@ -486,7 +486,6 @@ if has("nvim")
   let g:deoplete#max_menu_width          = 0
   let g:deoplete#file#enable_buffer_path = 1
   let g:deoplete#sources                 = {}
-  " let g:deoplete#sources._               = ['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
   let g:deoplete#sources['javascript.jsx'] = ['file', 'buffer', 'ultisnips', 'ternjs']
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#functions.javascript = [
@@ -497,12 +496,7 @@ if has("nvim")
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
-  let g:deoplete#omni#functions['typescript.jsx'] = [
-      \ 'tern#Complete',
-      \ 'jspc#omni'
-      \]
-  call deoplete#custom#source('ultisnips', 'rank', 1000)
-  "let g:deoplete#sources['typescript'] = ['around', 'file', 'buffer', 'ultisnips', 'ternjs']
+  call deoplete#custom#source('ultisnips', 'rank', 9999)
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#type_info_on_hold  = 1
   call deoplete#custom#set('buffer', 'mark', '')
@@ -518,9 +512,6 @@ if has("nvim")
   nnoremap <localleader>t :TSType<CR>
   nnoremap <localleader>tc :TSEditConfig<CR>
   nnoremap <localleader>i :TSImport<CR>
-  " let g:deoplete#enable_debug = 1
-  " let g:deoplete#enable_profile = 1
-  " call deoplete#enable_logging('DEBUG', 'deoplete.log')
 else
   let g:ycm_add_preview_to_completeopt                = 1
   let g:ycm_autoclose_preview_window_after_completion = 1
@@ -552,8 +543,6 @@ let g:tern#arguments = ["--persistent"]
 let g:SuperTabDefaultCompletionType = "<c-p>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 let g:SuperTabLongestHighlight = 1
-" or just disable the preview entirely
-"set completeopt-=preview
 
 "------------------------------------
 " Goyo
@@ -608,16 +597,13 @@ let g:vim_markdown_fenced_languages =['css', 'erb=eruby', 'javascript', 'js=java
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled           = 1 " Stop folding markdown please
 
+" let g:UltiSnipsSnippetsDir="~/Dotfiles/vim/mySnippets"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
 let g:UltiSnipsExpandTrigger="<C-J>"
 let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsListSnippets="<s-tab>"
+let g:UltiSnipsListSnippets="<space>ls"
 let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your window.
-
-let delimitMate_expand_cr          = 2
-let delimitMate_expand_space       = 1
-let delimitMate_balance_matchpairs = 1
 " ================================================
 " FZF
 " ================================================
@@ -628,7 +614,7 @@ if !has('gui_running')
   let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-s': 'split',
-        \ 'ctrl-v': 'vsplit' 
+        \ 'ctrl-v': 'vsplit'
         \}
 "Customize fzf colors to match your color scheme
   let g:fzf_colors =

@@ -30,13 +30,16 @@ Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'do': 'npm install -g tern'
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'ujihisa/neco-look' "English completion
 Plug 'ervandew/supertab', Cond(has('nvim'))
+Plug 'Shougo/neoinclude.vim', Cond(has('nvim'))
 "================================
 Plug 'w0rp/ale' " Ale  Async Linting as you type
-Plug 'SirVer/ultisnips' 
+Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
 Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim' "Added emmet vim plugin
-Plug 'Raimondi/delimitMate' "Add delimitmate
+Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion' "Added easy motions
 function! BuildTern(info)
   if a:info.status == 'installed' || a:info.force
@@ -78,7 +81,6 @@ Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "Syntax ============================
-" Plug 'HerringtonDarkholme/yats.vim', { 'for':'typescript' }
 Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
@@ -109,8 +111,8 @@ Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 " Color picker
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 "Git -------------------------------
+" Plug 'lambdalisue/gina.vim'
 Plug 'christoomey/vim-conflicted'
-Plug 'lambdalisue/gina.vim'
 Plug 'jreybert/vimagit'
 
 if !has('gui_running')
