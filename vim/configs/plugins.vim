@@ -44,7 +44,7 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'ternjs/tern_for_vim', {'for': ['javascript.jsx', 'javascript'], 'do':function('BuildTern')}
+Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
 Plug 'mhinz/vim-startify'
 if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'
@@ -98,9 +98,11 @@ Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'bkad/CamelCaseMotion'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'terryma/vim-expand-region'
+Plug 'kana/vim-textobj-function'
+Plug 'thinca/vim-textobj-function-javascript'
 Plug 'wellle/targets.vim'
 Plug 'christoomey/vim-sort-motion'
+" Plug 'terryma/vim-expand-region'
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
 "Coding tools =======================
@@ -111,9 +113,7 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-" Color picker
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-
 if !has('gui_running')
   Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
 endif

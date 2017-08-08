@@ -76,6 +76,9 @@ nnoremap <leader>ba :1,1000 bd!<cr>
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " Shortcuts
 " Change Working Directory to that of the current file
+
+" insert path of current file into a command
+cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 " For when you forget to sudo.. Really Write the file.
