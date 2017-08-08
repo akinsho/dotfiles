@@ -1,6 +1,34 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+function! JsEchoError(msg)
+  redraw | echon "js: " | echohl ErrorMsg | echon a:msg | echohl None
+endfunction
+
+" Swapping between test file and main file.
+function! JsSwitch(bang, cmd)
+  let file = expand('%')
+  if empty(file)
+    call JsEchoError("no buffer name")
+    return
+  elseif file =~# '^\f\+.test\.js$'
+    let l:root = split(file, '.test.js$')[0]
+    let l:alt_file = l:root . ".js"
+  elseif file =~# '^\f\+\.js$'
+    let l:root = split(file, ".js$")[0]
+    let l:alt_file = l:root . '.test.js'
+  else
+    call JsEchoError("not a js file")
+    return
+  endif
+  if empty(a:cmd)
+    execute ":edit " . alt_file
+  else
+    execute ":" . a:cmd . " " . alt_file
+  endif
+endfunction
+
+au Filetype javascript command! -bang A call JsSwitch(<bang>0, '')
 function! WrapForTmux(s)
   if !exists('$TMUX')
     return a:s
@@ -171,6 +199,7 @@ augroup filetype_javascript_typescript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   autocmd FileType javascript setlocal concealcursor=nvic
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
 augroup END
 
 augroup FileType_Clojure
@@ -338,7 +367,7 @@ if !has('nvim')
   set sessionoptions-=options
   set termsize="10x30"
 endif
-set completeopt+=menu,noselect
+set completeopt+=menu,noselect,longest
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------
@@ -387,7 +416,6 @@ elseif executable('ag')
   set grepformat^=%f:%l:%c:%m
 endif
 "pressing Tab on the command line will show a menu to complete buffer and file names
-set noshowcmd
 set wildchar=<Tab>
 set wildmenu
 set wildmode=full       " Shows a menu bar as opposed to an enormous list
@@ -438,20 +466,21 @@ set listchars+=eol:\
 " =====================================================================
 "-----------------------------------
 set iskeyword+=- "Enables better css syntax highlighting
-" link to system clipboard
 if has("unnamedplus")
   set clipboard=unnamedplus
 elseif has("clipboard")
   set clipboard=unnamed
 endif
 set nojoinspaces
-set gdefault "Makes the g flag available by default so it doesn't have to be specified
+set gdefault
 " insert completion height and options
 set pumheight=10
-set title                             " wintitle = filename - vim
-set number
-if has('+relativenumber') "Add relative line numbers and relative = absolute line numbers i.e current
+set title
+if has('+relativenumber')
+  set number
   set relativenumber
+else
+  set number
 endif
 if !has('gui_running')
   set linespace=4
@@ -544,10 +573,6 @@ if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
 endif
 scriptencoding utf-8
-
-" =======================================================
-"  DICTIONARY
-" =======================================================
 set dictionary+=/usr/share/dict/words
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
@@ -594,7 +619,6 @@ endif
 " ----------------------------------------------------------------------------
 " Match and search
 " ----------------------------------------------------------------------------
-" Sets a case insensitive search except when using Caps
 set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
@@ -606,13 +630,13 @@ endif
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-"augroup cursorline
-  "autocmd!
-  "autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  "autocmd WinLeave * setlocal nocursorline
-"augroup END
+augroup cursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
 "
-set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
+set scrolloff=999 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 

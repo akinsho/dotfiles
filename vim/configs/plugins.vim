@@ -34,13 +34,11 @@ Plug 'Shougo/neoinclude.vim', Cond(has('nvim'))
 "================================
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
 Plug 'Shougo/echodoc.vim'
-Plug 'scrooloose/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'mattn/emmet-vim' "Added emmet vim plugin
+Plug 'scrooloose/nerdtree', {'on':['NERDTreeFind', 'NERDTreeToggle']}
+Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
-Plug 'easymotion/vim-easymotion' "Added easy motions
+Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
   if a:info.status == 'installed' || a:info.force
     !npm install
@@ -68,7 +66,6 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-" Plug 'itchyny/vim-cursorword'
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -92,14 +89,16 @@ Plug 'lilydjwg/colorizer', { 'on': 'Colorize' }
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
 "Text Objects =====================
+Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'bkad/CamelCaseMotion'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-expand-region'
 Plug 'wellle/targets.vim'
+Plug 'christoomey/vim-sort-motion'
 "Search Tools =======================
-Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFPrompt', 'CtrlSFToggle'] }
+Plug 'dyng/ctrlsf.vim'
 "Coding tools =======================
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }

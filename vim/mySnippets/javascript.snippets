@@ -19,7 +19,7 @@ for (let i = 0; i< $0; i++){
 endsnippet
 
 snippet cl "console log"
-console.log('${1:log}', $2);
+console.log('${1:log}', ${2}$1${3});
 endsnippet
 
 snippet log "console log string"
@@ -73,7 +73,6 @@ snippet class "Class"
 class ${1:Name} {
   constructor(${2:arg}) {
       $3
-        
   }
     $4
 
@@ -259,6 +258,14 @@ endsnippet
 # Import
 snippet im "import from"
 import ${1:foo} from '${2:bar}'
+endsnippet
+
+snippet imm "import {} from"
+import { ${1:foo} } from '${2:bar}'
+endsnippet
+
+snippet imas "import * as from"
+import * as ${1:foo} from '${2:bar}'
 endsnippet
 
 # Export

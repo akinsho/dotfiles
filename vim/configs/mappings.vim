@@ -14,9 +14,18 @@ if has('nvim')
   tnoremap <C-j> <C-\><C-n><C-j>
   tnoremap <C-k> <C-\><C-n><C-k>
   tnoremap <C-l> <C-\><C-n><C-l>
+  tmap <leader>. <C-\><C-n>:bprevious<CR>
+  tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
+  tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
+  tmap <leader>3  <C-\><C-n><Plug>AirlineSelectTab3
+  tmap <leader>4  <C-\><C-n><Plug>AirlineSelectTab4
+  tmap <leader>5  <C-\><C-n><Plug>AirlineSelectTab5
+  tmap <leader>6  <C-\><C-n><Plug>AirlineSelectTab6
+  tmap <leader>7  <C-\><C-n><Plug>AirlineSelectTab7
+  tmap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
+  tmap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
   tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
   nmap <leader>t :term<cr>
-  nmap <leader>, :bnext<CR>
   tmap <leader>, <C-\><C-n>:bnext<cr>
 endif
 

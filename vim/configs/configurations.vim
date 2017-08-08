@@ -46,6 +46,8 @@ endif
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
+nnoremap <leader>gnc :GitNextConflict<cr>
+set stl+=%{ConflictedVersion()}
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
@@ -67,13 +69,17 @@ call NERDTreeHighlightFile('svg', 178, 'none', '#CDA109')
 call NERDTreeHighlightFile('gif', 36, 'none', '#15A274')
 call NERDTreeHighlightFile('jpg', 36, 'none', '#15A274')
 call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
+call NERDTreeHighlightFile('DS_Store', 'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('zshrc', 'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#151515')
 
 if executable('rg')
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
 elseif executable('ag')
-  " ag is fast enough that CtrlP doesn't need to cache
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
@@ -239,6 +245,9 @@ nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
 imap <C-L> <C-O><Plug>CapsLockToggle
 "--------------------------------------------
+" Use `gl` and `gu` rather than the default conflicted diffget mappings
+let g:diffget_local_map = 'gl'
+let g:diffget_upstream_map = 'gu'
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
@@ -318,13 +327,13 @@ let g:NERDTreeWinSize                 = 30
 " Expandable ideas = ['','']
 " let g:NERDTreeDirArrowExpandable      = '├'
 " let g:NERDTreeDirArrowCollapsible     = '└'
-let NERDTreeQuitOnOpen                = 1
-let NERDTreeMinimalUI                 = 1
-let NERDTreeDirArrows                 = 1
-let NERDTreeCascadeOpenSingleChildDir = 1
+" let g:NERDTreeDirArrows                 = 0
+let g:NERDTreeQuitOnOpen                = 1
+let g:NERDTreeMinimalUI                 = 1
+let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks           = 1
-let NERDTreeAutoDeleteBuffer          = 1
-let NERDTreeShowHidden                = 1 "Show hidden files by default
+let g:NERDTreeAutoDeleteBuffer          = 1
+let g:NERDTreeShowHidden                = 1 "Show hidden files by default
 
 "===================================================
 "EasyMotion mappings
@@ -406,8 +415,7 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
-"
-"fugitive plugin
+
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -530,9 +538,9 @@ let g:tern_show_signature_in_pum              = 1
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 " close the preview window when you're not using it
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType    = "<c-n>"
 let g:SuperTabClosePreviewOnPopupClose = 1
-let g:SuperTabLongestHighlight = 1
+let g:SuperTabLongestHighlight         = 1
 
 "------------------------------------
 " Goyo
@@ -601,13 +609,13 @@ let g:vim_markdown_fenced_languages =[
   \]
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
-let g:UltiSnipsSnippetsDir="~/Dotfiles/vim/mySnippets"
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mySnippets"]
-let g:UltiSnipsExpandTrigger="<C-J>"
-let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsListSnippets="<space>ls"
-let g:UltiSnipsJumpBackwardTrigger="<C-K>"
-let g:UltiSnipsEditSplit="vertical" "If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsSnippetsDir          = "~/Dotfiles/vim/mySnippets" "Both of these settings are necessary
+let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
+let g:UltiSnipsExpandTrigger        = "<C-J>"
+let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
+let g:UltiSnipsListSnippets         = "<space>ls"
+let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
+let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
 " ================================================
 " FZF
 " ================================================
