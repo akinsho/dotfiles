@@ -7,7 +7,8 @@ alias work="cd ~/Desktop/Coding/Work/"
 alias code="cd ~/Desktop/Coding"
 alias l="lsp"
 alias la='ls -aG'
-alias v='vim'
+alias v='nvim'
+alias vi='vim'
 alias nv='nvim'
 alias cl='clear'
 alias o='a -e xdg-open' # quick opening files with xdg-open
@@ -26,6 +27,7 @@ alias nev="nvim ~/.vimrc"
 alias net="nvim ~/.tmux.conf"
 alias yt="clear && yarn test"
 alias ys="clear && yarn start"
+alias yd="cl && yarn develop"
 
 #alias ctags if you used homebrew
 alias ctags="`brew --prefix`/bin/ctags"
@@ -51,7 +53,7 @@ alias -s html=nvim
 alias -s css=nvim
 alias -s py=nvim
 
-# alias tmux="tmux -CC"
+alias ti="tmux -CC"
 # alias attach="tmux -CC attach"
 alias browse="browser-sync start --server"
 alias ctags="`brew --prefix`/bin/ctags"

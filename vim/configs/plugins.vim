@@ -88,6 +88,10 @@ Plug 'lilydjwg/colorizer', { 'on': 'Colorize' }
 "Git ===============================
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
+Plug 'christoomey/vim-conflicted'
+Plug 'jreybert/vimagit'
+Plug 'shumphrey/fugitive-gitlab.vim'
+" Plug 'lambdalisue/gina.vim'
 "Text Objects =====================
 Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-textobj-user'
@@ -109,10 +113,6 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 " Color picker
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-"Git -------------------------------
-" Plug 'lambdalisue/gina.vim'
-Plug 'christoomey/vim-conflicted'
-Plug 'jreybert/vimagit'
 
 if !has('gui_running')
   Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}

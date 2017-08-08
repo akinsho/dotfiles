@@ -205,6 +205,10 @@ xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 
 "============================================================
+" Switch
+"============================================================
+let g:switch_mapping = "-"
+"============================================================
 " Sayonara
 "============================================================
 nnoremap <leader>q :Sayonara!<CR>
@@ -218,9 +222,7 @@ if has('gui_running')
 endif
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
-let g:ale_fixers.javascript = [
-  \ 'prettier', 'eslint'
-  \]
+let g:ale_fixers.javascript = ['prettier', 'eslint']
 let g:ale_fixers.python = ['flake8']
 let g:ale_fixers.typescript = ['prettier']
 let g:ale_fixers.css = ['stylelint']

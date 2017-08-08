@@ -367,7 +367,8 @@ if !has('nvim')
   set sessionoptions-=options
   set termsize="10x30"
 endif
-set completeopt+=menu,noselect,longest
+set completeopt+=noselect,longest
+set completeopt-=preview
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------

@@ -1,8 +1,19 @@
 [user]
-	name = Akin909
-	email = akin.sowemimo@gmail.com
+  name = Akin909
+  email = akin.sowemimo@gmail.com
 [color]
-	ui = auto
+  ui = auto
 [core]
-	editor = vim
-	excludesfile = /Users/A_nonymous/.gitignore_global
+  editor = nvim
+  excludesfile = /Users/A_nonymous/.gitignore_global
+[alias]
+  conflicted = !vim +Conflicted
+  fall = fetch --all
+  uncommit = reset --soft HEAD^
+  ureset = !git reset --hard $(git upstream)
+[push]
+  default = upstream
+[fetch]
+  prune = true
+[gitsh]
+  prompt = "\n%D %c(%b%#)%w ➜"
