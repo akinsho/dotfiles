@@ -348,7 +348,8 @@ endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
-set timeout timeoutlen=300 ttimeoutlen=100 "time out on mapping after half a second, time out on key codes after a tenth of a second automatically at present
+"NOTE: notimeout setting is super important as it prevents delayed key entry
+set notimeout timeoutlen=300 ttimeoutlen=100
 set pastetoggle=<F2>
 set nohidden
 set winwidth=30
