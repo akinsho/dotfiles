@@ -85,7 +85,6 @@ tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_blac
 # tm_tunes="#[bg=colour234,fg=colour178]$tm_right_separator_black#[fg=black,bg=colour178]#(osascript ~/Dotfiles/applescripts/tunes.scpt)"
 tm_tunes="#[fg=black,bg=colour178]#(osascript ~/Dotfiles/bin/tunes.scpt)"
 
-# tm_battery="#[fg=colour255,bg=$tm_color_music]$tm_right_separator_black#[bg=colour255]#(~/Dotfiles/bin/battery_indicator.sh)"
 # batt_plug="#{battery_status_bg} #{battery_icon}   #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M "
 batt_plug="#{battery_status_fg} #{battery_icon}   #{battery_percentage} #{battery_remain}"
  # | %a %h-%d %H:%M 

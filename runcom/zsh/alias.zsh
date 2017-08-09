@@ -2,6 +2,8 @@
 # Aliases
 # ================================================================================
 alias x="exit" # Exit Terminal
+alias eal="vim ~/Dotfiles/configs/alacritty/alacritty.yml"
+alias neal="nvim ~/Dotfiles/configs/alacritty/alacritty.yml"
 alias dots="cd ~/Dotfiles"
 alias work="cd ~/Desktop/Coding/Work/"
 alias code="cd ~/Desktop/Coding"

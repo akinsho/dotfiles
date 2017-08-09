@@ -25,7 +25,7 @@ dimensions:
 # (change requires restart)
 padding:
   x: 10
-  y: 10
+  y: 5
 
 # The FreeType rasterizer needs to know the device DPI for best results
 # (changes require restart)
@@ -49,15 +49,16 @@ font:
 
   # The bold font face
   bold:
-    family: Flott Flott
+    # family: flottflott
+    family: FuraCode NerdFont
     # Style can be specified to pick a specific face.
-    style: Regular
+    style: Bold
 
   # The italic font face
   italic:
-    family: Menlo
+    family: Input Mono
     # Style can be specified to pick a specific face.
-    style: Italic
+    style: Extra Light Italic
 
   # Point size of the font
   size: 15.0
@@ -193,6 +194,7 @@ visual_bell:
 #     strings. For example:
 #     - { ... , command: { program: "alacritty", args: ["-e", "vttest"] } }
 key_bindings:
+  - { key: Space, mods: Control, chars: "\x00"                           }
   - { key: V,        mods: Command, action: Paste                        }
   - { key: C,        mods: Command, action: Copy                         }
   - { key: Q,        mods: Command, action: Quit                         }
@@ -270,7 +272,7 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-hide_cursor_when_typing: false
+hide_cursor_when_typing: true
 
 # Shell
 #
