@@ -72,6 +72,7 @@ Plug 'vim-airline/vim-airline-themes'
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
 Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
