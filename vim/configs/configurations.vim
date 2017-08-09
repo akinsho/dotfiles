@@ -271,7 +271,7 @@ let g:go_highlight_methods      = 1
 " Git Gutter
 "--------------------------------------------
 nnoremap <leader>gg :GitGutterToggle<CR>
-let g:gitgutter_enabled       = 0
+let g:gitgutter_enabled       = 1
 let g:gitgutter_sign_modified = '•'
 let g:gitgutter_eager         = 1
 let g:gitgutter_sign_added    = '❖'

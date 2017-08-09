@@ -92,7 +92,7 @@ Plug 'rhysd/committia.vim'
 Plug 'christoomey/vim-conflicted'
 Plug 'jreybert/vimagit'
 Plug 'shumphrey/fugitive-gitlab.vim'
-" Plug 'lambdalisue/gina.vim'
+Plug 'lambdalisue/gina.vim'
 "Text Objects =====================
 Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-textobj-user'

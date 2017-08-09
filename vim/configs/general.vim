@@ -489,7 +489,7 @@ if !has('gui_running')
 else
   set linespace=2
 endif
-set numberwidth=5
+set numberwidth=6
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
