@@ -81,7 +81,8 @@ nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:regi
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
-" For when you forget to sudo.. Really Write the file.
+cnoremap <C-Z> <S-Left>
+cnoremap <C-X> <S-Right>
 cmap w!! w !sudo tee % >/dev/null
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
