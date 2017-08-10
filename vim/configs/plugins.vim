@@ -103,7 +103,7 @@ Plug 'kana/vim-textobj-function'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'wellle/targets.vim'
 Plug 'christoomey/vim-sort-motion'
-" Plug 'terryma/vim-expand-region'
+Plug 'terryma/vim-expand-region'
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
 "Coding tools =======================
@@ -112,7 +112,6 @@ Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/switch.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 if !has('gui_running')
