@@ -322,20 +322,20 @@ endfunction
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
-let g:NERDTreeHeader                  = 'Happy Hacking'
-let g:NERDTreeHijackNetrw             = 0 "Off as it messes with startify's autoload session
-let g:NERDTreeAutoDeleteBuffer        = 1
-let g:NERDTreeWinSize                 = 30
-" Expandable ideas = ['','']
-" let g:NERDTreeDirArrowExpandable      = '├'
-" let g:NERDTreeDirArrowCollapsible     = '└'
-" let g:NERDTreeDirArrows                 = 0
+let g:NERDTreeHeader                    = 'Happy Hacking'
+let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
+let g:NERDTreeAutoDeleteBuffer          = 1
+let g:NERDTreeWinSize                   = 30
+"Cannot remove nerdtree arrows so compromis is use NBS
+let NERDTreeDirArrowExpandable          = " "
+let NERDTreeDirArrowCollapsible         = " "
 let g:NERDTreeQuitOnOpen                = 1
 let g:NERDTreeMinimalUI                 = 1
 let g:NERDTreeCascadeOpenSingleChildDir = 1
-let g:NERDTreeShowBookmarks           = 1
+let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
+" Expandable ideas = ['','','├','└']
 
 "===================================================
 "EasyMotion mappings
@@ -496,7 +496,11 @@ if has("nvim")
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
-  call deoplete#custom#source('ultisnips', 'rank', 9999)
+  let g:deoplete#omni#functions["typescript.tsx"] = [
+      \ 'tern#Complete',
+      \ 'jspc#omni'
+      \]
+  call deoplete#custom#source('ultisnips', 'rank', 6000)
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#type_info_on_hold  = 1
   call deoplete#custom#set('buffer', 'mark', '')
@@ -507,11 +511,12 @@ if has("nvim")
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
 
-  nnoremap <localleader>d :TSDefPreview<CR>
-  nnoremap <localleader>r :TSRefs<CR>
-  nnoremap <localleader>t :TSType<CR>
+  nnoremap <localleader>tp :TSDefPreview<CR>
+  nnoremap <localleader>td :TSDef<CR>
+  nnoremap <localleader>tr :TSRefs<CR>
+  nnoremap <localleader>tt :TSType<CR>
   nnoremap <localleader>tc :TSEditConfig<CR>
-  nnoremap <localleader>i :TSImport<CR>
+  nnoremap <localleader>ti :TSImport<CR>
 else
   let g:ycm_add_preview_to_completeopt                = 1
   let g:ycm_autoclose_preview_window_after_completion = 1

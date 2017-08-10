@@ -19,6 +19,9 @@ export RUNCOM=$DOTFILES/runcom/
 #export PATH="$(yarn global bin):$PATH"
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 
+#Pyenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -82,11 +85,22 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
 # PLUGINS =======================================================================
-plugins=(alias-tips yarn nvm git gitfast zsh-completions command-not-found colored-man-pages z common-aliases brew)
+plugins=(
+        alias-tips
+        yarn
+        last-working-dir
+        nvm
+        git gitfast
+        zsh-completions
+        command-not-found
+        colored-man-pages
+        z
+        common-aliases
+        brew
+        )
 
 # web-search - great plugin, google from the command line although I never use
 # it soo...
