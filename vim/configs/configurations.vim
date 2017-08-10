@@ -49,12 +49,6 @@ endif
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
-
-"-------------------------------------------------------------------------------------------------
-"Gina
-"-------------------------------------------------------------------------------------------------
-nnoremap <leader>g :Gina 
-
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
@@ -107,6 +101,35 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 
 "=============================================================
+" Gina
+"=============================================================
+nnoremap <leader>g :Gina 
+" Alias 'track' to 'commit:checkout:track'
+call gina#custom#command#alias('branch', 'br')
+call gina#custom#command#option('br', '-v', 'v')
+call gina#custom#command#option(
+      \ '/\%(log\|reflog\)',
+      \ '--opener', 'vsplit'
+      \)
+call gina#custom#command#option(
+      \ 'log', '--group', 'log-viewer'
+      \)
+call gina#custom#command#option(
+      \ 'reflog', '--group', 'reflog-viewer'
+      \)
+call gina#custom#command#option(
+      \ 'commit', '-v|--verbose'
+      \)
+" Alias 'dp' to 'diff:preview' globally
+call gina#custom#action#alias(
+      \ '/.*', '<leader>dp', 'diff:preview'
+      \)
+call gina#custom#action#alias(
+      \ 'branch', 'track', 'commit:checkout:track',
+      \)
+call gina#custom#command#alias('status', 'st')
+
+"=============================================================
 "               Airline
 "
 "=============================================================
@@ -119,7 +142,12 @@ let g:airline#extensions#tabline#show_tabs               = 1
 let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                = ':t'
 let g:airline#extensions#tabline#show_tab_type           = 1
-let g:airline_section_y='%{gina#component#status#preset("fancy")}'
+" let g:airline_section_y='%{gina#component#traffic#behind()}'
+let g:airline_section_gutter ='%{gina#component#repo#preset("fancy")}'
+"  let g:airline#extensions#default#layout = [
+"       \ [ 'a', 'b', 'y' ],
+"       \ [ 'x', 'c', 'z', 'error', 'warning' ]
+"       \ ]
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#ale#enabled               = 1

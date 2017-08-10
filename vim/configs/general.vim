@@ -349,7 +349,7 @@ endif
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
-set notimeout timeoutlen=300 ttimeoutlen=100
+set notimeout timeoutlen=500 ""ttimeoutlen=100
 set pastetoggle=<F2>
 set nohidden
 set winwidth=30
