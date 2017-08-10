@@ -541,6 +541,9 @@ iabbrev tr true
 "NVIM
 "--------------------------------------------------------------
 if has('nvim')
+  "Only enable this if you become a Python dev
+  " let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
+  " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
   set inccommand=nosplit
   let g:terminal_color_0  = '#ffffff'
   let g:terminal_color_15 = '#eeeeec'
@@ -550,7 +553,6 @@ endif
 "-----------------------------------------------------------------------
 set background=dark
 " colorscheme nova
-" colorscheme jellybeans
 colorscheme quantum
 "-------------------------------------------------------------
 " Utilities

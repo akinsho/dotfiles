@@ -20,7 +20,9 @@ export RUNCOM=$DOTFILES/runcom/
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 
 #Pyenv
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYENV_VIRTUAL_DISABLE_PROMPT=1
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH

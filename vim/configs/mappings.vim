@@ -81,8 +81,8 @@ nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:regi
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
-cnoremap <C-Z> <S-Left>
-cnoremap <C-X> <S-Right>
+cnoreabbrev <expr> help ((getcmdtype() is# ':'    && getcmdline() is# 'help')?('vert help'):('help'))
+cnoreabbrev <expr> h ((getcmdtype() is# ':'    && getcmdline() is# 'h')?('vert help'):('h'))
 cmap w!! w !sudo tee % >/dev/null
 
 """""""""""""""""""""""""""""""""""""""""""""""""""

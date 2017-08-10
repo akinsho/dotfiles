@@ -84,15 +84,15 @@ Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/dbext.vim'
-Plug 'lilydjwg/colorizer', { 'on': 'Colorize' }
+Plug 'ap/vim-css-color'
 " Plug 'fleischie/vim-styled-components'
 "Git ===============================
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
-Plug 'christoomey/vim-conflicted'
 Plug 'jreybert/vimagit'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'lambdalisue/gina.vim'
+" Plug 'christoomey/vim-conflicted' "Gina does this
 "Text Objects =====================
 Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-textobj-user'

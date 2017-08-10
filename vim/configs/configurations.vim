@@ -17,6 +17,7 @@ highlight jsThis ctermfg=224
 highlight jsSuper ctermfg=13
 highlight jsFuncCall ctermfg=cyan
 highlight jsClassProperty ctermfg=14 cterm=bold
+highlight cssBraces ctermfg=cyan
 "highlight jsComment ctermfg=245 ctermbg=none
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
@@ -24,8 +25,10 @@ highlight Type    gui=italic cterm=italic
 highlight Folded guifg=#FFC66D guibg=NONE
 highlight CursorLine term=none cterm=none
 "make the completion menu a bit more readable
-highlight PmenuSel guibg=black guifg=white
-highlight Pmenu guibg=white guifg=black
+highlight PmenuSel guibg=#004D40 guifg=white
+highlight Pmenu guibg=#00897b guifg=white
+highlight link StartifySlash Directory
+highlight WildMenu ctermbg=253 ctermfg=0
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
@@ -46,8 +49,12 @@ endif
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
-nnoremap <leader>gnc :GitNextConflict<cr>
-set stl+=%{ConflictedVersion()}
+
+"-------------------------------------------------------------------------------------------------
+"Gina
+"-------------------------------------------------------------------------------------------------
+nnoremap <leader>g :Gina 
+
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
@@ -101,6 +108,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 
 "=============================================================
 "               Airline
+"
 "=============================================================
 let g:webdevicons_enable_airline_tabline                 = 1
 let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
@@ -111,7 +119,7 @@ let g:airline#extensions#tabline#show_tabs               = 1
 let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                = ':t'
 let g:airline#extensions#tabline#show_tab_type           = 1
-
+let g:airline_section_y='%{gina#component#status#preset("fancy")}'
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#ale#enabled               = 1
@@ -205,10 +213,6 @@ xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 
 "============================================================
-" Switch
-"============================================================
-let g:switch_mapping = "-"
-"============================================================
 " Sayonara
 "============================================================
 nnoremap <leader>q :Sayonara!<CR>
@@ -246,10 +250,6 @@ nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
 imap <C-L> <C-O><Plug>CapsLockToggle
-"--------------------------------------------
-" Use `gl` and `gu` rather than the default conflicted diffget mappings
-let g:diffget_local_map = 'gl'
-let g:diffget_upstream_map = 'gu'
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
@@ -327,15 +327,15 @@ let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's au
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
 "Cannot remove nerdtree arrows so compromis is use NBS
-let NERDTreeDirArrowExpandable          = " "
-let NERDTreeDirArrowCollapsible         = " "
+let NERDTreeDirArrowExpandable          = "├"
+let NERDTreeDirArrowCollapsible         = "└"
 let g:NERDTreeQuitOnOpen                = 1
 let g:NERDTreeMinimalUI                 = 1
 let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
-" Expandable ideas = ['','','├','└']
+" Expandable ideas = [' ', ' ', ','','├','└']
 
 "===================================================
 "EasyMotion mappings

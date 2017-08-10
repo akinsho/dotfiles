@@ -66,6 +66,41 @@ let g:airline#extensions#tabline#right_alt_sep = '|'
 let g:airline_left_alt_sep = ''
 let g:airline_right_alt_sep = ''
 
+let g:webdevicons_enable_airline_tabline                 = 1
+let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
+let g:airline_powerline_fonts                            = 1
+let g:airline#extensions#tabline#enabled                 = 1
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
+let g:airline#extensions#tabline#show_tabs               = 1
+let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod                = ':t'
+let g:airline#extensions#tabline#show_tab_type           = 1
+
+" configure whether close button should be shown: >
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#ale#enabled               = 1
+" determine whether inactive windows should have the left section collapsed to
+" only the filename of that buffer.  >
+let g:airline_inactive_collapse                    = 1
+ let g:airline#extensions#tabline#close_symbol     = 'x' " * configure symbol used to represent close button >
+" * configure pattern to be ignored on BufAdd autocommand >
+" fixes unnecessary redraw, when e.g. opening Gundo window
+let airline#extensions#tabline#ignore_bufadd_pat   =
+      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <localleader>1 <Plug>AirlineSelectTab1
+nmap <localleader>2 <Plug>AirlineSelectTab2
+nmap <localleader>3 <Plug>AirlineSelectTab3
+nmap <localleader>4 <Plug>AirlineSelectTab4
+nmap <localleader>5 <Plug>AirlineSelectTab5
+nmap <localleader>6 <Plug>AirlineSelectTab6
+nmap <localleader>7 <Plug>AirlineSelectTab7
+nmap <localleader>8 <Plug>AirlineSelectTab8
+nmap <localleader>9 <Plug>AirlineSelectTab9
+nmap <localleader>- <Plug>AirlineSelectPrevTab
+nmap <localleader>+ <Plug>AirlineSelectNextTab
+
 " A plugin for managing vim themes
 Plug 'reedes/vim-thematic'
 "Use emmet only for html and css files - Great config option although having
