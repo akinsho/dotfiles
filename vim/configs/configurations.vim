@@ -261,7 +261,8 @@ let g:ale_fixers.css = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '✘'
+" let g:ale_sign_error         = '✘'
+let g:ale_sign_error         = '⨉'
 let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'python': ['flake8'],

@@ -479,8 +479,10 @@ set gdefault
 set pumheight=10
 set title
 if has('+relativenumber')
-  set number
-  set relativenumber
+  if !has('nvim')
+    set number
+    set relativenumber
+  endif
 else
   set number
 endif
