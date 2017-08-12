@@ -100,7 +100,18 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "=============================================================
 " Gina
 "=============================================================
-nnoremap <leader>g :Gina 
+function MyGitStatus() abort
+  let staged = gina#component#status#staged()
+  let unstaged = gina#component#status#unstaged()
+  let conflicted = gina#component#status#conflicted()
+  return printf(
+        \ 's: %s, u: %s, c: %s',
+        \ staged,
+        \ unstaged,
+        \ conflicted,
+        \)
+endfunction
+nnoremap <leader>g :Gina
 " Alias 'track' to 'commit:checkout:track'
 call gina#custom#command#alias('branch', 'br')
 call gina#custom#command#option('br', '-v', 'v')
@@ -139,8 +150,9 @@ let g:airline#extensions#tabline#show_tabs               = 1
 let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                = ':t'
 let g:airline#extensions#tabline#show_tab_type           = 1
-" let g:airline_section_y='%{gina#component#traffic#behind()}'
-let g:airline_section_gutter ='%{gina#component#repo#preset("fancy")}'
+let g:airline_section_gutter ='%{gina#component#status#preset()}'
+" let g:airline_section_gutter ='%{MyGitStatus}'
+
 "  let g:airline#extensions#default#layout = [
 "       \ [ 'a', 'b', 'y' ],
 "       \ [ 'x', 'c', 'z', 'error', 'warning' ]
@@ -533,7 +545,7 @@ if has("nvim")
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
-  call deoplete#custom#set('file', 'mark', 'file')
+  call deoplete#custom#set('file', 'mark', '')
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')

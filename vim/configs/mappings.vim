@@ -76,7 +76,18 @@ nnoremap <leader>ba :1,1000 bd!<cr>
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " Shortcuts
 " Change Working Directory to that of the current file
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Command mode related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Smart mappings on the command line
+cno $h e ~/
+cno $d e ~/Desktop/
+cno $j e ./
+cno $c e <C-\>eCurrentFileDir("e")<cr>
 
+" $q is super useful when browsing on the command line
+" it deletes everything until the last slash 
+cno $q <C-\>eDeleteTillSlash()<cr>
 " insert path of current file into a command
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
@@ -339,7 +350,7 @@ nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
-
+map <leader>co :botright cope<cr>
 "Add neovim terminal escape with ESC mapping
 if has("nvim")
   tnoremap <ESC> <C-\><C-n>

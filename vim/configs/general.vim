@@ -1,6 +1,30 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+func! DeleteTillSlash()
+    let g:cmd = getcmdline()
+
+    if has("win16") || has("win32")
+        let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+    else
+        let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+    endif
+
+    if g:cmd == g:cmd_edited
+        if has("win16") || has("win32")
+            let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+        else
+            let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+        endif
+    endif
+
+    return g:cmd_edited
+endfunc
+
+func! CurrentFileDir(cmd)
+    return a:cmd . " " . expand("%:p:h") . "/"
+  endfunc
+
 function! JsEchoError(msg)
   redraw | echon "js: " | echohl ErrorMsg | echon a:msg | echohl None
 endfunction
@@ -248,6 +272,7 @@ if has('nvim')
     au BufEnter * if &buftype == 'terminal' | :startinsert | endif
     autocmd BufEnter term://* startinsert
     autocmd TermOpen * set bufhidden=hide
+    au BufEnter * if &buftype == 'terminal' | setlocal nonumber | endif
   augroup END
 endif
 
@@ -610,16 +635,16 @@ else
   set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
 endif
 if !has('nvim')
-set autoread " reload files if they were edited elsewhere
-  if has ('persistent_undo')
-    if exists('$SUDO_USER')
-      set noundofile "Dont add root owned files which I will need to sudo to remove
-    else
-      set undodir=~/.vim/.undo//
-      set undodir+=~/local/.vim/tmp/undo
-      set undodir+=.
-      set undofile
-    endif
+  set autoread " reload files if they were edited elsewhere
+endif
+if has ('persistent_undo')
+  if exists('$SUDO_USER')
+    set noundofile "Dont add root owned files which I will need to sudo to remove
+  else
+    set undodir=~/.vim/.undo//
+    set undodir+=~/local/.vim/tmp/undo
+    set undodir+=.
+    set undofile
   endif
 endif
 "}}}
