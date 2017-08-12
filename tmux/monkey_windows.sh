@@ -60,12 +60,12 @@ set -g pane-active-border-fg colour51
 setw -g window-status-current-fg colour81
 setw -g window-status-current-bg colour238
 setw -g window-status-current-attr bold
-setw -g window-status-current-format ' #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F '
+setw -g window-status-current-format " #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F "
 
 setw -g window-status-fg colour138
 setw -g window-status-bg colour235
 setw -g window-status-attr none
-setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+setw -g window-status-format " #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F "
 
 setw -g window-status-bell-attr bold
 setw -g window-status-bell-fg colour255

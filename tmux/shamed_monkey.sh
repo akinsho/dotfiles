@@ -78,34 +78,26 @@ tm_right_separator_black=''
 tm_session_symbol=''
 tm_color_feature=colour4
 
-tm_spotify="#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/Dotfiles/bin/spotify.scpt)"
-
-tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_black#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/Dotfiles/bin/itunes.scpt)"
-
+# tm_spotify="#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/Dotfiles/bin/spotify.scpt)"
+# tm_itunes="#[fg=$tm_color_music,bg=$tm_color_background]$tm_right_separator_black#[fg=$tm_color_background,bg=$tm_color_music]#(osascript ~/Dotfiles/bin/itunes.scpt)"
 # tm_tunes="#[bg=colour234,fg=colour178]$tm_right_separator_black#[fg=black,bg=colour178]#(osascript ~/Dotfiles/applescripts/tunes.scpt)"
-tm_tunes="#[fg=black,bg=colour178]#(osascript ~/Dotfiles/bin/tunes.scpt)"
-
+# tm_tunes="#[fg=black,bg=colour178]#(osascript ~/Dotfiles/bin/tunes.scpt)"
 # batt_plug="#{battery_status_bg} #{battery_icon}   #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M "
 batt_plug="#{battery_status_fg} #{battery_icon}   #{battery_percentage} #{battery_remain}"
- # | %a %h-%d %H:%M 
+# | %a %h-%d %H:%M 
 # separator fg colors the arrow(250), bg colors surrounding space(default), date fg
 # colors text bg the block (250)
 # Host bg = colour245, seperator fg = colour245 (need to match)
-
-
 # tm_continuum="#[bg=colour178,fg=colour241]$tm_right_separator_black#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
-tm_continuum="#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
+# tm_continuum="#[fg=colour233,bg=colour241,bold] Continuum: #{continuum_status}" 
 
-tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold]   #h "
+# tm_host="#[bg=colour241,fg=colour245]$tm_right_separator_black#[bg=colour245,fg=colour226,bold]   #h "
 # uname="#[bg=colour241,fg=colour245]$tm_right_separator_black#[fg=colour16,bg=colour252,bold,noitalics,nounderscore] $(uname -n)"
 # tm_date_power="#[bg=colour241,fg=colour250]$tm_right_separator_black#[bg=colour250,fg=black,bold]%R %d %b "
 tm_date="#[bg=colour250,fg=black,bold] %R %d %b "
 
-
-
 tm_session_name="$tm_icon #S "
 #[fg=$tm_color_feature,bg=default,nobold] - not sure where this came from
-
 
 set -g status-position bottom
 set -g status-bg colour234
@@ -114,23 +106,7 @@ set -g status-attr dim
 # Added functionality to highlight session indicator when the prefix has been
 # pressed using client prefix ternary operator of sorts
 set -g status-left "#{?client_prefix,#[bg=colour039]#[fg=colour226],#[bg=colour172]#[fg=white]#[bold]}$tm_session_name"
-# removed $tm_host from status bar till resizing issue fixed
-#[fg=#{battery_status_bg},bg=colour241]$tm_right_separator_black
-# set -g status-right "$tm_tunes  #[bg=colour241]$batt_plug  $tm_date"
 set -g status-right " #[bg=colour241]$batt_plug  $tm_date"
-
-
-# Failed attempts to create a responsive status bar
-
-# window_width=$(tmux display-message -p "#{window_width}")
-
-
-# if-shell "[[ '$window_width' -ge '$MEDIUM' ]]" "set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S $SIZE'"\
-# "set -g status-right '$tm_tunes $tm_continuum $tm_host  $tm_date'"
-
-# set -g status-right '#(eval ./responsive.sh `tmux display -p "#{client_width}"`)'
-# set -g status-right "$tm_tunes $tm_continuum $tm_host $tm_date"
-
 
 
 # Original Status line if in need to revert
