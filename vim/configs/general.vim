@@ -27,8 +27,8 @@ function! JsSwitch(bang, cmd)
     execute ":" . a:cmd . " " . alt_file
   endif
 endfunction
-
 au Filetype javascript command! -bang A call JsSwitch(<bang>0, '')
+
 function! WrapForTmux(s)
   if !exists('$TMUX')
     return a:s
@@ -255,6 +255,7 @@ augroup FileType_all
   autocmd!
   autocmd FileType python setl ts=4
   autocmd FileType rust setl sw=0 sts=0
+  autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
@@ -638,9 +639,14 @@ endif
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
 augroup cursorline
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  autocmd WinLeave * setlocal nocursorline
+  autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
+  autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
+
+if exists('&colorcolumn')
+    autocmd InsertEnter * set colorcolumn=80
+    autocmd InsertLeave * set colorcolumn=""
+endif
 "
 set scrolloff=999 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10

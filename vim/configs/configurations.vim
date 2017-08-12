@@ -34,9 +34,6 @@ highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 "highlight VertSplit guifg=black ctermfg=black
 "Remove Background color
-if !has('gui_running')
-  "highlight Normal ctermbg=NONE guibg=NONE
-endif
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
 endif
@@ -262,8 +259,8 @@ let g:ale_fixers.css = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
-" let g:ale_sign_error         = '✘'
-let g:ale_sign_error         = '⨉'
+let g:ale_sign_error         = '✘'
+" let g:ale_sign_error         = '⨉'
 let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'python': ['flake8'],
@@ -292,7 +289,7 @@ vnoremap <leader>gb :Gbrowse<CR>
 "--------------------------------------------
 " JSX & POLYGLOT
 "--------------------------------------------
-let g:jsx_ext_required          = 0
+let g:jsx_ext_required          = 1
 "VIM-GO
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_functions    = 1
@@ -664,6 +661,7 @@ if !has('gui_running')
         \ 'ctrl-s': 'split',
         \ 'ctrl-v': 'vsplit'
         \}
+let g:fzf_nvim_statusline = 0
 "Customize fzf colors to match your color scheme
   let g:fzf_colors =
         \ { 'fg':    ['fg', 'Normal'],

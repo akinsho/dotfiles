@@ -17,3 +17,5 @@
   prune = true
 [gitsh]
   prompt = "\n%D %c(%b%#)%w ➜"
+[pager]
+    diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
