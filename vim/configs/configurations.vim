@@ -1,5 +1,9 @@
-"====================================================================================
 " Highlights
+"====================================================================================
+" Highlight cursor column onwards - kind of cool
+"====================================================================================
+" let &colorcolumn=join(range(81,999),",")
+" highlight ColorColumn ctermbg=235 guibg=#2c2d27
 "====================================================================================
 " Change default highlighting for spellbad, the default is really bad
 highlight clear SpellBad
@@ -98,46 +102,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 
 "=============================================================
-" Gina
-"=============================================================
-function MyGitStatus() abort
-  let staged = gina#component#status#staged()
-  let unstaged = gina#component#status#unstaged()
-  let conflicted = gina#component#status#conflicted()
-  return printf(
-        \ 's: %s, u: %s, c: %s',
-        \ staged,
-        \ unstaged,
-        \ conflicted,
-        \)
-endfunction
-nnoremap <leader>g :Gina
-" Alias 'track' to 'commit:checkout:track'
-call gina#custom#command#alias('branch', 'br')
-call gina#custom#command#option('br', '-v', 'v')
-call gina#custom#command#option(
-      \ '/\%(log\|reflog\)',
-      \ '--opener', 'vsplit'
-      \)
-call gina#custom#command#option(
-      \ 'log', '--group', 'log-viewer'
-      \)
-call gina#custom#command#option(
-      \ 'reflog', '--group', 'reflog-viewer'
-      \)
-call gina#custom#command#option(
-      \ 'commit', '-v|--verbose'
-      \)
-" Alias 'dp' to 'diff:preview' globally
-call gina#custom#action#alias(
-      \ '/.*', '<leader>dp', 'diff:preview'
-      \)
-call gina#custom#action#alias(
-      \ 'branch', 'track', 'commit:checkout:track',
-      \)
-call gina#custom#command#alias('status', 'st')
-
-"=============================================================
 "               Airline
 "
 "=============================================================
@@ -150,7 +114,6 @@ let g:airline#extensions#tabline#show_tabs               = 1
 let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                = ':t'
 let g:airline#extensions#tabline#show_tab_type           = 1
-let g:airline_section_gutter ='%{gina#component#status#preset()}'
 " let g:airline_section_gutter ='%{MyGitStatus}'
 
 "  let g:airline#extensions#default#layout = [
@@ -181,6 +144,9 @@ nmap <localleader>8 <Plug>AirlineSelectTab8
 nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
+
+let g:tigris#enable_at_startup = 1
+let g:tigris#on_the_fly_enabled = 1
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
@@ -211,8 +177,10 @@ inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 " --color: Search color options
 if !has('gui_running')
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
-let g:fzf_files_options =
-      \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+" let g:fzf_files_options =
+"       \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
@@ -222,12 +190,16 @@ command! -bang -nargs=* Rg
       \   <bang>0)
 " Advanced customization using autoload functions
 " Replace the default dictionary completion with fzf-based fuzzy completion
-inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
+
+imap <c-x>l <plug>(fzf-complete-line)
+imap <c-x>p <plug>(fzf-complete-path)
+inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
 nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>H :History<CR>
 nnoremap <silent> <localleader>C :Commits<CR>
+nnoremap <silent> <localleader>L :Lines<CR>
 
 function! SearchWordWithRg()
   execute 'Rg' expand('<cword>')
@@ -415,47 +387,6 @@ nnoremap <leader>u :GundoToggle<CR>
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
 "}}}
 let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
-"}}}
-"====================================================================================
-"Spelling
-"====================================================================================
-" Dropbox or kept in Git.
-set spellfile=$HOME/.vim-spell-en.utf-8.add
-set fileformats=unix,dos,mac
-set complete+=kspell
-"===================================================================================
-"Mouse {{{
-"===================================================================================
-set mousehide
-set mouse=a "this is the command that works for mousepad
-" Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
-if exists('$TMUX')
-  if !has('nvim')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  endif
-endif
-
-if !has('nvim')
-  set ttymouse=xterm2
-  set mouse=a
-endif
-"}}}
-
-" Zoom / Restore window.
-function! s:ZoomToggle() abort
-  if exists('t:zoomed') && t:zoomed
-    exec t:zoom_winrestcmd
-    let t:zoomed = 0
-  else
-    let t:zoom_winrestcmd = winrestcmd()
-    resize
-    vertical resize
-    let t:zoomed = 1
-  endif
-endfunction
-command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
@@ -541,7 +472,10 @@ if has("nvim")
       \]
   call deoplete#custom#source('ultisnips', 'rank', 6000)
   let g:nvim_typescript#javascript_support = 1
-  let g:nvim_typescript#type_info_on_hold  = 1
+  let g:deoplete#sources#ternjs#types = 1
+  let g:deoplete#sources#ternjs#docs = 1
+  let g:deoplete#sources#ternjs#case_insensitive = 1
+  " let g:nvim_typescript#type_info_on_hold  = 1
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
@@ -673,7 +607,7 @@ if !has('gui_running')
         \ 'ctrl-s': 'split',
         \ 'ctrl-v': 'vsplit'
         \}
-let g:fzf_nvim_statusline = 0
+let g:fzf_nvim_statusline = 1
 "Customize fzf colors to match your color scheme
   let g:fzf_colors =
         \ { 'fg':    ['fg', 'Normal'],
@@ -689,6 +623,15 @@ let g:fzf_nvim_statusline = 0
         \ 'spinner': ['fg', 'Label'],
         \ 'header':  ['fg', 'Comment']
         \}
+" function! s:fzf_statusline()
+  " Override statusline as you like
+"   highlight fzf1 ctermfg=161 ctermbg=251
+"   highlight fzf2 ctermfg=23 ctermbg=251
+"   highlight fzf3 ctermfg=237 ctermbg=251
+"   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+" endfunction
+" autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
 " Files + devicons
 function! Fzf_dev()
   function! s:files()

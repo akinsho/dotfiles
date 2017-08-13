@@ -273,6 +273,7 @@ if has('nvim')
     autocmd BufEnter term://* startinsert
     autocmd TermOpen * set bufhidden=hide
     au BufEnter * if &buftype == 'terminal' | setlocal nonumber | endif
+    au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
 endif
 
@@ -517,7 +518,7 @@ if !has('gui_running')
 else
   set linespace=2
 endif
-set numberwidth=6
+set numberwidth=4
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
@@ -581,7 +582,9 @@ endif
 "-----------------------------------------------------------------------
 set background=dark
 " colorscheme nova
-colorscheme quantum
+" colorscheme quantum
+colorscheme vim-material
+let g:airline_theme='material'
 "-------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
@@ -668,13 +671,41 @@ augroup cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
 
-if exists('&colorcolumn')
-    autocmd InsertEnter * set colorcolumn=80
-    autocmd InsertLeave * set colorcolumn=""
-endif
+" if exists('&colorcolumn')
+"     autocmd InsertEnter * set colorcolumn=80
+"     autocmd InsertLeave * set colorcolumn=""
+" endif
 "
 set scrolloff=999 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 
 "}}}
+
+"====================================================================================
+"Spelling
+"====================================================================================
+" Dropbox or kept in Git.
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+set fileformats=unix,dos,mac
+set complete+=kspell
+"===================================================================================
+"Mouse {{{
+"===================================================================================
+set mousehide
+set mouse=a "this is the command that works for mousepad
+" Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
+if exists('$TMUX')
+  if !has('nvim')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  endif
+endif
+
+if !has('nvim')
+  set ttymouse=xterm2
+  set mouse=a
+endif
+"}}}
+
+
