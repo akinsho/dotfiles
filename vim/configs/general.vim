@@ -78,6 +78,19 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 "====================================================================================
 "AUTOCOMMANDS {{{
 "===================================================================================
+augroup Code Comments             "{{{
+"------------------------------------+
+" Horizontal Rule (78 char long)
+autocmd FileType vim                           nnoremap <leader>hr 0i""---------------------------------------------------------------------------//<ESC>
+autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
+autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
+" Comment Banners (adds 5 spaces at each end)
+autocmd FileType vim                           nnoremap <leader>cb I"     <ESC>A     "<ESC>yyp0lv$hhr-yykPjj
+autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>cb I#     <ESC>A     #<ESC>yyp0lv$hhr-yykPjj
+autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>cb I/*     <ESC>A     */<ESC>yyp0llv$r-$hc$*/<ESC>yykPjj
+
+augroup END "}}}
+
 au FileType qf call AdjustWindowHeight(3, 10)
 function! AdjustWindowHeight(minheight, maxheight)
    let l = 1

@@ -350,9 +350,29 @@ nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
-map <leader>co :botright cope<cr>
+nnoremap <leader>co :botright cope<cr>
 "Add neovim terminal escape with ESC mapping
 if has("nvim")
   tnoremap <ESC> <C-\><C-n>
 endif
 "}}}
+
+
+" Shortcut to jump to next conflict marker"
+nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+  if exists('t:zoomed') && t:zoomed
+    exec t:zoom_winrestcmd
+    let t:zoomed = 0
+  else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let t:zoomed = 1
+  endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <leader>z :ZoomToggle<CR>
+

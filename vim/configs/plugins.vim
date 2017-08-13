@@ -91,7 +91,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
 Plug 'jreybert/vimagit'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'lambdalisue/gina.vim'
 " Plug 'christoomey/vim-conflicted' "Gina does this
 "Text Objects =====================
 Plug 'tommcdo/vim-exchange'
@@ -134,6 +133,7 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'trevordmiller/nova-vim'
+Plug 'hzchirs/vim-material'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 
