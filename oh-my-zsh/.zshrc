@@ -132,7 +132,10 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # export PROJECTS_HOME=~/Desktop/Coding
 # Aliases 'hub' to git to allow for greater git powah!!
 eval "$(hub alias -s)"
-
+##---------------------------------------------------------------------------/
+## NPX - AUTO-FALL-BACK COMMAND
+##---------------------------------------------------------------------------///
+source <(npx --shell-auto-fallback zsh)
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -238,7 +241,7 @@ if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
 fi
 
-# EMOJI-CLI 
+# EMOJI-CLI
 source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
 
 

@@ -15,22 +15,14 @@ endfunction
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 
-if !has('nvim')
-  if has('unix')
-    if empty($SSH_CONNECTION)
-      Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer --tern-completer' }
-    endif
-  endif
-endif
 "NVIM ====================================
 " Deoplete
 " ----------------------------------------
-Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
-Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'), { 'do': 'npm install -g tern' })
+Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
+Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
-Plug 'ujihisa/neco-look', Cond(has('nvim'), { 'for': 'markdown' }) "English completion
-Plug 'ervandew/supertab', Cond(has('nvim'))
-Plug 'Shougo/neoinclude.vim', Cond(has('nvim'))
+Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
+Plug 'ervandew/supertab',           Cond(has('nvim'))
 "================================
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
@@ -59,7 +51,7 @@ if executable("tmux")
 endif
 
 "Utilities ============================
-Plug 'sjl/gundo.vim',{'on':'GundoToggle'} "Add Gundo - undo plugin for vim
+Plug 'mbbill/undotree',{'on':['UndoTreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
   autocmd!
@@ -68,7 +60,8 @@ augroup load_fat_finger
 augroup END
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'machakann/vim-highlightedyank'
+Plug 'airblade/vim-rooter'
 "TPOPE ====================================
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
@@ -83,8 +76,14 @@ Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'vim-scripts/dbext.vim'
-Plug 'ap/vim-css-color'
+Plug 'vim-scripts/dbext.vim', {'for': 'sql'}
+Plug 'ap/vim-css-color', { 'for': [
+      \ 'typescript.tsx'
+      \ ,'javascript.jsx'
+      \ , 'css'
+      \ , 'javascript'
+      \ , 'typescript'
+      \ ] }
 " Plug 'fleischie/vim-styled-components'
 "Git ===============================
 Plug 'airblade/vim-gitgutter'
@@ -92,6 +91,14 @@ Plug 'rhysd/committia.vim'
 Plug 'jreybert/vimagit'
 Plug 'shumphrey/fugitive-gitlab.vim'
 " Plug 'christoomey/vim-conflicted' "Gina does this
+" Clojure =========================
+"   Plug 'guns/vim-sexp'
+"   Plug 'guns/vim-clojure-highlight'
+"   let g:clojure_fold = 1
+"   let g:sexp_filetypes = ''
+" 
+"   Plug 'tpope/vim-salve'
+"   let g:salve_auto_start_repl = 1
 "Text Objects =====================
 Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-textobj-user'
@@ -105,6 +112,7 @@ Plug 'christoomey/vim-sort-motion'
 Plug 'terryma/vim-expand-region'
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
+Plug 'kopischke/vim-fetch'
 "Coding tools =======================
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }

@@ -39,9 +39,13 @@ nnoremap <leader>l<CR> :rightbelow vnew<CR>:terminal<CR>
 nnoremap <leader>k<CR> :leftabove new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow new<CR>:terminal<CR>
 "}}}
+"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
+nnoremap ]e ddkP
+nnoremap [e ddp
 " Move visual block
-vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -65,10 +69,6 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 "nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-"Use this to ensure mappings dont already exist
-" if !hasmapto('\ABCdoit')
-"    map <Leader>d \ABCdoit
-" endif
 " Close all the buffers
 nnoremap <leader>ba :1,1000 bd!<cr>
 " Quickly edit your macros
@@ -92,8 +92,6 @@ cno $q <C-\>eDeleteTillSlash()<cr>
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
-cnoreabbrev <expr> help ((getcmdtype() is# ':'    && getcmdline() is# 'help')?('vert help'):('help'))
-cnoreabbrev <expr> h ((getcmdtype() is# ':'    && getcmdline() is# 'h')?('vert help'):('h'))
 cmap w!! w !sudo tee % >/dev/null
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,6 +100,24 @@ cmap w!! w !sudo tee % >/dev/null
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
+" vim-vertical-move replacement
+" credit: cherryberryterry: https://www.reddit.com/r/vim/comments/4j4duz/a/d33s213
+function! s:vjump(dir) abort
+  let c = '%'.virtcol('.').'v'
+  let flags = a:dir ? 'bnW' : 'nW'
+  let bot = search('\v'.c.'.*\n^(.*'.c.'.)@!.*$', flags)
+  let top = search('\v^(.*'.c.'.)@!.*$\n.*\zs'.c, flags)
+
+  " norm! m`
+  return a:dir ? (line('.') - (bot > top ? bot : top)).'k'
+    \        : ((bot < top ? bot : top) - line('.')).'j'
+endfunction
+vnoremap <expr> <c-j> <SID>vjump(0)
+vnoremap <expr> <c-k> <SID>vjump(1)
+xnoremap <expr> <C-j> <SID>vjump(0)
+xnoremap <expr> <C-k> <SID>vjump(1)
+onoremap <expr> <C-j> <SID>vjump(0)
+onoremap <expr> <C-k> <SID>vjump(1)
 
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
@@ -184,14 +200,7 @@ nnoremap gV `[V`]
 " make last typed word uppercase
 inoremap :u <esc>viwUea
 
-"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-vnoremap é xp`[V`]
-vnoremap ï xkP`[V`]
-nnoremap é ddp
-nnoremap ï ddkP
 
-"Line completion - native vim
-inoremap ç <C-X><C-L>
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
 " replace word under cursor
@@ -199,12 +208,21 @@ nnoremap S :%s/\<<C-R><C-W>\>//gc<Left><Left><Left>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 inoremap ó <C-O>:update<CR>
-"This mapping allows yanking all of a line without taking the new line
-"character as well can be with our without spaces
-vnoremap <silent> al :<c-u>norm!0v$h<cr>
-vnoremap <silent> il :<c-u>norm!^vg_<cr>
-onoremap <silent> al :norm val<cr>
-onoremap <silent> il :norm vil<cr>
+" text-object: line
+" Elegant text-object pattern hacked out of jdaddy.vim.
+function! s:line_inner_movement(count) abort
+  "TODO: handle count
+  if empty(getline('.'))
+    return "\<Esc>"
+  endif
+  let [lopen, copen, lclose, cclose] = [line('.'), 1, line('.'), col('$')-1]
+  call setpos("'[", [0, lopen, copen, 0])
+  call setpos("']", [0, lclose, cclose, 0])
+  return "`[o`]"
+endfunction
+xnoremap <expr>   il <SID>line_inner_movement(v:count1)
+onoremap <silent> il :normal vil<CR>
+
 "ctrl-o in insert mode allows you to perform one normal mode command then
 "returns to insert mode
 " inoremap <C-j> <Down>
@@ -237,12 +255,6 @@ endfunction
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
-"Help Command - vertical split
-command! -complete=help -nargs=1 H call VerticalHelp(<f-args>)
-function! VerticalHelp(topic)
-  execute "vertical botright help " . a:topic
-  execute "vertical resize 78"
-endfunction
 "Remap back tick for jumping to marks more quickly
 nnoremap ' `
 nnoremap ` '
@@ -291,19 +303,9 @@ nnoremap <leader>r <C-W>R
 "Open Common files
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
-
 nnoremap <leader>x :lclose<CR>
 "Indent a page
 nnoremap <C-G>f gg=G<CR>
-" duplicate line and comment (requires vim-commentary)
-nmap <leader>cc yygccp
-xmap <leader>cc m'ygvgc''jp
-"map window keys to leader - Interfere with tmux navigator
-" noremap <C-h> <c-w>h
-" noremap <C-j> <c-w>j
-" noremap <C-k> <c-w>k
-" noremap <C-l> <c-w>l
-"Remap arrow keys to do nothing
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
@@ -328,8 +330,8 @@ noremap <localleader>y "*y
 noremap <localleader>yy "*Y
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
-noremap K  @='10k'<CR>
-noremap J  @='10j'<CR>
+nnoremap K  @='10k'<CR>
+nnoremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -357,7 +359,6 @@ if has("nvim")
 endif
 "}}}
 
-
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 
@@ -376,3 +377,4 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
+command! PU PlugUpdate | PlugUpgrade

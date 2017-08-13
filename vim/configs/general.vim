@@ -1,6 +1,11 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+function! s:SetupHelpWindow() "{{{
+  wincmd L
+  vertical resize 79
+  setl nonumber winfixwidth colorcolumn=
+endfunction "}}}
 func! DeleteTillSlash()
     let g:cmd = getcmdline()
 
@@ -106,6 +111,11 @@ function! AdjustWindowHeight(minheight, maxheight)
    exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
+" syntaxcomplete provides basic completion for filetypes that lack a custom one.
+"   :h ft-syntax-omni
+if has("autocmd") && exists("+omnifunc")
+  autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+endif
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
   autocmd!
@@ -210,7 +220,7 @@ augroup END
 
 augroup filetype_completion
   autocmd!
-  autocmd FileType html,css,javascript,typescript,typscript.tsx,javascript.jsx EmmetInstall
+  autocmd FileType html,css,javascript,typescript,typescript.tsx,vue,javascript.jsx EmmetInstall
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -295,6 +305,8 @@ augroup FileType_all
   autocmd FileType python setl ts=4
   autocmd FileType rust setl sw=0 sts=0
   autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+  au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
+  au FileType help au BufEnter,BufWinEnter <buffer> setlocal spell!
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
@@ -389,7 +401,8 @@ endif
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
-set notimeout timeoutlen=500 ""ttimeoutlen=100
+" set notimeout timeoutlen=500 ""ttimeoutlen=100
+set timeout timeoutlen=500 ""ttimeoutlen=100
 set pastetoggle=<F2>
 set nohidden
 set winwidth=30
@@ -519,10 +532,8 @@ set gdefault
 set pumheight=10
 set title
 if has('+relativenumber')
-  if !has('nvim')
     set number
     set relativenumber
-  endif
 else
   set number
 endif
@@ -531,8 +542,8 @@ if !has('gui_running')
 else
   set linespace=2
 endif
-set numberwidth=4
-set report=0 " Always show # number yanked/deleted lines
+set numberwidth=5
+set report=1 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
 set textwidth=79
@@ -540,19 +551,19 @@ if has('vim')
   if has('+signcolumn')
     set signcolumn=yes "enables column that shows signs and error symbols
   endif
+else
+  set signcolumn=yes
 endif
 set ruler
 set incsearch
 set completeopt+=noinsert
+set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
   set complete-=i
   set autoindent
   set autowrite "Automatically :write before running commands
   set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast " Improves smoothness of redrawing when there are multiple windows
-  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
-else
-  set nolazyredraw "Broken on neovim
 endif
 if exists('&belloff')
   set belloff=all

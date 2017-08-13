@@ -50,6 +50,43 @@ endif
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
+let g:signify_vcs_list = [ 'git' ]
+let g:signify_realtime = 1
+
+"NERDTree
+" =============================================
+" Ctrl+N to toggle Nerd Tree
+ function! NERDTreeToggleAndFind()
+    if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+      execute ':NERDTreeClose'
+    else
+      execute ':NERDTreeFind'
+    endif
+  endfunction
+" nnoremap <C-N> :NERDTreeToggle<CR>
+nnoremap <silent> <c-n> :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
+
+fun! ToggleNERDTreeWithRefresh()
+    :NERDTreeToggle
+    if(exists("b:NERDTreeType") == 1)
+        call feedkeys("R")
+    endif
+endf
+
+let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
+let g:NERDTreeAutoDeleteBuffer          = 1
+let g:NERDTreeWinSize                   = 30
+let NERDTreeDirArrowExpandable          = "├"
+let NERDTreeDirArrowCollapsible         = "└"
+let g:NERDTreeQuitOnOpen                = 1
+let g:NERDTreeMinimalUI                 = 1
+let g:NERDTreeCascadeOpenSingleChildDir = 1
+let g:NERDTreeShowBookmarks             = 1
+let g:NERDTreeAutoDeleteBuffer          = 1
+let g:NERDTreeShowHidden                = 1 "Show hidden files by default
+" Expandable ideas = [' ', ' ', ','','├','└']
+
 " NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
@@ -85,7 +122,6 @@ elseif executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
-command! PU PlugUpdate | PlugUpgrade
 
 if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')
@@ -145,8 +181,6 @@ nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
 
-let g:tigris#enable_at_startup = 1
-let g:tigris#on_the_fly_enabled = 1
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
@@ -195,7 +229,6 @@ imap <c-x>l <plug>(fzf-complete-line)
 imap <c-x>p <plug>(fzf-complete-path)
 inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
 nnoremap <silent> <localleader>o :Buffers<CR>
-nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>H :History<CR>
 nnoremap <silent> <localleader>C :Commits<CR>
@@ -320,49 +353,27 @@ function! g:committia_hooks.edit_open(info)
   imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-"NERDTree
-" =============================================
-" Ctrl+N to toggle Nerd Tree
- function! NERDTreeToggleAndFind()
-    if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-      execute ':NERDTreeClose'
-    else
-      execute ':NERDTreeFind'
-    endif
-  endfunction
-nnoremap <C-N> :NERDTreeToggle<CR>
-nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
-
-let g:NERDTreeHeader                    = 'Happy Hacking'
-let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
-let g:NERDTreeAutoDeleteBuffer          = 1
-let g:NERDTreeWinSize                   = 30
-"Cannot remove nerdtree arrows so compromis is use NBS
-let NERDTreeDirArrowExpandable          = "├"
-let NERDTreeDirArrowCollapsible         = "└"
-let g:NERDTreeQuitOnOpen                = 1
-let g:NERDTreeMinimalUI                 = 1
-let g:NERDTreeCascadeOpenSingleChildDir = 1
-let g:NERDTreeShowBookmarks             = 1
-let g:NERDTreeAutoDeleteBuffer          = 1
-let g:NERDTreeShowHidden                = 1 "Show hidden files by default
-" Expandable ideas = [' ', ' ', ','','├','└']
+if has("vim")
+  map y <Plug>(highlightedyank)
+endif
+let g:highlightedyank_highlight_duration = 500
 
 "===================================================
 "EasyMotion mappings
 "===================================================
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
+let g:EasyMotion_do_mapping       = 0
+let g:EasyMotion_smartcase        = 1
 let g:EasyMotion_use_smartsign_us = 1
-let g:EasyMotion_startofline = 0
+let g:EasyMotion_startofline      = 0
 omap t <Plug>(easymotion-bd-tl)
 " nmap s <Plug>(easymotion-s)
 " Jump to anwhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
@@ -381,7 +392,7 @@ let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
 
-nnoremap <leader>u :GundoToggle<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
 
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
