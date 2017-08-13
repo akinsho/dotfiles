@@ -8,6 +8,7 @@ alias dots="cd ~/Dotfiles"
 alias work="cd ~/Desktop/Coding/Work/"
 alias code="cd ~/Desktop/Coding"
 alias magit="vim -c \"MagitOnly\""
+alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
 alias l="lsp"
 alias la='ls -aG'
 alias v='nvim'

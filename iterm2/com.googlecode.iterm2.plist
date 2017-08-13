@@ -6,6 +6,8 @@
 	<false/>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>AlwaysAcceptFirstMouse</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
@@ -1011,6 +1013,8 @@
 	<true/>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<true/>
+	<key>DwcLineCache</key>
+	<true/>
 	<key>EnableAPIServer</key>
 	<true/>
 	<key>EnableDivisionView</key>
@@ -1157,7 +1161,7 @@
 	<key>HideTabCloseButton</key>
 	<true/>
 	<key>HideTabNumber</key>
-	<true/>
+	<false/>
 	<key>Hotkey</key>
 	<true/>
 	<key>HotkeyChar</key>
@@ -1227,17 +1231,17 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>310 275 224 325 0 0 1280 800 </string>
 	<key>NSWindow Frame NSColorPanel.modal</key>
-	<string>528 385 224 317 0 0 1280 800 </string>
+	<string>528 391 224 309 0 0 1280 800 </string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>57 37 814 457 0 0 1280 800 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 126 606 469 0 0 1280 800 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>231 99 796 473 0 0 1280 800 </string>
+	<string>231 191 918 485 0 0 1280 800 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 193 592 584 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 13 1270 786 0 0 1280 800 </string>
+	<string>0 5 1280 795 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-960 -271 954 1048 -1920 -280 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -1508,7 +1512,7 @@
 			<key>Disable Printing</key>
 			<true/>
 			<key>Disable Smcup Rmcup</key>
-			<true/>
+			<false/>
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Flashing Bell</key>
@@ -1844,7 +1848,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Hasklig-Regular 15</string>
+			<string>FuraCodeNerdFontCM-Light 15</string>
 			<key>Option Key Sends</key>
 			<integer>1</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3509,6 +3513,8 @@
 		<string>0070</string>
 		<string>0071</string>
 	</array>
+	<key>OnlyWhenMoreTabs</key>
+	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
@@ -3567,7 +3573,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-06T21:02:57Z</date>
+	<date>2017-08-13T10:38:30Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -3575,6 +3581,8 @@
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
 	<key>ShowBookmarkName</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>ShowPaneTitles</key>
 	<false/>
@@ -3598,6 +3606,8 @@
 	<real>1493374592</real>
 	<key>UseBorder</key>
 	<false/>
+	<key>UseLayers</key>
+	<true/>
 	<key>WindowNumber</key>
 	<false/>
 	<key>WordCharacters</key>

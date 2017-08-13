@@ -43,20 +43,21 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Hasklug NF
+    # family: Hasklug NF
+    family: FuraCode Nerd Font
     # Style can be specified to pick a specific face.
-     # style: light
+     # style: Light
 
   # The bold font face
   bold:
     # family: flottflott
-    family: FuraCode NerdFont
+    family: Hasklig
     # Style can be specified to pick a specific face.
     style: Bold
 
   # The italic font face
   italic:
-    family: Input Mono
+    family: Hasklig
     # Style can be specified to pick a specific face.
     style: Light Italic
 
