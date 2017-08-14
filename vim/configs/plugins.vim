@@ -14,7 +14,6 @@ endfunction
 
 "set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
-
 "NVIM ====================================
 " Deoplete
 " ----------------------------------------

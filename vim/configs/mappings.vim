@@ -199,8 +199,6 @@ nnoremap gV `[V`]
 
 " make last typed word uppercase
 inoremap :u <esc>viwUea
-
-
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
 " replace word under cursor
