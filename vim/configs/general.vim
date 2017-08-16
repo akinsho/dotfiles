@@ -111,11 +111,6 @@ function! AdjustWindowHeight(minheight, maxheight)
    exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
-" syntaxcomplete provides basic completion for filetypes that lack a custom one.
-"   :h ft-syntax-omni
-if has("autocmd") && exists("+omnifunc")
-  autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
-endif
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
   autocmd!
@@ -220,6 +215,10 @@ augroup END
 
 augroup filetype_completion
   autocmd!
+  " syntaxcomplete provides basic completion for filetypes that lack a custom one.
+  " :h ft-syntax-omni
+  autocmd FileType * if exists("+omnifunc") && &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+  autocmd FileType * if exists("+completefunc") && &completefunc == "" | setlocal completefunc=syntaxcomplete#Complete | endif
   autocmd FileType html,css,javascript,typescript,typescript.tsx,vue,javascript.jsx EmmetInstall
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
