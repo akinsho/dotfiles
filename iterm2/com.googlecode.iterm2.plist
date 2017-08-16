@@ -1247,13 +1247,17 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>337 331 606 469 0 0 1280 800 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>231 367 918 394 0 0 1280 800 </string>
+	<string>231 162 796 473 0 0 1280 800 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 216 592 584 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 1280 796 0 0 1280 800 </string>
+	<string>0 13 1272 787 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-960 -271 954 1048 -1920 -280 1920 1057 </string>
+	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
+	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1543,7 +1547,7 @@
 			<key>Guid</key>
 			<string>9D1B5F3F-E936-495F-A39A-94EA9D753E55</string>
 			<key>Horizontal Spacing</key>
-			<real>0.89191688629518073</real>
+			<real>0.90000000000000002</real>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Jobs to Ignore</key>
@@ -1856,13 +1860,13 @@
 			<key>Name</key>
 			<string>MyDefault</string>
 			<key>Non Ascii Font</key>
-			<string>FuraCodeNerdFontC-Regular 15</string>
+			<string>FuraCodeNerdFontC-Regular 16</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FuraCodeNerdFontC-Medium 16</string>
+			<string>FuraCodeNerdFontC-Regular 15</string>
 			<key>Option Key Sends</key>
 			<integer>1</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1952,13 +1956,13 @@
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
-			<false/>
+			<true/>
 			<key>Use Tab Color</key>
 			<true/>
 			<key>Use Underline Color</key>
 			<true/>
 			<key>Vertical Spacing</key>
-			<real>1</real>
+			<real>1.0057181852409638</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
@@ -3545,7 +3549,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-14T13:15:01Z</date>
+	<date>2017-08-16T08:39:07Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -3575,6 +3579,8 @@
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabViewType</key>
+	<integer>1</integer>
+	<key>TmuxDashboardLimit</key>
 	<integer>1</integer>
 	<key>UKCrashReporterLastCrashReportDate</key>
 	<real>1502633216</real>

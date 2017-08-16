@@ -142,15 +142,15 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "
 "=============================================================
 " Makes airline tabs rectangular
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = '|'
+" let g:airline_left_sep = ' '
+" let g:airline_right_sep = ' '
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#right_sep = ''
+" let g:airline#extensions#tabline#right_alt_sep = '|'
 "This defines the separators for airline changes them from the default arrows
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_alt_sep = ''
 let g:webdevicons_enable_airline_tabline                 = 1
 let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
 let g:airline_powerline_fonts                            = 1
@@ -168,8 +168,6 @@ let g:airline#extensions#tabline#show_tab_type           = 1
 " configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#ale#enabled               = 1
-" determine whether inactive windows should have the left section collapsed to
-" only the filename of that buffer.  >
 let g:airline_inactive_collapse                    = 1
  let g:airline#extensions#tabline#close_symbol     = 'x' " * configure symbol used to represent close button >
 " * configure pattern to be ignored on BufAdd autocommand >
@@ -366,6 +364,7 @@ if has("vim")
 endif
 let g:highlightedyank_highlight_duration = 500
 
+
 "===================================================
 "EasyMotion mappings
 "===================================================
@@ -413,7 +412,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "-----------------------------------------------------------
 "Plugin configurations "{{{
 "-----------------------------------------------------------------
-let test#runners = {'Typescript': ['Jest', 'Mocha']}
+" let test#runners = {'Typescript': ['Mocha', 'Jest']}
+let test#runners = {'Typescript': ['Mocha', 'Jest']}
+let test#runners = {'Typescript': ['Mocha']}
 " Commenting
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
@@ -430,12 +431,16 @@ nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
 
+"=======================================================
+" Polyglot
+"=======================================================
 let g:polyglot_disabled = ['elm', 'clojure']
+let g:vue_disable_pre_processors=1
 
 "Removes highlighting in typescript
-highlight YcmErrorSection gui=underline cterm=underline
+" highlight YcmErrorSection gui=underline cterm=underline
 
-let g:echodoc#enable_at_startup          = 1
+let g:echodoc#enable_at_startup= 1
 "=======================================================
 " Deoplete Options
 "=======================================================
@@ -490,9 +495,10 @@ if has("nvim")
       \ 'jspc#omni'
       \]
   call deoplete#custom#source('ultisnips', 'rank', 6000)
-  let g:nvim_typescript#javascript_support = 1
-  let g:deoplete#sources#ternjs#types = 1
-  let g:deoplete#sources#ternjs#docs = 1
+  let g:nvim_typescript#javascript_support       = 1
+  let g:nvim_typescript#vue_support              = 1
+  let g:deoplete#sources#ternjs#types            = 1
+  let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   " let g:nvim_typescript#type_info_on_hold  = 1
   call deoplete#custom#set('buffer', 'mark', '')
@@ -510,13 +516,13 @@ if has("nvim")
   nnoremap <localleader>tc :TSEditConfig<CR>
   nnoremap <localleader>ti :TSImport<CR>
 else
-  let g:ycm_add_preview_to_completeopt                = 1
-  let g:ycm_autoclose_preview_window_after_completion = 1
-  let g:ycm_seed_identifiers_with_syntax              = 1
-  let g:ycm_collect_identifiers_from_tags_files       = 1
-  nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-  nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
-  nnoremap <leader>gt :YcmCompleter GetType<CR>
+  " let g:ycm_add_preview_to_completeopt                = 1
+  " let g:ycm_autoclose_preview_window_after_completion = 1
+  " let g:ycm_seed_identifiers_with_syntax              = 1
+  " let g:ycm_collect_identifiers_from_tags_files       = 1
+  " nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+  " nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
+  " nnoremap <leader>gt :YcmCompleter GetType<CR>
 endif
 
 let g:tern_request_timeout = 1

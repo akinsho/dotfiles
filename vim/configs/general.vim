@@ -604,10 +604,13 @@ endif
 "Colorscheme
 "-----------------------------------------------------------------------
 set background=dark
+let g:enable_bold_font = 1
 " colorscheme nova
+" colorscheme vim-material
 " colorscheme quantum
-colorscheme vim-material
-let g:airline_theme='material'
+colorscheme hybrid_material
+let g:airline_theme='hybrid'
+
 "-------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------

@@ -59,6 +59,7 @@ augroup load_fat_finger
 augroup END
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
 "}}}
@@ -125,9 +126,7 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-if !has('gui_running')
-  Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
-endif
+Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -144,9 +143,10 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "}}}
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
+" Plug 'trevordmiller/nova-vim'
+" Plug 'hzchirs/vim-material'
 Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'trevordmiller/nova-vim'
-Plug 'hzchirs/vim-material'
+Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 
