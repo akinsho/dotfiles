@@ -50,11 +50,11 @@ endif
 "--------------------------------------------------------------------------------------------------
 "PLUGIN MAPPINGS {{{
 "--------------------------------------------------------------------------------------------------
-let g:signify_vcs_list = [ 'git' ]
-let g:signify_realtime = 1
+"VIM ROOTER ==================================================
+let g:rooter_change_directory_for_non_project_files = 'current'
+let g:rooter_resolve_links = 1
 
-"NERDTree
-" =============================================
+"NERDTree =============================================
 " Ctrl+N to toggle Nerd Tree
  function! NERDTreeToggleAndFind()
     if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -141,6 +141,16 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "               Airline
 "
 "=============================================================
+" Makes airline tabs rectangular
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+"This defines the separators for airline changes them from the default arrows
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
 let g:webdevicons_enable_airline_tabline                 = 1
 let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
 let g:airline_powerline_fonts                            = 1
@@ -150,7 +160,6 @@ let g:airline#extensions#tabline#show_tabs               = 1
 let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                = ':t'
 let g:airline#extensions#tabline#show_tab_type           = 1
-" let g:airline_section_gutter ='%{MyGitStatus}'
 
 "  let g:airline#extensions#default#layout = [
 "       \ [ 'a', 'b', 'y' ],
@@ -277,7 +286,6 @@ let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "O
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always = 1
 let g:ale_sign_error         = '✘'
-" let g:ale_sign_error         = '⨉'
 let g:ale_sign_warning       = '⚠️'
 let g:ale_linters            = {
       \'python': ['flake8'],
