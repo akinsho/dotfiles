@@ -416,8 +416,8 @@ if has('folding')
   set foldnestmax=3
 endif
 set switchbuf=useopen,usetab,newtab
+set sessionoptions-=options
 if !has('nvim')
-  set sessionoptions-=options
   set termsize="10x30"
 endif
 set completeopt+=noselect,longest
@@ -530,9 +530,11 @@ set gdefault
 " insert completion height and options
 set pumheight=10
 set title
+set number relativenumber
 if has('+relativenumber')
-    set number
-    set relativenumber
+    set number relativenumber
+elseif has('nvim')
+    set number relativenumber
 else
   set number
 endif
@@ -597,19 +599,31 @@ if has('nvim')
   " let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
   " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
   set inccommand=nosplit
-  let g:terminal_color_0  = '#ffffff'
+  let g:terminal_color_1  = '#cc0000'
+  let g:terminal_color_2  = '#4e9a06'
+  let g:terminal_color_3  = '#c4a000'
+  let g:terminal_color_4  = '#3465a4'
+  let g:terminal_color_5  = '#75507b'
+  let g:terminal_color_6  = '#0b939b'
+  let g:terminal_color_7  = '#d3d7cf'
+  let g:terminal_color_8  = '#555753'
+  let g:terminal_color_9  = '#ef2929'
+  let g:terminal_color_10 = '#8ae234'
+  let g:terminal_color_11 = '#fce94f'
+  let g:terminal_color_12 = '#729fcf'
+  let g:terminal_color_13 = '#ad7fa8'
+  let g:terminal_color_14 = '#00f5e9'
   let g:terminal_color_15 = '#eeeeec'
 endif
 "-----------------------------------------------------------------------
 "Colorscheme
 "-----------------------------------------------------------------------
 set background=dark
-let g:enable_bold_font = 1
 " colorscheme nova
+" colorscheme hybrid_material
 " colorscheme vim-material
-" colorscheme quantum
-colorscheme hybrid_material
-let g:airline_theme='hybrid'
+
+colorscheme quantum
 
 "-------------------------------------------------------------
 " Utilities

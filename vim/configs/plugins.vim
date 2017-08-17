@@ -21,8 +21,10 @@ Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlug
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
+Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
 Plug 'ervandew/supertab',           Cond(has('nvim'))
 "================================{{{
+Plug 'maralla/completor.vim', Cond(has('vim'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
@@ -57,7 +59,7 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'machakann/vim-highlightedyank'
@@ -79,6 +81,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/dbext.vim', {'for': 'sql'}
+Plug 'ElmCast/elm-vim'
 Plug 'ap/vim-css-color', { 'for': [
       \ 'typescript.tsx'
       \ ,'javascript.jsx'
@@ -93,7 +96,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
 Plug 'jreybert/vimagit'
 Plug 'shumphrey/fugitive-gitlab.vim'
-" Plug 'christoomey/vim-conflicted' "Gina does this
+Plug 'christoomey/vim-conflicted'
 "}}}
 " Clojure =========================
 "   Plug 'guns/vim-sexp'
@@ -127,6 +130,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
+Plug 'kassio/neoterm', Cond(has('nvim'))
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -144,9 +148,10 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 " Plug 'trevordmiller/nova-vim'
-" Plug 'hzchirs/vim-material'
+" Plug 'kristijanhusak/vim-hybrid-material'
+" Plug 'mhartington/oceanic-next'
+Plug 'hzchirs/vim-material'
 Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 

@@ -28,15 +28,15 @@ highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic cterm=italic
 highlight Folded guifg=#FFC66D guibg=NONE
 highlight CursorLine term=none cterm=none
+highlight link StartifySlash Directory
 "make the completion menu a bit more readable
 highlight PmenuSel guibg=#004D40 guifg=white
 highlight Pmenu guibg=#00897b guifg=white
-highlight link StartifySlash Directory
-highlight WildMenu ctermbg=253 ctermfg=0
+" highlight WildMenu ctermbg=253 ctermfg=0
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
-"highlight VertSplit guifg=black ctermfg=black
+" highlight VertSplit guifg=black ctermfg=black
 "Remove Background color
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
@@ -141,16 +141,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "               Airline
 "
 "=============================================================
-" Makes airline tabs rectangular
-" let g:airline_left_sep = ' '
-" let g:airline_right_sep = ' '
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
-" let g:airline#extensions#tabline#right_sep = ''
-" let g:airline#extensions#tabline#right_alt_sep = '|'
-"This defines the separators for airline changes them from the default arrows
-" let g:airline_left_alt_sep = ''
-" let g:airline_right_alt_sep = ''
 let g:webdevicons_enable_airline_tabline                 = 1
 let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
 let g:airline_powerline_fonts                            = 1
@@ -250,10 +240,6 @@ nnoremap <C-P> :call Fzf_dev()<CR>
 nnoremap \ :Rg<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
 endif
-
-"This allows me to use control-f to jump out of a newly matched pair (courtesty
-"of delimitmate)
-imap <C-F> <C-g>g
 
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
@@ -431,19 +417,37 @@ nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
 
+""---------------------------------------------------------------------------//
+" Neoterm
+""---------------------------------------------------------------------------//
+let g:neoterm_position = 'vertical'
+" open terminal
+nnoremap <silent> ,to :call neoterm#open()<cr>
+" hide/close terminal
+nnoremap <silent> ,th :call neoterm#close()<cr>
+" clear terminal
+nnoremap <silent> ,tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+nnoremap <silent> ,tc :call neoterm#kill()<cr>
 "=======================================================
 " Polyglot
 "=======================================================
-let g:polyglot_disabled = ['elm', 'clojure']
+let g:polyglot_disabled = ['elm','clojure']
 let g:vue_disable_pre_processors=1
-
-"Removes highlighting in typescript
-" highlight YcmErrorSection gui=underline cterm=underline
-
+""---------------------------------------------------------------------------//
+" ELM
+""---------------------------------------------------------------------------//
+let g:elm_format_autosave   = 1
+let g:elm_jump_to_error     = 1
+let g:elm_detailed_complete = 1
+let g:elm_setup_keybindings = 1
+let g:elm_make_output_file  = "index.html"
+""---------------------------------------------------------------------------//
 let g:echodoc#enable_at_startup= 1
-"=======================================================
+
+""---------------------------------------------------------------------------//
 " Deoplete Options
-"=======================================================
+""---------------------------------------------------------------------------//
 if has("nvim")
   let g:nvim_typescript#kind_symbols = {
       \ 'keyword': 'keyword',
@@ -508,21 +512,12 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
-
   nnoremap <localleader>tp :TSDefPreview<CR>
   nnoremap <localleader>td :TSDef<CR>
   nnoremap <localleader>tr :TSRefs<CR>
   nnoremap <localleader>tt :TSType<CR>
   nnoremap <localleader>tc :TSEditConfig<CR>
   nnoremap <localleader>ti :TSImport<CR>
-else
-  " let g:ycm_add_preview_to_completeopt                = 1
-  " let g:ycm_autoclose_preview_window_after_completion = 1
-  " let g:ycm_seed_identifiers_with_syntax              = 1
-  " let g:ycm_collect_identifiers_from_tags_files       = 1
-  " nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-  " nnoremap <leader>gr :YcmCompleter GoToReferences<CR>
-  " nnoremap <leader>gt :YcmCompleter GetType<CR>
 endif
 
 let g:tern_request_timeout = 1
@@ -536,16 +531,14 @@ let g:tern#filetypes = [
       \ 'jsx',
       \ 'javascript.jsx',
       \ ]
-let g:tern_show_argument_hints                = '0'
-let g:tern_map_keys                           = 1
-let g:tern_show_signature_in_pum              = 1
+let g:tern_show_argument_hints      = '0'
+let g:tern_map_keys                 = 1
+let g:tern_show_signature_in_pum    = 1
 " Use tern_for_vim.
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
-" close the preview window when you're not using it
-let g:SuperTabDefaultCompletionType    = "<c-n>"
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:SuperTabLongestHighlight         = 1
+let g:tern#command                  = ["tern"]
+let g:tern#arguments                = ["--persistent"]
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabLongestHighlight      = 1
 
 "------------------------------------
 " Goyo
