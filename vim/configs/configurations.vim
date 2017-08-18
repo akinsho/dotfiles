@@ -1,10 +1,11 @@
+""---------------------------------------------------------------------------//
 " Highlights
-"====================================================================================
+""---------------------------------------------------------------------------//
 " Highlight cursor column onwards - kind of cool
-"====================================================================================
+""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
 " highlight ColorColumn ctermbg=235 guibg=#2c2d27
-"====================================================================================
+""---------------------------------------------------------------------------//
 " Change default highlighting for spellbad, the default is really bad
 highlight clear SpellBad
 highlight SpellBad  term=underline cterm=italic ctermfg=Red
@@ -15,7 +16,9 @@ highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
 highlight clear SpellRare
 highlight SpellRare  term=underline cterm=italic ctermfg=Blue
 highlight clear Conceal "Sets no highlighting for conceal
+""---------------------------------------------------------------------------//
 "few nicer JS colours
+""---------------------------------------------------------------------------//
 highlight xmlAttrib cterm=italic,bold ctermfg=121
 highlight jsThis ctermfg=224
 highlight jsSuper ctermfg=13
@@ -47,14 +50,14 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
-"--------------------------------------------------------------------------------------------------
-"PLUGIN MAPPINGS {{{
-"--------------------------------------------------------------------------------------------------
-"VIM ROOTER ==================================================
+""---------------------------------------------------------------------------//
+"VIM ROOTER
+""---------------------------------------------------------------------------//
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_resolve_links = 1
-
-"NERDTree =============================================
+""---------------------------------------------------------------------------//
+"NERDTree
+""---------------------------------------------------------------------------//
 " Ctrl+N to toggle Nerd Tree
  function! NERDTreeToggleAndFind()
     if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -137,10 +140,9 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set t
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 
-"=============================================================
+""---------------------------------------------------------------------------//
 "               Airline
-"
-"=============================================================
+""---------------------------------------------------------------------------//
 let g:webdevicons_enable_airline_tabline                 = 1
 let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
 let g:airline_powerline_fonts                            = 1
@@ -193,78 +195,36 @@ nnoremap <C-F>o :CtrlSFOpen<CR>
 nnoremap <C-F>t :CtrlSFToggle<CR>
 inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
-"--------------------------------------------
-" FZF bindings
-"--------------------------------------------
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-if !has('gui_running')
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
-" let g:fzf_files_options =
-"       \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-" Use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
-" Advanced customization using autoload functions
-" Replace the default dictionary completion with fzf-based fuzzy completion
-
-imap <c-x>l <plug>(fzf-complete-line)
-imap <c-x>p <plug>(fzf-complete-path)
-inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
-nnoremap <silent> <localleader>o :Buffers<CR>
-nnoremap <silent> <localleader>a :Windows<CR>
-nnoremap <silent> <localleader>H :History<CR>
-nnoremap <silent> <localleader>C :Commits<CR>
-nnoremap <silent> <localleader>L :Lines<CR>
-
-function! SearchWordWithRg()
-  execute 'Rg' expand('<cword>')
-endfunction
-" Launch file search using FZF - FZFR Uses the project's root regardless of where vim is
-nnoremap <localleader>p :GitFiles <CR>
-nnoremap <C-P> :call Fzf_dev()<CR>
-nnoremap \ :Rg<CR>
-nnoremap <space>\ :call SearchWordWithRg()<CR>
-endif
-
+""---------------------------------------------------------------------------//
+" TEXTOBJECT - COMMENT
+""---------------------------------------------------------------------------//
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
 omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 
-"============================================================
+""---------------------------------------------------------------------------//
 " Sayonara
-"============================================================
+""---------------------------------------------------------------------------//
 nnoremap <leader>q :Sayonara!<CR>
 nnoremap <C-Q> :Sayonara<CR>
-"-----------------------------------------------------------
+""---------------------------------------------------------------------------//
 "     ALE
-"-----------------------------------------------------------
+""---------------------------------------------------------------------------//
 " Disable linting for all minified JS files.
 if has('gui_running')
   let g:ale_set_balloons = 1
+endif
+if has('vim')
+  " Enable completion where available.
+  let g:ale_completion_enabled = 1
 endif
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['prettier', 'eslint']
 let g:ale_fixers.python = ['flake8']
-" let g:ale_fixers.typescript = ['prettier', 'stylelint']
-let g:ale_fixers.typescript = ['prettier']
+let g:ale_fixers.typescript = ['prettier', 'stylelint']
 let g:ale_fixers.css = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
@@ -285,7 +245,13 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
 
+""---------------------------------------------------------------------------//
+" CAPSLOCK
+""---------------------------------------------------------------------------//
 imap <C-L> <C-O><Plug>CapsLockToggle
+""---------------------------------------------------------------------------//
+" FUGITIVE
+""---------------------------------------------------------------------------//
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
@@ -295,17 +261,19 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 " JSX & POLYGLOT
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 let g:jsx_ext_required          = 1
+""---------------------------------------------------------------------------//
 "VIM-GO
+""---------------------------------------------------------------------------//
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 " Git Gutter
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
 let g:gitgutter_enabled       = 1
 let g:gitgutter_sign_modified = '•'
@@ -315,22 +283,30 @@ let g:gitgutter_grep_command  = 'ag --nocolor'
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
-
+""---------------------------------------------------------------------------//
+" SIDEWAYS
+""---------------------------------------------------------------------------//
 nnoremap <C-F> :SidewaysLeft<cr>
 nnoremap <C-F>r :SidewaysRight<cr>
-
+""---------------------------------------------------------------------------//
+" VIM-EASY-ALIGN
+""---------------------------------------------------------------------------//
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vnoremap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
-
+""---------------------------------------------------------------------------//
+" VIM-JAVASCRIPT
+""---------------------------------------------------------------------------//
 let g:javascript_plugin_flow       = 1
 let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
 let g:javascript_plugin_jsdoc      = 1
-
+""---------------------------------------------------------------------------//
+" COMMITIA
+""---------------------------------------------------------------------------//
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
   " Additional settings
@@ -350,10 +326,9 @@ if has("vim")
 endif
 let g:highlightedyank_highlight_duration = 500
 
-
-"===================================================
+""---------------------------------------------------------------------------//
 "EasyMotion mappings
-"===================================================
+""---------------------------------------------------------------------------//
 let g:EasyMotion_do_mapping       = 0
 let g:EasyMotion_smartcase        = 1
 let g:EasyMotion_use_smartsign_us = 1
@@ -372,9 +347,9 @@ omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 
-"=======================================================================
+""---------------------------------------------------------------------------//
 "                    EMMET for Vim
-"=======================================================================
+""---------------------------------------------------------------------------//
 let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
 let g:user_emmet_settings     = {
@@ -384,30 +359,31 @@ let g:user_emmet_settings     = {
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
-
+""---------------------------------------------------------------------------//
 nnoremap <leader>u :UndotreeToggle<CR>
-
+""---------------------------------------------------------------------------//
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
-"}}}
 let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
-
+""---------------------------------------------------------------------------//
+" EDITOR CONFIG
+""---------------------------------------------------------------------------//
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-"-----------------------------------------------------------
+""---------------------------------------------------------------------------//
 "Plugin configurations "{{{
-"-----------------------------------------------------------------
-" let test#runners = {'Typescript': ['Mocha', 'Jest']}
+""---------------------------------------------------------------------------//
+
 let test#runners = {'Typescript': ['Mocha', 'Jest']}
 let test#runners = {'Typescript': ['Mocha']}
 " Commenting
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDCustomDelimiters = {
-  \    'jsx': { 'left': '{/*','right': '*/}' }, 
-  \    'typescript.tsx': { 'left': '{/*','right': '*/}' } 
+let g:NERDSpaceDelims       = 1
+let g:NERDCompactSexyComs   = 1
+let g:NERDDefaultAlign      = 'left'
+let g:NERDCustomDelimiters  = {
+  \    'jsx': { 'left': '{/*','right': '*/}' },
+  \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
   \  }
 let g:NERDCommentEmptyLines = 1
 
@@ -534,15 +510,19 @@ let g:tern#filetypes = [
 let g:tern_show_argument_hints      = '0'
 let g:tern_map_keys                 = 1
 let g:tern_show_signature_in_pum    = 1
-" Use tern_for_vim.
+
 let g:tern#command                  = ["tern"]
 let g:tern#arguments                = ["--persistent"]
+
+""---------------------------------------------------------------------------//
+" SUPERTAB
+""---------------------------------------------------------------------------//
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabLongestHighlight      = 1
 
-"------------------------------------
+""---------------------------------------------------------------------------//
 " Goyo
-"------------------------------------
+""---------------------------------------------------------------------------//
 let g:goyo_width=100
 let g:goyo_margin_top = 2
 let g:goyo_margin_bottom = 2
@@ -588,7 +568,9 @@ augroup goyo_markdown
   autocmd BufNewFile,BufRead * call s:auto_goyo()
   autocmd! User GoyoLeave nested call s:goyo_leave()
 augroup END
-
+""---------------------------------------------------------------------------//
+" VIM MARKDOWN
+""---------------------------------------------------------------------------//
 let g:vim_markdown_fenced_languages =[
   \'css',
   \'erb=eruby',
@@ -607,6 +589,9 @@ let g:vim_markdown_fenced_languages =[
   \]
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
+""---------------------------------------------------------------------------//
+" ULTISNIPS
+""---------------------------------------------------------------------------//
 let g:UltiSnipsSnippetsDir          = "~/Dotfiles/vim/mySnippets" "Both of these settings are necessary
 let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
 let g:UltiSnipsExpandTrigger        = "<C-J>"
@@ -614,9 +599,59 @@ let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
 let g:UltiSnipsListSnippets         = "<space>ls"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
-" ================================================
+
+""---------------------------------------------------------------------------//
 " FZF
-" ================================================
+""---------------------------------------------------------------------------//
+"--------------------------------------------
+" FZF bindings
+"--------------------------------------------
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+if !has('gui_running')
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
+" let g:fzf_files_options =
+"       \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+" Use ripgrep instead of ag:
+command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
+" Advanced customization using autoload functions
+" Replace the default dictionary completion with fzf-based fuzzy completion
+
+imap <c-x>l <plug>(fzf-complete-line)
+imap <c-x>p <plug>(fzf-complete-path)
+inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
+nnoremap <silent> <localleader>o :Buffers<CR>
+nnoremap <silent> <localleader>a :Windows<CR>
+nnoremap <silent> <localleader>H :History<CR>
+nnoremap <silent> <localleader>C :Commits<CR>
+nnoremap <silent> <localleader>L :Lines<CR>
+
+function! SearchWordWithRg()
+  execute 'Rg' expand('<cword>')
+endfunction
+
+" Launch file search using FZF
+nnoremap <localleader>p :GitFiles <CR>
+nnoremap <C-P> :call Fzf_dev()<CR>
+nnoremap \ :Rg<CR>
+nnoremap <space>\ :call SearchWordWithRg()<CR>
+endif
+
 if !has('gui_running')
   nnoremap <localleader>m  :Marks<CR>
   nnoremap <localleader>mm :Maps<CR>
@@ -682,7 +717,9 @@ function! Fzf_dev()
 endfunction
 
 endif
-
+""---------------------------------------------------------------------------//
+" STARTIFY
+""---------------------------------------------------------------------------//
 let g:startify_list_order = [
       \ ['   😇 My Sessions:'],
       \ 'sessions',
@@ -701,11 +738,12 @@ let g:startify_session_autoload    = 1
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root  = 1
 let g:startify_session_sort        = 1
-
-" =========================================================================
-
+""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
+""---------------------------------------------------------------------------//
+" TMUX NAVIGATOR
+""---------------------------------------------------------------------------//
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
 " saves on moving pane but only the currently opened buffer if changed
