@@ -709,17 +709,15 @@ augroup cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
 
-" if exists('&colorcolumn')
-"     autocmd InsertEnter * set colorcolumn=80
-"     autocmd InsertLeave * set colorcolumn=""
-" endif
-"
+if exists('&colorcolumn')
+    autocmd InsertEnter * set colorcolumn=80
+    autocmd InsertLeave * set colorcolumn=""
+endif
+
 set scrolloff=999 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
-
 "}}}
-
 "====================================================================================
 "Spelling
 "====================================================================================
@@ -745,5 +743,3 @@ if !has('nvim')
   set mouse=a
 endif
 "}}}
-
-

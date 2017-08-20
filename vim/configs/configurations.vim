@@ -4,7 +4,7 @@
 " Highlight cursor column onwards - kind of cool
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
-" highlight ColorColumn ctermbg=235 guibg=#2c2d27
+highlight ColorColumn guibg=#2c3a41
 ""---------------------------------------------------------------------------//
 highlight clear SpellBad
 highlight SpellBad  term=underline cterm=italic ctermfg=Red

@@ -92,10 +92,10 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 # PLUGINS =======================================================================
 plugins=(
         alias-tips
-        yarn
         last-working-dir
         nvm
-        git gitfast
+        git 
+        gitfast
         zsh-completions
         command-not-found
         colored-man-pages
@@ -105,7 +105,6 @@ plugins=(
         )
 
 # web-search - great plugin, google from the command line although I never use
-# it soo...
 
 source $ZSH/oh-my-zsh.sh
 
@@ -136,15 +135,14 @@ eval "$(hub alias -s)"
 ## NPX - AUTO-FALL-BACK COMMAND
 ##---------------------------------------------------------------------------///
 source <(npx --shell-auto-fallback zsh)
+
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 #=======================================================================
@@ -237,6 +235,9 @@ fi
 # default code for base16 shell
 #BASE16_SHELL=$HOME/.config/base16-shell/
 #[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+##---------------------------------------------------------------------------//
+
+
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
 fi
@@ -246,8 +247,8 @@ source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
 
 
 #ENHANCD ================================================================
-
 source ~/enhancd/init.sh
+
 #=======================================================================
 #   LOCAL SCRIPTS
 #=======================================================================
@@ -275,7 +276,7 @@ bindkey '^Z' fancy-ctrl-z
 
 
 
-    # Plugin that autocorrects when you type fuck or whatever alias you intended
+# Plugin that autocorrects when you type fuck or whatever alias you intended
 eval "$(thefuck --alias fuck)"
 
 # iTERM Integration ==================================================
@@ -288,11 +289,17 @@ end_time="$(date +%s)"
 echo load time: $((end_time - start_time)) seconds
 # zprof
 
+##---------------------------------------------------------------------------//
+# FZF
+##---------------------------------------------------------------------------//
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+##---------------------------------------------------------------------------//
+# ZSH Autosuggestions
+##---------------------------------------------------------------------------//
+source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+##---------------------------------------------------------------------------//
+# ZSH highlighting
+##---------------------------------------------------------------------------//
+source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
-if [[ $ZSH_EVAL_CONTEXT == 'file' ]]; then
-   #printf "autosuggestions loaded"
-  source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
