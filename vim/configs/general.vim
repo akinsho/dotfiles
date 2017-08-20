@@ -549,7 +549,7 @@ set smartindent
 set wrap
 set textwidth=79
 if has('vim')
-  if has('+signcolumn')
+  if exists('&signcolumn')
     set signcolumn=yes "enables column that shows signs and error symbols
   endif
 else

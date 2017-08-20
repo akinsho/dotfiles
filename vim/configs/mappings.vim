@@ -141,8 +141,8 @@ nnoremap <S-tab> :bprevious<CR>
 " nnoremap <CR> G "20 enter to go to line 20
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
-nnoremap ; :
-nnoremap : ;
+" nnoremap ; :
+" nnoremap : ;
 "nnoremap [Alt]   <Nop>
 "xnoremap [Alt]   <Nop>
 " nmap    e  [Alt]
