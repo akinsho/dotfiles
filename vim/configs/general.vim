@@ -520,6 +520,7 @@ set listchars+=eol:\
 " =====================================================================
 "-----------------------------------
 set iskeyword+=- "Enables better css syntax highlighting
+set iskeyword+=_,$,@,%,#
 if has("unnamedplus")
   set clipboard=unnamedplus
 elseif has("clipboard")
@@ -544,7 +545,7 @@ else
   set linespace=2
 endif
 set numberwidth=5
-set report=1 " Always show # number yanked/deleted lines
+set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
 set textwidth=79
@@ -683,6 +684,7 @@ if has ('persistent_undo')
     set noundofile "Dont add root owned files which I will need to sudo to remove
   else
     set undodir=~/.vim/.undo//
+    set undolevels=1000
     set undodir+=~/local/.vim/tmp/undo
     set undodir+=.
     set undofile

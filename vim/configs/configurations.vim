@@ -102,7 +102,8 @@ call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
 call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
-call NERDTreeHighlightFile('ts', 226, 'none', '#FFD700')
+call NERDTreeHighlightFile('ts', 226, 'none', '#2E7AB1')
+" call NERDTreeHighlightFile('tsx', 226, 'none', '#2E7AB1')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
 call NERDTreeHighlightFile('jsx', 140, 'none', '#9E6FCD')
@@ -151,6 +152,7 @@ let g:airline#extensions#tabline#show_tabs               = 1
 let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                = ':t'
 let g:airline#extensions#tabline#show_tab_type           = 1
+let g:airline_section_c = '%t %{GetFileSize()}'
 
 "  let g:airline#extensions#default#layout = [
 "       \ [ 'a', 'b', 'y' ],
@@ -393,20 +395,8 @@ nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
 
 ""---------------------------------------------------------------------------//
-" Neoterm
-""---------------------------------------------------------------------------//
-let g:neoterm_position = 'vertical'
-" open terminal
-nnoremap <silent> ,to :call neoterm#open()<cr>
-" hide/close terminal
-nnoremap <silent> ,th :call neoterm#close()<cr>
-" clear terminal
-nnoremap <silent> ,tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
-nnoremap <silent> ,tc :call neoterm#kill()<cr>
-"=======================================================
 " Polyglot
-"=======================================================
+""---------------------------------------------------------------------------//
 let g:polyglot_disabled = ['elm','clojure']
 let g:vue_disable_pre_processors=1
 ""---------------------------------------------------------------------------//
@@ -454,13 +444,18 @@ if has("nvim")
       \ 'constructor': '',
       \}
   let g:deoplete#enable_at_startup       = 1
+  let g:deoplete#sources#go#gocode_binary= $GOPATH.'/bin/gocode'
+  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+  let g:deoplete#sources#go#package_dot  = 1
+  let g:deoplete#sources#go#use_cache    = 1
+  let g:deoplete#sources#go#pointer      = 1
   let g:deoplete#enable_smart_case       = 1
   let g:deoplete#auto_complete_delay     = 0
   let g:deoplete#enable_refresh_always   = 0
   let g:deoplete#max_abbr_width          = 0
   let g:deoplete#max_menu_width          = 0
   let g:deoplete#file#enable_buffer_path = 1
-  let g:deoplete#omni#functions = {}
+  let g:deoplete#omni#functions          = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
         \ 'jspc#omni'
@@ -748,4 +743,16 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " saves on moving pane but only the currently opened buffer if changed
 let g:tmux_navigator_save_on_switch = 2
 "}}}
+
+function! GetFileSize() "{{{
+  let bytes = getfsize(expand("%:p"))
+  if bytes <= 0
+    return ""
+  endif
+  if bytes < 1024
+    return "[" . bytes . " b]"
+  else
+    return "[" . (bytes / 1024) . " kb]"
+  endif
+endfunction "}}}
 "---------------------------------------------------------------------

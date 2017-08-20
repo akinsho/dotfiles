@@ -21,6 +21,7 @@ Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlug
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
+Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
 Plug 'ervandew/supertab',           Cond(has('nvim'))
 "================================{{{
@@ -59,7 +60,7 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-" Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-rooter'
@@ -79,7 +80,7 @@ Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'vim-scripts/dbext.vim', {'for': 'sql'}
+Plug 'vim-scripts/dbext.vim'
 Plug 'ElmCast/elm-vim'
 Plug 'ap/vim-css-color', { 'for': [
       \ 'typescript.tsx'
@@ -88,14 +89,14 @@ Plug 'ap/vim-css-color', { 'for': [
       \ , 'javascript'
       \ , 'typescript'
       \ ] }
-" Plug 'fleischie/vim-styled-components'
+Plug 'fleischie/vim-styled-components'
 "}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/committia.vim'
-Plug 'jreybert/vimagit'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'christoomey/vim-conflicted'
+Plug 'jreybert/vimagit'
 "}}}
 " Clojure =========================
 "   Plug 'guns/vim-sexp'
@@ -118,6 +119,7 @@ Plug 'terryma/vim-expand-region'
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
 "Coding tools ======================={{{
+Plug 'kshenoy/vim-signature'
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'scrooloose/nerdcommenter'
@@ -126,7 +128,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
-Plug 'kassio/neoterm', Cond(has('nvim'))
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -150,6 +151,7 @@ call plug#end()
 " Plug 'michaeljsmith/vim-indent-object'
 " Plug 'machakann/vim-highlightedyank'
 " Plug 'kopischke/vim-fetch'
+" Plug 'kassio/neoterm', Cond(has('nvim'))
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas
 ""---------------------------------------------------------------------------//
