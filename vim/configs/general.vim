@@ -619,11 +619,8 @@ endif
 "Colorscheme
 "-----------------------------------------------------------------------
 set background=dark
-" colorscheme nova
-" colorscheme hybrid_material
-" colorscheme vim-material
-
 colorscheme quantum
+
 
 "-------------------------------------------------------------
 " Utilities
@@ -648,7 +645,8 @@ if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
 endif
 scriptencoding utf-8
-set dictionary+=/usr/share/dict/words
+" set dictionary+=/usr/share/dict/words
+
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif

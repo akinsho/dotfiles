@@ -1,6 +1,6 @@
 {
-    "processors": ["stylelint-processor-styled-components"],
-    "extends": "stylelint-config-standard",
+    "processors": ["/usr/local/lib/node_modules/stylelint-processor-styled-components"],
+    "extends": ["/usr/local/lib/node_modules/stylelint-config-standard"],
     "syntax": "scss",
       "rules": {
         "at-rule-empty-line-before": null,
@@ -10,7 +10,7 @@
           "ignore": ["stylelint-command", "after-comment"]
         } ],
         "declaration-colon-space-after": "always",
-        "indentation": ["tab", {
+        "indentation": ["spaces", {
           "except": ["value"]
         }],
         "max-empty-lines": 2,

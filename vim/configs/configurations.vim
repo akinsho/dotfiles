@@ -6,7 +6,6 @@
 " let &colorcolumn=join(range(81,999),",")
 " highlight ColorColumn ctermbg=235 guibg=#2c2d27
 ""---------------------------------------------------------------------------//
-" Change default highlighting for spellbad, the default is really bad
 highlight clear SpellBad
 highlight SpellBad  term=underline cterm=italic ctermfg=Red
 highlight clear SpellCap
@@ -40,7 +39,6 @@ highlight Pmenu guibg=#00897b guifg=white
 highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 " highlight VertSplit guifg=black ctermfg=black
-"Remove Background color
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
 endif
@@ -223,8 +221,7 @@ endif
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['prettier', 'eslint']
-let g:ale_fixers.python = ['flake8']
-let g:ale_fixers.typescript = ['prettier', 'stylelint']
+let g:ale_fixers.typescript = ['prettier']
 let g:ale_fixers.css = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
@@ -277,6 +274,7 @@ let g:go_highlight_methods      = 1
 nnoremap <leader>gg :GitGutterToggle<CR>
 let g:gitgutter_enabled       = 1
 let g:gitgutter_sign_modified = '•'
+let g:gitgutter_sign_modified_removed='±'
 let g:gitgutter_eager         = 1
 let g:gitgutter_sign_added    = '❖'
 let g:gitgutter_grep_command  = 'ag --nocolor'

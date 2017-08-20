@@ -52,7 +52,7 @@ if executable("tmux")
 endif
 
 "Utilities ============================{{{
-Plug 'mbbill/undotree',{'on':['UndoTreeToggle']} "Add Gundo - undo plugin for vim
+Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
 augroup load_fat_finger
   autocmd!
@@ -62,7 +62,6 @@ augroup END
 " Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
 "}}}
 "TPOPE ===================================={{{
@@ -103,7 +102,6 @@ Plug 'christoomey/vim-conflicted'
 "   Plug 'guns/vim-clojure-highlight'
 "   let g:clojure_fold = 1
 "   let g:sexp_filetypes = ''
-
 "   Plug 'tpope/vim-salve'
 "   let g:salve_auto_start_repl = 1
 "Text Objects ====================={{{
@@ -111,7 +109,6 @@ Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'bkad/CamelCaseMotion'
-Plug 'michaeljsmith/vim-indent-object'
 Plug 'kana/vim-textobj-function'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'wellle/targets.vim'
@@ -120,7 +117,6 @@ Plug 'terryma/vim-expand-region'
 "}}}
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
-Plug 'kopischke/vim-fetch'
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
@@ -147,14 +143,21 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "}}}
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
-" Plug 'trevordmiller/nova-vim'
-" Plug 'kristijanhusak/vim-hybrid-material'
-" Plug 'mhartington/oceanic-next'
-Plug 'hzchirs/vim-material'
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 
+" Plug 'michaeljsmith/vim-indent-object'
+" Plug 'machakann/vim-highlightedyank'
+" Plug 'kopischke/vim-fetch'
+""---------------------------------------------------------------------------//
+" Colorscheme ideas
+""---------------------------------------------------------------------------//
+" Plug 'trevordmiller/nova-vim'
+" Plug 'kristijanhusak/vim-hybrid-material'
+" Plug 'hzchirs/vim-material'
+" Plug 'rakr/vim-one'
+" Plug 'mhartington/oceanic-next'
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
