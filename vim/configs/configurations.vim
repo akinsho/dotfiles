@@ -475,7 +475,8 @@ if has("nvim")
   let g:deoplete#sources#ternjs#types            = 1
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
-  " let g:nvim_typescript#type_info_on_hold  = 1
+  let g:tmuxcomplete#trigger                     = ''
+  let g:nvim_typescript#type_info_on_hold        = 1
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
@@ -755,11 +756,14 @@ call camelcasemotion#CreateMotionMappings('<leader>')
 ""---------------------------------------------------------------------------//
 " TMUX NAVIGATOR
 ""---------------------------------------------------------------------------//
-" Disable tmux navigator when zooming the Vim pane
-let g:tmux_navigator_disable_when_zoomed = 1
-" saves on moving pane but only the currently opened buffer if changed
-let g:tmux_navigator_save_on_switch = 2
+if exists('$TMUX')
+  " Disable tmux navigator when zooming the Vim pane
+  let g:tmux_navigator_disable_when_zoomed = 1
+  " saves on moving pane but only the currently opened buffer if changed
+  let g:tmux_navigator_save_on_switch = 2
+endif
 "}}}
+"
 
 function! GetFileSize() "{{{
   let bytes = getfsize(expand("%:p"))

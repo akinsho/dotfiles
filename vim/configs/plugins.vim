@@ -24,6 +24,7 @@ Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "En
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
 Plug 'ervandew/supertab',           Cond(has('nvim'))
+Plug 'wellle/tmux-complete.vim'
 "================================{{{
 Plug 'maralla/completor.vim', Cond(has('vim'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
@@ -48,7 +49,7 @@ Plug 'tpope/vim-capslock'
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 "}}}
 "TMUX ============================
-if executable("tmux")
+if exists("$TMUX")
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 endif
 
