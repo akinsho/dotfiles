@@ -32,8 +32,8 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 export PATH=$HOME/Library/Python/2.7/bin:$PATH
 # GO ============================================================
 export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/.go
-# export GOPATH=$HOME/Desktop/Coding/Go
+# export GOPATH=$HOME/.go
+export GOPATH=$HOME/Desktop/Coding/Go
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:$(go env GOPATH)/bin
 

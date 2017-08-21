@@ -18,11 +18,12 @@ highlight clear Conceal "Sets no highlighting for conceal
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
-highlight xmlAttrib cterm=italic,bold ctermfg=121
+highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
+highlight jsxAttrib cterm=italic,bold ctermfg=121
 highlight jsThis ctermfg=224
 highlight jsSuper ctermfg=13
 highlight jsFuncCall ctermfg=cyan
-highlight jsClassProperty ctermfg=14 cterm=bold
+highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
 highlight cssBraces ctermfg=cyan
 "highlight jsComment ctermfg=245 ctermbg=none
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
@@ -626,14 +627,38 @@ command! -bang -nargs=* Rg
 " Advanced customization using autoload functions
 " Replace the default dictionary completion with fzf-based fuzzy completion
 
+" This command now supports CTRL-T, CTRL-V, and CTRL-X key bindings
+" and opens fzf according to g:fzf_layout setting.
+command! Buffers call fzf#run(fzf#wrap(
+    \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}))
+
+" This extends the above example to open fzf in fullscreen
+" when the command is run with ! suffix (Buffers!)
+command! -bang Buffers call fzf#run(fzf#wrap(
+    \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}, <bang>0))
+
+command! FZFMru call fzf#run({
+\ 'source':  reverse(s:all_files()),
+\ 'sink':    'edit',
+\ 'options': '-m -x +s',
+\ 'down':    '40%' })
+
+function! s:all_files()
+  return extend(
+  \ filter(copy(v:oldfiles),
+  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+endfunction
+
 imap <c-x>l <plug>(fzf-complete-line)
 imap <c-x>p <plug>(fzf-complete-path)
 inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
+nnoremap <silent> <localleader>m :FZFMru<CR>
 nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>H :History<CR>
 nnoremap <silent> <localleader>C :Commits<CR>
-nnoremap <silent> <localleader>L :Lines<CR>
+nnoremap <silent> <localleader>l :Lines<CR>
 
 function! SearchWordWithRg()
   execute 'Rg' expand('<cword>')
@@ -642,12 +667,12 @@ endfunction
 " Launch file search using FZF
 nnoremap <localleader>p :GitFiles <CR>
 nnoremap <C-P> :call Fzf_dev()<CR>
-nnoremap \ :Rg<CR>
+nnoremap \ :Rg!<CR>
 nnoremap <space>\ :call SearchWordWithRg()<CR>
 endif
 
 if !has('gui_running')
-  nnoremap <localleader>m  :Marks<CR>
+  nnoremap <localleader>ma  :Marks<CR>
   nnoremap <localleader>mm :Maps<CR>
   let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
@@ -670,14 +695,6 @@ let g:fzf_nvim_statusline = 1
         \ 'spinner': ['fg', 'Label'],
         \ 'header':  ['fg', 'Comment']
         \}
-" function! s:fzf_statusline()
-  " Override statusline as you like
-"   highlight fzf1 ctermfg=161 ctermbg=251
-"   highlight fzf2 ctermfg=23 ctermbg=251
-"   highlight fzf3 ctermfg=237 ctermbg=251
-"   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-" endfunction
-" autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 " Files + devicons
 function! Fzf_dev()

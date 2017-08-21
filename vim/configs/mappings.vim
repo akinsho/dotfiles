@@ -141,8 +141,8 @@ nnoremap <S-tab> :bprevious<CR>
 " nnoremap <CR> G "20 enter to go to line 20
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
-" nnoremap ; :
-" nnoremap : ;
+nnoremap ; :
+nnoremap : ;
 "nnoremap [Alt]   <Nop>
 "xnoremap [Alt]   <Nop>
 " nmap    e  [Alt]
@@ -268,7 +268,7 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
 nnoremap <localleader>c :<c-f>
 "Open command line window
-nnoremap <localleader>l :redraw!<cr>
+nnoremap <localleader>L :redraw!<cr>
 "--------------------------------------------
 " Window resizing bindings
 "--------------------------------------------
@@ -376,3 +376,20 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 command! PU PlugUpdate | PlugUpgrade
+
+" Map key to toggle opt
+function! MapToggle(key, opt)
+  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+  exec 'nnoremap '.a:key.' '.cmd
+  exec 'inoremap '.a:key." \<C-O>".cmd
+endfunction
+command! -nargs=+ MapToggle call MapToggle(<f-args>)
+
+" Display-altering option toggles
+MapToggle <F1> wrap
+MapToggle <F3> list
+
+" Behavior-altering option toggles
+MapToggle <F10> scrollbind
+MapToggle <F11> ignorecase
+set pastetoggle=<F2>

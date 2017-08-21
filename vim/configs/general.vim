@@ -1,6 +1,6 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""
+""---------------------------------------------------------------------------//
 " => HELPER FUNCTIONS
-""""""""""""""""""""""""""""""""""""""""""""""""""
+""---------------------------------------------------------------------------//
 function! s:SetupHelpWindow() "{{{
   wincmd L
   vertical resize 79
@@ -401,8 +401,7 @@ endif
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
-set timeout timeoutlen=500 ""ttimeoutlen=100
-set pastetoggle=<F2>
+set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
 set winwidth=30
 set splitbelow "Open a horizontal split below current window

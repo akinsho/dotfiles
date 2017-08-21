@@ -89,7 +89,7 @@ Plug 'ap/vim-css-color', { 'for': [
       \ , 'javascript'
       \ , 'typescript'
       \ ] }
-Plug 'fleischie/vim-styled-components'
+" Plug 'fleischie/vim-styled-components'
 "}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
@@ -151,7 +151,6 @@ call plug#end()
 " Plug 'michaeljsmith/vim-indent-object'
 " Plug 'machakann/vim-highlightedyank'
 " Plug 'kopischke/vim-fetch'
-" Plug 'kassio/neoterm', Cond(has('nvim'))
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas
 ""---------------------------------------------------------------------------//
