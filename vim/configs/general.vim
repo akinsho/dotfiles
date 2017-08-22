@@ -224,7 +224,7 @@ augroup filetype_completion
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=tern#Complete
+  autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd CompleteDone * silent! pclose!
 augroup END
 
@@ -236,16 +236,12 @@ augroup filetype_javascript_typescript
   autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
-  " autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-  autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
-  autocmd FileType javascript :iabbrev <buffer> und undefined
-  autocmd Filetype javascript setlocal nocindent "don't use cindent for javascript
+  " autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   autocmd FileType javascript setlocal concealcursor=nvic
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
 augroup END
 
 augroup FileType_Clojure
@@ -558,9 +554,9 @@ endif
 set ruler
 set incsearch
 set completeopt+=noinsert
-set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
   set complete-=i
+  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set autoindent
   set autowrite "Automatically :write before running commands
   set backspace=2 "Back space deletes like most programs in insert mode
@@ -709,11 +705,6 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-
-if exists('&colorcolumn')
-    autocmd InsertEnter * set colorcolumn=80
-    autocmd InsertLeave * set colorcolumn=""
-endif
 
 set scrolloff=999 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
 set sidescrolloff=10
