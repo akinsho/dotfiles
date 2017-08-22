@@ -26,7 +26,8 @@ Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
 Plug 'ervandew/supertab',           Cond(has('nvim'))
 Plug 'wellle/tmux-complete.vim'
 "================================{{{
-Plug 'maralla/completor.vim', Cond(has('vim'))
+Plug 'maralla/completor.vim', Cond(!has('nvim'))
+Plug 'Quramy/tsuquyomi',      Cond(!has('nvim'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
@@ -52,7 +53,6 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 if exists("$TMUX")
   Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 endif
-
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
@@ -82,7 +82,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/dbext.vim'
-Plug 'ElmCast/elm-vim'
+Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'ap/vim-css-color', { 'for': [
       \ 'typescript.tsx'
       \ ,'javascript.jsx'
@@ -90,11 +90,9 @@ Plug 'ap/vim-css-color', { 'for': [
       \ , 'javascript'
       \ , 'typescript'
       \ ] }
-" Plug 'fleischie/vim-styled-components'
 "}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
-Plug 'rhysd/committia.vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'christoomey/vim-conflicted'
 Plug 'jreybert/vimagit'
@@ -152,6 +150,7 @@ call plug#end()
 " Plug 'michaeljsmith/vim-indent-object'
 " Plug 'machakann/vim-highlightedyank'
 " Plug 'kopischke/vim-fetch'
+" Plug 'rhysd/committia.vim'
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas
 ""---------------------------------------------------------------------------//

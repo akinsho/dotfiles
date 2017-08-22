@@ -103,7 +103,7 @@ call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
 call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
-call NERDTreeHighlightFile('ts', 226, 'none', '#2E7AB1')
+" call NERDTreeHighlightFile('ts', 226, 'none', '#2E7AB1')
 " call NERDTreeHighlightFile('tsx', 226, 'none', '#2E7AB1')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
@@ -159,7 +159,6 @@ let g:airline_section_c = '%t %{GetFileSize()}'
 "       \ [ 'a', 'b', 'y' ],
 "       \ [ 'x', 'c', 'z', 'error', 'warning' ]
 "       \ ]
-" configure whether close button should be shown: >
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#ale#enabled               = 1
 let g:airline_inactive_collapse                    = 1
@@ -216,28 +215,29 @@ nnoremap <C-Q> :Sayonara<CR>
 ""---------------------------------------------------------------------------//
 " Disable linting for all minified JS files.
 if has('gui_running')
-  let g:ale_set_balloons = 1
+  let g:ale_set_balloons                 = 1
 endif
 if has('vim')
   " Enable completion where available.
-  let g:ale_completion_enabled = 1
+  let g:ale_completion_enabled           = 1
 endif
-let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
-let g:ale_fixers = {}
-let g:ale_fixers.javascript = ['prettier', 'eslint']
-let g:ale_fixers.typescript = ['prettier']
-let g:ale_fixers.css = ['stylelint']
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_echo_msg_format = '%linter%: %s [%severity%]'
-let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '✘'
-let g:ale_sign_warning       = '⚠️'
-let g:ale_linters            = {
+let g:ale_pattern_options                = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_fixers                         = {}
+let g:ale_fixers.javascript              = ['prettier', 'eslint']
+let g:ale_fixers.typescript              = ['prettier']
+let g:ale_fixers.css                     = ['stylelint']
+let g:ale_javascript_prettier_options    = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_typescript_tsserver_use_global = 1
+let g:ale_echo_msg_format                = '%linter%: %s [%severity%]'
+let g:ale_sign_column_always             = 1
+let g:ale_sign_error                     = '✘'
+let g:ale_sign_warning                   = '⚠️'
+let g:ale_linters                        = {
       \'python': ['flake8'],
       \'css': ['stylelint'],
       \'jsx': ['stylelint', 'eslint'],
       \'sql': ['sqlint'],
-      \'typescript':['tslint', 'tsserver', 'typecheck', 'stylelint'],
+      \'typescript':['tsserver', 'tslint', 'stylelint'],
       \'html':[]
       \}
 let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
@@ -306,27 +306,6 @@ let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
 let g:javascript_plugin_jsdoc      = 1
-""---------------------------------------------------------------------------//
-" COMMITIA
-""---------------------------------------------------------------------------//
-let g:committia_hooks = {}
-function! g:committia_hooks.edit_open(info)
-  " Additional settings
-  setlocal spell
-  " If no commit message, start with insert mode
-  if a:info.vcs ==# 'git' && getline(1) ==# ''
-    startinsert
-  end
-  " Scroll the diff window from insert mode
-  " Map <C-n> and <C-p>
-  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
-endfunction
-
-if has("vim")
-  map y <Plug>(highlightedyank)
-endif
-let g:highlightedyank_highlight_duration = 500
 
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings
@@ -366,7 +345,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 ""---------------------------------------------------------------------------//
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
-let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
+" let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 ""---------------------------------------------------------------------------//
 " EDITOR CONFIG
 ""---------------------------------------------------------------------------//
@@ -385,6 +364,7 @@ let g:NERDCompactSexyComs   = 1
 let g:NERDDefaultAlign      = 'left'
 let g:NERDCustomDelimiters  = {
   \    'jsx': { 'left': '{/*','right': '*/}' },
+  \    'typescript.jsx': { 'left': '{/*','right': '*/}' },
   \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
   \  }
 let g:NERDCommentEmptyLines = 1
@@ -614,8 +594,6 @@ let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to 
 " --color: Search color options
 if !has('gui_running')
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
-" let g:fzf_files_options =
-"       \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 " Use ripgrep instead of ag:
@@ -746,6 +724,11 @@ let g:startify_list_order = [
       \ ]
 
 let g:startify_session_dir         = '~/.vim/session'
+let g:startify_bookmarks           = [
+      \ {'vimrc ': '~/.vimrc'},
+      \ {'zshrc ':'~/.zshrc'},
+      \ {'tmux ':'~/.tmux.conf'}
+      \ ]
 let g:startify_session_autoload    = 1
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root  = 1

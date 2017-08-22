@@ -1,14 +1,15 @@
-"-----------------------------------------------------------------------------------
+""---------------------------------------------------------------------------//
 "MAPPINGS {{{
-"------------------------------------------------------------------"
-"---------------------------------------------------------------------------
+""---------------------------------------------------------------------------//
+""---------------------------------------------------------------------------//
 " NEOVIM
-"---------------------------------------------------------------------------
+""---------------------------------------------------------------------------//
 " Terminal settings
 if has('nvim')
-  " set guicursor=n-v-c:block,i-ci-ve:ver10,r-cr:hor20,o:hor50
-  "       \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-  "       \,sm:block-blinkwait175-blinkoff150-blinkon175
+  " set guicursor=n-v-c-i-ci-ve:block
+  " \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+        \,sm:block-blinkwait175-blinkoff150-blinkon175
   tnoremap <Leader>e <C-\><C-n>
   tnoremap <C-h> <C-\><C-n><C-h>
   tnoremap <C-j> <C-\><C-n><C-j>
@@ -28,9 +29,9 @@ if has('nvim')
   nmap <leader>t :term<cr>
   tmap <leader>, <C-\><C-n>:bnext<cr>
 endif
-
+""---------------------------------------------------------------------------//
 "Terminal {{{
-"====================================================================
+""---------------------------------------------------------------------------//
 nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
 
 "Opening splits with terminal in all directions
@@ -76,9 +77,9 @@ nnoremap <leader>ba :1,1000 bd!<cr>
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " Shortcuts
 " Change Working Directory to that of the current file
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""---------------------------------------------------------------------------//
 " => Command mode related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""---------------------------------------------------------------------------//
 " Smart mappings on the command line
 cno $h e ~/
 cno $d e ~/Desktop/
@@ -94,9 +95,9 @@ cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 cmap w!! w !sudo tee % >/dev/null
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
-""""""""""""""""""""""""""""""""""""""""""""""""""
+""---------------------------------------------------------------------------//
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
@@ -269,9 +270,9 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <localleader>c :<c-f>
 "Open command line window
 nnoremap <localleader>L :redraw!<cr>
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 " Window resizing bindings
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 "Create a horizontal split
 nnoremap _ :sp<CR>
 "Create a vertical split
@@ -284,10 +285,6 @@ nnoremap <up> 15<c-w>+
 nnoremap <left> 15<c-w>>
 " Decrease window size horizontally
 nnoremap <right> 15<c-w><
-" Max out the height of the current split
-nnoremap <localleader>f <C-W>_
-" Max out the width of the current split
-nnoremap <localleader>e <C-W>|
 
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
@@ -297,7 +294,7 @@ nnoremap <leader>nt <C-W>T
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
 nnoremap <leader>r <C-W>R
-"--------------------------------------------
+""---------------------------------------------------------------------------//
 "Open Common files
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
@@ -393,3 +390,12 @@ MapToggle <F3> list
 MapToggle <F10> scrollbind
 MapToggle <F11> ignorecase
 set pastetoggle=<F2>
+
+fu! ToggleColorColumn()
+  if &colorcolumn
+    set colorcolumn=""
+  else
+    set colorcolumn=80
+  endif
+endfunction
+nnoremap <F4> :call ToggleColorColumn()<CR>
