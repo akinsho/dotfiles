@@ -160,9 +160,10 @@ let g:airline_section_c = '%t %{GetFileSize()}'
 "       \ [ 'x', 'c', 'z', 'error', 'warning' ]
 "       \ ]
 let g:airline#extensions#tabline#show_close_button = 1
-let g:airline#extensions#ale#enabled               = 1
+let g:airline#extensions#ale#error_symbol = '✖:'
+let g:airline#extensions#ale#warning_symbol = '⚠:'
 let g:airline_inactive_collapse                    = 1
- let g:airline#extensions#tabline#close_symbol     = 'x' " * configure symbol used to represent close button >
+let g:airline#extensions#tabline#close_symbol     = 'x' " * configure symbol used to represent close button >
 " * configure pattern to be ignored on BufAdd autocommand >
 " fixes unnecessary redraw, when e.g. opening Gundo window
 let airline#extensions#tabline#ignore_bufadd_pat   =
@@ -269,6 +270,8 @@ let g:jsx_ext_required          = 1
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//
+let g:go_fmt_command = "goimports"
+let g:go_list_type = "quickfix"
 let g:go_doc_keywordprg_enabled = 0
 let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
@@ -428,7 +431,7 @@ if has("nvim")
       \}
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#sources#go#gocode_binary= $GOPATH.'/bin/gocode'
-  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const', 'ultisnips']
   let g:deoplete#sources#go#package_dot  = 1
   let g:deoplete#sources#go#use_cache    = 1
   let g:deoplete#sources#go#pointer      = 1
@@ -495,7 +498,8 @@ let g:tern#arguments                = ["--persistent"]
 ""---------------------------------------------------------------------------//
 " SUPERTAB
 ""---------------------------------------------------------------------------//
-let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestHighlight      = 1
 
 ""---------------------------------------------------------------------------//

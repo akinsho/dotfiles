@@ -39,6 +39,7 @@ alias lip="lsof -Pn -i4"
 alias ports=" _ lsof -i -P | grep -i 'listen'"
 alias sesh="vim -S"
 alias tmux="tmux -2"
+alias imux="tmux -CC"
 alias ta="tmux attach -t"
 alias td="tmux detach"
 alias tls="tmux ls"
@@ -57,7 +58,6 @@ alias -s html=nvim
 alias -s css=nvim
 alias -s py=nvim
 
-alias ti="tmux -CC"
 # alias attach="tmux -CC attach"
 alias browse="browser-sync start --server"
 alias ctags="`brew --prefix`/bin/ctags"

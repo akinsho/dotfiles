@@ -399,3 +399,11 @@ fu! ToggleColorColumn()
   endif
 endfunction
 nnoremap <F4> :call ToggleColorColumn()<CR>
+
+
+""---------------------------------------------------------------------------//
+" GREPPING
+""---------------------------------------------------------------------------//
+nnoremap <silent> g/ :silent! :grep!<space>
+nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
+nnoremap <silent> ga :silent! :grepadd!<space>

@@ -278,7 +278,7 @@ bindkey '^Z' fancy-ctrl-z
 
 # Plugin that autocorrects when you type fuck or whatever alias you intended
 eval "$(thefuck --alias fuck)"
-
+alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 # iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

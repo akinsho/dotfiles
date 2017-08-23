@@ -85,6 +85,7 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 "===================================================================================
 augroup Code Comments             "{{{
 "------------------------------------+
+au!
 " Horizontal Rule (78 char long)
 autocmd FileType vim                           nnoremap <leader>hr 0i""---------------------------------------------------------------------------//<ESC>
 autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
@@ -96,7 +97,11 @@ autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>cb I/*     <ESC>
 
 augroup END "}}}
 
-au FileType qf call AdjustWindowHeight(3, 10)
+
+" Auto open grep quickfix window
+au! QuickFixCmdPost *grep* cwindow
+
+au! FileType qf call AdjustWindowHeight(3, 10)
 function! AdjustWindowHeight(minheight, maxheight)
    let l = 1
    let n_lines = 0
@@ -375,6 +380,8 @@ augroup ft_css
   au FileType css setlocal foldtext=CSSFoldText()
 augroup END
 
+set modelines=0
+set nomodeline
 " ----------------------------------------------------------------------------
 " Message output on vim actions
 " ----------------------------------------------------------------------------
@@ -385,7 +392,7 @@ set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
 set shortmess-=l
 set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
- set shortmess-=f                      " (file x of x) instead of just (x of x)
+set shortmess-=f                      " (file x of x) instead of just (x of x)
 " set shortmess+=I                      " no splash screen
 " set shortmess+=mnrxoOt
 if has('patch-7.4.314')
@@ -459,7 +466,7 @@ set suffixesadd+=.js,.jsx,.ts,.tsx
 if executable('rg')
   " set grepprg=rg\ --vimgrep\ --no-heading
   set grepprg=rg\ --smart-case\ --vimgrep\ $*
-  set grepformat^=%f:%l:%c:%m
+  set grepformat^=%f:%l:%c:%m,%f:%l:%m
 elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
   set grepformat^=%f:%l:%c:%m
@@ -735,3 +742,10 @@ if !has('nvim')
   set mouse=a
 endif
 "}}}
+""---------------------------------------------------------------------------//
+" Trailing whitespace handling
+""---------------------------------------------------------------------------//
+" Highlight end of line whitespace.
+highlight WhitespaceEOL ctermbg=red guibg=red
+match WhitespaceEOL /\s\+$/
+""---------------------------------------------------------------------------//

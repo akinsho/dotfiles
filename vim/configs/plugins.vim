@@ -46,13 +46,10 @@ if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'
 endif
 Plug 'ctrlpvim/ctrlp.vim', Cond(has('gui_running'))
-Plug 'tpope/vim-capslock'
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 "}}}
 "TMUX ============================
-if exists("$TMUX")
-  Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-endif
+Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
@@ -117,6 +114,7 @@ Plug 'terryma/vim-expand-region'
 "}}}
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
+Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 "Coding tools ======================={{{
 Plug 'kshenoy/vim-signature'
 Plug 'janko-m/vim-test'
@@ -149,7 +147,6 @@ call plug#end()
 
 " Plug 'michaeljsmith/vim-indent-object'
 " Plug 'machakann/vim-highlightedyank'
-" Plug 'kopischke/vim-fetch'
 " Plug 'rhysd/committia.vim'
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas

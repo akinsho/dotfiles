@@ -7,8 +7,13 @@
   editor = nvim
   excludesfile = /Users/A_nonymous/.gitignore_global
 [alias]
-  conflicted = !vim +Conflicted
+# List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
+  aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
+# Destroy all local changes and reset to HEAD.
+  fuckit = reset --hard HEAD
   fall = fetch --all
+# Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
+  damnit = reset --soft HEAD^
   uncommit = reset --soft HEAD^
   ureset = !git reset --hard $(git upstream)
 [push]
