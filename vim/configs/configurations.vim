@@ -469,12 +469,15 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
-  nnoremap <localleader>tp :TSDefPreview<CR>
-  nnoremap <localleader>td :TSDef<CR>
-  nnoremap <localleader>tr :TSRefs<CR>
-  nnoremap <localleader>tt :TSType<CR>
-  nnoremap <localleader>tc :TSEditConfig<CR>
-  nnoremap <localleader>ti :TSImport<CR>
+  augroup Typescript_helpers
+    au!
+    autocmd FileType typescript nnoremap <localleader>p :TSDefPreview<CR>
+    autocmd FileType typescript nnoremap <localleader>d :TSDef<CR>
+    autocmd FileType typescript nnoremap <localleader>r :TSRefs<CR>
+    autocmd FileType typescript nnoremap <localleader>t :TSType<CR>
+    autocmd FileType typescript nnoremap <localleader>c :TSEditConfig<CR>
+    autocmd FileType typescript nnoremap <localleader>i :TSImport<CR>
+  augroup END
 endif
 
 let g:tern_request_timeout = 1

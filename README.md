@@ -14,6 +14,11 @@ A list of amazing tools I've discorvered but cannot hide away
    new so not perfect but is under active developement. Has file broswer
    markdown preview etc.
 
+2. [Karabiner-elements](https://github.com/tekezo/Karabiner-Elements) - Well
+   known tool which has been remade for macOS Sierra which allows remaping keys, so
+   you can do cool things like make the capslock key return an escape if
+   pressed alone otherwise it returns control.
+
 
 ## Tmux Setup
 
@@ -36,7 +41,7 @@ tic -o /path/to/terminfo_folder /path/to/tmux.terminfo/
 ### Great Plugins I've Abandoned for now
 So My Vimrc is arguably overloaded with plugins so I've decided to make
 a little list of plugins I use which I find really helpful but am currently
-not using just to get back into the feel of doing these things without these
+not using/am using but may not be depending on my mood just to get back into the feel of doing these things without these
 awesome tools
 
 * The syntax highlighting wars continue - `Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx']}`
@@ -46,6 +51,8 @@ awesome tools
 * `Plug 'bronson/vim-visual-star-search'`
 * `Plug 'ap/vim-buftabline'`
 * Colors for hexcode in vim `Plug 'gorodinskiy/vim-coloresque', {'for': ['css', 'scss']}` - really great idea incredibly slow sadly
+* `Plug 'lifepillar/vim-cheat40'`
+* `Plug 'wikitopian/hardmode'`
 
 ### Excellent colorschemes
 * `Plug 'davidklsn/vim-sialoquent'`
@@ -56,5 +63,3 @@ awesome tools
 * `Plug 'haya14busa/incsearch.vim'`
 * `Plug 'haya14busa/incsearch-fuzzy.vim'`
 * `Plug 'haya14busa/incsearch-easymotion.vim'`
-* `Plug 'lifepillar/vim-cheat40'`
-* `Plug 'wikitopian/hardmode'`

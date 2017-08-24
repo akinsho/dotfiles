@@ -146,7 +146,7 @@ endfunction
 augroup Go_Mappings
   autocmd!
   autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 nolist
-  autocmd BufNewFile,WinEnter,BufRead *.go setlocal nolist
+  autocmd BufNewFile,BufEnter,WinEnter,BufRead *.go setlocal nolist
   autocmd FileType go nmap <leader>t  <Plug>(go-test)
   autocmd FileType go nmap <Leader>d <Plug>(go-doc)
   autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -294,7 +294,7 @@ if has('nvim')
     au!
     au BufEnter * if &buftype == 'terminal' | :startinsert | endif
     autocmd BufEnter term://* startinsert
-    autocmd TermOpen * set bufhidden=hide
+    autocmd TermOpen * set bufhidden=hide | setl scrolloff=0
     au BufEnter * if &buftype == 'terminal' | setlocal nonumber | endif
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END

@@ -1247,11 +1247,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>337 331 606 469 0 0 1280 800 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>228 255 796 473 0 0 1280 800 </string>
+	<string>228 348 770 429 0 0 1280 800 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 216 592 584 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 5 1280 795 0 0 1280 800 </string>
+	<string>640 28 640 772 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-960 -271 954 1048 -1920 -280 1920 1057 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
@@ -1278,19 +1278,23 @@
 			<key>AWDS Window Option</key>
 			<string>No</string>
 			<key>Allow Title Reporting</key>
-			<false/>
+			<true/>
 			<key>Allow Title Setting</key>
 			<true/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.15294118225574493</real>
+				<real>0.08477783203125</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.12941177189350128</real>
+				<real>0.082023219794224028</real>
 				<key>Red Component</key>
-				<real>0.11764705926179886</real>
+				<real>0.080458478070795536</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>
@@ -1999,12 +2003,16 @@
 			<false/>
 			<key>Ansi 0 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.15294118225574493</real>
+				<real>0.08477783203125</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.12941177189350128</real>
+				<real>0.082023219794224028</real>
 				<key>Red Component</key>
-				<real>0.11764705926179886</real>
+				<real>0.080458478070795536</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>
@@ -3543,7 +3551,7 @@
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.33124499198717949</real>
+	<real>0.43551181891025637</real>
 	<key>StretchTabsToFillBar</key>
 	<false/>
 	<key>SwitchPaneModifier</key>
@@ -3553,7 +3561,7 @@
 	<key>SwitchWindowModifier</key>
 	<integer>6</integer>
 	<key>TabStyle</key>
-	<integer>1</integer>
+	<integer>3</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
 	<key>TmuxDashboardLimit</key>
