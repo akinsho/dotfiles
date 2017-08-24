@@ -39,6 +39,9 @@ if filereadable(expand("~/Dotfiles/vim/configs/configurations.vim"))
   source $HOME/Dotfiles/vim/configs/configurations.vim
 endif
 
+source $HOME/Dotfiles/vim/plugins/grep.vim
+source $HOME/Dotfiles/vim/plugins/togglelist.vim
+
 "-----------------------------------------------------------------------
 " Mappings
 "-----------------------------------------------------------------------
