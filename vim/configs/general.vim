@@ -294,7 +294,7 @@ if has('nvim')
     au!
     au BufEnter * if &buftype == 'terminal' | :startinsert | endif
     autocmd BufEnter term://* startinsert
-    autocmd TermOpen * set bufhidden=hide | setl scrolloff=0
+    autocmd TermOpen * set bufhidden=hide
     au BufEnter * if &buftype == 'terminal' | setlocal nonumber | endif
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END

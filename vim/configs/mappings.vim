@@ -11,6 +11,8 @@ if has('nvim')
   " set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   "       \,sm:block-blinkwait175-blinkoff150-blinkon175
   nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
+"Add neovim terminal escape with ESC mapping
+  tnoremap <ESC> <C-\><C-n>
   tnoremap <Leader>e <C-\><C-n>
   tnoremap <C-h> <C-\><C-n><C-h>
   tnoremap <C-j> <C-\><C-n><C-j>
@@ -45,8 +47,6 @@ nnoremap [e ddp
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
-nnoremap gf <c-w>gF
-
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -67,7 +67,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-"nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+" nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " Close all the buffers
@@ -84,7 +84,6 @@ nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:regi
 cno $h e ~/
 cno $d e ~/Desktop/
 cno $j e ./
-cno $c e <C-\>eCurrentFileDir("e")<cr>
 
 " $q is super useful when browsing on the command line
 " it deletes everything until the last slash 
@@ -101,6 +100,8 @@ cmap w!! w !sudo tee % >/dev/null
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
+" nnoremap j jzz
+" nnoremap k kzz
 
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
@@ -132,11 +133,8 @@ nnoremap : ;
 " xmap    e  [Alt]
 " Like gv, but select the last changed text.
 nnoremap gi  `[v`]
-" Specify the last changed text as {motion}.
-onoremap <silent> gi  :<C-u>normal gc<CR>"`
-vnoremap <silent> gi  :<C-u>normal gc<CR>
 " Capitalize.
-nnoremap õ <ESC>gUiw`]
+nnoremap ,U <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
 " Smart }."
 nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
@@ -169,31 +167,19 @@ xmap ad  a"
 omap id  i"
 xmap id  i"
 
-" <angle>
-" omap aa  a>
-" xmap aa  a>
-" omap ia  i>
-" xmap ia  i>
 "Change two horizontally split windows to vertical splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
 nnoremap <LocalLeader>v <C-W>t <C-W>H
 "Select txt that has just been read or pasted in
 nnoremap gV `[V`]
-
-" make last typed word uppercase
-inoremap :u <esc>viwUea
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
-" replace word under cursor
-nnoremap S :%s/\<<C-R><C-W>\>//gc<Left><Left><Left>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
-inoremap ó <C-O>:update<CR>
 " text-object: line
 " Elegant text-object pattern hacked out of jdaddy.vim.
 function! s:line_inner_movement(count) abort
-  "TODO: handle count
   if empty(getline('.'))
     return "\<Esc>"
   endif
@@ -207,11 +193,8 @@ onoremap <silent> il :normal vil<CR>
 
 "ctrl-o in insert mode allows you to perform one normal mode command then
 "returns to insert mode
-" inoremap <C-j> <Down>
-inoremap ê <Down>
-inoremap è <left>
-inoremap ë <up>
-inoremap ì <right>
+inoremap <C-j> <c-o>j
+inoremap <C-k> <c-o>k
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <F6> :! open %<CR>
@@ -222,6 +205,7 @@ nnoremap Y y$
 nnoremap <leader>sw :b#<CR>
 " Quick find/replace
 nnoremap <Leader>[ :%s/<C-r><C-w>/
+nnoremap <localleader>[ :s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 "--------------------------------------------
 "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
@@ -237,14 +221,14 @@ endfunction
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
-"Remap back tick for jumping to marks more quickly
+"Remap back tick for jumping to marks more quickly back
 nnoremap ' `
 nnoremap ` '
 
 "Save all files
 nnoremap qa :wqa<CR>
 " press enter for newline without insert
-nnoremap <cr> o<esc>
+" nnoremap <cr> o<esc> "******************************************************
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
@@ -309,8 +293,8 @@ noremap <localleader>y "*y
 noremap <localleader>yy "*Y
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
-noremap K  @='10k'<CR>
-noremap J  @='10j'<CR>
+noremap K  @='10gk'<CR>
+noremap J  @='10gj'<CR>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -331,11 +315,6 @@ nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 "Map Q to remove a CR
 nnoremap Q J
-nnoremap <leader>co :botright cope<cr>
-"Add neovim terminal escape with ESC mapping
-if has("nvim")
-  tnoremap <ESC> <C-\><C-n>
-endif
 "}}}
 
 " Shortcut to jump to next conflict marker"
@@ -368,12 +347,12 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Display-altering option toggles
 MapToggle <F1> wrap
-MapToggle <F3> list
+MapToggle <F2> list
 
 " Behavior-altering option toggles
 MapToggle <F10> scrollbind
 MapToggle <F11> ignorecase
-set pastetoggle=<F2>
+set pastetoggle=<F3>
 
 fu! ToggleColorColumn()
   if &colorcolumn

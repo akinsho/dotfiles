@@ -501,9 +501,7 @@ let g:tern#arguments                = ["--persistent"]
 ""---------------------------------------------------------------------------//
 " SUPERTAB
 ""---------------------------------------------------------------------------//
-" let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestHighlight      = 1
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 ""---------------------------------------------------------------------------//
 " Goyo
@@ -556,7 +554,7 @@ augroup END
 ""---------------------------------------------------------------------------//
 " VIM MARKDOWN
 ""---------------------------------------------------------------------------//
-let g:vim_markdown_fenced_languages =[
+let g:vim_markdown_fenced_languages = [
   \'css',
   \'erb=eruby',
   \'javascript',
@@ -656,7 +654,7 @@ endfunction
 nnoremap <localleader>p :GitFiles <CR>
 nnoremap <C-P> :call Fzf_dev()<CR>
 nnoremap \ :Rg!<CR>
-nnoremap <space>\ :call SearchWordWithRg()<CR>
+nnoremap <localleader>gw :call SearchWordWithRg()<CR>
 endif
 
 if !has('gui_running')
