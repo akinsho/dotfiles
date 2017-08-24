@@ -10,6 +10,7 @@ if has('nvim')
   " \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
   " set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   "       \,sm:block-blinkwait175-blinkoff150-blinkon175
+  nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
   tnoremap <Leader>e <C-\><C-n>
   tnoremap <C-h> <C-\><C-n><C-h>
   tnoremap <C-j> <C-\><C-n><C-j>
@@ -25,18 +26,15 @@ if has('nvim')
   tmap <leader>7  <C-\><C-n><Plug>AirlineSelectTab7
   tmap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
   tmap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
-  tmap <leader>q <c-\><c-n>:bp! <BAR> bd! #<CR>
   nmap <leader>t :term<cr>
   tmap <leader>, <C-\><C-n>:bnext<cr>
 endif
 ""---------------------------------------------------------------------------//
 "Terminal {{{
 ""---------------------------------------------------------------------------//
-nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
-
 "Opening splits with terminal in all directions
-nnoremap <leader>h<CR> :leftabove 10vnew<CR>:terminal<CR>
-nnoremap <leader>l<CR> :rightbelow 10vnew<CR>:terminal<CR>
+nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
+nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
 nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 "}}}
@@ -103,24 +101,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
-" vim-vertical-move replacement
-" credit: cherryberryterry: https://www.reddit.com/r/vim/comments/4j4duz/a/d33s213
-function! s:vjump(dir) abort
-  let c = '%'.virtcol('.').'v'
-  let flags = a:dir ? 'bnW' : 'nW'
-  let bot = search('\v'.c.'.*\n^(.*'.c.'.)@!.*$', flags)
-  let top = search('\v^(.*'.c.'.)@!.*$\n.*\zs'.c, flags)
-
-  " norm! m`
-  return a:dir ? (line('.') - (bot > top ? bot : top)).'k'
-    \        : ((bot < top ? bot : top) - line('.')).'j'
-endfunction
-" vnoremap <expr> <c-j> <SID>vjump(0)
-" vnoremap <expr> <c-k> <SID>vjump(1)
-" xnoremap <expr> <C-j> <SID>vjump(0)
-" xnoremap <expr> <C-k> <SID>vjump(1)
-" onoremap <expr> <C-j> <SID>vjump(0)
-" onoremap <expr> <C-k> <SID>vjump(1)
 
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
@@ -162,6 +142,7 @@ inoremap <C-u> <ESC>gUiw`]a
 nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
+
 function! ForwardParagraph()
   let cnt = v:count ? v:count : 1
   let i = 0
