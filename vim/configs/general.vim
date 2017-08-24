@@ -230,7 +230,7 @@ augroup filetype_completion
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd CompleteDone * silent! pclose!
+  " autocmd CompleteDone * silent! pclose!
 augroup END
 
 augroup filetype_javascript_typescript
@@ -582,7 +582,7 @@ endif
 " ------------------------------------
 " Command line
 " ------------------------------------
-set showcmd "Show commands being input
+set noshowcmd "Show commands being input
 set cmdheight=2 " Set command line height to two lines
 "-----------------------------------------------------------------
 "Abbreviations

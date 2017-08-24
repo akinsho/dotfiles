@@ -25,7 +25,7 @@ if has('nvim')
   tmap <leader>7  <C-\><C-n><Plug>AirlineSelectTab7
   tmap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
   tmap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
-  tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
+  tmap <leader>q <c-\><c-n>:bp! <BAR> bd! #<CR>
   nmap <leader>t :term<cr>
   tmap <leader>, <C-\><C-n>:bnext<cr>
 endif
@@ -35,10 +35,10 @@ endif
 nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
 
 "Opening splits with terminal in all directions
-nnoremap <leader>h<CR> :leftabove vnew<CR>:terminal<CR>
-nnoremap <leader>l<CR> :rightbelow vnew<CR>:terminal<CR>
-nnoremap <leader>k<CR> :leftabove new<CR>:terminal<CR>
-nnoremap <leader>j<CR> :rightbelow new<CR>:terminal<CR>
+nnoremap <leader>h<CR> :leftabove 10vnew<CR>:terminal<CR>
+nnoremap <leader>l<CR> :rightbelow 10vnew<CR>:terminal<CR>
+nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
+nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 "}}}
 "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
 nnoremap ]e ddkP
@@ -46,6 +46,8 @@ nnoremap [e ddp
 " Move visual block
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
+
+nnoremap gf <c-w>gF
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
@@ -113,12 +115,12 @@ function! s:vjump(dir) abort
   return a:dir ? (line('.') - (bot > top ? bot : top)).'k'
     \        : ((bot < top ? bot : top) - line('.')).'j'
 endfunction
-vnoremap <expr> <c-j> <SID>vjump(0)
-vnoremap <expr> <c-k> <SID>vjump(1)
-xnoremap <expr> <C-j> <SID>vjump(0)
-xnoremap <expr> <C-k> <SID>vjump(1)
-onoremap <expr> <C-j> <SID>vjump(0)
-onoremap <expr> <C-k> <SID>vjump(1)
+" vnoremap <expr> <c-j> <SID>vjump(0)
+" vnoremap <expr> <c-k> <SID>vjump(1)
+" xnoremap <expr> <C-j> <SID>vjump(0)
+" xnoremap <expr> <C-k> <SID>vjump(1)
+" onoremap <expr> <C-j> <SID>vjump(0)
+" onoremap <expr> <C-k> <SID>vjump(1)
 
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
@@ -298,7 +300,8 @@ nnoremap <leader>r <C-W>R
 "Open Common files
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
-nnoremap <leader>x :lclose<CR>
+"close loclist or qflist
+nnoremap <leader>x :cclose <bar> lclose<CR>
 "Indent a page
 nnoremap <C-G>f gg=G<CR>
 inoremap <up> <nop>
@@ -325,8 +328,8 @@ noremap <localleader>y "*y
 noremap <localleader>yy "*Y
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
-nnoremap K  @='10k'<CR>
-nnoremap J  @='10j'<CR>
+noremap K  @='10k'<CR>
+noremap J  @='10j'<CR>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>

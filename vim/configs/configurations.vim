@@ -369,9 +369,9 @@ let g:NERDCompactSexyComs   = 1
 let g:NERDDefaultAlign      = 'left'
 let g:NERDCustomDelimiters  = {
   \    'jsx': { 'left': '{/*','right': '*/}' },
-  \    'typescript.jsx': { 'left': '{/*','right': '*/}' },
-  \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
   \  }
+" \    'typescript.jsx': { 'left': '{/*','right': '*/}' },
+" \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
 let g:NERDCommentEmptyLines = 1
 
 nmap <silent> <leader>vt :TestNearest<CR>
@@ -471,12 +471,12 @@ if has("nvim")
   call deoplete#custom#set('ultisnips', 'mark', '')
   augroup Typescript_helpers
     au!
-    autocmd FileType typescript nnoremap <localleader>p :TSDefPreview<CR>
-    autocmd FileType typescript nnoremap <localleader>d :TSDef<CR>
-    autocmd FileType typescript nnoremap <localleader>r :TSRefs<CR>
-    autocmd FileType typescript nnoremap <localleader>t :TSType<CR>
-    autocmd FileType typescript nnoremap <localleader>c :TSEditConfig<CR>
-    autocmd FileType typescript nnoremap <localleader>i :TSImport<CR>
+    autocmd FileType typescript.jsx nnoremap <localleader>p :TSDefPreview<CR>
+    autocmd FileType typescript.jsx nnoremap <localleader>d :TSDef<CR>
+    autocmd FileType typescript.jsx nnoremap <localleader>r :TSRefs<CR>
+    autocmd FileType typescript.jsx nnoremap <localleader>t :TSType<CR>
+    autocmd FileType typescript.jsx nnoremap <localleader>c :TSEditConfig<CR>
+    autocmd FileType typescript.jsx nnoremap <localleader>i :TSImport<CR>
   augroup END
 endif
 
