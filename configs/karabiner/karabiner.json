@@ -191,7 +191,7 @@
             "name": "Akin",
             "selected": true,
             "simple_modifications": {
-                "right_control": "caps_lock"
+                "grave_accent_and_tilde": "caps_lock"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
