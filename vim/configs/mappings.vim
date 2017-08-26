@@ -119,6 +119,8 @@ nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
 "Quit
 vnoremap <C-Q>     <esc>
+nnoremap <leader>ln :cnext<CR>
+nnoremap <leader>lp :cprev<CR>
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>   :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
@@ -191,10 +193,6 @@ endfunction
 xnoremap <expr>   il <SID>line_inner_movement(v:count1)
 onoremap <silent> il :normal vil<CR>
 
-"ctrl-o in insert mode allows you to perform one normal mode command then
-"returns to insert mode
-inoremap <C-j> <c-o>j
-inoremap <C-k> <c-o>k
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <F6> :! open %<CR>
@@ -228,7 +226,8 @@ nnoremap ` '
 "Save all files
 nnoremap qa :wqa<CR>
 " press enter for newline without insert
-" nnoremap <cr> o<esc> "******************************************************
+"******************************************************
+nnoremap <localleader><cr> o<esc>
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory

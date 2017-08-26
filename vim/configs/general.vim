@@ -121,10 +121,12 @@ augroup quickfix_menu_quit
   autocmd!
   autocmd FileType help,git-status,git-log,qf,
         \gitcommit,quickrun,qfreplace,ref,
-        \simpletap-summary,vcs-commit,vcs-status,vim-hacks
+        \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
         \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
+    autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
+    autocmd FileType qf setl nohidden
 augroup END
 
 function! s:smart_close()
@@ -417,7 +419,7 @@ if has('folding')
   set foldlevelstart=99
   set foldnestmax=3
 endif
-set switchbuf=useopen,usetab,newtab
+set switchbuf=useopen,usetab,vsplit
 set sessionoptions-=options
 if !has('nvim')
   set termsize="10x30"
