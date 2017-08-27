@@ -10,15 +10,17 @@ if has('nvim')
   " \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
   " set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   "       \,sm:block-blinkwait175-blinkoff150-blinkon175
-  nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
-"Add neovim terminal escape with ESC mapping
+  " nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
+
+  "Add neovim terminal escape with ESC mapping
   tnoremap <ESC> <C-\><C-n>
   tnoremap <Leader>e <C-\><C-n>
   tnoremap <C-h> <C-\><C-n><C-h>
   tnoremap <C-j> <C-\><C-n><C-j>
   tnoremap <C-k> <C-\><C-n><C-k>
   tnoremap <C-l> <C-\><C-n><C-l>
-  tmap <leader>. <C-\><C-n>:bprevious<CR>
+  tmap <localleader><tab> <C-\><C-n>:bnext<CR>
+  tmap <localleader><S-tab> <C-\><C-n>:bprev<CR>
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
   tmap <leader>3  <C-\><C-n><Plug>AirlineSelectTab3

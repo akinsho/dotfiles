@@ -245,11 +245,29 @@ let g:ale_set_highlights    = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
+""---------------------------------------------------------------------------//
+" NEOTERM
+""---------------------------------------------------------------------------//
+let g:neoterm_size = '40'
+let g:neoterm_position = 'vertical'
+let g:neoterm_automap_keys = ',tt'
 
-""---------------------------------------------------------------------------//
-" CAPSLOCK
-""---------------------------------------------------------------------------//
-imap <C-L> <C-O><Plug>CapsLockToggle
+" Git commands
+command! -nargs=+ Tg :T git <args>
+nnoremap <silent> <leader><CR> :Ttoggle<CR>
+nnoremap <silent> <leader>ta :TtoggleAll<CR>
+nnoremap <silent> <leader>tx :TcloseAll<CR>
+nnoremap <silent> <leader>ts :TREPLSendFile<cr>
+nnoremap <silent> <leader>tl :TREPLSendLine<cr>
+vnoremap <silent> <leader>tl :TREPLSendSelection<cr>
+
+" Useful maps
+" hide/close terminal
+nnoremap <silent> <leader>th :call neoterm#close()<cr>
+" clear terminal
+nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+nnoremap <silent> <leader>tk :call neoterm#kill()<cr>
 ""---------------------------------------------------------------------------//
 " FUGITIVE
 ""---------------------------------------------------------------------------//
@@ -269,12 +287,15 @@ let g:jsx_ext_required          = 1
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//
-" let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
-let g:go_fmt_autosave = 1
-let g:go_doc_keywordprg_enabled = 0
+let g:go_list_type              = "quickfix"
+let g:go_auto_type_info         = 0
+let g:go_auto_sameids           = 1
+let g:go_fmt_command            = "goimports"
+let g:go_fmt_autosave           = 1
+let g:go_doc_keywordprg_enabled = 0 "Stops auto binding K
 let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
+let g:go_def_reuse_buffer       = 1
 ""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
@@ -311,7 +332,6 @@ let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
 let g:javascript_plugin_jsdoc      = 1
-
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings
 ""---------------------------------------------------------------------------//
@@ -455,6 +475,7 @@ if has("nvim")
       \ 'jspc#omni'
       \]
   call deoplete#custom#source('ultisnips', 'rank', 6000)
+  call deoplete#custom#source('tmux', 'rank', 2000)
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
@@ -579,7 +600,7 @@ let g:UltiSnipsSnippetsDir          = "~/Dotfiles/vim/mySnippets" "Both of these
 let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
 let g:UltiSnipsExpandTrigger        = "<C-J>"
 let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
-let g:UltiSnipsListSnippets         = "<space>ls"
+let g:UltiSnipsListSnippets         = ",us"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
 

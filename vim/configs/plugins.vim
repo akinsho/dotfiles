@@ -74,7 +74,8 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "}}}
 "Syntax ============================{{{
-Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
+" Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
+Plug 'ianks/vim-tsx'
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
 Plug 'editorconfig/editorconfig-vim'
@@ -91,7 +92,6 @@ Plug 'ap/vim-css-color', { 'for': [
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'christoomey/vim-conflicted'
 Plug 'jreybert/vimagit'
 "}}}
 " Clojure =========================
@@ -125,6 +125,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
+Plug 'kassio/neoterm'
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -147,7 +148,6 @@ call plug#end()
 
 " Plug 'michaeljsmith/vim-indent-object'
 " Plug 'machakann/vim-highlightedyank'
-" Plug 'rhysd/committia.vim'
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas
 ""---------------------------------------------------------------------------//
