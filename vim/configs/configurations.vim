@@ -37,8 +37,9 @@ highlight PmenuSel guibg=#004D40 guifg=white
 highlight Pmenu guibg=#00897b guifg=white
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 "so it's clear which paren I'm on and which is matched
-highlight MatchParen cterm=bold ctermbg=none guifg=white guibg=green
+highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
 " highlight VertSplit guifg=black ctermfg=black
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
@@ -49,12 +50,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
-""---------------------------------------------------------------------------//
-"VIM ROOTER
-""---------------------------------------------------------------------------//
-let g:rooter_change_directory_for_non_project_files = 'current'
-let g:rooter_resolve_links = 1
-let g:rooter_silent_chdir = 1
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
@@ -119,13 +114,13 @@ call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868')
 call NERDTreeHighlightFile('zshrc', 'Gray', 'none', '#686868')
 call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#151515')
 
-if executable('rg')
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-elseif executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
+" if executable('rg')
+"   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+"   let g:ctrlp_use_caching = 0
+" elseif executable('ag')
+"   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"   let g:ctrlp_use_caching = 0
+" endif
 
 if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
   if exists('g:loaded_webdevicons')

@@ -79,7 +79,9 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+if !has('nvim')
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+endif
 "====================================================================================
 "AUTOCOMMANDS {{{
 "===================================================================================
@@ -117,7 +119,7 @@ function! AdjustWindowHeight(minheight, maxheight)
 endfunction
 
 " Always use a dark gray statusline, no matter what colorscheme is chosen
-autocmd! ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
+autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
 
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
@@ -519,7 +521,7 @@ endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
-" set list                              " show invisible chars
+set list                              " show invisible chars
 set listchars+=tab:▷\ 
 set listchars+=precedes:←
 set listchars+=extends:→
@@ -624,7 +626,7 @@ colorscheme quantum
 " Utilities
 "---------------------------------------------------------------------
 set noshowmode "No mode showing in command pane
-set updatetime=2000
+set updatetime=200
 if has('virtualedit')
   set virtualedit=block,onemore               " allow cursor to move where there is no text in visual block mode
 endif
