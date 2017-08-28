@@ -17,19 +17,19 @@ rbenv() {
   esac
 }
 # Enable tab completion
-source ~/git-completion.bash
+source $HOME/git-completion.bash
 
 # colors!
-green="\[\033[0;32m\]"
-blue="\[\033[0;34m\]"
-white='\[\e[1;37m\]'
-light_blue="\[\e[1;34m\]"
-light_red='\[\e[1;31m\]'
-light_cyan="\[\e[1;36m\]"
-purple="\[\033[0;35m\]"
-GRAY="\[\033[1;30m\]"
-CYAN="\[\033[0;36m\]"
-reset="\[\033[0m\]"
+# green="\[\033[0;32m\]"
+# blue="\[\033[0;34m\]"
+# white='\[\e[1;37m\]'
+# light_blue="\[\e[1;34m\]"
+# light_red='\[\e[1;31m\]'
+# light_cyan="\[\e[1;36m\]"
+# purple="\[\033[0;35m\]"
+# GRAY="\[\033[1;30m\]"
+# CYAN="\[\033[0;36m\]"
+# reset="\[\033[0m\]"
 
 #Powerline prompts
 if [ -d "$HOME/Library/Python/2.7/bin" ]; then

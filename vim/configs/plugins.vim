@@ -56,10 +56,9 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-rooter'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
@@ -72,7 +71,6 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "}}}
 "Syntax ============================{{{
-" Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 Plug 'ianks/vim-tsx'
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
@@ -107,7 +105,6 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'kana/vim-textobj-function'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'wellle/targets.vim'
-Plug 'christoomey/vim-sort-motion'
 Plug 'terryma/vim-expand-region'
 "}}}
 "Search Tools =======================
@@ -147,6 +144,7 @@ call plug#end()
 " Plug 'michaeljsmith/vim-indent-object'
 " Plug 'rhysd/committia.vim'
 " Plug 'machakann/vim-highlightedyank'
+" Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas
 ""---------------------------------------------------------------------------//
@@ -155,6 +153,7 @@ call plug#end()
 " Plug 'hzchirs/vim-material'
 " Plug 'rakr/vim-one'
 " Plug 'mhartington/oceanic-next'
+filetype plugin indent on
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif

@@ -250,10 +250,11 @@ nmap <silent> <C-\> <Plug>(ale_next_wrap)
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
-let g:neoterm_size = '40'
-let g:neoterm_position = 'vertical'
+let g:neoterm_size         = '40'
+let g:neoterm_position     = 'vertical'
 let g:neoterm_automap_keys = ',tt'
-
+let g:neoterm_autoscroll   = 1
+let g:neoterm_fixedsize    = 1
 " Git commands
 command! -nargs=+ Tg :T git <args>
 nnoremap <silent> <leader><CR> :Ttoggle<CR>
@@ -518,7 +519,6 @@ let g:tern#filetypes = [
 let g:tern_show_argument_hints      = '0'
 let g:tern_map_keys                 = 1
 let g:tern_show_signature_in_pum    = 1
-
 let g:tern#command                  = ["tern"]
 let g:tern#arguments                = ["--persistent"]
 
@@ -752,8 +752,8 @@ let g:startify_bookmarks           = [
       \ ]
 let g:startify_session_autoload    = 1
 let g:startify_session_persistence = 1
-let g:startify_change_to_vcs_root  = 1
 let g:startify_session_sort        = 1
+" let g:startify_change_to_vcs_root  = 1
 ""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
