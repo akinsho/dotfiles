@@ -114,6 +114,7 @@ Plug 'terryma/vim-expand-region'
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
+Plug 'airblade/vim-rooter'
 "Coding tools ======================={{{
 Plug 'kshenoy/vim-signature'
 Plug 'janko-m/vim-test'
@@ -146,15 +147,10 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 
-" Plug 'michaeljsmith/vim-indent-object'
-" Plug 'rhysd/committia.vim'
-" Plug 'machakann/vim-highlightedyank'
 " Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript'  }
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas
 ""---------------------------------------------------------------------------//
-" Plug 'trevordmiller/nova-vim'
-" Plug 'kristijanhusak/vim-hybrid-material'
 " Plug 'rakr/vim-one'
 " Plug 'mhartington/oceanic-next'
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''

@@ -44,7 +44,6 @@ endif
 ""---------------------------------------------------------------------------//
 source $HOME/Dotfiles/vim/plugins/grep.vim
 source $HOME/Dotfiles/vim/plugins/togglelist.vim
-source $HOME/Dotfiles/vim/plugins/rooter.vim
 
 "-----------------------------------------------------------------------
 " Mappings
