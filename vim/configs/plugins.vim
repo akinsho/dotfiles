@@ -116,9 +116,9 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'airblade/vim-rooter'
 "Coding tools ======================={{{
+Plug 'matze/vim-move'
 Plug 'kshenoy/vim-signature'
 Plug 'janko-m/vim-test'
-Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'

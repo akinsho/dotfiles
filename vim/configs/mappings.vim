@@ -19,7 +19,7 @@ if has('nvim')
   tnoremap <C-j> <C-\><C-n><C-j>
   tnoremap <C-k> <C-\><C-n><C-k>
   tnoremap <C-l> <C-\><C-n><C-l>
-  tmap <localleader><tab> <C-\><C-n>:bnext<CR>
+  tmap <tab><leader> <C-\><C-n>:bnext<CR>
   tmap <localleader><S-tab> <C-\><C-n>:bprev<CR>
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
@@ -42,6 +42,7 @@ nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
 nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 "}}}
+noremap <leader>va ggVGo
 "Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
 nnoremap ]e ddkP
 nnoremap [e ddp
@@ -51,7 +52,6 @@ vnoremap J :m '>+1<CR>gv=gv
 
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -61,7 +61,6 @@ nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nnoremap <leader>q :bp <BAR> bd #<CR>
-nnoremap <C-Q> :wq!<CR>
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
 "Displays the name of the highlight group of the selected word
@@ -232,6 +231,7 @@ nnoremap qa :wqa<CR>
 " press enter for newline without insert
 "******************************************************
 " nnoremap <localleader><cr> o<esc>
+noremap <S-cr> o<Esc>
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory

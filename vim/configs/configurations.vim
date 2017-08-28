@@ -90,8 +90,10 @@ let g:NERDTreeShowHidden                = 1 "Show hidden files by default
 "Adding the flags to NERDTree
 let g:webdevicons_enable_nerdtree = 1
 " after a re-source, fix syntax matching issues (concealing brackets):
-if exists('g:loaded_webdevicons')
-  call webdevicons#hardRefresh()
+if exists('g:NERDTree')
+  if exists('g:loaded_webdevicons')
+    call webdevicons#hardRefresh()
+  endif
 endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {} " needed
 let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
@@ -107,7 +109,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 ""---------------------------------------------------------------------------//
 " NERDTree Syntax highlight
 ""---------------------------------------------------------------------------//
-"Devicons Syntax Highlight
 "Speed it up
 let g:NERDTreeLimitedSyntax = 1
 

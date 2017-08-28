@@ -170,6 +170,32 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "Change left_shift to caps_lock if alone.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_shift",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "caps_lock"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
@@ -191,7 +217,7 @@
             "name": "Akin",
             "selected": true,
             "simple_modifications": {
-                "left_option": "caps_lock"
+                "left_control": "left_alt"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,

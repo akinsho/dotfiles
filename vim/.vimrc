@@ -22,8 +22,8 @@ syntax enable
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
-let g:mapleader = ',' "Remap leader key
-let g:maplocalleader = '\<space>' "Local leader key
+let g:mapleader      = ',' "Remap leader key
+let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 
 "-----------------------------------------------------------------------
 " General Settings
@@ -44,6 +44,7 @@ endif
 ""---------------------------------------------------------------------------//
 source $HOME/Dotfiles/vim/plugins/grep.vim
 source $HOME/Dotfiles/vim/plugins/togglelist.vim
+source $DOTFILES/vim/plugins/bufclose.vim
 
 "-----------------------------------------------------------------------
 " Mappings
