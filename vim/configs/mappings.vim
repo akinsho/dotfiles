@@ -60,7 +60,8 @@ nnoremap <leader>n :enew<cr>
 nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-nnoremap ,q :bp <BAR> bd #<CR>
+nnoremap <leader>q :bp <BAR> bd #<CR>
+nnoremap <C-Q> :wq!<CR>
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
 "Displays the name of the highlight group of the selected word
@@ -72,7 +73,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-" nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " Close all the buffers
@@ -80,8 +81,6 @@ nnoremap <leader>ba :1,1000 bd!<cr>
 " Quickly edit your macros
 " Usage <leader>m or "q<leader>m
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-" Shortcuts
-" Change Working Directory to that of the current file
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//
@@ -303,7 +302,7 @@ noremap J  @='10gj'<CR>
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
-
+command! Vimrc :e $MYVIMRC
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap <leader>sv :source $MYVIMRC<cr>
 "This maps leader quote (single or double to wrap the word in quotes)

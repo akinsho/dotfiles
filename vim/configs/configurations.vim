@@ -34,13 +34,16 @@ highlight CursorLine term=none cterm=none
 highlight link StartifySlash Directory
 "make the completion menu a bit more readable
 highlight PmenuSel guibg=#004D40 guifg=white
-highlight Pmenu guibg=#00897b guifg=white
+"guibg=#00897b
+highlight Pmenu guibg=#489DE7 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
 " highlight VertSplit guifg=black ctermfg=black
+"Color the tildes at the end of the buffer
+hi EndOfBuffer guifg=#282C34 ctermfg=235
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
 endif
@@ -61,7 +64,6 @@ endif
       execute ':NERDTreeFind'
     endif
   endfunction
-" nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <silent> <c-n> :call ToggleNERDTreeWithRefresh()<cr>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
@@ -85,71 +87,58 @@ let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
 " Expandable ideas = [' ', ' ', ','','├','└']
 
-" NERDTrees File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg)
-  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
-  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('html', 202, 'none', '#FC4709')
-call NERDTreeHighlightFile('hbs', 202, 'none', '#FC4709')
-call NERDTreeHighlightFile('jade', 149, 'none', '#A0D24D')
-call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
-call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
-call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
-call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
-call NERDTreeHighlightFile('ts', 226, 'none', '#2EB4FF')
-call NERDTreeHighlightFile('tsx', 226, 'none', '#2EB4FF')
-call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
-call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
-call NERDTreeHighlightFile('jsx', 140, 'none', '#9E6FCD')
-call NERDTreeHighlightFile('svg', 178, 'none', '#CDA109')
-call NERDTreeHighlightFile('gif', 36, 'none', '#15A274')
-call NERDTreeHighlightFile('jpg', 36, 'none', '#15A274')
-call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
-call NERDTreeHighlightFile('DS_Store', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('zshrc', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#151515')
-
-" if executable('rg')
-"   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-"   let g:ctrlp_use_caching = 0
-" elseif executable('ag')
-"   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-"   let g:ctrlp_use_caching = 0
-" endif
-
-if exists('NERDTree') " after a re-source, fix syntax matching issues (concealing brackets):
-  if exists('g:loaded_webdevicons')
-    call webdevicons#hardRefresh()
-  endif
+"Adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+  call webdevicons#hardRefresh()
 endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {} " needed
 let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
 let g:DevIconsEnableFoldersOpenClose                             = 1
+let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
-let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md']  = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
+" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nerdtree'] = ''
+""---------------------------------------------------------------------------//
+" NERDTree Syntax highlight
+""---------------------------------------------------------------------------//
+"Devicons Syntax Highlight
+"Speed it up
+let g:NERDTreeLimitedSyntax = 1
 
 ""---------------------------------------------------------------------------//
 "               Airline
 ""---------------------------------------------------------------------------//
-let g:webdevicons_enable_airline_tabline                 = 1
-let g:airline#parts#ffenc#skip_expected_string           = 'utf-8[unix]'
-let g:airline_powerline_fonts                            = 1
-let g:airline#extensions#tabline#enabled                 = 1
-let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-let g:airline#extensions#tabline#show_tabs               = 1
-let g:airline#extensions#tabline#tab_nr_type             = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod                = ':t'
-let g:airline#extensions#tabline#show_tab_type           = 1
-let g:airline_section_c = '%t %{GetFileSize()}'
-
+let g:webdevicons_enable_airline_tabline                  = 1
+let g:airline#parts#ffenc#skip_expected_string            = 'utf-8[unix]'
+let g:airline_powerline_fonts                             = 1
+let g:airline#extensions#tabline#enabled                  = 1
+let g:airline#extensions#tabline#switch_buffers_and_tabs  = 1
+let g:airline#extensions#tabline#show_tabs                = 1
+let g:airline#extensions#tabline#tab_nr_type              = 2 " Show # of splits and tab #
+let g:airline#extensions#tabline#fnamemod                 = ':t'
+let g:airline#extensions#tabline#show_tab_type            = 1
+let g:airline#extensions#tabline#excludes                 = ["nerdtree", "neoterm", "zsh"]
+let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
+let g:airline#extensions#tabline#fnamecollapse            = 1
+let g:airline#extensions#tabline#buffer_min_count         = 3
+let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
+let g:airline#extensions#tabline#tab_min_count            = 1
+let g:airline_section_c                                   = '%t %{GetFileSize()}'
+let g:airline#extensions#tabline#left_sep                 = ''
+let g:airline#extensions#tabline#left_alt_sep             = ''
+let g:airline#extensions#tabline#right_sep                = ''
+let g:airline#extensions#tabline#right_alt_sep            = ''
+let g:airline_right_sep                                   = ''
+let g:airline_left_sep                                    = ''
+let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+"Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
+let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
 "  let g:airline#extensions#default#layout = [
 "       \ [ 'a', 'b', 'y' ],
 "       \ [ 'x', 'c', 'z', 'error', 'warning' ]
@@ -178,7 +167,7 @@ nmap <localleader>+ <Plug>AirlineSelectNextTab
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//
-inoremap <F1> <c-o>:VCoolor<CR>
+noremap <leader>1 <c-o>:VCoolor<CR>
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
@@ -204,11 +193,6 @@ xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
 
 ""---------------------------------------------------------------------------//
-" Sayonara
-""---------------------------------------------------------------------------//
-nnoremap <leader>q :Sayonara!<CR>
-nnoremap <C-Q> :Sayonara<CR>
-""---------------------------------------------------------------------------//
 "     ALE
 ""---------------------------------------------------------------------------//
 " Disable linting for all minified JS files.
@@ -224,7 +208,7 @@ let g:ale_fixers.typescript           = ['prettier']
 let g:ale_linters                     = {'go': ['go build', 'gofmt', 'golint', 'go vet']}
 let g:ale_fixers.css                  = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_sh_shellcheck_options       = '-e SC2039'
+let g:ale_sh_shellcheck_options       = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
 let g:ale_sign_error                  = '✘'
@@ -285,6 +269,9 @@ let g:jsx_ext_required          = 1
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//
+let g:go_term_height            = 30
+let g:go_term_width             = 30
+let g:go_term_mode              = "split"
 let g:go_list_type              = "quickfix"
 let g:go_auto_type_info         = 0
 let g:go_auto_sameids           = 1
@@ -454,7 +441,8 @@ if has("nvim")
   let g:deoplete#sources#go#use_cache    = 1
   let g:deoplete#sources#go#pointer      = 1
   let g:deoplete#enable_smart_case       = 1
-  let g:deoplete#auto_complete_delay     = 0
+  " Autocomplete delay is the aim here
+  let g:deoplete#auto_complete_delay     = 20
   let g:deoplete#enable_refresh_always   = 0
   let g:deoplete#max_abbr_width          = 0
   let g:deoplete#max_menu_width          = 0
@@ -567,7 +555,7 @@ endfunction
 
 augroup goyo_markdown
   autocmd!
-  autocmd BufNewFile,BufRead * call s:auto_goyo()
+  " autocmd BufNewFile,BufRead * call s:auto_goyo()
   autocmd! User GoyoLeave nested call s:goyo_leave()
 augroup END
 ""---------------------------------------------------------------------------//
@@ -748,7 +736,7 @@ let g:startify_bookmarks           = [
 let g:startify_session_autoload    = 1
 let g:startify_session_persistence = 1
 let g:startify_session_sort        = 1
-" let g:startify_change_to_vcs_root  = 1
+let g:startify_change_to_vcs_root  = 1
 ""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')

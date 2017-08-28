@@ -5,11 +5,14 @@
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  augroup VimPlug
+    au!
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  augroup END
 endif
 function! Cond(cond, ...)
-  let opts = get(a:000, 0, {})
-  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+  let l:opts = get(a:000, 0, {})
+  return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
 endfunction
 
 call plug#begin('~/.vim/plugged')
@@ -20,10 +23,11 @@ Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlug
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
+Plug 'Shougo/neco-vim',             Cond(has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
-Plug 'ervandew/supertab',           Cond(has('nvim'))
 Plug 'wellle/tmux-complete.vim'
+Plug 'ervandew/supertab'
 "================================{{{
 Plug 'maralla/completor.vim', Cond(!has('nvim'))
 Plug 'Quramy/tsuquyomi',      Cond(!has('nvim'))
@@ -35,7 +39,7 @@ Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
-  if a:info.status == 'installed' || a:info.force
+  if a:info.status ==# 'installed' || a:info.force
     !npm install
   endif
 endfunction
@@ -56,7 +60,7 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
-" Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "}}}
@@ -68,7 +72,6 @@ Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
 Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
 Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "}}}
 "Syntax ============================{{{
 Plug 'ianks/vim-tsx'
@@ -91,6 +94,7 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Clojure =========================
+"   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "   Plug 'guns/vim-sexp'
 "   Plug 'guns/vim-clojure-highlight'
 "   let g:clojure_fold = 1
@@ -120,11 +124,11 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
-Plug 'kassio/neoterm'
+Plug 'kassio/neoterm', Cond(has('nvim'))
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
+  if a:info.status !=# 'unchanged' || a:info.force
     if has('nvim')
       !cargo build --release
     else
@@ -138,6 +142,7 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 
@@ -150,11 +155,9 @@ call plug#end()
 ""---------------------------------------------------------------------------//
 " Plug 'trevordmiller/nova-vim'
 " Plug 'kristijanhusak/vim-hybrid-material'
-" Plug 'hzchirs/vim-material'
 " Plug 'rakr/vim-one'
 " Plug 'mhartington/oceanic-next'
-filetype plugin indent on
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
   runtime! macros/matchit.vim
 endif
 "}}}

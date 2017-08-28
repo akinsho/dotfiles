@@ -189,7 +189,6 @@ set statusline+=%{ale#statusline#Status()}\
 " set statusline+=\CWD:\ %r%.35{getcwd(winnr)}%h\ 
 " set statusline+=%2*\ %<%.30F\ %{ReadOnly()}\ %M\ %w\        " File+path .30 prefix is for the degree of truncation
 " set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\ %{&ff}\ " Encoding & Fileformat, No current use for this info
-" set statusline+=%{exists('*SleuthIndicator')?SleuthIndicator():''}
 "==============================================================
 "Need to figure this our in order to change statusline colors
 "if has('termguicolors')

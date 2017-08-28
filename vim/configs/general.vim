@@ -9,17 +9,17 @@ endfunction "}}}
 func! DeleteTillSlash()
     let g:cmd = getcmdline()
 
-    if has("win16") || has("win32")
-        let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+    if has('win16') || has('win32')
+        let g:cmd_edited = substitute(g:cmd, '\\(.*\[\\\\]\\).*', '\\1', '')
     else
-        let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+        let g:cmd_edited = substitute(g:cmd, '\\(.*\[/\]\\).*', '\\1', '')
     endif
 
     if g:cmd == g:cmd_edited
-        if has("win16") || has("win32")
-            let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+        if has('win16') || has('win32')
+            let g:cmd_edited = substitute(g:cmd, '\\(.*\[\\\\\]\\).*\[\\\\\]', '\\1', '')
         else
-            let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+            let g:cmd_edited = substitute(g:cmd, '\\(.*\[/\]\\).*/', '\\1', '')
         endif
     endif
 
@@ -27,33 +27,33 @@ func! DeleteTillSlash()
 endfunc
 
 func! CurrentFileDir(cmd)
-    return a:cmd . " " . expand("%:p:h") . "/"
+    return a:cmd . ' ' . expand('%:p:h') . '/'
   endfunc
 
 function! JsEchoError(msg)
-  redraw | echon "js: " | echohl ErrorMsg | echon a:msg | echohl None
+  redraw | echon 'js: ' | echohl ErrorMsg | echon a:msg | echohl None
 endfunction
 
 " Swapping between test file and main file.
 function! JsSwitch(bang, cmd)
-  let file = expand('%')
-  if empty(file)
-    call JsEchoError("no buffer name")
+  let l:file = expand('%')
+  if empty(l:file)
+    call JsEchoError('no buffer name')
     return
-  elseif file =~# '^\f\+.test\.js$'
-    let l:root = split(file, '.test.js$')[0]
-    let l:alt_file = l:root . ".js"
-  elseif file =~# '^\f\+\.js$'
-    let l:root = split(file, ".js$")[0]
+  elseif l:file =~# '^\f\+.test\.js$'
+    let l:root = split(l:file, '.test.js$')[0]
+    let l:alt_file = l:root . '.js'
+  elseif l:file =~# '^\f\+\.js$'
+    let l:root = split(l:file, '.js$')[0]
     let l:alt_file = l:root . '.test.js'
   else
-    call JsEchoError("not a js file")
+    call JsEchoError('not a js file')
     return
   endif
   if empty(a:cmd)
-    execute ":edit " . alt_file
+    execute ':edit ' . l:alt_file
   else
-    execute ":" . a:cmd . " " . alt_file
+    execute ':' . a:cmd . ' ' . l:alt_file
   endif
 endfunction
 au Filetype javascript command! -bang A call JsSwitch(<bang>0, '')
@@ -63,12 +63,12 @@ function! WrapForTmux(s)
     return a:s
   endif
 
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
+  let l:tmux_start = "\<Esc>Ptmux;"
+  let l:tmux_end = "\<Esc>\\"
 
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+  return l:tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . l:tmux_end
 endfunction
-if !has("nvim")
+if !has('nvim')
   let &t_SI .= WrapForTmux("\<Esc>[?2004h")
   let &t_EI .= WrapForTmux("\<Esc>[?2004l")
 endif
@@ -76,7 +76,7 @@ endif
 function! XTermPasteBegin()
   set pastetoggle=<Esc>[201~
   set paste
-  return ""
+  return ''
 endfunction
 
 if !has('nvim')
@@ -101,37 +101,37 @@ augroup END "}}}
 
 
 " Auto open grep quickfix window
-au! QuickFixCmdPost *grep* cwindow
+augroup QFix
+  au!
+  au QuickFixCmdPost *grep* cwindow
 
-au! FileType qf call AdjustWindowHeight(3, 10)
-function! AdjustWindowHeight(minheight, maxheight)
-   let l = 1
-   let n_lines = 0
-   let w_width = winwidth(0)
-   while l <= line('$')
-       " number to float for division
-       let l_len = strlen(getline(l)) + 0.0
-       let line_width = l_len/w_width
-       let n_lines += float2nr(ceil(line_width))
-       let l += 1
-   endw
-   exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
-endfunction
+  au FileType qf call AdjustWindowHeight(3, 10)
+  function! AdjustWindowHeight(minheight, maxheight)
+    let l:l = 1
+    let l:n_lines = 0
+    let l:w_width = winwidth(0)
+    while l:l <= line('$')
+      " number to float for division
+      let l:l_len = strlen(getline(l:l)) + 0.0
+      let l:line_width = l:l_len/l:w_width
+      let l:n_lines += float2nr(ceil(l:line_width))
+      let l:l += 1
+    endw
+    exe max([min([l:n_lines, a:maxheight]), a:minheight]) . 'wincmd _'
+  endfunction
 
-" Always use a dark gray statusline, no matter what colorscheme is chosen
-autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
+  " Always use a dark gray statusline, no matter what colorscheme is chosen
+  autocmd VimEnter,ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
 
-" Close help and git window by pressing q.
-augroup quickfix_menu_quit
-  autocmd!
+  " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
         \gitcommit,quickrun,qfreplace,ref,
         \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
         \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
-    autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
-    autocmd FileType qf setl nohidden nowrap
+  autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
+  autocmd FileType qf setl nohidden nowrap
 augroup END
 
 function! s:smart_close()
@@ -152,8 +152,8 @@ endfunction
 
 augroup Go_Mappings
   autocmd!
-  autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 nolist
-  autocmd BufNewFile,BufEnter,WinEnter,BufRead,VimEnter *.go setlocal nolist
+  autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
+  au Filetype go setlocal listchars+=tab:\ \ 
   autocmd FileType go nmap <leader>t  <Plug>(go-test)
   autocmd FileType go nmap <Leader>d <Plug>(go-doc)
   autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -192,20 +192,20 @@ augroup END
   function! s:expand_html_tab()
 " try to determine if we're within quotes or tags.
 " if so, assume we're in an emmet fill area.
-   let line = getline('.')
-   if col('.') < len(line)
-     let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-     if len(line) >= 2
+   let l:line = getline('.')
+   if col('.') < len(l:line)
+     let l:line = matchstr(l:line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+     if len(l:line) >= 2
         return "\<C-n>"
      endif
    endif
     " try to determine if we're within quotes or tags.
   " if so, assume we're in an emmet fill area.
-  let line = getline('.')
-  if col('.') < len(line)
-    let line = matchstr(line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+  let l:line = getline('.')
+  if col('.') < len(l:line)
+    let l:line = matchstr(l:line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
 
-    if len(line) >= 2
+    if len(l:line) >= 2
       return "\<Plug>(emmet-move-next)"
     endif
   endif
@@ -236,7 +236,11 @@ augroup filetype_completion
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=javascriptcomplete#CompleteJS
+  if exists('g:plugs["tern_for_vim"]')
+    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=tern#Complete
+  else
+    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=javascriptcomplete#CompleteJS
+  endif
   " autocmd CompleteDone * silent! pclose!
 augroup END
 
@@ -323,7 +327,7 @@ augroup FileType_all
         \   exe "normal g`\"" |
         \ endif
 
-  if exists("*mkdir") "auto-create directories for new files
+  if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
 augroup END
@@ -531,9 +535,9 @@ set listchars+=eol:\
 "-----------------------------------
 set iskeyword+=- "Enables better css syntax highlighting
 set iskeyword+=_,$,@,%,#
-if has("unnamedplus")
+if has('unnamedplus')
   set clipboard=unnamedplus
-elseif has("clipboard")
+elseif has('clipboard')
   set clipboard=unnamed
 endif
 set nojoinspaces
@@ -599,21 +603,6 @@ if has('nvim')
   " let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
   " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
   set inccommand=nosplit
-  let g:terminal_color_1  = '#cc0000'
-  let g:terminal_color_2  = '#4e9a06'
-  let g:terminal_color_3  = '#c4a000'
-  let g:terminal_color_4  = '#3465a4'
-  let g:terminal_color_5  = '#75507b'
-  let g:terminal_color_6  = '#0b939b'
-  let g:terminal_color_7  = '#d3d7cf'
-  let g:terminal_color_8  = '#555753'
-  let g:terminal_color_9  = '#ef2929'
-  let g:terminal_color_10 = '#8ae234'
-  let g:terminal_color_11 = '#fce94f'
-  let g:terminal_color_12 = '#729fcf'
-  let g:terminal_color_13 = '#ad7fa8'
-  let g:terminal_color_14 = '#00f5e9'
-  let g:terminal_color_15 = '#eeeeec'
 endif
 "-----------------------------------------------------------------------
 "Colorscheme
@@ -656,8 +645,8 @@ if &tabpagemax < 50
 endif
 if !empty(&viminfo)
   set viminfo^=!
+  set viminfo+='0
 endif
-set viminfo+='0
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
@@ -698,7 +687,7 @@ set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
 set nohlsearch " -functionality i.e. search highlighting done by easy motion and incsearch
-if &ft ==# 'html'
+if &filetype ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
 " ----------------------------------------------------------------------------
