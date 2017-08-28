@@ -521,23 +521,29 @@ nnoremap <F3> :Goyo<CR>
 function! s:goyo_enter()
   silent !tmux set status off
   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set noshowmode
-  set noshowcmd
   set nonumber
-  set scrolloff=999
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
 endfunction
 
 function! s:goyo_leave()
   silent !tmux set status on
   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  set showmode
-  set showcmd
   set number relativenumber
-  set scrolloff=5
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
 endfunction
 
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
 " Goyo
 function! s:auto_goyo()
@@ -548,16 +554,10 @@ function! s:auto_goyo()
   endif
 endfunction
 
-function! s:goyo_leave()
-  if winnr('$') < 2
-    silent! :q
-  endif
-endfunction
-
 augroup goyo_markdown
   autocmd!
-  " autocmd BufNewFile,BufRead * call s:auto_goyo()
-  autocmd! User GoyoLeave nested call s:goyo_leave()
+  autocmd BufNewFile,BufRead * call s:auto_goyo()
+  autocmd User GoyoLeave nested call s:goyo_leave()
 augroup END
 ""---------------------------------------------------------------------------//
 " VIM MARKDOWN
@@ -580,6 +580,13 @@ let g:vim_markdown_fenced_languages = [
   \]
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
+""---------------------------------------------------------------------------//
+" VIM ROOTER
+""---------------------------------------------------------------------------//
+let g:rooter_change_directory_for_non_project_files = 'current'
+let g:rooter_silent_chdir = 1
+let g:rooter_resolve_links = 1
+
 ""---------------------------------------------------------------------------//
 " ULTISNIPS
 ""---------------------------------------------------------------------------//

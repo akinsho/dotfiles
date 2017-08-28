@@ -43,16 +43,58 @@ nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 "}}}
 noremap <leader>va ggVGo
-"Bubbling text a la vimcasts - http://vimcasts.org/episodes/bubbling-text/
-nnoremap ]e ddkP
-nnoremap [e ddp
-" Move visual block
-vnoremap K :m '<-2<CR>gv=gv
-vnoremap J :m '>+1<CR>gv=gv
 
+""---------------------------------------------------------------------------//
+" BUBBLING - Hacked out of Unimpaired.vim
+""---------------------------------------------------------------------------//
+"Bubbling text a la vimcasts & tpope -
+"https://github.com/tpope/vim-unimpaired/blob/3a7759075cca5b0dc29ce81f2747489b6c8e36a7/plugin/unimpaired.vim#L206 
+"http://vimcasts.org/episodes/bubbling-text/
+" Move visual block
+function! s:ExecMove(cmd) abort
+  let old_fdm = &foldmethod
+  if old_fdm != 'manual'
+    let &foldmethod = 'manual'
+  endif
+  normal! m`
+  silent! exe a:cmd
+  norm! ``
+  if old_fdm != 'manual'
+    let &foldmethod = old_fdm
+  endif
+endfunction
+
+function! s:Move(cmd, count, map) abort
+  call s:ExecMove('move'.a:cmd.a:count)
+  silent! call repeat#set("\<Plug>Move".a:map, a:count)
+endfunction
+
+function! s:MoveSelectionDown(count) abort
+  call s:ExecMove("'<,'>move'>+".a:count)
+  silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+endfunction
+
+function! s:MoveSelectionUp(count) abort
+  call s:ExecMove("'<,'>move'<--".a:count)
+  silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+endfunction
+
+noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
+noremap  <silent> <Plug>MoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
+nnoremap <silent> <Plug>MoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+nnoremap <silent> <Plug>MoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+
+nmap <c-]> <Plug>MoveUp
+nmap <c-[> <Plug>MoveDown
+vmap <c-]> <Plug>MoveSelectionUp
+vmap <c-[> <Plug>MoveSelectionDown
+
+""---------------------------------------------------------------------------//
+" Add Empty space above and below
+""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
 nnoremap <leader>n :enew<cr>

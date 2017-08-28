@@ -122,7 +122,7 @@ Plug 'janko-m/vim-test'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'junegunn/goyo.vim'
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
 Plug 'kassio/neoterm', Cond(has('nvim'))
