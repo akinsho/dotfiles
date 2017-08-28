@@ -1,9 +1,6 @@
 #!/bin/sh
 # Setting ag as the default source for fzf
 
-# FZF_DEFAULT_COMMAND='ag -g ""'
-# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-
 # --files: List files that would be searched but do not search
 # --no-ignore: Do not respect .gitignore, etc...
 # --hidden: Search hidden files and folders
@@ -14,14 +11,13 @@
 
 export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow --glob ''!.git/*'''
 # Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
-export FZF_DEFAULT_OPTS=" --select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_CTRL_T_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 # export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow -g "!{.git,node_modules,vendor}/*"'
+# export FZF_DEFAULT_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # export FZF_DEFAULT_COMMAND='ag --nobreak --nonumbers --noheading . | fzf'
 
-# Changed FZF trigger to ; from **
-# export FZF_COMPLETION_TRIGGER=';'
 # To apply to the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_TMUX=1
@@ -37,9 +33,9 @@ export FZF_TMUX=1
 tm() {
   local session
   newsession=${1:-new}
-  session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --query="$1" --select-1 --exit-0) &&
-    tmux attach-session -t "$session" || tmux new-session -s $newsession
+  session="$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0)" &&
+    tmux attach-session -t "$session" || tmux new-session -s "$newsession"
 }
 
 
@@ -59,7 +55,7 @@ fshow() {
 cdf() {
   local file
   local dir
-  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir" || exit
 }
 
 # fbr - checkout git branch
@@ -67,13 +63,8 @@ fbr() {
   local branches branch
   branches=$(git branch) &&
     branch=$(echo "$branches" | fzf +s +m) &&
-    git checkout $(echo "$branch" | sed "s/.* //")
+    git checkout "$(echo "$branch" | sed "s/.* //")"
 }
-
-# cf - fuzzy cd from anywhere
-# ex: cf word1 word2 ... (even part of a file name)
-# zsh autoload function
-
 
 # cf() {
 #   local file
@@ -102,28 +93,6 @@ fs() {
     tmux switch-client -t "$session"
 }
 
-# unalias z
-# z() {
-#   if [[ -z "$*" ]]; then
-#       cd "$(_z -l 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
-#       else
-#           _last_z_args="$@"
-#             _z "$@"
-#             fi
-#           }
-#
-#           zz() {
-#             cd "$(_z -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q $_last_z_args)"
-#           }
-
-# Works with fasd to move dir with fuzzy searching
-# z() {
-#   local dir
-#   dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
-# }
-
-
-
 
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
@@ -138,14 +107,14 @@ fe() {
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
-fo() {
-  local out file key
-  IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
-}
+# fo() {
+#   local out file key
+#   IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+#   key=$(head -1 <<< "$out")
+#   file=$(head -2 <<< "$out" | tail -1)
+#   if [ -n "$file" ]; then
+#     [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+#   fi
+# }
 
 

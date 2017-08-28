@@ -1239,7 +1239,7 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>310 275 224 325 0 0 1280 800 </string>
 	<key>NSWindow Frame NSColorPanel.modal</key>
-	<string>528 397 224 301 0 0 1280 800 </string>
+	<string>528 427 224 261 0 0 1280 800 </string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>57 37 814 323 0 0 1280 800 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
@@ -1247,7 +1247,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>337 331 606 469 0 0 1280 800 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>228 348 770 429 0 0 1280 800 </string>
+	<string>228 244 796 473 0 0 1280 800 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 216 592 584 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -1870,7 +1870,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>OperatorMonoLig-Medium 16</string>
+			<string>OperatorMono-Book 16</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3533,7 +3533,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-22T21:05:32Z</date>
+	<date>2017-08-27T19:56:15Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -3584,7 +3584,7 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.1.20170821-nightly</string>
+	<string>3.1.20170823-nightly</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

@@ -49,6 +49,9 @@ nnoremap [e ddp
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
@@ -229,7 +232,7 @@ nnoremap ` '
 nnoremap qa :wqa<CR>
 " press enter for newline without insert
 "******************************************************
-nnoremap <localleader><cr> o<esc>
+" nnoremap <localleader><cr> o<esc>
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
@@ -237,7 +240,7 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
 nnoremap <localleader>c :<c-f>
 "Open command line window
-nnoremap <localleader>L :redraw!<cr>
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 ""---------------------------------------------------------------------------//
 " Window resizing bindings
 ""---------------------------------------------------------------------------//

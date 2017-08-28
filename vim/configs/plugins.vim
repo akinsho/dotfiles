@@ -12,7 +12,6 @@ function! Cond(cond, ...)
   return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
-"set the runtime path to include Vundle and initialise
 call plug#begin('~/.vim/plugged')
 "NVIM ====================================
 " Deoplete
@@ -45,7 +44,6 @@ Plug 'mhinz/vim-startify'
 if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'
 endif
-Plug 'ctrlpvim/ctrlp.vim', Cond(has('gui_running'))
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 "}}}
 "TMUX ============================
@@ -147,6 +145,7 @@ Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add fil
 call plug#end()
 
 " Plug 'michaeljsmith/vim-indent-object'
+" Plug 'rhysd/committia.vim'
 " Plug 'machakann/vim-highlightedyank'
 ""---------------------------------------------------------------------------//
 " Colorscheme ideas

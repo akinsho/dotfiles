@@ -293,6 +293,23 @@ echo load time: $((end_time - start_time)) seconds
 # FZF
 ##---------------------------------------------------------------------------//
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# A helper function to join multi-line output from fzf
+join-lines() {
+  local item
+  while read item; do
+    echo -n "${(q)item} "
+  done
+}
+
+fzf-gt-widget() LBUFFER+=$(gt | join-lines)
+zle -N fzf-gt-widget
+bindkey '^g^t' fzf-gt-widget
+
+
+fzf-gt-widget() LBUFFER+=$(gt | join-lines)
+zle -N fzf-gt-widget
+bindkey '^g^t' fzf-gt-widget
 ##---------------------------------------------------------------------------//
 # ZSH Autosuggestions
 ##---------------------------------------------------------------------------//

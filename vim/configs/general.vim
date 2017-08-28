@@ -116,6 +116,9 @@ function! AdjustWindowHeight(minheight, maxheight)
    exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
+" Always use a dark gray statusline, no matter what colorscheme is chosen
+autocmd! ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
+
 " Close help and git window by pressing q.
 augroup quickfix_menu_quit
   autocmd!
@@ -126,7 +129,7 @@ augroup quickfix_menu_quit
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
     autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
-    autocmd FileType qf setl nohidden
+    autocmd FileType qf setl nohidden nowrap
 augroup END
 
 function! s:smart_close()
@@ -148,7 +151,7 @@ endfunction
 augroup Go_Mappings
   autocmd!
   autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 nolist
-  autocmd BufNewFile,BufEnter,WinEnter,BufRead *.go setlocal nolist
+  autocmd BufNewFile,BufEnter,WinEnter,BufRead,VimEnter *.go setlocal nolist
   autocmd FileType go nmap <leader>t  <Plug>(go-test)
   autocmd FileType go nmap <Leader>d <Plug>(go-doc)
   autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -179,7 +182,7 @@ augroup END
 
 augroup VimResizing
   autocmd!
-  autocmd VimResized * wincmd =
+  " autocmd VimResized * wincmd =
   autocmd FocusLost * :wa
   autocmd VimResized * :redraw! | :echo 'Redrew'
 augroup END
@@ -297,7 +300,8 @@ if has('nvim')
     au BufEnter * if &buftype == 'terminal' | :startinsert | endif
     autocmd BufEnter term://* startinsert
     autocmd TermOpen * set bufhidden=hide
-    au BufEnter * if &buftype == 'terminal' | setlocal nonumber | endif
+    " au TermOpen * au <buffer> BufEnter,WinEnter redraw! "Does not Work!!
+    au BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber | endif
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
 endif
@@ -468,7 +472,7 @@ set suffixesadd+=.js,.jsx,.ts,.tsx
 if executable('rg')
   " set grepprg=rg\ --vimgrep\ --no-heading
   set grepprg=rg\ --smart-case\ --vimgrep\ $*
-  set grepformat^=%f:%l:%c:%m,%f:%l:%m
+  set grepformat^=%f:%l:%c:%m
 elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
   set grepformat^=%f:%l:%c:%m
@@ -515,7 +519,7 @@ endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
-set list                              " show invisible chars
+" set list                              " show invisible chars
 set listchars+=tab:▷\ 
 set listchars+=precedes:←
 set listchars+=extends:→
@@ -536,13 +540,6 @@ set gdefault
 set pumheight=10
 set title
 set number relativenumber
-if has('+relativenumber')
-    set number relativenumber
-elseif has('nvim')
-    set number relativenumber
-else
-  set number
-endif
 if !has('gui_running')
   set linespace=4
 else
@@ -553,21 +550,17 @@ set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
 set textwidth=79
-if has('vim')
-  if exists('&signcolumn')
-    set signcolumn=yes "enables column that shows signs and error symbols
-  endif
-else
-  set signcolumn=yes
+if exists('&signcolumn')
+  set signcolumn=yes "enables column that shows signs and error symbols
 endif
 set ruler
 set incsearch
 set completeopt+=noinsert
+set autowrite "Automatically :write before running commands
 if !has('nvim')
   set complete-=i
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set autoindent
-  set autowrite "Automatically :write before running commands
   set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast " Improves smoothness of redrawing when there are multiple windows
 endif
@@ -576,8 +569,8 @@ if exists('&belloff')
 endif
 if has('termguicolors')
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
-  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  " let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+  " let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
 endif
 "}}}
 " ----------------------------------------------------------------------------
@@ -633,7 +626,7 @@ colorscheme quantum
 set noshowmode "No mode showing in command pane
 set updatetime=2000
 if has('virtualedit')
-  set virtualedit=block               " allow cursor to move where there is no text in visual block mode
+  set virtualedit=block,onemore               " allow cursor to move where there is no text in visual block mode
 endif
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin {{{
@@ -662,6 +655,7 @@ endif
 if !empty(&viminfo)
   set viminfo^=!
 endif
+set viminfo+='0
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16

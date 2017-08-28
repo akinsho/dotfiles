@@ -41,7 +41,7 @@ if [[ $(uname) == 'Linux' ]]; then
 
 # for apple (not tested)
 else
-	battery_info=$(ioreg -rc AppleSmartBattery)
+	battery_info="$(ioreg -rc AppleSmartBattery)"
 	current_charge=$(echo $battery_info | grep -o '"CurrentCapacity" = [0-9]\+' | cut -d " " -f 3)
 	total_charge=$(echo $battery_info | grep -o '"MaxCapacity" = [0-9]\+' | cut -d " " -f 3)
 	design_charge=$(echo $battery_info | grep -o '"DesignCapacity" = [0-9]\+' | cut -d " " -f 3)
@@ -49,9 +49,9 @@ fi
 
 # 2. calcuate slots
 # ceil(x/y)=(x+y-1)/y with integer arithmetic
-charged_slots=$((($current_charge*$TOTAL_SLOTS+$design_charge-1)/$design_charge))
+charged_slots=$(((current_charge*TOTAL_SLOTS+design_charge-1)/design_charge))
 
-dead_slots=$(($TOTAL_SLOTS-($total_charge*$TOTAL_SLOTS+$design_charge-1)/$design_charge))
+dead_slots=$((TOTAL_SLOTS-(total_charge*TOTAL_SLOTS+design_charge-1)/design_charge))
 if [[ $dead_slots -lt 1 ]]; then
 	dead_slots=0
 fi
@@ -60,7 +60,7 @@ fi
 if [[ $charged_slots -ge 1 ]]
 then
 	echo -n '#[fg=red]'
-	for i in $(seq 1 $charged_slots)
+	for _ in $(seq 1 $charged_slots)
 	do
 		echo -n "$HEART"
 	done
@@ -69,7 +69,7 @@ fi
 if [[ $charged_slots -lt $TOTAL_SLOTS ]]
 then
 	echo -n '#[fg=white]'
-	for i in $(seq 1 $(($TOTAL_SLOTS-($charged_slots+$dead_slots))))
+	for _ in $(seq 1 $((TOTAL_SLOTS-(charged_slots+dead_slots))))
 	do
 		echo -n "$HEART"
 	done
@@ -78,7 +78,7 @@ fi
 if [[ $dead_slots -ge 1 ]]
 then
 	echo -n '#[fg=black]'
-	for i in $(seq 1 $dead_slots)
+	for _ in $(seq 1 $dead_slots)
 	do
 		echo -n "$HEART"
 	done

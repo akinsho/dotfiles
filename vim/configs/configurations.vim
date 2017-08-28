@@ -35,9 +35,9 @@ highlight link StartifySlash Directory
 "make the completion menu a bit more readable
 highlight PmenuSel guibg=#004D40 guifg=white
 highlight Pmenu guibg=#00897b guifg=white
-" highlight WildMenu ctermbg=253 ctermfg=0
+highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 "so it's clear which paren I'm on and which is matched
-highlight MatchParen cterm=bold ctermbg=none guifg=green guibg=NONE
+highlight MatchParen cterm=bold ctermbg=none guifg=white guibg=green
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 " highlight VertSplit guifg=black ctermfg=black
 if has('gui_running')
@@ -103,8 +103,8 @@ call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
 call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
 call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
-" call NERDTreeHighlightFile('ts', 226, 'none', '#2E7AB1')
-" call NERDTreeHighlightFile('tsx', 226, 'none', '#2E7AB1')
+call NERDTreeHighlightFile('ts', 226, 'none', '#2EB4FF')
+call NERDTreeHighlightFile('tsx', 226, 'none', '#2EB4FF')
 call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
 call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
 call NERDTreeHighlightFile('jsx', 140, 'none', '#9E6FCD')
@@ -180,7 +180,10 @@ nmap <localleader>8 <Plug>AirlineSelectTab8
 nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
-
+""---------------------------------------------------------------------------//
+" VCoolor
+""---------------------------------------------------------------------------//
+inoremap <F1> <c-o>:VCoolor<CR>
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
@@ -217,22 +220,21 @@ nnoremap <C-Q> :Sayonara<CR>
 if has('gui_running')
   let g:ale_set_balloons                 = 1
 endif
-if has('vim')
-  " Enable completion where available.
-  let g:ale_completion_enabled           = 1
-endif
-let g:ale_pattern_options                = {'\.min.js$': {'ale_enabled': 0}}
-let g:ale_fixers                         = {}
-let g:ale_fixers.javascript              = ['prettier', 'eslint']
-let g:ale_fixers.typescript              = ['prettier']
-let g:ale_fixers.css                     = ['stylelint']
-let g:ale_javascript_prettier_options    = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_typescript_tsserver_use_global = 1
-let g:ale_echo_msg_format                = '%linter%: %s [%severity%]'
-let g:ale_sign_column_always             = 1
-let g:ale_sign_error                     = '✘'
-let g:ale_sign_warning                   = '⚠️'
-let g:ale_linters                        = {
+" Enable completion where available.
+let g:ale_completion_enabled          = 1
+let g:ale_pattern_options             = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_fixers                      = {}
+let g:ale_fixers.javascript           = ['prettier', 'eslint']
+let g:ale_fixers.typescript           = ['prettier']
+let g:ale_linters                     = {'go': ['go build', 'gofmt', 'golint', 'go vet']}
+let g:ale_fixers.css                  = ['stylelint']
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_sh_shellcheck_options       = '-e SC2039'
+let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
+let g:ale_sign_column_always          = 1
+let g:ale_sign_error                  = '✘'
+let g:ale_sign_warning                = '⚠️'
+let g:ale_linters                     = {
       \'python': ['flake8'],
       \'css': ['stylelint'],
       \'jsx': ['stylelint', 'eslint'],
@@ -281,7 +283,7 @@ nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
 ""---------------------------------------------------------------------------//
-" JSX & POLYGLOT
+" JSX
 ""---------------------------------------------------------------------------//
 let g:jsx_ext_required          = 1
 ""---------------------------------------------------------------------------//
@@ -389,9 +391,9 @@ let g:NERDCompactSexyComs   = 1
 let g:NERDDefaultAlign      = 'left'
 let g:NERDCustomDelimiters  = {
   \    'jsx': { 'left': '{/*','right': '*/}' },
+  \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
   \  }
 " \    'typescript.jsx': { 'left': '{/*','right': '*/}' },
-" \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
 let g:NERDCommentEmptyLines = 1
 
 nmap <silent> <leader>vt :TestNearest<CR>
@@ -482,7 +484,7 @@ if has("nvim")
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-  let g:nvim_typescript#type_info_on_hold        = 1
+  " let g:nvim_typescript#type_info_on_hold        = 1
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
@@ -492,12 +494,13 @@ if has("nvim")
   call deoplete#custom#set('ultisnips', 'mark', '')
   augroup Typescript_helpers
     au!
-    autocmd FileType typescript.jsx nnoremap <localleader>p :TSDefPreview<CR>
-    autocmd FileType typescript.jsx nnoremap <localleader>d :TSDef<CR>
-    autocmd FileType typescript.jsx nnoremap <localleader>r :TSRefs<CR>
-    autocmd FileType typescript.jsx nnoremap <localleader>t :TSType<CR>
-    autocmd FileType typescript.jsx nnoremap <localleader>c :TSEditConfig<CR>
-    autocmd FileType typescript.jsx nnoremap <localleader>i :TSImport<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>p :TSDefPreview<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>d :TSDef<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap gd :TSDef<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>r :TSRefs<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>t :TSType<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>c :TSEditConfig<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>i :TSImport<CR>
   augroup END
 endif
 
@@ -621,49 +624,32 @@ let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to 
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 if !has('gui_running')
+
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+
+command! -bang Dots
+      \ call fzf#run(fzf#wrap('dotfiles', {'dir': '~/Dotfiles'}, <bang>0))
+
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
       \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \   <bang>0 ? fzf#vim#with_preview('right:60%')
       \           : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0)
-" Advanced customization using autoload functions
-" Replace the default dictionary completion with fzf-based fuzzy completion
 
-" This command now supports CTRL-T, CTRL-V, and CTRL-X key bindings
-" and opens fzf according to g:fzf_layout setting.
-command! Buffers call fzf#run(fzf#wrap(
-    \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}))
 
-" This extends the above example to open fzf in fullscreen
-" when the command is run with ! suffix (Buffers!)
-command! -bang Buffers call fzf#run(fzf#wrap(
-    \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}, <bang>0))
-
-command! FZFMru call fzf#run({
-\ 'source':  reverse(s:all_files()),
-\ 'sink':    'edit',
-\ 'options': '-m -x +s',
-\ 'down':    '40%' })
-
-function! s:all_files()
-  return extend(
-  \ filter(copy(v:oldfiles),
-  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
-  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
-endfunction
 
 imap <c-x>l <plug>(fzf-complete-line)
 imap <c-x>p <plug>(fzf-complete-path)
 inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
-nnoremap <silent> <localleader>m :FZFMru<CR>
+nnoremap <silent> <localleader>D :Dots<CR>
 nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
-nnoremap <silent> <localleader>H :History<CR>
+nnoremap <silent> <localleader>m :History<CR>
 nnoremap <silent> <localleader>C :Commits<CR>
 nnoremap <silent> <localleader>l :Lines<CR>
 
@@ -673,19 +659,27 @@ endfunction
 
 " Launch file search using FZF
 nnoremap <localleader>p :GitFiles <CR>
-nnoremap <C-P> :call Fzf_dev()<CR>
+nnoremap <C-P> :Files<CR>
 nnoremap \ :Rg!<CR>
 nnoremap <localleader>gw :call SearchWordWithRg()<CR>
-endif
 
-if !has('gui_running')
-  nnoremap <localleader>ma  :Marks<CR>
-  nnoremap <localleader>mm :Maps<CR>
-  let g:fzf_action = {
-        \ 'ctrl-t': 'tab split',
-        \ 'ctrl-s': 'split',
-        \ 'ctrl-v': 'vsplit'
-        \}
+
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+
+nnoremap <localleader>ma  :Marks<CR>
+nnoremap <localleader>mm :Maps<CR>
+
 let g:fzf_nvim_statusline = 1
 "Customize fzf colors to match your color scheme
   let g:fzf_colors =
@@ -733,7 +727,6 @@ function! Fzf_dev()
         \ 'options': '-m -x +s',
         \ 'down':    '40%' })
 endfunction
-
 endif
 ""---------------------------------------------------------------------------//
 " STARTIFY
@@ -782,9 +775,9 @@ function! GetFileSize() "{{{
     return ""
   endif
   if bytes < 1024
-    return "[" . bytes . " b]"
+    return  bytes . " b"
   else
-    return "[" . (bytes / 1024) . " kb]"
+    return  (bytes / 1024) . " kb"
   endif
 endfunction "}}}
 "---------------------------------------------------------------------
