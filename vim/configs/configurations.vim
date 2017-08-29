@@ -34,12 +34,11 @@ highlight CursorLine term=none cterm=none
 highlight link StartifySlash Directory
 "make the completion menu a bit more readable
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-" highlight Pmenu guibg=white guifg=black
+highlight Pmenu guibg=#67bae5 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
-highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
 " highlight VertSplit guifg=black ctermfg=black
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
@@ -115,7 +114,7 @@ let g:NERDTreeLimitedSyntax = 1
 ""---------------------------------------------------------------------------//
 "               Airline
 ""---------------------------------------------------------------------------//
-let g:webdevicons_enable_airline_tabline                  = 1
+let g:airline_highlighting_cache = 1
 let g:airline#parts#ffenc#skip_expected_string            = 'utf-8[unix]'
 let g:airline_powerline_fonts                             = 1
 let g:airline#extensions#tabline#enabled                  = 1
@@ -203,12 +202,14 @@ endif
 " Enable completion where available.
 let g:ale_completion_enabled          = 1
 let g:ale_pattern_options             = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_fixers                      = {}
 let g:ale_fixers.javascript           = ['prettier', 'eslint']
 let g:ale_fixers.typescript           = ['prettier']
 let g:ale_linters                     = {'go': ['go build', 'gofmt', 'golint', 'go vet']}
 let g:ale_fixers.css                  = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+" let g:ale_javascript_prettier_options = '--config ~/.prettierrc' "Order of arguments matters here!!
 let g:ale_sh_shellcheck_options       = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
@@ -374,9 +375,9 @@ let g:NERDSpaceDelims       = 1
 let g:NERDCompactSexyComs   = 1
 let g:NERDDefaultAlign      = 'left'
 let g:NERDCustomDelimiters  = {
-  \    'jsx': { 'left': '{/*','right': '*/}' },
-  \    'typescript.tsx': { 'left': '{/*','right': '*/}' }
-  \  }
+      \    'jsx': { 'leftAlt': '{/*','rightAlt': '*/}', 'left': '/*', 'right': '*/'  },
+      \    'typescript.tsx': { 'leftAlt': '{/*','rightAlt': '*/}', 'left': '/*', 'right': '*/' }
+      \  }
 " \    'typescript.jsx': { 'left': '{/*','right': '*/}' },
 let g:NERDCommentEmptyLines = 1
 

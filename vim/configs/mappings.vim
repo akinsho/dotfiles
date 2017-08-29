@@ -84,10 +84,10 @@ noremap  <silent> <Plug>MoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:co
 nnoremap <silent> <Plug>MoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
 noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
 
-nmap <c-]> <Plug>MoveUp
-nmap <c-[> <Plug>MoveDown
-vmap <c-]> <Plug>MoveSelectionUp
-vmap <c-[> <Plug>MoveSelectionDown
+" nmap <c-]> <Plug>MoveUp
+" nmap <c-[> <Plug>MoveDown
+" vmap <c-]> <Plug>MoveSelectionUp
+" vmap <c-[> <Plug>MoveSelectionDown
 
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below

@@ -92,7 +92,8 @@ set shortmess-=l
 set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 set shortmess-=f                      " (file x of x) instead of just (x of x)
 " set shortmess+=I                      " no splash screen
-" set shortmess+=mnrxoOt
+set shortmess+=F                      "Dont give file info when editing a file
+set shortmess+=mnrxo
 if has('patch-7.4.314')
   set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
@@ -294,9 +295,7 @@ endif
 "Colorscheme
 "-----------------------------------------------------------------------
 set background=dark
-" colorscheme quantum
-colorscheme one
-
+colorscheme quantum
 
 "-------------------------------------------------------------
 " Utilities
@@ -304,7 +303,7 @@ colorscheme one
 set noshowmode "No mode showing in command pane
 set updatetime=200
 if has('virtualedit')
-  set virtualedit=block,onemore               " allow cursor to move where there is no text in visual block mode
+  set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin {{{
@@ -321,7 +320,7 @@ if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
 endif
 scriptencoding utf-8
-" set dictionary+=/usr/share/dict/words
+set dictionary+=/usr/share/dict/words
 
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash

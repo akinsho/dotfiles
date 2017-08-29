@@ -38,7 +38,7 @@ augroup QFix
 
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,quickrun,qfreplace,ref,
+        \gitcommit,quickrun,qfreplace,ref,gina-log,gina-status
         \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
         \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
@@ -167,7 +167,6 @@ augroup filetype_javascript_typescript
   autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
   "==================================
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-  " autocmd FileType javascript nnoremap <buffer> <leader>co I{/*<C-O>A */}<esc>
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   autocmd FileType javascript setlocal concealcursor=nvic

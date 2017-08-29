@@ -45,7 +45,6 @@ endif
 source $DOTFILES/vim/plugins/grep.vim
 source $DOTFILES/vim/plugins/togglelist.vim
 source $DOTFILES/vim/plugins/bufclose.vim
-source $DOTFILES/vim/plugins/rooter.vim
 
 "-----------------------------------------------------------------------
 " Mappings
