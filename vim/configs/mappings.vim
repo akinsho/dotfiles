@@ -71,18 +71,18 @@ endfunction
 
 function! s:MoveSelectionDown(count) abort
   call s:ExecMove("'<,'>move'>+".a:count)
-  silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+  silent! call repeat#set("\<Plug>MoveSelectionDown", a:count)
 endfunction
 
 function! s:MoveSelectionUp(count) abort
   call s:ExecMove("'<,'>move'<--".a:count)
-  silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+  silent! call repeat#set("\<Plug>MoveSelectionUp", a:count)
 endfunction
 
-noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
-noremap  <silent> <Plug>MoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
 nnoremap <silent> <Plug>MoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+noremap  <silent> <Plug>MoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
 nnoremap <silent> <Plug>MoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
 
 nmap <c-]> <Plug>MoveUp
 nmap <c-[> <Plug>MoveDown
@@ -118,7 +118,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+" nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " Close all the buffers
@@ -149,8 +149,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Store relative line number jumps in the jumplist.
 noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
-" nnoremap j jzz
-" nnoremap k kzz
 
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
@@ -277,7 +275,7 @@ nnoremap qa :wqa<CR>
 " press enter for newline without insert
 "******************************************************
 " nnoremap <localleader><cr> o<esc>
-noremap <S-cr> o<Esc>
+noremap <tab><CR> o<Esc>
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
@@ -336,10 +334,6 @@ inoremap <c-e> <c-o>$
 inoremap jk <ESC>
 xnoremap jk <ESC>
 cnoremap jk <C-C>
-
-" Yank text to the OS X clipboard
-noremap <localleader>y "*y
-noremap <localleader>yy "*Y
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
 noremap K  @='10gk'<CR>
@@ -397,10 +391,9 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 " Display-altering option toggles
 MapToggle <F1> wrap
 MapToggle <F2> list
-
 " Behavior-altering option toggles
-MapToggle <F10> scrollbind
-MapToggle <F11> ignorecase
+MapToggle <F5> scrollbind
+
 set pastetoggle=<F3>
 
 fu! ToggleColorColumn()

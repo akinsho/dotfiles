@@ -294,7 +294,8 @@ endif
 "Colorscheme
 "-----------------------------------------------------------------------
 set background=dark
-colorscheme quantum
+" colorscheme quantum
+colorscheme one
 
 
 "-------------------------------------------------------------
