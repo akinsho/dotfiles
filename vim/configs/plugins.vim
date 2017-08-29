@@ -27,7 +27,6 @@ Plug 'Shougo/neco-vim',             Cond(has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
 Plug 'wellle/tmux-complete.vim'
-Plug 'ervandew/supertab'
 "================================{{{
 Plug 'maralla/completor.vim', Cond(!has('nvim'))
 Plug 'Quramy/tsuquyomi',      Cond(!has('nvim'))
@@ -92,6 +91,7 @@ Plug 'ap/vim-css-color', { 'for': [
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
+Plug 'lambdalisue/gina.vim'
 "}}}
 " Clojure =========================
 "   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -114,9 +114,8 @@ Plug 'terryma/vim-expand-region'
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 "Coding tools ======================={{{
-Plug 'matze/vim-move'
 Plug 'kshenoy/vim-signature'
 Plug 'janko-m/vim-test'
 Plug 'scrooloose/nerdcommenter'

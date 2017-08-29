@@ -12,8 +12,8 @@ filetype off " required  Prevents potential side-effects from system ftdetects s
 "----------------------------------------------------------------------
 " Plugins
 "----------------------------------------------------------------------
-if filereadable(expand('~/Dotfiles/vim/configs/plugins.vim'))
-  source $HOME/Dotfiles/vim/configs/plugins.vim
+if filereadable(expand($DOTFILES.'/vim/configs/plugins.vim'))
+  source $DOTFILES/vim/configs/plugins.vim
 endif
 
 "-----------------------------------------------------------------------
@@ -23,33 +23,38 @@ syntax enable
 "Leader bindings
 "-----------------------------------------------------------------------
 let g:mapleader      = ',' "Remap leader key
-let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 
+let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "-----------------------------------------------------------------------
 " General Settings
 "-----------------------------------------------------------------------
-if filereadable(expand('~/Dotfiles/vim/configs/general.vim'))
-  source $HOME/Dotfiles/vim/configs/general.vim
+if filereadable(expand($DOTFILES.'/vim/configs/general.vim'))
+  source $DOTFILES/vim/configs/general.vim
 endif
 
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-if filereadable(expand('~/Dotfiles/vim/configs/configurations.vim'))
-  source $HOME/Dotfiles/vim/configs/configurations.vim
+if filereadable(expand($DOTFILES.'/vim/configs/configurations.vim'))
+  source $DOTFILES/vim/configs/configurations.vim
 endif
 
 ""---------------------------------------------------------------------------//
 " Home-made Plugins
 ""---------------------------------------------------------------------------//
-source $HOME/Dotfiles/vim/plugins/grep.vim
-source $HOME/Dotfiles/vim/plugins/togglelist.vim
+source $DOTFILES/vim/plugins/grep.vim
+source $DOTFILES/vim/plugins/togglelist.vim
 source $DOTFILES/vim/plugins/bufclose.vim
+source $DOTFILES/vim/plugins/rooter.vim
 
 "-----------------------------------------------------------------------
 " Mappings
 "-----------------------------------------------------------------------
-if filereadable(expand('~/Dotfiles/vim/configs/mappings.vim'))
-  source $HOME/Dotfiles/vim/configs/mappings.vim
+if filereadable(expand($DOTFILES.'/vim/configs/mappings.vim'))
+  source $DOTFILES/vim/configs/mappings.vim
 endif
 
+""---------------------------------------------------------------------------//
+" AUTOCOMMANDS
+""---------------------------------------------------------------------------//
+source $DOTFILES/vim/configs/autocommands.vim

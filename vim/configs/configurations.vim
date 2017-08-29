@@ -33,9 +33,8 @@ highlight Folded guifg=#FFC66D guibg=NONE
 highlight CursorLine term=none cterm=none
 highlight link StartifySlash Directory
 "make the completion menu a bit more readable
-highlight PmenuSel guibg=#004D40 guifg=white
-"guibg=#00897b
-highlight Pmenu guibg=#489DE7 guifg=black
+highlight PmenuSel guibg=#004D40 guifg=white gui=bold
+" highlight Pmenu guibg=white guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
@@ -43,13 +42,14 @@ highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 highlight StatusLine ctermbg=darkgray cterm=NONE guibg=black gui=NONE
 " highlight VertSplit guifg=black ctermfg=black
 "Color the tildes at the end of the buffer
-hi EndOfBuffer guifg=#282C34 ctermfg=235
+hi link EndOfBuffer VimFgBgAttrib
+"#282C34
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
+" Highlight term cursor differently
 endif
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-" Highlight term cursor differently
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
@@ -443,10 +443,6 @@ if has("nvim")
   let g:deoplete#sources#go#pointer      = 1
   let g:deoplete#enable_smart_case       = 1
   " Autocomplete delay is the aim here
-  let g:deoplete#auto_complete_delay     = 20
-  let g:deoplete#enable_refresh_always   = 0
-  let g:deoplete#max_abbr_width          = 0
-  let g:deoplete#max_menu_width          = 0
   let g:deoplete#file#enable_buffer_path = 1
   let g:deoplete#omni#functions          = {}
   let g:deoplete#omni#functions.javascript = [
@@ -462,14 +458,15 @@ if has("nvim")
       \ 'jspc#omni'
       \]
   call deoplete#custom#source('ultisnips', 'rank', 6000)
+  call deoplete#custom#source('ternjs', 'rank', 6001)
   call deoplete#custom#source('tmux', 'rank', 2000)
+  " let g:nvim_typescript#type_info_on_hold        = 1
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-  " let g:nvim_typescript#type_info_on_hold        = 1
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
@@ -477,16 +474,6 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
-  augroup Typescript_helpers
-    au!
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>p :TSDefPreview<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>d :TSDef<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap gd :TSDef<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>r :TSRefs<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>t :TSType<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>c :TSEditConfig<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>i :TSImport<CR>
-  augroup END
 endif
 
 let g:tern_request_timeout = 1
@@ -505,11 +492,6 @@ let g:tern_map_keys                 = 1
 let g:tern_show_signature_in_pum    = 1
 let g:tern#command                  = ["tern"]
 let g:tern#arguments                = ["--persistent"]
-
-""---------------------------------------------------------------------------//
-" SUPERTAB
-""---------------------------------------------------------------------------//
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
 ""---------------------------------------------------------------------------//
 " Goyo

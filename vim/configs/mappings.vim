@@ -94,7 +94,10 @@ vmap <c-[> <Plug>MoveSelectionDown
 ""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+""---------------------------------------------------------------------------//
+"Tab completion
+""---------------------------------------------------------------------------//
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
 nnoremap <leader>n :enew<cr>
@@ -102,7 +105,8 @@ nnoremap <leader>n :enew<cr>
 nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-nnoremap <leader>q :bp <BAR> bd #<CR>
+" nnoremap <leader>q :bp <BAR> bd #<CR>
+nnoremap <leader>q :on<CR>
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
 "Displays the name of the highlight group of the selected word

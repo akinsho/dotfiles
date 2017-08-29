@@ -1,12 +1,12 @@
 "follow symlinked file
 function! FollowSymlink()
-  let current_file = expand('%p')
+  let l:current_file = expand('%p')
   " check if file type is a symlink
-  if getftype(current_file) == 'link'
+  if getftype(l:current_file) ==# 'link'
     "If it is a symlink resolve to the actual filepath
     " and open the actual file
-    let actual_file = resolve(current_file)
-    silent! exec 'file ' . actual_file
+    let l:actual_file = resolve(l:current_file)
+    silent! exec 'file ' . l:actual_file
   endif
 endfunction
 
@@ -15,20 +15,24 @@ endfunction
 function! SetProjectRoot()
   " default to the current file's directory
   lcd %:p:h
-  let git_dir = system("git rev-parse --show-toplevel")
+  let l:git_dir = system('git rev-parse --show-toplevel')
   " See if the command output starts with 'fatal' (if it does
   " then not in a git repo)
-  let is_not_git_dir = matchstr(git_dir, '^fatal:.*')
+  let l:is_not_git_dir = matchstr(l:git_dir, '^fatal:.*')
   " if git project change local directory to git project root
-  if empty(is_not_git_dir)
-    exec 'lcd ' . git_dir
+  if empty(l:is_not_git_dir)
+    exec 'lcd ' . l:git_dir
   endif
 endfunction
 
+augroup RooterVim
+  au!
 "Follow symlink and set working directory
 autocmd BufRead *
+      \if &filetype !=# 'gitcommit'
       \ call FollowSymlink() |
       \ call SetProjectRoot()
+      \endif
 
 " netrw: follow symlink and set working directory
 autocmd CursorMoved silent *
@@ -37,3 +41,4 @@ autocmd CursorMoved silent *
   \   call FollowSymlink() |
   \   call SetProjectRoot() |
   \ endif
+augroup END
