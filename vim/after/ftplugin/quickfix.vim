@@ -1,0 +1,2 @@
+setlocal nonumber
+setlocal nolist

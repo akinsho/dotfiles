@@ -2,14 +2,12 @@
 "MAPPINGS {{{
 ""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
-" NEOVIM
+"Terminal {{{
 ""---------------------------------------------------------------------------//
 " Terminal settings
 if has('nvim')
-  set guicursor=n-v-c-i-ci-ve:block
-  " \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-  " set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-  "       \,sm:block-blinkwait175-blinkoff150-blinkon175
+  " set guicursor=n-v-c-i-ci-ve:block
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
   " nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
 
   "Add neovim terminal escape with ESC mapping
@@ -32,17 +30,18 @@ if has('nvim')
   tmap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
   nmap <leader>t :term<cr>
   tmap <leader>, <C-\><C-n>:bnext<cr>
-endif
-""---------------------------------------------------------------------------//
-"Terminal {{{
-""---------------------------------------------------------------------------//
 "Opening splits with terminal in all directions
 nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
 nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
 nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
+endif
 "}}}
-noremap <leader>va ggVGo
+""---------------------------------------------------------------------------//"
+"Select Entire
+""---------------------------------------------------------------------------//
+nnoremap <leader>va ggVGo
+xnoremap <Leader>v <C-C>ggVG
 
 ""---------------------------------------------------------------------------//
 " BUBBLING - Hacked out of Unimpaired.vim
@@ -89,6 +88,9 @@ noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:coun
 " vmap <c-]> <Plug>MoveSelectionUp
 " vmap <c-[> <Plug>MoveSelectionDown
 
+nnoremap <leader><leader> viwxi()<Esc>P
+vnoremap <leader><leader> xi()<Esc>P
+
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
 ""---------------------------------------------------------------------------//
@@ -106,6 +108,10 @@ nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 " nnoremap <leader>q :bp <BAR> bd #<CR>
+" Better redo
+nnoremap U <C-R>
+" Paste in visual mode multiple times
+xnoremap p pgvy
 nnoremap <leader>q :on<CR>
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
@@ -142,6 +148,17 @@ cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 cmap w!! w !sudo tee % >/dev/null
+" Commands {{{
+" Loop cnext / cprev / lnext / lprev {{{
+command! Cnext try | cnext | catch | cfirst | catch | endtry
+command! Cprev try | cprev | catch | clast | catch | endtry
+command! Lnext try | lnext | catch | lfirst | catch | endtry
+command! Lprev try | lprev | catch | llast | catch | endtry
+cabbrev cnext Cnext
+cabbrev cprev CPrev
+cabbrev lnext Lnext
+cabbrev lprev Lprev
+" }}}
 
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
@@ -157,9 +174,11 @@ noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
 " c-a / c-e everywhere
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
-cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
+" Scroll command history
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
 "Save
 nnoremap <C-S> :update<CR>
 nnoremap <leader>s :update<cr>

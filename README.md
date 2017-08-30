@@ -7,6 +7,46 @@ I thought I'd document for myself and for others potentially some of the setup
 involved in the various programs my dotfiles cover. I'm no pro and some of
 this stuff has worked for me but may not be universal.
 
+
+# My Setup
+
+After struggling with a 2500+ line long vimrc I finally decided to bite the
+bullet and modularise my vimrc.
+
+Having taken a look at several patterns on line I decided on the following approach
+My `init.vim` is essentially a hub of links to the various sections of my
+configuration. 
+
+These are divided into
+* Autocommands
+* Mappings
+* General settings
+* Plugins (home made or stolen vimscript)
+
+I then further submodularised/succombed to the internet's suggestion to avoid
+over using Autocommands and use **vim's after** directory.
+
+Small explainer if this news to you. Vim loads different files depending on the
+the location in its directory, for example autoloading scripts load on
+demand/lazily. ftplugins run when a file type is opened. `after/ftplugins` do
+what you might think. AKA open in a filetype after the the plugin.
+
+This lets me have the last word on the settings per file type after the plugins
+have run and the ft files from vim so my settings definitely show up.
+
+```
+  .vim/
+    autoload/
+    ftplugin/
+    plugged/ [vim-plug]
+    plugins/
+    bundle/
+    after/
+      /ftplugins
+        /myFile
+```
+ 
+
 ## Amazing Tools
 A list of amazing tools I've discorvered but cannot hide away
 1. **Vimr** - An absolutely astounding project to create a gui for neovim. It's

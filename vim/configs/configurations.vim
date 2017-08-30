@@ -115,6 +115,7 @@ let g:NERDTreeLimitedSyntax = 1
 "               Airline
 ""---------------------------------------------------------------------------//
 let g:airline_highlighting_cache = 1
+let g:airline#extensions#branch#empty_message = "no git"
 let g:airline#parts#ffenc#skip_expected_string            = 'utf-8[unix]'
 let g:airline_powerline_fonts                             = 1
 let g:airline#extensions#tabline#enabled                  = 1
@@ -123,7 +124,6 @@ let g:airline#extensions#tabline#show_tabs                = 1
 let g:airline#extensions#tabline#tab_nr_type              = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                 = ':t'
 let g:airline#extensions#tabline#show_tab_type            = 1
-let g:airline#extensions#tabline#excludes                 = ["nerdtree", "neoterm", "zsh"]
 let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#fnamecollapse            = 1
 let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
@@ -233,7 +233,7 @@ nmap <silent> <C-\> <Plug>(ale_next_wrap)
 " BufOnly
 ""---------------------------------------------------------------------------//
 nnoremap <leader>a :BufOnly<CR>
-nnoremap <leader>ba :BufOnly
+nnoremap <leader>ab :BufOnly
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
@@ -288,6 +288,7 @@ let g:go_fmt_autosave           = 1
 let g:go_doc_keywordprg_enabled = 0 "Stops auto binding K
 let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
+let g:go_highlight_extra_types  = 1
 let g:go_def_reuse_buffer       = 1
 ""---------------------------------------------------------------------------//
 " Git Gutter
@@ -341,11 +342,13 @@ nmap s <Plug>(easymotion-overwin-f)
 " Move to line
 map <Leader>L <Plug>(easymotion-bd-jk)
 nmap <Leader>L <Plug>(easymotion-overwin-line)
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
-
+if !has('nvim')
+  map  / <Plug>(easymotion-sn)
+  omap / <Plug>(easymotion-tn)
+  map  n <Plug>(easymotion-next)
+  map  N <Plug>(easymotion-prev)
+endif
+" 
 ""---------------------------------------------------------------------------//
 "                    EMMET for Vim
 ""---------------------------------------------------------------------------//
@@ -406,8 +409,10 @@ let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 1
 let g:elm_make_output_file  = "index.html"
 ""---------------------------------------------------------------------------//
-let g:echodoc#enable_at_startup= 1
-
+" ECHODOC
+""---------------------------------------------------------------------------//
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type              = "signature"
 ""---------------------------------------------------------------------------//
 " Deoplete Options
 ""---------------------------------------------------------------------------//
@@ -443,12 +448,14 @@ if has("nvim")
       \}
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#sources#go#gocode_binary= $GOPATH.'/bin/gocode'
-  let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const', 'ultisnips']
   let g:deoplete#sources#go#package_dot  = 1
   let g:deoplete#sources#go#use_cache    = 1
   let g:deoplete#sources#go#pointer      = 1
   let g:deoplete#enable_smart_case       = 1
   " Autocomplete delay is the aim here
+  let g:deoplete#auto_complete_delay = 100
+  let g:deoplete#auto_refresh_delay = 100
+  let g:deoplete#max_menu_width     = 30
   let g:deoplete#file#enable_buffer_path = 1
   let g:deoplete#omni#functions          = {}
   let g:deoplete#omni#functions.javascript = [
@@ -463,14 +470,17 @@ if has("nvim")
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
-  call deoplete#custom#source('ultisnips', 'rank', 6000)
-  call deoplete#custom#source('ternjs', 'rank', 6001)
-  call deoplete#custom#source('tmux', 'rank', 2000)
-  " let g:nvim_typescript#type_info_on_hold        = 1
+  call deoplete#custom#source('ultisnips', 'rank', 100)
+  call deoplete#custom#source('ternjs', 'rank', 90)
+  call deoplete#custom#source('tmux', 'rank', 50)
+  call deoplete#custom#set('buffer', 'rank', 40)
+  call deoplete#custom#set('go', 'matchers', ['matcher_fuzzy'])
+  call deoplete#custom#set('go', 'sorters', [])
+  call deoplete#custom#set('_', 'min_pattern_length', 1)
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
-  let g:deoplete#sources#ternjs#docs             = 1
+  let g:deoplete#sources#ternjs#docs             = 0
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
   call deoplete#custom#set('buffer', 'mark', '')
@@ -493,12 +503,44 @@ let g:tern#filetypes = [
       \ 'jsx',
       \ 'javascript.jsx',
       \ ]
+"Add extra filetypes
+let g:deoplete#sources#ternjs#guess = 0
+let g:deoplete#sources#ternjs#omit_object_prototype = 0
+let g:deoplete#sources#ternjs#filetypes = [
+      \ 'tsx',
+      \ 'typescript.tsx',
+      \ 'typescript.jsx',
+      \ 'typescript',
+      \ 'javascript',
+      \ 'jsx',
+      \ 'javascript.jsx',
+                \ ]
 let g:tern_show_argument_hints      = '0'
-let g:tern_map_keys                 = 1
+let g:tern_map_keys                 = 0
 let g:tern_show_signature_in_pum    = 1
 let g:tern#command                  = ["tern"]
 let g:tern#arguments                = ["--persistent"]
+""---------------------------------------------------------------------------//
+" GINA
+""---------------------------------------------------------------------------//
+  call gina#custom#command#option('commit', '-S|--signoff')
+  call gina#custom#execute(
+        \ '/\%(commit\)',
+        \ 'setlocal colorcolumn=69 expandtab shiftwidth=2 softtabstop=2 tabstop=2 winheight=35',
+        \)
+  call gina#custom#execute(
+        \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
+        \ 'setlocal winfixheight',
+        \)
+  call gina#custom#mapping#nmap(
+        \ '/\%(commit\|status\|branch\|ls\|grep\|changes\|tag\)',
+        \ 'q', ':<C-u> q<CR>', {'noremap': 1, 'silent': 1},
+        \)
 
+nnoremap <localleader>gs :Gina status<CR>
+nnoremap <localleader>gdi :Gina diff<CR>
+nnoremap <localleader>gc :Gina commit<CR>
+nnoremap <localleader>gp :Gina push<CR>
 ""---------------------------------------------------------------------------//
 " Goyo
 ""---------------------------------------------------------------------------//

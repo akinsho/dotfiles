@@ -21,7 +21,7 @@ augroup QFix
   au!
   au QuickFixCmdPost *grep* cwindow
 
-  au FileType qf call AdjustWindowHeight(3, 10)
+  au FileType qf call AdjustWindowHeight(8, 8)
   function! AdjustWindowHeight(minheight, maxheight)
     let l:l = 1
     let l:n_lines = 0
@@ -53,25 +53,6 @@ function! s:smart_close()
   endif
 endfunction
 
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#cmd#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-augroup Go_Mappings
-  autocmd!
-  autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4
-  au Filetype go setlocal listchars+=tab:\ \ 
-  autocmd FileType go nmap <leader>t  <Plug>(go-test)
-  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
-  autocmd FileType go nmap <leader>r  <Plug>(go-run)
-  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-augroup END
 
 augroup CheckOutsideTime - "excellent function but implemented by terminus
   autocmd!
@@ -86,20 +67,19 @@ augroup Cancel_Paste
         \ if &paste | set nopaste | echo 'nopaste' | endif
 augroup END
 
-augroup reload_vimrc
+augroup UpdateVim
   autocmd!
   autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
   if has('gui_running')
     source $MYGVIMRC | echo 'Source .gvimrc'
   endif
-augroup END
-
-
-augroup VimResizing
-  autocmd!
-  " autocmd VimResized * wincmd =
   autocmd FocusLost * :wa
   autocmd VimResized * :redraw! | :echo 'Redrew'
+  " autocmd VimResized * wincmd =
+augroup END
+
+augroup AirLineRefresh
+  autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 
   function! s:expand_html_tab()
@@ -142,19 +122,29 @@ augroup filetype_completion
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
-  autocmd FileType * if exists("+omnifunc") && &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
-  autocmd FileType * if exists("+completefunc") && &completefunc == "" | setlocal completefunc=syntaxcomplete#Complete | endif
+  autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
+        \ | setlocal omnifunc=syntaxcomplete#Complete | endif
+
+  autocmd FileType * if exists("+completefunc") && &completefunc == ""
+        \ | setlocal completefunc=syntaxcomplete#Complete | endif
+
   autocmd FileType html,css,javascript,typescript,typescript.tsx,vue,javascript.jsx EmmetInstall
+
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
+
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
+
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+
   if exists('g:plugs["tern_for_vim"]')
-    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=tern#Complete
+    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx
+          \ setlocal omnifunc=tern#Complete
   else
-    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx
+          \ setlocal omnifunc=javascriptcomplete#CompleteJS
   endif
-  " autocmd CompleteDone * silent! pclose!
 augroup END
 
 augroup filetype_javascript_typescript
@@ -162,14 +152,14 @@ augroup filetype_javascript_typescript
   "==================================
   "TypeScript
   "==================================
-  autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx let b:ale_javascript_prettier_options='--trailing-comma all --tab-width 4 --print-width 100'
+  autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx
+        \ let b:ale_javascript_prettier_options=
+        \ '--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
-  autocmd FileType typescript setl softtabstop=4 tabstop=4 shiftwidth=4
-  "==================================
+  autocmd WinEnter,BufRead,VimEnter *.tsx,*.jsx,*.js set completeopt-=preview
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
-  autocmd FileType javascript setlocal concealcursor=nvic
 augroup END
 
 augroup FileType_Clojure
@@ -183,27 +173,8 @@ augroup FileType_html
   autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg=G
 augroup END
 
-
-augroup FileType_markdown
+augroup CommandWindow
   autocmd!
-  autocmd BufNewFile, BufRead *.md setlocal spell spelllang=en_uk "Detect .md files as mark down
-  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
-  autocmd BufNewFile,BufRead *.md :onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
-  autocmd BufNewFile,BufRead *.md :nnoremap <buffer><leader>+ :HeaderIncrease<cr>
-  autocmd BufNewFile,BufRead *.md :nnoremap <buffer><leader>- :HeaderDecrease<cr>
-augroup END
-
-augroup filetype_vim
-  "Vimscript file settings -------------------------
-  autocmd!
-  "This command makes vim start a file with all folds closed
-  autocmd FileType vim setlocal foldmethod=marker
-  autocmd FileType vim nnoremap <leader>pi :PlugInstall<CR>
-  autocmd FileType vim nnoremap <leader>ps :PlugStatus<CR>
-  autocmd FileType vim nnoremap <leader>pc :PlugClean<CR>
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
 augroup END
 
@@ -215,10 +186,9 @@ augroup END
 if has('nvim')
   augroup nvim
     au!
-    au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-    autocmd BufEnter term://* startinsert
+    " autocmd BufEnter term://* startinsert
+    au BufEnter * if &buftype == 'fzf' | :startinsert | endif
     autocmd TermOpen * set bufhidden=hide
-    " au TermOpen * au <buffer> BufEnter,WinEnter redraw! "Does not Work!!
     au BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber | endif
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
@@ -262,6 +232,11 @@ augroup NERDTree
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   autocmd FileType nerdtree setlocal nolist
 augroup END
+
+augroup fix-ultisnips-overriding-tab-visual-mode
+    autocmd!
+    autocmd VimEnter * xnoremap <Tab> >gv
+  augroup END
 
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
@@ -312,12 +287,19 @@ augroup END
 if has('nvim')
   augroup Typescript_helpers
     au!
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>p :TSDefPreview<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>d :TSDef<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap gd :TSDef<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>r :TSRefs<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>t :TSType<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>c :TSEditConfig<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx nnoremap <localleader>i :TSImport<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap <localleader>p :TSDefPreview<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap <localleader>d :TSDef<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap gd :TSDef<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap <localleader>r :TSRefs<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap <localleader>t :TSType<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap <localleader>c :TSEditConfig<CR>
+    autocmd FileType typescript,typescript.tsx,typescript.jsx
+          \ nnoremap <localleader>i :TSImport<CR>
   augroup END
 endif

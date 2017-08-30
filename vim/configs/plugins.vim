@@ -21,12 +21,12 @@ call plug#begin('~/.vim/plugged')
 " ----------------------------------------
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
-Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
-Plug 'Shougo/neco-vim',             Cond(has('nvim'))
+Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
-Plug 'pbogut/deoplete-elm',         Cond(has('nvim'))
-Plug 'wellle/tmux-complete.vim'
+Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
+Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "================================{{{
 Plug 'maralla/completor.vim', Cond(!has('nvim'))
 Plug 'Quramy/tsuquyomi',      Cond(!has('nvim'))
@@ -45,7 +45,8 @@ endfunction
 Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
 Plug 'mhinz/vim-startify'
 if !has('gui_running')
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  | Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        \ | Plug 'junegunn/fzf.vim'
 endif
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 "}}}
@@ -108,9 +109,11 @@ Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'bkad/CamelCaseMotion'
 Plug 'kana/vim-textobj-function'
-Plug 'thinca/vim-textobj-function-javascript'
-Plug 'wellle/targets.vim'
-Plug 'terryma/vim-expand-region'
+      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      \ | Plug 'thinca/vim-textobj-function-javascript'
+      \ | Plug 'wellle/targets.vim'
+      \ | Plug 'terryma/vim-expand-region'
+      \ | Plug 'paulhybryant/vim-textobj-path'
 "}}}
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'

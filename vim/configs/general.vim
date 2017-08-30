@@ -121,8 +121,6 @@ set sessionoptions-=options
 if !has('nvim')
   set termsize="10x30"
 endif
-set completeopt+=noselect,longest
-set completeopt-=preview
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------
@@ -220,7 +218,6 @@ set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 " =====================================================================
 "-----------------------------------
-set iskeyword+=- "Enables better css syntax highlighting
 set iskeyword+=_,$,@,%,#
 if has('unnamedplus')
   set clipboard=unnamedplus
@@ -248,7 +245,8 @@ if exists('&signcolumn')
 endif
 set ruler
 set incsearch
-set completeopt+=noinsert
+set completeopt+=noinsert,noselect,longest
+set completeopt-=preview
 set autowrite "Automatically :write before running commands
 if !has('nvim')
   set complete-=i
@@ -278,11 +276,28 @@ set cmdheight=2 " Set command line height to two lines
 "Abbreviations
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
-iabbrev fn function
 
 "}}}
 "
 "--------------------------------------------------------------
+"-----------------------------------------------------------------------
+"Colorscheme
+"-----------------------------------------------------------------------
+set background=dark
+colorscheme quantum
+
+let g:terminal_scrollback_buffer_size = 100000
+let s:num = 0
+"        black      red        green      yellow     blue       magenta    cyan       white
+for s:color in [
+      \ '#101112', '#b24e4e', '#9da45a', '#f0c674', '#5f819d', '#85678f', '#5e8d87', '#707880',
+      \ '#373b41', '#cc6666', '#a0a85c', '#f0c674', '#81a2be', '#b294bb', '#8abeb7', '#c5c8c6',
+      \ ]
+  " let g:terminal_color_{s:num} = s:color
+  let s:num += 1
+endfor
+let g:terminal_color_background = '#000000'
+
 "NVIM
 "--------------------------------------------------------------
 if has('nvim')
@@ -291,12 +306,6 @@ if has('nvim')
   " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
   set inccommand=nosplit
 endif
-"-----------------------------------------------------------------------
-"Colorscheme
-"-----------------------------------------------------------------------
-set background=dark
-colorscheme quantum
-
 "-------------------------------------------------------------
 " Utilities
 "---------------------------------------------------------------------
