@@ -262,8 +262,10 @@ if exists('&belloff')
 endif
 if has('termguicolors')
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
-  " let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-  " let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  if exists('$TMUX')
+    let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+    let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
+  endif
 endif
 "}}}
 " ----------------------------------------------------------------------------
@@ -277,8 +279,6 @@ set cmdheight=2 " Set command line height to two lines
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
 iabbrev fn function
-iabbrev fl false
-iabbrev tr true
 
 "}}}
 "

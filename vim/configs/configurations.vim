@@ -34,7 +34,7 @@ highlight CursorLine term=none cterm=none
 highlight link StartifySlash Directory
 "make the completion menu a bit more readable
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-highlight Pmenu guibg=#67bae5 guifg=black
+" highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 "so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
@@ -126,7 +126,6 @@ let g:airline#extensions#tabline#show_tab_type            = 1
 let g:airline#extensions#tabline#excludes                 = ["nerdtree", "neoterm", "zsh"]
 let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#fnamecollapse            = 1
-let g:airline#extensions#tabline#buffer_min_count         = 3
 let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
 let g:airline#extensions#tabline#tab_min_count            = 1
 let g:airline_section_c                                   = '%t %{GetFileSize()}'
@@ -206,10 +205,11 @@ let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_fixers                      = {}
 let g:ale_fixers.javascript           = ['prettier', 'eslint']
 let g:ale_fixers.typescript           = ['prettier']
+let g:ale_fixers.json                 = ['prettier']
 let g:ale_linters                     = {'go': ['go build', 'gofmt', 'golint', 'go vet']}
 let g:ale_fixers.css                  = ['stylelint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-" let g:ale_javascript_prettier_options = '--config ~/.prettierrc' "Order of arguments matters here!!
+" let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
 let g:ale_sh_shellcheck_options       = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
@@ -228,11 +228,17 @@ let g:ale_set_highlights    = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap <silent> <C-/> <Plug>(ale_previous_wrap)
 nmap <silent> <C-\> <Plug>(ale_next_wrap)
+
+""---------------------------------------------------------------------------//
+" BufOnly
+""---------------------------------------------------------------------------//
+nnoremap <leader>a :BufOnly<CR>
+nnoremap <leader>ba :BufOnly
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
-let g:neoterm_size         = '40'
-let g:neoterm_position     = 'vertical'
+let g:neoterm_size         = '10'
+let g:neoterm_position     = 'horizontal'
 let g:neoterm_automap_keys = ',tt'
 let g:neoterm_autoscroll   = 1
 let g:neoterm_fixedsize    = 1
@@ -378,7 +384,6 @@ let g:NERDCustomDelimiters  = {
       \    'jsx': { 'leftAlt': '{/*','rightAlt': '*/}', 'left': '//', 'right': ''  },
       \    'typescript.tsx': { 'leftAlt': '{/*','rightAlt': '*/}', 'left': '//', 'right': '' }
       \  }
-" \    'typescript.jsx': { 'left': '{/*','right': '*/}' },
 let g:NERDCommentEmptyLines = 1
 
 nmap <silent> <leader>vt :TestNearest<CR>
@@ -718,16 +723,32 @@ let g:startify_list_order = [
       \ 'commands',
       \ ]
 
+
+let g:startify_session_before_save = [
+      \ 'echo "Cleaning up before saving.."',
+      \ 'silent! NERDTreeClose'
+      \ ]
 let g:startify_session_dir         = '~/.vim/session'
 let g:startify_bookmarks           = [
-      \ {'vimrc: ': '~/.vimrc'},
+      \ {'c': '~/.vimrc'},
       \ {'zshrc: ':'~/.zshrc'},
       \ {'tmux: ':'~/.tmux.conf'}
       \ ]
-let g:startify_session_autoload    = 1
-let g:startify_session_persistence = 1
-let g:startify_session_sort        = 1
-let g:startify_change_to_vcs_root  = 1
+
+let g:startify_skiplist = [
+      \ 'COMMIT_EDITMSG',
+      \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+      \ 'bundle/.*/doc',
+      \ '/data/repo/neovim/runtime/doc',
+      \ ]
+let g:startify_fortune_use_unicode    = 1
+let g:startify_session_autoload       = 1
+let g:startify_session_delete_buffers = 1
+let g:startify_session_persistence    = 1
+let g:startify_update_oldfiles        = 1
+let g:startify_session_sort           = 1
+let g:startify_change_to_vcs_root     = 1
+
 ""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')

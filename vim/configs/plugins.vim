@@ -62,6 +62,7 @@ augroup END
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'schickling/vim-bufonly'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)

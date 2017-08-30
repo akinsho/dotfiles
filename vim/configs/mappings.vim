@@ -122,7 +122,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " Close all the buffers
-nnoremap <leader>ba :1,1000 bd!<cr>
+" nnoremap <leader>ba :bufdo bd!<cr>
 " Quickly edit your macros
 " Usage <leader>m or "q<leader>m
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
