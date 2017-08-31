@@ -42,7 +42,7 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
+Plug 'ternjs/tern_for_vim', Cond(has('nvim'), {'do':function('BuildTern')})
 Plug 'mhinz/vim-startify'
 if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -63,7 +63,7 @@ augroup END
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'schickling/vim-bufonly'
+Plug 'mhinz/vim-sayonara'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
@@ -95,25 +95,17 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
 Plug 'lambdalisue/gina.vim'
 "}}}
-" Clojure =========================
-"   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-"   Plug 'guns/vim-sexp'
-"   Plug 'guns/vim-clojure-highlight'
-"   let g:clojure_fold = 1
-"   let g:sexp_filetypes = ''
-"   Plug 'tpope/vim-salve'
-"   let g:salve_auto_start_repl = 1
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
-Plug 'kana/vim-textobj-user'
-Plug 'glts/vim-textobj-comment'
 Plug 'bkad/CamelCaseMotion'
-Plug 'kana/vim-textobj-function'
+Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
-      \ | Plug 'thinca/vim-textobj-function-javascript'
+      \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'wellle/targets.vim'
       \ | Plug 'terryma/vim-expand-region'
       \ | Plug 'paulhybryant/vim-textobj-path'
+      \ | Plug 'kana/vim-textobj-function'
+        \ | Plug 'thinca/vim-textobj-function-javascript'
 "}}}
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
@@ -127,7 +119,6 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-Plug 'othree/jspc.vim', {'for': ['javascript', 'typescript']}
 Plug 'kassio/neoterm', Cond(has('nvim'))
 "}}}
 "Filetype Plugins ======================{{{

@@ -114,8 +114,8 @@ let g:NERDTreeLimitedSyntax = 1
 ""---------------------------------------------------------------------------//
 "               Airline
 ""---------------------------------------------------------------------------//
-let g:airline_highlighting_cache = 1
-let g:airline#extensions#branch#empty_message = "no git"
+let g:airline_highlighting_cache                          = 1
+let g:airline#extensions#branch#empty_message             = "No Git 😅"
 let g:airline#parts#ffenc#skip_expected_string            = 'utf-8[unix]'
 let g:airline_powerline_fonts                             = 1
 let g:airline#extensions#tabline#enabled                  = 1
@@ -124,8 +124,8 @@ let g:airline#extensions#tabline#show_tabs                = 1
 let g:airline#extensions#tabline#tab_nr_type              = 2 " Show # of splits and tab #
 let g:airline#extensions#tabline#fnamemod                 = ':t'
 let g:airline#extensions#tabline#show_tab_type            = 1
-let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#fnamecollapse            = 1
+let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
 let g:airline#extensions#tabline#tab_min_count            = 1
 let g:airline_section_c                                   = '%t %{GetFileSize()}'
@@ -135,7 +135,7 @@ let g:airline#extensions#tabline#right_sep                = ''
 let g:airline#extensions#tabline#right_alt_sep            = ''
 let g:airline_right_sep                                   = ''
 let g:airline_left_sep                                    = ''
-let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+let g:ff_map                                              = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
 "  let g:airline#extensions#default#layout = [
@@ -199,17 +199,16 @@ if has('gui_running')
   let g:ale_set_balloons                 = 1
 endif
 " Enable completion where available.
-let g:ale_completion_enabled          = 1
-let g:ale_pattern_options             = {'\.min.js$': {'ale_enabled': 0}}
+" let g:ale_completion_enabled          = 1 "Careful clashes with other completion engines
+" let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
 let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_pattern_options             = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers                      = {}
 let g:ale_fixers.javascript           = ['prettier', 'eslint']
 let g:ale_fixers.typescript           = ['prettier']
 let g:ale_fixers.json                 = ['prettier']
-let g:ale_linters                     = {'go': ['go build', 'gofmt', 'golint', 'go vet']}
 let g:ale_fixers.css                  = ['stylelint']
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-" let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
 let g:ale_sh_shellcheck_options       = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
@@ -221,6 +220,7 @@ let g:ale_linters                     = {
       \'jsx': ['stylelint', 'eslint'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint', 'stylelint'],
+      \'go': ['go build', 'gofmt', 'golint', 'go vet'],
       \'html':[]
       \}
 let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
@@ -232,8 +232,8 @@ nmap <silent> <C-\> <Plug>(ale_next_wrap)
 ""---------------------------------------------------------------------------//
 " BufOnly
 ""---------------------------------------------------------------------------//
-nnoremap <leader>a :BufOnly<CR>
-nnoremap <leader>ab :BufOnly
+nnoremap <C-Q> :Sayonara<CR>
+nnoremap <leader>q :Sayonara<CR>
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
@@ -330,9 +330,9 @@ let g:javascript_plugin_jsdoc      = 1
 "EasyMotion mappings
 ""---------------------------------------------------------------------------//
 let g:EasyMotion_do_mapping       = 0
+let g:EasyMotion_startofline      = 0
 let g:EasyMotion_smartcase        = 1
 let g:EasyMotion_use_smartsign_us = 1
-let g:EasyMotion_startofline      = 0
 omap t <Plug>(easymotion-bd-tl)
 " nmap s <Plug>(easymotion-s)
 " Jump to anwhere with only `s{char}{target}`
@@ -372,7 +372,6 @@ let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasm
 ""---------------------------------------------------------------------------//
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-
 ""---------------------------------------------------------------------------//
 "Plugin configurations "{{{
 ""---------------------------------------------------------------------------//
@@ -446,18 +445,18 @@ if has("nvim")
       \ 'call': 'call',
       \ 'constructor': '',
       \}
-  let g:deoplete#enable_at_startup       = 1
-  let g:deoplete#sources#go#gocode_binary= $GOPATH.'/bin/gocode'
-  let g:deoplete#sources#go#package_dot  = 1
-  let g:deoplete#sources#go#use_cache    = 1
-  let g:deoplete#sources#go#pointer      = 1
-  let g:deoplete#enable_smart_case       = 1
+  let g:deoplete#enable_at_startup        = 1
+  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+  let g:deoplete#sources#go#package_dot   = 1
+  let g:deoplete#sources#go#use_cache     = 1
+  let g:deoplete#sources#go#pointer       = 1
+  let g:deoplete#enable_smart_case        = 1
   " Autocomplete delay is the aim here
-  let g:deoplete#auto_complete_delay = 100
-  let g:deoplete#auto_refresh_delay = 100
-  let g:deoplete#max_menu_width     = 30
-  let g:deoplete#file#enable_buffer_path = 1
-  let g:deoplete#omni#functions          = {}
+  let g:deoplete#auto_complete_delay      = 0
+  let g:deoplete#auto_refresh_delay       = 50
+  let g:deoplete#max_menu_width           = 40
+  let g:deoplete#file#enable_buffer_path  = 1
+  let g:deoplete#omni#functions           = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
         \ 'jspc#omni'
@@ -470,26 +469,26 @@ if has("nvim")
       \ 'tern#Complete',
       \ 'jspc#omni'
       \]
-  call deoplete#custom#source('ultisnips', 'rank', 100)
-  call deoplete#custom#source('ternjs', 'rank', 90)
-  call deoplete#custom#source('tmux', 'rank', 50)
-  call deoplete#custom#set('buffer', 'rank', 40)
+  call deoplete#custom#source('ultisnips', 'rank', 290)
+  call deoplete#custom#source('ternjs', 'rank', 300)
   call deoplete#custom#set('go', 'matchers', ['matcher_fuzzy'])
   call deoplete#custom#set('go', 'sorters', [])
-  call deoplete#custom#set('_', 'min_pattern_length', 1)
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
-  let g:deoplete#sources#ternjs#docs             = 0
+  let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
+  call deoplete#custom#set('tern', 'mark', '')
   call deoplete#custom#set('omni', 'mark', '⌾')
   call deoplete#custom#set('file', 'mark', '')
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
+  let g:deoplete#ignore_sources = {}
+  let g:deoplete#ignore_sources._ = ['around']
 endif
 
 let g:tern_request_timeout = 1
@@ -504,8 +503,6 @@ let g:tern#filetypes = [
       \ 'javascript.jsx',
       \ ]
 "Add extra filetypes
-let g:deoplete#sources#ternjs#guess = 0
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
 let g:deoplete#sources#ternjs#filetypes = [
       \ 'tsx',
       \ 'typescript.tsx',
@@ -515,11 +512,13 @@ let g:deoplete#sources#ternjs#filetypes = [
       \ 'jsx',
       \ 'javascript.jsx',
                 \ ]
-let g:tern_show_argument_hints      = '0'
-let g:tern_map_keys                 = 0
-let g:tern_show_signature_in_pum    = 1
-let g:tern#command                  = ["tern"]
-let g:tern#arguments                = ["--persistent"]
+let g:deoplete#sources#ternjs#omit_object_prototype = 0
+let g:deoplete#sources#ternjs#guess                 = 1
+let g:tern_show_argument_hints                      = 'on_hold'
+let g:tern_map_keys                                 = 0
+let g:tern_show_signature_in_pum                    = 1
+let g:tern#command                                  = ["tern"]
+let g:tern#arguments                                = ["--persistent"]
 ""---------------------------------------------------------------------------//
 " GINA
 ""---------------------------------------------------------------------------//
@@ -624,7 +623,7 @@ let g:UltiSnipsSnippetsDir          = "~/Dotfiles/vim/mySnippets" "Both of these
 let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
 let g:UltiSnipsExpandTrigger        = "<C-J>"
 let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
-let g:UltiSnipsListSnippets         = ",us"
+let g:UltiSnipsListSnippets         = "<C-/>"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
 

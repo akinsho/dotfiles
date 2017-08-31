@@ -86,6 +86,19 @@ awesome tools.
 * `Plug 'trevordmiller/nova-vim'`
 * `Plug 'kristijanhusak/vim-hybrid-material'`
 
+### Language plugins
+Since I have great aspirations to play with all the languages :smile: here are
+some plugins I'm keeping my eyes on
+
+## Clojure =========================
+*    Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+*    Plug 'guns/vim-sexp'
+*    Plug 'guns/vim-clojure-highlight'
+*    let g:clojure_fold = 1
+*    let g:sexp_filetypes = ''
+*    Plug 'tpope/vim-salve'
+*    let g:salve_auto_start_repl = 1
+
 ## Tmux Setup
 Tmux is an amazing dev tool, it is a `terminal multiplexer`. Which is matrix
 speech for saying it lets you have multiple terminal splits and windows,

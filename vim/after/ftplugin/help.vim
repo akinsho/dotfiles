@@ -1,0 +1,1 @@
+  setl nonumber winfixwidth colorcolumn=

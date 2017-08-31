@@ -1,2 +1,2 @@
-setlocal concealcursor=nvic
+" setlocal concealcursor=nvic
 setl completeopt-=preview

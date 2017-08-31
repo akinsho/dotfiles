@@ -6,17 +6,18 @@
 ""---------------------------------------------------------------------------//
 " Terminal settings
 if has('nvim')
-  " set guicursor=n-v-c-i-ci-ve:block
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+  " set guicursor=n-v-c-i-ci-ve:block
   " nnoremap <silent> <leader><Enter> :tabnew<CR>:terminal<CR>
 
   "Add neovim terminal escape with ESC mapping
-  tnoremap <ESC> <C-\><C-n>
-  tnoremap <Leader>e <C-\><C-n>
-  tnoremap <C-h> <C-\><C-n><C-h>
-  tnoremap <C-j> <C-\><C-n><C-j>
-  tnoremap <C-k> <C-\><C-n><C-k>
-  tnoremap <C-l> <C-\><C-n><C-l>
+  tmap <ESC> <C-\><C-n>
+  tmap <Leader>e <C-\><C-n>
+  tmap <C-h> <C-\><C-n><C-h>
+  tmap <C-j> <C-\><C-n><C-j>
+  tmap <C-k> <C-\><C-n><C-k>
+  tmap <C-l> <C-\><C-n><C-l>
+  tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
   tmap <tab><leader> <C-\><C-n>:bnext<CR>
   tmap <localleader><S-tab> <C-\><C-n>:bprev<CR>
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
@@ -83,11 +84,6 @@ noremap  <silent> <Plug>MoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:co
 nnoremap <silent> <Plug>MoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
 noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
 
-" nmap <c-]> <Plug>MoveUp
-" nmap <c-[> <Plug>MoveDown
-" vmap <c-]> <Plug>MoveSelectionUp
-" vmap <c-[> <Plug>MoveSelectionDown
-
 nnoremap <leader><leader> viwxi()<Esc>P
 vnoremap <leader><leader> xi()<Esc>P
 
@@ -108,11 +104,11 @@ nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 " nnoremap <leader>q :bp <BAR> bd #<CR>
+" nnoremap <leader>q :on<CR>
 " Better redo
 nnoremap U <C-R>
 " Paste in visual mode multiple times
 xnoremap p pgvy
-nnoremap <leader>q :on<CR>
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
 "Displays the name of the highlight group of the selected word

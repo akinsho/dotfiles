@@ -129,13 +129,9 @@ augroup filetype_completion
         \ | setlocal completefunc=syntaxcomplete#Complete | endif
 
   autocmd FileType html,css,javascript,typescript,typescript.tsx,vue,javascript.jsx EmmetInstall
-
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
-
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
-
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 
   if exists('g:plugs["tern_for_vim"]')
@@ -187,17 +183,17 @@ if has('nvim')
   augroup nvim
     au!
     " autocmd BufEnter term://* startinsert
-    au BufEnter * if &buftype == 'fzf' | :startinsert | endif
+    " au BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber | endif
+    au BufEnter * if &buftype == 'terminal' | :startinsert | endif
     autocmd TermOpen * set bufhidden=hide
-    au BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber | endif
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
 endif
 
 function! s:SetupHelpWindow() "{{{
   wincmd L
-  vertical resize 79
-  setl nonumber winfixwidth colorcolumn=
+  vertical resize 70
+  " setl nonumber winfixwidth colorcolumn=
 endfunction "}}}
 
 augroup FileType_all
@@ -267,23 +263,6 @@ augroup jsfolding
   au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=99
 augroup END
 " }}}
-" CSS {{{
-function! CSSFoldText()
-  let line = substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '(' . ( lines_count ) . ')'
-  let foldchar = matchstr(&fillchars, 'fold:\')
-  let foldtextstart = strpart('✦ ' . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(' ', 2 )
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
-endfunction
-augroup ft_css
-  au!
-  au Filetype css setlocal foldmethod=indent | setlocal foldlevelstart=99
-  au Filetype css setlocal foldmarker={,}
-  au FileType css setlocal foldtext=CSSFoldText()
-augroup END
 if has('nvim')
   augroup Typescript_helpers
     au!
