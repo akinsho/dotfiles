@@ -559,6 +559,7 @@ nnoremap <localleader>gdi :Gina diff<CR>
 nnoremap <localleader>gc :Gina commit<CR>
 nnoremap <localleader>gc! :Gina! commit<CR>
 nnoremap <localleader>gp :Gina! push<CR>
+nnoremap <localleader>gP :Gina!! push<CR>
 ""---------------------------------------------------------------------------//
 " Goyo
 ""---------------------------------------------------------------------------//
