@@ -44,8 +44,13 @@ augroup QFix
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
   autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
-  autocmd FileType qf setl nohidden nowrap
+  autocmd FileType qf setl nohidden
 augroup END
+
+aug QFClose
+  au!
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+aug END
 
 function! s:smart_close()
   if winnr('$') != 1

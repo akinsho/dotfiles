@@ -525,10 +525,10 @@ let g:tern#arguments                                = ["--persistent"]
   call gina#custom#command#option('commit', '-S|--signoff')
   call gina#custom#execute(
         \ '/\%(commit\)',
-        \ 'setlocal colorcolumn=69 expandtab shiftwidth=2 softtabstop=2 tabstop=2 winfixheight',
+        \ 'setlocal colorcolumn=69 expandtab shiftwidth=2 softtabstop=2 tabstop=2',
         \)
   call gina#custom#execute(
-        \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
+        \ '/\%(commit\|status\|branch\|ls\|grep\|changes\|tag\)',
         \ 'setlocal winfixheight',
         \)
   call gina#custom#mapping#nmap(
@@ -536,21 +536,23 @@ let g:tern#arguments                                = ["--persistent"]
         \ 'q', ':<C-u> q<CR>', {'noremap': 1, 'silent': 1},
         \)
 
-
   " Execute :Gina commit with <C-^> on "gina-status" buffer
   call gina#custom#mapping#nmap(
         \ 'status', '<C-N>',
         \ ':<C-u>Gina commit<CR>',
         \ {'noremap': 1, 'silent': 1},
         \)
-
   " Execute :Gina status with <C-^> on "gina-commit" buffer
   call gina#custom#mapping#nmap(
         \ 'commit', '<C-N>',
         \ ':<C-u>Gina status<CR>',
         \ {'noremap': 1, 'silent': 1},
         \)
-
+  " Use g<CR> to open a candidate on a new tabpage
+  call gina#custom#mapping#nmap(
+        \ '/.*', 'g<CR>',
+        \ '<Plug>(gina-edit-tab)'
+        \)
 nnoremap <localleader>gs :Gina status<CR>
 nnoremap <localleader>gS :Gina! status<CR>
 nnoremap <localleader>gdi :Gina diff<CR>

@@ -184,7 +184,14 @@ vnoremap <C-Q>     <esc>
 nnoremap <leader>ln :cnext<CR>
 nnoremap <leader>lp :cprev<CR>
 " Tab and Shift + Tab Circular buffer navigation
-nnoremap <tab>   :bnext<CR>
+function! SkipQF()
+  if &buftype ==# 'quickfix'
+    exec 'bdelete | bnext'
+  else
+    exec 'bnext'
+  endif
+endfunction
+nnoremap <tab>  :call SkipQF()<CR>
 nnoremap <S-tab> :bprevious<CR>
 " nnoremap <CR> G "20 enter to go to line 20
 nnoremap <BS> gg
