@@ -1,5 +1,5 @@
   setl nonumber winfixwidth colorcolumn=
   augroup Quit
     au!
-    au VimLeave :q<CR>
+    au FileType help VimLeave :q<CR>
   augroup END

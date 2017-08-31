@@ -77,7 +77,10 @@ Plug 'tpope/vim-abolish'
 "Syntax ============================{{{
 Plug 'ianks/vim-tsx'
 Plug 'sheerun/vim-polyglot'
-Plug 'othree/javascript-libraries-syntax.vim', { 'for':['javascript', 'typescript'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
+      \ 'javascript',
+      \ 'typescript'
+      \ ] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-scripts/dbext.vim'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}

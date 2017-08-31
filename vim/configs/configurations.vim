@@ -668,7 +668,7 @@ command! -bang -nargs=? -complete=dir Files
 
 
 command! -bang Dots
-      \ call fzf#run(fzf#wrap('dotfiles', {'dir': '~/Dotfiles'}, <bang>0))
+      \ call fzf#run(fzf#wrap('dotfiles', {'dir': $DOTFILES}, <bang>0))
 
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
@@ -683,7 +683,7 @@ command! -bang -nargs=* Rg
 imap <c-x>l <plug>(fzf-complete-line)
 imap <c-x>p <plug>(fzf-complete-path)
 inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
-nnoremap <silent> <localleader>D :Dots<CR>
+nnoremap <silent> <localleader>d :Dots<CR>
 nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
 nnoremap <silent> <localleader>m :History<CR>
@@ -698,7 +698,7 @@ endfunction
 nnoremap <localleader>p :GitFiles <CR>
 nnoremap <C-P> :Files<CR>
 nnoremap \ :Rg!<CR>
-nnoremap <localleader>gw :call SearchWordWithRg()<CR>
+nnoremap <localleader>w :call SearchWordWithRg()<CR>
 
 
 function! s:build_quickfix_list(lines)
