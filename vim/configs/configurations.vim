@@ -87,7 +87,8 @@ let g:NERDTreeShowHidden                = 1 "Show hidden files by default
 " Expandable ideas = [' ', ' ', ','','├','└']
 
 "Adding the flags to NERDTree
-let g:webdevicons_enable_nerdtree = 1
+let g:webdevicons_enable_nerdtree           = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:NERDTree')
   if exists('g:loaded_webdevicons')
@@ -173,14 +174,20 @@ noremap <leader>1 <c-o>:VCoolor<CR>
 let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
 let g:ctrlsf_winsize      = "30%"
 let g:ctrlsf_ignore_dir   = ['bower_components', 'node_modules']
+let g:ctrlsf_confirm_save = 0
+nmap     <C-F>w <Plug>CtrlSFCwordExec
 nmap     <C-F>f <Plug>CtrlSFPrompt
-vmap     <C-F>f <Plug>CtrlSFVwordPath
-vmap     <C-F>F <Plug>CtrlSFVwordExec
+vmap     <C-F>F <Plug>CtrlSFVwordPath
+vmap     <C-F>f <Plug>CtrlSFVwordExec
 nmap     <C-F>n <Plug>CtrlSFCwordPath
 nmap     <C-F>p <Plug>CtrlSFPwordPath
 nnoremap <C-F>o :CtrlSFOpen<CR>
 nnoremap <C-F>t :CtrlSFToggle<CR>
 inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+
+function! g:CtrlSFAfterMainWindowInit()
+  setl wrap nonumber norelativenumber
+endfunction
 
 ""---------------------------------------------------------------------------//
 " TEXTOBJECT - COMMENT

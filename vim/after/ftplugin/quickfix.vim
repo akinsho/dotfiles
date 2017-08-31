@@ -1,2 +1,0 @@
-setlocal nonumber
-setlocal nolist
