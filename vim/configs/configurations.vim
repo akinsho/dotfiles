@@ -514,8 +514,8 @@ let g:deoplete#sources#ternjs#filetypes = [
                 \ ]
 let g:deoplete#sources#ternjs#omit_object_prototype = 0
 let g:deoplete#sources#ternjs#guess                 = 1
-let g:tern_show_argument_hints                      = 'on_hold'
 let g:tern_map_keys                                 = 0
+let g:tern_show_argument_hints                      = 'on_hold'
 let g:tern_show_signature_in_pum                    = 1
 let g:tern#command                                  = ["tern"]
 let g:tern#arguments                                = ["--persistent"]
@@ -525,7 +525,7 @@ let g:tern#arguments                                = ["--persistent"]
   call gina#custom#command#option('commit', '-S|--signoff')
   call gina#custom#execute(
         \ '/\%(commit\)',
-        \ 'setlocal colorcolumn=69 expandtab shiftwidth=2 softtabstop=2 tabstop=2 winheight=35',
+        \ 'setlocal colorcolumn=69 expandtab shiftwidth=2 softtabstop=2 tabstop=2 winfixheight',
         \)
   call gina#custom#execute(
         \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
@@ -536,10 +536,27 @@ let g:tern#arguments                                = ["--persistent"]
         \ 'q', ':<C-u> q<CR>', {'noremap': 1, 'silent': 1},
         \)
 
+
+  " Execute :Gina commit with <C-^> on "gina-status" buffer
+  call gina#custom#mapping#nmap(
+        \ 'status', '<C-N>',
+        \ ':<C-u>Gina commit<CR>',
+        \ {'noremap': 1, 'silent': 1},
+        \)
+
+  " Execute :Gina status with <C-^> on "gina-commit" buffer
+  call gina#custom#mapping#nmap(
+        \ 'commit', '<C-N>',
+        \ ':<C-u>Gina status<CR>',
+        \ {'noremap': 1, 'silent': 1},
+        \)
+
 nnoremap <localleader>gs :Gina status<CR>
+nnoremap <localleader>gS :Gina! status<CR>
 nnoremap <localleader>gdi :Gina diff<CR>
 nnoremap <localleader>gc :Gina commit<CR>
-nnoremap <localleader>gp :Gina push<CR>
+nnoremap <localleader>gc! :Gina! commit<CR>
+nnoremap <localleader>gp :Gina! push<CR>
 ""---------------------------------------------------------------------------//
 " Goyo
 ""---------------------------------------------------------------------------//
@@ -593,7 +610,6 @@ augroup END
 ""---------------------------------------------------------------------------//
 let g:vim_markdown_fenced_languages = [
   \'css',
-  \'erb=eruby',
   \'javascript',
   \'js=javascript',
   \'json=json',
@@ -603,8 +619,6 @@ let g:vim_markdown_fenced_languages = [
   \'xml',
   \'html',
   \'python',
-  \'stylus=css',
-  \'less=css',
   \'sql'
   \]
 let g:vim_markdown_toml_frontmatter = 1
@@ -691,7 +705,7 @@ function! s:build_quickfix_list(lines)
 endfunction
 
 let g:fzf_action = {
-      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-l': function('s:build_quickfix_list'),
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit'
