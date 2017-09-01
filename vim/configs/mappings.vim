@@ -111,6 +111,15 @@ nnoremap U <C-R>
 xnoremap p pgvy
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
+
+" Toggle background with <leader>bg
+nnoremap <leader>bg :let &background = (&background == "dark" ? "light" : "dark")<cr>
+
+" These mappings will make it so that going to the next one in a search will
+" center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -300,7 +309,7 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 
 nnoremap <localleader>c :<c-f>
 "Open command line window
-nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <leader>hl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 ""---------------------------------------------------------------------------//
 " Window resizing bindings
 ""---------------------------------------------------------------------------//

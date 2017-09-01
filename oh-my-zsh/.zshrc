@@ -1,6 +1,9 @@
 #=======================================================================
 #               STARTUP TIMES
 #=======================================================================
+# echo -e "\033]6;1;bg;red;brightness;38\a"
+# echo -e "\033]6;1;bg;green;brightness;50\a"
+# echo -e "\033]6;1;bg;blue;brightness;56\a"
 # zmodload zsh/zprof
 start_time="$(date +%s)"
 #=======================================================================
@@ -94,7 +97,8 @@ plugins=(
         alias-tips
         last-working-dir
         nvm
-        git 
+        vi-mode
+        git
         gitfast
         zsh-completions
         command-not-found
@@ -102,6 +106,8 @@ plugins=(
         z
         common-aliases
         brew
+        zsh-syntax-highlighting
+        zsh-autosuggestions
         )
 
 # web-search - great plugin, google from the command line although I never use
@@ -282,12 +288,6 @@ alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_RE
 # iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# STARTUP TIMES (CONTD)================================================
-end_time="$(date +%s)"
-# Compares start time defined above with end time above and prints the
-# difference
-echo load time: $((end_time - start_time)) seconds
-# zprof
 
 ##---------------------------------------------------------------------------//
 # FZF
@@ -310,13 +310,12 @@ bindkey '^g^t' fzf-gt-widget
 fzf-gt-widget() LBUFFER+=$(gt | join-lines)
 zle -N fzf-gt-widget
 bindkey '^g^t' fzf-gt-widget
-##---------------------------------------------------------------------------//
-# ZSH Autosuggestions
-##---------------------------------------------------------------------------//
-source ~/Dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-##---------------------------------------------------------------------------//
-# ZSH highlighting
-##---------------------------------------------------------------------------//
-source ~/Dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+
+# STARTUP TIMES (CONTD)================================================
+end_time="$(date +%s)"
+# Compares start time defined above with end time above and prints the
+# difference
+echo load time: $((end_time - start_time)) seconds
+# zprof

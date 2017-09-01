@@ -117,7 +117,7 @@ if has('folding')
   set foldnestmax=3
 endif
 set switchbuf=useopen,usetab,vsplit
-set sessionoptions-=options
+set sessionoptions-=options,blank,folds,help
 if !has('nvim')
   set termsize="10x30"
 endif
@@ -286,24 +286,23 @@ iabbrev w@ www.akin-sowemimo.com
 set background=dark
 colorscheme quantum
 
-let g:terminal_scrollback_buffer_size = 100000
-let s:num = 0
-"        black      red        green      yellow     blue       magenta    cyan       white
-for s:color in [
-      \ '#101112', '#b24e4e', '#9da45a', '#f0c674', '#5f819d', '#85678f', '#5e8d87', '#707880',
-      \ '#373b41', '#cc6666', '#a0a85c', '#f0c674', '#81a2be', '#b294bb', '#8abeb7', '#c5c8c6',
-      \ ]
-  " let g:terminal_color_{s:num} = s:color
-  let s:num += 1
-endfor
-let g:terminal_color_background = '#000000'
+if has('nvim')
+  let g:terminal_scrollback_buffer_size = 100000
+  let s:num = 0
+  "        black      red        green      yellow     blue       magenta    cyan       white
+  for s:color in [
+        \ '#101112', '#b24e4e', '#9da45a', '#f0c674', '#5f819d', '#85678f', '#5e8d87', '#707880',
+        \ '#373b41', '#cc6666', '#a0a85c', '#f0c674', '#81a2be', '#b294bb', '#8abeb7', '#c5c8c6',
+        \ ]
+    " let g:terminal_color_{s:num} = s:color
+    let s:num += 1
+  endfor
+  let g:terminal_color_background = '#000000'
+endif
 
 "NVIM
 "--------------------------------------------------------------
 if has('nvim')
-  "Only enable this if you become a Python dev
-  " let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
-  " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
   set inccommand=nosplit
 endif
 "-------------------------------------------------------------
@@ -325,9 +324,7 @@ set noshiftround " use multiple of shiftwidth when shifting indent levels. this 
 set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
 set complete+=k " Add dictionary to vim's autocompletion
 set display+=lastline
-if &encoding ==# 'latin1' && has('gui_running')
-  set encoding=utf-8
-endif
+set encoding=utf-8
 scriptencoding utf-8
 set dictionary+=/usr/share/dict/words
 
@@ -394,7 +391,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-set scrolloff=10 " Show context around current cursor position i.e. cursor lines 
+set scrolloff=10 " Show context around current cursor position i.e. cursor lines
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

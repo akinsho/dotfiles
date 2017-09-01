@@ -20,22 +20,6 @@ augroup END "}}}
 augroup QFix
   au!
   au QuickFixCmdPost *grep* cwindow
-
-  au FileType qf call AdjustWindowHeight(8, 8)
-  function! AdjustWindowHeight(minheight, maxheight)
-    let l:l = 1
-    let l:n_lines = 0
-    let l:w_width = winwidth(0)
-    while l:l <= line('$')
-      " number to float for division
-      let l:l_len = strlen(getline(l:l)) + 0.0
-      let l:line_width = l:l_len/l:w_width
-      let l:n_lines += float2nr(ceil(l:line_width))
-      let l:l += 1
-    endw
-    exe max([min([l:n_lines, a:maxheight]), a:minheight]) . 'wincmd _'
-  endfunction
-
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
         \gitcommit,quickrun,qfreplace,ref,gina-log,gina-status
@@ -57,6 +41,8 @@ augroup CheckOutsideTime
   autocmd!
   autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
   au FocusLost * silent! wa "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
+  " Autosave buffers before leaving them
+  autocmd BufLeave * silent! :wa
 augroup end
 
 " Disable paste.
@@ -80,6 +66,7 @@ augroup END
 augroup AirLineRefresh
   autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
+
 
   function! s:expand_html_tab()
 " try to determine if we're within quotes or tags.

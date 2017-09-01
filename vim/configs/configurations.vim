@@ -73,7 +73,7 @@ fun! ToggleNERDTreeWithRefresh()
     endif
 endf
 
-let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
+let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
 let NERDTreeDirArrowExpandable          = "├"
@@ -117,6 +117,7 @@ let g:NERDTreeLimitedSyntax = 1
 ""---------------------------------------------------------------------------//
 let g:airline_highlighting_cache                          = 1
 let g:airline#extensions#branch#empty_message             = "No Git 😅"
+let g:airline_skip_empty_sections                         = 1
 let g:airline#parts#ffenc#skip_expected_string            = 'utf-8[unix]'
 let g:airline_powerline_fonts                             = 1
 let g:airline#extensions#tabline#enabled                  = 1
@@ -129,7 +130,6 @@ let g:airline#extensions#tabline#fnamecollapse            = 1
 let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
 let g:airline#extensions#tabline#tab_min_count            = 1
-let g:airline_section_c                                   = '%t %{GetFileSize()}'
 let g:airline#extensions#tabline#left_sep                 = ''
 let g:airline#extensions#tabline#left_alt_sep             = ''
 let g:airline#extensions#tabline#right_sep                = ''
@@ -139,10 +139,8 @@ let g:airline_left_sep                                    = ''
 let g:ff_map                                              = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
-"  let g:airline#extensions#default#layout = [
-"       \ [ 'a', 'b', 'y' ],
-"       \ [ 'x', 'c', 'z', 'error', 'warning' ]
-"       \ ]
+" let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
+let g:airline_section_c                                   = '%t %{GetFileSize()}'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#ale#error_symbol          = '✖ : '
 let g:airline#extensions#ale#warning_symbol        = '⚠ : '
@@ -293,10 +291,11 @@ let g:go_auto_sameids           = 1
 let g:go_fmt_command            = "goimports"
 let g:go_fmt_autosave           = 1
 let g:go_doc_keywordprg_enabled = 0 "Stops auto binding K
+let g:go_def_reuse_buffer       = 1
 let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
 let g:go_highlight_extra_types  = 1
-let g:go_def_reuse_buffer       = 1
+let g:go_highlight_structs      = 1
 ""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
@@ -336,6 +335,7 @@ let g:javascript_plugin_jsdoc      = 1
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings
 ""---------------------------------------------------------------------------//
+let g:EasyMotion_prompt = 'Jump to → '
 let g:EasyMotion_do_mapping       = 0
 let g:EasyMotion_startofline      = 0
 let g:EasyMotion_smartcase        = 1
@@ -383,8 +383,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "Plugin configurations "{{{
 ""---------------------------------------------------------------------------//
 
-let test#runners = {'Typescript': ['Mocha', 'Jest']}
-let test#runners = {'Typescript': ['Mocha']}
+" let test#runners = {'Typescript': ['Mocha', 'Jest']}
+" let test#runners = {'Typescript': ['Mocha']}
 " Commenting
 let g:NERDSpaceDelims       = 1
 let g:NERDCompactSexyComs   = 1
@@ -423,6 +423,42 @@ let g:echodoc#type              = "signature"
 " Deoplete Options
 ""---------------------------------------------------------------------------//
 if has("nvim")
+  let g:deoplete#enable_at_startup        = 1
+  let g:deoplete#enable_smart_case        = 1
+  " Autocomplete delay is the aim here
+  let g:deoplete#auto_complete_delay      = 0
+  let g:deoplete#auto_refresh_delay       = 50
+  let g:deoplete#max_menu_width           = 40
+  let g:deoplete#file#enable_buffer_path  = 1
+  let g:deoplete#ignore_sources = {}
+  let g:deoplete#ignore_sources._ = ['around']
+  call deoplete#custom#source('ultisnips', 'rank', 290)
+  call deoplete#custom#source('ternjs', 'rank', 300)
+  call deoplete#custom#set('buffer', 'mark', '')
+  call deoplete#custom#set('ternjs', 'mark', '')
+  call deoplete#custom#set('tern', 'mark', '')
+  call deoplete#custom#set('omni', 'mark', '⌾')
+  call deoplete#custom#set('file', 'mark', '')
+  call deoplete#custom#set('jedi', 'mark', '')
+  call deoplete#custom#set('typescript', 'mark', '')
+  call deoplete#custom#set('ultisnips', 'mark', '')
+""---------------------------------------------------------------------------//
+" Deoplete Go
+""---------------------------------------------------------------------------//
+  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+  let g:deoplete#sources#go#use_cache     = 1
+  let g:deoplete#sources#go#pointer       = 1
+  let g:deoplete#sources#go#sort_class = [
+        \ 'package',
+        \ 'func',
+        \ 'type',
+        \ 'var',
+        \ 'const',
+        \ 'ultisnips'
+        \ ]
+""---------------------------------------------------------------------------//
+" NVIM TYPESCRIPT
+""---------------------------------------------------------------------------//
   let g:nvim_typescript#kind_symbols = {
       \ 'keyword': 'keyword',
       \ 'class': '',
@@ -452,41 +488,16 @@ if has("nvim")
       \ 'call': 'call',
       \ 'constructor': '',
       \}
-  let g:deoplete#enable_at_startup        = 1
-  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-  let g:deoplete#sources#go#package_dot   = 1
-  let g:deoplete#sources#go#use_cache     = 1
-  let g:deoplete#sources#go#pointer       = 1
-  let g:deoplete#sources#go#sort_class = [
-        \ 'package',
-        \ 'func',
-        \ 'type',
-        \ 'var',
-        \ 'const',
-        \ 'ultisnips'
-        \ ]
-  let g:deoplete#enable_smart_case        = 1
-  " Autocomplete delay is the aim here
-  let g:deoplete#auto_complete_delay      = 0
-  let g:deoplete#auto_refresh_delay       = 50
-  let g:deoplete#max_menu_width           = 40
-  let g:deoplete#file#enable_buffer_path  = 1
   let g:deoplete#omni#functions           = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
-        \ 'jspc#omni'
         \]
   let g:deoplete#omni#functions.typescript = [
       \ 'tern#Complete',
-      \ 'jspc#omni'
       \]
   let g:deoplete#omni#functions["typescript.tsx"] = [
       \ 'tern#Complete',
-      \ 'jspc#omni'
       \]
-  call deoplete#custom#source('ultisnips', 'rank', 290)
-  call deoplete#custom#source('ternjs', 'rank', 300)
-  call deoplete#custom#set('go', 'matchers', ['matcher_fuzzy'])
 
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
@@ -494,16 +505,6 @@ if has("nvim")
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-  call deoplete#custom#set('buffer', 'mark', '')
-  call deoplete#custom#set('ternjs', 'mark', '')
-  call deoplete#custom#set('tern', 'mark', '')
-  call deoplete#custom#set('omni', 'mark', '⌾')
-  call deoplete#custom#set('file', 'mark', '')
-  call deoplete#custom#set('jedi', 'mark', '')
-  call deoplete#custom#set('typescript', 'mark', '')
-  call deoplete#custom#set('ultisnips', 'mark', '')
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['around']
 endif
 
 let g:tern_request_timeout = 1
@@ -568,6 +569,8 @@ let g:tern#arguments                                = ["--persistent"]
         \ '/.*', 'g<CR>',
         \ '<Plug>(gina-edit-tab)'
         \)
+
+nnoremap <localleader>g :Gina 
 nnoremap <localleader>gs :Gina status<CR>
 nnoremap <localleader>gS :Gina! status<CR>
 nnoremap <localleader>gdi :Gina diff<CR>
@@ -575,6 +578,24 @@ nnoremap <localleader>gc :Gina commit<CR>
 nnoremap <localleader>gC :Gina! commit<CR>
 nnoremap <localleader>gp :Gina! push<CR>
 nnoremap <localleader>gP :Gina!! push<CR>
+
+""---------------------------------------------------------------------------//
+" Smart Word & CamelCaseMotion Match made in Heaven!!
+""---------------------------------------------------------------------------//
+map w  <Plug>(smartword-w)
+map b  <Plug>(smartword-b)
+map e  <Plug>(smartword-e)
+map ge  <Plug>(smartword-ge)
+
+xmap w  <Plug>(smartword-w)
+xmap b  <Plug>(smartword-b)
+xmap e  <Plug>(smartword-e)
+xmap ge <Plug>(smartword-ge)
+
+map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
+map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
+map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
+
 ""---------------------------------------------------------------------------//
 " Goyo
 ""---------------------------------------------------------------------------//

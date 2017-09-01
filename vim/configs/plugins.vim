@@ -82,7 +82,6 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ 'typescript'
       \ ] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'vim-scripts/dbext.vim'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'ap/vim-css-color', { 'for': [
       \ 'typescript.tsx'
@@ -102,6 +101,7 @@ Plug 'lambdalisue/gina.vim'
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
+Plug 'kana/vim-smartword'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
@@ -116,7 +116,7 @@ Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
 "Coding tools ======================={{{
-" Plug 'terryma/vim-multiple-cursors'
+Plug 'matze/vim-move'
 Plug 'janko-m/vim-test'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
@@ -138,6 +138,7 @@ function! BuildComposer(info)
 endfunction
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}

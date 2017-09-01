@@ -23,3 +23,7 @@ cmdargs:
       enable: true
     ProhibitUnusedVariable:
       enable: true
+    ProhibitImplicitScopeBuiltinVariable:
+      enable: false
+    ProhibitUsingUndeclaredVariable:
+      enable: true
