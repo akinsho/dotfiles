@@ -18,7 +18,7 @@ if has('nvim')
   tmap <C-k> <C-\><C-n><C-k>
   tmap <C-l> <C-\><C-n><C-l>
   tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
-  tmap <tab><leader> <C-\><C-n>:bnext<CR>
+  tmap <tab> <C-\><C-n>:bnext<CR>
   tmap <localleader><S-tab> <C-\><C-n>:bprev<CR>
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
@@ -183,6 +183,8 @@ inoremap <C-s> <C-O>:update<cr>
 vnoremap <C-Q>     <esc>
 nnoremap <leader>ln :cnext<CR>
 nnoremap <leader>lp :cprev<CR>
+"File completion made a little less painful
+inoremap <c-f> <c-x><c-f>
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>

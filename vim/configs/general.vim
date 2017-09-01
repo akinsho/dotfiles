@@ -394,8 +394,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-
-set scrolloff=10 " Show context around current cursor position i.e. cursor lines remaining whilst moving up or down As this is set to a large number the cursor will remain in the middle of the page on scroll (8 ) was the previous value
+set scrolloff=10 " Show context around current cursor position i.e. cursor lines 
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

@@ -1017,6 +1017,8 @@
 	<true/>
 	<key>DisableWindowSizeSnap</key>
 	<true/>
+	<key>DockIconTogglesWindow</key>
+	<true/>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<true/>
 	<key>DrawOutlineAroundCursor</key>
@@ -1247,7 +1249,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>337 331 606 469 0 0 1280 800 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>278 316 1018 447 0 0 1280 800 </string>
+	<string>278 280 796 473 0 0 1280 800 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 216 592 584 0 0 1280 800 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -1490,6 +1492,8 @@
 			<integer>70</integer>
 			<key>Command</key>
 			<string></string>
+			<key>Cursor Boost</key>
+			<real>0.0</real>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -1870,9 +1874,9 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>OperatorMono-Book 16</string>
+			<string>OperatorMono-Book 15</string>
 			<key>Option Key Sends</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>Prompt Before Closing 2</key>
 			<false/>
 			<key>Reduce Flicker</key>
@@ -3524,6 +3528,8 @@
 	<true/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<true/>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -3533,7 +3539,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-30T16:03:59Z</date>
+	<date>2017-09-01T09:29:18Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -3547,7 +3553,7 @@
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>SlowFrameRate</key>
-	<real>15</real>
+	<real>40</real>
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SplitPaneDimmingAmount</key>
@@ -3564,6 +3570,8 @@
 	<integer>3</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
+	<key>TerminalMargin</key>
+	<integer>2</integer>
 	<key>TmuxDashboardLimit</key>
 	<integer>3</integer>
 	<key>ToolbeltTools</key>

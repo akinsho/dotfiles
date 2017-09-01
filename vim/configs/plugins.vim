@@ -114,9 +114,11 @@ Plug 'kana/vim-textobj-user'
 Plug 'dyng/ctrlsf.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'airblade/vim-rooter'
+Plug 'rhysd/devdocs.vim'
 "Coding tools ======================={{{
-Plug 'kshenoy/vim-signature'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'janko-m/vim-test'
+Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'

@@ -167,7 +167,7 @@ nmap <localleader>+ <Plug>AirlineSelectNextTab
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//
-noremap <leader>1 <c-o>:VCoolor<CR>
+noremap <leader>vc <c-o>:VCoolor<CR>
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
@@ -457,6 +457,14 @@ if has("nvim")
   let g:deoplete#sources#go#package_dot   = 1
   let g:deoplete#sources#go#use_cache     = 1
   let g:deoplete#sources#go#pointer       = 1
+  let g:deoplete#sources#go#sort_class = [
+        \ 'package',
+        \ 'func',
+        \ 'type',
+        \ 'var',
+        \ 'const',
+        \ 'ultisnips'
+        \ ]
   let g:deoplete#enable_smart_case        = 1
   " Autocomplete delay is the aim here
   let g:deoplete#auto_complete_delay      = 0
@@ -479,7 +487,7 @@ if has("nvim")
   call deoplete#custom#source('ultisnips', 'rank', 290)
   call deoplete#custom#source('ternjs', 'rank', 300)
   call deoplete#custom#set('go', 'matchers', ['matcher_fuzzy'])
-  call deoplete#custom#set('go', 'sorters', [])
+
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
@@ -518,7 +526,7 @@ let g:deoplete#sources#ternjs#filetypes = [
       \ 'javascript',
       \ 'jsx',
       \ 'javascript.jsx',
-                \ ]
+      \ ]
 let g:deoplete#sources#ternjs#omit_object_prototype = 0
 let g:deoplete#sources#ternjs#guess                 = 1
 let g:tern_map_keys                                 = 0
@@ -564,7 +572,7 @@ nnoremap <localleader>gs :Gina status<CR>
 nnoremap <localleader>gS :Gina! status<CR>
 nnoremap <localleader>gdi :Gina diff<CR>
 nnoremap <localleader>gc :Gina commit<CR>
-nnoremap <localleader>gc! :Gina! commit<CR>
+nnoremap <localleader>gC :Gina! commit<CR>
 nnoremap <localleader>gp :Gina! push<CR>
 nnoremap <localleader>gP :Gina!! push<CR>
 ""---------------------------------------------------------------------------//
@@ -772,6 +780,19 @@ function! Fzf_dev()
         \ 'down':    '40%' })
 endfunction
 endif
+
+""---------------------------------------------------------------------------//
+" DEVDOCS & DASH "Devdocs is free but opens a browser tab Dash isn't but opens
+" the local app which is preferable
+""---------------------------------------------------------------------------//
+let g:devdocs_filetype_map = {
+    \   'ruby': 'rails',
+    \   'javascript.jsx': 'react',
+    \   'javascript.test': 'chai',
+    \   'typescript.tsx': 'react'
+    \ }
+
+command! -nargs=* DevDocsReact call devdocs#open_doc(<q-args>, 'react')
 ""---------------------------------------------------------------------------//
 " STARTIFY
 ""---------------------------------------------------------------------------//

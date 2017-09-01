@@ -183,7 +183,7 @@ if has('nvim')
     au!
     " autocmd BufEnter term://* startinsert
     " au BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber | endif
-    au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+    au BufEnter * if &buftype == 'fzf' | :startinsert | endif
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
@@ -268,7 +268,7 @@ if has('nvim')
     autocmd FileType typescript,typescript.tsx,typescript.jsx
           \ nnoremap <localleader>p :TSDefPreview<CR>
     autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <localleader>d :TSDef<CR>
+          \ nnoremap <leader>d :TSDef<CR>
     autocmd FileType typescript,typescript.tsx,typescript.jsx
           \ nnoremap gd :TSDef<CR>
     autocmd FileType typescript,typescript.tsx,typescript.jsx

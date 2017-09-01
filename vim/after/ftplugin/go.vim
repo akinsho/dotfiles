@@ -8,7 +8,7 @@ nmap <leader>t  <Plug>(go-test)
 nmap <Leader>d <Plug>(go-doc)
 nmap <leader>r  <Plug>(go-run)
 nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-nnoremap <leader>a	:A<CR>
+nnoremap <leader>a  :A<CR>
 nnoremap <leader>av :AV<CR>
 nnoremap <leader>as :AS<CR>
 nnoremap <leader>at :AT<CR>
