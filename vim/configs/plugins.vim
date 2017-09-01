@@ -154,4 +154,7 @@ call plug#end()
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
   runtime! macros/matchit.vim
 endif
+
+" Don't use netrw at all, interferes with "clever" autocommands
+let g:loaded_netrwPlugin = 1
 "}}}

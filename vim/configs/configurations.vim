@@ -580,6 +580,18 @@ nnoremap <localleader>gp :Gina! push<CR>
 nnoremap <localleader>gP :Gina!! push<CR>
 
 ""---------------------------------------------------------------------------//
+" Surround Vim
+""---------------------------------------------------------------------------//
+" surround.vim
+" Surround with function call
+let g:surround_{char2nr('f')} = "function(\r)"
+""---------------------------------------------------------------------------//
+" vim-exchange
+""---------------------------------------------------------------------------//
+let g:exchange_no_mappings = 1
+nmap X <Plug>(Exchange)
+xmap X <Plug>(Exchange)
+""---------------------------------------------------------------------------//
 " Smart Word & CamelCaseMotion Match made in Heaven!!
 ""---------------------------------------------------------------------------//
 map w  <Plug>(smartword-w)
