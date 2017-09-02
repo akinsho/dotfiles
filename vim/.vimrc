@@ -55,3 +55,6 @@ endif
 " AUTOCOMMANDS
 ""---------------------------------------------------------------------------//
 source $DOTFILES/vim/configs/autocommands.vim
+
+
+filetype plugin indent on

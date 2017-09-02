@@ -278,6 +278,11 @@ nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
 ""---------------------------------------------------------------------------//
+" NEOTAGS
+""---------------------------------------------------------------------------//
+let g:neotags_enabled = 1
+let g:neotags_file    = "~/.tags/"
+""---------------------------------------------------------------------------//
 " JSX
 ""---------------------------------------------------------------------------//
 let g:jsx_ext_required          = 1
