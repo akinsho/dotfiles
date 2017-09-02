@@ -1,4 +1,3 @@
-setlocal iskeyword+="
 setlocal noexpandtab
 setlocal shiftwidth=4
 setlocal softtabstop=4
@@ -13,7 +12,7 @@ nmap <leader>r  <Plug>(go-run)
 nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 nmap <Leader>i <Plug>(go-info)
 " ---------------------------------------------------
-" Open Alternate files 
+" Open Alternate files
 " ---------------------------------------------------
 nnoremap <leader>a  :A<CR>
 nnoremap <leader>av :AV<CR>

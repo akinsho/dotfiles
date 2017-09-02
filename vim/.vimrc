@@ -8,7 +8,6 @@
 "                                        \|_________|
 " Each section of my config has been separated out into subsections in
 " ./configs/
-filetype off " required  Prevents potential side-effects from system ftdetects scripts
 "----------------------------------------------------------------------
 " Plugins
 "----------------------------------------------------------------------
@@ -55,6 +54,8 @@ endif
 " AUTOCOMMANDS
 ""---------------------------------------------------------------------------//
 source $DOTFILES/vim/configs/autocommands.vim
-
-
-filetype plugin indent on
+""---------------------------------------------------------------------------//
+" Essential Settings - Taken care of by Vim Plug
+""---------------------------------------------------------------------------//
+" filetype off " required  Prevents potential side-effects from system ftdetects scripts
+" filetype plugin indent on

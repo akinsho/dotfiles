@@ -23,7 +23,7 @@ Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlug
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
-Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
+Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for':'go', 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
@@ -48,7 +48,6 @@ if !has('gui_running')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 endif
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 "}}}
 "TMUX ============================
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
@@ -60,6 +59,7 @@ augroup load_fat_finger
   autocmd InsertEnter * call plug#load('vim-fat-finger')
         \| autocmd! load_fat_finger
 augroup END
+Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -116,16 +116,15 @@ Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
 "Coding tools ======================={{{
-Plug 'matze/vim-move'
 Plug 'janko-m/vim-test'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'c0r73x/neotags.nvim', Cond(has('nvim'))
+Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'))
+Plug 'kassio/neoterm',        Cond(has('nvim'))
+Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-Plug 'kassio/neoterm', Cond(has('nvim'))
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -147,11 +146,6 @@ Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
-""---------------------------------------------------------------------------//
-" Colorscheme ideas
-""---------------------------------------------------------------------------//
-" Plug 'mhartington/oceanic-next'
-" Plug 'rakr/vim-one'
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
   runtime! macros/matchit.vim
 endif

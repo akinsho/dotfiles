@@ -52,9 +52,15 @@ augroup Cancel_Paste
         \ if &paste | set nopaste | echo 'nopaste' | endif
 augroup END
 
+augroup WhiteSpace
+  " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+  au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
+  au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
+augroup END
+
 augroup UpdateVim
   autocmd!
-  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+  autocmd bufwritepost $MYVIMRC source $MYVIMRC
   if has('gui_running')
     source $MYGVIMRC | echo 'Source .gvimrc'
   endif

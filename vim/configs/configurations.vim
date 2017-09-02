@@ -84,7 +84,6 @@ let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
-" Expandable ideas = [' ', ' ', ','','├','└']
 
 "Adding the flags to NERDTree
 let g:webdevicons_enable_nerdtree           = 1
@@ -231,11 +230,10 @@ let g:ale_linters                     = {
 let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
 let g:ale_set_highlights    = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
-nmap <silent> <C-/> <Plug>(ale_previous_wrap)
-nmap <silent> <C-\> <Plug>(ale_next_wrap)
-
+nmap ]a <Plug>(ale_next_wrap)
+nmap [a <Plug>(ale_previous_wrap)
 ""---------------------------------------------------------------------------//
-" BufOnly
+" Sayonara
 ""---------------------------------------------------------------------------//
 nnoremap <C-Q> :Sayonara<CR>
 nnoremap <leader>q :Sayonara<CR>
@@ -281,7 +279,7 @@ vnoremap <leader>gb :Gbrowse<CR>
 " NEOTAGS
 ""---------------------------------------------------------------------------//
 let g:neotags_enabled = 1
-let g:neotags_file    = "~/.tags/"
+" let g:neotags_file    = "~/.tags"
 ""---------------------------------------------------------------------------//
 " JSX
 ""---------------------------------------------------------------------------//
@@ -307,12 +305,19 @@ let g:go_highlight_structs      = 1
 " Git Gutter
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
-let g:gitgutter_enabled       = 0
-let g:gitgutter_sign_modified = '•'
-let g:gitgutter_sign_modified_removed='±'
-let g:gitgutter_eager         = 1
-let g:gitgutter_sign_added    = '❖'
-let g:gitgutter_grep_command  = 'ag --nocolor'
+if has('mac')
+  let g:gitgutter_enabled               = 1
+  let g:gitgutter_eager                 = 1
+  let g:gitgutter_grep_command          = 'ag --nocolor'
+  let g:gitgutter_sign_added            = '😻'
+  let g:gitgutter_sign_modified         = '🍄'
+  let g:gitgutter_sign_removed          = '😤'
+  let g:gitgutter_sign_modified_removed = '☁️'
+else
+  let g:gitgutter_sign_modified         = '•'
+  let g:gitgutter_sign_modified_removed = '±'
+  let g:gitgutter_sign_added            = '❖'
+endif
 ""---------------------------------------------------------------------------//
 " EXPAND REGION VIM
 ""---------------------------------------------------------------------------//
@@ -697,6 +702,9 @@ let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to 
 ""---------------------------------------------------------------------------//
 " FZF
 ""---------------------------------------------------------------------------//
+if has('nvim')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
 "--------------------------------------------
 " FZF bindings
 "--------------------------------------------
