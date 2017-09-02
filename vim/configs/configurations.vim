@@ -251,7 +251,9 @@ let g:neoterm_fixedsize    = 1
 command! -nargs=+ Tg :T git <args>
 nnoremap <silent> <leader><CR> :Ttoggle<CR>
 nnoremap <silent> <leader>ta :TtoggleAll<CR>
-nnoremap <silent> <leader>tx :TcloseAll<CR>
+nnoremap <silent> <leader>tn :Tnew<CR>
+nnoremap <silent> <leader>tc :Tclose!<CR>
+nnoremap <silent> <leader>tx :TcloseAll!<CR>
 nnoremap <silent> <leader>ts :TREPLSendFile<cr>
 nnoremap <silent> <leader>tl :TREPLSendLine<cr>
 vnoremap <silent> <leader>tl :TREPLSendSelection<cr>

@@ -1,87 +1,82 @@
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 
-function tr(){
+tr(){
   #Defaults to 3 levels deep
-  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
+  "tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 20 -L ${1:-3} -aC $2"
 }
 # Jumps
- function j() {
-   jump "$@"
+ j() {
+   jump '$@'
  }
 
 # Vim
-function v() {
+v() {
   nvim "$@"
 }
 
 # Teamocil
-function t() {
+t() {
   teamocil "$@"
 }
 
 # chmod a directory
-function ch() {
+ch() {
   sudo chmod -R 777 "$@"
 }
 
 # chown a directory
-function cho() {
+cho() {
   sudo chown -R www:www "$@"
 }
 
 # Do a Git clone
-function gcl() {
+gcl() {
   git clone "$@"
 }
 
 # Do a Git commit
-function gc() {
+gc() {
   git add .;git add -u :/;git commit -m "$@";
 }
 
 # Do a Git push from the current branch
-function gp() {
+gp() {
   git push origin "$@"
 }
 
 # Do a Git push setting the upstream from your current branch
-function gpuo() {
+gpuo() {
   git push --set-upstream origin "$@"
 }
 
 # Do a Git commit/push
-function gcap() {
+gcap() {
   git add .;git add -u :/;git commit -m "$@";git push
 }
 
-# Do a Git commit/push/deploy - no deploy script yet
-# function gcpd() {
-#   git add .;git add -u :/;git commit -m "$@";git push;sh utilities/deploy.sh
-# }
-
 # Do a Git rebase
-function gpr() {
+gpr() {
   git pull --rebase "$@"
 }
 
 # Do a Git commit/push and a heroku deploy
-function gcph() {
+gcph() {
   git add .;git add -u :/;git commit -m "$@";git push;git push heroku master
 }
 
 # Do a Heroku commit/push/deploy
-function gph() {
+gph() {
   git add .;git add -u :/;git commit -m "$@";git push heroku master
 }
 
 # Install a Gulp plugin and save to devDependencies
-function gi() {
+gi() {
   npm install --save-dev gulp-"$@"
 }
 
 # Install a generic NPM module and save to devDependencies
-function npmi() {
+npmi() {
   npm install --save-dev "$@"
 }
 

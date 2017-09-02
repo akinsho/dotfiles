@@ -123,6 +123,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'c0r73x/neotags.nvim', Cond(has('nvim'))
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'kassio/neoterm', Cond(has('nvim'))
 "}}}
