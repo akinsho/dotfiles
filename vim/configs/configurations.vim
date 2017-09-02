@@ -680,7 +680,6 @@ let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
-
 ""---------------------------------------------------------------------------//
 " ULTISNIPS
 ""---------------------------------------------------------------------------//
@@ -691,7 +690,6 @@ let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
 let g:UltiSnipsListSnippets         = "<C-/>"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
-
 ""---------------------------------------------------------------------------//
 " FZF
 ""---------------------------------------------------------------------------//
@@ -846,6 +844,7 @@ let g:startify_list_order = [
 let g:startify_session_before_save = [
       \ 'echo "Cleaning up before saving.."',
       \ 'silent! NERDTreeClose'
+      \ 'silent! delmarks!'
       \ ]
 let g:startify_session_dir         = '~/.vim/session'
 let g:startify_bookmarks           = [
