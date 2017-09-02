@@ -190,9 +190,7 @@
             },
             "name": "Akin",
             "selected": true,
-            "simple_modifications": {
-                "left_control": "left_alt"
-            },
+            "simple_modifications": {},
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"

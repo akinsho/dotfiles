@@ -665,8 +665,6 @@ let g:vim_markdown_fenced_languages = [
   \'js=javascript',
   \'json=json',
   \'ruby',
-  \'sass',
-  \'scss=sass',
   \'xml',
   \'html',
   \'python',
@@ -843,7 +841,7 @@ let g:startify_list_order = [
 
 let g:startify_session_before_save = [
       \ 'echo "Cleaning up before saving.."',
-      \ 'silent! NERDTreeClose'
+      \ 'silent! NERDTreeClose',
       \ 'silent! delmarks!'
       \ ]
 let g:startify_session_dir         = '~/.vim/session'

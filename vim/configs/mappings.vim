@@ -44,48 +44,65 @@ endif
 nnoremap <leader>va ggVGo
 xnoremap <Leader>v <C-C>ggVG
 
-""---------------------------------------------------------------------------//
-" BUBBLING - Hacked out of Unimpaired.vim
-""---------------------------------------------------------------------------//
-"Bubbling text a la vimcasts & tpope -
-"https://github.com/tpope/vim-unimpaired/blob/3a7759075cca5b0dc29ce81f2747489b6c8e36a7/plugin/unimpaired.vim#L206 
-"http://vimcasts.org/episodes/bubbling-text/
-" Move visual block
-function! s:ExecMove(cmd) abort
-  let old_fdm = &foldmethod
-  if old_fdm != 'manual'
-    let &foldmethod = 'manual'
-  endif
-  normal! m`
-  silent! exe a:cmd
-  norm! ``
-  if old_fdm != 'manual'
-    let &foldmethod = old_fdm
-  endif
-endfunction
-
-function! s:Move(cmd, count, map) abort
-  call s:ExecMove('move'.a:cmd.a:count)
-  silent! call repeat#set("\<Plug>Move".a:map, a:count)
-endfunction
-
-function! s:MoveSelectionDown(count) abort
-  call s:ExecMove("'<,'>move'>+".a:count)
-  silent! call repeat#set("\<Plug>MoveSelectionDown", a:count)
-endfunction
-
-function! s:MoveSelectionUp(count) abort
-  call s:ExecMove("'<,'>move'<--".a:count)
-  silent! call repeat#set("\<Plug>MoveSelectionUp", a:count)
-endfunction
-
-nnoremap <silent> <Plug>MoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-noremap  <silent> <Plug>MoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
-nnoremap <silent> <Plug>MoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-noremap  <silent> <Plug>MoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
-
 nnoremap <leader><leader> viwxi()<Esc>P
 vnoremap <leader><leader> xi()<Esc>P
+
+" Open new tab more easily:
+nnoremap ,t :tabnew<cr>
+nnoremap ,T :tabedit %<cr>gT:quit<cr>
+""---------------------------------------------------------------------------//
+" MACROS
+""---------------------------------------------------------------------------//
+" Quickly make a macro and use it with "."
+let s:simple_macro_active = 0
+nnoremap M :call <SID>SimpleMacro()<cr>
+function! s:SimpleMacro()
+  if s:simple_macro_active == 0
+
+    call feedkeys('qm', 'n')
+    let s:simple_macro_active = 1
+
+  elseif s:simple_macro_active == 1
+
+    normal! q
+    " remove trailing M
+    let @m = @m[0:-2]
+    call repeat#set(":\<c-u>call repeat#wrap('@m', 1)\<cr>", 1)
+    let s:simple_macro_active = 0
+
+  endif
+endfunction
+
+" Quickly edit your macros
+" Usage <leader>m or "q<leader>m
+nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+"--------------------------------------------
+"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
+"repeat macros across a visual range
+"--------------------------------------------
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+"--------------------------------------------
+" Focus marked text by highlighting everything else as a comment
+xnoremap <silent> <cr> :<c-u>call <SID>Focus()<cr>
+nnoremap <silent> <cr> :call <SID>Unfocus()<cr>
+
+function! s:Focus()
+  let start = line("'<")
+  let end   = line("'>")
+
+  call matchadd('Comment', '.*\%<'.start.'l')
+  call matchadd('Comment', '.*\%>'.end.'l')
+  syntax sync fromstart
+  redraw
+endfunction
+
+function! s:Unfocus()
+  call clearmatches()
+endfunction
 
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
@@ -99,8 +116,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 " This replaces :tabnew which I used to bind to this mapping
 nnoremap <leader>n :enew<cr>
-" Close a tab
-nnoremap <leader>tc :tabclose<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 " nnoremap <leader>q :bp <BAR> bd #<CR>
@@ -134,20 +149,14 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " Close all the buffers
 " nnoremap <leader>ba :bufdo bd!<cr>
-" Quickly edit your macros
-" Usage <leader>m or "q<leader>m
-nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//
 " Smart mappings on the command line
-cno $h e ~/
 cno $d e ~/Desktop/
-cno $j e ./
 
 " $q is super useful when browsing on the command line
 " it deletes everything until the last slash 
-cno $q <C-\>eDeleteTillSlash()<cr>
 " insert path of current file into a command
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
@@ -278,16 +287,6 @@ nnoremap <leader>sw :b#<CR>
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 nnoremap <localleader>[ :s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
-"--------------------------------------------
-"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
-"repeat macros across a visual range
-"--------------------------------------------
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-"--------------------------------------------
 
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -325,7 +324,6 @@ nnoremap <up> 15<c-w>+
 nnoremap <left> 15<c-w>>
 " Decrease window size horizontally
 nnoremap <right> 15<c-w><
-
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
 "Break out current window into new tabview
@@ -347,6 +345,8 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
+inoremap <C-p> <Esc>pa
+cnoremap <C-p> <C-r>"
 " Make Ctrl-e jump to the end of the current line in the insert mode. This is
 " handy when you are in the middle of a line and would like to go to its end
 " without switching to the normal mode.
@@ -354,8 +354,9 @@ inoremap <right> <nop>
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
+" Delete left-hand side of assignment
+nnoremap d= df=x
 "Remaps native ctrl k - deleting to the end of a line to control e
-" inoremap <C-Q> <C-K>
 " Map jk to esc key
 inoremap jk <ESC>
 xnoremap jk <ESC>
@@ -435,6 +436,8 @@ nnoremap <F4> :call ToggleColorColumn()<CR>
 ""---------------------------------------------------------------------------//
 " GREPPING
 ""---------------------------------------------------------------------------//
-nnoremap <silent> g/ :silent! :grep!<space>
 nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 nnoremap <silent> ga :silent! :grepadd!<space>
+" Show last search in quickfix (http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/)
+nnoremap g/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
+" nnoremap <silent> g/ :silent! :grep!<space>
