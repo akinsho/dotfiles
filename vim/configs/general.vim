@@ -103,7 +103,7 @@ endif
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
-set timeout timeoutlen=500 ttimeoutlen=10
+set timeout timeoutlen=300 ttimeoutlen=10
 set nohidden
 set winwidth=30
 set splitbelow "Open a horizontal split below current window

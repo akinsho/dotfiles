@@ -314,8 +314,8 @@ vmap <C-v> <Plug>(expand_region_shrink)
 ""---------------------------------------------------------------------------//
 " SIDEWAYS
 ""---------------------------------------------------------------------------//
-nnoremap <C-F> :SidewaysLeft<cr>
-nnoremap <C-F>r :SidewaysRight<cr>
+nnoremap c< :SidewaysLeft<cr>
+nnoremap c> :SidewaysRight<cr>
 ""---------------------------------------------------------------------------//
 " VIM-EASY-ALIGN
 ""---------------------------------------------------------------------------//
@@ -373,7 +373,6 @@ nnoremap <leader>u :UndotreeToggle<CR>
 ""---------------------------------------------------------------------------//
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
-" let g:html_indent_tags = 'li\|p' " Treat <li> and <p> tags like the block tags they are
 ""---------------------------------------------------------------------------//
 " EDITOR CONFIG
 ""---------------------------------------------------------------------------//
