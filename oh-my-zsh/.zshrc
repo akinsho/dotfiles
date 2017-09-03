@@ -148,9 +148,7 @@ source <(npx --shell-auto-fallback zsh)
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 # For a full list of active aliases, run `alias`.
-#
 #=======================================================================
 #                 SPACESHIP THEME
 #=======================================================================
@@ -168,8 +166,8 @@ SPACESHIP_PROMPT_SEPARATE_LINE=true
 
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
-SPACESHIP_VI_MODE_INSERT="[Insert]"
-SPACESHIP_VI_MODE_NORMAL="[Normal]"
+SPACESHIP_VI_MODE_INSERT="✏️ "
+SPACESHIP_VI_MODE_NORMAL="🏃🏾"
 # GIT
 SPACESHIP_PREFIX_GIT='  on '
 SPACESHIP_GIT_STASHED=' 💰 '
@@ -184,6 +182,7 @@ SPACESHIP_RUBY_SHOW=false
 # PYENV
 SPACESHIP_PYENV_SHOW=   false
 SPACESHIP_PYENV_SYMBOL='🐍'
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 #=======================================================================
 # User configuration
@@ -283,7 +282,7 @@ bindkey '^Z' fancy-ctrl-z
 
 
 # Plugin that autocorrects when you type fuck or whatever alias you intended
-eval "$(thefuck --alias fuck)"
+eval "$(thefuck --alias)"
 alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 # iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -293,23 +292,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # FZF
 ##---------------------------------------------------------------------------//
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# A helper function to join multi-line output from fzf
-join-lines() {
-  local item
-  while read item; do
-    echo -n "${(q)item} "
-  done
-}
-
-fzf-gt-widget() LBUFFER+=$(gt | join-lines)
-zle -N fzf-gt-widget
-bindkey '^g^t' fzf-gt-widget
-
-
-fzf-gt-widget() LBUFFER+=$(gt | join-lines)
-zle -N fzf-gt-widget
-bindkey '^g^t' fzf-gt-widget
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
