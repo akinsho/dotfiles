@@ -64,6 +64,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mhinz/vim-sayonara'
+Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
@@ -96,6 +97,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
 Plug 'lambdalisue/gina.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
@@ -150,7 +152,6 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) =
 endif
 
 "Plugins to Try ============================================================
-" Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'))
 
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1
