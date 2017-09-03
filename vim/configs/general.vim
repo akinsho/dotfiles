@@ -1,30 +1,6 @@
 ""---------------------------------------------------------------------------//
 " => HELPER FUNCTIONS
 ""---------------------------------------------------------------------------//
-func! DeleteTillSlash()
-    let g:cmd = getcmdline()
-
-    if has('win16') || has('win32')
-        let g:cmd_edited = substitute(g:cmd, '\\(.*\[\\\\]\\).*', '\\1', '')
-    else
-        let g:cmd_edited = substitute(g:cmd, '\\(.*\[/\]\\).*', '\\1', '')
-    endif
-
-    if g:cmd == g:cmd_edited
-        if has('win16') || has('win32')
-            let g:cmd_edited = substitute(g:cmd, '\\(.*\[\\\\\]\\).*\[\\\\\]', '\\1', '')
-        else
-            let g:cmd_edited = substitute(g:cmd, '\\(.*\[/\]\\).*/', '\\1', '')
-        endif
-    endif
-
-    return g:cmd_edited
-endfunc
-
-func! CurrentFileDir(cmd)
-    return a:cmd . ' ' . expand('%:p:h') . '/'
-  endfunc
-
 function! JsEchoError(msg)
   redraw | echon 'js: ' | echohl ErrorMsg | echon a:msg | echohl None
 endfunction
@@ -310,8 +286,8 @@ colorscheme quantum
 if has('nvim')
   let g:terminal_scrollback_buffer_size = 100000
   set inccommand=nosplit
-  let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
-  let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
+  " let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
+  " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
 endif
 "-------------------------------------------------------------
 " Utilities
