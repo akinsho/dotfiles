@@ -21,10 +21,11 @@ call plug#begin('~/.vim/plugged')
 " ----------------------------------------
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
-Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'for': ['javascript', 'typescript'], 'do': 'npm install -g tern' })
+Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
+Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
+      \ { 'for': ['javascript', 'typescript'],  'do': 'npm install -g tern' })
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
-Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "================================{{{

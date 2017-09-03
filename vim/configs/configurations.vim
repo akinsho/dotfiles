@@ -172,10 +172,6 @@ let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or 
 let g:ctrlsf_winsize      = "30%"
 let g:ctrlsf_ignore_dir   = ['bower_components', 'node_modules']
 let g:ctrlsf_confirm_save = 0
-let g:ctrlsf_mapping = {
-    \ "next": "n",
-    \ "prev": "N",
-    \ }
 nmap     <C-F>w <Plug>CtrlSFCwordExec
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>F <Plug>CtrlSFVwordPath
@@ -366,7 +362,7 @@ if !has('nvim')
   map  n <Plug>(easymotion-next)
   map  N <Plug>(easymotion-prev)
 endif
-" 
+"
 ""---------------------------------------------------------------------------//
 "                    EMMET for Vim
 ""---------------------------------------------------------------------------//
@@ -468,8 +464,7 @@ if has("nvim")
         \ 'func',
         \ 'type',
         \ 'var',
-        \ 'const',
-        \ 'ultisnips'
+        \ 'const'
         \ ]
 ""---------------------------------------------------------------------------//
 " NVIM TYPESCRIPT

@@ -36,11 +36,6 @@ nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 endif
 "}}}
-""---------------------------------------------------------------------------//"
-"Select Entire
-""---------------------------------------------------------------------------//
-nnoremap <leader>va ggVGo
-xnoremap <Leader>v <C-C>ggVG
 
 nnoremap <leader><leader> viwxi()<Esc>P
 vnoremap <leader><leader> xi()<Esc>P
@@ -154,7 +149,7 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 cno $d e ~/Desktop/
 
 " $q is super useful when browsing on the command line
-" it deletes everything until the last slash 
+" it deletes everything until the last slash
 " insert path of current file into a command
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
@@ -170,6 +165,9 @@ cabbrev cnext Cnext
 cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
+" Scroll command history
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
 " }}}
 
 ""---------------------------------------------------------------------------//
@@ -188,23 +186,37 @@ cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
-" Scroll command history
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
 "Save
 nnoremap <C-S> :update<CR>
 nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
-"Quit
+"Save all files
+nnoremap qa :wqa<CR>
 vnoremap <C-Q>     <esc>
-nnoremap <leader>ln :cnext<CR>
-nnoremap <leader>lp :cprev<CR>
+" ----------------------------------------------------------------------------
+" Quickfix
+" ----------------------------------------------------------------------------
+nnoremap ]q :cnext<CR>zz
+nnoremap [q :cprev<CR>zz
+nnoremap ]l :lnext<cr>zz
+nnoremap [l :lprev<cr>zz
+" ----------------------------------------------------------------------------
+" Tabs
+" ----------------------------------------------------------------------------
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
 "File completion made a little less painful
 inoremap <c-f> <c-x><c-f>
+" ----------------------------------------------------------------------------
+" Buffers
+" ----------------------------------------------------------------------------
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
-" nnoremap <CR> G "20 enter to go to line 20
+"Switch to previous
+nnoremap <leader>sw :b#<CR>
+""---------------------------------------------------------------------------//
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
 nnoremap ; :
@@ -213,11 +225,29 @@ nnoremap : ;
 "xnoremap [Alt]   <Nop>
 " nmap    e  [Alt]
 " xmap    e  [Alt]
+""---------------------------------------------------------------------------//
+" Last Insterted or Changed object
+""---------------------------------------------------------------------------//
 " Like gv, but select the last changed text.
 nnoremap gi  `[v`]
+" select last paste in visual mode
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+""---------------------------------------------------------------------------//
+" Capitalize
+""---------------------------------------------------------------------------//
 " Capitalize.
 nnoremap ,U <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
+" ----------------------------------------------------------------------------
+" Moving lines
+" ----------------------------------------------------------------------------
+nnoremap <silent> <C-]> :move+<cr>
+nnoremap <silent> <C-[> :move-2<cr>
+xnoremap <silent> <C-k> :move-2<cr>gv
+xnoremap <silent> <C-j> :move'>+<cr>gv
+""---------------------------------------------------------------------------//
+" Paragrapgh Wise navigation
+""---------------------------------------------------------------------------//
 " Smart }."
 nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
 onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
@@ -259,8 +289,10 @@ nnoremap gV `[V`]
 vnoremap * y/<C-R>"<CR>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
-" text-object: line
-" Elegant text-object pattern hacked out of jdaddy.vim.
+""---------------------------------------------------------------------------//
+" Credit: Tpope
+" text-object: line - Elegant text-object pattern hacked out of jdaddy.vim.
+""---------------------------------------------------------------------------//
 function! s:line_inner_movement(count) abort
   if empty(getline('.'))
     return "\<Esc>"
@@ -273,32 +305,34 @@ endfunction
 xnoremap <expr>   il <SID>line_inner_movement(v:count1)
 onoremap <silent> il :normal vil<CR>
 
-" select last paste in visual mode
-nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <F6> :! open %<CR>
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
-nnoremap <leader>sw :b#<CR>
+""---------------------------------------------------------------------------//
 " Quick find/replace
+""---------------------------------------------------------------------------//
 nnoremap <Leader>[ :%s/<C-r><C-w>/
 nnoremap <localleader>[ :s/<C-r><C-w>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
-
+""---------------------------------------------------------------------------//
+" Find and Replace Using Abolish Plugin %S - Subvert
+""---------------------------------------------------------------------------//
+nnoremap <leader>{ :%S/<C-r><C-w>/
+vnoremap <Leader>{ "zy:%S/<C-r><C-o>"/
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
 "Remap back tick for jumping to marks more quickly back
 nnoremap ' `
 nnoremap ` '
-
-"Save all files
-nnoremap qa :wqa<CR>
+""---------------------------------------------------------------------------//
 " press enter for newline without insert
-"******************************************************
 " nnoremap <localleader><cr> o<esc>
 noremap <tab><CR> o<Esc>
+"******************************************************
+""---------------------------------------------------------------------------//
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
@@ -342,18 +376,103 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-
+""---------------------------------------------------------------------------//
+" Insert & Commandline mode Paste
+""---------------------------------------------------------------------------//
 inoremap <C-p> <Esc>pa
 cnoremap <C-p> <C-r>"
-" Make Ctrl-e jump to the end of the current line in the insert mode. This is
-" handy when you are in the middle of a line and would like to go to its end
-" without switching to the normal mode.
-" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
-"Move to beginning of a line in insert mode
-inoremap <c-a> <c-o>0
-inoremap <c-e> <c-o>$
+
 " Delete left-hand side of assignment
 nnoremap d= df=x
+" ----------------------------------------------------------------------------
+"Credit: JGunn :Count
+" ----------------------------------------------------------------------------
+command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
+" ----------------------------------------------------------------------------
+" Todo - Check the repo for Todos and add to the qf list
+" ----------------------------------------------------------------------------
+function! s:todo() abort
+  let entries = []
+  for cmd in ['git grep -niI -e TODO -e FIXME -e XXX 2> /dev/null',
+            \ 'grep -rniI -e TODO -e FIXME -e XXX * 2> /dev/null']
+    let lines = split(system(cmd), '\n')
+    if v:shell_error != 0 | continue | endif
+    for line in lines
+      let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
+      call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+    endfor
+    break
+  endfor
+
+  if !empty(entries)
+    call setqflist(entries)
+    copen
+  endif
+endfunction
+command! Todo call s:todo()
+" ----------------------------------------------------------------------------
+" Open FILENAME:LINE:COL
+" ----------------------------------------------------------------------------
+function! s:goto_line()
+  let tokens = split(expand('%'), ':')
+  if len(tokens) <= 1 || !filereadable(tokens[0])
+    return
+  endif
+
+  let file = tokens[0]
+  let rest = map(tokens[1:], 'str2nr(v:val)')
+  let line = get(rest, 0, 1)
+  let col  = get(rest, 1, 1)
+  bd!
+  silent execute 'e' file
+  execute printf('normal! %dG%d|', line, col)
+endfunction
+
+autocmd! BufNewFile * nested call s:goto_line()
+" ----------------------------------------------------------------------------
+" <Leader>?/! | Google it / Feeling lucky
+" ----------------------------------------------------------------------------
+function! s:goog(pat, lucky)
+  let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
+  let q = substitute(q, '[[:punct:] ]',
+       \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
+  call system(printf('open "https://www.google.com/search?%sq=%s"',
+                   \ a:lucky ? 'btnI&' : '', q))
+endfunction
+
+nnoremap <leader>? :call <SID>goog(expand("<cWORD>"), 0)<cr>
+nnoremap <leader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
+xnoremap <leader>? "gy:call <SID>goog(@g, 0)<cr>gv
+xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
+
+" ----------------------------------------------------------------------------
+" ConnectChrome
+" ----------------------------------------------------------------------------
+if has('mac')
+  function! s:connect_chrome(bang)
+    augroup connect-chrome
+      autocmd!
+      if !a:bang
+        autocmd BufWritePost <buffer> call system(join([
+        \ "osascript -e 'tell application \"Google Chrome\"".
+        \               "to tell the active tab of its first window\n",
+        \ "  reload",
+        \ "end tell'"], "\n"))
+      endif
+    augroup END
+  endfunction
+  command! -bang ConnectChrome call s:connect_chrome(<bang>0)
+endif
+
+" ----------------------------------------------------------------------------
+" ?ie | entire object
+" ----------------------------------------------------------------------------
+xnoremap <silent> ie gg0oG$
+onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
+
+""---------------------------------------------------------------------------//
+" Navigation (CORE)
+""---------------------------------------------------------------------------//
 "Remaps native ctrl k - deleting to the end of a line to control e
 " Map jk to esc key
 inoremap jk <ESC>
@@ -381,6 +500,15 @@ nnoremap <leader>ll :vertical resize +10<cr>
 nnoremap <leader>hh :vertical resize -10<cr>
 nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
+
+" Make Ctrl-e jump to the end of the current line in the insert mode. This is
+" handy when you are in the middle of a line and would like to go to its end
+" without switching to the normal mode.
+" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
+"Move to beginning of a line in insert mode
+inoremap <c-a> <c-o>0
+inoremap <c-e> <c-o>$
+
 "Map Q to remove a CR
 nnoremap Q J
 "}}}
@@ -404,19 +532,23 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 command! PU PlugUpdate | PlugUpgrade
-
+""---------------------------------------------------------------------------//
 " Map key to toggle opt
+""---------------------------------------------------------------------------//
 function! MapToggle(key, opt)
   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
   exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
-
+""---------------------------------------------------------------------------//
 " Display-altering option toggles
+""---------------------------------------------------------------------------//
 MapToggle <F1> wrap
 MapToggle <F2> list
+""---------------------------------------------------------------------------//
 " Behavior-altering option toggles
+""---------------------------------------------------------------------------//
 MapToggle <F5> scrollbind
 
 set pastetoggle=<F3>
