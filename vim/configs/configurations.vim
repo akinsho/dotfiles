@@ -282,7 +282,7 @@ vnoremap <leader>gb :Gbrowse<CR>
 ""---------------------------------------------------------------------------//
 " JSX
 ""---------------------------------------------------------------------------//
-let g:jsx_ext_required          = 1
+let g:jsx_ext_required          = 0 "Allow jsx in .js files REQUIRED
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//
@@ -400,8 +400,12 @@ let g:NERDSpaceDelims       = 1
 let g:NERDCompactSexyComs   = 1
 let g:NERDDefaultAlign      = 'left'
 let g:NERDCustomDelimiters  = {
-      \    'jsx': { 'leftAlt': '{/*','rightAlt': '*/}', 'left': '//', 'right': ''  },
-      \    'typescript.tsx': { 'leftAlt': '{/*','rightAlt': '*/}', 'left': '//', 'right': '' }
+      \ 'jsx': { 'leftAlt': '{/*','rightAlt': '*/}',
+      \ 'left': '//', 'right': ''
+      \ },
+      \ 'typescript.tsx': { 'leftAlt': '{/*','rightAlt': '*/}',
+      \ 'left': '//', 'right': ''
+      \ }
       \  }
 let g:NERDCommentEmptyLines = 1
 
@@ -433,6 +437,7 @@ let g:echodoc#type              = "signature"
 " Deoplete Options
 ""---------------------------------------------------------------------------//
 if has("nvim")
+  call deoplete#enable_logging("DEBUG", "./log.txt")
   let g:deoplete#enable_at_startup        = 1
   let g:deoplete#enable_smart_case        = 1
   " Autocomplete delay is the aim here
@@ -859,9 +864,9 @@ let g:startify_session_before_save = [
       \ ]
 let g:startify_session_dir         = '~/.vim/session'
 let g:startify_bookmarks           = [
-      \ {'c': '~/.vimrc'},
-      \ {'zshrc: ':'~/.zshrc'},
-      \ {'tmux: ':'~/.tmux.conf'}
+      \ {'v': '~/.vimrc'},
+      \ {'z': '~/.zshrc'},
+      \ {'t': '~/.tmux.conf'}
       \ ]
 
 let g:startify_skiplist = [

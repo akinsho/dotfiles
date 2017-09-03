@@ -8,10 +8,6 @@ au!
 autocmd FileType vim                           nnoremap <leader>hr 0i""---------------------------------------------------------------------------//<ESC>
 autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
 autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
-" Comment Banners (adds 5 spaces at each end)
-autocmd FileType vim                           nnoremap <leader>cb I"     <ESC>A     "<ESC>yyp0lv$hhr-yykPjj
-autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>cb I#     <ESC>A     #<ESC>yyp0lv$hhr-yykPjj
-autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>cb I/*     <ESC>A     */<ESC>yyp0llv$r-$hc$*/<ESC>yykPjj
 
 augroup END "}}}
 
@@ -53,9 +49,16 @@ augroup Cancel_Paste
 augroup END
 
 augroup WhiteSpace
+  au!
+  "Performance issue potentially!
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-  au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
-  au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
+  " Defined a highlight group ExtraWhitespace then match it
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter,BufEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+  autocmd BufWinLeave,BufLeave * call clearmatches()
 augroup END
 
 augroup UpdateVim
@@ -184,8 +187,7 @@ endif
 
 function! s:SetupHelpWindow() "{{{
   wincmd L
-  vertical resize 70
-  " setl nonumber winfixwidth colorcolumn=
+  vertical resize 80
 endfunction "}}}
 
 augroup FileType_all
@@ -228,49 +230,13 @@ augroup fix-ultisnips-overriding-tab-visual-mode
 
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()
-  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '(' . ( lines_count ) . ')'
-  let foldtextstart = strpart('✦' . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(' ', 2 )
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend
+  let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let l:lines_count = v:foldend - v:foldstart + 1
+  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
+  let l:foldtextstart = strpart('✦' . l:line, 0, (winwidth(0)*2)/3)
+  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
+  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return l:foldtextstart . repeat(' ', winwidth(0)-l:foldtextlength) . l:foldtextend
 endfunction
 set foldtext=NeatFoldText()
 " }}}
-" Javascript {{{
-function! FoldText()
-  let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '(' . ( lines_count ) . ')'
-  let foldchar = matchstr(&fillchars, 'fold:\')
-  let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(' ', 2 )
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
-endfunction
-augroup jsfolding
-  autocmd!
-  autocmd FileType javascript,javascript.jsx,jsx setlocal foldenable|setlocal foldmethod=indent|setlocal foldtext=FoldText()
-  au Filetype javascript,javascript.jsx,jsx setlocal foldlevelstart=99
-augroup END
-" }}}
-if has('nvim')
-  augroup Typescript_helpers
-    au!
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <localleader>p :TSDefPreview<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <leader>d :TSDef<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap gd :TSDef<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <localleader>r :TSRefs<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <localleader>t :TSType<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <localleader>c :TSEditConfig<CR>
-    autocmd FileType typescript,typescript.tsx,typescript.jsx
-          \ nnoremap <localleader>i :TSImport<CR>
-  augroup END
-endif

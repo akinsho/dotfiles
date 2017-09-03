@@ -21,10 +21,10 @@ call plug#begin('~/.vim/plugged')
 " ----------------------------------------
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
-Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
+Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'for': ['javascript', 'typescript'], 'do': 'npm install -g tern' })
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
-Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for':'go', 'do': 'make'})
+Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "================================{{{
@@ -76,7 +76,7 @@ Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
-Plug 'ianks/vim-tsx'
+Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ 'javascript',
@@ -85,11 +85,9 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'ap/vim-css-color', { 'for': [
-      \ 'typescript.tsx'
-      \ ,'javascript.jsx'
-      \ , 'css'
-      \ , 'javascript'
-      \ , 'typescript'
+      \  'css',
+      \  'javascript',
+      \  'typescript'
       \ ] }
 "}}}
 "Git ==============================={{{
@@ -105,7 +103,7 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-smartword'
 Plug 'kana/vim-textobj-user'
-      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      \ | Plug 'whatyouhide/vim-textobj-xmlattr', { 'for':['html', 'javascript', 'typescript'] }
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'terryma/vim-expand-region'
       \ | Plug 'paulhybryant/vim-textobj-path'
@@ -137,7 +135,7 @@ function! BuildComposer(info)
     endif
   endif
 endfunction
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+Plug 'euclio/vim-markdown-composer', { 'for': 'markdown', 'do': function('BuildComposer') }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}

@@ -103,7 +103,7 @@ endif
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
-set timeout timeoutlen=300 ttimeoutlen=10
+set timeout timeoutlen=400 ttimeoutlen=10
 set nohidden
 set winwidth=30
 set splitbelow "Open a horizontal split below current window
@@ -305,24 +305,13 @@ iabbrev w@ www.akin-sowemimo.com
 set background=dark
 colorscheme quantum
 
-if has('nvim')
-  let g:terminal_scrollback_buffer_size = 100000
-  let s:num = 0
-  "        black      red        green      yellow     blue       magenta    cyan       white
-  for s:color in [
-        \ '#101112', '#b24e4e', '#9da45a', '#f0c674', '#5f819d', '#85678f', '#5e8d87', '#707880',
-        \ '#373b41', '#cc6666', '#a0a85c', '#f0c674', '#81a2be', '#b294bb', '#8abeb7', '#c5c8c6',
-        \ ]
-    " let g:terminal_color_{s:num} = s:color
-    let s:num += 1
-  endfor
-  let g:terminal_color_background = '#000000'
-endif
-
 "NVIM
 "--------------------------------------------------------------
 if has('nvim')
+  let g:terminal_scrollback_buffer_size = 100000
   set inccommand=nosplit
+  let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
+  let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
 endif
 "-------------------------------------------------------------
 " Utilities
