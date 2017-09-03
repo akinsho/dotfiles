@@ -20,12 +20,12 @@ call plug#begin('~/.vim/plugged')
 " Deoplete
 " ----------------------------------------
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'), { 'do': 'npm install -g tern' })
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for':'go', 'do': 'make'})
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
-Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "================================{{{
 Plug 'maralla/completor.vim', Cond(!has('nvim'))
@@ -121,7 +121,6 @@ Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'))
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
@@ -149,6 +148,9 @@ call plug#end()
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
   runtime! macros/matchit.vim
 endif
+
+"Plugins to Try ============================================================
+" Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'))
 
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1
