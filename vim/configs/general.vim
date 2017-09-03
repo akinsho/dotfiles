@@ -286,8 +286,8 @@ colorscheme quantum
 if has('nvim')
   let g:terminal_scrollback_buffer_size = 100000
   set inccommand=nosplit
-  " let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
-  " let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
+  let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
+  let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
 endif
 "-------------------------------------------------------------
 " Utilities
@@ -404,10 +404,4 @@ if !has('nvim')
   set mouse=a
 endif
 "}}}
-""---------------------------------------------------------------------------//
-" Trailing whitespace handling
-""---------------------------------------------------------------------------//
-" Highlight end of line whitespace.
-highlight WhitespaceEOL ctermbg=red guibg=red
-match WhitespaceEOL /\s\+$/
 ""---------------------------------------------------------------------------//

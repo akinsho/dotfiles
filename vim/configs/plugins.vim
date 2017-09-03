@@ -113,7 +113,6 @@ Plug 'kana/vim-textobj-user'
 "}}}
 "Search Tools =======================
 Plug 'dyng/ctrlsf.vim'
-Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
 "Coding tools ======================={{{
@@ -151,6 +150,8 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) =
 endif
 
 "Plugins to Try ============================================================
+" Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
+" Plug 'jodosha/vim-godebug'
 
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1

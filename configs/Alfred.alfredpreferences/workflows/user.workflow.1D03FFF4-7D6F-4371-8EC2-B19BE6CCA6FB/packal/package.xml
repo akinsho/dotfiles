@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>man</name>
+  <version>1.0</version>
+  <bundle>net.isometry.alfred.man</bundle>
+  <updated>1407263612</updated>
+  <file>man.alfredworkflow</file>
+</workflow>

@@ -453,9 +453,9 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
-""---------------------------------------------------------------------------//
-" Deoplete Go
-""---------------------------------------------------------------------------//
+  ""---------------------------------------------------------------------------//
+  " Deoplete Go
+  ""---------------------------------------------------------------------------//
   let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
   let g:deoplete#sources#go#use_cache     = 1
   let g:deoplete#sources#go#pointer       = 1
@@ -467,48 +467,48 @@ if has("nvim")
         \ 'const',
         \ 'ultisnips'
         \ ]
-""---------------------------------------------------------------------------//
-" NVIM TYPESCRIPT
-""---------------------------------------------------------------------------//
+  ""---------------------------------------------------------------------------//
+  " NVIM TYPESCRIPT
+  ""---------------------------------------------------------------------------//
   let g:nvim_typescript#kind_symbols = {
-      \ 'keyword': 'keyword',
-      \ 'class': '',
-      \ 'interface': 'interface',
-      \ 'script': 'script',
-      \ 'module': '',
-      \ 'local class': 'local class',
-      \ 'type': 'type',
-      \ 'enum': '',
-      \ 'enum member': '',
-      \ 'alias': '',
-      \ 'type parameter': 'type param',
-      \ 'primitive type': 'primitive type',
-      \ 'var': '',
-      \ 'local var': '',
-      \ 'property': '',
-      \ 'let': '',
-      \ 'const': '',
-      \ 'label': 'label',
-      \ 'parameter': 'param',
-      \ 'index': 'index',
-      \ 'function': '',
-      \ 'local function': 'local function',
-      \ 'method': '',
-      \ 'getter': '',
-      \ 'setter': '',
-      \ 'call': 'call',
-      \ 'constructor': '',
-      \}
+        \ 'keyword': 'keyword',
+        \ 'class': '',
+        \ 'interface': 'interface',
+        \ 'script': 'script',
+        \ 'module': '',
+        \ 'local class': 'local class',
+        \ 'type': 'type',
+        \ 'enum': '',
+        \ 'enum member': '',
+        \ 'alias': '',
+        \ 'type parameter': 'type param',
+        \ 'primitive type': 'primitive type',
+        \ 'var': '',
+        \ 'local var': '',
+        \ 'property': '',
+        \ 'let': '',
+        \ 'const': '',
+        \ 'label': 'label',
+        \ 'parameter': 'param',
+        \ 'index': 'index',
+        \ 'function': '',
+        \ 'local function': 'local function',
+        \ 'method': '',
+        \ 'getter': '',
+        \ 'setter': '',
+        \ 'call': 'call',
+        \ 'constructor': '',
+        \}
   let g:deoplete#omni#functions           = {}
   let g:deoplete#omni#functions.javascript = [
         \ 'tern#Complete',
         \]
   let g:deoplete#omni#functions.typescript = [
-      \ 'tern#Complete',
-      \]
+        \ 'tern#Complete',
+        \]
   let g:deoplete#omni#functions["typescript.tsx"] = [
-      \ 'tern#Complete',
-      \]
+        \ 'tern#Complete',
+        \]
 
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
@@ -516,36 +516,42 @@ if has("nvim")
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-endif
 
-let g:tern_request_timeout = 1
-"Add extra filetypes
-let g:tern#filetypes = [
-      \ 'tsx',
-      \ 'typescript.tsx',
-      \ 'typescript.jsx',
-      \ 'typescript',
-      \ 'javascript',
-      \ 'jsx',
-      \ 'javascript.jsx',
-      \ ]
-"Add extra filetypes
-let g:deoplete#sources#ternjs#filetypes = [
-      \ 'tsx',
-      \ 'typescript.tsx',
-      \ 'typescript.jsx',
-      \ 'typescript',
-      \ 'javascript',
-      \ 'jsx',
-      \ 'javascript.jsx',
-      \ ]
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
-let g:deoplete#sources#ternjs#guess                 = 1
-let g:tern_map_keys                                 = 0
-let g:tern_show_argument_hints                      = 'on_hold'
-let g:tern_show_signature_in_pum                    = 1
-let g:tern#command                                  = ["tern"]
-let g:tern#arguments                                = ["--persistent"]
+
+  let g:tern_request_timeout = 1
+  "Add extra filetypes
+  let g:tern#filetypes = [
+        \ 'tsx',
+        \ 'typescript.tsx',
+        \ 'typescript.jsx',
+        \ 'typescript',
+        \ 'javascript',
+        \ 'jsx',
+        \ 'javascript.jsx',
+        \ ]
+  "Add extra filetypes
+  let g:deoplete#sources#ternjs#filetypes = [
+        \ 'tsx',
+        \ 'typescript.tsx',
+        \ 'typescript.jsx',
+        \ 'typescript',
+        \ 'javascript',
+        \ 'jsx',
+        \ 'javascript.jsx',
+        \ ]
+  let g:deoplete#sources#ternjs#omit_object_prototype = 0
+  let g:deoplete#sources#ternjs#guess                 = 1
+  let g:tern_map_keys                                 = 0
+  let g:tern_show_argument_hints                      = 'on_hold'
+  let g:tern_show_signature_in_pum                    = 1
+  let g:tern#command                                  = ["tern"]
+  let g:tern#arguments                                = ["--persistent"]
+
+else
+  inoremap _expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+  let g:completor_auto_trigger = 0
+  let g:completor_gocode_binary = $GOPATH.'/bin/gocode'
+endif
 ""---------------------------------------------------------------------------//
 " GINA
 ""---------------------------------------------------------------------------//
@@ -836,6 +842,7 @@ let g:devdocs_filetype_map = {
     \ }
 
 command! -nargs=* DevDocsReact call devdocs#open_doc(<q-args>, 'react')
+nmap <leader>D <Plug>(devdocs-under-cursor)
 ""---------------------------------------------------------------------------//
 " STARTIFY
 ""---------------------------------------------------------------------------//
