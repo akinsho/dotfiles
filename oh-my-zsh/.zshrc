@@ -142,7 +142,6 @@ eval "$(hub alias -s)"
 ##---------------------------------------------------------------------------///
 source <(npx --shell-auto-fallback zsh)
 
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
