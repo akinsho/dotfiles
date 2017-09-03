@@ -139,7 +139,7 @@ let g:ff_map                                              = { "unix": "␊", "ma
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
 " let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
-let g:airline_section_c                                   = '%t %{GetFileSize()}'
+let g:airline_section_c                            = '%t %{GetFileSize()}'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#ale#error_symbol          = '✖ : '
 let g:airline#extensions#ale#warning_symbol        = '⚠ : '
@@ -698,13 +698,15 @@ let g:rooter_resolve_links = 1
 ""---------------------------------------------------------------------------//
 " ULTISNIPS
 ""---------------------------------------------------------------------------//
-let g:UltiSnipsSnippetsDir          = "~/Dotfiles/vim/mySnippets" "Both of these settings are necessary
+" Snippet settings:
+let g:snips_author = 'Akin Sowemimo'
+let g:UltiSnipsSnippetsDir          = $DOTFILES."/vim/mySnippets" "Both of these settings are necessary
 let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
 let g:UltiSnipsExpandTrigger        = "<C-J>"
 let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
-let g:UltiSnipsListSnippets         = "<C-/>"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
+nnoremap <localleader>u :UltiSnipsEdit<CR>
 ""---------------------------------------------------------------------------//
 " FZF
 ""---------------------------------------------------------------------------//
@@ -754,25 +756,15 @@ nnoremap <silent> <localleader>m :History<CR>
 nnoremap <silent> <localleader>C :Commits<CR>
 nnoremap <silent> <localleader>l :Lines<CR>
 
-function! SearchWordWithRg()
-  execute 'Rg' expand('<cword>')
-endfunction
-
 " Launch file search using FZF
 nnoremap <localleader>p :GitFiles <CR>
 nnoremap <C-P> :Files<CR>
 nnoremap \ :Rg!<CR>
-nnoremap <localleader>w :call SearchWordWithRg()<CR>
-
-
-function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-  copen
-  cc
-endfunction
+"Find Word under cursor
+nnoremap <leader>f :Find <C-R><C-W><CR>
+nnoremap <leader>F :Find 
 
 let g:fzf_action = {
-      \ 'ctrl-l': function('s:build_quickfix_list'),
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit'

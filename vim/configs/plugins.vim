@@ -152,6 +152,7 @@ endif
 "Plugins to Try ============================================================
 " Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 " Plug 'jodosha/vim-godebug'
+" Plug 'low-ghost/nerdtree-fugitive' - Fugitive capability in nerd tree
 
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1

@@ -24,7 +24,7 @@ packages=(
 
 for i in "${packages[@]}"
 do
-  "brew install $i"
+  brew install $i
   echo "---------------------------------------------------------"
 done
 
@@ -53,7 +53,7 @@ export DOTFILES="$HOME/Dotfiles"
 cd Dotfiles || "Didn't cd into dotfiles this will be bad :("
 git submodule update --init --recursive
 
-"cd $HOME"
+cd $HOME
 echo "running RCM's rcup command"
 echo "This is symlink the rc files in Dotfiles"
 echo "with the rc files in $HOME"
@@ -64,15 +64,15 @@ rcup
 echo "---------------------------------------------------------"
 
 echo "Changing to zsh"
-"chsh -s $(which zsh)"
+chsh -s $(which zsh)
 
 echo "You'll need to log out for this to take effect"
 echo "---------------------------------------------------------"
 
 echo "running macos defaults"
-"cd $DOTFILES || echo 'Oh god didn't cd exiting || exit"
+cd $DOTFILES || echo "Oh god didn't cd exiting" || exit
 ./configs/macosdefaults.sh
-"cd $DOTFILES/configs/homebrew/ || echo 'Could get into Homebrew subdir'"
+cd $DOTFILES/configs/homebrew/ || echo "Could get into Homebrew subdir"
 brew bundle
 echo "Installing Homebrew apps from brew file"
 

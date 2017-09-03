@@ -4,7 +4,7 @@
 
 function tr(){
   #Defaults to 3 levels deep
-  "tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 20 -L ${1:-3} -aC $2"
+  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 20 -L ${1:-3} -aC $2
 }
 
 # Vim
