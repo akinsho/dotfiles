@@ -58,8 +58,9 @@ alias -s js=nvim
 alias -s html=nvim
 alias -s css=nvim
 alias -s py=nvim
+alias -s go=nvim
 
 alias ta="tmux -CC attach"
-alias browse="browser-sync start --server"
 #Git aliases
+alias browse="browser-sync start --server"
 alias serve='python -m SimpleHTTPServer'
