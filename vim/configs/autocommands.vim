@@ -48,18 +48,6 @@ augroup Cancel_Paste
         \ if &paste | set nopaste | echo 'nopaste' | endif
 augroup END
 
-augroup WhiteSpace
-  au!
-  "Performance issue potentially!
-  " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-  " Defined a highlight group ExtraWhitespace then match it
-  highlight ExtraWhitespace ctermbg=red guibg=red
-  match ExtraWhitespace /\s\+$/
-  autocmd BufWinEnter,BufEnter * match ExtraWhitespace /\s\+$/
-  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-  autocmd BufWinLeave,BufLeave * call clearmatches()
-augroup END
 
 augroup UpdateVim
   autocmd!

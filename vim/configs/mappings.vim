@@ -16,7 +16,7 @@ if has('nvim')
   tmap <C-k> <C-\><C-n><C-k>
   tmap <C-l> <C-\><C-n><C-l>
   tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
-  tmap <tab> <C-\><C-n>:bnext<CR>
+  tmap <leader><tab> <C-\><C-n>:bnext<CR>
   tmap <localleader><S-tab> <C-\><C-n>:bprev<CR>
   tmap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
   tmap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2

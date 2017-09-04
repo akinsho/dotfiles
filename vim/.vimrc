@@ -38,12 +38,6 @@ if filereadable(expand($DOTFILES.'/vim/configs/configurations.vim'))
   source $DOTFILES/vim/configs/configurations.vim
 endif
 
-""---------------------------------------------------------------------------//
-" Home-made Plugins
-""---------------------------------------------------------------------------//
-source $DOTFILES/vim/plugins/grep.vim
-source $DOTFILES/vim/plugins/togglelist.vim
-
 "-----------------------------------------------------------------------
 " Mappings
 "-----------------------------------------------------------------------

@@ -187,9 +187,6 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 # User configuration
 #=======================================================================
 
-# auto-ls () { ls -GC; }
-# chpwd_functions=( auto-ls $chpwd_functions )
-
 export KEYTIMEOUT=1
 
 bindkey ‘^R’ history-incremental-search-backward

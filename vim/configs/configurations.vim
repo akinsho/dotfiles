@@ -52,6 +52,17 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
+"TODO - Figure if and how to use these highlight groups
+" highlight! NERDTreeGitStatusModified ctermfg=1 guifg=#D370A3
+" highlight! NERDTreeGitStatusStaged ctermfg=10 guifg=#A3D572
+" highlight! NERDTreeGitStatusUntracked ctermfg=12 guifg=#98CBFE
+" highlight! NERDTreeOpenable ctermfg=132 guifg=#B05E87
+" highlight! def link NERDTreeClosable NERDTreeOpenable
+" highlight! def link NERDTreeGitStatusRenamed Title
+" highlight! def link NERDTreeGitStatusUnmerged Label
+" highlight! def link NERDTreeGitStatusDirDirty Constant
+" highlight! def link NERDTreeGitStatusDirClean DiffAdd
+" highlight! def link NERDTreeGitStatusUnknown Comment
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
@@ -76,18 +87,20 @@ endf
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
-let NERDTreeDirArrowExpandable          = "├"
-let NERDTreeDirArrowCollapsible         = "└"
+let g:NERDTreeDirArrowExpandable        = '▷'
+let g:NERDTreeDirArrowCollapsible       = '▼'
 let g:NERDTreeQuitOnOpen                = 1
 let g:NERDTreeMinimalUI                 = 1
 let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
+" let NERDTreeDirArrowExpandable          = "├"
+" let NERDTreeDirArrowCollapsible         = "└"
 
 "Adding the flags to NERDTree
 let g:webdevicons_enable_nerdtree           = 1
-let g:webdevicons_conceal_nerdtree_brackets = 1
+" let g:webdevicons_conceal_nerdtree_brackets = 1
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:NERDTree')
   if exists('g:loaded_webdevicons')
@@ -313,6 +326,17 @@ else
   let g:gitgutter_sign_modified_removed = '±'
   let g:gitgutter_sign_added            = '❖'
 endif
+"     \ 'Modified':  '·',
+"     \ 'Staged':    '‧',
+"     \ 'Dirty':     '⁖',
+let g:NERDTreeIndicatorMapCustom = {
+      \ 'Untracked': '?',
+      \ 'Renamed':   '≫',
+      \ 'Unmerged':  '≠',
+      \ 'Deleted':   '✃',
+      \ 'Clean':     '✓',
+      \ 'Unknown':   '⁇'
+      \ }
 ""---------------------------------------------------------------------------//
 " EXPAND REGION VIM
 ""---------------------------------------------------------------------------//
@@ -433,7 +457,6 @@ let g:echodoc#type              = "signature"
 " Deoplete Options
 ""---------------------------------------------------------------------------//
 if has("nvim")
-  call deoplete#enable_logging("DEBUG", "./log.txt")
   let g:deoplete#enable_at_startup        = 1
   let g:deoplete#enable_smart_case        = 1
   " Autocomplete delay is the aim here
@@ -548,7 +571,7 @@ if has("nvim")
   let g:tern#arguments                                = ["--persistent"]
 
 else
-  inoremap _expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
   let g:completor_auto_trigger = 0
   let g:completor_gocode_binary = $GOPATH.'/bin/gocode'
 endif
