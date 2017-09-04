@@ -51,13 +51,16 @@ augroup END
 
 augroup UpdateVim
   autocmd!
-  autocmd bufwritepost $MYVIMRC source $MYVIMRC
+  " Reload vim and config automatically {{{
+  execute 'autocmd UpdateVim BufWritePost '.$DOTFILES.'/vim/configs/*,vimrc nested'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+  " }}}
   if has('gui_running')
     source $MYGVIMRC | echo 'Source .gvimrc'
   endif
   autocmd FocusLost * :wa
-  autocmd VimResized * :redraw! | :echo 'Redrew'
-  " autocmd VimResized * wincmd =
+  autocmd VimResized * :redraw! | echom 'Redrew'
+  autocmd VimResized * wincmd =
 augroup END
 
 augroup AirLineRefresh

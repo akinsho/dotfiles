@@ -112,9 +112,11 @@ Plug 'kana/vim-textobj-user'
         \ | Plug 'thinca/vim-textobj-function-javascript'
 "}}}
 "Search Tools =======================
+Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
+Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
 Plug 'kshenoy/vim-signature'
@@ -149,10 +151,8 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) =
 endif
 
 "Plugins to Try ============================================================
-" Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 " Plug 'jodosha/vim-godebug'
 " Plug 'low-ghost/nerdtree-fugitive' - Fugitive capability in nerd tree
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight' - Too Slow
 
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1

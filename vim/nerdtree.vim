@@ -1,4 +1,6 @@
 augroup NERDTreeHighlighing
+"Clear AUTOCOMMAND Always FFS
+  au!
   " NERDTrees File highlighting
   function! NERDTreeHighlightFile(extension, fg, bg, guifg)
     exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg

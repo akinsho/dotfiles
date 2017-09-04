@@ -36,7 +36,6 @@ highlight link StartifySlash Directory
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
-"so it's clear which paren I'm on and which is matched
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 " highlight VertSplit guifg=black ctermfg=black
@@ -50,6 +49,7 @@ endif
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
+  highlight QuickFixLine guibg=#717673 gui=bold
   highlight TermCursor ctermfg=green guifg=green
 endif
 ""---------------------------------------------------------------------------//
@@ -63,8 +63,8 @@ endif
       execute ':NERDTreeFind'
     endif
   endfunction
-nnoremap <silent> <localleader>n :call ToggleNERDTreeWithRefresh()<cr>
-nnoremap <localleader>f :call NERDTreeToggleAndFind()<CR>
+nnoremap <silent> <C-N> :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
     :NERDTreeToggle
@@ -156,6 +156,14 @@ nmap <localleader>8 <Plug>AirlineSelectTab8
 nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
+" Plugin: vim-choosewin {{{
+" ---------------------------------------------------------
+" invoke with '-'
+nmap  -  <Plug>(choosewin)
+let g:choosewin_label = 'SDFJKLZXCV'
+let g:choosewin_statusline_replace = 1
+let g:choosewin_overlay_enable = 1
+let g:choosewin_blink_on_land = 0
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//

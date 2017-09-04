@@ -362,7 +362,7 @@ endif
 set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
-set nohlsearch " -functionality i.e. search highlighting done by easy motion and incsearch
+set hlsearch " -functionality i.e. search highlighting done by easy motion and incsearch
 if &filetype ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
