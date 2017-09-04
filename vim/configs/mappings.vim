@@ -240,10 +240,10 @@ inoremap <C-u> <ESC>gUiw`]a
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-nnoremap <silent> <C-]> :move+<cr>
-nnoremap <silent> <C-[> :move-2<cr>
-xnoremap <silent> <C-k> :move-2<cr>gv
-xnoremap <silent> <C-j> :move'>+<cr>gv
+" nnoremap <silent> <C-]> :move+<cr>
+" nnoremap <silent> <C-[> :move-2<cr>
+" xnoremap <silent> <C-k> :move-2<cr>gv
+" xnoremap <silent> <C-j> :move'>+<cr>gv
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
 ""---------------------------------------------------------------------------//

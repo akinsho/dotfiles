@@ -439,7 +439,7 @@ if has("nvim")
   let g:deoplete#enable_smart_case        = 1
   " Autocomplete delay is the aim here
   let g:deoplete#auto_complete_delay      = 0
-  let g:deoplete#auto_refresh_delay       = 50
+  let g:deoplete#auto_refresh_delay       = 20
   let g:deoplete#max_menu_width           = 40
   let g:deoplete#file#enable_buffer_path  = 1
   let g:deoplete#ignore_sources = {}
