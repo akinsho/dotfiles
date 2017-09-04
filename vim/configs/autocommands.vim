@@ -101,7 +101,7 @@ augroup END
   return "\<tab>"
   endfunction
 
-augroup filetype_completion
+augroup mutltiple_filetype_settings
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
@@ -112,6 +112,7 @@ augroup filetype_completion
         \ | setlocal completefunc=syntaxcomplete#Complete | endif
 
   autocmd FileType html,css,javascript,typescript,typescript.tsx,vue,javascript.jsx EmmetInstall
+  autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -195,12 +196,32 @@ augroup FileType_all
   " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
         \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
+        \   exe "keepjumps normal g`\"" |
         \ endif
 
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
+
+  " Update filetype on save if empty
+  autocmd BufWritePost * nested
+        \ if &l:filetype ==# '' || exists('b:ftdetect')
+        \ |   unlet! b:ftdetect
+        \ |   filetype detect
+        \ | endif
+
+
+  " Reload Vim script automatically if setlocal autoread
+  autocmd BufWritePost,FileWritePost *.vim nested
+        \ if &l:autoread > 0 | source <afile> |
+        \   echo 'source '.bufname('%') |
+        \ endif
+
+    " Clean all useless whitespace:
+  autocmd BufWritePre *
+        \ if !exists('g:skip_clean_whitespace') && !exists('b:skip_clean_whitespaste') |
+        \   exe "CleanWhitespace"                                                      |
+        \ endif
 augroup END
 
 augroup fugitiveSettings
@@ -214,6 +235,10 @@ augroup NERDTree
   autocmd!
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   autocmd FileType nerdtree setlocal nolist
+augroup END
+
+augroup LongFiles
+  autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
 
 augroup fix-ultisnips-overriding-tab-visual-mode

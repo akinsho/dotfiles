@@ -6,6 +6,8 @@ setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal tabstop=4
 setlocal listchars+=tab:\ \ 
+highlight default link goErr WarningMsg |
+      \ match goErr /\<err\>/
 " ---------------------------------------------------
 " VIM-GO !!!
 " ---------------------------------------------------
