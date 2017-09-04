@@ -52,17 +52,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
-"TODO - Figure if and how to use these highlight groups
-" highlight! NERDTreeGitStatusModified ctermfg=1 guifg=#D370A3
-" highlight! NERDTreeGitStatusStaged ctermfg=10 guifg=#A3D572
-" highlight! NERDTreeGitStatusUntracked ctermfg=12 guifg=#98CBFE
-" highlight! NERDTreeOpenable ctermfg=132 guifg=#B05E87
-" highlight! def link NERDTreeClosable NERDTreeOpenable
-" highlight! def link NERDTreeGitStatusRenamed Title
-" highlight! def link NERDTreeGitStatusUnmerged Label
-" highlight! def link NERDTreeGitStatusDirDirty Constant
-" highlight! def link NERDTreeGitStatusDirClean DiffAdd
-" highlight! def link NERDTreeGitStatusUnknown Comment
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
@@ -74,8 +63,8 @@ endif
       execute ':NERDTreeFind'
     endif
   endfunction
-nnoremap <silent> <c-n> :call ToggleNERDTreeWithRefresh()<cr>
-nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
+nnoremap <silent> <localleader>n :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <localleader>f :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
     :NERDTreeToggle
@@ -95,8 +84,7 @@ let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
-" let NERDTreeDirArrowExpandable          = "├"
-" let NERDTreeDirArrowCollapsible         = "└"
+" NerdTree Arrow Options = ["├","└"]
 
 "Adding the flags to NERDTree
 let g:webdevicons_enable_nerdtree           = 1
@@ -118,12 +106,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set t
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nerdtree'] = ''
-""---------------------------------------------------------------------------//
-" NERDTree Syntax highlight
-""---------------------------------------------------------------------------//
-"Speed it up
-let g:NERDTreeLimitedSyntax = 1
-
 ""---------------------------------------------------------------------------//
 "               Airline
 ""---------------------------------------------------------------------------//
@@ -423,16 +405,6 @@ nmap <silent> <leader>vT :TestFile<CR>
 nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
-""---------------------------------------------------------------------------//
-" Vim Multi-Cursors
-""---------------------------------------------------------------------------//
-" Default mapping
-let g:multi_cursor_start_key='<S-CR>'
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-let g:multi_cursor_use_default_mapping=0
 ""---------------------------------------------------------------------------//
 " Polyglot
 ""---------------------------------------------------------------------------//

@@ -121,7 +121,6 @@ Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }

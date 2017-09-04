@@ -258,8 +258,6 @@ source $DOTFILES/runcom/functions.sh
 source $DOTFILES/runcom/zsh/alias.zsh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
 for script ($DOTFILES/runcom/zsh/*) source $script
-
-source $DOTFILES/local/.localrc
 #=======================================================================
 #       FUNCTIONS
 #=======================================================================
