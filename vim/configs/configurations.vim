@@ -37,7 +37,7 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+highlight Search ctermbg=NONE guifg=NONE guibg=NONE gui=underline
 " highlight VertSplit guifg=black ctermfg=black
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
