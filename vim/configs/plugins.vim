@@ -121,6 +121,7 @@ Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
@@ -142,7 +143,6 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
@@ -153,6 +153,7 @@ endif
 " Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 " Plug 'jodosha/vim-godebug'
 " Plug 'low-ghost/nerdtree-fugitive' - Fugitive capability in nerd tree
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight' - Too Slow
 
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1

@@ -217,11 +217,11 @@ augroup FileType_all
         \   echo 'source '.bufname('%') |
         \ endif
 
-    " Clean all useless whitespace:
-  autocmd BufWritePre *
-        \ if !exists('g:skip_clean_whitespace') && !exists('b:skip_clean_whitespaste') |
-        \   exe "CleanWhitespace"                                                      |
-        \ endif
+  " Clean all useless whitespace:
+  " autocmd BufWritePre *
+  "       \ if !exists('g:skip_clean_whitespace') && !exists('b:skip_clean_whitespaste') |
+  "       \   exe "CleanWhitespace"                                                      |
+  "       \ endif
 augroup END
 
 augroup fugitiveSettings

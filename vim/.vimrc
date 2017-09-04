@@ -36,6 +36,7 @@ endif
 " ----------------------------------------------------------------------
 if filereadable(expand($DOTFILES.'/vim/configs/configurations.vim'))
   source $DOTFILES/vim/configs/configurations.vim
+  source $DOTFILES/vim/nerdtree.vim
 endif
 
 "-----------------------------------------------------------------------

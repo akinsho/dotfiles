@@ -187,7 +187,6 @@ cnoremap <C-E> <End>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 "Save
-nnoremap <C-S> :update<CR>
 nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
 "Save all files

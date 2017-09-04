@@ -326,17 +326,6 @@ else
   let g:gitgutter_sign_modified_removed = '±'
   let g:gitgutter_sign_added            = '❖'
 endif
-"     \ 'Modified':  '·',
-"     \ 'Staged':    '‧',
-"     \ 'Dirty':     '⁖',
-let g:NERDTreeIndicatorMapCustom = {
-      \ 'Untracked': '?',
-      \ 'Renamed':   '≫',
-      \ 'Unmerged':  '≠',
-      \ 'Deleted':   '✃',
-      \ 'Clean':     '✓',
-      \ 'Unknown':   '⁇'
-      \ }
 ""---------------------------------------------------------------------------//
 " EXPAND REGION VIM
 ""---------------------------------------------------------------------------//
@@ -434,7 +423,16 @@ nmap <silent> <leader>vT :TestFile<CR>
 nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
-
+""---------------------------------------------------------------------------//
+" Vim Multi-Cursors
+""---------------------------------------------------------------------------//
+" Default mapping
+let g:multi_cursor_start_key='<S-CR>'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_use_default_mapping=0
 ""---------------------------------------------------------------------------//
 " Polyglot
 ""---------------------------------------------------------------------------//
@@ -539,7 +537,6 @@ if has("nvim")
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-
 
   let g:tern_request_timeout = 1
   "Add extra filetypes
