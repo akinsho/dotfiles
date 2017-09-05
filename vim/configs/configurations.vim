@@ -271,6 +271,16 @@ nnoremap <silent> <leader>tk :call neoterm#kill()<cr>
 ""---------------------------------------------------------------------------//
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
+"Stages the current file
+nnoremap <leader>gw :Gwrite<CR>
+"Rename the current file and the corresponding buffer
+nnoremap <leader>gm :Gmove<CR>
+"Revert current file to last checked in version
+nnoremap <leader>gre :Gread<CR>
+"Remove the current file and the corresponding buffer
+nnoremap <leader>grm :Gremove<CR>
+nnoremap <leader>gbl :Gblame<CR>
+nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>

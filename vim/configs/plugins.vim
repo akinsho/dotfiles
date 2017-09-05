@@ -17,7 +17,7 @@ endfunction
 
 call plug#begin('~/.vim/plugged')
 "NVIM ====================================
-" Deoplete
+" Deoplete {{{
 " ----------------------------------------
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
@@ -28,7 +28,10 @@ Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "En
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
+"}}}
 "================================{{{
+" CORE
+"================================
 Plug 'maralla/completor.vim', Cond(!has('nvim'))
 Plug 'Quramy/tsuquyomi',      Cond(!has('nvim'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
