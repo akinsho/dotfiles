@@ -4,9 +4,8 @@
 setlocal number
 setlocal norelativenumber
 setlocal nolist
-setlocal nowrap
-setlocal winminheight=1 winheight=10 winfixheight
-" setlocal winminheight=10 winheight=10
+setlocal wrap
+" setlocal winminheight=1 winheight=10 winfixheight
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
 augroup TakeAllSpace
@@ -26,14 +25,14 @@ let b:undo_ftplugin = 'setl fo< com< ofu<'
 
 
 " open entry in a new horizontal window
-nnoremap <silent> <buffer> s <C-w><CR>
-nnoremap <buffer> <CR> <CR><C-w>p
+nnoremap <silent><buffer> s <C-w><CR>
+nnoremap <buffer><CR> <CR><C-w>p
 " open entry in a new vertical window.
-nnoremap <silent> <expr> <buffer> v &splitright ? "\<C-w>\<CR>\<C-w>L\<C-w>p\<C-w>J\<C-w>p" : "\<C-w>\<CR>\<C-w>H\<C-w>p\<C-w>J\<C-w>p"
+nnoremap <silent><expr> <buffer> v &splitright ? "\<C-w>\<CR>\<C-w>L\<C-w>p\<C-w>J\<C-w>p" : "\<C-w>\<CR>\<C-w>H\<C-w>p\<C-w>J\<C-w>p"
 " open entry in a new tab.
-nnoremap <silent> <buffer> t <C-w><CR><C-w>T
+nnoremap <silent><buffer> t <C-w><CR><C-w>T
 " open entry and come back
-nnoremap <silent> <buffer> o <CR><C-w>p
+nnoremap <silent><buffer> o <CR><C-w>p
 nnoremap <silent><buffer> p  :call <SID>preview_file()<CR>
 
 " are we in a location list or a quickfix list?
@@ -75,7 +74,7 @@ function! AdjustWindowHeight(minheight, maxheight)
 endfunction
 
 augroup AdjustWindowHeight
-  " au!  FileType qf call AdjustWindowHeight(8, 8)
+   au!  <buffer> call AdjustWindowHeight(8, 8)
 augroup END
 
 let &cpoptions = s:save_cpo

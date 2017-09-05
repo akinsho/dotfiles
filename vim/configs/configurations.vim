@@ -239,7 +239,7 @@ nmap [a <Plug>(ale_previous_wrap)
 " Sayonara
 ""---------------------------------------------------------------------------//
 nnoremap <C-Q> :Sayonara<CR>
-nnoremap <leader>q :Sayonara<CR>
+nnoremap <leader>q :on<CR>
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
@@ -250,6 +250,8 @@ let g:neoterm_autoscroll   = 1
 let g:neoterm_fixedsize    = 1
 " Git commands
 command! -nargs=+ Tg :T git <args>
+" Useful maps
+" hide/close terminal
 nnoremap <silent> <leader><CR> :Ttoggle<CR>
 nnoremap <silent> <leader>ta :TtoggleAll<CR>
 nnoremap <silent> <leader>tn :Tnew<CR>
@@ -258,9 +260,6 @@ nnoremap <silent> <leader>tx :TcloseAll!<CR>
 nnoremap <silent> <leader>ts :TREPLSendFile<cr>
 nnoremap <silent> <leader>tl :TREPLSendLine<cr>
 vnoremap <silent> <leader>tl :TREPLSendSelection<cr>
-
-" Useful maps
-" hide/close terminal
 nnoremap <silent> <leader>th :call neoterm#close()<cr>
 " clear terminal
 nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
@@ -281,6 +280,7 @@ nnoremap <leader>gre :Gread<CR>
 nnoremap <leader>grm :Gremove<CR>
 "See in a side window who is responsible for lines of code
 nnoremap <leader>gbl :Gblame<CR>
+"Opens the index - i.e. git saved version of a file
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
@@ -777,7 +777,7 @@ nnoremap <silent> <localleader>l :Lines<CR>
 if isdirectory(".git")
   " if in a git project, use :GFiles
   nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
-else
+  else
   " otherwise, use :FZF
   nnoremap <silent><C-P> :Files<CR>
 endif
