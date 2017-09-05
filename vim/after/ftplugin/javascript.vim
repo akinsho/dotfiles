@@ -1,6 +1,6 @@
 setlocal concealcursor=nvic
 setl completeopt-=preview
-setlocal foldenable foldmethod=indent foldtext=FoldText()
+setlocal foldenable  foldtext=FoldText()
 setlocal foldlevelstart=99
 
 " Javascript {{{

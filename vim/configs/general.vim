@@ -88,6 +88,7 @@ if has('folding')
   if has('windows')
     set fillchars=vert:│
     set fillchars+=fold:-
+    set foldmethod=syntax
   endif
   set foldlevelstart=99
   set foldnestmax=3
@@ -97,6 +98,10 @@ set sessionoptions-=options,blank,folds,help
 if !has('nvim')
   set termsize="10x30"
 endif
+if &term =~# '256color'
+    " disable background color erase
+    set t_ut=
+  endif
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------
@@ -215,6 +220,7 @@ set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
+set wrapmargin=8
 set textwidth=79
 if exists('&signcolumn')
   set signcolumn=yes "enables column that shows signs and error symbols
@@ -375,7 +381,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-set scrolloff=10 " Show context around current cursor position i.e. cursor lines
+set scrolloff=999 " Show context around current cursor position i.e. cursor lines
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

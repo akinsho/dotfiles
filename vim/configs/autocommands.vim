@@ -67,7 +67,6 @@ augroup AirLineRefresh
   autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 augroup END
 
-
   function! s:expand_html_tab()
 " try to determine if we're within quotes or tags.
 " if so, assume we're in an emmet fill area.

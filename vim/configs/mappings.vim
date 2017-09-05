@@ -244,6 +244,7 @@ inoremap <C-u> <ESC>gUiw`]a
 " nnoremap <silent> <C-[> :move-2<cr>
 " xnoremap <silent> <C-k> :move-2<cr>gv
 " xnoremap <silent> <C-j> :move'>+<cr>gv
+
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
 ""---------------------------------------------------------------------------//
@@ -329,7 +330,6 @@ nnoremap ` '
 ""---------------------------------------------------------------------------//
 " press enter for newline without insert
 " nnoremap <localleader><cr> o<esc>
-noremap <tab><CR> o<Esc>
 "******************************************************
 ""---------------------------------------------------------------------------//
 "Sort a visual selection
@@ -479,8 +479,12 @@ xnoremap jk <ESC>
 cnoremap jk <C-C>
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
-noremap K  @='10gk'<CR>
-noremap J  @='10gj'<CR>
+" ********* BIG CHANGE ***********************
+" noremap K  @='10gk'<CR>
+" noremap J  @='10gj'<CR>
+" scroll the viewport faster
+nnoremap J 4<C-e>
+nnoremap K 4<C-y>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>

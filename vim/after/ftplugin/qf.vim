@@ -9,6 +9,10 @@ setlocal winminheight=1 winheight=10 winfixheight
 " setlocal winminheight=10 winheight=10
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
+augroup TakeAllSpace
+  au!
+  autocmd * <buffer> wincmd J
+augroup END
 
 if exists('b:did_ftplugin')
   finish

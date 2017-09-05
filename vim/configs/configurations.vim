@@ -25,8 +25,9 @@ highlight jsSuper ctermfg=13
 highlight jsFuncCall ctermfg=cyan
 highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
 highlight cssBraces ctermfg=cyan
-"highlight jsComment ctermfg=245 ctermbg=none
+highlight Type cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
+"highlight jsComment ctermfg=245 ctermbg=none
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic cterm=italic
 highlight Folded guifg=#FFC66D guibg=NONE
@@ -38,7 +39,6 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 highlight Search ctermbg=NONE guifg=NONE guibg=NONE gui=underline
-" highlight VertSplit guifg=black ctermfg=black
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
 "#282C34
@@ -156,8 +156,9 @@ nmap <localleader>8 <Plug>AirlineSelectTab8
 nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
+""---------------------------------------------------------------------------//
 " Plugin: vim-choosewin {{{
-" ---------------------------------------------------------
+""---------------------------------------------------------------------------//
 " invoke with '-'
 nmap  -  <Plug>(choosewin)
 let g:choosewin_label = 'SDFJKLZXCV'
@@ -359,12 +360,10 @@ nmap s <Plug>(easymotion-overwin-f)
 " Move to line
 map <Leader>L <Plug>(easymotion-bd-jk)
 nmap <Leader>L <Plug>(easymotion-overwin-line)
-if !has('nvim')
-  map  / <Plug>(easymotion-sn)
-  omap / <Plug>(easymotion-tn)
-  map  n <Plug>(easymotion-next)
-  map  N <Plug>(easymotion-prev)
-endif
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 "
 ""---------------------------------------------------------------------------//
 "                    EMMET for Vim
@@ -757,8 +756,13 @@ nnoremap <silent> <localleader>C :Commits<CR>
 nnoremap <silent> <localleader>l :Lines<CR>
 
 " Launch file search using FZF
-nnoremap <localleader>p :GitFiles <CR>
-nnoremap <C-P> :Files<CR>
+if isdirectory(".git")
+  " if in a git project, use :GFiles
+  nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
+else
+  " otherwise, use :FZF
+  nnoremap <silent><C-P> :Files<CR>
+endif
 nnoremap \ :Rg!<CR>
 "Find Word under cursor
 nnoremap <leader>f :Find <C-R><C-W><CR>
