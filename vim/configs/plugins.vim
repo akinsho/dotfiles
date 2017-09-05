@@ -35,6 +35,8 @@ Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree', {'on':['NERDTreeFind', 'NERDTreeToggle']}
+      \ | Plug 'Xuyuanp/nerdtree-git-plugin'
+      \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
@@ -96,7 +98,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
 Plug 'lambdalisue/gina.vim'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
@@ -111,12 +112,13 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-textobj-function'
         \ | Plug 'thinca/vim-textobj-function-javascript'
 "}}}
-"Search Tools =======================
+"Search Tools ======================={{{
 Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
+"}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
 Plug 'kshenoy/vim-signature'
@@ -152,8 +154,6 @@ endif
 
 "Plugins to Try ============================================================
 " Plug 'jodosha/vim-godebug'
-" Plug 'low-ghost/nerdtree-fugitive' - Fugitive capability in nerd tree
-
 " Don't use netrw at all, interferes with "clever" autocommands
 let g:loaded_netrwPlugin = 1
 "}}}

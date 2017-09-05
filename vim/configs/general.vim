@@ -57,7 +57,7 @@ endif
 set modelines=0
 set nomodeline
 " ----------------------------------------------------------------------------
-" Message output on vim actions
+" Message output on vim actions {{{
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start
 set shortmess+=A                      " ignore annoying swapfile messages
@@ -73,7 +73,7 @@ set shortmess+=mnrxo
 if has('patch-7.4.314')
   set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
-
+"}}}
 " ----------------------------------------------------------------------------
 " Window splitting and buffers
 " ----------------------------------------------------------------------------
@@ -88,10 +88,11 @@ if has('folding')
   if has('windows')
     set fillchars=vert:│
     set fillchars+=fold:-
-    set foldmethod=syntax
   endif
-  set foldlevelstart=99
-  set foldnestmax=3
+  if &filetype !=# 'vim'
+    set foldlevelstart=99
+    set foldnestmax=3
+  endif
 endif
 set switchbuf=useopen,usetab,vsplit
 set sessionoptions-=options,blank,folds,help
@@ -132,11 +133,12 @@ endif
 set nrformats-=octal " never use octal when <C-x> or <C-a>"
 "}}}
 " ----------------------------------------------------------------------------
-" Vim Path
+" Vim Path {{{
 " ----------------------------------------------------------------------------
 " set path+=** "Vim searches recursively through all directories and subdirectories
 set path+=**/src/main/**,** " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
 set suffixesadd+=.js,.jsx,.ts,.tsx
+"}}}
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{
 " ----------------------------------------------------------------------------
@@ -177,7 +179,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " --------------------------------------------------------------------------
 set conceallevel=2
 "syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
- set synmaxcol=1024 " don't syntax highlight long lines
+set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
@@ -249,7 +251,7 @@ if has('termguicolors')
 endif
 " ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,tags;,~/.tags
-
+"}}}
 " ----------------------------------------------------------------------------
 " Credit:  June Gunn  - AutoSave
 " ----------------------------------------------------------------------------
@@ -292,17 +294,18 @@ colorscheme quantum
 if has('nvim')
   let g:terminal_scrollback_buffer_size = 100000
   set inccommand=nosplit
-  let g:python_host_prog='/Users/A_nonymous/.pyenv/versions/neovim2/bin/python'
-  let g:python3_host_prog='/Users/A_nonymous/.pyenv/versions/neovim3/bin/python'
+  let g:python_host_prog=$HOME.'/.pyenv/versions/neovim2/bin/python'
+  let g:python3_host_prog=$HOME.'/.pyenv/versions/neovim3/bin/python'
 endif
 "-------------------------------------------------------------
-" Utilities
+" Utilities {{{
 "---------------------------------------------------------------------
 set noshowmode "No mode showing in command pane
 set updatetime=200
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
+"}}}
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin {{{
 " ----------------------------------------------------------------------------
@@ -363,15 +366,15 @@ if has ('persistent_undo')
 endif
 "}}}
 " ----------------------------------------------------------------------------
-" Match and search
+" Match and search {{{
 " ----------------------------------------------------------------------------
 set ignorecase
 set smartcase
 set wrapscan " Searches wrap around the end of the file
-set hlsearch " -functionality i.e. search highlighting done by easy motion and incsearch
 if &filetype ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
+"}}}
 " ----------------------------------------------------------------------------
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
@@ -381,7 +384,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-set scrolloff=999 " Show context around current cursor position i.e. cursor lines
+set scrolloff=999
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

@@ -20,3 +20,4 @@ function! AutoHighlightToggle()
     return 1
   endif
 endfunction
+call AutoHighlightToggle()

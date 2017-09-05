@@ -66,22 +66,9 @@ fbr() {
     git checkout "$(echo "$branch" | sed "s/.* //")"
 }
 
-# cf() {
-#   local file
-#
-#   # file="$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1)"
-#   file="$(fzf --read0 -0 -1)"
-#
-#   if [[ -n $file ]]
-#   then
-#      if [[ -d $file ]]
-#      then
-#         cd -- $file
-#      else
-#         cd -- ${file:h}
-#      fi
-#   fi
-# }
+vmod(){
+  vim "$(git status -s | fzf -m)"
+}
 
 # fs [FUZZY PATTERN] - Select selected tmux session
 #   - Bypass fuzzy finder if there's only one match (--select-1)

@@ -136,8 +136,7 @@ let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ '
 " let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
 let g:airline_section_c                            = '%t %{GetFileSize()}'
 let g:airline#extensions#tabline#show_close_button = 1
-let g:airline#extensions#ale#error_symbol          = '✖ : '
-let g:airline#extensions#ale#warning_symbol        = '⚠ : '
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:airline_inactive_collapse                    = 1
 " * configure pattern to be ignored on BufAdd autocommand >
 " fixes unnecessary redraw, when e.g. opening Gundo window
@@ -358,8 +357,8 @@ omap t <Plug>(easymotion-bd-tl)
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
 " Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+map <Leader>k <Plug>(easymotion-bd-jk)
+nmap <Leader>k <Plug>(easymotion-overwin-line)
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
@@ -673,7 +672,7 @@ augroup goyo_markdown
   autocmd User GoyoLeave nested call s:goyo_leave()
 augroup END
 ""---------------------------------------------------------------------------//
-" VIM MARKDOWN
+" VIM MARKDOWN {{{
 ""---------------------------------------------------------------------------//
 let g:vim_markdown_fenced_languages = [
   \'css',
@@ -688,14 +687,16 @@ let g:vim_markdown_fenced_languages = [
   \]
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
+"}}}
 ""---------------------------------------------------------------------------//
-" VIM ROOTER
-""---------------------------------------------------------------------------//
+" VIM ROOTER {{{
+"---------------------------------------------------------------------------//
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_silent_chdir = 1
 let g:rooter_resolve_links = 1
+" }}}
 ""---------------------------------------------------------------------------//
-" ULTISNIPS
+" ULTISNIPS {{{
 ""---------------------------------------------------------------------------//
 " Snippet settings:
 let g:snips_author = 'Akin Sowemimo'
@@ -706,8 +707,9 @@ let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
 nnoremap <localleader>u :UltiSnipsEdit<CR>
+"}}}
 ""---------------------------------------------------------------------------//
-" FZF
+" FZF {{{
 ""---------------------------------------------------------------------------//
 if has('nvim')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
@@ -728,13 +730,20 @@ endif
 if !has('gui_running')
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
+command! -bang -nargs=? -complete=dir GFiles
+  \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 command! -bang Dots
       \ call fzf#run(fzf#wrap('dotfiles', {'dir': $DOTFILES}, <bang>0))
 
+command! Modified call fzf#run(fzf#wrap(
+  \ {'source': 'git ls-files --exclude-standard --others --modified'}))
+
+noremap <localLeader>mo :Modified<cr>
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
@@ -825,10 +834,11 @@ function! Fzf_dev()
         \ 'down':    '40%' })
 endfunction
 endif
-
+"}}}
 ""---------------------------------------------------------------------------//
-" DEVDOCS & DASH "Devdocs is free but opens a browser tab Dash isn't but opens
+"  "Devdocs is free but opens a browser tab Dash isn't but opens
 " the local app which is preferable
+"DEVDOCS & DASH {{{
 ""---------------------------------------------------------------------------//
 let g:devdocs_filetype_map = {
     \   'ruby': 'rails',
@@ -839,8 +849,9 @@ let g:devdocs_filetype_map = {
 
 command! -nargs=* DevDocsReact call devdocs#open_doc(<q-args>, 'react')
 nmap <leader>D <Plug>(devdocs-under-cursor)
+"}}}
 ""---------------------------------------------------------------------------//
-" STARTIFY
+" STARTIFY {{{
 ""---------------------------------------------------------------------------//
 let g:startify_list_order = [
       \ ['   😇 My Sessions:'],
@@ -881,12 +892,12 @@ let g:startify_session_persistence    = 1
 let g:startify_update_oldfiles        = 1
 let g:startify_session_sort           = 1
 let g:startify_change_to_vcs_root     = 1
-
+"}}}
 ""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
 ""---------------------------------------------------------------------------//
-" TMUX NAVIGATOR
+" TMUX NAVIGATOR {{{
 ""---------------------------------------------------------------------------//
 if exists('$TMUX')
   " Disable tmux navigator when zooming the Vim pane

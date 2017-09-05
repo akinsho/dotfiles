@@ -1,4 +1,4 @@
-setl softtabstop=4 tabstop=4 shiftwidth=4
+setl softtabstop=4 tabstop=4 shiftwidth=4 foldmethod=syntax
 setl completeopt-=preview
 if has('nvim')
   nnoremap <localleader>p :TSDefPreview<CR>
