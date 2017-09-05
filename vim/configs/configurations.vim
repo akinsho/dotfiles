@@ -279,6 +279,7 @@ nnoremap <leader>gm :Gmove<CR>
 nnoremap <leader>gre :Gread<CR>
 "Remove the current file and the corresponding buffer
 nnoremap <leader>grm :Gremove<CR>
+"See in a side window who is responsible for lines of code
 nnoremap <leader>gbl :Gblame<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gd :Gdiff<CR>
@@ -761,8 +762,6 @@ command! -bang -nargs=* Rg
       \   <bang>0 ? fzf#vim#with_preview('right:60%')
       \           : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0)
-
-
 
 imap <c-x>l <plug>(fzf-complete-line)
 imap <c-x>p <plug>(fzf-complete-path)
