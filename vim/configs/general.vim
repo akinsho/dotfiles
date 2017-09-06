@@ -50,9 +50,7 @@ function! XTermPasteBegin()
   return ''
 endfunction
 
-if !has('nvim')
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-endif
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 set modelines=0
 set nomodeline

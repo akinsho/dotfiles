@@ -119,7 +119,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>n :enew<cr>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-" nnoremap <leader>q :bp <BAR> bd #<CR>
+nnoremap <leader>q :bp <BAR> bd #<CR>
 " Better redo
 nnoremap U <C-R>
 " Paste in visual mode multiple times

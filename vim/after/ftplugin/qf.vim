@@ -1,17 +1,15 @@
 " Snippets from vim-qf
 " Credits: https://github.com/romainl/vim-qf
-
 setlocal number
 setlocal norelativenumber
 setlocal nolist
 setlocal wrap
+if has('nvim')
+  highlight QuickFixLine gui=bold
+endif
 " setlocal winminheight=1 winheight=10 winfixheight
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
-augroup TakeAllSpace
-  au!
-  autocmd * <buffer> wincmd J
-augroup END
 
 if exists('b:did_ftplugin')
   finish
@@ -43,18 +41,18 @@ else
 endif
 
 function! s:preview_file()
-  let winwidth = &columns
-  let cur_list = b:qf_isLoc == 1 ? getloclist('.') : getqflist()
-  let cur_line = getline(line('.'))
-  let cur_file = fnameescape(substitute(cur_line, '|.*$', '', ''))
-  if cur_line =~# '|\d\+'
-    let cur_pos  = substitute(cur_line, '^\(.\{-}|\)\(\d\+\)\(.*\)', '\2', '')
-    execute 'vertical pedit! +'.cur_pos.' '.cur_file
+  let l:winwidth = &columns
+  let l:cur_list = b:qf_isLoc == 1 ? getloclist('.') : getqflist()
+  let l:cur_line = getline(line('.'))
+  let l:cur_file = fnameescape(substitute(l:cur_line, '|.*$', '', ''))
+  if l:cur_line =~# '|\d\+'
+    let l:cur_pos  = substitute(l:cur_line, '^\(.\{-}|\)\(\d\+\)\(.*\)', '\2', '')
+    execute 'vertical pedit! +'.l:cur_pos.' '.l:cur_file
   else
-    execute 'vertical pedit! '.cur_file
+    execute 'vertical pedit! '.l:cur_file
   endif
   wincmd P
-  execute 'vert resize '.(winwidth / 2)
+  execute 'vert resize '.(l:winwidth / 2)
   wincmd p
 endfunction
 
@@ -72,8 +70,10 @@ function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([l:n_lines, a:maxheight]), a:minheight]) . 'wincmd _'
 endfunction
 
-augroup AdjustWindowHeight
-   au!  <buffer> call AdjustWindowHeight(3, 8)
+augroup QFCommands
+  au!
+  autocmd * <buffer> wincmd J
+  autocmd * <buffer><silent> call AdjustWindowHeight(3, 8)
 augroup END
 
 let &cpoptions = s:save_cpo

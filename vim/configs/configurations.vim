@@ -49,7 +49,6 @@ endif
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
-  highlight QuickFixLine guibg=#717673 gui=bold
   highlight TermCursor ctermfg=green guifg=green
 endif
 ""---------------------------------------------------------------------------//
@@ -107,7 +106,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nerdtree'] = ''
 ""---------------------------------------------------------------------------//
-"               Airline
+"               Airline {{{
 ""---------------------------------------------------------------------------//
 let g:airline_highlighting_cache                          = 1
 let g:airline#extensions#branch#empty_message             = "No Git 😅"
@@ -133,7 +132,6 @@ let g:airline_left_sep                                    = ''
 let g:ff_map                                              = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
-" let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
 let g:airline_section_c                            = '%t %{GetFileSize()}'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
@@ -155,6 +153,7 @@ nmap <localleader>8 <Plug>AirlineSelectTab8
 nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
+"}}}
 ""---------------------------------------------------------------------------//
 " Plugin: vim-choosewin {{{
 ""---------------------------------------------------------------------------//
