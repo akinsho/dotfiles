@@ -38,7 +38,7 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-highlight Search ctermbg=NONE guifg=NONE guibg=NONE gui=underline
+highlight Search ctermbg=NONE guifg=NONE guibg=NONE
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
 "#282C34
@@ -164,12 +164,13 @@ let g:choosewin_label = 'SDFJKLZXCV'
 let g:choosewin_statusline_replace = 1
 let g:choosewin_overlay_enable = 1
 let g:choosewin_blink_on_land = 0
+"}}}
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//
 noremap <leader>vc <c-o>:VCoolor<CR>
 "--------------------------------------------
-" CTRLSF - CTRL-SHIFT-F
+" CTRLSF - CTRL-SHIFT-F {{{
 "--------------------------------------------
 let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
 let g:ctrlsf_winsize      = "30%"
@@ -188,7 +189,7 @@ inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 function! g:CtrlSFAfterMainWindowInit()
   setl wrap nonumber norelativenumber
 endfunction
-
+"}}}
 ""---------------------------------------------------------------------------//
 " TEXTOBJECT - COMMENT
 ""---------------------------------------------------------------------------//
@@ -235,11 +236,6 @@ let g:ale_set_highlights    = 0
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
-""---------------------------------------------------------------------------//
-" Sayonara
-""---------------------------------------------------------------------------//
-nnoremap <C-Q> :Sayonara<CR>
-nnoremap <leader>q :on<CR>
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
@@ -448,7 +444,7 @@ if has("nvim")
   let g:deoplete#enable_smart_case        = 1
   " Autocomplete delay is the aim here
   let g:deoplete#auto_complete_delay      = 0
-  let g:deoplete#auto_refresh_delay       = 20
+  let g:deoplete#auto_refresh_delay       = 0
   let g:deoplete#max_menu_width           = 40
   let g:deoplete#file#enable_buffer_path  = 1
   let g:deoplete#ignore_sources = {}
@@ -800,6 +796,7 @@ let g:fzf_nvim_statusline = 1
   let g:fzf_colors =
         \ { 'fg':    ['fg', 'Normal'],
         \ 'bg':      ['bg', 'Normal'],
+        \ 'border':  ['fg', 'Ignore'],
         \ 'hl':      ['fg', 'Comment'],
         \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
         \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],

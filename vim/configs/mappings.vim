@@ -487,11 +487,11 @@ cnoremap jk <C-C>
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
 " ********* BIG CHANGE ***********************
-" noremap K  @='10gk'<CR>
-" noremap J  @='10gj'<CR>
+noremap K  @='10gk'<CR>
+noremap J  @='10gj'<CR>
 " scroll the viewport faster
-nnoremap J 4<C-e>
-nnoremap K 4<C-y>
+nnoremap <c-e> 4<C-e>
+nnoremap <c-y> 4<C-y>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -572,7 +572,8 @@ fu! ToggleColorColumn()
 endfunction
 nnoremap <F4> :call ToggleColorColumn()<CR>
 
-
+nnoremap p p=`]<c-o>
+nnoremap P P=`]<c-o>
 ""---------------------------------------------------------------------------//
 " GREPPING
 ""---------------------------------------------------------------------------//

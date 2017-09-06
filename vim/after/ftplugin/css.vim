@@ -1,5 +1,6 @@
 set iskeyword+=- "Enables better css syntax highlighting
 setlocal foldlevelstart=99
+setlocal nofoldenable
 setlocal foldmarker={,}
 setlocal foldtext=CSSFoldText()
 

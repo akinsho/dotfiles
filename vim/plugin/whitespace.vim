@@ -17,7 +17,7 @@ endif
 function! s:ToggleWhitespace(mode)
   if &buftype =~? 'nofile\|help\|quickfix' || &filetype ==? ''
     return
-  elseif a:mode ==? ''
+  elseif a:mode ==? '' && exists('w:whitespace_match_id')
     call matchdelete(w:whitespace_match_id)
     return
   else

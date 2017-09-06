@@ -75,7 +75,7 @@ if has('patch-7.4.314')
 endif
 "}}}
 " ----------------------------------------------------------------------------
-" Window splitting and buffers
+" Window splitting and buffers {{{
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
@@ -103,6 +103,7 @@ if &term =~# '256color'
     " disable background color erase
     set t_ut=
   endif
+  "}}}
 " ----------------------------------------------------------------------------
 " DIFFING {{{
 " ----------------------------------------------------------------------------
@@ -228,11 +229,11 @@ if exists('&signcolumn')
   set signcolumn=yes "enables column that shows signs and error symbols
 endif
 set ruler
-set incsearch
 set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set autowrite "Automatically :write before running commands
 if !has('nvim')
+  set incsearch
   set complete-=i
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set autoindent

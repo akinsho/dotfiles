@@ -1,12 +1,11 @@
+" NERDTrees File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg)
+  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
+  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
 augroup NERDTreeHighlighing
 "Clear AUTOCOMMAND Always FFS
   au!
-  " NERDTrees File highlighting
-  function! NERDTreeHighlightFile(extension, fg, bg, guifg)
-    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
-    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-  endfunction
-
   call NERDTreeHighlightFile('html', 202, 'none', '#FC4709')
   call NERDTreeHighlightFile('hbs', 202, 'none', '#FC4709')
   call NERDTreeHighlightFile('jade', 149, 'none', '#A0D24D')

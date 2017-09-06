@@ -1,26 +1,26 @@
 function! GetBufferList()
-  redir =>buflist
+  redir => l:buflist
   silent! ls!
   redir END
-  return buflist
+  return l:buflist
 endfunction
 
 function! ToggleList(bufname, pfx)
-  let buflist = GetBufferList()
-  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
+  let l:buflist = GetBufferList()
+  for l:bufnum in map(filter(split(l:buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(l:bufnum) != -1
       exec(a:pfx.'close')
       return
     endif
   endfor
-  if a:pfx == 'l' && len(getloclist(0)) == 0
+  if a:pfx ==# 'l' && len(getloclist(0)) ==# 0
       echohl ErrorMsg
-      echo "Location List is Empty."
+      echo 'Location List is Empty.'
       return
   endif
-  let winnr = winnr()
+  let l:winnr = winnr()
   exec(a:pfx.'open')
-  if winnr() != winnr
+  if winnr() != l:winnr
     wincmd p
   endif
 endfunction

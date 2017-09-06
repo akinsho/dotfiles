@@ -69,8 +69,8 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'mhinz/vim-sayonara'
 Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
+" Plug 'mhinz/vim-sayonara'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
@@ -108,7 +108,7 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-smartword'
 Plug 'kana/vim-textobj-user'
-      \ | Plug 'whatyouhide/vim-textobj-xmlattr', { 'for':['html', 'javascript', 'typescript'] }
+      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'terryma/vim-expand-region'
       \ | Plug 'paulhybryant/vim-textobj-path'
