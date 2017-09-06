@@ -43,8 +43,9 @@ vnoremap <leader><leader> xi()<Esc>P
 " Open new tab more easily:
 nnoremap ,t :tabnew<cr>
 nnoremap ,T :tabedit %<cr>gT:quit<cr>
+"}}}
 ""---------------------------------------------------------------------------//
-" MACROS
+" MACROS {{{
 ""---------------------------------------------------------------------------//
 " Quickly make a macro and use it with "."
 let s:simple_macro_active = 0
@@ -96,13 +97,20 @@ endfunction
 function! s:Unfocus()
   call clearmatches()
 endfunction
-
+"}}}
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
 ""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 ""---------------------------------------------------------------------------//
+" Make the given command repeatable using repeat.vim
+command! -nargs=* Repeatable call s:Repeatable(<q-args>)
+function! s:Repeatable(command)
+  exe a:command
+  call repeat#set(':Repeatable '.a:command."\<cr>")
+endfunction
+
 "Tab completion
 ""---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -112,7 +120,6 @@ nnoremap <leader>n :enew<cr>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 " nnoremap <leader>q :bp <BAR> bd #<CR>
-" nnoremap <leader>q :on<CR>
 " Better redo
 nnoremap U <C-R>
 " Paste in visual mode multiple times

@@ -23,7 +23,6 @@ set cpoptions&vim
 
 let b:undo_ftplugin = 'setl fo< com< ofu<'
 
-
 " open entry in a new horizontal window
 nnoremap <silent><buffer> s <C-w><CR>
 nnoremap <buffer><CR> <CR><C-w>p
@@ -74,7 +73,7 @@ function! AdjustWindowHeight(minheight, maxheight)
 endfunction
 
 augroup AdjustWindowHeight
-   au!  <buffer> call AdjustWindowHeight(8, 8)
+   au!  <buffer> call AdjustWindowHeight(3, 8)
 augroup END
 
 let &cpoptions = s:save_cpo
