@@ -615,10 +615,10 @@ xmap X <Plug>(Exchange)
 ""---------------------------------------------------------------------------//
 " Smart Word & CamelCaseMotion Match made in Heaven!!
 ""---------------------------------------------------------------------------//
-map w  <Plug>(smartword-w)
-map b  <Plug>(smartword-b)
-map e  <Plug>(smartword-e)
-map ge  <Plug>(smartword-ge)
+nmap w  <Plug>(smartword-w)
+nmap b  <Plug>(smartword-b)
+nmap e  <Plug>(smartword-e)
+nmap ge  <Plug>(smartword-ge)
 
 xmap w  <Plug>(smartword-w)
 xmap b  <Plug>(smartword-b)
