@@ -119,7 +119,8 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <leader>n :enew<cr>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-nnoremap <leader>q :bp <BAR> bd #<CR>
+" nnoremap <leader>q :bp <BAR> bd #<CR>
+nnoremap <leader>q :on<cr>
 " Better redo
 nnoremap U <C-R>
 " Paste in visual mode multiple times
@@ -154,9 +155,6 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 ""---------------------------------------------------------------------------//
 " Smart mappings on the command line
 cno $d e ~/Desktop/
-
-" $q is super useful when browsing on the command line
-" it deletes everything until the last slash
 " insert path of current file into a command
 cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
@@ -382,6 +380,9 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+" Repeat last substitute with flags
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
 ""---------------------------------------------------------------------------//
 " Insert & Commandline mode Paste
 ""---------------------------------------------------------------------------//
@@ -434,7 +435,9 @@ function! s:goto_line()
   execute printf('normal! %dG%d|', line, col)
 endfunction
 
-autocmd! BufNewFile * nested call s:goto_line()
+augroup GoToLine
+  autocmd! BufNewFile * nested call s:goto_line()
+augroup END
 " ----------------------------------------------------------------------------
 " <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------

@@ -127,6 +127,7 @@ augroup mutltiple_filetype_settings
     autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx
           \ setlocal omnifunc=javascriptcomplete#CompleteJS
   endif
+  au * BufWinEnter :AutoSave<CR> | echom 'Autosave Enabled'
 augroup END
 
 augroup filetype_javascript_typescript

@@ -9,7 +9,6 @@ set macmeta
 set linespace=3
 set ballooneval
 let g:balloondelay = 600
-"autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
 let g:gitgutter_enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''

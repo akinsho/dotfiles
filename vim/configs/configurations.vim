@@ -130,9 +130,9 @@ let g:airline#extensions#tabline#right_alt_sep            = ''
 let g:airline_right_sep                                   = ''
 let g:airline_left_sep                                    = ''
 let g:ff_map                                              = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+let g:airline_section_c                            = airline#section#create(["%{getcwd()}", g:airline_symbols.space, '%t %{GetFileSize()}'])
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
-let g:airline_section_c                            = '%t %{GetFileSize()}'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:airline_inactive_collapse                    = 1
@@ -305,10 +305,12 @@ let g:go_highlight_functions    = 1
 let g:go_highlight_methods      = 1
 let g:go_highlight_extra_types  = 1
 let g:go_highlight_structs      = 1
+let g:go_highlight_operators    = 1
 ""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
+
 if has('mac')
   let g:gitgutter_enabled               = 1
   let g:gitgutter_eager                 = 1
@@ -388,12 +390,13 @@ nnoremap <leader>u :UndotreeToggle<CR>
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
 ""---------------------------------------------------------------------------//
-" EDITOR CONFIG
+" EDITOR CONFIG {{{
 ""---------------------------------------------------------------------------//
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+"}}}
 ""---------------------------------------------------------------------------//
-"Plugin configurations "{{{
+" NERDComment {{{
 ""---------------------------------------------------------------------------//
 
 " let test#runners = {'Typescript': ['Mocha', 'Jest']}
@@ -417,6 +420,7 @@ nmap <silent> <leader>vT :TestFile<CR>
 nmap <silent> <leader>va :TestSuite<CR>
 nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
+"}}}
 ""---------------------------------------------------------------------------//
 " Polyglot
 ""---------------------------------------------------------------------------//
@@ -441,10 +445,7 @@ let g:echodoc#type              = "signature"
 if has("nvim")
   let g:deoplete#enable_at_startup        = 1
   let g:deoplete#enable_smart_case        = 1
-  " Autocomplete delay is the aim here
-  let g:deoplete#auto_complete_delay      = 0
-  let g:deoplete#auto_refresh_delay       = 0
-  let g:deoplete#max_menu_width           = 40
+  let g:deoplete#max_menu_width           = 80
   let g:deoplete#file#enable_buffer_path  = 1
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['around']
