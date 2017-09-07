@@ -27,8 +27,8 @@ if has('nvim')
   tmap <leader>7  <C-\><C-n><Plug>AirlineSelectTab7
   tmap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
   tmap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
-  nmap <leader>t :term<cr>
   tmap <leader>, <C-\><C-n>:bnext<cr>
+  nmap <leader>t :term<cr>
 "Opening splits with terminal in all directions
 nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
 nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
