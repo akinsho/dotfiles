@@ -344,6 +344,9 @@ if exists('$SUDO_USER')
   set nobackup                        " don't create root-owned files
   set nowritebackup                   " don't create root-owned files
 else
+  if !isdirectory($HOME."/.vim/.backup")
+    call mkdir("/.vim/.backup", "p")
+  endif
   set backupdir=~/.vim/.backup//
   set backupdir+=~/local/.vim/tmp/backup
   set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
@@ -355,6 +358,9 @@ if has ('persistent_undo')
   if exists('$SUDO_USER')
     set noundofile "Dont add root owned files which I will need to sudo to remove
   else
+    if !isdirectory($HOME."/.vim/.undo")
+      call mkdir("/.vim/.undo", "p")
+    endif
     set undodir=~/.vim/.undo//
     set undolevels=1000
     set undodir+=~/local/.vim/tmp/undo

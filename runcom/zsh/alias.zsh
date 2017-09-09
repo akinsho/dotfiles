@@ -2,6 +2,7 @@
 # Aliases
 # ================================================================================
 alias x="exit" # Exit Terminal
+alias t=_t
 alias eal="vim ~/Dotfiles/configs/alacritty/alacritty.yml"
 alias neal="nvim ~/Dotfiles/configs/alacritty/alacritty.yml"
 alias dots="cd ~/Dotfiles"

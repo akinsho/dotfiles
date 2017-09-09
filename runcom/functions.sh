@@ -1,11 +1,14 @@
 #!/bin/zsh
+# courtesy of wes bos https://gist.github.com/wesbos/1432b08749e3cd2aea22fcea2628e2ed
+function _t() {
+  # Defaults to 3 levels deep, do more with `t 5` or `t 1`
+  # pass additional args after
+  local levels=${1:-3}; shift
+  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst -L $levels -aC $@
+}
+
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
-
-function tr(){
-  #Defaults to 3 levels deep
-  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 20 -L ${1:-3} -aC $2
-}
 
 # Vim
 function v() {

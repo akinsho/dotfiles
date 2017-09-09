@@ -46,7 +46,7 @@ if which ruby >/dev/null && which gem >/dev/null; then
 fi
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/A_nonymous/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="spaceship"
 
@@ -168,13 +168,11 @@ SPACESHIP_VI_MODE_SHOW=true
 SPACESHIP_VI_MODE_INSERT="✏️ "
 SPACESHIP_VI_MODE_NORMAL="🏃🏾"
 # GIT
-SPACESHIP_PREFIX_GIT='  on '
-SPACESHIP_GIT_STASHED=' 💰 '
-SPACESHIP_GIT_UNTRACKED=' 😰 '
+SPACESHIP_GIT_PREFIX='  on '
+SPACESHIP_GIT_STATUS_STASHED=' 💰 '
+SPACESHIP_GIT_STATUS_UNTRACKED=' 😰 '
 
-
-SPACESHIP_PREFIX_NVM=' @ '
-SPACESHIP_NVM_SHOW=true
+SPACESHIP_NODE_PREFIX=' @ '
 
 
 SPACESHIP_RUBY_SHOW=false
@@ -244,11 +242,15 @@ if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
 fi
 
 # EMOJI-CLI
-source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
+if [ -f $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh ]; then
+  source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
+fi
 
 
 #ENHANCD ================================================================
-source ~/enhancd/init.sh
+if [ -f ~/enhancd/init.sh ]; then
+  source ~/enhancd/init.sh
+fi
 
 #=======================================================================
 #   LOCAL SCRIPTS
@@ -295,3 +297,6 @@ end_time="$(date +%s)"
 # difference
 echo load time: $((end_time - start_time)) seconds
 # zprof
+
+
+source "${HOME}/Dotfiles/oh-my-zsh/themes/spaceship.zsh-theme"
