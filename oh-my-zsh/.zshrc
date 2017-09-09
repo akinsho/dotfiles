@@ -108,6 +108,7 @@ plugins=(
         brew
         zsh-syntax-highlighting
         zsh-autosuggestions
+        zsh-iterm-touchbar
         )
 
 # web-search - great plugin, google from the command line although I never use
@@ -181,6 +182,13 @@ SPACESHIP_PYENV_SHOW=   false
 SPACESHIP_PYENV_SYMBOL='🐍'
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
+
+export GIT_UNCOMMITTED="+"
+export GIT_UNSTAGED="!"
+export GIT_UNTRACKED="?"
+export GIT_STASHED="$"
+export GIT_UNPULLED="⇣"
+export GIT_UNPUSHED="⇡"
 #=======================================================================
 # User configuration
 #=======================================================================

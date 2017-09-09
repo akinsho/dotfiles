@@ -208,15 +208,16 @@ endif
 " Enable completion where available.
 " let g:ale_completion_enabled          = 1 "Careful clashes with other completion engines
 " let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
+let g:ale_open_list                            = 'on_save'
 let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_pattern_options             = {'\.min.js$': {'ale_enabled': 0}}
-let g:ale_fixers                      = {}
-let g:ale_fixers.javascript           = ['prettier', 'eslint']
-let g:ale_fixers.typescript           = ['prettier']
-let g:ale_fixers.json                 = ['prettier']
-let g:ale_fixers.css                  = ['stylelint']
-let g:ale_sh_shellcheck_options       = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
+let g:ale_javascript_prettier_options          = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_pattern_options                      = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_fixers                               = {}
+let g:ale_fixers.javascript                    = ['prettier', 'eslint']
+let g:ale_fixers.typescript                    = ['prettier']
+let g:ale_fixers.json                          = ['prettier']
+let g:ale_fixers.css                           = ['stylelint']
+let g:ale_sh_shellcheck_options                = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
 let g:ale_sign_error                  = '✘'
@@ -230,8 +231,8 @@ let g:ale_linters                     = {
       \'go': ['go build', 'gofmt', 'golint', 'go vet'],
       \'html':[]
       \}
-let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
 let g:ale_set_highlights    = 0
+let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
