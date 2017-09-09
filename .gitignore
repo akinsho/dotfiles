@@ -5,3 +5,4 @@ node
 local
 .DS_Store
 *~
+.tern-port

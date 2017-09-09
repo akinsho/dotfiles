@@ -40,7 +40,7 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=none
+highlight IncSearch ctermbg=NONE guifg=#FF486C guibg=NONE gui=underline cterm=none
 hi! link Search IncSearch
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
@@ -524,7 +524,7 @@ if has("nvim")
         \ 'tern#Complete',
         \]
 
-  let g:nvim_typescript#javascript_support       = 1
+  let g:nvim_typescript#javascript_support       = 0
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
   let g:deoplete#sources#ternjs#docs             = 1
