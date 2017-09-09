@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" => HELPER FUNCTIONS
+" => HELPER FUNCTIONS {{{
 ""---------------------------------------------------------------------------//
 function! JsEchoError(msg)
   redraw | echon 'js: ' | echohl ErrorMsg | echon a:msg | echohl None
@@ -51,7 +51,7 @@ function! XTermPasteBegin()
 endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
+"}}}
 set modelines=0
 set nomodeline
 " ----------------------------------------------------------------------------
@@ -65,7 +65,6 @@ set shortmess+=W                      " don't echo "[w]"/"[written]" when writin
 set shortmess-=l
 set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 set shortmess-=f                      " (file x of x) instead of just (x of x)
-" set shortmess+=I                      " no splash screen
 set shortmess+=F                      "Dont give file info when editing a file
 set shortmess+=mnrxo
 if has('patch-7.4.314')
@@ -82,6 +81,11 @@ set nohidden
 set winwidth=30
 set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
+set switchbuf=useopen,usetab,vsplit
+set sessionoptions=buffers,folds,sesdir,tabpages,winsize  " What to save in a session.
+if !has('nvim')
+  set termsize="10x30"
+endif
 if has('folding')
   if has('windows')
     set fillchars=vert:│
@@ -92,15 +96,10 @@ if has('folding')
     set foldnestmax=3
   endif
 endif
-set switchbuf=useopen,usetab,vsplit
-set sessionoptions-=options,blank,folds,help
-if !has('nvim')
-  set termsize="10x30"
-endif
 if &term =~# '256color'
-    " disable background color erase
-    set t_ut=
-  endif
+  " disable background color erase
+  set t_ut=
+endif
   "}}}
 " ----------------------------------------------------------------------------
 " DIFFING {{{
@@ -109,8 +108,7 @@ if &term =~# '256color'
 " Note this is += since fillchars was defined in the window config
 set fillchars+=diff:⣿
 set diffopt=vertical                  " Use in vertical diff mode
-set diffopt+=filler                   " blank lines to keep sides aligned
-set diffopt+=iwhite                   " Ignore whitespace changes
+set diffopt+=filler,iwhite,foldcolumn:0,context:4                    " blank lines to keep sides aligned, Ignore whitespace changes
 "}}}
 " ----------------------------------------------------------------------------
 "             FORMAT OPTIONS {{{
@@ -201,22 +199,14 @@ set listchars+=eol:\
 " =====================================================================
 "-----------------------------------
 set iskeyword+=_,$,@,%,#
-if has('unnamedplus')
-  set clipboard=unnamedplus
-elseif has('clipboard')
-  set clipboard=unnamed
-endif
 set nojoinspaces
 set gdefault
+set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 " insert completion height and options
+set secure  " Disable autocmd etc for project local vimrc files.
 set pumheight=10
 set title
 set number relativenumber
-if !has('gui_running')
-  set linespace=4
-else
-  set linespace=2
-endif
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
@@ -229,7 +219,18 @@ endif
 set ruler
 set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
+set nohlsearch
 set autowrite "Automatically :write before running commands
+if !has('gui_running')
+  set linespace=4
+else
+  set linespace=2
+endif
+if has('unnamedplus')
+  set clipboard=unnamedplus
+elseif has('clipboard')
+  set clipboard=unnamed
+endif
 if !has('nvim')
   set incsearch
   set complete-=i
@@ -252,7 +253,7 @@ endif
 set tags=./.tags,tags;,~/.tags
 "}}}
 " ----------------------------------------------------------------------------
-" Credit:  June Gunn  - AutoSave
+" Credit:  June Gunn  - AutoSave {{{
 " ----------------------------------------------------------------------------
 function! s:autosave(enable)
   augroup autosave
@@ -268,17 +269,16 @@ endfunction
 
 command! -bang AutoSave call s:autosave(<bang>1)
 "}}}
-" ----------------------------------------------------------------------------
-" ------------------------------------
-" Command line
-" ------------------------------------
+""---------------------------------------------------------------------------//
+" Command line {{{
+""---------------------------------------------------------------------------//
 set noshowcmd "Show commands being input
 set cmdheight=2 " Set command line height to two lines
+"}}}
 "-----------------------------------------------------------------
-"Abbreviations
+"Abbreviations {{{
 "-----------------------------------------------------------------
 iabbrev w@ www.akin-sowemimo.com
-
 "}}}
 ""---------------------------------------------------------------------------//
 "Colorscheme {{{
@@ -287,7 +287,7 @@ set background=dark
 colorscheme quantum
 "}}}
 ""---------------------------------------------------------------------------//
-"NVIM
+"NVIM {{{
 ""---------------------------------------------------------------------------//
 if has('nvim')
   let g:terminal_scrollback_buffer_size = 100000
@@ -295,6 +295,7 @@ if has('nvim')
   let g:python_host_prog=$HOME.'/.pyenv/versions/neovim2/bin/python'
   let g:python3_host_prog=$HOME.'/.pyenv/versions/neovim3/bin/python'
 endif
+"}}}
 ""---------------------------------------------------------------------------//
 " Utilities {{{
 ""---------------------------------------------------------------------------//

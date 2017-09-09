@@ -6,14 +6,17 @@
 " let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn guibg=#2c3a41
 ""---------------------------------------------------------------------------//
-highlight clear SpellBad
+syntax clear SpellBad
+syntax clear SpellCap
+syntax clear SpellLocal
+syntax clear SpellRare
+syntax clear Search
+
 highlight SpellBad  term=underline cterm=italic ctermfg=Red
-highlight clear SpellCap
 highlight SpellCap  term=underline cterm=italic ctermfg=Blue
 highlight clear SpellLocal
-highlight SpellLocal  term=underline cterm=italic ctermfg=Blue
-highlight clear SpellRare
-highlight SpellRare  term=underline cterm=italic ctermfg=Blue
+highlight! link SpellLocal SpellCap
+highlight! link SpellRare SpellCap
 highlight clear Conceal "Sets no highlighting for conceal
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
@@ -27,7 +30,6 @@ highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
 highlight cssBraces ctermfg=cyan
 highlight Type cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
-"highlight jsComment ctermfg=245 ctermbg=none
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic cterm=italic
 highlight Folded guifg=#FFC66D guibg=NONE
@@ -38,7 +40,8 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-highlight Search ctermbg=NONE guifg=NONE guibg=NONE
+highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=none
+hi! link Search IncSearch
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
 "#282C34
@@ -51,6 +54,10 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
+
+" For viewing patches
+highlight diffRemoved guifg=red
+highlight diffAdded guifg=green
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
@@ -316,8 +323,8 @@ if has('mac')
   let g:gitgutter_enabled               = 1
   let g:gitgutter_eager                 = 1
   let g:gitgutter_grep_command          = 'ag --nocolor'
-  let g:gitgutter_sign_added            = '😻'
-  let g:gitgutter_sign_modified         = '🍄'
+  let g:gitgutter_sign_added            = '✨'
+  let g:gitgutter_sign_modified         = '💥'
   let g:gitgutter_sign_removed          = '😤'
   let g:gitgutter_sign_modified_removed = '☁️'
 else

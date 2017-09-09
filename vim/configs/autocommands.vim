@@ -220,6 +220,8 @@ augroup FileType_all
         \   echo 'source '.bufname('%') |
         \ endif
 
+  " Highlight the current word under the cursor
+  autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
 augroup END
 
 augroup fugitiveSettings
