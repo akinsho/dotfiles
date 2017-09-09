@@ -234,6 +234,7 @@ HISTFILE=~/.zsh_history
 
 
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
+export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 # POWERLINE ==========================================================
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
   source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh

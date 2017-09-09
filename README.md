@@ -90,7 +90,7 @@ awesome tools.
 Since I have great aspirations to play with all the languages :smile: here are
 some plugins I'm keeping my eyes on
 
-## Clojure =========================
+## Clojure
 *    Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 *    Plug 'guns/vim-sexp'
 *    Plug 'guns/vim-clojure-highlight'
@@ -116,6 +116,16 @@ setup I mean not the typing).
 * Anywhere else (**not inside this folder**) you need to create a `tmux.terminfo`
     file, a `tmux-256color.terminfo` file and an `xterm-256color.terminfo` file.
 * Finally run the command 
+N.B. The advice I have seen given multiple times is to use the commands below.
+although a recent laptop setup proved unsuccessful using these command. I'll
+leave them for future reference but what I in fact used successfuly was 
+
+```
+//Dotfiles/configs/
+tic xterm-256color.terminfo
+tic tmux-256color.terminfo
+...
+```
 ```
 tic -o /path/to/terminfo_folder /path/to/xterm-256color.terminfo/
 tic -o /path/to/terminfo_folder /path/to/tmux-256color.terminfo/
