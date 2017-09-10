@@ -40,7 +40,7 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-highlight IncSearch ctermbg=NONE guifg=#FF486C guibg=NONE gui=underline cterm=none
+highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=NONE
 hi! link Search IncSearch
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
