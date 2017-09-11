@@ -143,8 +143,8 @@ let g:airline#extensions#tabline#right_sep                = ''
 let g:airline#extensions#tabline#right_alt_sep            = ''
 let g:airline_right_sep                                   = ''
 let g:airline_left_sep                                    = ''
-let g:ff_map                                              = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
-let g:airline_section_c                            = airline#section#create(["%{getcwd()}", g:airline_symbols.space, '%t %{GetFileSize()}'])
+let g:ff_map = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+let g:airline_section_c = airline#section#create(["%{getcwd()}", g:airline_symbols.space, '%t %{GetFileSize()}'])
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
 let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
 let g:airline#extensions#tabline#show_close_button = 1

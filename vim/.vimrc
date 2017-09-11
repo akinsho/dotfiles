@@ -36,7 +36,6 @@ endif
 " ----------------------------------------------------------------------
 if filereadable(expand($DOTFILES.'/vim/configs/configurations.vim'))
   source $DOTFILES/vim/configs/configurations.vim
-  source $DOTFILES/vim/nerdtree.vim
 endif
 
 "-----------------------------------------------------------------------
@@ -50,6 +49,7 @@ endif
 " AUTOCOMMANDS
 ""---------------------------------------------------------------------------//
 source $DOTFILES/vim/configs/autocommands.vim
+source $DOTFILES/vim/nerdtree.vim
 ""---------------------------------------------------------------------------//
 " Essential Settings - Taken care of by Vim Plug
 ""---------------------------------------------------------------------------//

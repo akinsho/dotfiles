@@ -100,6 +100,14 @@ if &term =~# '256color'
 endif
   "}}}
 " ----------------------------------------------------------------------------
+""---------------------------------------------------------------------------//
+" Windows
+""---------------------------------------------------------------------------//
+" Auto resize Vim splits to active split
+set winwidth=104
+set winheight=5
+set winminheight=5
+set winheight=999
 " DIFFING {{{
 " ----------------------------------------------------------------------------
 
@@ -391,6 +399,7 @@ augroup cursorline
 augroup END
 set scrolloff=8
 set sidescrolloff=10
+set sidescroll=1
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}
 "====================================================================================

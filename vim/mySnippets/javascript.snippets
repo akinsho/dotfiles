@@ -1,9 +1,25 @@
 priority 0
 
-snippet af "Anonymous Function" i
-function($1) {
-    ${VISUAL}$0
-}
+global !p
+
+def wrap_to_eol(snip, pre, trigger_len):
+		line_text = snip.buffer[snip.line]
+		_, pos = snip.cursor
+
+		line_to_pos = ('' if pos == trigger_len
+			else line_text[0:pos - trigger_len])
+		to_wrap = line_text[pos:]
+
+		snip.buffer[snip.line] = line_to_pos + pre + to_wrap;
+
+		new_pos = len(line_to_pos) + len(pre) + len(to_wrap)
+		snip.cursor.set(snip.line, new_pos)
+
+endglobal
+
+pre_expand "wrap_to_eol(snip, 'console.warn(', 2)"
+snippet cw "console.warn()"
+$1);
 endsnippet
 
 snippet fun "function (fun)" w
@@ -19,7 +35,7 @@ for (let i = 0; i< $0; i++){
 endsnippet
 
 snippet cl "console log"
-console.log('${1:log}', ${2}$1${3});
+console.log('${1:log}', $1);
 endsnippet
 
 snippet log "console log string"

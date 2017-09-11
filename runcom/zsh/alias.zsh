@@ -25,13 +25,11 @@ alias gbs="git branch | fzf-tmux -d 15"
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
-alias ea="vim ${DOTFILES}/runcom/zsh/alias.zsh"
-alias ez="vim ~/.zshrc"
-alias nez="vim ~/.zshrc"
-alias ev="vim ~/.vimrc"
-alias nev="nvim ~/.vimrc"
-alias et="vim ~/.tmux.conf"
-alias net="nvim ~/.tmux.conf"
+alias ea="nvim ${DOTFILES}/runcom/zsh/alias.zsh"
+alias ez="nvim ~/.zshrc"
+alias nez="nvim ~/.zshrc"
+alias ev="nvim ~/.vimrc"
+alias et="nvim ~/.tmux.conf"
 alias yt="clear && yarn test"
 alias ys="clear && yarn start"
 alias yd="cl && yarn develop"
@@ -45,6 +43,7 @@ alias imux="tmux -CC"
 alias ta="tmux attach -t"
 alias td="tmux detach"
 alias tls="tmux ls"
+alias tkss="killall tmux"
 alias tkill="tmux kill-session -t"
 
 # reload zsh config

@@ -230,6 +230,27 @@ augroup fugitiveSettings
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
 
+
+"toggle relative numbering, and set to absolute on loss of focus or insert mode
+function! ToggleNumbersOn()
+    set nu!
+    set rnu
+endfunction
+function! ToggleRelativeOn()
+    set rnu!
+    set nu
+endfunction
+
+augroup ToggleNumbers
+  au!
+  if &ft != "nerdtree"
+    autocmd FocusLost * call ToggleRelativeOn()
+    autocmd FocusGained * call ToggleRelativeOn()
+    autocmd InsertEnter * call ToggleRelativeOn()
+    autocmd InsertLeave * call ToggleRelativeOn()
+  endif
+augroup END
+
 "Close vim if only window is a Nerd Tree
 augroup NERDTree
   autocmd!
@@ -244,9 +265,9 @@ augroup END
 augroup fix-ultisnips-overriding-tab-visual-mode
     autocmd!
     autocmd VimEnter * xnoremap <Tab> >gv
-  augroup END
+augroup END
 
-"Stolen from HiCodin's Dotfiles a really cool set of fold text functions
+"Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{
 function! NeatFoldText()
   let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
   let l:lines_count = v:foldend - v:foldstart + 1
