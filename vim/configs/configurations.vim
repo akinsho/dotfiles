@@ -31,11 +31,12 @@ highlight cssBraces ctermfg=cyan
 highlight Type cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
-highlight Type    gui=italic cterm=italic
-highlight Folded guifg=#FFC66D guibg=NONE
+highlight Type    gui=italic,bold cterm=italic,bold
 highlight CursorLine term=none cterm=none
 highlight link StartifySlash Directory
 "make the completion menu a bit more readable
+"guifg=#D8D8D8 guibg=NONE
+highlight Folded gui=bold
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
@@ -307,7 +308,7 @@ let g:jsx_ext_required          = 0 "Allow jsx in .js files REQUIRED
 let g:csv_autocmd_arrange      = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 let g:csv_strict_columns       = 1
-" let g:csv_highlight_column     = 'y'
+let g:csv_highlight_column     = 'y'
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//

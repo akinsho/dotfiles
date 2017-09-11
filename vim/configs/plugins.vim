@@ -1,7 +1,7 @@
 "-----------------------------------------------------------
-"PLUGINS {{{
+"PLUGINS
 "-----------------------------------------------------------
-"This will autoinstall vim plug if not already installed
+"This will autoinstall vim plug if not already installed {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -16,6 +16,7 @@ function! Cond(cond, ...)
 endfunction
 
 call plug#begin('~/.vim/plugged')
+"}}}
 "NVIM ====================================
 " Deoplete {{{
 " ----------------------------------------
@@ -32,8 +33,6 @@ Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "================================{{{
 " CORE
 "================================
-Plug 'maralla/completor.vim', Cond(!has('nvim'))
-Plug 'Quramy/tsuquyomi',      Cond(!has('nvim'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
@@ -55,8 +54,9 @@ if !has('gui_running')
         \ | Plug 'junegunn/fzf.vim'
 endif
 "}}}
-"TMUX ============================
+"TMUX ============================ {{{
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
+"}}}
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos

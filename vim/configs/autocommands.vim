@@ -11,6 +11,15 @@ autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------
 
 augroup END "}}}
 
+augroup WhiteSpace
+  " Highlight Whitespace
+  highlight ExtraWhitespace ctermfg=red guifg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+  autocmd BufWinLeave * call clearmatches()
+augroup END
 
 " Auto open grep quickfix window
 augroup QFix
