@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AboutToPasteTabsWithCancel</key>
+	<true/>
+	<key>AboutToPasteTabsWithCancel_selection</key>
+	<integer>2</integer>
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AllowClipboardAccess</key>
@@ -24,6 +28,7 @@
 	<integer>1</integer>
 	<key>Coprocess MRU</key>
 	<array>
+		<string>echo nvim /usr/local/Cellar/macvim/8.0-136_1</string>
 		<string>echo nvim /Users/A_nonymous/Desktop/Coding/FAC/express-handlebars-workshop</string>
 	</array>
 	<key>CopyLastNewline</key>
@@ -1173,6 +1178,15 @@
 			<key>Text</key>
 			<string>6C5C2DFA-1FBD-44F3-968E-CB9B799F3A13</string>
 		</dict>
+		<key>touchbar:C3AE776B-8D0C-45B4-96DD-8E7B2A9CC96A</key>
+		<dict>
+			<key>Action</key>
+			<integer>28</integer>
+			<key>Label</key>
+			<string>HSplit</string>
+			<key>Text</key>
+			<string>6C5C2DFA-1FBD-44F3-968E-CB9B799F3A13</string>
+		</dict>
 	</dict>
 	<key>HideActivityIndicator</key>
 	<false/>
@@ -1202,6 +1216,14 @@
 	<integer>2</integer>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
+	<key>NSColorPanelMode</key>
+	<string>6</string>
+	<key>NSColorPanelMode.modal</key>
+	<integer>6</integer>
+	<key>NSColorPanelToolbarIsShown.modal</key>
+	<integer>1</integer>
+	<key>NSColorPanelVisibleSwatchRows.modal</key>
+	<integer>2</integer>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/Dotfiles/iterm2</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
@@ -1246,8 +1268,8 @@
 	<dict>
 		<key>CurrentItems</key>
 		<array>
-			<string>iTermTouchBarIdentifierManPage</string>
 			<string>touchbar:1096DA04-7073-4848-997A-D6428F57EA2E</string>
+			<string>touchbar:C3AE776B-8D0C-45B4-96DD-8E7B2A9CC96A</string>
 			<string>iTermTouchBarIdentifierFunctionKeys</string>
 			<string>iTermTouchBarFunctionKeysScrollView</string>
 			<string>NSTouchBarItemIdentifierFlexibleSpace</string>
@@ -1265,14 +1287,18 @@
 			<string>iTermTouchBarIdentifierNextMark</string>
 		</array>
 	</dict>
+	<key>NSWindow Frame NSColorPanel</key>
+	<string>357 330 224 325 0 0 1440 900 </string>
+	<key>NSWindow Frame NSColorPanel.modal</key>
+	<string>608 484 224 285 0 0 1440 900 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>896 37 508 94 0 0 1440 900 </string>
+	<string>661 153 653 241 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>419 274 937 512 0 0 1440 900 </string>
+	<string>419 254 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 4 720 896 0 0 1440 900 </string>
+	<string>720 5 720 895 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4007,7 +4033,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>OperatorMonoLig-Book 14</string>
+			<string>OperatorMonoLig-Book 15</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4137,7 +4163,7 @@
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PasteTabToStringTabStopSize</key>
-	<integer>4</integer>
+	<integer>2</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>

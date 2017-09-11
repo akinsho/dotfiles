@@ -1,9 +1,6 @@
 #=======================================================================
 #               STARTUP TIMES
 #=======================================================================
-# echo -e "\033]6;1;bg;red;brightness;38\a"
-# echo -e "\033]6;1;bg;green;brightness;50\a"
-# echo -e "\033]6;1;bg;blue;brightness;56\a"
 # zmodload zsh/zprof
 start_time="$(date +%s)"
 #=======================================================================
@@ -31,11 +28,12 @@ export PYENV_VIRTUAL_DISABLE_PROMPT=1
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# this line puts Python in the PATH
-export PATH=$HOME/Library/Python/2.7/bin:$PATH
+# Means of adding python not sure which is the right one
+# neither seem necessary
+# export PATH=$HOME/Library/Python/2.7/bin:$PATH
+# export PATH="$HOME/.pyenv/shims:$PATH"
 # GO ============================================================
 export GOROOT=/usr/local/opt/go/libexec
-# export GOPATH=$HOME/.go
 export GOPATH=$HOME/Desktop/Coding/Go
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:$(go env GOPATH)/bin
@@ -236,10 +234,6 @@ HISTFILE=~/.zsh_history
 
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
-# POWERLINE ==========================================================
-if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
-  source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-fi
 # BASE16===============================================================
 # default code for base16 shell
 #BASE16_SHELL=$HOME/.config/base16-shell/
@@ -307,6 +301,3 @@ end_time="$(date +%s)"
 # difference
 echo load time: $((end_time - start_time)) seconds
 # zprof
-
-
-source "${HOME}/Dotfiles/oh-my-zsh/themes/spaceship.zsh-theme"

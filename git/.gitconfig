@@ -5,7 +5,7 @@
   ui = auto
 [core]
   editor = nvim
-  excludesfile = /Users/A_nonymous/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [alias]
   fix = "!f() { ${EDITOR} `git rev-parse --show-toplevel`/`git diff --name-only`; }; f"
 # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
