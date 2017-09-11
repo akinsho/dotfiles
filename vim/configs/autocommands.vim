@@ -153,12 +153,13 @@ augroup END
 
 augroup FileType_html
   autocmd!
-  autocmd BufNewFile, BufRead *.html setlocal nowrap :normal gg=G
+  autocmd BufNewFile,BufRead,BufWritePre *.html setlocal nowrap :normal gg=G
 augroup END
 
 augroup CommandWindow
   autocmd!
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
+  autocmd CmdwinEnter * nnoremap <CR> <CR>
 augroup END
 
 augroup FileType_text
@@ -219,9 +220,8 @@ augroup FileType_all
         \ if &l:autoread > 0 | source <afile> |
         \   echo 'source '.bufname('%') |
         \ endif
-
   " Highlight the current word under the cursor
-    autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+  " autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
   augroup END
 
 augroup fugitiveSettings

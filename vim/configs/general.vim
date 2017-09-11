@@ -52,8 +52,6 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 "}}}
-set modelines=0
-set nomodeline
 " ----------------------------------------------------------------------------
 " Message output on vim actions {{{
 " ----------------------------------------------------------------------------
@@ -174,6 +172,8 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
+set modelines=0
+set nomodeline
 set conceallevel=2
 "syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
 set synmaxcol=1024 " don't syntax highlight long lines
@@ -389,7 +389,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-set scrolloff=999
+set scrolloff=8
 set sidescrolloff=10
 set nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

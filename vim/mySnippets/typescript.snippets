@@ -2,6 +2,24 @@ priority 0
 
 extends javascript
 
+global !p
+from snippet_helpers_javascript import *
+endglobal
+
+snippet r "React component"
+import * as React from 'react';
+
+interface ${1:`!p js_class_name(path, snip)`}Props {
+	$2
+}
+
+export default class $1 extends React.Component<$1Props, any> {
+	render() {
+		return ${0:<div />};
+	}
+}
+endsnippet
+
 snippet itf "interface .." b
 interface ${1:InterfaceName}${2: extends ${3:Parent}} {
 	${4://code...}
@@ -47,13 +65,7 @@ interface $1 {
 endsnippet
 
 snippet /meth(od)?/ "Creates a new method" !br
-/**
- * Method $1
- *
- * $2
- *
- */
-${3:public }$1($4) : ${5:void} {
+${2:public }$1($3) : ${4:void} {
 	$0
 }
 endsnippet

@@ -103,6 +103,13 @@ endfunction
 ""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+"Use enter to create new lines w/o entering insert mode
+nnoremap <CR> o<Esc>
+"Below is to fix issues with the ABOVE mappings in quickfix window
+augroup EnterMapping
+  au!
+  autocmd BufReadPost quickfix nnoremap <CR> <CR>
+augroup END
 ""---------------------------------------------------------------------------//
 " Make the given command repeatable using repeat.vim
 command! -nargs=* Repeatable call s:Repeatable(<q-args>)
@@ -196,7 +203,7 @@ nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
 "Save all files
 nnoremap qa :wqa<CR>
-vnoremap <C-Q>     <esc>
+vnoremap <C-Q>  <esc>
 " ----------------------------------------------------------------------------
 " Quickfix
 " ----------------------------------------------------------------------------
@@ -218,8 +225,8 @@ inoremap <c-f> <c-x><c-f>
 " Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
-"Switch to previous
-nnoremap <leader>sw :b#<CR>
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
 ""---------------------------------------------------------------------------//
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
@@ -363,7 +370,8 @@ nnoremap <right> 15<c-w><
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
 "Break out current window into new tabview
-nnoremap <leader>nt <C-W>T
+nnoremap <leader>t :tab split<CR>
+nnoremap <leader>tcl :tabc<CR>
 "Close every window in the current tabview but the current one
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
@@ -398,25 +406,7 @@ command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | no
 " ----------------------------------------------------------------------------
 " Todo - Check the repo for Todos and add to the qf list
 " ----------------------------------------------------------------------------
-function! s:todo() abort
-  let entries = []
-  for cmd in ['git grep -niI -e TODO -e FIXME -e XXX 2> /dev/null',
-            \ 'grep -rniI -e TODO -e FIXME -e XXX * 2> /dev/null']
-    let lines = split(system(cmd), '\n')
-    if v:shell_error != 0 | continue | endif
-    for line in lines
-      let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
-      call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
-    endfor
-    break
-  endfor
-
-  if !empty(entries)
-    call setqflist(entries)
-    copen
-  endif
-endfunction
-command! Todo call s:todo()
+command! Todo noautocmd vimgrep /TODO\|FIXME/j ** | cw
 " ----------------------------------------------------------------------------
 " Open FILENAME:LINE:COL
 " ----------------------------------------------------------------------------
@@ -574,7 +564,7 @@ fu! ToggleColorColumn()
   endif
 endfunction
 nnoremap <F4> :call ToggleColorColumn()<CR>
-
+"Re-indent pasted text
 nnoremap p p=`]<c-o>
 nnoremap P P=`]<c-o>
 ""---------------------------------------------------------------------------//

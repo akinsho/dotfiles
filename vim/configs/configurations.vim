@@ -40,8 +40,8 @@ highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=NONE
-hi! link Search IncSearch
+" highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=NONE
+" hi! link Search IncSearch
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
 "#282C34
@@ -56,8 +56,15 @@ if has('nvim')
 endif
 
 " For viewing patches
-highlight diffRemoved guifg=red
-highlight diffAdded guifg=green
+highlight diffRemoved gui=bold
+highlight diffAdded gui=bold
+""---------------------------------------------------------------------------//
+" HardTime
+""---------------------------------------------------------------------------//"
+nnoremap <leader>ht :HardTimeToggle<CR>
+let g:hardtime_default_on             = 0
+let g:hardtime_timeout                = 500
+let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
@@ -78,7 +85,7 @@ fun! ToggleNERDTreeWithRefresh()
         call feedkeys("R")
     endif
 endf
-
+let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
@@ -215,7 +222,6 @@ endif
 " Enable completion where available.
 " let g:ale_completion_enabled          = 1 "Careful clashes with other completion engines
 " let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
-let g:ale_open_list                            = 'on_save'
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_javascript_prettier_options          = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options                      = {'\.min.js$': {'ale_enabled': 0}}
@@ -297,6 +303,13 @@ vnoremap <leader>gb :Gbrowse<CR>
 ""---------------------------------------------------------------------------//
 let g:jsx_ext_required          = 0 "Allow jsx in .js files REQUIRED
 ""---------------------------------------------------------------------------//
+" VIM CSV
+""---------------------------------------------------------------------------//
+let g:csv_autocmd_arrange      = 1
+let g:csv_autocmd_arrange_size = 1024*1024
+let g:csv_strict_columns       = 1
+" let g:csv_highlight_column     = 'y'
+""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//
 let g:go_term_height            = 30
@@ -324,7 +337,7 @@ if has('mac')
   let g:gitgutter_eager                 = 1
   let g:gitgutter_grep_command          = 'ag --nocolor'
   let g:gitgutter_sign_added            = '✨'
-  let g:gitgutter_sign_modified         = '💥'
+  let g:gitgutter_sign_modified         = '🔥'
   let g:gitgutter_sign_removed          = '😤'
   let g:gitgutter_sign_modified_removed = '☁️'
 else

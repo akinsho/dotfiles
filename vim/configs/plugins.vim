@@ -69,8 +69,6 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
-" Plug 'mhinz/vim-sayonara'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
@@ -128,9 +126,11 @@ Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'takac/vim-hardtime'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
+Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
