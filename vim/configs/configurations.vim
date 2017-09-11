@@ -71,16 +71,16 @@ let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
 " Ctrl+N to toggle Nerd Tree
  function! NERDTreeToggleAndFind()
     if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-      execute ':NERDTreeClose'
+      execute 'NERDTreeClose'
     else
-      execute ':NERDTreeFind'
+      execute 'NERDTreeFind'
     endif
   endfunction
 nnoremap <silent> <C-N> :call ToggleNERDTreeWithRefresh()<cr>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
-    :NERDTreeToggle
+    exe 'NERDTreeToggle'
     if(exists("b:NERDTreeType") == 1)
         call feedkeys("R")
     endif
@@ -211,7 +211,6 @@ xmap ac <Plug>(textobj-comment-a)
 omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
-
 ""---------------------------------------------------------------------------//
 "     ALE
 ""---------------------------------------------------------------------------//

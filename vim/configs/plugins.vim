@@ -119,6 +119,8 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
+Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
@@ -130,7 +132,6 @@ Plug 'takac/vim-hardtime'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-Plug 'c0r73x/neotags.nvim',   Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)

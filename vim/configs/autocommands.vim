@@ -60,7 +60,7 @@ augroup UpdateVim
   endif
   autocmd FocusLost * :wa
   autocmd VimResized * :redraw! | echom 'Redrew'
-  autocmd VimResized * wincmd =
+  " autocmd VimResized * wincmd =
 augroup END
 
 augroup AirLineRefresh
@@ -160,6 +160,8 @@ augroup CommandWindow
   autocmd!
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 
 augroup FileType_text

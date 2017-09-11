@@ -22,7 +22,6 @@ syntax enable
 "Leader bindings
 "-----------------------------------------------------------------------
 let g:mapleader      = ',' "Remap leader key
-
 let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "-----------------------------------------------------------------------
 " General Settings

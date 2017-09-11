@@ -103,11 +103,9 @@ endif
 ""---------------------------------------------------------------------------//
 " Windows
 ""---------------------------------------------------------------------------//
-" Auto resize Vim splits to active split
-set winwidth=104
-set winheight=5
-set winminheight=5
-set winheight=999
+" Auto resize Vim splits to active split to 70% - https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
+let &winheight = &lines * 7 / 10
+let &winwidth = &columns * 7 / 10
 " DIFFING {{{
 " ----------------------------------------------------------------------------
 
@@ -280,7 +278,7 @@ command! -bang AutoSave call s:autosave(<bang>1)
 ""---------------------------------------------------------------------------//
 " Command line {{{
 ""---------------------------------------------------------------------------//
-set noshowcmd "Show commands being input
+" set noshowcmd "Show commands being input
 set cmdheight=2 " Set command line height to two lines
 "}}}
 "-----------------------------------------------------------------

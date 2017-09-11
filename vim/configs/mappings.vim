@@ -547,14 +547,14 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 ""---------------------------------------------------------------------------//
 " Display-altering option toggles
 ""---------------------------------------------------------------------------//
-MapToggle <F1> wrap
-MapToggle <F2> list
+MapToggle <F7> wrap
+MapToggle <F8> list
 ""---------------------------------------------------------------------------//
 " Behavior-altering option toggles
 ""---------------------------------------------------------------------------//
-MapToggle <F5> scrollbind
+MapToggle <F9> scrollbind
 
-set pastetoggle=<F3>
+set pastetoggle=<F6>
 
 fu! ToggleColorColumn()
   if &colorcolumn
@@ -563,7 +563,7 @@ fu! ToggleColorColumn()
     set colorcolumn=80
   endif
 endfunction
-nnoremap <F4> :call ToggleColorColumn()<CR>
+nnoremap <F5> :call ToggleColorColumn()<CR>
 "Re-indent pasted text
 nnoremap p p=`]<c-o>
 nnoremap P P=`]<c-o>
