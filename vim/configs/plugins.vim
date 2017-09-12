@@ -158,6 +158,6 @@ endif
 
 "Plugins to Try ============================================================
 " Plug 'jodosha/vim-godebug'
-" Don't use netrw at all, interferes with "clever" autocommands
+" Don't use netrw at all
 let g:loaded_netrwPlugin = 1
 "}}}
