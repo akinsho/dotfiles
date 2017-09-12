@@ -430,6 +430,7 @@ set complete+=kspell
 "===================================================================================
 set mousehide
 set mouse=a "this is the command that works for mousepad
+set mouse-=i
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
 if exists('$TMUX')
   if !has('nvim')

@@ -34,8 +34,41 @@ for (let i = 0; i< $0; i++){
 };
 endsnippet
 
-snippet cl "console log"
-console.log('${1:log}', $1);
+# log snippets
+snippet lred
+console.log('%c${1}', 'font-weight:bold;color:red;');
+endsnippet
+
+snippet lgreen
+console.log('%c${1}', 'font-weight:bold;color:green;');
+endsnippet
+
+snippet lblue
+console.log('%c${1}', 'font-weight:bold;color:blue;');
+endsnippet
+
+snippet lpurple
+console.log('%c${1}', 'font-weight:bold;color:purple;');
+endsnippet
+
+snippet lor
+console.log('%c${1}', 'font-weight:bold;color:orange;');
+endsnippet
+
+snippet ctab
+console.table(${1});
+endsnippet
+
+snippet debug
+console.log('[DEBUG] ${1}');
+endsnippet
+
+snippet trace
+console.trace()
+endsnippet
+
+snippet cl
+console.log('$1: ', ${1});
 endsnippet
 
 snippet log "console log string"
