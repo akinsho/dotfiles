@@ -231,8 +231,6 @@ augroup FileType_all
         \ if &l:autoread > 0 | source <afile> |
         \   echo 'source '.bufname('%') |
         \ endif
-  " Highlight the current word under the cursor
-  " autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
   augroup END
 
 augroup fugitiveSettings
@@ -241,26 +239,13 @@ augroup fugitiveSettings
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
 
-
-"toggle relative numbering, and set to absolute on loss of focus or insert mode
-function! ToggleNumbersOn()
-    set nu!
-    set rnu
-endfunction
-function! ToggleRelativeOn()
-    set rnu!
-    set nu
-endfunction
-
-augroup ToggleNumbers
-  au!
-  if &ft != "nerdtree"
-    autocmd FocusLost * call ToggleRelativeOn()
-    autocmd FocusGained * call ToggleRelativeOn()
-    autocmd InsertEnter * call ToggleRelativeOn()
-    autocmd InsertLeave * call ToggleRelativeOn()
-  endif
+"As Per the tin this toggles relativenumber and number depending on mode
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
+
 
 "Close vim if only window is a Nerd Tree
 augroup NERDTree

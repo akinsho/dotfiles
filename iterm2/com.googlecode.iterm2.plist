@@ -1219,10 +1219,12 @@
 	<key>NSColorPanelMode</key>
 	<string>6</string>
 	<key>NSColorPanelMode.modal</key>
-	<integer>6</integer>
+	<integer>0</integer>
 	<key>NSColorPanelToolbarIsShown.modal</key>
 	<integer>1</integer>
 	<key>NSColorPanelVisibleSwatchRows.modal</key>
+	<integer>2</integer>
+	<key>NSColorPickerPreferredRGBEntryMode</key>
 	<integer>2</integer>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/Dotfiles/iterm2</string>
@@ -1290,15 +1292,15 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>357 330 224 325 0 0 1440 900 </string>
 	<key>NSWindow Frame NSColorPanel.modal</key>
-	<string>608 484 224 285 0 0 1440 900 </string>
+	<string>608 502 224 261 0 0 1440 900 </string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>661 153 653 241 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>419 254 796 473 0 0 1440 900 </string>
+	<string>419 256 918 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 5 720 895 0 0 1440 900 </string>
+	<string>720 4 720 896 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4033,7 +4035,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>OperatorMonoLig-Book 15</string>
+			<string>FuraCodeNerdFontC-Light 15</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4146,12 +4148,21 @@
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>04F2B1C7-B89F-486B-9D5D-C67C15F69855</string>
+	<key>NoSyncLastTipTime</key>
+	<real>526858335.67058498</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
 	<integer>0</integer>
+	<key>NoSyncPermissionToShowTip</key>
+	<true/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>526567604.34051102</real>
+	<key>NoSyncTipsToNotShow</key>
+	<array>
+		<string>000</string>
+		<string>0000</string>
+	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
 	<key>OpenArrangementAtStartup</key>
@@ -4214,7 +4225,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-09-09T13:29:13Z</date>
+	<date>2017-09-11T21:22:29Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>

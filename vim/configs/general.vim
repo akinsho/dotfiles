@@ -76,7 +76,6 @@ endif
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
 set timeout timeoutlen=400 ttimeoutlen=10
 set nohidden
-set winwidth=30
 set splitbelow "Open a horizontal split below current window
 set splitright "Open a vertical split to the right of the window
 set switchbuf=useopen,usetab,vsplit
@@ -104,8 +103,24 @@ endif
 " Windows {{{
 ""---------------------------------------------------------------------------//
 " Auto resize Vim splits to active split to 70% - https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
-let &winheight = &lines * 7 / 10
-let &winwidth = &columns * 7 / 10
+let g:auto_resize_on = 1
+
+function! AutoResize()
+  if g:auto_resize_on == 1
+    let &winheight = &lines * 7 / 10
+    let &winwidth = &columns * 7 / 10
+    let g:auto_resize_on = 0
+    echom 'Auto resize on'
+  else
+    set winheight=30
+    set winwidth=30
+    let g:auto_resize_on = 1
+  endif
+endfunction
+command! AutoResize call AutoResize()
+
+set winheight=30
+set winwidth=30
 "}}}
 ""---------------------------------------------------------------------------//
 " DIFFING {{{

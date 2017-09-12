@@ -253,6 +253,9 @@ nmap [a <Plug>(ale_previous_wrap)
 "TAGBAR
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
+let g:tagbar_autopreview     = 1
+let g:tagbar_show_visibility = 0
+let g:tagbar_autofocus       = 1
 let g:tagbar_type_typescript = {
   \ 'ctagstype': 'typescript',
   \ 'kinds': [
@@ -353,7 +356,7 @@ if has('mac')
   let g:gitgutter_enabled               = 1
   let g:gitgutter_eager                 = 1
   let g:gitgutter_grep_command          = 'ag --nocolor'
-  let g:gitgutter_sign_added            = '✨'
+  let g:gitgutter_sign_added            = '👍🏾'
   let g:gitgutter_sign_modified         = '🔥'
   let g:gitgutter_sign_removed          = '😤'
   let g:gitgutter_sign_modified_removed = '☁️'

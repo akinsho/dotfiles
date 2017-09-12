@@ -137,6 +137,23 @@ const mapStateToProps = state => {
 $3
 endsnippet
 
+snippet rct "Typescript React Class Component" b
+import * as React from 'react';
+
+class ${1:`!v expand('%:t:r')`} extends React.Component {
+
+  render() {
+    return (
+	<div>
+	$3
+	</div>
+	);
+  }
+}
+
+export default $1;
+endsnippet
+
 snippet rcc "React Class Component" b
 import React, { Component } from 'react';
 
