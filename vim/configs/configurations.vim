@@ -250,6 +250,23 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 ""---------------------------------------------------------------------------//
+"TAGBAR
+""---------------------------------------------------------------------------//
+nnoremap <leader>. :TagbarToggle<CR>
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+  \ }
+""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
 let g:neoterm_size         = '10'
