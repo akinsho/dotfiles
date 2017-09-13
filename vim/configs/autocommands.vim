@@ -242,8 +242,10 @@ augroup END
 "As Per the tin this toggles relativenumber and number depending on mode
 augroup numbertoggle
   autocmd!
+if &ft != 'nerdtree\|startify\|qf'
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+endif
 augroup END
 
 

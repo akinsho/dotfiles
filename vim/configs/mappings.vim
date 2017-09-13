@@ -40,9 +40,6 @@ endif
 nnoremap <leader><leader> viwxi()<Esc>P
 vnoremap <leader><leader> xi()<Esc>P
 
-" Open new tab more easily:
-nnoremap ,t :tabnew<cr>
-nnoremap ,T :tabedit %<cr>gT:quit<cr>
 "}}}
 ""---------------------------------------------------------------------------//
 " MACROS {{{
@@ -226,8 +223,14 @@ nnoremap [l :lprev<cr>zz
 " ----------------------------------------------------------------------------
 " Tabs
 " ----------------------------------------------------------------------------
-nnoremap ]t :tabn<cr>
-nnoremap [t :tabp<cr>
+" Tab navigation
+nnoremap th :tabprev<CR>
+nnoremap tl :tabnext<CR>
+" Useful mappings for managing tabs
+nnoremap tn :tab split<cr>
+nnoremap to :tabonly<cr>
+nnoremap tc :tabclose<cr>
+nnoremap tm :tabmove<Space>
 
 "File completion made a little less painful
 inoremap <c-f> <c-x><c-f>
@@ -381,9 +384,6 @@ nnoremap <left> 15<c-w>>
 nnoremap <right> 15<c-w><
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
-"Break out current window into new tabview
-nnoremap <leader>t :tab split<CR>
-nnoremap <leader>tcl :tabc<CR>
 "Close every window in the current tabview but the current one
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
