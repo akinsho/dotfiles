@@ -248,12 +248,16 @@ if &ft != 'nerdtree\|startify\|qf'
 endif
 augroup END
 
+augroup OpenImages
+  autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
+augroup END
+
 
 "Close vim if only window is a Nerd Tree
 augroup NERDTree
   autocmd!
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-  autocmd FileType nerdtree setlocal nolist
+  autocmd FileType nerdtree setlocal nolist nonumber
 augroup END
 
 augroup LongFiles

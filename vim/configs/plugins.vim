@@ -98,7 +98,6 @@ Plug 'ap/vim-css-color', { 'for': [
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
-Plug 'lambdalisue/gina.vim'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
@@ -109,12 +108,10 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'terryma/vim-expand-region'
-      \ | Plug 'paulhybryant/vim-textobj-path'
       \ | Plug 'kana/vim-textobj-function'
         \ | Plug 'thinca/vim-textobj-function-javascript'
 "}}}
 "Search Tools ======================={{{
-Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
 Plug 'rhysd/devdocs.vim'
@@ -123,7 +120,7 @@ Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "Coding tools ======================={{{
-Plug 'janko-m/vim-test'
+" Plug 'janko-m/vim-test'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/sideways.vim'
@@ -158,6 +155,9 @@ endif
 
 "Plugins to Try ============================================================
 " Plug 'jodosha/vim-godebug'
+" Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
+" Plug 'lambdalisue/gina.vim'
+" Plug 'paulhybryant/vim-textobj-path'
 " Don't use netrw at all
 let g:loaded_netrwPlugin = 1
 "}}}

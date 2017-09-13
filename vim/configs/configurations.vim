@@ -36,7 +36,7 @@ highlight CursorLine term=none cterm=none
 highlight link StartifySlash Directory
 "make the completion menu a bit more readable
 "guifg=#D8D8D8 guibg=NONE
-highlight Folded gui=bold
+highlight Folded guifg=#65D2DF gui=bold
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 " highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
@@ -137,10 +137,13 @@ nnoremap <silent> <C-N> :call ToggleNERDTreeWithRefresh()<cr>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
-    exe 'NERDTreeToggle'
-    if(exists("b:NERDTreeType") == 1)
-        call feedkeys("R")
-    endif
+  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+    execute 'NERDTreeClose'
+  else
+    call NERDTreeFocus()
+    call g:NERDTree.ForCurrentTab().getRoot().refresh()
+    call g:NERDTree.ForCurrentTab().render()
+  endif
 endf
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
@@ -154,7 +157,6 @@ let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
 " NerdTree Arrow Options = ["├","└"]
 
-"Adding the flags to NERDTree
 let g:webdevicons_enable_nerdtree           = 1
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:NERDTree')
@@ -239,19 +241,10 @@ nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
 "}}}
 ""---------------------------------------------------------------------------//
-" Plugin: vim-choosewin {{{
-""---------------------------------------------------------------------------//
-" invoke with '-'
-nmap  -  <Plug>(choosewin)
-let g:choosewin_label = 'SDFJKLZXCV'
-let g:choosewin_statusline_replace = 1
-let g:choosewin_overlay_enable = 1
-let g:choosewin_blink_on_land = 0
-"}}}
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//
-noremap <leader>vc <c-o>:VCoolor<CR>
+nnoremap <leader>vc <c-o>:VCoolor<CR>
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F {{{
 "--------------------------------------------
@@ -315,7 +308,6 @@ let g:ale_linters                     = {
       \}
 let g:ale_set_highlights    = 0
 let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ OK']
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 ""---------------------------------------------------------------------------//
@@ -666,56 +658,7 @@ else
   let g:completor_auto_trigger = 0
   let g:completor_gocode_binary = $GOPATH.'/bin/gocode'
 endif
-""---------------------------------------------------------------------------//
-" GINA
-""---------------------------------------------------------------------------//
-  call gina#custom#command#option('commit', '-S|--signoff')
-  call gina#custom#execute(
-        \ '/\%(commit\)',
-        \ 'setlocal colorcolumn=69 expandtab shiftwidth=2 softtabstop=2 tabstop=2',
-        \)
-  call gina#custom#execute(
-        \ '/\%(commit\|status\|branch\|ls\|grep\|changes\|tag\)',
-        \ 'setlocal winfixheight',
-        \)
-  call gina#custom#mapping#nmap(
-        \ '/\%(commit\|status\|branch\|ls\|grep\|changes\|tag\)',
-        \ 'q', ':<C-u> q<CR>', {'noremap': 1, 'silent': 1},
-        \)
 
-  " Execute :Gina commit with <C-^> on "gina-status" buffer
-  call gina#custom#mapping#nmap(
-        \ 'status', '<C-N>',
-        \ ':<C-u>Gina commit<CR>',
-        \ {'noremap': 1, 'silent': 1},
-        \)
-  " Execute :Gina status with <C-^> on "gina-commit" buffer
-  call gina#custom#mapping#nmap(
-        \ 'commit', '<C-N>',
-        \ ':<C-u>Gina status<CR>',
-        \ {'noremap': 1, 'silent': 1},
-        \)
-  " Use g<CR> to open a candidate on a new tabpage
-  call gina#custom#mapping#nmap(
-        \ '/.*', 'g<CR>',
-        \ '<Plug>(gina-edit-tab)'
-        \)
-
-nnoremap <localleader>g :Gina 
-nnoremap <localleader>gs :Gina status<CR>
-nnoremap <localleader>gS :Gina! status<CR>
-nnoremap <localleader>gdi :Gina diff<CR>
-nnoremap <localleader>gc :Gina commit<CR>
-nnoremap <localleader>gC :Gina! commit<CR>
-nnoremap <localleader>gp :Gina! push<CR>
-nnoremap <localleader>gP :Gina!! push<CR>
-
-""---------------------------------------------------------------------------//
-" Surround Vim
-""---------------------------------------------------------------------------//
-" surround.vim
-" Surround with function call
-let g:surround_{char2nr('f')} = "function(\r)"
 ""---------------------------------------------------------------------------//
 " vim-exchange
 ""---------------------------------------------------------------------------//
