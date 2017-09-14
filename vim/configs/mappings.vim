@@ -585,5 +585,5 @@ nnoremap P P=`]<c-o>
 nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 nnoremap <silent> ga :silent! :grepadd!<space>
 " Show last search in quickfix (http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/)
-nnoremap g/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
-" nnoremap <silent> g/ :silent! :grep!<space>
+nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
+nnoremap <silent> g/ :silent! :grep!<space>

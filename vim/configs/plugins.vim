@@ -36,7 +36,8 @@ Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
-Plug 'scrooloose/nerdtree', {'on':['NERDTreeFind', 'NERDTreeToggle']}
+"NOTE to future self not lazy loading nerdtree as needs to be loaded for refresh function
+Plug 'scrooloose/nerdtree'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
       \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
 Plug 'mattn/emmet-vim'

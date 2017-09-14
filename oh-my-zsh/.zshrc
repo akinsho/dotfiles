@@ -65,7 +65,7 @@ export UPDATE_ZSH_DAYS=5
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -300,4 +300,10 @@ end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
 echo load time: $((end_time - start_time)) seconds
+##---------------------------------------------------------------------------//
+# LOL
+##---------------------------------------------------------------------------//
+if brew ls --versions fortune > /dev/null;then
+  fortune | cowsay | lolcat
+fi
 # zprof
