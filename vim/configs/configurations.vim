@@ -33,16 +33,10 @@ highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
 highlight CursorLine term=none cterm=none
-highlight link StartifySlash Directory
-"make the completion menu a bit more readable
-"guifg=#D8D8D8 guibg=NONE
 highlight Folded guifg=#65D2DF gui=bold
-highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-" highlight Pmenu guibg=#9CFFF0 guifg=black
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 " highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=NONE
-" hi! link Search IncSearch
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
 "#282C34
@@ -50,6 +44,9 @@ if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
 " Highlight term cursor differently
 endif
+""---------------------------------------------------------------------------//
+" Startify Highlighting
+""---------------------------------------------------------------------------//
 hi StartifyBracket  guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi StartifyFile     guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi StartifyFooter   guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -65,6 +62,15 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
   highlight TermCursor ctermfg=green guifg=green
 endif
+""---------------------------------------------------------------------------//
+"Autocomplete menu highlighting
+""---------------------------------------------------------------------------//
+"make the completion menu a bit more readable
+hi PmenuSel guibg=#004D40 guifg=white gui=bold
+hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
+hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
+hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+
 ""---------------------------------------------------------------------------//
 " NERDTrees highlighting {{{
 ""---------------------------------------------------------------------------//
@@ -146,6 +152,10 @@ fun! ToggleNERDTreeWithRefresh()
   endif
 endf
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
+" Repo-specific bookmarks
+if isdirectory(expand(".git"))
+  let g:NERDTreeBookmarksFile = '.git/.nerdtree-bookmarks'
+endif
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
@@ -314,7 +324,8 @@ nmap [a <Plug>(ale_previous_wrap)
 "TAGBAR
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
-let g:tagbar_autopreview     = 1
+let g:tagbar_autoshowtag     = 1  " Open folds if necessary when navigating to a tag
+let g:tagbar_autoclose       = 1  " Focus cursor inside tagbar when opened, and auto close after navigation
 let g:tagbar_show_visibility = 0
 let g:tagbar_autofocus       = 1
 let g:tagbar_type_typescript = {
@@ -486,7 +497,13 @@ let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
 ""---------------------------------------------------------------------------//
+" UNDOTREE {{{
+""---------------------------------------------------------------------------//
+let g:undotree_SplitWidth         = 35
+let g:undotree_TreeNodeShape      = '◉'
+let g:undotree_SetFocusWhenToggle = 1
 nnoremap <leader>u :UndotreeToggle<CR>
+"}}}
 ""---------------------------------------------------------------------------//
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
@@ -499,7 +516,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 ""---------------------------------------------------------------------------//
 " NERDComment {{{
 ""---------------------------------------------------------------------------//
-
 " let test#runners = {'Typescript': ['Mocha', 'Jest']}
 " let test#runners = {'Typescript': ['Mocha']}
 " Commenting

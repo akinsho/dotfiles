@@ -6,7 +6,6 @@
 ""---------------------------------------------------------------------------//
 " Terminal settings
 if has('nvim')
-  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
   " set guicursor=n-v-c-i-ci-ve:block
   "Add neovim terminal escape with ESC mapping
   tmap <ESC> <C-\><C-n>
@@ -36,9 +35,6 @@ nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 endif
 "}}}
-
-nnoremap <leader><leader> viwxi()<Esc>P
-vnoremap <leader><leader> xi()<Esc>P
 
 "}}}
 ""---------------------------------------------------------------------------//
@@ -95,6 +91,13 @@ function! s:Unfocus()
   call clearmatches()
 endfunction
 "}}}
+""---------------------------------------------------------------------------//
+" Find and Jump Mapping
+""---------------------------------------------------------------------------//"
+" Map <Leader>ff to display all lines with keyword under cursor
+" and ask which one to jump to
+nnoremap <localleader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+
 ""---------------------------------------------------------------------------//
 " Word transposition. Lifted from:
 " http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
@@ -195,9 +198,10 @@ cnoremap <C-k> <Up>
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
 " Store relative line number jumps in the jumplist.
-noremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
-noremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
-
+nnoremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
+nnoremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
+" inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
+" inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 " Emacs like keybindings for the command line (:) are better
 " and you cannot use Vi style-binding here anyway, because ESC
 " just closes the command line and using Home and End..
@@ -526,6 +530,8 @@ inoremap <c-e> <c-o>$
 
 "Map Q to remove a CR
 nnoremap Q J
+"Replace word under curosor
+nnoremap S "_diwP
 "}}}
 
 " Shortcut to jump to next conflict marker"

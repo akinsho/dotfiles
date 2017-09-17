@@ -313,6 +313,7 @@ colorscheme quantum
 "NVIM {{{
 ""---------------------------------------------------------------------------//
 if has('nvim')
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 100000
   set inccommand=nosplit
   let g:python_host_prog=$HOME.'/.pyenv/versions/neovim2/bin/python'
@@ -368,12 +369,12 @@ if exists('$SUDO_USER')
   set nobackup                        " don't create root-owned files
   set nowritebackup                   " don't create root-owned files
 else
-  if !isdirectory($HOME."/.vim/.backup")
-    call mkdir("/.vim/.backup", "p")
-  endif
   set backupdir=~/.vim/.backup//
   set backupdir+=~/local/.vim/tmp/backup
   set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
+  if !isdirectory(&backupdir)
+    call mkdir(&backupdir, "p")
+  endif
 endif
 if !has('nvim')
   set autoread " reload files if they were edited elsewhere
@@ -382,10 +383,10 @@ if has ('persistent_undo')
   if exists('$SUDO_USER')
     set noundofile "Dont add root owned files which I will need to sudo to remove
   else
-    if !isdirectory($HOME."/.vim/.undo")
-      call mkdir("/.vim/.undo", "p")
-    endif
     set undodir=~/.vim/.undo//
+    if !isdirectory(&undodir)
+      call mkdir(&undodir, "p")
+    endif
     set undolevels=1000
     set undodir+=~/local/.vim/tmp/undo
     set undodir+=.

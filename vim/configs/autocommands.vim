@@ -214,6 +214,11 @@ augroup FileType_all
         \   exe "keepjumps normal g`\"" |
         \ endif
 
+  autocmd User Fugitive
+        \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+        \   nnoremap <buffer> .. :edit %:h<CR> |
+        \ endif
+
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
@@ -252,7 +257,6 @@ augroup OpenImages
   autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
 augroup END
 
-
 "Close vim if only window is a Nerd Tree
 augroup NERDTree
   autocmd!
@@ -263,6 +267,7 @@ augroup END
 augroup LongFiles
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
+
 
 augroup fix-ultisnips-overriding-tab-visual-mode
     autocmd!
