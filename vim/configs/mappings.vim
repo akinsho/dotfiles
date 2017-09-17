@@ -139,7 +139,7 @@ nnoremap <leader>n :enew<cr>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 " nnoremap <leader>q :bp <BAR> bd #<CR>
-nnoremap <leader>q :on<cr>
+nnoremap <leader>q :q!<cr>
 " Better redo
 nnoremap U <C-R>
 " Paste in visual mode multiple times
@@ -154,6 +154,13 @@ nnoremap <leader>bg :let &background = (&background == "dark" ? "light" : "dark"
 " center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
+
+" center when moving up and down
+nnoremap <c-d> <c-d>zz
+nnoremap <c-u> <c-u>zz
+
+" fix common q: :q mistype
+nnoremap q: :q
 
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>

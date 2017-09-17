@@ -67,7 +67,7 @@ endif
 ""---------------------------------------------------------------------------//
 "make the completion menu a bit more readable
 hi PmenuSel guibg=#004D40 guifg=white gui=bold
-hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
+hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 
@@ -409,7 +409,7 @@ let g:go_term_width             = 30
 let g:go_term_mode              = "split"
 let g:go_list_type              = "quickfix"
 let g:go_auto_type_info         = 0
-let g:go_auto_sameids           = 1
+let g:go_auto_sameids           = 0
 let g:go_fmt_command            = "goimports"
 let g:go_fmt_autosave           = 1
 let g:go_doc_keywordprg_enabled = 0 "Stops auto binding K
@@ -681,22 +681,6 @@ endif
 let g:exchange_no_mappings = 1
 nmap X <Plug>(Exchange)
 xmap X <Plug>(Exchange)
-""---------------------------------------------------------------------------//
-" Smart Word & CamelCaseMotion Match made in Heaven!!
-""---------------------------------------------------------------------------//
-nmap w  <Plug>(smartword-w)
-nmap b  <Plug>(smartword-b)
-nmap e  <Plug>(smartword-e)
-nmap ge  <Plug>(smartword-ge)
-
-xmap w  <Plug>(smartword-w)
-xmap b  <Plug>(smartword-b)
-xmap e  <Plug>(smartword-e)
-xmap ge <Plug>(smartword-ge)
-
-map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
-map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
-map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
 
 ""---------------------------------------------------------------------------//
 " Goyo
@@ -969,7 +953,15 @@ let g:startify_change_to_vcs_root     = 1
 "}}}
 ""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
-call camelcasemotion#CreateMotionMappings('<leader>')
+" call camelcasemotion#CreateMotionMappings('<leader>')
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
 ""---------------------------------------------------------------------------//
 " TMUX NAVIGATOR {{{
 ""---------------------------------------------------------------------------//

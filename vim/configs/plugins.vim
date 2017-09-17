@@ -90,6 +90,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'ap/vim-css-color', { 'for': [
+      \  'vim',
       \  'css',
       \  'javascript',
       \  'typescript'
@@ -104,7 +105,6 @@ Plug 'jreybert/vimagit'
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
-Plug 'kana/vim-smartword'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
@@ -160,6 +160,7 @@ endif
 " Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
 " Plug 'lambdalisue/gina.vim'
 " Plug 'paulhybryant/vim-textobj-path'
+" Plug 'kana/vim-smartword'
 " Don't use netrw at all
 let g:loaded_netrwPlugin = 1
 "}}}

@@ -221,7 +221,7 @@ set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 " =====================================================================
 "-----------------------------------
-set iskeyword+=_,$,@,%,#
+set iskeyword+=_,$,@
 set nojoinspaces
 set gdefault
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc

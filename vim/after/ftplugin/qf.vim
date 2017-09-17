@@ -7,7 +7,7 @@ setlocal wrap
 if has('nvim')
   highlight QuickFixLine gui=bold
 endif
-" setlocal winminheight=1 winheight=10 winfixheight
+" setlocal winminheight=1 winheight=8 winfixheight
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
 
@@ -73,7 +73,7 @@ endfunction
 augroup QFCommands
   au!
   autocmd * <buffer> wincmd J
-  autocmd * <buffer><silent> call AdjustWindowHeight(3, 8)
+  autocmd * <buffer><silent> call AdjustWindowHeight(8, 8)
 augroup END
 
 let &cpoptions = s:save_cpo
