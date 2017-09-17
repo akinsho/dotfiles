@@ -254,9 +254,9 @@ if has('unnamedplus')
 elseif has('clipboard')
   set clipboard=unnamed
 endif
+set complete+=i      " Use included files for completion
 if !has('nvim')
   set incsearch
-  set complete-=i
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode

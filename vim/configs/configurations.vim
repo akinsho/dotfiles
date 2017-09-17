@@ -499,8 +499,8 @@ let g:user_emmet_install_global = 0
 ""---------------------------------------------------------------------------//
 " UNDOTREE {{{
 ""---------------------------------------------------------------------------//
+let g:undotree_TreeNodeShape      = '◦' " Alternative: '◉'
 let g:undotree_SplitWidth         = 35
-let g:undotree_TreeNodeShape      = '◉'
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <leader>u :UndotreeToggle<CR>
 "}}}
@@ -563,6 +563,7 @@ if has("nvim")
   let g:deoplete#enable_at_startup        = 1
   let g:deoplete#enable_smart_case        = 1
   let g:deoplete#max_menu_width           = 80
+  let g:deoplete#max_menu_height          = 40
   let g:deoplete#file#enable_buffer_path  = 1
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['around']

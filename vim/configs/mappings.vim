@@ -262,6 +262,11 @@ nnoremap : ;
 "xnoremap [Alt]   <Nop>
 " nmap    e  [Alt]
 " xmap    e  [Alt]
+" Allow using alt in macOS without enabling “Use Option as Meta key”
+nmap ¬ <a-l>
+nmap ˙ <a-h>
+nmap ∆ <a-j>
+nmap ˚ <a-k>
 ""---------------------------------------------------------------------------//
 " Last Insterted or Changed object
 ""---------------------------------------------------------------------------//
@@ -278,8 +283,8 @@ inoremap <C-u> <ESC>gUiw`]a
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-" nnoremap <silent> <C-]> :move+<cr>
-" nnoremap <silent> <C-[> :move-2<cr>
+nnoremap <silent> ß :move+<cr>
+nnoremap <silent> ∂ :move-2<cr>
 " xnoremap <silent> <C-k> :move-2<cr>gv
 " xnoremap <silent> <C-j> :move'>+<cr>gv
 

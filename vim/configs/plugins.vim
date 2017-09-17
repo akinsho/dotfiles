@@ -151,7 +151,9 @@ Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
 call plug#end()
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
+if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
+  packadd! matchit
+else
   runtime! macros/matchit.vim
 endif
 
