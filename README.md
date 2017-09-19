@@ -78,6 +78,13 @@ awesome tools.
 * `Plug 'michaeljsmith/vim-indent-object`
 * `Plug 'rhysd/committia.vim'`
 * `Plug 'machakann/vim-highlightedyank'`
+* Plug 'jodosha/vim-godebug'
+* Plug 'gwutz/vim-materialtheme'
+* Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
+* Plug 'lambdalisue/gina.vim'
+* Plug 'paulhybryant/vim-textobj-path'
+* Plug 'kana/vim-smartword'
+
 
 
 ### Excellent colorschemes

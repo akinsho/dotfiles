@@ -159,11 +159,6 @@ else
 endif
 
 "Plugins to Try ============================================================
-" Plug 'jodosha/vim-godebug'
-" Plug 't9md/vim-choosewin', {'on': '<Plug>(choosewin)' }
-" Plug 'lambdalisue/gina.vim'
-" Plug 'paulhybryant/vim-textobj-path'
-" Plug 'kana/vim-smartword'
 " Don't use netrw at all
 let g:loaded_netrwPlugin = 1
 "}}}

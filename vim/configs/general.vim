@@ -214,7 +214,8 @@ set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
 set list                              " show invisible chars
-set listchars+=tab:▷\ 
+" set listchars+=tab:▷\ 
+set listchars+=tab:\¦·
 set listchars+=precedes:←
 set listchars+=extends:→
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
@@ -295,7 +296,6 @@ command! -bang AutoSave call s:autosave(<bang>1)
 ""---------------------------------------------------------------------------//
 " Command line {{{
 ""---------------------------------------------------------------------------//
-" set noshowcmd "Show commands being input
 set cmdheight=2 " Set command line height to two lines
 "}}}
 "-----------------------------------------------------------------

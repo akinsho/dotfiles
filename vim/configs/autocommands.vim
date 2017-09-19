@@ -244,14 +244,6 @@ augroup fugitiveSettings
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
 
-"As Per the tin this toggles relativenumber and number depending on mode
-augroup numbertoggle
-  autocmd!
-if &ft !=# 'nerdtree\|startify\|qf'
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-endif
-augroup END
 
 augroup OpenImages
   autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw

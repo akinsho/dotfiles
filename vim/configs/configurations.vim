@@ -152,10 +152,6 @@ fun! ToggleNERDTreeWithRefresh()
   endif
 endf
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
-" Repo-specific bookmarks
-" if isdirectory(expand(".git"))
-"   let g:NERDTreeBookmarksFile = '.git/.nerdtree-bookmarks'
-" endif
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
