@@ -28,7 +28,7 @@ highlight jsSuper ctermfg=13
 highlight jsFuncCall ctermfg=cyan
 highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
 highlight cssBraces ctermfg=cyan
-highlight Type cterm=italic
+highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
@@ -67,9 +67,9 @@ endif
 ""---------------------------------------------------------------------------//
 "make the completion menu a bit more readable
 hi PmenuSel guibg=#004D40 guifg=white gui=bold
-hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+" hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 
 ""---------------------------------------------------------------------------//
 " NERDTrees highlighting {{{
@@ -153,9 +153,9 @@ fun! ToggleNERDTreeWithRefresh()
 endf
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
 " Repo-specific bookmarks
-if isdirectory(expand(".git"))
-  let g:NERDTreeBookmarksFile = '.git/.nerdtree-bookmarks'
-endif
+" if isdirectory(expand(".git"))
+"   let g:NERDTreeBookmarksFile = '.git/.nerdtree-bookmarks'
+" endif
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
@@ -186,6 +186,12 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
+""---------------------------------------------------------------------------//
+" Conflicted
+""---------------------------------------------------------------------------//
+" Use `gl` and `gu` rather than the default conflicted diffget mappings
+let g:diffget_local_map = 'gl'
+let g:diffget_upstream_map = 'gu'
 ""---------------------------------------------------------------------------//
 " NERDTree Git
 ""---------------------------------------------------------------------------//
@@ -954,15 +960,7 @@ let g:startify_change_to_vcs_root     = 1
 "}}}
 ""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
-" call camelcasemotion#CreateMotionMappings('<leader>')
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-map <silent> ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
+call camelcasemotion#CreateMotionMappings('<leader>')
 ""---------------------------------------------------------------------------//
 " TMUX NAVIGATOR {{{
 ""---------------------------------------------------------------------------//

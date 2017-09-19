@@ -100,6 +100,7 @@ Plug 'ap/vim-css-color', { 'for': [
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit'
+Plug 'christoomey/vim-conflicted'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'

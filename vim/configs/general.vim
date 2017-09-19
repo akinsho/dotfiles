@@ -430,8 +430,18 @@ set complete+=kspell
 "Mouse {{{
 "===================================================================================
 set mousehide
-set mouse=a "this is the command that works for mousepad
-set mouse-=i
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=a
+    endif
+  endfunc
+set mouse= "this is the command that works for mousepad
+nnoremap § :call ToggleMouse()<CR>
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
 if exists('$TMUX')
   if !has('nvim')
