@@ -32,6 +32,7 @@ highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
+highlight Identifier gui=bold
 highlight CursorLine term=none cterm=none
 highlight Folded guifg=#65D2DF gui=bold
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
@@ -482,9 +483,11 @@ omap t <Plug>(easymotion-bd-tl)
 " `s<CR>` repeat last find motion.
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
-" Move to line
-map <Leader>k <Plug>(easymotion-bd-jk)
-nmap <Leader>k <Plug>(easymotion-overwin-line)
+" easymotion with hjkl keys
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
@@ -794,6 +797,22 @@ endif
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 if !has('gui_running')
+
+let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
+let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
+
+let s:diff_options =
+  \ '--reverse ' .
+  \ '--preview "(git diff --color=always master -- {} | tail -n +5 || cat {}) 2> /dev/null | head -'.&lines.'"'
+
+command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
+      \ extend(branch_files_options, { 'options': s:diff_options }), 0))
+
+command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
+      \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
+
+nnoremap <silent> <localleader>bf :BranchFiles<cr>
+nnoremap <silent> <localleader>u :UncommitedFiles<cr>
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
