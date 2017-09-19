@@ -193,6 +193,10 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 let g:diffget_local_map = 'gl'
 let g:diffget_upstream_map = 'gu'
 ""---------------------------------------------------------------------------//
+" MAGIT
+""---------------------------------------------------------------------------//
+nnoremap mgo :MagitOnly<CR>
+""---------------------------------------------------------------------------//
 " NERDTree Git
 ""---------------------------------------------------------------------------//
 " NERDTree: Git Plugin
@@ -971,8 +975,7 @@ if exists('$TMUX')
   let g:tmux_navigator_save_on_switch = 2
 endif
 "}}}
-"
-
+""---------------------------------------------------------------------------//
 function! GetFileSize() "{{{
   let bytes = getfsize(expand("%:p"))
   if bytes <= 0
