@@ -136,7 +136,6 @@ augroup mutltiple_filetype_settings
     autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx
           \ setlocal omnifunc=javascriptcomplete#CompleteJS
   endif
-  au * BufWinEnter :AutoSave<CR> | echom 'Autosave Enabled'
 augroup END
 
 augroup filetype_javascript_typescript
@@ -222,6 +221,8 @@ augroup FileType_all
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
+
+  autocmd VimEnter,BufWinEnter,WinEnter * AutoSave
 
   " Update filetype on save if empty
   autocmd BufWritePost * nested

@@ -174,8 +174,6 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 " nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-" Close all the buffers
-" nnoremap <leader>ba :bufdo bd!<cr>
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//

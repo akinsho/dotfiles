@@ -118,7 +118,7 @@ function! AutoResize()
   endif
 endfunction
 command! AutoResize call AutoResize()
-
+nnoremap <leader>ar :AutoResize<CR>
 set winheight=30
 set winwidth=30
 "}}}
