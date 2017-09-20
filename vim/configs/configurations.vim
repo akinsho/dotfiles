@@ -32,7 +32,7 @@ highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
-highlight Identifier gui=bold
+" highlight Identifier gui=italic,bold
 highlight CursorLine term=none cterm=none
 highlight Folded guifg=#65D2DF gui=bold
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
