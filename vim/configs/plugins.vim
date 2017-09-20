@@ -89,12 +89,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ ] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
-Plug 'ap/vim-css-color', { 'for': [
-      \  'vim',
-      \  'css',
-      \  'javascript',
-      \  'typescript'
-      \ ] }
+Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
 "}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
@@ -123,11 +118,13 @@ Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "Coding tools ======================={{{
 " Plug 'janko-m/vim-test'
+" Plug 'AndrewRadev/sideways.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
-Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'takac/vim-hardtime'
+Plug 'rstacruz/vim-hyperstyle'
+Plug 'rizzatti/dash.vim',       { 'on': 'Dash' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }

@@ -9,7 +9,8 @@ if has('nvim')
   " set guicursor=n-v-c-i-ci-ve:block
   "Add neovim terminal escape with ESC mapping
   tmap <ESC> <C-\><C-n>
-  tmap <Leader>e <C-\><C-n>
+  " escape from terminal mode to normal mode
+  tnoremap jk <C-\><C-n>
   tmap <C-h> <C-\><C-n><C-h>
   tmap <C-j> <C-\><C-n><C-j>
   tmap <C-k> <C-\><C-n><C-k>

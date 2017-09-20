@@ -1,6 +1,9 @@
 setl softtabstop=4 tabstop=4 shiftwidth=4 foldmethod=syntax foldlevelstart=99
+setl colorcolumn=120
 setl nofoldenable
 setl completeopt-=preview
+
+
 if has('nvim')
   nnoremap <localleader>p :TSDefPreview<CR>
   nnoremap <leader>d :TSDef<CR>

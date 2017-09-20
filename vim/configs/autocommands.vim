@@ -177,18 +177,25 @@ augroup FileType_text
   autocmd FileType text setlocal textwidth=78
 augroup END
 
+augroup fileSettings
+  autocmd!
+  autocmd Filetype vim-plug setlocal nonumber
+augroup END
+
 if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
+    autocmd BufEnter,WinLeave term://* setlocal nonumber norelativenumber
+    autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
-    highlight BlackTerminal guibg=black ctermbg=Black
     if exists('+winhighlight')
-    autocmd TermOpen * if &buftype !=# 'fzf'
-          \ | set winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
-          \ | endif
+      highlight BlackTerminal guibg=black ctermbg=Black
+      autocmd TermOpen * if &buftype !=# 'fzf'
+            \ | set winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
+            \ | endif
     endif
-    autocmd TermOpen * set bufhidden=hide | set nonumber
+    autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
 endif
@@ -237,7 +244,7 @@ augroup FileType_all
         \ if &l:autoread > 0 | source <afile> |
         \   echo 'source '.bufname('%') |
         \ endif
-  augroup END
+augroup END
 
 augroup fugitiveSettings
   autocmd!
@@ -263,8 +270,8 @@ augroup END
 
 
 augroup fix-ultisnips-overriding-tab-visual-mode
-    autocmd!
-    autocmd VimEnter * xnoremap <Tab> >gv
+  autocmd!
+  autocmd VimEnter * xnoremap <Tab> >gv
 augroup END
 
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{

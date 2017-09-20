@@ -4,6 +4,7 @@
 " Highlight cursor column onwards - kind of cool
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
+set colorcolumn=80
 highlight ColorColumn guibg=#2c3a41
 ""---------------------------------------------------------------------------//
 syntax clear SpellBad
@@ -152,6 +153,8 @@ fun! ToggleNERDTreeWithRefresh()
     call g:NERDTree.ForCurrentTab().render()
   endif
 endf
+let g:NERDTreeMapOpenSplit='s'
+let g:NERDTreeMapOpenVSplit='v'
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
 let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
@@ -301,15 +304,17 @@ endif
 " Enable completion where available.
 " let g:ale_completion_enabled          = 1 "Careful clashes with other completion engines
 " let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
+let g:ale_lint_on_insert_leave = 1
 let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options          = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_pattern_options                      = {'\.min.js$': {'ale_enabled': 0}}
-let g:ale_fixers                               = {}
-let g:ale_fixers.javascript                    = ['prettier', 'eslint']
-let g:ale_fixers.typescript                    = ['prettier']
-let g:ale_fixers.json                          = ['prettier']
-let g:ale_fixers.css                           = ['stylelint']
-let g:ale_sh_shellcheck_options                = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_fixers = {
+    \'typescript':['prettier'],
+    \'javascript':['prettier', 'eslint'],
+    \'json':'prettier',
+    \'css':'stylelint'
+    \}
+let g:ale_sh_shellcheck_options = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
 let g:ale_sign_error                  = '✘'
@@ -320,7 +325,7 @@ let g:ale_linters                     = {
       \'jsx': ['stylelint', 'eslint'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint', 'stylelint'],
-      \'go': ['go build', 'gofmt', 'golint', 'go vet'],
+      \'go': ['gofmt -e', 'go vet', 'golint', 'go build', 'gosimple', 'staticcheck'],
       \'html':[]
       \}
 let g:ale_set_highlights    = 0
@@ -428,6 +433,8 @@ let g:go_highlight_extra_types          = 1
 let g:go_highlight_structs              = 1
 let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassign', 'goconst']
 ""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
@@ -436,7 +443,7 @@ nnoremap <leader>gg :GitGutterToggle<CR>
 if has('mac')
   let g:gitgutter_enabled               = 1
   let g:gitgutter_grep_command          = 'ag --nocolor'
-  let g:gitgutter_sign_added            = '🌝'
+  let g:gitgutter_sign_added            = '🍄'
   let g:gitgutter_sign_modified         = '🔥'
   let g:gitgutter_sign_removed          = '😤'
   let g:gitgutter_sign_modified_removed = '☁️'
