@@ -244,7 +244,7 @@ nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
 
 "File completion made a little less painful
-inoremap <c-f> <c-x><c-f>
+" inoremap <c-f> <c-x><c-f>
 " ----------------------------------------------------------------------------
 " Buffers
 " ----------------------------------------------------------------------------

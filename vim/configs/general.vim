@@ -195,7 +195,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
-set modelines=0
+set modelines=1
 set nomodeline
 set conceallevel=2
 "syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
@@ -456,3 +456,4 @@ if !has('nvim')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
+" vim:foldmethod=marker:foldlevel=0

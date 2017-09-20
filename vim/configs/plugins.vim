@@ -117,7 +117,6 @@ Plug 'kana/vim-textobj-user'
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
-Plug 'rhysd/devdocs.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'

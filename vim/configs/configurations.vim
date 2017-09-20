@@ -411,21 +411,23 @@ let g:csv_highlight_column     = 'y'
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//
-let g:go_term_height            = 30
-let g:go_term_width             = 30
-let g:go_term_mode              = "split"
-let g:go_list_type              = "quickfix"
-let g:go_auto_type_info         = 0
-let g:go_auto_sameids           = 0
-let g:go_fmt_command            = "goimports"
-let g:go_fmt_autosave           = 1
-let g:go_doc_keywordprg_enabled = 0 "Stops auto binding K
-let g:go_def_reuse_buffer       = 1
-let g:go_highlight_functions    = 1
-let g:go_highlight_methods      = 1
-let g:go_highlight_extra_types  = 1
-let g:go_highlight_structs      = 1
-let g:go_highlight_operators    = 1
+let g:go_term_height                    = 30
+let g:go_term_width                     = 30
+let g:go_term_mode                      = "split"
+let g:go_list_type                      = "quickfix"
+let g:go_auto_type_info                 = 0
+let g:go_auto_sameids                   = 0
+let g:go_fmt_command                    = "goimports"
+let g:go_fmt_autosave                   = 1
+let g:go_doc_keywordprg_enabled         = 0 "Stops auto binding K
+let g:go_highlight_variable_assignments = 1
+let g:go_def_reuse_buffer               = 1
+let g:go_highlight_functions            = 1
+let g:go_highlight_methods              = 1
+let g:go_highlight_extra_types          = 1
+let g:go_highlight_structs              = 1
+let g:go_highlight_operators            = 1
+let g:go_highlight_build_constraints    = 1
 ""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
@@ -811,9 +813,6 @@ command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
 command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
       \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
 
-nnoremap <silent> <localleader>bf :BranchFiles<cr>
-nnoremap <silent> <localleader>u :UncommitedFiles<cr>
-
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 command! -bang -nargs=? -complete=dir Files
@@ -840,6 +839,8 @@ command! -bang -nargs=* Rg
 imap <c-x>l <plug>(fzf-complete-line)
 imap <c-x>p <plug>(fzf-complete-path)
 inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
+nnoremap <silent> <localleader>bf :BranchFiles<cr>
+nnoremap <silent> <localleader>u :UncommitedFiles<cr>
 nnoremap <silent> <localleader>d :Dots<CR>
 nnoremap <silent> <localleader>o :Buffers<CR>
 nnoremap <silent> <localleader>a :Windows<CR>
@@ -918,21 +919,6 @@ function! Fzf_dev()
         \ 'down':    '40%' })
 endfunction
 endif
-"}}}
-""---------------------------------------------------------------------------//
-"  "Devdocs is free but opens a browser tab Dash isn't but opens
-" the local app which is preferable
-"DEVDOCS & DASH {{{
-""---------------------------------------------------------------------------//
-let g:devdocs_filetype_map = {
-    \   'ruby': 'rails',
-    \   'javascript.jsx': 'react',
-    \   'javascript.test': 'chai',
-    \   'typescript.tsx': 'react'
-    \ }
-
-command! -nargs=* DevDocsReact call devdocs#open_doc(<q-args>, 'react')
-nmap <leader>D <Plug>(devdocs-under-cursor)
 "}}}
 ""---------------------------------------------------------------------------//
 " STARTIFY {{{
