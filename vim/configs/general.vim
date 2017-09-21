@@ -257,8 +257,8 @@ if has('unnamedplus')
 elseif has('clipboard')
   set clipboard=unnamed
 endif
-set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
+  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set incsearch
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode
