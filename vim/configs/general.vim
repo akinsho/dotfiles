@@ -307,8 +307,13 @@ iabbrev w@ www.akin-sowemimo.com
 "Colorscheme {{{
 ""---------------------------------------------------------------------------//
 set background=dark
-colorscheme quantum
+" colorscheme quantum
+let g:onedark_terminal_italics = 1
+colorscheme onedark
 "}}}
+" Custom Terminal title
+let &titlestring=hostname() . ' ● : ❐ %F  %r: Vim %m'
+set title
 ""---------------------------------------------------------------------------//
 "NVIM {{{
 ""---------------------------------------------------------------------------//
@@ -431,15 +436,15 @@ set complete+=kspell
 "===================================================================================
 set mousehide
 function! ToggleMouse()
-    " check if mouse is enabled
-    if &mouse == 'a'
-        " disable mouse
-        set mouse=
-    else
-        " enable mouse everywhere
-        set mouse=a
-    endif
-  endfunc
+  " check if mouse is enabled
+  if &mouse == 'a'
+    " disable mouse
+    set mouse=
+  else
+    " enable mouse everywhere
+    set mouse=a
+  endif
+endfunc
 set mouse= "this is the command that works for mousepad
 nnoremap § :call ToggleMouse()<CR>
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581

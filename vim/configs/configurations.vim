@@ -4,8 +4,8 @@
 " Highlight cursor column onwards - kind of cool
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
+" highlight ColorColumn guibg=#2c3a41
 set colorcolumn=80
-highlight ColorColumn guibg=#2c3a41
 ""---------------------------------------------------------------------------//
 syntax clear SpellBad
 syntax clear SpellCap
@@ -44,7 +44,7 @@ hi link EndOfBuffer VimFgBgAttrib
 "#282C34
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
-" Highlight term cursor differently
+  " Highlight term cursor differently
 endif
 ""---------------------------------------------------------------------------//
 " Startify Highlighting
@@ -134,13 +134,13 @@ let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
 "NERDTree
 ""---------------------------------------------------------------------------//
 " Ctrl+N to toggle Nerd Tree
- function! NERDTreeToggleAndFind()
-    if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-      execute 'NERDTreeClose'
-    else
-      execute 'NERDTreeFind'
-    endif
-  endfunction
+function! NERDTreeToggleAndFind()
+  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+    execute 'NERDTreeClose'
+  else
+    execute 'NERDTreeFind'
+  endif
+endfunction
 nnoremap <silent> <C-N> :call ToggleNERDTreeWithRefresh()<cr>
 nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
 
@@ -309,11 +309,11 @@ let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {
-    \'typescript':['prettier'],
-    \'javascript':['prettier', 'eslint'],
-    \'json':'prettier',
-    \'css':'stylelint'
-    \}
+      \'typescript':['prettier'],
+      \'javascript':['prettier', 'eslint'],
+      \'json':'prettier',
+      \'css':'stylelint'
+      \}
 let g:ale_sh_shellcheck_options = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
@@ -341,18 +341,18 @@ let g:tagbar_autoclose       = 1  " Focus cursor inside tagbar when opened, and 
 let g:tagbar_show_visibility = 0
 let g:tagbar_autofocus       = 1
 let g:tagbar_type_typescript = {
-  \ 'ctagstype': 'typescript',
-  \ 'kinds': [
-    \ 'c:classes',
-    \ 'n:modules',
-    \ 'f:functions',
-    \ 'v:variables',
-    \ 'v:varlambdas',
-    \ 'm:members',
-    \ 'i:interfaces',
-    \ 'e:enums',
-  \ ]
-  \ }
+      \ 'ctagstype': 'typescript',
+      \ 'kinds': [
+      \ 'c:classes',
+      \ 'n:modules',
+      \ 'f:functions',
+      \ 'v:variables',
+      \ 'v:varlambdas',
+      \ 'm:members',
+      \ 'i:interfaces',
+      \ 'e:enums',
+      \ ]
+      \ }
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
@@ -508,9 +508,9 @@ map  N <Plug>(easymotion-prev)
 let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
 let g:user_emmet_settings     = {
-          \'javascript': {'extends': 'jsx'},
-          \'typescript':{'extends': 'tsx'}
-          \}
+      \'javascript': {'extends': 'jsx'},
+      \'typescript':{'extends': 'tsx'}
+      \}
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
@@ -753,16 +753,16 @@ augroup END
 " VIM MARKDOWN {{{
 ""---------------------------------------------------------------------------//
 let g:vim_markdown_fenced_languages = [
-  \'css',
-  \'javascript',
-  \'js=javascript',
-  \'json=json',
-  \'ruby',
-  \'xml',
-  \'html',
-  \'python',
-  \'sql'
-  \]
+      \'css',
+      \'javascript',
+      \'js=javascript',
+      \'json=json',
+      \'ruby',
+      \'xml',
+      \'html',
+      \'python',
+      \'sql'
+      \]
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
 "}}}
@@ -807,78 +807,78 @@ endif
 " --color: Search color options
 if !has('gui_running')
 
-let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
-let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
+  let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
+  let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
 
-let s:diff_options =
-  \ '--reverse ' .
-  \ '--preview "(git diff --color=always master -- {} | tail -n +5 || cat {}) 2> /dev/null | head -'.&lines.'"'
+  let s:diff_options =
+        \ '--reverse ' .
+        \ '--preview "(git diff --color=always master -- {} | tail -n +5 || cat {}) 2> /dev/null | head -'.&lines.'"'
 
-command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
-      \ extend(branch_files_options, { 'options': s:diff_options }), 0))
+  command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
+        \ extend(branch_files_options, { 'options': s:diff_options }), 0))
 
-command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
-      \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
+  command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
+        \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
 
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  command! -bang -nargs=? -complete=dir Files
+        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-command! -bang -nargs=? -complete=dir GFiles
-  \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+  command! -bang -nargs=? -complete=dir GFiles
+        \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-command! -bang Dots
-      \ call fzf#run(fzf#wrap('dotfiles', {'dir': $DOTFILES}, <bang>0))
+  command! -bang Dots
+        \ call fzf#run(fzf#wrap('dotfiles', {'dir': $DOTFILES}, <bang>0))
 
-command! Modified call fzf#run(fzf#wrap(
-  \ {'source': 'git ls-files --exclude-standard --others --modified'}))
+  command! Modified call fzf#run(fzf#wrap(
+        \ {'source': 'git ls-files --exclude-standard --others --modified'}))
 
-noremap <localLeader>mo :Modified<cr>
-" Use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('right:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+  noremap <localLeader>mo :Modified<cr>
+  " Use ripgrep instead of ag:
+  command! -bang -nargs=* Rg
+        \ call fzf#vim#grep(
+        \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+        \   <bang>0 ? fzf#vim#with_preview('right:60%')
+        \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+        \   <bang>0)
 
-imap <c-x>l <plug>(fzf-complete-line)
-imap <c-x>p <plug>(fzf-complete-path)
-inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
-nnoremap <silent> <localleader>bf :BranchFiles<cr>
-nnoremap <silent> <localleader>u :UncommitedFiles<cr>
-nnoremap <silent> <localleader>d :Dots<CR>
-nnoremap <silent> <localleader>o :Buffers<CR>
-nnoremap <silent> <localleader>a :Windows<CR>
-nnoremap <silent> <localleader>m :History<CR>
-nnoremap <silent> <localleader>C :Commits<CR>
-nnoremap <silent> <localleader>l :Lines<CR>
+  imap <c-x>l <plug>(fzf-complete-line)
+  imap <c-x>p <plug>(fzf-complete-path)
+  inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
+  nnoremap <silent> <localleader>bf :BranchFiles<cr>
+  nnoremap <silent> <localleader>u :UncommitedFiles<cr>
+  nnoremap <silent> <localleader>d :Dots<CR>
+  nnoremap <silent> <localleader>o :Buffers<CR>
+  nnoremap <silent> <localleader>a :Windows<CR>
+  nnoremap <silent> <localleader>m :History<CR>
+  nnoremap <silent> <localleader>C :Commits<CR>
+  nnoremap <silent> <localleader>l :Lines<CR>
 
-" Launch file search using FZF
-if isdirectory(".git")
-  " if in a git project, use :GFiles
-  nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
+  " Launch file search using FZF
+  if isdirectory(".git")
+    " if in a git project, use :GFiles
+    nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
   else
-  " otherwise, use :FZF
-  nnoremap <silent><C-P> :Files<CR>
-endif
-nnoremap \ :Rg!<CR>
-"Find Word under cursor
-nnoremap <leader>f :Find <C-R><C-W><CR>
-nnoremap <leader>F :Find 
+    " otherwise, use :FZF
+    nnoremap <silent><C-P> :Files<CR>
+  endif
+  nnoremap \ :Rg!<CR>
+  "Find Word under cursor
+  nnoremap <leader>f :Find <C-R><C-W><CR>
+  nnoremap <leader>F :Find 
 
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-x': 'split',
-      \ 'ctrl-v': 'vsplit'
-      \ }
+  let g:fzf_action = {
+        \ 'ctrl-t': 'tab split',
+        \ 'ctrl-x': 'split',
+        \ 'ctrl-v': 'vsplit'
+        \ }
 
-nnoremap <localleader>ma  :Marks<CR>
-nnoremap <localleader>mm :Maps<CR>
+  nnoremap <localleader>ma  :Marks<CR>
+  nnoremap <localleader>mm :Maps<CR>
 
-let g:fzf_nvim_statusline = 1
-"Customize fzf colors to match your color scheme
+  let g:fzf_nvim_statusline = 1
+  "Customize fzf colors to match your color scheme
   let g:fzf_colors =
         \ { 'fg':    ['fg', 'Normal'],
         \ 'bg':      ['bg', 'Normal'],
@@ -895,36 +895,36 @@ let g:fzf_nvim_statusline = 1
         \ 'header':  ['fg', 'Comment']
         \}
 
-" Files + devicons
-function! Fzf_dev()
-  function! s:files()
-    let files = split(system($FZF_DEFAULT_COMMAND), '\n')
-    return s:prepend_icon(files)
+  " Files + devicons
+  function! Fzf_dev()
+    function! s:files()
+      let files = split(system($FZF_DEFAULT_COMMAND), '\n')
+      return s:prepend_icon(files)
+    endfunction
+
+    function! s:prepend_icon(candidates)
+      let result = []
+      for candidate in a:candidates
+        let filename = fnamemodify(candidate, ':p:t')
+        let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
+        call add(result, printf("%s %s", icon, candidate))
+      endfor
+
+      return result
+    endfunction
+
+    function! s:edit_file(item)
+      let parts = split(a:item, ' ')
+      let file_path = get(parts, 1, '')
+      execute 'silent e' file_path
+    endfunction
+
+    call fzf#run({
+          \ 'source': <sid>files(),
+          \ 'sink':   function('s:edit_file'),
+          \ 'options': '-m -x +s',
+          \ 'down':    '40%' })
   endfunction
-
-  function! s:prepend_icon(candidates)
-    let result = []
-    for candidate in a:candidates
-      let filename = fnamemodify(candidate, ':p:t')
-      let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
-      call add(result, printf("%s %s", icon, candidate))
-    endfor
-
-    return result
-  endfunction
-
-  function! s:edit_file(item)
-    let parts = split(a:item, ' ')
-    let file_path = get(parts, 1, '')
-    execute 'silent e' file_path
-  endfunction
-
-  call fzf#run({
-        \ 'source': <sid>files(),
-        \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m -x +s',
-        \ 'down':    '40%' })
-endfunction
 endif
 "}}}
 ""---------------------------------------------------------------------------//
