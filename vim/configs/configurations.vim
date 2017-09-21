@@ -399,7 +399,6 @@ highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse,underli
 " Git Gutter
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
-
 let g:gitgutter_enabled               = 1
 let g:gitgutter_grep_command          = 'ag --nocolor'
 let g:gitgutter_sign_modified         = '•'

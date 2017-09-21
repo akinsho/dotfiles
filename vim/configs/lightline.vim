@@ -138,6 +138,7 @@ endfunction
 if exists('g:lightline')
 
   " These are the colour codes that are used in the original onedark theme
+  let s:gold         = ['#F5F478', 227]
   let s:black        = ['#282c34', 235]
   let s:white        = ['#abb2bf', 145]
   let s:light_red    = ['#e06c75', 204]
@@ -155,7 +156,7 @@ if exists('g:lightline')
 
   let s:p = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
 
-  let s:p.normal.left     = [ [ s:gutter_grey, s:black ], [ s:comment_grey, s:black ] ]
+  let s:p.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ] ]
   let s:p.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
   let s:p.normal.middle   = [ [ s:comment_grey, s:black ] ]
 
