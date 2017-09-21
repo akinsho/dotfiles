@@ -82,9 +82,6 @@ augroup UpdateVim
   " autocmd VimResized * wincmd =
 augroup END
 
-augroup AirLineRefresh
-  autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
-augroup END
 
   function! s:expand_html_tab()
 " try to determine if we're within quotes or tags.

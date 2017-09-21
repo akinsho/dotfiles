@@ -5,7 +5,7 @@
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
 " highlight ColorColumn guibg=#2c3a41
-set colorcolumn=80
+" set colorcolumn=80
 ""---------------------------------------------------------------------------//
 syntax clear SpellBad
 syntax clear SpellCap
@@ -38,13 +38,11 @@ highlight CursorLine term=none cterm=none
 highlight Folded guifg=#65D2DF gui=bold
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-" highlight IncSearch ctermbg=NONE guifg=NONE guibg=NONE gui=underline cterm=NONE
 "Color the tildes at the end of the buffer
 hi link EndOfBuffer VimFgBgAttrib
 "#282C34
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
-  " Highlight term cursor differently
 endif
 ""---------------------------------------------------------------------------//
 " Startify Highlighting
@@ -62,6 +60,7 @@ hi StartifySpecial  guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE c
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
+  " Highlight term cursor differently
   highlight TermCursor ctermfg=green guifg=green
 endif
 ""---------------------------------------------------------------------------//
@@ -71,7 +70,7 @@ endif
 hi PmenuSel guibg=#004D40 guifg=white gui=bold
 hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-" hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
+hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 
 ""---------------------------------------------------------------------------//
 " NERDTrees highlighting {{{
@@ -141,8 +140,8 @@ function! NERDTreeToggleAndFind()
     execute 'NERDTreeFind'
   endif
 endfunction
-nnoremap <silent> <C-N> :call ToggleNERDTreeWithRefresh()<cr>
-nnoremap <localleader>n :call NERDTreeToggleAndFind()<CR>
+nnoremap <silent> <localleader>n :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <localleader>nf :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -196,6 +195,10 @@ let g:diffget_upstream_map = 'gu'
 " MAGIT
 ""---------------------------------------------------------------------------//
 nnoremap mgo :MagitOnly<CR>
+""---------------------------------------------------------------------------//"
+" LIGHTLINE
+""---------------------------------------------------------------------------//
+source $DOTFILES/vim/configs/lightline.vim
 ""---------------------------------------------------------------------------//
 " NERDTree Git
 ""---------------------------------------------------------------------------//
@@ -211,58 +214,6 @@ let g:NERDTreeIndicatorMapCustom = {
       \ "Clean"     : "",
       \ "Unknown"   : ""
       \ }
-""---------------------------------------------------------------------------//
-"               Airline {{{
-""---------------------------------------------------------------------------//
-let g:airline_highlighting_cache                          = 1
-let g:airline#extensions#branch#empty_message             = "No Git 😅"
-let g:airline_skip_empty_sections                         = 1
-let g:airline#parts#ffenc#skip_expected_string            = 'utf-8[unix]'
-let g:airline_powerline_fonts                             = 1
-let g:airline#extensions#tabline#enabled                  = 1
-let g:airline#extensions#tabline#switch_buffers_and_tabs  = 1
-let g:airline#extensions#tabline#show_tabs                = 1
-let g:airline#extensions#tabline#tab_nr_type              = 2 " Show # of splits and tab #
-let g:airline#extensions#tabline#fnamemod                 = ':t'
-let g:airline#extensions#tabline#show_tab_type            = 1
-let g:airline#extensions#tabline#fnamecollapse            = 1
-let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
-let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
-let g:airline#extensions#tabline#tab_min_count            = 1
-" let g:airline#extensions#tabline#left_sep                 = ''
-" let g:airline#extensions#tabline#left_alt_sep             = ''
-" let g:airline#extensions#tabline#right_sep                = ''
-" let g:airline#extensions#tabline#right_alt_sep            = ''
-" let g:airline_left_alt_sep  = ''
-" let g:airline_right_alt_sep = ''
-" let g:airline_right_sep     = ''
-" let g:airline_left_sep      = ''
-let g:ff_map = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
-let g:airline_section_c = airline#section#create(["%{getcwd()}", g:airline_symbols.space, '%t %{GetFileSize()}'])
-"Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
-let g:airline_section_y ="%{get(g:ff_map,&ff,'?').(&expandtab?'\ ˽\ ':'\ ⇥\ ').&tabstop}"
-let g:airline#extensions#tabline#show_close_button = 1
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-let g:airline_inactive_collapse                    = 1
-" * configure pattern to be ignored on BufAdd autocommand >
-" fixes unnecessary redraw, when e.g. opening Gundo window
-let airline#extensions#tabline#ignore_bufadd_pat   =
-      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
-
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <localleader>1 <Plug>AirlineSelectTab1
-nmap <localleader>2 <Plug>AirlineSelectTab2
-nmap <localleader>3 <Plug>AirlineSelectTab3
-nmap <localleader>4 <Plug>AirlineSelectTab4
-nmap <localleader>5 <Plug>AirlineSelectTab5
-nmap <localleader>6 <Plug>AirlineSelectTab6
-nmap <localleader>7 <Plug>AirlineSelectTab7
-nmap <localleader>8 <Plug>AirlineSelectTab8
-nmap <localleader>9 <Plug>AirlineSelectTab9
-nmap <localleader>- <Plug>AirlineSelectPrevTab
-nmap <localleader>+ <Plug>AirlineSelectNextTab
-"}}}
-""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//
@@ -441,62 +392,21 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassi
 ""---------------------------------------------------------------------------//
 "" ================ Multiple Cursors ======================== {{{
 ""---------------------------------------------------------------------------//
-" Highlighting
-hi! link multiple_cursors_cursor Visual
-hi! link multiple_cursors_visual Visual
-
-
-" Disable YouCompleteMe and syntastic when using vim-multiple-cursors
-function! Multiple_cursors_before()
-  if exists('g:ycm_filetype_whitelist')
-    let s:old_ycm_whitelist = g:ycm_filetype_whitelist
-    let g:ycm_filetype_whitelist = {}
-  endif
-  if exists(':SyntasticToggleMode')
-    silent! call SyntasticToggleMode()
-  endif
-  if get(g:, 'ale_enabled', 0)
-    let g:orig_ale_enabled = get(g:, 'ale_enabled', 0)
-    silent! ALEDisable
-  endif
-  if exists("*deoplete#disable")
-    silent! call deoplete#disable()
-  endif
-endfunction
-
-function! Multiple_cursors_after()
-  if exists('g:ycm_filetype_whitelist') && exists('s:old_ycm_whitelist')
-    let g:ycm_filetype_whitelist = s:old_ycm_whitelist
-  endif
-  if exists(':SyntasticToggleMode')
-    silent! call SyntasticToggleMode()
-  endif
-  if g:orig_ale_enabled
-    silent! ALEEnable
-  endif
-  if exists("*deoplete#enable")
-    silent! call deoplete#enable()
-  endif
-endfunction
 "---------------------------------------------------------------------------//}}}
 ""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
 
-if has('mac')
-  let g:gitgutter_enabled               = 1
-  let g:gitgutter_grep_command          = 'ag --nocolor'
-  let g:gitgutter_sign_added            = '  '
-
-  let g:gitgutter_sign_modified         = '🔥'
-  let g:gitgutter_sign_removed          = '😤'
-  let g:gitgutter_sign_modified_removed = '☁️'
-else
-  let g:gitgutter_sign_modified         = '•'
-  let g:gitgutter_sign_modified_removed = '±'
-  let g:gitgutter_sign_added            = '❖'
-endif
+let g:gitgutter_enabled               = 1
+let g:gitgutter_grep_command          = 'ag --nocolor'
+let g:gitgutter_sign_modified         = '•'
+let g:gitgutter_sign_modified_removed = '±'
+let g:gitgutter_sign_added            = '❖'
+" let g:gitgutter_sign_added            = ''
+" if has('mac')
+  " let g:gitgutter_sign_modified_removed = '☁️'
+" endif
 ""---------------------------------------------------------------------------//
 " EXPAND REGION VIM
 ""---------------------------------------------------------------------------//
@@ -547,498 +457,498 @@ omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 "
-""---------------------------------------------------------------------------//
-"                    EMMET for Vim
-""---------------------------------------------------------------------------//
-let g:user_emmet_mode         = 'a'
-let g:user_emmet_complete_tag = 1
-let g:user_emmet_settings     = {
-      \'javascript': {'extends': 'jsx'},
-      \'typescript':{'extends': 'tsx'}
-      \}
-let g:user_emmet_leader_key     = "<C-Y>"
-let g:user_emmet_expandabbr_key =  "<C-Y>"
-let g:user_emmet_install_global = 0
-""---------------------------------------------------------------------------//
-" UNDOTREE {{{
-""---------------------------------------------------------------------------//
-let g:undotree_TreeNodeShape      = '◦' " Alternative: '◉'
-let g:undotree_SplitWidth         = 35
-let g:undotree_SetFocusWhenToggle = 1
-nnoremap <leader>u :UndotreeToggle<CR>
-"}}}
-""---------------------------------------------------------------------------//
-"Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
-""---------------------------------------------------------------------------//
-" EDITOR CONFIG {{{
-""---------------------------------------------------------------------------//
-let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-"}}}
-""---------------------------------------------------------------------------//
-" NERDComment {{{
-""---------------------------------------------------------------------------//
-" let test#runners = {'Typescript': ['Mocha', 'Jest']}
-" let test#runners = {'Typescript': ['Mocha']}
-" Commenting
-let g:NERDSpaceDelims       = 1
-let g:NERDCompactSexyComs   = 1
-let g:NERDDefaultAlign      = 'left'
-let g:NERDCustomDelimiters  = {
-      \ 'jsx': { 'leftAlt': '{/*','rightAlt': '*/}',
-      \ 'left': '//', 'right': ''
-      \ },
-      \ 'typescript.tsx': { 'leftAlt': '{/*','rightAlt': '*/}',
-      \ 'left': '//', 'right': ''
-      \ }
-      \  }
-let g:NERDCommentEmptyLines = 1
-
-nmap <silent> <leader>vt :TestNearest<CR>
-nmap <silent> <leader>vT :TestFile<CR>
-nmap <silent> <leader>va :TestSuite<CR>
-nmap <silent> <leader>vl :TestLast<CR>
-nmap <silent> <leader>vg :TestVisit<CR>
-"}}}
-""---------------------------------------------------------------------------//
-" Polyglot
-""---------------------------------------------------------------------------//
-let g:polyglot_disabled = ['elm','clojure']
-let g:vue_disable_pre_processors=1
-""---------------------------------------------------------------------------//
-" ELM
-""---------------------------------------------------------------------------//
-let g:elm_format_autosave   = 1
-let g:elm_jump_to_error     = 1
-let g:elm_detailed_complete = 1
-let g:elm_setup_keybindings = 1
-let g:elm_make_output_file  = "index.html"
-""---------------------------------------------------------------------------//
-" ECHODOC
-""---------------------------------------------------------------------------//
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type              = "signature"
-""---------------------------------------------------------------------------//
-" Deoplete Options
-""---------------------------------------------------------------------------//
-if has("nvim")
-  let g:deoplete#enable_at_startup        = 1
-  let g:deoplete#enable_smart_case        = 1
-  let g:deoplete#max_menu_width           = 80
-  let g:deoplete#max_menu_height          = 40
-  let g:deoplete#file#enable_buffer_path  = 1
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['around']
-  call deoplete#custom#source('ultisnips', 'rank', 290)
-  call deoplete#custom#source('ternjs', 'rank', 300)
-  call deoplete#custom#set('buffer', 'mark', '')
-  call deoplete#custom#set('ternjs', 'mark', '')
-  call deoplete#custom#set('tern', 'mark', '')
-  call deoplete#custom#set('omni', 'mark', '⌾')
-  call deoplete#custom#set('file', 'mark', '')
-  call deoplete#custom#set('jedi', 'mark', '')
-  call deoplete#custom#set('typescript', 'mark', '')
-  call deoplete#custom#set('ultisnips', 'mark', '')
   ""---------------------------------------------------------------------------//
-  " Deoplete Go
+  "                    EMMET for Vim
   ""---------------------------------------------------------------------------//
-  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-  let g:deoplete#sources#go#use_cache     = 1
-  let g:deoplete#sources#go#pointer       = 1
-  let g:deoplete#sources#go#sort_class = [
-        \ 'package',
-        \ 'func',
-        \ 'type',
-        \ 'var',
-        \ 'const',
-        \ 'ultisnips'
-        \ ]
-  ""---------------------------------------------------------------------------//
-  " NVIM TYPESCRIPT
-  ""---------------------------------------------------------------------------//
-  let g:nvim_typescript#kind_symbols = {
-        \ 'keyword': 'keyword',
-        \ 'class': '',
-        \ 'interface': 'interface',
-        \ 'script': 'script',
-        \ 'module': '',
-        \ 'local class': 'local class',
-        \ 'type': 'type',
-        \ 'enum': '',
-        \ 'enum member': '',
-        \ 'alias': '',
-        \ 'type parameter': 'type param',
-        \ 'primitive type': 'primitive type',
-        \ 'var': '',
-        \ 'local var': '',
-        \ 'property': '',
-        \ 'let': '',
-        \ 'const': '',
-        \ 'label': 'label',
-        \ 'parameter': 'param',
-        \ 'index': 'index',
-        \ 'function': '',
-        \ 'local function': 'local function',
-        \ 'method': '',
-        \ 'getter': '',
-        \ 'setter': '',
-        \ 'call': 'call',
-        \ 'constructor': '',
+  let g:user_emmet_mode         = 'a'
+  let g:user_emmet_complete_tag = 1
+  let g:user_emmet_settings     = {
+        \'javascript': {'extends': 'jsx'},
+        \'typescript':{'extends': 'tsx'}
         \}
-  let g:deoplete#omni#functions           = {}
-  let g:deoplete#omni#functions.javascript = [
-        \ 'tern#Complete',
-        \]
-  let g:deoplete#omni#functions.typescript = [
-        \ 'tern#Complete',
-        \]
-  let g:deoplete#omni#functions["typescript.tsx"] = [
-        \ 'tern#Complete',
-        \]
-
-  let g:nvim_typescript#javascript_support       = 0
-  let g:nvim_typescript#vue_support              = 1
-  let g:deoplete#sources#ternjs#types            = 1
-  let g:deoplete#sources#ternjs#docs             = 1
-  let g:deoplete#sources#ternjs#case_insensitive = 1
-  let g:tmuxcomplete#trigger                     = ''
-
-  let g:tern_request_timeout = 1
-  "Add extra filetypes
-  let g:tern#filetypes = [
-        \ 'tsx',
-        \ 'typescript.tsx',
-        \ 'typescript.jsx',
-        \ 'typescript',
-        \ 'javascript',
-        \ 'jsx',
-        \ 'javascript.jsx',
-        \ ]
-  "Add extra filetypes
-  let g:deoplete#sources#ternjs#filetypes = [
-        \ 'tsx',
-        \ 'typescript.tsx',
-        \ 'typescript.jsx',
-        \ 'typescript',
-        \ 'javascript',
-        \ 'jsx',
-        \ 'javascript.jsx',
-        \ ]
-  let g:deoplete#sources#ternjs#omit_object_prototype = 0
-  let g:deoplete#sources#ternjs#guess                 = 1
-  let g:tern_map_keys                                 = 0
-  let g:tern_show_argument_hints                      = 'on_hold'
-  let g:tern_show_signature_in_pum                    = 1
-  let g:tern#command                                  = ["tern"]
-  let g:tern#arguments                                = ["--persistent"]
-
-else
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-  let g:completor_auto_trigger = 0
-  let g:completor_gocode_binary = $GOPATH.'/bin/gocode'
-endif
-
-""---------------------------------------------------------------------------//
-" vim-exchange
-""---------------------------------------------------------------------------//
-let g:exchange_no_mappings = 1
-nmap X <Plug>(Exchange)
-xmap X <Plug>(Exchange)
-
-""---------------------------------------------------------------------------//
-" Goyo
-""---------------------------------------------------------------------------//
-let g:goyo_width=100
-let g:goyo_margin_top = 2
-let g:goyo_margin_bottom = 2
-nnoremap <F3> :Goyo<CR>
-function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set nonumber
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  set number relativenumber
-  " Quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
-
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-
-" Goyo
-function! s:auto_goyo()
-  if &ft == 'markdown' && winnr('$') == 1
-    Goyo
-  elseif exists('#goyo')
-    Goyo!
-  endif
-endfunction
-
-augroup goyo_markdown
-  autocmd!
-  autocmd BufNewFile,BufRead * call s:auto_goyo()
-  autocmd User GoyoLeave nested call s:goyo_leave()
-augroup END
-""---------------------------------------------------------------------------//
-" VIM MARKDOWN {{{
-""---------------------------------------------------------------------------//
-let g:markdown_composer_syntax_theme='hybrid'
-let g:vim_markdown_fenced_languages = [
-      \'css',
-      \'javascript',
-      \'js=javascript',
-      \'json=json',
-      \'ruby',
-      \'xml',
-      \'html',
-      \'python',
-      \'sql'
-      \]
-let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
-"}}}
-""---------------------------------------------------------------------------//
-" VIM ROOTER {{{
-"---------------------------------------------------------------------------//
-let g:rooter_change_directory_for_non_project_files = 'current'
-let g:rooter_silent_chdir = 1
-let g:rooter_resolve_links = 1
-" }}}
-""---------------------------------------------------------------------------//
-" ULTISNIPS {{{
-""---------------------------------------------------------------------------//
-" Snippet settings:
-let g:snips_author = 'Akin Sowemimo'
-let g:UltiSnipsSnippetsDir          = $DOTFILES."/vim/mySnippets" "Both of these settings are necessary
-let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
-let g:UltiSnipsExpandTrigger        = "<C-J>"
-let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
-let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
-let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
-nnoremap <localleader>u :UltiSnipsEdit<CR>
-"}}}
-""---------------------------------------------------------------------------//
-" FZF {{{
-""---------------------------------------------------------------------------//
-if has('nvim')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-endif
-"--------------------------------------------
-" FZF bindings
-"--------------------------------------------
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-if !has('gui_running')
-
-  let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
-  let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
-
-  let s:diff_options =
-        \ '--reverse ' .
-        \ '--preview "(git diff --color=always master -- {} | tail -n +5 || cat {}) 2> /dev/null | head -'.&lines.'"'
-
-  command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
-        \ extend(branch_files_options, { 'options': s:diff_options }), 0))
-
-  command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
-        \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
-
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
-  command! -bang -nargs=? -complete=dir Files
-        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-  command! -bang -nargs=? -complete=dir GFiles
-        \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-  command! -bang Dots
-        \ call fzf#run(fzf#wrap('dotfiles', {'dir': $DOTFILES}, <bang>0))
-
-  command! Modified call fzf#run(fzf#wrap(
-        \ {'source': 'git ls-files --exclude-standard --others --modified'}))
-
-  noremap <localLeader>mo :Modified<cr>
-  " Use ripgrep instead of ag:
-  command! -bang -nargs=* Rg
-        \ call fzf#vim#grep(
-        \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-        \   <bang>0 ? fzf#vim#with_preview('right:60%')
-        \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-        \   <bang>0)
-
-  imap <c-x>l <plug>(fzf-complete-line)
-  imap <c-x>p <plug>(fzf-complete-path)
-  inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
-  nnoremap <silent> <localleader>bf :BranchFiles<cr>
-  nnoremap <silent> <localleader>u :UncommitedFiles<cr>
-  nnoremap <silent> <localleader>d :Dots<CR>
-  nnoremap <silent> <localleader>o :Buffers<CR>
-  nnoremap <silent> <localleader>a :Windows<CR>
-  nnoremap <silent> <localleader>m :History<CR>
-  nnoremap <silent> <localleader>C :Commits<CR>
-  nnoremap <silent> <localleader>l :Lines<CR>
-
-  " Launch file search using FZF
-  if isdirectory(".git")
-    " if in a git project, use :GFiles
-    nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
-  else
-    " otherwise, use :FZF
-    nnoremap <silent><C-P> :Files<CR>
-  endif
-  nnoremap \ :Rg!<CR>
-  "Find Word under cursor
-  nnoremap <leader>f :Find <C-R><C-W><CR>
-  nnoremap <leader>F :Find 
-
-  let g:fzf_action = {
-        \ 'ctrl-t': 'tab split',
-        \ 'ctrl-x': 'split',
-        \ 'ctrl-v': 'vsplit'
+  let g:user_emmet_leader_key     = "<C-Y>"
+  let g:user_emmet_expandabbr_key =  "<C-Y>"
+  let g:user_emmet_install_global = 0
+  ""---------------------------------------------------------------------------//
+  " UNDOTREE {{{
+  ""---------------------------------------------------------------------------//
+  let g:undotree_TreeNodeShape      = '◦' " Alternative: '◉'
+  let g:undotree_SplitWidth         = 35
+  let g:undotree_SetFocusWhenToggle = 1
+  nnoremap <leader>u :UndotreeToggle<CR>
+  "}}}
+  ""---------------------------------------------------------------------------//
+  "Set up libraries to highlight with library syntax highlighter
+  let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
+  ""---------------------------------------------------------------------------//
+  " EDITOR CONFIG {{{
+  ""---------------------------------------------------------------------------//
+  let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+  "}}}
+  ""---------------------------------------------------------------------------//
+  " NERDComment {{{
+  ""---------------------------------------------------------------------------//
+  " let test#runners = {'Typescript': ['Mocha', 'Jest']}
+  " let test#runners = {'Typescript': ['Mocha']}
+  " Commenting
+  let g:NERDSpaceDelims       = 1
+  let g:NERDCompactSexyComs   = 1
+  let g:NERDDefaultAlign      = 'left'
+  let g:NERDCustomDelimiters  = {
+        \ 'jsx': { 'leftAlt': '{/*','rightAlt': '*/}',
+        \ 'left': '//', 'right': ''
+        \ },
+        \ 'typescript.tsx': { 'leftAlt': '{/*','rightAlt': '*/}',
+        \ 'left': '//', 'right': ''
         \ }
+        \  }
+  let g:NERDCommentEmptyLines = 1
 
-  nnoremap <localleader>ma  :Marks<CR>
-  nnoremap <localleader>mm :Maps<CR>
+  nmap <silent> <leader>vt :TestNearest<CR>
+  nmap <silent> <leader>vT :TestFile<CR>
+  nmap <silent> <leader>va :TestSuite<CR>
+  nmap <silent> <leader>vl :TestLast<CR>
+  nmap <silent> <leader>vg :TestVisit<CR>
+  "}}}
+  ""---------------------------------------------------------------------------//
+  " Polyglot
+  ""---------------------------------------------------------------------------//
+  let g:polyglot_disabled = ['elm','clojure']
+  let g:vue_disable_pre_processors=1
+  ""---------------------------------------------------------------------------//
+  " ELM
+  ""---------------------------------------------------------------------------//
+  let g:elm_format_autosave   = 1
+  let g:elm_jump_to_error     = 1
+  let g:elm_detailed_complete = 1
+  let g:elm_setup_keybindings = 1
+  let g:elm_make_output_file  = "index.html"
+  ""---------------------------------------------------------------------------//
+  " ECHODOC
+  ""---------------------------------------------------------------------------//
+  let g:echodoc#enable_at_startup = 1
+  let g:echodoc#type              = "signature"
+  ""---------------------------------------------------------------------------//
+  " Deoplete Options
+  ""---------------------------------------------------------------------------//
+  if has("nvim")
+    let g:deoplete#enable_at_startup        = 1
+    let g:deoplete#enable_smart_case        = 1
+    let g:deoplete#max_menu_width           = 80
+    let g:deoplete#max_menu_height          = 40
+    let g:deoplete#file#enable_buffer_path  = 1
+    let g:deoplete#ignore_sources = {}
+    let g:deoplete#ignore_sources._ = ['around']
+    call deoplete#custom#source('ultisnips', 'rank', 290)
+    call deoplete#custom#source('ternjs', 'rank', 300)
+    call deoplete#custom#set('buffer', 'mark', '')
+    call deoplete#custom#set('ternjs', 'mark', '')
+    call deoplete#custom#set('tern', 'mark', '')
+    call deoplete#custom#set('omni', 'mark', '⌾')
+    call deoplete#custom#set('file', 'mark', '')
+    call deoplete#custom#set('jedi', 'mark', '')
+    call deoplete#custom#set('typescript', 'mark', '')
+    call deoplete#custom#set('ultisnips', 'mark', '')
+    ""---------------------------------------------------------------------------//
+    " Deoplete Go
+    ""---------------------------------------------------------------------------//
+    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+    let g:deoplete#sources#go#use_cache     = 1
+    let g:deoplete#sources#go#pointer       = 1
+    let g:deoplete#sources#go#sort_class = [
+          \ 'package',
+          \ 'func',
+          \ 'type',
+          \ 'var',
+          \ 'const',
+          \ 'ultisnips'
+          \ ]
+    ""---------------------------------------------------------------------------//
+    " NVIM TYPESCRIPT
+    ""---------------------------------------------------------------------------//
+    let g:nvim_typescript#kind_symbols = {
+          \ 'keyword': 'keyword',
+          \ 'class': '',
+          \ 'interface': 'interface',
+          \ 'script': 'script',
+          \ 'module': '',
+          \ 'local class': 'local class',
+          \ 'type': 'type',
+          \ 'enum': '',
+          \ 'enum member': '',
+          \ 'alias': '',
+          \ 'type parameter': 'type param',
+          \ 'primitive type': 'primitive type',
+          \ 'var': '',
+          \ 'local var': '',
+          \ 'property': '',
+          \ 'let': '',
+          \ 'const': '',
+          \ 'label': 'label',
+          \ 'parameter': 'param',
+          \ 'index': 'index',
+          \ 'function': '',
+          \ 'local function': 'local function',
+          \ 'method': '',
+          \ 'getter': '',
+          \ 'setter': '',
+          \ 'call': 'call',
+          \ 'constructor': '',
+          \}
+    let g:deoplete#omni#functions           = {}
+    let g:deoplete#omni#functions.javascript = [
+          \ 'tern#Complete',
+          \]
+    let g:deoplete#omni#functions.typescript = [
+          \ 'tern#Complete',
+          \]
+    let g:deoplete#omni#functions["typescript.tsx"] = [
+          \ 'tern#Complete',
+          \]
 
-  let g:fzf_nvim_statusline = 1
-  "Customize fzf colors to match your color scheme
-  let g:fzf_colors =
-        \ { 'fg':    ['fg', 'Normal'],
-        \ 'bg':      ['bg', 'Normal'],
-        \ 'border':  ['fg', 'Ignore'],
-        \ 'hl':      ['fg', 'Comment'],
-        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-        \ 'hl+':     ['fg', 'Statement'],
-        \ 'info':    ['fg', 'PreProc'],
-        \ 'prompt':  ['fg', 'Conditional'],
-        \ 'pointer': ['fg', 'Exception'],
-        \ 'marker':  ['fg', 'Keyword'],
-        \ 'spinner': ['fg', 'Label'],
-        \ 'header':  ['fg', 'Comment']
-        \}
+    let g:nvim_typescript#javascript_support       = 0
+    let g:nvim_typescript#vue_support              = 1
+    let g:deoplete#sources#ternjs#types            = 1
+    let g:deoplete#sources#ternjs#docs             = 1
+    let g:deoplete#sources#ternjs#case_insensitive = 1
+    let g:tmuxcomplete#trigger                     = ''
 
-  " Files + devicons
-  function! Fzf_dev()
-    function! s:files()
-      let files = split(system($FZF_DEFAULT_COMMAND), '\n')
-      return s:prepend_icon(files)
-    endfunction
+    let g:tern_request_timeout = 1
+    "Add extra filetypes
+    let g:tern#filetypes = [
+          \ 'tsx',
+          \ 'typescript.tsx',
+          \ 'typescript.jsx',
+          \ 'typescript',
+          \ 'javascript',
+          \ 'jsx',
+          \ 'javascript.jsx',
+          \ ]
+    "Add extra filetypes
+    let g:deoplete#sources#ternjs#filetypes = [
+          \ 'tsx',
+          \ 'typescript.tsx',
+          \ 'typescript.jsx',
+          \ 'typescript',
+          \ 'javascript',
+          \ 'jsx',
+          \ 'javascript.jsx',
+          \ ]
+    let g:deoplete#sources#ternjs#omit_object_prototype = 0
+    let g:deoplete#sources#ternjs#guess                 = 1
+    let g:tern_map_keys                                 = 0
+    let g:tern_show_argument_hints                      = 'on_hold'
+    let g:tern_show_signature_in_pum                    = 1
+    let g:tern#command                                  = ["tern"]
+    let g:tern#arguments                                = ["--persistent"]
 
-    function! s:prepend_icon(candidates)
-      let result = []
-      for candidate in a:candidates
-        let filename = fnamemodify(candidate, ':p:t')
-        let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
-        call add(result, printf("%s %s", icon, candidate))
-      endfor
-
-      return result
-    endfunction
-
-    function! s:edit_file(item)
-      let parts = split(a:item, ' ')
-      let file_path = get(parts, 1, '')
-      execute 'silent e' file_path
-    endfunction
-
-    call fzf#run({
-          \ 'source': <sid>files(),
-          \ 'sink':   function('s:edit_file'),
-          \ 'options': '-m -x +s',
-          \ 'down':    '40%' })
-  endfunction
-endif
-"}}}
-""---------------------------------------------------------------------------//
-" STARTIFY {{{
-""---------------------------------------------------------------------------//
-let g:startify_list_order = [
-      \ ['   😇 My Sessions:'],
-      \ 'sessions',
-      \ ['   MRU Files:'],
-      \ 'files',
-      \ ['   My Bookmarks:'],
-      \ 'bookmarks',
-      \ ['   MRU files in current directory:'],
-      \ 'dir',
-      \ ['   Commands:'],
-      \ 'commands',
-      \ ]
-
-
-let g:startify_session_before_save = [
-      \ 'echo "Cleaning up before saving.."',
-      \ 'silent! NERDTreeClose',
-      \ 'silent! delmarks!'
-      \ ]
-let g:startify_session_dir         = '~/.vim/session'
-let g:startify_bookmarks           = [
-      \ {'v': '~/.vimrc'},
-      \ {'z': '~/.zshrc'},
-      \ {'t': '~/.tmux.conf'}
-      \ ]
-
-let g:startify_skiplist = [
-      \ 'COMMIT_EDITMSG',
-      \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
-      \ 'bundle/.*/doc',
-      \ '/data/repo/neovim/runtime/doc',
-      \ ]
-let g:startify_fortune_use_unicode    = 1
-let g:startify_session_autoload       = 1
-let g:startify_session_delete_buffers = 1
-let g:startify_session_persistence    = 1
-let g:startify_update_oldfiles        = 1
-let g:startify_session_sort           = 1
-let g:startify_change_to_vcs_root     = 1
-"}}}
-""---------------------------------------------------------------------------//
-" This sets default mapping for camel case text object
-call camelcasemotion#CreateMotionMappings('<leader>')
-""---------------------------------------------------------------------------//
-" TMUX NAVIGATOR {{{
-""---------------------------------------------------------------------------//
-if exists('$TMUX')
-  " Disable tmux navigator when zooming the Vim pane
-  let g:tmux_navigator_disable_when_zoomed = 1
-  " saves on moving pane but only the currently opened buffer if changed
-  let g:tmux_navigator_save_on_switch = 2
-endif
-"}}}
-""---------------------------------------------------------------------------//
-function! GetFileSize() "{{{
-  let bytes = getfsize(expand("%:p"))
-  if bytes <= 0
-    return ""
-  endif
-  if bytes < 1024
-    return  bytes . " b"
   else
-    return  (bytes / 1024) . " kb"
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+    let g:completor_auto_trigger = 0
+    let g:completor_gocode_binary = $GOPATH.'/bin/gocode'
   endif
-endfunction "}}}
+
+  ""---------------------------------------------------------------------------//
+  " vim-exchange
+  ""---------------------------------------------------------------------------//
+  let g:exchange_no_mappings = 1
+  nmap X <Plug>(Exchange)
+  xmap X <Plug>(Exchange)
+
+  ""---------------------------------------------------------------------------//
+  " Goyo
+  ""---------------------------------------------------------------------------//
+  let g:goyo_width=100
+  let g:goyo_margin_top = 2
+  let g:goyo_margin_bottom = 2
+  nnoremap <F3> :Goyo<CR>
+  function! s:goyo_enter()
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+    set nonumber
+    let b:quitting = 0
+    let b:quitting_bang = 0
+    autocmd QuitPre <buffer> let b:quitting = 1
+    cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+  endfunction
+
+  function! s:goyo_leave()
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+    set number relativenumber
+    " Quit Vim if this is the only remaining buffer
+    if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+      if b:quitting_bang
+        qa!
+      else
+        qa
+      endif
+    endif
+  endfunction
+
+  autocmd! User GoyoLeave nested call <SID>goyo_leave()
+  autocmd! User GoyoEnter nested call <SID>goyo_enter()
+
+  " Goyo
+  function! s:auto_goyo()
+    if &ft == 'markdown' && winnr('$') == 1
+      Goyo
+    elseif exists('#goyo')
+      Goyo!
+    endif
+  endfunction
+
+  augroup goyo_markdown
+    autocmd!
+    autocmd BufNewFile,BufRead * call s:auto_goyo()
+    autocmd User GoyoLeave nested call s:goyo_leave()
+  augroup END
+  ""---------------------------------------------------------------------------//
+  " VIM MARKDOWN {{{
+  ""---------------------------------------------------------------------------//
+  let g:markdown_composer_syntax_theme='hybrid'
+  let g:vim_markdown_fenced_languages = [
+        \'css',
+        \'javascript',
+        \'js=javascript',
+        \'json=json',
+        \'ruby',
+        \'xml',
+        \'html',
+        \'python',
+        \'sql'
+        \]
+  let g:vim_markdown_toml_frontmatter = 1
+  let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
+  "}}}
+  ""---------------------------------------------------------------------------//
+  " VIM ROOTER {{{
+  "---------------------------------------------------------------------------//
+  let g:rooter_change_directory_for_non_project_files = 'current'
+  let g:rooter_silent_chdir = 1
+  let g:rooter_resolve_links = 1
+  " }}}
+  ""---------------------------------------------------------------------------//
+  " ULTISNIPS {{{
+  ""---------------------------------------------------------------------------//
+  " Snippet settings:
+  let g:snips_author = 'Akin Sowemimo'
+  let g:UltiSnipsSnippetsDir          = $DOTFILES."/vim/mySnippets" "Both of these settings are necessary
+  let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
+  let g:UltiSnipsExpandTrigger        = "<C-J>"
+  let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
+  let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
+  let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
+  nnoremap <localleader>u :UltiSnipsEdit<CR>
+  "}}}
+  ""---------------------------------------------------------------------------//
+  " FZF {{{
+  ""---------------------------------------------------------------------------//
+  if has('nvim')
+    let $FZF_DEFAULT_OPTS .= ' --inline-info'
+  endif
+  "--------------------------------------------
+  " FZF bindings
+  "--------------------------------------------
+  " --column: Show column number
+  " --line-number: Show line number
+  " --no-heading: Do not show file headings in results
+  " --fixed-strings: Search term as a literal string
+  " --ignore-case: Case insensitive search
+  " --no-ignore: Do not respect .gitignore, etc...
+  " --hidden: Search hidden files and folders
+  " --follow: Follow symlinks
+  " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+  " --color: Search color options
+  if !has('gui_running')
+
+    let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
+    let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
+
+    let s:diff_options =
+          \ '--reverse ' .
+          \ '--preview "(git diff --color=always master -- {} | tail -n +5 || cat {}) 2> /dev/null | head -'.&lines.'"'
+
+    command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
+          \ extend(branch_files_options, { 'options': s:diff_options }), 0))
+
+    command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
+          \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
+
+    command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+    command! -bang -nargs=? -complete=dir Files
+          \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+    command! -bang -nargs=? -complete=dir GFiles
+          \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+    command! -bang Dots
+          \ call fzf#run(fzf#wrap('dotfiles', {'dir': $DOTFILES}, <bang>0))
+
+    command! Modified call fzf#run(fzf#wrap(
+          \ {'source': 'git ls-files --exclude-standard --others --modified'}))
+
+    noremap <localLeader>mo :Modified<cr>
+    " Use ripgrep instead of ag:
+    command! -bang -nargs=* Rg
+          \ call fzf#vim#grep(
+          \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+          \   <bang>0 ? fzf#vim#with_preview('right:60%')
+          \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+          \   <bang>0)
+
+    imap <c-x>l <plug>(fzf-complete-line)
+    imap <c-x>p <plug>(fzf-complete-path)
+    inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
+    nnoremap <silent> <localleader>bf :BranchFiles<cr>
+    nnoremap <silent> <localleader>u :UncommitedFiles<cr>
+    nnoremap <silent> <localleader>d :Dots<CR>
+    nnoremap <silent> <localleader>o :Buffers<CR>
+    nnoremap <silent> <localleader>a :Windows<CR>
+    nnoremap <silent> <localleader>m :History<CR>
+    nnoremap <silent> <localleader>C :Commits<CR>
+    nnoremap <silent> <localleader>l :Lines<CR>
+
+    " Launch file search using FZF
+    if isdirectory(".git")
+      " if in a git project, use :GFiles
+      nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
+    else
+      " otherwise, use :FZF
+      nnoremap <silent><C-P> :Files<CR>
+    endif
+    nnoremap \ :Rg!<CR>
+    "Find Word under cursor
+    nnoremap <leader>f :Find <C-R><C-W><CR>
+    nnoremap <leader>F :Find 
+
+    let g:fzf_action = {
+          \ 'ctrl-t': 'tab split',
+          \ 'ctrl-x': 'split',
+          \ 'ctrl-v': 'vsplit'
+          \ }
+
+    nnoremap <localleader>ma  :Marks<CR>
+    nnoremap <localleader>mm :Maps<CR>
+
+    let g:fzf_nvim_statusline = 1
+    "Customize fzf colors to match your color scheme
+    let g:fzf_colors =
+          \ { 'fg':    ['fg', 'Normal'],
+          \ 'bg':      ['bg', 'Normal'],
+          \ 'border':  ['fg', 'Ignore'],
+          \ 'hl':      ['fg', 'Comment'],
+          \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+          \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+          \ 'hl+':     ['fg', 'Statement'],
+          \ 'info':    ['fg', 'PreProc'],
+          \ 'prompt':  ['fg', 'Conditional'],
+          \ 'pointer': ['fg', 'Exception'],
+          \ 'marker':  ['fg', 'Keyword'],
+          \ 'spinner': ['fg', 'Label'],
+          \ 'header':  ['fg', 'Comment']
+          \}
+
+    " Files + devicons
+    function! Fzf_dev()
+      function! s:files()
+        let files = split(system($FZF_DEFAULT_COMMAND), '\n')
+        return s:prepend_icon(files)
+      endfunction
+
+      function! s:prepend_icon(candidates)
+        let result = []
+        for candidate in a:candidates
+          let filename = fnamemodify(candidate, ':p:t')
+          let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
+          call add(result, printf("%s %s", icon, candidate))
+        endfor
+
+        return result
+      endfunction
+
+      function! s:edit_file(item)
+        let parts = split(a:item, ' ')
+        let file_path = get(parts, 1, '')
+        execute 'silent e' file_path
+      endfunction
+
+      call fzf#run({
+            \ 'source': <sid>files(),
+            \ 'sink':   function('s:edit_file'),
+            \ 'options': '-m -x +s',
+            \ 'down':    '40%' })
+    endfunction
+  endif
+  "}}}
+  ""---------------------------------------------------------------------------//
+  " STARTIFY {{{
+  ""---------------------------------------------------------------------------//
+  let g:startify_list_order = [
+        \ ['   😇 My Sessions:'],
+        \ 'sessions',
+        \ ['   MRU Files:'],
+        \ 'files',
+        \ ['   My Bookmarks:'],
+        \ 'bookmarks',
+        \ ['   MRU files in current directory:'],
+        \ 'dir',
+        \ ['   Commands:'],
+        \ 'commands',
+        \ ]
+
+
+  let g:startify_session_before_save = [
+        \ 'echo "Cleaning up before saving.."',
+        \ 'silent! NERDTreeClose',
+        \ 'silent! delmarks!'
+        \ ]
+  let g:startify_session_dir         = '~/.vim/session'
+  let g:startify_bookmarks           = [
+        \ {'v': '~/.vimrc'},
+        \ {'z': '~/.zshrc'},
+        \ {'t': '~/.tmux.conf'}
+        \ ]
+
+  let g:startify_skiplist = [
+        \ 'COMMIT_EDITMSG',
+        \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+        \ 'bundle/.*/doc',
+        \ '/data/repo/neovim/runtime/doc',
+        \ ]
+  let g:startify_fortune_use_unicode    = 1
+  let g:startify_session_autoload       = 1
+  let g:startify_session_delete_buffers = 1
+  let g:startify_session_persistence    = 1
+  let g:startify_update_oldfiles        = 1
+  let g:startify_session_sort           = 1
+  let g:startify_change_to_vcs_root     = 1
+  "}}}
+  ""---------------------------------------------------------------------------//
+  " This sets default mapping for camel case text object
+  call camelcasemotion#CreateMotionMappings('<leader>')
+  ""---------------------------------------------------------------------------//
+  " TMUX NAVIGATOR {{{
+  ""---------------------------------------------------------------------------//
+  if exists('$TMUX')
+    " Disable tmux navigator when zooming the Vim pane
+    let g:tmux_navigator_disable_when_zoomed = 1
+    " saves on moving pane but only the currently opened buffer if changed
+    let g:tmux_navigator_save_on_switch = 2
+  endif
+  "}}}
+  ""---------------------------------------------------------------------------//
+  function! GetFileSize() "{{{
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+      return ""
+    endif
+    if bytes < 1024
+      return  bytes . " b"
+    else
+      return  (bytes / 1024) . " kb"
+    endif
+  endfunction "}}}
 "---------------------------------------------------------------------

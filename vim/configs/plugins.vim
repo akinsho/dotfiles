@@ -68,8 +68,10 @@ augroup load_fat_finger
 augroup END
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'terryma/vim-multiple-cursors'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
