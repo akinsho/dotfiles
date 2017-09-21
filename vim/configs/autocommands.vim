@@ -11,6 +11,15 @@ autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------
 
 augroup END "}}}
 
+  function! s:WhitespaceHighlight()
+    " Don't highlight trailing spaces in certain filetypes.
+    if &filetype ==# 'help' || &filetype ==# 'vim-plug'
+      hi! ExtraWhitespace NONE
+    else
+      hi! ExtraWhitespace guifg=red guibg=red
+    endif
+  endfunction
+
 augroup WhiteSpace
   " Highlight Whitespace
   highlight ExtraWhitespace ctermfg=red guifg=red
@@ -19,6 +28,7 @@ augroup WhiteSpace
   autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
   autocmd BufWinLeave * call clearmatches()
+  autocmd BufEnter * call s:WhitespaceHighlight()
 augroup END
 
 " Auto open grep quickfix window
@@ -182,11 +192,18 @@ augroup fileSettings
   autocmd Filetype vim-plug setlocal nonumber
 augroup END
 
+" Hide line numbers when entering diff mode
+augroup hide_lines
+  autocmd!
+  autocmd FilterWritePre * if &diff | set nonumber norelativenumber | endif
+augroup EN
+
 if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
-    autocmd BufEnter,WinLeave term://* setlocal nonumber norelativenumber
+    "Do everything possible to prevent numbers in term buffer
+    autocmd BufEnter,BufLeave,BufWinLeave,WinLeave term://* setlocal nonumber norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     if exists('+winhighlight')

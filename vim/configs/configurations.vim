@@ -229,12 +229,14 @@ let g:airline#extensions#tabline#fnamecollapse            = 1
 let g:airline#extensions#tabline#keymap_ignored_filetypes = ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#formatter                = 'unique_tail_improved'
 let g:airline#extensions#tabline#tab_min_count            = 1
-let g:airline#extensions#tabline#left_sep                 = ''
-let g:airline#extensions#tabline#left_alt_sep             = ''
-let g:airline#extensions#tabline#right_sep                = ''
-let g:airline#extensions#tabline#right_alt_sep            = ''
-let g:airline_right_sep                                   = ''
-let g:airline_left_sep                                    = ''
+" let g:airline#extensions#tabline#left_sep                 = ''
+" let g:airline#extensions#tabline#left_alt_sep             = ''
+" let g:airline#extensions#tabline#right_sep                = ''
+" let g:airline#extensions#tabline#right_alt_sep            = ''
+" let g:airline_left_alt_sep  = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_right_sep     = ''
+" let g:airline_left_sep      = ''
 let g:ff_map = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 let g:airline_section_c = airline#section#create(["%{getcwd()}", g:airline_symbols.space, '%t %{GetFileSize()}'])
 "Get method finds the fileformat array and returns the matching key the &ff or ? expand tab shows whether i'm using spaces or tabs
@@ -336,10 +338,11 @@ nmap [a <Plug>(ale_previous_wrap)
 "TAGBAR
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
-let g:tagbar_autoshowtag     = 1  " Open folds if necessary when navigating to a tag
-let g:tagbar_autoclose       = 1  " Focus cursor inside tagbar when opened, and auto close after navigation
-let g:tagbar_show_visibility = 0
-let g:tagbar_autofocus       = 1
+let g:tagbar_autoshowtag                = 1  " Open folds if necessary when navigating to a tag
+let g:tagbar_autoclose                  = 1  " Focus cursor inside tagbar when opened, and auto close after navigation
+let g:tagbar_show_visibility            = 0
+let g:tagbar_autofocus                  = 1
+let g:airline#extensions#tagbar#enabled = 0
 let g:tagbar_type_typescript = {
       \ 'ctagstype': 'typescript',
       \ 'kinds': [
@@ -436,6 +439,47 @@ let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassign', 'goconst']
 ""---------------------------------------------------------------------------//
+"" ================ Multiple Cursors ======================== {{{
+""---------------------------------------------------------------------------//
+" Highlighting
+hi! link multiple_cursors_cursor Visual
+hi! link multiple_cursors_visual Visual
+
+
+" Disable YouCompleteMe and syntastic when using vim-multiple-cursors
+function! Multiple_cursors_before()
+  if exists('g:ycm_filetype_whitelist')
+    let s:old_ycm_whitelist = g:ycm_filetype_whitelist
+    let g:ycm_filetype_whitelist = {}
+  endif
+  if exists(':SyntasticToggleMode')
+    silent! call SyntasticToggleMode()
+  endif
+  if get(g:, 'ale_enabled', 0)
+    let g:orig_ale_enabled = get(g:, 'ale_enabled', 0)
+    silent! ALEDisable
+  endif
+  if exists("*deoplete#disable")
+    silent! call deoplete#disable()
+  endif
+endfunction
+
+function! Multiple_cursors_after()
+  if exists('g:ycm_filetype_whitelist') && exists('s:old_ycm_whitelist')
+    let g:ycm_filetype_whitelist = s:old_ycm_whitelist
+  endif
+  if exists(':SyntasticToggleMode')
+    silent! call SyntasticToggleMode()
+  endif
+  if g:orig_ale_enabled
+    silent! ALEEnable
+  endif
+  if exists("*deoplete#enable")
+    silent! call deoplete#enable()
+  endif
+endfunction
+"---------------------------------------------------------------------------//}}}
+""---------------------------------------------------------------------------//
 " Git Gutter
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
@@ -443,7 +487,8 @@ nnoremap <leader>gg :GitGutterToggle<CR>
 if has('mac')
   let g:gitgutter_enabled               = 1
   let g:gitgutter_grep_command          = 'ag --nocolor'
-  let g:gitgutter_sign_added            = '🍄'
+  let g:gitgutter_sign_added            = '  '
+
   let g:gitgutter_sign_modified         = '🔥'
   let g:gitgutter_sign_removed          = '😤'
   let g:gitgutter_sign_modified_removed = '☁️'
@@ -752,6 +797,7 @@ augroup END
 ""---------------------------------------------------------------------------//
 " VIM MARKDOWN {{{
 ""---------------------------------------------------------------------------//
+let g:markdown_composer_syntax_theme='hybrid'
 let g:vim_markdown_fenced_languages = [
       \'css',
       \'javascript',

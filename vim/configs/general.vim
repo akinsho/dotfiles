@@ -215,9 +215,11 @@ set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
 set list                              " show invisible chars
 " set listchars+=tab:▷\ 
+" set listchars+=precedes:←
+" set listchars+=extends:→
 set listchars+=tab:\¦·
-set listchars+=precedes:←
-set listchars+=extends:→
+set listchars+=extends:…
+set listchars+=precedes:…
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=eol:\ 
 " =====================================================================
@@ -255,10 +257,9 @@ if has('unnamedplus')
 elseif has('clipboard')
   set clipboard=unnamed
 endif
-set complete+=i      " Use included files for completion
+set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
   set incsearch
-  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast " Improves smoothness of redrawing when there are multiple windows
@@ -344,6 +345,7 @@ set tabstop=8 " real tabs render width. Applicable to HTML, PHP, anything using 
 set noshiftround " use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
 set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
 set complete+=k " Add dictionary to vim's autocompletion
+set complete-=i      " Dont use included files for completion
 set display+=lastline
 set encoding=utf-8
 scriptencoding utf-8

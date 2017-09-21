@@ -3,7 +3,7 @@
 let g:filetype_ignore =
       \ get( g:, 'relativity_filetype_ignore', ['term://','vim-plug','startify','controlp', 'nerdtree', 'help','fugitive', 'tagbar'] )
 let g:buftype_ignore =
-      \ get( g:, 'relativity_buftype_ignore', ['term://','nomodifiable','nofile','help'] )
+      \ get( g:, 'relativity_buftype_ignore', ['vim-plug','term://','nomodifiable','nofile','help'] )
 
 function! s:is_blacklisted()
   for ft in g:filetype_ignore
