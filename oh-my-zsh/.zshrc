@@ -306,4 +306,5 @@ echo load time: $((end_time - start_time)) seconds
 if brew ls --versions fortune > /dev/null;then
   fortune | cowsay | lolcat
 fi
+archey -o
 # zprof

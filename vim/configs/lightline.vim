@@ -2,7 +2,9 @@ let g:lightline = {
   \ 'colorscheme': 'onedark',
   \ 'active': {
   \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
-  \   'right': [ [ 'fugitive' ], [ 'AleError', 'AleWarning', 'AleOk' ] ]
+  \   'right': [ [ 'fugitive' ], [ 'AleError', 'AleWarning', 'AleOk' ],
+  \    ['conflicted']
+  \]
   \ },
   \ 'inactive': {
   \   'left': [ [ 'filename' ] ],
@@ -10,7 +12,8 @@ let g:lightline = {
   \ },
   \ 'component': {
   \   'lineinfo': '%3l:%-2v',
-  \   'tagbar': '%{tagbar#currenttag("%s", "")}'
+  \   'tagbar': '%{tagbar#currenttag("%s", "")}',
+  \   'conflicted': '%{ConflictedVersion()}'
   \ },
   \ 'component_function': {
   \   'fugitive': 'LightLineFugitive',
@@ -31,7 +34,7 @@ let g:lightline = {
   \   'AleOk':      'ok',
   \ },
   \ 'subseparator': { 'left': '', 'right': '' }
-\ }
+  \ }
 
 augroup LightLineOnALE
   autocmd!
