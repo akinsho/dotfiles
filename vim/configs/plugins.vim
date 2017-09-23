@@ -70,10 +70,9 @@ augroup END
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'ap/vim-buftabline'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'vimwiki/vimwiki'
 "}}}
 "TPOPE ===================================={{{
 "Very handy plugins and functionality by Tpope (ofc)
@@ -99,7 +98,6 @@ Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript'
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-Plug 'christoomey/vim-conflicted'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
@@ -162,5 +160,5 @@ endif
 
 "Plugins to Try ============================================================
 " Don't use netrw at all
-let g:loaded_netrwPlugin = 1
+" let g:loaded_netrwPlugin = 1
 "}}}
