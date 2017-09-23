@@ -38,9 +38,9 @@ Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
 "NOTE to future self not lazy loading nerdtree as needs to be loaded for refresh function
 Plug 'scrooloose/nerdtree'
+      \ | Plug 'AndrewRadev/andrews_nerdtree.vim'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
       \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
-Plug 'AndrewRadev/andrews_nerdtree.vim'
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
@@ -98,7 +98,7 @@ Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript'
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'jreybert/vimagit'
+Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 Plug 'christoomey/vim-conflicted'
 "}}}
 "Text Objects ====================={{{
@@ -127,8 +127,8 @@ Plug 'ludovicchabant/vim-gutentags'
 " Plug 'AndrewRadev/sideways.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
-Plug 'takac/vim-hardtime'
-Plug 'rstacruz/vim-hyperstyle'
+Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
+Plug 'rstacruz/vim-hyperstyle', {'for': ['css', 'scss', 'sass', 'jsx', 'tsx']}
 Plug 'rizzatti/dash.vim',       { 'on': 'Dash' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }

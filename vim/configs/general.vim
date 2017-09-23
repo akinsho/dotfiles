@@ -92,10 +92,10 @@ if has('folding')
     set foldnestmax=3
   endif
 endif
-if &term =~# '256color'
-  " disable background color erase
-  set t_ut=
-endif
+" if &term =~# '256color'
+"   " disable background color erase
+"   set t_ut=
+" endif
   "}}}
 " ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//

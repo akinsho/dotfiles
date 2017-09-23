@@ -1,7 +1,7 @@
 let g:lightline = {
   \ 'colorscheme': 'onedark',
   \ 'active': {
-  \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
+  \   'left': [ [ 'mode' ], [ 'filename', 'filetype', 'filesize'] ],
   \   'right': [ [ 'fugitive' ], [ 'AleError', 'AleWarning', 'AleOk' ],
   \    ['lineinfo']
   \]
@@ -16,6 +16,7 @@ let g:lightline = {
   \   'conflicted': '%{ConflictedVersion()}'
   \ },
   \ 'component_function': {
+  \   'filesize': 'LightLineFileSize',
   \   'fugitive': 'LightLineFugitive',
   \   'filename': 'LightLineFilename',
   \   'fileformat': 'LightLineFileformat',
@@ -61,6 +62,18 @@ function! LightLineFilename()
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
+
+function! LightLineFileSize() "{{{
+  let bytes = getfsize(expand("%:p"))
+  if bytes <= 0
+    return ""
+  endif
+  if bytes < 1024
+    return  bytes . " b"
+  else
+    return  (bytes / 1024) . " kb"
+  endif
+endfunction "}}}
 
 function! LightLineFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''

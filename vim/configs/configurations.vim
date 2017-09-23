@@ -72,6 +72,7 @@ hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=ligh
 hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 
+highlight BufTabLineCurrent gui=bold guibg=#E7B563 guifg=black
 ""---------------------------------------------------------------------------//
 " NERDTrees highlighting {{{
 ""---------------------------------------------------------------------------//
@@ -132,12 +133,6 @@ let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
-let g:andrews_nerdtree_buffer_fs_menu     = 1
-let g:andrews_nerdtree_diff               = 1
-let g:andrews_nerdtree_external_open      = 1
-let g:andrews_nerdtree_interactive_edit   = 1
-let g:andrews_nerdtree_startshell_mapping = 0
-let g:andrews_nerdtree_git_filter         = 1
 " Ctrl+N to toggle Nerd Tree
 function! NERDTreeToggleAndFind()
   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -541,11 +536,13 @@ let g:echodoc#type              = "signature"
 " Deoplete Options
 ""---------------------------------------------------------------------------//
 if has("nvim")
-  let g:deoplete#enable_at_startup        = 1
-  let g:deoplete#enable_smart_case        = 1
-  let g:deoplete#max_menu_width           = 80
-  let g:deoplete#max_menu_height          = 40
-  let g:deoplete#file#enable_buffer_path  = 1
+  let g:deoplete#enable_at_startup            = 1
+  let g:deoplete#auto_completion_start_length = 1
+  let g:deoplete#auto_complete_delay          = 50
+  let g:deoplete#enable_smart_case            = 1
+  let g:deoplete#max_menu_width               = 80
+  let g:deoplete#max_menu_height              = 40
+  let g:deoplete#file#enable_buffer_path      = 1
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['around']
   call deoplete#custom#source('ultisnips', 'rank', 290)
@@ -585,7 +582,7 @@ if has("nvim")
     nmap <D-8> <Plug>BufTabLine.Go(8)
     nmap <D-9> <Plug>BufTabLine.Go(9)
     nmap <D-0> <Plug>BufTabLine.Go(10)
-endif
+  endif
   ""---------------------------------------------------------------------------//
   " Deoplete Go
   ""---------------------------------------------------------------------------//
@@ -963,8 +960,12 @@ let g:startify_session_sort           = 1
 let g:startify_change_to_vcs_root     = 1
 "}}}
 ""---------------------------------------------------------------------------//
+""---------------------------------------------------------------------------//
+" CAMELCASEMOTION {{{
+""---------------------------------------------------------------------------//
 " This sets default mapping for camel case text object
 call camelcasemotion#CreateMotionMappings('<leader>')
+"}}}
 ""---------------------------------------------------------------------------//
 " TMUX NAVIGATOR {{{
 ""---------------------------------------------------------------------------//
@@ -976,15 +977,4 @@ if exists('$TMUX')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
-function! GetFileSize() "{{{
-  let bytes = getfsize(expand("%:p"))
-  if bytes <= 0
-    return ""
-  endif
-  if bytes < 1024
-    return  bytes . " b"
-  else
-    return  (bytes / 1024) . " kb"
-  endif
-endfunction "}}}
 "---------------------------------------------------------------------

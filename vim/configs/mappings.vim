@@ -143,7 +143,8 @@ nnoremap U <C-R>
 xnoremap p pgvy
 " " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
-
+" search visual selection
+vnoremap // y/<C-R>"<CR>
 " Toggle background with <leader>bg
 nnoremap <leader>bg :let &background = (&background == "dark" ? "light" : "dark")<cr>
 
