@@ -2,25 +2,25 @@
 "AUTOCOMMANDS
 "===================================================================================
 augroup Code Comments             "{{{
-"------------------------------------+
-au!
-" Horizontal Rule (78 char long)
-autocmd FileType vim                           nnoremap <leader>hr 0i""---------------------------------------------------------------------------//<ESC>
-autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
-autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
+  "------------------------------------+
+  au!
+  " Horizontal Rule (78 char long)
+  autocmd FileType vim                           nnoremap <leader>hr 0i""---------------------------------------------------------------------------//<ESC>
+  autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
+  autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
 
 augroup END "}}}
 
-  function! s:WhitespaceHighlight()
-    " Don't highlight trailing spaces in certain filetypes.
-    if &filetype ==# 'help' || &filetype ==# 'vim-plug'
-      hi! ExtraWhitespace NONE
-    else
-      hi! ExtraWhitespace guifg=red guibg=red
-    endif
-  endfunction
+function! s:WhitespaceHighlight()
+  " Don't highlight trailing spaces in certain filetypes.
+  if &filetype ==# 'help' || &filetype ==# 'vim-plug'
+    hi! ExtraWhitespace NONE
+  else
+    hi! ExtraWhitespace guifg=red guibg=red
+  endif
+endfunction
 
-augroup WhiteSpace
+augroup WhiteSpace "{{{
   " Highlight Whitespace
   highlight ExtraWhitespace ctermfg=red guifg=red
   match ExtraWhitespace /\s\+$/
@@ -29,7 +29,7 @@ augroup WhiteSpace
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
   autocmd BufWinLeave * call clearmatches()
   autocmd BufEnter * call s:WhitespaceHighlight()
-augroup END
+augroup END "}}}
 
 " Auto open grep quickfix window
 augroup QFix
@@ -52,13 +52,13 @@ function! s:smart_close()
 endfunction
 
 
-augroup CheckOutsideTime
+augroup CheckOutsideTime "{{{
   autocmd!
   autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
   au FocusLost * silent! wa "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
   " Autosave buffers before leaving them
   autocmd BufLeave * silent! :wa
-augroup end
+augroup end "}}}
 
 " Disable paste.
 augroup Cancel_Paste
@@ -78,22 +78,22 @@ augroup UpdateVim
     source $MYGVIMRC | echo 'Source .gvimrc'
   endif
   autocmd FocusLost * :wa
-  autocmd VimResized * :redraw! | echom 'Redrew'
+  autocmd VimResized * redraw! | echom 'Redrew'
   " autocmd VimResized * wincmd =
 augroup END
 
-
-  function! s:expand_html_tab()
-" try to determine if we're within quotes or tags.
-" if so, assume we're in an emmet fill area.
-   let l:line = getline('.')
-   if col('.') < len(l:line)
-     let l:line = matchstr(l:line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-     if len(l:line) >= 2
-        return "\<C-n>"
-     endif
-   endif
-    " try to determine if we're within quotes or tags.
+"Expand tab html{{{
+function! s:expand_html_tab()
+  " try to determine if we're within quotes or tags.
+  " if so, assume we're in an emmet fill area.
+  let l:line = getline('.')
+  if col('.') < len(l:line)
+    let l:line = matchstr(l:line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
+    if len(l:line) >= 2
+      return "\<C-n>"
+    endif
+  endif
+  " try to determine if we're within quotes or tags.
   " if so, assume we're in an emmet fill area.
   let l:line = getline('.')
   if col('.') < len(l:line)
@@ -117,9 +117,9 @@ augroup END
 
   " return a regular tab character
   return "\<tab>"
-  endfunction
-
-augroup mutltiple_filetype_settings
+endfunction
+"}}}
+augroup mutltiple_filetype_settings "{{{
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
@@ -144,8 +144,8 @@ augroup mutltiple_filetype_settings
           \ setlocal omnifunc=javascriptcomplete#CompleteJS
   endif
 augroup END
-
-augroup filetype_javascript_typescript
+"}}}
+augroup filetype_javascript_typescript "{{{
   autocmd!
   "==================================
   "TypeScript
@@ -159,7 +159,7 @@ augroup filetype_javascript_typescript
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
-
+"}}}
 augroup FileType_Clojure
   autocmd!
   " Evaluate Clojure buffers on load
@@ -184,16 +184,16 @@ augroup FileType_text
   autocmd FileType text setlocal textwidth=78
 augroup END
 
-augroup fileSettings
+augroup fileSettings "{{{
   autocmd!
   autocmd Filetype vim-plug setlocal nonumber
-augroup END
+augroup END "}}}
 
 " Hide line numbers when entering diff mode
 augroup hide_lines
   autocmd!
-  autocmd FilterWritePre * if &diff | set nonumber norelativenumber | endif
-augroup EN
+  autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
+augroup END
 
 if has('nvim')
   augroup nvim
@@ -219,7 +219,7 @@ function! s:SetupHelpWindow() "{{{
   vertical resize 80
 endfunction "}}}
 
-augroup FileType_all
+augroup FileType_all "{{{
   autocmd!
   autocmd FileType python setl ts=4
   autocmd FileType rust setl sw=0 sts=0
@@ -266,22 +266,23 @@ augroup fugitiveSettings
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
 
-
+"}}}
 augroup OpenImages
   autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
 augroup END
 
 "Close vim if only window is a Nerd Tree
-augroup NERDTree
+augroup NERDTree "{{{
   autocmd!
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   autocmd FileType nerdtree setlocal nolist nonumber
 augroup END
+"}}}
 
-augroup LongFiles
+augroup LongFiles "{{{
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
-
+"}}}
 
 augroup fix-ultisnips-overriding-tab-visual-mode
   autocmd!

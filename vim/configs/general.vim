@@ -76,8 +76,7 @@ endif
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
 set timeout timeoutlen=400 ttimeoutlen=10
 set nohidden
-set splitbelow "Open a horizontal split below current window
-set splitright "Open a vertical split to the right of the window
+set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit
 set sessionoptions=buffers,folds,sesdir,tabpages,winsize  " What to save in a session.
 if !has('nvim')
@@ -312,16 +311,22 @@ set background=dark
 let g:onedark_terminal_italics = 1
 colorscheme onedark
 "}}}
+""---------------------------------------------------------------------------//
+" TITLE {{{
+""---------------------------------------------------------------------------//
 " Custom Terminal title
 let &titlestring=hostname() . ' ● : ❐ %F  %r: Vim %m'
 set title
+"}}}
 ""---------------------------------------------------------------------------//
 "NVIM {{{
 ""---------------------------------------------------------------------------//
 if has('nvim')
-  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-  let g:terminal_scrollback_buffer_size = 100000
   set inccommand=nosplit
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0
+  set guicursor=i-ci:ver50-Cursor/lCursor
+  set guicursor=r-cr:hor20-Cursor/lCursor
+  let g:terminal_scrollback_buffer_size = 100000
   let g:python_host_prog=$HOME.'/.pyenv/versions/neovim2/bin/python'
   let g:python3_host_prog=$HOME.'/.pyenv/versions/neovim3/bin/python'
 endif
@@ -340,8 +345,8 @@ endif
 " ----------------------------------------------------------------------------
 set expandtab                         " default to spaces instead of tabs
 set shiftwidth=2                      " softtabs are 2 spaces for expandtab
-set softtabstop=-2 " Alignment tabs are two spaces, and never tabs. Negative means use same as shiftwidth (so the 2 actually doesn't matter).
-set tabstop=8 " real tabs render width. Applicable to HTML, PHP, anything using real tabs. I.e., not applicable to JS.
+set softtabstop=-2
+set tabstop=8
 set noshiftround " use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
 set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
 set complete+=k " Add dictionary to vim's autocompletion
@@ -354,7 +359,7 @@ set dictionary+=/usr/share/dict/words
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif
-set history=100
+set history=1000
 if &tabpagemax < 50
   set tabpagemax=50
 endif
@@ -404,9 +409,7 @@ endif
 " ----------------------------------------------------------------------------
 " Match and search {{{
 " ----------------------------------------------------------------------------
-set ignorecase
-set smartcase
-set wrapscan " Searches wrap around the end of the file
+set ignorecase smartcase wrapscan " Searches wrap around the end of the file
 if &filetype ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
@@ -420,10 +423,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-set scrolloff=8
-set sidescrolloff=10
-set sidescroll=1
-set nostartofline " Stops some cursor movements from jumping to the start of a line
+set scrolloff=8 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}
 "====================================================================================
 "Spelling {{{

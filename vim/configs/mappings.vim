@@ -135,11 +135,7 @@ endfunction
 ""---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
-nnoremap <leader>n :enew<cr>
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-" nnoremap <leader>q :bp <BAR> bd #<CR>
+nnoremap <localleader>n :enew<cr>
 nnoremap <leader>q :q!<cr>
 " Better redo
 nnoremap U <C-R>

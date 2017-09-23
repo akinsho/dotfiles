@@ -3,7 +3,7 @@ let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
   \   'right': [ [ 'fugitive' ], [ 'AleError', 'AleWarning', 'AleOk' ],
-  \    ['conflicted']
+  \    ['lineinfo']
   \]
   \ },
   \ 'inactive': {

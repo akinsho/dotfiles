@@ -35,7 +35,7 @@ highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
 " highlight Identifier gui=italic,bold
 highlight CursorLine term=none cterm=none
-highlight Folded guifg=#65D2DF gui=bold
+highlight Folded guifg=#E7B563 gui=bold
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 "Color the tildes at the end of the buffer
@@ -132,6 +132,12 @@ let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
 ""---------------------------------------------------------------------------//
 "NERDTree
 ""---------------------------------------------------------------------------//
+let g:andrews_nerdtree_buffer_fs_menu     = 1
+let g:andrews_nerdtree_diff               = 1
+let g:andrews_nerdtree_external_open      = 1
+let g:andrews_nerdtree_interactive_edit   = 1
+let g:andrews_nerdtree_startshell_mapping = 0
+let g:andrews_nerdtree_git_filter         = 1
 " Ctrl+N to toggle Nerd Tree
 function! NERDTreeToggleAndFind()
   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -140,7 +146,7 @@ function! NERDTreeToggleAndFind()
     execute 'NERDTreeFind'
   endif
 endfunction
-nnoremap <silent> <localleader>n :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <silent> <leader>n :call ToggleNERDTreeWithRefresh()<cr>
 nnoremap <localleader>nf :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
@@ -289,8 +295,8 @@ nmap [a <Plug>(ale_previous_wrap)
 "TAGBAR
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
-let g:tagbar_autoshowtag                = 1  " Open folds if necessary when navigating to a tag
-let g:tagbar_autoclose                  = 1  " Focus cursor inside tagbar when opened, and auto close after navigation
+let g:tagbar_autoshowtag                = 1
+let g:tagbar_autoclose                  = 1
 let g:tagbar_show_visibility            = 0
 let g:tagbar_autofocus                  = 1
 let g:airline#extensions#tagbar#enabled = 0
@@ -350,7 +356,6 @@ nnoremap <leader>gbl :Gblame<CR>
 "Opens the index - i.e. git saved version of a file
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gd :Gdiff<CR>
-nnoremap <Leader>gD <c-w>h<c-w>c
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
 "Open current file on github.com
@@ -397,7 +402,7 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassi
 highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse,underline
 "---------------------------------------------------------------------------//}}}
 ""---------------------------------------------------------------------------//
-" Git Gutter
+" Git Gutter {{{
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
 let g:gitgutter_enabled               = 1
@@ -409,6 +414,7 @@ let g:gitgutter_sign_added            = '❖'
 " if has('mac')
 " let g:gitgutter_sign_modified_removed = '☁️'
 " endif
+"}}}
 ""---------------------------------------------------------------------------//
 " EXPAND REGION VIM
 ""---------------------------------------------------------------------------//
@@ -552,124 +558,126 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
-"---------------------------------------------------------------------------//
-" BUFTABLINE
-""---------------------------------------------------------------------------//  "
-let g:buftabline_separators = 1
-let g:buftabline_indicators = 1
-let g:buftabline_numbers = 2
-nmap <leader>1 <Plug>BufTabLine.Go(1)
-nmap <leader>2 <Plug>BufTabLine.Go(2)
-nmap <leader>3 <Plug>BufTabLine.Go(3)
-nmap <leader>4 <Plug>BufTabLine.Go(4)
-nmap <leader>5 <Plug>BufTabLine.Go(5)
-nmap <leader>6 <Plug>BufTabLine.Go(6)
-nmap <leader>7 <Plug>BufTabLine.Go(7)
-nmap <leader>8 <Plug>BufTabLine.Go(8)
-nmap <leader>9 <Plug>BufTabLine.Go(9)
-nmap <leader>0 <Plug>BufTabLine.Go(10)
-nmap <D-1> <Plug>BufTabLine.Go(1)
-nmap <D-2> <Plug>BufTabLine.Go(2)
-nmap <D-3> <Plug>BufTabLine.Go(3)
-nmap <D-4> <Plug>BufTabLine.Go(4)
-nmap <D-5> <Plug>BufTabLine.Go(5)
-nmap <D-6> <Plug>BufTabLine.Go(6)
-nmap <D-7> <Plug>BufTabLine.Go(7)
-nmap <D-8> <Plug>BufTabLine.Go(8)
-nmap <D-9> <Plug>BufTabLine.Go(9)
-nmap <D-0> <Plug>BufTabLine.Go(10)
-""---------------------------------------------------------------------------//
-" Deoplete Go
-""---------------------------------------------------------------------------//
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#use_cache     = 1
-let g:deoplete#sources#go#pointer       = 1
-let g:deoplete#sources#go#sort_class = [
-      \ 'package',
-      \ 'func',
-      \ 'type',
-      \ 'var',
-      \ 'const',
-      \ 'ultisnips'
-      \ ]
-""---------------------------------------------------------------------------//
-" NVIM TYPESCRIPT
-""---------------------------------------------------------------------------//
-let g:nvim_typescript#kind_symbols = {
-      \ 'keyword': 'keyword',
-      \ 'class': '',
-      \ 'interface': 'interface',
-      \ 'script': 'script',
-      \ 'module': '',
-      \ 'local class': 'local class',
-      \ 'type': 'type',
-      \ 'enum': '',
-      \ 'enum member': '',
-      \ 'alias': '',
-      \ 'type parameter': 'type param',
-      \ 'primitive type': 'primitive type',
-      \ 'var': '',
-      \ 'local var': '',
-      \ 'property': '',
-      \ 'let': '',
-      \ 'const': '',
-      \ 'label': 'label',
-      \ 'parameter': 'param',
-      \ 'index': 'index',
-      \ 'function': '',
-      \ 'local function': 'local function',
-      \ 'method': '',
-      \ 'getter': '',
-      \ 'setter': '',
-      \ 'call': 'call',
-      \ 'constructor': '',
-      \}
-let g:deoplete#omni#functions           = {}
-let g:deoplete#omni#functions.javascript = [
-      \ 'tern#Complete',
-      \]
-let g:deoplete#omni#functions.typescript = [
-      \ 'tern#Complete',
-      \]
-let g:deoplete#omni#functions["typescript.tsx"] = [
-      \ 'tern#Complete',
-      \]
+  "---------------------------------------------------------------------------//
+  " BUFTABLINE
+  ""---------------------------------------------------------------------------//  "
+  let g:buftabline_separators = 1
+  let g:buftabline_indicators = 1
+  let g:buftabline_numbers = 2
+  nmap <localleader>1 <Plug>BufTabLine.Go(1)
+  nmap <localleader>2 <Plug>BufTabLine.Go(2)
+  nmap <localleader>3 <Plug>BufTabLine.Go(3)
+  nmap <localleader>4 <Plug>BufTabLine.Go(4)
+  nmap <localleader>5 <Plug>BufTabLine.Go(5)
+  nmap <localleader>6 <Plug>BufTabLine.Go(6)
+  nmap <localleader>7 <Plug>BufTabLine.Go(7)
+  nmap <localleader>8 <Plug>BufTabLine.Go(8)
+  nmap <localleader>9 <Plug>BufTabLine.Go(9)
+  nmap <localleader>0 <Plug>BufTabLine.Go(10)
+  if has('gui_running')
+    nmap <D-1> <Plug>BufTabLine.Go(1)
+    nmap <D-2> <Plug>BufTabLine.Go(2)
+    nmap <D-3> <Plug>BufTabLine.Go(3)
+    nmap <D-4> <Plug>BufTabLine.Go(4)
+    nmap <D-5> <Plug>BufTabLine.Go(5)
+    nmap <D-6> <Plug>BufTabLine.Go(6)
+    nmap <D-7> <Plug>BufTabLine.Go(7)
+    nmap <D-8> <Plug>BufTabLine.Go(8)
+    nmap <D-9> <Plug>BufTabLine.Go(9)
+    nmap <D-0> <Plug>BufTabLine.Go(10)
+endif
+  ""---------------------------------------------------------------------------//
+  " Deoplete Go
+  ""---------------------------------------------------------------------------//
+  let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+  let g:deoplete#sources#go#use_cache     = 1
+  let g:deoplete#sources#go#pointer       = 1
+  let g:deoplete#sources#go#sort_class = [
+        \ 'package',
+        \ 'func',
+        \ 'type',
+        \ 'var',
+        \ 'const',
+        \ 'ultisnips'
+        \ ]
+  ""---------------------------------------------------------------------------//
+  " NVIM TYPESCRIPT
+  ""---------------------------------------------------------------------------//
+  let g:nvim_typescript#kind_symbols = {
+        \ 'keyword': 'keyword',
+        \ 'class': '',
+        \ 'interface': 'interface',
+        \ 'script': 'script',
+        \ 'module': '',
+        \ 'local class': 'local class',
+        \ 'type': 'type',
+        \ 'enum': '',
+        \ 'enum member': '',
+        \ 'alias': '',
+        \ 'type parameter': 'type param',
+        \ 'primitive type': 'primitive type',
+        \ 'var': '',
+        \ 'local var': '',
+        \ 'property': '',
+        \ 'let': '',
+        \ 'const': '',
+        \ 'label': 'label',
+        \ 'parameter': 'param',
+        \ 'index': 'index',
+        \ 'function': '',
+        \ 'local function': 'local function',
+        \ 'method': '',
+        \ 'getter': '',
+        \ 'setter': '',
+        \ 'call': 'call',
+        \ 'constructor': '',
+        \}
+  let g:deoplete#omni#functions           = {}
+  let g:deoplete#omni#functions.javascript = [
+        \ 'tern#Complete',
+        \]
+  let g:deoplete#omni#functions.typescript = [
+        \ 'tern#Complete',
+        \]
+  let g:deoplete#omni#functions["typescript.tsx"] = [
+        \ 'tern#Complete',
+        \]
 
-let g:nvim_typescript#javascript_support       = 1
-let g:nvim_typescript#vue_support              = 1
-let g:deoplete#sources#ternjs#types            = 1
-let g:deoplete#sources#ternjs#docs             = 1
-let g:deoplete#sources#ternjs#case_insensitive = 1
-let g:tmuxcomplete#trigger                     = ''
+  let g:nvim_typescript#javascript_support       = 1
+  let g:nvim_typescript#vue_support              = 1
+  let g:deoplete#sources#ternjs#types            = 1
+  let g:deoplete#sources#ternjs#docs             = 1
+  let g:deoplete#sources#ternjs#case_insensitive = 1
+  let g:tmuxcomplete#trigger                     = ''
 
-let g:tern_request_timeout = 1
-"Add extra filetypes
-let g:tern#filetypes = [
-      \ 'tsx',
-      \ 'typescript.tsx',
-      \ 'typescript.jsx',
-      \ 'typescript',
-      \ 'javascript',
-      \ 'jsx',
-      \ 'javascript.jsx',
-      \ ]
-"Add extra filetypes
-let g:deoplete#sources#ternjs#filetypes = [
-      \ 'tsx',
-      \ 'typescript.tsx',
-      \ 'typescript.jsx',
-      \ 'typescript',
-      \ 'javascript',
-      \ 'jsx',
-      \ 'javascript.jsx',
-      \ ]
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
-let g:deoplete#sources#ternjs#guess                 = 1
-let g:tern_map_keys                                 = 0
-let g:tern_show_argument_hints                      = 'on_hold'
-let g:tern_show_signature_in_pum                    = 1
-let g:tern#command                                  = ["tern"]
-let g:tern#arguments                                = ["--persistent"]
+  let g:tern_request_timeout = 1
+  "Add extra filetypes
+  let g:tern#filetypes = [
+        \ 'tsx',
+        \ 'typescript.tsx',
+        \ 'typescript.jsx',
+        \ 'typescript',
+        \ 'javascript',
+        \ 'jsx',
+        \ 'javascript.jsx',
+        \ ]
+  "Add extra filetypes
+  let g:deoplete#sources#ternjs#filetypes = [
+        \ 'tsx',
+        \ 'typescript.tsx',
+        \ 'typescript.jsx',
+        \ 'typescript',
+        \ 'javascript',
+        \ 'jsx',
+        \ 'javascript.jsx',
+        \ ]
+  let g:deoplete#sources#ternjs#omit_object_prototype = 0
+  let g:deoplete#sources#ternjs#guess                 = 1
+  let g:tern_map_keys                                 = 0
+  let g:tern_show_argument_hints                      = 'on_hold'
+  let g:tern_show_signature_in_pum                    = 1
+  let g:tern#command                                  = ["tern"]
+  let g:tern#arguments                                = ["--persistent"]
 
 else
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
