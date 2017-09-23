@@ -70,6 +70,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'ap/vim-buftabline'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 "}}}
