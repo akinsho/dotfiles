@@ -153,13 +153,6 @@ nnoremap <leader>bg :let &background = (&background == "dark" ? "light" : "dark"
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" center when moving up and down
-nnoremap <c-d> <c-d>zz
-nnoremap <c-u> <c-u>zz
-
-" fix common q: :q mistype
-nnoremap q: :q
-
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>
 function! <SID>SynStack()

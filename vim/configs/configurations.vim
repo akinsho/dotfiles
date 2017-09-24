@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" Highlights
+" Highlights {{{
 ""---------------------------------------------------------------------------//
 " Highlight cursor column onwards - kind of cool
 ""---------------------------------------------------------------------------//
@@ -73,6 +73,7 @@ hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=da
 hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 
 highlight BufTabLineCurrent gui=bold guibg=#E7B563 guifg=black
+"}}}
 ""---------------------------------------------------------------------------//
 " NERDTrees highlighting {{{
 ""---------------------------------------------------------------------------//
@@ -401,12 +402,19 @@ let g:go_highlight_structs              = 1
 let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassign','goconst']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'goconst','ineffassign']
 ""---------------------------------------------------------------------------//
-"" ================ Multiple Cursors ======================== {{{
+""  Multiple Cursors  {{{
 ""---------------------------------------------------------------------------//
 
 highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse,underline
+function! Multiple_cursors_before()
+  let b:deoplete_disable_auto_complete = 1
+endfunction
+
+function! Multiple_cursors_after()
+  let b:deoplete_disable_auto_complete = 0
+endfunction
 "---------------------------------------------------------------------------//}}}
 ""---------------------------------------------------------------------------//
 " Git Gutter {{{
@@ -792,9 +800,6 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
 ""---------------------------------------------------------------------------//
 " FZF {{{
 ""---------------------------------------------------------------------------//
-if has('nvim')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-endif
 "--------------------------------------------
 " FZF bindings
 "--------------------------------------------
@@ -842,8 +847,8 @@ if !has('gui_running')
   command! -bang -nargs=* Rg
         \ call fzf#vim#grep(
         \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-        \   <bang>0 ? fzf#vim#with_preview('right:60%')
-        \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+        \   <bang>0 ? fzf#vim#with_preview('right:50%:hidden', '?')
+        \           : fzf#vim#with_preview('right:60%'),
         \   <bang>0)
 
   imap <c-x>l <plug>(fzf-complete-line)
@@ -866,7 +871,7 @@ if !has('gui_running')
     " otherwise, use :FZF
     nnoremap <silent><C-P> :Files<CR>
   endif
-  nnoremap \ :Rg!<CR>
+  nnoremap \ :Rg<CR>
   "Find Word under cursor
   nnoremap <leader>f :Find <C-R><C-W><CR>
   nnoremap <leader>F :Find 

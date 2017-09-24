@@ -62,6 +62,7 @@ Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the s
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
+Plug 'yuttie/comfortable-motion.vim'
 augroup load_fat_finger
   autocmd!
   autocmd InsertEnter * call plug#load('vim-fat-finger')
@@ -123,10 +124,10 @@ Plug 'ludovicchabant/vim-gutentags'
 "Coding tools ======================={{{
 " Plug 'janko-m/vim-test'
 " Plug 'AndrewRadev/sideways.vim'
+" Plug 'rstacruz/vim-hyperstyle', {'for': ['css', 'scss', 'sass', 'jsx', 'tsx']}
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
-Plug 'rstacruz/vim-hyperstyle', {'for': ['css', 'scss', 'sass', 'jsx', 'tsx']}
 Plug 'rizzatti/dash.vim',       { 'on': 'Dash' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }

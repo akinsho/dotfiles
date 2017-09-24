@@ -310,6 +310,7 @@ set background=dark
 " colorscheme quantum
 let g:onedark_terminal_italics = 1
 colorscheme onedark
+
 "}}}
 ""---------------------------------------------------------------------------//
 " TITLE {{{
