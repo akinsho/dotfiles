@@ -72,7 +72,6 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'vimwiki/vimwiki'
 "}}}
 "TPOPE ===================================={{{
@@ -109,7 +108,6 @@ Plug 'AndrewRadev/deleft.vim'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'vimtaku/vim-textobj-keyvalue'
       \ | Plug 'terryma/vim-expand-region'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'

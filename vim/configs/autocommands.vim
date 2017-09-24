@@ -197,12 +197,12 @@ augroup hide_lines
 augroup END
 
 " Terminal Black Background {{{
-if has('nvim') 
+if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
     "Do everything possible to prevent numbers in term buffer
-    autocmd BufEnter,BufLeave,BufWinLeave,WinLeave term://* setlocal nonumber norelativenumber
+    autocmd BufEnter,BufWinLeave,WinLeave term://* setlocal nonumber norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     if exists('+winhighlight')

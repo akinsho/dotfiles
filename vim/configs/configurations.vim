@@ -142,8 +142,8 @@ function! NERDTreeToggleAndFind()
     execute 'NERDTreeFind'
   endif
 endfunction
-nnoremap <silent> <leader><leader> :call ToggleNERDTreeWithRefresh()<cr>
-nnoremap <leader>n :call NERDTreeToggleAndFind()<CR>
+nnoremap <silent> <c-n> :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <c-n>f :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -154,8 +154,8 @@ fun! ToggleNERDTreeWithRefresh()
     call g:NERDTree.ForCurrentTab().render()
   endif
 endf
-let g:NERDTreeMapOpenSplit='s'
-let g:NERDTreeMapOpenVSplit='v'
+let g:NERDTreeMapOpenSplit              = 's'
+let g:NERDTreeMapOpenVSplit             = 'v'
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
 let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
@@ -270,12 +270,13 @@ let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
 let g:ale_sign_error                  = '✘'
 let g:ale_sign_warning                = '⚠️'
+"TODO: integrate stylelint
 let g:ale_linters                     = {
       \'python': ['flake8'],
       \'css': ['stylelint'],
-      \'jsx': ['stylelint', 'eslint'],
+      \'jsx': ['eslint'],
       \'sql': ['sqlint'],
-      \'typescript':['tsserver', 'tslint', 'stylelint'],
+      \'typescript':['tsserver', 'tslint'],
       \'go': ['gofmt -e', 'go vet', 'golint', 'go build', 'gosimple', 'staticcheck'],
       \'html':[]
       \}
@@ -336,6 +337,9 @@ nnoremap <silent> <leader>tk :call neoterm#kill()<cr>
 ""---------------------------------------------------------------------------//
 " FUGITIVE {{{
 ""---------------------------------------------------------------------------//
+" For fugitive.git, dp means :diffput. Define dg to mean :diffget
+nnoremap <silent> <leader>dg :diffget<CR>
+nnoremap <silent> <leader>dp :diffput<CR>
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
 "Stages the current file
@@ -404,19 +408,6 @@ let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'goconst','ineffassign']
 ""---------------------------------------------------------------------------//
-""  Multiple Cursors  {{{
-""---------------------------------------------------------------------------//
-
-highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse,underline
-function! Multiple_cursors_before()
-  let b:deoplete_disable_auto_complete = 1
-endfunction
-
-function! Multiple_cursors_after()
-  let b:deoplete_disable_auto_complete = 0
-endfunction
-"---------------------------------------------------------------------------//}}}
-""---------------------------------------------------------------------------//
 " Git Gutter {{{
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
@@ -455,7 +446,11 @@ let g:javascript_plugin_flow       = 1
 let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
-let g:javascript_plugin_jsdoc      = 1
+let g:no_ligatures                 = 1
+if exists("g:no_ligatures")
+  let g:javascript_conceal_arrow_function = "⇒"
+endif
+let g:javascript_plugin_jsdoc           = 1
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings
 ""---------------------------------------------------------------------------//
@@ -558,7 +553,7 @@ let g:echodoc#type              = "signature"
 "---------------------------------------------------------------------------//
 " BUFTABLINE {{{
 ""---------------------------------------------------------------------------//  "
-let g:buftabline_separators = 1
+let g:buftabline_separators = 0
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
 nmap <localleader>1 <Plug>BufTabLine.Go(1)
@@ -954,7 +949,6 @@ let g:startify_list_order = [
 let g:startify_session_before_save = [
       \ 'echo "Cleaning up before saving.."',
       \ 'silent! NERDTreeClose',
-      \ 'silent! delmarks!'
       \ ]
 let g:startify_session_dir         = '~/.vim/session'
 let g:startify_bookmarks           = [

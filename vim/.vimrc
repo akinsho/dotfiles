@@ -34,6 +34,7 @@ endif
 " Plugin Configurations
 " ----------------------------------------------------------------------
 if filereadable(expand($DOTFILES.'/vim/configs/configurations.vim'))
+  source $DOTFILES/vim/configs/open-changed-files.vim
   source $DOTFILES/vim/configs/configurations.vim
 endif
 

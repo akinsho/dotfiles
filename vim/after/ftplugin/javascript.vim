@@ -2,16 +2,19 @@ setlocal concealcursor=nvic
 setl completeopt-=preview
 setlocal nofoldenable  foldtext=FoldText()
 setlocal foldlevelstart=99 foldmethod=indent
+if has('nvim')
+  nnoremap gd :TSDef<CR>
+endif
 
 " Javascript {{{
 function! FoldText()
-  let l:line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
-  let l:lines_count = v:foldend - v:foldstart + 1
-  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
-  let l:foldchar = matchstr(&fillchars, 'fold:\')
-  let l:foldtextstart = strpart('✦' . repeat(l:foldchar, v:foldlevel*2) . l:line, 0, (winwidth(0)*2)/3)
-  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
-  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return l:foldtextstart . repeat(' ', winwidth(0)-l:foldtextlength) . l:foldtextend . ' '
+  let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '(' . ( lines_count ) . ')'
+  let foldchar = matchstr(&fillchars, 'fold:\')
+  let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(' ', 2 )
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
 endfunction
 " }}}
