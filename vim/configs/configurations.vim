@@ -473,7 +473,7 @@ map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 "
 ""---------------------------------------------------------------------------//
-"                    EMMET for Vim
+"                    EMMET for Vim {{{
 ""---------------------------------------------------------------------------//
 let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
@@ -486,6 +486,7 @@ let g:user_emmet_settings     = {
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
+"}}}
 ""---------------------------------------------------------------------------//
 " UNDOTREE {{{
 ""---------------------------------------------------------------------------//
@@ -576,7 +577,7 @@ if has('gui_running')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
-" Deoplete Options
+" Deoplete Options {{{
 ""---------------------------------------------------------------------------//
 if has("nvim")
   let g:deoplete#enable_at_startup            = 1
@@ -598,8 +599,9 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
+  "}}}
   ""---------------------------------------------------------------------------//
-  " Deoplete Go
+  " Deoplete Go {{{
   ""---------------------------------------------------------------------------//
   let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
   let g:deoplete#sources#go#use_cache     = 1
@@ -612,6 +614,7 @@ if has("nvim")
         \ 'const',
         \ 'ultisnips'
         \ ]
+  "}}}
   ""---------------------------------------------------------------------------//
   " NVIM TYPESCRIPT {{{
   ""---------------------------------------------------------------------------//
