@@ -1,0 +1,8 @@
+= Todo =
+2. [✗] Fix Startify not updating session on exit
+3. [✗] Figure out why Go loses ultisnips and correct ftdetection on resoucing vimrc
+
+= Tips =
+== VimWiki ==
+1. <leader>ww to open the index wiki
+2. {number}<leader>ww to open a wiki based on position - a.k.a other wikis

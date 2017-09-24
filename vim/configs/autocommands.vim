@@ -32,7 +32,7 @@ augroup WhiteSpace "{{{
 augroup END "}}}
 
 " Auto open grep quickfix window
-augroup QFix
+augroup SmartClose
   au!
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
@@ -55,8 +55,9 @@ endfunction
 augroup CheckOutsideTime "{{{
   autocmd!
   autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
-  au FocusLost * silent! wa "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
+  au FocusLost * silent! wall "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
   " Autosave buffers before leaving them
+    autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
   autocmd BufLeave * silent! :wa
 augroup end "}}}
 
@@ -195,7 +196,8 @@ augroup hide_lines
   autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
 augroup END
 
-if has('nvim')
+" Terminal Black Background {{{
+if has('nvim') 
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
@@ -213,6 +215,7 @@ if has('nvim')
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
 endif
+"}}}
 
 function! s:SetupHelpWindow() "{{{
   wincmd L
@@ -267,6 +270,7 @@ augroup fugitiveSettings
 augroup END
 
 "}}}
+
 augroup OpenImages
   autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
 augroup END
@@ -291,13 +295,13 @@ augroup END
 
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{
 function! NeatFoldText()
-  let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let l:lines_count = v:foldend - v:foldstart + 1
-  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
-  let l:foldtextstart = strpart('✦' . l:line, 0, (winwidth(0)*2)/3)
-  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
-  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return l:foldtextstart . repeat(' ', winwidth(0)-l:foldtextlength) . l:foldtextend
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '(' . ( lines_count ) . ')'
+  let foldtextstart = strpart('✦' . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(' ', 2 )
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend
 endfunction
 set foldtext=NeatFoldText()
 " }}}

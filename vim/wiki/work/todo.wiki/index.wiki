@@ -2,4 +2,3 @@
   * [[Tasks]] -- things to be done _yesterday_
   * Scratchpad -- temporary stuff.
   * Work Stuff
-  * Play

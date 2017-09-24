@@ -1,3 +1,4 @@
+set spell spelllang=en_us
 nnoremap <buffer> <CR> <C-]>
 nnoremap <buffer> <BS> <C-T>
 nnoremap <buffer> o /'\l\{2,\}'<CR>

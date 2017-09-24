@@ -248,7 +248,7 @@ nnoremap tm :tabmove<Space>
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
 " Switch between the last two files
-nnoremap <leader><leader> <c-^>
+nnoremap <leader><localleader> <c-^>
 ""---------------------------------------------------------------------------//
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion

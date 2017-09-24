@@ -78,7 +78,7 @@ set timeout timeoutlen=400 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit
-set sessionoptions=buffers,folds,sesdir,tabpages,winsize  " What to save in a session.
+set sessionoptions=blank,curdir,folds,help,tabpages,winpos
 if !has('nvim')
   set termsize="10x30"
 endif
@@ -96,7 +96,7 @@ endif
 "   " disable background color erase
 "   set t_ut=
 " endif
-  "}}}
+"}}}
 " ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//
 " Windows {{{

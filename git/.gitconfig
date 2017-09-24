@@ -15,7 +15,7 @@
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [alias]
   conflicted = !vim +Conflicted
-  fix = "!f() { ${EDITOR} `git rev-parse --show-toplevel`/`git diff --name-only`; }; f"
+  fix='$EDITOR `git diff --name-only | uniq`'
 # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
   aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
 # Destroy all local changes and reset to HEAD.

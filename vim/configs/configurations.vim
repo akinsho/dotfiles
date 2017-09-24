@@ -131,7 +131,7 @@ let g:hardtime_default_on             = 0
 let g:hardtime_timeout                = 500
 let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
 ""---------------------------------------------------------------------------//
-"NERDTree
+"NERDTree {{{
 ""---------------------------------------------------------------------------//
 " Ctrl+N to toggle Nerd Tree
 function! NERDTreeToggleAndFind()
@@ -141,8 +141,8 @@ function! NERDTreeToggleAndFind()
     execute 'NERDTreeFind'
   endif
 endfunction
-nnoremap <silent> <leader>n :call ToggleNERDTreeWithRefresh()<cr>
-nnoremap <localleader>nf :call NERDTreeToggleAndFind()<CR>
+nnoremap <silent> <leader><leader> :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <leader>n :call NERDTreeToggleAndFind()<CR>
 
 fun! ToggleNERDTreeWithRefresh()
   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
@@ -156,7 +156,7 @@ endf
 let g:NERDTreeMapOpenSplit='s'
 let g:NERDTreeMapOpenVSplit='v'
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
-let g:NERDTreeHijackNetrw               = 1 "Off as it messes with startify's autoload session
+let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
 let g:NERDTreeQuitOnOpen                = 1
@@ -186,12 +186,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
-""---------------------------------------------------------------------------//
-" Conflicted
-""---------------------------------------------------------------------------//
-" Use `gl` and `gu` rather than the default conflicted diffget mappings
-let g:diffget_local_map = 'gl'
-let g:diffget_upstream_map = 'gu'
+"}}}
 ""---------------------------------------------------------------------------//
 " MAGIT
 ""---------------------------------------------------------------------------//
@@ -241,15 +236,16 @@ function! g:CtrlSFAfterMainWindowInit()
 endfunction
 "}}}
 ""---------------------------------------------------------------------------//
-" TEXTOBJECT - COMMENT
+" TEXTOBJECT - COMMENT {{{
 ""---------------------------------------------------------------------------//
 let g:textobj_comment_no_default_key_mappings = 1
 xmap ac <Plug>(textobj-comment-a)
 omap ac <Plug>(textobj-comment-a)
 xmap ic <Plug>(textobj-comment-i)
 omap ic <Plug>(textobj-comment-i)
+"}}}
 ""---------------------------------------------------------------------------//
-"     ALE
+"     ALE {{{
 ""---------------------------------------------------------------------------//
 " Disable linting for all minified JS files.
 if has('gui_running')
@@ -286,8 +282,9 @@ let g:ale_set_highlights    = 0
 let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
+"}}}
 ""---------------------------------------------------------------------------//
-"TAGBAR
+"TAGBAR{{{
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
 let g:tagbar_autoshowtag                = 1
@@ -308,8 +305,9 @@ let g:tagbar_type_typescript = {
       \ 'e:enums',
       \ ]
       \ }
+"}}}
 ""---------------------------------------------------------------------------//
-" NEOTERM
+" NEOTERM {{{
 ""---------------------------------------------------------------------------//
 let g:neoterm_size         = '10'
 let g:neoterm_position     = 'horizontal'
@@ -333,8 +331,9 @@ nnoremap <silent> <leader>th :call neoterm#close()<cr>
 nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
 " kills the current job (send a <c-c>)
 nnoremap <silent> <leader>tk :call neoterm#kill()<cr>
+"}}}
 ""---------------------------------------------------------------------------//
-" FUGITIVE
+" FUGITIVE {{{
 ""---------------------------------------------------------------------------//
 "Fugitive bindings
 nnoremap <leader>gs :Gstatus<CR>
@@ -357,6 +356,7 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
+"}}}
 ""---------------------------------------------------------------------------//
 " VIM WIKI
 ""---------------------------------------------------------------------------//
@@ -401,7 +401,7 @@ let g:go_highlight_structs              = 1
 let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassign'] ",'goconst'
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'ineffassign','goconst']
 ""---------------------------------------------------------------------------//
 "" ================ Multiple Cursors ======================== {{{
 ""---------------------------------------------------------------------------//
@@ -478,8 +478,10 @@ map  N <Plug>(easymotion-prev)
 let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
 let g:user_emmet_settings     = {
-      \'javascript': {'extends': 'jsx'},
-      \'typescript':{'extends': 'tsx'}
+      \ 'html': { 'empty_element_suffix': ' />'  },
+      \'javascript': {'extends': 'jsx', 'empty_element_suffix': ' />',
+      \},
+      \'typescript':{'extends': 'tsx', 'empty_element_suffix': ' />'}
       \}
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
@@ -544,6 +546,35 @@ let g:elm_make_output_file  = "index.html"
 ""---------------------------------------------------------------------------//
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type              = "signature"
+"---------------------------------------------------------------------------//
+" BUFTABLINE {{{
+""---------------------------------------------------------------------------//  "
+let g:buftabline_separators = 1
+let g:buftabline_indicators = 1
+let g:buftabline_numbers = 2
+nmap <localleader>1 <Plug>BufTabLine.Go(1)
+nmap <localleader>2 <Plug>BufTabLine.Go(2)
+nmap <localleader>3 <Plug>BufTabLine.Go(3)
+nmap <localleader>4 <Plug>BufTabLine.Go(4)
+nmap <localleader>5 <Plug>BufTabLine.Go(5)
+nmap <localleader>6 <Plug>BufTabLine.Go(6)
+nmap <localleader>7 <Plug>BufTabLine.Go(7)
+nmap <localleader>8 <Plug>BufTabLine.Go(8)
+nmap <localleader>9 <Plug>BufTabLine.Go(9)
+nmap <localleader>0 <Plug>BufTabLine.Go(10)
+if has('gui_running')
+  nmap <D-1> <Plug>BufTabLine.Go(1)
+  nmap <D-2> <Plug>BufTabLine.Go(2)
+  nmap <D-3> <Plug>BufTabLine.Go(3)
+  nmap <D-4> <Plug>BufTabLine.Go(4)
+  nmap <D-5> <Plug>BufTabLine.Go(5)
+  nmap <D-6> <Plug>BufTabLine.Go(6)
+  nmap <D-7> <Plug>BufTabLine.Go(7)
+  nmap <D-8> <Plug>BufTabLine.Go(8)
+  nmap <D-9> <Plug>BufTabLine.Go(9)
+  nmap <D-0> <Plug>BufTabLine.Go(10)
+endif
+"}}}
 ""---------------------------------------------------------------------------//
 " Deoplete Options
 ""---------------------------------------------------------------------------//
@@ -567,34 +598,6 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
-  "---------------------------------------------------------------------------//
-  " BUFTABLINE
-  ""---------------------------------------------------------------------------//  "
-  let g:buftabline_separators = 1
-  let g:buftabline_indicators = 1
-  let g:buftabline_numbers = 2
-  nmap <localleader>1 <Plug>BufTabLine.Go(1)
-  nmap <localleader>2 <Plug>BufTabLine.Go(2)
-  nmap <localleader>3 <Plug>BufTabLine.Go(3)
-  nmap <localleader>4 <Plug>BufTabLine.Go(4)
-  nmap <localleader>5 <Plug>BufTabLine.Go(5)
-  nmap <localleader>6 <Plug>BufTabLine.Go(6)
-  nmap <localleader>7 <Plug>BufTabLine.Go(7)
-  nmap <localleader>8 <Plug>BufTabLine.Go(8)
-  nmap <localleader>9 <Plug>BufTabLine.Go(9)
-  nmap <localleader>0 <Plug>BufTabLine.Go(10)
-  if has('gui_running')
-    nmap <D-1> <Plug>BufTabLine.Go(1)
-    nmap <D-2> <Plug>BufTabLine.Go(2)
-    nmap <D-3> <Plug>BufTabLine.Go(3)
-    nmap <D-4> <Plug>BufTabLine.Go(4)
-    nmap <D-5> <Plug>BufTabLine.Go(5)
-    nmap <D-6> <Plug>BufTabLine.Go(6)
-    nmap <D-7> <Plug>BufTabLine.Go(7)
-    nmap <D-8> <Plug>BufTabLine.Go(8)
-    nmap <D-9> <Plug>BufTabLine.Go(9)
-    nmap <D-0> <Plug>BufTabLine.Go(10)
-  endif
   ""---------------------------------------------------------------------------//
   " Deoplete Go
   ""---------------------------------------------------------------------------//
@@ -610,7 +613,7 @@ if has("nvim")
         \ 'ultisnips'
         \ ]
   ""---------------------------------------------------------------------------//
-  " NVIM TYPESCRIPT
+  " NVIM TYPESCRIPT {{{
   ""---------------------------------------------------------------------------//
   let g:nvim_typescript#kind_symbols = {
         \ 'keyword': 'keyword',
@@ -687,22 +690,17 @@ if has("nvim")
   let g:tern_show_signature_in_pum                    = 1
   let g:tern#command                                  = ["tern"]
   let g:tern#arguments                                = ["--persistent"]
-
-else
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-  let g:completor_auto_trigger = 0
-  let g:completor_gocode_binary = $GOPATH.'/bin/gocode'
 endif
-
+"}}}
 ""---------------------------------------------------------------------------//
-" vim-exchange
+" vim-exchange {{{
 ""---------------------------------------------------------------------------//
 let g:exchange_no_mappings = 1
 nmap X <Plug>(Exchange)
 xmap X <Plug>(Exchange)
-
+"}}}
 ""---------------------------------------------------------------------------//
-" Goyo
+" Goyo {{{
 ""---------------------------------------------------------------------------//
 let g:goyo_width=100
 let g:goyo_margin_top = 2
@@ -749,6 +747,7 @@ augroup goyo_markdown
   autocmd BufNewFile,BufRead * call s:auto_goyo()
   autocmd User GoyoLeave nested call s:goyo_leave()
 augroup END
+"}}}
 ""---------------------------------------------------------------------------//
 " VIM MARKDOWN {{{
 ""---------------------------------------------------------------------------//
@@ -943,7 +942,6 @@ let g:startify_list_order = [
       \ ['   Commands:'],
       \ 'commands',
       \ ]
-
 
 let g:startify_session_before_save = [
       \ 'echo "Cleaning up before saving.."',
