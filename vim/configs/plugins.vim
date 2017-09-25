@@ -1,7 +1,8 @@
 "-----------------------------------------------------------
 "PLUGINS
 "-----------------------------------------------------------
-"This will autoinstall vim plug if not already installed {{{
+" Plug Setupe ===================== {{{
+"This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -17,9 +18,8 @@ endfunction
 
 call plug#begin('~/.vim/plugged')
 "}}}
+" Deoplete  ============================={{{
 "NVIM ====================================
-" Deoplete {{{
-" ----------------------------------------
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
@@ -30,9 +30,7 @@ Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "}}}
-"================================{{{
-" CORE
-"================================
+" CORE ================================ {{{
 Plug 'w0rp/ale' " Ale  Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
@@ -40,7 +38,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'
       \ | Plug 'AndrewRadev/andrews_nerdtree.vim'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
-      \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
+      " \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
@@ -84,8 +82,8 @@ Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
-Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'sheerun/vim-polyglot'
+Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ 'javascript',
       \ 'typescript'
@@ -93,6 +91,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
+Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
 "}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'

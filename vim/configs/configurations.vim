@@ -237,6 +237,18 @@ function! g:CtrlSFAfterMainWindowInit()
 endfunction
 "}}}
 ""---------------------------------------------------------------------------//
+" COMFORTABLE MOTION {{{
+""---------------------------------------------------------------------------//
+" Scroll proportional to window height
+let g:comfortable_motion_no_default_key_mappings = 1
+let g:comfortable_motion_impulse_multiplier = 1  " Feel free to increase/decrease this value.
+nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
+nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
+nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 4)<CR>
+nnoremap <silent> <C-b> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -4)<CR>
+noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+""---------------------------------------------------------------------------//
 " TEXTOBJECT - COMMENT {{{
 ""---------------------------------------------------------------------------//
 let g:textobj_comment_no_default_key_mappings = 1
@@ -802,6 +814,10 @@ let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
 let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to split your window.
 nnoremap <localleader>u :UltiSnipsEdit<CR>
 "}}}
+""---------------------------------------------------------------------------//""---------------------------------------------------------------------------//
+" PEEKABO
+""---------------------------------------------------------------------------//
+let g:peekaboo_prefix = '<leader>'
 ""---------------------------------------------------------------------------//
 " FZF {{{
 ""---------------------------------------------------------------------------//
@@ -980,6 +996,7 @@ let g:startify_session_persistence    = 1
 let g:startify_update_oldfiles        = 1
 let g:startify_session_sort           = 1
 let g:startify_change_to_vcs_root     = 1
+let g:startify_session_remove_lines = ['setlocal', 'winheight']
 "}}}
 ""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//

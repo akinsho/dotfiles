@@ -308,3 +308,7 @@ if brew ls --versions fortune > /dev/null;then
 fi
 archey -o
 # zprof
+
+
+source ~/.xsh
+

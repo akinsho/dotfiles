@@ -10,6 +10,10 @@ function _t() {
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 
+function port() {
+  lsof -n -i ":$@" | grep LISTEN
+}
+
 # Vim
 function v() {
   nvim "$@"

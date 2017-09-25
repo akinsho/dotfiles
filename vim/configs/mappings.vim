@@ -499,12 +499,8 @@ xnoremap jk <ESC>
 cnoremap jk <C-C>
 "Maps K and J to a 10 k and j but @= makes the motions multipliable - not
 "a word I know
-" ********* BIG CHANGE ***********************
 noremap K  @='10gk'<CR>
 noremap J  @='10gj'<CR>
-" scroll the viewport faster
-nnoremap <c-e> 4<C-e>
-nnoremap <c-y> 4<C-y>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -512,9 +508,13 @@ nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
 command! Vimrc :e $MYVIMRC
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap <leader>sv :source $MYVIMRC<cr>
-"This maps leader quote (single or double to wrap the word in quotes)
+" Surround word with quotes or braces
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
+nnoremap <leader>) viw<esc>a)<esc>bi(<esc>lel
+nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
+nnoremap <leader>} viw<esc>a}<esc>bi{<esc>lel
 " Remap going to beginning and end of lines
 " move to beginning/end of line
 nnoremap H ^
