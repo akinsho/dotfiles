@@ -7,7 +7,7 @@ start_time="$(date +%s)"
 #       ENV VARIABLES
 #=======================================================================
 export NVM_LAZY_LOAD=true
-# export NVM_AUTO_USE=false
+export NVM_AUTO_USE=true
 # NB for future notice this tries to install in dotfiles unless explicitly
 # specified here
 export NVM_DIR="$HOME/.nvm"

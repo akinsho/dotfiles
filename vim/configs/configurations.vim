@@ -817,7 +817,7 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
 ""---------------------------------------------------------------------------//""---------------------------------------------------------------------------//
 " PEEKABO
 ""---------------------------------------------------------------------------//
-let g:peekaboo_prefix = '<leader>'
+let g:peekaboo_prefix = '<localleader>'
 ""---------------------------------------------------------------------------//
 " FZF {{{
 ""---------------------------------------------------------------------------//
@@ -876,7 +876,7 @@ if !has('gui_running')
   imap <c-x>p <plug>(fzf-complete-path)
   inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
-  nnoremap <silent> <localleader>u :UncommitedFiles<cr>
+  nnoremap <silent> <localleader>uf :UncommitedFiles<cr>
   nnoremap <silent> <localleader>d :Dots<CR>
   nnoremap <silent> <localleader>o :Buffers<CR>
   nnoremap <silent> <localleader>a :Windows<CR>
