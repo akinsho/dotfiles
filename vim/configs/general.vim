@@ -74,11 +74,10 @@ endif
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
 " set notimeout timeoutlen=500 ""ttimeoutlen=100
-set timeout timeoutlen=400 ttimeoutlen=10
+set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit
-set sessionoptions=blank,curdir,folds,help,tabpages,winpos
 if !has('nvim')
   set termsize="10x30"
 endif

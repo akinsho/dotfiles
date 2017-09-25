@@ -123,10 +123,11 @@ Plug 'ludovicchabant/vim-gutentags'
 " Plug 'janko-m/vim-test'
 " Plug 'AndrewRadev/sideways.vim'
 " Plug 'rstacruz/vim-hyperstyle', {'for': ['css', 'scss', 'sass', 'jsx', 'tsx']}
+" Plug 'rizzatti/dash.vim',       { 'on': 'Dash' }
+Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
-Plug 'rizzatti/dash.vim',       { 'on': 'Dash' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }

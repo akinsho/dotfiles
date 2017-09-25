@@ -345,7 +345,7 @@ nnoremap <leader>gs :Gstatus<CR>
 "Stages the current file
 nnoremap <leader>gw :Gwrite<CR>
 "Rename the current file and the corresponding buffer
-nnoremap <leader>gm :Gmove<CR>
+nnoremap <leader>gm :Gmove<Space>
 "Revert current file to last checked in version
 nnoremap <leader>gre :Gread<CR>
 "Remove the current file and the corresponding buffer
@@ -356,7 +356,11 @@ nnoremap <leader>gbl :Gblame<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gt :Gcommit -v -q %:p<CR>
 nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>ggp :Ggrep<Space>
+nnoremap <leader>gbr :Git branch<Space>
+nnoremap <leader>go :Git checkout<Space>
 "Open current file on github.com
 nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
@@ -579,6 +583,12 @@ if has('gui_running')
   nmap <D-0> <Plug>BufTabLine.Go(10)
 endif
 "}}}
+""---------------------------------------------------------------------------//
+" INVESTIGATE
+""---------------------------------------------------------------------------//
+let g:investigate_syntax_for_typescripttsx = "javascript"
+let g:investigate_syntax_for_javascriptjsx = "javascript"
+let g:investigate_use_dash                 = 1
 ""---------------------------------------------------------------------------//
 " Deoplete Options {{{
 ""---------------------------------------------------------------------------//

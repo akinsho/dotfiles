@@ -244,7 +244,7 @@ nnoremap <S-tab> :bprevious<CR>
 nnoremap <leader><leader> <c-^>
 
 " use ,gf to go to file in a vertical split
-nnoremap <silent> ,gf   :vertical botright wincmd F<CR>
+nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
 ""---------------------------------------------------------------------------//
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion

@@ -1,9 +1,9 @@
 "As Per the tin this toggles relativenumber and number depending on mode
 " Blacklist certain plugins and buffer types
 let g:filetype_ignore =
-      \ get( g:, 'relativity_filetype_ignore', ['vim-plug','startify','controlp', 'nerdtree', 'help','fugitive', 'tagbar'] )
+      \ get( g:, 'relativity_filetype_ignore', ['vim-plug','startify','controlp', 'goyo', 'nerdtree', 'help','fugitive', 'tagbar'] )
 let g:buftype_ignore =
-      \ get( g:, 'relativity_buftype_ignore', ['vim-plug','terminal','nomodifiable','nofile','help'] )
+      \ get( g:, 'relativity_buftype_ignore', ['vim-plug', 'goyo', 'terminal','nomodifiable','nofile','help'] )
 
 function! s:is_blacklisted()
   for ft in g:filetype_ignore
