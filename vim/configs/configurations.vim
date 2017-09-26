@@ -324,7 +324,7 @@ let g:tagbar_type_typescript = {
 ""---------------------------------------------------------------------------//
 " NEOTERM {{{
 ""---------------------------------------------------------------------------//
-let g:neoterm_size         = '10'
+let g:neoterm_size         = '20'
 let g:neoterm_position     = 'horizontal'
 let g:neoterm_automap_keys = ',tt'
 let g:neoterm_autoscroll   = 1
@@ -600,6 +600,7 @@ endif
 ""---------------------------------------------------------------------------//
 " INVESTIGATE
 ""---------------------------------------------------------------------------//
+let g:investigate_syntax_for_typescript = "javascript"
 let g:investigate_syntax_for_typescripttsx = "javascript"
 let g:investigate_syntax_for_javascriptjsx = "javascript"
 let g:investigate_use_dash                 = 1

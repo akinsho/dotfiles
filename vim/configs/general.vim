@@ -86,10 +86,7 @@ if has('folding')
     set fillchars=vert:│
     set fillchars+=fold:-
   endif
-  if &filetype !=# 'vim'
-    set foldlevelstart=99
     set foldnestmax=3
-  endif
 endif
 " if &term =~# '256color'
 "   " disable background color erase

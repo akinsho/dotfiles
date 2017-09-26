@@ -41,26 +41,6 @@ endif
 ""---------------------------------------------------------------------------//
 " MACROS {{{
 ""---------------------------------------------------------------------------//
-" Quickly make a macro and use it with "."
-let s:simple_macro_active = 0
-nnoremap M :call <SID>SimpleMacro()<cr>
-function! s:SimpleMacro()
-  if s:simple_macro_active == 0
-
-    call feedkeys('qm', 'n')
-    let s:simple_macro_active = 1
-
-  elseif s:simple_macro_active == 1
-
-    normal! q
-    " remove trailing M
-    let @m = @m[0:-2]
-    call repeat#set(":\<c-u>call repeat#wrap('@m', 1)\<cr>", 1)
-    let s:simple_macro_active = 0
-
-  endif
-endfunction
-
 " Quickly edit your macros
 " Usage <leader>m or "q<leader>m
 nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
@@ -602,7 +582,6 @@ nnoremap P P=`]<c-o>
 " GREPPING
 ""---------------------------------------------------------------------------//
 nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
-nnoremap <silent> ga :silent! :grepadd!<space>
 " Show last search in quickfix (http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/)
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
