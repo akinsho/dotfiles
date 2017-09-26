@@ -158,6 +158,7 @@ let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
 let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
+let NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
 let g:NERDTreeQuitOnOpen                = 1
@@ -378,6 +379,7 @@ nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
 "}}}
+""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
 " VIM WIKI
 ""---------------------------------------------------------------------------//
@@ -815,9 +817,10 @@ let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to 
 nnoremap <localleader>u :UltiSnipsEdit<CR>
 "}}}
 ""---------------------------------------------------------------------------//""---------------------------------------------------------------------------//
-" PEEKABO
+" PEEKABO {{{
 ""---------------------------------------------------------------------------//
 let g:peekaboo_prefix = '<localleader>'
+"}}}
 ""---------------------------------------------------------------------------//
 " FZF {{{
 ""---------------------------------------------------------------------------//
@@ -846,9 +849,6 @@ if !has('gui_running')
   command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
         \ extend(branch_files_options, { 'options': s:diff_options }), 0))
 
-  command! UncommitedFiles call fzf#run(fzf#wrap('UncommitedFiles',
-        \ extend(uncommited_files_options, { 'options': s:diff_options }), 0))
-
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
   command! -bang -nargs=? -complete=dir Files
@@ -876,8 +876,8 @@ if !has('gui_running')
   imap <c-x>p <plug>(fzf-complete-path)
   inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
-  nnoremap <silent> <localleader>uf :UncommitedFiles<cr>
   nnoremap <silent> <localleader>d :Dots<CR>
+  nnoremap <silent> <localleader>t :BTags<CR>
   nnoremap <silent> <localleader>o :Buffers<CR>
   nnoremap <silent> <localleader>a :Windows<CR>
   nnoremap <silent> <localleader>m :History<CR>

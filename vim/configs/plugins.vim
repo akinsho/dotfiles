@@ -20,7 +20,12 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " Deoplete  ============================={{{
 "NVIM ====================================
-Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
+if has('nvim')
+  " Code completion
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+endif
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
@@ -38,7 +43,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'
       \ | Plug 'AndrewRadev/andrews_nerdtree.vim'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
-      " \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
+" \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
@@ -120,9 +125,7 @@ Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "Coding tools ======================={{{
 " Plug 'janko-m/vim-test'
-" Plug 'AndrewRadev/sideways.vim'
 " Plug 'rstacruz/vim-hyperstyle', {'for': ['css', 'scss', 'sass', 'jsx', 'tsx']}
-" Plug 'rizzatti/dash.vim',       { 'on': 'Dash' }
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
@@ -156,8 +159,6 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
-
-"Plugins to Try ============================================================
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}

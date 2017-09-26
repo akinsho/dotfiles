@@ -11,7 +11,7 @@ alias work="cd ~/Desktop/Coding/Work/"
 alias wapi="cd ~/Desktop/Coding/Work/yulife-api-server/"
 alias wfront="cd ~/Desktop/Coding/Work/yulife-signup-front-end/"
 alias code="cd ~/Desktop/Coding"
-alias magit="vim -c \"MagitOnly\""
+alias magit="nvim -c \"MagitOnly\""
 alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
 alias l="lsp"
 alias la='ls -aG'
@@ -37,7 +37,6 @@ alias yd="cl && yarn develop"
 
 #alias ctags if you used homebrew
 alias ctags="`brew --prefix`/bin/ctags"
-alias ports=" _ lsof -i -P | grep -i 'listen'"
 alias sesh="vim -S"
 alias tmux="tmux -2"
 alias imux="tmux -CC"
@@ -46,7 +45,9 @@ alias td="tmux detach"
 alias tls="tmux ls"
 alias tkss="killall tmux"
 alias tkill="tmux kill-session -t"
-
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
 # reload zsh config
 alias reload!='RELOAD=1 source ~/.zshrc'
 # Silence or turn up the volume

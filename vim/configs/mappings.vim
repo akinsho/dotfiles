@@ -515,15 +515,22 @@ nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>) viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
 nnoremap <leader>} viw<esc>a}<esc>bi{<esc>lel
-" Remap going to beginning and end of lines
-" move to beginning/end of line
-nnoremap H ^
-nnoremap L $
+" To the leftmost non-blank character of the current line
+nnoremap H g^
+" To the rightmost character of the current line
+nnoremap L g$
+
 nnoremap <leader>ll :vertical resize +10<cr>
 nnoremap <leader>hh :vertical resize -10<cr>
 nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
 " Make Ctrl-e jump to the end of the current line in the insert mode. This is
 " handy when you are in the middle of a line and would like to go to its end
 " without switching to the normal mode.
@@ -533,7 +540,9 @@ inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 
 "Map Q to remove a CR
-nnoremap Q J
+" nnoremap Q J
+" Quick macro invocation with q register
+nnoremap Q @q
 "Replace word under curosor
 nnoremap S "_diwP
 "}}}
