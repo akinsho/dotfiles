@@ -176,11 +176,11 @@ if exists('g:NERDTree')
     call webdevicons#hardRefresh()
   endif
 endif
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
 " let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
 " let g:DevIconsEnableFoldersOpenClose                             = 1
 " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md']  = ''
@@ -403,6 +403,16 @@ let g:csv_autocmd_arrange      = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 let g:csv_strict_columns       = 1
 let g:csv_highlight_column     = 'y'
+""---------------------------------------------------------------------------//
+"Indent Guide
+""---------------------------------------------------------------------------//
+let g:indentLine_fileType = ['c', 'cpp', 'typescript', 'javascript', 'javascript.jsx', 'typescript.tsx']
+let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit' ]
+let g:indentLine_concealcursor=''
+let g:indentLine_char = '┊'
+" let g:indentLine_bgcolor_term = 227
+" let g:indentLine_char = " ︙"
+nnoremap <leader>il :IndentLinesToggle<CR>
 ""---------------------------------------------------------------------------//
 "VIM-GO
 ""---------------------------------------------------------------------------//

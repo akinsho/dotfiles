@@ -117,8 +117,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
 nnoremap <leader>q :q!<cr>
-" Better redo
-nnoremap U <C-R>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " " Show all open buffers and their status
@@ -178,10 +176,6 @@ nnoremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
 nnoremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
 " inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
 " inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
-" Emacs like keybindings for the command line (:) are better
-" and you cannot use Vi style-binding here anyway, because ESC
-" just closes the command line and using Home and End..
-" remap arrow keys
 " c-a / c-e everywhere
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
@@ -343,9 +337,6 @@ vnoremap > >gv
 nnoremap ' `
 nnoremap ` '
 ""---------------------------------------------------------------------------//
-" press enter for newline without insert
-" nnoremap <localleader><cr> o<esc>
-"******************************************************
 ""---------------------------------------------------------------------------//
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>

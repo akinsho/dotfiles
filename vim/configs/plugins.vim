@@ -87,6 +87,7 @@ Plug 'tpope/vim-repeat' " . to repeat more actions
 Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
+Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
