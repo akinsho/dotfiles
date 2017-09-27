@@ -5,7 +5,7 @@
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
 " highlight ColorColumn guibg=#2c3a41
-" set colorcolumn=80
+set colorcolumn=80
 ""---------------------------------------------------------------------------//
 syntax clear SpellBad
 syntax clear SpellCap
@@ -18,7 +18,8 @@ highlight SpellCap  term=underline cterm=italic ctermfg=Blue
 highlight clear SpellLocal
 highlight! link SpellLocal SpellCap
 highlight! link SpellRare SpellCap
-highlight clear Conceal "Sets no highlighting for conceal
+" Clearing conceal messes up indent guide lines
+" highlight clear Conceal "Sets no highlighting for conceal
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
@@ -410,7 +411,7 @@ let g:indentLine_fileType = ['c', 'cpp', 'typescript', 'javascript', 'javascript
 let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit' ]
 let g:indentLine_concealcursor=''
 let g:indentLine_char = '┊'
-" let g:indentLine_bgcolor_term = 227
+let g:indentLine_color_term = 228
 " let g:indentLine_char = " ︙"
 nnoremap <leader>il :IndentLinesToggle<CR>
 ""---------------------------------------------------------------------------//

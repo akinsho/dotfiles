@@ -80,8 +80,22 @@ augroup UpdateVim
   endif
   autocmd FocusLost * :wa
   autocmd VimResized * redraw! | echom 'Redrew'
-  " autocmd VimResized * wincmd =
+  autocmd VimResized * wincmd =
+  autocmd VimResized,VimEnter * call CheckColorColumn()
 augroup END
+
+function! CheckColorColumn()
+  if &colorcolumn > 0
+    let b:cl_size = &colorcolumn
+  endif
+  if winwidth('%') <= 120
+    setl colorcolumn=
+    echom 'colorcolumn off'
+  else
+    let &colorcolumn=b:cl_size
+    echom 'colorcolumn on'
+  endif
+endfunction
 
 "Expand tab html{{{
 function! s:expand_html_tab()

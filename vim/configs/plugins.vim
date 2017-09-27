@@ -88,6 +88,7 @@ Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
 Plug 'Yggdroot/indentLine'
+Plug 'hail2u/vim-css3-syntax'
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[

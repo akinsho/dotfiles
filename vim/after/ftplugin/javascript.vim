@@ -1,4 +1,3 @@
-setlocal concealcursor=nvic
 setl completeopt-=preview
 setlocal nofoldenable  foldtext=FoldText()
 setlocal foldlevelstart=99 foldmethod=indent
