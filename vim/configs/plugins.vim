@@ -81,9 +81,9 @@ Plug 'vimwiki/vimwiki'
 "Very handy plugins and functionality by Tpope (ofc)
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-fugitive' " Add fugitive git status and command plugins
-Plug 'tpope/vim-eunuch' " Adds file manipulation functionality
-Plug 'tpope/vim-repeat' " . to repeat more actions
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
@@ -153,7 +153,7 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'joshdick/onedark.vim'
-Plug 'ryanoasis/vim-devicons' " This Plugin must load after the others - Add file type icons to vim
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
   packadd! matchit
