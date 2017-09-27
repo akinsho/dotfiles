@@ -29,3 +29,18 @@ an established user base.
 
 
 "Everyone is entitled to an *informed* opinion." -- Harlan Ellison
+
+Rudin's Law:
+
+     If there is a wrong way to do
+     something, most people will
+
+     do it every time.
+
+     Rudin's Second Law:
+
+     In a crisis that forces a choice to be
+     made among alternative
+
+     courses of action, people tend to
+     choose the worst possible course.

@@ -186,6 +186,8 @@ nnoremap <leader>s :update<cr>
 inoremap <C-s> <C-O>:update<cr>
 "Save all files
 nnoremap qa :wqa<CR>
+" Quit
+inoremap <C-Q>     <esc>:q<cr>
 vnoremap <C-Q>  <esc>
 " ----------------------------------------------------------------------------
 " Quickfix

@@ -1301,9 +1301,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>338 217 916 485 0 0 1440 900 </string>
+	<string>338 170 770 429 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 4 1440 896 0 0 1440 900 </string>
+	<string>720 28 720 872 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4173,16 +4173,12 @@
 			<false/>
 			<key>Ansi 0 Color</key>
 			<dict>
-				<key>Alpha Component</key>
-				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.08477783203125</real>
-				<key>Color Space</key>
-				<string>sRGB</string>
+				<real>0.15294118225574493</real>
 				<key>Green Component</key>
-				<real>0.082023219794224028</real>
+				<real>0.12941177189350128</real>
 				<key>Red Component</key>
-				<real>0.080458478070795536</real>
+				<real>0.11764705926179886</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>
@@ -4739,13 +4735,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.883941650390625</real>
+				<real>0.73423302173614502</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.73448182160438902</real>
+				<real>0.35916060209274292</real>
 				<key>Red Component</key>
-				<real>0.59136257506906986</real>
+				<real>0.0</real>
 			</dict>
 			<key>Minimum Contrast</key>
 			<real>0.0</real>
@@ -4760,7 +4756,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>OperatorMono-Light 16</string>
+			<string>FuraCodeNerdFontC-Regular 15</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4772,7 +4768,7 @@
 			<key>Rows</key>
 			<integer>80</integer>
 			<key>Screen</key>
-			<integer>-1</integer>
+			<integer>-2</integer>
 			<key>Scrollback Lines</key>
 			<integer>1000</integer>
 			<key>Scrollback in Alternate Screen</key>
@@ -4818,31 +4814,18 @@
 			<true/>
 			<key>Sync Title</key>
 			<false/>
-			<key>Tab Color</key>
-			<dict>
-				<key>Alpha Component</key>
-				<real>1</real>
-				<key>Blue Component</key>
-				<real>0.20392156862745098</real>
-				<key>Color Space</key>
-				<string>sRGB</string>
-				<key>Green Component</key>
-				<real>0.17254901960784313</real>
-				<key>Red Component</key>
-				<real>0.15686274509803921</real>
-			</dict>
 			<key>Tags</key>
 			<array/>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
-			<integer>4</integer>
+			<integer>3</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unicode Normalization</key>
 			<integer>3</integer>
 			<key>Unicode Version</key>
-			<integer>8</integer>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<true/>
 			<key>Use Bold Font</key>
@@ -4876,7 +4859,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>04F2B1C7-B89F-486B-9D5D-C67C15F69855</string>
 	<key>NoSyncLastTipTime</key>
-	<real>528133426.14106703</real>
+	<real>528219866.57591301</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4907,6 +4890,7 @@
 		<string>0012</string>
 		<string>0013</string>
 		<string>0014</string>
+		<string>0015</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -4992,7 +4976,7 @@
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.43551181891025637</real>
 	<key>StretchTabsToFillBar</key>
-	<false/>
+	<true/>
 	<key>SwitchPaneModifier</key>
 	<integer>4</integer>
 	<key>SwitchTabModifier</key>
@@ -5002,7 +4986,7 @@
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabViewType</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>TerminalMargin</key>
 	<integer>2</integer>
 	<key>ThreeFingerEmulates</key>

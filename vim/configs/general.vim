@@ -202,7 +202,8 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   let &showbreak='↪ '
   if exists('&breakindentopt')
-    set breakindentopt=shift:2
+    " set breakindentopt=shift:2
+    set breakindentopt=sbr
   endif
 endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
@@ -263,11 +264,9 @@ if exists('&belloff')
   set belloff=all
 endif
 if has('termguicolors')
+  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
-  if exists('$TMUX')
-    let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-    let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
-  endif
 endif
 " ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,tags;,~/.tags

@@ -95,7 +95,6 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ 'typescript'
       \ ] }
 Plug 'editorconfig/editorconfig-vim'
-Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
 Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
 "}}}
