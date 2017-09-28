@@ -81,17 +81,17 @@ augroup UpdateVim
   autocmd FocusLost * :wa
   autocmd VimResized * redraw! | echom 'Redrew'
   autocmd VimResized * wincmd =
-  autocmd VimResized,VimEnter,BufEnter,WinEnter,WinLeave * call CheckColorColumn()
+  autocmd VimResized,VimEnter, BufWinEnter * call CheckColorColumn()
 augroup END
 
+let g:cl_size = 0
+"TODO Fix this function as it doesn't run
 function! CheckColorColumn()
-  if &colorcolumn > 0
-    let b:cl_size = &colorcolumn
-  endif
   if winwidth('%') <= 120
+    windo let g:cl_size = &colorcolumn
     setl colorcolumn=
   else
-    let &colorcolumn=b:cl_size
+    let &colorcolumn=g:cl_size
     echom 'colorcolumn on'
   endif
 endfunction
@@ -291,8 +291,10 @@ augroup END
 "Close vim if only window is a Nerd Tree
 augroup NERDTree "{{{
   autocmd!
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   autocmd FileType nerdtree setlocal nolist nonumber
+  autocmd BufEnter * if exists('b:NERDTree')
+        \ | execute 'normal R' | endif
 augroup END
 "}}}
 

@@ -143,18 +143,9 @@ function! NERDTreeToggleAndFind()
     execute 'NERDTreeFind'
   endif
 endfunction
-nnoremap <silent> <c-n> :call ToggleNERDTreeWithRefresh()<cr>
+nnoremap <silent> <c-n> :NERDTreeToggle<cr>
 nnoremap <c-n>f :call NERDTreeToggleAndFind()<CR>
 
-fun! ToggleNERDTreeWithRefresh()
-  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-    execute 'NERDTreeClose'
-  else
-    call NERDTreeFocus()
-    call g:NERDTree.ForCurrentTab().getRoot().refresh()
-    call g:NERDTree.ForCurrentTab().render()
-  endif
-endf
 let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
@@ -243,7 +234,7 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Scroll proportional to window height
 let g:comfortable_motion_no_default_key_mappings = 1
-let g:comfortable_motion_impulse_multiplier = 2  " Feel free to increase/decrease this value.
+let g:comfortable_motion_impulse_multiplier = 1.5  " Feel free to increase/decrease this value.
 nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
 nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
 nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 4)<CR>
@@ -421,9 +412,9 @@ let g:go_term_height                    = 30
 let g:go_term_width                     = 30
 let g:go_term_mode                      = "split"
 let g:go_list_type                      = "quickfix"
+let g:go_fmt_command                    = "goimports"
 let g:go_auto_type_info                 = 0
 let g:go_auto_sameids                   = 0
-let g:go_fmt_command                    = "goimports"
 let g:go_fmt_autosave                   = 1
 let g:go_doc_keywordprg_enabled         = 0 "Stops auto binding K
 let g:go_highlight_variable_assignments = 1
@@ -537,10 +528,11 @@ let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "}}}
 ""---------------------------------------------------------------------------//
-" NERDComment {{{
-""---------------------------------------------------------------------------//
 " let test#runners = {'Typescript': ['Mocha', 'Jest']}
 " let test#runners = {'Typescript': ['Mocha']}
+""---------------------------------------------------------------------------//
+" NERDComment {{{
+""---------------------------------------------------------------------------//
 " Commenting
 let g:NERDSpaceDelims       = 1
 let g:NERDCompactSexyComs   = 1
@@ -753,6 +745,7 @@ function! s:goyo_enter()
   silent !tmux set status off
   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
   set nonumber
+  set statusline=
   let b:quitting = 0
   let b:quitting_bang = 0
   autocmd QuitPre <buffer> let b:quitting = 1
@@ -830,11 +823,11 @@ let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to 
 nnoremap <localleader>u :UltiSnipsEdit<CR>
 "}}}
 ""---------------------------------------------------------------------------//
-""---------------------------------------------------------------------------//
 " SplitJoin {{{
 ""---------------------------------------------------------------------------//
 nnoremap sk :SplitjoinSplit<cr>
 nnoremap sj :SplitjoinJoin<cr>
+"}}}
 ""---------------------------------------------------------------------------//
 " PEEKABO {{{
 ""---------------------------------------------------------------------------//

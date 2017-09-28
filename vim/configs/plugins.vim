@@ -36,14 +36,12 @@ Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "}}}
 " CORE ================================ {{{
-Plug 'w0rp/ale' " Ale  Async Linting as you type
+Plug 'w0rp/ale' " Ale Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
-"NOTE to future self not lazy loading nerdtree as needs to be loaded for refresh function
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
       \ | Plug 'AndrewRadev/andrews_nerdtree.vim'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
-" \ | Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
@@ -111,7 +109,6 @@ Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'kana/vim-textobj-user'
-      \ | Plug 'kana/vim-textobj-linekana/vim-textobj-line'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'terryma/vim-expand-region'
@@ -164,3 +161,4 @@ endif
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}
+" \ | 

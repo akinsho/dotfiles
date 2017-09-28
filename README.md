@@ -84,6 +84,7 @@ awesome tools.
 * Plug 'lambdalisue/gina.vim'
 * Plug 'paulhybryant/vim-textobj-path'
 * Plug 'kana/vim-smartword'
+* Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree
 
 
 
@@ -109,32 +110,32 @@ some plugins I'm keeping my eyes on
 ## Tmux Setup
 Tmux is an amazing dev tool, it is a `terminal multiplexer`. Which is matrix
 speech for saying it lets you have multiple terminal splits and windows,
-sessions all within a single actual terminal pane. It's easier seen than
-described.
-Here by a Giant rabbit hole you have been warned.
+       sessions all within a single actual terminal pane. It's easier seen than
+       described.
+       Here by a Giant rabbit hole you have been warned.
 
-*Italics*
-===
-Okay so firstly that was awesome, not for you, for me as I just wrote that
-using *vim inside of tmux* and let me tell you that was no easy feat (the
-setup I mean not the typing).
+       *Italics*
+       ===
+       Okay so firstly that was awesome, not for you, for me as I just wrote that
+       using *vim inside of tmux* and let me tell you that was no easy feat (the
+           setup I mean not the typing).
 
-* Firstly you need to create a `$HOME/terminfo` folder.
-* Anywhere else (**not inside this folder**) you need to create a `tmux.terminfo`
-    file, a `tmux-256color.terminfo` file and an `xterm-256color.terminfo` file.
-* Finally run the command 
-N.B. The advice I have seen given multiple times is to use the commands below.
-although a recent laptop setup proved unsuccessful using these command. I'll
-leave them for future reference but what I in fact used successfuly was 
+       * Firstly you need to create a `$HOME/terminfo` folder.
+       * Anywhere else (**not inside this folder**) you need to create a `tmux.terminfo`
+       file, a `tmux-256color.terminfo` file and an `xterm-256color.terminfo` file.
+       * Finally run the command 
+       N.B. The advice I have seen given multiple times is to use the commands below.
+       although a recent laptop setup proved unsuccessful using these command. I'll
+       leave them for future reference but what I in fact used successfuly was 
 
-```
-//Dotfiles/configs/
-tic xterm-256color.terminfo
-tic tmux-256color.terminfo
-...
-```
-```
-tic -o /path/to/terminfo_folder /path/to/xterm-256color.terminfo/
-tic -o /path/to/terminfo_folder /path/to/tmux-256color.terminfo/
-tic -o /path/to/terminfo_folder /path/to/tmux.terminfo/
+       ```
+       //Dotfiles/configs/
+       tic xterm-256color.terminfo
+       tic tmux-256color.terminfo
+       ...
+       ```
+       ```
+       tic -o /path/to/terminfo_folder /path/to/xterm-256color.terminfo/
+       tic -o /path/to/terminfo_folder /path/to/tmux-256color.terminfo/
+       tic -o /path/to/terminfo_folder /path/to/tmux.terminfo/
 ```

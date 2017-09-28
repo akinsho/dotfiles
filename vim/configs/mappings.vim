@@ -77,11 +77,20 @@ endfunction
 ""---------------------------------------------------------------------------//"
 " Map <Leader>ff to display all lines with keyword under cursor
 " and ask which one to jump to
-nnoremap <localleader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
+  nnoremap <localleader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+" ----------------------------------------------------------------------------
+" Credit: JGunn Choi ?il | inner line
+" ----------------------------------------------------------------------------
+" includes newline
+xnoremap al $o0
+onoremap al :<C-u>normal val<CR>
+" No Spaces or CR
+xnoremap <silent> il <Esc>^vg_
+onoremap <silent> il :<C-U>normal! ^vg_<CR>
 ""---------------------------------------------------------------------------//
 " Word transposition. Lifted from:
-" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
+" http://superuser.com/questions/290360
+"/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
 ""---------------------------------------------------------------------------//
 " exchange word under cursor with the next word without moving the cursor
 nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
@@ -616,6 +625,7 @@ nnoremap P P=`]<c-o>
 " GREPPING
 ""---------------------------------------------------------------------------//
 nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
-" Show last search in quickfix (http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/)
+" Show last search in quickfix
+" (http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/)
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
