@@ -56,7 +56,7 @@ endfunction
 "--------------------------------------------
 " Focus marked text by highlighting everything else as a comment
 xnoremap <silent> <cr> :<c-u>call <SID>Focus()<cr>
-nnoremap <silent> <cr> :call <SID>Unfocus()<cr>
+nnoremap <silent> <cr>q :call <SID>Unfocus()<cr>
 
 function! s:Focus()
   let start = line("'<")
@@ -125,11 +125,6 @@ nnoremap <leader>bl :ls<CR>
 vnoremap // y/<C-R>"<CR>
 " Toggle background with <leader>bg
 nnoremap <leader>bg :let &background = (&background == "dark" ? "light" : "dark")<cr>
-
-" These mappings will make it so that going to the next one in a search will
-" center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
 
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>
@@ -300,21 +295,56 @@ nnoremap gV `[V`]
 vnoremap * y/<C-R>"<CR>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
-""---------------------------------------------------------------------------//
-" Credit: Tpope
-" text-object: line - Elegant text-object pattern hacked out of jdaddy.vim.
-""---------------------------------------------------------------------------//
-function! s:line_inner_movement(count) abort
-  if empty(getline('.'))
-    return "\<Esc>"
+"---------------------------------------------------------------------------//
+" Inner Indent Text Object - Courtesty of http://vim.wikia.com/wiki/Indent_text_object
+"---------------------------------------------------------------------------//
+" Changes to allow blank lines in blocks, and
+" Top level blocks (zero indent) separated by two or more blank lines.
+" Usage: source <thisfile> in pythonmode and
+" Press: vai, vii to select outer/inner python blocks by indetation.
+" Press: vii, yii, dii, cii to select/yank/delete/change an indented block.
+onoremap <silent>ai :<C-u>call IndTxtObj(0)<CR>
+onoremap <silent>ii :<C-u>call IndTxtObj(1)<CR>
+vnoremap <silent>ai <Esc>:call IndTxtObj(0)<CR><Esc>gv
+vnoremap <silent>ii <Esc>:call IndTxtObj(1)<CR><Esc>gv
+
+function! IndTxtObj(inner)
+  let curcol = col(".")
+  let curline = line(".")
+  let lastline = line("$")
+  let i = indent(line("."))
+  if getline(".") !~ "^\\s*$"
+    let p = line(".") - 1
+    let pp = line(".") - 2
+    let nextblank = getline(p) =~ "^\\s*$"
+    let nextnextblank = getline(pp) =~ "^\\s*$"
+    while p > 0 && ((i == 0 && (!nextblank || (pp > 0 && !nextnextblank)))
+          \ || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner))
+          \ || (nextblank && !a:inner))))
+      -
+      let p = line(".") - 1
+      let pp = line(".") - 2
+      let nextblank = getline(p) =~ "^\\s*$"
+      let nextnextblank = getline(pp) =~ "^\\s*$"
+    endwhile
+    normal! 0V
+    call cursor(curline, curcol)
+    let p = line(".") + 1
+    let pp = line(".") + 2
+    let nextblank = getline(p) =~ "^\\s*$"
+    let nextnextblank = getline(pp) =~ "^\\s*$"
+    while p <= lastline && ((i == 0 && (!nextblank || pp < lastline && !nextnextblank))
+          \ || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner))
+          \ || (nextblank && !a:inner))))
+      +
+      let p = line(".") + 1
+      let pp = line(".") + 2
+      let nextblank = getline(p) =~ "^\\s*$"
+      let nextnextblank = getline(pp) =~ "^\\s*$"
+    endwhile
+    normal! $
   endif
-  let [lopen, copen, lclose, cclose] = [line('.'), 1, line('.'), col('$')-1]
-  call setpos("'[", [0, lopen, copen, 0])
-  call setpos("']", [0, lclose, cclose, 0])
-  return "`[o`]"
 endfunction
-xnoremap <expr>   il <SID>line_inner_movement(v:count1)
-onoremap <silent> il :normal vil<CR>
 
 nnoremap <F6> :! open %<CR>
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
@@ -523,7 +553,18 @@ nnoremap S "_diwP
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 
-" Zoom / Restore window.
+" Zoom - This function uses a tab to zoom the current split
+function! s:zoom()
+  if winnr('$') > 1
+    tab split
+  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+    tabclose
+  endif
+endfunction
+nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+" Zoom / Restore window. - Zooms by increasing window with smooshing the
+" Other window
 function! s:ZoomToggle() abort
   if exists('t:zoomed') && t:zoomed
     exec t:zoom_winrestcmd
@@ -536,7 +577,7 @@ function! s:ZoomToggle() abort
   endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <leader>z :ZoomToggle<CR>
+nnoremap <silent> <localleader>z :ZoomToggle<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 ""---------------------------------------------------------------------------//
