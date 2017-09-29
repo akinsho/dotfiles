@@ -57,7 +57,7 @@ augroup CheckOutsideTime "{{{
   autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
   au FocusLost * silent! wall "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
   " Autosave buffers before leaving them
-    autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
+  autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
   autocmd BufLeave * silent! :wa
 augroup end "}}}
 
@@ -81,17 +81,20 @@ augroup UpdateVim
   autocmd FocusLost * :wa
   autocmd VimResized * redraw! | echom 'Redrew'
   autocmd VimResized * wincmd =
-  autocmd VimResized,VimEnter, BufWinEnter * call CheckColorColumn()
+  autocmd VimResized,VimEnter,BufWinEnter * call CheckColorColumn()
 augroup END
 
-let g:cl_size = 0
 "TODO Fix this function as it doesn't run
 function! CheckColorColumn()
+  if &colorcolumn > 0
+    let b:cl_size = &colorcolumn
+    echom b:cl_size
+  endif
   if winwidth('%') <= 120
-    windo let g:cl_size = &colorcolumn
     setl colorcolumn=
+    echom 'colorcolumn off'
   else
-    let &colorcolumn=g:cl_size
+    let &colorcolumn=b:cl_size
     echom 'colorcolumn on'
   endif
 endfunction
