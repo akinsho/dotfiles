@@ -31,17 +31,19 @@ augroup WhiteSpace "{{{
   autocmd BufEnter * call s:WhitespaceHighlight()
 augroup END "}}}
 
-" Auto open grep quickfix window
+" Auto open grep quickfix window and SmartClose {{{
 augroup SmartClose
   au!
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,quickrun,qfreplace,ref,gina-log,gina-status
+        \gitcommit,quickrun,qfreplace,ref,
         \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
         \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
+
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
+
   autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
 augroup END
 
@@ -50,7 +52,7 @@ function! s:smart_close()
     close
   endif
 endfunction
-
+"}}}
 
 augroup CheckOutsideTime "{{{
   autocmd!
@@ -69,33 +71,33 @@ augroup Cancel_Paste
 augroup END
 
 
+" Reload vim and config automatically {{{
 augroup UpdateVim
   autocmd!
-  " Reload vim and config automatically {{{
   execute 'autocmd UpdateVim BufWritePost '.$DOTFILES.'/vim/configs/*,vimrc nested'
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
-  " }}}
+
   if has('gui_running')
     source $MYGVIMRC | echo 'Source .gvimrc'
   endif
   autocmd FocusLost * :wa
   autocmd VimResized * redraw! | echom 'Redrew'
   autocmd VimResized * wincmd =
-  autocmd VimResized,VimEnter,BufWinEnter * call CheckColorColumn()
+  " autocmd VimResized,VimEnter,BufWinEnter * call CheckColorColumn()
 augroup END
+" }}}
 
 "TODO Fix this function as it doesn't run
 function! CheckColorColumn()
   if &colorcolumn > 0
     let b:cl_size = &colorcolumn
-    echom b:cl_size
   endif
   if winwidth('%') <= 120
     setl colorcolumn=
-    echom 'colorcolumn off'
+    " echom 'colorcolumn off'
   else
     let &colorcolumn=b:cl_size
-    echom 'colorcolumn on'
+    " echom 'colorcolumn on'
   endif
 endfunction
 
@@ -136,6 +138,7 @@ function! s:expand_html_tab()
   return "\<tab>"
 endfunction
 "}}}
+
 augroup mutltiple_filetype_settings "{{{
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
@@ -162,6 +165,7 @@ augroup mutltiple_filetype_settings "{{{
   endif
 augroup END
 "}}}
+
 augroup filetype_javascript_typescript "{{{
   autocmd!
   "==================================
@@ -177,29 +181,32 @@ augroup filetype_javascript_typescript "{{{
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
 "}}}
-augroup FileType_Clojure
+
+augroup FileType_Clojure "{{{
   autocmd!
   " Evaluate Clojure buffers on load
   autocmd BufRead *.clj, *cljs try | silent! Require | catch /^Fireplace/ | endtry
 augroup END
+"}}}
 
 augroup FileType_html
   autocmd!
   autocmd BufNewFile,BufRead,BufWritePre *.html setlocal nowrap :normal gg=G
 augroup END
 
-augroup CommandWindow
+augroup CommandWindow "{{{
   autocmd!
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
+"}}}
 
-augroup FileType_text
+augroup FileType_text "{{{
   autocmd!
   autocmd FileType text setlocal textwidth=78
-augroup END
+augroup END "}}}
 
 augroup fileSettings "{{{
   autocmd!
@@ -207,10 +214,10 @@ augroup fileSettings "{{{
 augroup END "}}}
 
 " Hide line numbers when entering diff mode
-augroup hide_lines
+augroup hide_lines "{{{
   autocmd!
   autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
-augroup END
+augroup END "}}}
 
 " Terminal Black Background {{{
 if has('nvim')
@@ -233,7 +240,8 @@ if has('nvim')
 endif
 "}}}
 
-function! s:SetupHelpWindow() "{{{
+" Setup Help Window "{{{
+function! s:SetupHelpWindow()
   wincmd L
   vertical resize 80
 endfunction "}}}
@@ -287,15 +295,12 @@ augroup END
 
 "}}}
 
-augroup OpenImages
-  autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
-augroup END
-
-"Close vim if only window is a Nerd Tree
 augroup NERDTree "{{{
+  "Close vim if only window is a Nerd Tree
   autocmd!
   autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   autocmd FileType nerdtree setlocal nolist nonumber
+  " Refresh NERDTree on Open
   autocmd BufEnter * if exists('b:NERDTree')
         \ | execute 'normal R' | endif
 augroup END
@@ -306,20 +311,23 @@ augroup LongFiles "{{{
 augroup END
 "}}}
 
-augroup fix-ultisnips-overriding-tab-visual-mode
-  autocmd!
-  autocmd VimEnter * xnoremap <Tab> >gv
-augroup END
-
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{
 function! NeatFoldText()
-  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '(' . ( lines_count ) . ')'
-  let foldtextstart = strpart('✦' . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(' ', 2 )
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend
+  let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let l:lines_count = v:foldend - v:foldstart + 1
+  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
+  let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
+  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
+  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
+  "NOTE: fold start shows the star the next section replaces everything after the text with
+  " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
+  " fold length with 2 space padding
+  return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
 endfunction
 set foldtext=NeatFoldText()
-" }}}
+
+augroup Folding "{{{
+  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+augroup END "}}}
+  " }}}

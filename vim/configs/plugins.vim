@@ -1,7 +1,7 @@
 "-----------------------------------------------------------
 "PLUGINS
 "-----------------------------------------------------------
-" Plug Setupe ===================== {{{
+" Plug Setup ===================== {{{
 "This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -39,7 +39,7 @@ Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 Plug 'w0rp/ale' " Ale Async Linting as you type
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
+Plug 'scrooloose/nerdtree'
       \ | Plug 'AndrewRadev/andrews_nerdtree.vim'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
@@ -86,7 +86,6 @@ Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
 Plug 'Yggdroot/indentLine'
-Plug 'hail2u/vim-css3-syntax'
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
@@ -161,4 +160,3 @@ endif
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}
-" \ | 

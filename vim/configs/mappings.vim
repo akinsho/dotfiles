@@ -120,6 +120,7 @@ function! s:Repeatable(command)
   call repeat#set(':Repeatable '.a:command."\<cr>")
 endfunction
 
+""---------------------------------------------------------------------------//
 "Tab completion
 ""---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -213,11 +214,11 @@ nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
 
 "File completion made a little less painful
-" inoremap <c-f> <c-x><c-f>
-" ----------------------------------------------------------------------------
-" Buffers
-" ----------------------------------------------------------------------------
-" Tab and Shift + Tab Circular buffer navigation
+"inoremap <c-f> <c-x><c-f>
+"----------------------------------------------------------------------------
+"Buffers
+"----------------------------------------------------------------------------
+"Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
 " Switch between the last two files
@@ -230,10 +231,6 @@ nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
 nnoremap ; :
 nnoremap : ;
-"nnoremap [Alt]   <Nop>
-"xnoremap [Alt]   <Nop>
-" nmap    e  [Alt]
-" xmap    e  [Alt]
 " Allow using alt in macOS without enabling “Use Option as Meta key”
 nmap ¬ <a-l>
 nmap ˙ <a-h>
@@ -252,13 +249,21 @@ nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 " Capitalize.
 nnoremap ,U <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
+
+""---------------------------------------------------------------------------//
+ " Insert Mode Bindings
+""---------------------------------------------------------------------------//
+inoremap <c-d> <esc>ddi
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
 nnoremap <silent> ß :move+<cr>
 nnoremap <silent> ∂ :move-2<cr>
-" xnoremap <silent> <C-k> :move-2<cr>gv
-" xnoremap <silent> <C-j> :move'>+<cr>gv
+nnoremap <silent> - :move+<cr>
+nnoremap <silent> _ :move-2<cr>
+" Move visual block
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
 
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
@@ -390,8 +395,8 @@ nnoremap <leader>hl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l
 ""---------------------------------------------------------------------------//
 " Window resizing bindings
 ""---------------------------------------------------------------------------//
+nnoremap <leader>- :sp<CR>
 "Create a horizontal split
-nnoremap _ :sp<CR>
 "Create a vertical split
 nnoremap \| :vsp<CR>
 " Resize window vertically  - shrink
@@ -466,9 +471,9 @@ augroup END
 function! s:goog(pat, lucky)
   let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
   let q = substitute(q, '[[:punct:] ]',
-       \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
+        \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
   call system(printf('open "https://www.google.com/search?%sq=%s"',
-                   \ a:lucky ? 'btnI&' : '', q))
+        \ a:lucky ? 'btnI&' : '', q))
 endfunction
 
 nnoremap <leader>? :call <SID>goog(expand("<cWORD>"), 0)<cr>
@@ -485,10 +490,10 @@ if has('mac')
       autocmd!
       if !a:bang
         autocmd BufWritePost <buffer> call system(join([
-        \ "osascript -e 'tell application \"Google Chrome\"".
-        \               "to tell the active tab of its first window\n",
-        \ "  reload",
-        \ "end tell'"], "\n"))
+              \ "osascript -e 'tell application \"Google Chrome\"".
+              \               "to tell the active tab of its first window\n",
+              \ "  reload",
+              \ "end tell'"], "\n"))
       endif
     augroup END
   endfunction
@@ -504,15 +509,15 @@ onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 ""---------------------------------------------------------------------------//
 " Navigation (CORE)
 ""---------------------------------------------------------------------------//
+nnoremap 0 ^
 "Remaps native ctrl k - deleting to the end of a line to control e
 " Map jk to esc key
 inoremap jk <ESC>
 xnoremap jk <ESC>
 cnoremap jk <C-C>
-"Maps K and J to a 10 k and j but @= makes the motions multipliable - not
-"a word I know
-noremap K  @='10gk'<CR>
-noremap J  @='10gj'<CR>
+"@= makes the motions take counts
+nnoremap K  @='10gk'<CR>
+nnoremap J  @='10gj'<CR>
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -543,9 +548,6 @@ if has("mac") || has("macunix")
   vmap <D-j> <M-j>
   vmap <D-k> <M-k>
 endif
-" Make Ctrl-e jump to the end of the current line in the insert mode. This is
-" handy when you are in the middle of a line and would like to go to its end
-" without switching to the normal mode.
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
@@ -567,7 +569,7 @@ function! s:zoom()
   if winnr('$') > 1
     tab split
   elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
-                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+        \ 'index(v:val, '.bufnr('').') >= 0')) > 1
     tabclose
   endif
 endfunction
@@ -589,6 +591,20 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <localleader>z :ZoomToggle<CR>
 
 command! PU PlugUpdate | PlugUpgrade
+
+" Peekabo Like functionality
+function! Reg()
+  reg
+  echo "Register: "
+  let char = nr2char(getchar())
+  if char != "\<Esc>"
+    execute "normal! \"".char."p"
+  endif
+  redraw
+endfunction
+
+command! -nargs=0 Reg call Reg()
+nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
 ""---------------------------------------------------------------------------//

@@ -1,6 +1,6 @@
 setl completeopt-=preview
 setlocal nofoldenable  foldtext=FoldText()
-setlocal foldlevelstart=99 foldmethod=indent
+setlocal foldlevelstart=99 foldmethod=syntax
 if has('nvim')
   nnoremap gd :TSDef<CR>
 endif
@@ -14,6 +14,6 @@ function! FoldText()
   let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
   let foldtextend = lines_count_text . repeat(' ', 2 )
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength) . foldtextend . ' '
+  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength - 7) . foldtextend . ' '
 endfunction
 " }}}

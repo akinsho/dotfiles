@@ -5,7 +5,7 @@
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
 " highlight ColorColumn guibg=#2c3a41
-set colorcolumn=80
+" set colorcolumn=80
 ""---------------------------------------------------------------------------//
 syntax clear SpellBad
 syntax clear SpellCap
@@ -149,7 +149,6 @@ nnoremap <c-n>f :call NERDTreeToggleAndFind()<CR>
 let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
 let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
-let g:NERDTreeHijackNetrw               = 0 "Off as it messes with startify's autoload session
 let NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
@@ -258,7 +257,6 @@ if has('gui_running')
   let g:ale_set_balloons                 = 1
 endif
 " Enable completion where available.
-" let g:ale_completion_enabled          = 1 "Careful clashes with other completion engines
 " let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_javascript_prettier_use_local_config = 1
@@ -270,7 +268,8 @@ let g:ale_fixers = {
       \'json':'prettier',
       \'css':'stylelint'
       \}
-let g:ale_sh_shellcheck_options = '-e SC2039' " Option tells shellcheck to shut up about local var which is actually fine
+" Allow local in Shell Check
+let g:ale_sh_shellcheck_options = '-e SC2039'
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
 let g:ale_sign_error                  = '✘'
@@ -575,6 +574,7 @@ let g:echodoc#type              = "signature"
 "---------------------------------------------------------------------------//
 " BUFTABLINE {{{
 ""---------------------------------------------------------------------------//  "
+hi TabLineSel guibg=white guifg=black
 let g:buftabline_separators = 0
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
