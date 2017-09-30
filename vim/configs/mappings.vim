@@ -177,10 +177,8 @@ cnoremap <C-k> <Up>
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
 " Store relative line number jumps in the jumplist.
-nnoremap <expr> j v:count > 1 ? 'm`' . v:count . 'j' : 'gj'
-nnoremap <expr> k v:count > 1 ? 'm`' . v:count . 'k' : 'gk'
-" inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
-" inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
+nnoremap <expr> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
+nnoremap <expr> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 " c-a / c-e everywhere
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
@@ -251,7 +249,7 @@ nnoremap ,U <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
 
 ""---------------------------------------------------------------------------//
- " Insert Mode Bindings
+" Insert Mode Bindings
 ""---------------------------------------------------------------------------//
 inoremap <c-d> <esc>ddi
 " ----------------------------------------------------------------------------
@@ -516,8 +514,9 @@ inoremap jk <ESC>
 xnoremap jk <ESC>
 cnoremap jk <C-C>
 "@= makes the motions take counts
-nnoremap K  @='10gk'<CR>
-nnoremap J  @='10gj'<CR>
+nnoremap <expr> J (v:count > 1 ? 'm`' . v:count : '') . "@='10gj'<CR>"
+nnoremap <expr> K (v:count > 1 ? 'm`' . v:count : '') . "@='10gk'<CR>"
+
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -553,10 +552,10 @@ endif
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 
-"Map Q to remove a CR
-" nnoremap Q J
 " Quick macro invocation with q register
 nnoremap Q @q
+"Map Q to remove a CR
+" nnoremap Q J
 "Replace word under curosor
 nnoremap S "_diwP
 "}}}

@@ -63,13 +63,12 @@ augroup CheckOutsideTime "{{{
   autocmd BufLeave * silent! :wa
 augroup end "}}}
 
-" Disable paste.
+" Disable paste.{{{
 augroup Cancel_Paste
   autocmd!
   autocmd InsertLeave *
         \ if &paste | set nopaste | echo 'nopaste' | endif
-augroup END
-
+augroup END "}}}
 
 " Reload vim and config automatically {{{
 augroup UpdateVim
@@ -330,4 +329,4 @@ augroup Folding "{{{
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
   autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 augroup END "}}}
-  " }}}
+" }}}
