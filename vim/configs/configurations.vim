@@ -36,7 +36,8 @@ highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
 " highlight Identifier gui=italic,bold
 highlight CursorLine term=none cterm=none
-highlight Folded guifg=#E7B563 gui=bold
+highlight Folded  gui=bold
+" guifg=#E7B563
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 "Color the tildes at the end of the buffer
@@ -189,7 +190,7 @@ nnoremap mgo :MagitOnly<CR>
 ""---------------------------------------------------------------------------//
 source $DOTFILES/vim/configs/lightline.vim
 ""---------------------------------------------------------------------------//
-" NERDTree Git
+" NERDTree Git {{{
 ""---------------------------------------------------------------------------//
 " NERDTree: Git Plugin
 let g:NERDTreeIndicatorMapCustom = {
@@ -203,6 +204,7 @@ let g:NERDTreeIndicatorMapCustom = {
       \ "Clean"     : "",
       \ "Unknown"   : ""
       \ }
+"}}}
 ""---------------------------------------------------------------------------//
 " VCoolor
 ""---------------------------------------------------------------------------//
@@ -240,6 +242,7 @@ nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impu
 nnoremap <silent> <C-b> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -4)<CR>
 noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
 noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+"}}}
 ""---------------------------------------------------------------------------//
 " TEXTOBJECT - COMMENT {{{
 ""---------------------------------------------------------------------------//
@@ -384,18 +387,20 @@ let g:play_wiki.path_html = $DOTFILES.'vim/wiki/play/todo.html'
 let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:play_wiki, g:work_wiki]
 ""---------------------------------------------------------------------------//
-" JSX
+" JSX{{{
 ""---------------------------------------------------------------------------//
 let g:jsx_ext_required          = 0 "Allow jsx in .js files REQUIRED
+"}}}
 ""---------------------------------------------------------------------------//
-" VIM CSV
+" VIM CSV{{{
 ""---------------------------------------------------------------------------//
 let g:csv_autocmd_arrange      = 1
 let g:csv_autocmd_arrange_size = 1024*1024
 let g:csv_strict_columns       = 1
 let g:csv_highlight_column     = 'y'
+"}}}
 ""---------------------------------------------------------------------------//
-"Indent Guide
+"Indent Guide{{{
 ""---------------------------------------------------------------------------//
 let g:indentLine_fileType = ['c', 'cpp', 'typescript', 'javascript', 'javascript.jsx', 'typescript.tsx']
 let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit' ]
@@ -404,8 +409,9 @@ let g:indentLine_char = '┊'
 let g:indentLine_color_term = 228
 " let g:indentLine_char = " ︙"
 nnoremap <leader>il :IndentLinesToggle<CR>
+"}}}
 ""---------------------------------------------------------------------------//
-"VIM-GO
+"VIM-GO{{{
 ""---------------------------------------------------------------------------//
 let g:go_term_height                    = 30
 let g:go_term_width                     = 30
@@ -426,6 +432,7 @@ let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'goconst','ineffassign']
+"}}}
 ""---------------------------------------------------------------------------//
 " Git Gutter {{{
 ""---------------------------------------------------------------------------//
@@ -554,18 +561,20 @@ nmap <silent> <leader>vl :TestLast<CR>
 nmap <silent> <leader>vg :TestVisit<CR>
 "}}}
 ""---------------------------------------------------------------------------//
-" Polyglot
+" Polyglot {{{
 ""---------------------------------------------------------------------------//
 let g:polyglot_disabled = ['clojure']
 let g:vue_disable_pre_processors=1
+"}}}
 ""---------------------------------------------------------------------------//
-" ELM
+" ELM {{{
 ""---------------------------------------------------------------------------//
 let g:elm_format_autosave   = 1
 let g:elm_jump_to_error     = 1
 let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 1
 let g:elm_make_output_file  = "index.html"
+}}}
 ""---------------------------------------------------------------------------//
 " ECHODOC
 ""---------------------------------------------------------------------------//
