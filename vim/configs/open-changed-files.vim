@@ -1,7 +1,6 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OpenChangedFiles COMMAND
 " Open a split for each dirty file in git
-"
 " Shamelessly stolen from Gary Bernhardt: https://github.com/garybernhardt/dotfiles
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenChangedFiles()

@@ -13,7 +13,6 @@ let g:lightline = {
   \ 'component': {
   \   'lineinfo': '%3l:%-2v',
   \   'tagbar': '%{tagbar#currenttag("%s", "")}',
-  \   'conflicted': '%{ConflictedVersion()}'
   \ },
   \ 'component_function': {
   \   'filesize': 'LightLineFileSize',

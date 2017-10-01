@@ -12,10 +12,7 @@ filetype off " required  Prevents potential side-effects from system ftdetects s
 "----------------------------------------------------------------------
 " Plugins
 "----------------------------------------------------------------------
-if filereadable(expand($DOTFILES.'/vim/configs/plugins.vim'))
-  source $DOTFILES/vim/configs/plugins.vim
-endif
-
+source $DOTFILES/vim/configs/plugins.vim
 "-----------------------------------------------------------------------
 syntax enable
 "-----------------------------------------------------------------------
@@ -26,25 +23,16 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "-----------------------------------------------------------------------
 " General Settings
 "-----------------------------------------------------------------------
-if filereadable(expand($DOTFILES.'/vim/configs/general.vim'))
-  source $DOTFILES/vim/configs/general.vim
-endif
-
+source $DOTFILES/vim/configs/general.vim
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-if filereadable(expand($DOTFILES.'/vim/configs/configurations.vim'))
-  source $DOTFILES/vim/configs/open-changed-files.vim
-  source $DOTFILES/vim/configs/configurations.vim
-endif
-
+source $DOTFILES/vim/configs/open-changed-files.vim
+source $DOTFILES/vim/configs/configurations.vim
 "-----------------------------------------------------------------------
 " Mappings
 "-----------------------------------------------------------------------
-if filereadable(expand($DOTFILES.'/vim/configs/mappings.vim'))
-  source $DOTFILES/vim/configs/mappings.vim
-endif
-
+source $DOTFILES/vim/configs/mappings.vim
 ""---------------------------------------------------------------------------//
 " AUTOCOMMANDS
 ""---------------------------------------------------------------------------//
@@ -53,3 +41,6 @@ source $DOTFILES/vim/configs/autocommands.vim
 " Essential Settings - Taken care of by Vim Plug
 ""---------------------------------------------------------------------------//
 filetype plugin indent on
+
+
+

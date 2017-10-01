@@ -446,25 +446,22 @@ let g:gitgutter_sign_added            = '❖'
 " endif
 "}}}
 ""---------------------------------------------------------------------------//
-" EXPAND REGION VIM
+" EXPAND REGION VIM {{{
 ""---------------------------------------------------------------------------//
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+"}}}
 ""---------------------------------------------------------------------------//
-" SIDEWAYS
-""---------------------------------------------------------------------------//
-nnoremap c< :SidewaysLeft<cr>
-nnoremap c> :SidewaysRight<cr>
-""---------------------------------------------------------------------------//
-" VIM-EASY-ALIGN
+" VIM-EASY-ALIGN {{{
 ""---------------------------------------------------------------------------//
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vnoremap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+"}}}
 ""---------------------------------------------------------------------------//
-" VIM-JAVASCRIPT
+" VIM-JAVASCRIPT {{{
 ""---------------------------------------------------------------------------//
 " let g:javascript_conceal_arrow_function = "⇒"
 let g:javascript_plugin_flow       = 1
@@ -472,8 +469,9 @@ let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
 let g:javascript_plugin_jsdoc      = 1
+"}}}
 ""---------------------------------------------------------------------------//
-"EasyMotion mappings
+"EasyMotion mappings {{{
 ""---------------------------------------------------------------------------//
 let g:EasyMotion_prompt = 'Jump to → '
 let g:EasyMotion_do_mapping       = 0
@@ -495,7 +493,7 @@ map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
-"
+"}}}
 ""---------------------------------------------------------------------------//
 "                    EMMET for Vim {{{
 ""---------------------------------------------------------------------------//
@@ -520,15 +518,17 @@ let g:undotree_SetFocusWhenToggle = 1
 nnoremap <leader>u :UndotreeToggle<CR>
 "}}}
 ""---------------------------------------------------------------------------//
+" Javascript libraries Syntax {{{
+""---------------------------------------------------------------------------//
 "Set up libraries to highlight with library syntax highlighter
 let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
+"}}}
 ""---------------------------------------------------------------------------//
 " EDITOR CONFIG {{{
 ""---------------------------------------------------------------------------//
 let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "}}}
-""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
 " NERDComment {{{
 ""---------------------------------------------------------------------------//
@@ -567,12 +567,14 @@ let g:elm_jump_to_error     = 1
 let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 1
 let g:elm_make_output_file  = "index.html"
+
 "}}}
 ""---------------------------------------------------------------------------//
-" ECHODOC
+" ECHODOC {{{
 ""---------------------------------------------------------------------------//
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type              = "signature"
+"}}}
 "---------------------------------------------------------------------------//
 " BUFTABLINE {{{
 ""---------------------------------------------------------------------------//  "
@@ -604,12 +606,13 @@ if has('gui_running')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
-" INVESTIGATE
+" INVESTIGATE {{{
 ""---------------------------------------------------------------------------//
 let g:investigate_syntax_for_typescript = "javascript"
 let g:investigate_syntax_for_typescripttsx = "javascript"
 let g:investigate_syntax_for_javascriptjsx = "javascript"
 let g:investigate_use_dash                 = 1
+"}}}
 ""---------------------------------------------------------------------------//
 " Deoplete Options {{{
 ""---------------------------------------------------------------------------//
@@ -833,7 +836,7 @@ nnoremap sj :SplitjoinJoin<cr>
 ""---------------------------------------------------------------------------//
 " PEEKABO {{{
 ""---------------------------------------------------------------------------//
-let g:peekaboo_prefix = '<localleader>'
+" let g:peekaboo_prefix = '<localleader>'
 "}}}
 ""---------------------------------------------------------------------------//
 " FZF {{{

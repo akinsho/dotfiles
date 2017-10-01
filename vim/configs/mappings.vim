@@ -96,10 +96,10 @@ onoremap <silent> il :<C-U>normal! ^vg_<CR>
 nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 
 " move the current word to the right and keep the cursor on it
-nnoremap ]w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
+nnoremap w> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
 " move the current word to the left and keep the cursor on it
-nnoremap [w "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
+nnoremap w< "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
 ""---------------------------------------------------------------------------//
@@ -210,7 +210,6 @@ nnoremap tn :tab split<cr>
 nnoremap to :tabonly<cr>
 nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
-
 "File completion made a little less painful
 "inoremap <c-f> <c-x><c-f>
 "----------------------------------------------------------------------------
@@ -386,15 +385,15 @@ nnoremap ` '
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
-
-nnoremap <localleader>c :<c-f>
 "Open command line window
+nnoremap <localleader>c :<c-f>
 nnoremap <leader>hl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
 ""---------------------------------------------------------------------------//
 " Window resizing bindings
 ""---------------------------------------------------------------------------//
-nnoremap <leader>- :sp<CR>
 "Create a horizontal split
+nnoremap <leader>- :sp<CR>
 "Create a vertical split
 nnoremap \| :vsp<CR>
 " Resize window vertically  - shrink
@@ -410,7 +409,7 @@ nnoremap <leader>= <C-W>=
 "Close every window in the current tabview but the current one
 nnoremap <localleader>q <C-W>o
 "Swap top/bottom or left/right split
-nnoremap <leader>r <C-W>R
+nnoremap <leader>sw <C-W>R
 ""---------------------------------------------------------------------------//
 "Open Common files
 nnoremap <leader>ez :e ~/.zshrc<cr>
@@ -431,9 +430,6 @@ xnoremap & :&&<CR>
 ""---------------------------------------------------------------------------//
 inoremap <C-p> <Esc>pa
 cnoremap <C-p> <C-r>"
-
-" Delete left-hand side of assignment
-nnoremap d= df=x
 " ----------------------------------------------------------------------------
 "Credit: JGunn :Count
 " ----------------------------------------------------------------------------
@@ -553,9 +549,9 @@ inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 
 " Quick macro invocation with q register
-nnoremap Q @q
+nnoremap <localleader>q @q
 "Map Q to remove a CR
-" nnoremap Q J
+nnoremap Q J
 "Replace word under curosor
 nnoremap S "_diwP
 "}}}
