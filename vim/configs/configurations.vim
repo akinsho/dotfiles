@@ -62,7 +62,6 @@ hi StartifySpecial  guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE c
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
-  " Highlight term cursor differently
   highlight TermCursor ctermfg=green guifg=green
 endif
 ""---------------------------------------------------------------------------//
@@ -173,11 +172,11 @@ endif
 " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {}
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = '' " Set tsx extension icon to same as ts
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "}}}
@@ -338,7 +337,6 @@ vnoremap <silent> <leader>tl :TREPLSendSelection<cr>
 nnoremap <silent> <leader>th :call neoterm#close()<cr>
 " clear terminal
 nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
 nnoremap <silent> <leader>tk :call neoterm#kill()<cr>
 "}}}
 ""---------------------------------------------------------------------------//
@@ -400,7 +398,7 @@ let g:csv_strict_columns       = 1
 let g:csv_highlight_column     = 'y'
 "}}}
 ""---------------------------------------------------------------------------//
-"Indent Guide{{{
+"Indent Guide {{{
 ""---------------------------------------------------------------------------//
 let g:indentLine_fileType = ['c', 'cpp', 'typescript', 'javascript', 'javascript.jsx', 'typescript.tsx']
 let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit' ]
@@ -468,15 +466,12 @@ xmap ga <Plug>(EasyAlign)
 ""---------------------------------------------------------------------------//
 " VIM-JAVASCRIPT
 ""---------------------------------------------------------------------------//
+" let g:javascript_conceal_arrow_function = "⇒"
 let g:javascript_plugin_flow       = 1
 let g:javascript_conceal_undefined = "¿"
 let g:javascript_conceal_super     = "Ω"
 let g:javascript_conceal_null      = "ø"
-let g:no_ligatures                 = 1
-if exists("g:no_ligatures")
-  let g:javascript_conceal_arrow_function = "⇒"
-endif
-let g:javascript_plugin_jsdoc           = 1
+let g:javascript_plugin_jsdoc      = 1
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings
 ""---------------------------------------------------------------------------//
@@ -534,8 +529,6 @@ let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "}}}
 ""---------------------------------------------------------------------------//
-" let test#runners = {'Typescript': ['Mocha', 'Jest']}
-" let test#runners = {'Typescript': ['Mocha']}
 ""---------------------------------------------------------------------------//
 " NERDComment {{{
 ""---------------------------------------------------------------------------//
@@ -574,7 +567,7 @@ let g:elm_jump_to_error     = 1
 let g:elm_detailed_complete = 1
 let g:elm_setup_keybindings = 1
 let g:elm_make_output_file  = "index.html"
-}}}
+"}}}
 ""---------------------------------------------------------------------------//
 " ECHODOC
 ""---------------------------------------------------------------------------//
@@ -1032,7 +1025,6 @@ call camelcasemotion#CreateMotionMappings('<leader>')
 if exists('$TMUX')
   " Disable tmux navigator when zooming the Vim pane
   let g:tmux_navigator_disable_when_zoomed = 1
-  " saves on moving pane but only the currently opened buffer if changed
   let g:tmux_navigator_save_on_switch = 2
 endif
 "}}}
