@@ -13,6 +13,7 @@ let g:lightline = {
   \ 'component': {
   \   'lineinfo': '%3l:%-2v',
   \   'tagbar': '%{tagbar#currenttag("%s", "")}',
+  \   'close': '%999X X ',
   \ },
   \ 'component_function': {
   \   'filesize': 'LightLineFileSize',
@@ -35,6 +36,13 @@ let g:lightline = {
   \ },
   \ 'subseparator': { 'left': '', 'right': '' }
   \ }
+
+let g:lightline.tabline = {
+		    \ 'left': [ [ 'tabs' ] ],
+		    \ 'right': [ [ 'close' ] ] }
+let g:lightline.tab = {
+      \ 'active': [ 'tabnum', 'filename', 'modified' ],
+      \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
 
 augroup LightLineOnALE
   autocmd!

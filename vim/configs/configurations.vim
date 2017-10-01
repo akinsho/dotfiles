@@ -322,8 +322,8 @@ let g:tagbar_type_typescript = {
 ""---------------------------------------------------------------------------//
 " NEOTERM {{{
 ""---------------------------------------------------------------------------//
-let g:neoterm_size         = '20'
-let g:neoterm_position     = 'horizontal'
+let g:neoterm_size         = '40'
+let g:neoterm_position     = 'vertical'
 let g:neoterm_automap_keys = ',tt'
 let g:neoterm_autoscroll   = 1
 let g:neoterm_fixedsize    = 1
@@ -552,12 +552,23 @@ let g:NERDCustomDelimiters  = {
       \ }
       \  }
 let g:NERDCommentEmptyLines = 1
+"}}}
+""---------------------------------------------------------------------------//
+" VIM-TEST {{{
+""---------------------------------------------------------------------------//
+" this can be in the project-local .vimrc
+function! TypeScriptTransform(cmd) abort
+  return substitute(a:cmd, 'src/\vtest/(\S+)\.ts', 'build/test/\1.js','g')
+endfunction
 
-nmap <silent> <leader>vt :TestNearest<CR>
-nmap <silent> <leader>vT :TestFile<CR>
-nmap <silent> <leader>va :TestSuite<CR>
-nmap <silent> <leader>vl :TestLast<CR>
-nmap <silent> <leader>vg :TestVisit<CR>
+let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
+let g:test#transformation = "typescript"
+
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
 "}}}
 ""---------------------------------------------------------------------------//
 " Polyglot {{{
@@ -841,22 +852,6 @@ nnoremap sk :SplitjoinSplit<cr>
 nnoremap sj :SplitjoinJoin<cr>
 "}}}
 ""---------------------------------------------------------------------------//
-" VIM-TEST {{{
-""---------------------------------------------------------------------------//
-nmap <silent> <localleader>tn :TestNearest<CR>
-nmap <silent> <localleader>tf :TestFile<CR>
-nmap <silent> <localleader>ta :TestSuite<CR>
-nmap <silent> <localleader>tl :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
-" this can be in the project-local .vimrc
-function! TypeScriptTransform(cmd) abort
-  return substitute(a:cmd, 'src/\vtest/(\S+)\.ts', 'build/test/\1.js','g')
-endfunction
-
-let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
-let g:test#transformation = "typescript"
-"}}}
-""---------------------------------------------------------------------------//
 " PEEKABO {{{
 ""---------------------------------------------------------------------------//
 " let g:peekaboo_prefix = '<localleader>'
@@ -1055,4 +1050,3 @@ if exists('$TMUX')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
-"---------------------------------------------------------------------

@@ -151,6 +151,7 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//
+" Commands {{{
 " Smart mappings on the command line
 cno $d e ~/Desktop/
 " insert path of current file into a command
@@ -158,7 +159,6 @@ cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 cmap w!! w !sudo tee % >/dev/null
-" Commands {{{
 " Loop cnext / cprev / lnext / lprev {{{
 command! Cnext try | cnext | catch | cfirst | catch | endtry
 command! Cprev try | cprev | catch | clast | catch | endtry
@@ -558,7 +558,6 @@ nnoremap S "_diwP
 
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
-
 " Zoom - This function uses a tab to zoom the current split
 function! s:zoom()
   if winnr('$') > 1
