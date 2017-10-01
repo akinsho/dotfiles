@@ -383,7 +383,6 @@ vnoremap <leader>gb :Gbrowse<CR>
 let g:work_wiki = {}
 let g:work_wiki.path = $DOTFILES.'/vim/wiki/work/todo.wiki'
 let g:work_wiki.path_html = $DOTFILES.'/vim/wiki/work/todo.html'
-
 let g:play_wiki = {}
 let g:play_wiki.path = $DOTFILES.'/vim/wiki/play/todo.wiki'
 let g:play_wiki.path_html = $DOTFILES.'vim/wiki/play/todo.html'
@@ -406,11 +405,26 @@ let g:csv_highlight_column     = 'y'
 ""---------------------------------------------------------------------------//
 "Indent Guide {{{
 ""---------------------------------------------------------------------------//
-let g:indentLine_fileType = ['c', 'cpp', 'typescript', 'javascript', 'javascript.jsx', 'typescript.tsx']
-let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit', 'peekabo' ]
-let g:indentLine_concealcursor=''
-let g:indentLine_char = '┊'
-let g:indentLine_color_term = 228
+let g:indentLine_fileType       = [
+      \ 'c',
+      \ 'cpp',
+      \ 'typescript',
+      \ 'javascript',
+      \ 'javascript.jsx',
+      \ 'typescript.tsx'
+      \ ]
+let g:indentLine_bufNameExclude = [
+      \ 'NERD_tree.*',
+      \ 'Startify',
+      \ 'terminal',
+      \ 'help',
+      \ 'magit',
+      \ 'peekabo' ]
+let g:indentLine_faster         = 1
+let g:indentLine_setConceal     = 0
+let g:indentLine_concealcursor  = ''
+let g:indentLine_char           = '┊'
+let g:indentLine_color_term     = 228
 " let g:indentLine_char = " ︙"
 nnoremap <leader>il :IndentLinesToggle<CR>
 "}}}
@@ -469,12 +483,12 @@ xmap ga <Plug>(EasyAlign)
 ""---------------------------------------------------------------------------//
 " VIM-JAVASCRIPT {{{
 ""---------------------------------------------------------------------------//
-" let g:javascript_conceal_arrow_function = "⇒"
-let g:javascript_plugin_flow       = 1
-let g:javascript_conceal_undefined = "¿"
-let g:javascript_conceal_super     = "Ω"
-let g:javascript_conceal_null      = "ø"
-let g:javascript_plugin_jsdoc      = 1
+let g:javascript_conceal_arrow_function = "⇒"
+let g:javascript_conceal_undefined      = "¿"
+let g:javascript_conceal_super          = "Ω"
+let g:javascript_conceal_null           = "ø"
+let g:javascript_plugin_flow            = 1
+let g:javascript_plugin_jsdoc           = 1
 "}}}
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings {{{
@@ -573,7 +587,7 @@ nmap <silent> <leader>tv :TestVisit<CR>
 ""---------------------------------------------------------------------------//
 " Polyglot {{{
 ""---------------------------------------------------------------------------//
-let g:polyglot_disabled = ['clojure']
+let g:polyglot_disabled = ['clojure', 'go']
 let g:vue_disable_pre_processors=1
 "}}}
 ""---------------------------------------------------------------------------//

@@ -312,7 +312,8 @@ hi CursorLineNr guifg=yellow gui=bold
 " TITLE {{{
 ""---------------------------------------------------------------------------//
 " Custom Terminal title
-let &titlestring=hostname() . ' ● : ❐ %F  %r: Vim %m'
+" hostname() . ' ● :'
+let &titlestring=' ❐ %F  %r: Vim %m'
 set title
 "}}}
 ""---------------------------------------------------------------------------//

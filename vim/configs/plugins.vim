@@ -24,7 +24,7 @@ if has('nvim')
   " Code completion
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  Plug 'ajh17/VimCompletesMe'
 endif
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
@@ -36,11 +36,10 @@ Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "}}}
 " CORE ================================ {{{
-Plug 'w0rp/ale' " Ale Async Linting as you type
+Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'
-      \ | Plug 'AndrewRadev/andrews_nerdtree.vim'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
@@ -70,13 +69,13 @@ augroup load_fat_finger
         \| autocmd! load_fat_finger
 augroup END
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
-Plug 'junegunn/vim-peekaboo'
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
 "}}}
 "TPOPE ===================================={{{
-"Very handy plugins and functionality by Tpope (ofc)
+"Very handy plugins and functionality by Tpope
+Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-fugitive'
@@ -108,6 +107,7 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/deleft.vim'
+Plug 'AndrewRadev/switch.vim'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
@@ -143,7 +143,7 @@ function! BuildComposer(info)
   endif
 endfunction
 Plug 'euclio/vim-markdown-composer', { 'for': 'markdown', 'do': function('BuildComposer') }
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } "Go for Vim
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}
 "Themes =============================== {{{

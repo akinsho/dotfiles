@@ -11,6 +11,7 @@ augroup Code Comments             "{{{
 
 augroup END "}}}
 
+"Whitespace Highlight {{{
 function! s:WhitespaceHighlight()
   " Don't highlight trailing spaces in certain filetypes.
   if &filetype ==# 'help' || &filetype ==# 'vim-plug'
@@ -19,6 +20,7 @@ function! s:WhitespaceHighlight()
     hi! ExtraWhitespace guifg=red
   endif
 endfunction
+"}}}
 
 augroup WhiteSpace "{{{
   " Highlight Whitespace
@@ -93,10 +95,8 @@ function! CheckColorColumn()
   endif
   if winwidth('%') <= 120
     setl colorcolumn=
-    " echom 'colorcolumn off'
   else
     let &colorcolumn=b:cl_size
-    " echom 'colorcolumn on'
   endif
 endfunction
 
@@ -188,10 +188,12 @@ augroup FileType_Clojure "{{{
 augroup END
 "}}}
 
-augroup FileType_html
+augroup FileType_html "{{{
   autocmd!
-  autocmd BufNewFile,BufRead,BufWritePre *.html setlocal nowrap :normal gg=G
+  autocmd BufNewFile,BufEnter *.html setlocal nowrap
+  autocmd BufNewFile,BufRead,BufWritePre *.html :normal gg=G
 augroup END
+"}}}
 
 augroup CommandWindow "{{{
   autocmd!
@@ -212,8 +214,8 @@ augroup fileSettings "{{{
   autocmd Filetype vim-plug setlocal nonumber
 augroup END "}}}
 
-" Hide line numbers when entering diff mode
 augroup hide_lines "{{{
+  " Hide line numbers when entering diff mode
   autocmd!
   autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
 augroup END "}}}

@@ -160,6 +160,7 @@ cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 cmap w!! w !sudo tee % >/dev/null
 " Loop cnext / cprev / lnext / lprev {{{
+
 command! Cnext try | cnext | catch | cfirst | catch | endtry
 command! Cprev try | cprev | catch | clast | catch | endtry
 command! Lnext try | lnext | catch | lfirst | catch | endtry
@@ -168,9 +169,7 @@ cabbrev cnext Cnext
 cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
-" Scroll command history
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
+
 " }}}
 
 ""---------------------------------------------------------------------------//
@@ -179,18 +178,19 @@ cnoremap <C-k> <Up>
 " Store relative line number jumps in the jumplist.
 nnoremap <expr> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
 nnoremap <expr> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
-" c-a / c-e everywhere
-cnoremap <C-A> <Home>
-cnoremap <C-E> <End>
+" c-a / c-e everywhere - RSI.vim provides these
+" cnoremap <C-A> <Home>
+" cnoremap <C-E> <End>
+" Scroll command history
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 "Save
 nnoremap <leader>s :update<cr>
-inoremap <C-s> <C-O>:update<cr>
+inoremap <leader>s <C-O>:update<cr>
 "Save all files
 nnoremap qa :wqa<CR>
 " Quit
-inoremap <C-Q>     <esc>:q<cr>
+inoremap <C-Q>  <esc>:q<cr>
 vnoremap <C-Q>  <esc>
 " ----------------------------------------------------------------------------
 " Quickfix
@@ -412,6 +412,8 @@ nnoremap <localleader>q <C-W>o
 nnoremap <leader>sw <C-W>R
 ""---------------------------------------------------------------------------//
 "Open Common files
+""---------------------------------------------------------------------------//
+nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
 "close loclist or qflist
@@ -429,7 +431,7 @@ xnoremap & :&&<CR>
 " Insert & Commandline mode Paste
 ""---------------------------------------------------------------------------//
 inoremap <C-p> <Esc>pa
-cnoremap <C-p> <C-r>"
+cnoremap <C-v> <C-r>"
 " ----------------------------------------------------------------------------
 "Credit: JGunn :Count
 " ----------------------------------------------------------------------------
@@ -537,12 +539,6 @@ nnoremap <leader>hh :vertical resize -10<cr>
 nnoremap <leader>jj :res +10<cr>
 nnoremap <leader>kk :res -10<cr>
 
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
@@ -635,7 +631,6 @@ nnoremap P P=`]<c-o>
 " GREPPING
 ""---------------------------------------------------------------------------//
 nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
-" Show last search in quickfix
-" (http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/)
+" Show last search in quickfix - http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
