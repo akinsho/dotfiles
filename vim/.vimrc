@@ -41,6 +41,3 @@ source $DOTFILES/vim/configs/autocommands.vim
 " Essential Settings - Taken care of by Vim Plug
 ""---------------------------------------------------------------------------//
 filetype plugin indent on
-
-
-

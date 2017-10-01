@@ -123,8 +123,7 @@ Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "Coding tools ======================={{{
-" Plug 'janko-m/vim-test'
-" Plug 'rstacruz/vim-hyperstyle', {'for': ['css', 'scss', 'sass', 'jsx', 'tsx']}
+Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'

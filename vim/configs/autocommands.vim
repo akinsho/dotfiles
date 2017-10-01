@@ -16,7 +16,7 @@ function! s:WhitespaceHighlight()
   if &filetype ==# 'help' || &filetype ==# 'vim-plug'
     hi! ExtraWhitespace NONE
   else
-    hi! ExtraWhitespace guifg=red guibg=red
+    hi! ExtraWhitespace guifg=red
   endif
 endfunction
 

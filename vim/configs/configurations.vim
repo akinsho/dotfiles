@@ -36,7 +36,7 @@ highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
 " highlight Identifier gui=italic,bold
 highlight CursorLine term=none cterm=none
-highlight Folded  gui=bold
+highlight Folded  gui=bold guifg=#A2E8F6
 " guifg=#E7B563
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
@@ -126,12 +126,13 @@ highlight diffRemoved gui=bold
 highlight diffAdded gui=bold
 "}}}
 ""---------------------------------------------------------------------------//
-" HardTime
+" HardTime {{{
 ""---------------------------------------------------------------------------//"
 nnoremap <leader>ht :HardTimeToggle<CR>
 let g:hardtime_default_on             = 0
 let g:hardtime_timeout                = 500
-let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]"
+let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
+"}}}
 ""---------------------------------------------------------------------------//
 "NERDTree {{{
 ""---------------------------------------------------------------------------//
@@ -181,13 +182,15 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "}}}
 ""---------------------------------------------------------------------------//
-" MAGIT
+" MAGIT {{{
 ""---------------------------------------------------------------------------//
 nnoremap mgo :MagitOnly<CR>
+"}}}
 ""---------------------------------------------------------------------------//"
-" LIGHTLINE
+" LIGHTLINE {{{
 ""---------------------------------------------------------------------------//
 source $DOTFILES/vim/configs/lightline.vim
+"}}}
 ""---------------------------------------------------------------------------//
 " NERDTree Git {{{
 ""---------------------------------------------------------------------------//
@@ -205,9 +208,11 @@ let g:NERDTreeIndicatorMapCustom = {
       \ }
 "}}}
 ""---------------------------------------------------------------------------//
-" VCoolor
+" VCoolor {{{
 ""---------------------------------------------------------------------------//
-nnoremap <leader>vc <c-o>:VCoolor<CR>
+nnoremap <leader>vc :VCoolor<CR>
+inoremap ç <c-o>:VCoolor<CR>
+" }}}
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F {{{
 "--------------------------------------------
@@ -373,7 +378,7 @@ vnoremap <leader>gb :Gbrowse<CR>
 "}}}
 ""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
-" VIM WIKI
+" VIM WIKI {{{
 ""---------------------------------------------------------------------------//
 let g:work_wiki = {}
 let g:work_wiki.path = $DOTFILES.'/vim/wiki/work/todo.wiki'
@@ -384,6 +389,7 @@ let g:play_wiki.path = $DOTFILES.'/vim/wiki/play/todo.wiki'
 let g:play_wiki.path_html = $DOTFILES.'vim/wiki/play/todo.html'
 let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:play_wiki, g:work_wiki]
+"}}}
 ""---------------------------------------------------------------------------//
 " JSX{{{
 ""---------------------------------------------------------------------------//
@@ -401,7 +407,7 @@ let g:csv_highlight_column     = 'y'
 "Indent Guide {{{
 ""---------------------------------------------------------------------------//
 let g:indentLine_fileType = ['c', 'cpp', 'typescript', 'javascript', 'javascript.jsx', 'typescript.tsx']
-let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit' ]
+let g:indentLine_bufNameExclude = [ 'NERD_tree.*', 'Startify', 'terminal', 'help', 'magit', 'peekabo' ]
 let g:indentLine_concealcursor=''
 let g:indentLine_char = '┊'
 let g:indentLine_color_term = 228
@@ -749,7 +755,7 @@ nnoremap <F3> :Goyo<CR>
 function! s:goyo_enter()
   silent !tmux set status off
   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set nonumber
+  set nonumber norelativenumber
   set statusline=
   let b:quitting = 0
   let b:quitting_bang = 0
@@ -761,6 +767,7 @@ function! s:goyo_leave()
   silent !tmux set status on
   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
   set number relativenumber
+  redraw!
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
     if b:quitting_bang
@@ -832,6 +839,22 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
 ""---------------------------------------------------------------------------//
 nnoremap sk :SplitjoinSplit<cr>
 nnoremap sj :SplitjoinJoin<cr>
+"}}}
+""---------------------------------------------------------------------------//
+" VIM-TEST {{{
+""---------------------------------------------------------------------------//
+nmap <silent> <localleader>tn :TestNearest<CR>
+nmap <silent> <localleader>tf :TestFile<CR>
+nmap <silent> <localleader>ta :TestSuite<CR>
+nmap <silent> <localleader>tl :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+" this can be in the project-local .vimrc
+function! TypeScriptTransform(cmd) abort
+  return substitute(a:cmd, 'src/\vtest/(\S+)\.ts', 'build/test/\1.js','g')
+endfunction
+
+let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
+let g:test#transformation = "typescript"
 "}}}
 ""---------------------------------------------------------------------------//
 " PEEKABO {{{
