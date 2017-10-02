@@ -20,6 +20,7 @@ highlight! link SpellLocal SpellCap
 highlight! link SpellRare SpellCap
 " Clearing conceal messes up indent guide lines
 " highlight clear Conceal "Sets no highlighting for conceal
+highlight Conceal gui=bold
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
@@ -420,8 +421,8 @@ let g:indentLine_bufNameExclude = [
       \ 'help',
       \ 'magit',
       \ 'peekabo' ]
-let g:indentLine_faster         = 1
 let g:indentLine_setConceal     = 0
+let g:indentLine_faster         = 1
 let g:indentLine_concealcursor  = ''
 let g:indentLine_char           = '┊'
 let g:indentLine_color_term     = 228
@@ -483,10 +484,10 @@ xmap ga <Plug>(EasyAlign)
 ""---------------------------------------------------------------------------//
 " VIM-JAVASCRIPT {{{
 ""---------------------------------------------------------------------------//
-let g:javascript_conceal_arrow_function = "⇒"
-let g:javascript_conceal_undefined      = "¿"
-let g:javascript_conceal_super          = "Ω"
-let g:javascript_conceal_null           = "ø"
+" let g:javascript_conceal_arrow_function = "⇒"
+" let g:javascript_conceal_undefined      = "¿"
+" let g:javascript_conceal_super          = "Ω"
+" let g:javascript_conceal_null           = "ø"
 let g:javascript_plugin_flow            = 1
 let g:javascript_plugin_jsdoc           = 1
 "}}}

@@ -271,64 +271,62 @@ augroup FileType_all "{{{
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
 
-  autocmd VimEnter,BufWinEnter,WinEnter * AutoSave
-
-  " Update filetype on save if empty
-  autocmd BufWritePost * nested
-        \ if &l:filetype ==# '' || exists('b:ftdetect')
-        \ |   unlet! b:ftdetect
-        \ |   filetype detect
-        \ | endif
+    " Update filetype on save if empty
+    autocmd BufWritePost * nested
+          \ if &l:filetype ==# '' || exists('b:ftdetect')
+          \ |   unlet! b:ftdetect
+          \ |   filetype detect
+          \ | endif
 
 
-  " Reload Vim script automatically if setlocal autoread
-  autocmd BufWritePost,FileWritePost *.vim nested
-        \ if &l:autoread > 0 | source <afile> |
-        \   echo 'source '.bufname('%') |
-        \ endif
-augroup END
+    " Reload Vim script automatically if setlocal autoread
+    autocmd BufWritePost,FileWritePost *.vim nested
+          \ if &l:autoread > 0 | source <afile> |
+          \   echo 'source '.bufname('%') |
+          \ endif
+  augroup END
 
-augroup fugitiveSettings
-  autocmd!
-  autocmd FileType gitcommit setlocal nolist
-  autocmd BufReadPost fugitive://* setlocal bufhidden=delete
-augroup END
+  augroup fugitiveSettings
+    autocmd!
+    autocmd FileType gitcommit setlocal nolist
+    autocmd BufReadPost fugitive://* setlocal bufhidden=delete
+  augroup END
 
-"}}}
+  "}}}
 
-augroup NERDTree "{{{
-  "Close vim if only window is a Nerd Tree
-  autocmd!
-  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-  autocmd FileType nerdtree setlocal nolist nonumber
-  " Refresh NERDTree on Open
-  autocmd BufEnter * if exists('b:NERDTree')
-        \ | execute 'normal R' | endif
-augroup END
-"}}}
+  augroup NERDTree "{{{
+    "Close vim if only window is a Nerd Tree
+    autocmd!
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    autocmd FileType nerdtree setlocal nolist nonumber
+    " Refresh NERDTree on Open
+    autocmd BufEnter * if exists('b:NERDTree')
+          \ | execute 'normal R' | endif
+  augroup END
+  "}}}
 
-augroup LongFiles "{{{
-  autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
-augroup END
-"}}}
+  augroup LongFiles "{{{
+    autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
+  augroup END
+  "}}}
 
-"Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{
-function! NeatFoldText()
-  let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let l:lines_count = v:foldend - v:foldstart + 1
-  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
-  let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
-  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
-  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
-  "NOTE: fold start shows the star the next section replaces everything after the text with
-  " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
-  " fold length with 2 space padding
-  return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
-endfunction
-set foldtext=NeatFoldText()
+  "Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{
+  function! NeatFoldText()
+    let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let l:lines_count = v:foldend - v:foldstart + 1
+    let l:lines_count_text = '(' . ( l:lines_count ) . ')'
+    let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
+    let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
+    let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
+    "NOTE: fold start shows the star the next section replaces everything after the text with
+    " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
+    " fold length with 2 space padding
+    return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
+  endfunction
+  set foldtext=NeatFoldText()
 
-augroup Folding "{{{
-  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-augroup END "}}}
-" }}}
+  augroup Folding "{{{
+    autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+    autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+  augroup END "}}}
+  " }}}

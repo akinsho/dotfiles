@@ -34,6 +34,7 @@ alias et="nvim ~/.tmux.conf"
 alias yt="clear && yarn test"
 alias ys="clear && yarn start"
 alias yd="cl && yarn develop"
+alias ydl="cl && yarn develop:local"
 
 #alias ctags if you used homebrew
 alias ctags="`brew --prefix`/bin/ctags"

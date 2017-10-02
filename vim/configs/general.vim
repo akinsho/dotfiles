@@ -92,6 +92,8 @@ if &term =~# '256color'
   " disable background color erase
   set t_ut=
 endif
+" Make session files minimal.
+set sessionoptions=blank,curdir,folds,help,tabpages,winsize
 "}}}
 " ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//

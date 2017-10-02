@@ -1,4 +1,4 @@
-setlocal spell spelllang=en_uk "Detect .md files as mark down
+setlocal spell spelllang=en_gb "Detect .md files as mark down
 
 onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
 onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>

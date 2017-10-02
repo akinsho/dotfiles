@@ -3,7 +3,7 @@ let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'mode' ], [ 'filename', 'filetype', 'filesize'] ],
   \   'right': [ [ 'fugitive' ], [ 'AleError', 'AleWarning', 'AleOk' ],
-  \    ['lineinfo']
+  \    ['lineinfo'], ['csv']
   \]
   \ },
   \ 'inactive': {
@@ -22,6 +22,7 @@ let g:lightline = {
   \   'fileformat': 'LightLineFileformat',
   \   'filetype': 'LightLineFiletype',
   \   'fileencoding': 'LightLineFileencoding',
+  \   'csv':'LightLineCsv',
   \   'mode': 'LightLineMode',
   \ },
   \ 'component_expand': {
@@ -38,11 +39,23 @@ let g:lightline = {
   \ }
 
 let g:lightline.tabline = {
-		    \ 'left': [ [ 'tabs' ] ],
-		    \ 'right': [ [ 'close' ] ] }
+      \ 'left': [ [ 'tabs' ] ],
+      \ 'right': [ [ 'close' ] ] }
 let g:lightline.tab = {
       \ 'active': [ 'tabnum', 'filename', 'modified' ],
       \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+
+
+function! LightLineCsv()
+  if has("statusline")
+    hi User1 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+    if exists("*CSV_WCol") && &ft =~ "csv"
+      return CSV_WCol("Name") . " " . CSV_WCol()
+    else
+      return ""
+    endif
+  endif
+endfunc
 
 augroup LightLineOnALE
   autocmd!
