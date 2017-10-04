@@ -47,6 +47,8 @@ augroup SmartClose
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
   autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
+  autocmd FileType qf nnoremap <buffer> <c-p> <up>
+        \|nnoremap <buffer> <c-n> <down>
 augroup END
 
 function! s:smart_close()
@@ -176,7 +178,6 @@ augroup filetype_javascript_typescript "{{{
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   autocmd WinEnter,BufRead,VimEnter *.tsx,*.jsx,*.js set completeopt-=preview
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
 "}}}
@@ -249,8 +250,6 @@ endfunction "}}}
 
 augroup FileType_all "{{{
   autocmd!
-  autocmd FileType python setl ts=4
-  autocmd FileType rust setl sw=0 sts=0
   autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   au FileType help au BufEnter,BufWinEnter <buffer> setlocal spell!

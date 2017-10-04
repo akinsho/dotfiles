@@ -84,7 +84,7 @@ Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
 Plug 'Yggdroot/indentLine'
-Plug 'hail2u/vim-css-syntax'
+Plug 'hail2u/vim-css-syntax', { 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
@@ -104,8 +104,6 @@ Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'

@@ -2,6 +2,11 @@
 
 root = true
 
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
 [**.ts]
 e4x = true
 indent_style = space
@@ -25,12 +30,17 @@ indent_style = space
 indent_size = 2
 
 [**.css]
-path=~/.vim/bundle/js-beautify/js/lib/beautify-css.js
 indent_style = space
 indent_size = 4
 
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.go]
+indent_style = tab
+
 [**.html]
-vim:path=~/.vim/bundle/js-beautify/js/lib/beautify-html.js
 indent_style = space
 indent_size = 4
 max_char = 78

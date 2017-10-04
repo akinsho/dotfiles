@@ -77,6 +77,14 @@ hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
 highlight BufTabLineCurrent gui=bold guibg=#E7B563 guifg=black
 "}}}
 ""---------------------------------------------------------------------------//
+""---------------------------------------------------------------------------//
+" NETRW
+""---------------------------------------------------------------------------//
+let g:netrw_liststyle    = 3
+let g:netrw_banner       = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize      = 25
+let g:netrw_altv         = 1
 " NERDTrees highlighting {{{
 ""---------------------------------------------------------------------------//
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
