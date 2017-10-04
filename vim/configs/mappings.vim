@@ -126,7 +126,7 @@ endfunction
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
-nnoremap <leader>q :q!<cr>
+nnoremap <localleader>q :q!<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " " Show all open buffers and their status
@@ -185,7 +185,7 @@ nnoremap <expr> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 "Save
-nnoremap <leader>s :update<cr>
+nnoremap <C-S> :update<cr>
 inoremap <leader>s <C-O>:update<cr>
 "Save all files
 nnoremap qa :wqa<CR>
@@ -407,7 +407,7 @@ nnoremap <right> 15<c-w><
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
 "Close every window in the current tabview but the current one
-nnoremap <localleader>q <C-W>o
+nnoremap <leader>q <C-W>o
 "Swap top/bottom or left/right split
 nnoremap <leader>sw <C-W>R
 ""---------------------------------------------------------------------------//

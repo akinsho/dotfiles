@@ -130,7 +130,12 @@ highlight diffAdded gui=bold
 " HardTime {{{
 ""---------------------------------------------------------------------------//"
 nnoremap <leader>ht :HardTimeToggle<CR>
-let g:hardtime_default_on             = 0
+if strftime("%H") > 18 "Turn on Hard Time out of working hours
+  let g:hardtime_default_on             = 1
+  exe 'HardTimeOn'
+else
+  let g:hardtime_default_on             = 0
+endif
 let g:hardtime_timeout                = 500
 let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
 "}}}
@@ -298,6 +303,11 @@ nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 "}}}
 ""---------------------------------------------------------------------------//
+" Gutentags {{{
+""---------------------------------------------------------------------------//
+let g:gutentags_ctags_exclude = ['*node_modules*', '*bower_components*', 'tmp*', 'temp*', 'package*json']
+" }}}
+""---------------------------------------------------------------------------//
 "TAGBAR{{{
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
@@ -324,7 +334,7 @@ let g:tagbar_type_typescript = {
 " NEOTERM {{{
 ""---------------------------------------------------------------------------//
 let g:neoterm_size         = '40'
-let g:neoterm_position     = 'vertical'
+let g:neoterm_position     = 'horizontal'
 let g:neoterm_automap_keys = ',tt'
 let g:neoterm_autoscroll   = 1
 let g:neoterm_fixedsize    = 1
@@ -372,6 +382,7 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>ggp :Ggrep<Space>
 nnoremap <leader>gbr :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
+nnoremap <leader>gL :Glog<BAR>:bot copen<CR>
 "Open current file on github.com
 nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
@@ -461,13 +472,8 @@ let g:gitgutter_grep_command          = 'ag --nocolor'
 let g:gitgutter_sign_modified         = '•'
 let g:gitgutter_sign_modified_removed = '±'
 let g:gitgutter_sign_added            = '❖'
-" let g:gitgutter_sign_added            = ''
-" if has('mac')
-" let g:gitgutter_sign_modified_removed = '☁️'
-" endif
-"}}}
 ""---------------------------------------------------------------------------//
-" EXPAND REGION VIM {{{
+" Vim-Expand-Region {{{
 ""---------------------------------------------------------------------------//
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -579,11 +585,11 @@ endfunction
 let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
 let g:test#transformation = "typescript"
 
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tv :TestVisit<CR>
+nnoremap <silent> <localleader>tn :TestNearest<CR>
+nnoremap <silent> <localleader>tf :TestFile<CR>
+nnoremap <silent> <localleader>ts :TestSuite<CR>
+nnoremap <silent> <localleader>tl :TestLast<CR>
+nnoremap <silent> <localleader>tv :TestVisit<CR>
 "}}}
 ""---------------------------------------------------------------------------//
 " Polyglot {{{
@@ -1049,6 +1055,15 @@ let g:startify_change_to_vcs_root     = 1
 let g:startify_session_remove_lines = ['setlocal', 'winheight']
 "}}}
 ""---------------------------------------------------------------------------//
+" Abolish {{{
+nnoremap <leader>S :S/<C-R><C-W>//<LEFT>
+nnoremap <leader>s :%S/<C-R><C-W>//<LEFT>
+" }}}
+
+"Surround {{{
+vmap s <Plug>VSurround
+vmap s <Plug>VSurround
+" }}}
 ""---------------------------------------------------------------------------//
 " CAMELCASEMOTION {{{
 ""---------------------------------------------------------------------------//

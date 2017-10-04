@@ -74,7 +74,6 @@ Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
 "}}}
 "TPOPE ===================================={{{
-"Very handy plugins and functionality by Tpope
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -108,10 +107,10 @@ Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/switch.vim'
+Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'terryma/vim-expand-region'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
 "}}}
@@ -119,8 +118,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
-Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar', 'TagbarOpen' ] }
 "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
@@ -151,6 +150,7 @@ Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'joshdick/onedark.vim'
 Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
   packadd! matchit
