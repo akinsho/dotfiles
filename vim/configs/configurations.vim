@@ -432,8 +432,8 @@ let g:indentLine_bufNameExclude = [
       \ 'help',
       \ 'magit',
       \ 'peekabo' ]
+" let g:indentLine_faster         = 1
 let g:indentLine_setConceal     = 0
-let g:indentLine_faster         = 1
 let g:indentLine_concealcursor  = ''
 let g:indentLine_char           = '┊'
 let g:indentLine_color_term     = 228
@@ -1052,15 +1052,17 @@ let g:startify_session_persistence    = 1
 let g:startify_update_oldfiles        = 1
 let g:startify_session_sort           = 1
 let g:startify_change_to_vcs_root     = 1
-let g:startify_session_remove_lines = ['setlocal', 'winheight']
 "}}}
 ""---------------------------------------------------------------------------//
 " Abolish {{{
+""---------------------------------------------------------------------------//
 nnoremap <leader>S :S/<C-R><C-W>//<LEFT>
 nnoremap <leader>s :%S/<C-R><C-W>//<LEFT>
 " }}}
 
+""---------------------------------------------------------------------------//
 "Surround {{{
+""---------------------------------------------------------------------------//
 vmap s <Plug>VSurround
 vmap s <Plug>VSurround
 " }}}

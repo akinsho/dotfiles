@@ -418,11 +418,11 @@ endif
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-augroup cursorline
-  autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
-  autocmd WinLeave,InsertEnter * setlocal nocursorline
-augroup END
+" augroup cursorline
+"   autocmd!
+"   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
+"   autocmd WinLeave,InsertEnter * setlocal nocursorline
+" augroup END
 set scrolloff=8 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}
 "====================================================================================
@@ -448,7 +448,7 @@ function! ToggleMouse()
   endif
 endfunc
 set mouse= "this is the command that works for mousepad
-nnoremap § :call ToggleMouse()<CR>
+nnoremap <silent> § :call ToggleMouse()<CR>
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
 if exists('$TMUX')
   if !has('nvim')

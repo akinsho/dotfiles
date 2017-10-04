@@ -126,8 +126,8 @@ Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
-Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
+Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 "}}}
