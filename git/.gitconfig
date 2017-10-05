@@ -27,7 +27,7 @@
   sl = log --oneline --decorate -20
    mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
 [push]
-  default = upstream
+  default = current
 [fetch]
   prune = true
 [gitsh]
