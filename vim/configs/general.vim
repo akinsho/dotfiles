@@ -53,6 +53,20 @@ endfunction
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 "}}}
 " ----------------------------------------------------------------------------
+""---------------------------------------------------------------------------//
+" MACVIM
+""---------------------------------------------------------------------------//
+if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
+  set transparency=0
+  set guioptions=
+  set guioptions+=g " gray menu items
+  set guioptions+=m " menu bar
+  set guioptions+=e " nice gui tabs
+
+  set antialias
+  set guifont=Fura\ Code\ Nerd\ Font:h16
+  set linespace=1
+endif
 " Message output on vim actions {{{
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start

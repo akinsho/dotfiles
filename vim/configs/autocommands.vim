@@ -81,7 +81,9 @@ augroup UpdateVim
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
-    source $MYGVIMRC | echo 'Source .gvimrc'
+    if filereadable($MYGVIMRC)
+      source $MYGVIMRC | echo 'Source .gvimrc'
+    endif
   endif
   autocmd FocusLost * :wa
   autocmd VimResized * redraw! | echom 'Redrew'

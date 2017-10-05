@@ -15,7 +15,6 @@
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [alias]
   standup = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
-  conflicted = !vim +Conflicted
   fix='$EDITOR `git diff --name-only | uniq`'
 # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
   aliases = "!git config -l | grep ^alias | cut -c 7- | sort"

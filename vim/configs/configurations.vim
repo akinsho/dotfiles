@@ -1024,15 +1024,15 @@ endif
 " STARTIFY {{{
 ""---------------------------------------------------------------------------//
 let g:startify_list_order = [
-      \ ['   😇 My Sessions:'],
+      \ ['   😸 My Sessions:'],
       \ 'sessions',
-      \ ['   MRU Files:'],
+      \ [' → Recent'],
       \ 'files',
-      \ ['   My Bookmarks:'],
+      \ [' → My Bookmarks:'],
       \ 'bookmarks',
-      \ ['   MRU files in current directory:'],
+      \ [' → Recent files in current directory:'],
       \ 'dir',
-      \ ['   Commands:'],
+      \ ['  → Commands:'],
       \ 'commands',
       \ ]
 

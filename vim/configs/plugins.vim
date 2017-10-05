@@ -72,6 +72,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
+Plug 'rstacruz/vim-xtract'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-rsi'
