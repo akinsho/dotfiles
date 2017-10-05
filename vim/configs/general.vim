@@ -418,12 +418,17 @@ endif
 " CURSOR  "{{{
 " ----------------------------------------------------------------------------
 " Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-augroup vimrc_cursorline
+" augroup vimrc_cursorline
+  " autocmd!
+  " autocmd CursorHold * setlocal cursorline
+        " \|autocmd  vimrc_cursorline CursorMoved * setlocal nocursorline
+        " \|autocmd! vimrc_cursorline CursorMoved
+"   autocmd InsertEnter * if &cursorline|setlocal nocursorline|endif
+" augroup END
+augroup cursorline
   autocmd!
-  autocmd CursorHold * setlocal cursorline
-        \|autocmd  vimrc_cursorline CursorMoved * setlocal nocursorline
-        \|autocmd! vimrc_cursorline CursorMoved
-  autocmd InsertEnter * if &cursorline|setlocal nocursorline|endif
+  autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
+  autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
 set scrolloff=8 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}
