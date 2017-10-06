@@ -241,6 +241,8 @@ if has('nvim')
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
+else
+     au BufWinEnter * if &buftype == 'terminal' | setlocal bufhidden=hide | endif
 endif
 "}}}
 

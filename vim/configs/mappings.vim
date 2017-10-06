@@ -28,14 +28,20 @@ if has('nvim')
   tmap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
   tmap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
   tmap <leader>, <C-\><C-n>:bnext<cr>
-  nmap <leader>t :term<cr>
-  "Opening splits with terminal in all directions
-  nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
-  nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
-  nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
-  nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
-  nnoremap <Leader>tt :tabnew<CR>:te<CR>
+else
+  tnoremap <C-h> <C-W>h
+  tnoremap <C-j> <C-W>j
+  tnoremap <C-k> <C-W>k
+  tnoremap <C-l> <C-W>l
+  tnoremap <C-x> <C-W>:q!<CR>
 endif
+nnoremap <leader>to :term<cr>
+"Opening splits with terminal in all directions
+nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
+nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
+nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
+nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
+nnoremap <Leader>tt :tabnew<CR>:te<CR>
 "}}}
 
 "}}}

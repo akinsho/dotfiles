@@ -440,7 +440,7 @@ let g:indentLine_bufNameExclude = [
       \ 'help',
       \ 'magit',
       \ 'peekabo' ]
-" let g:indentLine_faster         = 1
+let g:indentLine_faster         = 1
 let g:indentLine_setConceal     = 0
 let g:indentLine_concealcursor  = ''
 let g:indentLine_char           = '┊'
@@ -663,9 +663,9 @@ let g:investigate_use_dash                 = 1
 " Deoplete Options {{{
 ""---------------------------------------------------------------------------//
 if has("nvim")
+  let g:deoplete#auto_complete_delay          = 0
   let g:deoplete#enable_at_startup            = 1
   let g:deoplete#auto_completion_start_length = 1
-  let g:deoplete#auto_complete_delay          = 50
   let g:deoplete#enable_smart_case            = 1
   let g:deoplete#max_menu_width               = 80
   let g:deoplete#max_menu_height              = 40
