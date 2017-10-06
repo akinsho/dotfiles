@@ -130,8 +130,6 @@ function! AutoResize()
 endfunction
 command! AutoResize call AutoResize()
 nnoremap <leader>ar :AutoResize<CR>
-set winheight=30
-set winwidth=30
 "}}}
 ""---------------------------------------------------------------------------//
 " DIFFING {{{
