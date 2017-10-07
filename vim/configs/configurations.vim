@@ -28,9 +28,12 @@ highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
 highlight jsxAttrib cterm=italic,bold ctermfg=121
 highlight jsThis ctermfg=224
 highlight jsSuper ctermfg=13
-highlight jsFuncCall ctermfg=cyan
+highlight jsFuncCall gui=italic ctermfg=cyan
+highlight Include gui=italic cterm=italic
+highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
 highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
-highlight cssBraces ctermfg=cyan
+highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
+highlight cssBraces guifg=cyan
 highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic

@@ -62,7 +62,6 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions+=g " gray menu items
   set guioptions+=m " menu bar
   set guioptions+=e " nice gui tabs
-
   set antialias
   set guifont=Fura\ Code\ Nerd\ Font:h16
   set linespace=1
@@ -336,7 +335,9 @@ set title
 if has('nvim')
   set inccommand=nosplit
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0
-  set guicursor=i-ci:ver50-Cursor/lCursor
+  set guicursor=i-ci:block-Cursor/lCursor-blinkon0
+  " Thin bar insert mode cursor
+  " set guicursor=i-ci:ver50-Cursor/lCursor
   set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 100000
   let g:python_host_prog=$HOME.'/.pyenv/versions/neovim2/bin/python'
