@@ -39,7 +39,7 @@ alias ydl="cl && yarn develop:local"
 #alias ctags if you used homebrew
 alias ctags="`brew --prefix`/bin/ctags"
 alias sesh="vim -S"
-alias tmux="tmux -2"
+alias tmux="tmux -2 -u"
 alias imux="tmux -CC"
 alias ta="tmux attach -t"
 alias td="tmux detach"

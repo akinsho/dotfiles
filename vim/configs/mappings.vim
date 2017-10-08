@@ -392,7 +392,7 @@ vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window
-nnoremap <localleader>c :<c-f>
+nnoremap <localleader>C :<c-f>
 nnoremap <leader>hl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 ""---------------------------------------------------------------------------//

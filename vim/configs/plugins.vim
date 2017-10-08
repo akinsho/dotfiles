@@ -100,6 +100,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
+Plug 'idanarye/vim-merginal'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'

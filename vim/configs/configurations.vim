@@ -948,7 +948,7 @@ if !has('gui_running')
   nnoremap <silent> <localleader>o :Buffers<CR>
   nnoremap <silent> <localleader>a :Windows<CR>
   nnoremap <silent> <localleader>m :History<CR>
-  nnoremap <silent> <localleader>C :Commits<CR>
+  nnoremap <silent> <localleader>c :Commits<CR>
   nnoremap <silent> <localleader>l :Lines<CR>
 
   " Launch file search using FZF

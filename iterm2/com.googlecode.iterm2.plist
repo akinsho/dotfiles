@@ -1303,9 +1303,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>172 382 918 485 0 0 1440 900 </string>
+	<string>225 48 918 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 4 720 896 0 0 1440 900 </string>
+	<string>0 5 1440 895 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4758,7 +4758,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FiraCode-Regular 15</string>
+			<string>FuraCodeNerdFontC-Regular 15</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4840,9 +4840,9 @@
 			<key>Unicode Normalization</key>
 			<integer>3</integer>
 			<key>Unicode Version</key>
-			<integer>9</integer>
+			<integer>8</integer>
 			<key>Unlimited Scrollback</key>
-			<true/>
+			<false/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -4858,7 +4858,7 @@
 			<key>Use Underline Color</key>
 			<true/>
 			<key>Vertical Spacing</key>
-			<real>1.003882718373494</real>
+			<real>1.0796369070030121</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
@@ -4874,7 +4874,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>04F2B1C7-B89F-486B-9D5D-C67C15F69855</string>
 	<key>NoSyncLastTipTime</key>
-	<real>528932215.69744003</real>
+	<real>529154533.90013301</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4914,6 +4914,8 @@
 		<string>0021</string>
 		<string>0022</string>
 		<string>0023</string>
+		<string>0024</string>
+		<string>0025</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -4979,7 +4981,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-10-04T10:30:57Z</date>
+	<date>2017-10-08T00:52:15Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
