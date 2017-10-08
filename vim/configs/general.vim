@@ -206,7 +206,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 set modelines=1
 set nomodeline
 set conceallevel=2
-"syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
+syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -269,7 +269,7 @@ if !has('nvim')
   set incsearch
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode
-  set ttyfast " Improves smoothness of redrawing when there are multiple windows
+  set ttyfast
 endif
 if exists('&belloff')
   set belloff=all
@@ -426,18 +426,6 @@ set ignorecase smartcase wrapscan " Searches wrap around the end of the file
 if &filetype ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
-"}}}
-" ----------------------------------------------------------------------------
-" CURSOR  "{{{
-" ----------------------------------------------------------------------------
-" Set cursorline to the focused window only and change and previously color/styling of cursor line depending on mode - Slow?
-" augroup vimrc_cursorline
-  " autocmd!
-  " autocmd CursorHold * setlocal cursorline
-        " \|autocmd  vimrc_cursorline CursorMoved * setlocal nocursorline
-        " \|autocmd! vimrc_cursorline CursorMoved
-"   autocmd InsertEnter * if &cursorline|setlocal nocursorline|endif
-" augroup END
 augroup cursorline
   autocmd!
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
