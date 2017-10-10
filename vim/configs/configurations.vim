@@ -934,9 +934,13 @@ if !has('gui_running')
   endfunction
 
   let branch_options = { 'source': '( git branch -a )', 'sink*': function('Fzf_checkout_branch') }
+  let s:branch_log =
+        \'--reverse --expect=ctrl-x '.
+        \'--preview "(git log --color=always --graph --abbrev-commit --decorate  --first-parent -- {})"'
+
 " Home made git branch functionality
   command! Branches call fzf#run(fzf#wrap('Branches',
-        \ extend(branch_options, { 'options': '--reverse --expect=ctrl-x' , 'right': 40 })))
+        \ extend(branch_options, { 'options': s:branch_log  })))
 
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
