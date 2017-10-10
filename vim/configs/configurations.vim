@@ -907,19 +907,6 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-if !has('gui_running')
-
-"   function! s:fzf_statusline()
-"   " Override statusline as you like
-"   highlight fzf1 guifg=#77E054 guibg=#EBD98C ctermfg=161 ctermbg=251
-"   highlight fzf2 guibg=#EBD98C guifg=black gui=bold ctermfg=23 ctermbg=251
-"   highlight fzf3 guibg=#EBD98C guifg=black gui=bold ctermfg=237 ctermbg=251
-"   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-" endfunction
-" 
-" augroup FZF
-"   autocmd! User FzfStatusLine call <SID>fzf_statusline()
-" augroup END
 
   let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
   let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
@@ -1062,7 +1049,6 @@ if !has('gui_running')
           \ 'options': '-m -x +s',
           \ 'down':    '40%' })
   endfunction
-endif
 "}}}
 ""---------------------------------------------------------------------------//
 " STARTIFY {{{

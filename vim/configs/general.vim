@@ -63,7 +63,8 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions+=m " menu bar
   set guioptions+=e " nice gui tabs
   set antialias
-  set guifont=Fura\ Code\ Nerd\ Font:h16
+  set guifont=FuraCode\ Nerd\ Font:h15
+  set guioptions-=e
   set linespace=1
 endif
 " Message output on vim actions {{{
