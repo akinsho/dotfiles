@@ -918,13 +918,13 @@ if !has('gui_running')
         \ extend(branch_files_options, { 'options': s:diff_options }), 0))
 
   function! Fzf_checkout_branch(b)
+    "First element is the command e.g ctrl-x, second element is the selected branch
     let l:str = split(a:b[1], '* ')
     let l:branch = get(l:str, 1, '')
     if exists('g:loaded_fugitive')
       let cmd = get({ 'ctrl-x': 'Git branch -d '}, a:b[0], 'Git checkout ')
       try
-        " execute 'Git checkout '. l:branch
-        execute cmd . l:branch
+        execute cmd . a:b[1]
       catch
         echohl WarningMsg
         echom v:exception
