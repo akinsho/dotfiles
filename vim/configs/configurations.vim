@@ -906,6 +906,18 @@ nnoremap sj :SplitjoinJoin<cr>
 " --color: Search color options
 if !has('gui_running')
 
+"   function! s:fzf_statusline()
+"   " Override statusline as you like
+"   highlight fzf1 guifg=#77E054 guibg=#EBD98C ctermfg=161 ctermbg=251
+"   highlight fzf2 guibg=#EBD98C guifg=black gui=bold ctermfg=23 ctermbg=251
+"   highlight fzf3 guibg=#EBD98C guifg=black gui=bold ctermfg=237 ctermbg=251
+"   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+" endfunction
+" 
+" augroup FZF
+"   autocmd! User FzfStatusLine call <SID>fzf_statusline()
+" augroup END
+
   let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
   let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
 
@@ -915,6 +927,19 @@ if !has('gui_running')
 
   command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
         \ extend(branch_files_options, { 'options': s:diff_options }), 0))
+
+  function! Fzf_checkout_branch(b)
+    let l:str = split(a:b, '* ')
+    let l:branch = get(l:str, 1, '')
+    if exists('g:loaded_fugitive')
+      execute 'Git checkout '. l:branch
+    endif
+  endfunction
+
+  let branch_options = { 'source': '( git branch -a )', 'sink': function('Fzf_checkout_branch') }
+
+  command! Branches call fzf#run(fzf#wrap('Branches',
+        \ extend(branch_options, { 'options': '--reverse'  })))
 
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
@@ -943,6 +968,7 @@ if !has('gui_running')
   imap <c-x>p <plug>(fzf-complete-path)
   inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
+  nnoremap <silent> <localleader>br :Branches<cr>
   nnoremap <silent> <localleader>d :Dots<CR>
   nnoremap <silent> <localleader>t :BTags<CR>
   nnoremap <silent> <localleader>o :Buffers<CR>
