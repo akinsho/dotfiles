@@ -878,17 +878,6 @@ let g:UltiSnipsEditSplit            = "vertical" "If you want :UltiSnipsEdit to 
 nnoremap <localleader>u :UltiSnipsEdit<CR>
 "}}}
 ""---------------------------------------------------------------------------//
-" SplitJoin {{{
-""---------------------------------------------------------------------------//
-nnoremap sk :SplitjoinSplit<cr>
-nnoremap sj :SplitjoinJoin<cr>
-"}}}
-""---------------------------------------------------------------------------//
-" PEEKABO {{{
-""---------------------------------------------------------------------------//
-" let g:peekaboo_prefix = '<localleader>'
-"}}}
-""---------------------------------------------------------------------------//
 " FZF {{{
 ""---------------------------------------------------------------------------//
 "--------------------------------------------
@@ -929,17 +918,25 @@ if !has('gui_running')
         \ extend(branch_files_options, { 'options': s:diff_options }), 0))
 
   function! Fzf_checkout_branch(b)
-    let l:str = split(a:b, '* ')
+    let l:str = split(a:b[1], '* ')
     let l:branch = get(l:str, 1, '')
     if exists('g:loaded_fugitive')
-      execute 'Git checkout '. l:branch
+      let cmd = get({ 'ctrl-x': 'Git branch -d '}, a:b[0], 'Git checkout ')
+      try
+        " execute 'Git checkout '. l:branch
+        execute cmd . l:branch
+      catch
+        echohl WarningMsg
+        echom v:exception
+        echohl None
+      endtry
     endif
   endfunction
 
-  let branch_options = { 'source': '( git branch -a )', 'sink': function('Fzf_checkout_branch') }
-
+  let branch_options = { 'source': '( git branch -a )', 'sink*': function('Fzf_checkout_branch') }
+" Home made git branch functionality
   command! Branches call fzf#run(fzf#wrap('Branches',
-        \ extend(branch_options, { 'options': '--reverse'  })))
+        \ extend(branch_options, { 'options': '--reverse', 'right': 40, 'expect':'ctrl-x'  })))
 
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
