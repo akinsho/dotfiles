@@ -73,7 +73,7 @@ function! LightLineGitGutter()
   let ret = []
   for i in [0, 1, 2]
     if hunks[i] > 0
-      call add(ret, symbols[i] . hunks[i])
+      call add(ret, symbols[i] . ' ' . hunks[i])
     endif
   endfor
   return join(ret, ' ')
