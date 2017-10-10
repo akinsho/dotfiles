@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-"MAPPINGS {{{
+"MAPPINGS
 ""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
 "Terminal {{{
@@ -43,7 +43,6 @@ nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
 nnoremap <Leader>tt :tabnew<CR>:te<CR>
 "}}}
 
-"}}}
 ""---------------------------------------------------------------------------//
 " MACROS {{{
 ""---------------------------------------------------------------------------//
@@ -216,11 +215,21 @@ nnoremap tn :tab split<cr>
 nnoremap to :tabonly<cr>
 nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
-"File completion made a little less painful
-"inoremap <c-f> <c-x><c-f>
+" Switch between tabs
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
 "----------------------------------------------------------------------------
 "Buffers
 "----------------------------------------------------------------------------
+"File completion made a little less painful
+"inoremap <c-f> <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>

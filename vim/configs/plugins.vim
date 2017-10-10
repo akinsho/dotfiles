@@ -72,7 +72,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-Plug 'rstacruz/vim-xtract'
+" Plug 'rstacruz/vim-xtract'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-rsi'
@@ -100,7 +100,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-Plug 'idanarye/vim-merginal'
+" Plug 'idanarye/vim-merginal'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
@@ -116,7 +116,6 @@ Plug 'kana/vim-textobj-user'
 "}}}
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
-Plug 'airblade/vim-rooter'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar', 'TagbarToggle', 'TagbarOpen' ] }
