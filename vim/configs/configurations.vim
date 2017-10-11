@@ -28,8 +28,8 @@ highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
 highlight jsxAttrib cterm=italic,bold ctermfg=121
 highlight jsThis ctermfg=224
 highlight jsSuper ctermfg=13
-highlight jsFuncCall gui=italic ctermfg=cyan
 highlight Include gui=italic cterm=italic
+" highlight jsFuncCall gui=italic ctermfg=cyan
 highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
 highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
 highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
@@ -497,6 +497,7 @@ nnoremap <silent> ]c :GitGutterNextHunk<CR>
 nnoremap <silent> [c :GitGutterPrevHunk<CR>
 nnoremap <silent> <Leader>hr :GitGutterRevertHunk<CR>
 nnoremap <silent> <Leader>hp :GitGutterPreviewHunk<CR><c-w>j
+nnoremap <silent> <Leader>hs :GitGutterStageHunk<CR>
 ""---------------------------------------------------------------------------//
 " Vim-Expand-Region {{{
 ""---------------------------------------------------------------------------//

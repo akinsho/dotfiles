@@ -1297,13 +1297,15 @@
 	<key>NSWindow Frame NSColorPanel.modal</key>
 	<string>608 536 224 216 0 0 1440 900 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>661 153 653 107 0 0 1440 900 </string>
+	<string>661 37 653 478 0 0 1440 900 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>412 545 616 174 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>320 316 796 473 0 0 1440 900 </string>
+	<string>320 163 796 473 0 0 1440 900 </string>
+	<key>NSWindow Frame UKCrashReporter</key>
+	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>720 4 720 896 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
@@ -4758,7 +4760,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FuraCodeNerdFontC-Regular 15</string>
+			<string>FuraCodeNerdFontC-Regular 15.5</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4772,7 +4774,7 @@
 			<key>Screen</key>
 			<integer>-2</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>2000</integer>
 			<key>Scrollback in Alternate Screen</key>
 			<false/>
 			<key>Selected Text Color</key>
@@ -4984,7 +4986,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-10-09T14:31:23Z</date>
+	<date>2017-10-11T13:24:54Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5026,6 +5028,8 @@
 		<string>Profiles</string>
 		<string>Paste History</string>
 	</array>
+	<key>UKCrashReporterLastCrashReportDate</key>
+	<real>1507759104</real>
 	<key>UseBorder</key>
 	<true/>
 	<key>UseLayers</key>

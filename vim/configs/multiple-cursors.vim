@@ -14,7 +14,7 @@ let g:multi_cursor_quit_key='<Esc>'
 
 highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse,underline
 function! Multiple_cursors_before()
-  let b:deoplete_disable_auto_complete = 1
+  let b:deoplete_disable_auto_complete = 2
   exe 'ALEDisable'
 endfunction
 

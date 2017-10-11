@@ -117,8 +117,6 @@ Plug 'kana/vim-textobj-user'
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
 Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar', 'TagbarToggle', 'TagbarOpen' ] }
 "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
