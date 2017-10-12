@@ -15,7 +15,6 @@ syntax clear Search
 
 highlight SpellBad  term=underline cterm=italic ctermfg=Red
 highlight SpellCap  term=underline cterm=italic ctermfg=Blue
-highlight clear SpellLocal
 highlight! link SpellLocal SpellCap
 highlight! link SpellRare SpellCap
 " Clearing conceal messes up indent guide lines
@@ -45,7 +44,7 @@ highlight Folded  gui=bold guifg=#A2E8F6
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 "Color the tildes at the end of the buffer
-hi link EndOfBuffer VimFgBgAttrib
+" hi link EndOfBuffer VimFgBgAttrib
 "#282C34
 if has('gui_running')
   hi VertSplit guibg=bg guifg=bg
@@ -72,11 +71,9 @@ endif
 "Autocomplete menu highlighting
 ""---------------------------------------------------------------------------//
 "make the completion menu a bit more readable
-hi PmenuSel guibg=#004D40 guifg=white gui=bold
-hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-hi Pmenu  guifg=Black guibg=white ctermfg=black ctermbg=Lightgray
-
+highlight PmenuSel guibg=#004D40 guifg=white gui=bold
+highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
+highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 highlight BufTabLineCurrent gui=bold guibg=#E7B563 guifg=black
 "}}}
 ""---------------------------------------------------------------------------//
@@ -88,6 +85,12 @@ let g:netrw_banner       = 0
 let g:netrw_browse_split = 4
 let g:netrw_winsize      = 25
 let g:netrw_altv         = 1
+augroup netrw
+  autocmd!
+  autocmd FileType netrw map <buffer> q :q<CR>
+  autocmd FileType netrw map <buffer> l <CR>
+  autocmd FileType netrw map <buffer> h <CR>
+augroup END
 " NERDTrees highlighting {{{
 ""---------------------------------------------------------------------------//
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
@@ -873,13 +876,6 @@ let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
 "}}}
 ""---------------------------------------------------------------------------//
-" VIM ROOTER {{{
-"---------------------------------------------------------------------------//
-let g:rooter_change_directory_for_non_project_files = 'current'
-let g:rooter_silent_chdir = 1
-let g:rooter_resolve_links = 1
-" }}}
-""---------------------------------------------------------------------------//
 " ULTISNIPS {{{
 ""---------------------------------------------------------------------------//
 " Snippet settings:
@@ -979,6 +975,7 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
   nnoremap <silent> <localleader>m :History<CR>
   nnoremap <silent> <localleader>c :Commits<CR>
   nnoremap <silent> <localleader>l :Lines<CR>
+  nnoremap <silent> <localleader>H :Helptags<CR>
 
   " Launch file search using FZF
   if isdirectory(".git")
@@ -1121,3 +1118,10 @@ if exists('$TMUX')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
+""---------------------------------------------------------------------------//
+" VIM-CALENDAR {{{
+""---------------------------------------------------------------------------//
+let g:calendar_google_calendar = 1
+let g:calendar_google_task     = 1
+let g:calendar_frame = 'unicode'
+"}}}

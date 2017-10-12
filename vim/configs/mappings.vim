@@ -157,6 +157,8 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " => Command mode related
 ""---------------------------------------------------------------------------//
 " Commands {{{
+command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _
+command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _
 " Smart mappings on the command line
 cno $d e ~/Desktop/
 " insert path of current file into a command
