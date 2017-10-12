@@ -23,16 +23,16 @@ highlight Conceal gui=bold
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
+" highlight jsFuncCall gui=italic ctermfg=cyan
+" highlight cssBraces guifg=cyan
 highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
 highlight jsxAttrib cterm=italic,bold ctermfg=121
 highlight jsThis ctermfg=224
 highlight jsSuper ctermfg=13
 highlight Include gui=italic cterm=italic
-" highlight jsFuncCall gui=italic ctermfg=cyan
 highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
 highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
 highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
-highlight cssBraces guifg=cyan
 highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
@@ -40,7 +40,6 @@ highlight Type    gui=italic,bold cterm=italic,bold
 " highlight Identifier gui=italic,bold
 highlight CursorLine term=none cterm=none
 highlight Folded  gui=bold guifg=#A2E8F6
-" guifg=#E7B563
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 "Color the tildes at the end of the buffer
@@ -758,10 +757,6 @@ if has("nvim")
   let g:deoplete#omni#functions.typescript = [
         \ 'tern#Complete',
         \]
-  let g:deoplete#omni#functions["typescript.tsx"] = [
-        \ 'tern#Complete',
-        \]
-
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
