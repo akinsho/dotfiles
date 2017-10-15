@@ -196,7 +196,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {}
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['css'] = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tsx'] = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js']  = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 "}}}
@@ -750,14 +749,7 @@ if has("nvim")
         \ 'call': 'call',
         \ 'constructor': '',
         \}
-  let g:deoplete#omni#functions           = {}
-  let g:deoplete#omni#functions.javascript = [
-        \ 'tern#Complete',
-        \]
-  let g:deoplete#omni#functions.typescript = [
-        \ 'tern#Complete',
-        \]
-  let g:nvim_typescript#javascript_support       = 1
+  let g:nvim_typescript#javascript_support       = 0
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
   let g:deoplete#sources#ternjs#docs             = 1
