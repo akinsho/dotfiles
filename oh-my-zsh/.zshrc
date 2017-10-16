@@ -232,7 +232,7 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 
-export ZSH_AUTOSUGGEST_USE_ASYNC=true
+export ZSH_AUTOSUGGEST_USE_ASYNC=false
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 # BASE16===============================================================
 # default code for base16 shell
