@@ -715,7 +715,7 @@ if has("nvim")
         \ 'call': 'call',
         \ 'constructor': '',
         \}
-  let g:nvim_typescript#javascript_support       = 0
+  let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
   let g:deoplete#sources#ternjs#types            = 1
   let g:deoplete#sources#ternjs#docs             = 1
@@ -941,7 +941,7 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
   nnoremap \ :Rg<CR>
   "Find Word under cursor
   nnoremap <leader>f :Find <C-R><C-W><CR>
-  nnoremap <leader>F :Find 
+  nnoremap <leader>F :Find<space>
 
   let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
@@ -1076,5 +1076,5 @@ endif
 ""---------------------------------------------------------------------------//
 let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
-let g:calendar_frame = 'unicode'
+let g:calendar_frame           = 'unicode_double'
 "}}}

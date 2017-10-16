@@ -73,7 +73,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
 Plug 'itchyny/calendar.vim'
-" Plug 'rstacruz/vim-xtract'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-rsi'
@@ -101,7 +100,6 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-" Plug 'idanarye/vim-merginal'
 "}}}
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
@@ -158,3 +156,5 @@ endif
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}
+" Plug 'rstacruz/vim-xtract'
+" Plug 'idanarye/vim-merginal'
