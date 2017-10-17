@@ -104,7 +104,15 @@ function! CheckColorColumn()
   if winwidth('%') <= 120
     setl colorcolumn=
   else
-    let &colorcolumn=b:cl_size
+    try
+      let &colorcolumn=b:cl_size
+    catch
+      echohl WarningMsg
+      echom v:exception
+      echom 'colorcolumn set to 80'
+      echohl None
+      let &colorcolumn=80 "Desparare default
+    endtry
   endif
 endfunction
 
