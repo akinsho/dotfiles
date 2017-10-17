@@ -4,8 +4,7 @@
 " Highlight cursor column onwards - kind of cool
 ""---------------------------------------------------------------------------//
 " let &colorcolumn=join(range(81,999),",")
-" highlight ColorColumn guibg=#2c3a41
-" set colorcolumn=80
+set colorcolumn=80
 ""---------------------------------------------------------------------------//
 syntax clear SpellBad
 syntax clear SpellCap
@@ -149,7 +148,9 @@ if strftime("%H") > 18 "Turn on Hard Time out of working hours
 else
   let g:hardtime_default_on             = 0
 endif
-let g:hardtime_timeout                = 500
+let g:hardtime_timeout                = 1000
+let g:hardtime_allow_different_key    = 1
+let g:hardtime_maxcount               = 2
 let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
 "}}}
 ""---------------------------------------------------------------------------//
@@ -288,7 +289,7 @@ let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {
-      \'typescript':['prettier'],
+      \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier', 'eslint'],
       \'json':'prettier',
       \'css':'stylelint'
@@ -654,10 +655,7 @@ if has("nvim")
   let g:deoplete#max_menu_width               = 80
   let g:deoplete#max_menu_height              = 50
   let g:deoplete#file#enable_buffer_path      = 1
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['around']
   call deoplete#custom#source('ultisnips', 'rank', 290)
-  call deoplete#custom#source('ternjs', 'rank', 300)
   call deoplete#custom#set('buffer', 'mark', '')
   call deoplete#custom#set('ternjs', 'mark', '')
   call deoplete#custom#set('tern', 'mark', '')
@@ -666,6 +664,9 @@ if has("nvim")
   call deoplete#custom#set('jedi', 'mark', '')
   call deoplete#custom#set('typescript', 'mark', '')
   call deoplete#custom#set('ultisnips', 'mark', '')
+  let g:deoplete#enable_debug = 1
+  let g:deoplete#enable_profile = 1
+  call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
   "}}}
   ""---------------------------------------------------------------------------//
   " Deoplete Go {{{

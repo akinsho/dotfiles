@@ -12,4 +12,5 @@ if has('nvim')
   nnoremap <localleader>t :TSType<CR>
   nnoremap <localleader>c :TSEditConfig<CR>
   nnoremap <localleader>i :TSImport<CR>
+  nnoremap <localleader>s :TSGetDocSymbols<CR>
 endif

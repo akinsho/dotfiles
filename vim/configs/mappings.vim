@@ -129,6 +129,9 @@ endfunction
 "Tab completion
 ""---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
 nnoremap <localleader>q :q!<cr>

@@ -86,9 +86,9 @@ augroup UpdateVim
     endif
   endif
   autocmd FocusLost * :wa
-  autocmd VimResized * redraw! | echom 'Redrew'
+  autocmd VimResized * redraw!
   autocmd VimResized * wincmd =
-  " autocmd VimResized,VimEnter,BufWinEnter * call CheckColorColumn()
+  autocmd VimResized,VimEnter,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
 augroup END
 " }}}
 "
@@ -96,7 +96,7 @@ augroup VimAfterObject
   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
 augroup END
 
-"TODO Fix this function as it doesn't run
+"TODO Need to hook into more events to remove colorcolumn
 function! CheckColorColumn()
   if &colorcolumn > 0
     let b:cl_size = &colorcolumn
@@ -337,4 +337,5 @@ augroup FileType_all "{{{
     autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
     autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
   augroup END "}}}
-  " }}}
+
+" }}}

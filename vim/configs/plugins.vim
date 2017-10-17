@@ -29,7 +29,9 @@ endif
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-      \ { 'for': ['javascript', 'typescript'],  'do': 'npm install -g tern' })
+      \ { 'do': 'npm install -g tern' })
+Plug 'fszymanski/deoplete-emoji',   Cond(has('nvim')) "Emoji completion
+Plug 'Shougo/neoinclude.vim',       Cond(has('nvim')) "Included files completion
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
@@ -49,12 +51,10 @@ function! BuildTern(info)
     !npm install
   endif
 endfunction
-Plug 'ternjs/tern_for_vim', Cond(has('nvim'), {'do':function('BuildTern')})
+Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
 Plug 'mhinz/vim-startify'
-if !has('gui_running')
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
-endif
 "}}}
 "TMUX ============================ {{{
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
@@ -94,7 +94,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ ] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
-Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
+" Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
 "}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
@@ -116,7 +116,7 @@ Plug 'kana/vim-textobj-user'
 "}}}
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
-Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
+" Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
 "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
@@ -144,9 +144,9 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
-Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'joshdick/onedark.vim'
 Plug 'ryanoasis/vim-devicons'
+" Plug 'tyrannicaltoucan/vim-quantum'
 
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
