@@ -104,6 +104,7 @@ Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects ====================={{{
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
+Plug 'junegunn/vim-after-object'
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'terryma/vim-expand-region'

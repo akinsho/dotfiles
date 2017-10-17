@@ -476,7 +476,7 @@ function! s:goto_line()
 endfunction
 
 augroup GoToLine
-  autocmd! BufNewFile * nested call s:goto_line()
+  autocmd! BufRead * nested call s:goto_line()
 augroup END
 " ----------------------------------------------------------------------------
 " <Leader>?/! | Google it / Feeling lucky
@@ -580,7 +580,7 @@ function! s:zoom()
     tabclose
   endif
 endfunction
-nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+nnoremap <silent> <localleader>z :call <sid>zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
 function! s:ZoomToggle() abort
@@ -595,7 +595,7 @@ function! s:ZoomToggle() abort
   endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <localleader>z :ZoomToggle<CR>
+nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 

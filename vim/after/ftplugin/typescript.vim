@@ -1,7 +1,7 @@
 setl softtabstop=4 tabstop=4 shiftwidth=4 foldmethod=indent foldlevelstart=99
 setl nofoldenable
 setl completeopt-=preview
-" setl colorcolumn=120
+setl colorcolumn=100
 
 
 if has('nvim')

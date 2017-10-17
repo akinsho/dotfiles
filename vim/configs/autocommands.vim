@@ -91,6 +91,10 @@ augroup UpdateVim
   " autocmd VimResized,VimEnter,BufWinEnter * call CheckColorColumn()
 augroup END
 " }}}
+"
+augroup VimAfterObject
+  autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
+augroup END
 
 "TODO Fix this function as it doesn't run
 function! CheckColorColumn()
@@ -174,7 +178,7 @@ augroup filetype_javascript_typescript "{{{
   "==================================
   "TypeScript
   "==================================
-  autocmd VimEnter,BufNewFile,BufEnter *.ts,*.tsx
+  autocmd VimEnter,BufNewFile,BufEnter,BufRead *.ts,*.tsx
         \ let b:ale_javascript_prettier_options=
         \ '--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
@@ -313,7 +317,8 @@ augroup FileType_all "{{{
   augroup END
   "}}}
 
-  "Stolen from HiCodin's Dotfiles a really cool set of fold text functions {{{
+  " Fold Text {{{
+  "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
   function! NeatFoldText()
     let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
     let l:lines_count = v:foldend - v:foldstart + 1

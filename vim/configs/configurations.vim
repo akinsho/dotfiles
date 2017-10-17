@@ -204,7 +204,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vim'] = ''
 ""---------------------------------------------------------------------------//
 nnoremap mgo :MagitOnly<CR>
 "}}}
-""---------------------------------------------------------------------------//"
+""---------------------------------------------------------------------------//
 " LIGHTLINE {{{
 ""---------------------------------------------------------------------------//
 source $DOTFILES/vim/configs/lightline.vim
@@ -314,7 +314,6 @@ let g:ale_linter_aliases    = {'jsx': 'css', 'typescript.jsx': 'css'}
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 "}}}
-""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
 " NEOTERM {{{
 ""---------------------------------------------------------------------------//
@@ -653,7 +652,7 @@ if has("nvim")
   let g:deoplete#auto_completion_start_length = 1
   let g:deoplete#enable_smart_case            = 1
   let g:deoplete#max_menu_width               = 80
-  let g:deoplete#max_menu_height              = 40
+  let g:deoplete#max_menu_height              = 50
   let g:deoplete#file#enable_buffer_path      = 1
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['around']
@@ -725,6 +724,7 @@ if has("nvim")
   let g:tern_request_timeout = 1
   "Add extra filetypes
   let g:tern#filetypes = [
+        \ 'ts',
         \ 'tsx',
         \ 'typescript.tsx',
         \ 'typescript.jsx',
@@ -735,6 +735,7 @@ if has("nvim")
         \ ]
   "Add extra filetypes
   let g:deoplete#sources#ternjs#filetypes = [
+        \ 'ts',
         \ 'tsx',
         \ 'typescript.tsx',
         \ 'typescript.jsx',

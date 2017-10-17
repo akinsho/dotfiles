@@ -2,7 +2,7 @@
 2. [✗] Fix Startify not updating session on exit
 3. [✗] Figure out why Go loses ultisnips and correct ftdetection on resoucing vimrc
 4. [✗] Integrate stylelint into ale current error CSSSyntaxError ...
-5. [✗] Fix session options in vim
+5. [✓] Fix session options in vim
 
 = Tips =
 == VimWiki ==
