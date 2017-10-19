@@ -631,6 +631,12 @@ let g:investigate_syntax_for_javascriptjsx = "javascript"
 let g:investigate_use_dash                 = 1
 "}}}
 ""---------------------------------------------------------------------------//
+" CLOSE-TAG
+""---------------------------------------------------------------------------//
+let g:closetag_filenames = '*.html,*.xhtml,*.tsx,*.jsx'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx,*.ts,*.js'
+let g:closetag_shortcut = '>'
+""---------------------------------------------------------------------------//
 " Deoplete Options {{{
 ""---------------------------------------------------------------------------//
 if has("nvim")
@@ -643,7 +649,6 @@ if has("nvim")
   let g:deoplete#file#enable_buffer_path      = 1
   call deoplete#custom#source('ultisnips', 'rank', 630)
   call deoplete#custom#set('typescript',   'rank', 600)
-  call deoplete#custom#set('ternjs',       'rank', 550)
   call deoplete#custom#set('buffer',       'mark', '')
   call deoplete#custom#set('ternjs',       'mark', '')
   call deoplete#custom#set('tern',         'mark', '')
@@ -652,9 +657,7 @@ if has("nvim")
   call deoplete#custom#set('jedi',         'mark', '')
   call deoplete#custom#set('typescript',   'mark', '')
   call deoplete#custom#set('ultisnips',    'mark', '')
-  " let g:deoplete#enable_debug = 1
-  " let g:deoplete#enable_profile = 1
-  " call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
+  " call deoplete#custom#set('ternjs',       'rank', 550)
   "}}}
   ""---------------------------------------------------------------------------//
   " Deoplete Go {{{
@@ -705,26 +708,11 @@ if has("nvim")
         \}
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
-""---------------------------------------------------------------------------//
-" DEOPLETE TERNJS
-""---------------------------------------------------------------------------//
-  let g:deoplete#sources#ternjs#types            = 1
-  let g:deoplete#sources#ternjs#docs             = 1
-  let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
+
   let g:tern_request_timeout = 1
   "Add extra filetypes
   let g:tern#filetypes = [
-        \ 'ts',
-        \ 'tsx',
-        \ 'typescript.tsx',
-        \ 'typescript',
-        \ 'javascript',
-        \ 'jsx',
-        \ 'javascript.jsx',
-        \ ]
-  "Add extra filetypes
-  let g:deoplete#sources#ternjs#filetypes = [
         \ 'ts',
         \ 'tsx',
         \ 'typescript.tsx',
@@ -853,7 +841,7 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
 
   let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
   let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}

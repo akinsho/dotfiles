@@ -101,7 +101,9 @@ function! CheckColorColumn()
     setl colorcolumn=
   else
     try
-      let &colorcolumn=b:cl_size
+      if &ft != 'Startify'
+        let &colorcolumn=b:cl_size
+      endif
     catch
       echohl WarningMsg
       echom v:exception
