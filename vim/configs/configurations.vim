@@ -651,13 +651,13 @@ if has("nvim")
   call deoplete#custom#set('typescript',   'rank', 600)
   call deoplete#custom#set('buffer',       'mark', '')
   call deoplete#custom#set('ternjs',       'mark', '')
+  call deoplete#custom#set('vim',          'mark', '')
   call deoplete#custom#set('tern',         'mark', '')
   call deoplete#custom#set('omni',         'mark', '⌾')
   call deoplete#custom#set('file',         'mark', '')
   call deoplete#custom#set('jedi',         'mark', '')
   call deoplete#custom#set('typescript',   'mark', '')
   call deoplete#custom#set('ultisnips',    'mark', '')
-  " call deoplete#custom#set('ternjs',       'rank', 550)
   "}}}
   ""---------------------------------------------------------------------------//
   " Deoplete Go {{{
