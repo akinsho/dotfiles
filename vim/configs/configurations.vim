@@ -642,7 +642,8 @@ if has("nvim")
   let g:deoplete#max_menu_height              = 50
   let g:deoplete#file#enable_buffer_path      = 1
   call deoplete#custom#source('ultisnips', 'rank', 630)
-  call deoplete#custom#set('typescript',   'rank', 590)
+  call deoplete#custom#set('typescript',   'rank', 600)
+  call deoplete#custom#set('ternjs',       'rank', 550)
   call deoplete#custom#set('buffer',       'mark', '')
   call deoplete#custom#set('ternjs',       'mark', '')
   call deoplete#custom#set('tern',         'mark', '')
@@ -651,9 +652,9 @@ if has("nvim")
   call deoplete#custom#set('jedi',         'mark', '')
   call deoplete#custom#set('typescript',   'mark', '')
   call deoplete#custom#set('ultisnips',    'mark', '')
-  let g:deoplete#enable_debug = 1
-  let g:deoplete#enable_profile = 1
-  call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
+  " let g:deoplete#enable_debug = 1
+  " let g:deoplete#enable_profile = 1
+  " call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
   "}}}
   ""---------------------------------------------------------------------------//
   " Deoplete Go {{{
@@ -711,8 +712,6 @@ if has("nvim")
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-  let g:deoplete#sources#ternjs#timeout          = 1
-  let g:deoplete#sources#ternjs#filter           = 0
   let g:tern_request_timeout = 1
   "Add extra filetypes
   let g:tern#filetypes = [
@@ -734,8 +733,6 @@ if has("nvim")
         \ 'jsx',
         \ 'javascript.jsx',
         \ ]
-  let g:deoplete#sources#ternjs#omit_object_prototype = 0
-  let g:deoplete#sources#ternjs#guess                 = 1
   let g:tern_map_keys                                 = 0
   let g:tern_show_argument_hints                      = 'on_hold'
   let g:tern_show_signature_in_pum                    = 1

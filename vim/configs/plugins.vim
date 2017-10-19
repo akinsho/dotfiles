@@ -28,8 +28,6 @@ else
 endif
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
-Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-       \ {'for':'javascript', 'do': 'npm install -g tern' })
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
@@ -157,4 +155,6 @@ endif
 " Plug 'idanarye/vim-merginal'
 " Plug 'editorconfig/editorconfig-vim'
 " Plug 'tyrannicaltoucan/vim-quantum'
+" Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
+"  \ {'for':'javascript', 'do': 'npm install -g tern' })
 " Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
