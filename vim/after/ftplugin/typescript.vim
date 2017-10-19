@@ -5,9 +5,9 @@ setl colorcolumn=100
 
 
 if has('nvim')
-  nnoremap <localleader>p :TSDefPreview<CR>
-  nnoremap <leader>d :TSDef<CR>
   nnoremap gd :TSDef<CR>
+  nnoremap <leader>d :TSDef<CR>
+  nnoremap <localleader>p :TSDefPreview<CR>
   nnoremap <localleader>r :TSRefs<CR>
   nnoremap <localleader>t :TSType<CR>
   nnoremap <localleader>c :TSEditConfig<CR>

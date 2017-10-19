@@ -1303,11 +1303,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>320 130 796 473 0 0 1440 900 </string>
+	<string>276 344 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 4 720 896 0 0 1440 900 </string>
+	<string>0 4 720 896 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4760,7 +4760,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FuraCodeNerdFontC-Regular 15.5</string>
+			<string>FuraCodeNerdFontC-Regular 15</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4991,7 +4991,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-10-15T21:31:27Z</date>
+	<date>2017-10-17T16:04:08Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5034,7 +5034,7 @@
 		<string>Paste History</string>
 	</array>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1507759104</real>
+	<real>1508256256</real>
 	<key>UseBorder</key>
 	<true/>
 	<key>UseLayers</key>

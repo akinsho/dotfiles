@@ -23,7 +23,6 @@ highlight Conceal gui=bold
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
 " highlight jsFuncCall gui=italic ctermfg=cyan
-" highlight cssBraces guifg=cyan
 highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
 highlight jsxAttrib cterm=italic,bold ctermfg=121
 highlight jsThis ctermfg=224
@@ -36,17 +35,13 @@ highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
-" highlight Identifier gui=italic,bold
-highlight CursorLine term=none cterm=none
-highlight Folded  gui=bold guifg=#A2E8F6
+highlight Folded  gui=bold cterm=bold guifg=#A2E8F6
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 "Color the tildes at the end of the buffer
 " hi link EndOfBuffer VimFgBgAttrib
-"#282C34
-if has('gui_running')
-  hi VertSplit guibg=bg guifg=bg
-endif
+" highlight VertSplit guibg=bg guifg=bg
+" highlight Identifier gui=italic,bold
 ""---------------------------------------------------------------------------//
 " Startify Highlighting
 ""---------------------------------------------------------------------------//
@@ -96,29 +91,29 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
-call NERDTreeHighlightFile('html', 202, 'none', '#FC4709')
-call NERDTreeHighlightFile('hbs', 202, 'none', '#FC4709')
-call NERDTreeHighlightFile('jade', 149, 'none', '#A0D24D')
-call NERDTreeHighlightFile('json', 223, 'none', '#FECEA0')
-call NERDTreeHighlightFile('scss', 44, 'none', '#db7093')
-call NERDTreeHighlightFile('css', 44, 'none', '#db7093')
-call NERDTreeHighlightFile('js', 226, 'none', '#FFD700')
-call NERDTreeHighlightFile('ts', 226, 'none', '#2EB4FF')
-call NERDTreeHighlightFile('tsx', 226, 'none', '#2EB4FF')
-call NERDTreeHighlightFile('go', 039, 'none', '#5BD9FF')
-call NERDTreeHighlightFile('rb', 197, 'none', '#E53378')
-call NERDTreeHighlightFile('md', 208, 'none', '#FD720A')
-call NERDTreeHighlightFile('jsx', 140, 'none', '#9E6FCD')
-call NERDTreeHighlightFile('svg', 178, 'none', '#CDA109')
-call NERDTreeHighlightFile('gif', 36, 'none', '#15A274')
-call NERDTreeHighlightFile('jpg', 36, 'none', '#15A274')
-call NERDTreeHighlightFile('png', 36, 'none', '#15A274')
-call NERDTreeHighlightFile('vim', 36, 'none', '#87bb7c')
-call NERDTreeHighlightFile('DS_Store', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868')
-call NERDTreeHighlightFile('zshrc', 'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('html',        202, 'none', '#FC4709')
+call NERDTreeHighlightFile('hbs',         202, 'none', '#FC4709')
+call NERDTreeHighlightFile('jade',        149, 'none', '#A0D24D')
+call NERDTreeHighlightFile('json',        223, 'none', '#FECEA0')
+call NERDTreeHighlightFile('scss',        44, 'none', '#db7093')
+call NERDTreeHighlightFile('css',         44, 'none', '#db7093')
+call NERDTreeHighlightFile('js',          226, 'none', '#FFD700')
+call NERDTreeHighlightFile('ts',          226, 'none', '#2EB4FF')
+call NERDTreeHighlightFile('tsx',         226, 'none', '#2EB4FF')
+call NERDTreeHighlightFile('go',          039, 'none', '#5BD9FF')
+call NERDTreeHighlightFile('rb',          197, 'none', '#E53378')
+call NERDTreeHighlightFile('md',          208, 'none', '#FD720A')
+call NERDTreeHighlightFile('jsx',         140, 'none', '#9E6FCD')
+call NERDTreeHighlightFile('svg',         178, 'none', '#CDA109')
+call NERDTreeHighlightFile('gif',         36, 'none', '#15A274')
+call NERDTreeHighlightFile('jpg',         36, 'none', '#15A274')
+call NERDTreeHighlightFile('png',         36, 'none', '#15A274')
+call NERDTreeHighlightFile('vim',         36, 'none', '#87bb7c')
+call NERDTreeHighlightFile('DS_Store',    'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('gitconfig',   'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('gitignore',   'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('bashrc',      'Gray', 'none', '#686868')
+call NERDTreeHighlightFile('zshrc',       'Gray', 'none', '#686868')
 call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#151515')
 " NERDTree: Set colors
 hi! NERDTreeGitStatusModified ctermfg=1 guifg=#D370A3
@@ -253,19 +248,10 @@ function! g:CtrlSFAfterMainWindowInit()
   setl wrap nonumber norelativenumber
 endfunction
 "}}}
-""---------------------------------------------------------------------------//
-" COMFORTABLE MOTION {{{
-""---------------------------------------------------------------------------//
-" Scroll proportional to window height
-let g:comfortable_motion_no_default_key_mappings = 1
-let g:comfortable_motion_impulse_multiplier = 1.5  " Feel free to increase/decrease this value.
-nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
-nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
-nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 4)<CR>
-nnoremap <silent> <C-b> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -4)<CR>
-noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
-"}}}
+
+if has('gui_running')
+  source $DOTFILES/vim/configs/comfortable_motion.vim
+endif
 ""---------------------------------------------------------------------------//
 " TEXTOBJECT - COMMENT {{{
 ""---------------------------------------------------------------------------//
@@ -609,7 +595,7 @@ let g:echodoc#type              = "signature"
 "---------------------------------------------------------------------------//
 " BUFTABLINE {{{
 ""---------------------------------------------------------------------------//  "
-hi TabLineSel guibg=white guifg=black
+highlight TabLineSel guibg=white guifg=black
 let g:buftabline_separators = 0
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
@@ -648,22 +634,23 @@ let g:investigate_use_dash                 = 1
 " Deoplete Options {{{
 ""---------------------------------------------------------------------------//
 if has("nvim")
-  let g:deoplete#auto_complete_delay          = 0
   let g:deoplete#enable_at_startup            = 1
+  let g:deoplete#auto_complete_delay          = 0
   let g:deoplete#auto_completion_start_length = 1
   let g:deoplete#enable_smart_case            = 1
   let g:deoplete#max_menu_width               = 80
   let g:deoplete#max_menu_height              = 50
   let g:deoplete#file#enable_buffer_path      = 1
-  call deoplete#custom#source('ultisnips', 'rank', 290)
-  call deoplete#custom#set('buffer', 'mark', '')
-  call deoplete#custom#set('ternjs', 'mark', '')
-  call deoplete#custom#set('tern', 'mark', '')
-  call deoplete#custom#set('omni', 'mark', '⌾')
-  call deoplete#custom#set('file', 'mark', '')
-  call deoplete#custom#set('jedi', 'mark', '')
-  call deoplete#custom#set('typescript', 'mark', '')
-  call deoplete#custom#set('ultisnips', 'mark', '')
+  call deoplete#custom#source('ultisnips', 'rank', 630)
+  call deoplete#custom#set('typescript',   'rank', 590)
+  call deoplete#custom#set('buffer',       'mark', '')
+  call deoplete#custom#set('ternjs',       'mark', '')
+  call deoplete#custom#set('tern',         'mark', '')
+  call deoplete#custom#set('omni',         'mark', '⌾')
+  call deoplete#custom#set('file',         'mark', '')
+  call deoplete#custom#set('jedi',         'mark', '')
+  call deoplete#custom#set('typescript',   'mark', '')
+  call deoplete#custom#set('ultisnips',    'mark', '')
   let g:deoplete#enable_debug = 1
   let g:deoplete#enable_profile = 1
   call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
@@ -717,18 +704,21 @@ if has("nvim")
         \}
   let g:nvim_typescript#javascript_support       = 1
   let g:nvim_typescript#vue_support              = 1
+""---------------------------------------------------------------------------//
+" DEOPLETE TERNJS
+""---------------------------------------------------------------------------//
   let g:deoplete#sources#ternjs#types            = 1
   let g:deoplete#sources#ternjs#docs             = 1
   let g:deoplete#sources#ternjs#case_insensitive = 1
   let g:tmuxcomplete#trigger                     = ''
-
+  let g:deoplete#sources#ternjs#timeout          = 1
+  let g:deoplete#sources#ternjs#filter           = 0
   let g:tern_request_timeout = 1
   "Add extra filetypes
   let g:tern#filetypes = [
         \ 'ts',
         \ 'tsx',
         \ 'typescript.tsx',
-        \ 'typescript.jsx',
         \ 'typescript',
         \ 'javascript',
         \ 'jsx',
@@ -739,7 +729,6 @@ if has("nvim")
         \ 'ts',
         \ 'tsx',
         \ 'typescript.tsx',
-        \ 'typescript.jsx',
         \ 'typescript',
         \ 'javascript',
         \ 'jsx',
@@ -765,14 +754,18 @@ xmap X <Plug>(Exchange)
 " Goyo {{{
 ""---------------------------------------------------------------------------//
 let g:goyo_width=100
+let g:goyo_height=60
 let g:goyo_margin_top = 2
 let g:goyo_margin_bottom = 2
 nnoremap <F3> :Goyo<CR>
 function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  if exists('$TMUX')
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
   set nonumber norelativenumber
-  set statusline=
+  set statusline=""
+  set showtabline=0
   let b:quitting = 0
   let b:quitting_bang = 0
   autocmd QuitPre <buffer> let b:quitting = 1
@@ -780,9 +773,12 @@ function! s:goyo_enter()
 endfunction
 
 function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  if exists('$TMUX')
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
   set number relativenumber
+  set showtabline=2
   redraw!
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
@@ -859,6 +855,8 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
+
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
   let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
   let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
@@ -945,7 +943,14 @@ nnoremap <localleader>u :UltiSnipsEdit<CR>
   nnoremap <leader>f :Find <C-R><C-W><CR>
   nnoremap <leader>F :Find<space>
 
+  function! s:build_quickfix_list(lines)
+    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+    copen
+    cc
+  endfunction
+
   let g:fzf_action = {
+        \ 'ctrl-q': function('s:build_quickfix_list'),
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-x': 'split',
         \ 'ctrl-v': 'vsplit'
@@ -1073,10 +1078,3 @@ if exists('$TMUX')
 endif
 "}}}
 ""---------------------------------------------------------------------------//
-""---------------------------------------------------------------------------//
-" VIM-CALENDAR {{{
-""---------------------------------------------------------------------------//
-let g:calendar_google_calendar = 1
-let g:calendar_google_task     = 1
-let g:calendar_frame           = 'unicode_double'
-"}}}

@@ -67,6 +67,7 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions-=e
   set linespace=1
 endif
+""---------------------------------------------------------------------------//
 " Message output on vim actions {{{
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start

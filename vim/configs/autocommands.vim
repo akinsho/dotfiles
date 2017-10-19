@@ -91,10 +91,6 @@ augroup UpdateVim
   autocmd VimResized,VimEnter,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
 augroup END
 " }}}
-"
-augroup VimAfterObject
-  autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
-augroup END
 
 "TODO Need to hook into more events to remove colorcolumn
 function! CheckColorColumn()

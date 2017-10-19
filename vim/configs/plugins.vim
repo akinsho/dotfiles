@@ -29,9 +29,7 @@ endif
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'), {'do': ':UpdateRemotePlugins'})
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-      \ { 'do': 'npm install -g tern' })
-Plug 'fszymanski/deoplete-emoji',   Cond(has('nvim')) "Emoji completion
-Plug 'Shougo/neoinclude.vim',       Cond(has('nvim')) "Included files completion
+       \ {'for':'javascript', 'do': 'npm install -g tern' })
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
@@ -62,7 +60,9 @@ Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the s
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
-Plug 'yuttie/comfortable-motion.vim'
+if has('gui_running')
+  Plug 'yuttie/comfortable-motion.vim'
+endif
 augroup load_fat_finger
   autocmd!
   autocmd InsertEnter * call plug#load('vim-fat-finger')
@@ -72,9 +72,9 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-Plug 'itchyny/calendar.vim'
 "}}}
 "TPOPE ===================================={{{
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -82,29 +82,28 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
-"}}}
-"Syntax ============================{{{
-Plug 'Yggdroot/indentLine'
+" "}}}
+" "Syntax ============================{{{
 Plug 'hail2u/vim-css-syntax', { 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
+Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
-Plug 'ianks/vim-tsx', { 'for': ['typescript.tsx'] }
+Plug 'ianks/vim-tsx'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ 'javascript',
       \ 'typescript'
       \ ] }
-Plug 'editorconfig/editorconfig-vim'
 Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
 " Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
-"}}}
-"Git ==============================={{{
+" "}}}
+" "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-"}}}
-"Text Objects ====================={{{
+" "}}}
+" "Text Objects ====================={{{
+Plug 'alvan/vim-closetag'
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
-Plug 'junegunn/vim-after-object'
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'terryma/vim-expand-region'
@@ -113,12 +112,11 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
-"}}}
-"Search Tools ======================={{{
+" "}}}
+" "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
-" Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
-"}}}
-"Coding tools ======================={{{
+" "}}}
+" "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
@@ -146,7 +144,6 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'joshdick/onedark.vim'
 Plug 'ryanoasis/vim-devicons'
-" Plug 'tyrannicaltoucan/vim-quantum'
 
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
@@ -157,5 +154,7 @@ endif
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}
-" Plug 'rstacruz/vim-xtract'
 " Plug 'idanarye/vim-merginal'
+" Plug 'editorconfig/editorconfig-vim'
+" Plug 'tyrannicaltoucan/vim-quantum'
+" Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line

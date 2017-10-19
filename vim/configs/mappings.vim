@@ -129,12 +129,13 @@ endfunction
 "Tab completion
 ""---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible()?"\<C-p>":{}TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
-nnoremap <localleader>q :q!<cr>
+nnoremap <leader>q :q!<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " " Show all open buffers and their status
@@ -234,7 +235,7 @@ nnoremap <leader>9 9gt
 "Buffers
 "----------------------------------------------------------------------------
 "File completion made a little less painful
-"inoremap <c-f> <c-x><c-f>
+inoremap <c-f> <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>
