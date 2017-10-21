@@ -88,7 +88,7 @@ augroup UpdateVim
   autocmd FocusLost * :wa
   autocmd VimResized * redraw!
   autocmd VimResized * wincmd =
-  autocmd VimResized,VimEnter,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
+  autocmd VimResized,VimEnter,WinNew,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
 augroup END
 " }}}
 
@@ -162,7 +162,7 @@ augroup mutltiple_filetype_settings "{{{
   autocmd FileType * if exists("+completefunc") && &completefunc == ""
         \ | setlocal completefunc=syntaxcomplete#Complete | endif
 
-  autocmd FileType html,css,javascript,typescript,typescript.tsx,vue,javascript.jsx EmmetInstall
+  autocmd FileType html,css,vue EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
@@ -239,7 +239,7 @@ if has('nvim')
     au!
     autocmd BufEnter term://* startinsert
     "Do everything possible to prevent numbers in term buffer
-    autocmd BufEnter,BufWinLeave,WinLeave term://* setlocal nonumber norelativenumber
+    autocmd BufEnter,BufWinLeave term://* setlocal nonumber norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     if exists('+winhighlight')

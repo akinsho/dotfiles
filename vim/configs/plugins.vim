@@ -26,7 +26,9 @@ Plug 'roxma/nvim-completion-manager', Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
 Plug 'mhartington/nvim-typescript',{'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
-Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
+"English completion
+Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' })
+"VimScript completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
@@ -153,6 +155,6 @@ endif
 " Plug 'idanarye/vim-merginal'
 " Plug 'editorconfig/editorconfig-vim'
 " Plug 'tyrannicaltoucan/vim-quantum'
-" Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-"  \ {'for':'javascript', 'do': 'npm install -g tern' })
 " Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
+" Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
+"       \ {'for':'javascript', 'do': 'npm install -g tern' })

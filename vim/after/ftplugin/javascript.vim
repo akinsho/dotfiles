@@ -1,6 +1,7 @@
 setl completeopt-=preview
 setlocal nofoldenable  foldtext=FoldText()
 setlocal foldlevelstart=99 foldmethod=indent
+setl omnifunc=tern#Complete
 if has('nvim')
   nnoremap gd :TSDef<CR>
 endif

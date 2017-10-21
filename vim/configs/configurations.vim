@@ -80,9 +80,9 @@ let g:netrw_winsize      = 25
 let g:netrw_altv         = 1
 augroup netrw
   autocmd!
-  autocmd FileType netrw map <buffer> q :q<CR>
-  autocmd FileType netrw map <buffer> l <CR>
-  autocmd FileType netrw map <buffer> h <CR>
+  autocmd FileType netrw nnoremap <buffer> q :q<CR>
+  autocmd FileType netrw nnoremap <buffer> l <CR>
+  autocmd FileType netrw nnoremap <buffer> h <CR>
 augroup END
 " NERDTrees highlighting {{{
 ""---------------------------------------------------------------------------//
@@ -318,9 +318,7 @@ nnoremap <silent> <leader>ta :TtoggleAll<CR>
 nnoremap <silent> <leader>tn :Tnew<CR>
 nnoremap <silent> <leader>tc :Tclose!<CR>
 nnoremap <silent> <leader>tx :TcloseAll!<CR>
-nnoremap <silent> <leader>ts :TREPLSendFile<cr>
-nnoremap <silent> <leader>tl :TREPLSendLine<cr>
-vnoremap <silent> <leader>tl :TREPLSendSelection<cr>
+vnoremap <silent> <leader>ts :TREPLSendSelection<cr>
 nnoremap <silent> <leader>th :call neoterm#close()<cr>
 " clear terminal
 nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
@@ -527,13 +525,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " Javascript libraries Syntax {{{
 ""---------------------------------------------------------------------------//
 "Set up libraries to highlight with library syntax highlighter
-let g:used_javascript_libs = 'underscore,flux,angularjs,jquery,rambda,react,jasmine,chai,handlebars,requirejs'
-"}}}
-""---------------------------------------------------------------------------//
-" EDITOR CONFIG {{{
-""---------------------------------------------------------------------------//
-let g:EditorConfig_core_mode = 'external_command' " Speed up editorconfig plugin
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:used_javascript_libs = 'underscore,flux,angularjs,rambda,react,jasmine,chai,handlebars,requirejs'
 "}}}
 ""---------------------------------------------------------------------------//
 " NERDComment {{{
@@ -596,7 +588,7 @@ let g:echodoc#type              = "signature"
 " BUFTABLINE {{{
 ""---------------------------------------------------------------------------//  "
 highlight TabLineSel guibg=white guifg=black
-let g:buftabline_separators = 0
+let g:buftabline_separators = 1
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
 nmap <localleader>1 <Plug>BufTabLine.Go(1)
@@ -1059,7 +1051,7 @@ call camelcasemotion#CreateMotionMappings('<leader>')
 if exists('$TMUX')
   " Disable tmux navigator when zooming the Vim pane
   let g:tmux_navigator_disable_when_zoomed = 1
-  let g:tmux_navigator_save_on_switch = 2
+  let g:tmux_navigator_save_on_switch      = 2
 endif
 "}}}
 ""---------------------------------------------------------------------------//

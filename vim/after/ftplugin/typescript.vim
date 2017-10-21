@@ -2,6 +2,7 @@ setl softtabstop=4 tabstop=4 shiftwidth=4 foldmethod=indent foldlevelstart=99
 setl nofoldenable
 setl completeopt-=preview
 setl colorcolumn=100
+setl omnifunc=tern#Complete
 
 
 if has('nvim')
