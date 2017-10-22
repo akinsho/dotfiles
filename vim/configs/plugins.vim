@@ -20,16 +20,14 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " Deoplete  ============================={{{
 " Code completion
-Plug 'Shougo/deoplete.nvim', Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "NVIM ====================================
-Plug 'roxma/nvim-completion-manager', Cond(!has('nvim'))
+Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
 Plug 'mhartington/nvim-typescript',{'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
-"English completion
-Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' })
-"VimScript completion
-Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' })
+Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
+Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }), "VimScript completion
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
 "}}}
