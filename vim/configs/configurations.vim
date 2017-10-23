@@ -270,10 +270,11 @@ if has('gui_running')
 endif
 " Enable completion where available.
 " let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
-let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_insert_leave                 = 1
+let g:ale_lint_on_enter                        = 0
 let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_javascript_prettier_options          = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_pattern_options                      = {'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {
       \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier', 'eslint'],
@@ -633,12 +634,12 @@ let g:closetag_shortcut = '>'
 ""---------------------------------------------------------------------------//
 if has("nvim")
   let g:deoplete#enable_at_startup            = 1
-  let g:deoplete#auto_complete_delay          = 0
-  let g:deoplete#auto_completion_start_length = 1
   let g:deoplete#enable_smart_case            = 1
   let g:deoplete#max_menu_width               = 80
   let g:deoplete#max_menu_height              = 50
   let g:deoplete#file#enable_buffer_path      = 1
+  let g:deoplete#ignore_sources = {}
+  let g:deoplete#ignore_sources['typescript.tsx'] = ['omni']
   call deoplete#custom#source('ultisnips', 'rank', 630)
   call deoplete#custom#set('typescript',   'rank', 600)
   call deoplete#custom#set('buffer',       'mark', '')

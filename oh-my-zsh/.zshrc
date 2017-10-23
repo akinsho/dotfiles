@@ -18,7 +18,7 @@ export RUNCOM=$DOTFILES/runcom/
 #This is not working
 #export PATH="$(yarn global bin):$PATH"
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
-
+export PATH="$HOME/.cargo/bin:$PATH"
 #Pyenv
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -92,6 +92,7 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 
 # PLUGINS =======================================================================
 plugins=(
+        zsh-syntax-highlighting
         alias-tips
         last-working-dir
         nvm
@@ -104,7 +105,6 @@ plugins=(
         z
         common-aliases
         brew
-        zsh-syntax-highlighting
         zsh-autosuggestions
         zsh-iterm-touchbar
         )
@@ -231,8 +231,6 @@ HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
-
-export ZSH_AUTOSUGGEST_USE_ASYNC=false
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 # BASE16===============================================================
 # default code for base16 shell

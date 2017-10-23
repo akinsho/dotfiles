@@ -22,14 +22,16 @@ call plug#begin('~/.vim/plugged')
 " Code completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "NVIM ====================================
-Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
-Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
 Plug 'mhartington/nvim-typescript',{'do': ':UpdateRemotePlugins'}
+Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
+      \ {'for':'javascript', 'do': 'npm install -g tern' })
+Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
+Plug 'roxma/vim-hug-neovim-rpc',    Cond(!has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }), "VimScript completion
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
-Plug 'wellle/tmux-complete.vim'   , Cond(exists('$TMUX'))
+Plug 'wellle/tmux-complete.vim',    Cond(exists('$TMUX'))
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
@@ -89,7 +91,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
       \ 'typescript'
       \ ] }
 Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
-" Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite' }
+Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite', 'for': ['tsx', 'jsx'] }
 " "}}}
 " "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
@@ -139,7 +141,7 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'joshdick/onedark.vim'
-Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons', Cond(!has('gui_running'))
 
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
@@ -150,9 +152,3 @@ endif
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}
-" Plug 'idanarye/vim-merginal'
-" Plug 'editorconfig/editorconfig-vim'
-" Plug 'tyrannicaltoucan/vim-quantum'
-" Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line
-" Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-"       \ {'for':'javascript', 'do': 'npm install -g tern' })

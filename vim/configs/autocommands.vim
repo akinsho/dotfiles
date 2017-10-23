@@ -154,6 +154,7 @@ endfunction
 
 augroup mutltiple_filetype_settings "{{{
   autocmd!
+  autocmd BufEnter * Root "NOTE: this might break
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
   autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
@@ -170,10 +171,10 @@ augroup mutltiple_filetype_settings "{{{
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 
   if exists('g:plugs["tern_for_vim"]')
-    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx
+    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.tsx
           \ setlocal omnifunc=tern#Complete
   else
-    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.jsx
+    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx
           \ setlocal omnifunc=javascriptcomplete#CompleteJS
   endif
 augroup END
@@ -188,7 +189,6 @@ augroup filetype_javascript_typescript "{{{
         \ let b:ale_javascript_prettier_options=
         \ '--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
-  autocmd WinEnter,BufRead,VimEnter *.tsx,*.jsx,*.js set completeopt-=preview
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END

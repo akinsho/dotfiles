@@ -83,6 +83,8 @@ A list of amazing tools I've discovered but cannot hide away
    * `Plug 'paulhybryant/vim-textobj-path'`
    * `Plug 'kana/vim-smartword'`
    * `Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree`
+   * `Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line`
+   * `Plug 'editorconfig/editorconfig-vim'`
 
    Autocompletion for css which auto expands, very cool idea
    although at present it clashes with other insert mode
@@ -95,6 +97,7 @@ A list of amazing tools I've discovered but cannot hide away
    * `Plug 'joshdick/onedark.vim'`
    * `Plug 'trevordmiller/nova-vim'`
    * `Plug 'kristijanhusak/vim-hybrid-material'`
+   * `Plug 'tyrannicaltoucan/vim-quantum'`
 
 ### Language plugins
    Since I have great aspirations to play with all the languages :smile: here are
