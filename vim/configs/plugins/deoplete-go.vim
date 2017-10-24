@@ -1,5 +1,5 @@
   ""---------------------------------------------------------------------------//
-  " Deoplete Go 
+  " Deoplete Go
   ""---------------------------------------------------------------------------//
   let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
   let g:deoplete#sources#go#use_cache     = 1

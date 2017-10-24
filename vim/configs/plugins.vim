@@ -27,7 +27,7 @@ if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
 endif
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-      \ {'do': 'npm install -g tern' })
+      \ {'for':['javascript', 'javascript.jsx'], 'do': 'npm install -g tern' })
 Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc',    Cond(!has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
@@ -88,13 +88,13 @@ Plug 'tpope/vim-abolish'
 Plug 'hail2u/vim-css-syntax',
       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 Plug 'Yggdroot/indentLine'
-Plug 'sheerun/vim-polyglot'
-Plug 'ianks/vim-tsx'
-Plug 'othree/javascript-libraries-syntax.vim',
+Plug 'sheerun/vim-polyglot', Cond(!has('g:gui_oni'))
+Plug 'ianks/vim-tsx', Cond(!has('g:gui_oni'))
+Plug 'othree/javascript-libraries-syntax.vim', Cond(!has('g:gui_oni'),
       \ { 'for':[
       \ 'javascript',
       \ 'typescript'
-      \ ] }
+      \ ] })
 Plug 'ap/vim-css-color',
       \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
 Plug 'styled-components/vim-styled-components',

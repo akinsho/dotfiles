@@ -252,12 +252,12 @@ if has('nvim')
     autocmd BufEnter,BufWinLeave term://* setlocal nonumber norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
-    if exists('+winhighlight')
-      highlight BlackTerminal guibg=black ctermbg=Black
-      autocmd TermOpen * if &buftype !=# 'fzf'
-            \ | set winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
-            \ | endif
-    endif
+    " if exists('+winhighlight')
+    "   highlight BlackTerminal guibg=black ctermbg=Black
+    "   autocmd TermOpen * if &buftype !=# 'fzf'
+    "         \ | set winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
+    "         \ | endif
+    " endif
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END

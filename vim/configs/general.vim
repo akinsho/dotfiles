@@ -62,11 +62,12 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions+=g " gray menu items
   set guioptions+=m " menu bar
   set guioptions+=e " nice gui tabs
-  set antialias
-  set macligatures
   set guifont=Fira\ Code:h16
   set guioptions-=e
   set linespace=1
+  set antialias
+  set macligatures
+  let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 endif
 ""---------------------------------------------------------------------------//
 " Message output on vim actions {{{
