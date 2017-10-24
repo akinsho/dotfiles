@@ -427,7 +427,7 @@ augroup cursorline
   autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
   autocmd WinLeave,InsertEnter * setlocal nocursorline
 augroup END
-set scrolloff=999 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
+set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}
 "====================================================================================
 "Spelling {{{

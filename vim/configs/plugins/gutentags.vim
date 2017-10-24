@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" Gutentags {{{
+" Gutentags 
 ""---------------------------------------------------------------------------//
 let g:gutentags_ctags_exclude = ['*node_modules*', '*bower_components*', 'tmp*', 'temp*', 'package*json',
       \ '*.min.js',

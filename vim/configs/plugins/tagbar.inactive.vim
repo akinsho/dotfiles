@@ -1,4 +1,4 @@
-"TAGBAR{{{
+"TAGBAR
 ""---------------------------------------------------------------------------//
 nnoremap <leader>. :TagbarToggle<CR>
 let g:tagbar_autoshowtag                = 1

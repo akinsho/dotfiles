@@ -20,18 +20,20 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " Deoplete  ============================={{{
 " Code completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim', Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
 "NVIM ====================================
-Plug 'mhartington/nvim-typescript',{'do': ':UpdateRemotePlugins'}
+" Plug 'Quramy/tsuquyomi' ", Cond(!has('nvim'))
+" Plug 'Shougo/vimproc', { 'do': 'make' }
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-      \ {'for':'javascript', 'do': 'npm install -g tern' })
+      \ {'do': 'npm install -g tern' })
 Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc',    Cond(!has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }), "VimScript completion
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
-Plug 'wellle/tmux-complete.vim',    Cond(exists('$TMUX'))
+" Plug 'wellle/tmux-complete.vim',    Cond(exists('$TMUX'))
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
@@ -44,7 +46,7 @@ Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
   if a:info.status ==# 'installed' || a:info.force
-    !npm install
+    !npm install && npm install -g tern
   endif
 endfunction
 Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
@@ -70,6 +72,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
+Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
@@ -82,16 +85,22 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 " "}}}
 " "Syntax ============================{{{
-Plug 'hail2u/vim-css-syntax', { 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
+Plug 'hail2u/vim-css-syntax',
+      \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx'
-Plug 'othree/javascript-libraries-syntax.vim', { 'for':[
+Plug 'othree/javascript-libraries-syntax.vim',
+      \ { 'for':[
       \ 'javascript',
       \ 'typescript'
       \ ] }
-Plug 'ap/vim-css-color', { 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
-Plug 'styled-components/vim-styled-components', { 'branch': 'rewrite', 'for': ['tsx', 'jsx'] }
+Plug 'ap/vim-css-color',
+      \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
+Plug 'styled-components/vim-styled-components',
+      \{ 'branch': 'rewrite', 'for': ['tsx', 'jsx'] }
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'jparise/vim-graphql'
 " "}}}
 " "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
@@ -99,11 +108,11 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 " "}}}
 " "Text Objects ====================={{{
+" Plug 'AndrewRadev/switch.vim'
 Plug 'alvan/vim-closetag'
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
-Plug 'AndrewRadev/switch.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
@@ -134,7 +143,8 @@ function! BuildComposer(info)
     endif
   endif
 endfunction
-Plug 'euclio/vim-markdown-composer', { 'for': 'markdown', 'do': function('BuildComposer') }
+Plug 'euclio/vim-markdown-composer',
+      \{ 'for': 'markdown', 'do': function('BuildComposer') }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}

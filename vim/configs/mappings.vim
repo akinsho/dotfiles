@@ -131,8 +131,9 @@ endfunction
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible()?"\<C-p>":{}TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+if has('nvim')
+  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+endif
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
 nnoremap <leader>q :q!<cr>
@@ -603,6 +604,9 @@ nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 
+" Use D to delete a range then move cursor back
+com! -range D <line1>,<line2>d | norm <C-o>
+
 " Peekabo Like functionality
 function! Reg()
   reg
@@ -666,7 +670,7 @@ function! s:root()
       return
     else
       execute 'lcd' root
-      echo 'Changed directory to: '.root
+      " echo 'Changed directory to: '.root
     endif
   endif
 catch

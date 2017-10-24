@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-"               Airline {{{
+"               Airline 
 ""---------------------------------------------------------------------------//
 augroup AirLineRefresh
   autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()

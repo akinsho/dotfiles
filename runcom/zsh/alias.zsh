@@ -1,6 +1,6 @@
-# ================================================================================
+# =============================================================================
 # Aliases
-# ================================================================================
+# =============================================================================
 alias x="exit" # Exit Terminal
 alias t=_t
 alias del="rm -rf"
@@ -49,8 +49,6 @@ alias tkill="tmux kill-session -t"
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
-# reload zsh config
-alias reload!='RELOAD=1 source ~/.zshrc'
 # Silence or turn up the volume
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"

@@ -1,13 +1,13 @@
 let g:lightline = {
   \ 'colorscheme': 'onedark',
   \ 'active': {
-  \   'left': [ [ 'mode' ], [ 'filename', 'filetype', 'filesize'] ],
+  \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
   \   'right': [ [ 'fugitive', 'gitgutter' ], [ 'AleError', 'AleWarning', 'AleOk' ],
   \    ['lineinfo'], ['csv']
   \]
   \ },
   \ 'inactive': {
-  \   'left': [ [ 'filename' ] ],
+  \   'left': [ [ 'filename',  'filesize' ] ],
   \   'right': [ [] ]
   \ },
   \ 'component': {

@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" COMFORTABLE MOTION {{{
+" COMFORTABLE MOTION 
 ""---------------------------------------------------------------------------//
 " Scroll proportional to window height
 let g:comfortable_motion_no_default_key_mappings = 1

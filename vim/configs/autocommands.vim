@@ -21,6 +21,16 @@ function! s:WhitespaceHighlight()
   endif
 endfunction
 "}}}
+""---------------------------------------------------------------------------//
+" Pretty templates
+""---------------------------------------------------------------------------//
+" Register tag name associated the filetype
+" call jspretmpl#register_tag('gql', 'graphql')
+" augroup JSTempl
+"   autocmd!
+"   autocmd FileType typescript syn clear foldBraces
+"   autocmd FileType javascript,typescript,typescript.tsx JsPreTmpl html
+" augroup END
 
 augroup WhiteSpace "{{{
   " Highlight Whitespace
@@ -171,7 +181,7 @@ augroup mutltiple_filetype_settings "{{{
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 
   if exists('g:plugs["tern_for_vim"]')
-    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx,typescript.tsx
+    autocmd FileType javascript,javascript.jsx,jsx ",typscript,typescript.tsx
           \ setlocal omnifunc=tern#Complete
   else
     autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx
