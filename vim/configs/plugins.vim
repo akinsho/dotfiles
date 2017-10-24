@@ -60,7 +60,7 @@ Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the s
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
-if has('gui_running')
+if has('gui_running') " || exists('g:gui_oni')
   Plug 'yuttie/comfortable-motion.vim'
 endif
 augroup load_fat_finger
@@ -88,27 +88,26 @@ Plug 'tpope/vim-abolish'
 Plug 'hail2u/vim-css-syntax',
       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 Plug 'Yggdroot/indentLine'
-Plug 'sheerun/vim-polyglot', Cond(!has('g:gui_oni'))
-Plug 'ianks/vim-tsx', Cond(!has('g:gui_oni'))
-Plug 'othree/javascript-libraries-syntax.vim', Cond(!has('g:gui_oni'),
+Plug 'sheerun/vim-polyglot'
+Plug 'ianks/vim-tsx'
+Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[
       \ 'javascript',
       \ 'typescript'
-      \ ] })
+      \ ] }
 Plug 'ap/vim-css-color',
       \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
 Plug 'styled-components/vim-styled-components',
       \{ 'branch': 'rewrite', 'for': ['tsx', 'jsx'] }
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'jparise/vim-graphql'
-" "}}}
-" "Git ==============================={{{
+"}}}
+"Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-" "}}}
-" "Text Objects ====================={{{
-" Plug 'AndrewRadev/switch.vim'
+"}}}
+"Text Objects ====================={{{
 Plug 'alvan/vim-closetag'
 Plug 'tommcdo/vim-exchange'
 Plug 'bkad/CamelCaseMotion'
@@ -120,10 +119,10 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
 " "}}}
-" "Search Tools ======================={{{
+"Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
 " "}}}
-" "Coding tools ======================={{{
+"Coding tools ======================={{{
 Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'

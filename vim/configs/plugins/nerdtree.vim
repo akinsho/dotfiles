@@ -86,8 +86,10 @@ endif
 " let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
 " let g:DevIconsEnableFoldersOpenClose                             = 1
 " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
+if !exists('g:gui_oni')
+  let g:NERDTreeDirArrowExpandable = ''
+  let g:NERDTreeDirArrowCollapsible = ''
+endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {}
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md']  = ''

@@ -68,6 +68,7 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set antialias
   set macligatures
   let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 endif
 ""---------------------------------------------------------------------------//
 " Message output on vim actions {{{
