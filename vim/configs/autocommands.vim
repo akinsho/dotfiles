@@ -25,12 +25,12 @@ endfunction
 " Pretty templates
 ""---------------------------------------------------------------------------//
 " Register tag name associated the filetype
-" call jspretmpl#register_tag('gql', 'graphql')
-" augroup JSTempl
-"   autocmd!
-"   autocmd FileType typescript syn clear foldBraces
-"   autocmd FileType javascript,typescript,typescript.tsx JsPreTmpl html
-" augroup END
+call jspretmpl#register_tag('gql', 'graphql')
+augroup JSTempl
+  autocmd!
+  autocmd FileType typescript syn clear foldBraces
+  autocmd FileType javascript,typescript,typescript.tsx JsPreTmpl html
+augroup END
 
 augroup WhiteSpace "{{{
   " Highlight Whitespace
@@ -116,7 +116,7 @@ function! CheckColorColumn()
       endif
     catch
       echohl WarningMsg
-      echom v:exception
+      " echom v:exception
       echom 'colorcolumn set to 80'
       echohl None
       let &colorcolumn=80 "Desparare default

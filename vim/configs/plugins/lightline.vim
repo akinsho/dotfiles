@@ -118,11 +118,19 @@ function! LightLineFileSize() "{{{
 endfunction "}}}
 
 function! LightLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
+  if has('gui_running')
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &ft : '') : ''
+  else
+    return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
+  endif
 endfunction
 
 function! LightLineFileFormat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  if has('gui_running')
+    return winwidth(0) > 70 ? (&fileformat . ' ') : ''
+  else
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  endif
 endfunction
 
 function! LightLineFileencoding()

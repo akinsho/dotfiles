@@ -12,6 +12,7 @@ filetype off " required  Prevents potential side-effects from system ftdetects s
 ""---------------------------------------------------------------------------//
 " Config Loader
 ""---------------------------------------------------------------------------//
+let g:dotfiles = '~/Dotfiles/'
 function! LoadConfigs(s) abort
     let s:plugins = split(globpath(a:s, '*.vim'), '\n')
     for fpath in s:plugins
@@ -27,44 +28,36 @@ function! LoadConfigs(s) abort
         endif
     endfor
     echohl WarningMsg
-    echom len(s:plugins).' plugin configs loaded'
+    " echom len(s:plugins).' plugin configs loaded'
     echohl none
 endfunction
 
-"----------------------------------------------------------------------
-" Plugins
-"----------------------------------------------------------------------
-source $DOTFILES/vim/configs/plugins.vim
-"-----------------------------------------------------------------------
-syntax enable
+function! Source(arg) abort
+    exe 'source' . g:dotfiles . a:arg
+endfunction
+
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
 let g:mapleader      = ',' "Remap leader key
 let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
+"----------------------------------------------------------------------
+" Plugins
+"----------------------------------------------------------------------
+call Source('/vim/configs/plugins.vim')
 "-----------------------------------------------------------------------
-" General Settings
-"-----------------------------------------------------------------------
-source $DOTFILES/vim/configs/general.vim
+syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-if !exists("gui_oni")
-    source $DOTFILES/vim/configs/open-changed-files.vim
-    source $DOTFILES/vim/configs/highlight.vim
-endif
-
-"TODO: source all files with load config fn let s:configs = $DOTFILES.'/vim/configs'
-let s:settings = $DOTFILES.'/vim/configs/plugins'
+call Source('/vim/configs/general.vim')
+call Source('/vim/configs/open-changed-files.vim')
+call Source('/vim/configs/highlight.vim')
+"TODO: source all files with load config fn let s:configs = g:dotfiles.'.'/vim/configs'
+let s:settings = g:dotfiles . '/vim/configs/plugins'
 call LoadConfigs(s:settings)
-"-----------------------------------------------------------------------
-" Mappings
-"-----------------------------------------------------------------------
-source $DOTFILES/vim/configs/mappings.vim
-"---------------------------------------------------------------------------//
-" AUTOCOMMANDS
-"---------------------------------------------------------------------------//
-source $DOTFILES/vim/configs/autocommands.vim
+call Source('/vim/configs/mappings.vim')
+call Source('/vim/configs/autocommands.vim')
 "---------------------------------------------------------------------------//
 " Essential Settings - Taken care of by Vim Plug
 "---------------------------------------------------------------------------//

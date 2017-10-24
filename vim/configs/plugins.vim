@@ -20,11 +20,12 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " Deoplete  ============================={{{
 " Code completion
-Plug 'Shougo/deoplete.nvim', Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
+Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
 "NVIM ====================================
-" Plug 'Quramy/tsuquyomi' ", Cond(!has('nvim'))
-" Plug 'Shougo/vimproc', { 'do': 'make' }
-Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
+Plug 'Quramy/tsuquyomi',            Cond(!has('nvim'))
+if !exists('g:gui_oni')
+  Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
+endif
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
       \ {'do': 'npm install -g tern' })
 Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
@@ -33,7 +34,6 @@ Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'mak
 Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
 Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }), "VimScript completion
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
-" Plug 'wellle/tmux-complete.vim',    Cond(exists('$TMUX'))
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
@@ -151,7 +151,7 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'joshdick/onedark.vim'
-Plug 'ryanoasis/vim-devicons', Cond(!has('gui_running'))
+Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default

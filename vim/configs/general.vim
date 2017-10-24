@@ -63,7 +63,8 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions+=m " menu bar
   set guioptions+=e " nice gui tabs
   set antialias
-  set guifont=FuraCode\ Nerd\ Font:h15
+  set macligatures
+  set guifont=Fira\ Code:h16
   set guioptions-=e
   set linespace=1
 endif
@@ -309,7 +310,7 @@ iabbrev w@ www.akin-sowemimo.com
 "Colorscheme {{{
 ""---------------------------------------------------------------------------//
 set background=dark
-if (has("autocmd") && !has("gui_running"))
+if (has("autocmd") && !has("gui_running") && !has('gui_vimr') && !exists('g:gui_oni'))
   let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
   autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
 end
