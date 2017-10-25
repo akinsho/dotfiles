@@ -64,7 +64,7 @@ nnoremap <silent> <Plug>Kwbd :<C-u>Kwbd<CR>
 " Use Q to intelligently close a window
 " (if there are multiple windows into the same buffer)
 " or kill the buffer entirely if it's the last window looking into that buffer
-function! CloseWindowOrKillBuffer()
+function! CloseWindowOrKillBuffer() abort
   let number_of_windows_to_this_buffer = len(filter(range(1, winnr('$')), "winbufnr(v:val) == bufnr('%')"))
 
   " We should never bdelete a nerd tree
@@ -76,7 +76,9 @@ function! CloseWindowOrKillBuffer()
   if number_of_windows_to_this_buffer > 1
     wincmd c
   else
-    bdelete
+    try
+      bdelete!
+    endtry
   endif
 endfunction
 

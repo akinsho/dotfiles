@@ -56,6 +56,10 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 ""---------------------------------------------------------------------------//
 " MACVIM
 ""---------------------------------------------------------------------------//
+if exists('g:gui_oni')
+  set shell=/bin/bash
+  set statusline=""
+endif
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
@@ -211,8 +215,11 @@ set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
-  " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
-  let &showbreak='↪ '
+  if g:gui_neovim_running
+    let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+  else
+    let &showbreak='↪ '
+  endif
   if exists('&breakindentopt')
     " set breakindentopt=shift:2
     set breakindentopt=sbr
@@ -222,7 +229,7 @@ set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
 set list                              " show invisible chars
-" set listchars+=tab:▷\ 
+" set listchars+=tab:▷\ ,
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
 set listchars+=precedes:…

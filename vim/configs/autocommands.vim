@@ -26,9 +26,11 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Register tag name associated the filetype
 call jspretmpl#register_tag('gql', 'graphql')
+call jspretmpl#register_tag('styled', 'css')
 augroup JSTempl
   autocmd!
-  autocmd FileType javascript,typescript,typescript.tsx JsPreTmpl html
+  "TODO: This should be in local vimrc as I might want to highlight html
+  autocmd FileType javascript,typescript,typescript.tsx JsPreTmpl graphql
 augroup END
 
 function! s:ClearMatches() abort
@@ -110,6 +112,9 @@ augroup END
 
 "TODO Need to hook into more events to remove colorcolumn
 function! CheckColorColumn()
+  if &ft ==# 'startify'
+    return
+  endif
   if &colorcolumn > 0
     let b:cl_size = &colorcolumn
   endif
@@ -117,9 +122,7 @@ function! CheckColorColumn()
     setl colorcolumn=
   else
     try
-      if &ft != 'Startify'
         let &colorcolumn=b:cl_size
-      endif
     catch
       echohl WarningMsg
       " echom v:exception
@@ -170,9 +173,6 @@ endfunction
 
 augroup mutltiple_filetype_settings "{{{
   autocmd!
-  if &ft != 'Startify'
-    autocmd BufEnter * Root "NOTE: this might break
-  endif
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
   " autocmd FileType * if exists("+omnifunc") && &omnifunc == ""

@@ -1,43 +1,43 @@
 let g:lightline = {
-  \ 'colorscheme': 'onedark',
-  \ 'active': {
-  \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
-  \   'right': [ [ 'fugitive', 'gitgutter' ], [ 'AleError', 'AleWarning', 'AleOk' ],
-  \    ['lineinfo'], ['csv']
-  \]
-  \ },
-  \ 'inactive': {
-  \   'left': [ [ 'filename',  'filesize' ] ],
-  \   'right': [ [] ]
-  \ },
-  \ 'component': {
-  \   'lineinfo': '%3l:%-2v',
-  \   'tagbar': '%{tagbar#currenttag("%s", "")}',
-  \   'close': '%999X X ',
-  \ },
-  \ 'component_function': {
-  \   'filesize': 'LightLineFileSize',
-  \   'fugitive': 'LightLineFugitive',
-  \   'filename': 'LightLineFilename',
-  \   'fileformat': 'LightLineFileformat',
-  \   'filetype': 'LightLineFiletype',
-  \   'fileencoding': 'LightLineFileencoding',
-  \   'csv':'LightLineCsv',
-  \   'mode': 'LightLineMode',
-  \   'gitgutter': 'LightLineGitGutter'
-  \ },
-  \ 'component_expand': {
-  \   'AleError':   'LightlineAleError',
-  \   'AleWarning': 'LightlineAleWarning',
-  \   'AleOk':      'LightlineAleOk',
-  \ },
-  \ 'component_type': {
-  \   'AleError':   'error',
-  \   'AleWarning': 'warning',
-  \   'AleOk':      'ok',
-  \ },
-  \ 'subseparator': { 'left': '', 'right': '' }
-  \ }
+      \ 'colorscheme': 'onedark',
+      \ 'active': {
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
+      \   'right': [ [ 'fugitive', 'gitgutter' ], [ 'AleError', 'AleWarning', 'AleOk' ],
+      \    ['lineinfo'], ['csv']
+      \]
+      \ },
+      \ 'inactive': {
+      \   'left': [ [ 'filename',  'filesize' ] ],
+      \   'right': [ [] ]
+      \ },
+      \ 'component': {
+      \   'lineinfo': '%3l:%-2v',
+      \   'tagbar': '%{tagbar#currenttag("%s", "")}',
+      \   'close': '%999X X ',
+      \ },
+      \ 'component_function': {
+      \   'filesize': 'LightLineFileSize',
+      \   'fugitive': 'LightLineFugitive',
+      \   'filename': 'LightLineFilename',
+      \   'fileformat': 'LightLineFileformat',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileencoding': 'LightLineFileencoding',
+      \   'csv':'LightLineCsv',
+      \   'mode': 'LightLineMode',
+      \   'gitgutter': 'LightLineGitGutter'
+      \ },
+      \ 'component_expand': {
+      \   'AleError':   'LightlineAleError',
+      \   'AleWarning': 'LightlineAleWarning',
+      \   'AleOk':      'LightlineAleOk',
+      \ },
+      \ 'component_type': {
+      \   'AleError':   'error',
+      \   'AleWarning': 'warning',
+      \   'AleOk':      'ok',
+      \ },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
 
 let g:lightline.tabline = {
       \ 'left': [ [ 'tabs' ] ],

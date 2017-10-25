@@ -21,8 +21,7 @@ let g:ale_fixers = {
       \'json':'prettier',
       \'css':'stylelint'
       \}
-" Allow local in Shell Check
-let g:ale_sh_shellcheck_options = '-e SC2039'
+let g:ale_sh_shellcheck_options = '-e SC2039' " Allow local in Shell Check
 let g:ale_echo_msg_format             = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always          = 1
 let g:ale_sign_error                  = '✘'

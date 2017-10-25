@@ -27,16 +27,19 @@ if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
 endif
 Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-      \ {'for':['javascript', 'javascript.jsx'], 'do': 'npm install -g tern' })
+      \ {'for':['javascript', 'javascript.jsx','typescript'],
+      \'do': 'npm install -g tern' })
 Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc',    Cond(!has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
-Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' }) "English completion
-Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }), "VimScript completion
+Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' })
+Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }),
 Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
 "}}}
 " CORE ================================ {{{
-Plug 'w0rp/ale'
+if !exists('g:gui_oni')
+  Plug 'w0rp/ale'
+endif
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'

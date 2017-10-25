@@ -49,7 +49,7 @@ highlight diffRemoved gui=bold
 highlight diffAdded gui=bold
 "}}}
 ""---------------------------------------------------------------------------//
-"NERDTree 
+"NERDTree
 ""---------------------------------------------------------------------------//
 " Ctrl+N to toggle Nerd Tree
 function! NERDTreeToggleAndFind()
