@@ -162,7 +162,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " set path+=** "Vim searches recursively through all directories and subdirectories
 set path+=**/src/main/**,** " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
-set suffixesadd+=.js,.jsx,.ts,.tsx
+
 "}}}
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{
@@ -334,7 +334,7 @@ set titleold=getcwd()
 ""---------------------------------------------------------------------------//
 if has('nvim')
   set inccommand=nosplit
-  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0
+  set guicursor=n-v-c:block-Cursor/lCursor
   " Thin bar insert mode cursor
   set guicursor=i-ci:ver50-Cursor/lCursor
   set guicursor=r-cr:hor20-Cursor/lCursor

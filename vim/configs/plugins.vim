@@ -143,7 +143,7 @@ function! BuildComposer(info)
   endif
 endfunction
 Plug 'euclio/vim-markdown-composer',
-      \{ 'for': 'markdown', 'do': function('BuildComposer') }
+      \Cond(!has('gui_vimr'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}

@@ -6,27 +6,17 @@
 ""---------------------------------------------------------------------------//
 " Terminal settings
 if has('nvim')
-  " set guicursor=n-v-c-i-ci-ve:block
   "Add neovim terminal escape with ESC mapping
-  tnoremap <ESC> <C-\><C-n>
-  tnoremap jk <C-\><C-n>
-  tnoremap <C-h> <C-\><C-n><C-h>
-  tnoremap <C-j> <C-\><C-n><C-j>
-  tnoremap <C-k> <C-\><C-n><C-k>
-  tnoremap <C-l> <C-\><C-n><C-l>
-  tnoremap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
-  tnoremap <leader><tab> <C-\><C-n>:bnext<CR>
-  tnoremap <localleader><S-tab> <C-\><C-n>:bprev<CR>
-  tnoremap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
-  tnoremap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
-  tnoremap <leader>3  <C-\><C-n><Plug>AirlineSelectTab3
-  tnoremap <leader>4  <C-\><C-n><Plug>AirlineSelectTab4
-  tnoremap <leader>5  <C-\><C-n><Plug>AirlineSelectTab5
-  tnoremap <leader>6  <C-\><C-n><Plug>AirlineSelectTab6
-  tnoremap <leader>7  <C-\><C-n><Plug>AirlineSelectTab7
-  tnoremap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
-  tnoremap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
-  tnoremap <leader>, <C-\><C-n>:bnext<cr>
+  tmap <ESC> <C-\><C-n>
+  tmap jk <C-\><C-n>
+  tmap <C-h> <C-\><C-n><C-h>
+  tmap <C-j> <C-\><C-n><C-j>
+  tmap <C-k> <C-\><C-n><C-k>
+  tmap <C-l> <C-\><C-n><C-l>
+  tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
+  tmap <tab> <C-\><C-n>:bnext<CR>
+  tmap <S-tab> <C-\><C-n>:bprev<CR>
+  tmap <leader>, <C-\><C-n>:bnext<cr>
 else
   tnoremap <C-h> <C-W>h
   tnoremap <C-j> <C-W>j
@@ -136,7 +126,7 @@ if has('nvim')
 endif
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
-nnoremap <leader>q :q!<cr>
+nnoremap <leader>q :bd!<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " " Show all open buffers and their status
@@ -658,7 +648,7 @@ nnoremap P P=`]<c-o>
 function! s:root()
   try
   let curdir = getcwd()
-  if &ft == 'gitcommit'
+  if &ft == 'gitcommit' || &ft == 'Startify'
     return
   endif
   silent! lcd %:p:h

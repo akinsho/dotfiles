@@ -51,5 +51,16 @@ nmap <localleader>8 <Plug>AirlineSelectTab8
 nmap <localleader>9 <Plug>AirlineSelectTab9
 nmap <localleader>- <Plug>AirlineSelectPrevTab
 nmap <localleader>+ <Plug>AirlineSelectNextTab
+if has('nvim')
+  tnoremap <leader>1  <C-\><C-n><Plug>AirlineSelectTab1
+  tnoremap <leader>2  <C-\><C-n><Plug>AirlineSelectTab2
+  tnoremap <leader>3  <C-\><C-n><Plug>AirlineSelectTab3
+  tnoremap <leader>4  <C-\><C-n><Plug>AirlineSelectTab4
+  tnoremap <leader>5  <C-\><C-n><Plug>AirlineSelectTab5
+  tnoremap <leader>6  <C-\><C-n><Plug>AirlineSelectTab6
+  tnoremap <leader>7  <C-\><C-n><Plug>AirlineSelectTab7
+  tnoremap <leader>8  <C-\><C-n><Plug>AirlineSelectTab8
+  tnoremap <leader>9  <C-\><C-n><Plug>AirlineSelectTab9
+endif
 "}}}
 ""---------------------------------------------------------------------------//

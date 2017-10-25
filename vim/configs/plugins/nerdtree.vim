@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" NERDTrees highlighting 
+" NERDTrees highlighting
 ""---------------------------------------------------------------------------//
 function! NERDTreeHighlightFile(extension, fg, bg, guifg)
   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guifg='. a:guifg
@@ -64,7 +64,7 @@ nnoremap <c-n>f :call NERDTreeToggleAndFind()<CR>
 
 let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
-let g:NERDTreeBookmarksFile             = $DOTFILES.'/vim/.NERDTreeBookmarks'
+let g:NERDTreeBookmarksFile             = g:dotfiles . '/vim/.NERDTreeBookmarks'
 let NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
@@ -83,12 +83,13 @@ if exists('g:NERDTree')
     call webdevicons#hardRefresh()
   endif
 endif
-" let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
-" let g:DevIconsEnableFoldersOpenClose                             = 1
-" let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
-if !exists('g:gui_oni')
+if !g:gui_neovim_running
   let g:NERDTreeDirArrowExpandable = ''
   let g:NERDTreeDirArrowCollapsible = ''
+else
+  let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
+  let g:DevIconsEnableFoldersOpenClose                             = 1
+  let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
 endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {}
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''

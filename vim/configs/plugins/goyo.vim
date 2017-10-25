@@ -12,7 +12,7 @@ function! s:goyo_enter()
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
   endif
   set nonumber norelativenumber
-  set statusline=""
+  " set statusline=""
   set showtabline=0
   let b:quitting = 0
   let b:quitting_bang = 0
@@ -27,6 +27,7 @@ function! s:goyo_leave()
   endif
   set number relativenumber
   set showtabline=2
+  call lightline#update()
   redraw!
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1

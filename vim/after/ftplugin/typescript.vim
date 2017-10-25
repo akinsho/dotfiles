@@ -1,9 +1,9 @@
-setl foldmethod=indent foldlevelstart=99
+setl foldmethod=syntax foldlevelstart=99
 setl nofoldenable
 setl completeopt-=preview
 setl colorcolumn=100
-" setl omnifunc=tern#Complete
-
+set suffixesadd+=.ts
+set suffixesadd+=.tsx
 
 if has('nvim')
   nnoremap gd :TSDef<CR>

@@ -12,7 +12,15 @@ filetype off " required  Prevents potential side-effects from system ftdetects s
 ""---------------------------------------------------------------------------//
 " Config Loader
 ""---------------------------------------------------------------------------//
-let g:dotfiles = '~/Dotfiles/'
+let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
+
+let g:dotfiles = $DOTFILES
+" Environment variables aren't consisitently available on guis so dont use them
+" If possible or default to the literal string if possible
+if g:gui_neovim_running
+    let g:dotfiles = '~/Dotfiles/'
+endif
+
 function! LoadConfigs(s) abort
     let s:plugins = split(globpath(a:s, '*.vim'), '\n')
     for fpath in s:plugins
@@ -27,9 +35,6 @@ function! LoadConfigs(s) abort
             endtry
         endif
     endfor
-    echohl WarningMsg
-    " echom len(s:plugins).' plugin configs loaded'
-    echohl none
 endfunction
 
 function! Source(arg) abort

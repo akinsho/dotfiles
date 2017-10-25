@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-"     ALE 
+"     ALE
 ""---------------------------------------------------------------------------//
 " Disable linting for all minified JS files.
 if has('gui_running')
@@ -8,10 +8,13 @@ endif
 " Enable completion where available.
 " let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
 let g:ale_lint_on_insert_leave                 = 1
+let g:ale_fix_on_save                          = 1
 let g:ale_lint_on_enter                        = 0
 let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options          = '--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_pattern_options                      = {'\.min.js$': {'ale_enabled': 0}}
+let g:ale_javascript_prettier_options          =
+      \'--single-quote --trailing-comma es5' "Order of arguments matters here!!
+let g:ale_pattern_options                      =
+      \{'\.min.js$': {'ale_enabled': 0}}
 let g:ale_fixers = {
       \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier', 'eslint'],

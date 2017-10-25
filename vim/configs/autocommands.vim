@@ -28,19 +28,25 @@ endfunction
 call jspretmpl#register_tag('gql', 'graphql')
 augroup JSTempl
   autocmd!
-  autocmd FileType typescript syn clear foldBraces
   autocmd FileType javascript,typescript,typescript.tsx JsPreTmpl html
 augroup END
 
+function! s:ClearMatches() abort
+  try
+    call clearmatches()
+  endtry
+endfunction
+
 augroup WhiteSpace "{{{
+  au!
   " Highlight Whitespace
   highlight ExtraWhitespace ctermfg=red guifg=red
   match ExtraWhitespace /\s\+$/
   autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
   autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-  autocmd BufWinLeave * call clearmatches()
-  autocmd BufEnter * call s:WhitespaceHighlight()
+  autocmd BufWinLeave * silent! s:ClearMatches()
+  autocmd BufEnter * silent! call s:WhitespaceHighlight()
 augroup END "}}}
 
 " Auto open grep quickfix window and SmartClose {{{
@@ -87,7 +93,7 @@ augroup END "}}}
 " Reload vim and config automatically {{{
 augroup UpdateVim
   autocmd!
-  execute 'autocmd UpdateVim BufWritePost '.$DOTFILES.'/vim/configs/*,vimrc nested'
+  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
@@ -164,14 +170,16 @@ endfunction
 
 augroup mutltiple_filetype_settings "{{{
   autocmd!
-  autocmd BufEnter * Root "NOTE: this might break
+  if &ft != 'Startify'
+    autocmd BufEnter * Root "NOTE: this might break
+  endif
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
-  autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
-        \ | setlocal omnifunc=syntaxcomplete#Complete | endif
-
-  autocmd FileType * if exists("+completefunc") && &completefunc == ""
-        \ | setlocal completefunc=syntaxcomplete#Complete | endif
+  " autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
+  "       \ | setlocal omnifunc=syntaxcomplete#Complete | endif
+  "
+  " autocmd FileType * if exists("+completefunc") && &completefunc == ""
+  "       \ | setlocal completefunc=syntaxcomplete#Complete | endif
 
   autocmd FileType html,css,vue EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
@@ -198,7 +206,6 @@ augroup filetype_javascript_typescript "{{{
   autocmd VimEnter,BufNewFile,BufEnter,BufRead *.ts,*.tsx
         \ let b:ale_javascript_prettier_options=
         \ '--trailing-comma all --tab-width 4 --print-width 100'
-  autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx ALEFix
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END

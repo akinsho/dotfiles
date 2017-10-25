@@ -1,11 +1,11 @@
 setl completeopt-=preview
 setlocal nofoldenable  foldtext=FoldText()
-setlocal foldlevelstart=99 foldmethod=indent
-setl omnifunc=tern#Complete
+setlocal foldlevelstart=99 foldmethod=syntax
+set suffixesadd+=.js,.jsx
+
 if has('nvim')
   nnoremap gd :TSDef<CR>
 endif
-
 " Javascript {{{
 function! FoldText()
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
