@@ -86,7 +86,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
-" "}}}
+"}}}
 " "Syntax ============================{{{
 Plug 'hail2u/vim-css-syntax',
       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
@@ -100,8 +100,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ ] }
 Plug 'ap/vim-css-color',
       \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
-Plug 'styled-components/vim-styled-components',
-      \{ 'branch': 'rewrite', 'for': ['tsx', 'jsx'] }
+" Plug 'styled-components/vim-styled-components',
+      " \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'jparise/vim-graphql'
 "}}}
@@ -146,7 +146,7 @@ function! BuildComposer(info)
   endif
 endfunction
 Plug 'euclio/vim-markdown-composer',
-      \Cond(!has('gui_vimr'), { 'for': 'markdown', 'do': function('BuildComposer') })
+      \ Cond(!has('gui_vimr'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 "}}}
