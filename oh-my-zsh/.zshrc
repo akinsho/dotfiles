@@ -22,6 +22,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #Pyenv
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+# source "$(dirname $(gem which colorls))"/tab_complete.sh
 export PYENV_VIRTUAL_DISABLE_PROMPT=1
 
 # If you come from bash you might have to change your $PATH.
@@ -37,6 +38,9 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/Desktop/Coding/Go
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:$(go env GOPATH)/bin
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
 
 # RUBY ==========================================================
 if which ruby >/dev/null && which gem >/dev/null; then
@@ -302,7 +306,7 @@ echo load time: $((end_time - start_time)) seconds
 # LOL
 ##---------------------------------------------------------------------------//
 if brew ls --versions fortune > /dev/null;then
-  fortune | cowsay | lolcat
+  runonce <(fortune | cowsay | lolcat)
 fi
 # archey -o
 # zprof

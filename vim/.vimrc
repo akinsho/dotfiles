@@ -18,7 +18,7 @@ let g:dotfiles = $DOTFILES
 " Environment variables aren't consisitently available on guis so dont use them
 " If possible or default to the literal string if possible
 if g:gui_neovim_running
-    let g:dotfiles = '~/Dotfiles/'
+    let g:dotfiles = '~/Dotfiles'
 endif
 
 function! LoadConfigs(s) abort

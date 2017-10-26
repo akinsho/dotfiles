@@ -58,7 +58,6 @@ inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 ""---------------------------------------------------------------------------//
 if exists('g:gui_oni')
   set shell=/bin/bash
-  set statusline=""
 endif
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
@@ -270,8 +269,8 @@ if has('unnamedplus')
 elseif has('clipboard')
   set clipboard=unnamed
 endif
+set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
-  set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set incsearch
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode

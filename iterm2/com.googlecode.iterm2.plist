@@ -1303,11 +1303,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>368 155 918 485 0 0 1440 900 </string>
+	<string>644 45 918 512 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 5 720 895 0 0 1440 900 </string>
+	<string>720 4 720 896 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4876,7 +4876,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>04F2B1C7-B89F-486B-9D5D-C67C15F69855</string>
 	<key>NoSyncLastTipTime</key>
-	<real>530484508.64352798</real>
+	<real>530660353.70013797</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4932,6 +4932,8 @@
 		<string>0037</string>
 		<string>0038</string>
 		<string>0039</string>
+		<string>0040</string>
+		<string>0041</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -4997,7 +4999,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-10-23T10:30:54Z</date>
+	<date>2017-10-25T19:44:09Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5015,7 +5017,7 @@
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.43551181891025637</real>
+	<real>0.10000000000000001</real>
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>SwitchPaneModifier</key>

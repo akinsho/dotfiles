@@ -1,6 +1,7 @@
 # =============================================================================
 # Aliases
 # =============================================================================
+alias l="colorls -r"
 alias x="exit" # Exit Terminal
 alias t=_t
 alias del="rm -rf"
@@ -13,7 +14,7 @@ alias wfront="cd ~/Desktop/Coding/Work/yulife-signup-front-end/"
 alias code="cd ~/Desktop/Coding"
 alias magit="nvim -c \"MagitOnly\""
 alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
-alias l="lsp"
+alias lp="lsp"
 alias la='ls -aG'
 # alias v='nvim'
 alias vi='vim'

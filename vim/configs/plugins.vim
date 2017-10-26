@@ -72,14 +72,14 @@ augroup load_fat_finger
         \| autocmd! load_fat_finger
 augroup END
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
-Plug 'itchyny/lightline.vim'
+if !exists('g:gui_oni')
+  Plug 'itchyny/lightline.vim'
+endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-fugitive'
@@ -124,6 +124,7 @@ Plug 'kana/vim-textobj-user'
 " "}}}
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
+Plug 'airblade/vim-rooter'
 " "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
@@ -161,6 +162,7 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
+Plug 'ludovicchabant/vim-gutentags'
 " Don't use netrw at all
 " let g:loaded_netrwPlugin = 1
 "}}}
