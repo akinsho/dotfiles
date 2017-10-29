@@ -98,8 +98,8 @@ endif
 " Window splitting and buffers {{{
 " ----------------------------------------------------------------------------
 "NOTE: notimeout setting is super important as it prevents delayed key entry
-" set notimeout timeoutlen=500 ttimeoutlen=100
-set timeout timeoutlen=500 ttimeoutlen=10
+set notimeout timeoutlen=500 ttimeoutlen=100
+" set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit

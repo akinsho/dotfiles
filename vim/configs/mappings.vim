@@ -66,12 +66,6 @@ function! s:Unfocus()
   call clearmatches()
 endfunction
 "}}}
-""---------------------------------------------------------------------------//
-" Find and Jump Mapping
-""---------------------------------------------------------------------------//"
-" Map <Leader>ff to display all lines with keyword under cursor
-" and ask which one to jump to
-  nnoremap <localleader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " ----------------------------------------------------------------------------
 " Credit: JGunn Choi ?il | inner line
 " ----------------------------------------------------------------------------
@@ -682,3 +676,21 @@ nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 " Show last search in quickfix - http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
+
+cnoremap <expr> <CR> <SID>CCR()
+function! s:CCR()
+  command! -bar Z silent set more|delcommand Z
+  if getcmdtype() == ":"
+    let cmdline = getcmdline()
+    if cmdline =~ '\v\C^(dli|il)' | return "\<CR>:" . cmdline[0] . "jump   " . split(cmdline, " ")[1] . "\<S-Left>\<Left>\<Left>"
+    elseif cmdline =~ '\v\C^(cli|lli)' | return "\<CR>:silent " . repeat(cmdline[0], 2) . "\<Space>"
+    elseif cmdline =~ '\C^changes' | set nomore | return "\<CR>:Z|norm! g;\<S-Left>"
+    elseif cmdline =~ '\C^ju' | set nomore | return "\<CR>:Z|norm! \<C-o>\<S-Left>"
+    elseif cmdline =~ '\v\C(#|nu|num|numb|numbe|number)$' | return "\<CR>:"
+    elseif cmdline =~ '\C^ol' | set nomore | return "\<CR>:Z|e #<"
+    elseif cmdline =~ '\v\C^(ls|files|buffers)' | return "\<CR>:b"
+    elseif cmdline =~ '\C^marks' | return "\<CR>:norm! `"
+    elseif cmdline =~ '\C^undol' | return "\<CR>:u "
+    else | return "\<CR>" | endif
+  else | return "\<CR>" | endif
+endfunction

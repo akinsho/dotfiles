@@ -32,7 +32,7 @@ files have run.
 This lets me have the last word on the settings per file type after the plugins
 have run and the ft files from vim so my settings definitely show up.
 
-```
+```vim
   .vim/
     autoload/
     ftplugin/
@@ -46,13 +46,14 @@ have run and the ft files from vim so my settings definitely show up.
 
 
 ## Amazing Tools
-A list of amazing tools I've discovered but cannot hide away
 1. **Vimr** - An absolutely astounding project to create a gui for neovim. It's
    a wonder to behold and really hits the nail on the head although its still
    new so not perfect but is under active development. Has file browser
    markdown preview etc.
 
-   2. [Karabiner-elements](https://github.com/tekezo/Karabiner-Elements) - Well
+2. **Oni** - Another perphaps even more spectacular GUI for neovim, featuring a very modern ui with completion menus, find in project menus etc.
+
+2. [Karabiner-elements](https://github.com/tekezo/Karabiner-Elements) - Well
    known tool which has been remade for macOS Sierra which allows remapping keys, so
    you can do cool things like make the capslock key return an escape if
    pressed alone otherwise it returns control.
@@ -104,13 +105,13 @@ A list of amazing tools I've discovered but cannot hide away
    some plugins I'm keeping my eyes on
 
 ## Clojure
-   *    Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-   *    Plug 'guns/vim-sexp'
-   *    Plug 'guns/vim-clojure-highlight'
-   *    let g:clojure_fold = 1
-   *    let g:sexp_filetypes = ''
-   *    Plug 'tpope/vim-salve'
-   *    let g:salve_auto_start_repl = 1
+   *    `Plug 'tpope/vim-fireplace', { 'for': 'clojure' }`
+   *    `Plug 'guns/vim-sexp'`
+   *    `Plug 'guns/vim-clojure-highlight'`
+   *    `let g:clojure_fold = 1`
+   *    `let g:sexp_filetypes = ''`
+   *    `Plug 'tpope/vim-salve'`
+   *    `let g:salve_auto_start_repl = 1`
 
 ## Tmux Setup
    Tmux is an amazing dev tool, it is a `terminal multiplexer`. Which is matrix
