@@ -60,6 +60,8 @@ endif
 ""---------------------------------------------------------------------------//
 if exists('g:gui_oni')
   set shell=/bin/bash
+else
+  set shell=/bin/zsh
 endif
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
@@ -67,7 +69,7 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions+=g " gray menu items
   set guioptions+=m " menu bar
   set guioptions+=e " nice gui tabs
-  set guifont=Fira\ Code:h16
+  set guifont=Hasklug\ Nerd\ Font:h16
   set guioptions-=e
   set linespace=1
   set antialias
