@@ -49,7 +49,7 @@ augroup SmartClose
         \gitcommit,quickrun,qfreplace,ref,
         \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
         \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
-
+  " autocmd Filetype qf setl nocolor
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
@@ -106,9 +106,7 @@ function! CheckColorColumn()
   if &ft ==# 'startify'
     return
   endif
-  if &colorcolumn > 0
-    let b:cl_size = &colorcolumn
-  endif
+  let b:cl_size = &colorcolumn
   if winwidth('%') <= 120
     setl colorcolumn=
   else
@@ -116,10 +114,9 @@ function! CheckColorColumn()
         let &colorcolumn=b:cl_size
     catch
       echohl WarningMsg
-      " echom v:exception
-      echom 'colorcolumn set to 80'
+      echom v:exception
       echohl None
-      let &colorcolumn=80 "Desparare default
+      let &colorcolumn=80 "Desparate default
     endtry
   endif
 endfunction
@@ -194,9 +191,6 @@ augroup filetype_javascript_typescript "{{{
   "==================================
   "TypeScript
   "==================================
-  autocmd VimEnter,BufNewFile,BufEnter,BufRead *.ts,*.tsx
-        \ let b:ale_javascript_prettier_options=
-        \ '--trailing-comma all --tab-width 4 --print-width 100'
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
@@ -250,12 +244,12 @@ if has('nvim')
     autocmd BufEnter,BufWinLeave term://* setlocal nonumber norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
-    " if exists('+winhighlight')
-    "   highlight BlackTerminal guibg=black ctermbg=Black
-    "   autocmd TermOpen * if &buftype !=# 'fzf'
-    "         \ | set winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
-    "         \ | endif
-    " endif
+    if exists('+winhighlight') && !g:gui_neovim_running
+      highlight BlackTerminal guibg=#000000 ctermbg=Black
+      autocmd TermOpen * if &filetype !=# 'fzf'
+            \ | setlocal winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
+            \ | endif
+    endif
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END

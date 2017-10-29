@@ -1,10 +1,11 @@
 ""---------------------------------------------------------------------------//
-" NEOTERM 
+" NEOTERM
 ""---------------------------------------------------------------------------//
-let g:neoterm_size         = '20'
+let g:neoterm_size         = '30'
 let g:neoterm_position     = 'horizontal'
 let g:neoterm_automap_keys = ',tt'
 let g:neoterm_autoscroll   = 1
+let g:neoterm_autoinsert   = 1
 let g:neoterm_fixedsize    = 1
 " Git commands
 command! -nargs=+ Tg :T git <args>
@@ -20,4 +21,3 @@ nnoremap <silent> <leader>th :call neoterm#close()<cr>
 " clear terminal
 nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
 nnoremap <silent> <leader>tk :call neoterm#kill()<cr>
-"}}}

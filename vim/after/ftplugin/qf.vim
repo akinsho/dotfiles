@@ -3,6 +3,7 @@
 setlocal number
 setlocal norelativenumber
 setlocal nolist
+setlocal colorcolumn=
 setlocal wrap
 if has('nvim')
   highlight QuickFixLine gui=bold
@@ -22,7 +23,9 @@ set cpoptions&vim
 let b:undo_ftplugin = 'setl fo< com< ofu<'
 
 " open entry in a new horizontal window
+unmap <buffer> s
 nnoremap <silent><buffer> s <C-w><CR>
+unmap <buffer> <CR>
 nnoremap <buffer><CR> <CR><C-w>p
 " open entry in a new vertical window.
 nnoremap <silent><expr> <buffer> v &splitright ? "\<C-w>\<CR>\<C-w>L\<C-w>p\<C-w>J\<C-w>p" : "\<C-w>\<CR>\<C-w>H\<C-w>p\<C-w>J\<C-w>p"

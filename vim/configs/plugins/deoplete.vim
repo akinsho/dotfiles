@@ -8,7 +8,6 @@
   let g:deoplete#max_menu_width          = 80
   let g:deoplete#max_menu_height         = 50
   let g:deoplete#file#enable_buffer_path = 1
-  let g:tmuxcomplete#trigger                     = ''
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif

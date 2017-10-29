@@ -26,8 +26,8 @@ eval "$(pyenv virtualenv-init -)"
 export PYENV_VIRTUAL_DISABLE_PROMPT=1
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 
 # Means of adding python not sure which is the right one
 # neither seem necessary

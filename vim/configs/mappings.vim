@@ -29,7 +29,7 @@ nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
 nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
 nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
 nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
-nnoremap <Leader>tt :tabnew<CR>:te<CR>
+nnoremap <Leader>te :tabnew<CR>:te<CR>
 "}}}
 
 ""---------------------------------------------------------------------------//
@@ -83,8 +83,7 @@ xnoremap <silent> il <Esc>^vg_
 onoremap <silent> il :<C-U>normal! ^vg_<CR>
 ""---------------------------------------------------------------------------//
 " Word transposition. Lifted from:
-" http://superuser.com/questions/290360
-"/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
+" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
 ""---------------------------------------------------------------------------//
 " exchange word under cursor with the next word without moving the cursor
 nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>

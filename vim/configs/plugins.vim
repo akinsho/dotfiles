@@ -77,6 +77,7 @@ if !exists('g:gui_oni')
 endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
+Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
@@ -87,7 +88,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 "}}}
-" "Syntax ============================{{{
+"Syntax ============================{{{
 Plug 'hail2u/vim-css-syntax',
       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 Plug 'Yggdroot/indentLine'
@@ -100,8 +101,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ ] }
 Plug 'ap/vim-css-color',
       \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
-" Plug 'styled-components/vim-styled-components',
-      " \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
+Plug 'styled-components/vim-styled-components',
+      \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'jparise/vim-graphql'
 "}}}
@@ -162,7 +163,4 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
-Plug 'ludovicchabant/vim-gutentags'
-" Don't use netrw at all
-" let g:loaded_netrwPlugin = 1
 "}}}

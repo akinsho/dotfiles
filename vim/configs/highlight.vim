@@ -38,10 +38,6 @@ highlight Type    gui=italic,bold cterm=italic,bold
 highlight Folded  gui=bold cterm=bold guifg=#A2E8F6
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-"Color the tildes at the end of the buffer
-" hi link EndOfBuffer VimFgBgAttrib
-" highlight VertSplit guibg=bg guifg=bg
-" highlight Identifier gui=italic,bold
 ""---------------------------------------------------------------------------//
 " Startify Highlighting
 ""---------------------------------------------------------------------------//
@@ -68,5 +64,11 @@ endif
 " highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 highlight BufTabLineCurrent gui=bold guibg=#E7B563 guifg=black
+
+highlight QuickFixLine guibg=#8A95A7 gui=underline
+"Color the tildes at the end of the buffer
+" hi link EndOfBuffer VimFgBgAttrib
+" highlight VertSplit guibg=bg guifg=bg
+" highlight Identifier gui=italic,bold
 "}}}
 ""---------------------------------------------------------------------------//
