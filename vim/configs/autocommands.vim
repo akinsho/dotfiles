@@ -77,8 +77,10 @@ augroup end "}}}
 " Disable paste.{{{
 augroup Cancel_Paste
   autocmd!
-  autocmd InsertLeave *
-        \ if &paste | set nopaste | echo 'nopaste' | endif
+  if !g:gui_neovim_running
+    autocmd InsertLeave *
+          \ if &paste | set nopaste | echo 'nopaste' | endif
+  endif
 augroup END "}}}
 
 " Reload vim and config automatically {{{
@@ -95,7 +97,7 @@ augroup UpdateVim
   autocmd FocusLost * :wa
   autocmd VimResized * redraw!
   autocmd VimResized * wincmd =
-  autocmd VimResized,VimEnter,WinNew,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
+  autocmd VimResized,WinNew,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
 augroup END
 " }}}
 

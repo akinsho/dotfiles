@@ -50,7 +50,9 @@ function! XTermPasteBegin()
   return ''
 endfunction
 
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+if !g:gui_neovim_running
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+endif
 "}}}
 " ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//

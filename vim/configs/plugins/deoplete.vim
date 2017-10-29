@@ -9,7 +9,9 @@
   let g:deoplete#max_menu_height         = 50
   let g:deoplete#file#enable_buffer_path = 1
   let g:tmuxcomplete#trigger                     = ''
-  let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+  if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
+  endif
   call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
   call deoplete#custom#source('ultisnips', 'rank', 630)
   call deoplete#custom#set('typescript',   'rank', 600)

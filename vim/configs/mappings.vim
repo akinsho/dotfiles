@@ -14,15 +14,14 @@ if has('nvim')
   tmap <C-k> <C-\><C-n><C-k>
   tmap <C-l> <C-\><C-n><C-l>
   tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
-  tmap <tab> <C-\><C-n>:bnext<CR>
-  tmap <S-tab> <C-\><C-n>:bprev<CR>
+  tmap <leader>. <C-\><C-n>:bprev<CR>
   tmap <leader>, <C-\><C-n>:bnext<cr>
 else
-  tnoremap <C-h> <C-W>h
-  tnoremap <C-j> <C-W>j
-  tnoremap <C-k> <C-W>k
-  tnoremap <C-l> <C-W>l
-  tnoremap <C-x> <C-W>:q!<CR>
+  tmap <C-h> <C-W>h
+  tmap <C-j> <C-W>j
+  tmap <C-k> <C-W>k
+  tmap <C-l> <C-W>l
+  tmap <C-x> <C-W>:q!<CR>
 endif
 nnoremap <leader>to :term<cr>
 "Opening splits with terminal in all directions
@@ -154,6 +153,9 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " Commands {{{
 command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _
 command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _
+" smooth searching
+cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"
+cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"
 " Smart mappings on the command line
 cno $d e ~/Desktop/
 " insert path of current file into a command
@@ -181,8 +183,8 @@ cabbrev lprev Lprev
 nnoremap <expr> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
 nnoremap <expr> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 " c-a / c-e everywhere - RSI.vim provides these
-" cnoremap <C-A> <Home>
-" cnoremap <C-E> <End>
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
 " Scroll command history
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
@@ -222,6 +224,26 @@ nnoremap <leader>6 6gt
 nnoremap <leader>7 7gt
 nnoremap <leader>8 8gt
 nnoremap <leader>9 9gt
+" ========== Multiple Cursor Replacement ========
+" http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+
+let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
+
+nnoremap cn *``cgn
+nnoremap cN *``cgN
+
+vnoremap <expr> cn g:mc . "``cgn"
+vnoremap <expr> cN g:mc . "``cgN"
+
+function! SetupCR()
+  nnoremap <Enter> :nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z
+endfunction
+
+nnoremap cq :call SetupCR()<CR>*``qz
+nnoremap cQ :call SetupCR()<CR>#``qz
+
+vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
+vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
 "----------------------------------------------------------------------------
 "Buffers
 "----------------------------------------------------------------------------
@@ -246,7 +268,7 @@ nmap ˙ <a-h>
 nmap ∆ <a-j>
 nmap ˚ <a-k>
 ""---------------------------------------------------------------------------//
-" Last Insterted or Changed object
+" Last Inserted or Changed object
 ""---------------------------------------------------------------------------//
 " Like gv, but select the last changed text.
 nnoremap gi  `[v`]
@@ -266,13 +288,11 @@ inoremap <c-d> <esc>ddi
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-nnoremap <silent> ß :move+<cr>
-nnoremap <silent> ∂ :move-2<cr>
-nnoremap <silent> - :move+<cr>
-nnoremap <silent> _ :move-2<cr>
+nnoremap <silent> ∆ :move+<cr>
+nnoremap <silent> ˚ :move-2<cr>
 " Move visual block
-vnoremap K :m '<-2<CR>gv=gv
-vnoremap J :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
+vnoremap ∆ :m '>+1<CR>gv=gv
 
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
@@ -377,8 +397,8 @@ nnoremap Y y$
 ""---------------------------------------------------------------------------//
 " Quick find/replace
 ""---------------------------------------------------------------------------//
-nnoremap <Leader>[ :%s/<C-r><C-w>/
-nnoremap <localleader>[ :s/<C-r><C-w>/
+nnoremap <Leader>[ :%s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <localleader>[ :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 ""---------------------------------------------------------------------------//
 " Find and Replace Using Abolish Plugin %S - Subvert
@@ -474,7 +494,7 @@ augroup GoToLine
   autocmd! BufRead * nested call s:goto_line()
 augroup END
 " ----------------------------------------------------------------------------
-" <Leader>?/! | Google it / Feeling lucky
+" Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
 function! s:goog(pat, lucky)
   let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
@@ -490,7 +510,7 @@ xnoremap <leader>? "gy:call <SID>goog(@g, 0)<cr>gv
 xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
 
 " ----------------------------------------------------------------------------
-" ConnectChrome
+" Credit: June Gunn  == ConnectChrome
 " ----------------------------------------------------------------------------
 if has('mac')
   function! s:connect_chrome(bang)
