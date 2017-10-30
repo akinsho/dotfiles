@@ -1,6 +1,7 @@
 ""---------------------------------------------------------------------------//
 " Deoplete Options
 ""---------------------------------------------------------------------------//
+if has('nvim')
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#enable_smart_case       = 1
   let g:deoplete#enable_ignore_case      = 1
@@ -23,4 +24,5 @@
   call deoplete#custom#set('jedi',         'mark', '')
   call deoplete#custom#set('typescript',   'mark', '')
   call deoplete#custom#set('ultisnips',    'mark', '')
+endif
   "}}}

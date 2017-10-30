@@ -55,11 +55,10 @@ syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
+let s:settings = g:dotfiles . '/vim/configs/plugins'
 call Source('/vim/configs/general.vim')
 call Source('/vim/configs/open-changed-files.vim')
 call Source('/vim/configs/highlight.vim')
-"TODO: source all files with load config fn let s:configs = g:dotfiles.'.'/vim/configs'
-let s:settings = g:dotfiles . '/vim/configs/plugins'
 call LoadConfigs(s:settings)
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')

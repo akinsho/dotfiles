@@ -97,9 +97,7 @@ endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers {{{
 " ----------------------------------------------------------------------------
-"NOTE: notimeout setting is super important as it prevents delayed key entry
-set notimeout timeoutlen=500 ttimeoutlen=100
-" set timeout timeoutlen=500 ttimeoutlen=10
+set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit
@@ -247,7 +245,6 @@ set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 " insert completion height and options
 set secure  " Disable autocmd etc for project local vimrc files.
 set pumheight=10
-set title
 set number relativenumber
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
@@ -337,7 +334,7 @@ hi CursorLineNr guifg=yellow gui=bold
 " hostname() . ' ● :'
 let &titlestring=' ❐ %f  %r %m'
 set title
-set titleold=getcwd()
+" set titleold
 "}}}
 ""---------------------------------------------------------------------------//
 "NVIM {{{

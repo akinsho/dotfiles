@@ -28,6 +28,15 @@ function! s:ClearMatches() abort
   endtry
 endfunction
 
+
+augroup vimrc-incsearch-highlight
+  autocmd!
+  if exists('+CmdlineEnter')
+    autocmd CmdlineEnter [/\?] :set hlsearch
+    autocmd CmdlineLeave [/\?] :set nohlsearch
+  endif
+augroup END
+
 augroup WhiteSpace "{{{
   au!
   " Highlight Whitespace

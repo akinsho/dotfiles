@@ -22,13 +22,12 @@ call plug#begin('~/.vim/plugged')
 " Code completion
 Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
 "NVIM ====================================
-Plug 'Quramy/tsuquyomi',            Cond(!has('nvim'))
 if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
+  Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
+        \ {'for':['javascript', 'javascript.jsx','typescript'],
+        \'do': 'npm install -g tern' })
 endif
-Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
-      \ {'for':['javascript', 'javascript.jsx','typescript'],
-      \'do': 'npm install -g tern' })
 Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc',    Cond(!has('nvim'))
 Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
@@ -103,9 +102,6 @@ Plug 'ap/vim-css-color',
       \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
 Plug 'styled-components/vim-styled-components',
       \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
-Plug 'Quramy/vim-js-pretty-template'
-Plug 'jparise/vim-graphql'
-"}}}
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -114,7 +110,6 @@ Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects ====================={{{
 Plug 'alvan/vim-closetag'
 Plug 'tommcdo/vim-exchange'
-Plug 'bkad/CamelCaseMotion'
 Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'terryma/vim-expand-region'
@@ -134,7 +129,6 @@ Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
-Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 "}}}
@@ -164,4 +158,9 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
+"}}}
+" Plug 'bkad/CamelCaseMotion'
+" Plug 'Quramy/vim-js-pretty-template'
+" Plug 'jparise/vim-graphql'
+" Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 "}}}

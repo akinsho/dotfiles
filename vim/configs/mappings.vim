@@ -281,9 +281,9 @@ inoremap <c-d> <esc>ddi
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
+" Move visual block
 nnoremap <silent> ∆ :move+<cr>
 nnoremap <silent> ˚ :move-2<cr>
-" Move visual block
 vnoremap ˚ :m '<-2<CR>gv=gv
 vnoremap ∆ :m '>+1<CR>gv=gv
 
@@ -536,9 +536,9 @@ nnoremap 0 ^
 inoremap jk <ESC>
 xnoremap jk <ESC>
 cnoremap jk <C-C>
-"@= makes the motions take counts
-nnoremap <expr> J (v:count > 1 ? 'm`' . v:count : '') . "@='10gj'<CR>"
-nnoremap <expr> K (v:count > 1 ? 'm`' . v:count : '') . "@='10gk'<CR>"
+
+nnoremap J 10j
+nnoremap K 10k
 
 
 "This line opens the vimrc in a vertical split

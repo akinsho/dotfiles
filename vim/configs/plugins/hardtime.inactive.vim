@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" HardTime 
+" HardTime
 ""---------------------------------------------------------------------------//"
 nnoremap <leader>ht :HardTimeToggle<CR>
 if strftime("%H") > 18 "Turn on Hard Time out of working hours
@@ -12,4 +12,3 @@ let g:hardtime_timeout                = 1000
 let g:hardtime_allow_different_key    = 1
 let g:hardtime_maxcount               = 2
 let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
-"}}}

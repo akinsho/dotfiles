@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" FUGITIVE 
+" FUGITIVE
 ""---------------------------------------------------------------------------//
 " For fugitive.git, dp means :diffput. Define dg to mean :diffget
 nnoremap <silent> <leader>dg :diffget<CR>
