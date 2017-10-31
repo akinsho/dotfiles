@@ -58,18 +58,14 @@ endif
 ""---------------------------------------------------------------------------//
 " MACVIM
 ""---------------------------------------------------------------------------//
-if exists('g:gui_oni')
-  set shell=/bin/bash
-else
-  set shell=/bin/zsh
-endif
+set shell=/bin/bash "run a simple bash rc without all the bells and whistles
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
   set guioptions+=g " gray menu items
   set guioptions+=m " menu bar
   set guioptions+=e " nice gui tabs
-  set guifont=Hasklug\ Nerd\ Font:h16
+  set guifont=FuraCode\ Nerd\ Font:h16 "Too find font proper run fc-list | grep name-of-font
   set guioptions-=e
   set linespace=1
   set antialias
@@ -319,7 +315,7 @@ iabbrev w@ www.akin-sowemimo.com
 "Colorscheme {{{
 ""---------------------------------------------------------------------------//
 set background=dark
-if (has("autocmd") && !has("gui_running") && !has('gui_vimr') && !exists('g:gui_oni'))
+if (has("autocmd") && !g:gui_neovim_running)
   let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
   autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
 end
@@ -434,8 +430,10 @@ if &filetype ==# 'html'
 endif
 augroup cursorline
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
-  autocmd WinLeave,InsertEnter * setlocal nocursorline
+  if &buftype != 'terminal'
+    autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
+    autocmd WinLeave,InsertEnter * setlocal nocursorline
+  endif
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

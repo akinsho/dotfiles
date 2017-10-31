@@ -250,20 +250,19 @@ if has('nvim')
     au!
     autocmd BufEnter term://* startinsert
     "Do everything possible to prevent numbers in term buffer
-    autocmd BufEnter,BufWinLeave term://* setlocal nonumber norelativenumber
+    autocmd BufEnter,BufWinLeave,InsertLeave term://* setlocal nonumber norelativenumber nocursorline
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
-    if exists('+winhighlight') && !g:gui_neovim_running
-      highlight BlackTerminal guibg=#000000 ctermbg=Black
-      autocmd TermOpen * if &filetype !=# 'fzf'
-            \ | setlocal winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
-            \ | endif
-    endif
+    " if exists('+winhighlight') && !g:gui_neovim_running && &ft != 'fzf'
+    "   echom &ft
+    "   highlight BlackTerminal guibg=#000000 ctermbg=Black
+    "   autocmd TermOpen *
+    "         \ | setlocal winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
+    " endif
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
-else
-     au BufWinEnter * if &buftype == 'terminal' | setlocal bufhidden=hide | endif
+  au BufWinEnter * if &buftype == 'terminal' | setlocal bufhidden=hide | endif
 endif
 "}}}
 

@@ -11,7 +11,6 @@ env:
   # Note that some xterm terminfo databases don't declare support for italics.
   # You can verify this by checking for the presence of `smso` and `sitm` in
   # `infocmp xterm-256color`.
-  # TERM: alacritty-256color [WIP]
   TERM: xterm-256color
 
 # Window dimensions in character columns and lines
@@ -24,14 +23,8 @@ dimensions:
 # Units are physical pixels; this is not DPI aware.
 # (change requires restart)
 padding:
-  x: 10
-  y: 5
-
-# The FreeType rasterizer needs to know the device DPI for best results
-# (changes require restart)
-dpi:
-  x: 96.0
-  y: 96.0
+  x: 5
+  y: 2
 
 # Display tabs using this many cells (changes require restart)
 tabspaces: 8
@@ -43,21 +36,19 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    # family: Hasklug NF
-    family: Operator Mono
+    family: FuraCode Nerd Font
     # Style can be specified to pick a specific face.
-     style: Book
+    style: Regular
 
   # The bold font face
   bold:
-    # family: flottflott
-    family: Hasklig
+    family: Hasklug Nerd Font
     # Style can be specified to pick a specific face.
     style: Bold
 
   # The italic font face
   italic:
-    family: Hasklig
+    family: Operator Mono
     # Style can be specified to pick a specific face.
     style: Italic
 
@@ -87,14 +78,13 @@ render_timer: false
 
 # Use custom cursor colors. If true, display the cursor in the cursor.foreground
 # and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: true
+custom_cursor_colors: false
 
 # Colors (Tomorrow Night Bright)
 colors:
   # Default colors
   primary:
-    background: '0x263238'
-    # 0x000000'
+    background: '0x282c34'
     foreground: '0xeaeaea'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
@@ -126,14 +116,14 @@ colors:
 
   # Dim colors (Optional)
   dim:
-￼   black:   '0x333333'
-￼   red:     '0xf2777a'
-￼   green:   '0x99cc99'
-￼   yellow:  '0xffcc66'
-￼   blue:    '0x6699cc'
-￼   magenta: '0xcc99cc'
-￼   cyan:    '0x66cccc'
-￼   white:   '0xdddddd'
+    black:   '0x333333'
+    red:     '0xf2777a'
+    green:   '0x99cc99'
+    yellow:  '0xffcc66'
+    blue:    '0x6699cc'
+    magenta: '0xcc99cc'
+    cyan:    '0x66cccc'
+    white:   '0xdddddd'
 
 
 # Visual Bell
@@ -161,6 +151,9 @@ colors:
 visual_bell:
   animation: EaseOutExpo
   duration: 0
+
+# Background opacity
+background_opacity: 1.0
 
 # Key bindings
 #
@@ -195,15 +188,19 @@ visual_bell:
 #     strings. For example:
 #     - { ... , command: { program: "alacritty", args: ["-e", "vttest"] } }
 key_bindings:
-  - { key: Space, mods: Control, chars: "\x00"                           }
+  - { key: Space, mods: Control, chars: "\x00" }
+  - { key: N,        mods: Command, command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] } }
   - { key: V,        mods: Command, action: Paste                        }
   - { key: C,        mods: Command, action: Copy                         }
   - { key: Q,        mods: Command, action: Quit                         }
   - { key: W,        mods: Command, action: Quit                         }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
-  - { key: Home,                    chars: "\x1b[1~",  mode: ~AppCursor  }
+  - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
-  - { key: End,                     chars: "\x1b[4~",  mode: ~AppCursor  }
+  - { key: End,                     chars: "\x1b[F",   mode: ~AppCursor  }
+  - { key: Key0,     mods: Command, action: ResetFontSize                }
+  - { key: Equals,   mods: Command, action: IncreaseFontSize             }
+  - { key: Minus,    mods: Command, action: DecreaseFontSize             }
   - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
   - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
   - { key: PageUp,                  chars: "\x1b[5~"                     }
@@ -273,14 +270,17 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-hide_cursor_when_typing: true
+hide_cursor_when_typing: false
+
+# Live config reload (changes require restart)
+live_config_reload: true
 
 # Shell
 #
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
-shell:
- program: /usr/local/bin/zsh
- args:
-   - --login
+#shell:
+#  program: /bin/bash
+#  args:
+#    - --login

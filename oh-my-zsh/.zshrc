@@ -19,14 +19,11 @@ export RUNCOM=$DOTFILES/runcom/
 #export PATH="$(yarn global bin):$PATH"
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 export PATH="$HOME/.cargo/bin:$PATH"
-#Pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 # source "$(dirname $(gem which colorls))"/tab_complete.sh
 export PYENV_VIRTUAL_DISABLE_PROMPT=1
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 
 # Means of adding python not sure which is the right one
@@ -144,6 +141,10 @@ eval "$(hub alias -s)"
 ## NPX - AUTO-FALL-BACK COMMAND
 ##---------------------------------------------------------------------------///
 source <(npx --shell-auto-fallback zsh)
+
+#Pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
