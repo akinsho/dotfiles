@@ -76,8 +76,8 @@ if !exists('g:gui_oni')
 endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-Plug 'c0r73x/neotags.nvim'
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
+" Plug 'c0r73x/neotags.nvim'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
@@ -100,8 +100,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ 'typescript'
       \ ] }
 Plug 'ap/vim-css-color'
-Plug 'styled-components/vim-styled-components',
-      \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
+" Plug 'styled-components/vim-styled-components',
+"       \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
 " Plug 'hail2u/vim-css-syntax',
 "       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 "Git ==============================={{{

@@ -6,5 +6,5 @@ call jspretmpl#register_tag('gql', 'graphql')
 augroup JSTempl
   autocmd!
   "TODO: This should be in local vimrc as I might want to highlight html
-  autocmd FileType javascript,typescript JsPreTmpl graphql
+  autocmd FileType javascript,typescript JsPreTmpl html
 augroup END

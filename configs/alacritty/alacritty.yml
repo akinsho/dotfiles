@@ -24,7 +24,7 @@ dimensions:
 # (change requires restart)
 padding:
   x: 5
-  y: 2
+  y: 5
 
 # Display tabs using this many cells (changes require restart)
 tabspaces: 8
@@ -36,7 +36,8 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: FuraCode Nerd Font
+    # family: FuraCode Nerd Font
+    family: Hasklug Nerd Font
     # Style can be specified to pick a specific face.
     style: Regular
 
