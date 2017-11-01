@@ -86,6 +86,7 @@ have run and the ft files from vim so my settings definitely show up.
    * `Plug 'low-ghost/nerdtree-fugitive'  "Fugitive capability in nerd tree`
    * `Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line`
    * `Plug 'editorconfig/editorconfig-vim'`
+   * `Plug 'bkad/CamelCaseMotion`
 
    Autocompletion for css which auto expands, very cool idea
    although at present it clashes with other insert mode

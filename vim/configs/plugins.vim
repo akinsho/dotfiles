@@ -76,7 +76,8 @@ if !exists('g:gui_oni')
 endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'c0r73x/neotags.nvim'
+" Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
@@ -88,8 +89,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
-Plug 'hail2u/vim-css-syntax',
-      \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'jparise/vim-graphql'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx'
@@ -98,10 +99,11 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ 'javascript',
       \ 'typescript'
       \ ] }
-Plug 'ap/vim-css-color',
-      \{ 'for': [  'vim',  'css',  'javascript',  'typescript' ] }
+Plug 'ap/vim-css-color'
 Plug 'styled-components/vim-styled-components',
       \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
+" Plug 'hail2u/vim-css-syntax',
+"       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -122,6 +124,7 @@ Plug 'kana/vim-textobj-user'
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
+" Plug 'itchyny/vim-cursorword'
 " "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
@@ -159,8 +162,5 @@ else
   runtime! macros/matchit.vim
 endif
 "}}}
-" Plug 'bkad/CamelCaseMotion'
-" Plug 'Quramy/vim-js-pretty-template'
-" Plug 'jparise/vim-graphql'
 " Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 "}}}

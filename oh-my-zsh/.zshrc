@@ -118,7 +118,8 @@ export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH
 
 # you may need to manually set your language environment
-export LANG=en_us.utf-8
+export LC_ALL=en_GB.UTF-8
+export LANG=en_GB.UTF-8
 
 # preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
