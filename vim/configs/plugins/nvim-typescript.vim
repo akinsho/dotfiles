@@ -1,7 +1,7 @@
 ""---------------------------------------------------------------------------//
 " NVIM TYPESCRIPT
 ""---------------------------------------------------------------------------//
-
+if !has('gui_running')
   let g:nvim_typescript#kind_symbols = {
         \ 'keyword': 'keyword',
         \ 'class': '',
@@ -31,7 +31,8 @@
         \ 'call': 'call',
         \ 'constructor': '',
         \}
-  let g:nvim_typescript#javascript_support       = 1
-  let g:nvim_typescript#type_info_on_hold        = 1
-  let g:nvim_typescript#vue_support              = 1
-  let g:nvim_typescript#max_completion_detail    = 1
+endif
+let g:nvim_typescript#javascript_support       = 1
+let g:nvim_typescript#type_info_on_hold        = 1
+let g:nvim_typescript#vue_support              = 1
+let g:nvim_typescript#max_completion_detail    = 1

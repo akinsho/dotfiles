@@ -1,6 +1,55 @@
 ""---------------------------------------------------------------------------//
 "MAPPINGS
 ""---------------------------------------------------------------------------//
+function! JSXIsSelfCloseTag()
+  let l:line_number = line(".")
+  let l:line = getline(".")
+  let l:tag_name = matchstr(matchstr(line, "<\\w\\+"), "\\w\\+")
+
+  exec "normal! 0f<vat\<esc>"
+
+  cal cursor(line_number, 1)
+
+  let l:selected_text = join(getline(getpos("'<")[1], getpos("'>")[1]))
+
+  let l:match_tag = matchstr(matchstr(selected_text, "</\\w\\+>*$"), "\\w\\+")
+
+  return tag_name != match_tag
+endfunction
+
+function! JSXSelectTag()
+  if JSXIsSelfCloseTag()
+    exec "normal! \<esc>0f<v/\\/>$\<cr>l"
+  else
+    exec "normal! \<esc>0f<vat"
+  end
+endfunction
+" transform this:
+"   <p>Hello</p>
+" into this:
+"   return (
+"     <p>Hello</p>
+"   );
+function! JSXEncloseReturn()
+  let l:previous_q_reg = @q
+  let l:tab = &expandtab ? repeat(" ", &shiftwidth) : "\t"
+  let l:line = getline(".")
+  let l:line_number = line(".")
+  let l:distance = len(matchstr(line, "^\[\\t|\\ \]*"))
+  if &expandtab
+    let l:distance = (distance / &shiftwidth)
+  endif
+
+  call JSXSelectTag()
+  exec "normal! \"qc"
+
+  let @q = repeat(tab, distance) . "return (\n" . repeat(tab, distance + 1) . substitute(getreg("q"), "\\n", ("\\n" . tab), "g") .  "\n" . repeat(tab, distance) . ");\n"
+
+  exec "normal! dd\"qP"
+
+  let @q = previous_q_reg
+endfunction
+
 ""---------------------------------------------------------------------------//
 "Terminal {{{
 ""---------------------------------------------------------------------------//
@@ -386,7 +435,7 @@ nnoremap <F6> :! open %<CR>
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
-nnoremap Y y$
+" nnoremap Y y$
 ""---------------------------------------------------------------------------//
 " Quick find/replace
 ""---------------------------------------------------------------------------//

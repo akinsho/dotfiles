@@ -43,15 +43,15 @@ font:
 
   # The bold font face
   bold:
-    family: Hasklug Nerd Font
+    family: Fira Code
     # Style can be specified to pick a specific face.
-    style: Bold
+    # style: Bold
 
   # The italic font face
   italic:
     family: Operator Mono
     # Style can be specified to pick a specific face.
-    style: Italic
+    # style: Medium
 
   # Point size of the font
   size: 16.0
@@ -271,7 +271,7 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-hide_cursor_when_typing: false
+hide_cursor_when_typing: true
 
 # Live config reload (changes require restart)
 live_config_reload: true
@@ -281,7 +281,7 @@ live_config_reload: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
-#shell:
-#  program: /bin/bash
+shell:
+ program: /bin/zsh
 #  args:
 #    - --login

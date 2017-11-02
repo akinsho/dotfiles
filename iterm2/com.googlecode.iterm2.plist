@@ -1297,17 +1297,17 @@
 	<key>NSWindow Frame NSColorPanel.modal</key>
 	<string>608 536 224 216 0 0 1440 900 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>661 37 653 344 0 0 1440 900 </string>
+	<string>661 37 653 94 0 0 1440 900 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>412 545 616 174 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>294 339 796 473 0 0 1440 900 </string>
+	<string>294 315 918 485 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 4 720 896 0 0 1440 900 </string>
+	<string>0 4 720 896 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -4836,7 +4836,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
-			<integer>0</integer>
+			<integer>4</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unicode Normalization</key>
@@ -4876,7 +4876,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>04F2B1C7-B89F-486B-9D5D-C67C15F69855</string>
 	<key>NoSyncLastTipTime</key>
-	<real>531054916.31187201</real>
+	<real>531191072.446998</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4937,6 +4937,7 @@
 		<string>0042</string>
 		<string>0043</string>
 		<string>0044</string>
+		<string>0045</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -5002,7 +5003,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-10-30T20:51:13Z</date>
+	<date>2017-11-01T01:04:32Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5045,7 +5046,7 @@
 		<string>Paste History</string>
 	</array>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1508256256</real>
+	<real>1509400448</real>
 	<key>UseBorder</key>
 	<true/>
 	<key>UseLayers</key>

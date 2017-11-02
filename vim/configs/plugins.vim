@@ -20,25 +20,23 @@ call plug#begin('~/.vim/plugged')
 "}}}
 " Deoplete  ============================={{{
 " Code completion
-Plug 'Shougo/deoplete.nvim',        Cond(has('nvim'),{ 'do': ':UpdateRemotePlugins' })
+Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
 "NVIM ====================================
 if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
-  Plug 'carlitux/deoplete-ternjs',    Cond(has('nvim'),
+  Plug 'carlitux/deoplete-ternjs',
         \ {'for':['javascript', 'javascript.jsx','typescript'],
-        \'do': 'npm install -g tern' })
+        \'do': 'npm install -g tern' }
 endif
-Plug 'roxma/nvim-yarp',             Cond(!has('nvim'))
-Plug 'roxma/vim-hug-neovim-rpc',    Cond(!has('nvim'))
-Plug 'zchee/deoplete-go',           Cond(has('nvim'), { 'for' : 'go', 'do': 'make'})
-Plug 'ujihisa/neco-look',           Cond(has('nvim'), { 'for': 'markdown' })
-Plug 'Shougo/neco-vim',             Cond(has('nvim'), { 'for': 'vim' }),
-Plug 'pbogut/deoplete-elm',         Cond(has('nvim'), { 'for': 'elm' })
+Plug 'roxma/nvim-yarp',
+Plug 'roxma/vim-hug-neovim-rpc',
+Plug 'zchee/deoplete-go',           { 'for' : 'go', 'do': 'make'}
+Plug 'ujihisa/neco-look',           { 'for': 'markdown' }
+Plug 'Shougo/neco-vim',             { 'for': 'vim' },
+Plug 'pbogut/deoplete-elm',         { 'for': 'elm' },
 "}}}
 " CORE ================================ {{{
-if !exists('g:gui_oni')
-  Plug 'w0rp/ale'
-endif
+Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'
@@ -62,7 +60,7 @@ Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the s
 "Utilities ============================{{{
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
 Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
-if has('gui_running') " || exists('g:gui_oni')
+if has('gui_running') || exists('g:gui_oni')
   Plug 'yuttie/comfortable-motion.vim'
 endif
 augroup load_fat_finger
@@ -77,7 +75,7 @@ endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
 Plug 'ludovicchabant/vim-gutentags'
-" Plug 'c0r73x/neotags.nvim'
+Plug 'c0r73x/neotags.nvim'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
@@ -120,11 +118,12 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
+Plug 'kana/vim-operator-user'
+      \ | Plug 'haya14busa/vim-operator-flashy'
 " "}}}
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
 Plug 'airblade/vim-rooter'
-" Plug 'itchyny/vim-cursorword'
 " "}}}
 "Coding tools ======================={{{
 Plug 'janko-m/vim-test'
@@ -134,6 +133,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
+Plug 'Galooshi/vim-import-js', { 'do': 'npm install -g import-js' }
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)

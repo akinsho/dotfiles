@@ -46,8 +46,8 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
+ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -291,6 +291,8 @@ alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_RE
 # iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+autoload -U promptinit; promptinit
+prompt pure
 
 ##---------------------------------------------------------------------------//
 # FZF
