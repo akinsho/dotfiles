@@ -16,14 +16,18 @@ function! Cond(cond, ...)
   return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
 endfunction
 
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+
 call plug#begin('~/.vim/plugged')
 "}}}
 " Deoplete  ============================={{{
 " Code completion
-Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
 "NVIM ====================================
 if !exists('g:gui_oni')
-  Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': ':UpdateRemotePlugins'})
+  Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
   Plug 'carlitux/deoplete-ternjs',
         \ {'for':['javascript', 'javascript.jsx','typescript'],
         \'do': 'npm install -g tern' }
@@ -74,8 +78,8 @@ if !exists('g:gui_oni')
 endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'c0r73x/neotags.nvim'
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'c0r73x/neotags.nvim', Cond(has('nvim'), { 'do': function('DoRemote') })
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'

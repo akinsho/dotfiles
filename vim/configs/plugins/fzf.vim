@@ -75,8 +75,9 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
         \           : fzf#vim#with_preview('right:60%'),
         \   <bang>0)
 
-  imap <c-x>l <plug>(fzf-complete-line)
-  imap <c-x>p <plug>(fzf-complete-path)
+  imap <c-l> <plug>(fzf-complete-line)
+  imap <c-f> <plug>(fzf-complete-path)
+
   inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
   nnoremap <silent> <localleader>br :Branches<cr>

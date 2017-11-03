@@ -66,7 +66,6 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions+=m " menu bar
   set guifont=Hasklug\ Nerd\ Font:h16 "Too find font proper run fc-list | grep name-of-font
   " set guifont=FuraCode\ Nerd\ Font:h16
-  " set guioptions-=e
   set guioptions+=e " nice gui tabs
   set linespace=1
   set antialias
@@ -269,7 +268,6 @@ elseif has('clipboard')
 endif
 set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
 if !has('nvim')
-  set nolazyredraw
   set incsearch
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode
@@ -329,7 +327,6 @@ hi CursorLineNr guifg=yellow gui=bold
 " TITLE {{{
 ""---------------------------------------------------------------------------//
 " Custom Terminal title
-" hostname() . ' ● :'
 let &titlestring=' ❐ %f  %r %m'
 set title
 " set titleold
@@ -340,10 +337,11 @@ set title
 if has('nvim')
   set inccommand=nosplit
   set guicursor=
+  " set guicursor=n-v-c:block-Cursor/lCursor
   " Thin bar insert mode cursor
-  set guicursor=i-ci:ver50-Cursor/lCursor
-  set guicursor=n-v-c:block-Cursor/lCursor
-  set guicursor=r-cr:hor20-Cursor/lCursor
+  " set guicursor=i-ci:ver50-Cursor/lCursor
+  " set guicursor=i-ci:block-Cursor/lCursor
+  " set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 100000
   let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
   let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')
@@ -465,7 +463,7 @@ function! ToggleMouse()
     set mouse=a
   endif
 endfunc
-set mouse= "this is the command that works for mousepad
+set mouse=a "this is the command that works for mousepad
 nnoremap <silent> § :call ToggleMouse()<CR>
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
 if exists('$TMUX')
@@ -477,7 +475,6 @@ endif
 
 if !has('nvim')
   set ttymouse=xterm2
-  set mouse=a
 endif
 "}}}
 ""---------------------------------------------------------------------------//

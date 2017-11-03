@@ -290,7 +290,7 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "Buffers
 "----------------------------------------------------------------------------
 "File completion made a little less painful
-inoremap <c-f> <c-x><c-f>
+inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
 nnoremap <tab>  :bnext<CR>
 nnoremap <S-tab> :bprevious<CR>

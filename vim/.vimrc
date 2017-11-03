@@ -59,9 +59,9 @@ let s:settings = g:dotfiles . '/vim/configs/plugins'
 call Source('/vim/configs/general.vim')
 call Source('/vim/configs/open-changed-files.vim')
 call Source('/vim/configs/highlight.vim')
-call LoadConfigs(s:settings)
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
+call LoadConfigs(s:settings)
 "---------------------------------------------------------------------------//
 " Essential Settings - Taken care of by Vim Plug
 "---------------------------------------------------------------------------//
