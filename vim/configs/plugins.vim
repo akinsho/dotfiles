@@ -29,8 +29,7 @@ Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
 if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
   Plug 'carlitux/deoplete-ternjs',
-        \ {'for':['javascript', 'javascript.jsx','typescript'],
-        \'do': 'npm install -g tern' }
+        \{'do': 'npm install -g tern' }
 endif
 Plug 'roxma/nvim-yarp',
 Plug 'roxma/vim-hug-neovim-rpc',
@@ -138,6 +137,7 @@ Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'Galooshi/vim-import-js', { 'do': 'npm install -g import-js' }
+Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -166,5 +166,4 @@ else
   runtime! macros/matchit.vim
 endif
 "}}}
-" Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 "}}}

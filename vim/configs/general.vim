@@ -337,11 +337,11 @@ set title
 if has('nvim')
   set inccommand=nosplit
   set guicursor=
-  " set guicursor=n-v-c:block-Cursor/lCursor
+  set guicursor=n-v-c:block-Cursor/lCursor
   " Thin bar insert mode cursor
-  " set guicursor=i-ci:ver50-Cursor/lCursor
   " set guicursor=i-ci:block-Cursor/lCursor
-  " set guicursor=r-cr:hor20-Cursor/lCursor
+  set guicursor=i-ci:ver50-Cursor/lCursor
+  set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 100000
   let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
   let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')

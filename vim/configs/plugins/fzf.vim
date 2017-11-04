@@ -82,13 +82,13 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
   nnoremap <silent> <localleader>br :Branches<cr>
   nnoremap <silent> <localleader>d :Dots<CR>
-  nnoremap <silent> <localleader>t :BTags<CR>
+  nnoremap <silent> <localleader>bt :BTags<CR>
   nnoremap <silent> <localleader>o :Buffers<CR>
   nnoremap <silent> <localleader>a :Windows<CR>
   nnoremap <silent> <localleader>m :History<CR>
   nnoremap <silent> <localleader>c :Commits<CR>
   nnoremap <silent> <localleader>l :Lines<CR>
-  nnoremap <silent> <localleader>H :Helptags<CR>
+  nnoremap <silent> <localleader>h :Helptags<CR>
 
   " Launch file search using FZF
   if isdirectory(".git")

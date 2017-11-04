@@ -14,4 +14,4 @@ nnoremap <localleader>c :TSEditConfig<CR>
 nnoremap <localleader>i :TSImport<CR>
 nnoremap <localleader>s :TSGetDocSymbols<CR>
 nnoremap <leader>jr :call JSXEncloseReturn()<CR>
-nnoremap <leader>js :call JSXIsSelectTag()<CR>
+nnoremap vat :call JSXSelectTag()<CR>

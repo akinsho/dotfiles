@@ -46,8 +46,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-# ZSH_THEME="spaceship"
-ZSH_THEME=""
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -164,9 +163,6 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 SPACESHIP_PROMPT_SEPARATE_LINE=true
-# TIME
-#SPACESHIP_TIME_SHOW=true
-#SPACESHIP_TIME_12HR=true
 
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
@@ -291,8 +287,8 @@ alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_RE
 # iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-autoload -U promptinit; promptinit
-prompt pure
+# autoload -U promptinit; promptinit
+# prompt pure
 
 ##---------------------------------------------------------------------------//
 # FZF
