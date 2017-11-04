@@ -327,7 +327,18 @@ hi CursorLineNr guifg=yellow gui=bold
 " TITLE {{{
 ""---------------------------------------------------------------------------//
 " Custom Terminal title
-let &titlestring=' ❐ %f  %r %m'
+function! GetTitleString() abort
+  if filereadable(expand('%'))
+    try
+      return fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
+    catch
+    endtry
+  endif
+
+  return fnamemodify(getcwd(), ':t')
+endfunction
+let &titlestring=' ❐ ' . GetTitleString()
+" ' ❐ %f  %r %m'
 set title
 " set titleold
 "}}}

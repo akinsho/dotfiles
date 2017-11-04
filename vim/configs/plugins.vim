@@ -37,6 +37,9 @@ Plug 'zchee/deoplete-go',           { 'for' : 'go', 'do': 'make'}
 Plug 'ujihisa/neco-look',           { 'for': 'markdown' }
 Plug 'Shougo/neco-vim',             { 'for': 'vim' },
 Plug 'pbogut/deoplete-elm',         { 'for': 'elm' },
+Plug 'billyvg/deoplete-import-js'
+Plug 'Galooshi/vim-import-js', { 'do': 'npm install -g import-js' }
+Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote') }
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
@@ -77,8 +80,7 @@ if !exists('g:gui_oni')
 endif
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
-" Plug 'ludovicchabant/vim-gutentags'
-Plug 'c0r73x/neotags.nvim', Cond(has('nvim'), { 'do': function('DoRemote') })
+Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "TPOPE ===================================={{{
 Plug 'tpope/vim-sleuth'
@@ -101,8 +103,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ 'typescript'
       \ ] }
 Plug 'ap/vim-css-color'
-" Plug 'styled-components/vim-styled-components',
-"       \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
+Plug 'styled-components/vim-styled-components',
+      \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
 " Plug 'hail2u/vim-css-syntax',
 "       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
 "Git ==============================={{{
@@ -136,7 +138,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-Plug 'Galooshi/vim-import-js', { 'do': 'npm install -g import-js' }
 Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 "}}}
 "Filetype Plugins ======================{{{
@@ -165,5 +166,4 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
-"}}}
 "}}}
