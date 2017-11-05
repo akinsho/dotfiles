@@ -12,3 +12,6 @@
 == Fugitive ==
 Added new key maps to explore
 1. viml <leader>gt - open full tab commit buffer
+
+== Ascending Number ==
+* To create a list of ascending numbers use `g<C-a>` over a visually selected list of numbers.

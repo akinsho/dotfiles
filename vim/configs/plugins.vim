@@ -11,6 +11,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   augroup END
 endif
+
 function! Cond(cond, ...)
   let l:opts = get(a:000, 0, {})
   return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
@@ -34,11 +35,12 @@ if !exists('g:gui_oni')
         \{'do': 'npm install -g tern' }
 endif
 Plug 'roxma/nvim-yarp',
-Plug 'roxma/vim-hug-neovim-rpc',
-Plug 'zchee/deoplete-go',           { 'for' : 'go', 'do': 'make'}
-Plug 'ujihisa/neco-look',           { 'for': 'markdown' }
-Plug 'pbogut/deoplete-elm',         { 'for': 'elm' },
-Plug 'Galooshi/vim-import-js', { 'do': 'npm install -g import-js' }
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
+Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
+Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
+Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
+Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'autozimu/LanguageClient-neovim',
 "       \{ 'do': function('DoRemote') }
 " 'for': ['javascript', 'typescript', 'rust'],
@@ -65,16 +67,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 "}}}
 "Utilities ============================{{{
-Plug 'mbbill/undotree',{'on':['UndotreeToggle']} "Add Gundo - undo plugin for vim
-Plug 'chip/vim-fat-finger', { 'on':[] } "Autocorrects 4,000 common typos
+Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
+Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 if has('gui_running') || exists('g:gui_oni')
   Plug 'yuttie/comfortable-motion.vim'
 endif
-augroup load_fat_finger
-  autocmd!
-  autocmd InsertEnter * call plug#load('vim-fat-finger')
-        \| autocmd! load_fat_finger
-augroup END
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 if !exists('g:gui_oni')
   Plug 'itchyny/lightline.vim'
@@ -99,22 +96,18 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx'
 Plug 'othree/javascript-libraries-syntax.vim',
-      \ { 'for':[
-      \ 'javascript',
-      \ 'typescript'
-      \ ] }
+      \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'ap/vim-css-color'
+Plug 'hail2u/vim-css-syntax'
 Plug 'styled-components/vim-styled-components',
       \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
-Plug 'hail2u/vim-css-syntax',
-      \{ 'for': ['css', 'sass', 'scss', 'less', 'typescript', 'javascript'] }
 "Git ==============================={{{
+Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "}}}
 "Text Objects ====================={{{
-Plug 'alvan/vim-closetag'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
@@ -133,10 +126,11 @@ Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
+Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
-Plug 'takac/vim-hardtime', { 'on': ['HardTimeToggle', 'HardTimeOn'] }
+Plug 'takac/vim-hardtime',    { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
@@ -150,8 +144,8 @@ function! BuildComposer(info)
 endfunction
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!has('gui_vimr'), { 'for': 'markdown', 'do': function('BuildComposer') })
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'fatih/vim-go',           { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 "}}}
 "Themes =============================== {{{
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
@@ -165,3 +159,7 @@ else
   runtime! macros/matchit.vim
 endif
 "}}}
+
+" Load immediately {{{
+call plug#load('vim-fat-finger')
+" }}}

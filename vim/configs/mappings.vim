@@ -112,12 +112,12 @@ endfunction
 "Tab completion
 ""---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible()?"\<C-p>":{}TAB>"
+inoremap <expr><S-TAB> pumvisible()?"\<C-p>":"\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
-nnoremap <leader>q :bd!<cr>
+" nnoremap <leader>q :bd!<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " " Show all open buffers and their status
@@ -530,9 +530,11 @@ onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 " Navigation (CORE)
 ""---------------------------------------------------------------------------//
 nnoremap 0 ^
-"Remaps native ctrl k - deleting to the end of a line to control e
-" Map jk to esc key
-inoremap jk <ESC>
+" jk is escape, THEN move to the right to preserve the cursor position, unless
+" at the first column.  <esc> will continue to work the default way.
+inoremap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
+imap JK jk
+imap Jk jk
 xnoremap jk <ESC>
 cnoremap jk <C-C>
 
