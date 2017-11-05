@@ -172,13 +172,13 @@ augroup mutltiple_filetype_settings "{{{
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
-  " autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
-  "       \ | setlocal omnifunc=syntaxcomplete#Complete | endif
-  "
-  " autocmd FileType * if exists("+completefunc") && &completefunc == ""
-  "       \ | setlocal completefunc=syntaxcomplete#Complete | endif
+  autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
+        \ | setlocal omnifunc=syntaxcomplete#Complete | endif
 
-  autocmd FileType html,css,vue EmmetInstall
+  autocmd FileType * if exists("+completefunc") && &completefunc == ""
+        \ | setlocal completefunc=syntaxcomplete#Complete | endif
+
+  autocmd FileType html,css,vue,*.jsx,*.js,*.tsx EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
@@ -274,7 +274,8 @@ endfunction "}}}
 
 augroup FileType_all "{{{
   autocmd!
-  autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+  au BufEnter * call akin#cd()
+  au BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   au FileType help au BufEnter,BufWinEnter <buffer> setlocal spell!
   " When editing a file, always jump to the last known cursor position.

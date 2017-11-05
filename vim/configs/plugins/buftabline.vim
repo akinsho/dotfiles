@@ -1,10 +1,11 @@
 "---------------------------------------------------------------------------//
 " BUFTABLINE
 ""---------------------------------------------------------------------------//
-highlight TabLineSel guibg=white guifg=black
-" if !has('gui_vimr') && !exists('g:gui_oni')
-"   let g:buftabline_separators = 1
-" endif
+highlight BufTabLineHidden guibg=#22252B guifg=#5A5E68
+highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold
+highlight BufTabLineActive guifg=white
+highlight BufTablineFill guibg=#22252B
+" highlight TabLineSel guibg=white guifg=black
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
 nmap <localleader>1 <Plug>BufTabLine.Go(1)

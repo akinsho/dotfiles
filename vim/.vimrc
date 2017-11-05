@@ -12,6 +12,10 @@ filetype off " required  Prevents potential side-effects from system ftdetects s
 ""---------------------------------------------------------------------------//
 " Config Loader
 ""---------------------------------------------------------------------------//
+augroup vimrc "Ensure all autocommands are cleared
+  autocmd!
+augroup END
+
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 
 let g:dotfiles = $DOTFILES
@@ -38,7 +42,13 @@ function! LoadConfigs(s) abort
 endfunction
 
 function! Source(arg) abort
-    exe 'source' . g:dotfiles . a:arg
+    try
+        exe 'source' . g:dotfiles . a:arg
+    catch
+        echohl WarningMsg
+        echom 'Could not load'.a:arg
+        echohl none
+    endtry
 endfunction
 
 "-----------------------------------------------------------------------

@@ -56,7 +56,7 @@ endif
 "}}}
 " ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//
-" MACVIM
+" MACVIM {{{
 ""---------------------------------------------------------------------------//
 set shell=/bin/bash "run a simple bash rc without all the bells and whistles
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
@@ -73,6 +73,7 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
   let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 endif
+"}}}
 ""---------------------------------------------------------------------------//
 " Message output on vim actions {{{
 " ----------------------------------------------------------------------------
@@ -106,34 +107,12 @@ if has('folding')
     set fillchars+=fold:-
   endif
     set foldnestmax=3
+    set foldopen+=jump
 endif
-"}}}
-" ----------------------------------------------------------------------------
-""---------------------------------------------------------------------------//
-" Windows {{{
-""---------------------------------------------------------------------------//
-" Auto resize Vim splits to active split to 70% - https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
-let g:auto_resize_on = 1
-
-function! AutoResize()
-  if g:auto_resize_on == 1
-    let &winheight = &lines * 7 / 10
-    let &winwidth = &columns * 7 / 10
-    let g:auto_resize_on = 0
-    echom 'Auto resize on'
-  else
-    set winheight=30
-    set winwidth=30
-    let g:auto_resize_on = 1
-  endif
-endfunction
-command! AutoResize call AutoResize()
-nnoremap <leader>ar :AutoResize<CR>
 "}}}
 ""---------------------------------------------------------------------------//
 " DIFFING {{{
 " ----------------------------------------------------------------------------
-
 " Note this is += since fillchars was defined in the window config
 set fillchars+=diff:⣿
 set diffopt=vertical                  " Use in vertical diff mode
@@ -337,8 +316,8 @@ function! GetTitleString() abort
 
   return fnamemodify(getcwd(), ':t')
 endfunction
-let &titlestring=' ❐ ' . GetTitleString()
-" ' ❐ %f  %r %m'
+set titlestring=%{GetTitleString()}
+"let &titlestring=' ❐ %f  %r %m'
 set title
 " set titleold
 "}}}
@@ -353,7 +332,7 @@ if has('nvim')
   " set guicursor=i-ci:block-Cursor/lCursor
   set guicursor=i-ci:ver50-Cursor/lCursor
   set guicursor=r-cr:hor20-Cursor/lCursor
-  let g:terminal_scrollback_buffer_size = 100000
+  let g:terminal_scrollback_buffer_size = 500000
   let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
   let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')
 endif
@@ -361,6 +340,7 @@ endif
 ""---------------------------------------------------------------------------//
 " Utilities {{{
 ""---------------------------------------------------------------------------//
+set tags=./tags,tags;$HOME
 set noshowmode "No mode showing in command pane
 set updatetime=200
 if has('virtualedit')
@@ -477,10 +457,20 @@ endfunc
 set mouse=a "this is the command that works for mousepad
 nnoremap <silent> § :call ToggleMouse()<CR>
 " Swap iTerm2 cursors in [n]vim insert mode when using tmux, more here https://gist.github.com/andyfowler/1195581
-if exists('$TMUX')
-  if !has('nvim')
+
+if !has('nvim')
+  if empty($TMUX)
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    if v:version >= 800
+      let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    endif
+  else
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    if v:version >= 800
+      let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    endif
   endif
 endif
 

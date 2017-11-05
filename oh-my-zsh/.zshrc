@@ -46,7 +46,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="spaceship"
+#ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -140,7 +140,7 @@ eval "$(hub alias -s)"
 ##---------------------------------------------------------------------------/
 ## NPX - AUTO-FALL-BACK COMMAND
 ##---------------------------------------------------------------------------///
-source <(npx --shell-auto-fallback zsh)
+#source <(npx --shell-auto-fallback zsh)
 
 #Pyenv
 eval "$(pyenv init -)"
@@ -287,9 +287,9 @@ alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_RE
 # iTERM Integration ==================================================
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# autoload -U promptinit; promptinit
-# prompt pure
-
+ autoload -U promptinit; promptinit
+ PURE_PROMPT_SYMBOL="•"
+ prompt pure
 ##---------------------------------------------------------------------------//
 # FZF
 ##---------------------------------------------------------------------------//

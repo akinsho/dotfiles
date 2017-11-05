@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-"                    EMMET for Vim {{{
+"                    EMMET for Vim
 ""---------------------------------------------------------------------------//
 let g:user_emmet_mode         = 'a'
 let g:user_emmet_complete_tag = 1
@@ -12,4 +12,3 @@ let g:user_emmet_settings     = {
 let g:user_emmet_leader_key     = "<C-Y>"
 let g:user_emmet_expandabbr_key =  "<C-Y>"
 let g:user_emmet_install_global = 0
-"}}}

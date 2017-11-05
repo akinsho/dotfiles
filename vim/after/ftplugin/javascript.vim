@@ -1,13 +1,13 @@
 setl completeopt-=preview
-setlocal nofoldenable  foldtext=FoldText()
+setlocal nofoldenable  foldtext=JavascriptFold()
 setlocal foldlevelstart=99 foldmethod=syntax
 set suffixesadd+=.js,.jsx
 
-if has('nvim')
-  nnoremap gd :TSDef<CR>
-endif
-" Javascript {{{
-function! FoldText()
+nnoremap <leader>jr :call akin#JSXEncloseReturn()<CR>
+nnoremap vat :call akin#JSXSelectTag()<CR>
+nnoremap gd :TSDef<CR>
+
+function! JavascriptFold()
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '(' . ( lines_count ) . ')'
@@ -17,4 +17,3 @@ function! FoldText()
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
   return foldtextstart . repeat(' ', winwidth(0)-foldtextlength - 7) . foldtextend . ' '
 endfunction
-" }}}

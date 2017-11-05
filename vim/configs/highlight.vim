@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" Highlights {{{
+" Highlights
 ""---------------------------------------------------------------------------//
 " Highlight cursor column onwards - kind of cool
 ""---------------------------------------------------------------------------//
@@ -63,12 +63,9 @@ endif
 " highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 " highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-highlight BufTabLineCurrent gui=bold guibg=#E7B563 guifg=black
-
 highlight QuickFixLine guibg=#8A95A7 gui=underline
 "Color the tildes at the end of the buffer
 " hi link EndOfBuffer VimFgBgAttrib
 " highlight VertSplit guibg=bg guifg=bg
 " highlight Identifier gui=italic,bold
-"}}}
 ""---------------------------------------------------------------------------//

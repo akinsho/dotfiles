@@ -25,6 +25,8 @@ call plug#begin('~/.vim/plugged')
 " Deoplete  ============================={{{
 " Code completion
 Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
+Plug 'Shougo/neco-vim',             { 'for': 'vim' },
+Plug 'Shougo/echodoc.vim'
 "NVIM ====================================
 if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
@@ -35,16 +37,15 @@ Plug 'roxma/nvim-yarp',
 Plug 'roxma/vim-hug-neovim-rpc',
 Plug 'zchee/deoplete-go',           { 'for' : 'go', 'do': 'make'}
 Plug 'ujihisa/neco-look',           { 'for': 'markdown' }
-Plug 'Shougo/neco-vim',             { 'for': 'vim' },
 Plug 'pbogut/deoplete-elm',         { 'for': 'elm' },
-Plug 'billyvg/deoplete-import-js'
 Plug 'Galooshi/vim-import-js', { 'do': 'npm install -g import-js' }
-Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote') }
+" Plug 'autozimu/LanguageClient-neovim',
+"       \{ 'do': function('DoRemote') }
+" 'for': ['javascript', 'typescript', 'rust'],
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
-Plug 'Shougo/echodoc.vim'
 Plug 'scrooloose/nerdtree'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
@@ -105,8 +106,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
 Plug 'ap/vim-css-color'
 Plug 'styled-components/vim-styled-components',
       \{ 'branch': 'rewrite', 'for': ['typescript.tsx', 'javascript.jsx'] }
-" Plug 'hail2u/vim-css-syntax',
-"       \{ 'for': ['css', 'sass', 'scss', 'less', 'jsx', 'tsx'] }
+Plug 'hail2u/vim-css-syntax',
+      \{ 'for': ['css', 'sass', 'scss', 'less', 'typescript', 'javascript'] }
 "Git ==============================={{{
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -128,9 +129,6 @@ Plug 'kana/vim-operator-user'
 " "}}}
 "Search Tools ======================={{{
 Plug 'dyng/ctrlsf.vim'
-Plug 'airblade/vim-rooter'
-" "}}}
-"Coding tools ======================={{{
 Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'

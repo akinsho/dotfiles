@@ -1,55 +1,6 @@
 ""---------------------------------------------------------------------------//
 "MAPPINGS
 ""---------------------------------------------------------------------------//
-function! JSXIsSelfCloseTag()
-  let l:line_number = line(".")
-  let l:line = getline(".")
-  let l:tag_name = matchstr(matchstr(line, "<\\w\\+"), "\\w\\+")
-
-  exec "normal! 0f<vat\<esc>"
-
-  cal cursor(line_number, 1)
-
-  let l:selected_text = join(getline(getpos("'<")[1], getpos("'>")[1]))
-
-  let l:match_tag = matchstr(matchstr(selected_text, "</\\w\\+>*$"), "\\w\\+")
-
-  return tag_name != match_tag
-endfunction
-
-function! JSXSelectTag()
-  if JSXIsSelfCloseTag()
-    exec "normal! \<esc>0f<v/\\/>$\<cr>l"
-  else
-    exec "normal! \<esc>0f<vat"
-  end
-endfunction
-" transform this:
-"   <p>Hello</p>
-" into this:
-"   return (
-"     <p>Hello</p>
-"   );
-function! JSXEncloseReturn()
-  let l:previous_q_reg = @q
-  let l:tab = &expandtab ? repeat(" ", &shiftwidth) : "\t"
-  let l:line = getline(".")
-  let l:line_number = line(".")
-  let l:distance = len(matchstr(line, "^\[\\t|\\ \]*"))
-  if &expandtab
-    let l:distance = (distance / &shiftwidth)
-  endif
-
-  call JSXSelectTag()
-  exec "normal! \"qc"
-
-  let @q = repeat(tab, distance) . "return (\n" . repeat(tab, distance + 1) . substitute(getreg("q"), "\\n", ("\\n" . tab), "g") .  "\n" . repeat(tab, distance) . ");\n"
-
-  exec "normal! dd\"qP"
-
-  let @q = previous_q_reg
-endfunction
-
 ""---------------------------------------------------------------------------//
 "Terminal {{{
 ""---------------------------------------------------------------------------//
@@ -132,17 +83,18 @@ onoremap <silent> il :<C-U>normal! ^vg_<CR>
 nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 
 " move the current word to the right and keep the cursor on it
-nnoremap w> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
+nnoremap [w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
 " move the current word to the left and keep the cursor on it
-nnoremap w< "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
+nnoremap ]w "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
 ""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "Use enter to create new lines w/o entering insert mode
-nnoremap <CR> o<Esc>
+" nnoremap <CR> o<Esc>
+nnoremap <silent><cr>  :call akin#jump()<cr>
 "Below is to fix issues with the ABOVE mappings in quickfix window
 augroup EnterMapping
   au!
@@ -162,9 +114,7 @@ endfunction
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible()?"\<C-p>":{}TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-if has('nvim')
-  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-endif
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
 nnoremap <leader>q :bd!<cr>
@@ -205,8 +155,8 @@ cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 cmap w!! w !sudo tee % >/dev/null
+"}}}
 " Loop cnext / cprev / lnext / lprev {{{
-
 command! Cnext try | cnext | catch | cfirst | catch | endtry
 command! Cprev try | cprev | catch | clast | catch | endtry
 command! Lnext try | lnext | catch | lfirst | catch | endtry
@@ -215,9 +165,9 @@ cabbrev cnext Cnext
 cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
-
 " }}}
-
+command! AutoResize call akin#auto_resize()
+nnoremap <leader>ar :AutoResize<CR>
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
@@ -321,8 +271,7 @@ nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 ""---------------------------------------------------------------------------//
 " Capitalize.
 nnoremap ,U <ESC>gUiw`]
-inoremap <C-u> <ESC>gUiw`]a
-
+" inoremap <C-u> <ESC>gUiw`]a
 ""---------------------------------------------------------------------------//
 " Insert Mode Bindings
 ""---------------------------------------------------------------------------//
@@ -378,6 +327,7 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 nnoremap gV `[V`]
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
+xnoremap <leader>*          :<c-u>call akin#search_all()<cr>//<cr>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 "---------------------------------------------------------------------------//
@@ -629,48 +579,17 @@ nnoremap S "_diwP
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
-function! s:zoom()
-  if winnr('$') > 1
-    tab split
-  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
-        \ 'index(v:val, '.bufnr('').') >= 0')) > 1
-    tabclose
-  endif
-endfunction
-nnoremap <silent> <localleader>z :call <sid>zoom()<cr>
+nnoremap <silent> <localleader>z :call akin#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
-function! s:ZoomToggle() abort
-  if exists('t:zoomed') && t:zoomed
-    exec t:zoom_winrestcmd
-    let t:zoomed = 0
-  else
-    let t:zoom_winrestcmd = winrestcmd()
-    resize
-    vertical resize
-    let t:zoomed = 1
-  endif
-endfunction
-command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <leader>z :ZoomToggle<CR>
+nnoremap <silent> <leader>z :call akin#buf_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 
 " Use D to delete a range then move cursor back
 com! -range D <line1>,<line2>d | norm <C-o>
 
-" Peekabo Like functionality
-function! Reg()
-  reg
-  echo "Register: "
-  let char = nr2char(getchar())
-  if char != "\<Esc>"
-    execute "normal! \"".char."p"
-  endif
-  redraw
-endfunction
-
-command! -nargs=0 Reg call Reg()
+command! -nargs=0 Reg call akin#reg()
 nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
