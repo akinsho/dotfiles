@@ -27,18 +27,24 @@ endif
 
 function! LoadConfigs(s) abort
     let s:plugins = split(globpath(a:s, '*.vim'), '\n')
+    let l:loaded = 0
     for fpath in s:plugins
         let s:inactive = match(fpath ,"inactive")
         if s:inactive == -1
             try
                 exe 'source' fpath
+                let l:loaded += 1
             catch
                 echohl WarningMsg
+                echom 'Error: ----->' . v:exception
                 echom 'Could not load '.fpath
                 echohl none
             endtry
         endif
     endfor
+    echohl WarningMsg
+    echom l:loaded . ' plugin configs successfully loaded'
+    echohl none
 endfunction
 
 function! Source(arg) abort
@@ -46,6 +52,7 @@ function! Source(arg) abort
         exe 'source' . g:dotfiles . a:arg
     catch
         echohl WarningMsg
+        echom 'Error: ----->' . v:exception
         echom 'Could not load'.a:arg
         echohl none
     endtry

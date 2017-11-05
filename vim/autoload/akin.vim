@@ -182,3 +182,24 @@ function! akin#auto_resize()
     let g:auto_resize_on = 1
   endif
 endfunction
+
+
+" This keeps the cursor in place when using * or #
+function! akin#star_search(key) abort
+  let g:_view = winsaveview()
+  let out = a:key
+
+  if mode() ==? 'v'
+    let out = '"vy' . (a:key == '*' ? '/' : '?') . "\<c-r>="
+          \. 'substitute(escape(@v, ''/\.*$^~[''), ''\_s\+'', ''\\_s\\+'', ''g'')'
+          \. "\<cr>\<cr>"
+  endif
+
+  return out."N:\<c-u>"
+        \   .join(['let g:_pos = getpos(''.'')[1:2]',
+        \   ':call winrestview(g:_view)',
+        \   ':call cursor(g:_pos)',
+        \   ':set hlsearch',
+        \   ':unlet! g:_view',
+        \   ':unlet! g:_pos'], "\<cr>")."\<cr>"
+endfunction

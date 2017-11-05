@@ -30,4 +30,22 @@ nnoremap <leader>gL :Glog<BAR>:bot copen<CR>
 nnoremap <leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
 vnoremap <leader>gb :Gbrowse<CR>
-"}}}
+
+function! s:setup() abort
+  nnoremap <expr><buffer> } filter([search('\%(\_^#\?\s*\_$\)\\|\%$', 'W'), line('$')], 'v:val')[0].'G'
+  nnoremap <expr><buffer> { max([1, search('\%(\_^#\?\s*\_$\)\\|\%^', 'bW')]).'G'
+
+  if expand('%') =~# 'COMMIT_EDITMSG'
+    setlocal spell
+    " delete the commit message storing it in "g, and go back to Gstatus
+    nnoremap <silent><buffer> Q gg"gd/#<cr>:let @/=''<cr>:<c-u>wq<cr>:Gstatus<cr>:call histdel('search', -1)<cr>
+    " Restore register "g
+    nnoremap <silent><buffer> <leader>u gg"gP
+  endif
+endfunction
+
+
+augroup vimrc_fugitive
+  autocmd!
+  autocmd FileType gitcommit call s:setup()
+augroup END

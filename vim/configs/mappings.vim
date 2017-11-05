@@ -168,6 +168,11 @@ cabbrev lprev Lprev
 " }}}
 command! AutoResize call akin#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
+
+nnoremap <silent><expr> <leader>* akin#star_search('*')
+vnoremap <silent><expr> <leader>* akin#star_search('*')
+" nnoremap <silent><expr> # akin#star_search('#')
+" vnoremap <silent><expr> # akin#star_search('#')
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//

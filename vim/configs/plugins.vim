@@ -41,9 +41,9 @@ Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
 Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
 Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
 Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'autozimu/LanguageClient-neovim',
-"       \{ 'do': function('DoRemote') }
-" 'for': ['javascript', 'typescript', 'rust'],
+" FIXME: Fails hard, paths loaded wrong? settings misssing??
+" Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote'),
+"       \'for': ['javascript', 'typescript', 'rust', 'html'],}
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
