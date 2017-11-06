@@ -13,5 +13,5 @@ nnoremap <localleader>t :TSType<CR>
 nnoremap <localleader>c :TSEditConfig<CR>
 nnoremap <localleader>i :TSImport<CR>
 nnoremap <localleader>s :TSGetDocSymbols<CR>
-nnoremap <leader>jr :call JSXEncloseReturn()<CR>
-nnoremap vat :call JSXSelectTag()<CR>
+nnoremap <leader>jr :call akin#JSXEncloseReturn()<CR>
+nnoremap vat :call akin#JSXSelectTag()<CR>

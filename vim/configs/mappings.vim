@@ -416,7 +416,7 @@ vnoremap <leader>s :sort<CR>
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window
 nnoremap <localleader>C :<c-f>
-nnoremap <leader>hl :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 ""---------------------------------------------------------------------------//
 " Window resizing bindings

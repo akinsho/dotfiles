@@ -117,6 +117,7 @@ function! akin#cd() abort
   endif
   if has_key(s:cache, curdir)
     execute 'lcd' fnameescape(s:cache[curdir])
+    " echohl WarningMsg | echo 'Jumping to '. curdir | echohl NONE
     return
   endif
   for dir in dirs
@@ -128,6 +129,7 @@ function! akin#cd() abort
   let dir = empty(founddir) ? curdir : resolve(fnamemodify(founddir, ':p:h:h'))
   let s:cache[curdir] = dir
   execute 'lcd' fnameescape(dir)
+  " echohl WarningMsg | echo 'Jumping to '. curdir | echohl NONE
 endfunction
 
 "

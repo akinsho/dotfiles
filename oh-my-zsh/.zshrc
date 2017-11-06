@@ -261,7 +261,7 @@ fi
 #=======================================================================
 # source all zsh and sh files inside dotfile/runcom
 source $DOTFILES/runcom/functions.sh
-source $DOTFILES/runcom/zsh/alias.zsh
+source $DOTFILES/runcom/zsh/alias.sh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
 for script ($DOTFILES/runcom/zsh/*) source $script
 #=======================================================================

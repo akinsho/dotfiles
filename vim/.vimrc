@@ -43,7 +43,7 @@ function! LoadConfigs(s) abort
         endif
     endfor
     echohl WarningMsg
-    echom l:loaded . ' plugin configs successfully loaded'
+    " echom l:loaded . ' plugin configs successfully loaded'
     echohl none
 endfunction
 
