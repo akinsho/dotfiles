@@ -1,5 +1,5 @@
+setl foldenable
 setl foldmethod=syntax foldlevelstart=99
-setl nofoldenable
 setl completeopt-=preview
 setl colorcolumn=100
 set suffixesadd+=.ts
@@ -15,3 +15,5 @@ nnoremap <localleader>i :TSImport<CR>
 nnoremap <localleader>s :TSGetDocSymbols<CR>
 nnoremap <leader>jr :call akin#JSXEncloseReturn()<CR>
 nnoremap vat :call akin#JSXSelectTag()<CR>
+
+syn region foldImports start="import" end=/import.*\n^$/ fold keepend

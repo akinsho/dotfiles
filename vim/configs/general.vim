@@ -320,8 +320,8 @@ function! GetTitleString() abort
 endfunction
 set titlestring=%{GetTitleString()}
 set title
+set titleold="And relax"
 "let &titlestring=' ❐ %f  %r %m'
-set titleold=%{getcwd()}
 "}}}
 ""---------------------------------------------------------------------------//
 "NVIM {{{
@@ -364,6 +364,94 @@ set display+=lastline
 set encoding=utf-8
 scriptencoding utf-8
 set dictionary+=/usr/share/dict/words
+
+if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
+  set shell=/bin/bash
+endif
+set history=1000
+if &tabpagemax < 50
+  set tabpagemax=50
+endif
+if !empty(&viminfo)
+  set viminfo^=!
+  set viminfo+='0
+endif
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+  set t_Co=16
+endif
+"-----------------------------------------------------------------------------
+" BACKUP AND SWAPS
+"-----------------------------------------------------------------------------
+"Turn swap files off - FOR GOD's SAKE they are ruining my life
+set noswapfile
+"This saves all back up files in a vim backup directory
+if exists('$SUDO_USER')
+  set nobackup                        " don't create root-owned files
+  set nowritebackup                   " don't create root-owned files
+else
+  set backupdir=~/.vim/.backup//
+  set backupdir+=~/local/.vim/tmp/backup
+  set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
+  if !isdirectory(&backupdir)
+    call mkdir(&backupdir, "p")
+  endif
+endif
+if !has('nvim')
+  set autoread " reload files if they were edited elsewhere
+endif
+if has ('persistent_undo')
+  if exists('$SUDO_USER')
+    set noundofile "Dont add root owned files which I will need to sudo to remove
+  else
+    set undodir=~/.vim/.undo//
+    if !isdirectory(&undodir)
+      call mkdir(&undodir, "p")
+    endif
+    set undolevels=1000
+    set undodir+=~/local/.vim/tmp/undo
+    set undodir+=.
+    set undofile
+  endif
+endif
+"}}}
+" ----------------------------------------------------------------------------
+" Match and search {{{
+" ----------------------------------------------------------------------------
+set ignorecase smartcase wrapscan " Searches wrap around the end of the file
+if &filetype ==# 'html'
+  set matchpairs+=<:> "setting is super annoying if not html
+endif
+augroup cursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
+  autocmd WinLeave,InsertEnter * setlocal nocursorline
+augroup END
+set scrolloff=999 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
+"}}}
+"====================================================================================
+"Spelling {{{
+"====================================================================================
+" Dropbox or kept in Git.
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+set fileformats=unix,dos,mac
+set complete+=kspell
+"}}}
+
+"===================================================================================
+"Mouse {{{
+"===================================================================================
+set mousehide
+function! ToggleMouse()
+  " check if mouse is enabled
+  if &mouse == 'a'
+    " disable mouse
+    set mouse=
+  else
+    " enable mouse everywhere
+    set mouse=a
+  endif
+endfunc
 
 if !has('nvim')
   if empty($TMUX)

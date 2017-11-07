@@ -16,5 +16,5 @@ module.exports = {
   "editor.fontSize": "16px",
   "editor.fontFamily": "FuraCode Nerd Font",
   "editor.completions.enabled": true,
-  "environment.additionalPaths": ['/usr/bin', '/usr/local/bin']
+  "environment.additionalPaths": ['/usr/bin', '/usr/local/bin','/Users/akinyulife/.config/yarn/global/node_modules/.bin']
 }

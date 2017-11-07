@@ -18,7 +18,8 @@ highlight! link SpellLocal SpellCap
 highlight! link SpellRare SpellCap
 " Clearing conceal messes up indent guide lines
 " highlight clear Conceal "Sets no highlighting for conceal
-" highlight Conceal gui=bold guifg=red
+highlight Conceal gui=bold
+" guifg=red
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
