@@ -122,9 +122,7 @@ Plug 'kana/vim-operator-user'
 " "}}}
 "Search Tools ======================={{{
 " Plug 'tomtom/tcomment_vim' "TODO: make a PR to add TSX
-" Plug 'dyng/ctrlsf.vim'
-Plug 'brooth/far.vim'
-Plug 'janko-m/vim-test'
+Plug 'dyng/ctrlsf.vim'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
@@ -133,6 +131,7 @@ Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'takac/vim-hardtime',    { 'on': ['HardTimeToggle', 'HardTimeOn'] }
+Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
 "}}}
 "Filetype Plugins ======================{{{
 function! BuildComposer(info)
