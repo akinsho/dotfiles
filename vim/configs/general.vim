@@ -263,7 +263,7 @@ if has('termguicolors')
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
 endif
 " ctags - search for a tags file then in current dir then home dir
-set tags=./.tags,tags;,~/.tags
+set tags=./.tags,./.git/.tags,./tags,tags;,~/.tags
 "}}}
 " ----------------------------------------------------------------------------
 " Credit:  June Gunn  - AutoSave {{{

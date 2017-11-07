@@ -2,16 +2,26 @@
 # Aliases
 # =====================================
 alias cl="clear"
+alias gss="git status -s"
 alias gst="git status"
 alias gc="git commit"
 alias gd="git diff"
 alias gp="git push"
-alias gcam="git commit -m -a"
+alias gaa="git add ."
 alias x="exit"
 alias del="rm -rf"
 alias src="source ~/.bashrc"
+alias ys="yarn start"
+alias yd="yarn develop"
+alias ydl="yarn develop local"
+alias yt="yarn test"
+# aliases dont take arguments so need to define a function here
+function gcm() {
+  git add . && git commit -m "$*"
+}
+
 if [ -f "$(brew --prefix)"/etc/bash_completion ]; then
-  . "$(brew --prefix)"/etc/bash_completion
+  . "$(brew --prefix)"/etc/bash_completion.d
 fi
 # =====================================
 # get current branch in git repo

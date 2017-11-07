@@ -25,6 +25,7 @@ let g:ale_sh_shellcheck_options          = '-e SC2039' " Allow local in Shell Ch
 let g:ale_echo_msg_format                = '%linter%: %s [%severity%]'
 let g:ale_sign_column_always             = 1
 let g:ale_sign_error                     = '✖'
+let g:ale_echo_delay                     = 80
 let g:ale_sign_warning                   = '❗'
 let g:ale_warn_about_trailing_whitespace = 1
 "TODO: integrate stylelint

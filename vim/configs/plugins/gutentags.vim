@@ -1,7 +1,9 @@
 ""---------------------------------------------------------------------------//
-" Gutentags 
+" Gutentags
 ""---------------------------------------------------------------------------//
-let g:gutentags_ctags_exclude = ['*node_modules*', '*bower_components*', 'tmp*', 'temp*', 'package*json',
+let g:gutentags_ctags_exclude = [
+      \ '*node_modules*',
+      \ '*bower_components*', 'tmp*', 'temp*', 'package*json',
       \ '*.min.js',
       \ '*html*',
       \ 'jquery*.js',
@@ -9,4 +11,3 @@ let g:gutentags_ctags_exclude = ['*node_modules*', '*bower_components*', 'tmp*',
       \ '*/python2.7/*',
       \ '*/migrate/*.rb'
       \]
-" }}}

@@ -15,5 +15,6 @@ module.exports = {
   "oni.loadInitVim": true,
   "editor.fontSize": "16px",
   "editor.fontFamily": "FuraCode Nerd Font",
-  "editor.completions.enabled": true
+  "editor.completions.enabled": true,
+  "environment.additionalPaths": ['/usr/bin', '/usr/local/bin']
 }
