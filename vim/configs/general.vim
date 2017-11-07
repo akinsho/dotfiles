@@ -319,9 +319,9 @@ function! GetTitleString() abort
   return fnamemodify(getcwd(), ':t')
 endfunction
 set titlestring=%{GetTitleString()}
-"let &titlestring=' ❐ %f  %r %m'
 set title
-" set titleold
+"let &titlestring=' ❐ %f  %r %m'
+set titleold=%{getcwd()}
 "}}}
 ""---------------------------------------------------------------------------//
 "NVIM {{{

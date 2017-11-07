@@ -96,6 +96,7 @@ plugins=(
         alias-tips
         last-working-dir
         nvm
+        jira
         vi-mode
         git
         gitfast
@@ -160,7 +161,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
+# SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 SPACESHIP_PROMPT_SEPARATE_LINE=true
 
@@ -290,6 +291,12 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
  # autoload -U promptinit; promptinit
  # PURE_PROMPT_SYMBOL="•"
  # prompt pure
+
+export JIRA_URL='https://yulife.atlassian.net/'
+export JIRA_NAME='akin'
+export JIRA_RAPID_BOARD=true
+export JIRA_DEFAULT_ACTION='dashboard'
+
 ##---------------------------------------------------------------------------//
 # FZF
 ##---------------------------------------------------------------------------//

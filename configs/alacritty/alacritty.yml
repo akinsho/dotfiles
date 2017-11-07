@@ -42,16 +42,16 @@ font:
     style: Regular
 
   # The bold font face
-  bold:
-    family: Fira Code
+  italic:
+    family: Operator Mono  # TODO: Need to Patch this font
     # Style can be specified to pick a specific face.
-    # style: Bold
+    style: Bold Italic
 
   # The italic font face
-  italic:
-    family: Operator Mono
+  bold:
+    family: FuraCode Nerd Font
     # Style can be specified to pick a specific face.
-    # style: Medium
+    style: Bold
 
   # Point size of the font
   size: 16.0

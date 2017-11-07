@@ -1,5 +1,5 @@
 "--------------------------------------------
-" CTRLSF - CTRL-SHIFT-F {{{
+" CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------
 let g:ctrlsf_default_root = 'project+fw' "Search at the project root i.e git or hg folder
 let g:ctrlsf_winsize      = "30%"
@@ -18,4 +18,3 @@ inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 function! g:CtrlSFAfterMainWindowInit()
   setl wrap nonumber norelativenumber
 endfunction
-"}}}

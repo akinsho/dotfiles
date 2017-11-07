@@ -121,7 +121,9 @@ Plug 'kana/vim-operator-user'
       \ | Plug 'haya14busa/vim-operator-flashy'
 " "}}}
 "Search Tools ======================={{{
-Plug 'dyng/ctrlsf.vim'
+" Plug 'tomtom/tcomment_vim' "TODO: make a PR to add TSX
+" Plug 'dyng/ctrlsf.vim'
+Plug 'brooth/far.vim'
 Plug 'janko-m/vim-test'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'

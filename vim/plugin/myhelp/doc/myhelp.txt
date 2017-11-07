@@ -1,0 +1,19 @@
+*myhelp.txt*    For Vim version 8.0 Last change: 2017 October 8
+*myhelp*
+
+Matt's cheat sheet of Vim stuff he always forgets.
+
+===============================================================================
+CONTENTS
+
+    1. Normal Mode.......................................|myhelp-normal|
+    2. Visual Mode.......................................|myhelp-visual|
+    3. Insert Mode.......................................|myhelp-insert|
+
+===============================================================================
+1. Normal Mode                                         *myhelp-normal*
+
+   - :wall : Save modified buffers
+   - :x : Save buffer only if modified, then exit (better than :wq)
+   - ]] : next section
+   - ]m : next method
