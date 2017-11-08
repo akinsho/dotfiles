@@ -19,7 +19,8 @@ highlight! link SpellRare SpellCap
 " Clearing conceal messes up indent guide lines
 " highlight clear Conceal "Sets no highlighting for conceal
 highlight Conceal gui=bold
-" guifg=red
+highlight Todo gui=bold
+highlight Credit gui=bold
 ""---------------------------------------------------------------------------//
 "few nicer JS colours
 ""---------------------------------------------------------------------------//
@@ -60,13 +61,13 @@ endif
 ""---------------------------------------------------------------------------//
 "Autocomplete menu highlighting
 ""---------------------------------------------------------------------------//
+highlight PmenuSel guibg=#004D40 guifg=white gui=bold
+highlight QuickFixLine gui=bold
 "make the completion menu a bit more readable
 " highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 " highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-highlight QuickFixLine guibg=#8A95A7 gui=underline
+" highlight VertSplit guibg=bg guifg=bg
 "Color the tildes at the end of the buffer
 " hi link EndOfBuffer VimFgBgAttrib
-" highlight VertSplit guibg=bg guifg=bg
 " highlight Identifier gui=italic,bold
 ""---------------------------------------------------------------------------//

@@ -3,6 +3,7 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty it self.
+---
 env:
   # TERM env customization.
   #
@@ -36,10 +37,12 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    # family: FuraCode Nerd Font
     family: Hasklug Nerd Font
-    # Style can be specified to pick a specific face.
     style: Regular
+    # family: FuraCode Nerd Font
+    # family: OperatorMono Nerd Font
+    # style: Book
+    # Style can be specified to pick a specific face.
 
   # The bold font face
   italic:

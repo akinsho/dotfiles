@@ -8,9 +8,10 @@ let g:deoplete#enable_ignore_case      = 1
 let g:deoplete#enable_camel_case       = 1
 let g:deoplete#max_menu_width          = 80
 let g:deoplete#max_menu_height         = 50
+let g:deoplete#auto_complete_delay     = 50
 let g:deoplete#file#enable_buffer_path = 1
 if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns   = {}
 endif
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('ultisnips', 'rank', 630)

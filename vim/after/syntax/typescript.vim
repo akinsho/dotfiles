@@ -1,4 +1,4 @@
-if g:gui_neovim_running " Don't run this file if in a gui
+if g:gui_neovim_running || g:indentLine_enabled " Don't run this file if in a gui
   finish " Interacts with indent guide lines
 endif
 
@@ -9,3 +9,4 @@ exe 'syntax match tsArrowFunction /_\ze\s*=>/    skipwhite skipempty nextgroup=t
 
 " hi typescriptFuncArg gui=italic
 " hi tsArguments gui=italic,bold
+hi tsArrowFunction guifg=red
