@@ -18,6 +18,10 @@ nnoremap <leader>jr :call fns#JSXEncloseReturn()<CR>
 nnoremap vat :call fns#JSXSelectTag()<CR>
 nnoremap mT :!mocha %<CR>
 
+if exists('g:gui_oni')
+  call deoplete#disable()
+endif
+
 syn region foldImports start="import" end=/import.*\n^$/ fold keepend
 
 " Set a nicer foldtext function

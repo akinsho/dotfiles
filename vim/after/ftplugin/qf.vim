@@ -76,7 +76,7 @@ endfunction
 augroup QFCommands
   au!
   autocmd * <buffer> wincmd J
-  autocmd * <buffer><silent> call AdjustWindowHeight(8, 8)
+  autocmd * <buffer><silent> call AdjustWindowHeight(3, 8)
 augroup END
 
 let &cpoptions = s:save_cpo

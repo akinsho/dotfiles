@@ -12,6 +12,9 @@ syntax clear SpellLocal
 syntax clear SpellRare
 syntax clear Search
 
+" Highlight over 80 cols in red
+match Error /\%80v.\+/
+
 highlight SpellBad  term=underline cterm=italic ctermfg=Red
 highlight SpellCap  term=underline cterm=italic ctermfg=Blue
 highlight! link SpellLocal SpellCap

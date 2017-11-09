@@ -16,6 +16,7 @@ module.exports = {
   'editor.fontSize': '16px',
   'editor.fontFamily': 'FuraCode Nerd Font',
   'editor.completions.enabled': true,
+  'editor.scrollBar.visible': false,
   'environment.additionalPaths': [
     '/usr/bin',
     '/usr/local/bin',

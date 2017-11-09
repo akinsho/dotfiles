@@ -99,8 +99,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'ap/vim-css-color'
 Plug 'hail2u/vim-css-syntax'
-Plug 'styled-components/vim-styled-components',
-      \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
+" Plug 'styled-components/vim-styled-components',
+"       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
 "Git ==============================={{{
 Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
 Plug 'airblade/vim-gitgutter'

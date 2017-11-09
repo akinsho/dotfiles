@@ -168,6 +168,14 @@ function! s:expand_html_tab()
 endfunction
 "}}}
 
+if exists($TMUX)
+  augroup TmuxTitle
+    autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
+          \ call system("tmux rename-window 'vim | " . expand("%:t") . "'")
+    autocmd VimLeave * call system("tmux setw automatic-rename")
+  augroup END
+endif
+
 augroup mutltiple_filetype_settings "{{{
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
@@ -251,8 +259,16 @@ let g:term_win_highlight = {
       \}
 
 function! s:highlight_myterm() abort
-  exe 'highlight MyTerminal guibg='.g:term_win_highlight["guibg"].' ctermbg='.g:term_win_highlight["ctermbg"]
-  exe 'setl winhighlight=Normal:MyTerminal,NormalNC:MyTerminal'
+  try
+    exe 'highlight MyTerminal '.
+          \'guibg='. g:term_win_highlight["guibg"].
+          \' ctermbg='.g:term_win_highlight["ctermbg"]
+    exe 'setl winhighlight=Normal:MyTerminal,NormalNC:MyTerminal'
+  catch v:exception
+    echohl WarningMsg
+    echom v:exception
+    echohl none
+  endtry
 endfunction
 
 

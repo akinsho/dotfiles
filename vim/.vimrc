@@ -68,7 +68,9 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "----------------------------------------------------------------------
 call Source('/vim/configs/plugins.vim')
 "-----------------------------------------------------------------------
-syntax enable
+if !exists('g:gui_oni')
+  syntax enable
+endif
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
