@@ -1,3 +1,4 @@
+source ~/.profile
 # =====================================
 # Aliases
 # =====================================
@@ -20,8 +21,10 @@ function gcm() {
   git add . && git commit -m "$*"
 }
 
-if [ command -v brew >/dev/null 2>&1 && -f "$(brew --prefix)"/etc/bash_completion ]; then
-  . "$(brew --prefix)"/etc/bash_completion.d
+if command -v brew >/dev/null 2>&1; then
+  if [ -f "$(brew --prefix)"/etc/bash_completion ]; then
+    . "$(brew --prefix)"/etc/bash_completion.d
+  fi
 fi
 # =====================================
 # get current branch in git repo
