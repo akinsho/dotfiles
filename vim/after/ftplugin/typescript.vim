@@ -1,4 +1,5 @@
 setl foldenable
+set foldopen=all
 setl foldmethod=syntax foldlevelstart=99
 setl completeopt-=preview
 setl colorcolumn=100
@@ -15,6 +16,7 @@ nnoremap <localleader>i :TSImport<CR>
 nnoremap <localleader>s :TSGetDocSymbols<CR>
 nnoremap <leader>jr :call akin#JSXEncloseReturn()<CR>
 nnoremap vat :call akin#JSXSelectTag()<CR>
+nnoremap mT :!mocha %<CR>
 
 syn region foldImports start="import" end=/import.*\n^$/ fold keepend
 
