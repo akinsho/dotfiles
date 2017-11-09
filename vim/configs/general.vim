@@ -424,8 +424,9 @@ if &filetype ==# 'html'
 endif
 augroup cursorline
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter,InsertLeave * setlocal cursorline
-  autocmd WinLeave,InsertEnter * setlocal nocursorline
+  "TODO: Remove cursorline on insert enter EXCLUDING Terminal
+  autocmd WinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "}}}

@@ -245,6 +245,17 @@ augroup hide_lines "{{{
 augroup END "}}}
 
 " Terminal Black Background {{{
+let g:term_win_highlight = {
+      \"guibg": "#22252B",
+      \"ctermbg":"BLACK",
+      \}
+
+function! s:highlight_myterm() abort
+  exe 'highlight MyTerminal guibg='.g:term_win_highlight["guibg"].' ctermbg='.g:term_win_highlight["ctermbg"]
+  exe 'setl winhighlight=Normal:MyTerminal,NormalNC:MyTerminal'
+endfunction
+
+
 if has('nvim')
   augroup nvim
     au!
@@ -253,12 +264,13 @@ if has('nvim')
     autocmd BufEnter,BufWinLeave,InsertLeave term://* setlocal nonumber norelativenumber nocursorline
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
-    " if exists('+winhighlight') && !g:gui_neovim_running && &ft != 'fzf'
-    "   echom &ft
-    "   highlight BlackTerminal guibg=#000000 ctermbg=Black
-    "   autocmd TermOpen *
-    "         \ | setlocal winhighlight=Normal:BlackTerminal,NormalNC:BlackTerminal,CursorLine:BlackTerminal
-    " endif
+    " TODO: Tidy this up as there must be a way not to run this for fzf term buffers using an if statement
+    if exists('+winhighlight') "&& &filetype !=? 'fzf'
+      autocmd TermOpen *
+        \ | call s:highlight_myterm()
+      " Clear highlight for fzf buffers because yuck
+      au FileType fzf setl winhighlight=
+    endif
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
