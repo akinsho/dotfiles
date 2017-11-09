@@ -4,8 +4,8 @@ setlocal foldlevelstart=99 foldmethod=syntax
 setl colorcolumn=81
 set suffixesadd+=.js,.jsx
 
-nnoremap <leader>jr :call akin#JSXEncloseReturn()<CR>
-nnoremap vat :call akin#JSXSelectTag()<CR>
+nnoremap <leader>jr :call fns#JSXEncloseReturn()<CR>
+nnoremap vat :call fns#JSXSelectTag()<CR>
 nnoremap gd :TSDef<CR>
 
 function! JavascriptFold()

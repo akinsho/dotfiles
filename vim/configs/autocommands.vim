@@ -274,7 +274,7 @@ endfunction "}}}
 
 augroup FileType_all "{{{
   autocmd!
-  au BufEnter * call akin#cd()
+  au BufEnter * call fns#cd() "FIXME: Why if this throwing an error
   au BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   au FileType help au BufEnter,BufWinEnter <buffer> setlocal spell!

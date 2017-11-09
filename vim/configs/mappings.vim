@@ -94,7 +94,7 @@ nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "Use enter to create new lines w/o entering insert mode
 " nnoremap <CR> o<Esc>
-nnoremap <silent><cr>  :call akin#jump()<cr>
+nnoremap <silent><cr>  :call fns#jump()<cr>
 "Below is to fix issues with the ABOVE mappings in quickfix window
 augroup EnterMapping
   au!
@@ -166,13 +166,17 @@ cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
 " }}}
-command! AutoResize call akin#auto_resize()
+command! AutoResize call fns#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
 
-nnoremap <silent><expr> <leader>* akin#star_search('*')
-vnoremap <silent><expr> <leader>* akin#star_search('*')
-" nnoremap <silent><expr> # akin#star_search('#')
-" vnoremap <silent><expr> # akin#star_search('#')
+nnoremap <silent><expr> <leader>* fns#star_search('*')
+vnoremap <silent><expr> <leader>* fns#star_search('*')
+" nnoremap <silent><expr> # fns#star_search('#')
+" vnoremap <silent><expr> # fns#star_search('#')
+
+nno <expr> [of fns#open_folds('enable')
+nno <expr> ]of fns#open_folds('disable')
+nno <expr> cof fns#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
@@ -332,7 +336,7 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 nnoremap gV `[V`]
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
-xnoremap <leader>*          :<c-u>call akin#search_all()<cr>//<cr>
+xnoremap <leader>*          :<c-u>call fns#search_all()<cr>//<cr>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 "---------------------------------------------------------------------------//
@@ -586,17 +590,17 @@ nnoremap S "_diwP
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
-nnoremap <silent> <localleader>z :call akin#tab_zoom()<cr>
+nnoremap <silent> <localleader>z :call fns#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
-nnoremap <silent> <leader>z :call akin#buf_zoom()<CR>
+nnoremap <silent> <leader>z :call fns#buf_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 
 " Use D to delete a range then move cursor back
 com! -range D <line1>,<line2>d | norm <C-o>
 
-command! -nargs=0 Reg call akin#reg()
+command! -nargs=0 Reg call fns#reg()
 nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt

@@ -1,4 +1,4 @@
-function! akin#tab_zoom()
+function! fns#tab_zoom()
   if winnr('$') > 1
     tab split
   elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
@@ -8,7 +8,7 @@ function! akin#tab_zoom()
 endfunction
 
 
-function! akin#buf_zoom() abort
+function! fns#buf_zoom() abort
   if exists('t:zoomed') && t:zoomed
     exec t:zoom_winrestcmd
     let t:zoomed = 0
@@ -22,7 +22,7 @@ endfunction
 
 
 " Peekabo Like functionality
-function! akin#reg()
+function! fns#reg()
   reg
   echo "Register: "
   let char = nr2char(getchar())
@@ -48,7 +48,7 @@ function! JSXIsSelfCloseTag()
   return tag_name != match_tag
 endfunction
 
-function! akin#JSXSelectTag()
+function! fns#JSXSelectTag()
   if JSXIsSelfCloseTag()
     exec "normal! \<esc>0f<v/\\/>$\<cr>l"
   else
@@ -63,7 +63,7 @@ endfunction
 "   return (
 "     <p>Hello</p>
 "   );
-function! akin#JSXEncloseReturn()
+function! fns#JSXEncloseReturn()
   let l:previous_q_reg = @q
   let l:tab = &expandtab ? repeat(" ", &shiftwidth) : "\t"
   let l:line = getline(".")
@@ -73,7 +73,7 @@ function! akin#JSXEncloseReturn()
     let l:distance = (distance / &shiftwidth)
   endif
 
-  call akin#JSXSelectTag()
+  call fns#JSXSelectTag()
   exec "normal! \"qc"
 
   let @q = repeat(tab, distance) . "return (\n" . repeat(tab, distance + 1) . substitute(getreg("q"), "\\n", ("\\n" . tab), "g") .  "\n" . repeat(tab, distance) . ");\n"
@@ -86,15 +86,15 @@ endfunction
 "
 " Verbatim matching for *.
 "
-function! akin#search() abort
+function! fns#search() abort
   let regsave = @@
   normal! gvy
   let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
   let @@ = regsave
 endfunction
 
-function! akin#search_all() abort
-  call akin#search()
+function! fns#search_all() abort
+  call fns#search()
   call setqflist([])
   execute 'bufdo vimgrepadd! /'. @/ .'/ %'
 endfunction
@@ -102,7 +102,7 @@ endfunction
 "
 " Switch to VCS root, if there is one.
 "
-function! akin#cd() abort
+function! fns#cd() abort
   if &buftype =~# '\v(nofile|terminal)' || expand('%') =~# '^fugitive'
     return
   endif
@@ -135,7 +135,7 @@ endfunction
 "
 " Smarter tag-based jumping.
 "
-function! akin#jump() abort
+function! fns#jump() abort
   if (&filetype == 'vim' && &buftype == 'nofile') || &buftype == 'quickfix'
     execute "normal! \<cr>"
   elseif &filetype == 'neoman'
@@ -172,7 +172,7 @@ endfunction
 " Auto resize Vim splits to active split to 70% - https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
 let g:auto_resize_on = 1
 
-function! akin#auto_resize()
+function! fns#auto_resize()
   if g:auto_resize_on == 1
     let &winheight = &lines * 7 / 10
     let &winwidth = &columns * 7 / 10
@@ -187,7 +187,7 @@ endfunction
 
 
 " This keeps the cursor in place when using * or #
-function! akin#star_search(key) abort
+function! fns#star_search(key) abort
   let g:_view = winsaveview()
   let out = a:key
 
@@ -205,3 +205,26 @@ function! akin#star_search(key) abort
         \   ':unlet! g:_view',
         \   ':unlet! g:_pos'], "\<cr>")."\<cr>"
 endfunction
+
+fu! fns#open_folds(action) abort
+    if a:action ==# 'is_active'
+        return exists('s:open_folds')
+    elseif a:action ==# 'enable'
+        let s:open_folds = {
+        \                    'foldclose' : &foldclose,
+        \                    'foldopen'  : &foldopen,
+        \                    'foldlevel' : &foldlevel,
+        \                  }
+        set foldlevel=0
+        set foldclose=all
+        set foldopen=all
+        echo '[auto open folds] ON'
+    else
+        let &foldlevel = s:open_folds.foldlevel
+        let &foldclose = s:open_folds.foldclose
+        let &foldopen  = s:open_folds.foldopen
+        unlet! s:open_folds
+        echo '[auto open folds] OFF'
+    endif
+    return ''
+  endfu
