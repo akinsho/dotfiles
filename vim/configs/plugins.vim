@@ -76,6 +76,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 if !exists('g:gui_oni')
   Plug 'itchyny/lightline.vim'
 endif
+" Plug 'mgee/lightline-bufferline'
 Plug 'ap/vim-buftabline'
 Plug 'vimwiki/vimwiki'
 Plug 'ludovicchabant/vim-gutentags'

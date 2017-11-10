@@ -5,7 +5,7 @@ highlight BufTabLineHidden guibg=#22252B guifg=#5A5E68
 highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold
 highlight BufTabLineActive guifg=white
 highlight BufTablineFill guibg=#22252B
-" highlight TabLineSel guibg=white guifg=black
+highlight TabLineSel guifg=#A2E8F6 guifg=#5A5E68 gui=bold
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
 nmap <localleader>1 <Plug>BufTabLine.Go(1)
