@@ -7,6 +7,8 @@ let g:EasyMotion_startofline      = 0
 let g:EasyMotion_smartcase        = 1
 let g:EasyMotion_use_smartsign_us = 1
 omap t <Plug>(easymotion-bd-tl)
+omap T <Plug>(easymotion-bd-tl)
+omap f <Plug>(easymotion-bd-f)
 " nmap s <Plug>(easymotion-s)
 " Jump to anywhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.

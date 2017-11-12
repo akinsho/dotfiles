@@ -1,8 +1,13 @@
 ""---------------------------------------------------------------------------//
 " Deoplete Options
 ""---------------------------------------------------------------------------//
+if exists('g:gui_oni')
+  finish
+endif
 let g:deoplete#enable_at_startup       = 1
-let g:deoplete#enable_yarp             = 1
+if !has('nvim')
+  let g:deoplete#enable_yarp             = 1
+endif
 let g:deoplete#enable_smart_case       = 1
 let g:deoplete#enable_ignore_case      = 1
 let g:deoplete#enable_camel_case       = 1

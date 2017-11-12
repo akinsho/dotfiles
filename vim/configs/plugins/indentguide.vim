@@ -7,7 +7,8 @@ let g:indentLine_fileType       = [
       \ 'typescript',
       \ 'javascript',
       \ 'javascript.jsx',
-      \ 'typescript.tsx'
+      \ 'typescript.tsx',
+      \ 'typescript.jsx'
       \ ]
 let g:indentLine_bufNameExclude = [
       \ 'NERD_tree.*',

@@ -48,9 +48,12 @@ let g:lightline = {
 " let g:lightline.tabline = {
 "       \ 'left': [ [ 'buffers' ] ],
 "       \ 'right': [ [ 'close' ] ] }
-let g:lightline.tab = {
-      \ 'active': [ 'tabnum', 'filename', 'modified' ],
-      \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+" let g:lightline.tab = {
+"       \ 'active': [ 'tabnum', 'filename', 'modified' ],
+"       \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+" 
+" let g:lightline#bufferline#unicode_symbols = 1
+" g:lightline#bufferline#show_number = 2
 
 
 function! LightLineCsv()

@@ -46,13 +46,13 @@ font:
 
   # The bold font face
   italic:
-    family: Operator Mono  # TODO: Need to Patch this font
+    family: OperatorMono Nerd Font
     # Style can be specified to pick a specific face.
     style: Bold Italic
 
   # The italic font face
   bold:
-    family: FuraCode Nerd Font
+    family: FuraCode Nerd Font  # TODO: Need to Patch this font
     # Style can be specified to pick a specific face.
     style: Bold
 
@@ -148,12 +148,12 @@ colors:
 #   primary:
 #     background: '0x282c34'
 #     foreground: '0xeaeaea'
-# 
+#
 #   # Colors the cursor will use if `custom_cursor_colors` is true
 #   cursor:
 #     text: '0x000000'
 #     cursor: '0xffffff'
-# 
+#
 #   # Normal colors
 #   normal:
 #     black:   '0x000000'
@@ -164,7 +164,7 @@ colors:
 #     magenta: '0xc397d8'
 #     cyan:    '0x70c0ba'
 #     white:   '0xffffff'
-# 
+#
 #   # Bright colors
 #   bright:
 #     black:   '0x666666'

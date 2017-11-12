@@ -245,6 +245,10 @@ nnoremap cQ :call SetupCR()<CR>#``qz
 
 vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
 vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
+
+" This rewires n and N to do the highlighing...
+nnoremap <silent> n   n:call lib#HLNext(0.4)<cr>
+nnoremap <silent> N   N:call lib#HLNext(0.4)<cr>
 "----------------------------------------------------------------------------
 "Buffers
 "----------------------------------------------------------------------------
@@ -269,10 +273,8 @@ nmap ˙ <a-h>
 nmap ∆ <a-j>
 nmap ˚ <a-k>
 ""---------------------------------------------------------------------------//
-" Last Inserted or Changed object
+" Last Inserted
 ""---------------------------------------------------------------------------//
-" Like gv, but select the last changed text.
-nnoremap gi  `[v`]
 " select last paste in visual mode
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 ""---------------------------------------------------------------------------//
@@ -404,8 +406,8 @@ vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 ""---------------------------------------------------------------------------//
 " Find and Replace Using Abolish Plugin %S - Subvert
 ""---------------------------------------------------------------------------//
-nnoremap <leader>{ :%S/<C-r><C-w>/
-vnoremap <Leader>{ "zy:%S/<C-r><C-o>"/
+nnoremap <localleader>{ :%S/<C-r><C-w>//c<left><left>
+vnoremap <localleader>{ "zy:%S/<C-r><C-o>"//c<left><left>
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
@@ -583,7 +585,7 @@ inoremap <c-e> <c-o>$
 nnoremap <localleader>q @q
 "Map Q to remove a CR
 nnoremap Q J
-"Replace word under curosor
+"Replace word under cursor
 nnoremap S "_diwP
 "}}}
 
@@ -599,7 +601,6 @@ command! PU PlugUpdate | PlugUpgrade
 
 " Use D to delete a range then move cursor back
 com! -range D <line1>,<line2>d | norm <C-o>
-vnoremap d :D<CR>
 
 command! -nargs=0 Reg call lib#reg()
 nnoremap <localleader>r :Reg<CR>

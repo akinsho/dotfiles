@@ -1,7 +1,7 @@
 "====================================================================================
 "AUTOCOMMANDS
 "===================================================================================
-augroup Code Comments             "{{{
+augroup Code Comments             "{{{1
   "------------------------------------+
   au!
   " Horizontal Rule (78 char long)
@@ -9,7 +9,7 @@ augroup Code Comments             "{{{
   autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
   autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
 
-augroup END "}}}
+augroup END
 
 "Whitespace Highlight {{{
 function! s:WhitespaceHighlight()
@@ -20,7 +20,7 @@ function! s:WhitespaceHighlight()
     hi! ExtraWhitespace guifg=red
   endif
 endfunction
-"}}}
+
 
 function! s:ClearMatches() abort
   try
@@ -37,7 +37,7 @@ augroup vimrc-incsearch-highlight
   endif
 augroup END
 
-augroup WhiteSpace "{{{
+augroup WhiteSpace "{{{1
   au!
   " Highlight Whitespace
   highlight ExtraWhitespace ctermfg=red guifg=red
@@ -47,7 +47,7 @@ augroup WhiteSpace "{{{
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
   autocmd BufWinLeave * silent! s:ClearMatches()
   autocmd BufEnter * silent! call s:WhitespaceHighlight()
-augroup END "}}}
+augroup END
 
 " Auto open grep quickfix window and SmartClose {{{
 augroup SmartClose
@@ -72,16 +72,16 @@ function! s:smart_close()
     close
   endif
 endfunction
-"}}}
 
-augroup CheckOutsideTime "{{{
+
+augroup CheckOutsideTime "{{{1
   autocmd!
-  autocmd WinEnter,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
-  au FocusLost * silent! wall "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
+  autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
+  au BufEnter * AutoSave
+  au FocusLost * silent! call lib#AutoSave() "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
   " Autosave buffers before leaving them
-  autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
   autocmd BufLeave * silent! :wa
-augroup end "}}}
+augroup end
 
 " Disable paste.{{{
 augroup Cancel_Paste
@@ -90,7 +90,7 @@ augroup Cancel_Paste
     autocmd InsertLeave *
           \ if &paste | set nopaste | echo 'nopaste' | endif
   endif
-augroup END "}}}
+augroup END
 
 " Reload vim and config automatically {{{
 augroup UpdateVim
@@ -120,7 +120,7 @@ function! CheckColorColumn()
     setl colorcolumn=
   else
     try
-        let &colorcolumn=b:cl_size
+      let &colorcolumn=b:cl_size
     catch
       echohl WarningMsg
       echom v:exception
@@ -166,7 +166,7 @@ function! s:expand_html_tab()
   " return a regular tab character
   return "\<tab>"
 endfunction
-"}}}
+
 
 if exists($TMUX)
   augroup TmuxTitle
@@ -176,7 +176,7 @@ if exists($TMUX)
   augroup END
 endif
 
-augroup mutltiple_filetype_settings "{{{
+augroup mutltiple_filetype_settings "{{{1
   autocmd!
   " syntaxcomplete provides basic completion for filetypes that lack a custom one.
   " :h ft-syntax-omni
@@ -201,9 +201,9 @@ augroup mutltiple_filetype_settings "{{{
           \ setlocal omnifunc=javascriptcomplete#CompleteJS
   endif
 augroup END
-"}}}
 
-augroup filetype_javascript_typescript "{{{
+
+augroup filetype_javascript_typescript "{{{1
   autocmd!
   "==================================
   "TypeScript
@@ -211,46 +211,46 @@ augroup filetype_javascript_typescript "{{{
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
-"}}}
 
-augroup FileType_Clojure "{{{
+
+augroup FileType_Clojure "{{{1
   autocmd!
   " Evaluate Clojure buffers on load
   autocmd BufRead *.clj, *cljs try | silent! Require | catch /^Fireplace/ | endtry
 augroup END
-"}}}
 
-augroup FileType_html "{{{
+
+augroup FileType_html "{{{1
   autocmd!
   autocmd BufNewFile,BufEnter *.html setlocal nowrap
   autocmd BufNewFile,BufRead,BufWritePre *.html :normal gg=G
 augroup END
-"}}}
 
-augroup CommandWindow "{{{
+
+augroup CommandWindow "{{{1
   autocmd!
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
-"}}}
 
-augroup FileType_text "{{{
+
+augroup FileType_text "{{{1
   autocmd!
   autocmd FileType text setlocal textwidth=78
-augroup END "}}}
+augroup END
 
-augroup fileSettings "{{{
+augroup fileSettings "{{{1
   autocmd!
   autocmd Filetype vim-plug setlocal nonumber
-augroup END "}}}
+augroup END
 
-augroup hide_lines "{{{
+augroup hide_lines "{{{1
   " Hide line numbers when entering diff mode
   autocmd!
   autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
-augroup END "}}}
+augroup END
 
 " Terminal Black Background {{{
 let g:term_win_highlight = {
@@ -283,7 +283,7 @@ if has('nvim')
     " TODO: Tidy this up as there must be a way not to run this for fzf term buffers using an if statement
     if exists('+winhighlight') "&& &filetype !=? 'fzf'
       autocmd TermOpen *
-        \ | call s:highlight_myterm()
+            \ | call s:highlight_myterm()
       " Clear highlight for fzf buffers because yuck
       au FileType fzf setl winhighlight=
     endif
@@ -292,15 +292,15 @@ if has('nvim')
   augroup END
   au BufWinEnter * if &buftype == 'terminal' | setlocal bufhidden=hide | endif
 endif
-"}}}
 
-" Setup Help Window "{{{
+
+" Setup Help Window "{{{1
 function! s:SetupHelpWindow()
   wincmd L
   vertical resize 80
-endfunction "}}}
+endfunction
 
-augroup FileType_all "{{{
+augroup FileType_all "{{{1
   autocmd!
   au BufEnter * call lib#cd() "FIXME: Why if this throwing an error
   au BufNewFile,BufRead * setlocal formatoptions-=cro
@@ -322,63 +322,63 @@ augroup FileType_all "{{{
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
 
-    " Update filetype on save if empty
-    autocmd BufWritePost * nested
-          \ if &l:filetype ==# '' || exists('b:ftdetect')
-          \ |   unlet! b:ftdetect
-          \ |   filetype detect
-          \ | endif
+  " Update filetype on save if empty
+  autocmd BufWritePost * nested
+        \ if &l:filetype ==# '' || exists('b:ftdetect')
+        \ |   unlet! b:ftdetect
+        \ |   filetype detect
+        \ | endif
 
 
-    " Reload Vim script automatically if setlocal autoread
-    autocmd BufWritePost,FileWritePost *.vim nested
-          \ if &l:autoread > 0 | source <afile> |
-          \   echo 'source '.bufname('%') |
-          \ endif
-  augroup END
+  " Reload Vim script automatically if setlocal autoread
+  autocmd BufWritePost,FileWritePost *.vim nested
+        \ if &l:autoread > 0 | source <afile> |
+        \   echo 'source '.bufname('%') |
+        \ endif
+augroup END
 
-  augroup fugitiveSettings
-    autocmd!
-    autocmd FileType gitcommit setlocal nolist
-    autocmd BufReadPost fugitive://* setlocal bufhidden=delete
-  augroup END
+augroup fugitiveSettings
+  autocmd!
+  autocmd FileType gitcommit setlocal nolist
+  autocmd BufReadPost fugitive://* setlocal bufhidden=delete
+augroup END
 
-  "}}}
 
-  augroup NERDTree "{{{
-    "Close vim if only window is a Nerd Tree
-    autocmd!
-    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    autocmd FileType nerdtree setlocal nolist nonumber
-    " Refresh NERDTree on Open
-    autocmd BufEnter * if exists('b:NERDTree')
-          \ | execute 'normal R' | endif
-  augroup END
-  "}}}
 
-  augroup LongFiles "{{{
-    autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
-  augroup END
-  "}}}
+augroup NERDTree "{{{1
+  "Close vim if only window is a Nerd Tree
+  autocmd!
+  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  autocmd FileType nerdtree setlocal nolist nonumber
+  " Refresh NERDTree on Open
+  autocmd BufEnter * if exists('b:NERDTree')
+        \ | execute 'normal R' | endif
+augroup END
 
-  " Fold Text {{{
-  "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
-  function! NeatFoldText()
-    let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let l:lines_count = v:foldend - v:foldstart + 1
-    let l:lines_count_text = '(' . ( l:lines_count ) . ')'
-    let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
-    let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
-    let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
-    "NOTE: fold start shows the start the next section replaces everything after the text with
-    " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
-    " fold length with 2 space padding
-    return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
-  endfunction
-  set foldtext=NeatFoldText()
 
-  augroup Folding "{{{
-    autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-    autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-  augroup END "}}}
+augroup LongFiles "{{{1
+  autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
+augroup END
+
+
+" Fold Text {{{
+"Stolen from HiCodin's Dotfiles a really cool set of fold text functions
+function! NeatFoldText()
+  let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let l:lines_count = v:foldend - v:foldstart + 1
+  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
+  let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
+  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
+  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
+  "NOTE: fold start shows the start the next section replaces everything after the text with
+  " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
+  " fold length with 2 space padding
+  return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
+endfunction
+set foldtext=NeatFoldText()
+
+augroup Folding "{{{1
+  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+augroup END
 

@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" => HELPER FUNCTIONS {{{
+" => HELPER FUNCTIONS {{{1
 ""---------------------------------------------------------------------------//
 function! WrapForTmux(s)
   if !exists('$TMUX')
@@ -25,9 +25,8 @@ endfunction
 if !g:gui_neovim_running
   inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 endif
-"}}}
 ""---------------------------------------------------------------------------//
-" MACVIM {{{
+" MACVIM {{{1
 ""---------------------------------------------------------------------------//
 set shell=/bin/bash "run a simple bash rc without all the bells and whistles
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
@@ -44,9 +43,8 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
   let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 endif
-"}}}
 ""---------------------------------------------------------------------------//
-" Message output on vim actions {{{
+" Message output on vim actions {{{1
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start
 set shortmess+=A                      " ignore annoying swapfile messages
@@ -61,9 +59,8 @@ set shortmess+=mnrxo
 if has('patch-7.4.314')
   set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
-"}}}
 " ----------------------------------------------------------------------------
-" Window splitting and buffers {{{
+" Window splitting and buffers {{{1
 " ----------------------------------------------------------------------------
 set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
@@ -81,16 +78,15 @@ if has('folding')
     set foldnestmax=2
     set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
 endif
-"}}}
 ""---------------------------------------------------------------------------//
-" DIFFING {{{
+" DIFFING {{{1
 " ----------------------------------------------------------------------------
 set diffopt=vertical                  " Use in vertical diff mode
 " blank lines to keep sides aligned, Ignore whitespace changes
 set diffopt+=filler,iwhite,foldcolumn:0,context:4
-"}}}
+
 " ----------------------------------------------------------------------------
-"             FORMAT OPTIONS {{{
+"             FORMAT OPTIONS {{{1
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
@@ -107,16 +103,16 @@ if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j
 endif
 set nrformats-=octal " never use octal when <C-x> or <C-a>"
-"}}}
+
 " ----------------------------------------------------------------------------
-" Vim Path {{{
+" Vim Path {{{1
 " ----------------------------------------------------------------------------
 "Vim searches recursively through all directories and subdirectories
 " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
 set path+=**/src/main/**,**
-"}}}
+
 " ----------------------------------------------------------------------------
-" Wild and file globbing stuff in command mode {{{
+" Wild and file globbing stuff in command mode {{{1
 " ----------------------------------------------------------------------------
 " Use faster grep alternatives if possible
 if executable('rg')
@@ -148,9 +144,9 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem
 set wildignore+=*.*~,*~
 set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 
-"}}}
+
 " ----------------------------------------------------------------------------
-" Display {{{
+" Display {{{1
 " --------------------------------------------------------------------------
 set cmdheight=2 " Set command line height to two lines
 set modelines=1
@@ -221,6 +217,8 @@ if !has('nvim')
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast
+else
+  set nolazyredraw
 endif
 if exists('&belloff')
   set belloff=all
@@ -232,38 +230,18 @@ if has('termguicolors')
 endif
 " ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,./.git/.tags,./tags,tags;,~/.tags
-"}}}
-" ----------------------------------------------------------------------------
-" Credit:  June Gunn  - AutoSave {{{
-" ----------------------------------------------------------------------------
-function! s:autosave(enable)
-  augroup autosave
-    autocmd!
-    if a:enable
-      autocmd TextChanged,InsertLeave <buffer>
-            \  if empty(&buftype) && !empty(bufname(''))
-            \|   silent! update
-            \| endif
-    endif
-  augroup END
-endfunction
 
-command! -bang AutoSave call s:autosave(<bang>1)
-"}}}
+" ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//
-"Colorscheme {{{
+"Colorscheme {{{1
 ""---------------------------------------------------------------------------//
 set background=dark
-" if (has("autocmd") && !g:gui_neovim_running)
-"   let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-"   autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
-" end
 try | colorscheme onedark | catch | endtry
 hi CursorLineNr guifg=yellow gui=bold
 
-"}}}
+
 ""---------------------------------------------------------------------------//
-" TITLE {{{
+" TITLE {{{1
 ""---------------------------------------------------------------------------//
 " Custom Terminal title
 function! GetTitleString() abort
@@ -271,6 +249,7 @@ function! GetTitleString() abort
     try
       return fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
     catch
+      return 'VIM'
     endtry
   endif
 
@@ -280,9 +259,9 @@ set titlestring=%{GetTitleString()}
 set title
 set titleold="And relax"
 "let &titlestring=' ❐ %f  %r %m'
-"}}}
+
 ""---------------------------------------------------------------------------//
-"NVIM {{{
+"NVIM {{{1
 ""---------------------------------------------------------------------------//
 if has('nvim')
   set inccommand=nosplit
@@ -296,9 +275,9 @@ if has('nvim')
   let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
   let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')
 endif
-"}}}
+
 ""---------------------------------------------------------------------------//
-" Utilities {{{
+" Utilities {{{1
 ""---------------------------------------------------------------------------//
 set tags=./tags,tags;$HOME
 set noshowmode "No mode showing in command pane
@@ -306,9 +285,9 @@ set updatetime=200
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
-"}}}
+
 " ----------------------------------------------------------------------------
-" Tabbing - overridden by editorconfig, after/ftplugin {{{
+" Tabbing - overridden by editorconfig, after/ftplugin {{{1
 " ----------------------------------------------------------------------------
 set expandtab                         " default to spaces instead of tabs
 set shiftwidth=2                      " softtabs are 2 spaces for expandtab
@@ -372,9 +351,9 @@ if has ('persistent_undo')
     set undofile
   endif
 endif
-"}}}
+
 " ----------------------------------------------------------------------------
-" Match and search {{{
+" Match and search {{{1
 " ----------------------------------------------------------------------------
 set ignorecase smartcase wrapscan " Searches wrap around the end of the file
 if &filetype ==# 'html'
@@ -387,18 +366,18 @@ augroup cursorline
   autocmd WinLeave,BufWinLeave * setlocal nocursorline
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
-"}}}
+
 "====================================================================================
-"Spelling {{{
+"Spelling {{{1
 "====================================================================================
 " Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,dos,mac
 set complete+=kspell
-"}}}
+
 
 "===================================================================================
-"Mouse {{{
+"Mouse {{{1
 "===================================================================================
 set mousehide
 function! ToggleMouse()
@@ -431,6 +410,5 @@ endif
 if !has('nvim')
   set ttymouse=xterm2
 endif
-"}}}
 ""---------------------------------------------------------------------------//
 " vim:foldmethod=marker:foldlevel=0

@@ -168,7 +168,8 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Windows
 ""---------------------------------------------------------------------------//
-" Auto resize Vim splits to active split to 70% - https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
+" Auto resize Vim splits to active split to 70% -
+" https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
 let g:auto_resize_on = 1
 
 function! lib#auto_resize()
@@ -206,120 +207,155 @@ function! lib#star_search(key) abort
 endfunction
 
 fu! lib#open_folds(action) abort
-    if a:action ==# 'is_active'
-        return exists('s:open_folds')
-    elseif a:action ==# 'enable'
-        let s:open_folds = {
-        \                    'foldclose' : &foldclose,
-        \                    'foldopen'  : &foldopen,
-        \                    'foldlevel' : &foldlevel,
-        \                  }
-        set foldlevel=0
-        set foldclose=all
-        set foldopen=all
-        echo '[auto open folds] ON'
-    else
-        let &foldlevel = s:open_folds.foldlevel
-        let &foldclose = s:open_folds.foldclose
-        let &foldopen  = s:open_folds.foldopen
-        unlet! s:open_folds
-        echo '[auto open folds] OFF'
-    endif
-    return ''
-  endfu
+  if a:action ==# 'is_active'
+    return exists('s:open_folds')
+  elseif a:action ==# 'enable'
+    let s:open_folds = {
+          \                    'foldclose' : &foldclose,
+          \                    'foldopen'  : &foldopen,
+          \                    'foldlevel' : &foldlevel,
+          \                  }
+    set foldlevel=0
+    set foldclose=all
+    set foldopen=all
+    echo '[auto open folds] ON'
+  else
+    let &foldlevel = s:open_folds.foldlevel
+    let &foldclose = s:open_folds.foldclose
+    let &foldopen  = s:open_folds.foldopen
+    unlet! s:open_folds
+    echo '[auto open folds] OFF'
+  endif
+  return ''
+endfu
 ""---------------------------------------------------------------------------//
 " CREDIT: Romain L
 ""---------------------------------------------------------------------------//
 " make list-like commands more intuitive
-  function! lib#CCR()
-    let cmdline = getcmdline()
-    command! -bar Z silent set more|delcommand Z
-    if cmdline =~ '\v\C^(ls|files|buffers)'
-      " like :ls but prompts for a buffer command
-      return "\<CR>:b"
-    elseif cmdline =~ '\v\C/(#|nu|num|numb|numbe|number)$'
-      " like :g//# but prompts for a command
-      return "\<CR>:"
-    elseif cmdline =~ '\v\C^(dli|il)'
-      " like :dlist or :ilist but prompts for a count for :djump or :ijump
-      return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
-    elseif cmdline =~ '\v\C^(cli|lli)'
-      " like :clist or :llist but prompts for an error/location number
-      return "\<CR>:sil " . repeat(cmdline[0], 2) . "\<Space>"
-    elseif cmdline =~ '\C^old'
-      " like :oldfiles but prompts for an old file to edit
-      set nomore
-      return "\<CR>:Z|e #<"
-    elseif cmdline =~ '\C^changes'
-      " like :changes but prompts for a change to jump to
-      set nomore
-      return "\<CR>:Z|norm! g;\<S-Left>"
-    elseif cmdline =~ '\C^ju'
-      " like :jumps but prompts for a position to jump to
-      set nomore
-      return "\<CR>:Z|norm! \<C-o>\<S-Left>"
-    elseif cmdline =~ '\C^marks'
-      " like :marks but prompts for a mark to jump to
-      return "\<CR>:norm! `"
-    elseif cmdline =~ '\C^undol'
-      " like :undolist but prompts for a change to undo
-      return "\<CR>:u "
-    else
-      return "\<CR>"
-    endif
-  endfunction
+function! lib#CCR()
+  let cmdline = getcmdline()
+  command! -bar Z silent set more|delcommand Z
+  if cmdline =~ '\v\C^(ls|files|buffers)'
+    " like :ls but prompts for a buffer command
+    return "\<CR>:b"
+  elseif cmdline =~ '\v\C/(#|nu|num|numb|numbe|number)$'
+    " like :g//# but prompts for a command
+    return "\<CR>:"
+  elseif cmdline =~ '\v\C^(dli|il)'
+    " like :dlist or :ilist but prompts for a count for :djump or :ijump
+    return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
+  elseif cmdline =~ '\v\C^(cli|lli)'
+    " like :clist or :llist but prompts for an error/location number
+    return "\<CR>:sil " . repeat(cmdline[0], 2) . "\<Space>"
+  elseif cmdline =~ '\C^old'
+    " like :oldfiles but prompts for an old file to edit
+    set nomore
+    return "\<CR>:Z|e #<"
+  elseif cmdline =~ '\C^changes'
+    " like :changes but prompts for a change to jump to
+    set nomore
+    return "\<CR>:Z|norm! g;\<S-Left>"
+  elseif cmdline =~ '\C^ju'
+    " like :jumps but prompts for a position to jump to
+    set nomore
+    return "\<CR>:Z|norm! \<C-o>\<S-Left>"
+  elseif cmdline =~ '\C^marks'
+    " like :marks but prompts for a mark to jump to
+    return "\<CR>:norm! `"
+  elseif cmdline =~ '\C^undol'
+    " like :undolist but prompts for a change to undo
+    return "\<CR>:u "
+  else
+    return "\<CR>"
+  endif
+endfunction
 
 
-  "==========[ ModifyLineEndDelimiter ]==========
-  " Description:
-  "	This function takes a delimiter character and:
-  "	- removes that character from the end of the line if the character at the end
-  "	of the line is that character
-  "	- removes the character at the end of the line if that character is a
-  "	delimiter that is not the input character and appends that character to
-  "	the end of the line
-  "	- adds that character to the end of the line if the line does not end with
-  "	a delimiter
-  "
-  " Delimiters:
-  " - ","
-  " - ";"
-  "==========================================
-  function! lib#ModifyLineEndDelimiter(character)
-    let line_modified = 0
-    let line = getline('.')
+"==========[ ModifyLineEndDelimiter ]==========
+" Description:
+"	This function takes a delimiter character and:
+"	- removes that character from the end of the line if the character at the end
+"	of the line is that character
+"	- removes the character at the end of the line if that character is a
+"	delimiter that is not the input character and appends that character to
+"	the end of the line
+"	- adds that character to the end of the line if the line does not end with
+"	a delimiter
+"
+" Delimiters:
+" - ","
+" - ";"
+"==========================================
+function! lib#ModifyLineEndDelimiter(character)
+  let line_modified = 0
+  let line = getline('.')
 
-    for character in [',', ';']
-      " check if the line ends in a trailing character
-      if line =~ character . '$'
-        let line_modified = 1
+  for character in [',', ';']
+    " check if the line ends in a trailing character
+    if line =~ character . '$'
+      let line_modified = 1
 
-        " delete the character that matches:
+      " delete the character that matches:
 
-        " reverse the line so that the last instance of the character on the
-        " line is the first instance
-        let newline = join(reverse(split(line, '.\zs')), '')
+      " reverse the line so that the last instance of the character on the
+      " line is the first instance
+      let newline = join(reverse(split(line, '.\zs')), '')
 
-        " delete the instance of the character
-        let newline = substitute(newline, character, '', '')
+      " delete the instance of the character
+      let newline = substitute(newline, character, '', '')
 
-        " reverse the string again
-        let newline = join(reverse(split(newline, '.\zs')), '')
+      " reverse the string again
+      let newline = join(reverse(split(newline, '.\zs')), '')
 
-        " if the line ends in a trailing character and that is the
-        " character we are operating on, delete it.
-        if character != a:character
-          let newline .= a:character
-        endif
-
-        break
+      " if the line ends in a trailing character and that is the
+      " character we are operating on, delete it.
+      if character != a:character
+        let newline .= a:character
       endif
-    endfor
 
-    " if the line was not modified, append the character
-    if line_modified == 0
-      let newline = line . a:character
+      break
     endif
+  endfor
 
-    call setline('.', newline)
-  endfunction
+  " if the line was not modified, append the character
+  if line_modified == 0
+    let newline = line . a:character
+  endif
+
+  call setline('.', newline)
+endfunction
+
+" saves all the visible windows if needed/possible
+function! lib#AutoSave()
+  let this_window = winnr()
+  windo if &buftype != "nofile" && expand('%') != '' && &modified | write | endif
+execute this_window . 'wincmd w'
+endfunction
+
+"line containing the match blinks
+function! lib#HLNext (blinktime)
+  set invcursorline
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  set invcursorline
+  redraw
+endfunction
+
+
+""---------------------------------------------------------------------------//
+" Credit:  June Gunn  - AutoSave {{{1
+" ----------------------------------------------------------------------------
+function! lib#autosave(enable)
+  augroup autosave
+    autocmd!
+    if a:enable
+      autocmd TextChanged,InsertLeave <buffer>
+            \  if empty(&buftype) && !empty(bufname(''))
+            \|   silent! update
+            \| endif
+    endif
+  augroup END
+endfunction
+
+command! -bang AutoSave call lib#autosave(<bang>1)
+

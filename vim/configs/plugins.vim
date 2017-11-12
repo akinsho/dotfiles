@@ -1,7 +1,8 @@
 "-----------------------------------------------------------
 "PLUGINS
 "-----------------------------------------------------------
-" Plug Setup ===================== {{{
+" Plug Setup {{{1
+"=====================
 "This will autoinstall vim plug if not already installed
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -22,29 +23,36 @@ function! DoRemote(arg)
 endfunction
 
 call plug#begin('~/.vim/plugged')
-"}}}
-" Deoplete  ============================={{{
+
+" Deoplete  {{{1
+"=============================
 " Code completion
+if !exists('g:gui_oni')
 Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
 Plug 'Shougo/neco-vim',             { 'for': 'vim' },
 Plug 'Shougo/echodoc.vim'
 "NVIM ====================================
-if !exists('g:gui_oni')
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
   Plug 'carlitux/deoplete-ternjs',
         \{'do': 'npm install -g tern' }
+  Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
+  Plug 'itchyny/lightline.vim'
+  Plug 'ap/vim-buftabline'
+  " Plug 'mgee/lightline-bufferline'
 endif
-Plug 'roxma/nvim-yarp',
-Plug 'roxma/vim-hug-neovim-rpc'
+if !has('nvim')
+  Plug 'roxma/nvim-yarp',
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
 Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
 Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
 Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
-Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
 " FIXME: Fails hard, paths loaded wrong? settings misssing??
 " Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote')}
-"}}}
-" CORE ================================ {{{
+
+" CORE {{{1
+"================================
 Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdtree'
@@ -61,25 +69,23 @@ Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
 Plug 'mhinz/vim-startify'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
-"}}}
-"TMUX ============================ {{{
+
+"TMUX {{{1
+"============================
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
-"}}}
-"Utilities ============================{{{
+"Utilities {{{1
+"============================
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 if has('gui_running') || exists('g:gui_oni')
   Plug 'yuttie/comfortable-motion.vim'
 endif
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
-if !exists('g:gui_oni')
-  Plug 'itchyny/lightline.vim'
-endif
-Plug 'ap/vim-buftabline'
-Plug 'vimwiki/vimwiki', { 'on': [ '<Plug>(VimWikiIndex)' ] }
+Plug 'vimwiki/vimwiki', { 'on': [ '<Plug>(VimwikiTab)', '<Plug>(VimwikiIndex)' ] }
 Plug 'ludovicchabant/vim-gutentags'
-"}}}
-"TPOPE ===================================={{{
+
+"TPOPE {{{1
+"====================================
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -87,26 +93,29 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
-"}}}
-"Syntax ============================{{{
+
+"Syntax {{{1
+"============================
+Plug 'ianks/vim-tsx'
 Plug 'jparise/vim-graphql'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
-Plug 'ianks/vim-tsx'
 Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'ap/vim-css-color'
 Plug 'hail2u/vim-css-syntax'
 " Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
-"}}}
-"Git ==============================={{{
+
+"Git {{{1
+"===============================
 Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-"}}}
-"Text Objects ====================={{{
+
+"Text Objects {{{1
+"=====================
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
@@ -118,8 +127,9 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'thinca/vim-textobj-function-javascript'
 Plug 'kana/vim-operator-user'
       \ | Plug 'haya14busa/vim-operator-flashy'
-" "}}}
-"Search Tools ======================={{{
+"
+"Search Tools {{{1
+"=======================
 " Plug 'tomtom/tcomment_vim' "TODO: make a PR to add TSX
 Plug 'dyng/ctrlsf.vim'
 Plug 'keith/investigate.vim'
@@ -131,8 +141,9 @@ Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
 Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'takac/vim-hardtime',    { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
-"}}}
-"Filetype Plugins ======================{{{
+
+"Filetype Plugins {{{1
+"======================
 function! BuildComposer(info)
   if a:info.status !=# 'unchanged' || a:info.force
     if has('nvim')
@@ -146,8 +157,9 @@ Plug 'euclio/vim-markdown-composer',
       \ Cond(!has('gui_vimr'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'fatih/vim-go',           { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
-"}}}
-"Themes =============================== {{{
+
+"Themes  {{{1
+"===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 Plug 'joshdick/onedark.vim'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
@@ -158,8 +170,6 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
-"}}}
-
-" Load immediately {{{
+" Load immediately {{{1
 call plug#load('vim-fat-finger')
-" }}}
+
