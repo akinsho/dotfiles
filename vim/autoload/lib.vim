@@ -345,7 +345,7 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Credit:  June Gunn  - AutoSave {{{1
 " ----------------------------------------------------------------------------
-function! lib#autosave(enable)
+function! lib#buffer_autosave(enable)
   augroup autosave
     autocmd!
     if a:enable

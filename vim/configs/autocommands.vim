@@ -77,7 +77,7 @@ endfunction
 augroup CheckOutsideTime "{{{1
   autocmd!
   autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
-  au BufEnter * AutoSave
+  au BufEnter * silent! call lib#buffer_autosave
   au FocusLost * silent! call lib#AutoSave() "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
   " Autosave buffers before leaving them
   autocmd BufLeave * silent! :wa
@@ -360,6 +360,13 @@ augroup LongFiles "{{{1
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
 
+if v:version >= 700
+  " Save the buffers current cursor position
+  augroup CursorSave
+    au BufLeave * let b:winview = winsaveview()
+    au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+  augroup END
+endif
 
 " Fold Text {{{
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions

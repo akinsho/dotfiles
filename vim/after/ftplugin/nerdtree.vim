@@ -12,5 +12,5 @@ if !exists("g:no_plugin_maps") && !exists("g:no_nerdtree_maps")
   nmap <buffer> <silent> <CR> <CR>
   let b:undo_ftplugin = "silent! iunmap! <buffer> <Esc>"
 endif
-
+setl nocursorline
 " vim:set sts=2 sw=2:

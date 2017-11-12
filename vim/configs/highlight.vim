@@ -41,7 +41,8 @@ highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Identifier gui=bold
 highlight Type    gui=italic,bold cterm=italic,bold
-highlight Folded  gui=bold cterm=bold guifg=#A2E8F6
+highlight Folded  gui=bold cterm=bold
+" guifg=#A2E8F6
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
 ""---------------------------------------------------------------------------//
@@ -68,7 +69,7 @@ endif
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
 highlight QuickFixLine gui=bold
 "Remove vertical separator
-highlight VertSplit guibg=bg guifg=bg
+" highlight VertSplit guibg=bg guifg=bg
 "make the completion menu a bit more readable
 " highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 " highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE

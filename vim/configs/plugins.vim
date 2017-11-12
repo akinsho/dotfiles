@@ -28,22 +28,20 @@ call plug#begin('~/.vim/plugged')
 "=============================
 " Code completion
 if !exists('g:gui_oni')
-Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
-Plug 'Shougo/neco-vim',             { 'for': 'vim' },
-Plug 'Shougo/echodoc.vim'
-"NVIM ====================================
+  Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
+  Plug 'Shougo/neco-vim',             { 'for': 'vim' },
+  Plug 'Shougo/echodoc.vim'
+  "NVIM ====================================
   Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
   Plug 'carlitux/deoplete-ternjs',
         \{'do': 'npm install -g tern' }
   Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'itchyny/lightline.vim'
   Plug 'ap/vim-buftabline'
-  " Plug 'mgee/lightline-bufferline'
+  let g:buftabline_modified_symbol = '✎' "Local version of the plugin
 endif
-if !has('nvim')
-  Plug 'roxma/nvim-yarp',
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
+Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
 Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
 Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
 Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
@@ -68,7 +66,7 @@ endfunction
 Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
 Plug 'mhinz/vim-startify'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        \ | Plug 'junegunn/fzf.vim'
+      \ | Plug 'junegunn/fzf.vim'
 
 "TMUX {{{1
 "============================
@@ -80,8 +78,12 @@ Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 if has('gui_running') || exists('g:gui_oni')
   Plug 'yuttie/comfortable-motion.vim'
 endif
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
-Plug 'vimwiki/vimwiki', { 'on': [ '<Plug>(VimwikiTab)', '<Plug>(VimwikiIndex)' ] }
+Plug 'junegunn/vim-easy-align',
+      \{ 'on': [ '<Plug>(EasyAlign)' ] }
+Plug 'vimwiki/vimwiki', { 'on': [
+      \'<Plug>(VimwikiTab)',
+      \'<Plug>(VimwikiIndex)'
+      \] }
 Plug 'ludovicchabant/vim-gutentags'
 
 "TPOPE {{{1
@@ -120,6 +122,7 @@ Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'terryma/vim-expand-region'
+Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
