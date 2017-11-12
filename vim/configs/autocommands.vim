@@ -263,7 +263,7 @@ function! s:highlight_myterm() abort
     exe 'highlight MyTerminal '.
           \'guibg='. g:term_win_highlight["guibg"].
           \' ctermbg='.g:term_win_highlight["ctermbg"]
-    exe 'setl winhighlight=Normal:MyTerminal,NormalNC:MyTerminal'
+    exe 'setl winhighlight=Normal:MyTerminal,NormalNC:MyTerminal,CursorLine:MyTerminal,CursorLineNr:MyTerminal'
   catch v:exception
     echohl WarningMsg
     echom v:exception
@@ -276,8 +276,8 @@ if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
-    "Do everything possible to prevent numbers in term buffer
-    autocmd BufEnter,BufWinLeave,InsertLeave term://* setlocal nonumber norelativenumber nocursorline
+    "Do everything possible to prevent numbers and cursorline in term buffer
+    autocmd BufEnter,BufWinLeave,BufWinEnter,WinEnter,InsertLeave term://* setlocal nonumber norelativenumber nocursorline
     autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     " TODO: Tidy this up as there must be a way not to run this for fzf term buffers using an if statement
@@ -302,10 +302,9 @@ endfunction "}}}
 
 augroup FileType_all "{{{
   autocmd!
-  au BufEnter * call fns#cd() "FIXME: Why if this throwing an error
+  au BufEnter * call lib#cd() "FIXME: Why if this throwing an error
   au BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
-  au FileType help au BufEnter,BufWinEnter <buffer> setlocal spell!
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
@@ -371,7 +370,7 @@ augroup FileType_all "{{{
     let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
     let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
     let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
-    "NOTE: fold start shows the star the next section replaces everything after the text with
+    "NOTE: fold start shows the start the next section replaces everything after the text with
     " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
     " fold length with 2 space padding
     return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend

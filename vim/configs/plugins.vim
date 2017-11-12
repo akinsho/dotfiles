@@ -42,8 +42,7 @@ Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
 Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
 Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
 " FIXME: Fails hard, paths loaded wrong? settings misssing??
-" Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote'),
-"       \'for': ['javascript', 'typescript', 'rust', 'html'],}
+" Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote')}
 "}}}
 " CORE ================================ {{{
 Plug 'w0rp/ale'
@@ -76,9 +75,8 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)' ] }
 if !exists('g:gui_oni')
   Plug 'itchyny/lightline.vim'
 endif
-" Plug 'mgee/lightline-bufferline'
 Plug 'ap/vim-buftabline'
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', { 'on': [ '<Plug>(VimWikiIndex)' ] }
 Plug 'ludovicchabant/vim-gutentags'
 "}}}
 "TPOPE ===================================={{{
@@ -91,7 +89,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 "}}}
 "Syntax ============================{{{
-Plug 'Quramy/vim-js-pretty-template'
 Plug 'jparise/vim-graphql'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
@@ -102,6 +99,7 @@ Plug 'ap/vim-css-color'
 Plug 'hail2u/vim-css-syntax'
 " Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
+"}}}
 "Git ==============================={{{
 Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
 Plug 'airblade/vim-gitgutter'

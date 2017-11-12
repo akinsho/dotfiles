@@ -1,34 +1,6 @@
 ""---------------------------------------------------------------------------//
 " => HELPER FUNCTIONS {{{
 ""---------------------------------------------------------------------------//
-function! JsEchoError(msg)
-  redraw | echon 'js: ' | echohl ErrorMsg | echon a:msg | echohl None
-endfunction
-
-" Swapping between test file and main file.
-function! JsSwitch(bang, cmd)
-  let l:file = expand('%')
-  if empty(l:file)
-    call JsEchoError('no buffer name')
-    return
-  elseif l:file =~# '^\f\+.test\.js$'
-    let l:root = split(l:file, '.test.js$')[0]
-    let l:alt_file = l:root . '.js'
-  elseif l:file =~# '^\f\+\.js$'
-    let l:root = split(l:file, '.js$')[0]
-    let l:alt_file = l:root . '.test.js'
-  else
-    call JsEchoError('not a js file')
-    return
-  endif
-  if empty(a:cmd)
-    execute ':edit ' . l:alt_file
-  else
-    execute ':' . a:cmd . ' ' . l:alt_file
-  endif
-endfunction
-au Filetype javascript command! -bang A call JsSwitch(<bang>0, '')
-
 function! WrapForTmux(s)
   if !exists('$TMUX')
     return a:s
@@ -54,7 +26,6 @@ if !g:gui_neovim_running
   inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 endif
 "}}}
-" ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//
 " MACVIM {{{
 ""---------------------------------------------------------------------------//
@@ -105,18 +76,18 @@ if has('folding')
   if has('windows')
     set fillchars=vert:│
     set fillchars+=fold:-
+    set fillchars+=diff:⣿
   endif
-    set foldnestmax=3
-    set foldopen+=jump
+    set foldnestmax=2
+    set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
 endif
 "}}}
 ""---------------------------------------------------------------------------//
 " DIFFING {{{
 " ----------------------------------------------------------------------------
-" Note this is += since fillchars was defined in the window config
-set fillchars+=diff:⣿
 set diffopt=vertical                  " Use in vertical diff mode
-set diffopt+=filler,iwhite,foldcolumn:0,context:4                    " blank lines to keep sides aligned, Ignore whitespace changes
+" blank lines to keep sides aligned, Ignore whitespace changes
+set diffopt+=filler,iwhite,foldcolumn:0,context:4
 "}}}
 " ----------------------------------------------------------------------------
 "             FORMAT OPTIONS {{{
@@ -140,9 +111,9 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Vim Path {{{
 " ----------------------------------------------------------------------------
-" set path+=** "Vim searches recursively through all directories and subdirectories
-set path+=**/src/main/**,** " path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
-
+"Vim searches recursively through all directories and subdirectories
+" path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
+set path+=**/src/main/**,**
 "}}}
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{
@@ -181,10 +152,9 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " ----------------------------------------------------------------------------
 " Display {{{
 " --------------------------------------------------------------------------
+set cmdheight=2 " Set command line height to two lines
 set modelines=1
-set nomodeline
 set conceallevel=2
-syntax sync minlines=256 " update syntax highlighting for more lines increased scrolling performance
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -251,8 +221,6 @@ if !has('nvim')
   set autoindent
   set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast
-else
-  set nolazyredraw
 endif
 if exists('&belloff')
   set belloff=all
@@ -283,24 +251,14 @@ endfunction
 command! -bang AutoSave call s:autosave(<bang>1)
 "}}}
 ""---------------------------------------------------------------------------//
-" Command line {{{
-""---------------------------------------------------------------------------//
-set cmdheight=2 " Set command line height to two lines
-"}}}
-"-----------------------------------------------------------------
-"Abbreviations {{{
-"-----------------------------------------------------------------
-iabbrev w@ www.akin-sowemimo.com
-"}}}
-""---------------------------------------------------------------------------//
 "Colorscheme {{{
 ""---------------------------------------------------------------------------//
 set background=dark
-if (has("autocmd") && !g:gui_neovim_running)
-  let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
-end
-colorscheme onedark
+" if (has("autocmd") && !g:gui_neovim_running)
+"   let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+"   autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
+" end
+try | colorscheme onedark | catch | endtry
 hi CursorLineNr guifg=yellow gui=bold
 
 "}}}

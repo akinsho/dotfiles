@@ -14,9 +14,12 @@ nnoremap <localleader>t :TSType<CR>
 nnoremap <localleader>c :TSEditConfig<CR>
 nnoremap <localleader>i :TSImport<CR>
 nnoremap <localleader>s :TSGetDocSymbols<CR>
-nnoremap <leader>jr :call fns#JSXEncloseReturn()<CR>
-nnoremap vat :call fns#JSXSelectTag()<CR>
+nnoremap <leader>jr :call lib#JSXEncloseReturn()<CR>
+nnoremap vat :call lib#JSXSelectTag()<CR>
 nnoremap mT :!mocha %<CR>
+
+" Highlight over 80 cols in red
+match Error /\%100v.\+/
 
 if exists('g:gui_oni')
   call deoplete#disable()

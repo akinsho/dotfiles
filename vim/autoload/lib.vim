@@ -1,4 +1,4 @@
-function! fns#tab_zoom()
+function! lib#tab_zoom()
   if winnr('$') > 1
     tab split
   elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
@@ -8,7 +8,7 @@ function! fns#tab_zoom()
 endfunction
 
 
-function! fns#buf_zoom() abort
+function! lib#buf_zoom() abort
   if exists('t:zoomed') && t:zoomed
     exec t:zoom_winrestcmd
     let t:zoomed = 0
@@ -22,7 +22,7 @@ endfunction
 
 
 " Peekabo Like functionality
-function! fns#reg()
+function! lib#reg()
   reg
   echo "Register: "
   let char = nr2char(getchar())
@@ -48,7 +48,7 @@ function! JSXIsSelfCloseTag()
   return tag_name != match_tag
 endfunction
 
-function! fns#JSXSelectTag()
+function! lib#JSXSelectTag()
   if JSXIsSelfCloseTag()
     exec "normal! \<esc>0f<v/\\/>$\<cr>l"
   else
@@ -63,7 +63,7 @@ endfunction
 "   return (
 "     <p>Hello</p>
 "   );
-function! fns#JSXEncloseReturn()
+function! lib#JSXEncloseReturn()
   let l:previous_q_reg = @q
   let l:tab = &expandtab ? repeat(" ", &shiftwidth) : "\t"
   let l:line = getline(".")
@@ -73,7 +73,7 @@ function! fns#JSXEncloseReturn()
     let l:distance = (distance / &shiftwidth)
   endif
 
-  call fns#JSXSelectTag()
+  call lib#JSXSelectTag()
   exec "normal! \"qc"
 
   let @q = repeat(tab, distance) . "return (\n" . repeat(tab, distance + 1) . substitute(getreg("q"), "\\n", ("\\n" . tab), "g") .  "\n" . repeat(tab, distance) . ");\n"
@@ -86,23 +86,23 @@ endfunction
 "
 " Verbatim matching for *.
 "
-function! fns#search() abort
+function! lib#search() abort
   let regsave = @@
   normal! gvy
   let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
   let @@ = regsave
 endfunction
 
-function! fns#search_all() abort
-  call fns#search()
+function! lib#search_all() abort
+  call lib#search()
   call setqflist([])
   execute 'bufdo vimgrepadd! /'. @/ .'/ %'
 endfunction
 
-"
+" CREDIT: MHINZ
 " Switch to VCS root, if there is one.
 "
-function! fns#cd() abort
+function! lib#cd() abort
   if &buftype =~# '\v(nofile|terminal)' || expand('%') =~# '^fugitive'
     return
   endif
@@ -135,7 +135,7 @@ endfunction
 "
 " Smarter tag-based jumping.
 "
-function! fns#jump() abort
+function! lib#jump() abort
   if (&filetype == 'vim' && &buftype == 'nofile') || &buftype == 'quickfix'
     execute "normal! \<cr>"
   elseif &filetype == 'neoman'
@@ -144,7 +144,6 @@ function! fns#jump() abort
     if exists('g:cscoped')
       try
         execute 'cscope find g' expand('<cword>')
-      " catch /E259/
       catch /E259/
         echohl WarningMsg
         redraw | echomsg 'No match found: '. expand('<cword>')
@@ -172,7 +171,7 @@ endfunction
 " Auto resize Vim splits to active split to 70% - https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
 let g:auto_resize_on = 1
 
-function! fns#auto_resize()
+function! lib#auto_resize()
   if g:auto_resize_on == 1
     let &winheight = &lines * 7 / 10
     let &winwidth = &columns * 7 / 10
@@ -187,7 +186,7 @@ endfunction
 
 
 " This keeps the cursor in place when using * or #
-function! fns#star_search(key) abort
+function! lib#star_search(key) abort
   let g:_view = winsaveview()
   let out = a:key
 
@@ -206,7 +205,7 @@ function! fns#star_search(key) abort
         \   ':unlet! g:_pos'], "\<cr>")."\<cr>"
 endfunction
 
-fu! fns#open_folds(action) abort
+fu! lib#open_folds(action) abort
     if a:action ==# 'is_active'
         return exists('s:open_folds')
     elseif a:action ==# 'enable'
@@ -228,3 +227,99 @@ fu! fns#open_folds(action) abort
     endif
     return ''
   endfu
+""---------------------------------------------------------------------------//
+" CREDIT: Romain L
+""---------------------------------------------------------------------------//
+" make list-like commands more intuitive
+  function! lib#CCR()
+    let cmdline = getcmdline()
+    command! -bar Z silent set more|delcommand Z
+    if cmdline =~ '\v\C^(ls|files|buffers)'
+      " like :ls but prompts for a buffer command
+      return "\<CR>:b"
+    elseif cmdline =~ '\v\C/(#|nu|num|numb|numbe|number)$'
+      " like :g//# but prompts for a command
+      return "\<CR>:"
+    elseif cmdline =~ '\v\C^(dli|il)'
+      " like :dlist or :ilist but prompts for a count for :djump or :ijump
+      return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
+    elseif cmdline =~ '\v\C^(cli|lli)'
+      " like :clist or :llist but prompts for an error/location number
+      return "\<CR>:sil " . repeat(cmdline[0], 2) . "\<Space>"
+    elseif cmdline =~ '\C^old'
+      " like :oldfiles but prompts for an old file to edit
+      set nomore
+      return "\<CR>:Z|e #<"
+    elseif cmdline =~ '\C^changes'
+      " like :changes but prompts for a change to jump to
+      set nomore
+      return "\<CR>:Z|norm! g;\<S-Left>"
+    elseif cmdline =~ '\C^ju'
+      " like :jumps but prompts for a position to jump to
+      set nomore
+      return "\<CR>:Z|norm! \<C-o>\<S-Left>"
+    elseif cmdline =~ '\C^marks'
+      " like :marks but prompts for a mark to jump to
+      return "\<CR>:norm! `"
+    elseif cmdline =~ '\C^undol'
+      " like :undolist but prompts for a change to undo
+      return "\<CR>:u "
+    else
+      return "\<CR>"
+    endif
+  endfunction
+
+
+  "==========[ ModifyLineEndDelimiter ]==========
+  " Description:
+  "	This function takes a delimiter character and:
+  "	- removes that character from the end of the line if the character at the end
+  "	of the line is that character
+  "	- removes the character at the end of the line if that character is a
+  "	delimiter that is not the input character and appends that character to
+  "	the end of the line
+  "	- adds that character to the end of the line if the line does not end with
+  "	a delimiter
+  "
+  " Delimiters:
+  " - ","
+  " - ";"
+  "==========================================
+  function! lib#ModifyLineEndDelimiter(character)
+    let line_modified = 0
+    let line = getline('.')
+
+    for character in [',', ';']
+      " check if the line ends in a trailing character
+      if line =~ character . '$'
+        let line_modified = 1
+
+        " delete the character that matches:
+
+        " reverse the line so that the last instance of the character on the
+        " line is the first instance
+        let newline = join(reverse(split(line, '.\zs')), '')
+
+        " delete the instance of the character
+        let newline = substitute(newline, character, '', '')
+
+        " reverse the string again
+        let newline = join(reverse(split(newline, '.\zs')), '')
+
+        " if the line ends in a trailing character and that is the
+        " character we are operating on, delete it.
+        if character != a:character
+          let newline .= a:character
+        endif
+
+        break
+      endif
+    endfor
+
+    " if the line was not modified, append the character
+    if line_modified == 0
+      let newline = line . a:character
+    endif
+
+    call setline('.', newline)
+  endfunction

@@ -28,7 +28,9 @@ let g:ale_sign_error                     = '✖'
 let g:ale_echo_delay                     = 80
 let g:ale_sign_warning                   = '❗'
 let g:ale_warn_about_trailing_whitespace = 1
-"TODO: integrate stylelint
+if exists("g:gui_oni")
+  let g:ale_echo_cursor = 0
+endif
 let g:ale_linters                     = {
       \'python': ['flake8'],
       \'css': ['stylelint'],

@@ -94,7 +94,7 @@ nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "Use enter to create new lines w/o entering insert mode
 " nnoremap <CR> o<Esc>
-nnoremap <silent><cr>  :call fns#jump()<cr>
+nnoremap <silent><cr>  :call lib#jump()<cr>
 "Below is to fix issues with the ABOVE mappings in quickfix window
 augroup EnterMapping
   au!
@@ -166,17 +166,17 @@ cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
 " }}}
-command! AutoResize call fns#auto_resize()
+command! AutoResize call lib#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
 
-nnoremap <silent><expr> <leader>* fns#star_search('*')
-vnoremap <silent><expr> <leader>* fns#star_search('*')
-" nnoremap <silent><expr> # fns#star_search('#')
-" vnoremap <silent><expr> # fns#star_search('#')
+nnoremap <silent><expr> <leader>* lib#star_search('*')
+vnoremap <silent><expr> <leader>* lib#star_search('*')
+" nnoremap <silent><expr> # lib#star_search('#')
+" vnoremap <silent><expr> # lib#star_search('#')
 
-nno <expr> [of fns#open_folds('enable')
-nno <expr> ]of fns#open_folds('disable')
-nno <expr> cof fns#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
+nno <expr> [of lib#open_folds('enable')
+nno <expr> ]of lib#open_folds('disable')
+nno <expr> cof lib#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
@@ -336,7 +336,7 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 nnoremap gV `[V`]
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
-xnoremap <leader>*          :<c-u>call fns#search_all()<cr>//<cr>
+xnoremap <leader>*          :<c-u>call lib#search_all()<cr>//<cr>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 "---------------------------------------------------------------------------//
@@ -590,17 +590,18 @@ nnoremap S "_diwP
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
-nnoremap <silent> <localleader>z :call fns#tab_zoom()<cr>
+nnoremap <silent> <localleader>z :call lib#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
-nnoremap <silent> <leader>z :call fns#buf_zoom()<CR>
+nnoremap <silent> <leader>z :call lib#buf_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 
 " Use D to delete a range then move cursor back
 com! -range D <line1>,<line2>d | norm <C-o>
+vnoremap d :D<CR>
 
-command! -nargs=0 Reg call fns#reg()
+command! -nargs=0 Reg call lib#reg()
 nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
@@ -656,20 +657,9 @@ nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
 
-cnoremap <expr> <CR> <SID>CCR()
-function! s:CCR()
-  command! -bar Z silent set more|delcommand Z
-  if getcmdtype() == ":"
-    let cmdline = getcmdline()
-    if cmdline =~ '\v\C^(dli|il)' | return "\<CR>:" . cmdline[0] . "jump   " . split(cmdline, " ")[1] . "\<S-Left>\<Left>\<Left>"
-    elseif cmdline =~ '\v\C^(cli|lli)' | return "\<CR>:silent " . repeat(cmdline[0], 2) . "\<Space>"
-    elseif cmdline =~ '\C^changes' | set nomore | return "\<CR>:Z|norm! g;\<S-Left>"
-    elseif cmdline =~ '\C^ju' | set nomore | return "\<CR>:Z|norm! \<C-o>\<S-Left>"
-    elseif cmdline =~ '\v\C(#|nu|num|numb|numbe|number)$' | return "\<CR>:"
-    elseif cmdline =~ '\C^ol' | set nomore | return "\<CR>:Z|e #<"
-    elseif cmdline =~ '\v\C^(ls|files|buffers)' | return "\<CR>:b"
-    elseif cmdline =~ '\C^marks' | return "\<CR>:norm! `"
-    elseif cmdline =~ '\C^undol' | return "\<CR>:u "
-    else | return "\<CR>" | endif
-  else | return "\<CR>" | endif
-endfunction
+cnoremap <expr> <CR> lib#CCR()
+
+" Conditionally modify character at end of line
+nnoremap <silent> <localleader>, :call lib#ModifyLineEndDelimiter(',')<cr>
+nnoremap <silent> <localleader>; :call lib#ModifyLineEndDelimiter(';')<cr>
+
