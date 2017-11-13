@@ -111,10 +111,10 @@ Plug 'hail2u/vim-css-syntax'
 
 "Git {{{1
 "===============================
-Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
+" Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
 
 "Text Objects {{{1
 "=====================

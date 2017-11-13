@@ -15,6 +15,8 @@ module.exports = {
   'oni.loadInitVim': true,
   'editor.fontSize': '16px',
   'editor.fontFamily': 'FuraCode Nerd Font',
+  // 'editor.fontFamily': 'OperatorMono Nerd Font',
+  // 'editor.fontSize': '17px',
   'editor.completions.enabled': true,
   'editor.scrollBar.visible': false,
   'environment.additionalPaths': [

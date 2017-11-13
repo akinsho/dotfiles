@@ -142,7 +142,7 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//
-" Commands {{{
+" Commands {{{1
 command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _
 command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _
 " smooth searching
@@ -150,13 +150,13 @@ cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>/<C-
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"
 " Smart mappings on the command line
 cno $d e ~/Desktop/
-" insert path of current file into a command
-cmap <c-f> <c-r>=expand("%:p:h") . "/" <cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 cmap w!! w !sudo tee % >/dev/null
-"}}}
-" Loop cnext / cprev / lnext / lprev {{{
+" insert path of current file into a command
+cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
+cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
+" Loop cnext / cprev / lnext / lprev {{{1
 command! Cnext try | cnext | catch | cfirst | catch | endtry
 command! Cprev try | cprev | catch | clast | catch | endtry
 command! Lnext try | lnext | catch | lfirst | catch | endtry
@@ -165,7 +165,7 @@ cabbrev cnext Cnext
 cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
-" }}}
+
 command! AutoResize call lib#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
 
@@ -341,6 +341,10 @@ vnoremap * y/<C-R>"<CR>
 xnoremap <leader>*          :<c-u>call lib#search_all()<cr>//<cr>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
+
+xnoremap nu :<C-u>call lib#Numbers()<CR>
+onoremap nu :normal vin<CR>
+
 "---------------------------------------------------------------------------//
 " Inner Indent Text Object - Courtesty of http://vim.wikia.com/wiki/Indent_text_object
 "---------------------------------------------------------------------------//

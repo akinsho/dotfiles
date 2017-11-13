@@ -41,7 +41,8 @@ let g:ale_linters                     = {
       \'html':[]
       \}
 " if g:gui_neovim_running
-let g:ale_set_highlights    = 0
+let g:ale_set_highlights    = 1
+highlight ALEErrorLine guifg=#E06C75 gui=bold
 " endif
 let g:ale_linter_aliases    = {'jsx': 'css', 'tsx': 'css'}
 nmap ]a <Plug>(ale_next_wrap)

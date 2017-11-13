@@ -359,3 +359,9 @@ endfunction
 
 command! -bang AutoSave call lib#autosave(<bang>1)
 
+" custom text-object for numerical values
+function! lib#Numbers()
+  call search('\d\([^0-9\.]\|$\)', 'cW')
+  normal v
+  call search('\(^\|[^0-9\.]\d\)', 'becW')
+endfunction
