@@ -175,4 +175,5 @@ else
 endif
 " Load immediately {{{1
 call plug#load('vim-fat-finger')
+"}}}
 

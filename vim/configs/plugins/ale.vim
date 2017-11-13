@@ -14,7 +14,9 @@ let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_javascript_prettier_options          =
       \'--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options                      =
-      \{'\.min.js$': {'ale_enabled': 0}}
+      \{'\.min.js$': {'ale_enabled': 0},
+      \'.*oni/.*\.ts$':{'g:ale_fix_on_save': 0}
+      \}
 let g:ale_fixers = {
       \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier', 'eslint'],
@@ -27,6 +29,7 @@ let g:ale_sign_column_always             = 1
 let g:ale_sign_error                     = '✖'
 let g:ale_echo_delay                     = 80
 let g:ale_sign_warning                   = '❗'
+let g:ale_lint_delay                     = 300
 let g:ale_warn_about_trailing_whitespace = 1
 if exists("g:gui_oni")
   let g:ale_echo_cursor = 0
@@ -40,13 +43,13 @@ let g:ale_linters                     = {
       \'go': ['gofmt -e', 'go vet', 'golint', 'go build', 'gosimple', 'staticcheck'],
       \'html':[]
       \}
-" if g:gui_neovim_running
-let g:ale_set_highlights    = 1
-highlight ALEErrorLine guifg=#E06C75 gui=bold
-" endif
+if !exists('g:gui_oni')
+  let g:ale_set_highlights    = 1
+endif
 let g:ale_linter_aliases    = {'jsx': 'css', 'tsx': 'css'}
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
+nmap [d <Plug>(ale_detail)
 
 augroup AleTS
   autocmd BufNewFile,BufEnter,BufRead *.ts,*.tsx

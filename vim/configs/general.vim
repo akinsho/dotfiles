@@ -281,7 +281,7 @@ endif
 ""---------------------------------------------------------------------------//
 set tags=./tags,tags;$HOME
 set noshowmode "No mode showing in command pane
-set updatetime=200
+set updatetime=500
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
