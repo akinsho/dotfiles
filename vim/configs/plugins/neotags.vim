@@ -20,5 +20,5 @@ let g:neotags#typescript#d = g:neotags#typescript#c
 
 highlight link javascriptClassTag Special
 highlight link javascriptConstantTag Special
-highlight link FunctionTag Identifier
+highlight link FunctionTag Special
 highlight link javascriptObjectTag PreProc

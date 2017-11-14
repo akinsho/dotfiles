@@ -40,7 +40,7 @@ highlight Type gui=italic,bold cterm=italic
 highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
 highlight Comment gui=italic cterm=italic
 highlight Type    gui=italic,bold cterm=italic,bold
-highlight Folded  gui=bold cterm=bold
+highlight Folded  gui=bold,italic cterm=bold
 " guifg=#A2E8F6
 highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
 highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
@@ -66,7 +66,6 @@ endif
 "Autocomplete menu highlighting
 ""---------------------------------------------------------------------------//
 highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-highlight QuickFixLine gui=bold
 " highlight Identifier gui=bold
 "Remove vertical separator
 " highlight VertSplit guibg=bg guifg=bg

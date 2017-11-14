@@ -80,10 +80,10 @@ call Source('/vim/configs/open-changed-files.vim')
 call Source('/vim/configs/highlight.vim')
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
-if exists('g:gui_oni')
+call LoadConfigs(s:settings)
+if exists('g:gui_oni') "NOTE: Order Matters here as this works like an after overwriting Settings for oni
   call Source('/vim/gui/oni.vim')
 endif
-call LoadConfigs(s:settings)
 "---------------------------------------------------------------------------//
 " Essential Settings - Taken care of by Vim Plug
 "---------------------------------------------------------------------------//

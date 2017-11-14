@@ -156,7 +156,7 @@ set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
-  if g:gui_neovim_running
+  if has('gui_vimr')
     let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   else
     let &showbreak='↪ '

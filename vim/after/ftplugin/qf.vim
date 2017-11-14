@@ -3,12 +3,38 @@
 setlocal number
 setlocal norelativenumber
 setlocal nolist
+setlocal nospell
 setlocal colorcolumn=
 setlocal wrap
+setlocal winfixheight
+
 if has('nvim')
-  highlight QuickFixLine gui=bold
+  highlight clear QuickFixLine
+  highlight QuickFixLine cterm=underline,bold gui=underline,bold guibg=none
 endif
-" setlocal winminheight=1 winheight=8 winfixheight
+
+if &l:conceallevel == 0
+  setlocal conceallevel=2
+endif
+
+let s:list = getloclist(0)
+let b:is_loc = !empty(s:list)
+
+if !b:is_loc
+  let s:list = getqflist()
+  if empty(s:list)
+    unlet! s:list
+    finish
+  endif
+else
+  let b:src_buf = s:list[0].bufnr
+endif
+
+let s:size = min([15, max([5, len(s:list)])])
+execute 'resize' s:size
+let &winheight = s:size
+unlet! s:size
+
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
 
@@ -23,15 +49,14 @@ set cpoptions&vim
 let b:undo_ftplugin = 'setl fo< com< ofu<'
 
 " open entry in a new horizontal window
-unmap <buffer> s
 nnoremap <silent><buffer> s <C-w><CR>
-unmap <buffer> <CR>
-nnoremap <buffer><CR> <CR><C-w>p
 " open entry in a new vertical window.
 nnoremap <silent><expr> <buffer> v &splitright ? "\<C-w>\<CR>\<C-w>L\<C-w>p\<C-w>J\<C-w>p" : "\<C-w>\<CR>\<C-w>H\<C-w>p\<C-w>J\<C-w>p"
 " open entry in a new tab.
 nnoremap <silent><buffer> t <C-w><CR><C-w>T
 " open entry and come back
+unmap! p
+unmap! o
 nnoremap <silent><buffer> o <CR><C-w>p
 nnoremap <silent><buffer> p  :call <SID>preview_file()<CR>
 
@@ -59,24 +84,10 @@ function! s:preview_file()
   wincmd p
 endfunction
 
-function! AdjustWindowHeight(minheight, maxheight)
-  let l:l = 1
-  let l:n_lines = 0
-  let l:w_width = winwidth(0)
-  while l:l <= line('$')
-    " number to float for division
-    let l:l_len = strlen(getline(l:l)) + 0.0
-    let l:line_width = l:l_len/l:w_width
-    let l:n_lines += float2nr(ceil(l:line_width))
-    let l:l += 1
-  endw
-  exe max([min([l:n_lines, a:maxheight]), a:minheight]) . 'wincmd _'
-endfunction
-
-augroup QFCommands
-  au!
-  autocmd * <buffer> wincmd J
-  autocmd * <buffer><silent> call AdjustWindowHeight(3, 8)
-augroup END
+if !exists('b:src_buf') && !b:is_loc
+  wincmd J
+endif
 
 let &cpoptions = s:save_cpo
+
+nnoremap <silent><buffer> <cr> :call <sid>select()<cr>
