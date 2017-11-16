@@ -1,5 +1,9 @@
 const activate = Oni => {
   console.log('config activated');
+  Oni.input.unbind('<c-/>');
+  Oni.input.bind('<m-\\>', 'language.symbols.document');
+  Oni.input.bind('<m-r>', 'language.rename');
+  Oni.input.bind('<m-/>', 'quickOpen.showBufferLines');
 };
 
 const deactivate = () => {
@@ -15,8 +19,7 @@ module.exports = {
   'oni.loadInitVim': true,
   'editor.fontSize': '16px',
   'editor.fontFamily': 'FuraCode Nerd Font',
-  // 'editor.fontFamily': 'OperatorMono Nerd Font',
-  // 'editor.fontSize': '17px',
+  'editor.cursorLine': false,
   'editor.completions.enabled': true,
   'editor.scrollBar.visible': false,
   'environment.additionalPaths': [
@@ -25,7 +28,6 @@ module.exports = {
     '/Users/akinyulife/.config/yarn/global/node_modules/.bin',
   ],
   'editor.formatting.formatOnSwitchToNormalMode': true,
-  'oni.enhancedSyntaxHighlighting': true,
   'ui.fontFamily': 'FuraCode Nerd Font',
   'ui.fontSize': '16px',
 };

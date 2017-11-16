@@ -1,4 +1,5 @@
 let g:neotags_enabled          = 1
+let g:neotags_run_ctags        = 0
 let g:neotags_patternlength    = 1024
 let g:neotags#typescript#order = 'cnfmoited'
 

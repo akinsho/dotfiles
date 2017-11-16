@@ -28,7 +28,8 @@ endif
 ""---------------------------------------------------------------------------//
 " MACVIM {{{1
 ""---------------------------------------------------------------------------//
-set shell=/bin/bash "run a simple bash rc without all the bells and whistles
+" set shell=/bin/bash "run a simple bash rc without all the bells and whistles
+set shell=/bin/zsh
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
@@ -229,7 +230,7 @@ if has('termguicolors')
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
 endif
 " ctags - search for a tags file then in current dir then home dir
-set tags=./.tags,./.git/.tags,./tags,tags;,~/.tags
+set tags=./.tags,./.git/.tags,tags,~/.tags
 
 " ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//
@@ -256,9 +257,8 @@ function! GetTitleString() abort
   return fnamemodify(getcwd(), ':t')
 endfunction
 set titlestring=%{GetTitleString()}
+" let &titlestring=' ❐ %f  %r %m'
 set title
-set titleold="And relax"
-"let &titlestring=' ❐ %f  %r %m'
 
 ""---------------------------------------------------------------------------//
 "NVIM {{{1
@@ -279,7 +279,6 @@ endif
 ""---------------------------------------------------------------------------//
 " Utilities {{{1
 ""---------------------------------------------------------------------------//
-set tags=./tags,tags;$HOME
 set noshowmode "No mode showing in command pane
 set updatetime=500
 if has('virtualedit')

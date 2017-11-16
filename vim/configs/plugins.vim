@@ -27,18 +27,18 @@ call plug#begin('~/.vim/plugged')
 " Deoplete  {{{1
 "=============================
 " Code completion
+Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
+Plug 'Shougo/neco-vim',             { 'for': 'vim' },
+Plug 'Shougo/echodoc.vim'
+"NVIM ====================================
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
+Plug 'carlitux/deoplete-ternjs',
+      \{'do': 'npm install -g tern' }
+Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
 if !exists('g:gui_oni')
-  Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
-  Plug 'Shougo/neco-vim',             { 'for': 'vim' },
-  Plug 'Shougo/echodoc.vim'
-  "NVIM ====================================
-  Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
-  Plug 'carlitux/deoplete-ternjs',
-        \{'do': 'npm install -g tern' }
-  Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'itchyny/lightline.vim'
   Plug 'ap/vim-buftabline'
-  let g:buftabline_modified_symbol = '✎' "Local version of the plugin
+  let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
 Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
 Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
@@ -104,9 +104,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[ 'javascript', 'typescript' ] }
-Plug 'ap/vim-css-color'
+Plug 'ap/vim-css-color', Cond(!exists('g:gui_oni'))
 Plug 'hail2u/vim-css-syntax'
-Plug 'c0r73x/neotags.nvim'
+Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
 " Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
 

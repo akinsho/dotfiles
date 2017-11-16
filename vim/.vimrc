@@ -58,6 +58,18 @@ function! Source(arg) abort
     endtry
 endfunction
 
+" if !exists('g:gui_oni')
+"   let g:term_win_highlight = {
+"         \"guibg": "#22252B",
+"         \"ctermbg":"BLACK",
+"         \}
+" else
+  let g:term_win_highlight = {
+        \"guibg": "black",
+        \"ctermbg":"BLACK",
+        \}
+" endif
+
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
@@ -68,9 +80,7 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "----------------------------------------------------------------------
 call Source('/vim/configs/plugins.vim')
 "-----------------------------------------------------------------------
-if !exists('g:gui_oni')
-  syntax enable
-endif
+syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------

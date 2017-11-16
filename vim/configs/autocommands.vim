@@ -253,11 +253,6 @@ augroup hide_lines "{{{1
 augroup END
 
 " Terminal Black Background {{{
-let g:term_win_highlight = {
-      \"guibg": "#22252B",
-      \"ctermbg":"BLACK",
-      \}
-
 function! s:highlight_myterm() abort
   try
     exe 'highlight MyTerminal '.

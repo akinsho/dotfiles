@@ -292,7 +292,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
  # PURE_PROMPT_SYMBOL="•"
  prompt pure
 
-export JIRA_URL='https://yulife.atlassian.net/'
+export JIRA_URL='https://yulife.atlassian.net'
 export JIRA_NAME='akin'
 export JIRA_RAPID_BOARD=true
 export JIRA_DEFAULT_ACTION='dashboard'

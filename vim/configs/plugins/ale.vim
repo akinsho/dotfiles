@@ -43,8 +43,8 @@ let g:ale_linters                     = {
       \'html':['tidy']
       \}
 let g:ale_linter_aliases    = {'jsx': 'css', 'tsx': 'css'}
-nmap ]a <Plug>(ale_next_wrap)
-nmap [a <Plug>(ale_previous_wrap)
+nmap [a <Plug>(ale_next_wrap)
+nmap ]a <Plug>(ale_previous_wrap)
 nmap [d <Plug>(ale_detail)
 
 augroup AleTS

@@ -14,6 +14,8 @@ command! -nargs=+ Tg :T git <args>
 nnoremap <silent> <leader><CR> :Ttoggle<CR>
 nnoremap <silent> <leader>ta :TtoggleAll<CR>
 nnoremap <silent> <leader>tn :Tnew<CR>
+nnoremap <silent> <leader>tf :Tnext<CR>
+nnoremap <silent> <leader>tp :Tprev<CR>
 nnoremap <silent> <leader>tc :Tclose!<CR>
 nnoremap <silent> <leader>tx :TcloseAll!<CR>
 vnoremap <silent> <leader>ts :TREPLSendSelection<cr>

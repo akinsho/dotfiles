@@ -21,10 +21,6 @@ nnoremap mT :!mocha %<CR>
 " Highlight over 80 cols in red
 match Error /\%100v.\+/
 
-if exists('g:gui_oni')
-  call deoplete#disable()
-endif
-
 syn region foldImports start="import" end=/import.*\n^$/ fold keepend
 
 " Set a nicer foldtext function
