@@ -1,18 +1,23 @@
-
+if exists('g:gui_oni')
+  finish
+endif
 let g:LanguageClient_serverCommands = {
                   \ 'reason': ['ocaml-language-server', '--stdio'],
                   \ 'ocaml': ['ocaml-language-server', '--stdio'],
                   \ 'html': ['html-languageserver', '--stdio'],
-                  \ 'css': ['css-languageserver', '--stdio'],
-                  \ 'sass': ['css-languageserver', '--stdio'],
-                  \ 'scss': ['css-languageserver', '--stdio'],
                   \ }
 
 if executable('javascript-typescript-stdio')
       let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
+      let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
       let g:LanguageClient_serverCommands.typescript = ['javascript-typescript-stdio']
       let g:LanguageClient_serverCommands["typescript.tsx"] = ['javascript-typescript-stdio']
-      let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
+endif
+
+if executable('css-language-server')
+  let g:LanguageClient_serverCommands.css = ['css-languageserver', '--stdio']
+  let g:LanguageClient_serverCommands.sass = ['css-languageserver', '--stdio']
+  let g:LanguageClient_serverCommands.scss = ['css-languageserver', '--stdio']
 endif
 
 " Automatically start language servers.

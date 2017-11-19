@@ -168,7 +168,7 @@ function! s:expand_html_tab()
 endfunction
 
 
-if exists($TMUX)
+if exists('$TMUX')
   augroup TmuxTitle
     autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
           \ call system("tmux rename-window 'vim | " . expand("%:t") . "'")
@@ -186,7 +186,7 @@ augroup mutltiple_filetype_settings "{{{1
   autocmd FileType * if exists("+completefunc") && &completefunc == ""
         \ | setlocal completefunc=syntaxcomplete#Complete | endif
 
-  autocmd FileType html,css,vue,*.jsx,*.js,*.tsx EmmetInstall
+  autocmd FileType html,css,vue,reason,*.jsx,*.js,*.tsx EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
   autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
