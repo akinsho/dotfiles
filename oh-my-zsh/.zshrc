@@ -312,8 +312,8 @@ echo load time: $((end_time - start_time)) seconds
 ##---------------------------------------------------------------------------//
 # LOL
 ##---------------------------------------------------------------------------//
-if brew ls --versions fortune > /dev/null;then
-  runonce <(fortune | cowsay | lolcat)
-fi
+# if brew ls --versions fortune > /dev/null;then
+#   runonce <(fortune | cowsay | lolcat)
+# fi
 # archey -o
 # zprof

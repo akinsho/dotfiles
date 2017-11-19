@@ -58,17 +58,17 @@ function! Source(arg) abort
     endtry
 endfunction
 
-" if !exists('g:gui_oni')
-"   let g:term_win_highlight = {
-"         \"guibg": "#22252B",
-"         \"ctermbg":"BLACK",
-"         \}
-" else
+if !exists('g:gui_oni')
   let g:term_win_highlight = {
-        \"guibg": "black",
+        \"guibg": "#22252B",
         \"ctermbg":"BLACK",
         \}
-" endif
+else
+  let g:term_win_highlight = {
+        \"guibg": "black",
+        \"ctermbg":"black",
+        \}
+endif
 
 "-----------------------------------------------------------------------
 "Leader bindings

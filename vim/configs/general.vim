@@ -1,5 +1,5 @@
 ""---------------------------------------------------------------------------//
-" => HELPER FUNCTIONS {{{1
+" => Helper Functions {{{1
 ""---------------------------------------------------------------------------//
 function! WrapForTmux(s)
   if !exists('$TMUX')
@@ -237,6 +237,10 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 "Colorscheme {{{1
 ""---------------------------------------------------------------------------//
 set background=dark
+if (has("autocmd") && !g:gui_neovim_running)
+  let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
+end
 try | colorscheme onedark | catch | endtry
 hi CursorLineNr guifg=yellow gui=bold
 
@@ -379,16 +383,19 @@ set complete+=kspell
 "Mouse {{{1
 "===================================================================================
 set mousehide
+set mouse=nv
+set mousefocus
 function! ToggleMouse()
   " check if mouse is enabled
-  if &mouse == 'a'
+  if &mouse=='nv'
     " disable mouse
     set mouse=
   else
     " enable mouse everywhere
-    set mouse=a
+    set mouse=nv
   endif
 endfunc
+nnoremap § :call ToggleMouse()<CR>
 
 if !has('nvim')
   if empty($TMUX)

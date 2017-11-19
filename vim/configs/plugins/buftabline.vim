@@ -1,17 +1,15 @@
 "---------------------------------------------------------------------------//
 " BUFTABLINE
 ""---------------------------------------------------------------------------//
-if $TERM != 'iterm'
-  " highlight BufTabLineHidden guifg=#5A5E68
-  " highlight BufTabLineHidden guifg=#5A5E68 guibg=#22252B
-  " highlight BufTablineFill guibg=#22252B
-  " highlight BufTabLineHidden guifg=#5A5E68 guibg=#22252B
-endif
+highlight BufTablineFill guibg=#212129
+highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
 highlight BufTabLineActive guifg=white
 highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold,italic
 highlight TabLineSel guifg=#A2E8F6 guifg=#5A5E68 gui=bold
+
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 2
+
 nmap <localleader>1 <Plug>BufTabLine.Go(1)
 nmap <localleader>2 <Plug>BufTabLine.Go(2)
 nmap <localleader>3 <Plug>BufTabLine.Go(3)

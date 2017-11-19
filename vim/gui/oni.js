@@ -4,6 +4,7 @@ const activate = Oni => {
   Oni.input.bind('<m-\\>', 'language.symbols.document');
   Oni.input.bind('<m-r>', 'language.rename');
   Oni.input.bind('<m-/>', 'quickOpen.showBufferLines');
+  Oni.input.bind('<m-,>', 'commands.show');
 };
 
 const deactivate = () => {
@@ -26,8 +27,8 @@ module.exports = {
     '/usr/bin',
     '/usr/local/bin',
     '/Users/akinyulife/.config/yarn/global/node_modules/.bin',
+    '/Users/akinyulife/Desktop/Coding/Go',
   ],
-  'editor.formatting.formatOnSwitchToNormalMode': true,
   'ui.fontFamily': 'FuraCode Nerd Font',
   'ui.fontSize': '16px',
 };

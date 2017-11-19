@@ -23,8 +23,25 @@ match Error /\%100v.\+/
 
 syn region foldImports start="import" end=/import.*\n^$/ fold keepend
 
+function! SteveLoshText()
+     let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction
+
 " Set a nicer foldtext function
-set foldtext=TypescriptFold()
+set foldtext=SteveLoshText()
+
 function! TypescriptFold()
   let line = getline(v:foldstart)
   if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
@@ -52,7 +69,7 @@ function! TypescriptFold()
   endif
   let n = v:foldend - v:foldstart + 1
   let info = " " . n . " lines"
-  let sub = sub . "                                                                                                                  "
+  " let sub = sub . repeat(' ', winwidth(0)-n - 7)
 
   let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
   let fold_w = getwinvar( 0, '&foldcolumn' )

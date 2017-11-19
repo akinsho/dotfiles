@@ -212,14 +212,6 @@ augroup filetype_javascript_typescript "{{{1
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
 
-
-augroup FileType_Clojure "{{{1
-  autocmd!
-  " Evaluate Clojure buffers on load
-  autocmd BufRead *.clj, *cljs try | silent! Require | catch /^Fireplace/ | endtry
-augroup END
-
-
 augroup FileType_html "{{{1
   autocmd!
   autocmd BufNewFile,BufEnter *.html setlocal nowrap

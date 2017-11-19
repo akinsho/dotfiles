@@ -27,6 +27,7 @@ call plug#begin('~/.vim/plugged')
 " Deoplete  {{{1
 "=============================
 " Code completion
+if !exists('g:gui_oni')
 Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
 Plug 'Shougo/neco-vim',             { 'for': 'vim' },
 Plug 'Shougo/echodoc.vim'
@@ -34,8 +35,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
 Plug 'carlitux/deoplete-ternjs',
       \{'do': 'npm install -g tern' }
-Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
-if !exists('g:gui_oni')
+  Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'itchyny/lightline.vim'
   Plug 'ap/vim-buftabline'
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
@@ -46,8 +46,7 @@ Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
 Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
 Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
 Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
-" FIXME: Fails hard, paths loaded wrong? settings misssing??
-" Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote')}
+Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote')}
 
 " CORE {{{1
 "================================
@@ -102,6 +101,7 @@ Plug 'ianks/vim-tsx'
 Plug 'jparise/vim-graphql'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
+Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'ap/vim-css-color', Cond(!exists('g:gui_oni'))
@@ -115,15 +115,12 @@ Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-" Plug 'shuber/vim-promiscuous', { 'on': ['Promiscuous'] }
-
 "Text Objects {{{1
 "=====================
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'terryma/vim-expand-region'
-Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
@@ -134,7 +131,6 @@ Plug 'kana/vim-operator-user'
 "
 "Search Tools {{{1
 "=======================
-" Plug 'tomtom/tcomment_vim' "TODO: make a PR to add TSX
 Plug 'dyng/ctrlsf.vim'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'

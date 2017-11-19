@@ -37,8 +37,8 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Hasklug Nerd Font
-    style: Regular
+    family: OperatorMono Nerd Font
+    style: Book
     # family: FuraCode Nerd Font
     # family: OperatorMono Nerd Font
     # style: Book
@@ -57,7 +57,7 @@ font:
     style: Bold
 
   # Point size of the font
-  size: 16.0
+  size: 17.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
