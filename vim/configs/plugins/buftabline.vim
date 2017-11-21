@@ -1,15 +1,16 @@
 "---------------------------------------------------------------------------//
 " BUFTABLINE
 ""---------------------------------------------------------------------------//
-highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
-highlight BufTablineFill guibg=#212129
-" highlight BufTabLineHidden guifg=#5A5E68
+" highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
+"#1A1B1F
+highlight BufTabLineHidden guifg=#5A5E68
+highlight BufTablineFill guibg=#282c34
 highlight BufTabLineActive guifg=white
 highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold,italic
 highlight TabLineSel guifg=#A2E8F6 guifg=#5A5E68 gui=bold
 
 let g:buftabline_indicators = 1
-let g:buftabline_numbers = 2
+let g:buftabline_numbers    = 2
 
 nmap <localleader>1 <Plug>BufTabLine.Go(1)
 nmap <localleader>2 <Plug>BufTabLine.Go(2)
