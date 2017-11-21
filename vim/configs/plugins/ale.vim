@@ -7,7 +7,6 @@ if has('gui_running')
 endif
 " Enable completion where available.
 " let g:ale_completion_enabled                   = 1
-" let g:ale_javascript_prettier_options = '--config ~/.prettierrc'
 let g:ale_lint_on_enter                        = 1
 let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1
@@ -23,7 +22,8 @@ let g:ale_fixers = {
       \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier', 'eslint'],
       \'json':'prettier',
-      \'css':['prettier','stylelint']
+      \'css':['prettier','stylelint'],
+      \'less':['prettier', 'stylelint']
       \}
 let g:ale_sh_shellcheck_options          = '-e SC2039' " Allow local in Shell Check
 let g:ale_echo_msg_format                = '%linter%: %(code): %%s [%severity%]'

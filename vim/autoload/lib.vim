@@ -174,8 +174,8 @@ let g:auto_resize_on = 1
 
 function! lib#auto_resize()
   if g:auto_resize_on == 1
-    let &winheight = &lines * 7 / 10
-    let &winwidth = &columns * 7 / 10
+    let &winheight = &lines * 9 / 10
+    let &winwidth = &columns * 9 / 10
     let g:auto_resize_on = 0
     echom 'Auto resize on'
   else

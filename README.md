@@ -98,6 +98,7 @@ dir to prevent having to manage and symlink to both.
    * `Plug 'kopischke/vim-fetch' "Allows GF to open vim at a specific line`
    * `Plug 'editorconfig/editorconfig-vim'`
    * `Plug 'bkad/CamelCaseMotion`
+   * `Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }`
 
    Autocompletion for css which auto expands, very cool idea
    although at present it clashes with other insert mode

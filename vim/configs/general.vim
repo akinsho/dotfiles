@@ -26,7 +26,7 @@ if !g:gui_neovim_running
   inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 endif
 ""---------------------------------------------------------------------------//
-" MACVIM {{{1
+" Macvim {{{1
 ""---------------------------------------------------------------------------//
 " set shell=/bin/bash "run a simple bash rc without all the bells and whistles
 set shell=/bin/zsh
@@ -80,14 +80,13 @@ if has('folding')
     set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
 endif
 ""---------------------------------------------------------------------------//
-" DIFFING {{{1
+" Diffing {{{1
 " ----------------------------------------------------------------------------
 set diffopt=vertical                  " Use in vertical diff mode
 " blank lines to keep sides aligned, Ignore whitespace changes
 set diffopt+=filler,iwhite,foldcolumn:0,context:4
-
 " ----------------------------------------------------------------------------
-"             FORMAT OPTIONS {{{1
+"             Format Options {{{1
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
@@ -171,7 +170,6 @@ set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
 set list                              " show invisible chars
-" set listchars+=tab:▷\ ,
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
 set listchars+=precedes:…
@@ -201,9 +199,7 @@ set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set nohlsearch
 set autowrite "Automatically :write before running commands
-if !has('gui_running')
-  set linespace=4
-else
+if has('gui_running')
   set linespace=2
 endif
 if has('unnamedplus')
@@ -236,17 +232,16 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 "Colorscheme {{{1
 ""---------------------------------------------------------------------------//
+let g:one_allow_italics = 1
+try | colorscheme one | catch | endtry
 set background=dark
-if (has("autocmd") && !g:gui_neovim_running)
-  let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
-end
-try | colorscheme onedark | catch | endtry
 hi CursorLineNr guifg=yellow gui=bold
+
+" call one#highlight('vimLineComment', 'cccccc', '', 'none')
 
 
 ""---------------------------------------------------------------------------//
-" TITLE {{{1
+" Title {{{1
 ""---------------------------------------------------------------------------//
 " Custom Terminal title
 function! GetTitleString() abort
@@ -265,7 +260,7 @@ set titlestring=%{GetTitleString()}
 set title
 
 ""---------------------------------------------------------------------------//
-"NVIM {{{1
+"Nvim {{{1
 ""---------------------------------------------------------------------------//
 if has('nvim')
   set inccommand=nosplit
@@ -288,7 +283,6 @@ set updatetime=500
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
-
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin {{{1
 " ----------------------------------------------------------------------------
@@ -377,8 +371,6 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,dos,mac
 set complete+=kspell
-
-
 "===================================================================================
 "Mouse {{{1
 "===================================================================================

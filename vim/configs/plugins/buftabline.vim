@@ -1,8 +1,9 @@
 "---------------------------------------------------------------------------//
 " BUFTABLINE
 ""---------------------------------------------------------------------------//
-highlight BufTablineFill guibg=#212129
-highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
+" highlight BufTablineFill guibg=#212129
+" highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
+highlight BufTabLineHidden guifg=#5A5E68
 highlight BufTabLineActive guifg=white
 highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold,italic
 highlight TabLineSel guifg=#A2E8F6 guifg=#5A5E68 gui=bold

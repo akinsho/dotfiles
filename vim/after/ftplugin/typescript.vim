@@ -18,6 +18,7 @@ nnoremap <leader>jr :call lib#JSXEncloseReturn()<CR>
 nnoremap vat :call lib#JSXSelectTag()<CR>
 nnoremap mT :!mocha %<CR>
 
+let g:LanguageClient_autoStart = 0
 " Highlight over 80 cols in red
 match Error /\%100v.\+/
 

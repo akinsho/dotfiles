@@ -15,7 +15,7 @@ module.exports = {
   activate,
   deactivate,
   //add custom config here, such as
-  'oni.bookmarks': ['~/Documents', '~/Desktop/Coding/Work'],
+  'oni.bookmarks': ['~/Dotfiles', '~/Desktop/Coding/Work'],
   'oni.useDefaultConfig': false,
   'oni.loadInitVim': true,
   'editor.fontSize': '16px',
@@ -26,6 +26,7 @@ module.exports = {
   'environment.additionalPaths': [
     '/usr/bin',
     '/usr/local/bin',
+    '/usr/local/lib',
     '/Users/akinyulife/.config/yarn/global/node_modules/.bin',
     '/Users/akinyulife/Desktop/Coding/Go',
   ],

@@ -2,7 +2,7 @@ if exists('g:gui_oni')
   finish
 endif
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
       \   'right': [ [ 'fugitive', 'gitgutter' ], [ 'AleError', 'AleWarning', 'AleOk' ],
@@ -263,5 +263,5 @@ if exists('g:lightline')
   let s:p.normal.ok  = [ [ s:green, s:black ] ]
 
 
-  let g:lightline#colorscheme#onedark#palette = lightline#colorscheme#flatten(s:p)
+  let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:p)
 endif

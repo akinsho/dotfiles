@@ -1194,7 +1194,7 @@
 	<key>HideActivityIndicator</key>
 	<false/>
 	<key>HideScrollbar</key>
-	<false/>
+	<true/>
 	<key>HideTab</key>
 	<true/>
 	<key>HideTabCloseButton</key>
@@ -1302,17 +1302,17 @@
 	<key>NSWindow Frame NSColorPanel.modal</key>
 	<string>608 536 224 216 0 0 1440 900 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>608 185 653 131 0 0 1440 900 </string>
+	<string>608 33 653 94 0 0 1440 900 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>412 545 616 174 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>521 212 918 452 0 0 1440 900 </string>
+	<string>357 120 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 0 720 900 0 0 1440 900 </string>
+	<string>0 0 1440 900 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -1608,7 +1608,7 @@
 			<key>Guid</key>
 			<string>F8C330A3-AD62-4E7A-ADDF-2E8B0901B37A</string>
 			<key>Horizontal Spacing</key>
-			<real>1</real>
+			<real>0.89484657379518073</real>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Jobs to Ignore</key>
@@ -1927,7 +1927,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>OperatorMono-Book 17</string>
+			<string>FuraCodeNerdFontC-Regular 16</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4894,7 +4894,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>04F2B1C7-B89F-486B-9D5D-C67C15F69855</string>
 	<key>NoSyncLastTipTime</key>
-	<real>532718192.89952099</real>
+	<real>532806228.89242101</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4965,6 +4965,7 @@
 		<string>0052</string>
 		<string>0053</string>
 		<string>0054</string>
+		<string>0055</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -5030,7 +5031,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-11-17T23:59:51Z</date>
+	<date>2017-11-20T00:39:45Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5058,7 +5059,7 @@
 	<key>SwitchWindowModifier</key>
 	<integer>6</integer>
 	<key>TabStyle</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>TerminalMargin</key>
@@ -5075,7 +5076,7 @@
 	<key>UKCrashReporterLastCrashReportDate</key>
 	<real>1509400448</real>
 	<key>UseBorder</key>
-	<true/>
+	<false/>
 	<key>UseLayers</key>
 	<true/>
 	<key>WindowNumber</key>

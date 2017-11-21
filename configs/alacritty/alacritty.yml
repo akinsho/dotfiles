@@ -37,9 +37,8 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: OperatorMono Nerd Font
-    style: Book
-    # family: FuraCode Nerd Font
+    family: FuraCode Nerd Font
+    style: Regular
     # family: OperatorMono Nerd Font
     # style: Book
     # Style can be specified to pick a specific face.

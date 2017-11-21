@@ -47,7 +47,6 @@ Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
 Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
 Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
 Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote')}
-
 " CORE {{{1
 "================================
 Plug 'w0rp/ale'
@@ -84,9 +83,10 @@ Plug 'vimwiki/vimwiki', { 'on': [
       \'<Plug>(VimwikiIndex)'
       \] }
 Plug 'ludovicchabant/vim-gutentags'
-
+Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NW', 'NRV'] }
 "TPOPE {{{1
 "====================================
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -109,7 +109,6 @@ Plug 'hail2u/vim-css-syntax'
 Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
 " Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
-
 "Git {{{1
 "===============================
 Plug 'airblade/vim-gitgutter'
@@ -122,10 +121,11 @@ Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'
-      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
+      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      " \ | Plug 'justinj/vim-textobj-reactprop'
 Plug 'kana/vim-operator-user'
       \ | Plug 'haya14busa/vim-operator-flashy'
 "
@@ -135,12 +135,13 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'scrooloose/nerdcommenter'
-Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
-Plug 'junegunn/goyo.vim',     { 'for':'markdown' }
-Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
+Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
+Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime',    { 'on': ['HardTimeToggle', 'HardTimeOn'] }
-Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
+" Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
+" Plug 'Rykka/colorv.vim'
+" Plug 'mattn/webapi-vim'
 
 "Filetype Plugins {{{1
 "======================
@@ -161,7 +162,8 @@ Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 "Themes  {{{1
 "===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdicke/onedark.vim'
+Plug 'rakr/vim-one'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 
 call plug#end()
