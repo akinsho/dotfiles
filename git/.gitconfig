@@ -1,6 +1,8 @@
 [user]
   name = Akin909
   email = akin.sowemimo@gmail.com
+[status]
+  submoduleSummary = true
 [color]
   ui = auto
   status = auto

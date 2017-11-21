@@ -233,11 +233,10 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 "Colorscheme {{{1
 ""---------------------------------------------------------------------------//
 let g:one_allow_italics = 1
-try | colorscheme one | catch | endtry
 set background=dark
+try | colorscheme one | catch | endtry
 hi CursorLineNr guifg=yellow gui=bold
-
-" call one#highlight('vimLineComment', 'cccccc', '', 'none')
+call one#highlight('Folded', 'db7093', 'none', 'bold')
 
 
 ""---------------------------------------------------------------------------//
@@ -390,7 +389,7 @@ endfunc
 nnoremap § :call ToggleMouse()<CR>
 
 if !has('nvim')
-  if empty($TMUX)
+  if empty("$TMUX")
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
     if v:version >= 800

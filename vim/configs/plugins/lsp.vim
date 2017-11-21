@@ -22,6 +22,7 @@ endif
 
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_changeThrottle = 1.5
 
 nnoremap <silent> <localleader>K :call LanguageClient_textDocument_hover()<CR>
 silent! nunmap gd

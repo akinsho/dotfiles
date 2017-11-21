@@ -31,7 +31,7 @@ let g:ale_sign_column_always             = 1
 let g:ale_sign_error                     = '✖'
 let g:ale_echo_delay                     = 80
 let g:ale_sign_warning                   = '❗'
-let g:ale_lint_delay                     = 300
+let g:ale_lint_delay                     = 1000
 let g:ale_warn_about_trailing_whitespace = 1
 let g:ale_linters                     = {
       \'markdown': ['prettier'],
@@ -47,6 +47,7 @@ let g:ale_linter_aliases    = {'jsx': 'css', 'tsx': 'css'}
 nmap [a <Plug>(ale_next_wrap)
 nmap ]a <Plug>(ale_previous_wrap)
 nmap [d <Plug>(ale_detail)
+nmap [gd <Plug>(ale_go_to_definition)
 
 augroup AleTS
   autocmd BufNewFile,BufEnter,BufRead *.ts,*.tsx

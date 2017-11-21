@@ -59,8 +59,9 @@ function! Source(arg) abort
 endfunction
 
 if !exists('g:gui_oni')
+  " alternatives: #22252B
   let g:term_win_highlight = {
-        \"guibg": "#22252B",
+        \"guibg": "black",
         \"ctermbg":"BLACK",
         \}
 else
