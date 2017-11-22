@@ -52,6 +52,8 @@ endfunction
 
 
 augroup numbertoggle
-  autocmd!
-  autocmd VimEnter * call s:relativeNumber_on()
+  if !g:disable_relativity
+    autocmd!
+    autocmd VimEnter * call s:relativeNumber_on()
+  endif
 augroup END

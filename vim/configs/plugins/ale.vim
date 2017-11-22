@@ -6,7 +6,7 @@ if has('gui_running')
   let g:ale_set_balloons                       = 1
 endif
 " Enable completion where available.
-" let g:ale_completion_enabled                   = 1
+" let g:ale_completion_enabled                = 1
 let g:ale_lint_on_enter                        = 1
 let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1

@@ -603,9 +603,6 @@ nnoremap <silent> <leader>z :call lib#buf_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 
-" Use D to delete a range then move cursor back
-com! -range D <line1>,<line2>d | norm <C-o>
-
 command! -nargs=0 Reg call lib#reg()
 nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//

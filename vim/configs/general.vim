@@ -185,7 +185,7 @@ set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 set secure  " Disable autocmd etc for project local vimrc files.
 set pumheight=10
 set number relativenumber
-set numberwidth=5
+set numberwidth=4
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap

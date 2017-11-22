@@ -83,10 +83,8 @@ Plug 'vimwiki/vimwiki', { 'on': [
       \'<Plug>(VimwikiIndex)'
       \] }
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NW', 'NRV'] }
 "TPOPE {{{1
 "====================================
-Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -125,7 +123,6 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
-      " \ | Plug 'justinj/vim-textobj-reactprop'
 Plug 'kana/vim-operator-user'
       \ | Plug 'haya14busa/vim-operator-flashy'
 "
@@ -140,8 +137,6 @@ Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime',    { 'on': ['HardTimeToggle', 'HardTimeOn'] }
 " Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
-" Plug 'Rykka/colorv.vim'
-" Plug 'mattn/webapi-vim'
 
 "Filetype Plugins {{{1
 "======================
