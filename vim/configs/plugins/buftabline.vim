@@ -1,10 +1,18 @@
 "---------------------------------------------------------------------------//
 " BUFTABLINE
 ""---------------------------------------------------------------------------//
-" highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
 "#1A1B1F
-highlight BufTabLineHidden guifg=#5A5E68
-highlight BufTablineFill guibg=#282c34
+if exists('g:gui_oni')
+  finish
+endif
+
+if $TERM_PROGRAM ==# 'iTerm.app'
+  highlight BufTabLineHidden guifg=#5A5E68
+  highlight BufTablineFill guibg=#282c34
+else
+  highlight BufTabLineHidden guifg=#5A5E68 guibg=#212129
+  highlight BufTablineFill guibg=#212129
+endif
 highlight BufTabLineActive guifg=white
 highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold,italic
 highlight TabLineSel guifg=#A2E8F6 guifg=#5A5E68 gui=bold

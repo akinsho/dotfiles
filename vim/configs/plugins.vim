@@ -27,7 +27,6 @@ call plug#begin('~/.vim/plugged')
 " Deoplete  {{{1
 "=============================
 " Code completion
-if !exists('g:gui_oni')
 Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
 Plug 'Shougo/neco-vim',             { 'for': 'vim' },
 Plug 'Shougo/echodoc.vim'
@@ -36,6 +35,7 @@ Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')
 Plug 'carlitux/deoplete-ternjs',
       \{'do': 'npm install -g tern' }
   Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
+  if !exists('g:gui_oni')
   Plug 'itchyny/lightline.vim'
   Plug 'ap/vim-buftabline'
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
@@ -54,7 +54,7 @@ Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdtree'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
-Plug 'cohama/lexima.vim'
+Plug 'cohama/lexima.vim', Cond(!exists('g:gui_oni'))
 Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
   if a:info.status ==# 'installed' || a:info.force
@@ -71,6 +71,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
 "Utilities {{{1
 "============================
+Plug 'embear/vim-localvimrc'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 if has('gui_running') || exists('g:gui_oni')
@@ -157,7 +158,7 @@ Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 "Themes  {{{1
 "===============================
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
-" Plug 'joshdicke/onedark.vim'
+Plug 'joshdick/onedark.vim'
 Plug 'rakr/vim-one'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 

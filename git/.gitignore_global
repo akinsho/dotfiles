@@ -17,6 +17,7 @@ Session.vim
 *.exe
 *.o
 *.so
+.lvimrc
 
 # Packages #
 ############

@@ -6,14 +6,17 @@ setl colorcolumn=100
 set suffixesadd+=.ts
 set suffixesadd+=.tsx
 
-nnoremap gd :TSDef<CR>
-nnoremap <leader>d :TSDef<CR>
-nnoremap <localleader>p :TSDefPreview<CR>
-nnoremap <localleader>r :TSRefs<CR>
-nnoremap <localleader>t :TSType<CR>
+if !exists('g:gui_oni')
+  nnoremap gd :TSDef<CR>
+  nnoremap <leader>d :TSDef<CR>
+  nnoremap <localleader>p :TSDefPreview<CR>
+  nnoremap <localleader>r :TSRefs<CR>
+  nnoremap <localleader>t :TSType<CR>
+  nnoremap <localleader>s :TSGetDocSymbols<CR>
+endif
+
 nnoremap <localleader>c :TSEditConfig<CR>
 nnoremap <localleader>i :TSImport<CR>
-nnoremap <localleader>s :TSGetDocSymbols<CR>
 nnoremap <leader>jr :call lib#JSXEncloseReturn()<CR>
 nnoremap vat :call lib#JSXSelectTag()<CR>
 nnoremap mT :!mocha %<CR>
@@ -22,8 +25,10 @@ let g:LanguageClient_autoStart = 0
 " Highlight over 80 cols in red
 match Error /\%100v.\+/
 
-syn region foldImports start="import" end=/import.*\n^$/ fold keepend
-
+syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
+" /import.*\n^$/
+hi link typescriptBrowserObjects TypescriptType
+" hi typescriptBrowserObjects gui=italic,bold guifg=yellow
 function! SteveLoshText()
      let line = getline(v:foldstart)
 

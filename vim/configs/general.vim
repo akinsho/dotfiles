@@ -52,11 +52,11 @@ set shortmess+=A                      " ignore annoying swapfile messages
 set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
-set shortmess-=l
+set shortmess+=l
 set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
-set shortmess-=f                      " (file x of x) instead of just (x of x)
+set shortmess+=f                      " (file x of x) instead of just (x of x)
 set shortmess+=F                      "Dont give file info when editing a file
-set shortmess+=mnrxo
+set shortmess+=mnrxos
 if has('patch-7.4.314')
   set shortmess+=c                    " Disable 'Pattern not found' messages
 endif
@@ -180,9 +180,7 @@ set listchars+=eol:\ ,
 set iskeyword+=_,$,@
 set nojoinspaces
 set gdefault
-set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 " insert completion height and options
-set secure  " Disable autocmd etc for project local vimrc files.
 set pumheight=10
 set number relativenumber
 set numberwidth=4
@@ -202,12 +200,12 @@ set autowrite "Automatically :write before running commands
 if has('gui_running')
   set linespace=2
 endif
-if has('unnamedplus')
-  set clipboard=unnamedplus
-elseif has('clipboard')
-  set clipboard=unnamed
-endif
 if !has('nvim')
+  if has('unnamedplus')
+    set clipboard+=unnamedplus
+  elseif has('clipboard')
+    set clipboard+=unnamed
+  endif
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set laststatus=2
   set incsearch
@@ -234,10 +232,36 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 let g:one_allow_italics = 1
 set background=dark
-try | colorscheme one | catch | endtry
-hi CursorLineNr guifg=yellow gui=bold
-call one#highlight('Folded', 'db7093', 'none', 'bold')
+if exists('g:gui_oni')
+  colorscheme onedark
+  " onedark.vim override: Don't set a background color when running in a terminal;
+" just use the terminal's background color
+" `gui` is the hex color code used in GUI mode/nvim true-color mode
+" `cterm` is the color code used in 256-color mode
+" `cterm16` is the color code used in 16-color mode
+if (has("autocmd") && !has("gui_running"))
+  augroup colorset
+    autocmd!
+    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+    autocmd ColorScheme * call onedark#set_highlight("Tabline", { "bg": s:white }) " `bg` will not be styled since there is no `bg` setting
+    autocmd!
+    " Make `Function`s bold in GUI mode
+    autocmd ColorScheme * call onedark#extend_highlight("Function", { "gui": "bold" })
+    " Override the `Statement` foreground color in 256-color mode
+    autocmd ColorScheme * call onedark#extend_highlight("Statement", { "fg": { "cterm": 128 } })
+    " Override the `Identifier` background color in GUI mode
+    autocmd ColorScheme * call onedark#extend_highlight("Identifier", {  "gui": "italic"  })
+  augroup END
+endif
+else
+  try
+    colorscheme one
+    call one#highlight('Folded', 'db7093', 'none', 'bold')
+   catch
+   endtry
+endif
 
+hi CursorLineNr guifg=yellow gui=bold
 
 ""---------------------------------------------------------------------------//
 " Title {{{1
@@ -407,5 +431,8 @@ endif
 if !has('nvim')
   set ttymouse=xterm2
 endif
+
+set secure  " Disable autocmd etc for project local vimrc files.
+set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 ""---------------------------------------------------------------------------//
 " vim:foldmethod=marker:foldlevel=0

@@ -8,10 +8,12 @@ let g:LanguageClient_serverCommands = {
                   \ }
 
 if executable('javascript-typescript-stdio')
-      let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
-      let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
-      let g:LanguageClient_serverCommands.typescript = ['javascript-typescript-stdio']
-      let g:LanguageClient_serverCommands["typescript.tsx"] = ['javascript-typescript-stdio']
+  " let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
+  " let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands.javascript = ['flow-language-server', '--stdio']
+  let g:LanguageClient_serverCommands["javascript.jsx"] = ['flow-language-server', '--stdio']
+  let g:LanguageClient_serverCommands.typescript = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands["typescript.tsx"] = ['javascript-typescript-stdio']
 endif
 
 if executable('css-language-server')

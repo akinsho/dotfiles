@@ -15,7 +15,7 @@ let g:ale_javascript_prettier_options          =
       \'--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options =
       \{'\.min.js$': {'ale_enabled': 0},
-      \'.*oni/.*\.ts$':{'ale_fix_on_save': 0}
+      \'oni/.*\.ts$':{'ale_fix_on_save': 0}
       \}
 let g:ale_fixers = {
       \'reason':['refmt'],
@@ -55,9 +55,7 @@ augroup AleTS
         \ '--trailing-comma all --tab-width 4 --print-width 100'
 augroup END
 
-if exists('g:gui_oni')
-  let g:ale_open_list             = 1
-  let g:ale_keep_list_window_open = 1
-  let g:ale_list_window_size      = 8
-endif
+" let g:ale_open_list             = 1
+" let g:ale_keep_list_window_open = 1
+" let g:ale_list_window_size      = 8
 "}}}
