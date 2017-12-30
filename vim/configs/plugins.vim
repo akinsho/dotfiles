@@ -27,11 +27,11 @@ call plug#begin('~/.vim/plugged')
 " Deoplete  {{{1
 "=============================
 " Code completion
-Plug 'Shougo/deoplete.nvim',        { 'do': function('DoRemote') }
-Plug 'Shougo/neco-vim',             { 'for': 'vim' },
-Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/neco-vim',      { 'for': 'vim' },
+Plug 'Shougo/echodoc.vim',   Cond(!exists('g:gui_oni'))
 "NVIM ====================================
-Plug 'mhartington/nvim-typescript', Cond(has('nvim'),{'do': function('DoRemote')})
+Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),{'do': function('DoRemote')})
 Plug 'carlitux/deoplete-ternjs',
       \{'do': 'npm install -g tern' }
   Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
@@ -54,7 +54,7 @@ Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdtree'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
-Plug 'cohama/lexima.vim', Cond(!exists('g:gui_oni'))
+Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
 Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
   if a:info.status ==# 'installed' || a:info.force
@@ -62,7 +62,7 @@ function! BuildTern(info)
   endif
 endfunction
 Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
-Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify' ", Cond(!exists('g:gui_oni'))
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 
@@ -105,7 +105,7 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'ap/vim-css-color', Cond(!exists('g:gui_oni'))
 Plug 'hail2u/vim-css-syntax'
-Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
+" Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
 " Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
 "Git {{{1

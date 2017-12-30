@@ -5,6 +5,8 @@ const activate = Oni => {
   Oni.input.bind('<m-r>', 'language.rename');
   Oni.input.bind('<m-/>', 'quickOpen.showBufferLines');
   Oni.input.bind('<m-,>', 'commands.show');
+  Oni.input.bind('<m-;>', 'markdown.togglePreview');
+  Oni.input.bind('<m-\'>', 'markdown.openPreview');
 };
 
 const deactivate = () => {
@@ -14,22 +16,28 @@ const deactivate = () => {
 module.exports = {
   activate,
   deactivate,
-  //add custom config here, such as
+  // add custom config here, such as
+  // Font alternatives "OperatorMono-XLight,
+  // OperatorMonoLig-Book,
+  // Hasklug Nerd Font,
+  // FuraCode Nerd Font,
+  // OperatorMono-Light, Pragmata Pro"
+
+  // 'ui.colorscheme': 'nord',
+  // 'ui.colorscheme': 'solarized8_dark',
+  // 'experimental.editor.textMateHighlighting.enabled': true,
+  'experimental.commandline.mode': false,
+  'experimental.wildmenu.mode': true,
+  'experimental.markdownPreview.enabled': true,
+  'experimental.sidebar.enabled': false,
   'oni.bookmarks': ['~/Dotfiles', '~/Desktop/Coding/Work'],
   'oni.useDefaultConfig': false,
   'oni.loadInitVim': true,
-  'editor.fontSize': '16px',
-  'editor.fontFamily': 'FuraCode Nerd Font',
+  'editor.fontSize': '17px',
+  'editor.fontFamily': 'Hasklug Nerd Font',
   'editor.cursorLine': false,
-  'editor.completions.enabled': true,
-  'editor.scrollBar.visible': false,
-  'environment.additionalPaths': [
-    '/usr/bin',
-    '/usr/local/bin',
-    '/usr/local/lib',
-    '/Users/akinyulife/.config/yarn/global/node_modules/.bin',
-    '/Users/akinyulife/Desktop/Coding/Go',
-  ],
-  'ui.fontFamily': 'FuraCode Nerd Font',
+  'editor.scrollBar.visible': true,
+  'ui.fontFamily': 'Operator Mono',
   'ui.fontSize': '16px',
+  'ui.colorscheme': 'onedark',
 };

@@ -82,6 +82,9 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "----------------------------------------------------------------------
 call Source('/vim/configs/plugins.vim')
 "-----------------------------------------------------------------------
+" Essential Settings - Taken care of by Vim Plug
+"---------------------------------------------------------------------------//
+filetype plugin indent on
 syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
@@ -97,6 +100,3 @@ if exists('g:gui_oni') "NOTE: Order Matters here as this works like an after ove
   call Source('/vim/gui/oni.vim')
 endif
 "---------------------------------------------------------------------------//
-" Essential Settings - Taken care of by Vim Plug
-"---------------------------------------------------------------------------//
-filetype plugin indent on

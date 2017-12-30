@@ -15,4 +15,3 @@ augroup TablineHighlighting
   au Colorscheme * highlight Tabline guibg=#282c34
   au VimEnter,Colorscheme * highlight TablineFill guibg=#282c34
 augroup END
-
