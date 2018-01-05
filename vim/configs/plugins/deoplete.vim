@@ -1,9 +1,9 @@
 ""---------------------------------------------------------------------------//
 " Deoplete Options
 ""---------------------------------------------------------------------------//
-if exists('g:gui_oni')
-  finish
-endif
+" if exists('g:gui_oni')
+"   finish
+" endif
 let g:deoplete#enable_at_startup       = 1
 if !has('nvim')
   let g:deoplete#enable_yarp             = 1

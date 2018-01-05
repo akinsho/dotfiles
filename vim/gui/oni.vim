@@ -10,8 +10,11 @@ let g:ale_sign_error                    = '❗'
 let g:nvim_typescript#type_info_on_hold = 0
 set noshowcmd
 
-augroup TablineHighlighting
+augroup DisabledDeoplete
   au!
-  au Colorscheme * highlight Tabline guibg=#282c34
-  au VimEnter,Colorscheme * highlight TablineFill guibg=#282c34
+  autocmd FileType typescript,typescript.tsx let b:deoplete_disable_auto_complete = 1
+  autocmd FileType javascript,javascript.jsx let b:deoplete_disable_auto_complete = 1
+  autocmd FileType css,less,scss let b:deoplete_disable_auto_complete = 1
 augroup END
+
+unmap /

@@ -46,7 +46,7 @@ Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
 Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
 Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
 Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
-Plug 'autozimu/LanguageClient-neovim', { 'do': function('DoRemote')}
+Plug 'autozimu/LanguageClient-neovim', Cond(!exists('g:gui_oni'), { 'do': function('DoRemote')})
 " CORE {{{1
 "================================
 Plug 'w0rp/ale'
@@ -105,7 +105,7 @@ Plug 'othree/javascript-libraries-syntax.vim',
       \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'ap/vim-css-color', Cond(!exists('g:gui_oni'))
 Plug 'hail2u/vim-css-syntax'
-" Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
+Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
 " Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
 "Git {{{1
@@ -151,7 +151,7 @@ function! BuildComposer(info)
   endif
 endfunction
 Plug 'euclio/vim-markdown-composer',
-      \ Cond(!has('gui_vimr'), { 'for': 'markdown', 'do': function('BuildComposer') })
+      \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'fatih/vim-go',           { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 

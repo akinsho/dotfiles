@@ -26,6 +26,7 @@ function! ApplyUserHighlights() abort
   highlight Conceal gui=bold
   highlight Todo gui=bold
   highlight Credit gui=bold
+  highlight CursorLineNr guifg=yellow gui=bold
   ""---------------------------------------------------------------------------//
   "few nicer JS colours
   ""---------------------------------------------------------------------------//
