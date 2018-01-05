@@ -158,6 +158,8 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   set linebreak
   if has('gui_vimr')
     let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+  elseif has('g:gui_oni')
+    let &showbreak='…'
   else
     let &showbreak='↪ '
   endif

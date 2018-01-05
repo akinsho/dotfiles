@@ -1,6 +1,7 @@
 " set foldopen=all
 setl foldenable
-setl foldmethod=syntax foldlevelstart=99
+setl foldmethod=syntax
+setl foldlevelstart=99
 setl completeopt-=preview
 setl colorcolumn=100
 set suffixesadd+=.ts

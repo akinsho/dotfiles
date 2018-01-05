@@ -84,6 +84,7 @@ Plug 'vimwiki/vimwiki', { 'on': [
       \'<Plug>(VimwikiIndex)'
       \] }
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'AndrewRadev/splitjoin.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-sleuth'
