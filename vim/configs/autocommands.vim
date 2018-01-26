@@ -289,7 +289,7 @@ endfunction
 
 augroup FileType_all "{{{1
   autocmd!
-  au BufEnter * call lib#cd() "FIXME: Why if this throwing an error
+  " au BufEnter * call lib#cd() "FIXME: Why if this throwing an error
   au BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.

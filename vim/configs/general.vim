@@ -158,7 +158,7 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   set linebreak
   if has('gui_vimr')
     let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
-  elseif has('g:gui_oni')
+  elseif exists('g:gui_oni')
     let &showbreak='…'
   else
     let &showbreak='↪ '
@@ -393,7 +393,7 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 " Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
-set fileformats=unix,dos,mac
+set fileformats=unix,mac,dos
 set complete+=kspell
 "===================================================================================
 "Mouse {{{1

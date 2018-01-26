@@ -55,6 +55,7 @@ Plug 'scrooloose/nerdtree'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
+Plug 'airblade/vim-rooter'
 Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
   if a:info.status ==# 'installed' || a:info.force
@@ -85,6 +86,7 @@ Plug 'vimwiki/vimwiki', { 'on': [
       \] }
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/switch.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-sleuth'
