@@ -9,6 +9,7 @@
 " Each section of my config has been separated out into subsections in
 " ./configs/
 filetype off " required  Prevents potential side-effects from system ftdetects scripts
+
 ""---------------------------------------------------------------------------//
 " Config Loader
 ""---------------------------------------------------------------------------//

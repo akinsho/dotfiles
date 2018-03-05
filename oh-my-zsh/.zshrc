@@ -117,6 +117,13 @@ source $ZSH/oh-my-zsh.sh
 export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH
 
+# Android SDK
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_144`
+
 # you may need to manually set your language environment
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8

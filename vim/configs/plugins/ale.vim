@@ -33,10 +33,10 @@ let g:ale_echo_delay                     = 80
 let g:ale_sign_warning                   = '❗'
 let g:ale_lint_delay                     = 1000
 let g:ale_warn_about_trailing_whitespace = 1
+"\'css': ['stylelint'],
 let g:ale_linters                     = {
       \'markdown': ['prettier'],
       \'python': ['flake8'],
-      \'css': ['stylelint'],
       \'jsx': ['eslint'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint'],
@@ -49,10 +49,12 @@ nmap ]a <Plug>(ale_previous_wrap)
 nmap [d <Plug>(ale_detail)
 nmap [gd <Plug>(ale_go_to_definition)
 
+let g:ale_stylus_stylelint_use_global = 0
+
 augroup AleTS
   autocmd BufNewFile,BufEnter,BufRead *.ts,*.tsx
         \ let b:ale_javascript_prettier_options=
-        \ '--trailing-comma all --tab-width 4 --print-width 100'
+        \ '--trailing-comma --tab-width 4 all --print-width 100'
 augroup END
 
 " let g:ale_open_list             = 1

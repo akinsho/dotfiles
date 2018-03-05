@@ -38,6 +38,7 @@ Plug 'carlitux/deoplete-ternjs',
   if !exists('g:gui_oni')
   Plug 'itchyny/lightline.vim'
   Plug 'ap/vim-buftabline'
+  Plug 'airblade/vim-rooter'
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
 Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
@@ -55,7 +56,6 @@ Plug 'scrooloose/nerdtree'
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
-Plug 'airblade/vim-rooter'
 Plug 'easymotion/vim-easymotion'
 function! BuildTern(info)
   if a:info.status ==# 'installed' || a:info.force
@@ -100,7 +100,6 @@ Plug 'tpope/vim-abolish'
 "Syntax {{{1
 "============================
 Plug 'ianks/vim-tsx'
-Plug 'jparise/vim-graphql'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
@@ -109,7 +108,8 @@ Plug 'othree/javascript-libraries-syntax.vim',
 Plug 'ap/vim-css-color', Cond(!exists('g:gui_oni'))
 Plug 'hail2u/vim-css-syntax'
 Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
-" Plug 'styled-components/vim-styled-components',
+Plug 'jparise/vim-graphql', {'for': ['typescript.ts', 'graphql'] }
+Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
 "Git {{{1
 "===============================
@@ -123,7 +123,9 @@ Plug 'wellle/targets.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'
+      \ | Plug 'kana/vim-textobj-diff'
       \ | Plug 'glts/vim-textobj-comment'
+      \ | Plug 'vimtaku/vim-textobj-keyvalue'
       \ | Plug 'kana/vim-textobj-function'
       \ | Plug 'thinca/vim-textobj-function-javascript'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
@@ -139,7 +141,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
-Plug 'takac/vim-hardtime',    { 'on': ['HardTimeToggle', 'HardTimeOn'] }
+Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
 " Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
 
 "Filetype Plugins {{{1
@@ -157,6 +159,7 @@ Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'fatih/vim-go',           { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
+Plug 'heavenshell/vim-jsdoc'
 
 "Themes  {{{1
 "===============================
