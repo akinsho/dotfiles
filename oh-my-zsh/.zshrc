@@ -95,7 +95,7 @@ plugins=(
         zsh-syntax-highlighting
         alias-tips
         last-working-dir
-        nvm
+        zsh-nvm
         jira
         vi-mode
         git

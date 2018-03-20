@@ -108,7 +108,7 @@ Plug 'othree/javascript-libraries-syntax.vim',
 Plug 'ap/vim-css-color', Cond(!exists('g:gui_oni'))
 Plug 'hail2u/vim-css-syntax'
 Plug 'c0r73x/neotags.nvim', {'do': function('DoRemote')}
-Plug 'jparise/vim-graphql', {'for': ['typescript.ts', 'graphql'] }
+Plug 'jparise/vim-graphql', {'for': ['typescript', 'graphql'] }
 Plug 'styled-components/vim-styled-components',
 "       \{ 'branch': 'rewrite', 'for': ['typescript.tsx'] }
 "Git {{{1
@@ -116,6 +116,7 @@ Plug 'styled-components/vim-styled-components',
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
+Plug 'sodapopcan/vim-twiggy'
 "Text Objects {{{1
 "=====================
 Plug 'tommcdo/vim-exchange'
@@ -137,11 +138,12 @@ Plug 'kana/vim-operator-user'
 Plug 'dyng/ctrlsf.vim'
 Plug 'keith/investigate.vim'
 Plug 'kshenoy/vim-signature'
-Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
+" Plug 'scrooloose/nerdcommenter'
 " Plug 'janko-m/vim-test', { 'on':[ 'TestNearest', 'TestSuite' ] }
 
 "Filetype Plugins {{{1

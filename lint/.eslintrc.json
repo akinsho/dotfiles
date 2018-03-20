@@ -1,16 +1,16 @@
 {
     "rules": {
-        "indent":0,
-        "linebreak-style": [ "off", "unix" ],
-        "quotes": [ "error", "single",{ "allowTemplateLiterals": true  }],
-        "semi": [ "error", "always" ],
-        "array-callback-return":"error",
+        "indent": 0,
+        "linebreak-style": ["off", "unix"],
+        "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+        "semi": ["error", "always"],
+        "array-callback-return": "error",
         "eqeqeq": "error",
         "no-console": "off",
         "strict": 0,
         "no-unused-vars": 0,
-        "no-undef":0,
-        "no-undefined":0,
+        "no-undef": 0,
+        "no-undefined": 0,
         "camelcase": 1,
         "no-underscore-dangle": 0,
         "no-console": 0,
@@ -40,9 +40,7 @@
         "modules": true
     },
     "parser": "babel-eslint",
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "globals": {
         "_": false,
         "remote": false,

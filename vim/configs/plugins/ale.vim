@@ -15,7 +15,6 @@ let g:ale_javascript_prettier_options          =
       \'--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options =
       \{'\.min.js$': {'ale_enabled': 0},
-      \'oni/.*\.ts$':{'ale_fix_on_save': 0}
       \}
 let g:ale_fixers = {
       \'reason':['refmt'],

@@ -1,6 +1,7 @@
 set noruler
 set laststatus=0
 
+let g:ale_fix_on_save                   = 1
 let g:ale_set_signs                     = 1
 let g:ale_echo_cursor                   = 1
 let g:ale_set_highlights                = 0
@@ -16,6 +17,12 @@ augroup DisabledDeoplete
   autocmd FileType typescript,typescript.tsx,reason let b:deoplete_disable_auto_complete = 1
   autocmd FileType javascript,javascript.jsx let b:deoplete_disable_auto_complete = 1
   autocmd FileType css,less,scss let b:deoplete_disable_auto_complete = 1
+augroup END
+
+augroup DisabledAle
+  au!
+  autocmd FileType typescript,typescript.tsx,javascript,javascript.jsx,json,graphql,markdown
+        \ let g:ale_fix_on_save = 0
 augroup END
 
 

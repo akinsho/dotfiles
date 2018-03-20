@@ -29,6 +29,7 @@ alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
 alias ea="nvim ${DOTFILES}/runcom/zsh/alias.sh"
+alias dnd='do-not-disturb toggle'
 alias ez="nvim ~/.zshrc"
 alias nez="nvim ~/.zshrc"
 alias ev="nvim ~/.vimrc"
