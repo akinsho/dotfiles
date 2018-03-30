@@ -9,7 +9,7 @@ let g:gitgutter_sign_added              = '+'
 let g:ale_sign_error                    = '❗'
 let g:nvim_typescript#type_info_on_hold = 0
 " let g:indentLine_enabled = 0
-" let g:startify_disable_at_vimenter = 1
+" let g:startify_disable_at_vimenter = 2
 set noshowcmd
 
 augroup DisabledDeoplete

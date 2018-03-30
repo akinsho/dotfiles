@@ -97,7 +97,8 @@ call Source('/vim/configs/highlight.vim')
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
 call LoadConfigs(s:settings)
-if exists('g:gui_oni') "NOTE: Order Matters here as this works like an after overwriting Settings for oni
+"NOTE: Order Matters here as this works like an after overwriting Settings for oni
+if exists('g:gui_oni')
   call Source('/vim/gui/oni.vim')
 endif
 "---------------------------------------------------------------------------//

@@ -29,7 +29,6 @@ endif
 " Macvim {{{1
 ""---------------------------------------------------------------------------//
 " set shell=/bin/bash "run a simple bash rc without all the bells and whistles
-set shell=/bin/zsh
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
@@ -234,34 +233,11 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 let g:one_allow_italics = 1
 set background=dark
-if exists('g:gui_oni')
-  colorscheme onedark
-  " onedark.vim override: Don't set a background color when running in a terminal;
-" just use the terminal's background color
-" `gui` is the hex color code used in GUI mode/nvim true-color mode
-" `cterm` is the color code used in 256-color mode
-" `cterm16` is the color code used in 16-color mode
-if (has("autocmd") && !has("gui_running"))
-  augroup colorset
-    autocmd!
-    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-    autocmd ColorScheme * call onedark#set_highlight("Tabline", { "bg": s:white }) " `bg` will not be styled since there is no `bg` setting
-    autocmd!
-    " Make `Function`s bold in GUI mode
-    autocmd ColorScheme * call onedark#extend_highlight("Function", { "gui": "bold" })
-    " Override the `Statement` foreground color in 256-color mode
-    autocmd ColorScheme * call onedark#extend_highlight("Statement", { "fg": { "cterm": 128 } })
-    " Override the `Identifier` background color in GUI mode
-    autocmd ColorScheme * call onedark#extend_highlight("Identifier", {  "gui": "italic"  })
-  augroup END
-endif
-else
   try
     colorscheme one
     call one#highlight('Folded', 'db7093', 'none', 'bold')
    catch
-   endtry
-endif
+endtry
 
 ""---------------------------------------------------------------------------//
 " Title {{{1

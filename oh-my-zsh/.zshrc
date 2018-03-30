@@ -44,6 +44,7 @@ if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
+export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="spaceship"

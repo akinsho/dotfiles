@@ -205,29 +205,6 @@ function! lib#star_search(key) abort
         \   ':unlet! g:_view',
         \   ':unlet! g:_pos'], "\<cr>")."\<cr>"
 endfunction
-
-fu! lib#open_folds(action) abort
-  if a:action ==# 'is_active'
-    return exists('s:open_folds')
-  elseif a:action ==# 'enable'
-    let s:open_folds = {
-          \                    'foldclose' : &foldclose,
-          \                    'foldopen'  : &foldopen,
-          \                    'foldlevel' : &foldlevel,
-          \                  }
-    set foldlevel=0
-    set foldclose=all
-    set foldopen=all
-    echo '[auto open folds] ON'
-  else
-    let &foldlevel = s:open_folds.foldlevel
-    let &foldclose = s:open_folds.foldclose
-    let &foldopen  = s:open_folds.foldopen
-    unlet! s:open_folds
-    echo '[auto open folds] OFF'
-  endif
-  return ''
-endfu
 ""---------------------------------------------------------------------------//
 " CREDIT: Romain L
 ""---------------------------------------------------------------------------//

@@ -13,6 +13,7 @@ function! ApplyUserHighlights() abort
   syntax clear SpellLocal
   syntax clear SpellRare
   syntax clear Search
+  syntax clear typescriptOpSymbols
 
   " Highlight over 80 cols in red
   match Error /\%80v.\+/
@@ -31,18 +32,23 @@ function! ApplyUserHighlights() abort
   "few nicer JS colours
   ""---------------------------------------------------------------------------//
   " highlight jsFuncCall gui=italic ctermfg=cyan
-  highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
-  highlight jsxAttrib cterm=italic,bold ctermfg=121
+  if exists("g:gui_oni")
+    highlight xmlAttrib gui=bold cterm=bold ctermfg=121
+    highlight jsxAttrib cterm=bold ctermfg=121
+    highlight Type    gui=bold cterm=italic,bold
+  else
+    highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
+    highlight jsxAttrib cterm=italic,bold ctermfg=121
+    highlight Type    gui=italic,bold cterm=italic,bold
+  endif
   highlight jsThis ctermfg=224
   highlight jsSuper ctermfg=13
   highlight Include gui=italic cterm=italic
   highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
   highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
   highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
-  highlight Type gui=italic,bold cterm=italic
   highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
   highlight Comment gui=italic cterm=italic
-  highlight Type    gui=italic,bold cterm=italic,bold
   highlight Folded  gui=bold,italic cterm=bold
   " guifg=#A2E8F6
   highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none

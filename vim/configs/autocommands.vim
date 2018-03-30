@@ -93,11 +93,13 @@ augroup Cancel_Paste
 augroup END
 
 " Reload vim and config automatically {{{
-augroup UpdateVim
-  autocmd!
-  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
-        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+  augroup UpdateVim
+    autocmd!
+    if !exists("g:gui_oni")
+      execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
+            \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
+    endif
   if has('gui_running')
     if filereadable($MYGVIMRC)
       source $MYGVIMRC | echo 'Source .gvimrc'
@@ -317,11 +319,13 @@ augroup FileType_all "{{{1
         \ | endif
 
 
-  " Reload Vim script automatically if setlocal autoread
-  autocmd BufWritePost,FileWritePost *.vim nested
-        \ if &l:autoread > 0 | source <afile> |
-        \   echo 'source '.bufname('%') |
-        \ endif
+  if !exists("g:gui_oni")
+    " Reload Vim script automatically if setlocal autoread
+    autocmd BufWritePost,FileWritePost *.vim nested
+          \ if &l:autoread > 0 | source <afile> |
+          \   echo 'source '.bufname('%') |
+          \ endif
+  endif
 augroup END
 
 augroup fugitiveSettings
@@ -370,9 +374,4 @@ function! NeatFoldText()
   return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
 endfunction
 set foldtext=NeatFoldText()
-
-augroup Folding "{{{1
-  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-augroup END
 

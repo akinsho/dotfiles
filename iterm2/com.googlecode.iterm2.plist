@@ -1023,6 +1023,8 @@
 	<true/>
 	<key>DimOnlyText</key>
 	<true/>
+	<key>DisableMetalWhenUnplugged</key>
+	<false/>
 	<key>DisableWindowSizeSnap</key>
 	<true/>
 	<key>DockIconTogglesWindow</key>
@@ -1302,17 +1304,17 @@
 	<key>NSWindow Frame NSColorPanel.modal</key>
 	<string>608 536 224 216 0 0 1440 900 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>542 33 653 302 0 0 1440 900 </string>
+	<string>518 0 653 168 0 0 1440 900 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>412 545 616 174 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>332 110 796 473 0 0 1440 900 </string>
+	<string>332 182 1018 447 0 0 1680 1050 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 316 592 584 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>720 0 720 900 0 0 1440 900 </string>
+	<string>840 0 840 1050 0 0 1680 1050 </string>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_9D1B5F3F-E936-495F-A39A-94EA9D753E55_selection</key>
@@ -5049,7 +5051,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-12-19T00:23:21Z</date>
+	<date>2018-03-25T22:16:10Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5097,6 +5099,8 @@
 	<false/>
 	<key>UseLayers</key>
 	<true/>
+	<key>UseMetal</key>
+	<true/>
 	<key>WindowNumber</key>
 	<false/>
 	<key>WordCharacters</key>
@@ -5104,7 +5108,7 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.1.5.beta.2</string>
+	<string>3.1.6beta4</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
