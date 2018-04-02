@@ -37,6 +37,7 @@ function! ApplyUserHighlights() abort
     highlight jsxAttrib cterm=bold ctermfg=121
     highlight Type    gui=bold cterm=italic,bold
   else
+    highlight Comment gui=italic cterm=italic
     highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
     highlight jsxAttrib cterm=italic,bold ctermfg=121
     highlight Type    gui=italic,bold cterm=italic,bold
@@ -48,7 +49,6 @@ function! ApplyUserHighlights() abort
   highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
   highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
   highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
-  highlight Comment gui=italic cterm=italic
   highlight Folded  gui=bold,italic cterm=bold
   " guifg=#A2E8F6
   highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none

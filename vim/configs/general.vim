@@ -237,6 +237,7 @@ set background=dark
     colorscheme one
     call one#highlight('Folded', 'db7093', 'none', 'bold')
    catch
+     colorscheme onedark
 endtry
 
 ""---------------------------------------------------------------------------//

@@ -34,7 +34,7 @@ function! LoadConfigs(s) abort
         let s:inactive = match(fpath ,"inactive")
         if s:inactive == -1
             try
-                exe 'source' fpath
+                exe 'source ' fpath
                 let l:loaded += 1
             catch
                 echohl WarningMsg
@@ -51,7 +51,7 @@ endfunction
 
 function! Source(arg) abort
     try
-        exe 'source' . g:dotfiles . a:arg
+        exe 'source ' . g:dotfiles . a:arg
     catch
         echohl WarningMsg
         echom 'Error: ----->' . v:exception
@@ -92,13 +92,14 @@ syntax enable
 " ----------------------------------------------------------------------
 let s:settings = g:dotfiles . '/vim/configs/plugins'
 call Source('/vim/configs/general.vim')
-call Source('/vim/configs/open-changed-files.vim')
 call Source('/vim/configs/highlight.vim')
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
+call Source('/vim/configs/open-changed-files.vim')
 call LoadConfigs(s:settings)
 "NOTE: Order Matters here as this works like an after overwriting Settings for oni
 if exists('g:gui_oni')
   call Source('/vim/gui/oni.vim')
 endif
 "---------------------------------------------------------------------------//
+echom 'Read Vimrc'

@@ -22,7 +22,11 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-call plug#begin('~/.vim/plugged')
+if has("nvim")
+  call plug#begin('~/.config/nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 " Deoplete  {{{1
 "=============================
@@ -52,10 +56,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
     Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
     Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
-    Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
     Plug 'scrooloose/nerdtree'
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
+" Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
 " CORE {{{1
 "================================
 Plug 'w0rp/ale'
@@ -64,12 +68,13 @@ Plug 'mattn/emmet-vim'
 Plug 'cohama/lexima.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-       \ | Plug 'junegunn/fzf.vim'
+        \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 
 "TMUX {{{1
 "============================
-" Plug 'christoomey/vim-tmux-navigator' "Navigate panes in vim and tmux with the same bindings
+"Navigate panes in vim and tmux with the same bindings
+Plug 'christoomey/vim-tmux-navigator'
 "Utilities {{{1
 "============================
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
@@ -101,29 +106,29 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
-      \ { 'for':[ 'javascript', 'typescript' ] }
-Plug 'jparise/vim-graphql'
-Plug 'styled-components/vim-styled-components',
+       \ { 'for':[ 'javascript', 'typescript' ] }
+ Plug 'jparise/vim-graphql'
+"  Plug 'styled-components/vim-styled-components',
 "Git {{{1
-"===============================
+" ==============================
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects {{{1
 "=====================
-" Plug 'chaoren/vim-wordmotion'
+Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'
-      \ | Plug 'kana/vim-operator-user'
-      \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'kana/vim-textobj-function'
-      \ | Plug 'thinca/vim-textobj-function-javascript'
-      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
-      \ | Plug 'haya14busa/vim-operator-flashy'
-"
+       \ | Plug 'kana/vim-operator-user'
+       \ | Plug 'glts/vim-textobj-comment'
+       \ | Plug 'kana/vim-textobj-function'
+       \ | Plug 'thinca/vim-textobj-function-javascript'
+       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+       \ | Plug 'haya14busa/vim-operator-flashy'
+
 "Search Tools {{{1
 "=======================
 Plug 'rizzatti/dash.vim'
@@ -154,7 +159,7 @@ Plug 'heavenshell/vim-jsdoc'
 
 "Themes  {{{1
 "===============================
-Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 

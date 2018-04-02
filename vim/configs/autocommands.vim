@@ -95,11 +95,9 @@ augroup END
 " Reload vim and config automatically {{{
   augroup UpdateVim
     autocmd!
-    if !exists("g:gui_oni")
       execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
             \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
-    endif
   if has('gui_running')
     if filereadable($MYGVIMRC)
       source $MYGVIMRC | echo 'Source .gvimrc'
@@ -319,13 +317,11 @@ augroup FileType_all "{{{1
         \ | endif
 
 
-  if !exists("g:gui_oni")
-    " Reload Vim script automatically if setlocal autoread
-    autocmd BufWritePost,FileWritePost *.vim nested
-          \ if &l:autoread > 0 | source <afile> |
-          \   echo 'source '.bufname('%') |
-          \ endif
-  endif
+  " Reload Vim script automatically if setlocal autoread
+  autocmd BufWritePost,FileWritePost *.vim nested
+        \ if &l:autoread > 0 | source <afile> |
+        \   echo 'source '.bufname('%') |
+        \ endif
 augroup END
 
 augroup fugitiveSettings

@@ -22,13 +22,13 @@ alias vi='vim'
 alias nv='nvim'
 alias cl='clear'
 alias o='a -e xdg-open' # quick opening files with xdg-open
-alias b="source ${DOTFILES}/bin/fzf-chrome.rb"
+alias b="source \${DOTFILES}/bin/fzf-chrome.rb"
 alias rn='ranger'
 alias gbs="git branch | fzf-tmux -d 15"
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
 alias gphm='git push heroku master'
-alias ea="nvim ${DOTFILES}/runcom/zsh/alias.sh"
+alias ea="nvim \${DOTFILES}/runcom/zsh/alias.sh"
 alias dnd='do-not-disturb toggle'
 alias ez="nvim ~/.zshrc"
 alias nez="nvim ~/.zshrc"
@@ -40,7 +40,7 @@ alias yd="cl && yarn develop"
 alias ydl="cl && yarn develop:local"
 
 #alias ctags if you used homebrew
-alias ctags="`brew --prefix`/bin/ctags"
+alias ctags="\$(brew --prefix)/bin/ctags"
 alias sesh="vim -S"
 alias tmux="tmux"
 # alias tmux="tmux -2 -u"
