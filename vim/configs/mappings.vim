@@ -252,6 +252,7 @@ nnoremap <silent> N   N:call lib#HLNext(0.4)<cr>
 "----------------------------------------------------------------------------
 "Buffers
 "----------------------------------------------------------------------------
+nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 "File completion made a little less painful
 inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation

@@ -32,7 +32,6 @@ export const configuration = {
     //add custom config here, such as
     // UI customizations
     "ui.animations.enabled": true,
-    "ui.fontSmoothing": "auto",
 
     // Font ------------------------------------
     // add custom config here, such as
@@ -76,10 +75,11 @@ export const configuration = {
     "oni.loadInitVim": true,
     // Editor -----------------------------------
 
-    "editor.fontFamily": "FiraCode-Retina",
     // "editor.fontFamily": "OperatorMonoLig-Medium",
     // "editor.fontFamily": "Hasklig-Regular",
     // "editor.fontFamily": "DejaVuSansCode",
+    // "editor.fontFamily": "FiraCode-Retina",
+    "editor.fontFamily": "LigaIBMPlexMono-Regular",
     "editor.fontSize": "17px",
     "editor.cursorLine": true,
     "editor.scrollBar.visible": true,
@@ -87,7 +87,8 @@ export const configuration = {
     // UI ---------------------------------------
     // "ui.fontFamily": "OperatorMono-Medium",
     "ui.fontFamily": "FiraCode-Medium",
-    "ui.fontSize": "16px",
+    "ui.fontSmoothing": "auto",
+    "ui.fontSize": "15px",
     "ui.colorscheme": "onedark",
     "tabs.mode": "buffers",
 
