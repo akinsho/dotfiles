@@ -80,13 +80,13 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'vimwiki/vimwiki', { 'on': [
 "       \'<Plug>(VimwikiTab)',
 "       \'<Plug>(VimwikiIndex)'
 "       \] }
 " Plug 'junegunn/vim-easy-align',
 "       \{ 'on': [ '<Plug>(EasyAlign)' ] }
-" Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'embear/vim-localvimrc'
 "TPOPE {{{1
@@ -107,7 +107,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
        \ { 'for':[ 'javascript', 'typescript' ] }
- Plug 'jparise/vim-graphql'
+ Plug 'jparise/vim-graphql', { 'for': ['ts', 'graphql'] }
 "  Plug 'styled-components/vim-styled-components',
 "Git {{{1
 " ==============================

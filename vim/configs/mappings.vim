@@ -171,8 +171,6 @@ nnoremap <leader>ar :AutoResize<CR>
 
 nnoremap <silent><expr> <leader>* lib#star_search('*')
 vnoremap <silent><expr> <leader>* lib#star_search('*')
-" nnoremap <silent><expr> # lib#star_search('#')
-" vnoremap <silent><expr> # lib#star_search('#')
 
 nno <expr> [of lib#open_folds('enable')
 nno <expr> ]of lib#open_folds('disable')

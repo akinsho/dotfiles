@@ -22,6 +22,18 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
+    oni.input.bind("<s-c-h>", () =>
+        oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
+    );
+    oni.input.bind("<s-c-j>", () =>
+        oni.editors.activeEditor.neovim.command(`call OniNextWindow('j')<CR>`),
+    );
+    oni.input.bind("<s-c-k>", () =>
+        oni.editors.activeEditor.neovim.command(`call OniNextWindow('k')<CR>`),
+    );
+    oni.input.bind("<s-c-l>", () =>
+        oni.editors.activeEditor.neovim.command(`call OniNextWindow('l')<CR>`),
+    );
 };
 
 export const deactivate = (oni: Oni.Plugin.Api) => {
@@ -40,7 +52,6 @@ export const configuration = {
     // "editor.fontFamily": "FuraCode Nerd Font",
     // "editor.fontFamily": "FuraCodeNerdFontC-Light",
     // "editor.fontFamily": "HasklugNerdFontC-Light",
-    // "editor.fontFamily": "OperatorMonoLig-Book",
     // "editor.fontFamily": "Hasklug Nerd Font",
     // "FiraCode-Medium"
     // OperatorMono-Light
@@ -53,16 +64,30 @@ export const configuration = {
     "debug.showNotificationOnError": true,
 
     // LSP -------------------------------------
+    // Flow Language Server ===============================================
     // "language.javascript.languageServer.command": "flow-language-server",
     // "language.javascript.languageServer.arguments": ["--stdio"],
-    // "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
-    // "language.typescript.languageServer.command": "typescript-language-server",
-    // "language.typescript.languageServer.arguments": ["--stdio"],
 
+    // TypeScript Language Server ===============================================
+    // "language.typescript.languageServer.command": "javascript-typescript-stdio",
+    // "language.typescript.languageServer.command": "javascript-typescript-stdio",
+    "language.typescript.languageServer.command": "typescript-language-server",
+    "language.typescript.languageServer.arguments": ["--stdio"],
+    "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
+
+    "language.rust.languageServer.command": "rustup",
+    "language.rust.languageServer.arguments": ["run", "stable", "rls"],
+    "language.rust.languageServer.rootFiles": ["Cargo.toml"],
+
+    // Vue Language Server ===============================================
     "language.vue.languageServer.command": "vls",
 
-    "language.go.languageServer.command": "go-langserver",
-    "language.go.languageServer.arguments": ["--gocodecompletion", "--freeosmemory", "false"],
+    // Lua Language Server ===============================================
+    "language.lua.languageServer.command": "lua-lsp",
+
+    // Go Language Server ===============================================
+    // "language.go.languageServer.command": "go-langserver",
+    // "language.go.languageServer.arguments": ["--gocodecompletion", "--freeosmemory", "false"],
     // "language.go.languageServer.rootFiles": [".git"],
 
     // Experimental -----------------------------
@@ -75,19 +100,31 @@ export const configuration = {
     "oni.loadInitVim": true,
     // Editor -----------------------------------
 
-    // "editor.fontFamily": "OperatorMonoLig-Medium",
     // "editor.fontFamily": "Hasklig-Regular",
     // "editor.fontFamily": "DejaVuSansCode",
+    // "editor.fontFamily": "OperatorMonoLig-Medium",
+    // "editor.fontFamily": "LigaCamingoCode-Regular"
+    // "editor.fontFamily": "LigaFantasqueSansMono-Regular",
+    // "editor.fontFamily": "OperatorMonoLig-Book",
+    // "editor.fontFamily": "LigaAnonymous_Pro-Regular",
+    // "editor.fontFamily": "LigaUbuntuMono-Regular",
     // "editor.fontFamily": "FiraCode-Retina",
-    "editor.fontFamily": "LigaIBMPlexMono-Regular",
-    "editor.fontSize": "17px",
-    "editor.cursorLine": true,
+    // "editor.fontFamily": "LigaSFMono-Regular",
+    // "editor.fontFamily": "LigaInconsolata-Regular",
+    // "editor.fontFamily": "LigaIBMPlexMono-Regular",
+    // "editor.fontFamily": "LigaInputMonoNarrow-Regular",
+
+    "editor.fontFamily": "LigaInput-Regular",
     "editor.scrollBar.visible": true,
+    "editor.fontSize": "16px",
+    "editor.cursorLine": true,
     "experimental.particles.enabled": false,
+    // Sidebar ----------------------------------
+    "sidebar.default.open": false,
     // UI ---------------------------------------
     // "ui.fontFamily": "OperatorMono-Medium",
+    // "ui.fontSmoothing": "subpixel-antialiased",
     "ui.fontFamily": "FiraCode-Medium",
-    "ui.fontSmoothing": "auto",
     "ui.fontSize": "15px",
     "ui.colorscheme": "onedark",
     "tabs.mode": "buffers",

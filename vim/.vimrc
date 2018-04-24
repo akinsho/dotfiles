@@ -102,4 +102,4 @@ if exists('g:gui_oni')
   call Source('/vim/gui/oni.vim')
 endif
 "---------------------------------------------------------------------------//
-echom 'Read Vimrc'
+" echom 'Read Vimrc'
