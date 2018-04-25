@@ -45,7 +45,7 @@ fi
 export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-# ZSH_THEME="spaceship"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -323,3 +323,7 @@ echo load time: $((end_time - start_time)) seconds
 # fi
 # archey -o
 # zprof
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
