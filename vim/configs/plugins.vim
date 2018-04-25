@@ -7,7 +7,15 @@
 "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
-if empty(glob('~/.vim/autoload/plug.vim'))
+
+if has("nvim")
+  let g:plug_load_dir = '~/.config/nvim/autoload/plug.vim'
+else
+  let g:plug_load_dir = '~/.vim/autoload/plug.vim'
+endif
+
+
+if empty(glob(g:plug_load_dir))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   augroup VimPlug

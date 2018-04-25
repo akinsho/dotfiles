@@ -71,7 +71,7 @@ echo "---------------------------------------------------------"
 
 echo "running macos defaults"
 cd "$DOTFILES" || echo "Oh god didn't cd exiting" || exit
-sudo ./configs/macosdefaults.sh
+sudo ./configs/.macos
 cd "$DOTFILES/configs/homebrew/" || echo "Could get into Homebrew subdir"
 brew bundle
 echo "Installing Homebrew apps from brew file"
