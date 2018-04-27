@@ -241,10 +241,6 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
-# BASE16===============================================================
-# default code for base16 shell
-#BASE16_SHELL=$HOME/.config/base16-shell/
-#[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 ##---------------------------------------------------------------------------//
 
 
@@ -260,6 +256,8 @@ fi
 
 #ENHANCD ================================================================
 if [ -f ~/enhancd/init.sh ]; then
+  # TODO add a check to see if script exists if not install it
+  # Maybe try using zplug again
   source ~/enhancd/init.sh
 fi
 

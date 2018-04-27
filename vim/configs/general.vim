@@ -271,8 +271,8 @@ if has('nvim')
   set guicursor=i-ci:ver50-Cursor/lCursor
   set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 500000
-  let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
-  let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')
+  " let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
+  " let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')
 endif
 
 ""---------------------------------------------------------------------------//

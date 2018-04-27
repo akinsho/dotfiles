@@ -47,15 +47,6 @@ export const configuration = {
 
     // Font ------------------------------------
     // add custom config here, such as
-    // Font alternatives "OperatorMono-XLight,
-
-    // "editor.fontFamily": "FuraCode Nerd Font",
-    // "editor.fontFamily": "FuraCodeNerdFontC-Light",
-    // "editor.fontFamily": "HasklugNerdFontC-Light",
-    // "editor.fontFamily": "Hasklug Nerd Font",
-    // "FiraCode-Medium"
-    // OperatorMono-Light
-    // Pragmata Pro"
 
     // 'ui.colorscheme': 'nord',
     // 'ui.colorscheme': 'solarized8_dark',

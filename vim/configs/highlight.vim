@@ -32,12 +32,12 @@ function! ApplyUserHighlights() abort
   "few nicer JS colours
   ""---------------------------------------------------------------------------//
   " highlight jsFuncCall gui=italic ctermfg=cyan
+  highlight Comment gui=italic cterm=italic
   if exists("g:gui_oni")
     highlight xmlAttrib gui=bold cterm=bold ctermfg=121
     highlight jsxAttrib cterm=bold ctermfg=121
     highlight Type    gui=bold cterm=italic,bold
   else
-    highlight Comment gui=italic cterm=italic
     highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
     highlight jsxAttrib cterm=italic,bold ctermfg=121
     highlight Type    gui=italic,bold cterm=italic,bold
