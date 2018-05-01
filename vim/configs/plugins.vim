@@ -11,10 +11,10 @@ if has("nvim")
           \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     augroup VimPlug
       au!
-      autocmd VimEnter * PlugInstall --sync | source $MYVIMRc
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     augroup END
-    call plug#begin('~/.config/nvim/plugged')
   endif
+  call plug#begin('~/.config/nvim/plugged')
 else
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -22,9 +22,9 @@ else
     augroup VimPlug
       au!
       autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-      call plug#begin('~/.vim/plugged')
     augroup END
   endif
+  call plug#begin('~/.vim/plugged')
 endif
 
 

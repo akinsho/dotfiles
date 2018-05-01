@@ -37,7 +37,7 @@ check_pkg_exists() {
 
 check_pkg_exists
 
-npm() {
+npm_install() {
   if hash npm 2>/dev/null;then
     npm i -g "$@"
   else
@@ -98,11 +98,11 @@ ln -s "$DOTFILES/configs/karabiner/" ~/.config/karabiner
 ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
 ln -s "$DOTFILES/configs/.hyper.js" ~/.hyper.js
 
-echo "Adding Oni Config"
+echo "Adding Oni Config ----------------------------------------"
 mkdir -p ~/.config/oni
 ln -sf "$DOTFILES/vim/gui/config.tsx" ~/.config/oni/
 
-npm spaceship-prompt
+npm_install spaceship-prompt
 
 mkdir -p ~/Desktop/Coding
 

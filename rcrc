@@ -1,3 +1,0 @@
-EXCLUDES="README.md LICENSE Brewfile git_template/*"
-SYMLINK_DIRS="vim configs lint oh-my-zsh"
-DOTFILES_DIRS="$HOME/Dotfiles"
