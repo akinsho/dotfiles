@@ -47,25 +47,35 @@ export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
 # command-not-found
 # colored-man-pages
 # z
-# common-aliases
-# brew
-# zsh-autosuggestions
 # zsh-iterm-touchbar
 # )
 
+#---------------------------------------------------------------------------//
 # ZPLUG
+#---------------------------------------------------------------------------//
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
 
-export ZPLUG_HOME=/usr/local/opt/zplug
+# Essential
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes
 zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
 zplug "plugins/git",   from:oh-my-zsh
 zplug "plugins/git-fast",   from:oh-my-zsh
+zplug "plugins/brew",   from:oh-my-zsh
 zplug "plugins/last-working-dir", from:oh-my-zsh
+zplug "plugins/common-aliases", from:oh-my-zsh
+zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/jira", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "b4b4r07/enhancd", use:init.sh
+zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 
 # Set the priority when loading
 # e.g., zsh-syntax-highlighting must be loaded
@@ -125,7 +135,6 @@ source <(npx --shell-auto-fallback zsh)
 #Pyenv
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 # For a full list of active aliases, run `alias`.
@@ -140,7 +149,6 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 SPACESHIP_PROMPT_SEPARATE_LINE=true
-
 # VI_MODE
 SPACESHIP_VI_MODE_SHOW=true
 SPACESHIP_VI_MODE_INSERT="[i]"
@@ -149,18 +157,13 @@ SPACESHIP_VI_MODE_NORMAL="[n]"
 SPACESHIP_GIT_PREFIX='  on '
 SPACESHIP_GIT_STATUS_STASHED=' 💰 '
 SPACESHIP_GIT_STATUS_UNTRACKED=' 😰 '
-
 SPACESHIP_NODE_PREFIX=' @ '
-
 SPACESHIP_PACKAGE_SHOW=false
-
 SPACESHIP_RUBY_SHOW=false
 # PYENV
 SPACESHIP_PYENV_SHOW=   false
 SPACESHIP_PYENV_SYMBOL='🐍'
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-
-
 export GIT_UNCOMMITTED="+"
 export GIT_UNSTAGED="!"
 export GIT_UNTRACKED="?"
@@ -170,9 +173,7 @@ export GIT_UNPUSHED="⇡"
 #=======================================================================
 # User configuration
 #=======================================================================
-
 export KEYTIMEOUT=1
-
 bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
@@ -183,13 +184,10 @@ bindkey '^U' autosuggest-accept
 # persistent reshahing i.e puts new executables in the $path
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' menu select
-
-
 # if no command is set typing in a line will cd by default
 setopt AUTO_CD
 setopt CORRECT
 setopt RM_STAR_WAIT
-
 # set some history options
 setopt append_history
 setopt extended_history
@@ -200,8 +198,10 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
-setopt autoparamslash       # tab completing directory appends a slash
-setopt correct              # command auto-correction
+# tab completing directory appends a slash
+setopt autoparamslash
+# command auto-correction
+setopt correct
 
 # Share your history across all your terminal windows
 setopt share_history
@@ -211,27 +211,11 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
+
 ##---------------------------------------------------------------------------//
-
-
-if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
-  . ~/.config/exercism/exercism_completion.zsh
-fi
-
 # EMOJI-CLI
 if [ -f $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh ]; then
   source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
-fi
-
-
-#ENHANCD ================================================================
-if [ -f ~/enhancd/init.sh ]; then
-  # TODO add a check to see if script exists if not install it
-  # Maybe try using zplug again
-  source ~/enhancd/init.sh
-else
-  git clone https://github.com/b4b4r07/enhancd ~/enhancd
-  source ~/enhancd/init.sh
 fi
 
 #=======================================================================
@@ -241,60 +225,49 @@ fi
 source $DOTFILES/runcom/functions.sh
 source $DOTFILES/runcom/zsh/alias.sh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
-  for script ($DOTFILES/runcom/zsh/*) source $script
-    #=======================================================================
-    #       FUNCTIONS
-    #=======================================================================
-    fancy-ctrl-z () {
-    if [[ $#BUFFER -eq 0 ]]; then
-      BUFFER="fg"
-      zle accept-line
-    else
-      zle push-input
-      zle clear-screen
-    fi
-  }
-  zle -N fancy-ctrl-z
-  bindkey '^Z' fancy-ctrl-z
+for script ($DOTFILES/runcom/zsh/*) source $script
+#=======================================================================
+#       FUNCTIONS
+#=======================================================================
+fancy-ctrl-z () {
+if [[ $#BUFFER -eq 0 ]]; then
+  BUFFER="fg"
+  zle accept-line
+else
+  zle push-input
+  zle clear-screen
+fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
+# Plugin that autocorrects when you type fuck or whatever alias you intended
+eval "$(thefuck --alias)"
+alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
+# iTERM Integration ==================================================
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+export JIRA_URL='https://yulife.atlassian.net'
+export JIRA_NAME='akin'
+export JIRA_RAPID_BOARD=true
+export JIRA_DEFAULT_ACTION='dashboard'
 
-  # Plugin that autocorrects when you type fuck or whatever alias you intended
-  eval "$(thefuck --alias)"
-  alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
-  # iTERM Integration ==================================================
-  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+##---------------------------------------------------------------------------//
+# FZF
+##---------------------------------------------------------------------------//
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
-  autoload -U promptinit; promptinit
-  # PURE_PROMPT_SYMBOL="•"
-  prompt pure
-
-  export JIRA_URL='https://yulife.atlassian.net'
-  export JIRA_NAME='akin'
-  export JIRA_RAPID_BOARD=true
-  export JIRA_DEFAULT_ACTION='dashboard'
-
-  ##---------------------------------------------------------------------------//
-  # FZF
-  ##---------------------------------------------------------------------------//
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
-
-  # STARTUP TIMES (CONTD)================================================
-  end_time="$(date +%s)"
-  # Compares start time defined above with end time above and prints the
-  # difference
-  echo load time: $((end_time - start_time)) seconds
-  ##---------------------------------------------------------------------------//
-  # LOL
-  ##---------------------------------------------------------------------------//
-  # if brew ls --versions fortune > /dev/null;then
-  #   runonce <(fortune | cowsay | lolcat)
-  # fi
-  # zprof
-  archey -o
-
-  # Set Spaceship ZSH as a prompt
-  autoload -U promptinit; promptinit
-  prompt spaceship
+# STARTUP TIMES (CONTD)================================================
+end_time="$(date +%s)"
+# Compares start time defined above with end time above and prints the
+# difference
+echo load time: $((end_time - start_time)) seconds
+##---------------------------------------------------------------------------//
+# LOL
+##---------------------------------------------------------------------------//
+# if brew ls --versions fortune > /dev/null;then
+#   runonce <(fortune | cowsay | lolcat)
+# fi
+# zprof
+archey -o
