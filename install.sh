@@ -48,7 +48,7 @@ npm_install() {
 echo "Installing brew bundle"
 brew tap Homebrew/bundle
 
-# Now lets clone my dotfiles repo into ~/Dotfiles/ if needed
+# Clone my dotfiles repo into ~/Dotfiles/ if needed
 echo "DOTFILES-------------------------------------------------"
 
 export DOTFILES="$HOME/Dotfiles"
@@ -91,14 +91,14 @@ echo "Changing to zsh"
 chsh "$(which zsh)"
 
 echo "Creating symlinks"
+ln -sf "$DOTFILES/vim" ~/.config/nvim
 ln -s "$DOTFILES/vim/init.vim" ~/.vimrc
-ln -s "$DOTFILES/vim" ~/.config/nvim
 ln -s "$DOTFILES/oh-my-zsh/.zshrc" ~/.zshrc
 ln -s "$DOTFILES/configs/karabiner/" ~/.config/karabiner
 ln -s "$DOTFILES/configs/.hyper.js" ~/.hyper.js
 
 mkdir -p ~/.config/git
-ln -s "$DOTFILES/git/.gitconfig_global" ~/.config/git/.gitconfig
+ln -s "$DOTFILES/git/.gitconfig_global" ~/.config/git/config
 
 echo "Adding Oni Config ----------------------------------------"
 mkdir -p ~/.config/oni
