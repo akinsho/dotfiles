@@ -1,3 +1,4 @@
+#!/bin/zsh
 #=======================================================================
 #               STARTUP TIMES
 #=======================================================================
@@ -32,6 +33,11 @@ zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "b4b4r07/emoji-cli"
 zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*darwin*amd64*"
 
 # Set the priority when loading
 # e.g., zsh-syntax-highlighting must be loaded
@@ -58,11 +64,6 @@ for script in ~/Dotfiles/shell_scripts/*; do
   source $script
 done
 
-##---------------------------------------------------------------------------//
-# FZF
-##---------------------------------------------------------------------------//
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # STARTUP TIMES (CONTD)================================================
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
@@ -76,4 +77,4 @@ echo load time: $((end_time - start_time)) seconds
 #   runonce <(fortune | cowsay | lolcat)
 # fi
 # zprof
-archey -o
+# archey -o

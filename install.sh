@@ -95,7 +95,7 @@ chsh "$(which zsh)"
 echo "Creating symlinks"
 ln -sf "$DOTFILES/vim" ~/.config/nvim
 ln -s "$DOTFILES/vim/init.vim" ~/.vimrc
-ln -s "$DOTFILES/zplug/.zshrc" ~/.zshrc
+ln -s "$DOTFILES/zsh/.zplugrc" ~/.zshrc
 ln -s "$DOTFILES/configs/karabiner/" ~/.config/karabiner
 ln -s "$DOTFILES/configs/.hyper.js" ~/.hyper.js
 
