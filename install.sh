@@ -94,10 +94,10 @@ chsh "$(which zsh)"
 
 echo "Creating symlinks"
 ln -sf "$DOTFILES/vim" ~/.config/nvim
-ln -s "$DOTFILES/vim/init.vim" ~/.vimrc
-ln -s "$DOTFILES/zsh/.zplugrc" ~/.zshrc
-ln -s "$DOTFILES/configs/karabiner/" ~/.config/karabiner
-ln -s "$DOTFILES/configs/.hyper.js" ~/.hyper.js
+ln -sf "$DOTFILES/zsh/.zplugrc" ~/.zshrc
+ln -sf "$DOTFILES/configs/karabiner/" ~/.config/karabiner
+ln -sf "$DOTFILES/vim/init.vim" ~/.vimrc
+ln -sf "$DOTFILES/configs/.hyper.js" ~/.hyper.js
 
 mkdir -p ~/.config/git
 ln -s "$DOTFILES/git/.gitconfig_global" ~/.config/git/config
