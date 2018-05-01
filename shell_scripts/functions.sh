@@ -103,5 +103,18 @@ _cdls_chpwd_handler () {
   ls -A
 }
 
+fancy-ctrl-z () {
+if [[ $#BUFFER -eq 0 ]]; then
+  BUFFER="fg"
+  zle accept-line
+else
+  zle push-input
+  zle clear-screen
+fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
+
+
 autoload -U add-zsh-hook
 add-zsh-hook chpwd _cdls_chpwd_handler

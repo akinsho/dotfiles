@@ -69,3 +69,4 @@ alias ta="tmux -CC attach"
 #Git aliases
 alias browse="browser-sync start --server"
 alias serve='python -m SimpleHTTPServer'
+alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
