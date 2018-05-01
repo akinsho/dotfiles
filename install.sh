@@ -95,8 +95,10 @@ ln -s "$DOTFILES/vim/init.vim" ~/.vimrc
 ln -s "$DOTFILES/vim" ~/.config/nvim
 ln -s "$DOTFILES/oh-my-zsh/.zshrc" ~/.zshrc
 ln -s "$DOTFILES/configs/karabiner/" ~/.config/karabiner
-ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
 ln -s "$DOTFILES/configs/.hyper.js" ~/.hyper.js
+
+mkdir -p ~/.config/git
+ln -s "$DOTFILES/git/.gitconfig_global" ~/.config/git/.gitconfig
 
 echo "Adding Oni Config ----------------------------------------"
 mkdir -p ~/.config/oni
