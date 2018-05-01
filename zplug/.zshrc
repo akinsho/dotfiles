@@ -55,7 +55,9 @@ zplug load
 #=======================================================================
 #   LOCAL SCRIPTS - Including Environment Variables
 #=======================================================================
-for script ($DOTFILES/shell_scripts/*) source $script
+for script in ~/Dotfiles/shell_scripts/*; do
+  source $script
+done
 
 ##---------------------------------------------------------------------------//
 # FZF
