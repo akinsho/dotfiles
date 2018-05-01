@@ -67,13 +67,15 @@ cd "$HOME" || exit
 echo "---------------------------------------------------------"
 
 echo "You'll need to log out for this to take effect"
-echo "---------------------------------------------------------"
 
 echo "running macos defaults"
+echo "this may take a while.. as well"
+echo "---------------------------------------------------------"
 
 # shellcheck source=/Users/Akin/Dotfiles/configs/.macos
 source "$DOTFILES/configs/.macos"
 
+# If script is run as ./install.sh minimal
 if [ "$1" == "minimal" ]; then
   echo "using minimal brew config"
   brew_directory="$DOTFILES/configs/homebrew/minimal/"

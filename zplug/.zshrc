@@ -55,6 +55,7 @@ export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
 
 # ZPLUG
 
+export ZPLUG_HOME=/usr/local/opt/zplug
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes
