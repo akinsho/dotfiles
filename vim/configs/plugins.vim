@@ -3,26 +3,30 @@
 "-----------------------------------------------------------
 " Plug Setup {{{1
 "=====================
-"This will autoinstall vim plug if not already installed
-"curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"
 
-" if has("nvim")
-"   let g:plug_load_dir = '~/.config/nvim/autoload/plug.vim'
-" else
-"   let g:plug_load_dir = '~/.vim/autoload/plug.vim'
-" endif
-
-
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  augroup VimPlug
-    au!
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  augroup END
+" auto-install vim-plug
+if has("nvim")
+  if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    augroup VimPlug
+      au!
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRc
+    augroup END
+    call plug#begin('~/.config/nvim/plugged')
+  endif
+else
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    augroup VimPlug
+      au!
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+      call plug#begin('~/.vim/plugged')
+    augroup END
+  endif
 endif
+
 
 function! Cond(cond, ...)
   let l:opts = get(a:000, 0, {})
@@ -33,14 +37,7 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-if has("nvim")
-  call plug#begin('~/.config/nvim/plugged')
-else
-  call plug#begin('~/.vim/plugged')
-endif
-
 " Deoplete  {{{1
-"=============================
 "NVIM ====================================
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'

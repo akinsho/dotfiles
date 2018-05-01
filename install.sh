@@ -47,31 +47,32 @@ npm() {
 
 echo "Installing brew bundle"
 brew tap Homebrew/bundle
-echo "---------------------------------------------------------"
 
-# Okay so everything should be good
-# Fingers cross at least
-# Now lets clone my dotfiles repo into ~/Dotfiles/
-echo "---------------------------------------------------------"
-
-echo "Cloning Akin's dotfiles into Dotfiles"
-git clone https://github.com/Akin909/Dotfiles.git ~/Dotfiles
+# Now lets clone my dotfiles repo into ~/Dotfiles/ if needed
+echo "DOTFILES-------------------------------------------------"
 
 export DOTFILES="$HOME/Dotfiles"
+
+if [ -f "$DOTFILES" ]; then
+  echo "Dotfiles have already been cloned into the home dir"
+else
+  echo "Cloning Akin's dotfiles into Dotfiles"
+  git clone https://github.com/Akin909/Dotfiles.git ~/Dotfiles
+fi
+
 cd DOTFILES || "Didn't cd into dotfiles this will be bad :("
 git submodule update --init --recursive
 
 cd "$HOME" || exit
 echo "---------------------------------------------------------"
-echo "Changing to zsh"
-chsh -s "$(which zsh)"
 
 echo "You'll need to log out for this to take effect"
 echo "---------------------------------------------------------"
 
 echo "running macos defaults"
 
-sudo "$DOTFILES/configs/.macos"
+# shellcheck source=/Users/Akin/Dotfiles/configs/.macos
+source "$DOTFILES/configs/.macos"
 
 if [ "$1" == "minimal" ]; then
   echo "using minimal brew config"
@@ -85,15 +86,20 @@ cd "$brew_directory" || echo "Couldn't get into Homebrew subdir"
 brew bundle
 echo "Installing Homebrew apps from brew file"
 
+echo "---------------------------------------------------------"
+echo "Changing to zsh"
+chsh "$(which zsh)"
+
 echo "Creating symlinks"
 ln -s "$DOTFILES/vim/init.vim" ~/.vimrc
+ln -s "$DOTFILES/vim" ~/.config/nvim
 ln -s "$DOTFILES/oh-my-zsh/.zshrc" ~/.zshrc
 ln -s "$DOTFILES/configs/karabiner/" ~/.config/karabiner
 ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
 
 echo "Adding Oni Config"
 mkdir -p ~/.config/oni
-ln -sf "$DOTFILES/vim/config/gui/config.tsx" ~/.config/oni/
+ln -sf "$DOTFILES/vim/gui/config.tsx" ~/.config/oni/
 
 npm spaceship-prompt
 
