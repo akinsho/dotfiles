@@ -29,7 +29,6 @@ zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/jira", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "b4b4r07/emoji-cli"
 zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
