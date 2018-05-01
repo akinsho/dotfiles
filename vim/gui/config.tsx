@@ -108,7 +108,7 @@ export const configuration = {
 
     "editor.fontFamily": "LigaInput-Regular",
     "editor.scrollBar.visible": true,
-    "editor.fontSize": "17px",
+    "editor.fontSize": "16px",
     "editor.cursorLine": true,
     "experimental.particles.enabled": false,
     // Sidebar ----------------------------------
