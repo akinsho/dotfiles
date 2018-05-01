@@ -9,32 +9,21 @@ start_time="$(date +%s)"
 # NB for future notice this tries to install in dotfiles unless explicitly
 # specified here
 export NVM_DIR="$HOME/.nvm"
-
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
-
-#This is not working
-#export PATH="$(yarn global bin):$PATH"
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 export PATH="$HOME/.cargo/bin:$PATH"
-# source "$(dirname $(gem which colorls))"/tab_complete.sh
 export PYENV_VIRTUAL_DISABLE_PROMPT=1
-
-# If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 
-# Means of adding python not sure which is the right one
-# neither seem necessary
-# export PATH=$HOME/Library/Python/2.7/bin:$PATH
-# export PATH="$HOME/.pyenv/shims:$PATH"
 # GO ============================================================
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/Desktop/Coding/Go
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:$(go env GOPATH)/bin
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+  PATH="$HOME/bin:$PATH"
 fi
 
 # RUBY ==========================================================
@@ -43,75 +32,58 @@ if which ruby >/dev/null && which gem >/dev/null; then
 fi
 
 export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="spaceship"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=5
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd/mm/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Add wisely, as too many plugins slow down shell startup.
 
 # PLUGINS =======================================================================
-plugins=(
-        zsh-syntax-highlighting
-        alias-tips
-        last-working-dir
-        zsh-nvm
-        jira
-        vi-mode
-        git
-        gitfast
-        zsh-completions
-        command-not-found
-        colored-man-pages
-        z
-        common-aliases
-        brew
-        zsh-autosuggestions
-        zsh-iterm-touchbar
-        )
+# plugins=(
+# zsh-syntax-highlighting
+# alias-tips
+# last-working-dir
+# zsh-nvm
+# jira
+# vi-mode
+# git
+# gitfast
+# zsh-completions
+# command-not-found
+# colored-man-pages
+# z
+# common-aliases
+# brew
+# zsh-autosuggestions
+# zsh-iterm-touchbar
+# )
 
-# web-search - great plugin, google from the command line although I never use
+# ZPLUG
 
-source $ZSH/oh-my-zsh.sh
+source ~/.zplug/init.zsh
+
+# Make sure to use double quotes
+zplug "zsh-users/zsh-history-substring-search"
+zplug "plugins/git",   from:oh-my-zsh
+zplug "plugins/git-fast",   from:oh-my-zsh
+zplug "plugins/last-working-dir", from:oh-my-zsh
+zplug "plugins/jira", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "b4b4r07/enhancd", use:init.sh
+
+# Set the priority when loading
+# e.g., zsh-syntax-highlighting must be loaded
+# after executing compinit command and sourcing other plugins
+# (If the defer tag is given 2 or above, run after compinit command)
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+
+# Then, source plugins and add commands to $PATH
+zplug load --verbose
 
 export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH
@@ -152,9 +124,6 @@ source <(npx --shell-auto-fallback zsh)
 #Pyenv
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -271,60 +240,60 @@ fi
 source $DOTFILES/runcom/functions.sh
 source $DOTFILES/runcom/zsh/alias.sh
 for fzfscript ($DOTFILES/runcom/fzf/*.sh) source $fzfscript
-for script ($DOTFILES/runcom/zsh/*) source $script
-#=======================================================================
-#       FUNCTIONS
-#=======================================================================
-fancy-ctrl-z () {
-  if [[ $#BUFFER -eq 0 ]]; then
-    BUFFER="fg"
-    zle accept-line
-  else
-    zle push-input
-    zle clear-screen
-  fi
-}
-zle -N fancy-ctrl-z
-bindkey '^Z' fancy-ctrl-z
+  for script ($DOTFILES/runcom/zsh/*) source $script
+    #=======================================================================
+    #       FUNCTIONS
+    #=======================================================================
+    fancy-ctrl-z () {
+    if [[ $#BUFFER -eq 0 ]]; then
+      BUFFER="fg"
+      zle accept-line
+    else
+      zle push-input
+      zle clear-screen
+    fi
+  }
+  zle -N fancy-ctrl-z
+  bindkey '^Z' fancy-ctrl-z
 
 
 
-# Plugin that autocorrects when you type fuck or whatever alias you intended
-eval "$(thefuck --alias)"
-alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
-# iTERM Integration ==================================================
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+  # Plugin that autocorrects when you type fuck or whatever alias you intended
+  eval "$(thefuck --alias)"
+  alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
+  # iTERM Integration ==================================================
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
- autoload -U promptinit; promptinit
- # PURE_PROMPT_SYMBOL="•"
- prompt pure
+  autoload -U promptinit; promptinit
+  # PURE_PROMPT_SYMBOL="•"
+  prompt pure
 
-export JIRA_URL='https://yulife.atlassian.net'
-export JIRA_NAME='akin'
-export JIRA_RAPID_BOARD=true
-export JIRA_DEFAULT_ACTION='dashboard'
+  export JIRA_URL='https://yulife.atlassian.net'
+  export JIRA_NAME='akin'
+  export JIRA_RAPID_BOARD=true
+  export JIRA_DEFAULT_ACTION='dashboard'
 
-##---------------------------------------------------------------------------//
-# FZF
-##---------------------------------------------------------------------------//
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  ##---------------------------------------------------------------------------//
+  # FZF
+  ##---------------------------------------------------------------------------//
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
-# STARTUP TIMES (CONTD)================================================
-end_time="$(date +%s)"
-# Compares start time defined above with end time above and prints the
-# difference
-echo load time: $((end_time - start_time)) seconds
-##---------------------------------------------------------------------------//
-# LOL
-##---------------------------------------------------------------------------//
-# if brew ls --versions fortune > /dev/null;then
-#   runonce <(fortune | cowsay | lolcat)
-# fi
-# zprof
-archey -o
+  # STARTUP TIMES (CONTD)================================================
+  end_time="$(date +%s)"
+  # Compares start time defined above with end time above and prints the
+  # difference
+  echo load time: $((end_time - start_time)) seconds
+  ##---------------------------------------------------------------------------//
+  # LOL
+  ##---------------------------------------------------------------------------//
+  # if brew ls --versions fortune > /dev/null;then
+  #   runonce <(fortune | cowsay | lolcat)
+  # fi
+  # zprof
+  archey -o
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+  # Set Spaceship ZSH as a prompt
+  autoload -U promptinit; promptinit
+  prompt spaceship
