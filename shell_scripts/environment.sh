@@ -39,7 +39,7 @@ export PATH=~/.rbenv:$PATH
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_144`
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_144`
 
 # you may need to manually set your language environment
 export LC_ALL=en_GB.UTF-8
