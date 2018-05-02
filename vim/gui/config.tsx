@@ -110,6 +110,8 @@ export const configuration = {
     "editor.scrollBar.visible": true,
     "editor.fontSize": "16px",
     "editor.cursorLine": true,
+
+    "explorer.autoRefresh": true,
     "experimental.particles.enabled": false,
     // Sidebar ----------------------------------
     "sidebar.default.open": false,
