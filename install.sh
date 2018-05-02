@@ -106,6 +106,7 @@ echo "Adding Oni Config ----------------------------------------"
 mkdir -p ~/.config/oni
 ln -sf "$DOTFILES/vim/gui/config.tsx" ~/.config/oni/
 
+git config --global core.excludesfile "$DOTFILES/git/.gitignore_global"
 npm_install spaceship-prompt
 
 mkdir -p ~/Desktop/Coding
