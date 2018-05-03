@@ -88,9 +88,24 @@ cd "$brew_directory" || echo "Couldn't get into Homebrew subdir"
 brew bundle
 echo "Installing Homebrew apps from brew file"
 
+pip3 install neovim --upgrade
+
 echo "---------------------------------------------------------"
 echo "Changing to zsh"
 chsh "$(which zsh)"
+
+echo "Creating .config dir if necessary -----------------------"
+if [ ! -d "$HOME/.config" ]; then
+  echo "Creating ~/.config"
+  mkdir -p "$HOME/.config"
+fi
+
+# link() {
+#   target="$HOME/.config/$1"
+#   if [ -e $target ]; then
+#     echo "${target}" already exists
+#   fi
+# }
 
 echo "Creating symlinks"
 ln -sf "$DOTFILES/vim" ~/.config/nvim

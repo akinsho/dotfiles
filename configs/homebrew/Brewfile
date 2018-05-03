@@ -75,6 +75,7 @@ brew "z"
 brew "zsh"
 brew "thoughtbot/formulae/rcm"
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
+brew "python3"
 cask "alfred"
 cask "dash"
 cask "devdocs"

@@ -71,12 +71,16 @@ plugins=(
         zsh-iterm-touchbar
         )
 
-# web-search - great plugin, google from the command line although I never use
+# ========================================================================
+# PLUGINS
+# ========================================================================
 
-source $ZSH/oh-my-zsh.sh
+if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+  source $ZSH/oh-my-zsh.sh
+fi
 
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
-  . ~/.config/exercism/exercism_completion.zsh
+  source ~/.config/exercism/exercism_completion.zsh
 fi
 
 # EMOJI-CLI
@@ -85,7 +89,6 @@ if [ -f $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh ]; then
 fi
 
 
-#ENHANCD ================================================================
 if [ -f ~/enhancd/init.sh ]; then
   # TODO add a check to see if script exists if not install it
   # Maybe try using zplug again
