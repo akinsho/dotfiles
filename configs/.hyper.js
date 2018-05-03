@@ -9,7 +9,7 @@ module.exports = {
         updateChannel: "stable",
 
         // default font size in pixels for all tabs
-        fontSize: 16,
+        fontSize: 17,
 
         // font family with optional fallbacks
         // fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
@@ -22,7 +22,7 @@ module.exports = {
         fontWeightBold: "bold",
 
         // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-        cursorColor: "rgba(248,28,229,0.8)",
+        cursorColor: "rgba(139, 191, 100, 0.8)",
 
         // terminal text color under BLOCK cursor
         cursorAccentColor: "#000",
@@ -31,7 +31,7 @@ module.exports = {
         cursorShape: "BLOCK",
 
         // set to `true` (without backticks and without quotes) for blinking cursor
-        cursorBlink: false,
+        cursorBlink: true,
 
         // color of the text
         foregroundColor: "#fff",
@@ -111,7 +111,7 @@ module.exports = {
         bell: "SOUND",
 
         // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
-        copyOnSelect: false,
+        copyOnSelect: true,
 
         // if `true` (without backticks and without quotes), hyper will be set as the default protocol client for SSH
         defaultSSHApp: true,
@@ -132,12 +132,30 @@ module.exports = {
     //   `hyperpower`
     //   `@company/project`
     //   `project#1.0.1`
-    plugins: ["hyper-one-dark-vivid", "hyper-statusline", "hyper-search"],
+    plugins: [
+        "hyper-one-dark-vivid",
+        "hyper-statusline",
+        "hyper-search",
+        "hyper-tabs-enhanced",
+        "hyper-pane",
+    ],
 
     // in development, you can create a directory under
     // `~/.hyper_plugins/local/` and include it here
     // to load it and avoid it being `npm install`ed
     localPlugins: [],
+
+    paneNavigation: {
+        hotkeys: {
+            navigation: {
+                left: "meta+ctrl+h",
+                right: "meta+ctrl+l",
+                down: "meta+ctrl+j",
+                up: "meta+ctrl+k",
+            },
+        },
+        focusOnMouseHover: true,
+    },
 
     keymaps: {
         // Example

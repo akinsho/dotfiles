@@ -62,9 +62,9 @@ export const configuration = {
     // TypeScript Language Server ===============================================
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
-    // "language.typescript.languageServer.command": "typescript-language-server",
-    // "language.typescript.languageServer.arguments": ["--stdio"],
-    // "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
+    "language.typescript.languageServer.command": "typescript-language-server",
+    "language.typescript.languageServer.arguments": ["--stdio"],
+    "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
     // "editor.renderer": "webgl",
 
     "language.rust.languageServer.command": "rustup",
