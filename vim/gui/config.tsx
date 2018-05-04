@@ -22,6 +22,7 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
+    // oni.input.bind("<m-.>", "autoformat.prettier.selection");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
     );
@@ -62,9 +63,9 @@ export const configuration = {
     // TypeScript Language Server ===============================================
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
-    "language.typescript.languageServer.command": "typescript-language-server",
-    "language.typescript.languageServer.arguments": ["--stdio"],
-    "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
+    // "language.typescript.languageServer.command": "typescript-language-server",
+    // "language.typescript.languageServer.arguments": ["--stdio"],
+    // "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
     // "editor.renderer": "webgl",
 
     "language.rust.languageServer.command": "rustup",
@@ -111,7 +112,7 @@ export const configuration = {
     "editor.fontSize": "16px",
     "editor.cursorLine": true,
 
-    "explorer.autoRefresh": true,
+    "explorer.autoRefresh": false,
     "experimental.particles.enabled": false,
     // Sidebar ----------------------------------
     "sidebar.default.open": false,

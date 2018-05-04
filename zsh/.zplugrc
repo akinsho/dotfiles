@@ -16,6 +16,7 @@ fi
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "lukechilds/zsh-nvm"
@@ -44,7 +45,6 @@ zplug "junegunn/fzf-bin", \
 # after executing compinit command and sourcing other plugins
 # (If the defer tag is given 2 or above, run after compinit command)
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
