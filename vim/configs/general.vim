@@ -48,6 +48,7 @@ endif
 " ----------------------------------------------------------------------------
 set shortmess+=t                      " truncate file messages at start
 set shortmess+=A                      " ignore annoying swapfile messages
+set shortmess+=o                      " file-read message overwrites previous
 set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
@@ -107,7 +108,9 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " Vim Path {{{1
 " ----------------------------------------------------------------------------
 "Vim searches recursively through all directories and subdirectories
-" path set to some greedy globs and suffixesadd set to contain .js. This allows me to press gf (open file under cursor) on a require statement, and it will actually take me to the source (if it exists)
+" path set to some greedy globs and suffixesadd set to contain .js.
+" This allows me to press gf (open file under cursor) on a require statement,
+" and it will actually take me to the source (if it exists)
 set path+=**/src/main/**,**
 
 " ----------------------------------------------------------------------------
@@ -158,7 +161,8 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   if has('gui_vimr')
     let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   elseif exists('g:gui_oni')
-    let &showbreak='…'
+    " let &showbreak='…'
+    let &showbreak='→'
   else
     let &showbreak='↪ '
   endif
@@ -227,7 +231,6 @@ endif
 " ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,./.git/.tags,tags,~/.tags
 
-" ----------------------------------------------------------------------------
 ""---------------------------------------------------------------------------//
 "Colorscheme {{{1
 ""---------------------------------------------------------------------------//

@@ -22,6 +22,7 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
+    oni.input.bind("<m-.>", "oni.git.branches");
     // oni.input.bind("<m-.>", "autoformat.prettier.selection");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
@@ -92,11 +93,12 @@ export const configuration = {
     "oni.useDefaultConfig": false,
     "oni.loadInitVim": true,
     // Editor -----------------------------------
+    "achievements.enabled": false,
+    "sidebar.plugins.enabled": true,
 
     // "editor.fontFamily": "Hasklig-Regular",
     // "editor.fontFamily": "DejaVuSansCode",
     // "editor.fontFamily": "OperatorMonoLig-Medium",
-    // "editor.fontFamily": "LigaCamingoCode-Regular"
     // "editor.fontFamily": "LigaFantasqueSansMono-Regular",
     // "editor.fontFamily": "OperatorMonoLig-Book",
     // "editor.fontFamily": "LigaAnonymous_Pro-Regular",
@@ -105,11 +107,16 @@ export const configuration = {
     // "editor.fontFamily": "LigaSFMono-Regular",
     // "editor.fontFamily": "LigaInconsolata-Regular",
     // "editor.fontFamily": "LigaIBMPlexMono-Regular",
-    // "editor.fontFamily": "LigaInputMonoNarrow-Regular",
 
-    "editor.fontFamily": "LigaInput-Regular",
+    // "editor.fontFamily": "LigaInput-Regular",
+    // "editor.linePadding": 2,
+    // "editor.fontSize": "16px",
+
+    "editor.fontFamily": "DankMono-Regular",
+    "editor.fontSize": "18px",
+    "editor.linePadding": 0,
+
     "editor.scrollBar.visible": true,
-    "editor.fontSize": "16px",
     "editor.cursorLine": true,
 
     "explorer.autoRefresh": false,
@@ -119,6 +126,7 @@ export const configuration = {
     // UI ---------------------------------------
     // "ui.fontFamily": "OperatorMono-Medium",
     // "ui.fontSmoothing": "subpixel-antialiased",
+    // "ui.fontFamily": "FiraCode-Medium",
     "ui.fontFamily": "FiraCode-Medium",
     "ui.fontSize": "15px",
     "ui.colorscheme": "onedark",

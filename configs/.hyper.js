@@ -158,7 +158,7 @@ module.exports = {
             permutation_modifier: "shift", // Added to jump and navigation hotkeys for pane permutation
             maximize: "ctrl+enter",
         },
-        showIndicators: true, // Show pane number
+        showIndicators: false, // Show pane number
         indicatorPrefix: "^⌥", // Will be completed with pane number
         indicatorStyle: {
             // Added to indicator <div>

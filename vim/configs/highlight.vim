@@ -33,16 +33,16 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   " highlight jsFuncCall gui=italic ctermfg=cyan
   highlight Comment gui=italic cterm=italic
-  if exists("g:gui_oni")
-    highlight xmlAttrib gui=bold cterm=bold ctermfg=121
-    highlight jsxAttrib cterm=bold ctermfg=121
-    highlight Type    gui=bold cterm=italic,bold
-  else
-    highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
-    highlight jsxAttrib cterm=italic,bold ctermfg=121
-    highlight Type    gui=italic,bold cterm=italic,bold
-  endif
-  highlight jsThis ctermfg=224
+  " if exists("g:gui_oni")
+  "   highlight xmlAttrib gui=bold cterm=bold ctermfg=121
+  "   highlight jsxAttrib cterm=bold ctermfg=121
+  "   highlight Type    gui=bold cterm=italic,bold
+  " else
+  highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
+  highlight jsxAttrib cterm=italic,bold ctermfg=121
+  highlight Type    gui=italic,bold cterm=italic,bold
+  " endif
+  highlight jsThis ctermfg=224,gui=italic
   highlight jsSuper ctermfg=13
   highlight Include gui=italic cterm=italic
   highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
@@ -75,8 +75,8 @@ function! ApplyUserHighlights() abort
   "Autocomplete menu highlighting
   ""---------------------------------------------------------------------------//
   highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-  " highlight Identifier gui=bold
   "Remove vertical separator
+  " highlight Identifier gui=italic,bold
   " highlight VertSplit guibg=bg guifg=bg
   "make the completion menu a bit more readable
   " highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
