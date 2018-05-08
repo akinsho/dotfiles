@@ -148,7 +148,7 @@ export const configuration = {
             arrowParens: "avoid",
             printWidth: 100,
         },
-        formatOnSave: true,
+        formatOnSave: false,
         enabled: true,
     },
 };
