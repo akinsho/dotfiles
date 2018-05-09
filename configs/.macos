@@ -212,6 +212,9 @@ defaults write com.apple.dock autohide -bool true
 # Save screenshots to the desktop
 defaults write com.apple.screencapture location -string "$HOME/Desktop"
 
+# set MacOS Dock size
+defaults write com.apple.dock tilesize -int 24
+
 ###############################################################################
 # Activity Monitor                                                            #
 ###############################################################################
