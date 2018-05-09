@@ -108,13 +108,13 @@ export const configuration = {
     // "editor.fontFamily": "LigaInconsolata-Regular",
     // "editor.fontFamily": "LigaIBMPlexMono-Regular",
 
-    // "editor.fontFamily": "LigaInput-Regular",
-    // "editor.linePadding": 2,
-    // "editor.fontSize": "16px",
+    "editor.fontFamily": "LigaInput-Regular",
+    "editor.linePadding": 2,
+    "editor.fontSize": "16px",
 
-    "editor.fontFamily": "DankMono-Regular",
-    "editor.fontSize": "18px",
-    "editor.linePadding": 0,
+    // "editor.fontFamily": "DankMono-Regular",
+    // "editor.fontSize": "18px",
+    // "editor.linePadding": 0,
 
     "editor.scrollBar.visible": true,
     "editor.cursorLine": true,

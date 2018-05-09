@@ -78,3 +78,7 @@ echo load time: $((end_time - start_time)) seconds
 # fi
 # zprof
 # archey -o
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
