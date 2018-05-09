@@ -60,7 +60,7 @@ else
   git clone https://github.com/Akin909/Dotfiles.git ~/Dotfiles
 fi
 
-cd DOTFILES || "Didn't cd into dotfiles this will be bad :("
+cd "$DOTFILES" || "Didn't cd into dotfiles this will be bad :("
 git submodule update --init --recursive
 
 cd "$HOME" || exit
