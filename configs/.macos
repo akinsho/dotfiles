@@ -234,7 +234,8 @@ defaults write com.apple.ActivityMonitor ShowCategory -int 0
 defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
 defaults write com.apple.ActivityMonitor SortDirection -int 0
 
-
+#FIXME: ONI KEY REPEAT
+defaults write com.extropy.oni ApplePressAndHoldEnabled -bool false
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################

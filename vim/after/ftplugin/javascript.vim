@@ -2,7 +2,6 @@ setl completeopt-=preview
 setlocal nofoldenable  foldtext=JavascriptFold()
 setlocal foldlevelstart=99 foldmethod=syntax
 setl colorcolumn=81
-set suffixesadd+=.js,.jsx
 
 nnoremap <leader>jr :call lib#JSXEncloseReturn()<CR>
 nnoremap vat :call lib#JSXSelectTag()<CR>

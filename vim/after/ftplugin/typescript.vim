@@ -4,8 +4,6 @@ setl foldmethod=syntax
 setl foldlevelstart=99
 setl completeopt-=preview
 setl colorcolumn=100
-set suffixesadd+=.ts
-set suffixesadd+=.tsx
 
 if !exists('g:gui_oni')
   nnoremap gd :TSDef<CR>

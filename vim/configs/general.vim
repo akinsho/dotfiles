@@ -107,11 +107,8 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Vim Path {{{1
 " ----------------------------------------------------------------------------
-"Vim searches recursively through all directories and subdirectories
-" path set to some greedy globs and suffixesadd set to contain .js.
-" This allows me to press gf (open file under cursor) on a require statement,
-" and it will actually take me to the source (if it exists)
-set path+=**/src/main/**,**
+" FIXME: Use vim-apathy instead https://github.com/tpope/vim-apathy
+" set path+=**/src/main/**,**
 
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{1
@@ -161,8 +158,8 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   if has('gui_vimr')
     let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   elseif exists('g:gui_oni')
-    " let &showbreak='…'
-    let &showbreak='→'
+    let &showbreak='…'
+    " let &showbreak='→'
   else
     let &showbreak='↪ '
   endif

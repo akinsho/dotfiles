@@ -64,6 +64,7 @@ endfunction
     Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
     Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
     Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
+    Plug 'ludovicchabant/vim-gutentags'
     Plug 'scrooloose/nerdtree'
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
@@ -95,7 +96,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 "       \] }
 " Plug 'junegunn/vim-easy-align',
 "       \{ 'on': [ '<Plug>(EasyAlign)' ] }
-" Plug 'ludovicchabant/vim-gutentags'
 " Plug 'embear/vim-localvimrc'
 "TPOPE {{{1
 "====================================
@@ -106,6 +106,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-apathy'
 
 "Syntax {{{1
 "============================
@@ -159,8 +160,8 @@ function! BuildComposer(info)
     endif
   endif
 endfunction
-" Plug 'euclio/vim-markdown-composer',
-      " \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
+Plug 'euclio/vim-markdown-composer',
+      \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'fatih/vim-go',           { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 Plug 'heavenshell/vim-jsdoc'
@@ -180,4 +181,3 @@ endif
 " Load immediately {{{1
 call plug#load('vim-fat-finger')
 "}}}
-
