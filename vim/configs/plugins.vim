@@ -116,7 +116,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
        \ { 'for':[ 'javascript', 'typescript' ] }
- Plug 'jparise/vim-graphql', { 'for': ['ts', 'graphql'] }
+ Plug 'jparise/vim-graphql', { 'for': ['ts', 'js', 'jsx', 'graphql'] }
 "  Plug 'styled-components/vim-styled-components',
 "Git {{{1
 " ==============================
