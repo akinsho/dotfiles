@@ -7,3 +7,4 @@ local
 plugged
 *~
 .tern-port
+plug.vim
