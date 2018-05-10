@@ -22,7 +22,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
-    oni.input.bind("<m-.>", "oni.git.branches");
+    // oni.input.bind("<m-.>", "oni.git.branches");
+    // oni.input.bind("<m-f>", "oni.git.fetch");
     // oni.input.bind("<m-.>", "autoformat.prettier.selection");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),

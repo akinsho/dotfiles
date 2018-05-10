@@ -217,6 +217,12 @@ defaults write com.apple.screencapture location -string "$HOME/Desktop"
 # set MacOS Dock size
 defaults write com.apple.dock tilesize -int 24
 
+# Show hidden apps in the dock
+defaults write com.apple.Dock showhidden -bool yes
+
+# Show a recently used apps stack in the dock
+defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'
+
 ###############################################################################
 # Activity Monitor                                                            #
 ###############################################################################
