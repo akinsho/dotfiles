@@ -22,7 +22,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
-    // oni.input.bind("<m-.>", "oni.git.branches");
+    // oni.input.bind("<m-f>", "autoformat.prettier");
+    oni.input.bind("<m-.>", "oni.git.branches");
     // oni.input.bind("<m-f>", "oni.git.fetch");
     // oni.input.bind("<m-.>", "autoformat.prettier.selection");
     oni.input.bind("<s-c-h>", () =>
@@ -78,7 +79,7 @@ export const configuration = {
     "language.vue.languageServer.command": "vls",
 
     // Lua Language Server ===============================================
-    "language.lua.languageServer.command": "lua-lsp",
+    // "language.lua.languageServer.command": "lua-lsp",
 
     // Go Language Server ===============================================
     // "language.go.languageServer.command": "go-langserver",
@@ -140,7 +141,7 @@ export const configuration = {
     "oni.plugins.prettier": {
         settings: {
             semi: true,
-            tabWidth: 4,
+            tabWidth: 2,
             useTabs: false,
             singleQuote: false,
             trailingComma: "all",
@@ -149,7 +150,7 @@ export const configuration = {
             arrowParens: "avoid",
             printWidth: 100,
         },
-        formatOnSave: false,
+        formatOnSave: true,
         enabled: true,
     },
 };
