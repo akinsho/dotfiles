@@ -12,7 +12,7 @@
   interactive = auto
 [core]
   editor = nvim
-  excludesfile = $HOME/Dotfiles/git/.gitignore_global
+	excludesfile = /Users/akinyulife/.gitignore_global
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [alias]

@@ -111,11 +111,11 @@ echo "Creating symlinks"
 ln -sf "$DOTFILES/vim" ~/.config/nvim
 ln -sf "$DOTFILES/zsh/.zplugrc" ~/.zshrc
 ln -sf "$DOTFILES/configs/karabiner/" ~/.config/karabiner
+ln -sf "$DOTFILES/configs/kitty" ~/.config/kitty
 ln -sf "$DOTFILES/vim/init.vim" ~/.vimrc
 ln -sf "$DOTFILES/configs/.hyper.js" ~/.hyper.js
 
-mkdir -p ~/.config/git
-ln -s "$DOTFILES/git/.gitconfig_global" ~/.config/git/config
+ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
 
 echo "Adding Oni Config ----------------------------------------"
 mkdir -p ~/.config/oni
