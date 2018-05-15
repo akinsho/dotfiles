@@ -117,7 +117,7 @@ export const configuration = {
   "editor.fontFamily": "LigaInput-Regular",
   "editor.fontSize": "16px",
 
-  "editor.linePadding": 1,
+  "editor.linePadding": 0,
 
   // "editor.fontFamily": "DankMono-Regular",
   // "editor.fontSize": "18px",
@@ -147,7 +147,7 @@ export const configuration = {
   "oni.plugins.prettier": {
     settings: {
       semi: true,
-      tabWidth: 2,
+      tabWidth: 4,
       useTabs: false,
       singleQuote: false,
       trailingComma: "all",
