@@ -7,6 +7,10 @@ start_time="$(date +%s)"
 #---------------------------------------------------------------------------//
 # ZPLUG
 #---------------------------------------------------------------------------//
+# FIXME this should go into ~/Dotfiles/scripts/environment.sh
+# But needs to load first
+export NVM_AUTO_USE=true
+
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
   source ~/.zplug/init.zsh && zplug update --self
