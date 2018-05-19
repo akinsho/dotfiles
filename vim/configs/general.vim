@@ -155,14 +155,13 @@ set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
-  if has('gui_vimr')
-    let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
-  elseif exists('g:gui_oni')
-    let &showbreak='…'
-    " let &showbreak='→'
-  else
-    let &showbreak='↪ '
-  endif
+  let &showbreak='↪ '
+  " if exists('g:gui_oni')
+  " let &showbreak='…'
+  " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+  " let &showbreak='→'
+  " else
+  " endif
   if exists('&breakindentopt')
     " set breakindentopt=shift:2
     set breakindentopt=sbr
@@ -199,9 +198,6 @@ set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set nohlsearch
 set autowrite "Automatically :write before running commands
-if has('gui_running')
-  set linespace=2
-endif
 if !has('nvim')
   if has('unnamedplus')
     set clipboard+=unnamedplus

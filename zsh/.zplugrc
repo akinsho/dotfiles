@@ -68,6 +68,11 @@ for script in ~/Dotfiles/shell_scripts/*; do
   source $script
 done
 
+function precmd () {
+  window_title="\033]0;${PWD##*/}\007"
+  echo -ne "$window_title"
+}
+
 # STARTUP TIMES (CONTD)================================================
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the

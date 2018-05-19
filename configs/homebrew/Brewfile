@@ -76,6 +76,7 @@ brew "zsh"
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 cask "alfred"
 cask "android-platform-tools"
+cask "android-studio"
 cask "dash"
 cask "discord"
 cask "dropbox"

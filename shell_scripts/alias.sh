@@ -18,6 +18,7 @@ alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
 alias lp="lsp"
 alias la='ls -aG'
 # alias v='nvim'
+alias brewupdate="brew bundle dump --force"
 alias vi='vim'
 alias nv='nvim'
 alias cl='clear'
