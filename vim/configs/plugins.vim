@@ -125,17 +125,18 @@ Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects {{{1
 "=====================
+Plug 'rhysd/clever-f.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
+Plug 'haya14busa/vim-operator-flashy'
 Plug 'kana/vim-textobj-user'
        \ | Plug 'kana/vim-operator-user'
        \ | Plug 'glts/vim-textobj-comment'
        \ | Plug 'kana/vim-textobj-function'
        \ | Plug 'thinca/vim-textobj-function-javascript'
        \ | Plug 'whatyouhide/vim-textobj-xmlattr'
-       \ | Plug 'haya14busa/vim-operator-flashy'
 
 "Search Tools {{{1
 "=======================

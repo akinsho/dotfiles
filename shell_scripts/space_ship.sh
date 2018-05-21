@@ -8,7 +8,8 @@
 # ➔ - default arrow
 # ➼ - fun alternative
 # ➪ - fun alternative2
-# SPACESHIP_PROMPT_SYMBOL='➜ 🍕 '
+# SPACESHIP_PROMPT_SYMBOL='➜  '
+SPACESHIP_CHAR_SYMBOL='🍕 '
 export SPACESHIP_PROMPT_ADD_NEWLINE=true
 export SPACESHIP_PROMPT_SEPARATE_LINE=true
 # VI_MODE
@@ -20,8 +21,8 @@ export SPACESHIP_GIT_PREFIX='  on '
 export SPACESHIP_GIT_STATUS_STASHED=' 💰 '
 export SPACESHIP_GIT_STATUS_UNTRACKED=' 😰 '
 export SPACESHIP_NODE_PREFIX=' @ '
-export SPACESHIP_PACKAGE_SHOW=false
 export SPACESHIP_RUBY_SHOW=false
+export SPACESHIP_PACKAGE_SHOW=false
 # PYENV
 export SPACESHIP_PYENV_SHOW=   false
 export SPACESHIP_PYENV_SYMBOL='🐍'

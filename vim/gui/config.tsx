@@ -106,18 +106,21 @@ export const configuration = {
     // "editor.fontFamily": "OperatorMonoLig-Book",
     // "editor.fontFamily": "LigaAnonymous_Pro-Regular",
     // "editor.fontFamily": "LigaUbuntuMono-Regular",
-    // "editor.fontFamily": "FiraCode-Regular",
     // "editor.fontFamily": "LigaSFMono-Regular",
     // "editor.fontFamily": "LigaInconsolata-Regular",
     // "editor.fontFamily": "LigaIBMPlexMono-Regular",
 
+    // "editor.fontFamily": "FiraCode-Retina",
+    // "editor.fontSize": "16px",
+    // "editor.linePadding": 5,
+
     "editor.fontFamily": "LigaSourceCodeVariable-Roman",
     "editor.fontSize": "17px",
+    "editor.linePadding": 2.5,
 
     // "editor.fontFamily": "LigaInput-Regular",
     // "editor.fontSize": "16px",
-
-    "editor.linePadding": 3,
+    // "editor.linePadding": 2.5,
 
     // "editor.fontFamily": "DankMono-Regular",
     // "editor.fontSize": "18px",

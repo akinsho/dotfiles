@@ -184,7 +184,7 @@ set gdefault
 " insert completion height and options
 set pumheight=10
 set number relativenumber
-set numberwidth=4
+set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap

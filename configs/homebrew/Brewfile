@@ -13,6 +13,7 @@ tap "universal-ctags/universal-ctags"
 cask "java"
 brew "archey"
 brew "bash"
+brew "bat"
 brew "cmake"
 brew "ctags", link: false
 brew "diff-so-fancy"
@@ -104,6 +105,7 @@ cask "zeplin"
 cask "caskroom/fonts/font-fira-code"
 cask "caskroom/fonts/font-firacode-nerd-font"
 cask "caskroom/fonts/font-hasklig-nerd-font"
+mas "GIPHY CAPTURE", id: 668208984
 mas "iMovie", id: 408981434
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
