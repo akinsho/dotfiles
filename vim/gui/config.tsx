@@ -60,8 +60,8 @@ export const configuration = {
 
     // LSP -------------------------------------
     // Flow Language Server ===============================================
-    // "language.javascript.languageServer.command": "flow-language-server",
-    // "language.javascript.languageServer.arguments": ["--stdio"],
+    "language.javascript.languageServer.command": "flow-language-server",
+    "language.javascript.languageServer.arguments": ["--stdio"],
 
     // TypeScript Language Server ===============================================
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
@@ -110,17 +110,24 @@ export const configuration = {
     // "editor.fontFamily": "LigaInconsolata-Regular",
     // "editor.fontFamily": "LigaIBMPlexMono-Regular",
 
+    // "editor.fontSize": "16px",
+    // "editor.linePadding": 0,
+
     // "editor.fontFamily": "FiraCode-Retina",
     // "editor.fontSize": "16px",
     // "editor.linePadding": 5,
 
     "editor.fontFamily": "LigaSourceCodeVariable-Roman",
     "editor.fontSize": "17px",
-    "editor.linePadding": 2.5,
+    "editor.linePadding": 3,
 
     // "editor.fontFamily": "LigaInput-Regular",
     // "editor.fontSize": "16px",
     // "editor.linePadding": 2.5,
+
+    // "editor.fontFamily": "OperatorMono-Book",
+    // "editor.fontSize": "17px",
+    // "editor.linePadding": 1.5,
 
     // "editor.fontFamily": "DankMono-Regular",
     // "editor.fontSize": "18px",
