@@ -60,8 +60,10 @@ export const configuration = {
 
     // LSP -------------------------------------
     // Flow Language Server ===============================================
-    "language.javascript.languageServer.command": "flow-language-server",
-    "language.javascript.languageServer.arguments": ["--stdio"],
+    // "language.javascript.languageServer.command": "flow-language-server",
+    // "language.javascript.languageServer.command":
+    // "/Users/akinyulife/.config/yarn/global/node_modules/flow-language-server/lib/bin/cli.js",
+    // "language.javascript.languageServer.arguments": ["--stdio"],
 
     // TypeScript Language Server ===============================================
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
@@ -69,10 +71,13 @@ export const configuration = {
     // "language.typescript.languageServer.command": "typescript-language-server",
     // "language.typescript.languageServer.arguments": ["--stdio"],
     // "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
+
     "editor.renderer": "webgl",
+    "wildmenu.mode": true,
+    // "editor.renderer": "canvas",
 
     "language.rust.languageServer.command": "rustup",
-    "language.rust.languageServer.arguments": ["run", "stable", "rls"],
+    "language.rust.languageServer.arguments": ["run", "nightly", "rls"],
     "language.rust.languageServer.rootFiles": ["Cargo.toml"],
 
     // Vue Language Server ===============================================
@@ -82,12 +87,11 @@ export const configuration = {
     // "language.lua.languageServer.command": "lua-lsp",
 
     // Go Language Server ===============================================
-    // "language.go.languageServer.command": "go-langserver",
-    // "language.go.languageServer.arguments": ["--gocodecompletion", "--freeosmemory", "false"],
-    // "language.go.languageServer.rootFiles": [".git"],
+    "language.go.languageServer.command": "go-langserver",
+    "language.go.languageServer.arguments": ["--gocodecompletion", "--freeosmemory", "false"],
+    "language.go.languageServer.rootFiles": [".git"],
 
     // Experimental -----------------------------
-    "markdownPreview.enabled": true,
     "experimental.welcome.enabled": false,
 
     // Oni Core ---------------------------------
@@ -99,41 +103,41 @@ export const configuration = {
     "sidebar.plugins.enabled": true,
     "sidebar.width": "16em",
 
-    // "editor.fontFamily": "Hasklig-Regular",
+    // "editor.fontFamily": "HasklugNerdFontComplete-Regular",
     // "editor.fontFamily": "DejaVuSansCode",
-    // "editor.fontFamily": "OperatorMonoLig-Medium",
-    // "editor.fontFamily": "LigaFantasqueSansMono-Regular",
-    // "editor.fontFamily": "OperatorMonoLig-Book",
-    // "editor.fontFamily": "LigaAnonymous_Pro-Regular",
-    // "editor.fontFamily": "LigaUbuntuMono-Regular",
-    // "editor.fontFamily": "LigaSFMono-Regular",
-    // "editor.fontFamily": "LigaInconsolata-Regular",
-    // "editor.fontFamily": "LigaIBMPlexMono-Regular",
 
-    // "editor.fontSize": "16px",
+    // "editor.fontFamily": "LigaIBMPlexMono-Regular",
+    // "editor.fontSize": "17px",
     // "editor.linePadding": 0,
 
-    // "editor.fontFamily": "FiraCode-Retina",
+    // "editor.fontFamily": "LigaSourceCodeVariable-Roman",
+
+    // "editor.fontFamily": "SourceCodePro-Regular",
+    // "editor.fontSize": "17px",
+    // "editor.linePadding": 2.5,
+
+    // "editor.fontFamily": "FiraCode-Regular",
     // "editor.fontSize": "16px",
     // "editor.linePadding": 5,
 
-    "editor.fontFamily": "LigaSourceCodeVariable-Roman",
-    "editor.fontSize": "17px",
-    "editor.linePadding": 3,
-
     // "editor.fontFamily": "LigaInput-Regular",
     // "editor.fontSize": "16px",
-    // "editor.linePadding": 2.5,
+    // "editor.linePadding": 3.5,
 
-    // "editor.fontFamily": "OperatorMono-Book",
+    // "editor.fontFamily": "mononokiNerdFontComplete-Regular",
+    // "editor.fontSize": "18px",
+    // "editor.linePadding": 1,
+
+    // "editor.fontFamily": "OperatorMono-Light",
     // "editor.fontSize": "17px",
     // "editor.linePadding": 1.5,
 
     // "editor.fontFamily": "DankMono-Regular",
-    // "editor.fontSize": "18px",
-    // "editor.linePadding": 0,
+    "editor.fontFamily": "CourierPrimeCode-Regular",
+    "editor.fontSize": "18px",
+    "editor.linePadding": 4.5,
 
-    "editor.scrollBar.visible": true,
+    "editor.scrollBar.visible": false,
     "editor.cursorLine": true,
 
     "explorer.autoRefresh": false,

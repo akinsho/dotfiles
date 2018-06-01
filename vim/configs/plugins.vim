@@ -63,9 +63,9 @@ endfunction
     Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
     Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
     Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
-    Plug 'Galooshi/vim-import-js',     { 'do': 'npm install -g import-js' }
-    Plug 'ludovicchabant/vim-gutentags'
     Plug 'scrooloose/nerdtree'
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'kristijanhusak/vim-js-file-import'
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
 " Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
@@ -125,7 +125,6 @@ Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects {{{1
 "=====================
-Plug 'rhysd/clever-f.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'

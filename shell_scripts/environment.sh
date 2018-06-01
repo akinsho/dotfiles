@@ -10,7 +10,6 @@ export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 export PATH="$HOME/.cargo/bin:$PATH"
-export PYENV_VIRTUAL_DISABLE_PROMPT=1
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 
