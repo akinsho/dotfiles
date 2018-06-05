@@ -150,7 +150,7 @@ export const configuration = {
     // "ui.fontSmoothing": "subpixel-antialiased",
     // "ui.fontFamily": "FiraCode-Medium",
     "ui.fontFamily": "FiraCode-Medium",
-    "ui.fontSize": "15px",
+    "ui.fontSize": "16px",
     "ui.colorscheme": "onedark",
     "tabs.mode": "buffers",
 

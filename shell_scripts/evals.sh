@@ -4,7 +4,7 @@ eval "$(hub alias -s)"
 ##---------------------------------------------------------------------------/
 ## NPX - AUTO-FALL-BACK COMMAND
 ##---------------------------------------------------------------------------///
-source <(npx --shell-auto-fallback zsh)
+# source <(npx --shell-auto-fallback zsh)
 
 #Pyenv
 eval "$(pyenv init -)"
