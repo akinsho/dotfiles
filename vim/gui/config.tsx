@@ -44,6 +44,11 @@ export const deactivate = (oni: Oni.Plugin.Api) => {
     console.log("config deactivated");
 };
 
+const shouldShowErrors = () => {
+    const hours = new Date().getHours();
+    return hours > 17;
+};
+
 export const configuration = {
     //add custom config here, such as
     // UI customizations
@@ -56,7 +61,7 @@ export const configuration = {
     // 'ui.colorscheme': 'solarized8_dark',
 
     // Debug -----------------------------------
-    "debug.showNotificationOnError": true,
+    "debug.showNotificationOnError": shouldShowErrors(),
 
     // LSP -------------------------------------
     // Flow Language Server ===============================================
@@ -142,6 +147,7 @@ export const configuration = {
 
     "explorer.autoRefresh": false,
     "experimental.particles.enabled": false,
+    "experimental.markdownPreview.enabled": true,
 
     // Sidebar ----------------------------------
     "sidebar.default.open": false,
@@ -170,7 +176,7 @@ export const configuration = {
             arrowParens: "avoid",
             printWidth: 100,
         },
-        formatOnSave: false,
+        formatOnSave: true,
         enabled: true,
     },
 };
