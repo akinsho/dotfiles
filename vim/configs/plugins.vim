@@ -161,7 +161,7 @@ function! BuildComposer(info)
 endfunction
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
-Plug 'fatih/vim-go',           { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go',            Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 Plug 'heavenshell/vim-jsdoc'
 

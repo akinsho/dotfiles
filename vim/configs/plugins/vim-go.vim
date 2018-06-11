@@ -1,6 +1,6 @@
-""---------------------------------------------------------------------------//
-"VIM-GO
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
+" VIM-GO
+"---------------------------------------------------------------------------//
 let g:go_term_height                    = 30
 let g:go_term_width                     = 30
 let g:go_term_mode                      = "split"
@@ -20,4 +20,4 @@ let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'vetshadow', 'goconst','ineffassign']
-"}}}
+" }}}
