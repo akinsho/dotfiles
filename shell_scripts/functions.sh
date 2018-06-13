@@ -14,6 +14,14 @@ function port() {
   lsof -n -i ":$@" | grep LISTEN
 }
 
+# Helper function to run a diff against a branch and exclude a file
+function gdmin() {
+  local branchname=${1:-develop}
+  local ignore=${2:-package\-lock.json}
+  git diff $branchname -- ":(exclude)"$ignore
+}
+
+
 function colours() {
   for i in {0..255}; do
     printf "\x1b[38;5;${i}m colour${i}"
