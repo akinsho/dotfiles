@@ -77,8 +77,9 @@ export const configuration = {
     // "language.typescript.languageServer.arguments": ["--stdio"],
     // "language.typescript.rootFiles": ["tsconfig.json", "package.json"],
 
-    "editor.renderer": "webgl",
     "wildmenu.mode": true,
+    "autoClosingPairs.enabled": false,
+    "editor.renderer": "webgl",
     // "editor.renderer": "canvas",
 
     "language.rust.languageServer.command": "rustup",
@@ -97,6 +98,9 @@ export const configuration = {
     "language.go.languageServer.rootFiles": [".git"],
 
     // Experimental -----------------------------
+    "experimental.vcs.sidebar": true,
+    "experimental.colorHighlight.enabled": true,
+    "experimental.indentLines.enabled": true,
     "experimental.welcome.enabled": false,
 
     // Oni Core ---------------------------------
@@ -107,6 +111,7 @@ export const configuration = {
     "achievements.enabled": false,
     "sidebar.plugins.enabled": true,
     "sidebar.width": "16em",
+    "sidebar.marks.enabled": true,
 
     // "editor.fontFamily": "HasklugNerdFontComplete-Regular",
     // "editor.fontFamily": "DejaVuSansCode",
@@ -137,12 +142,17 @@ export const configuration = {
     // "editor.fontSize": "17px",
     // "editor.linePadding": 1.5,
 
+    // "editor.fontFamily": "SpaceMono-Regular-NL",
+    // "editor.fontSize": "17px",
+    // "editor.linePadding": 0,
+
     // "editor.fontFamily": "DankMono-Regular",
+
     "editor.fontFamily": "CourierPrimeCode-Regular",
     "editor.fontSize": "18px",
     "editor.linePadding": 4.5,
 
-    "editor.scrollBar.visible": false,
+    "editor.scrollBar.visible": true,
     "editor.cursorLine": true,
 
     "explorer.autoRefresh": false,
@@ -153,12 +163,11 @@ export const configuration = {
     "sidebar.default.open": false,
     // UI ---------------------------------------
     // "ui.fontFamily": "OperatorMono-Medium",
-    // "ui.fontSmoothing": "subpixel-antialiased",
-    // "ui.fontFamily": "FiraCode-Medium",
     "ui.fontFamily": "FiraCode-Medium",
     "ui.fontSize": "16px",
     "ui.colorscheme": "onedark",
     "tabs.mode": "buffers",
+    "tabs.dirtyMarker.userColor": "green",
 
     // Workspace ---------------------------------------
     "workspace.autoDetectWorkspace": "always",

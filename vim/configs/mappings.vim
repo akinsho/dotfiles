@@ -13,23 +13,23 @@ if has('nvim')
   tmap <C-j> <C-\><C-n><C-j>
   tmap <C-k> <C-\><C-n><C-k>
   tmap <C-l> <C-\><C-n><C-l>
-  tmap <leader>x <c-\><c-n>:bp! <BAR> bd! #<CR>
-  tmap <leader>. <C-\><C-n>:bprev<CR>
-  tmap <leader>, <C-\><C-n>:bnext<cr>
+  tmap <leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
+  tmap <leader>. <C-\><C-n><Cmd>bprev<CR>
+  tmap <leader>, <C-\><C-n><Cmd>bnext<cr>
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j
   tmap <C-k> <C-W>k
   tmap <C-l> <C-W>l
-  tmap <C-x> <C-W>:q!<CR>
+  tmap <C-x> <C-W><Cmd>q!<CR>
 endif
-nnoremap <leader>to :term<cr>
+nnoremap <leader>to <Cmd>term<cr>
 "Opening splits with terminal in all directions
-nnoremap <leader>h<CR> :leftabove 30vnew<CR>:terminal<CR>
-nnoremap <leader>l<CR> :rightbelow 30vnew<CR>:terminal<CR>
-nnoremap <leader>k<CR> :leftabove 10new<CR>:terminal<CR>
-nnoremap <leader>j<CR> :rightbelow 10new<CR>:terminal<CR>
-nnoremap <Leader>te :tabnew<CR>:te<CR>
+nnoremap <leader>h<CR> <Cmd>leftabove 30vnew<CR><Cmd>terminal<CR>
+nnoremap <leader>l<CR> <Cmd>rightbelow 30vnew<CR><Cmd>terminal<CR>
+nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
+nnoremap <leader>j<CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
+nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
 "}}}
 
 ""---------------------------------------------------------------------------//
@@ -42,7 +42,7 @@ nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:regi
 "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 "repeat macros across a visual range
 "--------------------------------------------
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+xnoremap @ <Cmd><C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
@@ -254,8 +254,8 @@ nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 "File completion made a little less painful
 inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
-nnoremap <tab>  :bnext<CR>
-nnoremap <S-tab> :bprevious<CR>
+nnoremap <tab>  <Cmd>bnext<CR>
+nnoremap <S-tab> <Cmd>bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 

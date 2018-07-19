@@ -44,7 +44,6 @@ endfunction
     Plug 'ap/vim-buftabline'
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
-    Plug 'mhartington/nvim-typescript', {'do': function('DoRemote')}
     Plug 'Xuyuanp/nerdtree-git-plugin'
     function! BuildTern(info)
       if a:info.status ==# 'installed' || a:info.force
@@ -71,6 +70,7 @@ endif
 " Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
 " CORE {{{1
 "================================
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
@@ -94,9 +94,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 "       \'<Plug>(VimwikiTab)',
 "       \'<Plug>(VimwikiIndex)'
 "       \] }
-" Plug 'junegunn/vim-easy-align',
-"       \{ 'on': [ '<Plug>(EasyAlign)' ] }
-" Plug 'embear/vim-localvimrc'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-sleuth'
@@ -111,12 +108,13 @@ Plug 'tpope/vim-apathy'
 "Syntax {{{1
 "============================
 Plug 'ianks/vim-tsx'
-Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine',Cond(!exists('g:gui_oni'))
+Plug 'fatih/vim-go',Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
        \ { 'for':[ 'javascript', 'typescript' ] }
- Plug 'styled-components/vim-styled-components',
+ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 "Git {{{1
 " ==============================
 Plug 'airblade/vim-gitgutter'
@@ -161,7 +159,6 @@ function! BuildComposer(info)
 endfunction
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
-Plug 'fatih/vim-go',            Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 Plug 'heavenshell/vim-jsdoc'
 

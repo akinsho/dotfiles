@@ -34,3 +34,5 @@ let g:nvim_typescript#javascript_support       = 1
 let g:nvim_typescript#type_info_on_hold        = 1
 let g:nvim_typescript#vue_support              = 1
 let g:nvim_typescript#max_completion_detail    = 1
+
+nnoremap <leader>im <Cmd>TSImport<CR>

@@ -170,7 +170,7 @@ endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
-set list                              " show invisible chars
+set nolist                              " show invisible chars
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
 set listchars+=precedes:…
@@ -188,8 +188,8 @@ set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
 set smartindent
 set wrap
-set wrapmargin=8
-set textwidth=79
+set wrapmargin=2
+set textwidth=80
 if exists('&signcolumn')
   set signcolumn=yes "enables column that shows signs and error symbols
 endif
