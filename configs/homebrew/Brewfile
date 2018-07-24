@@ -94,6 +94,7 @@ cask "opera"
 cask "postgres"
 cask "postman"
 cask "react-native-debugger"
+cask "sketch"
 cask "slack"
 cask "spectacle"
 cask "spotify"
@@ -111,6 +112,7 @@ cask "homebrew/cask-fonts/font-source-code-pro"
 cask "homebrew/cask-versions/java8"
 mas "GIPHY CAPTURE", id: 668208984
 mas "iMovie", id: 408981434
+mas "NordVPN IKE", id: 1116599239
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Xcode", id: 497799835

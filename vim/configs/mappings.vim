@@ -663,4 +663,3 @@ nnoremap <silent> g/ :silent! :grep!<space>
 " Conditionally modify character at end of line
 nnoremap <silent> <localleader>, :call lib#ModifyLineEndDelimiter(',')<cr>
 nnoremap <silent> <localleader>; :call lib#ModifyLineEndDelimiter(';')<cr>
-

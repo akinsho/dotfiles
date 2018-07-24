@@ -23,7 +23,7 @@ source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "lukechilds/zsh-nvm"
+# zplug "lukechilds/zsh-nvm"
 zplug "zsh-users/zsh-completions"
 zplug "plugins/git",   from:oh-my-zsh
 zplug "plugins/git-fast",   from:oh-my-zsh

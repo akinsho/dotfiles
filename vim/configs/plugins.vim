@@ -89,11 +89,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'vimwiki/vimwiki', { 'on': [
-"       \'<Plug>(VimwikiTab)',
-"       \'<Plug>(VimwikiIndex)'
-"       \] }
+Plug 'AndrewRadev/multichange.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-sleuth'
@@ -123,7 +121,7 @@ Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects {{{1
 "=====================
-Plug 'chaoren/vim-wordmotion'
+" Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
@@ -161,6 +159,7 @@ Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 Plug 'heavenshell/vim-jsdoc'
+Plug 'samuelsimoes/vim-jsx-utils'
 
 "Themes  {{{1
 "===============================

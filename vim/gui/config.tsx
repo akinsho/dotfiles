@@ -7,6 +7,7 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.unbind("<c-/>");
     oni.input.unbind("<m-d>");
     oni.input.unbind("<m-o>");
+    oni.input.unbind("<m-s-f>");
     oni.input.bind(["<enter>", "<tab>"], "contextMenu.select");
     oni.input.bind("<m-d>", "language.gotoDefinition");
     oni.input.bind("<m-\\>", "language.symbols.document");
@@ -17,15 +18,16 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<m-'>", "markdown.openPreview");
     oni.input.bind("<enter>", "contextMenu.select");
     oni.input.bind("<m-o>", "buffer.toggle");
-    oni.input.bind("<c-d>", "buffer.delete");
+    oni.input.bind("<c-s-d>", "buffer.delete");
     oni.input.bind("<c-s>", "buffer.split");
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
-    oni.input.bind("<m-.>", "oni.git.branches");
+    oni.input.bind("<m-.>", "vcs.branches");
+    oni.input.bind("m-v", "vcs.sidebar.toggle");
     oni.input.bind("<m-f>", "autoformat.prettier");
-    // oni.input.bind("<m-f>", "oni.git.fetch");
-    // oni.input.bind("<m-.>", "autoformat.prettier.selection");
+    oni.input.bind("<m-s-f>", "quickOpen.searchFileByContent");
+    // oni.input.bind("<m-v>", "oni.git.fetch");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
     );
@@ -56,7 +58,6 @@ export const configuration = {
 
     // Font ------------------------------------
     // add custom config here, such as
-
     // 'ui.colorscheme': 'nord',
     // 'ui.colorscheme': 'solarized8_dark',
 
@@ -64,6 +65,7 @@ export const configuration = {
     "debug.showNotificationOnError": shouldShowErrors(),
 
     // LSP -------------------------------------
+
     // Flow Language Server ===============================================
     // "language.javascript.languageServer.command": "flow-language-server",
     // "language.javascript.languageServer.command":
@@ -101,6 +103,7 @@ export const configuration = {
     "experimental.vcs.sidebar": true,
     "experimental.colorHighlight.enabled": true,
     "experimental.indentLines.enabled": true,
+    "experimental.indentLines.bannedFiletypes": [".csv", ".md"],
     "experimental.welcome.enabled": false,
 
     // Oni Core ---------------------------------
@@ -143,10 +146,12 @@ export const configuration = {
     // "editor.linePadding": 1.5,
 
     // "editor.fontFamily": "SpaceMono-Regular-NL",
-    // "editor.fontSize": "17px",
+    // "editor.fontSize": "18px",
     // "editor.linePadding": 0,
 
     // "editor.fontFamily": "DankMono-Regular",
+    // "editor.fontSize": "18px",
+    // "editor.linePadding": 0,
 
     "editor.fontFamily": "CourierPrimeCode-Regular",
     "editor.fontSize": "18px",

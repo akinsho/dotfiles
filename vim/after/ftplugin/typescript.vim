@@ -16,8 +16,6 @@ endif
 
 nnoremap <localleader>c :TSEditConfig<CR>
 nnoremap <localleader>i :TSImport<CR>
-nnoremap <leader>jr :call lib#JSXEncloseReturn()<CR>
-nnoremap vat :call lib#JSXSelectTag()<CR>
 nnoremap mT :!mocha %<CR>
 
 let g:LanguageClient_autoStart = 0
@@ -27,7 +25,7 @@ match Error /\%100v.\+/
 syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
 " /import.*\n^$/
 hi link typescriptBrowserObjects TypescriptType
-" hi typescriptBrowserObjects gui=italic,bold guifg=yellow
+hi typescriptBrowserObjects gui=italic,bold guifg=yellow
 function! SteveLoshText()
      let line = getline(v:foldstart)
 

@@ -90,6 +90,9 @@ echo "Installing Homebrew apps from brew file"
 
 pip3 install neovim --upgrade
 
+# Install n node version manager program
+curl -L https://git.io/n-install | bash
+
 echo "---------------------------------------------------------"
 echo "Changing to zsh"
 chsh "$(which zsh)"
