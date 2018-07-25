@@ -91,7 +91,6 @@ Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/multichange.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-sleuth'
@@ -121,7 +120,7 @@ Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects {{{1
 "=====================
-" Plug 'chaoren/vim-wordmotion'
+Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
