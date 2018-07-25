@@ -24,10 +24,9 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
     oni.input.bind("<m-.>", "vcs.branches");
-    oni.input.bind("m-v", "vcs.sidebar.toggle");
+    oni.input.bind("m-s-v", "vcs.sidebar.toggle");
     oni.input.bind("<m-f>", "autoformat.prettier");
     oni.input.bind("<m-s-f>", "quickOpen.searchFileByContent");
-    // oni.input.bind("<m-v>", "oni.git.fetch");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
     );
