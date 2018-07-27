@@ -25,7 +25,7 @@ match Error /\%100v.\+/
 syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
 " /import.*\n^$/
 hi link typescriptBrowserObjects TypescriptType
-hi typescriptBrowserObjects gui=italic,bold guifg=yellow
+" hi typescriptBrowserObjects gui=italic,bold guifg=goldenrod
 function! SteveLoshText()
      let line = getline(v:foldstart)
 
