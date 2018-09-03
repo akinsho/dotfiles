@@ -71,10 +71,10 @@ endif
 " CORE {{{1
 "================================
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
-Plug 'cohama/lexima.vim'
+Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
@@ -104,9 +104,9 @@ Plug 'tpope/vim-apathy'
 
 "Syntax {{{1
 "============================
-Plug 'ianks/vim-tsx'
-Plug 'Yggdroot/indentLine',Cond(!exists('g:gui_oni'))
-Plug 'fatih/vim-go',Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
+Plug 'ianks/vim-tsx' , Cond(!exists('g:gui_oni'))
+Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
+Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
@@ -120,12 +120,14 @@ Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 "Text Objects {{{1
 "=====================
+Plug 'Yilin-Yang/vim-markbar'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'kana/vim-textobj-user'
+       \ | Plug 'rhysd/vim-textobj-conflict'
        \ | Plug 'kana/vim-operator-user'
        \ | Plug 'glts/vim-textobj-comment'
        \ | Plug 'kana/vim-textobj-function'
@@ -134,6 +136,7 @@ Plug 'kana/vim-textobj-user'
 
 "Search Tools {{{1
 "=======================
+Plug 'RRethy/vim-illuminate'
 Plug 'rizzatti/dash.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'kshenoy/vim-signature'
@@ -162,7 +165,10 @@ Plug 'samuelsimoes/vim-jsx-utils'
 
 "Themes  {{{1
 "===============================
-Plug 'joshdick/onedark.vim'
+if !exists('g:gui_oni')
+  Plug 'joshdick/onedark.vim'
+  Plug 'haishanh/night-owl.vim'
+endif
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 

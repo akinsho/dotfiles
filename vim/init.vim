@@ -19,7 +19,7 @@ augroup END
 
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 let g:dotfiles = $DOTFILES
-let g:disable_relativity = 0
+let g:disable_relativity = 1
 
 " Environment variables aren't consisitently available on guis so dont use them
 " If possible or default to the literal string if possible

@@ -17,6 +17,7 @@ alias magit="nvim -c \"MagitOnly\""
 alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
 alias lp="lsp"
 alias la='ls -aG'
+alias fixcl='git commit --am "update changelog" && git push'
 # alias v='nvim'
 alias brewupdate="brew bundle dump --force"
 alias vi='vim'

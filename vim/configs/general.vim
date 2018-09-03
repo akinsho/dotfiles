@@ -227,14 +227,17 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 "Colorscheme {{{1
 ""---------------------------------------------------------------------------//
-let g:one_allow_italics = 1
+if !exists('g:gui_oni')
 set background=dark
-  try
-    colorscheme one
-    call one#highlight('Folded', 'db7093', 'none', 'bold')
-   catch
-     colorscheme onedark
-endtry
+colorscheme night-owl
+"   try
+"     let g:one_allow_italics = 1
+"     colorscheme one
+"     call one#highlight('Folded', 'db7093', 'none', 'bold')
+"    catch
+"      colorscheme onedark
+" endtry
+endif
 
 ""---------------------------------------------------------------------------//
 " Title {{{1
@@ -355,9 +358,10 @@ if &filetype ==# 'html'
 endif
 augroup cursorline
   autocmd!
-  "TODO: Remove cursorline on insert enter EXCLUDING Terminal
-  autocmd WinEnter,BufWinEnter * setlocal cursorline
-  autocmd WinLeave,BufWinLeave * setlocal nocursorline
+  if !exists('g:gui_oni')
+    autocmd WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave,BufWinLeave * setlocal nocursorline
+  endif
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 

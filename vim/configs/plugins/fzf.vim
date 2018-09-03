@@ -67,13 +67,6 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
         \ {'source': 'git ls-files --exclude-standard --others --modified'}))
 
   noremap <localLeader>mo :Modified<cr>
-  " Use ripgrep instead of ag:
-  command! -bang -nargs=* Rg
-        \ call fzf#vim#grep(
-        \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-        \   <bang>0 ? fzf#vim#with_preview('right:50%:hidden', '?')
-        \           : fzf#vim#with_preview('right:60%'),
-        \   <bang>0)
 
   imap <c-l> <plug>(fzf-complete-line)
   imap <c-f> <plug>(fzf-complete-path)

@@ -254,13 +254,22 @@ nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 "File completion made a little less painful
 inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
-nnoremap <tab>  <Cmd>bnext<CR>
-nnoremap <S-tab> <Cmd>bprevious<CR>
+if has('nvim')
+  nnoremap <tab>  <Cmd>bnext<CR>
+  nnoremap <S-tab> <Cmd>bprevious<CR>
+else
+  nnoremap <silent><tab>  :bnext<CR>
+  nnoremap <silent><S-tab> :bprevious<CR>
+endif
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
 " use ,gf to go to file in a vertical split
 nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
+nnoremap <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
+nnoremap <leader>yf :let @"=expand("%:p")<CR>    " Mnemonic: Yank File path
+"  force Vim to always present the relative path - fnamemodify(expand("%"), ":~:.")
+nnoremap <leader>fn :let @"=fnamemodify(expand("%"), ":~:.")<CR>      " Mnemonic: yank File Name
 ""---------------------------------------------------------------------------//
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
@@ -281,7 +290,7 @@ nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 ""---------------------------------------------------------------------------//
 " Capitalize.
 nnoremap ,U <ESC>gUiw`]
-" inoremap <C-u> <ESC>gUiw`]a
+inoremap <C-u> <ESC>gUiw`]a
 ""---------------------------------------------------------------------------//
 " Insert Mode Bindings
 ""---------------------------------------------------------------------------//
@@ -418,7 +427,6 @@ vnoremap > >gv
 nnoremap ' `
 nnoremap ` '
 ""---------------------------------------------------------------------------//
-""---------------------------------------------------------------------------//
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
@@ -552,8 +560,11 @@ imap Jk jk
 xnoremap jk <ESC>
 cnoremap jk <C-C>
 
-nnoremap J 10j
-nnoremap K 10k
+" Note: These mappings MUST be recursive i.e. `nmap` since `j` and `k` are mapped to be added to the
+" jump list aka this recursively calls the mappings for j and k making sure these movements
+" are added
+nmap J 10j
+nmap K 10k
 
 
 "This line opens the vimrc in a vertical split
@@ -663,3 +674,4 @@ nnoremap <silent> g/ :silent! :grep!<space>
 " Conditionally modify character at end of line
 nnoremap <silent> <localleader>, :call lib#ModifyLineEndDelimiter(',')<cr>
 nnoremap <silent> <localleader>; :call lib#ModifyLineEndDelimiter(';')<cr>
+

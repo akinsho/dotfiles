@@ -8,6 +8,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.unbind("<m-d>");
     oni.input.unbind("<m-o>");
     oni.input.unbind("<m-s-f>");
+    oni.input.unbind("<m-]>");
+    oni.input.unbind("<m-[>");
     oni.input.bind(["<enter>", "<tab>"], "contextMenu.select");
     oni.input.bind("<m-d>", "language.gotoDefinition");
     oni.input.bind("<m-\\>", "language.symbols.document");
@@ -23,6 +25,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<c-v>", "buffer.vsplit");
     oni.input.bind("<m-h>", "oni.editor.hide");
     oni.input.bind("<m-n>", "sidebar.toggle");
+    oni.input.bind("<m-[>", "oni.editor.nextError");
+    oni.input.bind("<m-]>", "oni.editor.previousError");
     oni.input.bind("<m-.>", "vcs.branches");
     oni.input.bind("m-s-v", "vcs.sidebar.toggle");
     oni.input.bind("<m-f>", "autoformat.prettier");
@@ -50,18 +54,100 @@ const shouldShowErrors = () => {
     return hours > 17;
 };
 
+/*
+ * Font Selector function to deal with my insane behaviour
+ */
+const fonts = {
+    monofur: {
+        "editor.fontFamily": "MonofurForPowerline",
+        "editor.fontSize": "19px",
+    },
+    spaceMono: {
+        "editor.fontFamily": "SpaceMono-Regular-NL",
+        "editor.fontSize": "17px",
+        "editor.linePadding": -2,
+    },
+    dank: {
+        "editor.fontFamily": "DankMono-Regular",
+        "editor.fontSize": "17px",
+        "editor.linePadding": 0,
+    },
+    officeCode: {
+        "editor.fontFamily": "OfficeCodePro-Regular",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 0,
+    },
+    hack: {
+        "editor.fontFamily": "Hack-Regular",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 0,
+    },
+    courier: {
+        "editor.fontFamily": "CourierPrimeCode-Regular",
+        "editor.fontSize": "17px",
+        "editor.linePadding": 4.5,
+    },
+    hasklig: {
+        "editor.fontFamily": "Hasklig-Regular",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 0,
+    },
+    liga: {
+        "editor.fontFamily": "LigaIBMPlexMono-Regular",
+        "editor.fontSize": "17px",
+        "editor.linePadding": 0,
+    },
+    Source: {
+        "editor.fontFamily": "SourceCodePro-Regular",
+        "editor.fontSize": "17px",
+        "editor.linePadding": 2.5,
+    },
+    monaco: {
+        "editor.fontFamily": "Monaco",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 4,
+    },
+    menlo: {
+        "editor.fontFamily": "Menlo",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 2,
+    },
+    fira: {
+        "editor.fontFamily": "FiraCode-Retina",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 5,
+    },
+    input: {
+        "editor.fontFamily": "LigaInput-Regular",
+        "editor.fontSize": "16px",
+        "editor.linePadding": 3.5,
+    },
+    mononoki: {
+        "editor.fontFamily": "mononokiNerdFontComplete-Regular",
+        "editor.fontSize": "18px",
+        "editor.linePadding": 1,
+    },
+    operatorBook: {
+        "editor.fontFamily": "OperatorMono-Book",
+        "editor.fontSize": "17px",
+        "editor.linePadding": 1.5,
+    },
+    // "editor.fontFamily": "LigaSourceCodeVariable-Roman",
+};
+
+function selectFont<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+
 export const configuration = {
     //add custom config here, such as
     // UI customizations
     "ui.animations.enabled": true,
-
-    // Font ------------------------------------
-    // add custom config here, such as
-    // 'ui.colorscheme': 'nord',
-    // 'ui.colorscheme': 'solarized8_dark',
+    "configuration.showReferenceBuffer": true,
 
     // Debug -----------------------------------
     "debug.showNotificationOnError": shouldShowErrors(),
+    // "editor.textMateHighlighting.debugScopes": true,
 
     // LSP -------------------------------------
 
@@ -72,7 +158,6 @@ export const configuration = {
     // "language.javascript.languageServer.arguments": ["--stdio"],
 
     // TypeScript Language Server ===============================================
-    // "language.typescript.languageServer.command": "javascript-typescript-stdio",
     // "language.typescript.languageServer.command": "javascript-typescript-stdio",
     // "language.typescript.languageServer.command": "typescript-language-server",
     // "language.typescript.languageServer.arguments": ["--stdio"],
@@ -91,7 +176,7 @@ export const configuration = {
     "language.vue.languageServer.command": "vls",
 
     // Lua Language Server ===============================================
-    // "language.lua.languageServer.command": "lua-lsp",
+    "language.lua.languageServer.command": "lua-lsp",
 
     // Go Language Server ===============================================
     "language.go.languageServer.command": "go-langserver",
@@ -100,64 +185,39 @@ export const configuration = {
 
     // Experimental -----------------------------
     "experimental.vcs.sidebar": true,
+    "experimental.vcs.blame.enabled": true,
+    "experimental.sessions.enabled": false,
+    "experimental.vcs.blame.mode": "auto",
     "experimental.colorHighlight.enabled": true,
     "experimental.indentLines.enabled": true,
-    "experimental.indentLines.bannedFiletypes": [".csv", ".md"],
-    "experimental.welcome.enabled": false,
+    "experimental.indentLines.bannedFiletypes": [".csv", ".md", ".txt"],
+    "experimental.welcome.enabled": true,
 
     // Oni Core ---------------------------------
     "oni.bookmarks": ["~/Dotfiles", "~/Desktop/Coding/Work"],
     "oni.useDefaultConfig": false,
     "oni.loadInitVim": true,
+
+    // "editor.tokenColors": [
+    //     {
+    //         scope: "comment",
+    //         settings: {
+    //             fontStyle: "bold",
+    //         },
+    //     },
+    // ],
+
+    // Font ------------------------------------
+    ...selectFont(fonts, "fira"),
+
     // Editor -----------------------------------
     "achievements.enabled": false,
     "sidebar.plugins.enabled": true,
-    "sidebar.width": "16em",
+    "sidebar.width": "20em",
     "sidebar.marks.enabled": true,
 
-    // "editor.fontFamily": "HasklugNerdFontComplete-Regular",
-    // "editor.fontFamily": "DejaVuSansCode",
-
-    // "editor.fontFamily": "LigaIBMPlexMono-Regular",
-    // "editor.fontSize": "17px",
-    // "editor.linePadding": 0,
-
-    // "editor.fontFamily": "LigaSourceCodeVariable-Roman",
-
-    // "editor.fontFamily": "SourceCodePro-Regular",
-    // "editor.fontSize": "17px",
-    // "editor.linePadding": 2.5,
-
-    // "editor.fontFamily": "FiraCode-Regular",
-    // "editor.fontSize": "16px",
-    // "editor.linePadding": 5,
-
-    // "editor.fontFamily": "LigaInput-Regular",
-    // "editor.fontSize": "16px",
-    // "editor.linePadding": 3.5,
-
-    // "editor.fontFamily": "mononokiNerdFontComplete-Regular",
-    // "editor.fontSize": "18px",
-    // "editor.linePadding": 1,
-
-    // "editor.fontFamily": "OperatorMono-Light",
-    // "editor.fontSize": "17px",
-    // "editor.linePadding": 1.5,
-
-    // "editor.fontFamily": "SpaceMono-Regular-NL",
-    // "editor.fontSize": "18px",
-    // "editor.linePadding": 0,
-
-    // "editor.fontFamily": "DankMono-Regular",
-    // "editor.fontSize": "18px",
-    // "editor.linePadding": 0,
-
-    "editor.fontFamily": "CourierPrimeCode-Regular",
-    "editor.fontSize": "18px",
-    "editor.linePadding": 4.5,
-
     "editor.scrollBar.visible": true,
-    "editor.cursorLine": true,
+    "editor.cursorLine": false,
 
     "explorer.autoRefresh": false,
     "experimental.particles.enabled": false,
@@ -166,17 +226,34 @@ export const configuration = {
     // Sidebar ----------------------------------
     "sidebar.default.open": false,
     // UI ---------------------------------------
-    // "ui.fontFamily": "OperatorMono-Medium",
-    "ui.fontFamily": "FiraCode-Medium",
-    "ui.fontSize": "16px",
-    "ui.colorscheme": "onedark",
+    "ui.fontFamily": selectFont(fonts, "operatorBook")["editor.fontFamily"],
+    "ui.fontSize": "15px",
+
     "tabs.mode": "buffers",
+    // "tabs.height": "2em",
     "tabs.dirtyMarker.userColor": "green",
 
+    // "ui.colorscheme": "onedark",
+    "ui.colorscheme": "night-owl",
+
+    "browser.enabled": true,
     // Workspace ---------------------------------------
     "workspace.autoDetectWorkspace": "always",
 
     // Plugins ---------------------------------------
+    "oni.plugins.touchbar": {
+        enabled: true,
+        escapeItem: "bigger",
+        leftActions: "sidebar",
+        middleActions: [
+            { label: ":q", type: "nvim", command: "<esc>:q<enter>" },
+            { label: ":w", type: "nvim", command: "<esc>:w<enter>" },
+            { label: "Reload Oni", type: "oni", command: "oni.debug.reload" },
+            { label: "New Oni Window", type: "oni", command: "oni.process.openWindow" },
+            { label: "Open Folder", type: "oni", command: "workspace.openFolder" },
+        ],
+        rightActions: "interaction",
+    },
     "oni.plugins.prettier": {
         settings: {
             semi: true,
@@ -192,4 +269,11 @@ export const configuration = {
         formatOnSave: true,
         enabled: true,
     },
+    "oni.plugins.importCost": {
+        enabled: true,
+        smallSize: 8,
+        showCalculating: false,
+    },
+
+    plugins: ["Akin909/oni-theme-night-owl"],
 };

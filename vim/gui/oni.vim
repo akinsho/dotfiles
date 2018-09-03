@@ -8,6 +8,7 @@ let g:ale_set_highlights                = 0
 let g:ale_sign_error                    = '❗'
 let g:nvim_typescript#type_info_on_hold = 0
 let g:startify_change_to_vcs_root       = 0
+let g:startify_disable_at_vimenter      = 1
 " let g:gitgutter_sign_added              = '+'
 " let g:startify_fortune_use_unicode      = 0
 " let g:startify_disable_at_vimenter = 2
@@ -24,7 +25,10 @@ augroup END
 augroup DisabledAle
   au!
   autocmd FileType typescript,typescript.tsx,javascript,javascript.jsx,json,graphql,markdown
-        \ let g:ale_fix_on_save = 0
+        \ let g:ale_linters = {
+        \   'typescript': ['tslint'],
+        \}
+        " \ let g:ale_fix_on_save = 0
 augroup END
 
 

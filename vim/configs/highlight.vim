@@ -33,15 +33,9 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   " highlight jsFuncCall gui=italic ctermfg=cyan
   highlight Comment gui=italic cterm=italic
-  " if exists("g:gui_oni")
-  "   highlight xmlAttrib gui=bold cterm=bold ctermfg=121
-  "   highlight jsxAttrib cterm=bold ctermfg=121
-  "   highlight Type    gui=bold cterm=italic,bold
-  " else
   highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
   highlight jsxAttrib cterm=italic,bold ctermfg=121
   highlight Type    gui=italic,bold cterm=italic,bold
-  " endif
   highlight jsThis ctermfg=224,gui=italic
   highlight jsSuper ctermfg=13
   highlight Include gui=italic cterm=italic
@@ -88,5 +82,7 @@ endfunction
 
 augroup InitHighlights
   au!
-  autocmd ColorScheme * silent! call ApplyUserHighlights()
+  if !exists('g:gui_oni')
+    autocmd ColorScheme * silent! call ApplyUserHighlights()
+  endif
 augroup END

@@ -3,9 +3,9 @@ setlocal nofoldenable  foldtext=JavascriptFold()
 setlocal foldlevelstart=99 foldmethod=syntax
 setl colorcolumn=81
 
-nnoremap <leader>jr :call lib#JSXEncloseReturn()<CR>
-nnoremap vat :call lib#JSXSelectTag()<CR>
-nnoremap gd :TSDef<CR>
+if !has('g:gui_oni')
+  nnoremap gd :TSDef<CR>
+endif
 
 function! JavascriptFold()
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
