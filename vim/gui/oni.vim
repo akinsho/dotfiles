@@ -9,18 +9,7 @@ let g:ale_sign_error                    = '❗'
 let g:nvim_typescript#type_info_on_hold = 0
 let g:startify_change_to_vcs_root       = 0
 let g:startify_disable_at_vimenter      = 1
-" let g:gitgutter_sign_added              = '+'
-" let g:startify_fortune_use_unicode      = 0
-" let g:startify_disable_at_vimenter = 2
-" let g:indentLine_enabled = 0
 set noshowcmd
-
-augroup DisabledDeoplete
-  au!
-  autocmd FileType typescript,typescript.tsx,reason let b:deoplete_disable_auto_complete = 1
-  autocmd FileType javascript,javascript.jsx let b:deoplete_disable_auto_complete = 1
-  autocmd FileType css,less,scss let b:deoplete_disable_auto_complete = 1
-augroup END
 
 augroup DisabledAle
   au!

@@ -21,13 +21,11 @@ function! s:WhitespaceHighlight()
   endif
 endfunction
 
-
 function! s:ClearMatches() abort
   try
     call clearmatches()
   endtry
 endfunction
-
 
 augroup vimrc-incsearch-highlight
   autocmd!
@@ -80,7 +78,6 @@ augroup CheckOutsideTime "{{{1
   au BufEnter * silent! call lib#buffer_autosave
   au FocusLost * silent! call lib#AutoSave() "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
   " Autosave buffers before leaving them
-  autocmd BufLeave * silent! :wa
 augroup end
 
 " Disable paste.{{{

@@ -39,6 +39,8 @@ endfunction
 
 " Deoplete  {{{1
 "NVIM ====================================
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/neco-vim',      { 'for': 'vim' },
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
     Plug 'ap/vim-buftabline'
@@ -54,9 +56,7 @@ endfunction
     Plug 'carlitux/deoplete-ternjs',
       \{'do': 'npm install -g tern' }
     " Code completion
-    Plug 'Shougo/neco-vim',      { 'for': 'vim' },
     Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
-    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
     Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
     Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
     Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
@@ -70,7 +70,7 @@ endif
 " Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
 " CORE {{{1
 "================================
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
@@ -83,7 +83,7 @@ Plug 'mhinz/vim-startify'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
@@ -101,10 +101,10 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-
+" ========================================= Oni Bug Above this line
 "Syntax {{{1
 "============================
-Plug 'ianks/vim-tsx' , Cond(!exists('g:gui_oni'))
+Plug 'ianks/vim-tsx' " , Cond(!exists('g:gui_oni'))
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
 Plug 'sheerun/vim-polyglot'
@@ -116,10 +116,10 @@ Plug 'othree/javascript-libraries-syntax.vim',
 " ==============================
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'sodapopcan/vim-twiggy'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-"Text Objects {{{1
-"=====================
+
+" Text Objects {{{1
+" =====================
 Plug 'Yilin-Yang/vim-markbar'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
@@ -127,6 +127,8 @@ Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'kana/vim-textobj-user'
+      \  | Plug 'vimtaku/vim-textobj-keyvalue'
+       \ | Plug 'thalesmello/vim-textobj-methodcall'
        \ | Plug 'rhysd/vim-textobj-conflict'
        \ | Plug 'kana/vim-operator-user'
        \ | Plug 'glts/vim-textobj-comment'
@@ -161,7 +163,6 @@ Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'chrisbra/csv.vim',       { 'for': 'csv' }
 Plug 'heavenshell/vim-jsdoc'
-Plug 'samuelsimoes/vim-jsx-utils'
 
 "Themes  {{{1
 "===============================

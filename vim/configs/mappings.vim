@@ -35,9 +35,6 @@ nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
 ""---------------------------------------------------------------------------//
 " MACROS {{{
 ""---------------------------------------------------------------------------//
-" Quickly edit your macros
-" Usage <leader>m or "q<leader>m
-nnoremap <leader>m  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 "--------------------------------------------
 "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 "repeat macros across a visual range
@@ -87,6 +84,11 @@ nnoremap [w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><
 
 " move the current word to the left and keep the cursor on it
 nnoremap ]w "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
+
+" Replace the current work with the last yanked word;
+" Save word and exchange it under cursor
+nnoremap <silent> ciy ciw<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
+nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
 ""---------------------------------------------------------------------------//
@@ -120,12 +122,8 @@ nnoremap <localleader>n :enew<cr>
 " nnoremap <leader>q :bd!<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
-" " Show all open buffers and their status
-nnoremap <leader>bl :ls<CR>
 " search visual selection
 vnoremap // y/<C-R>"<CR>
-" Toggle background with <leader>bg
-nnoremap <leader>bg :let &background = (&background == "dark" ? "light" : "dark")<cr>
 
 "Displays the name of the highlight group of the selected word
 nnoremap <leader>E :call <SID>SynStack()<CR>
@@ -566,6 +564,9 @@ cnoremap jk <C-C>
 nmap J 10j
 nmap K 10k
 
+" Toggle top/center/bottom
+noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
+
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -580,6 +581,7 @@ nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>) viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
 nnoremap <leader>} viw<esc>a}<esc>bi{<esc>lel
+
 " To the leftmost non-blank character of the current line
 nnoremap H g^
 " To the rightmost character of the current line

@@ -30,6 +30,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<m-.>", "vcs.branches");
     oni.input.bind("m-s-v", "vcs.sidebar.toggle");
     oni.input.bind("<m-f>", "autoformat.prettier");
+    oni.input.bind("<m-b>", "quickOpen.showBookmarks");
+    oni.input.bind("<c-f>", "oni.bookmarks.setFolderOrOpenFile");
     oni.input.bind("<m-s-f>", "quickOpen.searchFileByContent");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
@@ -92,12 +94,12 @@ const fonts = {
         "editor.fontSize": "16px",
         "editor.linePadding": 0,
     },
-    liga: {
+    plex: {
         "editor.fontFamily": "LigaIBMPlexMono-Regular",
-        "editor.fontSize": "17px",
+        "editor.fontSize": "16px",
         "editor.linePadding": 0,
     },
-    Source: {
+    source: {
         "editor.fontFamily": "SourceCodePro-Regular",
         "editor.fontSize": "17px",
         "editor.linePadding": 2.5,
@@ -113,13 +115,13 @@ const fonts = {
         "editor.linePadding": 2,
     },
     fira: {
-        "editor.fontFamily": "FiraCode-Retina",
+        "editor.fontFamily": "FiraCode-Regular",
         "editor.fontSize": "16px",
         "editor.linePadding": 5,
     },
     input: {
         "editor.fontFamily": "LigaInput-Regular",
-        "editor.fontSize": "16px",
+        "editor.fontSize": "15px",
         "editor.linePadding": 3.5,
     },
     mononoki: {
@@ -132,7 +134,11 @@ const fonts = {
         "editor.fontSize": "17px",
         "editor.linePadding": 1.5,
     },
-    // "editor.fontFamily": "LigaSourceCodeVariable-Roman",
+    operatorLight: {
+        "editor.fontFamily": "OperatorMono-Light",
+        "editor.fontSize": "17px",
+        "editor.linePadding": 1.5,
+    },
 };
 
 function selectFont<T, K extends keyof T>(obj: T, key: K) {
@@ -143,11 +149,12 @@ export const configuration = {
     //add custom config here, such as
     // UI customizations
     "ui.animations.enabled": true,
-    "configuration.showReferenceBuffer": true,
+    "configuration.showReferenceBuffer": false,
 
     // Debug -----------------------------------
     "debug.showNotificationOnError": shouldShowErrors(),
-    // "editor.textMateHighlighting.debugScopes": true,
+    "editor.textMateHighlighting.enabled": true,
+    "editor.textMateHighlighting.debugScopes": false,
 
     // LSP -------------------------------------
 
@@ -166,7 +173,6 @@ export const configuration = {
     "wildmenu.mode": true,
     "autoClosingPairs.enabled": false,
     "editor.renderer": "webgl",
-    // "editor.renderer": "canvas",
 
     "language.rust.languageServer.command": "rustup",
     "language.rust.languageServer.arguments": ["run", "nightly", "rls"],
@@ -184,31 +190,33 @@ export const configuration = {
     "language.go.languageServer.rootFiles": [".git"],
 
     // Experimental -----------------------------
+    "experimental.markdownPreview.enabled": true,
     "experimental.vcs.sidebar": true,
     "experimental.vcs.blame.enabled": true,
+    "experimental.particles.enabled": false,
     "experimental.sessions.enabled": false,
     "experimental.vcs.blame.mode": "auto",
-    "experimental.colorHighlight.enabled": true,
+    "experimental.colorHighlight.enabled": false,
     "experimental.indentLines.enabled": true,
     "experimental.indentLines.bannedFiletypes": [".csv", ".md", ".txt"],
     "experimental.welcome.enabled": true,
 
     // Oni Core ---------------------------------
-    "oni.bookmarks": ["~/Dotfiles", "~/Desktop/Coding/Work"],
+    "oni.bookmarks": ["Dotfiles", "Desktop/Coding/Work"],
     "oni.useDefaultConfig": false,
     "oni.loadInitVim": true,
 
-    // "editor.tokenColors": [
-    //     {
-    //         scope: "comment",
-    //         settings: {
-    //             fontStyle: "bold",
-    //         },
-    //     },
-    // ],
+    "editor.tokenColors": [
+        {
+            scope: "comment",
+            settings: {
+                fontStyle: "bold italic",
+            },
+        },
+    ],
 
     // Font ------------------------------------
-    ...selectFont(fonts, "fira"),
+    ...selectFont(fonts, "dank"),
 
     // Editor -----------------------------------
     "achievements.enabled": false,
@@ -220,22 +228,19 @@ export const configuration = {
     "editor.cursorLine": false,
 
     "explorer.autoRefresh": false,
-    "experimental.particles.enabled": false,
-    "experimental.markdownPreview.enabled": true,
 
     // Sidebar ----------------------------------
     "sidebar.default.open": false,
     // UI ---------------------------------------
-    "ui.fontFamily": selectFont(fonts, "operatorBook")["editor.fontFamily"],
+    "ui.fontFamily": "Firacode-Regular",
     "ui.fontSize": "15px",
 
-    "tabs.mode": "buffers",
     // "tabs.height": "2em",
+    "tabs.mode": "buffers",
     "tabs.dirtyMarker.userColor": "green",
 
     // "ui.colorscheme": "onedark",
     "ui.colorscheme": "night-owl",
-
     "browser.enabled": true,
     // Workspace ---------------------------------------
     "workspace.autoDetectWorkspace": "always",

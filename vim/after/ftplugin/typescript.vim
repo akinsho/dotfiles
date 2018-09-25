@@ -1,9 +1,8 @@
-" set foldopen=all
-setl foldenable
+set foldopen=all
 setl foldmethod=syntax
-setl foldlevelstart=99
 setl completeopt-=preview
 setl colorcolumn=100
+set foldlevelstart=99
 
 if !exists('g:gui_oni')
   nnoremap gd :TSDef<CR>
@@ -24,7 +23,7 @@ match Error /\%100v.\+/
 
 syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
 " /import.*\n^$/
-hi link typescriptBrowserObjects TypescriptType
+" hi link typescriptBrowserObjects TypescriptType
 " hi typescriptBrowserObjects gui=italic,bold guifg=goldenrod
 function! SteveLoshText()
      let line = getline(v:foldstart)
@@ -43,7 +42,7 @@ function! SteveLoshText()
 endfunction
 
 " Set a nicer foldtext function
-set foldtext=SteveLoshText()
+" set foldtext=SteveLoshText()
 
 function! TypescriptFold()
   let line = getline(v:foldstart)
