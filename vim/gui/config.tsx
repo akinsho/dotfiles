@@ -116,7 +116,7 @@ const fonts = {
     },
     fira: {
         "editor.fontFamily": "FiraCode-Regular",
-        "editor.fontSize": "16px",
+        "editor.fontSize": "15px",
         "editor.linePadding": 5,
     },
     input: {
@@ -216,7 +216,7 @@ export const configuration = {
     ],
 
     // Font ------------------------------------
-    ...selectFont(fonts, "dank"),
+    ...selectFont(fonts, "fira"),
 
     // Editor -----------------------------------
     "achievements.enabled": false,
