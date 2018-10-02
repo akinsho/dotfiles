@@ -198,6 +198,7 @@ export const configuration = {
     "experimental.vcs.blame.mode": "auto",
     "experimental.colorHighlight.enabled": false,
     "experimental.indentLines.enabled": true,
+    "experimental.indentLines.color": "rgba(94,129,206,0.321)",
     "experimental.indentLines.bannedFiletypes": [".csv", ".md", ".txt"],
     "experimental.welcome.enabled": true,
 
