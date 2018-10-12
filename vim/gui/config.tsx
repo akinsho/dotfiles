@@ -33,6 +33,7 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("<m-b>", "quickOpen.showBookmarks");
     oni.input.bind("<c-f>", "oni.bookmarks.setFolderOrOpenFile");
     oni.input.bind("<m-s-f>", "quickOpen.searchFileByContent");
+    oni.input.bind("<m-1>", "oni.csv.preview.toggle");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
     );
@@ -71,7 +72,7 @@ const fonts = {
     },
     dank: {
         "editor.fontFamily": "DankMono-Regular",
-        "editor.fontSize": "17px",
+        "editor.fontSize": "16px",
         "editor.linePadding": 0,
     },
     officeCode: {
@@ -86,7 +87,7 @@ const fonts = {
     },
     courier: {
         "editor.fontFamily": "CourierPrimeCode-Regular",
-        "editor.fontSize": "17px",
+        "editor.fontSize": "16px",
         "editor.linePadding": 4.5,
     },
     hasklig: {
@@ -96,7 +97,7 @@ const fonts = {
     },
     plex: {
         "editor.fontFamily": "LigaIBMPlexMono-Regular",
-        "editor.fontSize": "16px",
+        "editor.fontSize": "15px",
         "editor.linePadding": 0,
     },
     source: {
@@ -136,7 +137,7 @@ const fonts = {
     },
     operatorLight: {
         "editor.fontFamily": "OperatorMono-Light",
-        "editor.fontSize": "17px",
+        "editor.fontSize": "16px",
         "editor.linePadding": 1.5,
     },
 };
@@ -196,7 +197,7 @@ export const configuration = {
     "experimental.particles.enabled": false,
     "experimental.sessions.enabled": false,
     "experimental.vcs.blame.mode": "auto",
-    "experimental.colorHighlight.enabled": false,
+    "experimental.colorHighlight.enabled": true,
     "experimental.indentLines.enabled": true,
     "experimental.indentLines.color": "rgba(94,129,206,0.321)",
     "experimental.indentLines.bannedFiletypes": [".csv", ".md", ".txt"],
@@ -225,9 +226,7 @@ export const configuration = {
     "sidebar.width": "20em",
     "sidebar.marks.enabled": true,
 
-    "editor.scrollBar.visible": true,
     "editor.cursorLine": false,
-
     "explorer.autoRefresh": false,
 
     // Sidebar ----------------------------------
