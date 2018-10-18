@@ -31,9 +31,9 @@ export const activate = (oni: Oni.Plugin.Api) => {
     oni.input.bind("m-s-v", "vcs.sidebar.toggle");
     oni.input.bind("<m-f>", "autoformat.prettier");
     oni.input.bind("<m-b>", "quickOpen.showBookmarks");
-    oni.input.bind("<c-f>", "oni.bookmarks.setFolderOrOpenFile");
     oni.input.bind("<m-s-f>", "quickOpen.searchFileByContent");
     oni.input.bind("<m-1>", "oni.csv.preview.toggle");
+    oni.input.bind(["<c-f>"], "marene.quickFind");
     oni.input.bind("<s-c-h>", () =>
         oni.editors.activeEditor.neovim.command(`call OniNextWindow('h')<CR>`),
     );
@@ -188,7 +188,7 @@ export const configuration = {
     // Go Language Server ===============================================
     "language.go.languageServer.command": "go-langserver",
     "language.go.languageServer.arguments": ["--gocodecompletion", "--freeosmemory", "false"],
-    "language.go.languageServer.rootFiles": [".git"],
+    // "language.go.languageServer.rootFiles": [".git"],
 
     // Experimental -----------------------------
     "experimental.markdownPreview.enabled": true,
@@ -223,7 +223,7 @@ export const configuration = {
     // Editor -----------------------------------
     "achievements.enabled": false,
     "sidebar.plugins.enabled": true,
-    "sidebar.width": "20em",
+    "sidebar.width": "20rem",
     "sidebar.marks.enabled": true,
 
     "editor.cursorLine": false,
@@ -242,6 +242,7 @@ export const configuration = {
     // "ui.colorscheme": "onedark",
     "ui.colorscheme": "night-owl",
     "browser.enabled": true,
+
     // Workspace ---------------------------------------
     "workspace.autoDetectWorkspace": "always",
 
