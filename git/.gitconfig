@@ -35,6 +35,10 @@
    mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
 [push]
   default = current
+[push]
+    followTags = true
+[pull]
+  rebase = true
 [fetch]
   prune = true
 [gitsh]
@@ -42,4 +46,4 @@
 [pager]
     diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 [rerere]
-	enabled = true
+    enabled = true

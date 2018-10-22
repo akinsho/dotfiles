@@ -4,9 +4,9 @@
 #=======================================================================
 # zmodload zsh/zprof
 start_time="$(date +%s)"
-#---------------------------------------------------------------------------//
+#------------------------------------------------------------//
 # ZPLUG
-#---------------------------------------------------------------------------//
+#------------------------------------------------------------//
 # FIXME this should go into ~/Dotfiles/scripts/environment.sh
 # But needs to load first
 export NVM_AUTO_USE=true
@@ -41,8 +41,7 @@ zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 zplug "junegunn/fzf-bin", \
     from:gh-r, \
     as:command, \
-    rename-to:fzf, \
-    use:"*darwin*amd64*"
+    rename-to:fzf
 
 # Set the priority when loading
 # e.g., zsh-syntax-highlighting must be loaded
@@ -59,7 +58,9 @@ if ! zplug check; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load
+if [[ -o interactive ]] then
+  zplug load
+fi
 
 #=======================================================================
 #   LOCAL SCRIPTS - Including Environment Variables
@@ -79,9 +80,9 @@ end_time="$(date +%s)"
 # difference
 echo load time: $((end_time - start_time)) seconds
 
-##---------------------------------------------------------------------------//
+##------------------------------------------------------------//
 # LOL
-##---------------------------------------------------------------------------//
+##------------------------------------------------------------//
 # if brew ls --versions fortune > /dev/null;then
 #   runonce <(fortune | cowsay | lolcat)
 # fi

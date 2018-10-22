@@ -102,7 +102,9 @@ fi
 #   LOCAL SCRIPTS
 #=======================================================================
 # source all zsh and sh files inside dotfile/runcom
-for script ($DOTFILES/shell_scripts/*) source $script
+for script in ~/Dotfiles/shell_scripts/*; do
+  source $script
+done
 
 ##---------------------------------------------------------------------------//
 # FZF
@@ -123,8 +125,4 @@ echo load time: $((end_time - start_time)) seconds
 #   runonce <(fortune | cowsay | lolcat)
 # fi
 # zprof
-archey -o
-
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+# archey -o
