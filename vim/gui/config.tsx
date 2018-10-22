@@ -204,6 +204,7 @@ export const configuration = {
     "experimental.welcome.enabled": true,
 
     // Oni Core ---------------------------------
+    // "oni.userShell": "/bin/bash", // for fastest startup
     "oni.bookmarks": ["Dotfiles", "Desktop/Coding/Work"],
     "oni.useDefaultConfig": false,
     "oni.loadInitVim": true,
