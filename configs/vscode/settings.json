@@ -1,42 +1,192 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-    "javascript.validate.enable": true,
-     "files.associations": {
-        "*.js": "javascriptreact",
-        "*.ts": "typescriptreact"
-    },
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "css.validate": false,
-    "scss.validate": false,
-    "vim.enableNeovim": true,
+    "workbench.colorTheme": "Night Owl",
+    "editor.tabCompletion": "on",
+    "files.autoSave": "onFocusChange",
+    "vim.leader": ",",
+    "vim.sneak": false,
+    "vim.surround": true,
     "vim.easymotion": true,
-    "editor.fontFamily": "Fira Code",
-    "editor.fontSize": 16,
-    "editor.fontLigatures": true,
-    "vim.hlsearch": true,
-    "vim.insertModeKeyBindings": [
+    "vim.easymotionMarkerFontFamily": "Fira Code",
+    "vim.easymotionMarkerHeight": 22,
+    "vim.easymotionMarkerWidthPerChar": 10,
+    "vim.useSystemClipboard": true,
+    "vim.visualstar": true,
+    "vim.enableNeovim": true,
+    "vim.useCtrlKeys": false,
+    "vim.handleKeys": {
+        "<C-f>": false
+    },
+    "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "before": ["j","k"],
-            "after": ["<Esc>"]
-        }
-    ],
-    "vim.otherModesKeyBindingsNonRecursive": [
-        {
-            "before": ["J"],
-            "after": ["10j"]
-        },
-        {
-            "before": ["K"],
-            "after": ["10k"]
-        },
-        {
-            "before":["<C-n>"],
-            "after":[],
-            "commands": [
-                {
-                    "command": ":nohl"
-                }
+            "before": [
+                "v"
+            ],
+            "after": [
+                "v"
             ]
         }
-    ]
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "v"
+            ],
+            "after": [
+                "a",
+                "f"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<space>",
+                ","
+            ],
+            "after": [
+                "A",
+                ",",
+                "<esc>"
+            ]
+        },
+        {
+            "before": [
+                ":"
+            ],
+            "commands": [
+                "workbench.action.showCommands"
+            ]
+        },
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        },
+        {
+            "before": [
+                ":"
+            ],
+            "commands": [
+                "workbench.action.showCommands"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "m"
+            ],
+            "commands": [
+                "bookmarks.toggle"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "b"
+            ],
+            "commands": [
+                "bookmarks.listFromAllFiles"
+            ]
+        },
+        {
+            "before": [
+                "Z",
+                "Z"
+            ],
+            "commands": [
+                ":wq"
+            ]
+        },
+        {
+            "before": [
+                "p"
+            ],
+            "after": [
+                "p",
+                "g",
+                "v",
+                "y"
+            ]
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "after": [
+                "<c-u>"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "<c-d>"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "_"
+            ]
+        }
+    ],
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "sync.gist": "2bf451b031b1d85dcf2a31408b3cdce9",
+    "editor.fontFamily": "Fira Code,Menlo, Monaco, 'Courier New', monospace",
+    "window.zoomLevel": 0,
+    "editor.lineNumbers": "relative",
+    "editor.formatOnSave": true,
+    "prettier.eslintIntegration": true,
+    "editor.fontSize": 15,
+    "editor.fontLigatures": true,
+    "scrolloff.alwaysCenter": true,
+    "bookmarks.navigateThroughAllFiles": true,
+    "editor.formatOnPaste": true,
+    "githubPullRequests.hosts": [
+        {
+            "host": "https://github.com",
+            "username": "oauth",
+            "token": "system"
+        }
+    ],
+    "git.autofetch": true,
+    "flow.useLSP": true,
+    "vim.substituteGlobalFlag": true,
+    "files.autoSaveDelay": 500,
+    "breadcrumbs.enabled": true,
+    "workbench.sideBar.location": "right",
+    "jsannotations.enabled": false,
+    "git.enableSmartCommit": true
 }
