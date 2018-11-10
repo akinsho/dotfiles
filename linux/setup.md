@@ -11,3 +11,5 @@
 setxkbmap -option ctrl:swapcaps
 xcape -e 'Control_L=Escape'
 ```
+
+[Reference](https://www.reddit.com/r/linux/comments/5h63js/anyway_to_remap_caps_lock_to_be_both_escape_and/)
