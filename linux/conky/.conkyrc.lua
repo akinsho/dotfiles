@@ -3,7 +3,7 @@ conky.config = {
     background = false,
     border_width = 1,
     cpu_avg_samples = 2,
-	default_color = 'white',
+	default_color = 'black',
     default_outline_color = 'white',
     default_shade_color = 'white',
     draw_borders = false,
@@ -31,7 +31,8 @@ conky.config = {
     uppercase = false,
     use_spacer = 'none',
     show_graph_scale = false,
-    show_graph_range = false
+    show_graph_range = false,
+    double_buffer = true,
 }
 
 conky.text = [[
