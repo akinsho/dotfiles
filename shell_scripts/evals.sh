@@ -7,8 +7,8 @@ eval "$(hub alias -s)"
 # source <(npx --shell-auto-fallback zsh)
 
 #Pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 # Plugin that autocorrects when you type fuck or whatever alias you intended
 eval "$(thefuck --alias)"
