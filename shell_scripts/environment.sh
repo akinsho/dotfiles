@@ -14,10 +14,15 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 
 # GO ============================================================
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/Desktop/Coding/Go
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-export PATH=$PATH:$(go env GOPATH)/bin
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  export PATH=$PATH:/usr/local/go/bin
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # Mac OSX
+  export GOPATH=$HOME/Desktop/Coding/Go
+  export GOROOT=/usr/local/opt/go/libexec
+  export PATH=$PATH:/usr/local/opt/go/libexec/bin
+  export PATH=$PATH:$(go env GOPATH)/bin
+fi
 if [ -d "$HOME/bin" ] ; then
   PATH="$HOME/bin:$PATH"
 fi
@@ -59,8 +64,3 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
-
-export JIRA_URL='https://yulife.atlassian.net'
-export JIRA_NAME='akin'
-export JIRA_RAPID_BOARD=true
-export JIRA_DEFAULT_ACTION='dashboard'
