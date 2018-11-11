@@ -29,7 +29,7 @@ ${voffset 10}Manjaro Linux ${execi 86400 awk -F'=' '/DISTRIB_RELEASE=/ {printf $
 ${kernel}-${machine}
 #
 ${voffset 10}CPU$alignr$color2$cpu%$color
-${cpubar 3,200}
+${cpubar 20,400}
 $color2${top name 1}$alignr${top cpu 1}%$color
 $color2${top name 2}$alignr${top cpu 2}%$color
 $color2${top name 3}$alignr${top cpu 3}%$color
@@ -37,26 +37,21 @@ $color2${top name 4}$alignr${top cpu 4}%$color
 $color2${top name 5}$alignr${top cpu 5}%$color
 #
 ${voffset 10}RAM$alignr$color2$mem/$memmax$color
-${membar 3,200}
+${membar 20,400}
 $color2${top_mem name 1}$alignr${top_mem mem_res 1}$color
 $color2${top_mem name 2}$alignr${top_mem mem_res 2}$color
 $color2${top_mem name 3}$alignr${top_mem mem_res 3}$color
 $color2${top_mem name 4}$alignr${top_mem mem_res 4}$color
 $color2${top_mem name 5}$alignr${top_mem mem_res 5}$color
 #
-${voffset 10}SWAP$alignr$color2$swap/$swapmax$color
-${swapbar 3,200}
-#
-${voffset 10}Root$alignr$color2${fs_used /}/${fs_size /}$color
-${fs_bar 3,200 /}
 Home$alignr$color2${fs_used /home}/${fs_size /home}$color
-${fs_bar 3,200 /home}
+${fs_bar 20,400 /home}
 #
 R/W: $color2${diskio_read}${goto 110}/${alignr}${diskio_write}$color
 #
-${voffset 10}E: Down $color2${downspeedf enp7s0}KiB${alignr}${upspeedf enp7s0}KiB$color Up
-W: Down $color2${downspeedf wlp4s0}KiB${alignr}${upspeedf wlp4s0}KiB$color Up
-#${wireless_link_bar 5,200 wlp4s0}
+${voffset 10}E: Down $color2${downspeedf enp7s0}KB${alignr}${upspeedf enp7s0}KB$color Up
+W: Down $color2${downspeedf wlp4s0}KB${alignr}${upspeedf wlp4s0}KB$color Up
+#${wireless_link_bar 5,400 wlp4s0}
 #
 ${voffset 10}#$alignc${execi 86400 whoami}@${nodename}
 uptime ${uptime_short}
