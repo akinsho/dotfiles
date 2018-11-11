@@ -9,3 +9,4 @@ plugged
 .tern-port
 plug.vim
 .netrwhist
+*.code-workspace
