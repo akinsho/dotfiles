@@ -7,6 +7,15 @@ function _t() {
   tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst -L $levels -aC $@
 }
 
+# Default to using `bat` https://github.com/sharkdp/bat#installation if it has been installed
+cat() {
+    if hash bat 2>/dev/null; then
+        bat "$@"
+    else
+        cat "$@"
+    fi
+}
+
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 
