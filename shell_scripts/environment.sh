@@ -22,6 +22,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   export GOROOT=/usr/local/opt/go/libexec
   export PATH=$PATH:/usr/local/opt/go/libexec/bin
   export PATH=$PATH:$(go env GOPATH)/bin
+
+  # # Android SDK
+  # export ANDROID_HOME=$HOME/Library/Android/sdk
+  # export PATH=$PATH:$ANDROID_HOME/tools
+  # export PATH=$PATH:$ANDROID_HOME/platform-tools
 fi
 if [ -d "$HOME/bin" ] ; then
   PATH="$HOME/bin:$PATH"
@@ -38,13 +43,6 @@ export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
 export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH
 
-# Android SDK
-
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-# export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_144`
-
 # you may need to manually set your language environment
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
@@ -59,6 +57,7 @@ fi
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
+source $HOME/.environment.secret.sh
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 

@@ -116,7 +116,7 @@ const fonts = {
         "editor.linePadding": 2,
     },
     fira: {
-        "editor.fontFamily": "FiraCode-Regular",
+        "editor.fontFamily": "Fira Code",
         "editor.fontSize": "15px",
         "editor.linePadding": 5,
     },
@@ -233,7 +233,7 @@ export const configuration = {
     // Sidebar ----------------------------------
     "sidebar.default.open": false,
     // UI ---------------------------------------
-    "ui.fontFamily": "Firacode-Regular",
+    "ui.fontFamily": "Fira Code",
     "ui.fontSize": "15px",
 
     // "tabs.height": "2em",
