@@ -74,8 +74,8 @@ endif
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
-" Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
-Plug 'Raimondi/delimitMate'
+Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
+" Plug 'Raimondi/delimitMate'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'

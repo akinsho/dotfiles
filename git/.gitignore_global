@@ -52,3 +52,7 @@ gin-bin
 
 # Oni Config Dir #
 .oni
+
+# VSCode workspaces
+*.code-workspace
+.vscode
