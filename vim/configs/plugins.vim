@@ -52,9 +52,9 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
         !npm install && npm install -g tern
       endif
     endfunction
-    Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
-    Plug 'carlitux/deoplete-ternjs',
-      \{'do': 'npm install -g tern' }
+    " Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
+    " Plug 'carlitux/deoplete-ternjs',
+    "   \{'do': 'npm install -g tern' }
     " Code completion
     Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
     Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
@@ -65,9 +65,9 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'kristijanhusak/vim-js-file-import'
+    Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
-" Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
 " CORE {{{1
 "================================
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
