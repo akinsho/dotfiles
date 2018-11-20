@@ -33,17 +33,17 @@ conky.config = {
 	draw_graph_borders = true,
 
 	default_bar_width = 50,
-    default_bar_height = 6,
+	default_bar_height = 6,
 	default_graph_width = 60,
-    default_graph_height = 35,
+	default_graph_height = 35,
 
 	own_window_colour = '000000',
-	default_color = 'bbbbbb',
+	default_color = 'ffffff',
 	default_shade_color = '111111',
 	color1 = '666666',
 	color2 = '1793d0',
 
-    lua_load = 'utils.lua',
+	lua_load = 'utils.lua',
 
 	font = 'Source Sans Pro:pixelsize=34:weight=normal',
 };
