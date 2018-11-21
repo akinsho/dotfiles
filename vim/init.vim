@@ -95,6 +95,7 @@ call Source('/vim/configs/general.vim')
 call Source('/vim/configs/highlight.vim')
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
+call Source('/vim/configs/utils.vim') "Previously autoloaded but difficult to port
 call Source('/vim/configs/open-changed-files.vim')
 call LoadConfigs(s:settings)
 "NOTE: Order Matters here as this works like an after overwriting Settings for oni

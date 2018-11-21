@@ -1,4 +1,4 @@
-function! lib#tab_zoom()
+function! utils#tab_zoom()
   if winnr('$') > 1
     tab split
   elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
@@ -8,7 +8,7 @@ function! lib#tab_zoom()
 endfunction
 
 
-function! lib#buf_zoom() abort
+function! utils#buf_zoom() abort
   if exists('t:zoomed') && t:zoomed
     exec t:zoom_winrestcmd
     let t:zoomed = 0
@@ -22,7 +22,7 @@ endfunction
 
 
 " Peekabo Like functionality
-function! lib#reg()
+function! utils#reg()
   reg
   echo "Register: "
   let char = nr2char(getchar())
@@ -35,22 +35,22 @@ endfunction
 "
 " Verbatim matching for *.
 "
-function! lib#search() abort
+function! utils#search() abort
   let regsave = @@
   normal! gvy
   let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
   let @@ = regsave
 endfunction
 
-function! lib#search_all() abort
-  call lib#search()
+function! utils#search_all() abort
+  call utils#search()
   call setqflist([])
   execute 'bufdo vimgrepadd! /'. @/ .'/ %'
 endfunction
 
 " CREDIT: MHINZ
 " Switch to VCS root, if there is one.
-function! lib#cd() abort
+function! utils#cd() abort
   if &buftype =~# '\v(nofile|terminal)' || expand('%') =~# '^fugitive'
     return
   endif
@@ -83,7 +83,7 @@ endfunction
 "
 " Smarter tag-based jumping.
 "
-function! lib#jump() abort
+function! utils#jump() abort
   if (&filetype == 'vim' && &buftype == 'nofile') || &buftype == 'quickfix'
     execute "normal! \<cr>"
   elseif &filetype == 'neoman'
@@ -120,7 +120,7 @@ endfunction
 " https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
 let g:auto_resize_on = 1
 
-function! lib#auto_resize()
+function! utils#auto_resize()
   if g:auto_resize_on == 1
     let &winheight = &lines * 9 / 10
     let &winwidth = &columns * 9 / 10
@@ -135,7 +135,7 @@ endfunction
 
 
 " This keeps the cursor in place when using * or #
-function! lib#star_search(key) abort
+function! utils#star_search(key) abort
   let g:_view = winsaveview()
   let out = a:key
 
@@ -168,7 +168,7 @@ endfunction
 " - ","
 " - ";"
 "==========================================
-function! lib#ModifyLineEndDelimiter(character)
+function! utils#ModifyLineEndDelimiter(character)
   let line_modified = 0
   let line = getline('.')
 
@@ -208,14 +208,14 @@ function! lib#ModifyLineEndDelimiter(character)
 endfunction
 
 " saves all the visible windows if needed/possible
-function! lib#AutoSave()
+function! utils#AutoSave()
   let this_window = winnr()
   windo if &buftype != "nofile" && expand('%') != '' && &modified | write | endif
 execute this_window . 'wincmd w'
 endfunction
 
 "line containing the match blinks
-function! lib#HLNext (blinktime)
+function! utils#HLNext (blinktime)
   set invcursorline
   redraw
   exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
@@ -227,7 +227,7 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Credit:  June Gunn  - AutoSave {{{1
 " ----------------------------------------------------------------------------
-function! lib#buffer_autosave(enable)
+function! utils#buffer_autosave(enable)
   augroup autosave
     autocmd!
     if a:enable
@@ -239,10 +239,10 @@ function! lib#buffer_autosave(enable)
   augroup END
 endfunction
 
-command! -bang AutoSave call lib#autosave(<bang>1)
+command! -bang AutoSave call utils#autosave(<bang>1)
 
 " custom text-object for numerical values
-function! lib#Numbers()
+function! utils#Numbers()
   call search('\d\([^0-9\.]\|$\)', 'cW')
   normal v
   call search('\(^\|[^0-9\.]\d\)', 'becW')

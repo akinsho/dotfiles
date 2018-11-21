@@ -96,7 +96,7 @@ nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "Use enter to create new lines w/o entering insert mode
 " nnoremap <CR> o<Esc>
-nnoremap <silent><cr>  :call lib#jump()<cr>
+nnoremap <silent><cr>  :call utils#jump()<cr>
 "Below is to fix issues with the ABOVE mappings in quickfix window
 augroup EnterMapping
   au!
@@ -164,15 +164,15 @@ cabbrev cprev CPrev
 cabbrev lnext Lnext
 cabbrev lprev Lprev
 
-command! AutoResize call lib#auto_resize()
+command! AutoResize call utils#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
 
-nnoremap <silent><expr> <leader>* lib#star_search('*')
-vnoremap <silent><expr> <leader>* lib#star_search('*')
+nnoremap <silent><expr> <leader>* utils#star_search('*')
+vnoremap <silent><expr> <leader>* utils#star_search('*')
 
-nno <expr> [of lib#open_folds('enable')
-nno <expr> ]of lib#open_folds('disable')
-nno <expr> cof lib#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
+nno <expr> [of utils#open_folds('enable')
+nno <expr> ]of utils#open_folds('disable')
+nno <expr> cof utils#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
@@ -243,8 +243,8 @@ vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
 vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
 
 " This rewires n and N to do the highlighing...
-nnoremap <silent> n   n:call lib#HLNext(0.4)<cr>
-nnoremap <silent> N   N:call lib#HLNext(0.4)<cr>
+nnoremap <silent> n   n:call utils#HLNext(0.4)<cr>
+nnoremap <silent> N   N:call utils#HLNext(0.4)<cr>
 "----------------------------------------------------------------------------
 "Buffers
 "----------------------------------------------------------------------------
@@ -344,11 +344,11 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 nnoremap gV `[V`]
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
-xnoremap <leader>*          :<c-u>call lib#search_all()<cr>//<cr>
+xnoremap <leader>*          :<c-u>call utils#search_all()<cr>//<cr>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 
-xnoremap nu :<C-u>call lib#Numbers()<CR>
+xnoremap nu :<C-u>call utils#Numbers()<CR>
 onoremap nu :normal vin<CR>
 
 "---------------------------------------------------------------------------//
@@ -608,14 +608,14 @@ nnoremap S "_diwP
 " Shortcut to jump to next conflict marker"
 nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
-nnoremap <silent> <localleader>z :call lib#tab_zoom()<cr>
+nnoremap <silent> <localleader>z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
-nnoremap <silent> <leader>z :call lib#buf_zoom()<CR>
+nnoremap <silent> <leader>z :call utils#buf_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 
-command! -nargs=0 Reg call lib#reg()
+command! -nargs=0 Reg call utils#reg()
 nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
@@ -671,9 +671,9 @@ nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
 
-" cnoremap <expr> <CR> lib#CCR()
+" cnoremap <expr> <CR> utils#CCR()
 
 " Conditionally modify character at end of line
-nnoremap <silent> <localleader>, :call lib#ModifyLineEndDelimiter(',')<cr>
-nnoremap <silent> <localleader>; :call lib#ModifyLineEndDelimiter(';')<cr>
+nnoremap <silent> <localleader>, :call utils#ModifyLineEndDelimiter(',')<cr>
+nnoremap <silent> <localleader>; :call utils#ModifyLineEndDelimiter(';')<cr>
 
