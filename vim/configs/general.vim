@@ -254,9 +254,9 @@ function! GetTitleString() abort
 
   return fnamemodify(getcwd(), ':t')
 endfunction
-set titlestring=%{GetTitleString()}
+" set titlestring=%{GetTitleString()}
 " let &titlestring=' ❐ %f  %r %m'
-set title
+" set title
 
 ""---------------------------------------------------------------------------//
 "Nvim {{{1

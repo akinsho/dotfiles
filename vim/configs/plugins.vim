@@ -65,7 +65,10 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'kristijanhusak/vim-js-file-import'
-    Plug 'autozimu/LanguageClient-neovim',{ 'do': function('DoRemote')}
+    Plug 'autozimu/LanguageClient-neovim', {
+          \ 'branch': 'next',
+          \ 'do': 'bash install.sh',
+          \ }
   let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
 endif
 " CORE {{{1
