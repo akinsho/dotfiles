@@ -46,7 +46,11 @@ function! ApplyUserHighlights() abort
   highlight Folded  gui=bold,italic cterm=bold
   " guifg=#A2E8F6
   highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
-  highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
+  if exists('g:gui_oni')
+    highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
+  else
+    highlight MatchParen cterm=bold ctermbg=none guifg=NONE guibg=#29EF58
+  endif
   ""---------------------------------------------------------------------------//
   " Startify Highlighting
   ""---------------------------------------------------------------------------//
