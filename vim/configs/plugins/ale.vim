@@ -16,10 +16,10 @@ let g:ale_javascript_prettier_options          =
 let g:ale_pattern_options =
       \{'\.min.js$': {'ale_enabled': 0},
       \}
+" \'javascript':['prettier', 'eslint'],
 let g:ale_fixers = {
       \'reason':['refmt'],
       \'typescript':['prettier', 'tslint'],
-      \'javascript':['prettier', 'eslint'],
       \'json':'prettier',
       \'css':['prettier','stylelint'],
       \'less':['prettier', 'stylelint']
@@ -56,7 +56,5 @@ augroup AleTS
         \ '--trailing-comma --tab-width 4 all --print-width 100'
 augroup END
 
-" let g:ale_open_list             = 1
-" let g:ale_keep_list_window_open = 1
-" let g:ale_list_window_size      = 8
-"}}}
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign

@@ -5,13 +5,13 @@ let g:LanguageClient_serverCommands = {
     \ 'reason': ['ocaml-language-server', '--stdio'],
     \ 'ocaml': ['ocaml-language-server', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
-    \ 'javascript': ['flow-language-server', '--stdio'],
-    \ 'javascript.jsx': ['flow-language-server', '--stdio'],
     \ }
+" \ 'javascript': ['flow-language-server', '--stdio'],
+" \ 'javascript.jsx': ['flow-language-server', '--stdio'],
 
 if executable('javascript-typescript-stdio')
-  " let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
-  " let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
+  let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
   let g:LanguageClient_serverCommands.typescript = ['javascript-typescript-stdio']
   let g:LanguageClient_serverCommands["typescript.tsx"] = ['javascript-typescript-stdio']
 endif
