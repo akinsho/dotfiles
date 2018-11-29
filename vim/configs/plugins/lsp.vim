@@ -1,8 +1,9 @@
 if exists('g:gui_oni')
   finish
 endif
+" \ 'reason': ['ocaml-language-server', '--stdio'],
 let g:LanguageClient_serverCommands = {
-    \ 'reason': ['ocaml-language-server', '--stdio'],
+    \ 'reason': ['~/reason-language-server/reason-language-server.exe', '--stdio'],
     \ 'ocaml': ['ocaml-language-server', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
     \ }
