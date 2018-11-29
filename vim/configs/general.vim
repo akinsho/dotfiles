@@ -198,12 +198,12 @@ set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set nohlsearch
 set autowrite "Automatically :write before running commands
+if has('unnamedplus')
+  set clipboard+=unnamedplus
+elseif has('clipboard')
+  set clipboard+=unnamed
+endif
 if !has('nvim')
-  if has('unnamedplus')
-    set clipboard+=unnamedplus
-  elseif has('clipboard')
-    set clipboard+=unnamed
-  endif
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set laststatus=2
   set incsearch
@@ -368,7 +368,6 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 "Spelling {{{1
 "====================================================================================
-" Dropbox or kept in Git.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,mac,dos
 set complete+=kspell
