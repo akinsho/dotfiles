@@ -14,8 +14,8 @@ else
   highlight BufTablineFill guibg=#212129
 endif
 
-highlight BufTabLineActive guifg=white
-highlight BufTabLineHidden guibg=#5A5E68 guifg=white
+" highlight BufTabLineActive guifg=white
+" highlight BufTabLineHidden guibg=#5A5E68 guifg=white
 highlight BufTabLineCurrent guifg=#A2E8F6 gui=bold,italic
 highlight TabLineSel guifg=#A2E8F6 guifg=#5A5E68 gui=bold
 

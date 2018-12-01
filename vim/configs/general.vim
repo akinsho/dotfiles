@@ -229,14 +229,14 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 if !exists('g:gui_oni')
 set background=dark
-colorscheme night-owl
-"   try
-"     let g:one_allow_italics = 1
-"     colorscheme one
-"     call one#highlight('Folded', 'db7093', 'none', 'bold')
-"    catch
-"      colorscheme onedark
-" endtry
+" colorscheme night-owl
+  try
+    let g:one_allow_italics = 1
+    colorscheme one
+    call one#highlight('Folded', 'db7093', 'none', 'bold')
+   catch
+     colorscheme onedark
+endtry
 endif
 
 ""---------------------------------------------------------------------------//
@@ -254,9 +254,9 @@ function! GetTitleString() abort
 
   return fnamemodify(getcwd(), ':t')
 endfunction
-" set titlestring=%{GetTitleString()}
-" let &titlestring=' ❐ %f  %r %m'
-" set title
+set titlestring=%{GetTitleString()}
+let &titlestring=' ❐ %f  %r %m'
+set title
 
 ""---------------------------------------------------------------------------//
 "Nvim {{{1
