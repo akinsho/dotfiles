@@ -13,8 +13,8 @@ let g:deoplete#enable_ignore_case      = 1
 let g:deoplete#enable_camel_case       = 1
 let g:deoplete#max_menu_width          = 80
 let g:deoplete#max_menu_height         = 50
-let g:deoplete#auto_complete_delay     = 50
 let g:deoplete#file#enable_buffer_path = 1
+" let g:deoplete#auto_complete_delay     = 50
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns   = {}
 endif
@@ -29,5 +29,5 @@ call deoplete#custom#source('file',         'mark', '')
 call deoplete#custom#source('jedi',         'mark', '')
 call deoplete#custom#source('typescript',   'mark', '')
 call deoplete#custom#source('ultisnips',    'mark', '')
-call deoplete#custom#source('flow',         'mark', 'λ')
 call deoplete#custom#source('around',       'mark', '⚡')
+" call deoplete#custom#source('flow',         'mark', 'λ')
