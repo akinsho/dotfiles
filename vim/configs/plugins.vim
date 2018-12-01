@@ -165,7 +165,7 @@ endfunction
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
-Plug 'jxnblk/vim-mdx-js'
+Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx'}
 Plug 'heavenshell/vim-jsdoc'
 
 "Themes  {{{1
