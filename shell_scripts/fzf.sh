@@ -9,14 +9,10 @@
 # Need to escape the "!" and "*" characters using /
 # --no-ignore = this flag shows node modules etc
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob ''!.git/*'''
-# Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
-export FZF_CTRL_T_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-# export FZF_DEFAULT_COMMAND='rg --files  --hidden --follow -g "!{.git,node_modules,vendor}/*"'
-# export FZF_DEFAULT_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
-# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-# export FZF_DEFAULT_COMMAND='ag --nobreak --nonumbers --noheading . | fzf'
+# Usin ghighlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
+export FZF_CTRL_T_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 
 # To apply to the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

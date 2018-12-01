@@ -1,9 +1,10 @@
 if exists('g:gui_oni')
   finish
 endif
-" \ 'reason': ['ocaml-language-server', '--stdio'],
+
+" \ 'reason': ['~/reason-language-server/reason-language-server.exe'],
 let g:LanguageClient_serverCommands = {
-    \ 'reason': ['~/reason-language-server/reason-language-server.exe'],
+    \ 'reason': ['ocaml-language-server', '--stdio'],
     \ 'ocaml': ['ocaml-language-server', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
     \ }
@@ -30,6 +31,7 @@ endif
 
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
+
 " let g:LanguageClient_changeThrottle = 1.5
 
 silent! nunmap gd

@@ -156,12 +156,9 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
   let &showbreak='↪ '
-  " if exists('g:gui_oni')
   " let &showbreak='…'
   " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
   " let &showbreak='→'
-  " else
-  " endif
   if exists('&breakindentopt')
     " set breakindentopt=shift:2
     set breakindentopt=sbr
@@ -270,8 +267,6 @@ if has('nvim')
   set guicursor=i-ci:ver50-Cursor/lCursor
   set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 500000
-  " let g:python_host_prog = glob('~/.pyenv/versions/neovim2/bin/python')
-  " let g:python3_host_prog = glob('~/.pyenv/versions/neovim3/bin/python')
 endif
 
 ""---------------------------------------------------------------------------//
