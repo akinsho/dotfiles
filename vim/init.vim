@@ -17,6 +17,16 @@ augroup vimrc "Ensure all autocommands are cleared
   autocmd!
 augroup END
 
+" The operating system is assigned to a global variable that
+" that can be used elsewhere for conditional system based logic
+let s:os = substitute(system('uname'), "\n", "", "")
+
+if s:os == "Linux"
+  let g:open_command = 'xdg-open'
+elseif s:os == "Darwin"
+  let g:open_command = 'open'
+endif
+
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 let g:dotfiles = $DOTFILES
 let g:disable_relativity = 1
