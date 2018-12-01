@@ -73,12 +73,11 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
 endif
 " CORE {{{1
 "================================
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {'do': './install.sh'})
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
-" Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
-Plug 'Raimondi/delimitMate'
+Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'

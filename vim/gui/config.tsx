@@ -1,5 +1,5 @@
-import * as React from "/Users/akinyulife/Desktop/Coding/oni/dist/mac/Oni.app/Contents/Resources/app/node_modules/react";
-import * as Oni from "/Users/akinyulife/Desktop/Coding/oni/dist/mac/Oni.app/Contents/Resources/app/node_modules/oni-api";
+import * as React from "/Users/akin/Desktop/Coding/oni/dist/mac/Oni.app/Contents/Resources/app/node_modules/react";
+import * as Oni from "/Users/akin/Desktop/Coding/oni/dist/mac/Oni.app/Contents/Resources/app/node_modules/oni-api";
 
 export const activate = (oni: Oni.Plugin.Api) => {
     console.log("config activated");
@@ -117,7 +117,7 @@ const fonts = {
     },
     fira: {
         "editor.fontFamily": "Fira Code",
-        "editor.fontSize": "15px",
+        "editor.fontSize": "16px",
         "editor.linePadding": 5,
     },
     input: {
@@ -150,14 +150,20 @@ export const configuration = {
     //add custom config here, such as
     // UI customizations
     "ui.animations.enabled": true,
-    "configuration.showReferenceBuffer": false,
+    "configuration.showReferenceBuffer": true,
 
     // Debug -----------------------------------
-    "debug.showNotificationOnError": shouldShowErrors(),
+    // "debug.showNotificationOnError": shouldShowErrors(),
+    // "keyDisplayer.showInInsertMode": false,
+    "debug.showNotificationOnError": false,
     "editor.textMateHighlighting.enabled": true,
     "editor.textMateHighlighting.debugScopes": false,
 
     // LSP -------------------------------------
+    "language.reason.languageServer.command":
+        "/home/akin/reason-language-server/reason-language-server.exe",
+    "language.reason.languageServer.arguments": [],
+    "language.reason.languageServer.configuration": {},
 
     // Flow Language Server ===============================================
     // "language.javascript.languageServer.command": "flow-language-server",
@@ -195,9 +201,9 @@ export const configuration = {
     "experimental.vcs.sidebar": true,
     "experimental.vcs.blame.enabled": true,
     "experimental.particles.enabled": false,
-    "experimental.sessions.enabled": false,
+    "experimental.sessions.enabled": true,
     "experimental.vcs.blame.mode": "auto",
-    "experimental.colorHighlight.enabled": true,
+    "experimental.colorHighlight.enabled": false,
     "experimental.indentLines.enabled": true,
     "experimental.indentLines.color": "rgba(94,129,206,0.321)",
     "experimental.indentLines.bannedFiletypes": [".csv", ".md", ".txt"],
