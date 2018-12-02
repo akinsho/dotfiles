@@ -6,10 +6,10 @@ let g:indentLine_bufNameExclude = [
       \ 'Startify',
       \ 'terminal',
       \ 'help',
-      \ 'txt',
       \ 'magit',
       \ 'peekabo'
       \]
+let g:indentLine_bufTypeExclude = ['help', 'terminal']
 
 let g:indentLine_faster         = 1
 let g:indentLine_setConceal     = 1
