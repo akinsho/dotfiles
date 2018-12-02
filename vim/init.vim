@@ -19,7 +19,6 @@ augroup END
 
 " The operating system is assigned to a global variable that
 " that can be used elsewhere for conditional system based logic
-" as I work on both mac and linux
 " TODO: find out if a better alternative is `if has('mac') or if has('linux')`
 let g:os = substitute(system('uname'), "\n", "", "")
 
