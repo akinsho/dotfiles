@@ -119,7 +119,6 @@ inoremap <expr><S-TAB> pumvisible()?"\<C-p>":"\<TAB>"
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
-" nnoremap <leader>q :bd!<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " search visual selection
@@ -202,19 +201,9 @@ nnoremap tn :tab split<cr>
 nnoremap to :tabonly<cr>
 nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
-" Switch between tabs
-nnoremap <leader>1 1gt
-nnoremap <leader>2 2gt
-nnoremap <leader>3 3gt
-nnoremap <leader>4 4gt
-nnoremap <leader>5 5gt
-nnoremap <leader>6 6gt
-nnoremap <leader>7 7gt
-nnoremap <leader>8 8gt
-nnoremap <leader>9 9gt
+
 " ========== Multiple Cursor Replacement ========
 " http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
-
 let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
 
 nnoremap cn *``cgn
@@ -222,16 +211,6 @@ nnoremap cN *``cgN
 
 vnoremap <expr> cn g:mc . "``cgn"
 vnoremap <expr> cN g:mc . "``cgN"
-
-function! SetupCR()
-  nnoremap <Enter> :nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z
-endfunction
-
-nnoremap cq :call SetupCR()<CR>*``qz
-nnoremap cQ :call SetupCR()<CR>#``qz
-
-vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
-vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call utils#HLNext(0.4)<cr>
@@ -664,9 +643,6 @@ nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 " Show last search in quickfix - http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
-
-" cnoremap <expr> <CR> utils#CCR()
-
 " Conditionally modify character at end of line
 nnoremap <silent> <localleader>, :call utils#ModifyLineEndDelimiter(',')<cr>
 nnoremap <silent> <localleader>; :call utils#ModifyLineEndDelimiter(';')<cr>

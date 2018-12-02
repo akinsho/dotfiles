@@ -1,34 +1,7 @@
-""---------------------------------------------------------------------------//
-" => Helper Functions {{{1
-""---------------------------------------------------------------------------//
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
+" A good number of these settings are inspired by or stolen from vim-sensible
+" Or were solutions to platform specific issues and should be revisited if they are
+" to see if they are still necessary
 
-  let l:tmux_start = "\<Esc>Ptmux;"
-  let l:tmux_end = "\<Esc>\\"
-
-  return l:tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . l:tmux_end
-endfunction
-if !has('nvim')
-  let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-  let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-endif
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ''
-endfunction
-
-if !g:gui_neovim_running
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-endif
-""---------------------------------------------------------------------------//
-" Macvim {{{1
-""---------------------------------------------------------------------------//
-" set shell=/bin/bash "run a simple bash rc without all the bells and whistles
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
@@ -148,7 +121,6 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " Display {{{1
 " --------------------------------------------------------------------------
 set cmdheight=2 " Set command line height to two lines
-set modelines=1
 set conceallevel=2
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
@@ -167,7 +139,7 @@ endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
-set nolist                              " show invisible chars
+set nolist                              " don't show invisible chars
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
 set listchars+=precedes:…
@@ -363,6 +335,7 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 "Spelling {{{1
 "====================================================================================
+" FIXME: There is no spellfile at this path
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 set fileformats=unix,mac,dos
 set complete+=kspell
@@ -372,17 +345,6 @@ set complete+=kspell
 set mousehide
 set mouse=nv
 set mousefocus
-function! ToggleMouse()
-  " check if mouse is enabled
-  if &mouse=='nv'
-    " disable mouse
-    set mouse=
-  else
-    " enable mouse everywhere
-    set mouse=nv
-  endif
-endfunc
-nnoremap § :call ToggleMouse()<CR>
 
 if !has('nvim')
   if empty("$TMUX")
@@ -407,4 +369,3 @@ endif
 set secure  " Disable autocmd etc for project local vimrc files.
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 ""---------------------------------------------------------------------------//
-" vim:foldmethod=marker:foldlevel=0

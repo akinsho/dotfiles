@@ -1,13 +1,13 @@
 ""---------------------------------------------------------------------------//
 " Highlights
 ""---------------------------------------------------------------------------//
-" Highlight cursor column onwards - kind of cool
-""---------------------------------------------------------------------------//
-" let &colorcolumn=join(range(81,999),",")
-" set colorcolumn=80
-""---------------------------------------------------------------------------//
 
 function! ApplyUserHighlights() abort
+  " Highlight cursor column onwards - kind of cool
+  "---------------------------------------------------------------------------//
+  let &colorcolumn=join(range(81,999),",")
+  set colorcolumn=80
+  "---------------------------------------------------------------------------//
   syntax clear SpellBad
   syntax clear SpellCap
   syntax clear SpellLocal
@@ -22,16 +22,14 @@ function! ApplyUserHighlights() abort
   highlight SpellCap  term=underline cterm=italic ctermfg=Blue
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
-  " Clearing conceal messes up indent guide lines
-  " highlight clear Conceal "Sets no highlighting for conceal
   highlight Conceal gui=bold
   highlight Todo gui=bold
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
   ""---------------------------------------------------------------------------//
-  "few nicer JS colours
+  "Nicer JS colours
   ""---------------------------------------------------------------------------//
-  " highlight jsFuncCall gui=italic ctermfg=cyan
+  highlight jsFuncCall gui=italic
   highlight Comment gui=italic cterm=italic
   highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
   highlight jsxAttrib cterm=italic,bold ctermfg=121
@@ -73,20 +71,22 @@ function! ApplyUserHighlights() abort
   "Autocomplete menu highlighting
   ""---------------------------------------------------------------------------//
   highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-  "Remove vertical separator
   " highlight Identifier gui=italic,bold
-  " highlight VertSplit guibg=bg guifg=bg
   "make the completion menu a bit more readable
   " highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
   " highlight! PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
   "Color the tildes at the end of the buffer
   " hi link EndOfBuffer VimFgBgAttrib
+
+  "Remove vertical separator
+  " highlight VertSplit guibg=bg guifg=bg
   ""---------------------------------------------------------------------------//
 endfunction
 
-augroup InitHighlights
-  au!
-  if !exists('g:gui_oni')
+
+if !exists('g:gui_oni')
+  augroup InitHighlights
+    au!
     autocmd ColorScheme * silent! call ApplyUserHighlights()
-  endif
-augroup END
+  augroup END
+endif

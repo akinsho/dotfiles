@@ -55,11 +55,12 @@ function! LoadConfigs(s) abort
             endtry
         endif
     endfor
-    echohl WarningMsg
+    " echohl WarningMsg
     " echom l:loaded . ' plugin configs successfully loaded'
-    echohl none
+    " echohl none
 endfunction
 
+" This could be refactored to be used with the above if I was less lazy/more clever
 function! Source(arg) abort
     try
         exe 'source ' . g:dotfiles . a:arg
@@ -106,8 +107,11 @@ call Source('/vim/configs/general.vim')
 call Source('/vim/configs/highlight.vim')
 call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
-call Source('/vim/configs/utils.vim') "Previously autoloaded but difficult to port
 call Source('/vim/configs/open-changed-files.vim')
+" FIXME: these two things should not be being sourced manually here
+" I need to figure out how to create symlinks from here to the correct
+" directories if they don't already exist
+call Source('/vim/configs/utils.vim') "Previously autoloaded but difficult to port
 call Source('/vim/plugin/token.vim')
 call LoadConfigs(s:settings)
 "NOTE: Order Matters here as this works like an after overwriting Settings for oni
