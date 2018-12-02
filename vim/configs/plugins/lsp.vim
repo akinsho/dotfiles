@@ -8,8 +8,6 @@ let g:LanguageClient_serverCommands = {
     \ 'ocaml': ['ocaml-language-server', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
     \ }
-" \ 'javascript': ['flow-language-server', '--stdio'],
-" \ 'javascript.jsx': ['flow-language-server', '--stdio'],
 
 if executable('javascript-typescript-stdio')
   let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
@@ -32,7 +30,8 @@ endif
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
-" let g:LanguageClient_changeThrottle = 1.5
+" let g:LanguageClient_loggingLevel = 'DEBUG' 
+" let g:LanguageClient_loggingFile = '~/lsp.log'
 
 silent! nunmap gd
 nnoremap <silent> <localleader>K :call LanguageClient_textDocument_hover()<CR>

@@ -37,6 +37,16 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
+" function! BuildTern(info)
+"   if a:info.status ==# 'installed' || a:info.force
+"     !npm install && npm install -g tern
+"   endif
+" endfunction
+" Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
+" Plug 'carlitux/deoplete-ternjs',
+"   \{'do': 'npm install -g tern' }
+" Code completion
+
 " Deoplete  {{{1
 "NVIM ====================================
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
@@ -47,15 +57,6 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    function! BuildTern(info)
-      if a:info.status ==# 'installed' || a:info.force
-        !npm install && npm install -g tern
-      endif
-    endfunction
-    " Plug 'ternjs/tern_for_vim', {'do':function('BuildTern')}
-    " Plug 'carlitux/deoplete-ternjs',
-    "   \{'do': 'npm install -g tern' }
-    " Code completion
     Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
     Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
     Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
