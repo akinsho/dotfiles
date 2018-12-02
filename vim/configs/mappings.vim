@@ -143,15 +143,6 @@ cmap w!! w !sudo tee % >/dev/null
 " insert path of current file into a command
 cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
 cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
-" Loop cnext / cprev / lnext / lprev {{{1
-command! Cnext try | cnext | catch | cfirst | catch | endtry
-command! Cprev try | cprev | catch | clast | catch | endtry
-command! Lnext try | lnext | catch | lfirst | catch | endtry
-command! Lprev try | lprev | catch | llast | catch | endtry
-cabbrev cnext Cnext
-cabbrev cprev CPrev
-cabbrev lnext Lnext
-cabbrev lprev Lprev
 
 command! AutoResize call utils#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
@@ -169,14 +160,18 @@ nno <expr> cof utils#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enab
 nnoremap <expr> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
 nnoremap <expr> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 " c-a / c-e everywhere - RSI.vim provides these
-cnoremap <C-A> <Home>
-cnoremap <C-E> <End>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-b> <Left>
+cnoremap <C-d> <Del>
+cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>
 " Scroll command history
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
+" Insert escaped '/' while inputting a search pattern
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/
 "Save
 nnoremap <C-S> :update<cr>
-inoremap <leader>s <C-O>:update<cr>
 "Save all files
 nnoremap qa :wqa<CR>
 " Quit

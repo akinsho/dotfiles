@@ -65,19 +65,6 @@ function! ApplyUserHighlights() abort
   else
     highlight MatchParen cterm=bold ctermbg=none guifg=NONE guibg=#29EF58
   endif
-  ""---------------------------------------------------------------------------//
-  " Startify Highlighting
-  ""---------------------------------------------------------------------------//
-  hi StartifyBracket  guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifyFile     guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifyFooter   guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifyHeader   guifg=#E7B563 ctermfg=114 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifyNumber   guifg=#f8f8f2 ctermfg=215 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifyPath     guifg=#8a8a8a ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifySection  guifg=#E7B563 ctermfg=114 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifySelect   guifg=#5fdfff ctermfg=81 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifySlash    guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-  hi StartifySpecial  guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
   " Highlight VCS conflict markers
   match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   if has('nvim')
@@ -101,7 +88,7 @@ function! ApplyUserHighlights() abort
   "---------------------------------------------------------------------------//
   " Illuminated Word
   "---------------------------------------------------------------------------//
-  call ExtendHighlight('CursorLine', 'illuminatedWord', 'gui=underline cterm=underline')
+  hi illuminatedWord gui=underline
 endfunction
 
 
