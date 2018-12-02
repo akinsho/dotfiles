@@ -117,35 +117,35 @@ Plug 'othree/javascript-libraries-syntax.vim',
  Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 "Git {{{1
 " ==============================
+Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 
 " Text Objects {{{1
 " =====================
-Plug 'Yilin-Yang/vim-markbar'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'kana/vim-textobj-user'
-      \  | Plug 'vimtaku/vim-textobj-keyvalue'
-       \ | Plug 'thalesmello/vim-textobj-methodcall'
-       \ | Plug 'rhysd/vim-textobj-conflict'
-       \ | Plug 'kana/vim-operator-user'
-       \ | Plug 'glts/vim-textobj-comment'
-       \ | Plug 'kana/vim-textobj-function'
-       \ | Plug 'thinca/vim-textobj-function-javascript'
-       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      \ | Plug 'rhysd/vim-textobj-conflict'
+      \ | Plug 'kana/vim-operator-user'
+      \ | Plug 'glts/vim-textobj-comment'
+      \ | Plug 'kana/vim-textobj-function'
+      \ | Plug 'thinca/vim-textobj-function-javascript'
+      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      " \  | Plug 'vimtaku/vim-textobj-keyvalue'
+      " \ | Plug 'thalesmello/vim-textobj-methodcall'
 
 "Search Tools {{{1
 "=======================
 Plug 'RRethy/vim-illuminate'
-Plug 'rizzatti/dash.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
+Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
 Plug 'kassio/neoterm',        Cond(has('nvim'))
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
@@ -183,6 +183,7 @@ if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
 else
   runtime! macros/matchit.vim
 endif
+
 " Load immediately {{{1
 call plug#load('vim-fat-finger')
 "}}}

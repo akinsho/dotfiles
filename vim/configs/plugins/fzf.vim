@@ -61,7 +61,7 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
         \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 
   command! -bang Dots
-        \ call fzf#run(fzf#wrap('dotfiles', {'dir': g:dotfiles}, <bang>0))
+        \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
   command! Modified call fzf#run(fzf#wrap(
         \ {'source': 'git ls-files --exclude-standard --others --modified'}))
@@ -113,6 +113,7 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
   nnoremap <localleader>mm :Maps<CR>
 
   let g:fzf_nvim_statusline = 1
+
   "Customize fzf colors to match your color scheme
   let g:fzf_colors =
         \ { 'fg':    ['fg', 'Normal'],
