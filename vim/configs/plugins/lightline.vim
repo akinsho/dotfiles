@@ -1,6 +1,7 @@
 if exists('g:gui_oni')
   finish
 endif
+
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
@@ -38,22 +39,47 @@ let g:lightline = {
       \   'AleError':   'error',
       \   'AleWarning': 'warning',
       \   'AleOk':      'ok',
+      \   'buffers': 'tabsel',
       \ },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
-"FIXME: Lightline Bufferline
-" let g:lightline#bufferline#modified  = ' @'
-" let g:lightline.component_type   = {'buffers': 'tabsel'}
-" let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-" let g:lightline.tabline = {
-"       \ 'left': [ [ 'buffers' ] ],
-"       \ 'right': [ [ 'close' ] ] }
-" let g:lightline.tab = {
-"       \ 'active': [ 'tabnum', 'filename', 'modified' ],
-"       \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
-" 
-" let g:lightline#bufferline#unicode_symbols = 1
-" g:lightline#bufferline#show_number = 2
+
+"Lightline Bufferline
+
+set showtabline=2
+
+let g:lightline.tabline = {
+      \ 'left': [ [ 'buffers' ] ],
+      \ 'right': [ [ 'close' ] ] 
+      \}
+let g:lightline.component_expand = {
+      \ 'buffers': 'lightline#bufferline#buffers'
+      \ }
+let g:lightline#bufferline#number_map = {
+      \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
+      \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
+      \ }
+let g:lightline.tab = {
+      \ 'active': [ 'tabnum', 'filename', 'modified' ],
+      \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+
+let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#min_buffer_count = 2
+let g:lightline#bufferline#filename_modifier = ':t'
+let g:lightline#bufferline#unicode_symbols = 1
+let g:lightline#bufferline#show_number = 2
+let g:lightline#bufferline#enable_devicons = 1
+
+nnoremap <Leader>1 <Plug>lightline#bufferline#go(1)
+nnoremap <Leader>2 <Plug>lightline#bufferline#go(2)
+nnoremap <Leader>3 <Plug>lightline#bufferline#go(3)
+nnoremap <Leader>4 <Plug>lightline#bufferline#go(4)
+nnoremap <Leader>5 <Plug>lightline#bufferline#go(5)
+nnoremap <Leader>6 <Plug>lightline#bufferline#go(6)
+nnoremap <Leader>7 <Plug>lightline#bufferline#go(7)
+nnoremap <Leader>8 <Plug>lightline#bufferline#go(8)
+nnoremap <Leader>9 <Plug>lightline#bufferline#go(9)
+nnoremap <Leader>0 <Plug>lightline#bufferline#go(10)
 
 
 function! LightLineCsv()
@@ -225,43 +251,46 @@ if exists('g:lightline')
   let s:gutter_grey  = ['#636d83', 238]
   let s:comment_grey = ['#5c6370', 59]
 
-  " TODO: Use Lightline bufferline -- needs configuring
+  "Lightline bufferline Colors
   let s:bright_blue  = ['#A2E8F6', 58]
   let s:grey         = ['#5A5E68', 59]
+  let s:background = ['#212129', 59]
+  let s:selected_background = ['#5A5E68', 59]
 
 
-  let s:p = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
+  let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
 
-  let s:p.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ] ]
-  let s:p.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:p.normal.middle   = [ [ s:comment_grey, s:black ] ]
-
-
-  let s:p.inactive.left   = [ [ s:comment_grey, s:black ], [ s:comment_grey, s:black ] ]
-  let s:p.inactive.right  = [ [ s:comment_grey, s:black ], [ s:comment_grey, s:black ] ]
-  let s:p.inactive.middle = [ [ s:comment_grey, s:black ] ]
-
-  let s:p.insert.left     = [ [ s:green, s:black ], [ s:comment_grey, s:black ] ]
-  let s:p.insert.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:p.insert.middle   = [ [ s:comment_grey, s:black ] ]
-
-  let s:p.replace.left     = [ [ s:light_red, s:black ], [ s:comment_grey, s:black ] ]
-  let s:p.replace.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:p.replace.middle   = [ [ s:comment_grey, s:black ] ]
-
-  let s:p.visual.left     = [ [ s:magenta, s:black ], [ s:comment_grey, s:black ] ]
-  let s:p.visual.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:p.visual.middle   = [ [ s:comment_grey, s:black ] ]
-
-  let s:p.tabline.left    = [ [ s:comment_grey, s:black ] ]
-  let s:p.tabline.right   = [ [ s:gutter_grey, s:black ] ]
-  let s:p.tabline.middle  = [ [ s:black, s:black ] ]
-  let s:p.tabline.tabsel  = [ [ s:white, s:black ] ]
-
-  let s:p.normal.error    = [ [ s:light_red, s:black ] ]
-  let s:p.normal.warning  = [ [ s:light_yellow, s:black ] ]
-  let s:p.normal.ok  = [ [ s:green, s:black ] ]
+  " Each Subarray represents the [ForegroundColorVar, BackgroundColorVar]
+  let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ] ]
+  let s:theme.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
+  let s:theme.normal.middle   = [ [ s:comment_grey, s:black ] ]
 
 
-  let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:p)
+  let s:theme.inactive.left   = [ [ s:comment_grey, s:black ], [ s:comment_grey, s:black ] ]
+  let s:theme.inactive.right  = [ [ s:comment_grey, s:black ], [ s:comment_grey, s:black ] ]
+  let s:theme.inactive.middle = [ [ s:comment_grey, s:black ] ]
+
+  let s:theme.insert.left     = [ [ s:green, s:black ], [ s:comment_grey, s:black ] ]
+  let s:theme.insert.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
+  let s:theme.insert.middle   = [ [ s:comment_grey, s:black ] ]
+
+  let s:theme.replace.left     = [ [ s:light_red, s:black ], [ s:comment_grey, s:black ] ]
+  let s:theme.replace.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
+  let s:theme.replace.middle   = [ [ s:comment_grey, s:black ] ]
+
+  let s:theme.visual.left     = [ [ s:magenta, s:black ], [ s:comment_grey, s:black ] ]
+  let s:theme.visual.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
+  let s:theme.visual.middle   = [ [ s:comment_grey, s:black ] ]
+
+  let s:theme.tabline.left    = [ [ s:grey, s:background ] ]
+  let s:theme.tabline.right   = [ [ s:grey, s:background ] ]
+  let s:theme.tabline.middle  = [ [ s:grey, s:background ] ]
+  let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
+
+  let s:theme.normal.error    = [ [ s:light_red, s:black ] ]
+  let s:theme.normal.warning  = [ [ s:light_yellow, s:black ] ]
+  let s:theme.normal.ok  = [ [ s:green, s:black ] ]
+
+
+  let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:theme)
 endif

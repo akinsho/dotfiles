@@ -43,7 +43,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'Shougo/neco-vim',      { 'for': 'vim' },
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
-    Plug 'ap/vim-buftabline'
+      Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -69,7 +69,7 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
           \ 'branch': 'next',
           \ 'do': 'bash install.sh',
           \ }
-  let g:buftabline_modified_symbol = '✎ ' "Local version of the plugin
+  let g:modified_symbol = '✎ ' "Local version of the plugin
 endif
 " CORE {{{1
 "================================
