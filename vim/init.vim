@@ -121,7 +121,7 @@ endfor
 
 call s:load_configs(g:dotfiles . '/vim/configs/plugins')
 
-"NOTE: Order Matters here as this works like an after overwriting Settings for oni
+"NOTE: Order matters here as this works like an after overwriting Settings for oni
 if exists('g:gui_oni')
   call s:safely_source(g:dotfiles . '/vim/gui/oni.vim')
 endif
