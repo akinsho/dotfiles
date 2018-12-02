@@ -153,6 +153,7 @@ function! utils#star_search(key) abort
         \   ':unlet! g:_view',
         \   ':unlet! g:_pos'], "\<cr>")."\<cr>"
 endfunction
+
 "==========[ ModifyLineEndDelimiter ]==========
 " Description:
 "	This function takes a delimiter character and:

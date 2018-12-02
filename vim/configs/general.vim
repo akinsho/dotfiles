@@ -1,7 +1,3 @@
-" A good number of these settings are inspired by or stolen from vim-sensible
-" Or were solutions to platform specific issues and should be revisited if they are
-" to see if they are still necessary
-
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
