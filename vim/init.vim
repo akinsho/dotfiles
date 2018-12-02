@@ -19,11 +19,13 @@ augroup END
 
 " The operating system is assigned to a global variable that
 " that can be used elsewhere for conditional system based logic
-let s:os = substitute(system('uname'), "\n", "", "")
+" as I work on both mac and linux
+" TODO: find out if a better alternative is `if has('mac') or if has('linux')`
+let g:os = substitute(system('uname'), "\n", "", "")
 
-if s:os == "Linux"
+if g:os == "Linux"
   let g:open_command = 'xdg-open'
-elseif s:os == "Darwin"
+elseif g:os == "Darwin"
   let g:open_command = 'open'
 endif
 
@@ -107,6 +109,7 @@ call Source('/vim/configs/mappings.vim')
 call Source('/vim/configs/autocommands.vim')
 call Source('/vim/configs/utils.vim') "Previously autoloaded but difficult to port
 call Source('/vim/configs/open-changed-files.vim')
+call Source('/vim/plugin/token.vim')
 call LoadConfigs(s:settings)
 "NOTE: Order Matters here as this works like an after overwriting Settings for oni
 if exists('g:gui_oni')

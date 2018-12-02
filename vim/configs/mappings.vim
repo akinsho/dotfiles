@@ -124,15 +124,6 @@ nnoremap <localleader>n :enew<cr>
 xnoremap p pgvy
 " search visual selection
 vnoremap // y/<C-R>"<CR>
-
-"Displays the name of the highlight group of the selected word
-nnoremap <leader>E :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
 " nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
@@ -287,7 +278,7 @@ nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 " Capitalize
 ""---------------------------------------------------------------------------//
 " Capitalize.
-nnoremap ,U <ESC>gUiw`]
+nnoremap <leader>U <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
 ""---------------------------------------------------------------------------//
 " Insert Mode Bindings
@@ -297,10 +288,17 @@ inoremap <c-d> <esc>ddi
 " Moving lines
 " ----------------------------------------------------------------------------
 " Move visual block
-nnoremap <silent> ∆ :move+<cr>
-nnoremap <silent> ˚ :move-2<cr>
-vnoremap ˚ :m '<-2<CR>gv=gv
-vnoremap ∆ :m '>+1<CR>gv=gv
+if g:os == 'Darwin'
+  nnoremap <silent> ∆ :move+<cr>
+  nnoremap <silent> ˚ :move-2<cr>
+  vnoremap ˚ :m '<-2<CR>gv=gv
+  vnoremap ∆ :m '>+1<CR>gv=gv
+else
+  nnoremap <silent> <a-k> :move-2<cr>
+  nnoremap <silent> <a-j> :move+<cr>
+  vnoremap <a-k> :m '<-2<CR>gv=gv
+  vnoremap <a-j> :m '>+1<CR>gv=gv
+endif
 
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
@@ -477,10 +475,6 @@ xnoremap & :&&<CR>
 inoremap <C-p> <Esc>pa
 cnoremap <C-v> <C-r>"
 " ----------------------------------------------------------------------------
-"Credit: JGunn :Count
-" ----------------------------------------------------------------------------
-command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
-" ----------------------------------------------------------------------------
 " Todo - Check the repo for Todos and add to the qf list
 " ----------------------------------------------------------------------------
 command! Todo noautocmd vimgrep /TODO\|FIXME/j ** | cw
@@ -549,6 +543,7 @@ onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 ""---------------------------------------------------------------------------//
 " Navigation (CORE)
 ""---------------------------------------------------------------------------//
+"Zero should go to the first non-blank character not to the first column (which could be blank)
 nnoremap 0 ^
 " jk is escape, THEN move to the right to preserve the cursor position, unless
 " at the first column.  <esc> will continue to work the default way.
@@ -571,7 +566,6 @@ noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)?
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
-command! Vimrc :e $MYVIMRC
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap <leader>sv :source $MYVIMRC<cr>
 " Surround word with quotes or braces
