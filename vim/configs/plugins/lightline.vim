@@ -70,16 +70,16 @@ let g:lightline#bufferline#unicode_symbols = 1
 let g:lightline#bufferline#show_number = 2
 let g:lightline#bufferline#enable_devicons = 1
 
-nnoremap <Leader>1 <Plug>lightline#bufferline#go(1)
-nnoremap <Leader>2 <Plug>lightline#bufferline#go(2)
-nnoremap <Leader>3 <Plug>lightline#bufferline#go(3)
-nnoremap <Leader>4 <Plug>lightline#bufferline#go(4)
-nnoremap <Leader>5 <Plug>lightline#bufferline#go(5)
-nnoremap <Leader>6 <Plug>lightline#bufferline#go(6)
-nnoremap <Leader>7 <Plug>lightline#bufferline#go(7)
-nnoremap <Leader>8 <Plug>lightline#bufferline#go(8)
-nnoremap <Leader>9 <Plug>lightline#bufferline#go(9)
-nnoremap <Leader>0 <Plug>lightline#bufferline#go(10)
+nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
+nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
+nmap <Localleader>3 <Plug>lightline#bufferline#go(3)
+nmap <Localleader>4 <Plug>lightline#bufferline#go(4)
+nmap <Localleader>5 <Plug>lightline#bufferline#go(5)
+nmap <Localleader>6 <Plug>lightline#bufferline#go(6)
+nmap <Localleader>7 <Plug>lightline#bufferline#go(7)
+nmap <Localleader>8 <Plug>lightline#bufferline#go(8)
+nmap <Localleader>9 <Plug>lightline#bufferline#go(9)
+nmap <Localleader>0 <Plug>lightline#bufferline#go(10)
 
 
 function! LightLineCsv()
@@ -260,7 +260,7 @@ if exists('g:lightline')
 
   let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
 
-  " Each Subarray represents the [ForegroundColorVar, BackgroundColorVar]
+  " Each subarray represents the [ForegroundColor, BackgroundColor]
   let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ] ]
   let s:theme.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
   let s:theme.normal.middle   = [ [ s:comment_grey, s:black ] ]
