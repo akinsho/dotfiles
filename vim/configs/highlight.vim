@@ -1,6 +1,9 @@
 ""---------------------------------------------------------------------------//
 " Highlights
 ""---------------------------------------------------------------------------//
+if !exists('g:gui_oni')
+  finish
+endif
 
 function! ApplyUserHighlights() abort
   " Highlight cursor column onwards - kind of cool
@@ -83,10 +86,7 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
 endfunction
 
-
-if !exists('g:gui_oni')
-  augroup InitHighlights
-    au!
-    autocmd ColorScheme * silent! call ApplyUserHighlights()
-  augroup END
-endif
+augroup InitHighlights
+  au!
+  autocmd ColorScheme * silent! call ApplyUserHighlights()
+augroup END
