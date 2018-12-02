@@ -38,38 +38,34 @@ if g:gui_neovim_running
     let g:dotfiles = '~/Dotfiles'
 endif
 
-function! LoadConfigs(s) abort
-    let s:plugins = split(globpath(a:s, '*.vim'), '\n')
-    let l:loaded = 0
-    for fpath in s:plugins
-        let s:inactive = match(fpath ,"inactive")
-        if s:inactive == -1
-            try
-                exe 'source ' fpath
-                let l:loaded += 1
-            catch
-                echohl WarningMsg
-                echom 'Error: ----->' . v:exception
-                echom 'Could not load '.fpath
-                echohl none
-            endtry
-        endif
-    endfor
-    " echohl WarningMsg
-    " echom l:loaded . ' plugin configs successfully loaded'
-    " echohl none
-endfunction
-
-" This could be refactored to be used with the above if I was less lazy/more clever
-function! Source(arg) abort
+function! s:safely_source(arg) abort
     try
-        exe 'source ' . g:dotfiles . a:arg
+        exe 'source ' . a:arg
+        return 1
     catch
         echohl WarningMsg
-        echom 'Error: ----->' . v:exception
-        echom 'Could not load'.a:arg
+        echom 'Error ->' . v:exception
+        echom 'Could not load'. a:arg
         echohl none
+        return 0
     endtry
+endfunction
+
+function! s:load_configs(settings_dir) abort
+  let s:plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
+  let s:loaded = 0
+  let s:errors = 0
+  for fpath in s:plugins
+    let s:inactive = match(fpath ,"inactive")
+    if s:inactive == -1
+      let s:result = s:safely_source(fpath)
+      if s:result == 0
+        let s:errors += 1
+      endif
+      let s:loaded += s:result
+    endif
+  endfor
+  echom 'loaded ' . s:loaded . ' configs successfully! ' . s:errors . ' errors'
 endfunction
 
 if !exists('g:gui_oni')
@@ -93,7 +89,7 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "----------------------------------------------------------------------
 " Plugins
 "----------------------------------------------------------------------
-call Source('/vim/configs/plugins.vim')
+call s:safely_source(g:dotfiles . '/vim/configs/plugins.vim')
 "-----------------------------------------------------------------------
 " Essential Settings - Taken care of by Vim Plug
 "---------------------------------------------------------------------------//
@@ -102,21 +98,24 @@ syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-let s:settings = g:dotfiles . '/vim/configs/plugins'
-call Source('/vim/configs/general.vim')
-call Source('/vim/configs/highlight.vim')
-call Source('/vim/configs/mappings.vim')
-call Source('/vim/configs/autocommands.vim')
-call Source('/vim/configs/open-changed-files.vim')
-" FIXME: these two things should not be being sourced manually here
-" I need to figure out how to create symlinks from here to the correct
-" directories if they don't already exist
-call Source('/vim/configs/utils.vim') "Previously autoloaded but difficult to port
-call Source('/vim/plugin/token.vim')
-call LoadConfigs(s:settings)
+let s:files = [
+  \ '/vim/configs/general.vim',
+  \ '/vim/configs/highlight.vim',
+  \ '/vim/configs/mappings.vim',
+  \ '/vim/configs/autocommands.vim',
+  \ '/vim/configs/open-changed-files.vim',
+  \ '/vim/configs/utils.vim',
+  \ '/vim/plugin/token.vim'
+  \]
+
+for file in s:files
+  call s:safely_source(g:dotfiles . file)
+endfor
+
+call s:load_configs(g:dotfiles . '/vim/configs/plugins')
+
 "NOTE: Order Matters here as this works like an after overwriting Settings for oni
 if exists('g:gui_oni')
-  call Source('/vim/gui/oni.vim')
+  call s:safely_source(g:dotfiles . '/vim/gui/oni.vim')
 endif
 "---------------------------------------------------------------------------//
-" echom 'Read Vimrc'
