@@ -5,16 +5,14 @@ if has('gui_running')
   let g:ale_set_balloons                       = 1
 endif
 
-" Enable completion where available.
-" let g:ale_completion_enabled                = 1
 let g:ale_lint_on_enter                        = 1
 let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_javascript_prettier_options          =
       \'--single-quote --trailing-comma es5' "Order of arguments matters here!!
-let g:ale_pattern_options =
-      \{'\.min.js$': {'ale_enabled': 0},
+let g:ale_pattern_options = {
+      \ '\.min.js$': {'ale_enabled': 0},
       \}
 let g:ale_fixers = {
       \'reason':['refmt'],
@@ -48,6 +46,7 @@ let g:ale_linters                     = {
       \'html':['tidy']
       \}
 let g:ale_linter_aliases    = {'jsx': 'css', 'tsx': 'css'}
+let g:ale_open_list         = 0
 nmap [a <Plug>(ale_next_wrap)
 nmap ]a <Plug>(ale_previous_wrap)
 nmap [d <Plug>(ale_detail)

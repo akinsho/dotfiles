@@ -53,7 +53,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'Shougo/neco-vim',      { 'for': 'vim' },
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
-      Plug 'mengelbrecht/lightline-bufferline'
+      \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -138,7 +138,7 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'thinca/vim-textobj-function-javascript'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       " \  | Plug 'vimtaku/vim-textobj-keyvalue'
-      " \ | Plug 'thalesmello/vim-textobj-methodcall'
+      " \  | Plug 'thalesmello/vim-textobj-methodcall'
 
 "Search Tools {{{1
 "=======================
@@ -146,8 +146,8 @@ Plug 'RRethy/vim-illuminate'
 Plug 'dyng/ctrlsf.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
-Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
-Plug 'kassio/neoterm',        Cond(has('nvim'))
+Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
+Plug 'kassio/neoterm'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
