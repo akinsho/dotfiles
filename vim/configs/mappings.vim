@@ -157,8 +157,8 @@ cabbrev lprev Lprev
 command! AutoResize call utils#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
 
-nnoremap <silent><expr> <leader>* utils#star_search('*')
-vnoremap <silent><expr> <leader>* utils#star_search('*')
+" Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
+nnoremap * m`:keepjumps normal! *``<cr>
 
 nno <expr> [of utils#open_folds('enable')
 nno <expr> ]of utils#open_folds('disable')
@@ -201,9 +201,10 @@ nnoremap tn :tab split<cr>
 nnoremap to :tabonly<cr>
 nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
-
+""---------------------------------------------------------------------------//
 " ========== Multiple Cursor Replacement ========
 " http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+""---------------------------------------------------------------------------//
 let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
 
 nnoremap cn *``cgn
@@ -212,9 +213,19 @@ nnoremap cN *``cgN
 vnoremap <expr> cn g:mc . "``cgn"
 vnoremap <expr> cN g:mc . "``cgN"
 
-" This rewires n and N to do the highlighing...
-nnoremap <silent> n   n:call utils#HLNext(0.4)<cr>
-nnoremap <silent> N   N:call utils#HLNext(0.4)<cr>
+" 1. Position the cursor over a word; alternatively, make a selection.
+" 2. Hit cq to start recording the macro.
+" 3. Once you are done with the macro, go back to normal mode.
+" 4. Hit Enter to repeat the macro over search matches.
+function! SetupCR()
+  nnoremap <Enter> :nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z
+endfunction
+
+nnoremap cq :call SetupCR()<CR>*``qz
+nnoremap cQ :call SetupCR()<CR>#``qz
+
+vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
+vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
 "----------------------------------------------------------------------------
 "Buffers
 "----------------------------------------------------------------------------
@@ -243,11 +254,6 @@ nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
 nnoremap ; :
 nnoremap : ;
-" Allow using alt in macOS without enabling “Use Option as Meta key”
-nmap ¬ <a-l>
-nmap ˙ <a-h>
-nmap ∆ <a-j>
-nmap ˚ <a-k>
 ""---------------------------------------------------------------------------//
 " Last Inserted
 ""---------------------------------------------------------------------------//
@@ -267,7 +273,12 @@ inoremap <c-d> <esc>ddi
 " Moving lines
 " ----------------------------------------------------------------------------
 " Move visual block
-if g:os == 'Darwin'
+if has('mac')
+  " Allow using alt in macOS without enabling “Use Option as Meta key”
+  nmap ¬ <a-l>
+  nmap ˙ <a-h>
+  nmap ∆ <a-j>
+  nmap ˚ <a-k>
   nnoremap <silent> ∆ :move+<cr>
   nnoremap <silent> ˚ :move-2<cr>
   vnoremap ˚ :m '<-2<CR>gv=gv
@@ -306,8 +317,7 @@ omap aq  a'
 xmap aq  a'
 omap iq  i'
 xmap iq  i'
-
-" \"double quote"
+"double quote
 omap ad  a"
 xmap ad  a"
 omap id  i"
@@ -321,7 +331,6 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 nnoremap gV `[V`]
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
-xnoremap <leader>*          :<c-u>call utils#search_all()<cr>//<cr>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 
@@ -379,7 +388,7 @@ function! IndTxtObj(inner)
   endif
 endfunction
 
-nnoremap <F6> :! open %<CR>
+nnoremap <F6> :! g:open_command %<CR>
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
@@ -400,14 +409,13 @@ vnoremap < <gv
 vnoremap > >gv
 "Remap back tick for jumping to marks more quickly back
 nnoremap ' `
-nnoremap ` '
 ""---------------------------------------------------------------------------//
 "Sort a visual selection
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window
-nnoremap <localleader>C :<c-f>
+nnoremap <leader>c :<c-f>
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 ""---------------------------------------------------------------------------//
@@ -417,14 +425,6 @@ nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 nnoremap <leader>- :sp<CR>
 "Create a vertical split
 nnoremap \| :vsp<CR>
-" Resize window vertically  - shrink
-nnoremap <down> 15<c-w>-
-" Resize window vertically - grow
-nnoremap <up> 15<c-w>+
-" Increase window size horizontally
-nnoremap <left> 15<c-w>>
-" Decrease window size horizontally
-nnoremap <right> 15<c-w><
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
 "Close every window in the current tabview but the current one
@@ -437,10 +437,13 @@ nnoremap <leader>sw <C-W>R
 nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
-"close loclist or qflist
-nnoremap <leader>x :cclose <bar> lclose<CR>
 "Indent a page
 nnoremap <C-G>f gg=G<CR>
+
+nnoremap <down> <nop>
+nnoremap <up> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>

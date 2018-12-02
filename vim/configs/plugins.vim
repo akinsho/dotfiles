@@ -78,7 +78,7 @@ Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {'do': './instal
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
-Plug 'cohama/lexima.vim' ", Cond(!exists('g:gui_oni'))
+Plug 'cohama/lexima.vim' 
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
@@ -105,10 +105,10 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-" ========================================= Oni Bug Above this line
+" ===========================
 "Syntax {{{1
 "============================
-Plug 'ianks/vim-tsx' " , Cond(!exists('g:gui_oni'))
+Plug 'ianks/vim-tsx' 
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
 Plug 'sheerun/vim-polyglot'
@@ -167,7 +167,7 @@ Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx'}
-Plug 'heavenshell/vim-jsdoc'
+Plug 'heavenshell/vim-jsdoc', { 'on': 'JSDoc' }
 
 "Themes  {{{1
 "===============================

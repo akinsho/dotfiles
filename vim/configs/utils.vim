@@ -42,12 +42,6 @@ function! utils#search() abort
   let @@ = regsave
 endfunction
 
-function! utils#search_all() abort
-  call utils#search()
-  call setqflist([])
-  execute 'bufdo vimgrepadd! /'. @/ .'/ %'
-endfunction
-
 " CREDIT: MHINZ
 " Switch to VCS root, if there is one.
 function! utils#cd() abort
@@ -133,26 +127,6 @@ function! utils#auto_resize()
   endif
 endfunction
 
-
-" This keeps the cursor in place when using * or #
-function! utils#star_search(key) abort
-  let g:_view = winsaveview()
-  let out = a:key
-
-  if mode() ==? 'v'
-    let out = '"vy' . (a:key == '*' ? '/' : '?') . "\<c-r>="
-          \. 'substitute(escape(@v, ''/\.*$^~[''), ''\_s\+'', ''\\_s\\+'', ''g'')'
-          \. "\<cr>\<cr>"
-  endif
-
-  return out."N:\<c-u>"
-        \   .join(['let g:_pos = getpos(''.'')[1:2]',
-        \   ':call winrestview(g:_view)',
-        \   ':call cursor(g:_pos)',
-        \   ':set hlsearch',
-        \   ':unlet! g:_view',
-        \   ':unlet! g:_pos'], "\<cr>")."\<cr>"
-endfunction
 
 "==========[ ModifyLineEndDelimiter ]==========
 " Description:
@@ -240,7 +214,7 @@ function! utils#buffer_autosave(enable)
   augroup END
 endfunction
 
-command! -bang AutoSave call utils#autosave(<bang>1)
+command! -bang AutoSave call utils#AutoSave()(<bang>1)
 
 " custom text-object for numerical values
 function! utils#Numbers()
