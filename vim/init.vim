@@ -51,6 +51,12 @@ function! s:safely_source(arg) abort
     endtry
 endfunction
 
+function! s:inform_load_result(loaded, errors) abort
+  echohl String
+  echom 'loaded ' . a:loaded . ' configs successfully! ' . a:errors . ' errors'
+  echohl none
+endfunction
+
 function! s:load_configs(settings_dir) abort
   let s:plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
   let s:loaded = 0
@@ -65,7 +71,8 @@ function! s:load_configs(settings_dir) abort
       let s:loaded += s:result
     endif
   endfor
-  echom 'loaded ' . s:loaded . ' configs successfully! ' . s:errors . ' errors'
+  " Don't block VimEnter to inform of the results
+  call timer_start(800, { tid -> s:inform_load_result(s:loaded, s:errors) })
 endfunction
 
 if !exists('g:gui_oni')
