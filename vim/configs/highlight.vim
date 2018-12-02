@@ -1,9 +1,22 @@
 ""---------------------------------------------------------------------------//
 " Highlights
 ""---------------------------------------------------------------------------//
-if !exists('g:gui_oni')
+if exists('g:gui_oni')
   finish
 endif
+
+" Takes a base - highlight group to extend,
+" group - the new group name
+" add - the settings to add  to the highlight
+function! ExtendHighlight(base, group, add)
+  redir => basehi
+  sil! exe 'highlight' a:base
+  redir END
+  let grphi = split(basehi, '\n')[0]
+  let grphi = substitute(grphi, '^'.a:base.'\s\+xxx', '', '')
+  sil exe 'highlight' a:group grphi a:add
+endfunction
+
 
 function! ApplyUserHighlights() abort
   " Highlight cursor column onwards - kind of cool
@@ -16,7 +29,7 @@ function! ApplyUserHighlights() abort
   syntax clear SpellLocal
   syntax clear SpellRare
   syntax clear Search
-  syntax clear typescriptOpSymbols
+  " syntax clear typescriptOpSymbols
 
   " Highlight over 80 cols in red
   match Error /\%80v.\+/
@@ -74,19 +87,26 @@ function! ApplyUserHighlights() abort
   "Autocomplete menu highlighting
   ""---------------------------------------------------------------------------//
   highlight PmenuSel guibg=#004D40 guifg=white gui=bold
-  " highlight Identifier gui=italic,bold
-  "make the completion menu a bit more readable
+
+  " make the completion menu a bit more readable
   " highlight PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-  " highlight! PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-  "Color the tildes at the end of the buffer
+  " highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+  " Color the tildes at the end of the buffer
   " hi link EndOfBuffer VimFgBgAttrib
 
   "Remove vertical separator
   " highlight VertSplit guibg=bg guifg=bg
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
+
+  "---------------------------------------------------------------------------//
+  " Illuminated Word
+  "---------------------------------------------------------------------------//
+  call ExtendHighlight('CursorLine', 'illuminatedWord', 'gui=underline cterm=underline')
 endfunction
+
 
 augroup InitHighlights
   au!
-  autocmd ColorScheme * silent! call ApplyUserHighlights()
+  autocmd VimEnter * call ApplyUserHighlights()
+  autocmd ColorScheme * call ApplyUserHighlights()
 augroup END

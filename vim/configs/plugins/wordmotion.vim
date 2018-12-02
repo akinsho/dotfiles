@@ -1,1 +1,1 @@
-let g:wordmotion_prefix = '<leader>'
+" let g:wordmotion_prefix = '<leader>'

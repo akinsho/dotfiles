@@ -96,7 +96,6 @@ nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "Use enter to create new lines w/o entering insert mode
 " nnoremap <CR> o<Esc>
-nnoremap <silent><cr>  :call utils#jump()<cr>
 "Below is to fix issues with the ABOVE mappings in quickfix window
 augroup EnterMapping
   au!

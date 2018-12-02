@@ -2,9 +2,9 @@ if exists('g:gui_oni')
   finish
 endif
 
-" \ 'reason': ['~/reason-language-server/reason-language-server.exe'],
+" \ 'reason': ['ocaml-language-server', '--stdio'],
 let g:LanguageClient_serverCommands = {
-    \ 'reason': ['ocaml-language-server', '--stdio'],
+    \ 'reason': ['~/reason-language-server/reason-language-server.exe'],
     \ 'ocaml': ['ocaml-language-server', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
     \ }
@@ -30,8 +30,8 @@ endif
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
-" let g:LanguageClient_loggingLevel = 'DEBUG' 
-" let g:LanguageClient_loggingFile = '~/lsp.log'
+let g:LanguageClient_loggingLevel = 'DEBUG' 
+let g:LanguageClient_loggingFile = '/tmp/lsp.log'
 
 silent! nunmap gd
 nnoremap <silent> <localleader>K :call LanguageClient_textDocument_hover()<CR>

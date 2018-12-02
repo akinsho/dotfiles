@@ -74,39 +74,6 @@ function! utils#cd() abort
   " echohl WarningMsg | echo 'Jumping to '. curdir | echohl NONE
 endfunction
 
-"
-" Smarter tag-based jumping.
-"
-function! utils#jump() abort
-  if (&filetype == 'vim' && &buftype == 'nofile') || &buftype == 'quickfix'
-    execute "normal! \<cr>"
-  elseif &filetype == 'neoman'
-    execute "normal \<c-]>"
-  else
-    if exists('g:cscoped')
-      try
-        execute 'cscope find g' expand('<cword>')
-      catch /E259/
-        echohl WarningMsg
-        redraw | echomsg 'No match found: '. expand('<cword>')
-        echohl NONE
-      endtry
-    else
-      try
-        execute "normal! g\<c-]>"
-      catch /E349/ " no identifier under cursor
-      catch /E426/
-        echohl WarningMsg
-        redraw | echomsg 'No match found: '. expand('<cword>')
-        echohl NONE
-      endtry
-    endif
-    normal! zvzt
-    " call halo#run()
-  endif
-endfunction
-
-
 ""---------------------------------------------------------------------------//
 " Windows
 ""---------------------------------------------------------------------------//

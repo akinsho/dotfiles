@@ -61,7 +61,7 @@ function! s:inform_load_result(loaded, errors) abort
   echohl none
 endfunction
 
-function! s:load_configs(settings_dir) abort
+function! s:load_plugin_configs(settings_dir) abort
   let s:plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
   let s:loaded = 0
   let s:errors = 0
@@ -109,7 +109,7 @@ syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-let s:files = [
+let s:config_files = [
   \ '/vim/configs/general.vim',
   \ '/vim/configs/highlight.vim',
   \ '/vim/configs/mappings.vim',
@@ -119,11 +119,12 @@ let s:files = [
   \ '/vim/plugin/token.vim'
   \]
 
-for file in s:files
+for file in s:config_files
   call s:safely_source(g:dotfiles . file)
 endfor
 
-call s:load_configs(g:dotfiles . '/vim/configs/plugins')
+call s:load_plugin_configs(g:dotfiles . '/vim/configs/plugins')
+
 
 "NOTE: Order matters here as this works like an after overwriting Settings for oni
 if exists('g:gui_oni')
