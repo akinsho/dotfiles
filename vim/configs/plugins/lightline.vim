@@ -274,9 +274,9 @@ if exists('g:lightline')
   let s:theme.insert.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
   let s:theme.insert.middle   = [ [ s:comment_grey, s:black ] ]
 
-  let s:theme.replace.left     = [ [ s:light_red, s:black ], [ s:comment_grey, s:black ] ]
-  let s:theme.replace.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:theme.replace.middle   = [ [ s:comment_grey, s:black ] ]
+  let s:theme.replace.left    = [ [ s:light_red, s:black ], [ s:comment_grey, s:black ] ]
+  let s:theme.replace.right   = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
+  let s:theme.replace.middle  = [ [ s:comment_grey, s:black ] ]
 
   let s:theme.visual.left     = [ [ s:magenta, s:black ], [ s:comment_grey, s:black ] ]
   let s:theme.visual.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
@@ -289,7 +289,7 @@ if exists('g:lightline')
 
   let s:theme.normal.error    = [ [ s:light_red, s:black ] ]
   let s:theme.normal.warning  = [ [ s:light_yellow, s:black ] ]
-  let s:theme.normal.ok  = [ [ s:green, s:black ] ]
+  let s:theme.normal.ok       = [ [ s:green, s:black ] ]
 
 
   let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:theme)
