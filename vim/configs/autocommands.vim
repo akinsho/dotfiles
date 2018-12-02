@@ -63,6 +63,7 @@ augroup SmartClose
   autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
   autocmd FileType qf nnoremap <buffer> <c-p> <up>
         \|nnoremap <buffer> <c-n> <down>
+  autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
 augroup END
 
 function! s:smart_close()
@@ -286,7 +287,6 @@ endfunction
 
 augroup FileType_all "{{{1
   autocmd!
-  " au BufEnter * call lib#cd() "FIXME: Why if this throwing an error
   au BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.

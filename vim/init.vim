@@ -52,7 +52,11 @@ function! s:safely_source(arg) abort
 endfunction
 
 function! s:inform_load_result(loaded, errors) abort
-  echohl String
+  if a:errors == 0
+    echohl String
+  else
+    echohl WarningMsg
+  endif
   echom 'loaded ' . a:loaded . ' configs successfully! ' . a:errors . ' errors'
   echohl none
 endfunction
