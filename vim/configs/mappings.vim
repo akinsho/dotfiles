@@ -546,13 +546,8 @@ imap Jk jk
 xnoremap jk <ESC>
 cnoremap jk <C-C>
 
-nnoremap J :call utils#send_warning('Use <Ctrl-U> Dummy!!')<cr>
-nnoremap K :call utils#send_warning('Use <Ctrl-D> Dummy!!')<cr>
-" Note: These mappings MUST be recursive i.e. `nmap` since `j` and `k` are mapped to be added to the
-" jump list aka this recursively calls the mappings for j and k making sure these movements
-" are added
-" nmap J 10j
-" nmap K 10k
+nnoremap J :call utils#send_warning('Use <Ctrl-U> (1/2 screen up) or <Ctrl-B> (1 screen up) Dummy!!')<cr>
+nnoremap K :call utils#send_warning('Use <Ctrl-D> (1/2 screen down) or <Ctrl-F>  (1 screen down) Dummy!!')<cr>
 
 " Toggle top/center/bottom
 noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
