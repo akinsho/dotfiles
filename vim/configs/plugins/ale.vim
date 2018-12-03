@@ -9,8 +9,6 @@ let g:ale_lint_on_enter                        = 1
 let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1
 let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options          =
-      \'--single-quote --trailing-comma es5' "Order of arguments matters here!!
 let g:ale_pattern_options = {
       \ '\.min.js$': {'ale_enabled': 0},
       \}
@@ -56,5 +54,5 @@ let g:ale_stylus_stylelint_use_global = 0
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = '→ '
 
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+highlight ALEErrorSign guifg=red guibg=none
+highlight ALEWarningSign guifg=yellow guibg=none
