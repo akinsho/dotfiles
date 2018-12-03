@@ -155,23 +155,6 @@ function! utils#ModifyLineEndDelimiter(character)
   call setline('.', newline)
 endfunction
 
-" saves all the visible windows if needed/possible
-function! utils#AutoSave()
-  let this_window = winnr()
-  windo if &buftype != "nofile" && expand('%') != '' && &modified | write | endif
-execute this_window . 'wincmd w'
-endfunction
-
-"line containing the match blinks
-function! utils#HLNext (blinktime)
-  set invcursorline
-  redraw
-  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-  set invcursorline
-  redraw
-endfunction
-
-
 ""---------------------------------------------------------------------------//
 " Credit:  June Gunn  - AutoSave {{{1
 " ----------------------------------------------------------------------------
@@ -186,8 +169,6 @@ function! utils#buffer_autosave(enable)
     endif
   augroup END
 endfunction
-
-command! -bang AutoSave call utils#AutoSave()(<bang>1)
 
 " custom text-object for numerical values
 function! utils#Numbers()

@@ -75,9 +75,7 @@ endfunction
 augroup CheckOutsideTime "{{{1
   autocmd!
   autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
-  au BufEnter * silent! call lib#buffer_autosave
-  au FocusLost * silent! call lib#AutoSave() "Saves all files on switching tabs i.e losing focus, ignoring warnings about untitled buffers
-  " Autosave buffers before leaving them
+  au VimEnter * silent! call utils#buffer_autosave(1)
 augroup end
 
 " Disable paste.{{{
@@ -147,7 +145,6 @@ augroup mutltiple_filetype_settings "{{{1
 
   autocmd FileType html,css,vue,reason,*.jsx,*.js,*.tsx EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
-  autocmd FileType html,markdown,css imap <buffer><expr><tab> <sid>expand_html_tab()
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -212,11 +209,9 @@ if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
-    "Do everything possible to prevent numbers and cursorline in term buffer
-    autocmd BufEnter,BufWinLeave,BufWinEnter,WinEnter,InsertLeave term://* setlocal nonumber norelativenumber nocursorline
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     " TODO: Tidy this up as there must be a way not to run this for fzf term buffers using an if statement
-    if exists('+winhighlight') "&& &filetype !=? 'fzf'
+    if exists('+winhighlight') 
       autocmd TermOpen *
             \ | call s:highlight_myterm()
       " Clear highlight for fzf buffers because yuck
@@ -245,11 +240,6 @@ augroup FileType_all "{{{1
         \   exe "keepjumps normal g`\"" |
         \ endif
 
-  autocmd User Fugitive
-        \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-        \   nnoremap <buffer> .. :edit %:h<CR> |
-        \ endif
-
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
@@ -260,7 +250,6 @@ augroup FileType_all "{{{1
         \ |   unlet! b:ftdetect
         \ |   filetype detect
         \ | endif
-
 
   " Reload Vim script automatically if setlocal autoread
   autocmd BufWritePost,FileWritePost *.vim nested
