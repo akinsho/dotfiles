@@ -56,7 +56,6 @@ augroup SmartClose
         \gitcommit,quickrun,qfreplace,ref,
         \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
         \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
-  " autocmd Filetype qf setl nocolor
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
@@ -152,16 +151,7 @@ augroup mutltiple_filetype_settings "{{{1
   autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-
-  if exists('g:plugs["tern_for_vim"]')
-    autocmd FileType javascript,javascript.jsx,jsx ",typscript,typescript.tsx
-          \ setlocal omnifunc=tern#Complete
-  else
-    autocmd FileType javascript,javascript.jsx,jsx,typscript,tsx
-          \ setlocal omnifunc=javascriptcomplete#CompleteJS
-  endif
 augroup END
-
 
 augroup filetype_javascript_typescript "{{{1
   autocmd!
@@ -218,14 +208,12 @@ function! s:highlight_myterm() abort
   endtry
 endfunction
 
-
 if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
     "Do everything possible to prevent numbers and cursorline in term buffer
     autocmd BufEnter,BufWinLeave,BufWinEnter,WinEnter,InsertLeave term://* setlocal nonumber norelativenumber nocursorline
-    autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     " TODO: Tidy this up as there must be a way not to run this for fzf term buffers using an if statement
     if exists('+winhighlight') "&& &filetype !=? 'fzf'
@@ -237,9 +225,7 @@ if has('nvim')
     autocmd TermOpen * set bufhidden=hide
     au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
   augroup END
-  au BufWinEnter * if &buftype == 'terminal' | setlocal bufhidden=hide | endif
 endif
-
 
 " Setup Help Window "{{{1
 function! s:SetupHelpWindow()

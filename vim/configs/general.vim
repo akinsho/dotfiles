@@ -200,6 +200,7 @@ set background=dark
     colorscheme one
     call one#highlight('Folded', 'db7093', 'none', 'bold')
    catch
+     let g:onedark_terminal_italics = 1
      colorscheme onedark
 endtry
 endif
