@@ -80,11 +80,11 @@ Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
-Plug 'cohama/lexima.vim' 
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
+" Plug 'cohama/lexima.vim' 
 
 "TMUX {{{1
 "============================

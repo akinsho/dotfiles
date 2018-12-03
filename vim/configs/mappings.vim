@@ -108,10 +108,25 @@ function! s:Repeatable(command)
   exe a:command
   call repeat#set(':Repeatable '.a:command."\<cr>")
 endfunction
-
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
+" Auto Closing Pairs
+"Credit: Justinmk
+"---------------------------------------------------------------------------//
+inoremap ( ()<left>
+inoremap { {}<left>
+inoremap ` ``<left>
+inoremap ```<CR> ```<CR>```<Esc>O<Tab>
+inoremap (<CR> (<CR>)<Esc>O<Tab>
+inoremap {<CR> {<CR>}<Esc>O<Tab>
+inoremap {; {<CR>};<Esc>O<Tab>
+inoremap {, {<CR>},<Esc>O<Tab>
+inoremap [<CR> [<CR>]<Esc>O<Tab>
+inoremap ([ ([<CR>])<Esc>O<Tab>
+inoremap [; [<CR>];<Esc>O<Tab>
+inoremap [, [<CR>],<Esc>O<Tab>
+"---------------------------------------------------------------------------//
 "Tab completion
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible()?"\<C-p>":"\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
@@ -534,8 +549,8 @@ cnoremap jk <C-C>
 " Note: These mappings MUST be recursive i.e. `nmap` since `j` and `k` are mapped to be added to the
 " jump list aka this recursively calls the mappings for j and k making sure these movements
 " are added
-nmap J 10j
-nmap K 10k
+" nmap J 10j
+" nmap K 10k
 
 " Toggle top/center/bottom
 noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
