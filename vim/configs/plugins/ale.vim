@@ -24,9 +24,8 @@ let g:ale_sh_shellcheck_options          = '-e SC2039' " Allow local in Shell Ch
 let g:ale_echo_msg_format                = '%linter%: %(code): %%s [%severity%]'
 let g:ale_sign_column_always             = 1
 let g:ale_sign_error                     = '✖'
-let g:ale_echo_delay                     = 80
 let g:ale_sign_warning                   = '❗'
-let g:ale_lint_delay                     = 1000
+let g:ale_reason_ols_use_global          = 1
 let g:ale_warn_about_trailing_whitespace = 1
 let g:ale_linters                     = {
       \'markdown': ['prettier'],
