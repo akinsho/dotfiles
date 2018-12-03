@@ -1,3 +1,9 @@
+function! utils#send_warning(msg) abort
+  echohl WarningMsg
+  echom a:msg
+  echohl none
+endfunction
+
 function! utils#tab_zoom()
   if winnr('$') > 1
     tab split

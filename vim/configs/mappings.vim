@@ -109,22 +109,6 @@ function! s:Repeatable(command)
   call repeat#set(':Repeatable '.a:command."\<cr>")
 endfunction
 "---------------------------------------------------------------------------//
-" Auto Closing Pairs
-"Credit: Justinmk
-"---------------------------------------------------------------------------//
-inoremap ( ()<left>
-inoremap { {}<left>
-inoremap ` ``<left>
-inoremap ```<CR> ```<CR>```<Esc>O<Tab>
-inoremap (<CR> (<CR>)<Esc>O<Tab>
-inoremap {<CR> {<CR>}<Esc>O<Tab>
-inoremap {; {<CR>};<Esc>O<Tab>
-inoremap {, {<CR>},<Esc>O<Tab>
-inoremap [<CR> [<CR>]<Esc>O<Tab>
-inoremap ([ ([<CR>])<Esc>O<Tab>
-inoremap [; [<CR>];<Esc>O<Tab>
-inoremap [, [<CR>],<Esc>O<Tab>
-"---------------------------------------------------------------------------//
 "Tab completion
 "---------------------------------------------------------------------------//
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -162,8 +146,6 @@ cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 command! AutoResize call utils#auto_resize()
 nnoremap <leader>ar :AutoResize<CR>
 
-" 8 is easier to hit than asterix
-nmap 8 * 
 " Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
 nnoremap * m`:keepjumps normal! *``<cr>
 
@@ -546,11 +528,11 @@ imap Jk jk
 xnoremap jk <ESC>
 cnoremap jk <C-C>
 
+nnoremap J :call utils#send_warning('Use <Ctrl-U> Dummy!!')<cr>
+nnoremap K :call utils#send_warning('Use <Ctrl-D> Dummy!!')<cr>
 " Note: These mappings MUST be recursive i.e. `nmap` since `j` and `k` are mapped to be added to the
 " jump list aka this recursively calls the mappings for j and k making sure these movements
 " are added
-nnoremap J <nop>
-nnoremap K <nop>
 " nmap J 10j
 " nmap K 10k
 

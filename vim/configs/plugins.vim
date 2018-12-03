@@ -84,7 +84,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-" Plug 'cohama/lexima.vim' 
+Plug 'cohama/lexima.vim' 
 
 "TMUX {{{1
 "============================
