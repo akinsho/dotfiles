@@ -209,6 +209,7 @@ if has('nvim')
   augroup nvim
     au!
     autocmd BufEnter term://* startinsert
+    autocmd TermOpen * setlocal nonumber norelativenumber
     au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
     " TODO: Tidy this up as there must be a way not to run this for fzf term buffers using an if statement
     if exists('+winhighlight') 

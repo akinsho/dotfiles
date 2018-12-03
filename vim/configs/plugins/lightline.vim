@@ -6,7 +6,7 @@ let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
-      \   'right': [ [ 'fugitive', 'gitgutter' ], [ 'AleError', 'AleWarning', 'AleOk' ],
+      \   'right': [ [ 'fugitive', 'gitgutter', 'gina' ], [ 'AleError', 'AleWarning', 'AleOk' ],
       \    ['lineinfo'], ['csv']
       \]
       \ },
@@ -28,7 +28,7 @@ let g:lightline = {
       \   'fileencoding': 'LightLineFileencoding',
       \   'csv':'LightLineCsv',
       \   'mode': 'LightLineMode',
-      \   'gitgutter': 'LightLineGitGutter'
+      \   'gitgutter': 'LightLineGitGutter',
       \ },
       \ 'component_expand': {
       \   'AleError':   'LightlineAleError',
@@ -52,9 +52,7 @@ let g:lightline.tabline = {
       \ 'left': [ [ 'buffers' ] ],
       \ 'right': [ [ 'close' ] ] 
       \}
-let g:lightline.component_expand = {
-      \ 'buffers': 'lightline#bufferline#buffers'
-      \ }
+let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
 let g:lightline#bufferline#number_map = {
       \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
       \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
@@ -231,6 +229,21 @@ function! LightlineAleString(mode)
 
   return l:counts.total == 0 ? '' : ''
 endfunction
+
+function! LightLineGinaStatus() abort
+  let conflicted = gina#component#status#conflicted()
+  let project = gina#component#repo#name()
+  let conflicts = conflicted > 0 ? conflicted . ',❗: '.conflicted : ''
+  let s:change_status =  printf(
+        \ ' %s %s',
+        \ project,
+        \ conflicts,
+        \) 
+  return s:change_status . ' ' . gina#component#traffic#preset('fancy')
+endfunction
+
+let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
+
 
 " Set the colorscheme. Modified from onedark.vim
 if exists('g:lightline')
