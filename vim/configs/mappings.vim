@@ -549,6 +549,8 @@ cnoremap jk <C-C>
 " Note: These mappings MUST be recursive i.e. `nmap` since `j` and `k` are mapped to be added to the
 " jump list aka this recursively calls the mappings for j and k making sure these movements
 " are added
+nnoremap J <nop>
+nnoremap K <nop>
 " nmap J 10j
 " nmap K 10k
 
