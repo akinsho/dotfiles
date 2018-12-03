@@ -63,3 +63,6 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+
+# opam configuration
+test -r /home/akin/.opam/opam-init/init.zsh && . /home/akin/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
