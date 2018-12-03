@@ -155,7 +155,7 @@ nno <expr> cof utils#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enab
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
-" If i'm not using a plugin then use homegrown mappings
+" If im not using a plugin then use homegrown mappings
 if !exists('g:plugs["lexima.vim"]')
   inoremap ( ()<left>
   inoremap { {}<left>

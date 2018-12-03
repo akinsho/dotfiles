@@ -124,9 +124,7 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
   let &showbreak='↪ '
-  " let &showbreak='…'
-  " let &showbreak='↳ ' " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
-  " let &showbreak='→'
+  " Options include -> '…', '↳ ', '→'
   if exists('&breakindentopt')
     " set breakindentopt=shift:2
     set breakindentopt=sbr
@@ -195,13 +193,13 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 if !exists('g:gui_oni')
 set background=dark
 " colorscheme night-owl
-  try
-    let g:one_allow_italics = 1
-    colorscheme one
-    call one#highlight('Folded', 'db7093', 'none', 'bold')
-   catch
-     let g:onedark_terminal_italics = 1
-     colorscheme onedark
+try
+  let g:one_allow_italics = 1
+  colorscheme one
+  call one#highlight('Folded', 'db7093', 'none', 'bold')
+catch
+  let g:onedark_terminal_italics = 1
+  colorscheme onedark
 endtry
 endif
 
