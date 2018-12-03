@@ -169,7 +169,7 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 " Insert escaped '/' while inputting a search pattern
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/
+cnoremap <expr> / getcmdtype() == "/" ? "\/" : "/"
 "Save
 nnoremap <C-S> :update<cr>
 "Save all files

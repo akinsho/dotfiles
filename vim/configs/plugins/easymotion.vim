@@ -20,6 +20,7 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 " map <Leader>l <Plug>(easymotion-lineforward)
 " map <Leader>h <Plug>(easymotion-linebackward)
+nnoremap <leader>/ /
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  <leader>n <Plug>(easymotion-next)
