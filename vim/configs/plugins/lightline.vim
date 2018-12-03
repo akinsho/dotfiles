@@ -268,7 +268,7 @@ if exists('g:lightline')
   let s:bright_blue  = ['#A2E8F6', 58]
   let s:grey         = ['#5A5E68', 59]
   let s:background = ['#212129', 59]
-  let s:selected_background = ['#5A5E68', 59]
+  let s:selected_background = ['#282C34', 59]
 
 
   let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
