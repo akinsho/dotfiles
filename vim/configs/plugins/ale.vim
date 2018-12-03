@@ -54,6 +54,7 @@ nmap [gd <Plug>(ale_go_to_definition)
 
 let g:ale_stylus_stylelint_use_global = 0
 let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '→ '
 
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
