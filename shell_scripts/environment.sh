@@ -8,7 +8,7 @@
 export NVM_DIR="$HOME/.nvm"
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
-export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
+export PATH="$PATH:$(yarn global bin)"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
