@@ -152,6 +152,24 @@ nnoremap * m`:keepjumps normal! *``<cr>
 nno <expr> [of utils#open_folds('enable')
 nno <expr> ]of utils#open_folds('disable')
 nno <expr> cof utils#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
+"---------------------------------------------------------------------------//
+" Auto Closing Pairs
+"---------------------------------------------------------------------------//
+" If i'm not using a plugin then use homegrown mappings
+if !exists('g:plugs["lexima.vim"]')
+  inoremap ( ()<left>
+  inoremap { {}<left>
+  inoremap ` ``<left>
+  inoremap ```<CR> ```<CR>```<Esc>O<Tab>
+  inoremap (<CR> (<CR>)<Esc>O<Tab>
+  inoremap {<CR> {<CR>}<Esc>O<Tab>
+  inoremap {; {<CR>};<Esc>O<Tab>
+  inoremap {, {<CR>},<Esc>O<Tab>
+  inoremap [<CR> [<CR>]<Esc>O<Tab>
+  inoremap ([ ([<CR>])<Esc>O<Tab>
+  inoremap [; [<CR>];<Esc>O<Tab>
+  inoremap [, [<CR>],<Esc>O<Tab>
+endif
 ""---------------------------------------------------------------------------//
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//

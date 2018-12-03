@@ -128,44 +128,6 @@ function! CheckColorColumn()
   endif
 endfunction
 
-"Expand tab html{{{
-function! s:expand_html_tab()
-  " try to determine if we're within quotes or tags.
-  " if so, assume we're in an emmet fill area.
-  let l:line = getline('.')
-  if col('.') < len(l:line)
-    let l:line = matchstr(l:line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-    if len(l:line) >= 2
-      return "\<C-n>"
-    endif
-  endif
-  " try to determine if we're within quotes or tags.
-  " if so, assume we're in an emmet fill area.
-  let l:line = getline('.')
-  if col('.') < len(l:line)
-    let l:line = matchstr(l:line, '[">][^<"]*\%'.col('.').'c[^>"]*[<"]')
-
-    if len(l:line) >= 2
-      return "\<Plug>(emmet-move-next)"
-    endif
-  endif
-
-  " go to next item in a popup menu.
-  if pumvisible()
-    return "\<C-n>"
-  endif
-
-  " expand anything emmet thinks is expandable.
-  " I'm not sure control ever reaches below this block.
-  if emmet#isExpandable()
-    return "\<Plug>(emmet-expand-abbr)"
-  endif
-
-  " return a regular tab character
-  return "\<tab>"
-endfunction
-
-
 if exists('$TMUX')
   augroup TmuxTitle
     autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
