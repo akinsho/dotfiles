@@ -34,7 +34,7 @@ let g:LanguageClient_loggingFile = '/tmp/lsp.log'
 function! LC_maps()
   if has_key(g:LanguageClient_serverCommands, &filetype)
     silent! nunmap gd
-    nnoremap <buffer><silent> <localleader>K :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <buffer><silent> K :call LanguageClient_textDocument_hover()<CR>
     nnoremap <buffer><silent> gd :call LanguageClient_textDocument_definition()<CR>
     nnoremap <buffer><silent> <F2> :call LanguageClient_textDocument_rename()<CR>
     nnoremap <buffer><silent> <localleader>ca :call LanguageClient_textDocument_codeAction()<CR>
