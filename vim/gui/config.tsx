@@ -160,9 +160,9 @@ export const configuration = {
     "editor.textMateHighlighting.debugScopes": false,
 
     // LSP -------------------------------------
-    "language.reason.languageServer.command":
-        "/home/akin/reason-language-server/reason-language-server.exe",
-    "language.reason.languageServer.arguments": [],
+    "language.reason.languageServer.command": "ocaml-language-server",
+    // "/home/akin/reason-language-server/reason-language-server.exe",
+    "language.reason.languageServer.arguments": ["--stdio"],
     "language.reason.languageServer.configuration": {},
 
     // Flow Language Server ===============================================
