@@ -50,8 +50,11 @@ nmap [d <Plug>(ale_detail)
 nmap [gd <Plug>(ale_go_to_definition)
 
 let g:ale_stylus_stylelint_use_global = 0
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '→ '
+
+if has('nvim-0.3.2')
+  let g:ale_virtualtext_cursor = 1
+  let g:ale_virtualtext_prefix = '→ '
+endif
 
 highlight ALEErrorSign guifg=red guibg=none
 highlight ALEWarningSign guifg=yellow guibg=none

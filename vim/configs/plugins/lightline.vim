@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['lsp'] ],
       \   'right': [ [ 'fugitive', 'gitgutter', 'gina' ], [ 'AleError', 'AleWarning', 'AleOk' ],
       \    ['lineinfo'], ['csv']
       \]
@@ -244,10 +244,13 @@ endfunction
 
 let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
 
+" function! LightLineLSP() abort
+"   return LanguageClient_serverStatusMessage()
+" endfunction
+" let g:lightline.component_function['lsp'] = 'LightLineLSP'
 
 " Set the colorscheme. Modified from onedark.vim
 if exists('g:lightline')
-
   " These are the colour codes that are used in the original onedark theme
   let s:gold         = ['#F5F478', 227]
   let s:black        = ['#282c34', 235]
