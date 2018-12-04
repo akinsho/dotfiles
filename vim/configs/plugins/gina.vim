@@ -1,3 +1,4 @@
+" Plugin Mappings
 call gina#custom#mapping#nmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#mapping#vmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> a')
@@ -6,10 +7,12 @@ call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-j>')
 call gina#custom#execute('/.*', 'silent! vunmap <buffer> <c-k>')
 call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q!<cr>')
 
+" Aliases
 call gina#custom#command#alias('branch', 'br')
 call gina#custom#command#option('br', '-v', 'v')
 call gina#custom#command#alias('status', 'st')
 
+" Options
 call gina#custom#command#option(
       \ 'commit', '-v|--verbose'
       \)
@@ -43,5 +46,6 @@ call gina#custom#mapping#nmap(
       \ {'noremap': 1, 'silent': 1},
       \)
 
+" General Mappings
 nnoremap <silent><nowait> <localleader>gs :Gina status<cr>
 nnoremap <silent><nowait> <localleader>gp :Gina push<cr>
