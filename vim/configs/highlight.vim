@@ -24,20 +24,11 @@ function! ApplyUserHighlights() abort
   let &colorcolumn=join(range(81,999),",")
   set colorcolumn=80
   "---------------------------------------------------------------------------//
-  " syntax clear SpellBad
-  " syntax clear SpellCap
-  " syntax clear SpellLocal
-  " syntax clear SpellRare
-  " syntax clear Search
-  " syntax clear typescriptOpSymbols
-
   " Highlight over 80 cols in red
   match Error /\%80v.\+/
 
-  " highlight SpellBad  term=underline cterm=italic ctermfg=Red
-  " highlight SpellCap  term=underline cterm=italic ctermfg=Blue
-  " highlight link SpellLocal SpellCap
-  " highlight link SpellRare SpellCap
+  highlight link SpellLocal SpellCap
+  highlight link SpellRare SpellCap
   highlight Conceal gui=bold
   highlight Todo gui=bold
   highlight Credit gui=bold
