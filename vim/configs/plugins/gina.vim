@@ -27,6 +27,7 @@ call gina#custom#command#option(
 " Add "--opener=split" to branch/changes/grep/log
 call gina#custom#command#option(
       \ '/\%(branch\|changes\|grep\|status\|commit\|log\)',
+      \ '--opener', 'split',
       \ '--group', 'short'
       \)
 

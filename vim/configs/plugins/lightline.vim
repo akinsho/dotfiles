@@ -6,8 +6,11 @@ let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['gina'] ],
-      \   'right': [ [ 'fugitive', 'gitgutter'], [ 'AleError', 'AleWarning', 'AleOk' ],
-      \    ['lineinfo'], ['csv']
+      \   'right': [
+      \     [ 'fugitive', 'gitgutter'],
+      \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \     ['lineinfo'],
+      \     ['csv']
       \]
       \ },
       \ 'inactive': {
@@ -32,15 +35,17 @@ let g:lightline = {
       \   'gina': 'LightLineGinaStatus'
       \ },
       \ 'component_expand': {
-      \   'AleError':   'LightlineAleError',
-      \   'AleWarning': 'LightlineAleWarning',
-      \   'AleOk':      'LightlineAleOk',
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
       \ },
       \ 'component_type': {
-      \   'AleError':   'error',
-      \   'AleWarning': 'warning',
-      \   'AleOk':      'ok',
-      \   'buffers': 'tabsel',
+      \     'linter_checking': 'checking',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'ok',
+      \     'buffers': 'tabsel',
       \ },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
@@ -79,6 +84,10 @@ nmap <Localleader>8 <Plug>lightline#bufferline#go(8)
 nmap <Localleader>9 <Plug>lightline#bufferline#go(9)
 nmap <Localleader>0 <Plug>lightline#bufferline#go(10)
 
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = ''
 
 function! LightLineCsv()
   if has("statusline")
@@ -196,41 +205,6 @@ function! LightLineMode()
         \ lightline#mode()
 endfunction
 
-function! LightlineAleError() abort
-  return LightlineAleString(0)
-endfunction
-
-function! LightlineAleWarning() abort
-  return LightlineAleString(1)
-endfunction
-
-function! LightlineAleOk() abort
-  let l:ok_string = LightlineAleString(2)
-  let l:active_linters = strlen(&filetype) ? ale#linter#Get(&filetype) : []
-  let l:has_linters = len(l:active_linters) > 0
-  return l:has_linters ? l:ok_string : ''
-endfunction
-
-function! LightlineAleString(mode)
-  if !exists('g:ale_buffer_info')
-    return ''
-  endif
-
-  let l:buffer = bufnr('%')
-  let l:counts = ale#statusline#Count(l:buffer)
-  let [l:error_format, l:warning_format, l:no_errors] = g:ale_statusline_format
-
-  if a:mode == 0 " Error
-    let l:errors = l:counts.error + l:counts.style_error
-    return l:errors ? printf(l:error_format, l:errors) : ''
-  elseif a:mode == 1 " Warning
-    let l:warnings = l:counts.warning + l:counts.style_warning
-    return l:warnings ? printf(l:warning_format, l:warnings) : ''
-  endif
-
-  return l:counts.total == 0 ? '' : ''
-endfunction
-
 function! LightLineGinaStatus() abort
   if !exists(':Gina')
     return ''
@@ -300,6 +274,7 @@ if exists('g:lightline')
   let s:theme.tabline.middle  = [ [ s:grey, s:background ] ]
   let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
+  let s:theme.normal.checking = [[ s:light_yellow, s:black ]]
   let s:theme.normal.error    = [ [ s:light_red, s:black ] ]
   let s:theme.normal.warning  = [ [ s:light_yellow, s:black ] ]
   let s:theme.normal.ok       = [ [ s:green, s:black ] ]

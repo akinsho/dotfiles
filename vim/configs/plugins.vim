@@ -54,6 +54,7 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
+      \ | Plug 'maximbaz/lightline-ale'
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
