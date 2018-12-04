@@ -274,7 +274,7 @@ if exists('g:lightline')
   let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
 
   " Each subarray represents the [ForegroundColor, BackgroundColor]
-  let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ], [ s:grey, s:black ] ]
+  let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ], [ s:dark_blue, s:black ] ]
   let s:theme.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
   let s:theme.normal.middle   = [ [ s:comment_grey, s:black ] ]
 

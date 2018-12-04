@@ -32,7 +32,7 @@ endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers {{{1
 " ----------------------------------------------------------------------------
-set timeout timeoutlen=500 ttimeoutlen=10
+set timeout timeoutlen=400 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit

@@ -174,8 +174,8 @@ endif
 " => VISUAL MODE RELATED
 ""---------------------------------------------------------------------------//
 " Store relative line number jumps in the jumplist.
-nnoremap <expr> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
-nnoremap <expr> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
+nnoremap <expr><silent> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
+nnoremap <expr><silent> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 " c-a / c-e everywhere - RSI.vim provides these
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
