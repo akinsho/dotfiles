@@ -28,7 +28,7 @@ endif
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
-let g:LanguageClient_loggingLevel = 'DEBUG' 
+" let g:LanguageClient_loggingLevel = 'DEBUG' 
 let g:LanguageClient_loggingFile = '/tmp/lsp.log'
 
 function! LC_maps()

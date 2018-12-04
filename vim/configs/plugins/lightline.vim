@@ -192,6 +192,7 @@ function! LightLineMode()
         \ &ft == 'unite' ? 'Unite' :
         \ &ft == 'vimfiler' ? 'VimFiler' :
         \ &ft == 'vimshell' ? 'VimShell' :
+        \ &ft == 'undotree' ? 'UndoTree' :
         \ lightline#mode()
 endfunction
 
