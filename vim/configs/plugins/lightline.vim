@@ -5,16 +5,10 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [
-      \     [ 'mode' ],
-      \     [ 'filename', 'filetype'],
-      \     [ 'AleError', 'AleWarning', 'AleOk' ]
-      \   ],
-      \   'right': [
-      \     [ 'fugitive', 'gitgutter', 'gina' ],
-      \     ['lineinfo'],
-      \     ['csv']
-      \   ]
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['lsp'] ],
+      \   'right': [ [ 'fugitive', 'gitgutter', 'gina' ], [ 'AleError', 'AleWarning', 'AleOk' ],
+      \    ['lineinfo'], ['csv']
+      \]
       \ },
       \ 'inactive': {
       \   'left': [ [ 'filename',  'filesize' ] ],
