@@ -1,6 +1,0 @@
-= Play Wiki =
-[[Golang Gopher Project]] - A Simple Platfomer
-[[Vim]] - Tips, Tricks and Tasks
-[[ Collected Wisdom ]] - Snippets of wisdom from various sources
-[[Things to Investigate]]
-[[Todo]] - Self Evident (Things to do)

@@ -1,2 +1,0 @@
-= Settle on a game Library =
-* [✗] Explore Pixel library vs Ebiten

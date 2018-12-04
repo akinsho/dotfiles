@@ -1,8 +1,0 @@
-* [✗] Investigate web workers and how they work
-    `js
-      async function get_useful_data(){
-        const raw_data = await request(some_data)
-        myWorker.postmessage(raw_data)
-      }
-    `
-* [✗] Why deoplete does not work in .ts and .js files properly

@@ -1,3 +1,0 @@
-1. Fix user passed in hover codeblock colors - check that colors arent being overriden in `themeManager`
-2. Syntax highlighting for hover menu
-3. Buffer Menu - PR

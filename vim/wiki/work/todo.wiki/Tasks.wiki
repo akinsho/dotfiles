@@ -1,5 +1,0 @@
-= Work Todos =
-* [✗] Figure out vim wiki
-* [✓] Complete final order page.
-* [✓] Complete address testing
-* [✗] Add writable fields to caspio to allow user data in quote table
