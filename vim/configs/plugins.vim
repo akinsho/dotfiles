@@ -122,7 +122,7 @@ Plug 'othree/javascript-libraries-syntax.vim',
 " ==============================
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'shumphrey/fugitive-gitlab.vim', { 'on': 'Gbrowse' }
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
 
 " Text Objects {{{1
@@ -137,15 +137,14 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function'
-      \ | Plug 'thinca/vim-textobj-function-javascript'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      \ | Plug 'thinca/vim-textobj-function-javascript'
       " \  | Plug 'vimtaku/vim-textobj-keyvalue'
-      " \  | Plug 'thalesmello/vim-textobj-methodcall'
 
 "Search Tools {{{1
 "=======================
 Plug 'RRethy/vim-illuminate'
-Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF'] }
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
 Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
