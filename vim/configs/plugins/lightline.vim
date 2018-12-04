@@ -29,6 +29,7 @@ let g:lightline = {
       \   'csv':'LightLineCsv',
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
+      \   'gina': 'LightLineGinaStatus'
       \ },
       \ 'component_expand': {
       \   'AleError':   'LightlineAleError',
@@ -237,7 +238,6 @@ function! LightLineGinaStatus() abort
   let s:project = ' ' . gina#component#repo#name()
   let s:traffic = gina#component#traffic#preset('fancy') 
   let s:status = gina#component#status#preset('fancy')
-  echom s:project
   return s:project . ' ' .s:traffic . ' ' . s:status
 endfunction
 
@@ -274,7 +274,7 @@ if exists('g:lightline')
   let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
 
   " Each subarray represents the [ForegroundColor, BackgroundColor]
-  let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ] ]
+  let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ], [ s:grey, s:black ] ]
   let s:theme.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
   let s:theme.normal.middle   = [ [ s:comment_grey, s:black ] ]
 
