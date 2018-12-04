@@ -90,8 +90,6 @@ fi
 
 
 if [ -f ~/enhancd/init.sh ]; then
-  # TODO add a check to see if script exists if not install it
-  # Maybe try using zplug again
   source ~/enhancd/init.sh
 else
   git clone https://github.com/b4b4r07/enhancd ~/enhancd
