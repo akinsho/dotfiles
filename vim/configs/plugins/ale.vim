@@ -10,7 +10,8 @@ let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_pattern_options = {
-      \ '\.min.js$': {'ale_enabled': 0},
+      \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
+      \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
       \}
 let g:ale_fixers = {
       \'reason':['refmt'],
@@ -28,7 +29,6 @@ let g:ale_sign_warning                   = '❗'
 let g:ale_reason_ols_use_global          = 1
 let g:ale_warn_about_trailing_whitespace = 1
 let g:ale_linters                     = {
-      \'markdown': ['prettier'],
       \'python': ['flake8'],
       \'jsx': ['eslint'],
       \'sql': ['sqlint'],
@@ -40,14 +40,20 @@ let g:ale_linters                     = {
       \ 'go build',
       \ 'gosimple',
       \ 'staticcheck'],
-      \'html':['tidy']
       \}
-let g:ale_linter_aliases    = {'jsx': 'css', 'tsx': 'css'}
+
+let g:ale_linter_aliases = {
+      \ 'jsx': ['css', 'javascript'],
+      \ 'tsx': ['css', 'typescript'],
+      \ 'vue': ['vue', 'javascript']
+      \}
+
 let g:ale_open_list         = 0
+let g:ale_keep_list_window_open = 1
+let g:ale_list_window_size = 5
+
 nmap [a <Plug>(ale_next_wrap)
 nmap ]a <Plug>(ale_previous_wrap)
-nmap [d <Plug>(ale_detail)
-nmap [gd <Plug>(ale_go_to_definition)
 
 let g:ale_stylus_stylelint_use_global = 0
 
@@ -59,3 +65,4 @@ endif
 highlight ALEErrorSign guifg=red guibg=none
 highlight ALEWarningSign guifg=yellow guibg=none
 " highlight ALEErrorLine gui=underline guifg=red
+
