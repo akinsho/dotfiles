@@ -230,19 +230,20 @@ function! LightlineAleString(mode)
   return l:counts.total == 0 ? '' : ''
 endfunction
 
-function! LightLineGinaStatus() abort
-  let conflicted = gina#component#status#conflicted()
-  let project = gina#component#repo#name()
-  let conflicts = conflicted > 0 ? conflicted . ',❗: '.conflicted : ''
-  let s:change_status =  printf(
-        \ ' %s %s',
-        \ project,
-        \ conflicts,
-        \) 
-  return s:change_status . ' ' . gina#component#traffic#preset('fancy')
-endfunction
-
-let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
+if exists(':Gina')
+  function! LightLineGinaStatus() abort
+    let conflicted = gina#component#status#conflicted()
+    let project = gina#component#repo#name()
+    let conflicts = conflicted > 0 ? conflicted . ',❗: '.conflicted : ''
+    let s:change_status =  printf(
+          \ ' %s %s',
+          \ project,
+          \ conflicts,
+          \) 
+    return s:change_status . ' ' . gina#component#traffic#preset('fancy')
+  endfunction
+  let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
+endif
 
 " function! LightLineLSP() abort
 "   return LanguageClient_serverStatusMessage()
