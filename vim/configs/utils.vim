@@ -85,18 +85,22 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Auto resize Vim splits to active split to 70% -
 " https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
-let g:auto_resize_on = 1
 
-function! utils#auto_resize()
-  if g:auto_resize_on == 1
-    let &winheight = &lines * 9 / 10
-    let &winwidth = &columns * 9 / 10
-    let g:auto_resize_on = 0
-    echom 'Auto resize on'
+let s:auto_resize_on = 0
+
+function! utils#auto_resize(factor)
+  let l:fraction = a:factor / 10
+  if s:auto_resize_on == 0
+    let &winheight = &lines * l:fraction / 10
+    let &winwidth = &columns * l:fraction / 10
+    let s:auto_resize_on = 1
+    echom 'Auto resize ON'
   else
-    set winheight=30
-    set winwidth=30
-    let g:auto_resize_on = 1
+    let &winheight = 30
+    let &winwidth = 30
+    wincmd =
+    let s:auto_resize_on = 0
+    echom 'Auto resize OFF'
   endif
 endfunction
 

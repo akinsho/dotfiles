@@ -143,8 +143,8 @@ cmap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
 cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 
-command! AutoResize call utils#auto_resize()
-nnoremap <leader>ar :AutoResize<CR>
+command! -nargs=1 AutoResize call utils#auto_resize(<args>)
+nnoremap <leader>ar :AutoResize 70<CR>
 
 " Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
 nnoremap * m`:keepjumps normal! *``<cr>

@@ -11,7 +11,7 @@ let g:lightline = {
       \]
       \ },
       \ 'inactive': {
-      \   'left': [ [ 'filename',  'filesize' ] ],
+      \   'left': [ [ 'filename',  'gina' ] ],
       \   'right': [ [] ]
       \ },
       \ 'component': {
@@ -29,7 +29,6 @@ let g:lightline = {
       \   'csv':'LightLineCsv',
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
-      \   'gina': 'LightLineGinaStatus'
       \ },
       \ 'component_expand': {
       \   'AleError':   'LightlineAleError',
@@ -231,20 +230,16 @@ function! LightlineAleString(mode)
   return l:counts.total == 0 ? '' : ''
 endfunction
 
-if exists(':Gina')
-  function! LightLineGinaStatus() abort
-    let conflicted = gina#component#status#conflicted()
-    let project = gina#component#repo#name()
-    let conflicts = conflicted > 0 ? conflicted . ',❗: '.conflicted : ''
-    let s:change_status =  printf(
-          \ ' %s %s',
-          \ project,
-          \ conflicts,
-          \) 
-    return s:change_status . ' ' . gina#component#traffic#preset('fancy')
-  endfunction
-  " let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
-endif
+function! LightLineGinaStatus() abort
+  if !exists(':Gina')
+    return ''
+  endif
+  let s:project = ' ' . gina#component#repo#name()
+  let s:traffic = gina#component#traffic#preset('fancy') 
+  let s:status = gina#component#status#preset('fancy')
+  echom s:project
+  return s:project . ' ' .s:traffic . ' ' . s:status
+endfunction
 
 " function! LightLineLSP() abort
 "   return LanguageClient_serverStatusMessage()
