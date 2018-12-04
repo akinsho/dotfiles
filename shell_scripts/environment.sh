@@ -17,11 +17,13 @@ export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PATH=$PATH:/usr/local/go/bin
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  # Mac OSX
-  export GOPATH=$HOME/Desktop/Coding/Go
-  export GOROOT=/usr/local/opt/go/libexec
-  export PATH=$PATH:/usr/local/opt/go/libexec/bin
-  export PATH=$PATH:$(go env GOPATH)/bin
+  if [[ $MINIMAL != true ]]; then
+    # Mac OSX
+    export GOPATH=$HOME/Desktop/Coding/Go
+    export GOROOT=/usr/local/opt/go/libexec
+    export PATH=$PATH:/usr/local/opt/go/libexec/bin
+    export PATH=$PATH:$(go env GOPATH)/bin
+  fi
 
   # # Android SDK
   # export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -57,7 +59,9 @@ fi
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
-source $HOME/.environment.secret.sh
+if [ -f "$HOME/.environment.secret.sh" ]; then
+  source $HOME/.environment.secret.sh
+fi
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
