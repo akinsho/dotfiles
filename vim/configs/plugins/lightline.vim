@@ -5,8 +5,8 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['lsp'] ],
-      \   'right': [ [ 'fugitive', 'gitgutter', 'gina' ], [ 'AleError', 'AleWarning', 'AleOk' ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['gina'] ],
+      \   'right': [ [ 'fugitive', 'gitgutter'], [ 'AleError', 'AleWarning', 'AleOk' ],
       \    ['lineinfo'], ['csv']
       \]
       \ },
@@ -29,6 +29,7 @@ let g:lightline = {
       \   'csv':'LightLineCsv',
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
+      \   'gina': 'LightLineGinaStatus'
       \ },
       \ 'component_expand': {
       \   'AleError':   'LightlineAleError',
@@ -45,7 +46,6 @@ let g:lightline = {
       \ }
 
 "Lightline Bufferline
-
 set showtabline=2
 
 let g:lightline.tabline = {
@@ -243,7 +243,7 @@ if exists(':Gina')
           \) 
     return s:change_status . ' ' . gina#component#traffic#preset('fancy')
   endfunction
-  let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
+  " let g:lightline.component_function['gina'] = 'LightLineGinaStatus'
 endif
 
 " function! LightLineLSP() abort
