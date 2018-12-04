@@ -8,7 +8,6 @@ endif
 let g:ale_lint_on_enter                        = 1
 let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1
-let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_pattern_options = {
       \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
       \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
@@ -26,6 +25,7 @@ let g:ale_echo_msg_format                = '%linter%: %(code): %%s [%severity%]'
 let g:ale_sign_column_always             = 1
 let g:ale_sign_error                     = '✖'
 let g:ale_sign_warning                   = '❗'
+let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_reason_ols_use_global          = 1
 let g:ale_warn_about_trailing_whitespace = 1
 let g:ale_linters                     = {

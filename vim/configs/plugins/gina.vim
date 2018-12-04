@@ -24,12 +24,10 @@ call gina#custom#command#option(
       \ '--opener', 'vsplit'
       \)
 
-" Add "--opener=split" to branch/changes/grep/log
-call gina#custom#command#option(
-      \ '/\%(branch\|changes\|grep\|status\|commit\|log\)',
-      \ '--opener', 'split',
-      \ '--group', 'short'
-      \)
+call gina#custom#command#option('status', '--opener', &previewheight . 'split')
+call gina#custom#command#option('commit', '--opener', &previewheight . 'split')
+call gina#custom#command#option('status', '--group', 'short')
+call gina#custom#command#option('commit', '--group', 'short')
 
 " Execute :Gina commit with cc on "gina-status" buffer
 call gina#custom#mapping#nmap(
