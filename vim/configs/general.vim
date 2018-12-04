@@ -117,7 +117,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " Display {{{1
 " --------------------------------------------------------------------------
 set cmdheight=2 " Set command line height to two lines
-set conceallevel=2
+" set conceallevel=2
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -229,8 +229,6 @@ if has('nvim')
   set inccommand=nosplit
   set guicursor=
   set guicursor=n-v-c:block-Cursor/lCursor
-  " Thin bar insert mode cursor
-  " set guicursor=i-ci:block-Cursor/lCursor
   set guicursor=i-ci:ver50-Cursor/lCursor
   set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 500000
@@ -364,3 +362,5 @@ endif
 set secure  " Disable autocmd etc for project local vimrc files.
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 ""---------------------------------------------------------------------------//
+
+" vim:foldmethod=marker
