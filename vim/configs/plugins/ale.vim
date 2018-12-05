@@ -65,4 +65,3 @@ endif
 highlight ALEErrorSign guifg=red guibg=none
 highlight ALEWarningSign guifg=yellow guibg=none
 " highlight ALEErrorLine gui=underline guifg=red
-

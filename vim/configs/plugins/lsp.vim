@@ -37,7 +37,10 @@ function! LC_maps()
     nnoremap <buffer><silent> K :call LanguageClient_textDocument_hover()<CR>
     nnoremap <buffer><silent> gd :call LanguageClient_textDocument_definition()<CR>
     nnoremap <buffer><silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+    nnoremap <buffer><silent> <localleader>r :call LanguageClient_textDocument_references()<CR>
+    nnoremap <buffer><silent> <localleader>s :call LanguageClient_textDocument_documentSymbol()<CR>
     nnoremap <buffer><silent> <localleader>ca :call LanguageClient_textDocument_codeAction()<CR>
+    set formatexpr=LanguageClient_textDocument_rangeFormatting()
   endif
 endfunction
 
@@ -45,6 +48,3 @@ augroup LC_Mappings
   au!
   autocmd FileType * call LC_maps()
 augroup END
-
-
-set formatexpr=LanguageClient_textDocument_rangeFormatting()

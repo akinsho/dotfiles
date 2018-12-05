@@ -9,6 +9,7 @@ let g:lightline = {
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \     [ 'lsp' ],
       \     ['lineinfo'],
       \     ['csv']
       \]
@@ -32,7 +33,8 @@ let g:lightline = {
       \   'csv':'LightLineCsv',
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
-      \   'gina': 'LightLineGinaStatus'
+      \   'gina': 'LightLineGinaStatus',
+      \   'lsp': 'LightlineLSP'
       \ },
       \ 'component_expand': {
       \  'linter_checking': 'lightline#ale#checking',
@@ -120,11 +122,6 @@ function! LightLineGitGutter()
   endfor
   return join(ret, ' ')
 endfunction
-
-augroup LightLineOnALE
-  autocmd!
-  autocmd User ALELint call lightline#update()
-augroup END
 
 function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '±' : &modifiable ? '' : '-'
@@ -215,10 +212,9 @@ function! LightLineGinaStatus() abort
   return s:project . ' ' .s:traffic . ' ' . s:status
 endfunction
 
-" function! LightLineLSP() abort
-"   return LanguageClient_serverStatusMessage()
-" endfunction
-" let g:lightline.component_function['lsp'] = 'LightLineLSP'
+function! LightlineLSP() abort
+    return LanguageClient#statusLine()
+endfunction
 
 " Set the colorscheme. Modified from onedark.vim
 if exists('g:lightline')
