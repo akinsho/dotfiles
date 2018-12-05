@@ -27,10 +27,12 @@ call gina#custom#command#option(
       \ '--opener', 'vsplit'
       \)
 
-call gina#custom#command#option('status', '--opener', &previewheight . 'split')
-call gina#custom#command#option('commit', '--opener', &previewheight . 'split')
-call gina#custom#command#option('status', '--group', 'short')
-call gina#custom#command#option('commit', '--group', 'short')
+" Open these window types as small re-usable splits
+call gina#custom#command#option(
+      \ '/\%(status\|commit\|branch\)',
+      \ '--opener', &previewheight . 'split',
+      \ '--group', 'short'
+      \)
 
 " Execute :Gina commit with cc on "gina-status" buffer
 call gina#custom#mapping#nmap(

@@ -216,6 +216,11 @@ function! LightlineLSP() abort
     return LanguageClient#statusLine()
 endfunction
 
+augroup languageclient
+  autocmd!
+  autocmd User LanguageClientDiagnosticsChanged call lightline#update()
+augroup END
+
 " Set the colorscheme. Modified from onedark.vim
 if exists('g:lightline')
   " These are the colour codes that are used in the original onedark theme
