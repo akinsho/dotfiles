@@ -50,7 +50,6 @@ endfunction
 " Deoplete  {{{1
 "NVIM ====================================
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-Plug 'Shougo/neco-vim',      { 'for': 'vim' },
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
@@ -58,12 +57,14 @@ Plug 'Shougo/neco-vim',      { 'for': 'vim' },
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'wokalski/autocomplete-flow', { 'for': ['javascript', 'javascript.jsx'] }
+    Plug 'wokalski/autocomplete-flow', {
+          \ 'for': ['javascript', 'javascript.jsx'] }
+    Plug 'Shougo/neco-vim', { 'for': 'vim' },
     Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
     Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
-    Plug 'zchee/deoplete-go',          { 'for' : 'go', 'do': 'make'}
-    Plug 'ujihisa/neco-look',          { 'for': 'markdown' }
-    Plug 'pbogut/deoplete-elm',        { 'for': 'elm' },
+    Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
+    Plug 'ujihisa/neco-look', { 'for': 'markdown' }
+    Plug 'pbogut/deoplete-elm',{ 'for': 'elm' },
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'kristijanhusak/vim-js-file-import'
@@ -86,7 +87,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim' 
-
+Plug 'kennykaye/vim-relativity'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -123,9 +124,7 @@ Plug 'othree/javascript-libraries-syntax.vim',
 " ==============================
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'shumphrey/fugitive-gitlab.vim', { 'on': 'Gbrowse' }
 Plug 'jreybert/vimagit', { 'on': ['Magit', 'MagitOnly'] }
-
 " Text Objects {{{1
 " =====================
 Plug 'chaoren/vim-wordmotion'

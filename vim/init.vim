@@ -30,7 +30,7 @@ endif
 
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 let g:dotfiles = $DOTFILES
-let g:disable_relativity = 1
+let g:inform_load_results = 0
 
 " Environment variables aren't consisitently available on guis so dont use them
 " If possible or default to the literal string if possible
@@ -76,7 +76,9 @@ function! s:load_plugin_configs(settings_dir) abort
     endif
   endfor
   " Don't block VimEnter to inform of the results
-  call timer_start(800, { tid -> s:inform_load_result(s:loaded, s:errors) })
+  if g:inform_load_results
+    call timer_start(800, { tid -> s:inform_load_result(s:loaded, s:errors) })
+  endif
 endfunction
 
 if !exists('g:gui_oni')

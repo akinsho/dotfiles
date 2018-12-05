@@ -98,13 +98,14 @@ augroup END
       source $MYGVIMRC | echo 'Source .gvimrc'
     endif
   endif
-  autocmd FocusLost * :wa
+  autocmd FocusLost * :wall
   autocmd VimResized * redraw!
   autocmd VimResized * wincmd =
   autocmd VimResized,WinNew,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
 augroup END
 " }}}
 
+" Hide the colorcolumn when there isn't enough space
 "TODO Need to hook into more events to remove colorcolumn
 function! CheckColorColumn()
   if &ft ==# 'startify'
@@ -232,7 +233,6 @@ endfunction
 
 augroup FileType_all "{{{1
   autocmd!
-  au BufNewFile,BufRead * setlocal formatoptions-=cro
   au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
