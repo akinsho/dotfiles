@@ -218,8 +218,9 @@ if has('nvim')
       " Clear highlight for fzf buffers because yuck
       au FileType fzf setl winhighlight=
     endif
-    autocmd TermOpen * set bufhidden=hide
-    au FileType fzf tnoremap <nowait><buffer> <esc> <c-g> "Close FZF in neovim with esc
+    " autocmd TermOpen * set bufhidden=hide
+    "Close FZF in neovim with esc
+    autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
   augroup END
 endif
 
