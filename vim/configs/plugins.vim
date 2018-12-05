@@ -114,7 +114,7 @@ Plug 'tpope/vim-apathy'
 "============================
 Plug 'ianks/vim-tsx' 
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
-Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries' })
+Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',

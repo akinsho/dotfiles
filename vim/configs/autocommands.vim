@@ -126,13 +126,14 @@ function! CheckColorColumn()
   endif
 endfunction
 
-if exists('$TMUX')
-  augroup TmuxTitle
-    autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
-          \ call system("tmux rename-window 'vim | " . expand("%:t") . "'")
-    autocmd VimLeave * call system("tmux setw automatic-rename")
-  augroup END
-endif
+" FIXME: Use async job api to do this as it is very slow run sync
+" if exists('$TMUX')
+"   augroup TmuxTitle
+"     autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
+"           \ call system("tmux rename-window 'vim | " . expand("%:t") . "'")
+"     autocmd VimLeave * call system("tmux setw automatic-rename")
+"   augroup END
+" endif
 
 augroup mutltiple_filetype_settings "{{{1
   autocmd!
