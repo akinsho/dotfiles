@@ -5,7 +5,8 @@ call gina#custom#execute('/.*', 'silent! nunmap <buffer> a')
 call gina#custom#execute('/.*', 'silent! vunmap <buffer> a')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-j>')
 call gina#custom#execute('/.*', 'silent! vunmap <buffer> <c-k>')
-call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q!<cr>')
+call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q<cr>')
+call gina#custom#execute('/.*', 'silent! nnoremap <buffer> Q :q!<cr>')
 
 " Aliases
 call gina#custom#command#alias('branch', 'br')
@@ -50,4 +51,5 @@ call gina#custom#mapping#nmap(
 
 " General Mappings
 nnoremap <silent><nowait> <localleader>gs :Gina status<cr>
+nnoremap <silent><nowait> <localleader>gc :Gina commit<cr>
 nnoremap <silent><nowait> <localleader>gp :Gina push<cr>

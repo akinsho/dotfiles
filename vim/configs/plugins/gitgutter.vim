@@ -3,7 +3,6 @@
 ""---------------------------------------------------------------------------//
 nnoremap <leader>gg :GitGutterToggle<CR>
 let g:gitgutter_sign_added            = '❖'
-" let g:gitgutter_sign_added            = '+'
 let g:gitgutter_map_keys              = 0
 let g:gitgutter_enabled               = 1
 let g:gitgutter_grep_command          = 'ag --nocolor'
