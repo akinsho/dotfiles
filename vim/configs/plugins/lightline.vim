@@ -202,6 +202,10 @@ function! LightLineMode()
         \ lightline#mode()
 endfunction
 
+function s:with_default(count, icon) abort
+  return a:count > 0 ? a:icon . a:count : ''
+endfunction
+
 function! LightLineGinaStatus() abort
   if !exists(':Gina')
     return ''
@@ -212,7 +216,7 @@ function! LightLineGinaStatus() abort
   " allow granular contro
   let l:ahead = gina#component#traffic#ahead() 
   let l:behind = gina#component#traffic#behind() 
-  let l:traffic = '↑ ' . l:ahead . ' ↓ ' . l:behind
+  let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
   return l:project . ' ' .l:traffic . ' ' . l:status
 endfunction
 
