@@ -206,10 +206,14 @@ function! LightLineGinaStatus() abort
   if !exists(':Gina')
     return ''
   endif
-  let s:project = ' ' . gina#component#repo#name()
-  let s:traffic = gina#component#traffic#preset('fancy') 
-  let s:status = gina#component#status#preset('fancy')
-  return s:project . ' ' .s:traffic . ' ' . s:status
+  let l:project = ' ' . gina#component#repo#name()
+  let l:status = gina#component#status#preset('fancy')
+  " Manually recreate the traffic fancy preset as it doesn't
+  " allow granular contro
+  let l:ahead = gina#component#traffic#ahead() 
+  let l:behind = gina#component#traffic#behind() 
+  let l:traffic = '↑ ' . l:ahead . ' ↓ ' . l:behind
+  return l:project . ' ' .l:traffic . ' ' . l:status
 endfunction
 
 function! LightlineLSP() abort
