@@ -6,20 +6,17 @@ if exists('g:gui_oni')
 endif
 let g:deoplete#enable_at_startup       = 1
 if !has('nvim')
-  let g:deoplete#enable_yarp             = 1
+  call deoplete#custom#option('yarp', v:true)
 endif
-let g:deoplete#enable_smart_case       = 1
-let g:deoplete#enable_ignore_case      = 1
-let g:deoplete#enable_camel_case       = 1
-let g:deoplete#max_menu_width          = 80
-let g:deoplete#max_menu_height         = 50
-let g:deoplete#file#enable_buffer_path = 1
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns   = {}
-endif
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+call deoplete#custom#source('tag', 'rank', 9999)
 " lambda - λ
-call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-call deoplete#custom#source('ultisnips', 'rank', 630)
+" call deoplete#custom#option('ignore_sources', {'_': ['buffer']})
+call deoplete#custom#source('ultisnips',    'rank', 150)
 call deoplete#custom#source('buffer',       'mark', '')
 call deoplete#custom#source('ternjs',       'mark', '')
 call deoplete#custom#source('vim',          'mark', '')

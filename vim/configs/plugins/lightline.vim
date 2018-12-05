@@ -202,7 +202,7 @@ function! LightLineMode()
         \ lightline#mode()
 endfunction
 
-function s:with_default(count, icon) abort
+function! s:with_default(count, icon) abort
   return a:count > 0 ? a:icon . a:count : ''
 endfunction
 
@@ -211,13 +211,13 @@ function! LightLineGinaStatus() abort
     return ''
   endif
   let l:project = ' ' . gina#component#repo#name()
-  let l:status = gina#component#status#preset('fancy')
+  " let l:status = gina#component#status#preset('fancy')
   " Manually recreate the traffic fancy preset as it doesn't
   " allow granular contro
   let l:ahead = gina#component#traffic#ahead() 
   let l:behind = gina#component#traffic#behind() 
   let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
-  return l:project . ' ' .l:traffic . ' ' . l:status
+  return l:project . ' ' .l:traffic . ' ' " . l:status
 endfunction
 
 function! LightlineLSP() abort

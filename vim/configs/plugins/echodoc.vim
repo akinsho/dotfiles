@@ -3,6 +3,6 @@
 ""---------------------------------------------------------------------------//
 let g:echodoc#enable_at_startup = 1
 
-if has('nvim')
+if has('nvim-0.3.2')
   let g:echodoc#type='virtual'
 endif

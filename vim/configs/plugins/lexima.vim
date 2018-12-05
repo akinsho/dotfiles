@@ -1,2 +1,6 @@
 " call lexima#add_rule({'char': '|', 'input_after': '|', 'filetype': 'reason', 'syntax': 'rustFoldBraces'})
-let g:lexima_enable_newline_rules = 0
+" FIXME: Raise an issue on the styled-components repo
+augroup js_styled_bug
+  au!
+  au Filetype javascript let b:lexima_enable_newline_rules = 0
+augroup END
