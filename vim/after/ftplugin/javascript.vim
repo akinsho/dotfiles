@@ -3,10 +3,6 @@ setlocal nofoldenable  foldtext=JavascriptFold()
 setlocal foldlevelstart=99 foldmethod=syntax
 setl colorcolumn=81
 
-if !has('g:gui_oni')
-  nnoremap gd :TSDef<CR>
-endif
-
 function! JavascriptFold()
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
