@@ -21,7 +21,7 @@ else
   tmap <C-j> <C-W>j
   tmap <C-k> <C-W>k
   tmap <C-l> <C-W>l
-  tmap <C-x> <C-W><Cmd>q!<CR>
+  tmap <C-x> <C-W><silent>q!<CR>
 endif
 nnoremap <leader>to <Cmd>term<cr>
 "Opening splits with terminal in all directions

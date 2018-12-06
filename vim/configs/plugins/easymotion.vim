@@ -16,8 +16,8 @@ omap f <Plug>(easymotion-bd-f)
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
 " easymotion with hjkl keys
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+map <localleader>j <Plug>(easymotion-j)
+map <localleader>k <Plug>(easymotion-k)
 " map <Leader>l <Plug>(easymotion-lineforward)
 " map <Leader>h <Plug>(easymotion-linebackward)
 nnoremap <leader>/ /

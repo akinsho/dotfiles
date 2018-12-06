@@ -221,7 +221,8 @@ function! LightLineGinaStatus() abort
 endfunction
 
 function! LightlineLSP() abort
-    return LanguageClient#statusLine()
+  let l:status = LanguageClient#serverStatusMessage()
+  return l:status ".'[LC]'
 endfunction
 
 augroup languageclient
