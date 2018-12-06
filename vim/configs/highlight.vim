@@ -53,8 +53,8 @@ function! ApplyUserHighlights() abort
   highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
   if exists('g:gui_oni')
     highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-  else
-    highlight MatchParen cterm=bold ctermbg=none guifg=NONE guibg=#29EF58
+  " else
+  "   highlight MatchParen cterm=bold ctermbg=none guifg=NONE guibg=#29EF58
   endif
   " Highlight VCS conflict markers
   match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
