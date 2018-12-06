@@ -27,6 +27,7 @@ call gina#custom#command#option(
       \)
 
 " Open these window types as small re-usable splits
+"NOTE: This and the command below should be specified separately
 call gina#custom#command#option(
       \ '/\%(status\|commit\|branch\)',
       \ '--opener', &previewheight . 'split',
