@@ -57,6 +57,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
     Plug 'wokalski/autocomplete-flow', {
           \ 'for': ['javascript', 'javascript.jsx'] }
     Plug 'Shougo/neco-vim', { 'for': 'vim' },

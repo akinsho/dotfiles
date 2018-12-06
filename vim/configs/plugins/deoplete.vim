@@ -13,9 +13,14 @@ endif
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
+call deoplete#custom#option('auto_complete_delay', 0)
 call deoplete#custom#source('tag', 'rank', 9999)
 " lambda - λ
-" call deoplete#custom#option('ignore_sources', {'_': ['buffer']})
+call deoplete#custom#option('ignore_sources', {
+      \ '_': ['tag'],
+      \ 'ocaml': ['buffer', 'around', 'member', 'tag'],
+      \ 'reason': ['buffer', 'around', 'member', 'tag'],
+      \ })
 call deoplete#custom#source('ultisnips',    'rank', 150)
 call deoplete#custom#source('buffer',       'mark', '')
 call deoplete#custom#source('ternjs',       'mark', '')
@@ -28,3 +33,5 @@ call deoplete#custom#source('typescript',   'mark', '')
 call deoplete#custom#source('ultisnips',    'mark', '')
 call deoplete#custom#source('around',       'mark', '⚡')
 call deoplete#custom#source('flow',         'mark', '')
+call deoplete#custom#source('LC',           'mark', '🖧')
+call deoplete#custom#source('ocaml',        'mark', '🐫')
