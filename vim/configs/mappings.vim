@@ -111,6 +111,9 @@ endfunction
 "---------------------------------------------------------------------------//
 "Tab completion
 "---------------------------------------------------------------------------//
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible()?"\<C-p>":"\<TAB>"
+"---------------------------------------------------------------------------//
 " To open a new empty buffer
 nnoremap <localleader>n :enew<cr>
 " Paste in visual mode multiple times
