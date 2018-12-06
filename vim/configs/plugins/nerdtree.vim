@@ -75,7 +75,7 @@ let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeShowHidden                = 1 "Show hidden files by default
 " NerdTree Arrow Options = ["├","└"]
-
+let g:NERDTreeHighlightCursorline           = 1
 let g:webdevicons_enable_nerdtree           = 1
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:NERDTree')

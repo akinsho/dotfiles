@@ -51,5 +51,6 @@ call gina#custom#mapping#nmap(
 
 " General Mappings
 nnoremap <silent><nowait> <localleader>gs :Gina status<cr>
+nnoremap <silent><nowait> <localleader>gb :Gina branch<cr>
 nnoremap <silent><nowait> <localleader>gc :Gina commit<cr>
 nnoremap <silent><nowait> <localleader>gp :Gina push<cr>
