@@ -120,8 +120,8 @@ nnoremap <localleader>n :enew<cr>
 xnoremap p pgvy
 " search visual selection
 vnoremap // y/<C-R>"<CR>
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<cr>
-" nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+" Enter key should repeat the last macro recorded or just act as enter
+nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 ""---------------------------------------------------------------------------//
@@ -569,11 +569,15 @@ nnoremap <leader>} viw<esc>a}<esc>bi{<esc>lel
 nnoremap H g^
 " To the rightmost character of the current line
 nnoremap L g$
+" Remap native bindings to leader prefixed ones
+nnoremap <silent><leader>H :norm! H<cr>
+nnoremap <silent><leader>L :norm! L<cr>
+
 
 nnoremap <leader>ll :vertical resize +10<cr>
 nnoremap <leader>hh :vertical resize -10<cr>
-nnoremap <leader>jj :res +10<cr>
-nnoremap <leader>kk :res -10<cr>
+nnoremap <leader>jj :resize +10<cr>
+nnoremap <leader>kk :resize -10<cr>
 
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 "Move to beginning of a line in insert mode
@@ -597,9 +601,8 @@ nnoremap <silent> <localleader>z :call utils#tab_zoom()<cr>
 nnoremap <silent> <leader>z :call utils#buf_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
-
+" Peekabo plugin handles this currently
 command! -nargs=0 Reg call utils#reg()
-nnoremap <localleader>r :Reg<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
 ""---------------------------------------------------------------------------//
