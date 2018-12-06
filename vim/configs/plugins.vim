@@ -65,7 +65,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
     Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
     Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
     Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
-    Plug 'pbogut/deoplete-elm',{ 'for': 'elm' },
+    Plug 'zchee/deoplete-zsh'
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'kristijanhusak/vim-js-file-import', { 'for':['javascript.jsx','javascript'] }
