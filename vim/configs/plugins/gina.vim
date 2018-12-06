@@ -1,10 +1,8 @@
 " Plugin Mappings
 call gina#custom#mapping#nmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#mapping#vmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
-call gina#custom#execute('/.*', 'silent! nunmap <buffer> a')
-call gina#custom#execute('/.*', 'silent! vunmap <buffer> a')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-j>')
-call gina#custom#execute('/.*', 'silent! vunmap <buffer> <c-k>')
+call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-k>')
 call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q<cr>')
 call gina#custom#execute('/.*', 'silent! nnoremap <buffer> Q :q!<cr>')
 
@@ -32,6 +30,10 @@ call gina#custom#command#option(
 call gina#custom#command#option(
       \ '/\%(status\|commit\|branch\)',
       \ '--opener', &previewheight . 'split',
+      \)
+
+call gina#custom#command#option(
+      \ '/\%(status\|commit\|branch\)',
       \ '--group', 'short'
       \)
 
