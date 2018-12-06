@@ -63,11 +63,11 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
     Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
     Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
     Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
-    Plug 'ujihisa/neco-look', { 'for': 'markdown' }
+    Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
     Plug 'pbogut/deoplete-elm',{ 'for': 'elm' },
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'kristijanhusak/vim-js-file-import'
+    Plug 'kristijanhusak/vim-js-file-import', { 'for':['javascript.jsx','javascript'] }
     Plug 'autozimu/LanguageClient-neovim', {
           \ 'branch': 'next',
           \ 'do': 'bash install.sh',
@@ -95,7 +95,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
-Plug 'chip/vim-fat-finger' "Autocorrects 4,000 common typos
+Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -114,12 +114,21 @@ Plug 'tpope/vim-apathy'
 "============================
 Plug 'ianks/vim-tsx' 
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
-Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), { 'do': ':GoUpdateBinaries', 'for': ['go'] })
+Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {
+      \ 'do': ':GoUpdateBinaries', 'for': ['go']
+      \ })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
        \ { 'for':[ 'javascript', 'typescript' ] }
- Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'styled-components/vim-styled-components', {
+      \ 'branch': 'main',
+      \ 'for': [
+      \ 'javascript.jsx',
+      \ 'typescript.tsx',
+      \ 'typescript',
+      \ 'javascript'
+      \ ] }
 "Git {{{1
 " ==============================
 Plug 'lambdalisue/gina.vim'
@@ -140,18 +149,18 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'thinca/vim-textobj-function-javascript'
       " \  | Plug 'vimtaku/vim-textobj-keyvalue'
-
 "Search Tools {{{1
 "=======================
 Plug 'RRethy/vim-illuminate'
-Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF'] }
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
-Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'kassio/neoterm'
-Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
+Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF'] }
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
+Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 
 "Filetype Plugins {{{1
 "======================

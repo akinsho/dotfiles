@@ -65,7 +65,7 @@ nnoremap <c-n>f :call NERDTreeToggleAndFind()<CR>
 let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
 let g:NERDTreeBookmarksFile             = g:dotfiles.'/vim/.NERDTreeBookmarks'
-let NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
+let g:NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 30
 let g:NERDTreeQuitOnOpen                = 1
