@@ -63,12 +63,12 @@ endfunction
           \ }
     Plug 'neoclide/coc-neco'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+    " Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
+    "       \ 'for': ['typescript'], 'do': './install.sh'
+    "       \ })
 endif
 " CORE {{{1
 "================================
-" Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
-"       \ 'for': ['typescript'], 'do': './install.sh'
-"       \ })
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'

@@ -77,7 +77,7 @@ function! s:load_plugin_configs(settings_dir) abort
   endfor
   " Don't block VimEnter to inform of the results
   if g:inform_load_results
-    call timer_start(800, { tid -> s:inform_load_result(s:loaded, s:errors) })
+    call timer_start(800, { -> s:inform_load_result(s:loaded, s:errors) })
   endif
 endfunction
 
