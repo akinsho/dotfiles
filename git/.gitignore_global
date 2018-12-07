@@ -56,3 +56,4 @@ gin-bin
 # VSCode workspaces
 *.code-workspace
 .vscode
+:merlin-log:
