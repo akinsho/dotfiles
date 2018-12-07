@@ -66,9 +66,9 @@ endfunction
 endif
 " CORE {{{1
 "================================
-Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
-      \ 'for': ['typescript'], 'do': './install.sh'
-      \ })
+" Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
+"       \ 'for': ['typescript'], 'do': './install.sh'
+"       \ })
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'

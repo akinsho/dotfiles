@@ -31,15 +31,21 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
+  let l:three_point_six_seconds = 3600
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
+    call timer_start(l:three_point_six_seconds, { tid -> execute('pclose!') })
   endif
 endfunction
 
+augroup CoCAutocommands
+  au!
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd CursorHoldI,CursorMovedI * call CocAction('showSignatureHelp')
+augroup END
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
