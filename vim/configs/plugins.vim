@@ -49,9 +49,6 @@ endfunction
 
 " Deoplete  {{{1
 "NVIM ====================================
-Plug 'Shougo/deoplete.nvim', {
-      \ 'do': function('DoRemote')
-      \ }
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
@@ -59,32 +56,13 @@ Plug 'Shougo/deoplete.nvim', {
     Plug 'airblade/vim-rooter'
     Plug 'Shougo/echodoc.vim'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'copy/deoplete-ocaml', {
-          \ 'for': ['ocaml', 'reason']
-          \ }
-    Plug 'wokalski/autocomplete-flow', {
-          \ 'for': ['javascript', 'javascript.jsx']
-          \ }
-    Plug 'Shougo/neco-vim', { 'for': 'vim' },
-    Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
-    Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
-    Plug 'zchee/deoplete-go', {
-          \ 'for' : 'go', 'do': 'make'
-          \}
-    Plug 'ujihisa/neco-look', {
-          \ 'for': ['markdown', 'gitcommit']
-          \ }
-    Plug 'zchee/deoplete-zsh'
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'kristijanhusak/vim-js-file-import', {
           \ 'for':['javascript.jsx','javascript']
           \ }
-    Plug 'autozimu/LanguageClient-neovim', {
-          \ 'branch': 'next',
-          \ 'do': 'bash install.sh',
-          \ }
-  let g:modified_symbol = '✎ ' "Local version of the plugin
+    Plug 'neoclide/coc-neco'
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif
 " CORE {{{1
 "================================

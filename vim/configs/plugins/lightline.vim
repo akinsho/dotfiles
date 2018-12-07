@@ -34,7 +34,7 @@ let g:lightline = {
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
       \   'gina': 'LightLineGinaStatus',
-      \   'lsp': 'LightlineLSP'
+      \   'lsp': 'coc#status'
       \ },
       \ 'component_expand': {
       \  'linter_checking': 'lightline#ale#checking',
@@ -213,22 +213,12 @@ function! LightLineGinaStatus() abort
   let l:project = ' ' . gina#component#repo#name()
   " let l:status = gina#component#status#preset('fancy')
   " Manually recreate the traffic fancy preset as it doesn't
-  " allow granular contro
+  " allow granular control
   let l:ahead = gina#component#traffic#ahead() 
   let l:behind = gina#component#traffic#behind() 
   let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
   return l:project . ' ' .l:traffic . ' ' " . l:status
 endfunction
-
-function! LightlineLSP() abort
-  let l:status = LanguageClient#serverStatusMessage()
-  return l:status ".'[LC]'
-endfunction
-
-augroup languageclient
-  autocmd!
-  autocmd User LanguageClientDiagnosticsChanged call lightline#update()
-augroup END
 
 " Set the colorscheme. Modified from onedark.vim
 if exists('g:lightline')

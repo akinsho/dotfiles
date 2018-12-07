@@ -10,8 +10,8 @@ let g:gitgutter_sign_modified         = '•'
 let g:gitgutter_sign_modified_removed = '±'
 let g:gitgutter_sign_removed          = '-'
 let g:gitgutter_max_signs             = 400
-nnoremap <silent> ]c :GitGutterNextHunk<CR>
-nnoremap <silent> [c :GitGutterPrevHunk<CR>
+nnoremap <silent> ]h :GitGutterNextHunk<CR>
+nnoremap <silent> [h :GitGutterPrevHunk<CR>
 nnoremap <silent> <Leader>hr :GitGutterRevertHunk<CR>
 nnoremap <silent> <Leader>hp :GitGutterPreviewHunk<CR><c-w>j
 nnoremap <silent> <Leader>hs :GitGutterStageHunk<CR>
