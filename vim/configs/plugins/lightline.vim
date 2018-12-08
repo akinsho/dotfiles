@@ -211,8 +211,8 @@ function! LightLineGinaStatus() abort
   if !exists(':Gina')
     return ''
   endif
-  let l:project = ' ' . gina#component#repo#name()
-  " let l:status = gina#component#status#preset('fancy')
+  let l:repo_name = gina#component#repo#name()
+  let l:project = l:repo_name !=# '' ? ' ' .l:repo_name : ''
   " Manually recreate the traffic fancy preset as it doesn't
   " allow granular control
   let l:ahead = gina#component#traffic#ahead() 
