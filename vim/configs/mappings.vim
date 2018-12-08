@@ -319,8 +319,6 @@ function! ForwardParagraph()
     let i = i + 1
   endwhile
 endfunction
-" Select block.
-xnoremap r <C-v>
 " Made mappings recursize to work with targets plugin
 " 'quote'
 omap aq  a'
@@ -558,12 +556,10 @@ nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap <leader>sv :source $MYVIMRC<cr>
 " Surround word with quotes or braces
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
-nnoremap <leader>) viw<esc>a)<esc>bi(<esc>lel
-nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
-nnoremap <leader>} viw<esc>a}<esc>bi{<esc>lel
+nnoremap <leader>" ciw"<c-r>""<esc>
+nnoremap <leader>' ciw'<c-r>"'<esc>
+nnoremap <leader>) ciw(<c-r>")<esc>
+nnoremap <leader>} ciw{<c-r>"}<esc>
 
 " To the leftmost non-blank character of the current line
 nnoremap H g^
