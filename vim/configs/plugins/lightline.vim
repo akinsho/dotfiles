@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['gina'], ['conflicted'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['repo'], ['conflicted'] ],
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -15,7 +15,7 @@ let g:lightline = {
       \]
       \ },
       \ 'inactive': {
-      \   'left': [ [ 'filename',  'gina' ] ],
+      \   'left': [ [ 'filename',  'repo' ] ],
       \   'right': [ [] ]
       \ },
       \ 'component': {
@@ -34,7 +34,7 @@ let g:lightline = {
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
       \   'conflicted': 'LightlineConflicted',
-      \   'lsp': 'coc#status'
+      \   'lsp': 'coc#status',
       \ },
       \ 'component_expand': {
       \  'linter_checking': 'lightline#ale#checking',
@@ -51,6 +51,7 @@ let g:lightline = {
       \ },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+" \   'repo': 'LightLineRepo',
 " \   'gina': 'LightLineGinaStatus',
 
 "Lightline Bufferline
@@ -205,6 +206,12 @@ endfunction
 
 function! s:with_default(count, icon) abort
   return a:count > 0 ? a:icon . a:count : ''
+endfunction
+
+function! LightLineRepo() abort
+  let l:repo_name = utils#git_branch_dir(expand('%:p:h'))
+  echom l:repo_name
+  return l:repo_name
 endfunction
 
 function! LightLineGinaStatus() abort

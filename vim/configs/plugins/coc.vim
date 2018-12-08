@@ -53,5 +53,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
 
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call CocAction('fold', <f-args>)

@@ -249,3 +249,23 @@ endfunc
 
 command! -nargs=0 Token call utils#token_inspect()
 nnoremap <leader>E :Token<cr>
+
+function! utils#git_branch_dir(path) abort
+  let path = a:path
+  let prev = ''
+  while path !=# prev
+    let dir = path . '/.git'
+    let type = getftype(dir)
+    if type ==# 'dir' && isdirectory(dir.'/objects') && isdirectory(dir.'/refs') && getfsize(dir.'/HEAD') > 10
+      return dir
+    elseif type ==# 'file'
+      let reldir = get(readfile(dir), 0, '')
+      if reldir =~# '^gitdir: '
+        return simplify(path . '/' . reldir[8:])
+      endif
+    endif
+    let prev = path
+    let path = fnamemodify(path, ':h')
+  endwhile
+  return ''
+endfunction

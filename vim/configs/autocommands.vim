@@ -35,6 +35,23 @@ augroup vimrc-incsearch-highlight
   endif
 augroup END
 
+augroup PreviewAutocmds
+  autocmd!
+  autocmd WinEnter * if &previewwindow | setlocal nonumber | endif
+augroup END
+
+augroup togglerelativelinenumbers
+  autocmd!
+  autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
+        \ if &l:number && empty(&buftype) |
+        \ setlocal norelativenumber |
+        \ endif
+  autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
+        \ if &l:number && empty(&buftype) |
+        \ setlocal relativenumber |
+        \ endif
+augroup end
+
 augroup WhiteSpace "{{{1
   au!
   " Highlight Whitespace

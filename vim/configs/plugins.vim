@@ -63,7 +63,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim' 
-Plug 'kennykaye/vim-relativity'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
