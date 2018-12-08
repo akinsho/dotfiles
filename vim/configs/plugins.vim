@@ -50,6 +50,11 @@ endfunction
     Plug 'kristijanhusak/vim-js-file-import', {
           \ 'for':['javascript.jsx','javascript']
           \ }
+    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Plug 'autozimu/LanguageClient-neovim', {
+    "       \ 'branch': 'next',
+    "       \ 'do': 'bash install.sh',
+    "       \ }
     Plug 'neoclide/coc-neco'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
     " Plug 'Shougo/echodoc.vim'

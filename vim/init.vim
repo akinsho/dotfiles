@@ -32,6 +32,12 @@ let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gu
 let g:dotfiles = $DOTFILES
 let g:inform_load_results = 0
 
+function! VimrcMessage(msg) abort
+  echohl WarningMsg
+  echom a:msg
+  echohl none
+endfunction
+
 " Environment variables aren't consisitently available on guis so dont use them
 " If possible or default to the literal string if possible
 if g:gui_neovim_running
@@ -43,11 +49,9 @@ function! s:safely_source(arg) abort
         exe 'source ' . a:arg
         return 1
     catch
-        echohl WarningMsg
-        echom 'Error ->' . v:exception
-        echom 'Could not load'. a:arg
-        echohl none
-        return 0
+      call VimrcMessage('Error ->' . v:exception)
+      call VimrcMessage('Could not load'. a:arg )
+      return 0
     endtry
 endfunction
 
@@ -93,6 +97,37 @@ else
         \"ctermbg":"black",
         \}
 endif
+
+function! s:toggle_plugin_config(on) abort
+  if &ft != 'vim'
+    return
+  endif
+  let l:config_file = expand('%:p') 
+  if matchstr(l:config_file, 'inactive.vim')
+    let l:deactivated_config  = substitute(l:config_file, '[\.inactive\.vim]', '.vim','')
+  else
+    let l:deactivated_config  = substitute(l:config_file, '\.vim', 'inactive.vim','')
+  endif
+  echohl String
+  echom 'moving ' . l:config_file ' to ' . l:deactivated_config
+  echohl clear
+  try
+    let l:path = l:config_file . ' ' . l:deactivated_config
+    if exists(':Gmove')
+      execute 'Gmove '. l:deactivated_config
+    elseif executable('git')
+      execute '!git mv '. l:path
+    else
+      execute '!mv '. l:path
+    endif
+  catch
+    " error handle
+    call VimrcMessage("Toggling plugin failed because ". v:exception)
+  endtry
+endfunction
+
+command! ActivateConfig call s:toggle_plugin_config(0)
+command! DeactivateConfig call s:toggle_plugin_config(1)
 
 "-----------------------------------------------------------------------
 "Leader bindings

@@ -32,11 +32,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  let l:three_point_six_seconds = 3600
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
+    " let l:three_point_six_seconds = 3600
     " call timer_start(l:three_point_six_seconds, { tid -> execute('pclose!') })
   endif
 endfunction
