@@ -37,7 +37,6 @@ function! VimrcMessage(msg) abort
   echom a:msg
   echohl none
 endfunction
-
 " Environment variables aren't consisitently available on guis so dont use them
 " If possible or default to the literal string if possible
 if g:gui_neovim_running
@@ -98,36 +97,6 @@ else
         \}
 endif
 
-function! Toggle_plugin_config() abort
-  if &ft != 'vim'
-    return
-  endif
-  let l:config_file = expand('%:p') 
-  let l:toggled_config =  match(l:config_file, 'inactive.vim') != -1
-        \ ? substitute(l:config_file, '\.inactive\.vim', '.vim','')
-        \ : substitute(l:config_file, '\.vim', '.inactive.vim','')
-
-  echohl String
-  echom 'moving ' . l:config_file ' to ' . l:toggled_config
-  echohl clear
-
-  try
-    let l:src_to_dest = l:config_file . ' ' . l:toggled_config
-    if exists(':Gmove')
-      execute 'Gmove '. l:toggled_config
-    elseif executable('git')
-      execute '!git mv '. l:src_to_dest
-    else
-      execute '!mv '. l:src_to_dest
-    endif
-  catch
-    " error handle
-    call VimrcMessage("Toggling plugin failed because ". v:exception)
-  endtry
-endfunction
-
-command! TogglePluginConfig call Toggle_plugin_config()
-
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
@@ -151,8 +120,6 @@ let s:config_files = [
   \ '/vim/configs/mappings.vim',
   \ '/vim/configs/autocommands.vim',
   \ '/vim/configs/open-changed-files.vim',
-  \ '/vim/configs/utils.vim',
-  \ '/vim/plugin/token.vim'
   \]
 
 for file in s:config_files
