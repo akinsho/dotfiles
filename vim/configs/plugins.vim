@@ -50,17 +50,19 @@ endfunction
     Plug 'kristijanhusak/vim-js-file-import', {
           \ 'for':['javascript.jsx','javascript']
           \ }
-    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    " Plug 'autozimu/LanguageClient-neovim', {
-    "       \ 'branch': 'next',
-    "       \ 'do': 'bash install.sh',
-    "       \ }
-    Plug 'neoclide/coc-neco'
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-    " Plug 'Shougo/echodoc.vim'
-    " Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
-    "       \ 'for': ['typescript'], 'do': './install.sh'
-    "       \ })
+     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+     Plug 'autozimu/LanguageClient-neovim', {
+           \ 'branch': 'next',
+           \ 'do': 'bash install.sh',
+           \ }
+     Plug 'Shougo/neco-vim'
+     Plug 'zchee/deoplete-go'
+     Plug 'copy/deoplete-ocaml'
+     Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
+           \ 'for': ['typescript'], 'do': './install.sh'
+           \ })
+     " Plug 'neoclide/coc-neco'
+     " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif
 " CORE {{{1
 "================================

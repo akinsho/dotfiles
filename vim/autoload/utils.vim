@@ -1,4 +1,4 @@
-function! utils#Toggle_plugin_config() abort
+function! utils#toggle_plugin_config() abort
   if &ft != 'vim'
     return
   endif
@@ -26,7 +26,7 @@ function! utils#Toggle_plugin_config() abort
   endtry
 endfunction
 
-command! TogglePluginConfig call Toggle_plugin_config()
+command! TogglePluginConfig call utils#toggle_plugin_config()
 
 function! utils#send_warning(msg) abort
   echohl WarningMsg

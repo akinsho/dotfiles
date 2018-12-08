@@ -1,0 +1,29 @@
+{
+  "languageserver": {
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
+    },
+    "reason": {
+      "command": "/home/akin/reason-language-server/reason-language-server.exe",
+      "args": ["--stdio"],
+      "trace.server": "verbose",
+      "filetypes": ["reason"],
+      "initializationOptions": {
+        "cacheDirectory": "/tmp/reason-lsp"
+      }
+    },
+    "flow": {
+      "command": "flow-language-server",
+      "args": ["--stdio", "--try-flow-bin"],
+      "filetypes": ["javascript", "javascript.jsx"],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  },
+  "tsserver.enableJavascript": false,
+  "coc.preferences.diagnostic.errorSign": "✖",
+  "coc.preferences.diagnostic.warningSign": "⚠",
+  "coc.preferences.diagnostic.infoSign": "?",
+  "coc.preferences.diagnostic.hintSign": ">>"
+}
