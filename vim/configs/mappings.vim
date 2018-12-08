@@ -560,6 +560,7 @@ nnoremap <leader>" ciw"<c-r>""<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
+nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
 
 " To the leftmost non-blank character of the current line
 nnoremap H g^
