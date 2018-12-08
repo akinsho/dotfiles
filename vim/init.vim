@@ -98,27 +98,27 @@ else
         \}
 endif
 
-function! s:toggle_plugin_config(on) abort
+function! s:toggle_plugin_config() abort
   if &ft != 'vim'
     return
   endif
   let l:config_file = expand('%:p') 
-  if matchstr(l:config_file, 'inactive.vim')
-    let l:deactivated_config  = substitute(l:config_file, '[\.inactive\.vim]', '.vim','')
-  else
-    let l:deactivated_config  = substitute(l:config_file, '\.vim', 'inactive.vim','')
-  endif
+  let l:toggled_config =  match(l:config_file, 'inactive.vim') != -1
+        \ ? substitute(l:config_file, '\.inactive\.vim', '.vim','')
+        \ : substitute(l:config_file, '\.vim', '.inactive.vim','')
+
   echohl String
-  echom 'moving ' . l:config_file ' to ' . l:deactivated_config
+  echom 'moving ' . l:config_file ' to ' . l:toggled_config
   echohl clear
+
   try
-    let l:path = l:config_file . ' ' . l:deactivated_config
+    let l:src_to_dest = l:config_file . ' ' . l:toggled_config
     if exists(':Gmove')
-      execute 'Gmove '. l:deactivated_config
+      execute 'Gmove '. l:toggled_config
     elseif executable('git')
-      execute '!git mv '. l:path
+      execute '!git mv '. l:src_to_dest
     else
-      execute '!mv '. l:path
+      execute '!mv '. l:src_to_dest
     endif
   catch
     " error handle
@@ -126,8 +126,7 @@ function! s:toggle_plugin_config(on) abort
   endtry
 endfunction
 
-command! ActivateConfig call s:toggle_plugin_config(0)
-command! DeactivateConfig call s:toggle_plugin_config(1)
+command! TogglePluginConfig call s:toggle_plugin_config()
 
 "-----------------------------------------------------------------------
 "Leader bindings
