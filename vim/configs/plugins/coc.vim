@@ -1,3 +1,4 @@
+" let g:coc_node_version = '/usr/local/n/versions/node/10.3.0/bin/node'
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 iunmap <TAB>
@@ -36,7 +37,7 @@ function! s:show_documentation()
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
-    call timer_start(l:three_point_six_seconds, { tid -> execute('pclose!') })
+    " call timer_start(l:three_point_six_seconds, { tid -> execute('pclose!') })
   endif
 endfunction
 
@@ -53,4 +54,4 @@ nmap <leader>rn <Plug>(coc-rename)
 nmap <leader>ac  <Plug>(coc-codeaction)
 
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)

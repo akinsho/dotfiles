@@ -53,7 +53,6 @@ export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
 
 # PLUGINS =======================================================================
 plugins=(
-        sudo
         zsh-syntax-highlighting
         alias-tips
         last-working-dir

@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['gina'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['gina'], ['conflicted'] ],
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -34,6 +34,7 @@ let g:lightline = {
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
       \   'gina': 'LightLineGinaStatus',
+      \   'conflicted': 'LightlineConflicted',
       \   'lsp': 'coc#status'
       \ },
       \ 'component_expand': {
@@ -218,6 +219,13 @@ function! LightLineGinaStatus() abort
   let l:behind = gina#component#traffic#behind() 
   let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
   return l:project . ' ' .l:traffic . ' ' " . l:status
+endfunction
+
+function! LightlineConflicted() abort
+  if !exists(':Conflicted')
+    return ''
+  endif
+  return ConflictedVersion()
 endfunction
 
 " Set the colorscheme. Modified from onedark.vim

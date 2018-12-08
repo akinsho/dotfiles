@@ -24,8 +24,12 @@ function! ApplyUserHighlights() abort
   let &colorcolumn=join(range(81,999),",")
   set colorcolumn=80
   "---------------------------------------------------------------------------//
-  " Highlight over 80 cols in red
-  match Error /\%80v.\+/
+  " Highlight over 80 cols in red - moot now because -> prettier
+  " Note: Match commands interact and this command prevents the command below from working
+  " match Error /\%80v.\+/
+
+  " Highlight VCS conflict markers
+  " match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
@@ -56,8 +60,7 @@ function! ApplyUserHighlights() abort
   " else
   "   highlight MatchParen cterm=bold ctermbg=none guifg=NONE guibg=#29EF58
   endif
-  " Highlight VCS conflict markers
-  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
   if has('nvim')
     highlight TermCursor ctermfg=green guifg=green
   endif
@@ -70,7 +73,6 @@ function! ApplyUserHighlights() abort
   " highlight PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
   " Color the tildes at the end of the buffer
   " hi link EndOfBuffer VimFgBgAttrib
-
   "Remove vertical separator
   " highlight VertSplit guibg=bg guifg=bg
   "---------------------------------------------------------------------------//
