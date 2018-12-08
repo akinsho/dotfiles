@@ -98,7 +98,7 @@ else
         \}
 endif
 
-function! l:toggle_plugin_config() abort
+function! Toggle_plugin_config() abort
   if &ft != 'vim'
     return
   endif
@@ -126,7 +126,7 @@ function! l:toggle_plugin_config() abort
   endtry
 endfunction
 
-command! TogglePluginConfig call l:toggle_plugin_config()
+command! TogglePluginConfig call Toggle_plugin_config()
 
 "-----------------------------------------------------------------------
 "Leader bindings
