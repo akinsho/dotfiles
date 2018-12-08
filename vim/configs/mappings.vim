@@ -590,7 +590,7 @@ nnoremap S "_diwP
 "}}}
 
 " Shortcut to jump to next conflict marker"
-nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+" nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
 nnoremap <silent> <localleader>z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the

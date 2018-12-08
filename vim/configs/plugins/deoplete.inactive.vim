@@ -18,8 +18,6 @@ call deoplete#custom#source('tag', 'rank', 9999)
 " lambda - λ
 call deoplete#custom#option('ignore_sources', {
       \ '_': ['tag'],
-      \ 'ocaml': ['buffer', 'around', 'member', 'tag'],
-      \ 'reason': ['buffer', 'around', 'member', 'tag'],
       \ })
 
 call deoplete#custom#source('ultisnips',     'rank', 150)

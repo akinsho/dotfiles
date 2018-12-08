@@ -33,7 +33,6 @@ let g:lightline = {
       \   'csv':'LightLineCsv',
       \   'mode': 'LightLineMode',
       \   'gitgutter': 'LightLineGitGutter',
-      \   'gina': 'LightLineGinaStatus',
       \   'conflicted': 'LightlineConflicted',
       \   'lsp': 'coc#status'
       \ },
@@ -52,6 +51,7 @@ let g:lightline = {
       \ },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+" \   'gina': 'LightLineGinaStatus',
 
 "Lightline Bufferline
 set showtabline=2

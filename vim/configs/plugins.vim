@@ -50,19 +50,8 @@ endfunction
     Plug 'kristijanhusak/vim-js-file-import', {
           \ 'for':['javascript.jsx','javascript']
           \ }
-     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-     Plug 'autozimu/LanguageClient-neovim', {
-           \ 'branch': 'next',
-           \ 'do': 'bash install.sh',
-           \ }
-     Plug 'Shougo/neco-vim'
-     Plug 'zchee/deoplete-go'
-     Plug 'copy/deoplete-ocaml'
-     Plug 'mhartington/nvim-typescript', Cond(!exists('g:gui_oni'),  {
-           \ 'for': ['typescript'], 'do': './install.sh'
-           \ })
-     " Plug 'neoclide/coc-neco'
-     " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+     Plug 'neoclide/coc-neco'
+     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif
 " CORE {{{1
 "================================
@@ -157,6 +146,7 @@ Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
+Plug 'tpope/vim-scriptease'
 "Filetype Plugins {{{1
 "======================
 function! BuildComposer(info)

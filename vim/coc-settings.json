@@ -5,12 +5,12 @@
       "filetypes": ["lua"]
     },
     "reason": {
-      "command": "/home/akin/reason-language-server/reason-language-server.exe",
+      "command": "ocaml-language-server",
       "args": ["--stdio"],
       "trace.server": "verbose",
-      "filetypes": ["reason"],
+      "filetypes": ["reason", "ocaml"],
       "initializationOptions": {
-        "cacheDirectory": "/tmp/reason-lsp"
+        "cacheDirectory": "/tmp/ocaml-lsp"
       }
     },
     "flow": {
