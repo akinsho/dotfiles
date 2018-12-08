@@ -35,19 +35,19 @@ augroup vimrc-incsearch-highlight
   endif
 augroup END
 
-augroup PreviewAutocmds
-  autocmd!
-  autocmd WinEnter * if &previewwindow | setlocal nonumber | endif
-augroup END
-
 augroup togglerelativelinenumbers
   autocmd!
+  " If in normal mode show hybrid numbers
+  " except in previewwindow and other readonly/ helper windows
+  " OR if the ft has a setting to turn of numbers for that buffer
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
-        \ if &l:number && empty(&buftype) |
+        \ if &previewwindow | setlocal nonumber norelativenumber |
+        \ elseif &l:number && empty(&buftype) |
         \ setlocal norelativenumber |
         \ endif
   autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
-        \ if &l:number && empty(&buftype) |
+        \ if &previewwindow | setlocal nonumber norelativenumber | 
+        \ elseif &l:number && empty(&buftype) |
         \ setlocal relativenumber |
         \ endif
 augroup end
