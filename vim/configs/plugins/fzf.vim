@@ -106,7 +106,7 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
   let g:fzf_action = {
         \ 'ctrl-q': function('s:build_quickfix_list'),
         \ 'ctrl-t': 'tab split',
-        \ 'ctrl-x': 'split',
+        \ 'ctrl-s': 'split',
         \ 'ctrl-v': 'vsplit'
         \ }
 

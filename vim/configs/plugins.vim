@@ -96,6 +96,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
        \ { 'for':[ 'javascript', 'typescript' ] }
+Plug 'figitaki/vim-dune'
 Plug 'styled-components/vim-styled-components', {
       \ 'branch': 'main',
       \ 'for': [
