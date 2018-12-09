@@ -178,6 +178,7 @@ function! LightlineFiletype()
       	return WebDevIconsGetFileTypeSymbol()
       else
       	return ''
+      endif
     endif
   endif
 endfunction
