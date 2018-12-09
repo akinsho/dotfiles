@@ -8,4 +8,3 @@ nnoremap <leader>pu :PlugUpdate<CR>
 nnoremap <leader>so :source %<CR>
 set foldopen=all " Open folds when you move over them
 " set foldclose=all " Close folds when you leave them
-highlight Folded guifg=#A2E8F6

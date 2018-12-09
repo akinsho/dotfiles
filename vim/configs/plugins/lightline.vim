@@ -133,8 +133,12 @@ function! LightlineReadonly()
   return &ft !~? 'help' && &previewwindow && &readonly ? '' : ''
 endfunction
 
-function! LightlineList()
-  return &buftype ==# 'quickfix' ?'QuickFix' : ''
+" This function allow me to specify titles for special case buffers
+" like the previewwindow or a quickfix window
+function! LightlineSpecialBuffers()
+  return &buftype ==# 'quickfix' ? 'QuickFix' :
+        \ &previewwindow ? 'preview' :
+        \ ''
 endfunction
 
 function! LightlineFilename()
@@ -145,7 +149,7 @@ function! LightlineFilename()
         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
         \ &ft == 'unite' ? unite#get_status_string() :
         \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != LightlineList() ? LightlineList() :
+        \ '' != LightlineSpecialBuffers() ? LightlineSpecialBuffers() :
         \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
