@@ -1,7 +1,3 @@
-nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
-
-vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
-
 function! s:GrepOperator(type)
   let l:saved_unnamed_register = @@
 
@@ -20,3 +16,6 @@ function! s:GrepOperator(type)
     wincmd p
   endif
 endfunction
+
+nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
+vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>

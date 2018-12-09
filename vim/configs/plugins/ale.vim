@@ -48,9 +48,9 @@ let g:ale_linter_aliases = {
       \ 'vue': ['vue', 'javascript']
       \}
 
-let g:ale_open_list         = 0
+let g:ale_open_list             = 0
 let g:ale_keep_list_window_open = 1
-let g:ale_list_window_size = 5
+let g:ale_list_window_size      = 5
 
 nmap [a <Plug>(ale_next_wrap)
 nmap ]a <Plug>(ale_previous_wrap)

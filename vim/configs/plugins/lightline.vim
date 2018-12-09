@@ -24,15 +24,15 @@ let g:lightline = {
       \   'close': '%999X X ',
       \ },
       \ 'component_function': {
-      \   'filesize': 'LightLineFileSize',
-      \   'fugitive': 'LightLineFugitive',
-      \   'filename': 'LightLineFilename',
-      \   'fileformat': 'LightLineFileformat',
-      \   'filetype': 'LightLineFiletype',
-      \   'fileencoding': 'LightLineFileencoding',
-      \   'csv':'LightLineCsv',
-      \   'mode': 'LightLineMode',
-      \   'gitgutter': 'LightLineGitGutter',
+      \   'filesize': 'LightlineFileSize',
+      \   'fugitive': 'LightlineFugitive',
+      \   'filename': 'LightlineFilename',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \   'fileencoding': 'LightlineFileencoding',
+      \   'csv':'LightlineCsv',
+      \   'mode': 'LightlineMode',
+      \   'gitgutter': 'LightlineGitGutter',
       \   'conflicted': 'LightlineConflicted',
       \   'lsp': 'coc#status',
       \ },
@@ -51,8 +51,8 @@ let g:lightline = {
       \ },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
-" \   'repo': 'LightLineRepo',
-" \   'gina': 'LightLineGinaStatus',
+" \   'repo': 'LightlineRepo',
+" \   'gina': 'LightlineGinaStatus',
 
 "Lightline Bufferline
 set showtabline=2
@@ -93,7 +93,7 @@ let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors = "\uf05e"
 let g:lightline#ale#indicator_ok = ''
 
-function! LightLineCsv()
+function! LightlineCsv()
   if has("statusline")
     hi User1 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
     if exists("*CSV_WCol") && &ft =~ "csv"
@@ -104,7 +104,7 @@ function! LightLineCsv()
   endif
 endfunction
 
-function! LightLineGitGutter()
+function! LightlineGitGutter()
   if ! exists('*GitGutterGetHunkSummary')
         \ || ! get(g:, 'gitgutter_enabled', 0)
         \ || winwidth('.') <= 90
@@ -125,15 +125,19 @@ function! LightLineGitGutter()
   return join(ret, ' ')
 endfunction
 
-function! LightLineModified()
+function! LightlineModified()
   return &ft =~ 'help' ? '' : &modified ? '±' : &modifiable ? '' : '-'
 endfunction
 
-function! LightLineReadonly()
-  return &ft !~? 'help' && &readonly ? '' : ''
+function! LightlineReadonly()
+  return &ft !~? 'help' && &previewwindow && &readonly ? '' : ''
 endfunction
 
-function! LightLineFilename()
+function! LightlineList()
+  return &buftype ==# 'quickfix' ?'QuickFix' : ''
+endfunction
+
+function! LightlineFilename()
   let fname = expand('%:t')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
         \ fname == '__Tagbar__' ? '' :
@@ -141,12 +145,13 @@ function! LightLineFilename()
         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
         \ &ft == 'unite' ? unite#get_status_string() :
         \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ '' != LightlineList() ? LightlineList() :
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
-function! LightLineFileSize() "{{{
+function! LightlineFileSize() "{{{
   let bytes = getfsize(expand("%:p"))
   if bytes <= 0
     return ""
@@ -158,7 +163,7 @@ function! LightLineFileSize() "{{{
   endif
 endfunction "}}}
 
-function! LightLineFiletype()
+function! LightlineFiletype()
   if has('gui_running')
     return winwidth(0) > 70 ? (strlen(&filetype) ? &ft : '') : ''
   else
@@ -166,7 +171,7 @@ function! LightLineFiletype()
   endif
 endfunction
 
-function! LightLineFileFormat()
+function! LightlineFileFormat()
   if has('gui_running')
     return winwidth(0) > 70 ? (&fileformat . ' ') : ''
   else
@@ -174,11 +179,11 @@ function! LightLineFileFormat()
   endif
 endfunction
 
-function! LightLineFileencoding()
+function! LightlineFileencoding()
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
-function! LightLineFugitive()
+function! LightlineFugitive()
   try
     if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ' '
@@ -190,7 +195,7 @@ function! LightLineFugitive()
   return ''
 endfunction
 
-function! LightLineMode()
+function! LightlineMode()
   let fname = expand('%:t')
   return fname == '__Tagbar__' ? 'Tagbar' :
         \ fname == 'ControlP' ? 'CtrlP' :
@@ -208,13 +213,13 @@ function! s:with_default(count, icon) abort
   return a:count > 0 ? a:icon . a:count : ''
 endfunction
 
-function! LightLineRepo() abort
+function! LightlineRepo() abort
   let l:repo_name = utils#git_branch_dir(expand('%:p:h'))
   echom l:repo_name
   return l:repo_name
 endfunction
 
-function! LightLineGinaStatus() abort
+function! LightlineGinaStatus() abort
   if !exists(':Gina')
     return ''
   endif

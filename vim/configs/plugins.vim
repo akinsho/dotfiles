@@ -41,8 +41,8 @@ endfunction
 "====================================
   if !exists('g:gui_oni')
     Plug 'itchyny/lightline.vim'
-      \ | Plug 'mengelbrecht/lightline-bufferline'
       \ | Plug 'maximbaz/lightline-ale'
+      \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'scrooloose/nerdtree'
