@@ -51,6 +51,7 @@ endfunction
           \ 'for':['javascript.jsx','javascript']
           \ }
      Plug 'neoclide/coc-neco'
+     Plug 'neoclide/coc-emmet'
      Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif
 " CORE {{{1
@@ -96,7 +97,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'othree/javascript-libraries-syntax.vim',
        \ { 'for':[ 'javascript', 'typescript' ] }
-Plug 'figitaki/vim-dune'
 Plug 'styled-components/vim-styled-components', {
       \ 'branch': 'main',
       \ 'for': [
