@@ -10,7 +10,7 @@ setlocal winfixheight
 
 if has('nvim')
   highlight clear QuickFixLine
-  highlight QuickFixLine cterm=underline,bold gui=underline,bold guibg=none
+  highlight! QuickFixLine cterm=underline,bold gui=underline,bold guibg=none
 endif
 
 if &l:conceallevel == 0

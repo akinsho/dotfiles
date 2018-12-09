@@ -175,7 +175,6 @@ augroup filetype_javascript_typescript "{{{1
   "==================================
   "TypeScript
   "==================================
-  autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
 
@@ -281,11 +280,8 @@ augroup END
 
 augroup fugitiveSettings
   autocmd!
-  autocmd FileType gitcommit setlocal nolist
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
-
-
 
 augroup NERDTree "{{{1
   "Close vim if only window is a Nerd Tree
