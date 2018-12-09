@@ -171,7 +171,14 @@ function! LightlineFiletype()
   if has('gui_running')
     return winwidth(0) > 70 ? (strlen(&filetype) ? &ft : '') : ''
   else
-    return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
+    if winwidth(0) > 70
+      if strlen(LightlineSpecialBuffers())
+      	return ''
+      elseif strlen(&filetype)
+      	return WebDevIconsGetFileTypeSymbol()
+      else
+      	return ''
+    endif
   endif
 endfunction
 
