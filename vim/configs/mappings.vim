@@ -7,15 +7,16 @@
 " Terminal settings
 if has('nvim')
   "Add neovim terminal escape with ESC mapping
-  tmap <ESC> <C-\><C-n>
-  tmap jk <C-\><C-n>
-  tmap <C-h> <C-\><C-n><C-h>
-  tmap <C-j> <C-\><C-n><C-j>
-  tmap <C-k> <C-\><C-n><C-k>
-  tmap <C-l> <C-\><C-n><C-l>
-  tmap <leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
-  tmap <leader>. <C-\><C-n><Cmd>bprev<CR>
-  tmap <leader>, <C-\><C-n><Cmd>bnext<cr>
+  tnoremap <ESC> <C-\><C-n>
+  tnoremap jk <C-\><C-n>
+  tnoremap <C-h> <C-\><C-n><C-h>
+  tnoremap <C-j> <C-\><C-n><C-j>
+  tnoremap <C-k> <C-\><C-n><C-k>
+  tnoremap <C-l> <C-\><C-n><C-l>
+  tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
+  tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
+  tnoremap <silent><Tab> <C-\><C-n><Cmd>bnext<cr>
+  tmap <silent><nowait><C-Q> <C-\><C-n><Cmd>Sayonara<cr>
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j

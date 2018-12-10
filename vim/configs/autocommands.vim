@@ -212,38 +212,33 @@ augroup END
 
 " Add Per Window Highlights [WIP] {{{
 function! s:handle_window_enter() abort
+  let l:win_highlight = {
+        \"guibg": exists('g:gui_oni') ? "black" : "#22252B",
+        \"ctermbg":"black",
+        \}
+  if &buftype ==# 'terminal'
+    startinsert
+    setlocal nocursorline nonumber norelativenumber bufhidden=hide
+    execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
+    if exists('+winhighlight') 
+      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors
+    endif
+  endif
   " if &previewwindow 
   "   setlocal winhighlight=Normal:Visual
   " endif
-  if &buftype ==# 'terminal'
-    setlocal bufhidden=hide
-    let l:term_win_highlight = {
-          \"guibg": exists('g:gui_oni') ? "black" : "#22252B",
-          \"ctermbg":"black",
-          \}
-    try
-      exe 'highlight TerminalColors '. 'guibg='. l:term_win_highlight.guibg . ' ctermbg='.l:term_win_highlight.ctermbg
-      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors
-    catch v:exception
-      call VimrcMessage(v:exception)
-    endtry
   " elseif !strlen(&buftype)
   "   hi link ActiveWindow Normal
   "   hi link InactiveWindow Visual
   "   setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
-  endif
 endfunction
 
 if has('nvim')
   augroup nvim
     au!
-    autocmd TermOpen * setlocal nonumber norelativenumber
-    au BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | set nocursorline | endif
-    if exists('+winhighlight') 
-      autocmd WinEnter,TermOpen * call s:handle_window_enter()
+      autocmd WinEnter,WinNew,TermOpen * call s:handle_window_enter()
       " TODO: Clear highlight for fzf buffers, tidy this up
       autocmd FileType fzf setlocal winhighlight=
-    endif
     "Close FZF in neovim with esc
     autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
   augroup END
