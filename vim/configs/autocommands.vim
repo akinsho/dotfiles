@@ -237,10 +237,11 @@ if has('nvim')
   augroup nvim
     au!
       autocmd WinEnter,WinNew,TermOpen * call s:handle_window_enter()
-      " TODO: Clear highlight for fzf buffers, tidy this up
-      autocmd FileType fzf setlocal winhighlight=
-    "Close FZF in neovim with esc
-    autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
+      "Close FZF in neovim with esc
+      " TODO: Clear highlight for fzf buffers (tidy this up)
+            autocmd FileType fzf
+            \ tnoremap <nowait><buffer> <esc> <c-g> 
+            \ | setlocal winhighlight=
   augroup END
 endif
 
