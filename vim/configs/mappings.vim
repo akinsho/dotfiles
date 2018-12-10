@@ -16,7 +16,6 @@ if has('nvim')
   tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
   tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
   tnoremap <silent><Tab> <C-\><C-n><Cmd>bnext<cr>
-  tmap <silent><nowait><C-Q> <C-\><C-n><Cmd>Sayonara<cr>
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j
