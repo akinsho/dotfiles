@@ -16,6 +16,11 @@ if has('nvim')
   tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
   tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
   tnoremap <silent><Tab> <C-\><C-n><Cmd>bnext<cr>
+  nnoremap <leader>h<CR> <Cmd>leftabove 30vnew<CR><Cmd>terminal<CR>
+  nnoremap <leader>l<CR> <Cmd>rightbelow 30vnew<CR><Cmd>terminal<CR>
+  nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
+  nnoremap <leader>j<CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
+  nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j
@@ -23,13 +28,7 @@ else
   tmap <C-l> <C-W>l
   tmap <C-x> <C-W><silent>q!<CR>
 endif
-nnoremap <leader>to <Cmd>term<cr>
 "Opening splits with terminal in all directions
-nnoremap <leader>h<CR> <Cmd>leftabove 30vnew<CR><Cmd>terminal<CR>
-nnoremap <leader>l<CR> <Cmd>rightbelow 30vnew<CR><Cmd>terminal<CR>
-nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
-nnoremap <leader>j<CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
-nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
 "}}}
 
 ""---------------------------------------------------------------------------//
