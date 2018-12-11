@@ -9,13 +9,15 @@ if has('nvim')
   "Add neovim terminal escape with ESC mapping
   tnoremap <ESC> <C-\><C-n>
   tnoremap jk <C-\><C-n>
-  tnoremap <C-h> <C-\><C-n><C-h>
-  tnoremap <C-j> <C-\><C-n><C-j>
-  tnoremap <C-k> <C-\><C-n><C-k>
-  tnoremap <C-l> <C-\><C-n><C-l>
+  " Recursive mappings so that the rebound <C-direction> mappings are triggerd
+  tmap <C-h> <C-\><C-n><C-h>
+  tmap <C-j> <C-\><C-n><C-j>
+  tmap <C-k> <C-\><C-n><C-k>
+  tmap <C-l> <C-\><C-n><C-l>
+  " TODO: this mapping should delete the buffer and close the window
   tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
-  tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
-  tnoremap <silent><Tab> <C-\><C-n><Cmd>bnext<cr>
+  tnoremap <silent><leader><S-Tab> <C-\><C-n><Cmd>bprev<CR>
+  tnoremap <silent><leader><Tab> <C-\><C-n><Cmd>bnext<cr>
   nnoremap <leader>h<CR> <Cmd>leftabove 30vnew<CR><Cmd>terminal<CR>
   nnoremap <leader>l<CR> <Cmd>rightbelow 30vnew<CR><Cmd>terminal<CR>
   nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
