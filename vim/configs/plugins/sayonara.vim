@@ -6,3 +6,4 @@ let g:sayonara_filetypes = {
 
 nnoremap <silent> <leader>q  :Sayonara!<CR>
 nnoremap <silent> <c-q> :Sayonara<CR>
+if has('nvim') | tnoremap <silent><nowait><C-Q> <C-\><C-n><Cmd>Sayonara<cr> | endif

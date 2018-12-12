@@ -84,19 +84,6 @@ function! s:load_plugin_configs(settings_dir) abort
   endif
 endfunction
 
-if !exists('g:gui_oni')
-  " alternatives: black
-  let g:term_win_highlight = {
-        \"guibg": "#22252B",
-        \"ctermbg":"BLACK",
-        \}
-else
-  let g:term_win_highlight = {
-        \"guibg": "black",
-        \"ctermbg":"black",
-        \}
-endif
-
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
