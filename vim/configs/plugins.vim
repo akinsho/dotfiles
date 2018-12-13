@@ -76,6 +76,7 @@ Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'yuttie/comfortable-motion.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-sleuth'

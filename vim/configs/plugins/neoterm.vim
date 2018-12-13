@@ -12,6 +12,9 @@ command! -nargs=+ Tg :T git <args>
 " Useful maps
 " hide/close terminal
 nnoremap <silent> <leader><CR> :Ttoggle<CR>
+if has('nvim')
+  tnoremap <silent> <leader><CR> <Cmd>Ttoggle<CR>
+endif
 nnoremap <silent> <leader>ta :TtoggleAll<CR>
 " clear terminal
 nnoremap <silent> <leader>tl :call neoterm#clear()<cr>
