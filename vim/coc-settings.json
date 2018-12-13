@@ -15,13 +15,24 @@
     },
     "flow": {
       "command": "flow-language-server",
-      "args": ["--stdio", "--try-flow-bin"],
+      "args": ["--stdio"],
+      "trace.server": "verbose",
       "filetypes": ["javascript", "javascript.jsx"],
-      "initializationOptions": {},
-      "settings": {}
+      "initializationOptions": {
+        "cacheDirectory": "/tmp/flow-lsp"
+      }
+    },
+    "golang": {
+      "command": "go-langserver",
+      "filetypes": ["go"],
+      "revealOutputChannelOn": "never",
+      "initializationOptions": {
+        "gocodeCompletionEnabled": true,
+        "diagnosticsEnabled": true,
+        "lintTool": "golint"
+      }
     }
   },
-  "tsserver.enableJavascript": false,
   "coc.preferences.diagnostic.errorSign": "✖",
   "coc.preferences.diagnostic.warningSign": "⚠",
   "coc.preferences.diagnostic.infoSign": "?",
