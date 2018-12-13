@@ -447,7 +447,7 @@ nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
 "Indent a page
-nnoremap <C-g>f gg=G<CR>
+nnoremap <C-G>f gg=G<CR>
 
 nnoremap <down> <nop>
 nnoremap <up> <nop>
