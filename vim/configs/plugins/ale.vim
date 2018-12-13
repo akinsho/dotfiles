@@ -33,14 +33,14 @@ let g:ale_linters                     = {
       \'jsx': ['eslint'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint'],
-      \'go': [
-      \ 'gofmt -e',
-      \ 'go vet',
-      \ 'golint',
-      \ 'go build',
-      \ 'gosimple',
-      \ 'staticcheck'],
       \}
+      " \'go': [
+      " \ 'gofmt -e',
+      " \ 'go vet',
+      " \ 'golint',
+      " \ 'go build',
+      " \ 'gosimple',
+      " \ 'staticcheck'],
 
 let g:ale_linter_aliases = {
       \ 'jsx': ['css', 'javascript'],

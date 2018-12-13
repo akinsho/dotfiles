@@ -7,10 +7,11 @@ let b:did_ftplugin = 1 " Don't load twice in one buffer
 " GO FILE SETTINGS
 ""---------------------------------------------------------------------------//
 setlocal noexpandtab
+" setlocal listchars+=tab:\ \ ,"Dont show indent line
+setlocal list listchars+=tab:\|\ "(here is a space), this is to show indent line
 setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal tabstop=4
-setlocal listchars+=tab:\ \ ,
 highlight default link goErr WarningMsg |
       \ match goErr /\<err\>/
 " ---------------------------------------------------
@@ -29,7 +30,7 @@ nnoremap <leader>av :AV<CR>
 nnoremap <leader>as :AS<CR>
 nnoremap <leader>at :AT<CR>
 
-run :GoBuild or :GoTestCompile based on the go file
+"run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
   if l:file =~# '^\f\+_test\.go$'
