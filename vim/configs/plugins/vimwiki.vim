@@ -4,11 +4,11 @@
 let g:work_wiki = {}
 let g:work_wiki.path = $DOTFILES.'/vim/wiki/work/todo.wiki'
 let g:work_wiki.path_html = $DOTFILES.'/vim/wiki/work/todo.html'
-let g:play_wiki = {}
-let g:play_wiki.path = $DOTFILES.'/vim/wiki/play/todo.wiki'
-let g:play_wiki.path_html = $DOTFILES.'vim/wiki/play/todo.html'
+let g:home_wiki = {}
+let g:home_wiki.path = $DOTFILES.'/vim/wiki/home/todo.wiki'
+let g:home_wiki.path_html = $DOTFILES.'vim/wiki/home/todo.html'
 let g:vimwiki_listsyms = '✗○◐●✓'
-let g:vimwiki_list = [g:play_wiki, g:work_wiki]
+let g:vimwiki_list = [g:home_wiki, g:work_wiki]
 
 function! s:close_wikis() abort
   for i in range(1, bufnr('$'))
