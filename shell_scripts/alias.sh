@@ -63,8 +63,6 @@ alias chrome="/Applications/Google\\ \\Chrome.app/Contents/MacOS/Google\\ \\Chro
 alias -s js=nvim
 alias -s html=nvim
 alias -s css=nvim
-alias -s py=nvim
-alias -s go=nvim
 
 alias ta="tmux -CC attach"
 #Git aliases
