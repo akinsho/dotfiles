@@ -96,12 +96,12 @@ nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 "Use enter to create new lines w/o entering insert mode
-" nnoremap <CR> o<Esc>
+nnoremap <CR> o<Esc>
 "Below is to fix issues with the ABOVE mappings in quickfix window
-augroup EnterMapping
-  au!
-  autocmd BufReadPost quickfix nnoremap <CR> <CR>
-augroup END
+" augroup EnterMapping
+"   au!
+"   autocmd BufReadPost quickfix nnoremap <CR> <CR>
+" augroup END
 ""---------------------------------------------------------------------------//
 " Make the given command repeatable using repeat.vim
 command! -nargs=* Repeatable call s:Repeatable(<q-args>)

@@ -1,9 +1,3 @@
-if has('vim_starting')
-  let &t_SI .= "\e[6 q"
-  let &t_EI .= "\e[2 q"
-  let &t_SR .= "\e[4 q"
-endif
-
 if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set transparency=0
   set guioptions=
