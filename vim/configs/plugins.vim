@@ -33,8 +33,14 @@ function! Cond(cond, ...)
   return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
 endfunction
 
-function! DoRemote(arg)
-  UpdateRemotePlugins
+function! BuildComposer(info)
+  if a:info.status !=# 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release
+    else
+      !cargo build --release --no-default-features --features json-rpc
+    endif
+  endif
 endfunction
 
 " Autocompletion  {{{1
@@ -151,15 +157,6 @@ Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'tpope/vim-scriptease'
 "Filetype Plugins {{{1
 "======================
-function! BuildComposer(info)
-  if a:info.status !=# 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build --release
-    else
-      !cargo build --release --no-default-features --features json-rpc
-    endif
-  endif
-endfunction
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx'}
