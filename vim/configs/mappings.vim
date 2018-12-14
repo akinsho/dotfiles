@@ -427,6 +427,35 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <leader>c :<c-f>
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
+" ----------------------------------------------------------------------------
+" CREDIT: JGunn #gi / #gpi | go to next/previous indentation level
+" ----------------------------------------------------------------------------
+function! s:indent_len(str)
+  return type(a:str) == 1 ? len(matchstr(a:str, '^\s*')) : 0
+endfunction
+
+function! s:go_indent(times, dir)
+  for _ in range(a:times)
+    let l = line('.')
+    let x = line('$')
+    let i = s:indent_len(getline(l))
+    let e = empty(getline(l))
+
+    while l >= 1 && l <= x
+      let line = getline(l + a:dir)
+      let l += a:dir
+      if s:indent_len(line) != i || empty(line) != e
+        break
+      endif
+    endwhile
+    let l = min([max([1, l]), x])
+    execute 'normal! '. l .'G^'
+  endfor
+endfunction
+
+nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
+nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
+
 ""---------------------------------------------------------------------------//
 " Window resizing bindings
 ""---------------------------------------------------------------------------//
@@ -582,10 +611,14 @@ nnoremap <leader>kk :resize -10<cr>
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 
-" Quick macro invocation with q register
-nnoremap <localleader>q @q
-"Map Q to remove a CR
-nnoremap Q J
+" Disable CTRL-A on tmux or on screen
+if exists('$TMUX')
+  nnoremap <C-a> <nop>
+  nnoremap <leader><C-a> <C-a>
+endif
+
+"Map Q to replay q register
+nnoremap Q @q
 "Replace word under cursor
 nnoremap S "_diwP
 "}}}
