@@ -17,7 +17,7 @@
       "command": "flow-language-server",
       "args": ["--stdio"],
       "trace.server": "verbose",
-      "filetypes": ["javascript", "javascript.jsx"],
+      "filetypes": ["javascript.jsx", "javascript"],
       "initializationOptions": {
         "cacheDirectory": "/tmp/flow-lsp"
       }
