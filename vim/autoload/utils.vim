@@ -13,7 +13,7 @@ function! utils#toggle_plugin_config() abort
 
   try
     let l:src_to_dest = l:config_file . ' ' . l:toggled_config
-    if exists(':Gmove')
+    if exists('g:loaded_fugitive')
       execute 'Gmove '. l:toggled_config
     elseif executable('git')
       execute '!git mv '. l:src_to_dest
