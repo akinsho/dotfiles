@@ -64,6 +64,13 @@ augroup WhiteSpace "{{{1
   autocmd BufEnter * silent! call s:WhitespaceHighlight()
 augroup END
 
+" FIXME: After filetype plugin is not working currently
+augroup GoLang "{{{
+  au!
+  autocmd BufNewFile,BufReadPost *.go set filetype=go
+  autocmd FileType go setlocal list listchars+=tab:\|\ "(here is a space), this is to show indent line
+augroup END "}}}
+
 " Auto open grep quickfix window and SmartClose {{{
 augroup SmartClose
   au!
@@ -290,9 +297,9 @@ augroup NERDTree "{{{1
   autocmd!
   autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   autocmd FileType nerdtree setlocal nolist nonumber
-  " Refresh NERDTree on Open
-  autocmd BufEnter * if exists('b:NERDTree')
-        \ | execute 'normal R' | endif
+  " Refresh NERDTree on Open (FIXME: This really doesn't work in a mono repo)
+  " autocmd BufEnter * if exists('b:NERDTree')
+  "       \ | execute 'normal R' | endif
 augroup END
 
 

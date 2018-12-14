@@ -24,5 +24,5 @@ let g:go_highlight_structs              = 1
 let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
 let g:go_metalinter_autosave = 1
-", 'vetshadow'
+"'vetshadow' - checks if variable names are shadowed
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'goconst','ineffassign']

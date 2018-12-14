@@ -18,4 +18,10 @@ function! s:close_wikis() abort
   endfor
 endfunction
 
-autocmd TabLeave * call s:close_wikis()
+augroup Wikis
+  au!
+  autocmd TabLeave * call s:close_wikis()
+  autocmd FileType vimwiki
+        \ nnoremap <silent><leader><tab> :bnext<cr>
+        \ nnoremap <silent><leader><s-tab> :bnext<cr>
+augroup END

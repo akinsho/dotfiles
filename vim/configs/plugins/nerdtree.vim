@@ -60,7 +60,7 @@ function! NERDTreeToggleAndFind()
   endif
 endfunction
 nnoremap <silent> <c-n> :NERDTreeToggle<cr>
-nnoremap <c-n>f :call NERDTreeToggleAndFind()<CR>
+nnoremap <silent><c-n>f :call NERDTreeToggleAndFind()<CR>
 
 let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
