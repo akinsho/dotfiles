@@ -239,14 +239,6 @@ function! s:hi_chain(synid) abort
   return names
 endfunction
 
-"Displays the name of the highlight group of the selected word
-function! s:SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
 command! -nargs=0 Token call utils#token_inspect()
 nnoremap <leader>E :Token<cr>
 

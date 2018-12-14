@@ -21,6 +21,7 @@ call gina#custom#mapping#nmap(
       \ 'blame', 'j',
       \ 'j<Plug>(gina-blame-echo)'
       \)
+
 call gina#custom#mapping#nmap(
       \ 'blame', 'k',
       \ 'k<Plug>(gina-blame-echo)'
@@ -67,3 +68,4 @@ nnoremap <silent><nowait> <localleader>gs :Gina status<cr>
 nnoremap <silent><nowait> <localleader>gb :Gina branch<cr>
 nnoremap <silent><nowait> <localleader>gc :Gina commit<cr>
 nnoremap <silent><nowait> <localleader>gp :Gina push<cr>
+nnoremap <silent><nowait> <localleader>gl :Gina pull<cr>
