@@ -459,10 +459,10 @@ nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 ""---------------------------------------------------------------------------//
 " Window resizing bindings
 ""---------------------------------------------------------------------------//
-"Create a horizontal split
-nnoremap <leader>- :sp<CR>
 "Create a vertical split
-nnoremap \| :vsp<CR>
+nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
+"Create a horizontal split
+nnoremap <expr><silent> _ !v:count ? "<C-W>s<C-W><Down>"  : '_'
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
 "Close every window in the current tabview but the current one
@@ -517,6 +517,7 @@ function! s:goto_line()
 endfunction
 
 augroup GoToLine
+  au!
   autocmd! BufRead * nested call s:goto_line()
 augroup END
 " ----------------------------------------------------------------------------
