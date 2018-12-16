@@ -583,11 +583,22 @@ nnoremap L g$
 nnoremap <silent><leader>H :norm! H<cr>
 nnoremap <silent><leader>L :norm! L<cr>
 
+" Repeatable window resizing mappings
+nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
+      \ :call repeat#set("\<Plug>ResizeRight")<CR>
+nmap <leader>ll <Plug>ResizeRight
 
-nnoremap <leader>ll :vertical resize +10<cr>
-nnoremap <leader>hh :vertical resize -10<cr>
-nnoremap <leader>jj :resize +10<cr>
-nnoremap <leader>kk :resize -10<cr>
+nnoremap <silent> <Plug>ResizeLeft :vertical resize -10<cr>
+      \ :call repeat#set("\<Plug>ResizeLeft")<CR>
+nmap <leader>hh <Plug>ResizeLeft
+
+nnoremap <silent> <Plug>ResizeDown :resize +10<cr>
+      \ :call repeat#set("\<Plug>ResizeDown")<CR>
+nmap <leader>jj <Plug>ResizeDown
+
+nnoremap <silent> <Plug>ResizeUp :resize -10<cr>
+      \ :call repeat#set("\<Plug>ResizeUp")<CR>
+nmap <leader>kk <Plug>ResizeUp
 
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 "Move to beginning of a line in insert mode

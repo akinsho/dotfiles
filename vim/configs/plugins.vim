@@ -159,9 +159,9 @@ Plug 'tpope/vim-scriptease'
 "======================
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
-Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx'}
 Plug 'heavenshell/vim-jsdoc', { 'on': 'JSDoc' }
 Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
+" Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx'}
 
 "Themes  {{{1
 "===============================

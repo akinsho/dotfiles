@@ -278,6 +278,6 @@ function! utils#open_changed_files()
     endfor
   end
 endfunction
-command! OpenChangedFiles :call OpenChangedFiles()
+command! OpenChangedFiles call utils#open_changed_files()
 
-nnoremap <leader>oc :utils#open_changed_files<CR>
+nnoremap <leader>oc :OpenChangedFiles<CR>
