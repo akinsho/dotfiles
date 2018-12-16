@@ -85,23 +85,11 @@ nnoremap [w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><
 
 " move the current word to the left and keep the cursor on it
 nnoremap ]w "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
-
-" Replace the current work with the last yanked word;
-" Save word and exchange it under cursor
-nnoremap <silent> ciy ciw<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
-nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 ""---------------------------------------------------------------------------//
 " Add Empty space above and below
 ""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-"Use enter to create new lines w/o entering insert mode
-nnoremap <CR> o<Esc>
-"Below is to fix issues with the ABOVE mappings in quickfix window
-" augroup EnterMapping
-"   au!
-"   autocmd BufReadPost quickfix nnoremap <CR> <CR>
-" augroup END
 ""---------------------------------------------------------------------------//
 " Make the given command repeatable using repeat.vim
 command! -nargs=* Repeatable call s:Repeatable(<q-args>)
@@ -135,9 +123,7 @@ command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<ba
 cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"
 " Smart mappings on the command line
-cno $d e ~/Desktop/
-cmap cwd lcd %:p:h
-cmap cd. lcd %:p:h
+cmap cwd lcd %:p:h<tab>
 cmap w!! w !sudo tee % >/dev/null
 " insert path of current file into a command
 cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
@@ -148,10 +134,6 @@ nnoremap <leader>ar :AutoResize 70<CR>
 
 " Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
 nnoremap * m`:keepjumps normal! *``<cr>
-
-nno <expr> [of utils#open_folds('enable')
-nno <expr> ]of utils#open_folds('disable')
-nno <expr> cof utils#open_folds(<sid>open_folds('is_active') ? 'disable' : 'enable')
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
