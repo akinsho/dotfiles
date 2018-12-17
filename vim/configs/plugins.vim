@@ -148,7 +148,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
 Plug 'kassio/neoterm'
-Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF'] }
+Plug 'dyng/ctrlsf.vim' ", { 'on': ['CtrlSF'] }
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })

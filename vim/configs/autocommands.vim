@@ -68,7 +68,7 @@ augroup END
 augroup GoLang "{{{
   au!
   autocmd BufNewFile,BufReadPost *.go set filetype=go
-  autocmd FileType go setlocal list listchars+=tab:\|\ "(here is a space), this is to show indent line
+  autocmd FileType go setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent line
 augroup END "}}}
 
 " Auto open grep quickfix window and SmartClose {{{
