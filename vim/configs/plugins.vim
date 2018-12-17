@@ -46,6 +46,17 @@ endfunction
 " Autocompletion  {{{1
 "====================================
   if !exists('g:gui_oni')
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
+    Plug 'wokalski/autocomplete-flow', {
+          \ 'for': ['javascript', 'javascript.jsx'] }
+    Plug 'Shougo/neco-vim', { 'for': 'vim' },
+    Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
+    Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
+    Plug 'autozimu/LanguageClient-neovim', {
+          \ 'branch': 'next',
+          \ 'do': 'bash install.sh',
+          \ }
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'
@@ -56,9 +67,6 @@ endfunction
     Plug 'kristijanhusak/vim-js-file-import', {
           \ 'for':['javascript.jsx','javascript']
           \ }
-     Plug 'neoclide/coc-neco'
-     Plug 'neoclide/coc-emmet'
-     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif
 " CORE {{{1
 "================================
