@@ -103,6 +103,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
+Plug 'tpope/vim-scriptease', { 'on': ['Messages', 'Verbose', 'Runtime'] }
 " ===========================
 "Syntax {{{1
 "============================
@@ -169,12 +170,11 @@ Plug 'dyng/ctrlsf.vim' , { 'on': [
       \'CtrlSFOpen',
       \'CtrlSFToggle',
       \] }
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
-Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
-Plug 'tpope/vim-scriptease'
 "Filetype Plugins {{{1
 "======================
 Plug 'euclio/vim-markdown-composer',
