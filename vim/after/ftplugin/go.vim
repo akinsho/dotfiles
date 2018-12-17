@@ -13,7 +13,7 @@ setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent li
 setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal tabstop=4
-highlight default link goErr WarningMsg |
+highlight! default link goErr WarningMsg |
       \ match goErr /\<err\>/
 " ---------------------------------------------------
 " VIM-GO !!!
