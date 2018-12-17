@@ -2,16 +2,21 @@ if exists('g:gui_oni')
   finish
 endif
 
-  " \ 'reason': ['~/reason-language-server/reason-language-server.exe'],
-let g:LanguageClient_serverCommands = {
-    \ 'reason': ['ocaml-language-server', '--stdio'],
-    \ 'ocaml': ['ocaml-language-server', '--stdio'],
-    \ 'html': ['html-languageserver', '--stdio'],
-    \ }
+let g:LanguageClient_serverCommands = {}
+
+" \ 'reason': ['~/reason-language-server/reason-language-server.exe'],
+if executable('ocaml-language-server')
+  let g:LanguageClient_serverCommands.reason = ['ocaml-language-server', '--stdio']
+  let g:LanguageClient_serverCommands.ocaml = ['ocaml-language-server', '--stdio']
+endif
 
 if executable('javascript-typescript-stdio')
   let g:LanguageClient_serverCommands.javascript = ['javascript-typescript-stdio']
   let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
+endif
+
+if executable('html-languageserver')
+  let g:LanguageClient_serverCommands.html = ['html-langserver', '--stdio']
 endif
 
 if executable('go-langserver')
@@ -26,7 +31,7 @@ endif
 
 if executable('flow-language-server')
   let g:LanguageClient_serverCommands.javascript = ['flow-language-server', '--stdio']
-  let g:LanguageClient_serverCommands["javascript.jsx"] = ['flow-language-server', '--stdio']
+  let g:LanguageClient_serverCommands['javascript.jsx'] = ['flow-language-server', '--stdio']
 endif
 
 " Automatically start language servers.

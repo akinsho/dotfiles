@@ -328,58 +328,53 @@ vnoremap . :norm.<CR>
 xnoremap nu :<C-u>call utils#Numbers()<CR>
 onoremap nu :normal vin<CR>
 
-"---------------------------------------------------------------------------//
-" Inner Indent Text Object - Courtesty of http://vim.wikia.com/wiki/Indent_text_object
-"---------------------------------------------------------------------------//
-" Changes to allow blank lines in blocks, and
-" Top level blocks (zero indent) separated by two or more blank lines.
-" Usage: source <thisfile> in pythonmode and
-" Press: vai, vii to select outer/inner python blocks by indetation.
-" Press: vii, yii, dii, cii to select/yank/delete/change an indented block.
-onoremap <silent>ai :<C-u>call IndTxtObj(0)<CR>
-onoremap <silent>ii :<C-u>call IndTxtObj(1)<CR>
-vnoremap <silent>ai <Esc>:call IndTxtObj(0)<CR><Esc>gv
-vnoremap <silent>ii <Esc>:call IndTxtObj(1)<CR><Esc>gv
+" ----------------------------------------------------------------------------
+" ?ii / ?ai | indent-object
+" ?io       | strictly-indent-object
+" ----------------------------------------------------------------------------
+function! s:indent_object(op, skip_blank, b, e, bd, ed)
+  let i = min([s:indent_len(getline(a:b)), s:indent_len(getline(a:e))])
+  let x = line('$')
+  let d = [a:b, a:e]
 
-function! IndTxtObj(inner)
-  let curcol = col(".")
-  let curline = line(".")
-  let lastline = line("$")
-  let i = indent(line("."))
-  if getline(".") !~ "^\\s*$"
-    let p = line(".") - 1
-    let pp = line(".") - 2
-    let nextblank = getline(p) =~ "^\\s*$"
-    let nextnextblank = getline(pp) =~ "^\\s*$"
-    while p > 0 && ((i == 0 && (!nextblank || (pp > 0 && !nextnextblank)))
-          \ || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner))
-          \ || (nextblank && !a:inner))))
-      -
-      let p = line(".") - 1
-      let pp = line(".") - 2
-      let nextblank = getline(p) =~ "^\\s*$"
-      let nextnextblank = getline(pp) =~ "^\\s*$"
+  if i == 0 && empty(getline(a:b)) && empty(getline(a:e))
+    let [b, e] = [a:b, a:e]
+    while b > 0 && e <= line('$')
+      let b -= 1
+      let e += 1
+      let i = min(filter(map([b, e], 's:indent_len(getline(v:val))'), 'v:val != 0'))
+      if i > 0
+        break
+      endif
     endwhile
-    normal! 0V
-    call cursor(curline, curcol)
-    let p = line(".") + 1
-    let pp = line(".") + 2
-    let nextblank = getline(p) =~ "^\\s*$"
-    let nextnextblank = getline(pp) =~ "^\\s*$"
-    while p <= lastline && ((i == 0 && (!nextblank || pp < lastline && !nextnextblank))
-          \ || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner))
-          \ || (nextblank && !a:inner))))
-      +
-      let p = line(".") + 1
-      let pp = line(".") + 2
-      let nextblank = getline(p) =~ "^\\s*$"
-      let nextnextblank = getline(pp) =~ "^\\s*$"
-    endwhile
-    normal! $
   endif
-endfunction
 
-nnoremap <F6> :! g:open_command %<CR>
+  for triple in [[0, 'd[o] > 1', -1], [1, 'd[o] < x', +1]]
+    let [o, ev, df] = triple
+
+    while eval(ev)
+      let line = getline(d[o] + df)
+      let idt = s:indent_len(line)
+
+      if eval('idt '.a:op.' i') && (a:skip_blank || !empty(line)) || (a:skip_blank && empty(line))
+        let d[o] += df
+      else | break | end
+    endwhile
+  endfor
+  execute printf('normal! %dGV%dG', max([1, d[0] + a:bd]), min([x, d[1] + a:ed]))
+endfunction
+xnoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), 0, 0)<cr>
+onoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), 0, 0)<cr>
+xnoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), -1, 1)<cr>
+onoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), -1, 1)<cr>
+xnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>"), 0, 0)<cr>
+onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
+
+" ----------------------------------------------------------------------------
+" <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
+" ----------------------------------------------------------------------------
+nmap <silent> <leader>I ^vio<C-V>I
+nmap <silent> <leader>A ^vio<C-V>$Andfunction
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.

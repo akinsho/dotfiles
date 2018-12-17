@@ -147,7 +147,7 @@ if exists('$TMUX')
   augroup TmuxTitle
     if has('nvim') " Figure out async api for vim to replicate this functionality
       autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
-        \ call jobstart("tmux rename-window 'vim | " . expand("%:t") . "'")
+            \ if strlen(expand("%:t")) | call jobstart("tmux rename-window 'vim | " . expand("%:t") . "'") | endif
       autocmd VimLeave * call jobstart('tmux setw automatic-rename')
     endif
   augroup END
@@ -201,7 +201,7 @@ augroup END
 
 augroup fileSettings "{{{1
   autocmd!
-  autocmd Filetype vim-plug setlocal nonumber
+  autocmd Filetype vim-plug setlocal nonumber norelativenumber
 augroup END
 
 augroup hide_lines "{{{1
