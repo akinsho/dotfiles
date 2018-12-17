@@ -2,6 +2,7 @@
 # Aliases
 # =============================================================================
 alias l="colorls -r"
+alias top="vtop"
 alias x="exit" # Exit Terminal
 alias t=_t
 alias del="rm -rf"
