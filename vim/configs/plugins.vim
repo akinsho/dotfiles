@@ -79,7 +79,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-Plug 'cohama/lexima.vim' 
+Plug 'cohama/lexima.vim'
 Plug 'vimwiki/vimwiki'
 "TMUX {{{1
 "============================
@@ -171,7 +171,6 @@ Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
 Plug 'heavenshell/vim-jsdoc', { 'on': 'JSDoc' }
 Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
-" Plug 'jxnblk/vim-mdx-js', { 'for': 'mdx'}
 
 "Themes  {{{1
 "===============================
@@ -185,8 +184,6 @@ Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
   packadd! matchit
-else
-  runtime! macros/matchit.vim
 endif
 
 " Load immediately {{{1

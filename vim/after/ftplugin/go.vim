@@ -1,14 +1,16 @@
-if exists("b:did_ftplugin")
-  finish
-endif
-
-let b:did_ftplugin = 1 " Don't load twice in one buffer
+" if exists("b:go_after_did_ftplugin")
+"   finish
+" endif
+"
+" let b:go_after_did_ftplugin = 1 " Don't load twice in one buffer
 ""---------------------------------------------------------------------------//
 " GO FILE SETTINGS
 ""---------------------------------------------------------------------------//
 setlocal noexpandtab
+setlocal colorcolumn=
 " setlocal listchars+=tab:\ \ ,"Dont show indent line
-setlocal list listchars+=tab:\|\ "(here is a space), this is to show indent line
+"(here is a space), this is to show indent line
+setlocal list listchars+=tab:\│\
 setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal tabstop=4

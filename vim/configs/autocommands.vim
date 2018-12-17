@@ -64,13 +64,6 @@ augroup WhiteSpace "{{{1
   autocmd BufEnter * silent! call s:WhitespaceHighlight()
 augroup END
 
-" FIXME: After filetype plugin is not working currently
-augroup GoLang "{{{
-  au!
-  autocmd BufNewFile,BufReadPost *.go set filetype=go
-  autocmd FileType go setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent line
-augroup END "}}}
-
 " Auto open grep quickfix window and SmartClose {{{
 augroup SmartClose
   au!

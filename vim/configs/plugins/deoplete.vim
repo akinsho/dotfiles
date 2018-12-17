@@ -4,7 +4,9 @@
 if exists('g:gui_oni')
   finish
 endif
-let g:deoplete#enable_at_startup       = 1
+
+let g:deoplete#enable_at_startup = 1
+
 if !has('nvim')
   call deoplete#custom#option('yarp', v:true)
 endif
