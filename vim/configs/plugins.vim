@@ -147,7 +147,6 @@ Plug 'haya14busa/vim-operator-flashy'
 " {Visual}["x]gr          Replace the selection with the contents of register x.
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
-      \ | Plug 'rhysd/vim-textobj-conflict'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function'
@@ -158,8 +157,18 @@ Plug 'kana/vim-textobj-user'
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
-Plug 'kassio/neoterm'
-Plug 'dyng/ctrlsf.vim' ", { 'on': ['CtrlSF'] }
+Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew'] }
+Plug 'dyng/ctrlsf.vim' , { 'on': [
+      \'CtrlSF',
+      \'CtrlSFCwordExec',
+      \'CtrlSFPrompt',
+      \'CtrlSFVwordPath',
+      \'CtrlSFVwordExec',
+      \'CtrlSFCwordPath',
+      \'CtrlSFPwordPath',
+      \'CtrlSFOpen',
+      \'CtrlSFToggle',
+      \] }
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
@@ -170,7 +179,10 @@ Plug 'tpope/vim-scriptease'
 "======================
 Plug 'euclio/vim-markdown-composer',
       \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
-Plug 'heavenshell/vim-jsdoc', { 'on': 'JSDoc' }
+Plug 'heavenshell/vim-jsdoc', {
+      \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
+      \ 'on': 'JSDoc'
+      \ }
 Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 
 "Themes  {{{1
