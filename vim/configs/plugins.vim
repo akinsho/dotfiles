@@ -43,9 +43,10 @@ function! BuildComposer(info)
   endif
 endfunction
 
-" Autocompletion  {{{1
-"====================================
   if !exists('g:gui_oni')
+    "====================================
+    " Autocompletion  {{{1
+    "====================================
     Plug 'Shougo/deoplete.nvim'
     Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
     Plug 'wokalski/autocomplete-flow', {
@@ -57,6 +58,7 @@ endfunction
           \ 'branch': 'next',
           \ 'do': 'bash install.sh',
           \ }
+    "====================================
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'
