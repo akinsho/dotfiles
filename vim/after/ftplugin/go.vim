@@ -9,8 +9,7 @@
 setlocal noexpandtab
 setlocal colorcolumn=
 " setlocal listchars+=tab:\ \ ,"Dont show indent line
-"(here is a space), this is to show indent line
-setlocal list listchars+=tab:\│\
+setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent line
 setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal tabstop=4
