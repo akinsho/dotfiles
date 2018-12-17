@@ -296,7 +296,7 @@ augroup NERDTree "{{{1
   "Close vim if only window is a Nerd Tree
   autocmd!
   autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-  autocmd FileType nerdtree setlocal nolist nonumber
+
   " Refresh NERDTree on Open (FIXME: This really doesn't work in a mono repo)
   " autocmd BufEnter * if exists('b:NERDTree')
   "       \ | execute 'normal R' | endif
