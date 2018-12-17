@@ -14,6 +14,10 @@ if executable('javascript-typescript-stdio')
   let g:LanguageClient_serverCommands["javascript.jsx"] = ['javascript-typescript-stdio']
 endif
 
+if executable('go-langserver')
+  let g:LanguageClient_serverCommands.go = ['go-langserver']
+endif
+
 if executable('css-language-server')
   let g:LanguageClient_serverCommands.css = ['css-languageserver', '--stdio']
   let g:LanguageClient_serverCommands.sass = ['css-languageserver', '--stdio']
