@@ -308,6 +308,12 @@ if v:version >= 700
   augroup END
 endif
 
+augroup Folding
+  " Show the foldcolumn in the active buffer
+  au BufEnter * set foldcolumn=3
+  au BufLeave * set foldcolumn=0
+augroup END
+
 " Fold Text {{{
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
 function! NeatFoldText()

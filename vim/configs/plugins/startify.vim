@@ -15,7 +15,9 @@ let g:startify_list_order = [
       \ ]
 
 " TODO: Create portable vim sessions dir in DOTFILES
-let g:startify_session_dir         = '~/.vim/session'
+let g:startify_session_dir         = has('nvim')
+      \ ? '~/.config/nvim/sessions'
+      \ : '~/.vim/sessions'
 let g:startify_bookmarks           = [
       \ {'v': '~/.vimrc'},
       \ {'z': '~/.zshrc'},

@@ -3,7 +3,8 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set guioptions=
   set guioptions+=g " gray menu items
   set guioptions+=m " menu bar
-  set guifont=Hasklug\ Nerd\ Font:h16 "Too find font proper run fc-list | grep name-of-font
+  "Too find font proper run fc-list | grep name-of-font
+  set guifont=Hasklug\ Nerd\ Font:h16
   " set guifont=FuraCode\ Nerd\ Font:h16
   set guioptions+=e " nice gui tabs
   set linespace=1
@@ -45,14 +46,11 @@ if has('folding')
     set fillchars+=fold:-
     set fillchars+=diff:⣿
   endif
-    set foldnestmax=2
     if has('nvim')
       set foldmethod=syntax
     else
       set foldmethod=indent
     endif
-    " series of actions which should trigger a fold opening
-    set foldopen+=jump
 endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
@@ -244,7 +242,7 @@ endif
 " Utilities {{{1
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
-set sessionoptions-=localoptions
+set sessionoptions-=blank,buffers,globals,help,options
 set updatetime=500
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
