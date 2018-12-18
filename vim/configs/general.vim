@@ -46,7 +46,13 @@ if has('folding')
     set fillchars+=diff:⣿
   endif
     set foldnestmax=2
-    set foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo
+    if has('nvim')
+      set foldmethod=syntax
+    else
+      set foldmethod=indent
+    endif
+    " series of actions which should trigger a fold opening
+    set foldopen+=jump
 endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
