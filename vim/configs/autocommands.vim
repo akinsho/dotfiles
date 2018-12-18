@@ -289,10 +289,6 @@ augroup NERDTree "{{{1
   "Close vim if only window is a Nerd Tree
   autocmd!
   autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-  " Refresh NERDTree on Open (FIXME: This really doesn't work in a mono repo)
-  " autocmd BufEnter * if exists('b:NERDTree')
-  "       \ | execute 'normal R' | endif
 augroup END
 
 
@@ -307,12 +303,6 @@ if v:version >= 700
     au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
   augroup END
 endif
-
-augroup Folding
-  " Show the foldcolumn in the active buffer
-  au BufEnter * set foldcolumn=3
-  au BufLeave * set foldcolumn=0
-augroup END
 
 " Fold Text {{{
 "Stolen from HiCodin's Dotfiles a really cool set of fold text functions
