@@ -14,9 +14,8 @@ command! -nargs=+ Tg :T git <args>
 " hide/close terminal
 if has('nvim')
   tnoremap <silent> <leader><CR> <Cmd>Ttoggle<CR>
-else
-  nnoremap <silent> <leader><CR> :Ttoggle<CR>
 endif
+nnoremap <silent> <leader><CR> :Ttoggle<CR>
 nnoremap <silent> <leader>ta :TtoggleAll<CR>
 " Map a command to the automap keys
 nnoremap <silent> <leader>tm :Tmap

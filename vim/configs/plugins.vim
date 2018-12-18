@@ -158,7 +158,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'tomtom/tcomment_vim'
-Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'T'] }
+Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'dyng/ctrlsf.vim' , { 'on': [
       \'CtrlSF',
       \'CtrlSFCwordExec',
