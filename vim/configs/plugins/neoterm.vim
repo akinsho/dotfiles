@@ -18,7 +18,7 @@ endif
 nnoremap <silent> <leader><CR> :Ttoggle<CR>
 nnoremap <silent> <leader>ta :TtoggleAll<CR>
 " Map a command to the automap keys
-nnoremap <silent> <leader>tm :Tmap
+nnoremap <silent> <leader>tm :Tmap<space>
 " clear terminal
 nnoremap <silent> <leader>tl :Tclear<cr>
 " kill process in terminal

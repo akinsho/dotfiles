@@ -210,7 +210,7 @@ function! utils#Numbers()
   normal v
   call search('\(^\|[^0-9\.]\d\)', 'becW')
 endfunction
-
+"}}}
 ""---------------------------------------------------------------------------//
 " Credit: Cocophon
 " This function allows you to see the syntax highlight token of the cursor word and that token's links
@@ -285,14 +285,15 @@ nnoremap <leader>oc :OpenChangedFiles<CR>
 ""---------------------------------------------------------------------------//
 " Fold Text (For Curly Brace languages)
 ""---------------------------------------------------------------------------//
-function! utils#braces_fold_text()
+function! utils#braces_fold_text(...)
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '(' . ( lines_count ) . ')'
   let foldchar = matchstr(&fillchars, 'fold:\')
-  let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(' ', 2 )
+  let l:window_width = winwidth(0)
+  let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel * 2) . line, 0, (l:window_width * 2) / 3)
+  let foldtextend = lines_count_text . repeat(' ', 2)
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', winwidth(0)-foldtextlength - 7) . foldtextend . ' '
+  return foldtextstart . foldtextend . ' ' . repeat(' ', l:window_width - foldtextlength - 7)
 endfunction
 
