@@ -8,6 +8,7 @@ endif
 let g:ale_lint_on_enter                        = 1
 let g:ale_lint_on_insert_leave                 = 1
 let g:ale_fix_on_save                          = 1
+let g:ale_lint_delay                           = 300
 let g:ale_pattern_options = {
       \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
       \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
