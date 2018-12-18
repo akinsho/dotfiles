@@ -123,8 +123,8 @@ set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
-  let &showbreak='↪ '
-  " Options include -> '…', '↳ ', '→'
+  let &showbreak='↳ '
+  " Options include -> '…', '↳ ', '→','↪ ' 
   if exists('&breakindentopt')
     " set breakindentopt=shift:2
     set breakindentopt=sbr
