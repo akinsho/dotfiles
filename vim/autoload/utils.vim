@@ -294,6 +294,6 @@ function! utils#braces_fold_text(...)
   let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel * 2) . line, 0, (l:window_width * 2) / 3)
   let foldtextend = lines_count_text . repeat(' ', 2)
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . foldtextend . ' ' . repeat(' ', l:window_width - foldtextlength - 7)
+  return foldtextstart . repeat(' ', l:window_width - foldtextlength - 7) . foldtextend . ' ' 
 endfunction
 
