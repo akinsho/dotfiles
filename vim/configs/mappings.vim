@@ -109,10 +109,12 @@ nnoremap <localleader>n :enew<cr>
 xnoremap p pgvy
 " search visual selection
 vnoremap // y/<C-R>"<CR>
+
 " Enter key should repeat the last macro recorded or just act as enter
 " nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
-nnoremap <silent> <space><space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//

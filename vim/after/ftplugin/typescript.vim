@@ -1,8 +1,8 @@
-setl foldopen=all
-setl foldmethod=syntax
 setl completeopt-=preview
 setl colorcolumn=100
-setl foldlevelstart=99
+" setl foldopen=all
+" setl foldmethod=syntax
+" setl foldlevelstart=99
 
 if !exists('g:gui_oni')
   nnoremap gd :TSDef<CR>
