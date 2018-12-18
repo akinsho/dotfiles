@@ -217,7 +217,6 @@ function! s:handle_window_enter() abort
         \"ctermbg":"black",
         \}
   if &buftype ==# 'terminal'
-    startinsert
     setlocal nocursorline nonumber norelativenumber bufhidden=hide
     execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
     if exists('+winhighlight') 

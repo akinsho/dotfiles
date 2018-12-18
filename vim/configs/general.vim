@@ -46,6 +46,7 @@ if has('folding')
     set fillchars+=fold:-
     set fillchars+=diff:⣿
   endif
+    set foldnestmax=3
     if has('nvim')
       set foldmethod=syntax
     else
