@@ -86,8 +86,10 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Vim Path {{{1
 " ----------------------------------------------------------------------------
-" FIXME: Use vim-apathy instead https://github.com/tpope/vim-apathy
-" set path+=**/src/main/**,**
+" NOTE: Use vim-apathy instead https://github.com/tpope/vim-apathy
+if !has_key(g:plugs, 'vim-apathy')
+  set path+=**/src/main/**,**
+endif
 
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{1

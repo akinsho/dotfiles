@@ -104,7 +104,12 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-scriptease', { 'on': ['Messages', 'Verbose', 'Runtime'] }
+Plug 'tpope/vim-scriptease', { 'on': [
+      \ 'Messages',
+      \ 'Verbose',
+      \ 'Runtime',
+      \ 'Scriptnames'
+      \ ] }
 " ===========================
 "Syntax {{{1
 "============================
