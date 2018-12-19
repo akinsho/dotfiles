@@ -304,9 +304,6 @@ if !has('nvim')
   set autoread " reload files if they were edited elsewhere
 endif
 if has ('persistent_undo')
-  if exists('$SUDO_USER')
-    set noundofile "Dont add root owned files which I will need to sudo to remove
-  else
     set undodir=~/.vim/.undo//
     if !isdirectory(&undodir)
       call mkdir(&undodir, "p")
@@ -315,7 +312,6 @@ if has ('persistent_undo')
     set undodir+=~/local/.vim/tmp/undo
     set undodir+=.
     set undofile
-  endif
 endif
 
 " ----------------------------------------------------------------------------

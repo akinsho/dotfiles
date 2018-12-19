@@ -3,6 +3,7 @@ call gina#custom#mapping#nmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#mapping#vmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-j>')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-k>')
+" TODO: prevent this command from closing vim
 call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q<cr>')
 call gina#custom#execute('/.*', 'silent! nnoremap <buffer> Q :q!<cr>')
 
