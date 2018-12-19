@@ -335,6 +335,7 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 " FIXME: There is no spellfile at this path
 set spellfile=$HOME/.vim-spell-en.utf-8.add
+set nospell
 set fileformats=unix,mac,dos
 set complete+=kspell
 "===================================================================================
