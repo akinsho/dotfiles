@@ -7,7 +7,7 @@ function! JsEchoError(msg)
 endfunction
 
 " Swapping between test file and main file.
-function! JsSwitch(bang, cmd)
+function! JsSwitch(bang, cmd) abort
   let l:file = expand('%')
   if empty(l:file)
     call JsEchoError('no buffer name')

@@ -5,19 +5,6 @@ if exists('g:gui_oni')
   finish
 endif
 
-" Takes a base - highlight group to extend,
-" group - the new group name
-" add - the settings to add  to the highlight
-function! ExtendHighlight(base, group, add)
-  redir => basehi
-  sil! exe 'highlight' a:base
-  redir END
-  let grphi = split(basehi, '\n')[0]
-  let grphi = substitute(grphi, '^'.a:base.'\s\+xxx', '', '')
-  sil exe 'highlight' a:group grphi a:add
-endfunction
-
-
 function! ApplyUserHighlights() abort
   " Highlight cursor column onwards - kind of cool
   "---------------------------------------------------------------------------//
@@ -59,7 +46,7 @@ function! ApplyUserHighlights() abort
     highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
   endif
 
-  call ExtendHighlight('Comment', 'FoldColumn', 'gui=none')
+  call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
 
   if has('nvim')
     highlight TermCursor ctermfg=green guifg=green

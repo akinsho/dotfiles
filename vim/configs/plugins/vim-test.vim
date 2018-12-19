@@ -8,9 +8,9 @@ endfunction
 let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
 let g:test#transformation = "typescript"
 
-nnoremap <silent> <localleader>tn :TestNearest<CR>
-nnoremap <silent> <localleader>tf :TestFile<CR>
-nnoremap <silent> <localleader>ts :TestSuite<CR>
-nnoremap <silent> <localleader>tl :TestLast<CR>
-nnoremap <silent> <localleader>tv :TestVisit<CR>
+nnoremap <silent> t<C-n> :TestNearest<CR>
+nnoremap <silent> t<C-f> :TestFile<CR>
+nnoremap <silent> t<C-s> :TestSuite<CR>
+nnoremap <silent> t<C-l> :TestLast<CR>
+nnoremap <silent> t<C-g> :TestVisit<CR>
 "}}}

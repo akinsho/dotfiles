@@ -297,3 +297,18 @@ function! utils#braces_fold_text(...)
   return foldtextstart . repeat(' ', l:window_width - foldtextlength - 7) . foldtextend . ' ' 
 endfunction
 
+
+""---------------------------------------------------------------------------//
+" Takes a base - highlight group to extend,
+" group - the new group name
+" add - the settings to add  to the highlight
+""---------------------------------------------------------------------------//"
+function! utils#extend_highlight(base, group, add)
+  redir => basehi
+  sil! exe 'highlight' a:base
+  redir END
+  let grphi = split(basehi, '\n')[0]
+  let grphi = substitute(grphi, '^'.a:base.'\s\+xxx', '', '')
+  sil exe 'highlight' a:group grphi a:add
+endfunction
+
