@@ -110,6 +110,8 @@ xnoremap p pgvy
 " search visual selection
 vnoremap // y/<C-R>"<CR>
 
+" Credit: JustinMK
+nnoremap g> :set nomore<bar>40messages<bar>set more<CR>
 " Enter key should repeat the last macro recorded or just act as enter
 " nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
 

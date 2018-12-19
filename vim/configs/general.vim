@@ -45,6 +45,11 @@ if has('folding')
     set fillchars=vert:│
     set fillchars+=fold:-
     set fillchars+=diff:⣿
+    if has('nvim-0.3.1')
+      set fillchars+=msgsep:‾
+      " TODO: move this to highlight.vim
+      highlight link MsgSeparator Comment
+    endif
   endif
     set foldlevelstart=10
     if has('nvim')
@@ -257,7 +262,9 @@ set noshiftround " use multiple of shiftwidth when shifting indent levels. this 
 set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
 set complete+=k " Add dictionary to vim's autocompletion
 set complete-=i      " Dont use included files for completion
-set display+=lastline
+if !has('nvim')
+  set display+=lastline
+endif
 set encoding=utf-8
 scriptencoding utf-8
 set dictionary+=/usr/share/dict/words
@@ -266,9 +273,6 @@ if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'
   set shell=/bin/bash
 endif
 set history=1000
-if &tabpagemax < 50
-  set tabpagemax=50
-endif
 if !empty(&viminfo)
   set viminfo^=!
   set viminfo+='0

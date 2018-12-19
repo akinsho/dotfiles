@@ -7,7 +7,11 @@ endfunction
 
 let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
 let g:test#transformation = "typescript"
+let test#neovim#term_position = "vsplit"
+" exists(':Tnew') ? "neoterm" : 
+let test#strategy = has('nvim') ? 'neovim' : 'vimterminal'
 
+nnoremap <silent> t<C-w> :TestNearest --watch<CR>
 nnoremap <silent> t<C-n> :TestNearest<CR>
 nnoremap <silent> t<C-f> :TestFile<CR>
 nnoremap <silent> t<C-s> :TestSuite<CR>
