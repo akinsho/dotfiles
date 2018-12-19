@@ -80,7 +80,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
-Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test', { 'on': [
+      \ 'TestNearest',
+      \ 'TestVisit',
+      \ 'TestSuite',
+      \ 'TestLast',
+      \ 'TestFile'
+      \ ] }
 Plug 'vimwiki/vimwiki'
 "TMUX {{{1
 "============================

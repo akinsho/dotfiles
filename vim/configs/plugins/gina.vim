@@ -48,12 +48,11 @@ call gina#custom#command#option(
 call gina#custom#command#option('diff', '--opener', 'vsplit')
 call gina#custom#command#option('diff', '--group', 'diffs')
 
-" WIP: Return to previous buffer on <backspace> 
-" call gina#custom#mapping#nmap(
-"       \ 'diff', '<BS>',
-"       \ ':bd | e #<CR>',
-"       \ {'noremap': 1, 'silent': 1},
-"       \)
+call gina#custom#mapping#nmap(
+      \ 'diff', 'cc',
+      \ ':<C-u>Gina status<CR>',
+      \ {'noremap': 1, 'silent': 1},
+      \)
 
 call gina#custom#command#option(
       \ '/\%(status\|commit\|branch\)',
