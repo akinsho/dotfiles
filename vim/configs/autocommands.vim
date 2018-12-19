@@ -224,8 +224,9 @@ function! s:handle_window_enter() abort
     endif
   endif
   if &previewwindow 
-    set nocursorline colorcolumn=
-    " winhighlight=Normal:Visual
+    setlocal nocursorline colorcolumn=
+    highlight CustomPreview guibg=#2c303a
+    setlocal winhighlight=Normal:CustomPreview
   endif
   " elseif !strlen(&buftype)
   "   hi link ActiveWindow Normal
@@ -236,7 +237,7 @@ endfunction
 if has('nvim')
   augroup nvim
     au!
-      autocmd WinEnter,WinNew,TermOpen * call s:handle_window_enter()
+      autocmd BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
       "Close FZF in neovim with esc
       " TODO: Clear highlight for fzf buffers (tidy this up)
             autocmd FileType fzf
