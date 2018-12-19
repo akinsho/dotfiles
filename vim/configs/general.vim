@@ -185,8 +185,6 @@ if exists('&belloff')
   set belloff=all
 endif
 if has('termguicolors')
-  let &t_8f="\<esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<esc>[48;2;%lu;%lu;%lum"
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
 endif
 " ctags - search for a tags file then in current dir then home dir
@@ -344,23 +342,6 @@ set complete+=kspell
 set mousehide
 set mouse=nv
 set mousefocus
-
-if !has('nvim')
-  if empty("$TMUX")
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-    if v:version >= 800
-      let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-    endif
-  else
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-    if v:version >= 800
-      let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-    endif
-  endif
-endif
-
 if !has('nvim')
   set ttymouse=xterm2
 endif
