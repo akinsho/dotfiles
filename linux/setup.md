@@ -23,6 +23,9 @@ UEFI settings (`ctrl-F12` repeatedly on boot)
 - Install `xcape` using package manager (`pacman`, `apt`).
 - Add the following to `~/.profile` to allow the `caps lock` key to work as `esc` and `ctrl` this is helpful for using `vim`.
 
+
+Note you can find key details like your wireless cards IF or port number, what drivers you are
+using, the state of your battery etc. by running `inxi -Fxz`
 ```sh
 setxkbmap -option ctrl:swapcaps
 xcape -e 'Control_L=Escape'

@@ -92,6 +92,8 @@ pip3 install neovim --upgrade
 
 # Install n node version manager program
 curl -L https://git.io/n-install | bash
+# Install rust
+curl https://sh.rustup.rs -sSf | sh
 
 echo "---------------------------------------------------------"
 echo "Changing to zsh"

@@ -66,8 +66,8 @@ ${voffset 10}
 ${lua_parse fs_free /} /
 ${lua_parse fs_free /home} /home
 ${voffset 20}
-${lua_parse upspeedf enp0s25} ↑
-${lua_parse downspeedf enp0s25} ↓
+${lua_parse upspeedf wlp59s0} ↑
+${lua_parse downspeedf wlp59s0} ↓
 ${voffset 20}
 ${time %a, %b %-d}${voffset -15}
 ${font Source Sans Pro:weight=0:pixelsize=180}${time %-H:%M}${font}${time %S}
