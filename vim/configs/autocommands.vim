@@ -223,9 +223,10 @@ function! s:handle_window_enter() abort
       setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors
     endif
   endif
-  " if &previewwindow 
-  "   setlocal winhighlight=Normal:Visual
-  " endif
+  if &previewwindow 
+    set nocursorline colorcolumn=
+    " winhighlight=Normal:Visual
+  endif
   " elseif !strlen(&buftype)
   "   hi link ActiveWindow Normal
   "   hi link InactiveWindow Visual

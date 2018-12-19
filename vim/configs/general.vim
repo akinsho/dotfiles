@@ -129,7 +129,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " Display {{{1
 " --------------------------------------------------------------------------
 set cmdheight=2 " Set command line height to two lines
-" set conceallevel=2
+set conceallevel=2
 set synmaxcol=1024 " don't syntax highlight long lines
 set emoji
 if has('linebreak') "Causes wrapped line to keep same indentation
@@ -284,7 +284,7 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
 endif
 "-----------------------------------------------------------------------------
-" BACKUP AND SWAPS
+" BACKUP AND SWAPS {{{
 "-----------------------------------------------------------------------------
 "Turn swap files off - FOR GOD's SAKE they are ruining my life
 set noswapfile
@@ -313,7 +313,7 @@ if has ('persistent_undo')
     set undodir+=.
     set undofile
 endif
-
+"}}}
 " ----------------------------------------------------------------------------
 " Match and search {{{1
 " ----------------------------------------------------------------------------

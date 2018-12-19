@@ -117,6 +117,11 @@ nnoremap g> :set nomore<bar>40messages<bar>set more<CR>
 
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+" "Refocus" folds
+nnoremap <localleader>z zMzvzz
+" Make zO recursively open whatever top level fold we're in, no matter where the
+" cursor happens to be.
+nnoremap zO zCzO
 ""---------------------------------------------------------------------------//
 " => Command mode related
 ""---------------------------------------------------------------------------//
@@ -619,7 +624,7 @@ nnoremap S "_diwP
 " Shortcut to jump to next conflict marker"
 " nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
-nnoremap <silent> <localleader>z :call utils#tab_zoom()<cr>
+nnoremap <silent> <leader>Z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
 nnoremap <silent> <leader>z :call utils#buf_zoom()<CR>
