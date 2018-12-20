@@ -225,7 +225,8 @@ function! s:handle_window_enter() abort
   endif
   if &previewwindow 
     setlocal nocursorline colorcolumn=
-    highlight CustomPreview guibg=#2c303a
+    " guibg=#2c303a
+    highlight link CustomPreview CursorLine
     setlocal winhighlight=Normal:CustomPreview
   endif
   " elseif !strlen(&buftype)
