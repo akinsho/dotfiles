@@ -7,7 +7,8 @@ let g:indentLine_bufNameExclude = [
       \ 'terminal',
       \ 'help',
       \ 'magit',
-      \ 'peekabo'
+      \ 'peekabo',
+      \ 'vimwiki'
       \]
 let g:indentLine_bufTypeExclude = ['help', 'terminal', 'nofile']
 

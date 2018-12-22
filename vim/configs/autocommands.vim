@@ -105,10 +105,10 @@ augroup Cancel_Paste
 augroup END
 
 " Reload vim and config automatically {{{
-  augroup UpdateVim
-    autocmd!
-      execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
-            \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+augroup UpdateVim
+  autocmd!
+  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
@@ -220,14 +220,16 @@ function! s:handle_window_enter() abort
     setlocal nocursorline nonumber norelativenumber bufhidden=hide
     execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
     if exists('+winhighlight') 
-      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors
+      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalColors
     endif
   endif
   if &previewwindow 
     setlocal nocursorline colorcolumn=
     " guibg=#2c303a
     highlight link CustomPreview CursorLine
-    setlocal winhighlight=Normal:CustomPreview
+    if exists('+winhighlight') 
+      setlocal winhighlight=Normal:CustomPreview
+    endif
   endif
   " elseif !strlen(&buftype)
   "   hi link ActiveWindow Normal
@@ -238,12 +240,12 @@ endfunction
 if has('nvim')
   augroup nvim
     au!
-      autocmd BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
-      "Close FZF in neovim with esc
-      " TODO: Clear highlight for fzf buffers (tidy this up)
-            autocmd FileType fzf
-            \ tnoremap <nowait><buffer> <esc> <c-g> 
-            \ | setlocal winhighlight=
+    autocmd BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
+    "Close FZF in neovim with esc
+    " TODO: Clear highlight for fzf buffers (tidy this up)
+    autocmd FileType fzf
+          \ tnoremap <nowait><buffer> <esc> <c-g> 
+          \ | setlocal winhighlight=
   augroup END
 endif
 
