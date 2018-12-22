@@ -217,7 +217,7 @@ function! s:handle_window_enter() abort
         \"ctermbg":"black",
         \}
   if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber bufhidden=hide
+    setlocal nocursorline nonumber norelativenumber
     execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
     if exists('+winhighlight') 
       setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalColors
@@ -225,10 +225,10 @@ function! s:handle_window_enter() abort
   endif
   if &previewwindow 
     setlocal nocursorline colorcolumn=
-    " guibg=#2c303a
-    highlight link CustomPreview CursorLine
     if exists('+winhighlight') 
-      setlocal winhighlight=Normal:CustomPreview
+      " guibg=#2c303a
+      call utils#extend_highlight('CursorLine', 'CustomPreview', 'guifg=#2C323C')
+      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:CustomPreview
     endif
   endif
   " elseif !strlen(&buftype)
