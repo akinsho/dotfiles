@@ -224,11 +224,13 @@ function! s:handle_window_enter() abort
     endif
   endif
   if &previewwindow 
-    setlocal nocursorline colorcolumn=
+    setlocal concealcursor=nv nocursorline colorcolumn=
     if exists('+winhighlight') 
-      " guibg=#2c303a
-      call utils#extend_highlight('CursorLine', 'CustomPreview', 'guifg=#2C323C')
-      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:CustomPreview
+      " These highlights set the preview to have the same foreground as the
+      " cursorline but not to show the tildes which mark the end of the buffer
+      highlight! link CustomPreview CursorLine
+      highlight! MonoChrome guifg=#2C323C
+      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:MonoChrome
     endif
   endif
   " elseif !strlen(&buftype)

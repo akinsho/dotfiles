@@ -130,6 +130,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " --------------------------------------------------------------------------
 set cmdheight=2 " Set command line height to two lines
 set conceallevel=2
+set concealcursor=nv
 set synmaxcol=1024 " don't syntax highlight long lines
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
@@ -217,6 +218,9 @@ endif
 "---------------------------------------------------------------------------//
 " Custom Terminal title
 function! GetTitleString() abort
+  if &filetype ==# 'fzf'
+    return 'FZF'
+  endif
   if filereadable(expand('%'))
     try
       return fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
