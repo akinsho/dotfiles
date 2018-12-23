@@ -185,8 +185,15 @@ Plug 'dyng/ctrlsf.vim' , { 'on': [
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
-Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
 Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
+"======================
+" Docs - Platform specific docs apps
+"======================
+if has('mac')
+  Plug 'rizzatti/dash.vim',     { 'on': 'Dash' }
+elseif g:os ==? 'linux'
+  Plug 'KabbAmine/zeavim.vim',  { 'on': 'Zeavim' }
+endif
 "Filetype Plugins {{{1
 "======================
 Plug 'euclio/vim-markdown-composer',

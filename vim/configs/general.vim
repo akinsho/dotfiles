@@ -218,7 +218,7 @@ endif
 "---------------------------------------------------------------------------//
 " Custom Terminal title
 function! GetTitleString() abort
-  if &filetype ==# 'fzf'
+  if &filetype ==? 'fzf'
     return 'FZF'
   endif
   if filereadable(expand('%'))
