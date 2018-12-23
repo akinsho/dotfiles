@@ -13,14 +13,12 @@
         "cacheDirectory": "/tmp/ocaml-lsp"
       }
     },
+    "tsserver.enableJavascript": true,
     "flow": {
       "command": "flow-language-server",
       "args": ["--stdio"],
-      "trace.server": "verbose",
-      "filetypes": ["javascript.jsx", "javascript"],
-      "initializationOptions": {
-        "cacheDirectory": "/tmp/flow-lsp"
-      }
+      "filetypes": ["javascript", "javascriptreact"],
+      "rootPatterns": [".flowconfig"]
     },
     "golang": {
       "command": "go-langserver",
