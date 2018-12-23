@@ -1,9 +1,10 @@
 "-----------------------------------------------------------
 "PLUGINS
 "-----------------------------------------------------------
+
+"=====================
 " Plug Setup {{{1
 "=====================
-
 " auto-install vim-plug
 if has("nvim")
   if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -47,17 +48,18 @@ endfunction
     "====================================
     " Autocompletion  {{{1
     "====================================
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
-    Plug 'wokalski/autocomplete-flow', {
-          \ 'for': ['javascript', 'javascript.jsx'] }
-    Plug 'Shougo/neco-vim', { 'for': 'vim' },
-    Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
-    Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
-    Plug 'autozimu/LanguageClient-neovim', {
-          \ 'branch': 'next',
-          \ 'do': 'bash install.sh',
-          \ }
+    " Plug 'Shougo/deoplete.nvim'
+    " Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
+    " Plug 'wokalski/autocomplete-flow', {
+    "       \ 'for': ['javascript', 'javascript.jsx'] }
+    " Plug 'Shougo/neco-vim', { 'for': 'vim' },
+    " Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
+    " Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
+    " Plug 'autozimu/LanguageClient-neovim', {
+    "       \ 'branch': 'next',
+    "       \ 'do': 'bash install.sh',
+    "       \ }
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
     "====================================
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'

@@ -1,3 +1,6 @@
+if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
+  finish
+endif
 " let g:coc_node_version = '/usr/local/n/versions/node/10.3.0/bin/node'
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
