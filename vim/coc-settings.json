@@ -13,7 +13,7 @@
         "cacheDirectory": "/tmp/ocaml-lsp"
       }
     },
-    "tsserver.enableJavascript": true,
+    "tsserver.enableJavascript": false,
     "flow": {
       "command": "flow-language-server",
       "args": ["--stdio"],
