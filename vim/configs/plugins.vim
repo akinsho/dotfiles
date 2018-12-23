@@ -52,13 +52,14 @@ endfunction
     " Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
     " Plug 'wokalski/autocomplete-flow', {
     "       \ 'for': ['javascript', 'javascript.jsx'] }
-    " Plug 'Shougo/neco-vim', { 'for': 'vim' },
     " Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
     " Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
     " Plug 'autozimu/LanguageClient-neovim', {
     "       \ 'branch': 'next',
     "       \ 'do': 'bash install.sh',
     "       \ }
+    Plug 'Shougo/neco-vim'
+    Plug 'neoclide/coc-neco'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
     "====================================
     Plug 'itchyny/lightline.vim'
