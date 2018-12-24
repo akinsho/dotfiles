@@ -13,7 +13,6 @@
         "cacheDirectory": "/tmp/ocaml-lsp"
       }
     },
-    "tsserver.enableJavascript": false,
     "flow": {
       "command": "flow-language-server",
       "args": ["--stdio"],
@@ -31,6 +30,12 @@
       }
     }
   },
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "javascriptreact"
+  },
+  "emmet.showAbbreviationSuggestions": true,
+  "tsserver.enableJavascript": false,
   "coc.preferences.diagnostic.errorSign": "✖",
   "coc.preferences.diagnostic.warningSign": "⚠",
   "coc.preferences.diagnostic.infoSign": "?",
