@@ -58,8 +58,8 @@ endfunction
     "       \ 'branch': 'next',
     "       \ 'do': 'bash install.sh',
     "       \ }
-    Plug 'Shougo/neco-vim'
-    Plug 'neoclide/coc-neco'
+    Plug 'Shougo/neco-vim', { 'for': 'vim' },
+    Plug 'neoclide/coc-neco', { 'for': 'vim' },
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
     "====================================
     Plug 'itchyny/lightline.vim'
@@ -105,6 +105,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 "TPOPE {{{1
 "====================================
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -172,7 +173,6 @@ Plug 'kana/vim-textobj-user'
 "=======================
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
-Plug 'tomtom/tcomment_vim'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'dyng/ctrlsf.vim' , { 'on': [
       \'CtrlSF',
@@ -206,7 +206,6 @@ Plug 'heavenshell/vim-jsdoc', {
       \ 'on': 'JSDoc'
       \ }
 Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
-
 "Themes  {{{1
 "===============================
 if !exists('g:gui_oni')
