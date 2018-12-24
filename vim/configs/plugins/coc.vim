@@ -46,11 +46,6 @@ endfunction
 
 augroup CoCAutocommands
   au!
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-  " if &filetype == 'reason'
-  "   autocmd CursorHold * silent call CocActionAsync('doHover')
-  " endif
   autocmd CursorHoldI,CursorMovedI * call CocAction('showSignatureHelp')
 augroup END
 

@@ -6,17 +6,18 @@ if has('gui_running')
 endif
 
 let g:ale_lint_on_enter                        = 1
-let g:ale_lint_on_insert_leave                 = 1
+let g:ale_lint_on_insert_leave                 = 0
 let g:ale_fix_on_save                          = 1
 let g:ale_lint_delay                           = 300
 let g:ale_pattern_options = {
       \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
       \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
       \}
+", 'eslint'
 let g:ale_fixers = {
       \'reason':['refmt'],
       \'typescript':['prettier', 'tslint'],
-      \'javascript':['prettier', 'eslint'],
+      \'javascript':['prettier'], 
       \'json':'prettier',
       \'css':['prettier','stylelint'],
       \'less':['prettier', 'stylelint']
@@ -31,7 +32,6 @@ let g:ale_reason_ols_use_global          = 0
 let g:ale_warn_about_trailing_whitespace = 1
 let g:ale_linters                     = {
       \'python': ['flake8'],
-      \'jsx': ['eslint'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint'],
       \}

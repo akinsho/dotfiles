@@ -162,20 +162,12 @@ endsnippet
 
 snippet rfc "React Functional Component" b
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './${2:$1}.css';
 
 const ${1:`!v expand('%:t:r')`} = ({ ${3:...props} }) => (
 	<div>
 		$4
 	</div>
 );
-
-$1.defaultProps = {
-};
-
-$1.propTypes = {
-};
 
 export default $1;
 endsnippet

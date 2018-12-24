@@ -252,7 +252,7 @@ endif
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
 set sessionoptions-=blank,buffers,globals,help,options
-set updatetime=500
+set updatetime=750
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif

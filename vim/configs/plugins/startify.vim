@@ -24,16 +24,6 @@ let g:startify_bookmarks           = [
       \ {'t': '~/.tmux.conf'}
       \ ]
 
-" let g:ascii = [
-"       \ '        __',
-"       \ '.--.--.|__|.--------.',
-"       \ '|  |  ||  ||        |',
-"       \ ' \___/ |__||__|__|__|',
-"       \ ''
-"       \]
-" let g:startify_custom_header =
-"       \ 'map(g:ascii + startify#fortune#boxed(), "\"   \".v:val")'
-
 let g:startify_fortune_use_unicode    = 1
 let g:startify_session_autoload       = 1
 let g:startify_session_delete_buffers = 1
