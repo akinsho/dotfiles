@@ -37,9 +37,6 @@ set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit
-if !has('nvim')
-  set termsize="10x30"
-endif
 if has('folding')
   if has('windows')
     set fillchars=vert:│

@@ -63,7 +63,7 @@ if has('nvim-0.3.2')
   let g:ale_virtualtext_prefix = '→ '
 endif
 
-highlight ALEErrorSign guifg=red guibg=none
-highlight ALEWarningSign guifg=yellow guibg=none
+highlight ALEErrorSign guifg=red guibg=NONE
+highlight ALEWarningSign guifg=yellow guibg=NONE
 highlight ALEWarning gui=underline cterm=underline
 " highlight ALEErrorLine gui=underline guifg=red
