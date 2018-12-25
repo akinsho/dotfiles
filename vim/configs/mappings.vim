@@ -311,18 +311,6 @@ function! ForwardParagraph()
     let i = i + 1
   endwhile
 endfunction
-" Made mappings recursize to work with targets plugin
-" 'quote'
-omap aq  a'
-xmap aq  a'
-omap iq  i'
-xmap iq  i'
-"double quote
-omap ad  a"
-xmap ad  a"
-omap id  i"
-xmap id  i"
-
 "Change two horizontally split windows to vertical splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
@@ -561,7 +549,6 @@ cnoremap jk <C-C>
 
 " Toggle top/center/bottom
 noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
-
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
