@@ -409,8 +409,7 @@ nnoremap ' `
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
-"Open command line window
-nnoremap <leader>c :<c-f>
+"Open command line window - :<c-f>
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 " ----------------------------------------------------------------------------
@@ -559,9 +558,6 @@ imap JK jk
 imap Jk jk
 xnoremap jk <ESC>
 cnoremap jk <C-C>
-
-nnoremap J :call utils#send_warning('Use <Ctrl-U> (1/2 screen up) or <Ctrl-B> (1 screen up) Dummy!!')<cr> <bar> J
-nnoremap K :call utils#send_warning('Use <Ctrl-D> (1/2 screen down) or <Ctrl-F>  (1 screen down) Dummy!!')<cr> <bar> K
 
 " Toggle top/center/bottom
 noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'

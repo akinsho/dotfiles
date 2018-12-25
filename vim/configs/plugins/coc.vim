@@ -46,7 +46,8 @@ endfunction
 
 augroup CoCAutocommands
   au!
-  autocmd CursorHoldI,CursorMovedI * call CocAction('showSignatureHelp')
+  ",CursorMovedI
+  autocmd CursorHoldI * call CocAction('showSignatureHelp')
 augroup END
 
 " Remap for rename current word
