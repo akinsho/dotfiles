@@ -35,7 +35,8 @@
     "javascript": "javascriptreact"
   },
   "emmet.showAbbreviationSuggestions": true,
-  "tsserver.enableJavascript": false,
+  "tsserver.enableJavascript": true,
+  "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.diagnostic.errorSign": "✖",
   "coc.preferences.diagnostic.warningSign": "⚠",
   "coc.preferences.diagnostic.infoSign": "?",
