@@ -57,3 +57,4 @@ gin-bin
 *.code-workspace
 .vscode
 :merlin-log:
+*.doc#
