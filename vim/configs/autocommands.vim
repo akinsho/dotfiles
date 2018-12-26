@@ -76,6 +76,11 @@ augroup SmartClose
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
+  " Close quick fix window if the file containing it was closed
+  autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+        \   bd|
+        \   q | endif
+
   autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
   autocmd FileType qf nnoremap <buffer> <c-p> <up>
         \|nnoremap <buffer> <c-n> <down>
