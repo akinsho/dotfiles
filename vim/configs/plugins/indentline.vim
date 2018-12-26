@@ -1,8 +1,13 @@
 ""---------------------------------------------------------------------------//
 "Indent Guide
 ""-------------------------------------------------------------------------//
+let g:indentLine_fileTypeExclude = [
+      \ 'vimwiki',
+      \ 'nerdtree',
+      \ 'markdown',
+      \]
+
 let g:indentLine_bufNameExclude = [
-      \ 'NERD_tree.*',
       \ 'Startify',
       \ 'terminal',
       \ 'help',
