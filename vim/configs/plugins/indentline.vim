@@ -5,6 +5,7 @@ let g:indentLine_fileTypeExclude = [
       \ 'vimwiki',
       \ 'nerdtree',
       \ 'markdown',
+      \ 'json',
       \]
 
 let g:indentLine_bufNameExclude = [

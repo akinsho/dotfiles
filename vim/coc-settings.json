@@ -41,5 +41,6 @@
   "coc.preferences.diagnostic.warningSign": "⚠",
   "coc.preferences.diagnostic.infoSign": "?",
   "coc.preferences.diagnostic.hintSign": ">>",
-  "coc.preferences.diagnostic.locationlist": true
+  "coc.preferences.diagnostic.locationlist": true,
+  "coc.preferences.diagnostic.displayByAle": true
 }
