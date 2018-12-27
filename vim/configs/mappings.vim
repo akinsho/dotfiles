@@ -185,6 +185,15 @@ nnoremap qa :wqa<CR>
 " Quit
 inoremap <C-Q>  <esc>:q<cr>
 vnoremap <C-Q>  <esc>
+
+" Use a bunch of standard UNIX commands for quick an dirty
+" whitespace-based alignment
+function! Align()
+  '<,'>!column -t|sed 's/  \(\S\)/ \1/g'
+  normal gv=
+endfunction
+
+xnoremap <silent> g= :<C-u>silent call Align()<CR>
 " ----------------------------------------------------------------------------
 " Quickfix
 " ----------------------------------------------------------------------------
