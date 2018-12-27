@@ -82,7 +82,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-Plug 'Raimondi/delimitMate'
+Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': [
       \ 'TestNearest',
       \ 'TestVisit',
@@ -90,7 +90,11 @@ Plug 'janko-m/vim-test', { 'on': [
       \ 'TestLast',
       \ 'TestFile'
       \ ] }
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', { 'on': [
+      \ 'VimwikiIndex',
+      \ 'VimwikiDiaryIndex',
+      \ 'VimwikiIndexMakeDiaryNote'
+      \ ] }
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -131,8 +135,6 @@ Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {
       \ })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
-Plug 'othree/javascript-libraries-syntax.vim',
-       \ { 'for':[ 'javascript', 'typescript' ] }
 Plug 'styled-components/vim-styled-components', {
       \ 'branch': 'main',
       \ 'for': [
