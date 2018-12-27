@@ -190,7 +190,7 @@ Plug 'dyng/ctrlsf.vim' , { 'on': [
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
-Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
+Plug 'takac/vim-hardtime',    "Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
 "======================
 " Docs - Platform specific docs apps
 "======================
