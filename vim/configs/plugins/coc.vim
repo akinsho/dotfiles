@@ -46,7 +46,6 @@ endfunction
 
 augroup CoCAutocommands
   au!
-  ",CursorMovedI
   autocmd CursorHoldI * call CocAction('showSignatureHelp')
 augroup END
 

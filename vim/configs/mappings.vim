@@ -201,7 +201,7 @@ nnoremap ]q :cnext<CR>zz
 nnoremap [q :cprev<CR>zz
 nnoremap ]l :lnext<cr>zz
 nnoremap [l :lprev<cr>zz
-nnoremap <silent> <localleader>q :cclose<cr>:lclose<cr>
+nnoremap <silent> <localleader>q :cclose<cr>:lclose<cr>:pclose<cr>
 " ----------------------------------------------------------------------------
 " Tabs
 " ----------------------------------------------------------------------------
@@ -384,7 +384,8 @@ nnoremap bk `.
 " Quick find/replace
 ""---------------------------------------------------------------------------//
 nnoremap <Leader>[ :%s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap <localleader>[ :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <localleader>] :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <localleader>[ :s/\<<C-r>=expand("<cword>")<CR>\>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 ""---------------------------------------------------------------------------//
 " Find and Replace Using Abolish Plugin %S - Subvert

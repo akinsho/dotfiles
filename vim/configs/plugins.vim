@@ -45,19 +45,6 @@ function! BuildComposer(info)
 endfunction
 
   if !exists('g:gui_oni')
-    "====================================
-    " Autocompletion  {{{1
-    "====================================
-    " Plug 'Shougo/deoplete.nvim'
-    " Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
-    " Plug 'wokalski/autocomplete-flow', {
-    "       \ 'for': ['javascript', 'javascript.jsx'] }
-    " Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
-    " Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
-    " Plug 'autozimu/LanguageClient-neovim', {
-    "       \ 'branch': 'next',
-    "       \ 'do': 'bash install.sh',
-    "       \ }
     Plug 'Shougo/neco-vim', { 'for': 'vim' },
     Plug 'neoclide/coc-neco', { 'for': 'vim' },
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
@@ -136,7 +123,7 @@ Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'styled-components/vim-styled-components', {
-      \ 'branch': 'main',
+      \ 'branch': 'develop',
       \ 'for': [
       \ 'javascript.jsx',
       \ 'typescript.tsx',

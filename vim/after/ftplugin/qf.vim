@@ -1,5 +1,14 @@
 " Snippets from vim-qf
 " Credits: https://github.com/romainl/vim-qf
+if exists('b:did_ftplugin')
+  finish
+endif
+let b:did_ftplugin = 1
+
+let s:save_cpo = &cpoptions
+set cpoptions&vim
+
+let b:undo_ftplugin = 'setl fo< com< ofu<'
 setlocal number
 setlocal norelativenumber
 setlocal nolist
@@ -38,16 +47,9 @@ unlet! s:size
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
 
-if exists('b:did_ftplugin')
-  finish
-endif
-let b:did_ftplugin = 1
-
-let s:save_cpo = &cpoptions
-set cpoptions&vim
-
-let b:undo_ftplugin = 'setl fo< com< ofu<'
-
+nunmap! <silent><buffer> t
+nunmap! <silent><buffer> v
+nunmap! <silent><buffer> s
 " open entry in a new horizontal window
 nnoremap <silent><buffer> s <C-w><CR>
 " open entry in a new vertical window.
