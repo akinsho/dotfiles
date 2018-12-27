@@ -82,7 +82,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-Plug 'cohama/lexima.vim'
+Plug 'Raimondi/delimitMate'
 Plug 'janko-m/vim-test', { 'on': [
       \ 'TestNearest',
       \ 'TestVisit',
