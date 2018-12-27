@@ -112,9 +112,9 @@ vnoremap // y/<C-R>"<CR>
 
 " Credit: JustinMK
 nnoremap g> :set nomore<bar>40messages<bar>set more<CR>
+
 " Enter key should repeat the last macro recorded or just act as enter
 " nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
-
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " "Refocus" folds
@@ -147,7 +147,7 @@ nnoremap * m`:keepjumps normal! *``<cr>
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
 " If im not using a plugin then use homegrown mappings
-if !exists('g:plugs["lexima.vim"]')
+if !has_key(g:plugs, 'lexima.vim')
   inoremap ( ()<left>
   inoremap { {}<left>
   inoremap ` ``<left>
@@ -245,16 +245,10 @@ nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 "File completion made a little less painful
 inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
-if has('nvim')
-  nnoremap <tab>  <Cmd>bnext<CR>
-  nnoremap <S-tab> <Cmd>bprevious<CR>
-else
-  nnoremap <silent><tab>  :bnext<CR>
-  nnoremap <silent><S-tab> :bprevious<CR>
-endif
+nnoremap <silent><tab>  :bnext<CR>
+nnoremap <silent><S-tab> :bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-
 " use ,gf to go to file in a vertical split
 nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
 nnoremap <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
