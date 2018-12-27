@@ -169,7 +169,8 @@ set ruler
 set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set nohlsearch
-set autowrite "Automatically :write before running commands
+"Automatically :write before running commands and changing files
+set autowriteall
 if has('unnamedplus')
   set clipboard+=unnamedplus
 elseif has('clipboard')

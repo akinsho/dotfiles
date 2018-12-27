@@ -127,7 +127,6 @@ mkdir -p ~/.config/oni
 ln -sf "$DOTFILES/vim/gui/config.tsx" ~/.config/oni/
 
 git config --global core.excludesfile "$DOTFILES/git/.gitignore_global"
-npm_install spaceship-prompt
 
 # Install rustup
 curl https://sh.rustup.rs -sSf | sh

@@ -95,7 +95,8 @@ endfunction
 
 augroup CheckOutsideTime "{{{1
   autocmd!
-  autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
+  " automatically check for changed files outside vim
+  autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime
   au VimEnter * silent! call utils#buffer_autosave(1)
 augroup end
 
