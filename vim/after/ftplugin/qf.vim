@@ -8,6 +8,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 setlocal number
+setlocal colorcolumn=
 setlocal norelativenumber
 setlocal wrap
 setlocal winfixheight
@@ -15,8 +16,8 @@ setlocal winfixheight
 set nobuflisted
 
 " Add the above commands to a list of commands to undo when switching out of 
-" the QF window
-let b:undo_ftplugin .= "| setl wrap< rnu< nu< bl<"
+" the QF window, the < resets the value to the global value
+let b:undo_ftplugin .= "| setlocal wrap< relativenumber< number< buflisted< colorcolumn<"
 
 if has('nvim')
   highlight clear QuickFixLine
@@ -39,6 +40,16 @@ if !b:is_loc
 else
   let b:src_buf = s:list[0].bufnr
 endif
+
+function! s:auto_size() abort
+  " Resize the window so its a maximum of 15 lines high
+  let s:size = min([12, max([5, len(s:list)])])
+  execute 'resize' s:size
+  let &winheight = s:size
+  unlet! s:size
+endfunction
+
+call s:auto_size()
 
 " open entry in a new horizontal window
 nnoremap <silent><buffer> s <C-w><CR>
