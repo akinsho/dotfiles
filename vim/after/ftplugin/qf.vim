@@ -40,57 +40,39 @@ else
   let b:src_buf = s:list[0].bufnr
 endif
 
-let s:size = min([15, max([5, len(s:list)])])
-execute 'resize' s:size
-let &winheight = s:size
-unlet! s:size
-
-" we don't want quickfix buffers to pop up when doing :bn or :bp
-set nobuflisted
-
-nunmap! <silent><buffer> t
-nunmap! <silent><buffer> v
-nunmap! <silent><buffer> s
 " open entry in a new horizontal window
 nnoremap <silent><buffer> s <C-w><CR>
 " open entry in a new vertical window.
-nnoremap <silent><expr> <buffer> v &splitright ? "\<C-w>\<CR>\<C-w>L\<C-w>p\<C-w>J\<C-w>p" : "\<C-w>\<CR>\<C-w>H\<C-w>p\<C-w>J\<C-w>p"
+nnoremap <silent><expr> <buffer> v &splitright
+      \ ? "\<C-w>\<CR>\<C-w>L\<C-w>p\<C-w>J\<C-w>p"
+      \ : "\<C-w>\<CR>\<C-w>H\<C-w>p\<C-w>J\<C-w>p"
 " open entry in a new tab.
 nnoremap <silent><buffer> t <C-w><CR><C-w>T
 " open entry and come back
-unmap! p
-unmap! o
 nnoremap <silent><buffer> o <CR><C-w>p
-nnoremap <silent><buffer> p  :call <SID>preview_file()<CR>
-
+" preview file
+nnoremap <silent><buffer> p  :call utils#preview_file_under_cursor()<CR>
 " are we in a location list or a quickfix list?
 let b:qf_isLoc = !empty(getloclist(0))
+
 if b:qf_isLoc == 1
   nnoremap <silent> <buffer> O <CR>:lclose<CR>
 else
   nnoremap <silent> <buffer> O <CR>:cclose<CR>
 endif
 
-function! s:preview_file()
-  let l:winwidth = &columns
-  let l:cur_list = b:qf_isLoc == 1 ? getloclist('.') : getqflist()
-  let l:cur_line = getline(line('.'))
-  let l:cur_file = fnameescape(substitute(l:cur_line, '|.*$', '', ''))
-  if l:cur_line =~# '|\d\+'
-    let l:cur_pos  = substitute(l:cur_line, '^\(.\{-}|\)\(\d\+\)\(.*\)', '\2', '')
-    execute 'vertical pedit! +'.l:cur_pos.' '.l:cur_file
-  else
-    execute 'vertical pedit! '.l:cur_file
-  endif
-  wincmd P
-  execute 'vert resize '.(l:winwidth / 2)
-  wincmd p
-endfunction
+" replace all the mappings
+let b:undo_ftplugin .= "| execute 'nunmap <buffer> s'"
+      \ . "| execute 'nunmap <buffer> v'"
+      \ . "| execute 'nunmap <buffer> t'"
+      \ . "| execute 'nunmap <buffer> o'"
+      \ . "| execute 'nunmap <buffer> O'"
+      \ . "| execute 'nunmap <buffer> p'"
 
 if !exists('b:src_buf') && !b:is_loc
   wincmd J
 endif
 
-let &cpoptions = s:save_cpo
+let b:undo_ftplugin .=  "| unlet! b:qf_isLoc"
 
-nnoremap <silent><buffer> <cr> :call <sid>select()<cr>
+let &cpo = s:save_cpo

@@ -136,7 +136,11 @@ endfunction
 " This function allow me to specify titles for special case buffers
 " like the previewwindow or a quickfix window
 function! LightlineSpecialBuffers()
-  return &buftype ==# 'quickfix' ? 'QuickFix' :
+  "Credits:  https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
+  let l:is_location_list = get(getloclist(0, {'winid':0}), 'winid', 0)
+
+  return l:is_location_list ? 'Location List' :
+        \ &buftype ==# 'quickfix' ? 'QuickFix' :
         \ &previewwindow ? 'preview' :
         \ ''
 endfunction
