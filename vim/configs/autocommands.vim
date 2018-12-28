@@ -84,6 +84,10 @@ augroup SmartClose
   autocmd FileType qf nnoremap <buffer> <c-p> <up>
         \|nnoremap <buffer> <c-n> <down>
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
+  " automatically close corresponding loclist when quitting a window
+  if exists('##QuitPre')
+    autocmd QuitPre * nested if &filetype != 'qf' | silent! lclose | endif
+  endif
 augroup END
 
 function! s:smart_close()
