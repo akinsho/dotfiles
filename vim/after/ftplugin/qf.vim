@@ -1,21 +1,22 @@
+""---------------------------------------------------------------------------//
 " Snippets from vim-qf
 " Credits: https://github.com/romainl/vim-qf
-if exists('b:did_ftplugin')
-  finish
-endif
-let b:did_ftplugin = 1
+""---------------------------------------------------------------------------//
+" This allows scripts to execute with vim defaults i.e. not clash
+" with changes a user (me) might have made
+let s:save_cpo = &cpo
+set cpo&vim
 
-let s:save_cpo = &cpoptions
-set cpoptions&vim
-
-let b:undo_ftplugin = 'setl fo< com< ofu<'
 setlocal number
 setlocal norelativenumber
-setlocal nolist
-setlocal nospell
-setlocal colorcolumn=
 setlocal wrap
 setlocal winfixheight
+" we don't want quickfix buffers to pop up when doing :bn or :bp
+set nobuflisted
+
+" Add the above commands to a list of commands to undo when switching out of 
+" the QF window
+let b:undo_ftplugin .= "| setl wrap< rnu< nu< bl<"
 
 if has('nvim')
   highlight clear QuickFixLine
