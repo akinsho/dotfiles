@@ -67,21 +67,16 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
   command! Modified call fzf#run(fzf#wrap(
         \ {'source': 'git ls-files --exclude-standard --others --modified'}))
 
-  noremap <localLeader>mo :Modified<cr>
-
-  imap <c-l> <plug>(fzf-complete-line)
-  imap <c-f> <plug>(fzf-complete-path)
-
-  inoremap <expr> <c-x>w fzf#vim#complete#word({'left': '15%'})
+  nnoremap <localleader>mo :Modified<cr>
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
   nnoremap <silent> <localleader>br :Branches<cr>
   nnoremap <silent> <localleader>d :Dots<CR>
-  nnoremap <silent> <localleader>bt :BTags<CR>
+  nnoremap <silent> <localleader>b :BTags<CR>
   nnoremap <silent> <localleader>o :Buffers<CR>
   nnoremap <silent> <localleader>a :Windows<CR>
   nnoremap <silent> <localleader>m :History<CR>
   nnoremap <silent> <localleader>c :Commits<CR>
-  nnoremap <silent> <localleader>l :Lines<CR>
+  nnoremap <silent> <localleader>li :Lines<CR>
   nnoremap <silent> <localleader>H :Helptags<CR>
 
   " Launch file search using FZF

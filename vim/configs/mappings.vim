@@ -402,7 +402,7 @@ vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window - :<c-f>
-nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 " ----------------------------------------------------------------------------
 " CREDIT: JGunn #gi / #gpi | go to next/previous indentation level
@@ -567,13 +567,12 @@ nnoremap <leader>} ciw{<c-r>"}<esc>
 nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
 
 " To the leftmost non-blank character of the current line
-nnoremap H g^
+nnoremap <leader>h g^
 " To the rightmost character of the current line
-nnoremap L g$
-" Remap native bindings to leader prefixed ones
-nnoremap <silent><leader>H :norm! H<cr>
-nnoremap <silent><leader>L :norm! L<cr>
-
+nnoremap <leader>l g$
+" easier to hit than shift versions
+nnoremap g4 g$
+nnoremap g6 g^
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>

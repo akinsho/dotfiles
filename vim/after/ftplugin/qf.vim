@@ -8,10 +8,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 setlocal number
-setlocal colorcolumn=
 setlocal norelativenumber
 setlocal wrap
 setlocal winfixheight
+setlocal colorcolumn=
 " we don't want quickfix buffers to pop up when doing :bn or :bp
 set nobuflisted
 
