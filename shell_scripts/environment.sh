@@ -5,14 +5,11 @@
 #=======================================================================
 # NB for future notice this tries to install in dotfiles unless explicitly
 # specified here
-export NVM_DIR="$HOME/.nvm"
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
 export PATH="$PATH:$(yarn global bin)"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/.node/bin:$HOME/.rbenv/shims:$PATH
-
 # GO ============================================================
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PATH=$PATH:/usr/local/go/bin
@@ -38,9 +35,6 @@ fi
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
-
-# Setting from Chrome Driver on MacOS
-export {no_proxy,NO_PROXY}="127.0.0.1,localhost"
 
 export MANPATH="/usr/local/man:$MANPATH"
 export PATH=~/.rbenv:$PATH

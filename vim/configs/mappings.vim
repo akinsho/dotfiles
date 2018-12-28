@@ -143,6 +143,7 @@ nnoremap <leader>ar :AutoResize 70<CR>
 
 " Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
 nnoremap * m`:keepjumps normal! *``<cr>
+
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
@@ -242,8 +243,6 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "Buffers
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
-"File completion made a little less painful
-inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
 nnoremap <silent><tab>  :bnext<CR>
 nnoremap <silent><S-tab> :bprevious<CR>
@@ -372,10 +371,10 @@ xnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>
 onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
 " ----------------------------------------------------------------------------
-" <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
+" FIXME: J. Gunn, <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
 " ----------------------------------------------------------------------------
 nmap <silent> <leader>I ^vio<C-V>I
-nmap <silent> <leader>A ^vio<C-V>$Andfunction
+nmap <silent> <leader>A ^vio<C-V>$
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.

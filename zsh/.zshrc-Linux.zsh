@@ -10,5 +10,5 @@ pacman() {
 
 backup-gnome() {
     dconf dump / > dconf-settings.ini
-    mv -f dconf-settings.ini ~/Dotfiles/linux/gnome/
+    mv -f dconf-settings.ini $DOTFILES/linux/gnome/
 }
