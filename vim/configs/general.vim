@@ -189,6 +189,9 @@ if exists('&belloff')
   set belloff=all
 endif
 if has('termguicolors')
+  " Not sure  if these are still necessary for vim
+  let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
 endif
 " ctags - search for a tags file then in current dir then home dir
@@ -249,7 +252,7 @@ endif
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
 set sessionoptions-=blank,buffers,globals,help,options
-set updatetime=750
+set updatetime=300
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
