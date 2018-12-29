@@ -196,6 +196,7 @@ augroup END
 
 augroup CommandWindow "{{{1
   autocmd!
+  " map q to close command window on quit
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
   autocmd QuickFixCmdPost [^l]* nested cwindow

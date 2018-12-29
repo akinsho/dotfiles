@@ -135,7 +135,6 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   let &showbreak='↳ '
   " Options include -> '…', '↳ ', '→','↪ ' 
   if exists('&breakindentopt')
-    " set breakindentopt=shift:2
     set breakindentopt=sbr
   endif
 endif
