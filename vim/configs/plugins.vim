@@ -119,7 +119,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'develop',
       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
 "Git {{{1
 " ==============================
-Plug 'christoomey/vim-conflicted'
+Plug 'whiteinge/diffconflicts'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'

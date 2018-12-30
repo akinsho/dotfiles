@@ -18,18 +18,18 @@ let g:ale_fixers = {
       \'css':['prettier','stylelint'],
       \'less':['prettier', 'stylelint']
       \}
+
 let g:ale_sh_shellcheck_options                = '-e SC2039'  " Allow local in Shell Check
 
 " let g:ale_sign_error         = ''
 " let g:ale_sign_warning       = ''
 " let g:ale_sign_info          = ''
-let g:ale_sign_column_always = 1
-let g:ale_sign_error         = '✗'
-let g:ale_sign_info          = '💡'
-let g:ale_sign_warning       = '⚠'
-let g:ale_sign_style_error   = ''
-let g:ale_sign_style_warning = ''
-
+let g:ale_sign_column_always                   = 1
+let g:ale_sign_error                           = '✗'
+let g:ale_sign_info                            = '💡'
+let g:ale_sign_warning                         = '⚠'
+let g:ale_sign_style_error                     = ''
+let g:ale_sign_style_warning                   = ''
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_reason_ols_use_global                = 0
 let g:ale_warn_about_trailing_whitespace       = 1

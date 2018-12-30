@@ -47,3 +47,8 @@
     diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 [rerere]
     enabled = true
+[merge]
+  tool = diffconflicts 
+[mergetool "diffconflicts"]
+  cmd = 'nvim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
+  trustExitCode = true
