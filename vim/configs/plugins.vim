@@ -82,7 +82,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
-Plug 'vimwiki/vimwiki', { 'on': ['VimwikiIndex', 'VimwikiDiaryIndex', 'VimwikiIndexMakeDiaryNote']}
+Plug 'vimwiki/vimwiki'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
