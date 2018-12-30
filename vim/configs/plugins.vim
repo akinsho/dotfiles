@@ -120,12 +120,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-scriptease', { 'on': [
-      \ 'Messages',
-      \ 'Verbose',
-      \ 'Runtime',
-      \ 'Scriptnames'
-      \ ] }
+Plug 'tpope/vim-scriptease'
 " ===========================
 "Syntax {{{1
 "============================
@@ -158,14 +153,6 @@ Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'haya14busa/vim-operator-flashy'
-" USAGE
-" [count]["x]gr{motion}   Replace {motion} text with the contents of register x.
-" Especially when using the unnamed register, this is
-" quicker than "_d{motion}P or "_c{motion}<C-R>"
-" [count]["x]grr          Replace [count] lines with the contents of register x.
-" To replace from the cursor position to the end of the
-" line use ["x]gr$
-" {Visual}["x]gr          Replace the selection with the contents of register x.
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
