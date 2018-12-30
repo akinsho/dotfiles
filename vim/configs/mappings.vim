@@ -565,14 +565,6 @@ nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
 nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
-
-" To the leftmost non-blank character of the current line
-nnoremap <leader>h g^
-" To the rightmost character of the current line
-nnoremap <leader>l g$
-" easier to hit than shift versions
-nnoremap g4 g$
-nnoremap g6 g^
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>
