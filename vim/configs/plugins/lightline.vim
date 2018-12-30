@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['repo'], ['conflicted'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['conflicted'] ],
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -15,7 +15,7 @@ let g:lightline = {
       \]
       \ },
       \ 'inactive': {
-      \   'left': [ [ 'filename',  'repo' ] ],
+      \   'left': [ [ 'filename'] ],
       \   'right': [ [] ]
       \ },
       \ 'component': {
@@ -185,6 +185,7 @@ function! LightlineFiletype()
       endif
     endif
   endif
+  return ''
 endfunction
 
 function! LightlineFileFormat()
@@ -221,9 +222,6 @@ function! LightlineMode()
         \ &ft== 'vim-plug' ? 'vim-plug ⚉':
         \ &ft == 'help' ? 'help ':
         \ &ft == 'undotree' ? 'UndoTree ⮌' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
         \ lightline#mode()
 endfunction
 
