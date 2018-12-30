@@ -95,6 +95,8 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
+Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
+Plug 'takac/vim-hardtime'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-commentary'
@@ -120,7 +122,6 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'develop',
 "Git {{{1
 " ==============================
 Plug 'whiteinge/diffconflicts'
-Plug 'rhysd/conflict-marker.vim'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 " Text Objects {{{1
@@ -134,19 +135,17 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'kana/vim-textobj-function'
+      \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'thinca/vim-textobj-function-javascript'
 "Search Tools {{{1
 "=======================
+Plug 'dyng/ctrlsf.vim'
+Plug 'junegunn/vim-peekaboo'
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
-Plug 'dyng/ctrlsf.vim'
-Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
-Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
-Plug 'takac/vim-hardtime'
 "======================
 " Docs - Platform specific docs apps
 "======================

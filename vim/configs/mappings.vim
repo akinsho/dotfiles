@@ -608,7 +608,9 @@ nnoremap S "_diwP
 "}}}
 
 " Shortcut to jump to next conflict marker"
-" nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+nnoremap <silent> [x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+" Shortcut to jump to last conflict marker"
+nnoremap <silent> ]x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
 nnoremap <silent> <leader>Z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
@@ -639,7 +641,7 @@ MapToggle <F9> scrollbind
 
 set pastetoggle=<F6>
 
-fu! ToggleColorColumn()
+function! ToggleColorColumn()
   if &colorcolumn
     set colorcolumn=""
   else
