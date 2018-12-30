@@ -43,5 +43,10 @@
   "coc.preferences.diagnostic.warningSign": "",
   "coc.preferences.diagnostic.infoSign": "",
   "coc.preferences.diagnostic.hintSign": "ﯦ",
-  "coc.preferences.snippetIndicator": " "
+  "coc.preferences.snippetIndicator": " ",
+  "snippets.extends": {
+    "cpp": ["c"],
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  }
 }

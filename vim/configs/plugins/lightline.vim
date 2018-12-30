@@ -217,11 +217,13 @@ function! LightlineMode()
         \ fname == 'ControlP' ? 'CtrlP' :
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
+        \ &ft== 'vim-plug' ? 'vim-plug ⚉':
+        \ &ft == 'help' ? 'help ':
+        \ &ft == 'undotree' ? 'UndoTree ⮌' :
         \ &ft == 'unite' ? 'Unite' :
         \ &ft == 'vimfiler' ? 'VimFiler' :
         \ &ft == 'vimshell' ? 'VimShell' :
-        \ &ft == 'undotree' ? 'UndoTree' :
         \ lightline#mode()
 endfunction
 
