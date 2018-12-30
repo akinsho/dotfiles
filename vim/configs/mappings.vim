@@ -207,15 +207,15 @@ nnoremap <silent> <localleader>q :cclose<cr>:lclose<cr>:pclose<cr>
 " Tabs
 " ----------------------------------------------------------------------------
 " Tab navigation
-nnoremap th :tabprev<CR>
-nnoremap tl :tabnext<CR>
+nnoremap ]t :tabprev<CR>
+nnoremap [t :tabnext<CR>
 " Useful mappings for managing tabs
 nnoremap tn :tab split<cr>
 nnoremap to :tabonly<cr>
 nnoremap tc :tabclose<cr>
 nnoremap tm :tabmove<Space>
 ""---------------------------------------------------------------------------//
-" ========== Multiple Cursor Replacement ========
+" Multiple Cursor Replacement
 " http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
 ""---------------------------------------------------------------------------//
 let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"

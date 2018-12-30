@@ -313,7 +313,7 @@ function! utils#extend_highlight(base, group, add)
 endfunction
 
 " open the current entry in th preview window
-function utils#preview_file_under_cursor()
+function! utils#preview_file_under_cursor()
   let cur_list = b:qf_isLoc == 1 ? getloclist('.') : getqflist()
   let cur_line = getline(line('.'))
   let cur_file = fnameescape(substitute(cur_line, '|.*$', '', ''))
