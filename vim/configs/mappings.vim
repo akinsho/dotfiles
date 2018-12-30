@@ -581,8 +581,9 @@ nmap <leader>jj <Plug>ResizeDown
 nnoremap <silent> <Plug>ResizeUp :resize -10<cr>
       \ :call repeat#set("\<Plug>ResizeUp")<CR>
 nmap <leader>kk <Plug>ResizeUp
-
+""---------------------------------------------------------------------------//
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
+""---------------------------------------------------------------------------//
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
