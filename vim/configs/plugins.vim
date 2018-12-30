@@ -1,7 +1,6 @@
 "-----------------------------------------------------------
 "PLUGINS
 "-----------------------------------------------------------
-
 "=====================
 " Plug Setup {{{1
 "=====================
@@ -58,12 +57,13 @@ function! CocInstall(info)
         \ )
   call coc#util#install()
 endfunction
-
+"================================
+" CORE {{{1
+"================================
   if !exists('g:gui_oni')
     Plug 'Shougo/neco-vim', { 'for': 'vim' },
     Plug 'neoclide/coc-neco', { 'for': 'vim' },
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': function('CocInstall')}
-    "====================================
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'
@@ -71,12 +71,8 @@ endfunction
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'kristijanhusak/vim-js-file-import', {
-          \ 'for':['javascript.jsx','javascript']
-          \ }
+    Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
-" CORE {{{1
-"================================
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
@@ -85,18 +81,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
-Plug 'janko-m/vim-test', { 'on': [
-      \ 'TestNearest',
-      \ 'TestVisit',
-      \ 'TestSuite',
-      \ 'TestLast',
-      \ 'TestFile'
-      \ ] }
-Plug 'vimwiki/vimwiki', { 'on': [
-      \ 'VimwikiIndex',
-      \ 'VimwikiDiaryIndex',
-      \ 'VimwikiIndexMakeDiaryNote'
-      \ ] }
+Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
+Plug 'vimwiki/vimwiki', { 'on': ['VimwikiIndex', 'VimwikiDiaryIndex', 'VimwikiIndexMakeDiaryNote']}
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -126,20 +112,11 @@ Plug 'tpope/vim-scriptease'
 "============================
 Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] } 
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
-Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {
-      \ 'do': ':GoUpdateBinaries',
-      \ 'for': ['go']
-      \ })
+Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
-Plug 'styled-components/vim-styled-components', {
-      \ 'branch': 'develop',
-      \ 'for': [
-      \ 'javascript.jsx',
-      \ 'typescript.tsx',
-      \ 'typescript',
-      \ 'javascript'
-      \ ] }
+Plug 'styled-components/vim-styled-components', { 'branch': 'develop',
+      \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
 "Git {{{1
 " ==============================
 Plug 'christoomey/vim-conflicted'
@@ -165,21 +142,11 @@ Plug 'kana/vim-textobj-user'
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
-Plug 'dyng/ctrlsf.vim' , { 'on': [
-      \'CtrlSF',
-      \'CtrlSFCwordExec',
-      \'CtrlSFPrompt',
-      \'CtrlSFVwordPath',
-      \'CtrlSFVwordExec',
-      \'CtrlSFCwordPath',
-      \'CtrlSFPwordPath',
-      \'CtrlSFOpen',
-      \'CtrlSFToggle',
-      \] }
+Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
-Plug 'takac/vim-hardtime',    "Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
+Plug 'takac/vim-hardtime'
 "======================
 " Docs - Platform specific docs apps
 "======================
@@ -214,3 +181,4 @@ endif
 " Load immediately {{{1
 call plug#load('vim-fat-finger')
 "}}}
+" vim:foldmethod=marker
