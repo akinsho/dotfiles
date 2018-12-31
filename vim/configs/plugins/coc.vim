@@ -1,6 +1,49 @@
 if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
   finish
 endif
+
+let languageservers = {}
+
+if executable('lua-lsp')
+  let languageservers['lua'] = {
+        \ 'command': 'lua-lsp'
+        \ 'filetypes': ['lua']
+        \}
+endif
+
+if executable('ocaml-language-server')
+  let languageservers['reason'] = {
+        \ 'args': ['--stdio'],
+        \ 'trace.server': 'verbose',
+        \ 'filetypes': ['reason', 'ocaml'],
+        \}
+endif
+
+if executable('flow-language-server')
+  let languageservers['javascript'] = {
+        \ "command": "flow-language-server",
+        \ "args": ["--stdio"],
+        \ "filetypes": ["javascript", "javascriptreact"],
+        \ "rootPatterns": [".flowconfig"]
+        \}
+endif
+
+if executable('go-languageserver')
+  let languageservers['golang'] = {
+        \ "command": "go-langserver",
+        \ "filetypes": ["go"],
+        \ "revealOutputChannelOn": "never",
+        \ "initializationOptions": {
+        \ "gocodeCompletionEnabled": true,
+        \ "diagnosticsEnabled": true,
+        \ "lintTool": "golint"
+        \ }
+        \}
+endif
+
+if !empty(languageservers)
+  call coc#config('languageserver', languageservers)
+endif
 " let g:coc_node_version = '/usr/local/n/versions/node/10.3.0/bin/node'
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
