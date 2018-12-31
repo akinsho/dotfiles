@@ -1,35 +1,4 @@
 {
-  "languageserver": {
-    "lua": {
-      "command": "lua-lsp",
-      "filetypes": ["lua"]
-    },
-    "reason": {
-      "command": "ocaml-language-server",
-      "args": ["--stdio"],
-      "trace.server": "verbose",
-      "filetypes": ["reason", "ocaml"],
-      "initializationOptions": {
-        "cacheDirectory": "/tmp/ocaml-lsp"
-      }
-    },
-    "flow": {
-      "command": "flow-language-server",
-      "args": ["--stdio"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "rootPatterns": [".flowconfig"]
-    },
-    "golang": {
-      "command": "go-langserver",
-      "filetypes": ["go"],
-      "revealOutputChannelOn": "never",
-      "initializationOptions": {
-        "gocodeCompletionEnabled": true,
-        "diagnosticsEnabled": true,
-        "lintTool": "golint"
-      }
-    }
-  },
   "emmet.includeLanguages": {
     "vue-html": "html",
     "javascript": "javascriptreact"

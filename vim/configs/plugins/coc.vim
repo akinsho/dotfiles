@@ -13,6 +13,7 @@ endif
 
 if executable('ocaml-language-server')
   let languageservers['reason'] = {
+        \ 'command': 'ocaml-language-server',
         \ 'args': ['--stdio'],
         \ 'trace.server': 'verbose',
         \ 'filetypes': ['reason', 'ocaml'],
@@ -20,7 +21,7 @@ if executable('ocaml-language-server')
 endif
 
 if executable('flow-language-server')
-  let languageservers['javascript'] = {
+  let languageservers['flow'] = {
         \ "command": "flow-language-server",
         \ "args": ["--stdio"],
         \ "filetypes": ["javascript", "javascriptreact"],
@@ -44,7 +45,7 @@ endif
 if !empty(languageservers)
   call coc#config('languageserver', languageservers)
 endif
-" let g:coc_node_version = '/usr/local/n/versions/node/10.3.0/bin/node'
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 iunmap <TAB>
