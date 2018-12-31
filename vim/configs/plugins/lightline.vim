@@ -150,6 +150,7 @@ function! LightlineFilename()
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
         \ fname == '__Tagbar__' ? '' :
         \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'ctrlsf' ? '' :
         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
         \ &ft == 'unite' ? unite#get_status_string() :
         \ &ft == 'vimshell' ? vimshell#get_status_string() :
@@ -219,7 +220,8 @@ function! LightlineMode()
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
         \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
-        \ &ft== 'vim-plug' ? 'vim-plug ⚉':
+        \ &ft == 'ctrlsf' ? 'CtrlSF 🔍' :
+        \ &ft == 'vim-plug' ? 'vim-plug ⚉':
         \ &ft == 'help' ? 'help ':
         \ &ft == 'undotree' ? 'UndoTree ⮌' :
         \ lightline#mode()
