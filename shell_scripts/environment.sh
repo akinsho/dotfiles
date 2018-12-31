@@ -10,9 +10,11 @@ export RUNCOM=$DOTFILES/runcom/
 export PATH="$PATH:$(yarn global bin)"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # GO ============================================================
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PATH=$PATH:/usr/local/go/bin
+  export PATH=$HOME/akin/.local/bin:$PATH
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
     # Mac OSX

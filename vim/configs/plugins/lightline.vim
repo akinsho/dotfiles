@@ -177,13 +177,8 @@ function! LightlineFiletype()
     return winwidth(0) > 70 ? (strlen(&filetype) ? &ft : '') : ''
   else
     if winwidth(0) > 70
-      if strlen(LightlineSpecialBuffers())
-      	return ''
-      elseif strlen(&filetype)
-      	return WebDevIconsGetFileTypeSymbol()
-      else
-      	return ''
-      endif
+      return strlen(LightlineSpecialBuffers()) ? '' :
+            \ strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : ''
     endif
   endif
   return ''
