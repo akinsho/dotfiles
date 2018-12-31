@@ -14,6 +14,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # GO ============================================================
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PATH=$PATH:/usr/local/go/bin
+  # FIXME: this is a brittle as it depends on this username
   export PATH=$HOME/akin/.local/bin:$PATH
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
