@@ -542,7 +542,7 @@ onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 " Navigation (CORE)
 ""---------------------------------------------------------------------------//
 "Zero should go to the first non-blank character not to the first column (which could be blank)
-nnoremap 0 ^
+noremap 0 ^
 " jk is escape, THEN move to the right to preserve the cursor position, unless
 " at the first column.  <esc> will continue to work the default way.
 inoremap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
