@@ -133,14 +133,30 @@ function! LightlineReadonly()
   return &ft !~? 'help' && &previewwindow && &readonly ? '' : ''
 endfunction
 
+" Helpers -- generalise the methods for checking a ft or buftype
+function! s:is_ft(ft) abort
+  return &ft ==# a:ft
+endfunction
+
+function! s:is_bt(bt) abort
+  return &bt ==# a:bt
+endfunction
+
+function! s:show_plain_lightline() abort
+  return s:is_ft('help') ||
+        \ s:is_ft('terminal')||
+        \ s:is_ft('neoterm')||
+        \ s:is_bt('quickfix') ||
+        \ &previewwindow
+endfunction
+
 " This function allow me to specify titles for special case buffers
 " like the previewwindow or a quickfix window
 function! LightlineSpecialBuffers()
   "Credits:  https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
   let l:is_location_list = get(getloclist(0, {'winid':0}), 'winid', 0)
-
   return l:is_location_list ? 'Location List' :
-        \ &buftype ==# 'quickfix' ? 'QuickFix' :
+        \ s:is_bt('quickfix') ? 'QuickFix' :
         \ &previewwindow ? 'preview' :
         \ ''
 endfunction
@@ -150,14 +166,14 @@ function! LightlineFilename()
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
         \ fname == '__Tagbar__' ? '' :
         \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'ctrlsf' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != LightlineSpecialBuffers() ? LightlineSpecialBuffers() :
-        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+        \ s:is_ft('ctrlsf') ? '' :
+        \ s:is_ft('vimfiler') ? vimfiler#get_status_string() :
+        \ s:is_ft('unite') ? unite#get_status_string() :
+        \ s:is_ft('vimshell') ? vimshell#get_status_string() :
+        \ strlen(LightlineSpecialBuffers()) ? LightlineSpecialBuffers() :
+        \ (strlen(LightlineReadonly()) ? LightlineReadonly() . ' ' : '') .
+        \ (strlen(fname) ? fname : '[No Name]') .
+        \ (strlen(LightlineModified()) ? ' ' . LightlineModified() : '')
 endfunction
 
 function! LightlineFileSize() "{{{
@@ -173,15 +189,11 @@ function! LightlineFileSize() "{{{
 endfunction "}}}
 
 function! LightlineFiletype()
-  if has('gui_running')
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &ft : '') : ''
-  else
-    if winwidth(0) > 70
-      return strlen(LightlineSpecialBuffers()) ? '' :
-            \ strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : ''
-    endif
+  if !strlen(&filetype) || s:show_plain_lightline()
+    return ''
   endif
-  return ''
+  let l:icon = has('gui_running') ? &filetype : WebDevIconsGetFileTypeSymbol()
+  return winwidth(0) > 70 ? l:icon : ''
 endfunction
 
 function! LightlineFileFormat()
