@@ -164,6 +164,7 @@ function! s:render_tab(tabnr) abort
   return s:number_to_symbol(a:tabnr)
 endfunction
 
+" TODO: Maybe factor this out into a plugin 🤷
 function! LightlineStatuslineTabs() abort
   let l:total_number_of_tabs = tabpagenr('$')
   " Don't render anything if there is only one tab
