@@ -153,12 +153,12 @@ function! s:number_to_symbol(num) abort
   return s:map[a:num]
 endfunction
 
-let s:add_tabname_prefix = { selected -> "[tab: " . selected . "]"}
+let s:add_tabname_prefix = { selected, nr -> "[". s:number_to_symbol(nr) . " " . selected . "]"}
 
 function! s:render_tab(tabnr) abort
   " Prefix the selected tab
   if tabpagenr() == a:tabnr 
-    let l:tab_name = s:add_tabname_prefix(lightline#tab#filename(a:tabnr))
+    let l:tab_name = s:add_tabname_prefix(lightline#tab#filename(a:tabnr), a:tabnr)
     return l:tab_name
   endif
   return s:number_to_symbol(a:tabnr)
