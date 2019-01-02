@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['conflicted'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['statusline_tabs'] ],
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -37,6 +37,7 @@ let g:lightline = {
       \   'lsp': 'coc#status',
       \ },
       \ 'component_expand': {
+      \  'statusline_tabs': 'LightlineStatuslineTabs',
       \  'linter_checking': 'lightline#ale#checking',
       \  'linter_warnings': 'lightline#ale#warnings',
       \  'linter_errors': 'lightline#ale#errors',
@@ -51,6 +52,8 @@ let g:lightline = {
       \ },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+
+" FIXME: these components cause 100% CPU usage
 " \   'repo': 'LightlineRepo',
 " \   'gina': 'LightlineGinaStatus',
 
@@ -70,12 +73,12 @@ let g:lightline.tab = {
       \ 'active': [ 'tabnum', 'filename', 'modified' ],
       \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
 
-let g:lightline#bufferline#shorten_path = 0
-let g:lightline#bufferline#min_buffer_count = 2
+let g:lightline#bufferline#shorten_path      = 0
+let g:lightline#bufferline#min_buffer_count  = 2
 let g:lightline#bufferline#filename_modifier = ':t'
-let g:lightline#bufferline#unicode_symbols = 1
-let g:lightline#bufferline#show_number = 2
-let g:lightline#bufferline#enable_devicons = 1
+let g:lightline#bufferline#unicode_symbols   = 1
+let g:lightline#bufferline#show_number       = 2
+let g:lightline#bufferline#enable_devicons   = 1
 
 nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
 nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
@@ -90,8 +93,8 @@ nmap <Localleader>0 <Plug>lightline#bufferline#go(10)
 
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
-let g:lightline#ale#indicator_errors = "\uf05e"
-let g:lightline#ale#indicator_ok = ''
+let g:lightline#ale#indicator_errors   = "\uf05e"
+let g:lightline#ale#indicator_ok       = ''
 
 function! LightlineCsv()
   if has("statusline")
@@ -131,6 +134,45 @@ endfunction
 
 function! LightlineReadonly()
   return &ft !~? 'help' && &previewwindow && &readonly ? '' : ''
+endfunction
+
+function! s:number_to_symbol(num) abort
+  " unicode source: http://jrgraphix.net/r/Unicode/2700-27BF
+  let s:map = {
+        \ 1: "❶",
+        \ 2: "❷",
+        \ 3: "❸",
+        \ 4: "❹",
+        \ 5: "❺",
+        \ 6: "❻",
+        \ 7: "❼",
+        \ 8: "❽",
+        \ 9: "❾",
+        \ 10: "❿",
+        \}
+  return s:map[a:num]
+endfunction
+
+let s:add_tabname_prefix = { selected -> "[tab: " . selected . "]"}
+
+function! s:render_tab(tabnr) abort
+  " Prefix the selected tab
+  if tabpagenr() == a:tabnr 
+    let l:tab_name = s:add_tabname_prefix(lightline#tab#filename(a:tabnr))
+    return l:tab_name
+  endif
+  return s:number_to_symbol(a:tabnr)
+endfunction
+
+function! LightlineStatuslineTabs() abort
+  let l:total_number_of_tabs = tabpagenr('$')
+  " Don't render anything if there is only one tab
+  if l:total_number_of_tabs == 1
+    return ''
+  endif
+  "Map the range of tabs from 1 to the last and for each,
+  "call the render_tab function, then join the result into a string.
+  return join(map(range(1, l:total_number_of_tabs), { -> s:render_tab(v:val) }))
 endfunction
 
 " Helpers -- generalise the methods for checking a ft or buftype
