@@ -44,18 +44,22 @@ function! BuildComposer(info)
 endfunction
 
 function! CocInstall(info)
-  call coc#add_extension(
-        \ 'coc-json',
-        \ 'coc-tsserver',
-        \ 'coc-rls',
-        \ 'coc-snippets',
-        \ 'coc-emmet',
-        \ 'coc-highlight',
-        \ 'coc-css',
-        \ 'coc-eslint',
-        \ 'coc-prettier'
-        \ )
-  call coc#util#install()
+  if a:info.status ==? 'installed' || a:info.force
+    call coc#add_extension(
+          \ 'coc-json',
+          \ 'coc-tsserver',
+          \ 'coc-rls',
+          \ 'coc-snippets',
+          \ 'coc-emmet',
+          \ 'coc-highlight',
+          \ 'coc-css',
+          \ 'coc-eslint',
+          \ 'coc-prettier'
+          \ )
+    call coc#util#install()
+  elseif a:info.status ==? 'updated'
+    silent execute 'CocUpdate'
+  endif
 endfunction
 "================================
 " CORE {{{1
