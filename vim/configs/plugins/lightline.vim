@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['statusline_tabs'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['statuslinetabs'] ],
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -37,7 +37,7 @@ let g:lightline = {
       \   'lsp': 'coc#status',
       \ },
       \ 'component_expand': {
-      \  'statusline_tabs': 'lightline#statuslinetabs#show',
+      \  'statuslinetabs': 'lightline#statuslinetabs#show',
       \  'linter_checking': 'lightline#ale#checking',
       \  'linter_warnings': 'lightline#ale#warnings',
       \  'linter_errors': 'lightline#ale#errors',

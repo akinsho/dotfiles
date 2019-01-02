@@ -217,7 +217,7 @@ augroup END
 augroup hide_lines "{{{1
   " Hide line numbers when entering diff mode
   autocmd!
-  autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
+  autocmd FilterWritePre * if &diff | setlocal nonumber norelativenumber nocursorline | endif
 augroup END
 
 " Add Per Window Highlights [WIP] {{{
