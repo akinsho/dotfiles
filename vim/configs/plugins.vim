@@ -70,6 +70,7 @@ endfunction
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': function('CocInstall')}
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
+      \ | Plug 'Akin909/lightline-statuslinetabs'
       \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
     Plug 'Xuyuanp/nerdtree-git-plugin'

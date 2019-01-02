@@ -37,7 +37,7 @@ let g:lightline = {
       \   'lsp': 'coc#status',
       \ },
       \ 'component_expand': {
-      \  'statusline_tabs': 'LightlineStatuslineTabs',
+      \  'statusline_tabs': 'lightline#statuslinetabs#show',
       \  'linter_checking': 'lightline#ale#checking',
       \  'linter_warnings': 'lightline#ale#warnings',
       \  'linter_errors': 'lightline#ale#errors',
@@ -134,46 +134,6 @@ endfunction
 
 function! LightlineReadonly()
   return &ft !~? 'help' && &previewwindow && &readonly ? '' : ''
-endfunction
-
-function! s:number_to_symbol(num) abort
-  " unicode source: http://jrgraphix.net/r/Unicode/2700-27BF
-  let s:map = {
-        \ 1: "❶",
-        \ 2: "❷",
-        \ 3: "❸",
-        \ 4: "❹",
-        \ 5: "❺",
-        \ 6: "❻",
-        \ 7: "❼",
-        \ 8: "❽",
-        \ 9: "❾",
-        \ 10: "❿",
-        \}
-  return s:map[a:num]
-endfunction
-
-let s:add_tabname_prefix = { selected, nr -> "❲". s:number_to_symbol(nr) . " " . selected . "❳"}
-
-function! s:render_tab(tabnr) abort
-  " Prefix the selected tab
-  if tabpagenr() == a:tabnr 
-    let l:tab_name = s:add_tabname_prefix(lightline#tab#filename(a:tabnr), a:tabnr)
-    return l:tab_name
-  endif
-  return s:number_to_symbol(a:tabnr)
-endfunction
-
-" TODO: Maybe factor this out into a plugin 🤷
-function! LightlineStatuslineTabs() abort
-  let l:total_number_of_tabs = tabpagenr('$')
-  " Don't render anything if there is only one tab
-  if l:total_number_of_tabs == 1
-    return ''
-  endif
-  "Map the range of tabs from 1 to the last and for each,
-  "call the render_tab function, then join the result into a string.
-  return join(map(range(1, l:total_number_of_tabs), { -> s:render_tab(v:val) }))
 endfunction
 
 " Helpers -- generalise the methods for checking a ft or buftype
