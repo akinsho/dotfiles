@@ -74,7 +74,7 @@ let g:lightline.tab = {
       \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
 
 let g:lightline#bufferline#shorten_path      = 0
-let g:lightline#bufferline#min_buffer_count  = 2
+let g:lightline#bufferline#min_buffer_count  = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#unicode_symbols   = 1
 let g:lightline#bufferline#show_number       = 2
