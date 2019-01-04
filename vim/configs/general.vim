@@ -37,9 +37,6 @@ set timeout timeoutlen=500 ttimeoutlen=10
 set nohidden
 set splitbelow splitright
 set switchbuf=useopen,usetab,vsplit
-if !has('nvim')
-  set termsize="10x30"
-endif
 if has('folding')
   if has('windows')
     set fillchars=vert:│
@@ -64,6 +61,9 @@ endif
 set diffopt=vertical                  " Use in vertical diff mode
 " blank lines to keep sides aligned, Ignore whitespace changes
 set diffopt+=filler,iwhite,foldcolumn:0,context:4
+if has("patch-8.1.0360")
+  set diffopt+=internal,algorithm:patience
+endif
 " ----------------------------------------------------------------------------
 "             Format Options {{{1
 " ----------------------------------------------------------------------------
@@ -130,6 +130,7 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 " --------------------------------------------------------------------------
 set cmdheight=2 " Set command line height to two lines
 set conceallevel=2
+set concealcursor=nv
 set synmaxcol=1024 " don't syntax highlight long lines
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
@@ -137,7 +138,6 @@ if has('linebreak') "Causes wrapped line to keep same indentation
   let &showbreak='↳ '
   " Options include -> '…', '↳ ', '→','↪ ' 
   if exists('&breakindentopt')
-    " set breakindentopt=shift:2
     set breakindentopt=sbr
   endif
 endif
@@ -171,7 +171,8 @@ set ruler
 set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set nohlsearch
-set autowrite "Automatically :write before running commands
+"Automatically :write before running commands and changing files
+set autowriteall
 if has('unnamedplus')
   set clipboard+=unnamedplus
 elseif has('clipboard')
@@ -191,6 +192,9 @@ if exists('&belloff')
   set belloff=all
 endif
 if has('termguicolors')
+  " Not sure  if these are still necessary for vim
+  let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
 endif
 " ctags - search for a tags file then in current dir then home dir
@@ -217,6 +221,9 @@ endif
 "---------------------------------------------------------------------------//
 " Custom Terminal title
 function! GetTitleString() abort
+  if &filetype ==? 'fzf'
+    return 'FZF'
+  endif
   if filereadable(expand('%'))
     try
       return fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
@@ -248,7 +255,7 @@ endif
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
 set sessionoptions-=blank,buffers,globals,help,options
-set updatetime=500
+set updatetime=300
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
@@ -327,7 +334,7 @@ augroup cursorline
     autocmd WinLeave,BufWinLeave * setlocal nocursorline
   endif
 augroup END
-set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
+set scrolloff=4 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 
 "====================================================================================
 "Spelling {{{1

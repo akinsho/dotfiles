@@ -13,6 +13,9 @@ let g:vim_markdown_fenced_languages = [
       \'python',
       \'sql'
       \]
+let g:vim_markdown_autowrite        = 1
+let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_frontmatter      = 1
 let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_folding_disabled = 1 " Stop folding markdown please
+let g:vim_markdown_folding_disabled = 0 
 "}}}

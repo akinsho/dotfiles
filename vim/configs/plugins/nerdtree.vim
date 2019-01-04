@@ -30,23 +30,28 @@ call NERDTreeHighlightFile('gitignore',   'Gray', 'none', '#686868')
 call NERDTreeHighlightFile('bashrc',      'Gray', 'none', '#686868')
 call NERDTreeHighlightFile('zshrc',       'Gray', 'none', '#686868')
 call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#151515')
-" NERDTree: Set colors
-hi! NERDTreeGitStatusModified ctermfg=1 guifg=#D370A3
-hi! NERDTreeGitStatusStaged ctermfg=10 guifg=#A3D572
-hi! NERDTreeGitStatusUntracked ctermfg=12 guifg=#98CBFE
-hi! def link NERDTreeGitStatusDirDirty Constant
-hi! def link NERDTreeGitStatusDirClean DiffAdd
-hi! def link NERDTreeGitStatusUnmerged Label
-hi! def link NERDTreeGitStatusUnknown Comment
-hi! NERDTreeDir          guifg=#F9F9F8
-hi! NERDTreeOpenable     guifg=#E7B563
-hi! NERDTreeClosable     guifg=#E7B563
-hi! NERDTreeDirSlash     guifg=#7E8E91
-hi! NERDTreeCWD          guifg=#7E8E91
 
-" For viewing patches
-highlight diffRemoved gui=bold
-highlight diffAdded gui=bold
+function! s:highlightNerdTree() abort
+  " NERDTree: Set colors
+  hi! NERDTreeGitStatusModified ctermfg=1 guifg=#D370A3
+  hi! NERDTreeGitStatusStaged ctermfg=10 guifg=#A3D572
+  hi! NERDTreeGitStatusUntracked ctermfg=12 guifg=#98CBFE
+  hi! def link NERDTreeGitStatusDirDirty Constant
+  hi! def link NERDTreeGitStatusDirClean DiffAdd
+  hi! def link NERDTreeGitStatusUnmerged Label
+  hi! def link NERDTreeGitStatusUnknown Comment
+  hi! NERDTreeDir          guifg=#F9F9F8
+  hi! NERDTreeOpenable     guifg=#E7B563
+  hi! NERDTreeClosable     guifg=#E7B563
+  hi! NERDTreeDirSlash     guifg=#7E8E91
+  hi! NERDTreeCWD          guifg=#7E8E91
+  " For viewing patches
+  highlight diffRemoved gui=bold
+  highlight diffAdded gui=bold
+endfunction
+
+call s:highlightNerdTree()
+
 "}}}
 ""---------------------------------------------------------------------------//
 "NERDTree
@@ -64,7 +69,6 @@ nnoremap <silent><c-n>f :call NERDTreeToggleAndFind()<CR>
 
 let g:NERDTreeMapOpenSplit              = 's'
 let g:NERDTreeMapOpenVSplit             = 'v'
-let g:NERDTreeBookmarksFile             = g:dotfiles.'/vim/.NERDTreeBookmarks'
 let g:NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 35

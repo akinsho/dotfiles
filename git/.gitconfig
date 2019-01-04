@@ -12,7 +12,7 @@
   interactive = auto
 [core]
   editor = nvim
-  excludesfile ="~/.gitignore_global"
+  excludesfile ="~/.gitignore"
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [remote "origin"]
@@ -47,3 +47,8 @@
     diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 [rerere]
     enabled = true
+[merge]
+  tool = diffconflicts 
+[mergetool "diffconflicts"]
+  cmd = 'nvim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
+  trustExitCode = true

@@ -117,8 +117,8 @@ ln -sf "$DOTFILES/vim" ~/.config/nvim
 ln -sf "$DOTFILES/zsh/.zplugrc" ~/.zshrc
 ln -sf "$DOTFILES/configs/karabiner/" ~/.config/karabiner
 ln -sf "$DOTFILES/configs/kitty" ~/.config/kitty
-ln -sf "$DOTFILES/vim/init.vim" ~/.vimrc
 ln -sf "$DOTFILES/configs/.hyper.js" ~/.hyper.js
+ln -sf "$DOTFILES/lint/.vintrc.yaml" ~/.vintrc.yaml
 
 ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
 
@@ -127,7 +127,6 @@ mkdir -p ~/.config/oni
 ln -sf "$DOTFILES/vim/gui/config.tsx" ~/.config/oni/
 
 git config --global core.excludesfile "$DOTFILES/git/.gitignore_global"
-npm_install spaceship-prompt
 
 # Install rustup
 curl https://sh.rustup.rs -sSf | sh

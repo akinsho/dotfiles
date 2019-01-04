@@ -76,10 +76,18 @@ augroup SmartClose
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
+  " Close quick fix window if the file containing it was closed
+  autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix')
+        \ | bd | q | endif
+
   autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
   autocmd FileType qf nnoremap <buffer> <c-p> <up>
         \|nnoremap <buffer> <c-n> <down>
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
+  " automatically close corresponding loclist when quitting a window
+  if exists('##QuitPre')
+    autocmd QuitPre * nested if &filetype != 'qf' | silent! lclose | endif
+  endif
 augroup END
 
 function! s:smart_close()
@@ -91,7 +99,8 @@ endfunction
 
 augroup CheckOutsideTime "{{{1
   autocmd!
-  autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime " automatically check for changed files outside vim
+  " automatically check for changed files outside vim
+  autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime
   au VimEnter * silent! call utils#buffer_autosave(1)
 augroup end
 
@@ -105,10 +114,10 @@ augroup Cancel_Paste
 augroup END
 
 " Reload vim and config automatically {{{
-  augroup UpdateVim
-    autocmd!
-      execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
-            \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+augroup UpdateVim
+  autocmd!
+  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,vimrc nested'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
@@ -187,6 +196,7 @@ augroup END
 
 augroup CommandWindow "{{{1
   autocmd!
+  " map q to close command window on quit
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
   autocmd QuickFixCmdPost [^l]* nested cwindow
@@ -207,7 +217,7 @@ augroup END
 augroup hide_lines "{{{1
   " Hide line numbers when entering diff mode
   autocmd!
-  autocmd FilterWritePre * if &diff | set nonumber norelativenumber nocursorline | endif
+  autocmd FilterWritePre * if &diff | setlocal nonumber norelativenumber nocursorline | endif
 augroup END
 
 " Add Per Window Highlights [WIP] {{{
@@ -217,17 +227,21 @@ function! s:handle_window_enter() abort
         \"ctermbg":"black",
         \}
   if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber bufhidden=hide
+    setlocal nocursorline nonumber norelativenumber
     execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
     if exists('+winhighlight') 
-      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors
+      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalColors
     endif
   endif
   if &previewwindow 
-    setlocal nocursorline colorcolumn=
-    " guibg=#2c303a
-    highlight link CustomPreview CursorLine
-    setlocal winhighlight=Normal:CustomPreview
+    setlocal concealcursor=nv nocursorline colorcolumn=
+    if exists('+winhighlight') 
+      " These highlights set the preview to have the same foreground as the
+      " cursorline but not to show the tildes which mark the end of the buffer
+      highlight link CustomPreview CursorLine
+      highlight MonoChrome guifg=#2C323C
+      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:MonoChrome
+    endif
   endif
   " elseif !strlen(&buftype)
   "   hi link ActiveWindow Normal
@@ -238,12 +252,12 @@ endfunction
 if has('nvim')
   augroup nvim
     au!
-      autocmd BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
-      "Close FZF in neovim with esc
-      " TODO: Clear highlight for fzf buffers (tidy this up)
-            autocmd FileType fzf
-            \ tnoremap <nowait><buffer> <esc> <c-g> 
-            \ | setlocal winhighlight=
+    autocmd BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
+    "Close FZF in neovim with esc
+    " TODO: Clear highlight for fzf buffers (tidy this up)
+    autocmd FileType fzf
+          \ tnoremap <nowait><buffer> <esc> <c-g> 
+          \ | setlocal winhighlight=
   augroup END
 endif
 

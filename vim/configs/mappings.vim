@@ -121,9 +121,9 @@ inoremap <silent> <C-Down> <C-o>:call utils#move_line_down()<CR>
 
 " Credit: JustinMK
 nnoremap g> :set nomore<bar>40messages<bar>set more<CR>
+
 " Enter key should repeat the last macro recorded or just act as enter
 " nnoremap <silent><expr> <CR> empty(&buftype) ? '@@' : '<CR>'
-
 "Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 " "Refocus" folds
@@ -152,11 +152,12 @@ nnoremap <leader>ar :AutoResize 70<CR>
 
 " Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
 nnoremap * m`:keepjumps normal! *``<cr>
+
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
 " If im not using a plugin then use homegrown mappings
-if !exists('g:plugs["lexima.vim"]')
+if !has_key(g:plugs, 'lexima.vim')
   inoremap ( ()<left>
   inoremap { {}<left>
   inoremap ` ``<left>
@@ -194,26 +195,36 @@ nnoremap qa :wqa<CR>
 " Quit
 inoremap <C-Q>  <esc>:q<cr>
 vnoremap <C-Q>  <esc>
+
+" Use a bunch of standard UNIX commands for quick an dirty
+" whitespace-based alignment
+function! Align()
+  '<,'>!column -t|sed 's/  \(\S\)/ \1/g'
+  normal gv=
+endfunction
+
+xnoremap <silent> g= :<C-u>silent call Align()<CR>
 " ----------------------------------------------------------------------------
 " Quickfix
 " ----------------------------------------------------------------------------
-nnoremap ]q :cnext<CR>zz
-nnoremap [q :cprev<CR>zz
-nnoremap ]l :lnext<cr>zz
-nnoremap [l :lprev<cr>zz
+nnoremap <silent> ]q :cnext<CR>zz
+nnoremap <silent> [q :cprev<CR>zz
+nnoremap <silent> ]l :lnext<cr>zz
+nnoremap <silent> [l :lprev<cr>zz
+nnoremap <silent> <localleader>q :cclose<cr>:lclose<cr>:pclose<cr>
 " ----------------------------------------------------------------------------
 " Tabs
 " ----------------------------------------------------------------------------
 " Tab navigation
-nnoremap th :tabprev<CR>
-nnoremap tl :tabnext<CR>
-" Useful mappings for managing tabs
-nnoremap tn :tab split<cr>
-nnoremap to :tabonly<cr>
-nnoremap tc :tabclose<cr>
-nnoremap tm :tabmove<Space>
+nnoremap <silent> ]t :tabprev<CR>
+nnoremap <silent> [t :tabnext<CR>
+" Useful <silent> mappings for managing tabs
+nnoremap <silent> <silent> tn :tab split<cr>
+nnoremap <silent> to :tabonly<cr>
+nnoremap <silent> tc :tabclose<cr>
+nnoremap <silent> tm :tabmove<Space>
 ""---------------------------------------------------------------------------//
-" ========== Multiple Cursor Replacement ========
+" Multiple Cursor Replacement
 " http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
 ""---------------------------------------------------------------------------//
 let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
@@ -241,19 +252,11 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "Buffers
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
-"File completion made a little less painful
-inoremap <c-x>f <c-x><c-f>
 "Tab and Shift + Tab Circular buffer navigation
-if has('nvim')
-  nnoremap <tab>  <Cmd>bnext<CR>
-  nnoremap <S-tab> <Cmd>bprevious<CR>
-else
-  nnoremap <silent><tab>  :bnext<CR>
-  nnoremap <silent><S-tab> :bprevious<CR>
-endif
+nnoremap <silent><tab>  :bnext<CR>
+nnoremap <silent><S-tab> :bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-
 " use ,gf to go to file in a vertical split
 nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
 nnoremap <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
@@ -320,18 +323,6 @@ function! ForwardParagraph()
     let i = i + 1
   endwhile
 endfunction
-" Made mappings recursize to work with targets plugin
-" 'quote'
-omap aq  a'
-xmap aq  a'
-omap iq  i'
-xmap iq  i'
-"double quote
-omap ad  a"
-xmap ad  a"
-omap id  i"
-xmap id  i"
-
 "Change two horizontally split windows to vertical splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
@@ -389,10 +380,10 @@ xnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>
 onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
 " ----------------------------------------------------------------------------
-" <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
+" FIXME: J. Gunn, <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
 " ----------------------------------------------------------------------------
 nmap <silent> <leader>I ^vio<C-V>I
-nmap <silent> <leader>A ^vio<C-V>$Andfunction
+nmap <silent> <leader>A ^vio<C-V>$
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
@@ -401,7 +392,8 @@ nnoremap bk `.
 " Quick find/replace
 ""---------------------------------------------------------------------------//
 nnoremap <Leader>[ :%s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap <localleader>[ :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <localleader>] :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <localleader>[ :s/\<<C-r>=expand("<cword>")<CR>\>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
 ""---------------------------------------------------------------------------//
 " Find and Replace Using Abolish Plugin %S - Subvert
@@ -418,9 +410,8 @@ nnoremap ' `
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
-"Open command line window
-nnoremap <leader>c :<c-f>
-nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+"Open command line window - :<c-f>
+nnoremap <localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 " ----------------------------------------------------------------------------
 " CREDIT: JGunn #gi / #gpi | go to next/previous indentation level
@@ -560,7 +551,7 @@ onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 " Navigation (CORE)
 ""---------------------------------------------------------------------------//
 "Zero should go to the first non-blank character not to the first column (which could be blank)
-nnoremap 0 ^
+noremap 0 ^
 " jk is escape, THEN move to the right to preserve the cursor position, unless
 " at the first column.  <esc> will continue to work the default way.
 inoremap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
@@ -569,12 +560,8 @@ imap Jk jk
 xnoremap jk <ESC>
 cnoremap jk <C-C>
 
-nnoremap J :call utils#send_warning('Use <Ctrl-U> (1/2 screen up) or <Ctrl-B> (1 screen up) Dummy!!')<cr> <bar> J
-nnoremap K :call utils#send_warning('Use <Ctrl-D> (1/2 screen down) or <Ctrl-F>  (1 screen down) Dummy!!')<cr> <bar> K
-
 " Toggle top/center/bottom
 noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
-
 
 "This line opens the vimrc in a vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -587,15 +574,6 @@ nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
 nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
-
-" To the leftmost non-blank character of the current line
-nnoremap H g^
-" To the rightmost character of the current line
-nnoremap L g$
-" Remap native bindings to leader prefixed ones
-nnoremap <silent><leader>H :norm! H<cr>
-nnoremap <silent><leader>L :norm! L<cr>
-
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>
@@ -612,8 +590,9 @@ nmap <leader>jj <Plug>ResizeDown
 nnoremap <silent> <Plug>ResizeUp :resize -10<cr>
       \ :call repeat#set("\<Plug>ResizeUp")<CR>
 nmap <leader>kk <Plug>ResizeUp
-
+""---------------------------------------------------------------------------//
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
+""---------------------------------------------------------------------------//
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
@@ -631,7 +610,9 @@ nnoremap S "_diwP
 "}}}
 
 " Shortcut to jump to next conflict marker"
-" nnoremap <silent> <localleader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+nnoremap <silent> [x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+" Shortcut to jump to last conflict marker"
+nnoremap <silent> ]x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " Zoom - This function uses a tab to zoom the current split
 nnoremap <silent> <leader>Z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
@@ -662,7 +643,7 @@ MapToggle <F9> scrollbind
 
 set pastetoggle=<F6>
 
-fu! ToggleColorColumn()
+function! ToggleColorColumn()
   if &colorcolumn
     set colorcolumn=""
   else

@@ -115,15 +115,6 @@ end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
 echo load time: $((end_time - start_time)) seconds
-
-##---------------------------------------------------------------------------//
-# LOL
-##---------------------------------------------------------------------------//
-# if brew ls --versions fortune > /dev/null;then
-#   runonce <(fortune | cowsay | lolcat)
-# fi
-
 # zprof
 
 # archey -o
-fpath=($fpath "/home/akin/.zfunctions")

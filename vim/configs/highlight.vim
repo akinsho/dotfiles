@@ -16,7 +16,7 @@ function! ApplyUserHighlights() abort
   " match Error /\%80v.\+/
 
   " Highlight VCS conflict markers
-  " match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
@@ -63,11 +63,6 @@ function! ApplyUserHighlights() abort
   "Remove vertical separator
   " highlight VertSplit guibg=bg guifg=bg
   "---------------------------------------------------------------------------//
-
-  "---------------------------------------------------------------------------//
-  " Illuminated Word
-  "---------------------------------------------------------------------------//
-  hi illuminatedWord gui=underline
 endfunction
 
 

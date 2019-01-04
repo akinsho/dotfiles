@@ -1,0 +1,47 @@
+snippet doc "comment"
+/*
+   ${0}
+ */
+endsnippet
+snippet let "assignment"
+let ${1} = ${0};
+endsnippet
+snippet fn "arrow function"
+let ${1} = (${2}) => {
+  ${0}
+};
+endsnippet
+snippet fun "function statement"
+fun ${1} => ${0}
+endsnippet
+snippet ty "type"
+type ${1} = ${0};
+endsnippet
+snippet mod "module"
+module ${1} = {
+  ${0}
+};
+endsnippet
+snippet modty "module type"
+module type ${1} = {
+  ${0}
+};
+endsnippet
+snippet sw "switch"
+switch (${1}) {
+  | ${2} => ${0}
+}
+endsnippet
+snippet | "pattern match"
+| ${1} => ${0}
+endsnippet
+snippet p "pipe"
+|> ${0}
+endsnippet
+snippet if "if"
+if (${1}) {
+  ${2}
+} else {
+  ${0}
+}
+endsnippet

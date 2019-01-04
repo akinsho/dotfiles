@@ -18,6 +18,11 @@ pacman -S hub
 yarn global add bs-platform
 yarn global add esy
 
+# after  installing node take ownership of its directories
+sudo chown -R $(whoami) /usr/local/lib/node_modules
+sudo chown -R $(whoami) /usr/local/bin
+sudo chown -R $(whoami) /usr/local/share
+
 link $LINUXDIR/conky/minimal-info/minimal-info.lua ~/.conkyrc
 link $LINUXDIR/conky/minimal-info/utils.lua ~/
 link $LINUXDIR/.zshrc-Linux.zsh ~/.zshrc

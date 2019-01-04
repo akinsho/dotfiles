@@ -3,7 +3,7 @@ if !executable('opam')
 endif
 " To generate help tags run
 " execute "helptags " . g:opamshare . "/merlin/vim/doc"
-
+"---------------------------------------------------------------------------//
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
 let s:opam_share_dir = system("opam config var share")
 let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')

@@ -1,9 +1,9 @@
 "-----------------------------------------------------------
 "PLUGINS
 "-----------------------------------------------------------
+"=====================
 " Plug Setup {{{1
 "=====================
-
 " auto-install vim-plug
 if has("nvim")
   if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -43,35 +43,41 @@ function! BuildComposer(info)
   endif
 endfunction
 
+function! CocInstall(info)
+  if a:info.status ==? 'installed' || a:info.force
+    call coc#add_extension(
+          \ 'coc-json',
+          \ 'coc-tsserver',
+          \ 'coc-rls',
+          \ 'coc-snippets',
+          \ 'coc-emmet',
+          \ 'coc-highlight',
+          \ 'coc-css',
+          \ 'coc-eslint',
+          \ 'coc-prettier'
+          \ )
+    call coc#util#install()
+  elseif a:info.status ==? 'updated'
+    silent execute 'CocUpdate'
+  endif
+endfunction
+"================================
+" CORE {{{1
+"================================
   if !exists('g:gui_oni')
-    "====================================
-    " Autocompletion  {{{1
-    "====================================
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'copy/deoplete-ocaml', { 'for': ['ocaml', 'reason'] }
-    Plug 'wokalski/autocomplete-flow', {
-          \ 'for': ['javascript', 'javascript.jsx'] }
     Plug 'Shougo/neco-vim', { 'for': 'vim' },
-    Plug 'zchee/deoplete-go', { 'for' : 'go', 'do': 'make'}
-    Plug 'ujihisa/neco-look', { 'for': ['markdown', 'gitcommit'] }
-    Plug 'autozimu/LanguageClient-neovim', {
-          \ 'branch': 'next',
-          \ 'do': 'bash install.sh',
-          \ }
-    "====================================
+    Plug 'neoclide/coc-neco', { 'for': 'vim' },
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': function('CocInstall')}
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
+      \ | Plug 'Akin909/lightline-statuslinetabs'
       \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'scrooloose/nerdtree'
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'kristijanhusak/vim-js-file-import', {
-          \ 'for':['javascript.jsx','javascript']
-          \ }
+    Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
-" CORE {{{1
-"================================
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
@@ -80,13 +86,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
-Plug 'janko-m/vim-test', { 'on': [
-      \ 'TestNearest',
-      \ 'TestVisit',
-      \ 'TestSuite',
-      \ 'TestLast',
-      \ 'TestFile'
-      \ ] }
+Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
 Plug 'vimwiki/vimwiki'
 "TMUX {{{1
 "============================
@@ -100,8 +100,11 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
+Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
+Plug 'takac/vim-hardtime'
 "TPOPE {{{1
 "====================================
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
@@ -110,37 +113,20 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-scriptease', { 'on': [
-      \ 'Messages',
-      \ 'Verbose',
-      \ 'Runtime',
-      \ 'Scriptnames'
-      \ ] }
+Plug 'tpope/vim-scriptease'
 " ===========================
 "Syntax {{{1
 "============================
 Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] } 
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
-Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {
-      \ 'do': ':GoUpdateBinaries',
-      \ 'for': ['go']
-      \ })
+Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
 Plug 'reasonml-editor/vim-reason-plus'
-Plug 'othree/javascript-libraries-syntax.vim',
-       \ { 'for':[ 'javascript', 'typescript' ] }
-Plug 'styled-components/vim-styled-components', {
-      \ 'branch': 'main',
-      \ 'for': [
-      \ 'javascript.jsx',
-      \ 'typescript.tsx',
-      \ 'typescript',
-      \ 'javascript'
-      \ ] }
+Plug 'styled-components/vim-styled-components', { 'branch': 'develop',
+      \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
 "Git {{{1
 " ==============================
-Plug 'christoomey/vim-conflicted'
-Plug 'rhysd/conflict-marker.vim'
+Plug 'whiteinge/diffconflicts'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 " Text Objects {{{1
@@ -150,43 +136,29 @@ Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'haya14busa/vim-operator-flashy'
-" USAGE
-" [count]["x]gr{motion}   Replace {motion} text with the contents of register x.
-" Especially when using the unnamed register, this is
-" quicker than "_d{motion}P or "_c{motion}<C-R>"
-" [count]["x]grr          Replace [count] lines with the contents of register x.
-" To replace from the cursor position to the end of the
-" line use ["x]gr$
-" {Visual}["x]gr          Replace the selection with the contents of register x.
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'kana/vim-textobj-function'
+      \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'thinca/vim-textobj-function-javascript'
 "Search Tools {{{1
 "=======================
+Plug 'dyng/ctrlsf.vim'
+Plug 'junegunn/vim-peekaboo'
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
-Plug 'tomtom/tcomment_vim'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
-Plug 'dyng/ctrlsf.vim' , { 'on': [
-      \'CtrlSF',
-      \'CtrlSFCwordExec',
-      \'CtrlSFPrompt',
-      \'CtrlSFVwordPath',
-      \'CtrlSFVwordExec',
-      \'CtrlSFCwordPath',
-      \'CtrlSFPwordPath',
-      \'CtrlSFOpen',
-      \'CtrlSFToggle',
-      \] }
-Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
-Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
-Plug 'rizzatti/dash.vim',     Cond(has('mac'), { 'on': 'Dash' })
-Plug 'takac/vim-hardtime',    Cond(!exists('g:gui_oni'), { 'on': ['HardTimeToggle', 'HardTimeOn'] })
+"======================
+" Docs - Platform specific docs apps
+"======================
+if has('mac')
+  Plug 'rizzatti/dash.vim',     { 'on': 'Dash' }
+elseif g:os ==? 'linux'
+  Plug 'KabbAmine/zeavim.vim',  { 'on': 'Zeavim' }
+endif
 "Filetype Plugins {{{1
 "======================
 Plug 'euclio/vim-markdown-composer',
@@ -195,8 +167,7 @@ Plug 'heavenshell/vim-jsdoc', {
       \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
       \ 'on': 'JSDoc'
       \ }
-Plug 'chrisbra/csv.vim',       Cond(!exists('g:gui_oni'), { 'for': 'csv' })
-
+Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 "Themes  {{{1
 "===============================
 if !exists('g:gui_oni')
@@ -214,3 +185,4 @@ endif
 " Load immediately {{{1
 call plug#load('vim-fat-finger')
 "}}}
+" vim:foldmethod=marker

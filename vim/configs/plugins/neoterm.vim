@@ -5,7 +5,8 @@ let g:neoterm_size            = '12'
 let g:neoterm_automap_keys    = ',tt'
 let g:neoterm_default_mod     = 'botright'
 let g:neoterm_autoscroll      = 1
-let g:neoterm_autoinsert      = 0
+let g:neoterm_autoinsert      = 1
+let g:neoterm_autojump        = 0
 let g:neoterm_keep_term_open  = 0
 let g:neoterm_fixedsize       = 1
 " Git commands

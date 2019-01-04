@@ -312,7 +312,6 @@ function! utils#extend_highlight(base, group, add)
   sil exe 'highlight' a:group grphi a:add
 endfunction
 
-
 function! utils#move_line_up()
   call utils#move_line_or_visual_up(".", "")
 endfunction
@@ -355,4 +354,17 @@ function! utils#move_line_or_visual_up_or_down(move_arg)
   let col_num = virtcol(".")
   execute "silent! ".a:move_arg
   execute "normal! ".col_num."|"
+endfunction
+
+" open the current entry in th preview window
+function! utils#preview_file_under_cursor()
+  let cur_list = b:qf_isLoc == 1 ? getloclist('.') : getqflist()
+  let cur_line = getline(line('.'))
+  let cur_file = fnameescape(substitute(cur_line, '|.*$', '', ''))
+  if cur_line =~ '|\d\+'
+    let cur_pos  = substitute(cur_line, '^\(.\{-}|\)\(\d\+\)\(.*\)', '\2', '')
+    execute "pedit +" . cur_pos . " " . cur_file
+  else
+    execute "pedit " . cur_file
+  endif
 endfunction

@@ -2,6 +2,14 @@ setl completeopt-=preview
 setlocal foldtext=utils#braces_fold_text()
 setl colorcolumn=81
 
+let b:switch_custom_definitions =
+      \ [
+      \   {
+      \     '<div\(.\{-}\)>\(.\{-}\)</div>': '<span\1>\2</span>',
+      \     '<span\(.\{-}\)>\(.\{-}\)</span>': '<div\1>\2</div>',
+      \   }
+      \ ]
+
 function! JsEchoError(msg)
   redraw | echon 'js: ' | echohl ErrorMsg | echon a:msg | echohl None
 endfunction

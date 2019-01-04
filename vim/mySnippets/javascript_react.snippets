@@ -1,5 +1,14 @@
-#React Native
+snippet stc
+import styled from 'styled-components'
 
+const ${1:Component} = styled.${2:div}`
+
+`
+
+export default $1
+endsnippet
+
+#React Native
 snippet rnccf
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
@@ -120,11 +129,6 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)($1);
 endsnippet
 
-snippet imm "import as a member"
-import { $1 } from '$2';
-$3
-endsnippet
-
 snippet mpt "map state to props"
 const mapStateToProps = state => {
   return {
@@ -153,20 +157,12 @@ endsnippet
 
 snippet rfc "React Functional Component" b
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './${2:$1}.css';
 
 const ${1:`!v expand('%:t:r')`} = ({ ${3:...props} }) => (
 	<div>
 		$4
 	</div>
 );
-
-$1.defaultProps = {
-};
-
-$1.propTypes = {
-};
 
 export default $1;
 endsnippet

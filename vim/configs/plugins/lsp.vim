@@ -1,4 +1,4 @@
-if exists('g:gui_oni')
+if !has_key(g:plugs, 'LanguageClient-neovim') || exists('g:gui_oni')
   finish
 endif
 

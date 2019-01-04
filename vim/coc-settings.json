@@ -1,41 +1,21 @@
 {
-  "languageserver": {
-    "lua": {
-      "command": "lua-lsp",
-      "filetypes": ["lua"]
-    },
-    "reason": {
-      "command": "ocaml-language-server",
-      "args": ["--stdio"],
-      "trace.server": "verbose",
-      "filetypes": ["reason", "ocaml"],
-      "initializationOptions": {
-        "cacheDirectory": "/tmp/ocaml-lsp"
-      }
-    },
-    "flow": {
-      "command": "flow-language-server",
-      "args": ["--stdio"],
-      "trace.server": "verbose",
-      "filetypes": ["javascript.jsx", "javascript"],
-      "initializationOptions": {
-        "cacheDirectory": "/tmp/flow-lsp"
-      }
-    },
-    "golang": {
-      "command": "go-langserver",
-      "filetypes": ["go"],
-      "revealOutputChannelOn": "never",
-      "initializationOptions": {
-        "gocodeCompletionEnabled": true,
-        "diagnosticsEnabled": true,
-        "lintTool": "golint"
-      }
-    }
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "javascriptreact"
   },
-  "coc.preferences.diagnostic.errorSign": "✖",
-  "coc.preferences.diagnostic.warningSign": "⚠",
-  "coc.preferences.diagnostic.infoSign": "?",
-  "coc.preferences.diagnostic.hintSign": ">>",
-  "coc.preferences.diagnostic.locationlist": true
+  "tsserver.enableJavascript": false,
+  "emmet.showAbbreviationSuggestions": true,
+  "coc.preferences.openResourceCommand": "edit",
+  "coc.preferences.diagnostic.locationlist": true,
+  "coc.preferences.diagnostic.displayByAle": true,
+  "coc.preferences.diagnostic.errorSign": "",
+  "coc.preferences.diagnostic.warningSign": "",
+  "coc.preferences.diagnostic.infoSign": "",
+  "coc.preferences.diagnostic.hintSign": "ﯦ",
+  "coc.preferences.snippetIndicator": " ",
+  "snippets.extends": {
+    "cpp": ["c"],
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  }
 }

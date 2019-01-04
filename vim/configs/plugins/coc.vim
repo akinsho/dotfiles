@@ -1,4 +1,51 @@
-" let g:coc_node_version = '/usr/local/n/versions/node/10.3.0/bin/node'
+if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
+  finish
+endif
+
+let languageservers = {}
+
+if executable('lua-lsp')
+  let languageservers['lua'] = {
+        \ 'command': 'lua-lsp'
+        \ 'filetypes': ['lua']
+        \}
+endif
+
+if executable('ocaml-language-server')
+  let languageservers['reason'] = {
+        \ 'command': 'ocaml-language-server',
+        \ 'args': ['--stdio'],
+        \ 'trace.server': 'verbose',
+        \ 'filetypes': ['reason', 'ocaml'],
+        \}
+endif
+
+if executable('flow-language-server')
+  let languageservers['flow'] = {
+        \ "command": "flow-language-server",
+        \ "args": ["--stdio"],
+        \ "filetypes": ["javascript", "javascriptreact"],
+        \ "rootPatterns": [".flowconfig"]
+        \}
+endif
+
+if executable('go-languageserver')
+  let languageservers['golang'] = {
+        \ "command": "go-langserver",
+        \ "filetypes": ["go"],
+        \ "revealOutputChannelOn": "never",
+        \ "initializationOptions": {
+        \ "gocodeCompletionEnabled": true,
+        \ "diagnosticsEnabled": true,
+        \ "lintTool": "golint"
+        \ }
+        \}
+endif
+
+if !empty(languageservers)
+  call coc#config('languageserver', languageservers)
+endif
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 iunmap <TAB>
@@ -43,14 +90,21 @@ endfunction
 
 augroup CoCAutocommands
   au!
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-  " if &filetype == 'reason'
-  "   autocmd CursorHold * silent call CocActionAsync('doHover')
-  " endif
-  autocmd CursorHoldI,CursorMovedI * call CocAction('showSignatureHelp')
+  autocmd CursorHoldI * call CocAction('showSignatureHelp')
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup END
 
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+vmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 " Remap for do codeAction of current line
