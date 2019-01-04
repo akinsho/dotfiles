@@ -317,7 +317,6 @@ if has ('persistent_undo')
     endif
     set undolevels=1000
     set undodir+=~/local/.vim/tmp/undo
-    set undodir+=.
     set undofile
 endif
 "}}}
