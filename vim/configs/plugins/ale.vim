@@ -59,10 +59,11 @@ let g:ale_stylus_stylelint_use_global = 0
 
 if has('nvim-0.3.2')
   let g:ale_virtualtext_cursor = 1
-  let g:ale_virtualtext_prefix = '→ '
+  let g:ale_virtualtext_prefix = '💡'
 endif
 
 highlight ALEErrorSign guifg=red guibg=NONE
 highlight ALEWarningSign guifg=yellow guibg=NONE
 highlight ALEWarning gui=underline cterm=underline
-" highlight ALEErrorLine gui=underline guifg=red
+highlight link ALEVirtualTextError ALEErrorSign
+highlight link ALEVirtualTextWarning ALEWarningSign
