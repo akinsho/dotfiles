@@ -5,7 +5,7 @@ endif
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'], ['statuslinetabs'] ],
+      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
@@ -33,11 +33,9 @@ let g:lightline = {
       \   'csv':'LightlineCsv',
       \   'mode': 'LightlineMode',
       \   'gitgutter': 'LightlineGitGutter',
-      \   'conflicted': 'LightlineConflicted',
       \   'lsp': 'coc#status',
       \ },
       \ 'component_expand': {
-      \  'statuslinetabs': 'lightline#statuslinetabs#show',
       \  'linter_checking': 'lightline#ale#checking',
       \  'linter_warnings': 'lightline#ale#warnings',
       \  'linter_errors': 'lightline#ale#errors',
@@ -53,16 +51,14 @@ let g:lightline = {
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
-" FIXME: these components cause 100% CPU usage
-" \   'repo': 'LightlineRepo',
-" \   'gina': 'LightlineGinaStatus',
-
+""---------------------------------------------------------------------------//
 "Lightline Bufferline
+""---------------------------------------------------------------------------//
 set showtabline=2
 
 let g:lightline.tabline = {
       \ 'left': [ [ 'buffers' ] ],
-      \ 'right': [ [ 'close' ] ] 
+      \ 'right': [ [ 'tabs','close' ] ] 
       \}
 let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
 let g:lightline#bufferline#number_map = {
@@ -75,10 +71,10 @@ let g:lightline.tab = {
 
 let g:lightline#bufferline#shorten_path      = 0
 let g:lightline#bufferline#min_buffer_count  = 1
-let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#unicode_symbols   = 1
 let g:lightline#bufferline#show_number       = 2
 let g:lightline#bufferline#enable_devicons   = 1
+let g:lightline#bufferline#filename_modifier = ':t'
 
 nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
 nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
@@ -243,7 +239,6 @@ endfunction
 
 function! LightlineRepo() abort
   let l:repo_name = utils#git_branch_dir(expand('%:p:h'))
-  echom l:repo_name
   return l:repo_name
 endfunction
 
@@ -259,13 +254,6 @@ function! LightlineGinaStatus() abort
   let l:behind = gina#component#traffic#behind() 
   let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
   return l:project . ' ' .l:traffic . ' ' " . l:status
-endfunction
-
-function! LightlineConflicted() abort
-  if !exists(':Conflicted')
-    return ''
-  endif
-  return ConflictedVersion()
 endfunction
 
 " Set the colorscheme. Modified from onedark.vim
