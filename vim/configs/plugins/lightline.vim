@@ -69,12 +69,20 @@ let s:active_numbers = {
       \ 10: ["❿", "➉"],
       \}
 
+let s:lsep = "("
+let s:rsep = ")"
+
+let s:fancy_renderer = {
+        \ tabnr -> tabnr == tabpagenr() ?
+        \ s:lsep . s:active_numbers[tabnr][0] . s:rsep :
+        \ s:active_numbers[tabnr][1]
+        \ }
+
+let s:plain_renderer = { tabnr -> tabnr == tabpagenr() ? s:lsep . tabnr . s:rsep : tabnr }
+
 function! LightlineMinimalTabs() abort
   let l:tabs = range(1, tabpagenr('$'))
-  let l:item = join(map(l:tabs, { -> v:val == tabpagenr() ?
-        \ s:active_numbers[v:val][0] :
-        \ s:active_numbers[v:val][1]
-        \ }))
+  let l:item = join(map(l:tabs, { -> s:plain_renderer(v:val) }))
   return l:item
 endfunction
 
