@@ -76,7 +76,7 @@ function! LightlineMinimalTabs() abort
   return l:item
 endfunction
 
-let g:lightline.component_type['minimal_tabs'] = 'raw'
+let g:lightline.component_type['minimal_tabs']   = 'raw'
 let g:lightline.component_expand['minimal_tabs'] = 'LightlineMinimalTabs'
 
 ""---------------------------------------------------------------------------//
@@ -85,7 +85,6 @@ let g:lightline.component_expand['minimal_tabs'] = 'LightlineMinimalTabs'
 set showtabline=2
 
 let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
-
 let g:lightline.tabline = {'left': [ [ 'buffers' ] ], 'right': [ [ 'minimal_tabs','close' ] ]}
 
 let g:lightline#bufferline#number_map = {
