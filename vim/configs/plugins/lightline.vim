@@ -56,11 +56,34 @@ let g:lightline = {
 ""---------------------------------------------------------------------------//
 set showtabline=2
 
+let s:active_numbers = {
+      \ 1: ["❶", "➀"],
+      \ 2: ["❷", "➁"],
+      \ 3: ["❸", "➂"],
+      \ 4: ["❹", "➃"],
+      \ 5: ["❺", "➄"],
+      \ 6: ["❻", "➅"],
+      \ 7: ["❼", "➆"],
+      \ 8: ["❽", "➇"],
+      \ 9: ["❾", "➈"],
+      \ 10: ["❿", "➉"],
+      \}
+
+function! LightlineMinimalTabs() abort
+  let l:tabs = range(1, tabpagenr('$'))
+  let l:item = join(map(l:tabs, { -> v:val == tabpagenr() ?
+        \ s:active_numbers[v:val][0] :
+        \ s:active_numbers[v:val][1]
+        \ }))
+  return l:item
+endfunction
+
 let g:lightline.tabline = {
       \ 'left': [ [ 'buffers' ] ],
-      \ 'right': [ [ 'tabs','close' ] ] 
+      \ 'right': [ [ 'minimal_tabs','close' ] ] 
       \}
 let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
+let g:lightline.component_expand['minimal_tabs'] = 'LightlineMinimalTabs'
 let g:lightline#bufferline#number_map = {
       \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
       \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
