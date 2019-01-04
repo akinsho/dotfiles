@@ -307,17 +307,16 @@ else
     call mkdir(&backupdir, "p")
   endif
 endif
-if !has('nvim')
-  set autoread " reload files if they were edited elsewhere
-endif
 if has ('persistent_undo')
+  if !has('nvim')
+    set autoread " reload files if they were edited elsewhere
     set undodir=~/.vim/.undo//
-    if !isdirectory(&undodir)
-      call mkdir(&undodir, "p")
-    endif
-    set undolevels=1000
-    set undodir+=~/local/.vim/tmp/undo
-    set undofile
+  endif
+  if !isdirectory(&undodir)
+    call mkdir(&undodir, "p")
+  endif
+  set undolevels=1000
+  set undofile
 endif
 "}}}
 " ----------------------------------------------------------------------------
