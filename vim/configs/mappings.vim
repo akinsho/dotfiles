@@ -110,6 +110,15 @@ xnoremap p pgvy
 " search visual selection
 vnoremap // y/<C-R>"<CR>
 
+nnoremap <silent> mlu :<C-u>call utils#move_line_up()<CR>
+nnoremap <silent> <C-Down> :<C-u>call utils#move_line_down()<CR>
+inoremap <silent> <C-Up> <C-o>:call utils#move_line_up()<CR>
+inoremap <silent> <C-Down> <C-o>:call utils#move_line_down()<CR>
+" "vnoremap <silent> <C-Up> :<C-u>call utils#move_visual_up()<CR>
+" "vnoremap <silent> <C-Down> :<C-u>call utils#move_visual_down()<CR>
+" xnoremap <silent> <C-Up> :<C-u>call utils#move_visual_up()<CR>
+" xnoremap <silent> <C-Down> :<C-u>call utils#move_visual_down()<CR>
+
 " Credit: JustinMK
 nnoremap g> :set nomore<bar>40messages<bar>set more<CR>
 " Enter key should repeat the last macro recorded or just act as enter
