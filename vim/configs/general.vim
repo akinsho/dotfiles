@@ -148,7 +148,8 @@ set nolist                              " don't show invisible chars
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
 set listchars+=precedes:…
-set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
+" BULLET (U+2022, UTF-8: E2 80 A2)
+set listchars+=trail:•
 set listchars+=eol:\ ,
 " =====================================================================
 "-----------------------------------
