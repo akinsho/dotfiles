@@ -51,47 +51,43 @@ let g:lightline = {
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
+" ==============================
+" Minial tab indicators
+" ==============================
+highlight MinimalTabActive guifg=dodgerblue guibg=white
+
+function! s:tab_renderer(tabnr, highlight) abort
+  let l:component = ''
+  " select the highlighting
+  let l:component .= a:tabnr == tabpagenr() ?
+        \ '%#'. a:highlight .'#' : '%#TabLine#'
+  " set the tab page number (for mouse clicks)
+  let l:component .= '%' . a:tabnr . 'T'
+  " add the label for the indicator 
+  let l:component .= ' ' . a:tabnr . ' '
+  " after the last tab fill with TabLineFill and reset tab page nr
+  let l:component .= '%#TabLineFill#%T'
+  return l:component
+endfunction
+
+function! LightlineMinimalTabs() abort
+  let l:tabs = range(1, tabpagenr('$'))
+  let l:item = join(map(l:tabs, { -> s:tab_renderer(v:val, 'MinimalTabActive') }))
+  return l:item
+endfunction
+
+let g:lightline.component_type['minimal_tabs'] = 'raw'
+let g:lightline.component_expand['minimal_tabs'] = 'LightlineMinimalTabs'
+
 ""---------------------------------------------------------------------------//
 "Lightline Bufferline
 ""---------------------------------------------------------------------------//
 set showtabline=2
 
-let s:active_numbers = {
-      \ 1: ["❶", "➀"],
-      \ 2: ["❷", "➁"],
-      \ 3: ["❸", "➂"],
-      \ 4: ["❹", "➃"],
-      \ 5: ["❺", "➄"],
-      \ 6: ["❻", "➅"],
-      \ 7: ["❼", "➆"],
-      \ 8: ["❽", "➇"],
-      \ 9: ["❾", "➈"],
-      \ 10: ["❿", "➉"],
-      \}
-
-let s:lsep = "("
-let s:rsep = ")"
-
-let s:fancy_renderer = {
-        \ tabnr -> tabnr == tabpagenr() ?
-        \ s:lsep . s:active_numbers[tabnr][0] . s:rsep :
-        \ s:active_numbers[tabnr][1]
-        \ }
-
-let s:plain_renderer = { tabnr -> tabnr == tabpagenr() ? s:lsep . tabnr . s:rsep : tabnr }
-
-function! LightlineMinimalTabs() abort
-  let l:tabs = range(1, tabpagenr('$'))
-  let l:item = join(map(l:tabs, { -> s:plain_renderer(v:val) }))
-  return l:item
-endfunction
-
-let g:lightline.tabline = {
-      \ 'left': [ [ 'buffers' ] ],
-      \ 'right': [ [ 'minimal_tabs','close' ] ] 
-      \}
 let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
-let g:lightline.component_expand['minimal_tabs'] = 'LightlineMinimalTabs'
+
+let g:lightline.tabline = {'left': [ [ 'buffers' ] ], 'right': [ [ 'minimal_tabs','close' ] ]}
+
 let g:lightline#bufferline#number_map = {
       \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
       \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
@@ -117,6 +113,7 @@ nmap <Localleader>7 <Plug>lightline#bufferline#go(7)
 nmap <Localleader>8 <Plug>lightline#bufferline#go(8)
 nmap <Localleader>9 <Plug>lightline#bufferline#go(9)
 nmap <Localleader>0 <Plug>lightline#bufferline#go(10)
+""---------------------------------------------------------------------------//
 
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
