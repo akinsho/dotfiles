@@ -214,12 +214,6 @@ augroup fileSettings "{{{1
   autocmd Filetype vim-plug setlocal nonumber norelativenumber
 augroup END
 
-augroup hide_lines "{{{1
-  " Hide line numbers when entering diff mode
-  autocmd!
-  autocmd FilterWritePre * if &diff | setlocal nonumber norelativenumber nocursorline | endif
-augroup END
-
 " Add Per Window Highlights [WIP] {{{
 function! s:handle_window_enter() abort
   let l:win_highlight = {
