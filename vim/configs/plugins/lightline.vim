@@ -3,8 +3,16 @@ if exists('g:gui_oni')
 endif
 
 let s:theme_opts = ['one', 'material_vim']
+
+function! s:get_active_theme() abort
+  let l:theme = join(map(s:theme_opts, { key,val -> strlen(matchstr(val, g:colors_name)) ? val : ""}), '')
+  return l:theme
+endfunction
+
+let s:active_theme = s:get_active_theme()
+
 let g:lightline = {
-      \ 'colorscheme': s:theme_opts[1],
+      \ 'colorscheme': s:active_theme,
       \ 'active': {
       \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
       \   'right': [
@@ -350,10 +358,7 @@ if exists('g:lightline')
   let s:theme.normal.ok       = [ [ s:green, s:normal_background ] ]
 
 
-  " FIXME: Select colorscheme to augment - do this programatically
-  if g:colors_name ==? 'one'
-    let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:theme)
-  elseif g:colors_name ==? 'material'
-    let g:lightline#colorscheme#material_vim#palette = lightline#colorscheme#flatten(s:theme)
-  endif
+  "Select colorscheme to augment
+  let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
+  let g:[s:colorscheme_palette] = lightline#colorscheme#flatten(s:theme)
 endif
