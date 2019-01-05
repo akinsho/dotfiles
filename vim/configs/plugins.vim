@@ -172,6 +172,7 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 if !exists('g:gui_oni')
   Plug 'joshdick/onedark.vim'
   Plug 'haishanh/night-owl.vim'
+  Plug 'kaicataldo/material.vim'
 endif
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}

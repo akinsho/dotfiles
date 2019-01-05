@@ -206,10 +206,11 @@ if !exists('g:gui_oni')
 set background=dark
 " colorscheme night-owl
 try
-  let g:one_allow_italics = 1
-  colorscheme one
-  call one#highlight('Folded', 'db7093', 'none', 'bold')
+  colorscheme material  
 catch
+  " let g:one_allow_italics = 1
+  " colorscheme one
+  " call one#highlight('Folded', 'db7093', 'none', 'bold')
   let g:onedark_terminal_italics = 1
   colorscheme onedark
 endtry

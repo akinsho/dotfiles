@@ -2,8 +2,9 @@ if exists('g:gui_oni')
   finish
 endif
 
+let s:theme_opts = ['one', 'material_vim']
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': s:theme_opts[1],
       \ 'active': {
       \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
       \   'right': [
@@ -283,11 +284,18 @@ function! LightlineGinaStatus() abort
   return l:project . ' ' .l:traffic . ' ' " . l:status
 endfunction
 
-" Set the colorscheme. Modified from onedark.vim
+" Programatically derive colors for lightline mods
+function! s:get_theme_background(highlight) abort
+  let l:gui_bgcolor = synIDattr(hlID(a:highlight), 'bg#')
+  let l:cterm_bgcolor = synIDattr(hlID(a:highlight), 'cterm') || 0 
+  return [l:gui_bgcolor, l:cterm_bgcolor]
+endfunction
+
+" Set the colorscheme. 
 if exists('g:lightline')
   " These are the colour codes that are used in the original onedark theme
+  let s:normal_background = s:get_theme_background('Normal')
   let s:gold         = ['#F5F478', 227]
-  let s:black        = ['#282c34', 235]
   let s:white        = ['#abb2bf', 145]
   let s:light_red    = ['#e06c75', 204]
   let s:dark_red     = ['#be5046', 196]
@@ -305,43 +313,47 @@ if exists('g:lightline')
   let s:bright_blue  = ['#A2E8F6', 58]
   let s:grey         = ['#5A5E68', 59]
   let s:background = ['#212129', 59]
-  let s:selected_background = ['#282C34', 59]
+  let s:selected_background = s:normal_background
 
 
   let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
 
   " Each subarray represents the [ForegroundColor, BackgroundColor]
-  let s:theme.normal.left     = [ [ s:gold, s:black ], [ s:white, s:black ], [ s:dark_blue, s:black ] ]
-  let s:theme.normal.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:theme.normal.middle   = [ [ s:comment_grey, s:black ] ]
+  let s:theme.normal.left     = [ [ s:gold, s:normal_background ], [ s:white, s:normal_background ], [ s:dark_blue, s:normal_background ] ]
+  let s:theme.normal.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+  let s:theme.normal.middle   = [ [ s:comment_grey, s:normal_background ] ]
 
+  let s:theme.inactive.left   = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+  let s:theme.inactive.right  = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+  let s:theme.inactive.middle = [ [ s:comment_grey, s:normal_background ] ]
 
-  let s:theme.inactive.left   = [ [ s:comment_grey, s:black ], [ s:comment_grey, s:black ] ]
-  let s:theme.inactive.right  = [ [ s:comment_grey, s:black ], [ s:comment_grey, s:black ] ]
-  let s:theme.inactive.middle = [ [ s:comment_grey, s:black ] ]
+  let s:theme.insert.left     = [ [ s:green, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+  let s:theme.insert.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+  let s:theme.insert.middle   = [ [ s:comment_grey, s:normal_background ] ]
 
-  let s:theme.insert.left     = [ [ s:green, s:black ], [ s:comment_grey, s:black ] ]
-  let s:theme.insert.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:theme.insert.middle   = [ [ s:comment_grey, s:black ] ]
+  let s:theme.replace.left    = [ [ s:light_red, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+  let s:theme.replace.right   = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+  let s:theme.replace.middle  = [ [ s:comment_grey, s:normal_background ] ]
 
-  let s:theme.replace.left    = [ [ s:light_red, s:black ], [ s:comment_grey, s:black ] ]
-  let s:theme.replace.right   = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:theme.replace.middle  = [ [ s:comment_grey, s:black ] ]
-
-  let s:theme.visual.left     = [ [ s:magenta, s:black ], [ s:comment_grey, s:black ] ]
-  let s:theme.visual.right    = [ [ s:dark_blue, s:black ], [ s:light_red, s:black ] ]
-  let s:theme.visual.middle   = [ [ s:comment_grey, s:black ] ]
+  let s:theme.visual.left     = [ [ s:magenta, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+  let s:theme.visual.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+  let s:theme.visual.middle   = [ [ s:comment_grey, s:normal_background ] ]
 
   let s:theme.tabline.left    = [ [ s:grey, s:background ] ]
   let s:theme.tabline.right   = [ [ s:grey, s:background ] ]
   let s:theme.tabline.middle  = [ [ s:grey, s:background ] ]
   let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
-  let s:theme.normal.checking = [[ s:light_yellow, s:black ]]
-  let s:theme.normal.error    = [ [ s:light_red, s:black ] ]
-  let s:theme.normal.warning  = [ [ s:light_yellow, s:black ] ]
-  let s:theme.normal.ok       = [ [ s:green, s:black ] ]
+  let s:theme.normal.checking = [ [s:light_yellow, s:normal_background ] ]
+  let s:theme.normal.error    = [ [ s:light_red, s:normal_background ] ]
+  let s:theme.normal.warning  = [ [ s:light_yellow, s:normal_background ] ]
+  let s:theme.normal.ok       = [ [ s:green, s:normal_background ] ]
 
 
-  let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:theme)
+  " FIXME: Select colorscheme to augment - do this programatically
+  if g:colors_name ==? 'one'
+    let g:lightline#colorscheme#one#palette = lightline#colorscheme#flatten(s:theme)
+  elseif g:colors_name ==? 'material'
+    let g:lightline#colorscheme#material_vim#palette = lightline#colorscheme#flatten(s:theme)
+  endif
 endif
