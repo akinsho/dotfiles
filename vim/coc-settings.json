@@ -5,6 +5,7 @@
   },
   "tsserver.enableJavascript": false,
   "emmet.showAbbreviationSuggestions": true,
+  "coc.preferences.codeLens.enable": true,
   "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.diagnostic.locationlist": true,
   "coc.preferences.diagnostic.displayByAle": true,
@@ -16,6 +17,7 @@
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
-    "typescript": ["javascript"]
+    "typescript": ["javascript"],
+    "rei": ["reason"]
   }
 }
