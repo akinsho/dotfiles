@@ -174,9 +174,6 @@ augroup mutltiple_filetype_settings "{{{1
 
   autocmd FileType html,css,vue,reason,*.jsx,*.js,*.tsx EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
-  autocmd FileType css,scss,sass,stylus,less setl omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
 augroup filetype_javascript_typescript "{{{1
@@ -259,9 +256,9 @@ endfunction
 augroup FileType_all "{{{1
   autocmd!
 
-  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
-  au FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
+  autocmd FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
@@ -307,8 +304,8 @@ augroup END
 if v:version >= 700
   " Save the buffers current cursor position
   augroup CursorSave
-    au BufLeave * let b:winview = winsaveview()
-    au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+    autocmd BufLeave * let b:winview = winsaveview()
+    autocmd BufEnter * if (exists('b:winview')) | call winrestview(b:winview) | endif
   augroup END
 endif
 
