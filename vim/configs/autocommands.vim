@@ -216,13 +216,12 @@ augroup END
 
 " Add Per Window Highlights [WIP] {{{
 function! s:handle_window_enter() abort
-  let l:win_highlight = { "guibg": "black", "ctermbg": "black" }
   if &buftype ==# 'terminal'
     setlocal nocursorline nonumber norelativenumber
-    " execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
-    " if exists('+winhighlight') 
-    "   setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalColors
-    " endif
+    highlight TerminalColors guibg=#22252B ctermbg=black
+    if exists('+winhighlight') 
+      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalColors
+    endif
   endif
   if &previewwindow 
     setlocal concealcursor=nv nocursorline colorcolumn=
