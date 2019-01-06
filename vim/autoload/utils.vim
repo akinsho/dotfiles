@@ -28,8 +28,8 @@ endfunction
 
 command! TogglePluginConfig call utils#toggle_plugin_config()
 
-function! utils#send_warning(msg) abort
-  echohl WarningMsg
+function! utils#info_message(msg) abort
+  echohl String
   echom a:msg
   echohl none
 endfunction

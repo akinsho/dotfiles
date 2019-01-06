@@ -565,7 +565,7 @@ noremap <expr> zz (winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 
 nnoremap <silent><leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <silent><localleader>ev :tabnew $MYVIMRC<cr>
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap <silent><leader>sv :source $MYVIMRC<cr> <bar> :echom 'Sourced init.vim'<cr>
+nnoremap <silent><leader>sv :source $MYVIMRC<cr> <bar> :call utils#info_message('Sourced init.vim')<cr>
 " Surround word with quotes or braces
 nnoremap <leader>" ciw"<c-r>""<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
