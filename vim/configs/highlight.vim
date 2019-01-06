@@ -21,6 +21,10 @@ function! ApplyUserHighlights() abort
 
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
+
+  " Add undercurl to existing spellbad highlight
+  call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl')
+
   highlight Conceal gui=bold
   highlight Todo gui=bold
   highlight Credit gui=bold

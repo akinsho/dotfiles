@@ -205,8 +205,10 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 if !exists('g:gui_oni')
 set background=dark
 try
-  colorscheme material  
+  let g:onedark_terminal_italics = 1
+  colorscheme onedark
 catch
+  colorscheme material  
   " ========================
   " Night Owl
   " ========================
@@ -218,9 +220,6 @@ catch
   " let g:one_allow_italics = 1
   " colorscheme one
   " call one#highlight('Folded', 'db7093', 'none', 'bold')
-
-  let g:onedark_terminal_italics = 1
-  colorscheme onedark
 endtry
 endif
 
