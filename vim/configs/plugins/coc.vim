@@ -17,6 +17,9 @@ let languageservers['reason'] = {
       \ 'command': s:reason_language_server,
       \ 'trace.server': 'verbose',
       \ 'filetypes': ['reason'],
+      \ 'reason_language_server': {
+      \   'per_value_codelens': v:true,  
+      \ }
       \}
 endif
 
@@ -44,9 +47,9 @@ if executable('go-languageserver')
         \ "filetypes": ["go"],
         \ "revealOutputChannelOn": "never",
         \ "initializationOptions": {
-        \ "gocodeCompletionEnabled": true,
-        \ "diagnosticsEnabled": true,
-        \ "lintTool": "golint"
+        \   "gocodeCompletionEnabled": v:true,
+        \   "diagnosticsEnabled": v:true,
+        \   "lintTool": "golint"
         \ }
         \}
 endif

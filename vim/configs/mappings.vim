@@ -253,7 +253,7 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 "Tab and Shift + Tab Circular buffer navigation
-nnoremap <silent><tab>  :bnext<CR>
+nnoremap <silent><localleader><tab>  :bnext<CR>
 nnoremap <silent><S-tab> :bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -272,7 +272,7 @@ nnoremap : ;
 " Last Inserted
 ""---------------------------------------------------------------------------//
 " select last paste in visual mode
-nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap gp `[v`]
 ""---------------------------------------------------------------------------//
 " Capitalize
 ""---------------------------------------------------------------------------//
@@ -327,8 +327,6 @@ endfunction
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
 nnoremap <LocalLeader>v <C-W>t <C-W>H
-"Select txt that has just been read or pasted in
-nnoremap gV `[V`]
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
 " make . work with visually selected lines
@@ -561,13 +559,13 @@ xnoremap jk <ESC>
 cnoremap jk <C-C>
 
 " Toggle top/center/bottom
-noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
+noremap <expr> zz (winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz'
 
 "This line opens the vimrc in a vertical split
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <localleader>ev :tabnew $MYVIMRC<cr>
+nnoremap <silent><leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <silent><localleader>ev :tabnew $MYVIMRC<cr>
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <silent><leader>sv :source $MYVIMRC<cr> <bar> :echom 'Sourced init.vim'<cr>
 " Surround word with quotes or braces
 nnoremap <leader>" ciw"<c-r>""<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
@@ -597,10 +595,10 @@ nmap <leader>kk <Plug>ResizeUp
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 
-" Disable CTRL-A on tmux or on screen
+" Disable CTRL-A on tmux or on screen, replace it with <ctrl-g>
 if exists('$TMUX')
   nnoremap <C-a> <nop>
-  nnoremap <leader><C-a> <C-a>
+  noremap <c-g> <c-a>
 endif
 
 "Map Q to replay q register

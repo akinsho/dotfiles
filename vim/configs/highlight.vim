@@ -49,8 +49,6 @@ function! ApplyUserHighlights() abort
   highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
   highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
   highlight Folded  gui=bold,italic cterm=bold
-  " guifg=#A2E8F6
-  highlight WildMenu guibg=#004D40 guifg=white ctermfg=none ctermbg=none
   if exists('g:gui_oni')
     highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
   endif
