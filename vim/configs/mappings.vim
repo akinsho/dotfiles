@@ -676,6 +676,6 @@ nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
 nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 nnoremap <silent> g/ :silent! :grep!<space>
 " Conditionally modify character at end of line
-nnoremap <silent> <localleader>, :call utils#ModifyLineEndDelimiter(',')<cr>
-nnoremap <silent> <localleader>; :call utils#ModifyLineEndDelimiter(';')<cr>
+nnoremap <silent> <localleader>, :call utils#modify_line_end_delimiter(',')<cr>
+nnoremap <silent> <localleader>; :call utils#modify_line_end_delimiter(';')<cr>
 

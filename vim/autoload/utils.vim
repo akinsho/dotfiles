@@ -150,7 +150,7 @@ endfunction
 " - ","
 " - ";"
 "==========================================
-function! utils#ModifyLineEndDelimiter(character)
+function! utils#modify_line_end_delimiter(character)
   let line_modified = 0
   let line = getline('.')
 

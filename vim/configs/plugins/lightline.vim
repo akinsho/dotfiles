@@ -179,9 +179,12 @@ endfunction
 
 function! s:show_plain_lightline() abort
   return s:is_ft('help') ||
+        \ s:is_ft('ctrlsf')||
         \ s:is_ft('terminal')||
         \ s:is_ft('neoterm')||
+        \ s:is_ft('fugitive') ||
         \ s:is_bt('quickfix') ||
+        \ s:is_bt('nofile') ||
         \ &previewwindow
 endfunction
 
