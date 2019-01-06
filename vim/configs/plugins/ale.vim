@@ -69,5 +69,5 @@ if has('nvim')
 else
   highlight ALEWarning gui=underline cterm=underline
 endif
-highlight link ALEVirtualTextError ALEErrorSign
-highlight link ALEVirtualTextWarning ALEWarningSign
+highlight link ALEVirtualTextError Identifier
+highlight link ALEVirtualTextWarning Type

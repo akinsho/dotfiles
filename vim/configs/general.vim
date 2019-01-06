@@ -206,6 +206,12 @@ if !exists('g:gui_oni')
 set background=dark
 try
   let g:onedark_terminal_italics = 1
+  augroup ColorExtend
+    autocmd!
+    autocmd ColorScheme * call onedark#extend_highlight(
+          \ "DiffChange",
+          \ { "gui": "none", "cterm": "none" })
+  augroup END
   colorscheme onedark
 catch
   colorscheme material  
