@@ -298,6 +298,9 @@ endfunction
 " Programatically derive colors for lightline mods
 function! s:get_theme_background(highlight) abort
   let l:gui_bgcolor = synIDattr(hlID(a:highlight), 'bg#')
+  if !strlen(l:gui_bgcolor)
+    let l:gui_bgcolor = synIDattr(hlID(a:highlight), 'fg#')
+  endif
   let l:cterm_bgcolor = synIDattr(hlID(a:highlight), 'cterm') || 0 
   return [l:gui_bgcolor, l:cterm_bgcolor]
 endfunction
@@ -322,7 +325,7 @@ if exists('g:lightline')
 
   "Lightline bufferline Colors
   let s:bright_blue  = ['#A2E8F6', 58]
-  let s:grey         = ['#5A5E68', 59]
+  let s:tabline_foreground = s:get_theme_background('Comment') "['#5A5E68', 59]
   let s:tabline_background = s:normal_background
   let s:selected_background = s:get_theme_background('TabLineSel')
 
@@ -350,9 +353,9 @@ if exists('g:lightline')
   let s:theme.visual.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
   let s:theme.visual.middle   = [ [ s:comment_grey, s:normal_background ] ]
 
-  let s:theme.tabline.left    = [ [ s:grey, s:tabline_background ] ]
-  let s:theme.tabline.right   = [ [ s:grey, s:tabline_background ] ]
-  let s:theme.tabline.middle  = [ [ s:grey, s:tabline_background ] ]
+  let s:theme.tabline.left    = [ [ s:tabline_foreground, s:tabline_background ] ]
+  let s:theme.tabline.right   = [ [ s:tabline_foreground, s:tabline_background ] ]
+  let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
   let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
   let s:theme.normal.checking = [ [s:light_yellow, s:normal_background ] ]
