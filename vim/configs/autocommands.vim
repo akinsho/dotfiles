@@ -216,10 +216,7 @@ augroup END
 
 " Add Per Window Highlights [WIP] {{{
 function! s:handle_window_enter() abort
-  let l:win_highlight = {
-        \"guibg": exists('g:gui_oni') ? "black" : "#22252B",
-        \"ctermbg":"black",
-        \}
+  let l:win_highlight = { "guibg": "black", "ctermbg": "black" }
   if &buftype ==# 'terminal'
     setlocal nocursorline nonumber norelativenumber
     execute 'highlight TerminalColors '. 'guibg='. l:win_highlight.guibg . ' ctermbg='.l:win_highlight.ctermbg
@@ -233,8 +230,7 @@ function! s:handle_window_enter() abort
       " These highlights set the preview to have the same foreground as the
       " cursorline but not to show the tildes which mark the end of the buffer
       highlight link CustomPreview CursorLine
-      highlight MonoChrome guifg=#2C323C
-      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:MonoChrome
+      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:CustomPreview
     endif
   endif
   " elseif !strlen(&buftype)

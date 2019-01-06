@@ -279,7 +279,7 @@ function! LightlineRepo() abort
 endfunction
 
 function! LightlineGinaStatus() abort
-  if !exists(':Gina')
+  if !has_key(g:plugs, 'gina.vim')
     return ''
   endif
   let l:repo_name = gina#component#repo#name()
@@ -320,8 +320,8 @@ if exists('g:lightline')
   "Lightline bufferline Colors
   let s:bright_blue  = ['#A2E8F6', 58]
   let s:grey         = ['#5A5E68', 59]
-  let s:background = ['#212129', 59]
-  let s:selected_background = s:normal_background
+  let s:tabline_background = s:normal_background
+  let s:selected_background = s:get_theme_background('TabLineSel')
 
 
   let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
@@ -347,9 +347,9 @@ if exists('g:lightline')
   let s:theme.visual.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
   let s:theme.visual.middle   = [ [ s:comment_grey, s:normal_background ] ]
 
-  let s:theme.tabline.left    = [ [ s:grey, s:background ] ]
-  let s:theme.tabline.right   = [ [ s:grey, s:background ] ]
-  let s:theme.tabline.middle  = [ [ s:grey, s:background ] ]
+  let s:theme.tabline.left    = [ [ s:grey, s:tabline_background ] ]
+  let s:theme.tabline.right   = [ [ s:grey, s:tabline_background ] ]
+  let s:theme.tabline.middle  = [ [ s:grey, s:tabline_background ] ]
   let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
   let s:theme.normal.checking = [ [s:light_yellow, s:normal_background ] ]
