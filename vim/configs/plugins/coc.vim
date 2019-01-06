@@ -95,8 +95,8 @@ function! s:show_documentation()
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
-    " let l:three_point_six_seconds = 3600
-    " call timer_start(l:three_point_six_seconds, { tid -> execute('pclose!') })
+    let l:timeout = 4500
+    call timer_start(l:timeout, { -> execute('pclose!') })
   endif
 endfunction
 
