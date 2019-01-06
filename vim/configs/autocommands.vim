@@ -221,7 +221,7 @@ function! s:handle_window_enter() abort
     endif
   endif
   if &previewwindow 
-    setlocal concealcursor=nv nocursorline colorcolumn=
+    setlocal nospell concealcursor=nv nocursorline colorcolumn=
     if exists('+winhighlight') 
       " These highlights set the preview to have the same foreground as the
       " cursorline but not to show the tildes which mark the end of the buffer

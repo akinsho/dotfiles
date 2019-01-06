@@ -11,12 +11,21 @@ if executable('lua-lsp')
         \}
 endif
 
+let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
+if filereadable(s:reason_language_server)
+let languageservers['reason'] = {
+      \ 'command': s:reason_language_server,
+      \ 'trace.server': 'verbose',
+      \ 'filetypes': ['reason'],
+      \}
+endif
+
 if executable('ocaml-language-server')
-  let languageservers['reason'] = {
+  let languageservers['ocaml'] = {
         \ 'command': 'ocaml-language-server',
         \ 'args': ['--stdio'],
         \ 'trace.server': 'verbose',
-        \ 'filetypes': ['reason', 'ocaml'],
+        \ 'filetypes': ['ocaml'],
         \}
 endif
 
