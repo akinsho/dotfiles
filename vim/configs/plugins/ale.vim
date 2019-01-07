@@ -1,11 +1,11 @@
 ""---------------------------------------------------------------------------//
 "     ALE
 ""---------------------------------------------------------------------------//
-let g:ale_lint_on_enter                        = 1
-let g:ale_lint_on_insert_leave                 = 0
-let g:ale_fix_on_save                          = 1
-let g:ale_lint_delay                           = 600
-let g:ale_pattern_options = {
+let g:ale_lint_on_enter        = 1
+let g:ale_lint_on_insert_leave = 0
+let g:ale_fix_on_save          = 1
+let g:ale_lint_delay           = 600
+let g:ale_pattern_options      = {
       \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
       \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
       \}
@@ -19,11 +19,11 @@ let g:ale_fixers = {
       \'less':['prettier', 'stylelint']
       \}
 
-let g:ale_sh_shellcheck_options                = '-e SC2039'  " Allow local in Shell Check
-
 " let g:ale_sign_error         = ''
 " let g:ale_sign_warning       = ''
 " let g:ale_sign_info          = ''
+
+let g:ale_sh_shellcheck_options                = '-e SC2039'  " Allow local in Shell Check
 let g:ale_sign_column_always                   = 1
 let g:ale_sign_error                           = '✗'
 let g:ale_sign_info                            = '💡'

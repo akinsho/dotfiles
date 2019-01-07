@@ -2,61 +2,68 @@ if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
   finish
 endif
 
-let languageservers = {}
+function! s:coc_init() abort
+  let s:languageservers = {}
 
-if executable('lua-lsp')
-  let languageservers['lua'] = {
-        \ 'command': 'lua-lsp'
-        \ 'filetypes': ['lua']
-        \}
-endif
+  if executable('lua-lsp')
+    let s:languageservers['lua'] = {
+          \ 'command': 'lua-lsp'
+          \ 'filetypes': ['lua']
+          \}
+  endif
 
-let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
-if filereadable(s:reason_language_server)
-let languageservers['reason'] = {
-      \ 'command': s:reason_language_server,
-      \ 'trace.server': 'verbose',
-      \ 'filetypes': ['reason'],
-      \ 'reason_language_server': {
-      \   'per_value_codelens': v:true,  
-      \ }
-      \}
-endif
+  let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
+  if filereadable(s:reason_language_server)
+    let s:languageservers['reason'] = {
+          \ 'command': s:reason_language_server,
+          \ 'trace.server': 'verbose',
+          \ 'filetypes': ['reason'],
+          \ 'reason_language_server': {
+          \   'per_value_codelens': v:true,  
+          \ }
+          \}
+  endif
 
-if executable('ocaml-language-server')
-  let languageservers['ocaml'] = {
-        \ 'command': 'ocaml-language-server',
-        \ 'args': ['--stdio'],
-        \ 'trace.server': 'verbose',
-        \ 'filetypes': ['ocaml'],
-        \}
-endif
+  if executable('ocaml-language-server')
+    let s:languageservers['ocaml'] = {
+          \ 'command': 'ocaml-language-server',
+          \ 'args': ['--stdio'],
+          \ 'trace.server': 'verbose',
+          \ 'filetypes': ['ocaml'],
+          \}
+  endif
 
-if executable('flow-language-server')
-  let languageservers['flow'] = {
-        \ "command": "flow-language-server",
-        \ "args": ["--stdio"],
-        \ "filetypes": ["javascript", "javascriptreact"],
-        \ "rootPatterns": [".flowconfig"]
-        \}
-endif
+  if executable('flow-language-server')
+    let s:languageservers['flow'] = {
+          \ "command": "flow-language-server",
+          \ "args": ["--stdio"],
+          \ "filetypes": ["javascript", "javascriptreact"],
+          \ "rootPatterns": [".flowconfig"]
+          \}
+  endif
 
-if executable('go-languageserver')
-  let languageservers['golang'] = {
-        \ "command": "go-langserver",
-        \ "filetypes": ["go"],
-        \ "revealOutputChannelOn": "never",
-        \ "initializationOptions": {
-        \   "gocodeCompletionEnabled": v:true,
-        \   "diagnosticsEnabled": v:true,
-        \   "lintTool": "golint"
-        \ }
-        \}
-endif
+  if executable('go-languageserver')
+    let s:languageservers['golang'] = {
+          \ "command": "go-langserver",
+          \ "filetypes": ["go"],
+          \ "revealOutputChannelOn": "never",
+          \ "initializationOptions": {
+          \   "gocodeCompletionEnabled": v:true,
+          \   "diagnosticsEnabled": v:true,
+          \   "lintTool": "golint"
+          \ }
+          \}
+  endif
 
-if !empty(languageservers)
-  call coc#config('languageserver', languageservers)
-endif
+  if !empty(s:languageservers)
+    call coc#config('languageserver', s:languageservers)
+  endif
+endfunction
+
+augroup InitCoc
+  autocmd!
+  autocmd VimEnter * call s:coc_init()
+augroup End
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
