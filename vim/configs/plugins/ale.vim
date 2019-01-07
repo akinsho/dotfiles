@@ -64,10 +64,5 @@ endif
 
 highlight ALEErrorSign guifg=red guibg=NONE
 highlight ALEWarningSign guifg=yellow guibg=NONE
-if has('nvim')
-  highlight ALEWarning gui=undercurl cterm=undercurl
-else
-  highlight ALEWarning gui=underline cterm=underline
-endif
 highlight link ALEVirtualTextError Identifier
 highlight link ALEVirtualTextWarning Type

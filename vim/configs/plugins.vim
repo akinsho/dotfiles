@@ -101,6 +101,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
+Plug 'Shougo/echodoc.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-commentary'
@@ -142,7 +143,6 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
-      \ | Plug 'thinca/vim-textobj-function-javascript'
 "Search Tools {{{1
 "=======================
 Plug 'dyng/ctrlsf.vim'

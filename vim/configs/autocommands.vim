@@ -225,8 +225,7 @@ function! s:handle_window_enter() abort
     if exists('+winhighlight') 
       " These highlights set the preview to have the same foreground as the
       " cursorline but not to show the tildes which mark the end of the buffer
-      highlight link CustomPreview CursorLine
-      setlocal winhighlight=Normal:CustomPreview,EndOfBuffer:CustomPreview
+      setlocal winhighlight=Normal:CursorLine,EndOfBuffer:EndOfBuffer
     endif
   endif
   " elseif !strlen(&buftype)
