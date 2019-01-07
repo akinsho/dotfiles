@@ -259,10 +259,13 @@ nnoremap <silent><S-tab> :bprevious<CR>
 nnoremap <leader><leader> <c-^>
 " use ,gf to go to file in a vertical split
 nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
-nnoremap <leader>cf :let @*=expand("%:p")<CR>    " Mnemonic: Copy File path
-nnoremap <leader>yf :let @"=expand("%:p")<CR>    " Mnemonic: Yank File path
+" Mnemonic: Copy File path
+nnoremap <leader>cf :let @*=expand("%:p")<CR>
+" Mnemonic: Yank File path
+nnoremap <leader>yf :let @"=expand("%:p")<CR>
 "  force Vim to always present the relative path - fnamemodify(expand("%"), ":~:.")
-nnoremap <leader>fn :let @"=fnamemodify(expand("%"), ":~:.")<CR>      " Mnemonic: yank File Name
+"" Mnemonic: yank File Name
+nnoremap <leader>fn :let @"=fnamemodify(expand("%"), ":~:.")<CR>      
 ""---------------------------------------------------------------------------//
 nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
@@ -272,7 +275,7 @@ nnoremap : ;
 " Last Inserted
 ""---------------------------------------------------------------------------//
 " select last paste in visual mode
-nnoremap gp `[v`]
+nnoremap gl `[v`]
 ""---------------------------------------------------------------------------//
 " Capitalize
 ""---------------------------------------------------------------------------//

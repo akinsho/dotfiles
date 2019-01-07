@@ -71,8 +71,8 @@ augroup SmartClose
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
         \gitcommit,quickrun,qfreplace,ref,
-        \simpletap-summary,vcs-commit,Godoc,vcs-status,vim-hacks
-        \ nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>
+        \vcs-commit,Godoc,vcs-status,vim-hacks
+        \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
@@ -216,8 +216,9 @@ function! s:handle_window_enter() abort
   if &buftype ==# 'terminal'
     setlocal nocursorline nonumber norelativenumber
     highlight TerminalColors guibg=#22252B ctermbg=black
+    highlight TerminalEndOfBuffer guifg=#22252B
     if exists('+winhighlight') 
-      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalColors
+      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
     endif
   endif
   if &previewwindow 
@@ -225,7 +226,9 @@ function! s:handle_window_enter() abort
     if exists('+winhighlight') 
       " These highlights set the preview to have the same foreground as the
       " cursorline but not to show the tildes which mark the end of the buffer
-      setlocal winhighlight=Normal:CursorLine,EndOfBuffer:EndOfBuffer
+      let l:cursorline_background = synIDattr(hlID('CursorLine'), 'bg#')
+      execute 'silent highlight PreviewEndOfBuffer guifg='.l:cursorline_background
+      setlocal winhighlight=Normal:CursorLine,EndOfBuffer:PreviewEndOfBuffer
     endif
   endif
   " elseif !strlen(&buftype)
