@@ -14,5 +14,5 @@ let g:user_emmet_settings     = {
       \},
       \'typescript.tsx':{'extends': 'jsx', 'empty_element_suffix': ' />'}
       \}
-let g:user_emmet_leader_key = '<c-space>'
+let g:user_emmet_leader_key = '<c-y>'
 let g:user_emmet_install_global = 0
