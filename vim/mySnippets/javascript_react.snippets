@@ -155,6 +155,19 @@ class ${1:`!v expand('%:t:r')`} extends Component {
 export default $1;
 endsnippet
 
+snippet cmp "Component Library Component"
+import * as React from 'react'
+import styled from 'styled-components'
+
+const ${1:`!v expand('%:t:r')`} = styled.$2\`
+  $4
+\`
+
+export default (props) => (
+  <${3:`!v expand('%:t:r')`}/>
+)
+endsnippet
+
 snippet rfc "React Functional Component" b
 import React from 'react';
 
