@@ -131,6 +131,22 @@ augroup UpdateVim
 augroup END
 " }}}
 
+" Wipeout Buffers with files that no longer exist
+function! s:WipeBuffersWithoutFiles() abort
+  " Find all the buffers for which the attached file doesn't exist
+  let l:buffs = filter(range(1, bufnr('$')), 'bufexists(v:val) && '.
+        \'empty(getbufvar(v:val, "&buftype")) && '.
+        \'!filereadable(bufname(v:val))')
+  if !empty(l:buffs)
+    execute 'bwipeout' . join(l:buffs)
+  endif
+endfunction
+
+augroup CleanBufferList
+  au!
+  autocmd FocusGained * call s:WipeBuffersWithoutFiles()
+augroup END
+
 " Hide the colorcolumn when there isn't enough space
 "TODO Need to hook into more events to remove colorcolumn
 function! CheckColorColumn()
