@@ -247,10 +247,6 @@ function! s:handle_window_enter() abort
       setlocal winhighlight=Normal:CursorLine,EndOfBuffer:PreviewEndOfBuffer
     endif
   endif
-  " elseif !strlen(&buftype)
-  "   hi link ActiveWindow Normal
-  "   hi link InactiveWindow Visual
-  "   setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
 endfunction
 
 if has('nvim')

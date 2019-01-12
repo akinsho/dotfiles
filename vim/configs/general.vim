@@ -209,8 +209,7 @@ try
   augroup ColorExtend
     autocmd!
     autocmd ColorScheme * call onedark#extend_highlight(
-          \ "DiffChange",
-          \ { "gui": "none", "cterm": "none" })
+          \ "DiffChange", { "gui": "none", "cterm": "none" })
   augroup END
   colorscheme onedark
 catch

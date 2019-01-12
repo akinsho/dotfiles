@@ -105,8 +105,13 @@ function! s:show_documentation()
   endif
 endfunction
 
+function! s:coc_highlights() abort
+  highlight CocCodeLens ctermfg=Gray guifg=#999999
+endfunction
+
 augroup CoCAutocommands
   au!
+  autocmd ColorScheme * call s:coc_highlights() 
   autocmd CursorHoldI * call CocAction('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocAction('formatSelected')

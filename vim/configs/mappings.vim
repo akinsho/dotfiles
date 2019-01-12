@@ -597,13 +597,6 @@ nmap <leader>kk <Plug>ResizeUp
 "Move to beginning of a line in insert mode
 inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
-
-" Disable CTRL-A on tmux or on screen, replace it with <ctrl-g>
-" if exists('$TMUX')
-" nnoremap <C-a> <nop>
-" noremap <c-g> <c-a>
-" endif
-
 "Map Q to replay q register
 nnoremap Q @q
 "Replace word under cursor
