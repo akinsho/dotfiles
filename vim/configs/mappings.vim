@@ -252,6 +252,8 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "Buffers
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
+" This lists the open buffers then takes input re. which to delete
+nnoremap <leader>d :ls<cr>:bd<space>
 "Use wildmenu to cycle tabs
 nnoremap <localleader><tab> :b <C-Z>
 "Tab and Shift + Tab Circular buffer navigation
@@ -266,7 +268,7 @@ nnoremap <leader>cf :let @*=expand("%:p")<CR>
 " Mnemonic: Yank File path
 nnoremap <leader>yf :let @"=expand("%:p")<CR>
 "  force Vim to always present the relative path - fnamemodify(expand("%"), ":~:.")
-"" Mnemonic: yank File Name
+" Mnemonic: yank File Name
 nnoremap <leader>fn :let @"=fnamemodify(expand("%"), ":~:.")<CR>      
 ""---------------------------------------------------------------------------//
 nnoremap <BS> gg
