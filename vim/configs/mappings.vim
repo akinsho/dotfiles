@@ -252,8 +252,10 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "Buffers
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
+"Use wildmenu to cycle tabs
+nnoremap <localleader><tab> :b <C-Z>
 "Tab and Shift + Tab Circular buffer navigation
-nnoremap <silent><localleader><tab>  :bnext<CR>
+nnoremap <silent><leader><tab>  :bnext<CR>
 nnoremap <silent><S-tab> :bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>

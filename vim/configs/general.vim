@@ -105,7 +105,6 @@ set wildchar=<Tab>
 set wildmenu
 set wildmode=full       " Shows a menu bar as opposed to an enormous list
 set wildcharm=<C-Z>
-nnoremap <leader><tab> :b <C-Z>
 set wildignorecase " Ignore case when completing file names and directories
 " Binary
 set wildignore+=*.aux,*.out,*.toc
