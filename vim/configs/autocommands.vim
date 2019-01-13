@@ -132,7 +132,7 @@ augroup END
 " }}}
 
 " Wipeout Buffers with files that no longer exist
-function! s:WipeBuffersWithoutFiles() abort
+function! s:wipe_buffers_without_files() abort
   " Find all the buffers for which the attached file doesn't exist
   let l:buffs = filter(range(1, bufnr('$')), 'bufexists(v:val) && '.
         \'empty(getbufvar(v:val, "&buftype")) && '.
@@ -142,9 +142,12 @@ function! s:WipeBuffersWithoutFiles() abort
   endif
 endfunction
 
+" This is aimed at removing old buffers between shell commands such
+" as changing git branch etc
+" See: https://github.com/tpope/vim-fugitive/issues/503
 augroup CleanBufferList
   au!
-  autocmd FocusGained * call s:WipeBuffersWithoutFiles()
+  autocmd BufWritePost,ShellCmdPost * call s:wipe_buffers_without_files()
 augroup END
 
 " Hide the colorcolumn when there isn't enough space

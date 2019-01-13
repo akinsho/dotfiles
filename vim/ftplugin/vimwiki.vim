@@ -1,3 +1,3 @@
-nnoremap <silent><localleader><tab> :bnext<cr>
-nnoremap <silent><leader><s-tab> :bnext<cr>
+setlocal nonumber norelativenumber
+
 nmap <Leader>tt <Plug>VimwikiToggleListItem
