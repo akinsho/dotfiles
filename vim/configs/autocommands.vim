@@ -219,7 +219,6 @@ augroup CommandWindow "{{{1
   autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 
-
 augroup FileType_text "{{{1
   autocmd!
   autocmd FileType text setlocal textwidth=78

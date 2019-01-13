@@ -10,12 +10,15 @@ let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:wiki]
 
 function! s:close_wikis() abort
-  for i in range(1, bufnr('$'))
-    if bufexists(i) && getbufvar(i, '&filetype') == 'vimwiki' && winbufnr(i) == -1
-      execute i 'bdelete'
+  let l:bufs = range(1, bufnr('$'))
+  for buf in l:bufs
+    if bufexists(buf) && getbufvar(buf, '&filetype') == 'vimwiki' && winbufnr(buf) == -1
+      execute buf 'bdelete'
     endif
   endfor
 endfunction
+
+command! CloseVimWikis call s:close_wikis()
 
 augroup Wikis
   au!
