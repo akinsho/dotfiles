@@ -41,6 +41,8 @@ let g:ale_linters                              = {
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint'],
       \'reason': [],
+      \'javascript.jsx':['eslint', 'tsserver'],
+      \'javascript':['eslint', 'tsserver'],
       \}
 
 let g:ale_linter_aliases = {
