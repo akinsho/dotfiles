@@ -338,6 +338,8 @@ nnoremap <LocalLeader>v <C-W>t <C-W>H
 vnoremap * y/<C-R>"<CR>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
+" Switch from visual to visual block.
+xnoremap r <C-v>
 
 xnoremap nu :<C-u>call utils#Numbers()<CR>
 onoremap nu :normal vin<CR>
