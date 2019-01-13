@@ -10,7 +10,6 @@
   "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.echodocSupport": true,
   "coc.preferences.diagnostic.locationlist": true,
-  "coc.preferences.diagnostic.displayByAle": true,
   "coc.preferences.diagnostic.errorSign": "",
   "coc.preferences.diagnostic.warningSign": "",
   "coc.preferences.diagnostic.infoSign": "",

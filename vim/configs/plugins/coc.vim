@@ -105,6 +105,8 @@ function! s:show_documentation()
   endif
 endfunction
 
+highlight link CocErrorHighlight SpellBad
+
 function! s:coc_highlights() abort
   highlight CocCodeLens ctermfg=Gray guifg=#999999
 endfunction

@@ -40,6 +40,7 @@ let g:ale_linters                              = {
       \'python': ['flake8'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint'],
+      \'reason': [],
       \}
 
 let g:ale_linter_aliases = {
