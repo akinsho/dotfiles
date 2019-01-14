@@ -142,8 +142,8 @@ function! s:wipe_buffers_without_files() abort
   endif
 endfunction
 
-" This is aimed at removing old buffers between shell commands such
-" as changing git branch etc
+command! CleanBufferList call s:wipe_buffers_without_files()
+" This is aimed at removing old buffers between shell commands such as changing git branch etc
 " See: https://github.com/tpope/vim-fugitive/issues/503
 augroup CleanBufferList
   au!
