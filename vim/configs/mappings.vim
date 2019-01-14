@@ -344,6 +344,11 @@ xnoremap r <C-v>
 xnoremap nu :<C-u>call utils#Numbers()<CR>
 onoremap nu :normal vin<CR>
 
+" Move <C-A> functionality to <C-G> is in tmux
+" Prevents this useful binding from getting swallowed
+if exists('$TMUX')
+  noremap <c-g> <c-a>
+endif
 " ----------------------------------------------------------------------------
 " ?ii / ?ai | indent-object
 " ?io       | strictly-indent-object
@@ -386,11 +391,6 @@ onoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.')
 xnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>"), 0, 0)<cr>
 onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
-" ----------------------------------------------------------------------------
-" FIXME: J. Gunn, <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
-" ----------------------------------------------------------------------------
-nmap <silent> <leader>I ^vio<C-V>I
-nmap <silent> <leader>A ^vio<C-V>$
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
