@@ -96,12 +96,13 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
-Plug 'AndrewRadev/deleft.vim'
+Plug 'AndrewRadev/deleft.vim' " TODO: delete?
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
 Plug 'Shougo/echodoc.vim'
+Plug 'lifepillar/vim-cheat40'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-commentary'
@@ -113,7 +114,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-scriptease' " TODO: delete?
 " ===========================
 "Syntax {{{1
 "============================
@@ -151,14 +152,6 @@ Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
-"======================
-" Docs - Platform specific docs apps
-"======================
-if has('mac')
-  Plug 'rizzatti/dash.vim',     { 'on': 'Dash' }
-elseif g:os ==? 'linux'
-  Plug 'KabbAmine/zeavim.vim',  { 'on': 'Zeavim' }
-endif
 "Filetype Plugins {{{1
 "======================
 Plug 'euclio/vim-markdown-composer',
