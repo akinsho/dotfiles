@@ -114,7 +114,6 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-scriptease' " TODO: delete?
 " ===========================
 "Syntax {{{1
 "============================
