@@ -286,12 +286,14 @@ nnoremap <leader>oc :OpenChangedFiles<CR>
 " Fold Text (For Curly Brace languages)
 ""---------------------------------------------------------------------------//
 function! utils#braces_fold_text(...)
+  " sparkle '✦'
+  let startchar = '≣'
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '(' . ( lines_count ) . ')'
   let foldchar = matchstr(&fillchars, 'fold:\')
   let l:window_width = winwidth(0)
-  let foldtextstart = strpart('✦' . repeat(foldchar, v:foldlevel * 2) . line, 0, (l:window_width * 2) / 3)
+  let foldtextstart = strpart(startchar . repeat(foldchar, v:foldlevel * 2) . line, 0, (l:window_width * 2) / 3)
   let foldtextend = lines_count_text . repeat(' ', 2)
   let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
   return foldtextstart . repeat(' ', l:window_width - foldtextlength - 7) . foldtextend . ' ' 

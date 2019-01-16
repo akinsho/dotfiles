@@ -14,9 +14,7 @@ let g:startify_list_order = [
       \ 'commands',
       \ ]
 
-let  g:startify_session_dir  = has('nvim') ?
-      \ '~/.config/nvim/session' :
-      \ '~/.vim/session'
+let  g:startify_session_dir  = '~/.vim/session'
 
 let  g:startify_bookmarks    =  [
       \ {'v': '~/.vimrc'},

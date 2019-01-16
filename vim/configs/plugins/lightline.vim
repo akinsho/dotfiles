@@ -57,6 +57,11 @@ let g:lightline = {
       \     'linter_ok': 'ok',
       \     'buffers': 'tabsel',
       \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \},
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
@@ -161,7 +166,7 @@ function! LightlineGitGutter()
 endfunction
 
 function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? '±' : &modifiable ? '' : '-'
+  return &ft =~ 'help' ? '' : &modified ? '✎' : &modifiable ? '' : '-'
 endfunction
 
 function! LightlineReadonly()

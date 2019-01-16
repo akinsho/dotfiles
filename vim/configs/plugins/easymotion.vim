@@ -15,14 +15,15 @@ omap f <Plug>(easymotion-bd-f)
 " `s<CR>` repeat last find motion.
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
-" easymotion with hjkl keys
-nmap <leader><leader>j <Plug>(easymotion-j)
-nmap <leader><leader>k <Plug>(easymotion-k)
-" map <Leader>l <Plug>(easymotion-lineforward)
-" map <Leader>h <Plug>(easymotion-linebackward)
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+" Move to character
+map <leader>s <Plug>(easymotion-sl)
+" Move to word
+map <leader>w <Plug>(easymotion-bd-wl)
 nnoremap <leader>/ /
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  <leader>n <Plug>(easymotion-next)
 map  <leader>N <Plug>(easymotion-prev)
-"}}}
