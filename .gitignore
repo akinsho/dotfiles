@@ -10,3 +10,4 @@ plugged
 plug.vim
 .netrwhist
 *.code-workspace
+session/
