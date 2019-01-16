@@ -96,7 +96,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
-Plug 'AndrewRadev/deleft.vim' " TODO: delete?
+Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
