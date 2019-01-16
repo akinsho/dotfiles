@@ -30,7 +30,7 @@ let g:lightline = {
       \ 'component': {
       \   'lineinfo': '%3l:%-2v',
       \   'tagbar': '%{tagbar#currenttag("%s", "")}',
-      \   'close': '%999X X ',
+      \   'close': '%#DiffDelete#%999X X ',
       \ },
       \ 'component_function': {
       \   'filesize': 'LightlineFileSize',

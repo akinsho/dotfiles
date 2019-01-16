@@ -11,3 +11,4 @@ plug.vim
 .netrwhist
 *.code-workspace
 session/
+oh-my-zsh/
