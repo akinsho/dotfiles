@@ -121,3 +121,4 @@ echo load time: $((end_time - start_time)) seconds
 # zprof
 
 # archey -o
+fpath+=${ZDOTDIR:-~}/.zsh_functions
