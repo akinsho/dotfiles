@@ -62,7 +62,6 @@ fi
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
 # opam configuration

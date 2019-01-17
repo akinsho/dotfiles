@@ -273,14 +273,20 @@ endif
 " ----------------------------------------------------------------------------
 " Tabbing - overridden by editorconfig, after/ftplugin {{{1
 " ----------------------------------------------------------------------------
-set expandtab                         " default to spaces instead of tabs
-set shiftwidth=2                      " softtabs are 2 spaces for expandtab
+" default to spaces instead of tabs
+set expandtab
+" softtabs are 2 spaces for expandtab
+set shiftwidth=2
 set softtabstop=-2
 set tabstop=8
-set noshiftround " use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
-set smarttab " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
-set complete+=k " Add dictionary to vim's autocompletion
-set complete-=i      " Dont use included files for completion
+" use multiple of shiftwidth when shifting indent levels. this is OFF so block comments don't get fudged when using \">>" and \"<<"
+set noshiftround
+" When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 'tabstop' or 'softtabstop' is used in other places.
+set smarttab
+" Add dictionary to vim's autocompletion
+set complete+=k
+" Dont use included files for completion
+set complete-=i
 if !has('nvim')
   set display+=lastline
 endif
