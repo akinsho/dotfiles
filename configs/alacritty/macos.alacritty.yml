@@ -83,19 +83,19 @@ font:
   normal:
     family: FuraCode Nerd Font Mono
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    # style: Regular
 
   # Bold font face
   bold:
     family: Operator Mono
     # The `style` can be specified to pick a specific face.
-    #style: Bold
+    style: Bold Italic
 
   # Italic font face
   italic:
     family: Operator Mono Book
     # The `style` can be specified to pick a specific face.
-    #style: Italic
+    # style: Italic
 
   # Point size
   size: 17.0

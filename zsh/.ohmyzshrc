@@ -117,7 +117,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
-echo load time: $((end_time - start_time)) seconds
+# echo load time: $((end_time - start_time)) seconds
 # zprof
 
 # archey -o

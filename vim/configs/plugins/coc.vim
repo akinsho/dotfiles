@@ -18,8 +18,11 @@ function! s:coc_init() abort
           \ 'command': s:reason_language_server,
           \ 'trace.server': 'verbose',
           \ 'filetypes': ['reason'],
-          \ 'reason_language_server': {
-          \   'per_value_codelens': v:true,  
+          \ 'settings': {
+          \  'reason_language_server': {
+          \    'per_value_codelens': v:true,
+          \    'build_system_override_by_root': 'dune:esy',
+          \   }
           \ }
           \}
   endif
