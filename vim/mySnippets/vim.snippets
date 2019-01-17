@@ -16,4 +16,16 @@ function ${1:function_name}($2)
 	${3:" code}
 endfunction
 endsnippet
+
+snippet doc "header block"
+"--------------------------------------------------------------------------------
+" ${1: title}
+"--------------------------------------------------------------------------------
+endsnippet
+
+snippet key "has_key check"
+if has_key(g:plugs, ${1:pluginName})
+	finish
+endif
+endsnippet
 # vim:ft=snippets:
