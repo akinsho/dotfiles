@@ -143,6 +143,7 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      \ | Plug 'coderifous/textobj-word-column.vim'
 "Search Tools {{{1
 "=======================
 Plug 'dyng/ctrlsf.vim'
