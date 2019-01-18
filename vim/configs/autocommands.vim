@@ -190,7 +190,6 @@ augroup mutltiple_filetype_settings "{{{1
   autocmd FileType * if exists("+completefunc") && &completefunc == ""
         \ | setlocal completefunc=syntaxcomplete#Complete | endif
 
-  autocmd FileType html,css,vue,reason,*.jsx,*.js,*.tsx EmmetInstall
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
 augroup END
 
