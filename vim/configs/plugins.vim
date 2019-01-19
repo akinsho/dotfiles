@@ -151,7 +151,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
-Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':'markdown' })
+Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
 Plug 'euclio/vim-markdown-composer',

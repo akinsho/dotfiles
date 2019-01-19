@@ -252,7 +252,7 @@ endfunction
 if has('nvim')
   augroup nvim
     au!
-    autocmd BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
+    autocmd ColorScheme,BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
     "Close FZF in neovim with esc
     " TODO: Clear highlight for fzf buffers (tidy this up)
     autocmd FileType fzf
@@ -271,6 +271,7 @@ augroup FileType_all "{{{1
   autocmd!
 
   autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  autocmd InsertLeave * update
 
   autocmd FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.

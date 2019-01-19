@@ -103,8 +103,12 @@ let g:lightline.tabline = {'left': [ [ 'buffers' ] ], 'right': [ [ 'minimal_tabs
 
 let g:lightline#bufferline#number_map = {
       \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
-      \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
+      \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹',
+      \ 10: '¹⁰', 11: '¹¹', 12: '¹²', 13: '¹³', 14: '¹⁴',
+      \ 15: '¹⁵', 16: '¹⁶', 17: '¹⁷', 18: '¹⁸', 19: '¹⁹',
+      \ 20: '²⁰', 21: '²¹', 22: '²²', 23: '²³', 24: '²⁴'
       \ }
+
 let g:lightline.tab = {
       \ 'active': [ 'tabnum', 'filename', 'modified' ],
       \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
