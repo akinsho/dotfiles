@@ -18,10 +18,6 @@ nmap s <Plug>(easymotion-overwin-f)
 " Move to line
 map <Leader>L <Plug>(easymotion-bd-jk)
 nmap <Leader>L <Plug>(easymotion-overwin-line)
-" Move to character
-map <leader>s <Plug>(easymotion-sl)
-" Move to word
-map <leader>w <Plug>(easymotion-bd-wl)
 nnoremap <leader>/ /
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)

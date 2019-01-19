@@ -53,3 +53,10 @@ endsnippet
 snippet log "print endline"
 print_endline("$1: " ++ ${1: value})
 endsnippet
+snippet test "rejest test"
+test("${1: test description}", () => {
+  test("${2: first case}", () => {
+    ${3: // Write some test}
+  })
+})
+endsnippet
