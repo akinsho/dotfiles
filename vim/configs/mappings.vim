@@ -398,15 +398,10 @@ nnoremap bk `.
 ""---------------------------------------------------------------------------//
 " Quick find/replace
 ""---------------------------------------------------------------------------//
+" nnoremap <leader>] :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Leader>[ :%s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap <localleader>] :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap <localleader>[ :s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <leader>] :s/\<<C-r>=expand("<cword>")<CR>\>/
 vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
-""---------------------------------------------------------------------------//
-" Find and Replace Using Abolish Plugin %S - Subvert
-""---------------------------------------------------------------------------//
-nnoremap <localleader>{ :%S/<C-r><C-w>//c<left><left>
-vnoremap <localleader>{ "zy:%S/<C-r><C-o>"//c<left><left>
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
@@ -584,11 +579,11 @@ nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>
-nmap <leader>ll <Plug>ResizeRight
+nmap <leader>hh <Plug>ResizeRight
 
 nnoremap <silent> <Plug>ResizeLeft :vertical resize -10<cr>
       \ :call repeat#set("\<Plug>ResizeLeft")<CR>
-nmap <leader>hh <Plug>ResizeLeft
+nmap <leader>ll <Plug>ResizeLeft
 
 nnoremap <silent> <Plug>ResizeDown :resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeDown")<CR>

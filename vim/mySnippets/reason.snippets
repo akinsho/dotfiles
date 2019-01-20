@@ -1,3 +1,8 @@
+snippet hr "header"
+/* -------------------------------------------------------------------------------
+   ${1: Header}
+   -------------------------------------------------------------------------------*/
+endsnippet
 snippet doc "comment"
 /*
    ${0}
@@ -53,10 +58,18 @@ endsnippet
 snippet log "print endline"
 print_endline("$1: " ++ ${1: value})
 endsnippet
-snippet test "rejest test"
+snippet describe "rejest test"
 test("${1: test description}", () => {
   test("${2: first case}", () => {
     ${3: // Write some test}
   })
 })
+endsnippet
+snippet test "test case"
+test("${1: test case}", () => {
+    ${2: // Write some test}
+    })
+endsnippet
+snippet expect "expect"
+expect(${1:variable}).toEqual(${2:value})
 endsnippet
