@@ -2,6 +2,19 @@ if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
   finish
 endif
 
+let g:coc_global_extensions = [ 
+      \ 'coc-json',
+      \ 'coc-tsserver',
+      \ 'coc-rls',
+      \ 'coc-snippets',
+      \ 'coc-emmet',
+      \ 'coc-highlight',
+      \ 'coc-css',
+      \ 'coc-eslint',
+      \ 'coc-prettier'
+      \ ]
+
+" FIXME: use new g:coc_user_config setting add these vars
 function! s:coc_init() abort
   let s:languageservers = {}
 
@@ -117,11 +130,11 @@ endfunction
 augroup CoCAutocommands
   au!
   autocmd ColorScheme * call s:coc_highlights() 
-  autocmd CursorHoldI * call CocAction('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  autocmd CursorHoldI,CursorMovedI * call CocAction('showSignatureHelp')
 augroup END
 
 

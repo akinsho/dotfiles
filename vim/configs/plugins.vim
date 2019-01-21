@@ -43,31 +43,13 @@ function! BuildComposer(info)
   endif
 endfunction
 
-function! CocInstall(info)
-  if a:info.status ==? 'installed' || a:info.force
-    call coc#add_extension(
-          \ 'coc-json',
-          \ 'coc-tsserver',
-          \ 'coc-rls',
-          \ 'coc-snippets',
-          \ 'coc-emmet',
-          \ 'coc-highlight',
-          \ 'coc-css',
-          \ 'coc-eslint',
-          \ 'coc-prettier'
-          \ )
-    call coc#util#install()
-  elseif a:info.status ==? 'updated'
-    silent execute 'CocUpdate'
-  endif
-endfunction
 "================================
 " CORE {{{1
 "================================
   if !exists('g:gui_oni')
     Plug 'Shougo/neco-vim', { 'for': 'vim' },
     Plug 'neoclide/coc-neco', { 'for': 'vim' },
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': function('CocInstall')}
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': {-> coc#util#install()}}
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'

@@ -40,11 +40,11 @@ endif
 "Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 "repeat macros across a visual range
 "--------------------------------------------
-xnoremap @ <Cmd><C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
+xnoremap @ <Cmd><C-u>call ExecuteMacroOverVisualRange()<CR>
 "--------------------------------------------
 " Focus marked text by highlighting everything else as a comment
 xnoremap <silent> <cr> :<c-u>call <SID>Focus()<cr>

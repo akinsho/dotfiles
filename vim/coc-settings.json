@@ -6,6 +6,7 @@
   "typescript.suggestionActions.enabled": true,
   "tsserver.enableJavascript": false,
   "emmet.showAbbreviationSuggestions": true,
+  "coc.preferences.diagnostic.virtualText": true,
   "coc.preferences.codeLens.enable": true,
   "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.echodocSupport": true,
