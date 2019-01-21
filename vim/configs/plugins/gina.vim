@@ -86,3 +86,8 @@ nnoremap <silent><localleader>gbl :Gina blame<cr>
 nnoremap <silent><nowait> <localleader>gc :Gina commit<cr>
 nnoremap <silent><nowait> <localleader>gp :Gina push<cr>
 nnoremap <silent><nowait> <localleader>gl :Gina pull<cr>
+
+" augroup GinaBranchBuffer
+      " au!
+      " autocmd BufLeave,BufWinLeave * if &ft == 'gina-branch' | :CleanBufferList | endif
+" augroup END
