@@ -36,13 +36,14 @@ let g:ale_warn_about_trailing_whitespace       = 1
 let g:ale_echo_msg_error_str                   = g:ale_sign_error
 let g:ale_echo_msg_warning_str                 = g:ale_sign_warning
 let g:ale_echo_msg_format                      = '[%linter% %severity%]: %(code) %%s' 
+let g:ale_linters_explicit = 1
 let g:ale_linters                              = {                                                           
       \'python': ['flake8'],
       \'sql': ['sqlint'],
       \'typescript':['tsserver', 'tslint'],
       \'reason': [],
-      \'javascript.jsx':['eslint', 'tsserver'],
-      \'javascript':['eslint', 'tsserver'],
+      \'javascript.jsx':[],
+      \'javascript':[],
       \}
 
 let g:ale_linter_aliases = {

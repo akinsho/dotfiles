@@ -415,6 +415,7 @@ nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window - :<c-f>
 nnoremap <localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
+command! -nargs=+ -complete=command TabMessage call utils#tab_message(<q-args>)
 " ----------------------------------------------------------------------------
 " CREDIT: JGunn #gi / #gpi | go to next/previous indentation level
 " ----------------------------------------------------------------------------

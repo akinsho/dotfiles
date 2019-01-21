@@ -10,6 +10,7 @@ let g:test#transformation = "typescript"
 let test#neovim#term_position = "vsplit"
 " exists(':Tnew') ? "neoterm" : 
 let test#strategy = has('nvim') ? 'neovim' : 'vimterminal'
+let test#javascript#jest#file_pattern = '\v(.*|(spec|test))\.(js|jsx|coffee|ts|tsx)$'
 
 nnoremap <silent> t<C-w> :TestNearest --watch<CR>
 nnoremap <silent> t<C-n> :TestNearest<CR>
