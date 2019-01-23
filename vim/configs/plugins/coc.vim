@@ -134,7 +134,7 @@ augroup CoCAutocommands
   autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  autocmd CursorHoldI,CursorMovedI * call CocAction('showSignatureHelp')
+  autocmd CursorHoldI * call CocAction('showSignatureHelp')
 augroup END
 
 
