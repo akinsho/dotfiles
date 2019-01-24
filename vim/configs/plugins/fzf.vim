@@ -69,7 +69,6 @@ let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
 
   nnoremap <localleader>mo :Modified<cr>
   nnoremap <silent> <localleader>bf :BranchFiles<cr>
-  nnoremap <silent> <localleader>br :Branches<cr>
   nnoremap <silent> <localleader>d :Dots<CR>
   nnoremap <silent> <localleader>b :BTags<CR>
   nnoremap <silent> <localleader>o :Buffers<CR>

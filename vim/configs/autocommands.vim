@@ -239,13 +239,13 @@ function! s:handle_window_enter() abort
   endif
   if &previewwindow 
     setlocal nospell concealcursor=nv nocursorline colorcolumn=
-    if exists('+winhighlight') 
-      " These highlights set the preview to have the same foreground as the
-      " cursorline but not to show the tildes which mark the end of the buffer
-      let l:cursorline_background = synIDattr(hlID('CursorLine'), 'bg#')
-      execute 'silent highlight PreviewEndOfBuffer guifg='.l:cursorline_background
-      setlocal winhighlight=Normal:CursorLine,EndOfBuffer:PreviewEndOfBuffer
-    endif
+    " if exists('+winhighlight') 
+    "   " These highlights set the preview to have the same foreground as the
+    "   " cursorline but not to show the tildes which mark the end of the buffer
+    "   let l:cursorline_background = synIDattr(hlID('CursorLine'), 'bg#')
+    "   execute 'silent highlight PreviewEndOfBuffer guifg='.l:cursorline_background
+    "   setlocal winhighlight=Normal:CursorLine,EndOfBuffer:PreviewEndOfBuffer
+    " endif
   endif
 endfunction
 

@@ -150,6 +150,24 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
 
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <localleader>cd  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <localleader>ce  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <localleader>cc  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <localleader>co  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <localleader>cs  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <localleader>cj  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <localleader>ck  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
+
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` for fold current buffer
