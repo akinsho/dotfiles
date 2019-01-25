@@ -135,6 +135,7 @@ augroup CoCAutocommands
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CursorHoldI * call CocAction('showSignatureHelp')
+  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup END
 
 
