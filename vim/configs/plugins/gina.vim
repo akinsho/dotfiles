@@ -8,6 +8,8 @@ call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q<cr>')
 call gina#custom#execute('/.*', 'silent! nnoremap <buffer> Q :q!<cr>')
 
 " Aliases
+call gina#custom#command#option('checkout', '-b')
+call gina#custom#command#alias('checkout', 'cb', 1)
 call gina#custom#command#alias('branch', 'br')
 call gina#custom#command#option('br', '-v', 'v')
 call gina#custom#command#alias('status', 'st')

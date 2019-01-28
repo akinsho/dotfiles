@@ -41,6 +41,7 @@ alias ys="clear && yarn start"
 alias yd="cl && yarn develop"
 alias ydl="cl && yarn develop:local"
 
+alias esy="nocorrect esy"
 #alias ctags if you used homebrew
 alias ctags="\$(brew --prefix)/bin/ctags"
 alias sesh="vim -S"

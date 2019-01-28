@@ -227,12 +227,12 @@ augroup fileSettings "{{{1
   autocmd Filetype vim-plug setlocal nonumber norelativenumber
 augroup END
 
-" Add Per Window Highlights [WIP] {{{
+" Add Per Window Highlights {{{
 function! s:handle_window_enter() abort
   if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber scrolloff=0
+    setlocal nocursorline nonumber norelativenumber "scrolloff=0
     highlight TerminalColors guibg=#22252B ctermbg=black
-    highlight TerminalEndOfBuffer guifg=#22252B
+    highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
     if exists('+winhighlight') 
       setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
     endif

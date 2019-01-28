@@ -11,8 +11,21 @@ let g:coc_global_extensions = [
       \ 'coc-highlight',
       \ 'coc-css',
       \ 'coc-eslint',
-      \ 'coc-prettier'
+      \ 'coc-prettier',
+      \ 'coc-jest',
       \ ]
+
+" Run jest for current project
+command! -nargs=0 Jest :call  CocAction('runCommand', 'jest.projectTest')
+
+" Run jest for current file
+command! -nargs=0 JestCurrent :call  CocAction('runCommand', 'jest.fileTest', ['%'])
+
+" Run jest for current test
+nnoremap <leader>te :call CocAction('runCommand', 'jest.singleTest')<CR>
+
+" Init jest in current cwd, require global jest command exists
+command! JestInit :call CocAction('runCommand', 'jest.init')
 
 " FIXME: use new g:coc_user_config setting add these vars
 function! s:coc_init() abort

@@ -5,3 +5,8 @@ setlocal errorformat+=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@
 if executable('esy')
   set makeprg=esy
 endif
+
+if exists("g:lexima#default_rules") 
+  call lexima#add_rule({'char': "'", 'filetype': ['reason']})
+  call lexima#add_rule({'char': '`', 'filetype': ['reason']})
+endif
