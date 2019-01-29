@@ -100,8 +100,19 @@ augroup CheckOutsideTime "{{{1
   autocmd!
   " automatically check for changed files outside vim
   autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime
-  au VimEnter * silent! call utils#buffer_autosave(1)
 augroup end
+
+""---------------------------------------------------------------------------//
+" Credit:  June Gunn  - AutoSave {{{1
+" ----------------------------------------------------------------------------
+augroup AutoSave
+  autocmd!
+  autocmd TextChanged,InsertLeave <buffer>
+        \  if empty(&buftype) && !empty(bufname(''))
+        \|   echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
+        \|   silent! update
+        \| endif
+augroup END
 
 " Disable paste.{{{
 augroup Cancel_Paste
@@ -271,7 +282,6 @@ augroup FileType_all "{{{1
   autocmd!
 
   autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-  autocmd InsertLeave * update
 
   autocmd FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.

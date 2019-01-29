@@ -3,9 +3,10 @@ call gina#custom#mapping#nmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#mapping#vmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-j>')
 call gina#custom#execute('/.*', 'silent! nunmap <buffer> <c-k>')
-" TODO: prevent this command from closing vim
-call gina#custom#execute('/.*', 'silent! nnoremap <buffer> q :q<cr>')
-call gina#custom#execute('/.*', 'silent! nnoremap <buffer> Q :q!<cr>')
+
+let s:close_command = exists(':Sayonara') ? ':Sayonara' : 'q'
+call gina#custom#execute('/.*', 'silent! nnoremap <buffer><silent> q ' . s:close_command .'<cr>')
+call gina#custom#execute('/.*', 'silent! nnoremap <buffer><silent> Q ' . s:close_command .'!<cr>')
 
 " Aliases
 call gina#custom#command#option('checkout', '-b')
