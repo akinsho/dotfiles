@@ -1,7 +1,7 @@
 ""---------------------------------------------------------------------------//
 "                    EMMET for Vim
 ""---------------------------------------------------------------------------//
-let g:user_emmet_mode         = 'a'
+let g:user_emmet_mode         = 'i'
 let g:user_emmet_complete_tag = 1
 
 let g:user_emmet_settings     = {
