@@ -75,9 +75,9 @@ function! s:coc_init() abort
 
   if executable('flow-language-server')
     let s:languageservers['flow'] = {
-          \ "command": "flow-language-server",
-          \ "args": ["--stdio"],
-          \ "filetypes": ["javascript", "javascriptreact"],
+          \ "command": "flow",
+          \ "args": ["lsp"],
+          \ "filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
           \ "rootPatterns": [".flowconfig"]
           \}
   endif

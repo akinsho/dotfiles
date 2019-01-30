@@ -11,6 +11,7 @@ let g:ale_pattern_options      = {
       \}
 ", 'eslint'
 let g:ale_fixers = {
+      \ 'ocaml': ['ocamlformat'],
       \ 'c': ['clang-format'],
       \ 'cpp': ['clang-format'],
       \'reason':['refmt'],
