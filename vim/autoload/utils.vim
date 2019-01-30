@@ -189,21 +189,6 @@ function! utils#modify_line_end_delimiter(character)
   call setline('.', newline)
 endfunction
 
-""---------------------------------------------------------------------------//
-" Credit:  June Gunn  - AutoSave {{{1
-" ----------------------------------------------------------------------------
-function! utils#buffer_autosave(enable)
-  augroup autosave
-    autocmd!
-    if a:enable
-      autocmd TextChanged,InsertLeave <buffer>
-            \  if empty(&buftype) && !empty(bufname(''))
-            \|   silent! update
-            \| endif
-    endif
-  augroup END
-endfunction
-
 " custom text-object for numerical values
 function! utils#Numbers()
   call search('\d\([^0-9\.]\|$\)', 'cW')

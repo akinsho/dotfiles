@@ -13,6 +13,7 @@
   "coc.preferences.codeLens.enable": true,
   "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.echodocSupport": true,
+  "coc.preferences.acceptSuggestionOnCommitCharacter": false,
   "coc.preferences.diagnostic.locationlist": true,
   "coc.preferences.diagnostic.virtualTextPrefix": "ﯦ ",
   "coc.preferences.diagnostic.errorSign": "",
