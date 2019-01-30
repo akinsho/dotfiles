@@ -11,6 +11,8 @@ let g:ale_pattern_options      = {
       \}
 ", 'eslint'
 let g:ale_fixers = {
+      \ 'c': ['clang-format'],
+      \ 'cpp': ['clang-format'],
       \'reason':['refmt'],
       \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier'], 

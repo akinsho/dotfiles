@@ -53,6 +53,17 @@ function! s:coc_init() abort
           \}
   endif
 
+  if executable('ccls')
+    let s:languageservers['ccls'] = {
+          \ "command": "ccls",
+          \ "filetypes": ["c", "cpp", "objc", "objcpp"],
+          \ "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+          \ "initializationOptions": {
+          \ "cacheDirectory": "/tmp/ccls"
+          \}
+          \}
+  endif
+
   if executable('ocaml-language-server')
     let s:languageservers['ocaml'] = {
           \ 'command': 'ocaml-language-server',
