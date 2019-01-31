@@ -82,18 +82,26 @@ function! s:coc_init() abort
           \}
   endif
 
-  if executable('go-langserver')
+  if executable('bingo')
     let s:languageservers['golang'] = {
-          \ "command": "go-langserver",
-          \ "filetypes": ["go"],
-          \ "revealOutputChannelOn": "never",
-          \ "initializationOptions": {
-          \   "gocodeCompletionEnabled": v:true,
-          \   "diagnosticsEnabled": v:true,
-          \   "lintTool": "golint"
-          \ }
+          \ "command": "bingo",
+          \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+          \ "filetypes": ["go"]
           \}
   endif
+
+  " if executable('go-langserver')
+  "   let s:languageservers['golang'] = {
+  "         \ "command": "go-langserver",
+  "         \ "filetypes": ["go"],
+  "         \ "revealOutputChannelOn": "never",
+  "         \ "initializationOptions": {
+  "         \   "gocodeCompletionEnabled": v:true,
+  "         \   "diagnosticsEnabled": v:true,
+  "         \   "lintTool": "golint"
+  "         \ }
+  "         \}
+  " endif
 
   if !empty(s:languageservers)
     call coc#config('languageserver', s:languageservers)
