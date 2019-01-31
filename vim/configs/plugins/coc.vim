@@ -82,7 +82,7 @@ function! s:coc_init() abort
           \}
   endif
 
-  if executable('go-languageserver')
+  if executable('go-langserver')
     let s:languageservers['golang'] = {
           \ "command": "go-langserver",
           \ "filetypes": ["go"],
