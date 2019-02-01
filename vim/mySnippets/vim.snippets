@@ -23,8 +23,8 @@ snippet doc "header block"
 "--------------------------------------------------------------------------------
 endsnippet
 
-snippet key "has_key check"
-if has_key(g:plugs, ${1:pluginName})
+snippet key "not has_key check"
+if !has_key(g:plugs, ${1:pluginName})
 	finish
 endif
 endsnippet

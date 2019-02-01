@@ -78,7 +78,6 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
-Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
@@ -114,12 +113,13 @@ Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 " Text Objects {{{1
 " =====================
-Plug 'chaoren/vim-wordmotion'
+Plug 'bkad/CamelCaseMotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'kana/vim-smartword'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'

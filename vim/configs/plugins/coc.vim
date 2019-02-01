@@ -16,16 +16,16 @@ let g:coc_global_extensions = [
       \ ]
 
 " Run jest for current project
-command! -nargs=0 Jest :call  CocAction('runCommand', 'jest.projectTest')
+command! -nargs=0 Jest :call  CocActionAsync('runCommand', 'jest.projectTest')
 
 " Run jest for current file
-command! -nargs=0 JestCurrent :call  CocAction('runCommand', 'jest.fileTest', ['%'])
+command! -nargs=0 JestCurrent :call  CocActionAsync('runCommand', 'jest.fileTest', ['%'])
 
 " Run jest for current test
-nnoremap <leader>te :call CocAction('runCommand', 'jest.singleTest')<CR>
+nnoremap <leader>te :call CocActionAsync('runCommand', 'jest.singleTest')<CR>
 
 " Init jest in current cwd, require global jest command exists
-command! JestInit :call CocAction('runCommand', 'jest.init')
+command! JestInit :call CocActionAsync('runCommand', 'jest.init')
 
 " FIXME: use new g:coc_user_config setting add these vars
 function! s:coc_init() abort
@@ -149,7 +149,7 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 
@@ -163,10 +163,10 @@ augroup CoCAutocommands
   au!
   autocmd ColorScheme * call s:coc_highlights() 
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  autocmd CursorHoldI * call CocAction('showSignatureHelp')
+  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
   autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup END
 
@@ -202,6 +202,6 @@ nnoremap <silent> <localleader>ck  :<C-u>CocPrev<CR>
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
 " Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)

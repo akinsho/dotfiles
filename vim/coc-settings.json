@@ -12,6 +12,16 @@
   "coc.preferences.codeLens.enable": true,
   "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.echodocSupport": true,
+  "list.normalMappings": {
+    "t": "action:tabe",
+    "v": "action:vsplit",
+    "s": "action:split",
+    "d": "expr:GetDeleteAction"
+  },
+  "list.insertMappings": {
+    "<C-t>": "action:tabe",
+    "<C-w>": "command:wincmd k"
+  },
   "coc.preferences.acceptSuggestionOnCommitCharacter": false,
   "coc.preferences.diagnostic.locationlist": true,
   "coc.preferences.diagnostic.virtualTextPrefix": "ﯦ ",
