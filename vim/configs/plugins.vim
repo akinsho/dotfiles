@@ -68,6 +68,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
+" NOTE: this is an exception as this variable needs to be set
+" before the plugin is loaded
+let g:vimwiki_map_prefix = '<leader><leader>w'
 Plug 'vimwiki/vimwiki'
 "TMUX {{{1
 "============================
