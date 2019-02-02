@@ -68,6 +68,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
+
 " NOTE: this is an exception as this variable needs to be set
 " before the plugin is loaded
 let g:vimwiki_map_prefix = '<leader><leader>w'
@@ -114,6 +115,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main',
 Plug 'whiteinge/diffconflicts'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'shuber/vim-promiscuous'
 " Text Objects {{{1
 " =====================
 Plug 'bkad/CamelCaseMotion'
