@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'promiscuous.vim')
+if !has_key(g:plugs, 'vim-promiscuous')
   finish
 endif
 
