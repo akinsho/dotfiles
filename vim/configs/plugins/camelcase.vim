@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'camelCaseMotion')
+if !has_key(g:plugs, 'CamelCaseMotion')
   finish
 endif
 
