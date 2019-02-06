@@ -73,3 +73,24 @@ highlight ALEErrorSign guifg=red guibg=NONE
 highlight ALEWarningSign guifg=yellow guibg=NONE
 highlight link ALEVirtualTextError Identifier
 highlight link ALEVirtualTextWarning Type
+
+function! s:fixALEToggle(...)
+  let s:fixALEStatus = {}
+  let s:fixALEStatus['global'] = get(g:, 'ale_fix_on_save', 0)
+  let s:fixALEStatus['buffer'] = get(b:, 'ale_fix_on_save', s:fixALEStatus['global'])
+  let s:fixCurrentScope = get(a:, 1, 'global')
+  if (s:fixALEStatus[s:fixCurrentScope] == 1)
+    let s:fixALEStatus[s:fixCurrentScope]=0
+  else
+    let s:fixALEStatus[s:fixCurrentScope]=1
+  endif
+  let g:ale_fix_on_save=s:fixALEStatus['global']
+  let b:ale_fix_on_save=s:fixALEStatus['buffer']
+endfunction
+
+command! ALEDisableFixers       let g:ale_fix_on_save=0
+command! ALEEnableFixers        let g:ale_fix_on_save=1
+command! ALEDisableFixersBuffer let b:ale_fix_on_save=0
+command! ALEEnableFixersBuffer  let b:ale_fix_on_save=0
+command! ALEToggleFixers call s:fixALEToggle('global')
+command! ALEToggleFixersBuffer call s:fixALEToggle('buffer')
