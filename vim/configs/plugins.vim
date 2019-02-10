@@ -87,7 +87,7 @@ Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
 Plug 'Shougo/echodoc.vim'
-Plug 'lifepillar/vim-cheat40'
+" Plug 'lifepillar/vim-cheat40'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-commentary'
