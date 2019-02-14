@@ -349,7 +349,7 @@ augroup cursorline
     autocmd WinLeave,BufWinLeave * setlocal nocursorline
   endif
 augroup END
-set scrolloff=999 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
+set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 
 "====================================================================================
 "Spelling {{{1
