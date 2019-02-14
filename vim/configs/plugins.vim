@@ -68,11 +68,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
-
-" NOTE: this is an exception as this variable needs to be set
-" before the plugin is loaded
-let g:vimwiki_map_prefix = '<leader><leader>w'
-Plug 'vimwiki/vimwiki'
+Plug 'mtth/scratch.vim'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -87,7 +83,6 @@ Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
 Plug 'Shougo/echodoc.vim'
-" Plug 'lifepillar/vim-cheat40'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-commentary'
