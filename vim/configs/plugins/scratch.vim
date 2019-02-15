@@ -3,4 +3,4 @@ if !has_key(g:plugs, 'scratch.vim')
 endif
 
 let g:scratch_horizontal = 0
-let g:scratch_height = 30
+let g:scratch_height = 50
