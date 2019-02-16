@@ -18,8 +18,8 @@ if has('nvim')
   tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
   tnoremap <silent><leader><S-Tab> <C-\><C-n><Cmd>bprev<CR>
   tnoremap <silent><leader><Tab> <C-\><C-n><Cmd>bnext<cr>
-  nnoremap <leader>h<CR> <Cmd>leftabove 30vnew<CR><Cmd>terminal<CR>
-  nnoremap <leader>l<CR> <Cmd>rightbelow 30vnew<CR><Cmd>terminal<CR>
+  nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
+  nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
   nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
   nnoremap <leader>j<CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
   nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
@@ -580,11 +580,11 @@ nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>
-nmap <leader>hh <Plug>ResizeRight
+nmap <leader>ll <Plug>ResizeRight
 
 nnoremap <silent> <Plug>ResizeLeft :vertical resize -10<cr>
       \ :call repeat#set("\<Plug>ResizeLeft")<CR>
-nmap <leader>ll <Plug>ResizeLeft
+nmap <leader>hh <Plug>ResizeLeft
 
 nnoremap <silent> <Plug>ResizeDown :resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeDown")<CR>
