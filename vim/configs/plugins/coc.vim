@@ -38,20 +38,20 @@ function! s:coc_init() abort
           \}
   endif
 
-  let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
-  if filereadable(s:reason_language_server)
-    let s:languageservers['reason'] = {
-          \ 'command': s:reason_language_server,
-          \ 'trace.server': 'verbose',
-          \ 'filetypes': ['reason'],
-          \ 'settings': {
-          \  'reason_language_server': {
-          \    'per_value_codelens': v:true,
-          \    'build_system_override_by_root': 'dune:esy',
-          \   }
-          \ }
-          \}
-  endif
+  " let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
+  " if filereadable(s:reason_language_server)
+  "   let s:languageservers['reason'] = {
+  "         \ 'command': s:reason_language_server,
+  "         \ 'trace.server': 'verbose',
+  "         \ 'filetypes': ['reason'],
+  "         \ 'settings': {
+  "         \  'reason_language_server': {
+  "         \    'build_system_override_by_root': 'dune:esy',
+  "         \    'per_value_codelens': v:true,
+  "         \   }
+  "         \ }
+  "         \}
+  " endif
 
   if executable('ccls')
     let s:languageservers['ccls'] = {
@@ -69,7 +69,7 @@ function! s:coc_init() abort
           \ 'command': 'ocaml-language-server',
           \ 'args': ['--stdio'],
           \ 'trace.server': 'verbose',
-          \ 'filetypes': ['ocaml'],
+          \ 'filetypes': ['ocaml', 'reason'],
           \}
   endif
 
