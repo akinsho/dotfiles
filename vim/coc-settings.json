@@ -6,11 +6,9 @@
   "typescript.suggestionActions.enabled": true,
   "tsserver.enableJavascript": false,
   "emmet.showAbbreviationSuggestions": true,
-  "coc.preferences.diagnostic.refreshOnInsertMode": true,
   "coc.preferences.noselect": true,
   "coc.preferences.diagnostic.virtualText": true,
   "coc.preferences.codeLens.enable": true,
-  "coc.preferences.openResourceCommand": "edit",
   "coc.preferences.echodocSupport": true,
   "list.normalMappings": {
     "t": "action:tabe",
