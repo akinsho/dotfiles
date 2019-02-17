@@ -22,3 +22,7 @@ nnoremap <silent> <Leader>hr :GitGutterRevertHunk<CR>
 nnoremap <silent> <Leader>hu :GitGutterUndoHunk<CR>
 nnoremap <silent> <Leader>hp :GitGutterPreviewHunk<CR><c-w>j
 nnoremap <silent> <Leader>hs :GitGutterStageHunk<CR>
+omap ih <Plug>GitGutterTextObjectInnerPending
+omap ah <Plug>GitGutterTextObjectOuterPending
+xmap ih <Plug>GitGutterTextObjectInnerVisual
+xmap ah <Plug>GitGutterTextObjectOuterVisual
