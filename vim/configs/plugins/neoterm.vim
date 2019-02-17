@@ -1,7 +1,6 @@
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
-let g:neoterm_size            = '70'
 let g:neoterm_automap_keys    = ',tt'
 let g:neoterm_default_mod     = 'vertical'
 let g:neoterm_autoscroll      = 1
