@@ -110,6 +110,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main',
 Plug 'whiteinge/diffconflicts'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/conflict-marker.vim'
 " Text Objects {{{1
 " =====================
 Plug 'bkad/CamelCaseMotion'

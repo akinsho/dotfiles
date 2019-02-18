@@ -606,9 +606,11 @@ nnoremap S "_diwP
 "}}}
 
 " Shortcut to jump to next conflict marker"
-nnoremap <silent> ]x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
-" Shortcut to jump to last conflict marker"
-nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+if !has_key(g:plugs, 'conflict-marker.vim')
+  nnoremap <silent> ]x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+  " Shortcut to jump to last conflict marker"
+  nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+endif
 " Zoom - This function uses a tab to zoom the current split
 nnoremap <silent> <leader>Z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
