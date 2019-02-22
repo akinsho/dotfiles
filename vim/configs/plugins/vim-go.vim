@@ -2,13 +2,13 @@
 " VIM-GO
 "---------------------------------------------------------------------------//
 " "auto format with goimports as well as gofmt
-" let g:go_fmt_command                    = "goimports"
+let g:go_fmt_command                    = "goimports"
 
 let g:go_term_height                    = 30
 let g:go_term_width                     = 30
 let g:go_term_mode                      = "split"
-let g:go_list_type                      = "quickfix"
-let g:go_auto_type_info                 = 1
+let g:go_list_type                      = "locationlist"
+let g:go_auto_type_info                 = 0
 let g:go_auto_sameids                   = 0
 let g:go_fmt_autosave                   = 1
 let g:go_alternate_mode                 = "vsplit"
