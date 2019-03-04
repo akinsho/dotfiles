@@ -102,7 +102,6 @@ Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
-Plug 'reasonml-editor/vim-reason-plus'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main',
       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
 "Git {{{1

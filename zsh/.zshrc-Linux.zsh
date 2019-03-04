@@ -12,3 +12,5 @@ backup-gnome() {
     dconf dump / > dconf-settings.ini
     mv -f dconf-settings.ini $DOTFILES/linux/gnome/
 }
+
+python3.7 -m site &> /dev/null && PATH="$PATH:`python3.7 -m site --user-base`/bin"
