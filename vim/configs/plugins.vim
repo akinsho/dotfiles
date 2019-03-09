@@ -110,6 +110,7 @@ Plug 'whiteinge/diffconflicts'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/conflict-marker.vim'
+Plug 'rhysd/git-messenger.vim', Cond(has('nvim-0.4.0'))
 " Text Objects {{{1
 " =====================
 Plug 'bkad/CamelCaseMotion'
