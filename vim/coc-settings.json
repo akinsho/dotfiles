@@ -26,7 +26,7 @@
   "diagnostic.virtualTextLineSeparator": " \\ ",
   "diagnostic.virtualText": false,
   "diagnostic.virtualTextLines": 3,
-  "coc.preferences.hoverTarget": "preview",
+  "coc.preferences.hoverTarget": "float",
   "diagnostic.virtualTextPrefix": "ﯦ ",
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
