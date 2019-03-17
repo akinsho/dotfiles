@@ -120,6 +120,9 @@ set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem
 " Temp/System
 set wildignore+=*.*~,*~
 set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
+if has('nvim-0.4')
+  set wildoptions=pum
+endif
 
 
 " ----------------------------------------------------------------------------
