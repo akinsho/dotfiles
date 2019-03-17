@@ -10,6 +10,7 @@ export RUNCOM=$DOTFILES/runcom/
 export PATH="$PATH:$(yarn global bin)"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/.npm/bin:$PATH"
 
 # GO ============================================================
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -63,6 +64,9 @@ fi
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+
+export N_PREFIX=$HOME/.n
+export PATH="$PATH:$N_PREFIX/bin" 
 
 # opam configuration
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
