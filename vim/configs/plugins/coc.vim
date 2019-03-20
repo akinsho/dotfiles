@@ -3,8 +3,8 @@ if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
 endif
 if has('nvim-0.4.0')
   let g:coc_force_debug = 1
-  hi link CocErrorFloat Pmenu
-  hi link CocWarningFloat Pmenu
+  " hi link CocErrorFloat Pmenu
+  " hi link CocWarningFloat Pmenu
 endif
 
 let g:coc_global_extensions = [ 
