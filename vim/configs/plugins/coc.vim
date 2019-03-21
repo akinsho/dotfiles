@@ -76,6 +76,7 @@ function! s:coc_init() abort
   if executable('bingo')
     let s:languageservers['golang'] = {
           \ "command": "bingo",
+          \ "args": ['--diagnostics-style=instant'],
           \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
           \ "filetypes": ["go"]
           \}
