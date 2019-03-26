@@ -420,6 +420,7 @@ key_bindings:
   - { key: Equals,   mods: Command, action: IncreaseFontSize             }
   - { key: Minus,    mods: Command, action: DecreaseFontSize             }
   - { key: K,        mods: Command, action: ClearHistory                 }
+  - { key: Q, mods: Control, chars: "\x11" }
   - { key: K,        mods: Command, chars: "\x0c"                        }
   - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
   - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
