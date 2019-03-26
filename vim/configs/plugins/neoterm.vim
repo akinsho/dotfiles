@@ -1,9 +1,9 @@
 ""---------------------------------------------------------------------------//
 " NEOTERM
 ""---------------------------------------------------------------------------//
-let g:neoterm_size            = '60'
+let g:neoterm_size            = '15'
 let g:neoterm_automap_keys    = ',tt'
-let g:neoterm_default_mod     = 'vertical'
+let g:neoterm_default_mod     = 'botright'
 let g:neoterm_autoscroll      = 1
 let g:neoterm_autoinsert      = 1
 let g:neoterm_autojump        = 0
