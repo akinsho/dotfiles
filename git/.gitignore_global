@@ -14,7 +14,6 @@ Session.vim
 *.com
 *.class
 *.dll
-*.exe
 *.o
 *.so
 .lvimrc
