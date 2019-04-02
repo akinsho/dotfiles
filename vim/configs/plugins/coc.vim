@@ -7,15 +7,15 @@ if has('nvim-0.4.0')
   " hi link CocWarningFloat Pmenu
 endif
 
+" \ 'coc-emmet',
+" \ 'coc-eslint',
 let g:coc_global_extensions = [ 
       \ 'coc-json',
       \ 'coc-tsserver',
       \ 'coc-rls',
       \ 'coc-snippets',
-      \ 'coc-emmet',
       \ 'coc-highlight',
       \ 'coc-css',
-      \ 'coc-eslint',
       \ 'coc-prettier',
       \ 'coc-jest',
       \ ]

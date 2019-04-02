@@ -54,12 +54,10 @@ endfunction
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
-    " Plug 'Xuyuanp/nerdtree-git-plugin'
-    " Plug 'scrooloose/nerdtree'
-    Plug 'Shougo/defx.nvim'
-    Plug 'kristijanhusak/defx-icons'
     Plug 'kristijanhusak/defx-git'
     Plug 'ludovicchabant/vim-gutentags'
+    Plug 'Shougo/defx.nvim', {'do': 'UpdateRemotePlugins'}
+    Plug 'kristijanhusak/defx-icons', {'do':'UpdateRemotePlugins'}
     Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
