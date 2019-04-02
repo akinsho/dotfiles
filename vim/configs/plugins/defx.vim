@@ -6,6 +6,11 @@ call defx#custom#column('filename', {
       \ 'directory_icon': '',
       \ 'opened_icon': '',
       \ })
+
+call defx#custom#column('mark', {
+      \ 'readonly_icon': '✗',
+      \ 'selected_icon': '✓',
+      \ })
 " Git
 if has_key(g:plugs, 'defx-git')
   let g:defx_git#indicators = {
@@ -65,7 +70,17 @@ function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> * defx#do_action('toggle_select_all')
   nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
-  nnoremap <silent><buffer><expr> <cr> defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <CR>
+        \ defx#is_directory() ?
+        \ defx#do_action('open') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><expr> C
+        \ defx#do_action('toggle_columns',
+        \                'mark:filename:type:size:time')
+  nnoremap <silent><buffer><expr> ;
+        \ defx#do_action('repeat')
+  nnoremap <silent><buffer><expr> <Space>
+        \ defx#do_action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> <c-p> defx#do_action('print')
   nnoremap <silent><buffer><expr> <c-r> defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <space> defx#do_action('toggle_select') . 'j'
