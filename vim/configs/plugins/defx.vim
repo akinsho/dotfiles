@@ -18,7 +18,6 @@ if has_key(g:plugs, 'defx-git')
         \ 'Deleted'   : '✖',
         \ 'Unknown'   : '?'
         \ }
-
 endif
 
 if has_key(g:plugs, 'defx-icons')

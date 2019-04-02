@@ -214,6 +214,7 @@ function! LightlineFilename()
         \ fname == '__Tagbar__' ? '' :
         \ fname =~ '__Gundo\|NERD_tree' ? '' :
         \ s:is_ft('ctrlsf') ? '' :
+        \ s:is_ft('defx') ? '' :
         \ s:is_ft('vimfiler') ? vimfiler#get_status_string() :
         \ s:is_ft('unite') ? unite#get_status_string() :
         \ s:is_ft('vimshell') ? vimshell#get_status_string() :
@@ -257,7 +258,7 @@ endfunction
 
 function! LightlineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD\|defx' && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ' '
       let _ = fugitive#head()
       return strlen(_) ? mark._ : ''
