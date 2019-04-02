@@ -2,35 +2,35 @@ if !has_key(g:plugs, 'defx.nvim')
   finish
 endif
 
-" call defx#custom#column('filename', {
-"       \ 'directory_icon': '⯈',
-"       \ 'opened_icon': '⯆',
-"       \ })
+call defx#custom#column('filename', {
+      \ 'directory_icon': '',
+      \ 'opened_icon': '',
+      \ })
 " Git
-" let g:defx_git#indicators = {
-"       \ 'Modified'  : '✹',
-"       \ 'Staged'    : '✚',
-"       \ 'Untracked' : '✭',
-"       \ 'Renamed'   : '➜',
-"       \ 'Unmerged'  : '═',
-"       \ 'Ignored'   : '☒',
-"       \ 'Deleted'   : '✖',
-"       \ 'Unknown'   : '?'
-"       \ }
-" let g:defx_git#column_length = 1
-" let g:defx_git#show_ignored = 0
-" let g:defx_git#raw_mode = 0
-" " Icons
+let g:defx_git#indicators = {
+      \ 'Modified'  : '✹',
+      \ 'Staged'    : '✚',
+      \ 'Untracked' : '✭',
+      \ 'Renamed'   : '➜',
+      \ 'Unmerged'  : '═',
+      \ 'Ignored'   : '☒',
+      \ 'Deleted'   : '✖',
+      \ 'Unknown'   : '?'
+      \ }
+
+" Icons
 " let g:defx_icons_column_length = 2
-let g:defx_icons_directory_icon = ''
+let g:defx_icons_directory_icon = ''
+let g:defx_icons_parent_icon = ''
 let g:defx_icons_mark_icon = '*'
-let g:defx_icons_parent_icon = ''
 let g:defx_icons_default_icon = ''
 let g:defx_icons_directory_symlink_icon = ''
+
 " Options below are applicable only when using "tree" feature
-let g:defx_icons_root_opened_tree_icon = ''
-let g:defx_icons_nested_opened_tree_icon = ''
-let g:defx_icons_nested_closed_tree_icon = ''
+let g:defx_icons_root_opened_tree_icon = ''
+let g:defx_icons_nested_opened_tree_icon = ''
+let g:defx_icons_nested_closed_tree_icon = ''
+
 " Speeds up defx massively
 let g:defx_icons_enable_syntax_highlight = 0
 
@@ -43,6 +43,8 @@ function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> m defx#do_action('move')
   nnoremap <silent><buffer><expr> p defx#do_action('paste')
   nnoremap <silent><buffer><expr> r defx#do_action('rename')
+  nnoremap <silent><buffer><expr> o defx#do_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> O defx#do_action('open_tree_recursive')
   nnoremap <silent><buffer><expr> d defx#do_action('remove_trash')
   nnoremap <silent><buffer><expr> l defx#do_action('open_directory')
   nnoremap <silent><buffer><expr> E defx#do_action('open', 'vsplit')
