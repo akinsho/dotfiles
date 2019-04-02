@@ -43,7 +43,8 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_enable_syntax_highlight = 0
 endif
 
-nnoremap <silent><C-N> :Defx -split=vertical -winwidth=35 -direction=topleft -columns=git:icons:filename:type -toggle -search=`expand('%:p')` `getcwd()`<CR>
+nnoremap <silent><C-N>
+      \ :Defx -split=vertical -winwidth=35 -direction=topleft -sort="Time" -columns=git:icons:filename:type -toggle -search=`expand('%:p')` `getcwd()`<CR>
 
 autocmd vimrc FileType defx call s:defx_mappings()
 

@@ -55,7 +55,7 @@ endfunction
       \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'Shougo/defx.nvim', {'do': 'UpdateRemotePlugins'}
+    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
     " NOTE: these are slow in large repositories
     " Plug 'kristijanhusak/defx-icons', {'do':'UpdateRemotePlugins'}
     " Plug 'kristijanhusak/defx-git', { 'do': 'UpdateRemotePlugins' }
