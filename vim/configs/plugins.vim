@@ -58,7 +58,8 @@ endfunction
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
     " NOTE: these are slow in large repositories
     " Plug 'kristijanhusak/defx-icons', {'do':'UpdateRemotePlugins'}
-    " Plug 'kristijanhusak/defx-git', { 'do': 'UpdateRemotePlugins' }
+    Plug 'kristijanhusak/defx-git', { 'do': 'UpdateRemotePlugins' }
+
     Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
@@ -70,7 +71,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
-Plug 'mtth/scratch.vim', { 'on': ['Scratch', 'ScratchInsert', 'ScratchPreview', 'ScratchSelection'] }
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
