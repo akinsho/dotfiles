@@ -46,6 +46,7 @@ endif
 nnoremap <silent><C-N> :call OpenDefx()<CR>
 function! OpenDefx() abort
   let g:defx_open_path = getcwd()
+  " \ -resume
   execute('Defx
         \ -columns=git:icons:filename:type
         \ -buffer-name=""
@@ -56,7 +57,6 @@ function! OpenDefx() abort
         \ -toggle
         \ -sort="Time"
         \ -search=`expand("%:p")`
-        \ -resume
         \ `g:defx_open_path`')
 endfunction
 
