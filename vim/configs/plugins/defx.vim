@@ -43,8 +43,22 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_enable_syntax_highlight = 0
 endif
 
-nnoremap <silent><C-N>
-      \ :Defx -split=vertical -winwidth=35 -direction=topleft -sort="Time" -columns=git:icons:filename:type -toggle -search=`expand('%:p')` `getcwd()`<CR>
+nnoremap <silent><C-N> :call OpenDefx()<CR>
+function! OpenDefx() abort
+  let g:defx_open_path = getcwd()
+  execute('Defx
+        \ -columns=git:icons:filename:type
+        \ -buffer-name=""
+        \ -show_ignored_files
+        \ -split=vertical
+        \ -winwidth=35
+        \ -direction=topleft
+        \ -toggle
+        \ -sort="Time"
+        \ -search=`expand("%:p")`
+        \ -resume
+        \ `g:defx_open_path`')
+endfunction
 
 autocmd vimrc FileType defx call s:defx_mappings()
 

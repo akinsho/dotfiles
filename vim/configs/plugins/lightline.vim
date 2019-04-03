@@ -275,7 +275,7 @@ function! LightlineMode()
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
         \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
-        \ &ft ==? 'defx' ? '⌨' :
+        \ &ft ==? 'defx' ? 'Defx ⌨' :
         \ &ft == 'ctrlsf' ? 'CtrlSF 🔍' :
         \ &ft == 'vim-plug' ? 'vim-plug ⚉':
         \ &ft == 'help' ? 'help ':
