@@ -27,6 +27,7 @@ nmap <Leader>i <Plug>(go-info)
 " Open Alternate files
 " ---------------------------------------------------
 nnoremap <leader>a  :A<CR>
+nnoremap <leader>A  :A!<CR>
 nnoremap <leader>av :AV<CR>
 nnoremap <leader>as :AS<CR>
 nnoremap <leader>at :AT<CR>
