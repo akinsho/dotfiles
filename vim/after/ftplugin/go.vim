@@ -32,6 +32,8 @@ nnoremap <leader>av :AV<CR>
 nnoremap <leader>as :AS<CR>
 nnoremap <leader>at :AT<CR>
 
+nnoremap <silent><leader>fs :GoFillStruct<CR>
+
 "run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
