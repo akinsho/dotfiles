@@ -19,6 +19,24 @@ call defx#custom#column('mark', {
       \ 'readonly_icon': '✗',
       \ 'selected_icon': '✓',
       \ })
+
+function! s:get_tree_width()
+  return &columns / 5
+endfunction
+
+call defx#custom#option('_', {
+      \ 'columns': 'git:icons:filename:type',
+      \ 'buffer_name':'',
+      \ 'root_marker':'Current: ',
+      \ 'show_ignored_files': 1,
+      \ 'split' : 'vertical',
+      \ 'winwidth': s:get_tree_width(),
+      \ 'direction': 'topleft',
+      \ 'toggle': 1,
+      \ 'sort': 'Time',
+      \ 'search': expand('%:p')
+      \})
+
 " Git
 if has_key(g:plugs, 'defx-git')
   let g:defx_git#indicators = {
@@ -52,23 +70,10 @@ endif
 
 nnoremap <silent><C-N> :call OpenDefx()<CR>
 function! OpenDefx() abort
-  let g:defx_open_path = getcwd()
-  " \ -resume
-  execute('Defx
-        \ -columns=git:icons:filename:type
-        \ -buffer-name=""
-        \ -root-marker="Current: "
-        \ -show_ignored_files
-        \ -split=vertical
-        \ -winwidth=`&columns / 5`
-        \ -direction=topleft
-        \ -toggle
-        \ -sort=Time
-        \ -search=`expand("%:p")`
-        \ `g:defx_open_path`')
+  execute('Defx `getcwd()`')
 endfunction
 
-autocmd vimrc FileType defx call s:defx_mappings()
+autocmd! FileType defx call s:defx_mappings()
 
 function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> c defx#do_action('copy')
