@@ -18,6 +18,7 @@ let g:coc_global_extensions = [
       \ 'coc-css',
       \ 'coc-prettier',
       \ 'coc-jest',
+      \ 'coc-ultisnips'
       \ ]
 
 " Run jest for current project
