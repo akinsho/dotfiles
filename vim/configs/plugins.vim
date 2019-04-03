@@ -103,7 +103,7 @@ Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] }
 Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
-Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot', { 'tag': 'v3.7.0' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main',
       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
 "Git {{{1
