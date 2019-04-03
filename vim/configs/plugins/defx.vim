@@ -2,6 +2,14 @@ if !has_key(g:plugs, 'defx.nvim')
   finish
 endif
 
+function! DefxRoot(path) abort
+  return fnamemodify(a:path, ':t')
+endfunction
+
+call defx#custom#source('file', {
+      \ 'root': 'DefxRoot',
+      \})
+
 call defx#custom#column('filename', {
       \ 'directory_icon': '',
       \ 'opened_icon': '',
@@ -38,7 +46,6 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_root_opened_tree_icon = ''
   let g:defx_icons_nested_opened_tree_icon = ''
   let g:defx_icons_nested_closed_tree_icon = ''
-
   " Speeds up defx massively
   let g:defx_icons_enable_syntax_highlight = 0
 endif
@@ -50,12 +57,13 @@ function! OpenDefx() abort
   execute('Defx
         \ -columns=git:icons:filename:type
         \ -buffer-name=""
+        \ -root-marker="Current: "
         \ -show_ignored_files
         \ -split=vertical
-        \ -winwidth=35
+        \ -winwidth=`&columns / 5`
         \ -direction=topleft
         \ -toggle
-        \ -sort="Time"
+        \ -sort=Time
         \ -search=`expand("%:p")`
         \ `g:defx_open_path`')
 endfunction
@@ -97,8 +105,6 @@ function! s:defx_mappings() abort
         \                'mark:filename:type:size:time')
   nnoremap <silent><buffer><expr> ;
         \ defx#do_action('repeat')
-  nnoremap <silent><buffer><expr> <Space>
-        \ defx#do_action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> <c-p> defx#do_action('print')
   nnoremap <silent><buffer><expr> <c-r> defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <space> defx#do_action('toggle_select') . 'j'
