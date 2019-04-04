@@ -30,7 +30,7 @@ call defx#custom#option('_', {
       \ 'root_marker':'Current: ',
       \ 'show_ignored_files': 1,
       \ 'split' : 'vertical',
-      \ 'winwidth': s:get_tree_width(),
+      \ 'winwidth': 35,
       \ 'direction': 'topleft',
       \ 'toggle': 1,
       \ 'sort': 'Time',
