@@ -127,6 +127,7 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
       \ | Plug 'coderifous/textobj-word-column.vim'
+      \ | Plug 'machakann/vim-textobj-functioncall'
 "Search Tools {{{1
 "=======================
 Plug 'dyng/ctrlsf.vim'
@@ -137,8 +138,7 @@ Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
-Plug 'euclio/vim-markdown-composer',
-      \ Cond(!exists('g:gui_oni'), { 'for': 'markdown', 'do': function('BuildComposer') })
+Plug 'iamcco/markdown-preview.nvim', { 'do': {->  mkdp#util#install() }, 'for': 'markdown', 'on': 'MarkdownPreview' }
 Plug 'heavenshell/vim-jsdoc', {
       \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
       \ 'on': 'JSDoc'

@@ -81,7 +81,7 @@ function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> o
         \ defx#is_directory() ?
         \ defx#do_action('open_or_close_tree') :
-        \ defx#do_action('multi', ['edit', 'quit'])
+        \ defx#do_action('multi', ['drop', 'quit'])
   nnoremap <silent><buffer><expr> O defx#do_action('open_tree_recursive')
   nnoremap <silent><buffer><expr> d defx#do_action('remove_trash')
   nnoremap <silent><buffer><expr> l defx#do_action('open_directory')
