@@ -20,21 +20,15 @@ call defx#custom#column('mark', {
       \ 'selected_icon': '✓',
       \ })
 
-function! s:get_tree_width()
-  return &columns / 4
-endfunction
-
 call defx#custom#option('_', {
       \ 'columns': 'git:icons:filename:type',
       \ 'buffer_name':'',
       \ 'root_marker':'Current: ',
       \ 'show_ignored_files': 1,
       \ 'split' : 'vertical',
-      \ 'winwidth': 35,
       \ 'direction': 'topleft',
       \ 'toggle': 1,
       \ 'sort': 'Time',
-      \ 'search': expand('%:p')
       \})
 
 " Git
@@ -70,7 +64,11 @@ endif
 
 nnoremap <silent><C-N> :call OpenDefx()<CR>
 function! OpenDefx() abort
-  execute('Defx `getcwd()`')
+  let g:defx_open_path = getcwd()
+  execute('Defx
+        \ -winwidth=`&columns / 5`
+        \ -search=`expand("%:p")`
+        \ `g:defx_open_path`')
 endfunction
 
 autocmd! FileType defx call s:defx_mappings()
