@@ -21,7 +21,7 @@ call defx#custom#column('mark', {
       \ })
 
 function! s:get_tree_width()
-  return &columns / 5
+  return &columns / 4
 endfunction
 
 call defx#custom#option('_', {
