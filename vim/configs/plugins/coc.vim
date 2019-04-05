@@ -3,13 +3,9 @@ if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
 endif
 if has('nvim-0.4.0')
   let g:coc_force_debug = 1
-  " hi link CocErrorFloat Pmenu
-  " hi link CocWarningFloat Pmenu
 endif
 
-" \ 'coc-emmet',
-" \ 'coc-eslint',
-let g:coc_global_extensions = [ 
+call coc#add_extension(
       \ 'coc-json',
       \ 'coc-tsserver',
       \ 'coc-rls',
@@ -18,8 +14,9 @@ let g:coc_global_extensions = [
       \ 'coc-css',
       \ 'coc-prettier',
       \ 'coc-jest',
-      \ 'coc-ultisnips'
-      \ ]
+      \ 'coc-ultisnips',
+      \ 'coc-eslint',
+      \)
 
 " Run jest for current project
 command! -nargs=0 Jest :call  CocActionAsync('runCommand', 'jest.projectTest')
@@ -82,19 +79,6 @@ function! s:coc_init() abort
           \ "filetypes": ["go"]
           \}
   endif
-
-  " if executable('go-langserver')
-  "   let s:languageservers['golang'] = {
-  "         \ "command": "go-langserver",
-  "         \ "filetypes": ["go"],
-  "         \ "revealOutputChannelOn": "never",
-  "         \ "initializationOptions": {
-  "         \   "gocodeCompletionEnabled": v:true,
-  "         \   "diagnosticsEnabled": v:true,
-  "         \   "lintTool": "golint"
-  "         \ }
-  "         \}
-  " endif
 
   " let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
   " if filereadable(s:reason_language_server)
