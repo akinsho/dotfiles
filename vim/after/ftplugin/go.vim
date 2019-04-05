@@ -18,11 +18,11 @@ highlight! default link goErr WarningMsg |
 " ---------------------------------------------------
 " VIM-GO !!!
 " ---------------------------------------------------
-nmap <leader>t  <Plug>(go-test)
-nmap <Leader>d <Plug>(go-doc)
-nmap <leader>r  <Plug>(go-run)
-nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-nmap <Leader>i <Plug>(go-info)
+nmap <localleader>t  <Plug>(go-test)
+nmap <localleader>d <Plug>(go-doc)
+nmap <localleader>r  <Plug>(go-run)
+nmap <localleader>b :<C-u>call <SID>build_go_files()<CR>
+nmap <localleader>i <Plug>(go-info)
 " ---------------------------------------------------
 " Open Alternate files
 " ---------------------------------------------------
