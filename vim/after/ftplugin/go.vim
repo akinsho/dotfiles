@@ -18,8 +18,8 @@ highlight! default link goErr WarningMsg |
 " ---------------------------------------------------
 " VIM-GO !!!
 " ---------------------------------------------------
+nmap <leader>d <Plug>(go-doc)
 nmap <localleader>t  <Plug>(go-test)
-nmap <localleader>d <Plug>(go-doc)
 nmap <localleader>r  <Plug>(go-run)
 nmap <localleader>b :<C-u>call <SID>build_go_files()<CR>
 nmap <localleader>i <Plug>(go-info)
