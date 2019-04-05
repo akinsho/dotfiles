@@ -49,7 +49,6 @@ endfunction
   if !exists('g:gui_oni')
     Plug 'Shougo/neco-vim', { 'for': 'vim' },
     Plug 'neoclide/coc-neco', { 'for': 'vim' },
-    " Plug 'neoclide/coc.nvim', {'do': {-> coc#util#install()}}
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
@@ -139,7 +138,7 @@ Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
-Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': {-> mkdp#util#install()}, 'for': 'markdown', 'on': 'MarkdownPreview' }
 Plug 'heavenshell/vim-jsdoc', {
       \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
       \ 'on': 'JSDoc'
