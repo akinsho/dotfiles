@@ -33,6 +33,7 @@ nnoremap <leader>as :AS<CR>
 nnoremap <leader>at :AT<CR>
 
 nnoremap <silent><leader>fs :GoFillStruct<CR>
+nnoremap <silent><leader>er :GoIfErr<CR>
 
 "run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
