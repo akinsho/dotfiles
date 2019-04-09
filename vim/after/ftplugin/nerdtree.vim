@@ -1,3 +1,6 @@
+if !has_key(g:plugs, "nerdtree.vim")
+  finish
+endif
 " Bookmark shortcut
 nnoremap <silent> <c-b> :Bookmark<CR>
 
