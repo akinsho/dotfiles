@@ -4,7 +4,6 @@
     "javascript": "javascriptreact"
   },
   "typescript.suggestionActions.enabled": true,
-  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.preferences.colorSupport": true,
   "tsserver.enableJavascript": false,
   "emmet.showAbbreviationSuggestions": true,
