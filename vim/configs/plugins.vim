@@ -59,7 +59,6 @@ endfunction
     " NOTE: these are slow in large repositories
     Plug 'kristijanhusak/defx-icons'
     Plug 'kristijanhusak/defx-git'
-
     Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
 Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
@@ -138,6 +137,7 @@ Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
+Plug 'lambdalisue/vim-backslash' 
 Plug 'iamcco/markdown-preview.nvim', { 'do': {-> mkdp#util#install()}, 'for': 'markdown', 'on': 'MarkdownPreview' }
 Plug 'heavenshell/vim-jsdoc', {
       \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],

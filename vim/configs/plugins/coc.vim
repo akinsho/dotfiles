@@ -81,8 +81,8 @@ function! s:coc_init() abort
   "         \ 'filetypes': ['reason'],
   "         \ 'settings': {
   "         \  'reason_language_server': {
-  "         \    'build_system_override_by_root': 'dune:esy',
   "         \    'per_value_codelens': v:true,
+  "         \    'useOldDuneProcess': v:true,
   "         \   }
   "         \ }
   "         \}
