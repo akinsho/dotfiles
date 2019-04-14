@@ -21,7 +21,7 @@ call defx#custom#column('mark', {
       \ })
 
 call defx#custom#option('_', {
-      \ 'columns': 'git:icons:filename:type',
+      \ 'columns': 'indent:git:icons:filename:type',
       \ 'buffer_name':'',
       \ 'root_marker':'Current: ',
       \ 'show_ignored_files': 1,
@@ -47,17 +47,11 @@ endif
 
 if has_key(g:plugs, 'defx-icons')
   " Icons
-  " let g:defx_icons_column_length = 2
-  let g:defx_icons_directory_icon = ''
-  let g:defx_icons_parent_icon = ''
+  let g:defx_icons_column_length = 2
   let g:defx_icons_mark_icon = '*'
   let g:defx_icons_default_icon = ''
   let g:defx_icons_directory_symlink_icon = ''
 
-  " Options below are applicable only when using "tree" feature
-  let g:defx_icons_root_opened_tree_icon = ''
-  let g:defx_icons_nested_opened_tree_icon = ''
-  let g:defx_icons_nested_closed_tree_icon = ''
   " Speeds up defx massively
   let g:defx_icons_enable_syntax_highlight = 0
 endif

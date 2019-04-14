@@ -5,6 +5,11 @@ if has('nvim-0.4.0')
   let g:coc_force_debug = 1
 endif
 
+augroup coc_commands
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
+augroup END
+
 call coc#add_extension(
       \ 'coc-json',
       \ 'coc-tsserver',
@@ -17,18 +22,6 @@ call coc#add_extension(
       \ 'coc-ultisnips',
       \ 'coc-eslint',
       \)
-
-" Run jest for current project
-command! -nargs=0 Jest :call  CocActionAsync('runCommand', 'jest.projectTest')
-
-" Run jest for current file
-command! -nargs=0 JestCurrent :call  CocActionAsync('runCommand', 'jest.fileTest', ['%'])
-
-" Run jest for current test
-nnoremap <leader>te :call CocActionAsync('runCommand', 'jest.singleTest')<CR>
-
-" Init jest in current cwd, require global jest command exists
-command! JestInit :call CocActionAsync('runCommand', 'jest.init')
 
 " FIXME: use new g:coc_user_config setting add these vars
 function! s:coc_init() abort
