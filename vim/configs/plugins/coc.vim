@@ -5,11 +5,6 @@ if has('nvim-0.4.0')
   let g:coc_force_debug = 1
 endif
 
-augroup coc_commands
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
-augroup END
-
 call coc#add_extension(
       \ 'coc-json',
       \ 'coc-tsserver',
@@ -93,9 +88,11 @@ function! s:coc_init() abort
   endif
 endfunction
 
-augroup InitCoc
+augroup coc_commands
   autocmd!
   autocmd VimEnter * call s:coc_init()
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
 augroup End
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -123,6 +120,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> <localleader>dc <Plug>(coc-declaration)
 nmap <silent> <localleader>y <Plug>(coc-type-definition)
 nmap <silent> <localleader>i <Plug>(coc-implementation)
 nmap <silent> <localleader>r <Plug>(coc-references)

@@ -650,7 +650,7 @@ function! ToggleColorColumn()
 endfunction
 nnoremap <F5> :call ToggleColorColumn()<CR>
 "Re-indent pasted text
-nnoremap p p=`]<c-o>
+" nnoremap p p=`]<c-o>
 nnoremap P P=`]<c-o>
 " ----------------------------------------------------------------------------
 " Profile
