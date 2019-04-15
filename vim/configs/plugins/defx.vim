@@ -53,7 +53,7 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_directory_symlink_icon = ''
 
   " Speeds up defx massively
-  let g:defx_icons_enable_syntax_highlight = 0
+  let g:defx_icons_enable_syntax_highlight = 1
 endif
 
 nnoremap <silent><C-N> :call OpenDefx()<CR>

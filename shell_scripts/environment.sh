@@ -26,10 +26,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=$PATH:$(go env GOPATH)/bin
   fi
 
-  # # Android SDK
-  # export ANDROID_HOME=$HOME/Library/Android/sdk
-  # export PATH=$PATH:$ANDROID_HOME/tools
-  # export PATH=$PATH:$ANDROID_HOME/platform-tools
 fi
 if [ -d "$HOME/bin" ] ; then
   PATH="$HOME/bin:$PATH"
