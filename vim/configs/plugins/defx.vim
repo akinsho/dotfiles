@@ -65,9 +65,21 @@ function! OpenDefx() abort
         \ `g:defx_open_path`')
 endfunction
 
-autocmd! FileType defx call s:defx_mappings()
+function! s:defx_context_menu() abort
+  let l:actions = ['new_multiple_files', 'rename', 'copy', 'move', 'paste', 'remove']
+  let l:selection = confirm('Action?', "&New file/directory\n&Rename\n&Copy\n&Move\n&Paste\n&Delete")
+  silent exe 'redraw'
+
+  return feedkeys(defx#do_action(l:actions[l:selection - 1]))
+endfunction
+
+augroup DefxCommands
+  au!
+  autocmd! FileType defx call s:defx_mappings()
+augroup END
 
 function! s:defx_mappings() abort
+  nnoremap <silent><buffer>M :call <sid>defx_context_menu()<CR>
   nnoremap <silent><buffer><expr> c defx#do_action('copy')
   nnoremap <silent><buffer><expr> m defx#do_action('move')
   nnoremap <silent><buffer><expr> p defx#do_action('paste')
