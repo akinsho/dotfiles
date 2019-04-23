@@ -89,7 +89,7 @@ function! s:defx_mappings() abort
         \ defx#do_action('open_or_close_tree') :
         \ defx#do_action('multi', ['drop', 'quit'])
   nnoremap <silent><buffer><expr> O defx#do_action('open_tree_recursive')
-  nnoremap <silent><buffer><expr> d defx#do_action('remove_trash')
+  nnoremap <silent><buffer><expr> d defx#do_action('remove')
   nnoremap <silent><buffer><expr> l defx#do_action('open_directory')
   nnoremap <silent><buffer><expr> v defx#do_action('open', 'vsplit')
   nnoremap <silent><buffer><expr> P defx#do_action('open', 'pedit')

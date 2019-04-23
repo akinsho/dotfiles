@@ -114,6 +114,7 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'rhysd/git-messenger.vim', Cond(has('nvim-0.4.0'))
 " Text Objects {{{1
 " =====================
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
@@ -148,8 +149,8 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 "===============================
 if !exists('g:gui_oni')
   Plug 'joshdick/onedark.vim'
-  Plug 'haishanh/night-owl.vim'
-  Plug 'kaicataldo/material.vim'
+  " Plug 'haishanh/night-owl.vim'
+  " Plug 'kaicataldo/material.vim'
 endif
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
