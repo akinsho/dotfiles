@@ -20,7 +20,7 @@
   "diagnostic.refreshOnInsertMode": true,
   "suggest.detailField": "menu",
   "javascript.referencesCodeLens.enable": true,
-  "codeLens.enable": true,
+  "codeLens.enable": false,
   "codeLens.separator": "‣",
   "suggest.echodocSupport": true,
   "suggest.fixInsertedWord": true,
