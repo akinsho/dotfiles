@@ -157,7 +157,7 @@ command! CleanBufferList call s:wipe_buffers_without_files()
 " See: https://github.com/tpope/vim-fugitive/issues/503
 augroup CleanBufferList
   au!
-  autocmd BufWrite,ShellCmdPost * call s:wipe_buffers_without_files()
+  " autocmd BufWrite,ShellCmdPost * call s:wipe_buffers_without_files()
 augroup END
 
 " Hide the colorcolumn when there isn't enough space

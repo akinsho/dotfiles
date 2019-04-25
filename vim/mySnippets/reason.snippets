@@ -81,3 +81,14 @@ endsnippet
 snippet show "show"
 [@deriving show]
 endsnippet
+
+snippet comp "Revery component" b
+open Revery_UI;
+
+let component = React.component("${1:Name}");
+
+let createElement = (~children as _, ()) => component(hooks, (
+  hooks,
+  <View><Text text="hello world" /></View>
+));
+endsnippet
