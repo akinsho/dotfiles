@@ -87,8 +87,8 @@ open Revery_UI;
 
 let component = React.component("${1:Name}");
 
-let createElement = (~children as _, ()) => component(hooks, (
+let createElement = (~children, ()) => component(hooks => (
   hooks,
-  <View><Text text="hello world" /></View>
+  <View>...children</View>
 ));
 endsnippet
