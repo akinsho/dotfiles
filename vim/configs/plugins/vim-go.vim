@@ -3,6 +3,9 @@
 "---------------------------------------------------------------------------//
 " "auto format with goimports as well as gofmt
 let g:go_fmt_command                    = "goimports"
+let g:go_fmt_options = {
+  \ 'goimports': '-local github.com/monzo/wearedev',
+  \ }
 
 let g:go_def_mode                       = 'gopls'
 let g:go_term_height                    = 30
