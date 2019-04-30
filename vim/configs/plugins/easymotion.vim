@@ -21,5 +21,5 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 nnoremap <leader>/ /
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-map  <leader>n <Plug>(easymotion-next)
-map  <leader>N <Plug>(easymotion-prev)
+" map  <leader>n <Plug>(easymotion-next)
+" map  <leader>N <Plug>(easymotion-prev)
