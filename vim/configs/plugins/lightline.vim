@@ -18,7 +18,7 @@ let g:lightline = {
       \   'right': [
       \     [ 'fugitive', 'gitgutter'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \     [ 'lsp' ],
+      \     [ 'lsp', 'current_function' ],
       \     ['lineinfo'],
       \     ['csv']
       \]
@@ -43,6 +43,7 @@ let g:lightline = {
       \   'mode': 'LightlineMode',
       \   'gitgutter': 'LightlineGitGutter',
       \   'lsp': 'coc#status',
+      \   'current_function': 'CocCurrentFunction',
       \ },
       \ 'component_expand': {
       \  'linter_checking': 'lightline#ale#checking',
@@ -82,6 +83,10 @@ function! s:tab_renderer(tabnr, highlight) abort
   " after the last tab fill with TabLineFill and reset tab page nr
   let l:component .= '%#TabLineFill#%T'
   return l:component
+endfunction
+
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
 endfunction
 
 function! LightlineMinimalTabs() abort
