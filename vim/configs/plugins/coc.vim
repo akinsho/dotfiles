@@ -91,8 +91,15 @@ endfunction
 augroup coc_commands
   autocmd!
   autocmd VimEnter * call s:coc_init()
+  autocmd ColorScheme * call s:coc_highlights() 
+
   autocmd CursorHold * silent call CocActionAsync('highlight')
   autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocActionAsync('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup End
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -143,18 +150,6 @@ function! s:coc_highlights() abort
   " highlight link CocWarningLine ALEWarningSign
   highlight CocCodeLens ctermfg=Gray guifg=#999999
 endfunction
-
-augroup CoCAutocommands
-  au!
-  autocmd ColorScheme * call s:coc_highlights() 
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocActionAsync('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
-  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-augroup END
-
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 vmap <leader>a  <Plug>(coc-codeaction-selected)
