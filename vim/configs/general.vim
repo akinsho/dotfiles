@@ -166,7 +166,11 @@ set wrap
 set wrapmargin=2
 set textwidth=80
 if exists('&signcolumn')
-  set signcolumn=yes "enables column that shows signs and error symbols
+  if has('nvim-0.4')
+    set signcolumn=yes:2 "nvim-0.4 - yes confirms showing the column and the specified size
+  else
+    set signcolumn=yes "enables column that shows signs and error symbols
+  endif
 endif
 set ruler
 set completeopt+=noinsert,noselect,longest
