@@ -6,6 +6,8 @@ if has('nvim-0.4.0')
 endif
 
 call coc#add_extension(
+      \ 'coc-gocode',
+      \ 'coc-tag',
       \ 'coc-json',
       \ 'coc-tsserver',
       \ 'coc-rls',
