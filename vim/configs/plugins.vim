@@ -139,7 +139,7 @@ Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','mark
 "Filetype Plugins {{{1
 "======================
 Plug 'lambdalisue/vim-backslash' 
-Plug 'iamcco/markdown-preview.nvim', { 'do': {-> mkdp#util#install()}, 'for': 'markdown', 'on': 'MarkdownPreview' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown', 'on': 'MarkdownPreview' }
 Plug 'heavenshell/vim-jsdoc', {
       \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
       \ 'on': 'JSDoc'
