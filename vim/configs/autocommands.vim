@@ -134,7 +134,7 @@ augroup UpdateVim
       source $MYGVIMRC | echo 'Source .gvimrc'
     endif
   endif
-  autocmd FocusLost * :wall
+  autocmd FocusLost * silent! wall
   autocmd VimResized * redraw!
   autocmd VimResized * wincmd =
   autocmd VimResized,WinNew,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
