@@ -33,28 +33,18 @@ function! Cond(cond, ...)
   return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
 endfunction
 
-function! BuildComposer(info)
-  if a:info.status !=# 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build --release
-    else
-      !cargo build --release --no-default-features --features json-rpc
-    endif
-  endif
-endfunction
-
 "================================
 " CORE {{{1
 "================================
   if !exists('g:gui_oni')
     Plug 'Shougo/neco-vim', { 'for': 'vim' },
     Plug 'neoclide/coc-neco', { 'for': 'vim' },
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
     Plug 'itchyny/lightline.vim'
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
-    Plug 'ludovicchabant/vim-gutentags'
+    " Plug 'ludovicchabant/vim-gutentags' "Using the LSP now not sure I need this
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
     " NOTE: these are slow in large repositories
     Plug 'kristijanhusak/defx-icons'

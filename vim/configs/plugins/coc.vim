@@ -65,6 +65,7 @@ function! s:coc_init() abort
     let s:languageservers['golang'] = {
           \ "command": "gopls",
           \ "filetypes": ["go"],
+          \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
           \}
   endif
 
