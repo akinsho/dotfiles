@@ -88,7 +88,6 @@ Plug 'tpope/vim-apathy'
 " ===========================
 "Syntax {{{1
 "============================
-Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] } 
 Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
