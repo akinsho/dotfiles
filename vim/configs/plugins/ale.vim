@@ -4,7 +4,6 @@
 let g:ale_lint_on_enter        = 1
 let g:ale_lint_on_insert_leave = 1
 let g:ale_fix_on_save          = 1
-let g:ale_lint_delay           = 400
 let g:ale_pattern_options      = {
       \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
       \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
@@ -17,8 +16,8 @@ let g:ale_fixers = {
       \ 'cpp': ['clang-format'],
       \'typescript':['prettier', 'tslint'],
       \'javascript':['prettier'], 
-      \'json':'prettier',
-      \'css':['prettier','stylelint'],
+      \'json':['prettier'],
+      \'css':['prettier'],
       \'less':['prettier', 'stylelint']
       \}
 

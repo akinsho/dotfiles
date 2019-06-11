@@ -10,7 +10,6 @@ let g:go_fmt_options = {
 let g:go_term_height                    = 30
 let g:go_term_width                     = 30
 let g:go_term_mode                      = "split"
-let g:go_list_type                      = "quickfix"
 let g:go_auto_type_info                 = 0
 let g:go_auto_sameids                   = 0
 let g:go_fmt_autosave                   = 1
@@ -27,6 +26,7 @@ let g:go_highlight_structs              = 1
 let g:go_highlight_operators            = 1
 let g:go_highlight_build_constraints    = 1
 let g:go_highlight_function_arguments   = 1
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave            = 1
+let g:go_metalinter_command             = "golangci-lint"
 "'vetshadow' - checks if variable names are shadowed
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'goconst','ineffassign']
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'goconst','ineffassign']

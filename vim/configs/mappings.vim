@@ -264,9 +264,9 @@ nnoremap <leader><leader> <c-^>
 " use ,gf to go to file in a vertical split
 nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
 " Mnemonic: Copy File path
-nnoremap <leader>cf :let @*=expand("%:p")<CR>
+nnoremap <silent><leader>cf :let @*=expand("%:p")<CR>
 " Mnemonic: Yank File path
-nnoremap <leader>yf :let @"=expand("%:p")<CR>
+nnoremap <silent><leader>yf :let @"=expand("%:p")<CR>
 "  force Vim to always present the relative path - fnamemodify(expand("%"), ":~:.")
 " Mnemonic: yank File Name
 nnoremap <leader>fn :let @"=fnamemodify(expand("%"), ":~:.")<CR>      
