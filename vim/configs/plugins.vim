@@ -44,7 +44,6 @@ endfunction
       \ | Plug 'maximbaz/lightline-ale'
       \ | Plug 'mengelbrecht/lightline-bufferline'
     Plug 'airblade/vim-rooter'
-    " Plug 'ludovicchabant/vim-gutentags' "Using the LSP now not sure I need this
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
     " NOTE: these are slow in large repositories
     Plug 'kristijanhusak/defx-icons'
