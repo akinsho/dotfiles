@@ -1,9 +1,6 @@
 if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
   finish
 endif
-if has('nvim-0.4.0')
-  let g:coc_force_debug = 1
-endif
 
 call coc#add_extension(
       \ 'coc-tag',
