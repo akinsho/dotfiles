@@ -58,10 +58,10 @@ endif
 
 nnoremap <silent><C-N> :call OpenDefx()<CR>
 function! OpenDefx() abort
-  let g:defx_open_path = getcwd()
+  let g:defx_open_path = expand("%:p:h")
+  " \ -search=`expand("%:p:h")`
   execute('Defx
         \ -winwidth=`&columns / 5`
-        \ -search=`expand("%:p")`
         \ `g:defx_open_path`')
 endfunction
 
