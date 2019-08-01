@@ -1,13 +1,8 @@
 {
-  "emmet.includeLanguages": {
-    "vue-html": "html",
-    "javascript": "javascriptreact"
-  },
   "typescript.suggestionActions.enabled": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.preferences.colorSupport": true,
   "tsserver.enableJavascript": false,
-  "emmet.showAbbreviationSuggestions": true,
   "list.normalMappings": {
     "t": "action:tabe",
     "v": "action:vsplit",
@@ -18,6 +13,7 @@
     "<C-t>": "action:tabe",
     "<C-w>": "command:wincmd k"
   },
+  "suggest.noselect": false,
   "suggest.detailField": "menu",
   "javascript.referencesCodeLens.enable": true,
   "codeLens.enable": false,
