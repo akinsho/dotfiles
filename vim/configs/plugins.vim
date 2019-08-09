@@ -72,7 +72,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
-Plug 'Shougo/echodoc.vim'
+" Plug 'Shougo/echodoc.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
