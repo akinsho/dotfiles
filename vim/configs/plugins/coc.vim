@@ -45,7 +45,7 @@ function! s:coc_init() abort
           \ 'command': 'ocaml-language-server',
           \ 'args': ['--stdio'],
           \ 'trace.server': 'verbose',
-          \ 'filetypes': ['ocaml', 'reason'],
+          \ 'filetypes': ['ocaml'],
           \}
   endif
 
@@ -66,20 +66,20 @@ function! s:coc_init() abort
           \}
   endif
 
-  " let s:reason_language_server = $HOME.'/reason-language-server/reason-language-server.exe'
-  " if filereadable(s:reason_language_server)
-  "   let s:languageservers['reason'] = {
-  "         \ 'command': s:reason_language_server,
-  "         \ 'trace.server': 'verbose',
-  "         \ 'filetypes': ['reason'],
-  "         \ 'settings': {
-  "         \  'reason_language_server': {
-  "         \    'per_value_codelens': v:true,
-  "         \    'useOldDuneProcess': v:true,
-  "         \   }
-  "         \ }
-  "         \}
-  " endif
+  let s:reason_language_server = $HOME.'/rls-linux/reason-language-server'
+  if filereadable(s:reason_language_server)
+    let s:languageservers['reason'] = {
+          \ 'command': s:reason_language_server,
+          \ 'trace.server': 'verbose',
+          \ 'filetypes': ['reason'],
+          \ 'settings': {
+          \  'reason_language_server': {
+          \    'per_value_codelens': v:true,
+          \    'useOldDuneProcess': v:true,
+          \   }
+          \ }
+          \}
+  endif
 
   if !empty(s:languageservers)
     call coc#config('languageserver', s:languageservers)
