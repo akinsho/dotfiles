@@ -76,7 +76,18 @@ endfunction
 augroup DefxCommands
   au!
   autocmd! FileType defx call s:defx_mappings()
+
 augroup END
+
+augroup defx
+    au!
+    au VimEnter * sil! au! FileExplorer *
+    au BufEnter * if s:isdir(expand('%')) | bd | exe 'Defx' | endif
+augroup END
+
+fu! s:isdir(dir) abort
+    return !empty(a:dir) && isdirectory(a:dir)
+endfu
 
 function! s:defx_mappings() abort
   nnoremap <silent><buffer>M :call <sid>defx_context_menu()<CR>
