@@ -180,6 +180,14 @@ nnoremap <silent> <localleader>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
+nmap <expr> <silent> <C-w> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(g:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
+
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocActionAsync('format')
 " Use `:Fold` for fold current buffer

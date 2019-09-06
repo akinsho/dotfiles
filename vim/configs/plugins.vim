@@ -36,26 +36,26 @@ endfunction
 "================================
 " CORE {{{1
 "================================
-  if !exists('g:gui_oni')
-    Plug 'Shougo/neco-vim', { 'for': 'vim' },
-    Plug 'neoclide/coc-neco', { 'for': 'vim' },
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'itchyny/lightline.vim'
-      \ | Plug 'maximbaz/lightline-ale'
-      \ | Plug 'mengelbrecht/lightline-bufferline'
-    Plug 'airblade/vim-rooter'
-    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-    " NOTE: these are slow in large repositories
-    Plug 'kristijanhusak/defx-icons'
-    Plug 'kristijanhusak/defx-git'
-    Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
+if !exists('g:gui_oni')
+  Plug 'Shougo/neco-vim', { 'for': 'vim' },
+  Plug 'neoclide/coc-neco', { 'for': 'vim' },
+  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'itchyny/lightline.vim'
+        \ | Plug 'maximbaz/lightline-ale'
+        \ | Plug 'mengelbrecht/lightline-bufferline'
+  Plug 'airblade/vim-rooter'
+  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  " NOTE: these are slow in large repositories
+  Plug 'kristijanhusak/defx-icons'
+  Plug 'kristijanhusak/defx-git'
+  Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
-Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
+" Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        \ | Plug 'junegunn/fzf.vim'
+      \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'cohama/lexima.vim'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
@@ -133,7 +133,7 @@ Plug 'heavenshell/vim-jsdoc', {
       \ 'on': 'JSDoc'
       \ }
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
-"Themes  {{{1
+""Themes  {{{1
 "===============================
 if !exists('g:gui_oni')
   Plug 'joshdick/onedark.vim'
@@ -150,5 +150,5 @@ endif
 
 " Load immediately {{{1
 call plug#load('vim-fat-finger')
-"}}}
+""}}}
 " vim:foldmethod=marker
