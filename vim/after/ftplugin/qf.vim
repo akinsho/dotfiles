@@ -17,7 +17,7 @@ set nobuflisted
 
 " Add the above commands to a list of commands to undo when switching out of 
 " the QF window, the < resets the value to the global value
-let b:undo_ftplugin .= "| setlocal wrap< relativenumber< number< buflisted< colorcolumn<"
+" let b:undo_ftplugin .= "| setlocal wrap< relativenumber< number< buflisted< colorcolumn<"
 
 if has('nvim')
   highlight clear QuickFixLine
@@ -73,17 +73,17 @@ else
 endif
 
 " replace all the mappings
-let b:undo_ftplugin .= "| execute 'nunmap <buffer> s'"
-      \ . "| execute 'nunmap <buffer> v'"
-      \ . "| execute 'nunmap <buffer> t'"
-      \ . "| execute 'nunmap <buffer> o'"
-      \ . "| execute 'nunmap <buffer> O'"
-      \ . "| execute 'nunmap <buffer> p'"
+" let b:undo_ftplugin .= "| execute 'nunmap <buffer> s'"
+"       \ . "| execute 'nunmap <buffer> v'"
+"       \ . "| execute 'nunmap <buffer> t'"
+"       \ . "| execute 'nunmap <buffer> o'"
+"       \ . "| execute 'nunmap <buffer> O'"
+"       \ . "| execute 'nunmap <buffer> p'"
 
 if !exists('b:src_buf') && !b:is_loc
   wincmd J
 endif
 
-let b:undo_ftplugin .=  "| unlet! b:qf_isLoc"
+" let b:undo_ftplugin .=  "| unlet! b:qf_isLoc"
 
 let &cpo = s:save_cpo
