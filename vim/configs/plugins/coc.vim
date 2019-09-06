@@ -50,14 +50,14 @@ function! s:coc_init() abort
           \}
   endif
 
-  if executable('flow-language-server')
-    let s:languageservers['flow'] = {
-          \ "command": "flow",
-          \ "args": ["lsp"],
-          \ "filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
-          \ "rootPatterns": [".flowconfig"]
-          \}
-  endif
+  " if executable('flow-language-server')
+  "   let s:languageservers['flow'] = {
+  "         \ "command": "flow",
+  "         \ "args": ["lsp"],
+  "         \ "filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
+  "         \ "rootPatterns": [".flowconfig"]
+  "         \}
+  " endif
 
   if executable('gopls')
     let s:languageservers['golang'] = {
