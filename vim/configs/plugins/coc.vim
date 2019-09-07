@@ -25,7 +25,7 @@ function! s:coc_init() abort
 
   if executable('lua-lsp')
     let s:languageservers['lua'] = {
-          \ 'command': 'lua-lsp'
+          \ 'command': 'lua-lsp',
           \ 'filetypes': ['lua']
           \}
   endif
@@ -136,7 +136,7 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
+  if (index(['help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
