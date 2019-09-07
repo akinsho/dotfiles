@@ -41,8 +41,8 @@ if !exists('g:gui_oni')
   Plug 'neoclide/coc-neco', { 'for': 'vim' },
   Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
   Plug 'itchyny/lightline.vim'
-        \ | Plug 'maximbaz/lightline-ale'
         \ | Plug 'mengelbrecht/lightline-bufferline'
+        " \ | Plug 'maximbaz/lightline-ale'
   Plug 'airblade/vim-rooter'
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
   " NOTE: these are slow in large repositories
@@ -90,7 +90,6 @@ Plug 'tpope/vim-apathy'
 Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
-Plug 'jparise/vim-graphql'
 Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main',
       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}

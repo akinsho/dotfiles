@@ -15,7 +15,8 @@ call coc#add_extension(
       \ 'coc-ultisnips',
       \ 'coc-eslint',
       \ 'coc-yank',
-      \ 'coc-flow'
+      \ 'coc-flow',
+      \ 'coc-vimlsp'
       \)
 
 " FIXME: use new g:coc_user_config setting add these vars
