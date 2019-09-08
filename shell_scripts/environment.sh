@@ -14,9 +14,10 @@ export PATH="$HOME/.npm/bin:$PATH"
 
 # GO ============================================================
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  export PATH=$PATH:/usr/local/go/bin
-  # FIXME: this is a brittle as it depends on this username
-  export PATH=$HOME/akin/.local/bin:$PATH
+    export GOPATH=$(go env GOPATH)
+    export PATH=$PATH:/usr/local/go/bin
+    export PATH=$PATH:$(go env GOPATH)/bin
+    export PATH=$HOME/.local/bin:$PATH
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
