@@ -47,8 +47,8 @@ endfunction
 xnoremap @ <Cmd><C-u>call ExecuteMacroOverVisualRange()<CR>
 "--------------------------------------------
 " Focus marked text by highlighting everything else as a comment
-xnoremap <silent> <cr> :<c-u>call <SID>Focus()<cr>
-nnoremap <silent> <cr>q :call <SID>Unfocus()<cr>
+" xnoremap <silent> <cr> :<c-u>call <SID>Focus()<cr>
+" nnoremap <silent> <cr>q :call <SID>Unfocus()<cr>
 
 function! s:Focus()
   let start = line("'<")
