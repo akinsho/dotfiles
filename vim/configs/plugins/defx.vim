@@ -62,6 +62,7 @@ function! OpenDefx() abort
   " \ -search=`expand("%:p:h")`
   execute('Defx
         \ -winwidth=`&columns / 5`
+        \ -resume
         \ `g:defx_open_path`')
 endfunction
 
