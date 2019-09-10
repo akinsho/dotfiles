@@ -63,6 +63,7 @@ function! OpenDefx() abort
   execute('Defx
         \ -winwidth=`&columns / 5`
         \ -resume
+        \ -search=`expand("%:p")` `getcwd()`
         \ `g:defx_open_path`')
 endfunction
 
