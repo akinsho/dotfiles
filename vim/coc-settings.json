@@ -24,7 +24,7 @@
   "diagnostic.virtualText": false,
   "diagnostic.virtualTextLines": 3,
   "coc.preferences.hoverTarget": "float",
-  "diagnostic.displayByAle": false,
+  "diagnostic.displayByAle": true,
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.refreshAfterSave": true,
   "diagnostic.virtualTextPrefix": "ﯦ ",

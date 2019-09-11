@@ -42,7 +42,7 @@ if !exists('g:gui_oni')
   Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
   Plug 'itchyny/lightline.vim'
         \ | Plug 'mengelbrecht/lightline-bufferline'
-        " \ | Plug 'maximbaz/lightline-ale'
+        \ | Plug 'maximbaz/lightline-ale'
   Plug 'airblade/vim-rooter'
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
   " NOTE: these are slow in large repositories
