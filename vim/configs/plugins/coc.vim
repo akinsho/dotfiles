@@ -91,7 +91,6 @@ endfunction
 augroup coc_commands
   autocmd!
   autocmd VimEnter * call s:coc_init()
-  autocmd ColorScheme * call s:coc_highlights() 
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
   autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
@@ -144,12 +143,10 @@ function! s:show_documentation()
 endfunction
 
 
-function! s:coc_highlights() abort
-  highlight link CocErrorHighlight SpellBad
-  " highlight link CocErrorLine CocErrorHighlight
-  " highlight link CocWarningLine ALEWarningSign
-  highlight CocCodeLens ctermfg=Gray guifg=#999999
-endfunction
+highlight CocErrorHighlight guifg=#E06C75 gui=underline
+highlight CocCodeLens ctermfg=Gray guifg=#999999
+" highlight link CocErrorLine CocErrorHighlight
+" highlight link CocWarningLine ALEWarningSign
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 vmap <leader>a  <Plug>(coc-codeaction-selected)
