@@ -126,10 +126,9 @@ nmap <silent> [c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> <localleader>dc <Plug>(coc-declaration)
-nmap <silent> <localleader>y <Plug>(coc-type-definition)
-nmap <silent> <localleader>i <Plug>(coc-implementation)
-nmap <silent> <localleader>r <Plug>(coc-references)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -160,15 +159,15 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> <localleader>cd  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <localleader>ce  :<C-u>CocList extensions<cr>
+nnoremap <silent> <localleader>a :<C-u>CocList diagnostics<cr>
 " Show commands
-nnoremap <silent> <localleader>cc  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <localleader>co  :<C-u>CocList outline<cr>
+nnoremap <silent> <localleader>c  :<C-u>CocList commands<cr>
+" Manage extensions
+" nnoremap <silent> <localleader>ce  :<C-u>CocList extensions<cr>
+" " Find symbol of current document
+" nnoremap <silent> <localleader>co  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <localleader>cs  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <localleader>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <localleader>cj  :<C-u>CocNext<CR>
 " Do default action for previous item.
