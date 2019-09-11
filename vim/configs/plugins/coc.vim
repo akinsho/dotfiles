@@ -145,8 +145,6 @@ endfunction
 
 highlight CocErrorHighlight guifg=#E06C75 gui=underline
 highlight CocCodeLens ctermfg=Gray guifg=#999999
-" highlight link CocErrorLine CocErrorHighlight
-" highlight link CocWarningLine ALEWarningSign
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 vmap <leader>a  <Plug>(coc-codeaction-selected)
