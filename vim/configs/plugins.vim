@@ -72,7 +72,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
-" Plug 'Shougo/echodoc.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
@@ -91,8 +90,8 @@ Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main',
-      \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
+" Plug 'styled-components/vim-styled-components', { 'branch': 'main',
+"       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
 "Git {{{1
 " ==============================
 Plug 'whiteinge/diffconflicts'
@@ -113,8 +112,6 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'whatyouhide/vim-textobj-xmlattr'
-      \ | Plug 'coderifous/textobj-word-column.vim'
-      \ | Plug 'machakann/vim-textobj-functioncall'
 "Search Tools {{{1
 "=======================
 Plug 'dyng/ctrlsf.vim'
@@ -136,8 +133,6 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 "===============================
 if !exists('g:gui_oni')
   Plug 'joshdick/onedark.vim'
-  " Plug 'haishanh/night-owl.vim'
-  " Plug 'kaicataldo/material.vim'
 endif
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
