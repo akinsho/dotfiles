@@ -46,7 +46,7 @@ if has('folding')
       highlight link MsgSeparator Comment
     endif
   endif
-    set foldlevelstart=10
+    set foldlevelstart=999
     if has('nvim')
       set foldmethod=syntax
     else
