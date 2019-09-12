@@ -2,7 +2,6 @@
   "typescript.suggestionActions.enabled": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.preferences.colorSupport": true,
-  "tsserver.enableJavascript": false,
   "list.normalMappings": {
     "t": "action:tabe",
     "v": "action:vsplit",
@@ -16,7 +15,7 @@
   "suggest.noselect": false,
   "suggest.detailField": "menu",
   "javascript.referencesCodeLens.enable": true,
-  "codeLens.enable": false,
+  "codeLens.enable": true,
   "codeLens.separator": "‣",
   "suggest.fixInsertedWord": true,
   "diagnostic.virtualTextLineSeparator": " \\ ",
