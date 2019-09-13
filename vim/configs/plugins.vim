@@ -37,8 +37,6 @@ endfunction
 " CORE {{{1
 "================================
 if !exists('g:gui_oni')
-  Plug 'Shougo/neco-vim', { 'for': 'vim' },
-  Plug 'neoclide/coc-neco', { 'for': 'vim' },
   Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
   Plug 'itchyny/lightline.vim'
         \ | Plug 'mengelbrecht/lightline-bufferline'
