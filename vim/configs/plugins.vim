@@ -48,7 +48,7 @@ if !exists('g:gui_oni')
   Plug 'kristijanhusak/defx-git'
   Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
-Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
+" Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'

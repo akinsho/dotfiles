@@ -33,6 +33,7 @@
   "signature.maxWindowHeight": 4,
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.previewAutoClose": true,
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
