@@ -51,6 +51,14 @@ function! s:coc_init() abort
           \}
   endif
 
+  if executable("elm-language-server")
+    let s:languageservers["elmLS"]   = {
+          \ "command": "elm-language-server",
+          \ "filetypes": ["elm"],
+          \ "rootPatterns": ["elm.json"],
+          \}
+  endif
+
   if executable('gopls')
     let s:languageservers['golang'] = {
           \ "command": "gopls",
