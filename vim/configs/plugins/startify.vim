@@ -1,18 +1,13 @@
 ""---------------------------------------------------------------------------//
 " STARTIFY
 ""---------------------------------------------------------------------------//
-let g:startify_list_order = [
-      \ ['   😸 My Sessions:'],
-      \ 'sessions',
-      \ [' → Recent'],
-      \ 'files',
-      \ [' → My Bookmarks:'],
-      \ 'bookmarks',
-      \ [' → Recent files in current directory:'],
-      \ 'dir',
-      \ ['  → Commands:'],
-      \ 'commands',
-      \ ]
+let g:startify_lists = [
+    \ { 'type': 'sessions',  'header': ['  😸 Sessions']       },
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \ ]
 
 let  g:startify_session_dir  = '~/.vim/session'
 
