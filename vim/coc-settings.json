@@ -34,6 +34,7 @@
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "snippets.ultisnips.directories": ["UltiSnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
