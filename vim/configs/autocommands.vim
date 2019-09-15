@@ -107,7 +107,7 @@ augroup end
 " ----------------------------------------------------------------------------
 augroup AutoSave
   autocmd!
-  autocmd TextChanged,InsertLeave <buffer>
+  autocmd CursorHold,CursorHoldI <buffer>
         \  if empty(&buftype) && !empty(bufname(''))
         \|   echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
         \|   silent! update
@@ -137,7 +137,6 @@ augroup UpdateVim
   autocmd FocusLost * silent! wall
   autocmd VimResized * redraw!
   autocmd VimResized * wincmd =
-  autocmd VimResized,WinNew,BufWinEnter,BufRead,BufEnter * call CheckColorColumn()
 augroup END
 " }}}
 

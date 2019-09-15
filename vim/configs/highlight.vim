@@ -8,16 +8,15 @@ endif
 function! ApplyUserHighlights() abort
   " Highlight cursor column onwards - kind of cool
   "---------------------------------------------------------------------------//
-  let &colorcolumn=join(range(81,999),",")
-  set colorcolumn=80
-  highlight link ColorColumn CursorLine
+  " let &colorcolumn=join(range(81,999),",")
+  " set colorcolumn=80
+  " highlight link ColorColumn CursorLine
   "---------------------------------------------------------------------------//
   " Highlight over 80 cols in red - moot now because -> prettier
   " Note: Match commands interact and this command prevents the command below from working
-  match Error /\%80v.\+/
 
   " Highlight VCS conflict markers
-  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  " match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
