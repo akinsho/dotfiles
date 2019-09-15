@@ -7,6 +7,7 @@ let g:go_fmt_options = {
   \ 'goimports': '-local github.com/monzo/wearedev',
   \ }
 
+let g:go_highlight_space_tab_error      = 1
 let g:go_term_height                    = 30
 let g:go_term_width                     = 30
 let g:go_term_mode                      = "split"
@@ -16,8 +17,10 @@ let g:go_fmt_autosave                   = 1
 let g:go_alternate_mode                 = "vsplit"
 let g:go_doc_keywordprg_enabled         = 0 "Stops auto binding K
 let g:go_highlight_types                = 1
-let g:go_highlight_fields               = 0
+let g:go_highlight_fields               = 1
+let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
+let g:go_highlight_generate_tags        = 1
 let g:go_def_reuse_buffer               = 1
 let g:go_highlight_functions            = 1
 let g:go_highlight_methods              = 1
