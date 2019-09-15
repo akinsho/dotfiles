@@ -210,28 +210,23 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 if !exists('g:gui_oni')
 set background=dark
-try
-  let g:onedark_terminal_italics = 1
-  augroup ColorExtend
-    autocmd!
-    autocmd ColorScheme * call onedark#extend_highlight(
-          \ "DiffChange", { "gui": "none", "cterm": "none" })
-  augroup END
-  colorscheme onedark
-catch
-  colorscheme material  
+  " let g:onedark_terminal_italics = 1
+  " augroup ColorExtend
+  "   autocmd!
+  "   autocmd ColorScheme * call onedark#extend_highlight(
+  "         \ "DiffChange", { "gui": "none", "cterm": "none" })
+  " augroup END
+  " colorscheme onedark
   " ========================
   " Night Owl
   " ========================
-  " colorscheme night-owl
-
+  colorscheme night-owl
   " ========================
   " ONE
   " ========================
   " let g:one_allow_italics = 1
   " colorscheme one
   " call one#highlight('Folded', 'db7093', 'none', 'bold')
-endtry
 endif
 
 "---------------------------------------------------------------------------//

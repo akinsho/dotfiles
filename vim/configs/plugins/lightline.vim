@@ -341,8 +341,9 @@ if exists('g:lightline')
 
   "Lightline bufferline Colors
   let s:bright_blue  = ['#A2E8F6', 58]
-  let s:tabline_background = ['#212129', 58]
-  let s:tabline_foreground = s:get_theme_background('Comment') "['#5A5E68', 59]
+ " OneDark colors for bufferline['#5A5E68', 59]
+  let s:tabline_background = ['#060F1F', 58]
+  let s:tabline_foreground = s:get_theme_background('Comment')
   let s:selected_background = s:get_theme_background('Normal')
 
 

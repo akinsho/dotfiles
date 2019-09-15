@@ -42,7 +42,6 @@ function! ApplyUserHighlights() abort
   highlight jsxAttrib cterm=italic,bold ctermfg=121
   highlight Type    gui=italic,bold cterm=italic,bold
   highlight jsThis ctermfg=224,gui=italic
-  highlight jsSuper ctermfg=13
   highlight Include gui=italic cterm=italic
   highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
   highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic

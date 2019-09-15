@@ -150,7 +150,8 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>ff  <Plug>(coc-fix-current)
+nmap <leader>rf  <Plug>(coc-refactor)
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 " Remap for do codeAction of current line

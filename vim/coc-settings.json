@@ -34,6 +34,12 @@
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "snippets.ultisnips.directories": ["UltiSnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "cpp": ["c"],
