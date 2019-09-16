@@ -1,7 +1,4 @@
 setl completeopt-=preview
-setl colorcolumn=100
-" setl foldopen=all
-" setl foldlevelstart=99
 nnoremap mT :!mocha %<CR>
 setl foldmethod=manual "this lets coc.nvim control folding
 
@@ -10,8 +7,6 @@ match Error /\%100v.\+/
 
 " syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
 " /import.*\n^$/
-" hi link typescriptBrowserObjects TypescriptType
-" hi typescriptBrowserObjects gui=italic,bold guifg=goldenrod
 function! SteveLoshText()
      let line = getline(v:foldstart)
 
