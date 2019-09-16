@@ -63,6 +63,7 @@ Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'Test
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
@@ -88,13 +89,8 @@ Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
-" Plug 'styled-components/vim-styled-components', {
-"       \ 'branch': 'main',
-"       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']
-"       \}
 "Git {{{1
 " ==============================
-" Plug 'whiteinge/diffconflicts'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/conflict-marker.vim'
