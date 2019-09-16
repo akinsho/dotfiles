@@ -33,9 +33,10 @@ function! ApplyUserHighlights() abort
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
   ""---------------------------------------------------------------------------//
-  "Nicer JS colours
+  "Nicer JS/TS colours
   ""---------------------------------------------------------------------------//
   highlight jsFuncCall gui=italic
+  highlight link typescriptImport jsImport
   highlight Comment gui=italic cterm=italic
   highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
   highlight jsxAttrib cterm=italic,bold ctermfg=121

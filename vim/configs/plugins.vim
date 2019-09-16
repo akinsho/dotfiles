@@ -109,7 +109,7 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
-      \ | Plug 'whatyouhide/vim-textobj-xmlattr'
+      \ | Plug 'inside/vim-textobj-jsxattr'
 "Search Tools {{{1
 "=======================
 Plug 'dyng/ctrlsf.vim'
