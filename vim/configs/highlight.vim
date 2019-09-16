@@ -36,7 +36,6 @@ function! ApplyUserHighlights() abort
   "Nicer JS/TS colours
   ""---------------------------------------------------------------------------//
   highlight jsFuncCall gui=italic
-  highlight link typescriptImport jsImport
   highlight Comment gui=italic cterm=italic
   highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
   highlight jsxAttrib cterm=italic,bold ctermfg=121
@@ -48,9 +47,9 @@ function! ApplyUserHighlights() abort
   highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
   highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
   highlight Folded  gui=bold,italic cterm=bold
-  if exists('g:gui_oni')
-    highlight MatchParen cterm=bold ctermbg=none guifg=#29EF58 guibg=NONE
-  endif
+  " Copy some of the nice highlighting from JS
+  highlight link typescriptExport jsImport
+  highlight link typescriptImport jsImport
 
   call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
 
