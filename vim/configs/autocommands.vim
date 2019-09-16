@@ -108,7 +108,7 @@ augroup end
 augroup AutoSave
   autocmd!
   autocmd CursorHold,CursorHoldI <buffer>
-        \  if empty(&buftype) && !empty(bufname(''))
+        \  if empty(&buftype) && !empty(bufname('')) && &modifiable == 1 && &readonly == 0 && &buftype != 'nofile'
         \|   echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
         \|   silent! update
         \| endif
@@ -139,25 +139,6 @@ augroup UpdateVim
   autocmd VimResized * wincmd =
 augroup END
 " }}}
-
-" Wipeout Buffers with files that no longer exist
-function! s:wipe_buffers_without_files() abort
-  " Find all the buffers for which the attached file doesn't exist
-  let l:buffs = filter(range(1, bufnr('$')), 'bufexists(v:val) && '.
-        \'empty(getbufvar(v:val, "&buftype")) && '.
-        \'!filereadable(bufname(v:val))')
-  if !empty(l:buffs)
-    execute 'bwipeout' . join(l:buffs)
-  endif
-endfunction
-
-command! CleanBufferList call s:wipe_buffers_without_files()
-" This is aimed at removing old buffers between shell commands such as changing git branch etc
-" See: https://github.com/tpope/vim-fugitive/issues/503
-augroup CleanBufferList
-  au!
-  " autocmd BufWrite,ShellCmdPost * call s:wipe_buffers_without_files()
-augroup END
 
 " Hide the colorcolumn when there isn't enough space
 "TODO Need to hook into more events to remove colorcolumn
@@ -192,14 +173,6 @@ endif
 
 augroup mutltiple_filetype_settings "{{{1
   autocmd!
-  " syntaxcomplete provides basic completion for filetypes that lack a custom one.
-  " :h ft-syntax-omni
-  autocmd FileType * if exists("+omnifunc") && &omnifunc == ""
-        \ | setlocal omnifunc=syntaxcomplete#Complete | endif
-
-  autocmd FileType * if exists("+completefunc") && &completefunc == ""
-        \ | setlocal completefunc=syntaxcomplete#Complete | endif
-
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
 augroup END
 
@@ -225,11 +198,6 @@ augroup CommandWindow "{{{1
   autocmd CmdwinEnter * nnoremap <CR> <CR>
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
-augroup END
-
-augroup FileType_text "{{{1
-  autocmd!
-  autocmd FileType text setlocal textwidth=78
 augroup END
 
 augroup fileSettings "{{{1
@@ -313,13 +281,6 @@ augroup fugitiveSettings
   autocmd!
   autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
-
-augroup NERDTree "{{{1
-  "Close vim if only window is a Nerd Tree
-  autocmd!
-  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
-
 
 augroup LongFiles "{{{1
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
