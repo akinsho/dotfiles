@@ -186,5 +186,4 @@ endfunc
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocActionAsync('format')
 " Use `:Fold` for fold current buffer
-command! -nargs=? FoldImports :call CocActionAsync('fold imports', <f-args>)
-command! -nargs=? FoldRegion :call CocActionAsync('fold region', <f-args>)
+command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
