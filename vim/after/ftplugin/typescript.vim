@@ -1,15 +1,14 @@
 setl completeopt-=preview
 setl colorcolumn=100
 " setl foldopen=all
-" setl foldmethod=syntax
 " setl foldlevelstart=99
 nnoremap mT :!mocha %<CR>
+setl foldmethod=manual "this lets coc.nvim control folding
 
-let g:LanguageClient_autoStart = 0
 " Highlight over 80 cols in red
 match Error /\%100v.\+/
 
-syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
+" syn region foldImports start="import" end=/import\s*{\?\s*/ fold keepend
 " /import.*\n^$/
 " hi link typescriptBrowserObjects TypescriptType
 " hi typescriptBrowserObjects gui=italic,bold guifg=goldenrod

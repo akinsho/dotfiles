@@ -174,12 +174,14 @@ endsnippet
 snippet rfc "React Functional Component" b
 import * React from 'react';
 
-const ${1:`!v expand('%:t:r')`} = ({ ${3:...props} }) => (
-	<div>
-		$4
-	</div>
-);
-
+function ${1:`!v expand('%:t:r')`}({ ${3:...props} }) {
+  return (
+	  <div>
+	  {/* Code Here */}
+	     $4
+	  </div>
+  );
+} 
 export default $1;
 endsnippet
 

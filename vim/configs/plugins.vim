@@ -88,11 +88,13 @@ Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
-" Plug 'styled-components/vim-styled-components', { 'branch': 'main',
-"       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']}
+" Plug 'styled-components/vim-styled-components', {
+"       \ 'branch': 'main',
+"       \ 'for': ['javascript.jsx', 'typescript.tsx', 'typescript', 'javascript']
+"       \}
 "Git {{{1
 " ==============================
-Plug 'whiteinge/diffconflicts'
+" Plug 'whiteinge/diffconflicts'
 Plug 'lambdalisue/gina.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/conflict-marker.vim'
