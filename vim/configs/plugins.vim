@@ -63,7 +63,7 @@ Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'Test
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
+Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
