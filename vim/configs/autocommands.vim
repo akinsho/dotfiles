@@ -109,7 +109,7 @@ augroup AutoSave
   autocmd!
   autocmd CursorHold,CursorHoldI <buffer>
         \  if empty(&buftype) && !empty(bufname('')) && &modifiable == 1 && &readonly == 0 && &buftype != 'nofile'
-        \|   echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
+        " \|   echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
         \|   silent! update
         \| endif
 augroup END
