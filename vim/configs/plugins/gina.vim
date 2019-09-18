@@ -93,7 +93,7 @@ nnoremap <silent><nowait> <localleader>gl :Gina pull<cr>
 augroup GinaCmds
   au!
   autocmd BufLeave *
-        \ if &ft ==# 'gina-branch'
+        \ if &ft ==# 'gina-branch' && exists(':CleanBufferList')
         \ |   execute('CleanBufferList')
         \ | endif
 augroup END
