@@ -40,13 +40,11 @@ if !exists('g:gui_oni')
   Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
   Plug 'itchyny/lightline.vim'
         \ | Plug 'mengelbrecht/lightline-bufferline'
-        \ | Plug 'maximbaz/lightline-ale'
   Plug 'airblade/vim-rooter'
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
   " NOTE: these are slow in large repositories
   Plug 'kristijanhusak/defx-icons'
   Plug 'kristijanhusak/defx-git'
-  Plug 'kristijanhusak/vim-js-file-import', {'for':['javascript.jsx','javascript']}
 endif
 " Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'

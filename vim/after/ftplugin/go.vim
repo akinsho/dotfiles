@@ -1,15 +1,15 @@
-" if exists("b:go_after_did_ftplugin")
-"   finish
-" endif
+if exists("b:go_after_did_ftplugin")
+  finish
+endif
 "
-" let b:go_after_did_ftplugin = 1 " Don't load twice in one buffer
-""---------------------------------------------------------------------------//
+ let b:go_after_did_ftplugin = 1 " Don't load twice in one buffer
+"---------------------------------------------------------------------------//
 " GO FILE SETTINGS
 ""---------------------------------------------------------------------------//
 setlocal noexpandtab
 setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent line
-highlight! default link goErr WarningMsg |
-      \ match goErr /\<err\>/
+highlight goErr guifg=#E06C75 gui=bold
+match goErr /\<err\>/
 " ---------------------------------------------------
 " VIM-GO !!!
 " ---------------------------------------------------
