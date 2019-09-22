@@ -30,7 +30,6 @@
   "diagnostic.hintSign": "ﯦ",
   "signature.target": "float",
   "signature.preferShownAbove": true,
-  "signature.maxWindowHeight": 4,
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],

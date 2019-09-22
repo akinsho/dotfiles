@@ -87,12 +87,18 @@ function! s:coc_init() abort
   endif
 endfunction
 
+
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
 augroup coc_commands
   autocmd!
   autocmd VimEnter * call s:coc_init()
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
+  " autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder
@@ -141,8 +147,11 @@ function! s:show_documentation()
 endfunction
 
 
-highlight CocErrorHighlight guifg=#E06C75 gui=underline
-highlight CocCodeLens ctermfg=Gray guifg=#999999
+augroup Coc_highlights
+  autocmd!
+  autocmd Colorscheme * highlight CocErrorHighlight guifg=#E06C75 gui=underline
+  autocmd Colorscheme * highlight CocCodeLens ctermfg=Gray guifg=#999999
+augroup END
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 vmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -187,3 +196,5 @@ endfunc
 command! -nargs=0 Format :call CocActionAsync('format')
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
