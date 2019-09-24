@@ -88,7 +88,7 @@ nnoremap <silent><localleader>gb :Gina branch<cr>
 nnoremap <silent><localleader>gbl :Gina blame<cr>
 nnoremap <silent><nowait> <localleader>gc :Gina commit<cr>
 nnoremap <silent><nowait> <localleader>gp :Gina push<cr>
-nnoremap <silent><nowait> <localleader>gP :Gina push -f<cr>
+nnoremap <silent><nowait> gP :Gina push -f<cr>
 nnoremap <silent><nowait> <localleader>gl :Gina pull<cr>
 
 augroup GinaCmds
