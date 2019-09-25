@@ -9,13 +9,13 @@ let g:go_fmt_options = {
 
 let g:go_doc_popup_window               = 1
 let g:go_highlight_space_tab_error      = 1
-let g:go_term_height                    = 30
+let g:go_term_enabled                   = 1
+let g:go_term_close_on_exit             = 1
+let g:go_term_height                    = 20
 let g:go_term_width                     = 30
-let g:go_term_mode                      = "split"
 let g:go_auto_type_info                 = 0
 let g:go_auto_sameids                   = 0
 let g:go_fmt_autosave                   = 1
-let g:go_alternate_mode                 = "vsplit"
 let g:go_doc_keywordprg_enabled         = 0 "Stops auto binding K
 let g:go_highlight_types                = 1
 let g:go_highlight_fields               = 1
