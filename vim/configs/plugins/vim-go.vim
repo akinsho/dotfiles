@@ -9,7 +9,8 @@ let g:go_fmt_options = {
 
 let g:go_doc_popup_window               = 1
 let g:go_highlight_space_tab_error      = 1
-let g:go_term_enabled                   = 1
+let g:go_gocode_unimported_packages     = 0
+let g:go_term_enabled                   = 0
 let g:go_term_close_on_exit             = 1
 let g:go_term_height                    = 20
 let g:go_term_width                     = 30
