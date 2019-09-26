@@ -61,7 +61,6 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
 " Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
-Plug 'tveskag/nvim-blame-line'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
