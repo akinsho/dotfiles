@@ -46,7 +46,6 @@ if !exists('g:gui_oni')
   Plug 'kristijanhusak/defx-icons'
   Plug 'kristijanhusak/defx-git'
 endif
-" Plug 'w0rp/ale', Cond(!exists('g:gui_oni'))
 Plug 'SirVer/ultisnips'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'
@@ -61,7 +60,8 @@ Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'Test
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
-Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
+" Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
+Plug 'tveskag/nvim-blame-line'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
