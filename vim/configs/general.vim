@@ -225,10 +225,6 @@ set background=dark
   " ========================
   colorscheme night-owl
   " ========================
-  " Plastic
-  " ========================
-  " colorscheme plastic
-  " ========================
   " ONE
   " ========================
   " let g:one_allow_italics = 1
