@@ -210,6 +210,9 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 if !exists('g:gui_oni')
 set background=dark
+  " ========================
+  " OneDark
+  " ========================
   " let g:onedark_terminal_italics = 1
   " augroup ColorExtend
   "   autocmd!
@@ -221,6 +224,10 @@ set background=dark
   " Night Owl
   " ========================
   colorscheme night-owl
+  " ========================
+  " Plastic
+  " ========================
+  " colorscheme plastic
   " ========================
   " ONE
   " ========================
