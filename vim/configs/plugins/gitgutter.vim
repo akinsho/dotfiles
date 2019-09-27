@@ -9,7 +9,7 @@ let g:gitgutter_sign_modified_removed = ''
 let g:gitgutter_terminal_reports_focus = 0
 let g:gitgutter_sign_allow_clobber = 0
 if has('nvim-0.3.2')
-  let g:gitgutter_highlight_linenrs = 1
+  let g:gitgutter_highlight_linenrs = 0
 endif
 " let g:gitgutter_sign_priority = 1
 " let g:gitgutter_sign_added            = '❖'
