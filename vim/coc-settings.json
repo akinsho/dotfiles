@@ -46,6 +46,16 @@
     "typescript": ["javascript"],
     "rei": ["reason"]
   },
+  "git.changedSign.text": "",
+  "git.addedSign.text": "",
+  "git.removedSign.text": "",
+  "git.changeRemovedSign.text": "",
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+  "git.addGlameToVirtualText": true,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
     "variable": "\ue79b",

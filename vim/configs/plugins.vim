@@ -89,7 +89,6 @@ Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
 Plug 'lambdalisue/gina.vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'rhysd/git-messenger.vim', Cond(has('nvim-0.4.0'))
 " Text Objects {{{1
@@ -109,7 +108,6 @@ Plug 'kana/vim-textobj-user'
 "=======================
 Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/vim-peekaboo'
-Plug 'RRethy/vim-illuminate'
 Plug 'kshenoy/vim-signature'
 Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })

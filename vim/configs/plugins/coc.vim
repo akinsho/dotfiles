@@ -16,7 +16,8 @@ call coc#add_extension(
       \ 'coc-eslint',
       \ 'coc-yank',
       \ 'coc-flow',
-      \ 'coc-vimlsp'
+      \ 'coc-vimlsp',
+      \ 'coc-git'
       \)
 
 " FIXME: use new g:coc_user_config setting add these vars
@@ -151,6 +152,7 @@ augroup Coc_highlights
   autocmd!
   autocmd Colorscheme * highlight CocErrorHighlight guifg=#E06C75 gui=underline
   autocmd Colorscheme * highlight CocCodeLens ctermfg=Gray guifg=#999999
+  autocmd ColorScheme * highlight CocHighlightText gui=underline,bold
 augroup END
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
@@ -196,5 +198,14 @@ endfunc
 command! -nargs=0 Format :call CocActionAsync('format')
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" navigate chunks of current buffer
+nmap ]h <Plug>(coc-git-prevchunk)
+nmap [h <Plug>(coc-git-nextchunk)
+" show chunk diff at current position
+nmap gi <Plug>(coc-git-chunkinfo)
+" create text object for git chunks
+omap ih <Plug>(coc-text-object-inner)
+xmap ih <Plug>(coc-text-object-inner)
+omap ih <Plug>(coc-text-object-outer)
+xmap ih <Plug>(coc-text-object-outer)

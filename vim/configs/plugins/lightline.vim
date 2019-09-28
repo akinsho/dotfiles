@@ -16,7 +16,7 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
       \   'right': [
-      \     [ 'fugitive', 'gitgutter'],
+      \     [ 'fugitive', 'git_status'],
       \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
       \     [ 'lsp', 'current_function' ],
       \     ['lineinfo'],
@@ -29,7 +29,6 @@ let g:lightline = {
       \ },
       \ 'component': {
       \   'lineinfo': '%3l:%-2v',
-      \   'tagbar': '%{tagbar#currenttag("%s", "")}',
       \   'close': '%#DiffDelete#%999X X ',
       \ },
       \ 'component_function': {
@@ -44,6 +43,7 @@ let g:lightline = {
       \   'gitgutter': 'LightlineGitGutter',
       \   'lsp': 'coc#status',
       \   'current_function': 'CocCurrentFunction',
+      \   'git_status': 'CocGitStatus',
       \ },
       \ 'component_expand': {
       \  'linter_checking': 'lightline#ale#checking',
@@ -87,6 +87,10 @@ endfunction
 
 function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
+endfunction
+
+function CocGitStatus() abort
+  return get(b:, "coc_git_status", "")
 endfunction
 
 function! LightlineMinimalTabs() abort
