@@ -1,8 +1,3 @@
-if exists("b:go_after_did_ftplugin")
-  finish
-endif
-"
- let b:go_after_did_ftplugin = 1 " Don't load twice in one buffer
 "---------------------------------------------------------------------------//
 " GO FILE SETTINGS
 ""---------------------------------------------------------------------------//
