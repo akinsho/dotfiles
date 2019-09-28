@@ -186,7 +186,7 @@ nnoremap <silent> <localleader>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
-" nmap <expr> <silent> <C-w> <SID>select_current_word()
+nmap <expr> <silent> <C-w> <SID>select_current_word()
 function! s:select_current_word()
   if !get(g:, 'coc_cursors_activated', 0)
     return "\<Plug>(coc-cursors-word)"
@@ -207,5 +207,7 @@ nmap gi <Plug>(coc-git-chunkinfo)
 " create text object for git chunks
 omap ih <Plug>(coc-text-object-inner)
 xmap ih <Plug>(coc-text-object-inner)
-omap ih <Plug>(coc-text-object-outer)
-xmap ih <Plug>(coc-text-object-outer)
+omap ah <Plug>(coc-text-object-outer)
+xmap ah <Plug>(coc-text-object-outer)
+nnoremap <leader>hs :<C-u>CocCommand git.chunkStage<CR>
+nnoremap <leader>hu :<C-u>CocCommand git.chunkUndo<CR>
