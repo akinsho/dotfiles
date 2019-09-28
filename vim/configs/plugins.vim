@@ -42,7 +42,6 @@ if !exists('g:gui_oni')
         \ | Plug 'mengelbrecht/lightline-bufferline'
   Plug 'airblade/vim-rooter'
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-  " NOTE: these are slow in large repositories
   Plug 'kristijanhusak/defx-icons'
   Plug 'kristijanhusak/defx-git'
 endif
@@ -66,7 +65,7 @@ Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
-Plug 'mhinz/vim-sayonara',    { 'on': 'Sayonara' }
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'takac/vim-hardtime'
 "TPOPE {{{1
 "====================================
@@ -90,7 +89,7 @@ Plug 'sheerun/vim-polyglot'
 " ==============================
 Plug 'lambdalisue/gina.vim'
 Plug 'rhysd/conflict-marker.vim'
-Plug 'rhysd/git-messenger.vim', Cond(has('nvim-0.4.0'))
+" Plug 'rhysd/git-messenger.vim', Cond(has('nvim-0.4.0'))
 " Text Objects {{{1
 " =====================
 Plug 'AndrewRadev/tagalong.vim'
@@ -102,7 +101,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'kana/vim-textobj-function', { 'for': ['vim', 'c', 'java'] }
       \ | Plug 'inside/vim-textobj-jsxattr'
 "Search Tools {{{1
 "=======================
