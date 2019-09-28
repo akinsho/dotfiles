@@ -10,8 +10,6 @@ if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
   set linespace=1
   set antialias
   set macligatures
-  let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
-  let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 endif
 ""---------------------------------------------------------------------------//
 " Message output on vim actions {{{1
@@ -88,7 +86,6 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 if !has_key(g:plugs, 'vim-apathy')
   set path+=**/src/main/**,**
 endif
-
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{1
 " ----------------------------------------------------------------------------
@@ -123,8 +120,6 @@ set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 if has('nvim-0.4')
   set wildoptions=pum
 endif
-
-
 " ----------------------------------------------------------------------------
 " Display {{{1
 " --------------------------------------------------------------------------
@@ -370,7 +365,6 @@ set mousefocus
 if !has('nvim')
   set ttymouse=xterm2
 endif
-
 set secure  " Disable autocmd etc for project local vimrc files.
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 ""---------------------------------------------------------------------------//

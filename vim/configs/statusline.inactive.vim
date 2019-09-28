@@ -98,6 +98,7 @@ function! ReadOnly()
     return g:mod_sym
   else
     return ''
+  endif
 endfunction
 
 function! GitInfo()
@@ -106,6 +107,7 @@ function! GitInfo()
     return ' '.fugitive#head()
   else
     return ''
+  endif
   endfunction
 
 " Returns true if paste mode is enabled
