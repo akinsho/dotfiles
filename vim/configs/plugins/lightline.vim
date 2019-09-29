@@ -2,7 +2,7 @@ if exists('g:gui_oni')
   finish
 endif
 
-let s:theme_opts = ['one', 'material_vim', 'plastic']
+let s:theme_opts = ['one', 'material_vim', 'palenight']
 
 function! s:get_active_theme() abort
   let l:theme = join(map(s:theme_opts, { key,val -> strlen(matchstr(val, g:colors_name)) ? val : ""}), '')
