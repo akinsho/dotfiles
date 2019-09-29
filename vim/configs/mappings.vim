@@ -253,7 +253,7 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 " This lists the open buffers then takes input re. which to delete
-nnoremap <leader>d :ls<cr>:bd<space>
+" nnoremap <localleader>d :ls<cr>:bd<space>
 "Use wildmenu to cycle tabs
 nnoremap <localleader><tab> :b <C-Z>
 "Tab and Shift + Tab Circular buffer navigation

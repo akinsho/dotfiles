@@ -17,7 +17,8 @@ call coc#add_extension(
       \ 'coc-yank',
       \ 'coc-flow',
       \ 'coc-vimlsp',
-      \ 'coc-git'
+      \ 'coc-git',
+      \ 'coc-tabnine'
       \)
 
 " FIXME: use new g:coc_user_config setting add these vars
@@ -87,12 +88,9 @@ function! s:coc_init() abort
     call coc#config('languageserver', s:languageservers)
   endif
 endfunction
-
-
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+""---------------------------------------------------------------------------//
+" Coc Autocommands
+""---------------------------------------------------------------------------//
 
 augroup coc_commands
   autocmd!
@@ -107,6 +105,9 @@ augroup coc_commands
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup End
 
+""---------------------------------------------------------------------------//
+" CoC Mappings
+""---------------------------------------------------------------------------//
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 iunmap <TAB>
@@ -135,7 +136,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> <localleader>gr <Plug>(coc-references)
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -147,13 +147,10 @@ function! s:show_documentation()
   endif
 endfunction
 
-
-augroup Coc_highlights
-  autocmd!
-  autocmd Colorscheme * highlight CocErrorHighlight guifg=#E06C75 gui=underline
-  autocmd Colorscheme * highlight CocCodeLens ctermfg=Gray guifg=#999999
-  autocmd ColorScheme * highlight CocHighlightText gui=underline,bold
-augroup END
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 vmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -165,24 +162,21 @@ nmap <leader>ff  <Plug>(coc-fix-current)
 nmap <leader>rf  <Plug>(coc-refactor)
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
 
+""---------------------------------------------------------------------------//
 " Using CocList
+""---------------------------------------------------------------------------//
+" nnoremap <silent> <localleader>y  :<C-u>CocList -A --normal yank<cr>
 " Show all diagnostics
-nnoremap <silent> <localleader>a :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
 " Show commands
-nnoremap <silent> <localleader>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Manage extensions
-" nnoremap <silent> <localleader>ce  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " " Find symbol of current document
-" nnoremap <silent> <localleader>co  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <localleader>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <localleader>cj  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <localleader>ck  :<C-u>CocPrev<CR>
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
@@ -193,12 +187,9 @@ function! s:select_current_word()
   endif
   return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
 endfunc
-
-" Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocActionAsync('format')
-" Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
-
+""---------------------------------------------------------------------------//
+" Coc Git
+""---------------------------------------------------------------------------//
 " navigate chunks of current buffer
 nmap ]h <Plug>(coc-git-prevchunk)
 nmap [h <Plug>(coc-git-nextchunk)
@@ -211,3 +202,17 @@ omap ah <Plug>(coc-text-object-outer)
 xmap ah <Plug>(coc-text-object-outer)
 nnoremap <leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <leader>hu :<C-u>CocCommand git.chunkUndo<CR>
+
+""---------------------------------------------------------------------------//
+" Coc Highlights
+""---------------------------------------------------------------------------//
+augroup Coc_highlights
+  autocmd!
+  autocmd Colorscheme * highlight CocErrorHighlight guifg=#E06C75 gui=underline
+  autocmd Colorscheme * highlight CocCodeLens ctermfg=Gray guifg=#999999
+  autocmd ColorScheme * highlight CocHighlightText gui=underline,bold
+augroup END
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
+" Use `:Fold` for fold current buffer
+command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)

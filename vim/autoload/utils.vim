@@ -247,32 +247,12 @@ function! utils#git_branch_dir(path) abort
   return ''
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OpenChangedFiles COMMAND
-" Open a split for each dirty file in git
-" Shamelessly stolen from Gary Bernhardt: https://github.com/garybernhardt/dotfiles
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! utils#open_changed_files()
-  only " Close all windows, unless they're modified
-  let status = system('git status -s | grep "^ \?\(M\|A\)" | cut -d " " -f 3')
-  let filenames = split(status, "\n")
-  if len(filenames) > 0
-    exec "edit " . filenames[0]
-    for filename in filenames[1:]
-      exec "tabedit " . filename
-    endfor
-  end
-endfunction
-command! OpenChangedFiles call utils#open_changed_files()
-
-nnoremap <leader>oc :OpenChangedFiles<CR>
-
 ""---------------------------------------------------------------------------//
 " Fold Text (For Curly Brace languages)
 ""---------------------------------------------------------------------------//
 function! utils#braces_fold_text(...)
-  " sparkle '✦'
-  let startchar = '≣'
+  " column icon '≣'
+  let startchar = '✦'
   let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '(' . ( lines_count ) . ')'
