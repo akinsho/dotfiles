@@ -29,22 +29,18 @@ window:
     x: 2
     y: 0
 
-  # Window decorations
-  #
-  # Available values:
-  # - `full`: Window with title bar and title bar buttons
-  # - `none`: Window without title bar, rounded corners, or drop shadow
-  # - `transparent`: Window with title bar with transparent background and title
-  #   bar buttons
-  # - `buttonless`: Window with title bar with transparent background and no
-  #   title bar buttons
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: false
+
   # Window decorations
   #
   # Values for `decorations`:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
-  #     - buttonless: Title bar, transparent background and title bar buttons
-  #     - transparent: Title bar, transparent background, but no title bar buttons
+  #
+  # Values for `decorations` (macOS only):
+  #     - transparent: Title bar, transparent background and title bar buttons
+  #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: full
 
 scrolling:
@@ -82,6 +78,7 @@ font:
   # Normal (roman) font face
   normal:
     family: FuraCode Nerd Font
+    # family: Cascadia Code
     # The `style` can be specified to pick a specific face.
     style: Regular
 

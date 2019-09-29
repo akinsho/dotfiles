@@ -55,6 +55,7 @@ function! ApplyUserHighlights() abort
 
   if has('nvim')
     highlight TermCursor ctermfg=green guifg=green
+    highlight link MsgSeparator Comment
   endif
   ""---------------------------------------------------------------------------//
   "Autocomplete menu highlighting

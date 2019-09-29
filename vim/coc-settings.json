@@ -20,7 +20,6 @@
   "suggest.fixInsertedWord": true,
   "diagnostic.virtualTextLineSeparator": " \\ ",
   "diagnostic.virtualText": false,
-  "diagnostic.virtualTextLines": 3,
   "coc.preferences.hoverTarget": "float",
   "diagnostic.refreshOnInsertMode": false,
   "diagnostic.virtualTextPrefix": "ﯦ ",

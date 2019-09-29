@@ -1,11 +1,10 @@
-if has("gui_running") && (has("gui_macvim") || has("gui_vimr"))
+if has("gui_running") && has("gui_macvim")
   set transparency=0
   set guioptions=
   set guioptions+=g " gray menu items
   set guioptions+=m " menu bar
   "Too find font proper run fc-list | grep name-of-font
-  set guifont=Hasklug\ Nerd\ Font:h16
-  " set guifont=FuraCode\ Nerd\ Font:h16
+  set guifont=FuraCode\ Nerd\ Font:h16
   set guioptions+=e " nice gui tabs
   set linespace=1
   set antialias
@@ -40,8 +39,6 @@ if has('folding')
     set fillchars+=diff:⣿
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
-      " TODO: move this to highlight.vim
-      highlight link MsgSeparator Comment
     endif
   endif
     set foldlevelstart=999
@@ -152,7 +149,7 @@ set iskeyword+=_,$,@
 set nojoinspaces
 set gdefault
 " insert completion height and options
-set pumheight=10
+set pumheight=15
 set number relativenumber
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
@@ -161,11 +158,12 @@ set wrap
 set wrapmargin=2
 set textwidth=80
 if exists('&signcolumn')
-  " if has('nvim-0.4')
-  "   set signcolumn=yes:2 "nvim-0.4 - yes confirms showing the column and the specified size
-  " else
+  if has('nvim-0.4')
+   "yes confirms showing the column and the specified size
+    set signcolumn=yes:2
+  else
     set signcolumn=yes "enables column that shows signs and error symbols
-  " endif
+  endif
 endif
 set ruler
 set completeopt+=noinsert,noselect,longest
@@ -290,7 +288,6 @@ endif
 set encoding=utf-8
 scriptencoding utf-8
 set dictionary+=/usr/share/dict/words
-
 if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
   set shell=/bin/bash
 endif
@@ -298,10 +295,6 @@ set history=1000
 if !empty(&viminfo)
   set viminfo^=!
   set viminfo+='0
-endif
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
 endif
 "-----------------------------------------------------------------------------
 " BACKUP AND SWAPS {{{
@@ -368,5 +361,4 @@ endif
 set secure  " Disable autocmd etc for project local vimrc files.
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 ""---------------------------------------------------------------------------//
-
 " vim:foldmethod=marker
