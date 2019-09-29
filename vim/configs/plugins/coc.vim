@@ -110,17 +110,20 @@ augroup End
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 iunmap <TAB>
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+let g:coc_snippet_next = '<tab>'
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
@@ -212,6 +215,9 @@ nnoremap <silent><leader>gl :<C-u>CocCommand git.copyUrl<CR>
 ""---------------------------------------------------------------------------//
 augroup Coc_highlights
   autocmd!
+  autocmd Colorscheme * highlight CocErrorSign  ctermfg=Red guifg=#ff0000
+  autocmd Colorscheme * highlight CocWarningSign  ctermfg=Brown guifg=#ff922b
+  autocmd ColorScheme * highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
   autocmd Colorscheme * highlight CocErrorHighlight guifg=#E06C75 gui=underline
   autocmd Colorscheme * highlight CocCodeLens ctermfg=Gray guifg=#999999
   autocmd ColorScheme * highlight CocHighlightText gui=underline,bold
