@@ -36,16 +36,13 @@ endfunction
 "================================
 " CORE {{{1
 "================================
-if !exists('g:gui_oni')
-  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'itchyny/lightline.vim'
-        \ | Plug 'mengelbrecht/lightline-bufferline'
-  Plug 'airblade/vim-rooter'
-  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'kristijanhusak/defx-icons'
-  Plug 'kristijanhusak/defx-git'
-endif
-Plug 'SirVer/ultisnips'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'itchyny/lightline.vim'
+      \ | Plug 'mengelbrecht/lightline-bufferline'
+Plug 'airblade/vim-rooter'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'kristijanhusak/defx-icons'
+Plug 'kristijanhusak/defx-git'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
