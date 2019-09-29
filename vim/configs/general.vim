@@ -116,6 +116,7 @@ set wildignore+=*.*~,*~
 set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 if has('nvim-0.4')
   set wildoptions=pum
+  set pumblend=2
 endif
 " ----------------------------------------------------------------------------
 " Display {{{1

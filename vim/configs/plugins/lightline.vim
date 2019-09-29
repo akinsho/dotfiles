@@ -127,7 +127,7 @@ let g:lightline#bufferline#min_buffer_count  = 1
 let g:lightline#bufferline#unicode_symbols   = 1
 let g:lightline#bufferline#show_number       = 2
 let g:lightline#bufferline#enable_devicons   = 1
-let g:lightline#bufferline#filename_modifier = ':t'
+" let g:lightline#bufferline#filename_modifier = ':t'
 
 nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
 nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
