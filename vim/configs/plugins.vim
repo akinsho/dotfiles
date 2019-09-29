@@ -89,7 +89,6 @@ Plug 'sheerun/vim-polyglot'
 " ==============================
 Plug 'lambdalisue/gina.vim'
 Plug 'rhysd/conflict-marker.vim'
-" Plug 'rhysd/git-messenger.vim', Cond(has('nvim-0.4.0'))
 " Text Objects {{{1
 " =====================
 Plug 'AndrewRadev/tagalong.vim'

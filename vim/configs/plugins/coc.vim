@@ -206,7 +206,7 @@ omap ah <Plug>(coc-text-object-outer)
 xmap ah <Plug>(coc-text-object-outer)
 nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
-
+nnoremap <silent><leader>gl :<C-u>CocCommand git.copyUrl<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//

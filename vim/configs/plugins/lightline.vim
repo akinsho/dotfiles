@@ -14,11 +14,11 @@ let s:active_theme = s:get_active_theme()
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
-      \   'left': [ [ 'mode' ], [ 'filename', 'filetype'] ],
+      \  'left':[['mode'], ['filename', 'filetype']],
       \   'right': [
-      \     [ 'fugitive', 'git_status'],
-      \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \     [ 'lsp', 'current_function' ],
+      \     ['coc_git_repo', 'coc_git_buffer'],
+      \     ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+      \     ['lsp', 'current_function'],
       \     ['lineinfo'],
       \     ['csv']
       \]
@@ -43,7 +43,8 @@ let g:lightline = {
       \   'gitgutter': 'LightlineGitGutter',
       \   'lsp': 'coc#status',
       \   'current_function': 'CocCurrentFunction',
-      \   'git_status': 'CocGitStatus',
+      \   'coc_git_buffer': 'CocGitStatus',
+      \   'coc_git_repo': 'CocGitRepoStatus',
       \ },
       \ 'component_expand': {
       \  'linter_checking': 'lightline#ale#checking',
@@ -90,7 +91,12 @@ function! CocCurrentFunction()
 endfunction
 
 function CocGitStatus() abort
-  return get(b:, "coc_git_status", "")
+  let status = get(b:, "coc_git_status", "")
+  return winwidth(0) > 120 ? status : ''
+endfunction
+
+function CocGitRepoStatus() abort
+  return get(g:, "coc_git_status", "")
 endfunction
 
 function! LightlineMinimalTabs() abort
