@@ -125,7 +125,12 @@ endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+if has("nvim")
+  " Or use `complete_info` if your vim support it, like:
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> ]c <Plug>(coc-diagnostic-prev)
 nmap <silent> [c <Plug>(coc-diagnostic-next)
@@ -179,7 +184,7 @@ nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
-" nmap <expr> <silent> <C-w> <SID>select_current_word()
+nmap <expr> <silent> <C-e> <SID>select_current_word()
 function! s:select_current_word()
   if !get(g:, 'coc_cursors_activated', 0)
     return "\<Plug>(coc-cursors-word)"
@@ -190,17 +195,17 @@ endfunc
 " Coc Git
 ""---------------------------------------------------------------------------//
 " navigate chunks of current buffer
-nmap ]h <Plug>(coc-git-prevchunk)
-nmap [h <Plug>(coc-git-nextchunk)
+nmap <silent> ]h <Plug>(coc-git-prevchunk)
+nmap <silent> [h <Plug>(coc-git-nextchunk)
 " show chunk diff at current position
-nmap gi <Plug>(coc-git-chunkinfo)
+nmap <silent> gi <Plug>(coc-git-chunkinfo)
 " create text object for git chunks
 omap ih <Plug>(coc-text-object-inner)
 xmap ih <Plug>(coc-text-object-inner)
 omap ah <Plug>(coc-text-object-outer)
 xmap ah <Plug>(coc-text-object-outer)
-nnoremap <leader>hs :<C-u>CocCommand git.chunkStage<CR>
-nnoremap <leader>hu :<C-u>CocCommand git.chunkUndo<CR>
+nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
+nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
 
 ""---------------------------------------------------------------------------//
 " Coc Highlights
