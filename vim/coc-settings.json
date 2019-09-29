@@ -39,8 +39,7 @@
     "typescript",
     "typescriptreact"
   ],
-  "snippets.userSnippetsDirectory": "/home/akin/Dotfiles/vim/mySnippets",
-  "snippets.ultisnips.directories": ["gosnippets/UltiSnips"],
+  "snippets.ultisnips.directories": ["Ultisnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],

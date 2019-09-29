@@ -3,8 +3,8 @@
 ""---------------------------------------------------------------------------//
 " Snippet settings:
 let g:snips_author = 'Akin Sowemimo'
-let g:UltiSnipsSnippetsDir          = $DOTFILES."/vim/mySnippets" "Both of these settings are necessary
-let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/mySnippets"]
+let g:UltiSnipsSnippetsDir          = $DOTFILES."/vim/snippets" "Both of these settings are necessary
+let g:UltiSnipsSnippetDirectories   = ["UltiSnips", $HOME."/Dotfiles/vim/snippets"]
 let g:UltiSnipsExpandTrigger        = "<C-J>"
 let g:UltiSnipsJumpForwardTrigger   = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger  = "<C-K>"
