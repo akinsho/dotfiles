@@ -30,7 +30,7 @@
   "signature.target": "float",
   "signature.preferShownAbove": true,
   "snippets.shortcut": "",
-  "coc.source.ultisnips.enable": false,
+  "coc.source.ultisnips.enable": true,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "eslint.filetypes": [
