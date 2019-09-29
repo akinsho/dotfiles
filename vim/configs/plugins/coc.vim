@@ -21,7 +21,6 @@ call coc#add_extension(
       \ 'coc-tabnine'
       \)
 
-" FIXME: use new g:coc_user_config setting add these vars
 function! s:coc_init() abort
   let s:languageservers = {}
 
