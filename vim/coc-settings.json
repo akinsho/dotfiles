@@ -30,7 +30,7 @@
   "signature.target": "float",
   "signature.preferShownAbove": true,
   "snippets.shortcut": "",
-  "coc.preferences.snippetStatusText": "",
+  "coc.source.ultisnips.enable": false,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "eslint.filetypes": [
@@ -44,7 +44,7 @@
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
-    "typescriptreact": ["typescript"],
+    "typescriptreact": ["javascript"],
     "typescript": ["javascript"],
     "rei": ["reason"]
   },
