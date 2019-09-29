@@ -22,10 +22,7 @@ nnoremap <silent><leader>gd :Gdiff<CR>
 nnoremap <silent><leader>gc :Gcommit<CR>
 nnoremap <silent><leader>gt :Gcommit -v -q %:p<CR>
 nnoremap <silent><leader>gp :Gpush<CR>
-nnoremap <silent><leader>ggp :Ggrep<Space>
-nnoremap <silent><leader>gbr :Git branch<Space>
 nnoremap <silent><leader>go :Git checkout<Space>
-nnoremap <silent><leader>gL :0Glog<BAR>:bot copen<CR>
 "Open current file on github.com
 nnoremap <silent><leader>gb :Gbrowse<CR>
 "Make it work in Visual mode to open with highlighted linenumbers
