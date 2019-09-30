@@ -207,14 +207,14 @@ augroup END
 
 " Add Per Window Highlights {{{
 function! s:handle_window_enter() abort
-  if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber "scrolloff=0
-    highlight TerminalColors guibg=#22252B ctermbg=black
-    highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
-    if exists('+winhighlight') 
-      setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
-    endif
-  endif
+  " if &buftype ==# 'terminal'
+  "   setlocal nocursorline nonumber norelativenumber "scrolloff=0
+  "   highlight TerminalColors guibg=#22252B ctermbg=black
+  "   highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
+  "   if exists('+winhighlight') 
+  "     setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
+  "   endif
+  " endif
   if &previewwindow 
     setlocal nospell concealcursor=nv nocursorline colorcolumn=
     " if exists('+winhighlight') 
@@ -226,6 +226,11 @@ function! s:handle_window_enter() abort
     " endif
   endif
 endfunction
+
+augroup GoError
+  autocmd Colorscheme *.go match goErr /\<err\>/
+  autocmd Colorscheme *.go highlight goErr guifg=#E06C75 gui=bold
+augroup end
 
 if has('nvim')
   augroup nvim

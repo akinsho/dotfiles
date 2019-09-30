@@ -219,6 +219,10 @@ set background=dark
   " ========================
   colorscheme night-owl
   " ========================
+  " Tender
+  " ========================
+  " colorscheme tender
+  " ========================
   " ONE
   " ========================
   " let g:one_allow_italics = 1

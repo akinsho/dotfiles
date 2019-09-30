@@ -3,8 +3,7 @@
 ""---------------------------------------------------------------------------//
 setlocal noexpandtab
 setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent line
-highlight goErr guifg=#E06C75 gui=bold
-match goErr /\<err\>/
+
 " ---------------------------------------------------
 " VIM-GO !!!
 " ---------------------------------------------------

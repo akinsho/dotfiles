@@ -2,7 +2,7 @@ if exists('g:gui_oni')
   finish
 endif
 
-let s:theme_opts = ['one', 'material_vim', 'palenight']
+let s:theme_opts = ['one', 'palenight', 'tender']
 
 function! s:get_active_theme() abort
   let l:theme = join(map(s:theme_opts, { key,val -> strlen(matchstr(val, g:colors_name)) ? val : ""}), '')
@@ -349,10 +349,15 @@ if exists('g:lightline')
   let s:gutter_grey  = ['#636d83', 238]
   let s:comment_grey = ['#5c6370', 59]
 
+  let s:bufferline_colors = {
+        \ "tender": ['#1d1d1d', 59],
+        \ "onedark": ['#5A5E68', 59],
+        \ "night-owl": ['#060F1F', 58]
+        \}
+
   "Lightline bufferline Colors
   let s:bright_blue  = ['#A2E8F6', 58]
- " OneDark colors for bufferline['#5A5E68', 59]
-  let s:tabline_background = ['#060F1F', 58]
+  let s:tabline_background = s:bufferline_colors[g:colors_name]
   let s:tabline_foreground = s:get_theme_background('Comment')
   let s:selected_background = s:get_theme_background('Normal')
 
