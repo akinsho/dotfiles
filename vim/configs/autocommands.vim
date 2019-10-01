@@ -206,14 +206,14 @@ augroup END
 
 " Add Per Window Highlights {{{
 function! s:handle_window_enter() abort
-  " if &buftype ==# 'terminal'
-  "   setlocal nocursorline nonumber norelativenumber "scrolloff=0
+  if &buftype ==# 'terminal'
+    setlocal nocursorline nonumber norelativenumber "scrolloff=0
   "   highlight TerminalColors guibg=#22252B ctermbg=black
   "   highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
   "   if exists('+winhighlight') 
   "     setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
   "   endif
-  " endif
+  endif
   if &previewwindow 
     setlocal nospell concealcursor=nv nocursorline colorcolumn=
     " if exists('+winhighlight') 
