@@ -48,9 +48,10 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-Plug 'cohama/lexima.vim'
-Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
+Plug 'janko-m/vim-test', {
+      \ 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
 Plug 'honza/vim-snippets'
+" Plug 'cohama/lexima.vim'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings

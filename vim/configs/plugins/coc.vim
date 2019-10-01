@@ -18,7 +18,8 @@ call coc#add_extension(
       \ 'coc-flow',
       \ 'coc-vimlsp',
       \ 'coc-git',
-      \ 'coc-tabnine'
+      \ 'coc-tabnine',
+      \ 'coc-pairs'
       \)
 
 function! s:coc_init() abort
@@ -142,7 +143,8 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Coc only does snippet and additional edit on confirm.
 if has("nvim")
   " Or use `complete_info` if your vim support it, like:
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
