@@ -51,7 +51,6 @@ Plug 'mhinz/vim-startify'
 Plug 'janko-m/vim-test', {
       \ 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
 Plug 'honza/vim-snippets'
-" Plug 'cohama/lexima.vim'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
