@@ -117,12 +117,10 @@ Plug 'heavenshell/vim-jsdoc', {
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 ""Themes  {{{1
 "===============================
-if !exists('g:gui_oni')
-  Plug 'joshdick/onedark.vim'
-  Plug 'haishanh/night-owl.vim'
-  Plug 'jacoborus/tender.vim'
-  Plug 'drewtempelmeyer/palenight.vim'
-endif
+Plug 'joshdick/onedark.vim'
+Plug 'haishanh/night-owl.vim'
+Plug 'jacoborus/tender.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
