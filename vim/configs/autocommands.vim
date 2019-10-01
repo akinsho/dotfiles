@@ -187,7 +187,6 @@ augroup END
 augroup FileType_html "{{{1
   autocmd!
   autocmd BufNewFile,BufEnter *.html setlocal nowrap
-  autocmd BufNewFile,BufRead,BufWritePre *.html :normal gg=G
 augroup END
 
 

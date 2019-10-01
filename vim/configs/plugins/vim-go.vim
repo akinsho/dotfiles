@@ -20,7 +20,7 @@ let g:go_fmt_autosave                   = 1
 let g:go_doc_keywordprg_enabled         = 0 "Stops auto binding K
 let g:go_highlight_types                = 1
 let g:go_highlight_fields               = 1
-let g:go_highlight_variable_declarations = 0
+let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_generate_tags        = 1
 let g:go_def_reuse_buffer               = 1
@@ -34,5 +34,3 @@ let g:go_highlight_function_arguments   = 1
 let g:go_highlight_function_calls       = 1
 let g:go_metalinter_autosave            = 1
 let g:go_jump_to_error                  = 0
-"'vetshadow' - checks if variable names are shadowed
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'goconst','ineffassign']
