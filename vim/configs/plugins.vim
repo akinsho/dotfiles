@@ -118,7 +118,6 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 ""Themes  {{{1
 "===============================
 Plug 'rakr/vim-one'
-Plug 'joshdick/onedark.vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
