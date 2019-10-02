@@ -31,8 +31,11 @@
   "suggest.snippetIndicator": " ",
   "snippets.userSnippetsDirectory": "~/Dotfiles/vim/snippets",
   "snippets.ultisnips.enable": true,
+  "suggest.languageSourcePriority": 999,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  // emoji
+  "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",
