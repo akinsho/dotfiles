@@ -405,8 +405,8 @@ live_config_reload: true
 #   - AppKeypad
 key_bindings:
   # (Windows/Linux only)
-  - { key: V, mods: Control|Shift, action: Paste }
-  - { key: C, mods: Control|Shift, action: Copy }
+  - { key: V, mods: Control, action: Paste }
+  - { key: C, mods: Control, action: Copy }
   - { key: Paste, action: Paste }
   - { key: Copy, action: Copy }
   - { key: L, mods: Control, action: ClearLogNotice }
