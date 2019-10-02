@@ -133,7 +133,7 @@ let g:lightline#bufferline#min_buffer_count  = 1
 let g:lightline#bufferline#unicode_symbols   = 1
 let g:lightline#bufferline#show_number       = 2
 let g:lightline#bufferline#enable_devicons   = 1
-" let g:lightline#bufferline#filename_modifier = ':t'
+let g:lightline#bufferline#filename_modifier = ':t'
 
 nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
 nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
@@ -313,8 +313,7 @@ function! LightlineGinaStatus() abort
   endif
   let l:repo_name = gina#component#repo#name()
   let l:project = l:repo_name !=# '' ? ' ' .l:repo_name : ''
-  " Manually recreate the traffic fancy preset as it doesn't
-  " allow granular control
+  " Manually recreate the traffic fancy preset as it doesn't allow granular control
   let l:ahead = gina#component#traffic#ahead() 
   let l:behind = gina#component#traffic#behind() 
   let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
