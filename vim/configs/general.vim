@@ -225,12 +225,9 @@ set background=dark
   " ========================
   " ONE
   " ========================
+  " See highlight.vim for colorscheme overrides
   let g:one_allow_italics = 1
   colorscheme one
-  call one#highlight('Folded', 'db7093', 'none', 'bold')
-  "Italicise typescript imports and exports
-  call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
-  call one#highlight('typescriptExport', '61afef', 'none', 'italic')
 endif
 
 "---------------------------------------------------------------------------//

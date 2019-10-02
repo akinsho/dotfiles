@@ -35,18 +35,26 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   "Nicer JS/TS colours
   ""---------------------------------------------------------------------------//
-  highlight jsFuncCall gui=italic
-  highlight Comment gui=italic cterm=italic
-  highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
-  highlight jsxAttrib cterm=italic,bold ctermfg=121
-  highlight Type    gui=italic,bold cterm=italic,bold
-  highlight jsThis ctermfg=224,gui=italic
-  highlight Include gui=italic cterm=italic
-  highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
-  highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
-  highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
-  highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
-  highlight Folded  gui=bold,italic cterm=bold
+  if g:colors_name ==? 'one'
+    call one#highlight('Folded', 'db7093', 'none', 'bold')
+    call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
+    "Italicise typescript imports and exports
+    call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
+    call one#highlight('typescriptExport', '61afef', 'none', 'italic')
+  else
+    highlight jsFuncCall gui=italic
+    highlight Comment gui=italic cterm=italic
+    highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
+    highlight jsxAttrib cterm=italic,bold ctermfg=121
+    highlight Type    gui=italic,bold cterm=italic,bold
+    highlight jsThis ctermfg=224,gui=italic
+    highlight Include gui=italic cterm=italic
+    highlight jsFuncArgs gui=italic cterm=italic ctermfg=217
+    highlight jsClassProperty ctermfg=14 cterm=bold,italic term=bold,italic
+    highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
+    highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
+    highlight Folded  gui=bold,italic cterm=bold
+  endif
 
   " This only applies to the specific highlight names night owl creates
   if g:colors_name ==? "night-owl"
@@ -75,6 +83,6 @@ endfunction
 
 augroup InitHighlights
   au!
-  autocmd VimEnter * call ApplyUserHighlights()
-  autocmd ColorScheme * call ApplyUserHighlights()
+    autocmd VimEnter * call ApplyUserHighlights()
+    autocmd ColorScheme * call ApplyUserHighlights()
 augroup END
