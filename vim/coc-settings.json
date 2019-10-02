@@ -31,7 +31,6 @@
   "suggest.snippetIndicator": " ",
   "snippets.userSnippetsDirectory": "~/Dotfiles/vim/snippets",
   "snippets.ultisnips.enable": true,
-  "coc.source.ultisnips.enable": false,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "eslint.filetypes": [
