@@ -59,6 +59,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "============================
 " Plug 'SirVer/ultisnips'
 " Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
+Plug 'kamykn/spelunker.vim'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
@@ -109,7 +110,10 @@ Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown', 'on': 'MarkdownPreview' }
+Plug 'iamcco/markdown-preview.nvim', {
+      \ 'do': 'cd app & yarn install',
+      \ 'for': 'markdown', 'on': 'MarkdownPreview'
+      \ }
 Plug 'heavenshell/vim-jsdoc', {
       \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
       \ 'on': 'JSDoc'

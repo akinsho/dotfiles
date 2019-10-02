@@ -111,7 +111,7 @@ augroup AutoSave
         \  if empty(&buftype) && !empty(bufname('')) && &modifiable == 1 && &readonly == 0 && &buftype != 'nofile'
         \|   silent! update
         \|   echohl String
-        \|   echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
+        \|   echom "(AutoSaved at " . strftime("%H:%M:%S") . ")"
         \|   echohl none
         \| endif
 augroup END
