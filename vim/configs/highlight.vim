@@ -47,9 +47,12 @@ function! ApplyUserHighlights() abort
   highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
   highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
   highlight Folded  gui=bold,italic cterm=bold
-  " Copy some of the nice highlighting from JS
-  highlight link typescriptExport jsImport
-  highlight link typescriptImport jsImport
+
+  " This only applies to the specific highlight names night owl creates
+  if g:colors_name ==? "night-owl"
+    highlight link typescriptExport jsImport
+    highlight link typescriptImport jsImport
+  endif
 
   call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
 
