@@ -352,7 +352,7 @@ if exists('g:lightline')
         \ "tender": ['#1d1d1d', 59],
         \ "onedark": ['#5A5E68', 59],
         \ "night-owl": ['#060F1F', 58],
-        \ "one": ['#2E3037', 59],
+        \ "one": ['#1b1e24', 59],
         \}
 
   "Lightline bufferline Colors
