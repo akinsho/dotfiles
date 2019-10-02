@@ -217,7 +217,7 @@ set background=dark
   " ========================
   " Night Owl
   " ========================
-  colorscheme night-owl
+  " colorscheme night-owl
   " ========================
   " Tender
   " ========================
@@ -225,9 +225,9 @@ set background=dark
   " ========================
   " ONE
   " ========================
-  " let g:one_allow_italics = 1
-  " colorscheme one
-  " call one#highlight('Folded', 'db7093', 'none', 'bold')
+  let g:one_allow_italics = 1
+  colorscheme one
+  call one#highlight('Folded', 'db7093', 'none', 'bold')
 endif
 
 "---------------------------------------------------------------------------//

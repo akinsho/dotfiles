@@ -2,7 +2,7 @@ if exists('g:gui_oni')
   finish
 endif
 
-let s:theme_opts = ['one', 'palenight', 'tender']
+let s:theme_opts = ['one', 'onedark', 'palenight', 'tender']
 
 function! s:get_active_theme() abort
   let l:theme = join(map(s:theme_opts, { key,val -> strlen(matchstr(val, g:colors_name)) ? val : ""}), '')
@@ -351,7 +351,8 @@ if exists('g:lightline')
   let s:bufferline_colors = {
         \ "tender": ['#1d1d1d', 59],
         \ "onedark": ['#5A5E68', 59],
-        \ "night-owl": ['#060F1F', 58]
+        \ "night-owl": ['#060F1F', 58],
+        \ "one": ['#222222', 59],
         \}
 
   "Lightline bufferline Colors

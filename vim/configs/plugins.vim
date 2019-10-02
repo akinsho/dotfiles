@@ -80,7 +80,7 @@ Plug 'tpope/vim-apathy'
 " ===========================
 "Syntax {{{1
 "============================
-Plug 'Akin909/vim-dune' " syntax highlighting for ocaml/reason dune files
+Plug 'Akin909/vim-dune', { 'for': ['dune']} " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
 Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
 Plug 'sheerun/vim-polyglot'
@@ -117,10 +117,10 @@ Plug 'heavenshell/vim-jsdoc', {
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 ""Themes  {{{1
 "===============================
+Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'jacoborus/tender.vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
