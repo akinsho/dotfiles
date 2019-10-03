@@ -18,8 +18,8 @@ call coc#add_extension(
       \ 'coc-flow',
       \ 'coc-vimlsp',
       \ 'coc-git',
+      \ 'coc-pairs',
       \ 'coc-tabnine',
-      \ 'coc-pairs'
       \)
 
 function! s:coc_init() abort

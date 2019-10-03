@@ -3,7 +3,7 @@
 " ----------------------------------------------------------------------------
 let s:preset = "💾 AutoSaved at " . strftime("%H:%M:%S")
 let g:autosave_message =  "💾 Saving..."
-let g:autosave_debounce_time = 3000
+let g:autosave_enabled = 1
 
 function! s:unset_autosaved() abort
     let b:autosaved_buffer = ""
@@ -18,7 +18,8 @@ function! s:is_valid_buffer() abort
 endfunction
 
 function! s:handle_autosave() abort
-  if s:is_valid_buffer()
+  let l:is_enabled = get(g:, 'autosave_enabled', 0)
+  if s:is_valid_buffer() && l:is_enabled
     silent! update
     let b:autosaved_buffer = get(g:, 'autosave_message', s:preset)
     call timer_start(1000, { -> s:unset_autosaved() })
