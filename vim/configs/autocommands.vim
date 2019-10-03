@@ -102,20 +102,6 @@ augroup CheckOutsideTime "{{{1
   autocmd WinEnter,BufWinEnter,BufWinLeave,BufRead,BufEnter,FocusGained * silent! checktime
 augroup end
 
-""---------------------------------------------------------------------------//
-" Credit:  June Gunn  - AutoSave {{{1
-" ----------------------------------------------------------------------------
-augroup AutoSave
-  autocmd!
-  autocmd CursorHold,CursorHoldI <buffer>
-        \  if empty(&buftype) && !empty(bufname('')) && &modifiable == 1 && &readonly == 0 && &buftype != 'nofile'
-        \|   silent! update
-        \|   echohl String
-        \|   echom "(AutoSaved at " . strftime("%H:%M:%S") . ")"
-        \|   echohl none
-        \| endif
-augroup END
-
 " Disable paste.{{{
 augroup Cancel_Paste
   autocmd!

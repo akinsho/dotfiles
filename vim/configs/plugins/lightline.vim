@@ -14,7 +14,7 @@ let s:active_theme = s:get_active_theme()
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
-      \  'left':[['mode'], ['filename', 'filetype']],
+      \  'left':[['mode'], ['filename', 'filetype'], ['autosave']],
       \   'right': [
       \     ['coc_git_repo', 'coc_git_buffer'],
       \     ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
@@ -40,6 +40,7 @@ let g:lightline = {
       \   'fileencoding': 'LightlineFileencoding',
       \   'csv':'LightlineCsv',
       \   'mode': 'LightlineMode',
+      \   'autosave': 'LightlineAutosave',
       \   'gitgutter': 'LightlineGitGutter',
       \   'lsp': 'coc#status',
       \   'current_function': 'CocCurrentFunction',
@@ -296,6 +297,10 @@ function! LightlineMode()
         \ &ft == 'help' ? 'help ':
         \ &ft == 'undotree' ? 'UndoTree ⮌' :
         \ lightline#mode()
+endfunction
+
+function LightlineAutosave() abort
+  return get(b:, 'autosaved_buffer', "")
 endfunction
 
 function! s:with_default(count, icon) abort
