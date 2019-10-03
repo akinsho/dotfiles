@@ -9,10 +9,6 @@ function! s:unset_autosaved() abort
     let b:autosaved_buffer = ""
 endfunction
 
-function! s:toggle_throttle(value) abort
-  let b:in_throttle = a:value
-endfunction
-
 function! s:is_valid_buffer() abort
   return empty(&buftype) &&
         \ !empty(bufname('')) &&
@@ -31,5 +27,6 @@ endfunction
 
 augroup AutoSave
   autocmd!
-  autocmd InsertLeave,TextChanged * nested call s:handle_autosave()
+  "NOTE: call is not *nested* so it doesn't trigger other autocommands
+  autocmd InsertLeave,TextChanged * call s:handle_autosave()
 augroup END
