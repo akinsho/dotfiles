@@ -35,6 +35,7 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   "Nicer JS/TS colours
   ""---------------------------------------------------------------------------//
+  " Vim One does not allow directly overriding highlights
   if g:colors_name ==? 'one'
     call one#highlight('Folded', 'db7093', 'none', 'bold')
     call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
