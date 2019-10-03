@@ -22,9 +22,9 @@ function s:is_valid_buffer() abort
 endfunction
 
 function! s:handle_autosave() abort
-  if exists('b:in_throttle') && b:in_throttle
-    return
-  endif
+  " if exists('b:in_throttle') && b:in_throttle
+  "   return
+  " endif
 
   if s:is_valid_buffer()
     silent! update
@@ -32,7 +32,7 @@ function! s:handle_autosave() abort
     let l:throttle_time = get(g:, 'autosave_debounce_time', 10000)
     let b:in_throttle = 1
     call timer_start(800, { -> s:unset_autosaved() })
-    call timer_start(l:throttle_time, { -> s:toggle_throttle(0)})
+    " call timer_start(l:throttle_time, { -> s:toggle_throttle(0)})
   endif
 endfunction
 
