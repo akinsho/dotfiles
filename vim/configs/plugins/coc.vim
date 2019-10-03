@@ -13,7 +13,6 @@ call coc#add_extension(
       \ 'coc-prettier',
       \ 'coc-jest',
       \ 'coc-emoji',
-      \ 'coc-ultisnips',
       \ 'coc-eslint',
       \ 'coc-yank',
       \ 'coc-flow',
