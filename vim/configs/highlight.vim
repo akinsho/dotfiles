@@ -33,13 +33,15 @@ function! ApplyUserHighlights() abort
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
   ""---------------------------------------------------------------------------//
-  "Nicer JS/TS colours
+  " JavascriptS/TypeScript highlights
   ""---------------------------------------------------------------------------//
   " Vim One does not allow directly overriding highlights
   if g:colors_name ==? 'one'
     call one#highlight('Folded', 'db7093', 'none', 'bold')
     call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
-    "Italicise typescript imports and exports
+    "Italicise imports
+    call one#highlight('jsImport', '61afef', 'none', 'italic')
+    call one#highlight('jsExport', '61afef', 'none', 'italic')
     call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
   else
