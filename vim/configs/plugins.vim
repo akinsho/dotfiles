@@ -37,6 +37,7 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+      \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets'
 Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
 Plug 'airblade/vim-rooter'
@@ -57,7 +58,6 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
-" Plug 'SirVer/ultisnips'
 " Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
 " Plug 'kamykn/spelunker.vim'
 Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
@@ -119,7 +119,7 @@ Plug 'heavenshell/vim-jsdoc', {
       \ 'on': 'JSDoc'
       \ }
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
-""Themes  {{{1
+"Themes  {{{1
 "===============================
 Plug 'rakr/vim-one'
 Plug 'haishanh/night-owl.vim'

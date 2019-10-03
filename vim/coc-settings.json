@@ -28,8 +28,6 @@
   "diagnostic.hintSign": "ﯦ",
   "signature.target": "float",
   "signature.preferShownAbove": true,
-  "suggest.snippetIndicator": " ",
-  "snippets.userSnippetsDirectory": "~/Dotfiles/vim/snippets",
   "suggest.languageSourcePriority": 999,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
@@ -42,7 +40,9 @@
     "typescriptreact"
   ],
   // Snippets
+  "suggest.snippetIndicator": " ",
   "snippets.ultisnips.enable": true,
+  "snippets.userSnippetsDirectory": "~/Dotfiles/vim/snippets",
   "snippets.ultisnips.directories": ["Ultisnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "cpp": ["c"],
