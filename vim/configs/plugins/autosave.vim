@@ -13,12 +13,20 @@ function s:toggle_throttle(value) abort
   let b:in_throttle = a:value
 endfunction
 
+function s:is_valid_buffer() abort
+  return empty(&buftype) &&
+        \ !empty(bufname('')) &&
+        \ &modifiable == 1 &&
+        \ &readonly == 0 &&
+        \ &buftype != 'nofile'
+endfunction
+
 function! s:handle_autosave() abort
   if exists('b:in_throttle') && b:in_throttle
     return
   endif
 
-  if empty(&buftype) && !empty(bufname('')) && &modifiable == 1 && &readonly == 0 && &buftype != 'nofile'
+  if s:is_valid_buffer()
     silent! update
     let b:autosaved_buffer = get(g:, 'autosave_message', s:preset)
     let l:throttle_time = get(g:, 'autosave_debounce_time', 10000)
