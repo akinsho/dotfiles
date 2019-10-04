@@ -271,7 +271,7 @@ nnoremap <silent><leader>yf :let @"=expand("%:p")<CR>
 " Mnemonic: yank File Name
 nnoremap <leader>fn :let @"=fnamemodify(expand("%"), ":~:.")<CR>      
 ""---------------------------------------------------------------------------//
-nnoremap <BS> gg
+" nnoremap <BS> gg
 "Change operator arguments to a character representing the desired motion
 nnoremap ; :
 nnoremap : ;
