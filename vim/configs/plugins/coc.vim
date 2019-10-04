@@ -18,9 +18,11 @@ call coc#add_extension(
       \ 'coc-flow',
       \ 'coc-vimlsp',
       \ 'coc-git',
-      \ 'coc-pairs',
       \ 'coc-tabnine',
       \)
+
+" TODO Coc pairs is takes half a second to expand
+" \ 'coc-pairs',
 
 function! s:coc_init() abort
   let s:languageservers = {}
