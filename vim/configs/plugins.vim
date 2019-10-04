@@ -83,8 +83,8 @@ Plug 'tpope/vim-apathy'
 "Syntax {{{1
 "============================
 Plug 'Akin909/vim-dune', { 'for': ['dune']} " syntax highlighting for ocaml/reason dune files
-Plug 'Yggdroot/indentLine', Cond(!exists('g:gui_oni'))
-Plug 'fatih/vim-go', Cond(!exists('g:gui_oni'), {'do': ':GoUpdateBinaries', 'for': ['go'] })
+Plug 'Yggdroot/indentLine'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
