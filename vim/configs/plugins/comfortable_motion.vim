@@ -4,7 +4,7 @@
 " Scroll proportional to window height
 let g:comfortable_motion_no_default_key_mappings = 1
 let g:comfortable_motion_impulse_multiplier = 1.2
-let g:comfortable_motion_friction = 200.0
+let g:comfortable_motion_friction = 150.0
 let g:comfortable_motion_air_drag = 0.0
 
 nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 1.5)<CR>
