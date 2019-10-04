@@ -137,7 +137,7 @@ endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " LIST =============================================================
-set nolist                              " don't show invisible chars
+set list                              " invisible chars
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
 set listchars+=precedes:…
@@ -274,11 +274,9 @@ endif
 " Tabbing - overridden by editorconfig, after/ftplugin {{{1
 " ----------------------------------------------------------------------------
 if !has_key(g:plugs, 'sleuth.vim')
-  " default to spaces instead of tabs
-  set expandtab
-  " softtabs are 2 spaces for expandtab
+  set expandtab " default to spaces instead of tabs
   set shiftwidth=2
-  set softtabstop=-2
+  set softtabstop=-2 " softtabs are 2 spaces for expandtab
   set tabstop=8
   " use multiple of shiftwidth when shifting indent levels.
   " this is OFF so block comments don't get fudged when using \">>" and \"<<"
