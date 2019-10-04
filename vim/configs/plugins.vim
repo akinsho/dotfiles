@@ -77,6 +77,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
+"sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 " ===========================
 "Syntax {{{1
