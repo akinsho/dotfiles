@@ -45,24 +45,6 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 xnoremap @ <Cmd><C-u>call ExecuteMacroOverVisualRange()<CR>
-"--------------------------------------------
-" Focus marked text by highlighting everything else as a comment
-" xnoremap <silent> <cr> :<c-u>call <SID>Focus()<cr>
-" nnoremap <silent> <cr>q :call <SID>Unfocus()<cr>
-
-function! s:Focus()
-  let start = line("'<")
-  let end   = line("'>")
-
-  call matchadd('Comment', '.*\%<'.start.'l')
-  call matchadd('Comment', '.*\%>'.end.'l')
-  syntax sync fromstart
-  redraw
-endfunction
-
-function! s:Unfocus()
-  call clearmatches()
-endfunction
 "}}}
 " ----------------------------------------------------------------------------
 " Credit: JGunn Choi ?il | inner line
@@ -461,7 +443,6 @@ nnoremap <leader>sw <C-W>R
 ""---------------------------------------------------------------------------//
 "Open Common files
 ""---------------------------------------------------------------------------//
-nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
 "Indent a page
@@ -576,7 +557,7 @@ nnoremap <leader>" ciw"<c-r>""<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
-nnoremap <Leader>dq daW"=substitute(@@,"'\\\|\"","","g")<CR>P
+
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>
