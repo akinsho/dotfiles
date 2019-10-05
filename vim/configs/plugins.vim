@@ -58,10 +58,9 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
-" Plug 'yardnsm/vim-import-cost', { 'do': 'yarn install' }
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 Plug 'cohama/lexima.vim'
-Plug 'mbbill/undotree',{'on':['UndotreeToggle']} " undo plugin for vim
+Plug 'liuchengxu/vim-which-key' ", { 'on': ['WhichKey', 'WhichKey!'] }
+Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
