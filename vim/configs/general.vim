@@ -39,6 +39,7 @@ if has('folding')
     set fillchars+=diff:⣿
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
+      set fillchars+=eob:\              " suppress ~ at EndOfBuffer
     endif
   endif
     set foldlevelstart=999
@@ -266,6 +267,7 @@ endif
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
 set sessionoptions-=blank,buffers,globals,help,options
+set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
 set updatetime=200
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
@@ -353,6 +355,9 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 set spellfile=$DOTFILES/vim/.vim-spell-en.utf-8.add
 set nospell
+if has('syntax')
+  set spellcapcheck=                  " don't check for capital letters at start of sentence
+endif
 set fileformats=unix,mac,dos
 set complete+=kspell
 "===================================================================================

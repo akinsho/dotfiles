@@ -67,12 +67,6 @@ function! ApplyUserHighlights() abort
     highlight TermCursor ctermfg=green guifg=green
     highlight link MsgSeparator Comment
   endif
-  ""---------------------------------------------------------------------------//
-  "Autocomplete menu highlighting
-  ""---------------------------------------------------------------------------//
-  " Hide the tildes at the end of the buffer
-  let s:normal_background = synIDattr(hlID('Normal'), 'bg#')
-  execute 'silent highlight EndOfBuffer guifg=' . s:normal_background
 
   "Remove vertical separator
   " highlight VertSplit guibg=bg guifg=bg
