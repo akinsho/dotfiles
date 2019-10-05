@@ -25,6 +25,8 @@ let g:which_localleader_key_map.6 = 'open buffer 6'
 let g:which_localleader_key_map.7 = 'open buffer 7'
 let g:which_localleader_key_map.8 = 'open buffer 8'
 let g:which_localleader_key_map.9 = 'open buffer 9'
+let g:which_localleader_key_map["["] = 'open space above'
+let g:which_localleader_key_map["]"] = 'insert space below'
 
 let g:which_leader_key_map.e = { 'name': '+edit-buffer' }
 let g:which_leader_key_map.z = 'Zoom in current buffer'
