@@ -177,15 +177,14 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <silent><leader>a  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>ff  <Plug>(coc-fix-current)
-nmap <leader>rf  <Plug>(coc-refactor)
+nmap <silent><leader>ff  <Plug>(coc-fix-current)
+nmap <silent><leader>rf  <Plug>(coc-refactor)
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+nmap <silent><leader>rn <Plug>(coc-rename)
 
 ""---------------------------------------------------------------------------//
 " Using CocList

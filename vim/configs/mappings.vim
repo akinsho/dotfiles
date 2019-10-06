@@ -386,6 +386,8 @@ nnoremap ' `
 vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
+"open a new file in the same directory
+nnoremap <Leader>sf :vsp <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window - :<c-f>
 nnoremap <localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
