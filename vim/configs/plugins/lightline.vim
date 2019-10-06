@@ -11,6 +11,8 @@ endfunction
 
 let s:active_theme = s:get_active_theme()
 
+highlight LightLineClose guifg=white guibg=red
+
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
@@ -29,7 +31,7 @@ let g:lightline = {
       \ },
       \ 'component': {
       \   'lineinfo': '%3l:%-2v',
-      \   'close': '%#DiffDelete#%999X X ',
+      \   'close': '%#LightLineClose#%999X X ',
       \ },
       \ 'component_function': {
       \   'filesize': 'LightlineFileSize',
@@ -80,7 +82,7 @@ function! s:tab_renderer(tabnr, highlight) abort
         \ '%#'. a:highlight .'#' : '%#TabLine#'
   " set the tab page number (for mouse clicks)
   let l:component .= '%' . a:tabnr . 'T'
-  " add the label for the indicator 
+  " add the label for the indicator
   let l:component .= ' ' . a:tabnr . ' '
   " after the last tab fill with TabLineFill and reset tab page nr
   let l:component .= '%#TabLineFill#%T'
@@ -102,7 +104,7 @@ endfunction
 
 function! LightlineMinimalTabs() abort
   let l:tabs = range(1, tabpagenr('$'))
-  let l:item = join(map(l:tabs, { -> s:tab_renderer(v:val, 'MinimalTabActive') }))
+  let l:item = join(map(l:tabs, { -> s:tab_renderer(v:val, 'TabLineSel') }))
   return l:item
 endfunction
 
