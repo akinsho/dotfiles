@@ -25,7 +25,7 @@ let g:which_localleader_key_map[','] = 'add comma to end of line'
 let g:which_localleader_key_map[';'] = 'add semicolon to end of line'
 let g:which_localleader_key_map['?'] = 'Search for word under cursor in google'
 let g:which_localleader_key_map['!'] = 'Search for word under cursor in google'
-let g:which_localleader_key_map['<TAB>'] = 'open vim bufferlist'
+let g:which_localleader_key_map['<tab>'] = 'open vim bufferlist'
 let g:which_localleader_key_map["["] = 'open space above'
 let g:which_localleader_key_map["]"] = 'insert space below'
 

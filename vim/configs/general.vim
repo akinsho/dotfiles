@@ -52,11 +52,11 @@ endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
 " ----------------------------------------------------------------------------
-set diffopt=vertical                  " Use in vertical diff mode
+set diffopt=vertical " Use in vertical diff mode
 " blank lines to keep sides aligned, Ignore whitespace changes
 set diffopt+=filler,iwhite,foldcolumn:0,context:4
 if has("patch-8.1.0360") || has('nvim-0.3.2')
-  set diffopt+=internal,algorithm:patience
+  set diffopt+=algorithm:histogram,internal,indent-heuristic
 endif
 " ----------------------------------------------------------------------------
 "             Format Options {{{1
@@ -67,8 +67,8 @@ endif
 set formatoptions=
 set formatoptions+=1
 set formatoptions-=q                  " continue comments with gq"
-set formatoptions-=c                  " Auto-wrap comments using textwidth
-set formatoptions-=r                  " Do not continue comments by default
+set formatoptions+=c                  " Auto-wrap comments using textwidth
+set formatoptions+=r                  " Continue comments when pressing Enter
 set formatoptions-=o                  " do not continue comment using o or O
 set formatoptions+=n                  " Recognize numbered lists
 set formatoptions+=2                  " Use indent from 2nd line of a paragraph
