@@ -30,14 +30,22 @@ let g:which_localleader_key_map["]"] = 'insert space below'
 
 let g:which_leader_key_map.ar = 'toggle auto resize'
 let g:which_leader_key_map.e = { 'name': '+edit-buffer' }
+let g:which_leader_key_map.f = 'find cursor word (fzf)'
+let g:which_leader_key_map.F = 'find word (prompt)'
 let g:which_leader_key_map.E = 'Show token under the cursor'
 let g:which_leader_key_map.g = 'grep word under the cursor'
+let g:which_leader_key_map.l = { 'name': 'left' }
+let g:which_leader_key_map.l.i = 'Toggle quickfix/location list'
+let g:which_leader_key_map.l['<CR>'] = 'open terminal right'
 let g:which_leader_key_map.z = 'Zoom in current buffer'
 let g:which_leader_key_map.Z = 'Zoom in with tab'
 let g:which_leader_key_map.ev = 'open vimrc in a new buffer'
 let g:which_leader_key_map.ez = 'open zshrc in a new buffer'
 let g:which_leader_key_map.et = 'open tmux config in a new buffer'
 let g:which_leader_key_map.s = 'sort a visual selection'
+let g:which_leader_key_map.so = 'source current buffer'
+let g:which_leader_key_map.sv = 'source init.vim'
+let g:which_leader_key_map.U = 'Uppercase all word'
 let g:which_leader_key_map.n = { 'name': '+new' }
 let g:which_leader_key_map.n.f ='create a new file'
 let g:which_leader_key_map[","] = 'go to previous buffer'
@@ -47,8 +55,10 @@ let g:which_leader_key_map["}"] = 'wrap with braces'
 let g:which_leader_key_map["\""] = 'wrap with double quotes'
 let g:which_leader_key_map["\'"] = 'wrap with single quotes'
 let g:which_leader_key_map['on'] = 'close all other buffers'
-let g:which_leader_key_map.TAB = 'Go to next buffer'
-let g:which_leader_key_map["s-tab"] = 'Go to next buffer'
+let g:which_leader_key_map["["] = 'subsitute cursor word in file'
+let g:which_leader_key_map["]"] = 'substitue cursor word on line'
+let g:which_leader_key_map["<s-tab>"] = 'Go to previous buffer'
+let g:which_leader_key_map["<tab>"] = 'Go to next buffer'
 
 " The map must be registered before the mappings below
 call which_key#register('<space>', "g:which_localleader_key_map")
