@@ -5,6 +5,7 @@ endif
 call coc#add_extension(
       \ 'coc-tag',
       \ 'coc-json',
+      \ 'coc-go',
       \ 'coc-tsserver',
       \ 'coc-rls',
       \ 'coc-snippets',
@@ -60,14 +61,6 @@ function! s:coc_init() abort
           \ "command": "elm-language-server",
           \ "filetypes": ["elm"],
           \ "rootPatterns": ["elm.json"],
-          \}
-  endif
-
-  if executable('gopls')
-    let s:languageservers['golang'] = {
-          \ "command": "gopls",
-          \ "filetypes": ["go"],
-          \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
           \}
   endif
 
