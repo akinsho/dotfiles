@@ -52,11 +52,10 @@ endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
 " ----------------------------------------------------------------------------
-set diffopt=vertical " Use in vertical diff mode
-" blank lines to keep sides aligned, Ignore whitespace changes
-set diffopt+=filler,iwhite,foldcolumn:0,context:4
+" Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
+set diffopt+=vertical,filler,iwhite,foldcolumn:0,context:4
 if has("patch-8.1.0360") || has('nvim-0.3.2')
-  set diffopt+=algorithm:histogram,internal,indent-heuristic
+  set diffopt+=algorithm:histogram,indent-heuristic
 endif
 " ----------------------------------------------------------------------------
 "             Format Options {{{1
