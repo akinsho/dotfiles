@@ -66,7 +66,7 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'takac/vim-hardtime'
+" Plug 'takac/vim-hardtime'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
