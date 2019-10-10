@@ -45,6 +45,45 @@ if has_key(g:plugs, 'defx-git')
         \ }
 endif
 
+function s:get_project_root() abort
+  let l:git_root = ''
+  let l:path = expand('%:p:h')
+  let l:cmd = systemlist('cd '.l:path.' && git rev-parse --show-toplevel')
+  if !v:shell_error && !empty(l:cmd)
+    let l:git_root = fnamemodify(l:cmd[0], ':p:h')
+  endif
+
+  if !empty(l:git_root)
+    return l:git_root
+  endif
+
+  return getcwd()
+endfunction
+
+function! s:defx_open(...) abort
+  if  &filetype ==? 'defx'
+    return
+  endif
+
+  let l:opts = get(a:, 1, {})
+  let l:path = s:get_project_root()
+
+  if has_key(l:opts, 'dir') && isdirectory(l:opts.dir)
+    let l:path = l:opts.dir
+  endif
+
+  let l:args = '-winwidth=40 -direction=topleft -split=vertical'
+
+  if has_key(l:opts, 'find_current_file')
+    call execute(printf('Defx %s -search=%s %s', l:args, expand('%:p'), l:path))
+  else
+    call execute(printf('Defx -toggle %s %s', l:args, l:path))
+    call execute('wincmd p')
+  endif
+
+  return execute("norm!\<C-w>=")
+endfunction
+
 if has_key(g:plugs, 'defx-icons')
   " Icons
   let g:defx_icons_column_length = 2
@@ -53,19 +92,11 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_directory_symlink_icon = ''
 
   " Speeds up defx massively
-  let g:defx_icons_enable_syntax_highlight = 1
+  let g:defx_icons_enable_syntax_highlight = 0
 endif
 
-nnoremap <silent><C-N> :call OpenDefx()<CR>
-function! OpenDefx() abort
-  let g:defx_open_path = expand("%:p:h")
-  " \ -search=`expand("%:p")` `getcwd()`
-  execute('Defx
-        \ -toggle
-        \ -winwidth=`&columns / 5`
-        \ `g:defx_open_path`
-        \ ')
-endfunction
+nnoremap <silent><C-N> :call <sid>defx_open()<CR>
+nnoremap <silent><C-N>f :call <sid>defx_open({ 'find_current_file': v:true })<CR>
 
 function! s:defx_context_menu() abort
   let l:actions = ['new_multiple_files', 'rename', 'copy', 'move', 'paste', 'remove']
