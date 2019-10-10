@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'nerdtree.vim')
+if !has_key(g:plugs, 'nerdtree')
   finish
 endif
 ""---------------------------------------------------------------------------//
@@ -79,7 +79,7 @@ let g:NERDTreeAutoDeleteBuffer          = 1
 let g:NERDTreeWinSize                   = 35
 let g:NERDTreeShowLineNumbers           = 0
 let g:NERDTreeQuitOnOpen                = 1
-let g:NERDTreeMinimalUI                 = 1
+let g:NERDTreeMinimalUI                 = 0
 let g:NERDTreeCascadeOpenSingleChildDir = 1
 let g:NERDTreeShowBookmarks             = 1
 let g:NERDTreeAutoDeleteBuffer          = 1
@@ -94,12 +94,12 @@ if exists('g:NERDTree')
   endif
 endif
 if !g:gui_neovim_running
-  let g:NERDTreeDirArrowExpandable = ''
-  let g:NERDTreeDirArrowCollapsible = ''
+  " let g:NERDTreeDirArrowExpandable = ''
+  " let g:NERDTreeDirArrowCollapsible = ''
 else
-  let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
-  let g:DevIconsEnableFoldersOpenClose                             = 1
-  let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodes                      = 1
+  " let g:DevIconsEnableFoldersOpenClose                             = 1
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol         = ''
 endif
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols        = {}
 let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol           = ''
