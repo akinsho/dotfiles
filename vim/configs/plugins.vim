@@ -59,7 +59,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
 Plug 'cohama/lexima.vim'
-Plug 'liuchengxu/vim-which-key' ", { 'on': ['WhichKey', 'WhichKey!'] }
+Plug 'liuchengxu/vim-which-key'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger'
 Plug 'AndrewRadev/switch.vim'
@@ -125,6 +125,8 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 Plug 'rakr/vim-one'
 Plug 'haishanh/night-owl.vim'
 Plug 'jacoborus/tender.vim'
+" Colorscheme Ideas
+" arzg/vim-substrata
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 

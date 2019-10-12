@@ -1,7 +1,6 @@
 ""---------------------------------------------------------------------------//
 "EasyMotion mappings
 ""---------------------------------------------------------------------------//
-let g:EasyMotion_prompt = 'Jump to → '
 let g:EasyMotion_do_mapping       = 0
 let g:EasyMotion_startofline      = 0
 let g:EasyMotion_smartcase        = 1
@@ -21,5 +20,3 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 nnoremap <leader>/ /
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-" map  <leader>n <Plug>(easymotion-next)
-" map  <leader>N <Plug>(easymotion-prev)

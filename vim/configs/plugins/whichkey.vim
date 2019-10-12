@@ -51,6 +51,7 @@ let g:which_leader_key_map.e = 'CamelCase: word motion'
 let g:which_leader_key_map.l = { 'name': 'left' }
 let g:which_leader_key_map.l.i = 'Toggle quickfix/location list'
 let g:which_leader_key_map.l['<CR>'] = 'open terminal right'
+let g:which_leader_key_map.L = 'Easymotion: jump to line'
 let g:which_leader_key_map.z = 'Zoom in current buffer'
 let g:which_leader_key_map.Z = 'Zoom in with tab'
 let g:which_leader_key_map.ev = 'Open vimrc in a new buffer'
