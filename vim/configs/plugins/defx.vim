@@ -72,7 +72,7 @@ function! s:defx_open(...) abort
     let l:path = l:opts.dir
   endif
 
-  let l:args = '-winwidth=40 -direction=topleft -split=vertical'
+  let l:args = '-winwidth=40 -direction=topleft -split=vertical -listed -resume'
 
   if has_key(l:opts, 'find_current_file')
     call execute(printf('Defx %s -search=%s %s', l:args, expand('%:p'), l:path))
@@ -92,7 +92,7 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_directory_symlink_icon = ''
 
   " Speeds up defx massively
-  let g:defx_icons_enable_syntax_highlight = 0
+  let g:defx_icons_enable_syntax_highlight = 1
 endif
 
 nnoremap <silent><C-N> :call <sid>defx_open()<CR>

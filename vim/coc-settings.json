@@ -51,6 +51,8 @@
     "typescript": ["javascript"],
     "rei": ["reason"]
   },
+  "git.stagedDecorator": "●",
+  "git.changedDecorator": "",
   "git.changedSign.text": "",
   "git.addedSign.text": "",
   "git.removedSign.text": "",
