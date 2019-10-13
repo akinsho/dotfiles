@@ -20,6 +20,7 @@ call coc#add_extension(
       \ 'coc-vimlsp',
       \ 'coc-git',
       \ 'coc-tabnine',
+      \ 'coc-reason'
       \)
 
 " TODO Coc pairs is takes half a second to expand
@@ -61,21 +62,6 @@ function! s:coc_init() abort
           \ "command": "elm-language-server",
           \ "filetypes": ["elm"],
           \ "rootPatterns": ["elm.json"],
-          \}
-  endif
-
-  let s:reason_language_server = $HOME.'/rls-linux/reason-language-server'
-  if filereadable(s:reason_language_server)
-    let s:languageservers['reason'] = {
-          \ 'command': s:reason_language_server,
-          \ 'trace.server': 'verbose',
-          \ 'filetypes': ['reason'],
-          \ 'settings': {
-          \  'reason_language_server': {
-          \    'per_value_codelens': v:true,
-          \    'useOldDuneProcess': v:true,
-          \   }
-          \ }
           \}
   endif
 
