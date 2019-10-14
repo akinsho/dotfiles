@@ -17,13 +17,13 @@ call coc#add_extension(
       \ 'coc-eslint',
       \ 'coc-yank',
       \ 'coc-flow',
-      \ 'coc-vimlsp',
       \ 'coc-git',
       \ 'coc-tabnine',
       \ 'coc-reason'
       \)
 
 " TODO Coc pairs is takes half a second to expand
+" \ 'coc-vimlsp',
 " \ 'coc-pairs',
 
 function! s:coc_init() abort
