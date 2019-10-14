@@ -75,10 +75,6 @@ snippet log "console log string"
 console.log('${1:log}')
 endsnippet
 
-snippet me "module.exports" b
-module.exports = ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`};$0
-endsnippet
-
 snippet fm "function with dynamic docblock" b
 `!p
 # Currently Ultisnips does not support dynamic tabstops, so we cannot add
