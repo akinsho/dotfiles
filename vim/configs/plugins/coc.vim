@@ -183,7 +183,7 @@ nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
 nmap <silent> <C-e> <Plug>(coc-cursors-word)*
-xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
+xmap <silent> <C-e> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//
