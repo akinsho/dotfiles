@@ -45,7 +45,7 @@ augroup togglerelativelinenumbers
         \ setlocal norelativenumber |
         \ endif
   autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
-        \ if &previewwindow | setlocal nonumber norelativenumber | 
+        \ if &previewwindow | setlocal nonumber norelativenumber |
         \ elseif &l:number && empty(&buftype) |
         \ setlocal relativenumber |
         \ endif
@@ -164,10 +164,10 @@ augroup mutltiple_filetype_settings "{{{1
   autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
 augroup END
 
-augroup filetype_javascript_typescript "{{{1
+augroup config_filtetype_settings "{{{1
   autocmd!
   "==================================
-  "TypeScript
+  " Config files
   "==================================
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
 augroup END
@@ -197,7 +197,7 @@ function! s:handle_window_enter() abort
   if &buftype ==# 'terminal'
     setlocal nocursorline nonumber norelativenumber
     if g:colors_name ==? 'one' || g:colors_name ==? 'onedark'
-      if exists('+winhighlight') 
+      if exists('+winhighlight')
         highlight TerminalColors guibg=#22252B ctermbg=black
         highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
         setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
