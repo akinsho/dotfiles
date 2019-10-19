@@ -44,7 +44,7 @@ let g:fzf_buffers_jump    = 1
 let g:fzf_colors = {
       \ 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Pmenu'],
-      \ 'border':  ['fg', 'Ignore'],
+      \ 'border':  ['fg', 'VertSplit'],
       \ 'hl':      ['fg', 'Comment'],
       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
       \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
