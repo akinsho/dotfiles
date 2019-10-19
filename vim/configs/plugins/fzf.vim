@@ -15,9 +15,7 @@
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 
-if stridx($FZF_DEFAULT_OPTS, '--border') == -1
-    let $FZF_DEFAULT_OPTS .= ' --bind ctrl-a:select-all --border --layout=reverse'
-endif
+let $FZF_DEFAULT_OPTS .= ' --bind ctrl-a:select-all --layout=reverse --margin=5%,5%'
 
 let branch_files_options = {
       \ 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'
@@ -26,6 +24,32 @@ let uncommited_files_options = {
       \ 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'
       \ }
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+let g:fzf_action = {
+      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+
+let g:fzf_nvim_statusline = 1
+let g:fzf_buffers_jump    = 1
+"Customize fzf colors to match your color scheme
+let g:fzf_colors = {
+      \ 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Pmenu'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment']
+      \}
+
 
 function! FloatingFZF()
   " make floating window pseudo transparent
@@ -127,35 +151,8 @@ augroup end
     cc
   endfunction
 
-  let g:fzf_action = {
-        \ 'ctrl-q': function('s:build_quickfix_list'),
-        \ 'ctrl-t': 'tab split',
-        \ 'ctrl-s': 'split',
-        \ 'ctrl-v': 'vsplit'
-        \ }
-
   nnoremap <localleader>ma  :Marks<CR>
   nnoremap <localleader>mm :Maps<CR>
-
-  let g:fzf_nvim_statusline = 1
-
-  "Customize fzf colors to match your color scheme
-  let g:fzf_colors =
-        \ { 'fg':    ['fg', 'Normal'],
-        \ 'bg':      ['bg', 'Normal'],
-        \ 'border':  ['fg', 'Ignore'],
-        \ 'hl':      ['fg', 'Comment'],
-        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-        \ 'hl+':     ['fg', 'Statement'],
-        \ 'info':    ['fg', 'PreProc'],
-        \ 'prompt':  ['fg', 'Conditional'],
-        \ 'pointer': ['fg', 'Exception'],
-        \ 'marker':  ['fg', 'Keyword'],
-        \ 'spinner': ['fg', 'Label'],
-        \ 'header':  ['fg', 'Comment']
-        \}
-
   " Files + devicons
   function! Fzf_dev()
     function! s:files()
