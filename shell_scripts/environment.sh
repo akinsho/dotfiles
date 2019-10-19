@@ -69,5 +69,5 @@ export PATH="$PATH:$N_PREFIX/bin"
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 if ! type "$bat" > /dev/null; then
-  export BAT_THEME="OneHalfDark"
+  export BAT_THEME="TwoDark"
 fi
