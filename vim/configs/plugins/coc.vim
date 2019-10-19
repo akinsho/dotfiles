@@ -2,10 +2,11 @@ if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
   finish
 endif
 
-call coc#add_extension(
+let g:coc_global_extensions = [
       \ 'coc-tag',
       \ 'coc-json',
       \ 'coc-go',
+      \ 'coc-vimlsp',
       \ 'coc-tsserver',
       \ 'coc-rls',
       \ 'coc-snippets',
@@ -20,10 +21,9 @@ call coc#add_extension(
       \ 'coc-git',
       \ 'coc-tabnine',
       \ 'coc-reason'
-      \)
+      \]
 
 " TODO Coc pairs is takes half a second to expand
-" \ 'coc-vimlsp',
 " \ 'coc-pairs',
 
 function! s:coc_init() abort

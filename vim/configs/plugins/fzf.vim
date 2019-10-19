@@ -15,11 +15,35 @@
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all '
+if stridx($FZF_DEFAULT_OPTS, '--border') == -1
+    let $FZF_DEFAULT_OPTS .= ' --bind ctrl-a:select-all --border'
+endif
 " let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
 
-  let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
-  let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
+let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
+let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+function! FloatingFZF()
+  " make floating window pseudo transparent
+  set winblend=10
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let width = float2nr(&columns * 0.8)
+  let height = float2nr(&lines * 0.6)
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': (&lines - height) / 2,
+        \ 'col': (&columns - width) / 2,
+        \ 'width': width,
+        \ 'height': height
+        \}
+
+
+  let win = nvim_open_win(buf, v:true, opts)
+  call setwinvar(win, '&winhighlight', 'NormalFloat:StatusLine')
+endfunction
 
   let s:diff_options =
         \ '--reverse ' .
