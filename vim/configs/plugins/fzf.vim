@@ -16,9 +16,8 @@
 " --color: Search color options
 
 if stridx($FZF_DEFAULT_OPTS, '--border') == -1
-    let $FZF_DEFAULT_OPTS .= ' --bind ctrl-a:select-all --border'
+    let $FZF_DEFAULT_OPTS .= ' --bind ctrl-a:select-all --border --layout=reverse'
 endif
-" let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
 
 let branch_files_options = {
       \ 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'
@@ -42,7 +41,6 @@ function! FloatingFZF()
         \ 'width': width,
         \ 'height': height
         \}
-
 
   let win = nvim_open_win(buf, v:true, opts)
   call setwinvar(win, '&winhighlight', 'NormalFloat:StatusLine')
