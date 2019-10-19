@@ -20,13 +20,16 @@ if stridx($FZF_DEFAULT_OPTS, '--border') == -1
 endif
 " let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
 
-let branch_files_options = { 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'}
-let uncommited_files_options = { 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'}
+let branch_files_options = {
+      \ 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'
+      \ }
+let uncommited_files_options = {
+      \ 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'
+      \ }
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
 function! FloatingFZF()
   " make floating window pseudo transparent
-  set winblend=10
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
 
@@ -51,6 +54,11 @@ endfunction
 
   command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
         \ extend(branch_files_options, { 'options': s:diff_options }), 0))
+
+augroup Fzf_translucent
+  " Make fzf floating window quasi transparent
+  autocmd Filetype fzf setlocal winblend=10
+augroup end
 
   function! Fzf_checkout_branch(b)
     "First element is the command e.g ctrl-x, second element is the selected branch
