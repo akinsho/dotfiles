@@ -83,7 +83,7 @@ if has('nvim')
           \}
 
     let win = nvim_open_win(buf, v:true, opts)
-    " The line below is techinically unnecessary it here as a reminder
+    " The line below is technically unnecessary it here as a reminder
     " of how to change the window highlight for the floating buffer
     " NOTE: these settings have to applied here after the buffer is open
     call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
