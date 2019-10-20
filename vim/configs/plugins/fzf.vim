@@ -56,14 +56,6 @@ let g:fzf_colors = {
       \ 'header':  ['fg', 'Comment']
       \}
 
-" Autocommands for all vim/nvim versions
-augroup FZF_Settings
-  "Close FZF in neovim with esc
-  au!
-  autocmd FileType fzf
-        \ tnoremap <nowait><buffer> <esc> <c-g>
-augroup end
-
 if has('nvim')
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
@@ -71,8 +63,7 @@ if has('nvim')
   if exists('&winblend')
     augroup FZF_Settings
       au!
-      autocmd Filetype fzf
-            \ setlocal winblend=7
+      autocmd Filetype fzf setlocal winblend=7
     augroup end
   endif
 

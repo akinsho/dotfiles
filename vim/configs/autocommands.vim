@@ -225,6 +225,9 @@ if has('nvim')
   augroup nvim
     au!
     autocmd ColorScheme,BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
+    "Close FZF in neovim with esc
+    autocmd FileType fzf
+          \ tnoremap <nowait><buffer> <esc> <c-g>
   augroup END
 endif
 
