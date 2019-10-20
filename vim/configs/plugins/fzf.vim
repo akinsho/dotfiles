@@ -89,13 +89,6 @@ if has('nvim')
     call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
     call setbufvar(buf, '&signcolumn', 'no')
   endfunction
-else
-  " If not neovim the we are using terminal fzf so we should
-  " clear the window highlights
-  augroup FZF_Vim_Highlight
-    au!
-    autocmd FileType fzf setlocal winhighlight=
-  augroup END
 endif
 
 let s:diff_options =
