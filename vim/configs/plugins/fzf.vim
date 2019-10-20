@@ -30,7 +30,6 @@ function! s:build_quickfix_list(lines)
   cc
 endfunction
 
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 let g:fzf_action = {
       \ 'ctrl-q': function('s:build_quickfix_list'),
       \ 'ctrl-t': 'tab split',
@@ -43,7 +42,7 @@ let g:fzf_buffers_jump    = 1
 "Customize fzf colors to match your color scheme
 let g:fzf_colors = {
       \ 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Pmenu'],
+      \ 'bg':      ['bg', 'NormalFloat'],
       \ 'border':  ['fg', 'VertSplit'],
       \ 'hl':      ['fg', 'Comment'],
       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -57,29 +56,35 @@ let g:fzf_colors = {
       \ 'header':  ['fg', 'Comment']
       \}
 
-augroup Fzf_translucent
-  " Make fzf floating window quasi transparent
-  autocmd Filetype fzf setlocal winblend=7
-augroup end
+if has('nvim')
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
-function! FloatingFZF()
-  " make floating window pseudo transparent
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
+  if exists('&winblend')
+    augroup Fzf_translucent
+      " Make fzf floating window quasi transparent
+      autocmd Filetype fzf setlocal winblend=7
+    augroup end
+  endif
 
-  let width = float2nr(&columns * 0.8)
-  let height = float2nr(&lines * 0.6)
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': (&lines - height) / 2,
-        \ 'col': (&columns - width) / 2,
-        \ 'width': width,
-        \ 'height': height
-        \}
+  function! FloatingFZF()
+    " make floating window pseudo transparent
+    let buf = nvim_create_buf(v:false, v:true)
+    call setbufvar(buf, '&signcolumn', 'no')
 
-  let win = nvim_open_win(buf, v:true, opts)
-  " call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
-endfunction
+    let width = float2nr(&columns * 0.8)
+    let height = float2nr(&lines * 0.6)
+    let opts = {
+          \ 'relative': 'editor',
+          \ 'row': (&lines - height) / 2,
+          \ 'col': (&columns - width) / 2,
+          \ 'width': width,
+          \ 'height': height
+          \}
+
+    let win = nvim_open_win(buf, v:true, opts)
+    " call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
+  endfunction
+endif
 
 let s:diff_options =
       \ '--reverse ' .
@@ -125,11 +130,11 @@ command! -bang -nargs=? -complete=dir GFiles
 
 "To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%'),
-  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%'),
+      \   <bang>0)
 
 command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)

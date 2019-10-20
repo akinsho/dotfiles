@@ -33,12 +33,6 @@
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   // emoji
   "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
-  "eslint.filetypes": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
   // Snippets
   "suggest.snippetIndicator": " ",
   "snippets.ultisnips.enable": true,
