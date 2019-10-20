@@ -71,7 +71,6 @@ if has('nvim')
 
   function! FloatingFZF()
     let buf = nvim_create_buf(v:false, v:true)
-    call setbufvar(buf, '&signcolumn', 'no')
 
     let width = float2nr(&columns * 0.8)
     let height = float2nr(&lines * 0.6)
@@ -86,7 +85,9 @@ if has('nvim')
     let win = nvim_open_win(buf, v:true, opts)
     " The line below is techinically unnecessary it here as a reminder
     " of how to change the window highlight for the floating buffer
+    " NOTE: these settings have to applied here after the buffer is open
     call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
+    call setbufvar(buf, '&signcolumn', 'no')
   endfunction
 else
   " If not neovim the we are using terminal fzf so we should
