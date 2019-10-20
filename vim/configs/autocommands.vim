@@ -196,13 +196,14 @@ augroup END
 function! s:handle_window_enter() abort
   if &buftype ==# 'terminal'
     setlocal nocursorline nonumber norelativenumber
-    if g:colors_name ==? 'one' || g:colors_name ==? 'onedark'
-      if exists('+winhighlight')
-        highlight TerminalColors guibg=#22252B ctermbg=black
-        highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
-        setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
-      endif
-    endif
+    " if g:colors_name ==? 'one' || g:colors_name ==? 'onedark'
+      " if exists('+winhighlight')
+        "@TODO: figure out how to avoid highlighting fzf buffers
+        " highlight TerminalColors guibg=#22252B ctermbg=black
+        " highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
+        " setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
+      " endif
+    " endif
   endif
   if &previewwindow
     setlocal nospell concealcursor=nv nocursorline colorcolumn=

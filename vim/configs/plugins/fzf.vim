@@ -39,14 +39,16 @@ let g:fzf_action = {
 
 let g:fzf_nvim_statusline = 1
 let g:fzf_buffers_jump    = 1
-"Customize fzf colors to match your color scheme
+
+" Customize fzf colors to match your color scheme
+" bg+ controls the highlight of the selected item
 let g:fzf_colors = {
       \ 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'NormalFloat'],
       \ 'border':  ['fg', 'VertSplit'],
       \ 'hl':      ['fg', 'Comment'],
       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
       \ 'hl+':     ['fg', 'Statement'],
       \ 'info':    ['fg', 'PreProc'],
       \ 'prompt':  ['fg', 'Conditional'],
@@ -82,7 +84,9 @@ if has('nvim')
           \}
 
     let win = nvim_open_win(buf, v:true, opts)
-    call setwinvar(win, '&winhighlight', 'NormalFloat:Pmenu')
+    " The line below is techinically unnecessary it here as a reminder
+    " of how to change the window highlight for the floating buffer
+    call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
   endfunction
 else
   " If not neovim the we are using terminal fzf so we should
