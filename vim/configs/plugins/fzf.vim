@@ -56,18 +56,27 @@ let g:fzf_colors = {
       \ 'header':  ['fg', 'Comment']
       \}
 
+" Autocommands for all vim/nvim versions
+augroup FZF_Settings
+  "Close FZF in neovim with esc
+  au!
+  autocmd FileType fzf
+        \ tnoremap <nowait><buffer> <esc> <c-g>
+augroup end
+
 if has('nvim')
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
+  " Make fzf floating window quasi transparent in Neovim
   if exists('&winblend')
-    augroup Fzf_translucent
-      " Make fzf floating window quasi transparent
-      autocmd Filetype fzf setlocal winblend=7
+    augroup FZF_Settings
+      au!
+      autocmd Filetype fzf
+            \ setlocal winblend=7
     augroup end
   endif
 
   function! FloatingFZF()
-    " make floating window pseudo transparent
     let buf = nvim_create_buf(v:false, v:true)
     call setbufvar(buf, '&signcolumn', 'no')
 
@@ -82,8 +91,15 @@ if has('nvim')
           \}
 
     let win = nvim_open_win(buf, v:true, opts)
-    " call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
+    call setwinvar(win, '&winhighlight', 'NormalFloat:Pmenu')
   endfunction
+else
+  " If not neovim the we are using terminal fzf so we should
+  " clear the window highlights
+  augroup FZF_Vim_Highlight
+    au!
+    autocmd FileType fzf setlocal winhighlight=
+  augroup END
 endif
 
 let s:diff_options =

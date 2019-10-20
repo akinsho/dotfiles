@@ -204,9 +204,9 @@ function! s:handle_window_enter() abort
       endif
     endif
   endif
-  if &previewwindow 
+  if &previewwindow
     setlocal nospell concealcursor=nv nocursorline colorcolumn=
-    " if exists('+winhighlight') 
+    " if exists('+winhighlight')
     "   " These highlights set the preview to have the same foreground as the
     "   " cursorline but not to show the tildes which mark the end of the buffer
     "   let l:cursorline_background = synIDattr(hlID('CursorLine'), 'bg#')
@@ -225,11 +225,6 @@ if has('nvim')
   augroup nvim
     au!
     autocmd ColorScheme,BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
-    "Close FZF in neovim with esc
-    " TODO: Clear highlight for fzf buffers (tidy this up)
-    autocmd FileType fzf
-          \ tnoremap <nowait><buffer> <esc> <c-g> 
-          \ | setlocal winhighlight=
   augroup END
 endif
 
