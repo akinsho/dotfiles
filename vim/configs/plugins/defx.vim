@@ -95,7 +95,7 @@ if has_key(g:plugs, 'defx-icons')
   let g:defx_icons_enable_syntax_highlight = 1
 endif
 
-nnoremap <silent><C-N> :call <sid>defx_open()<CR>
+nnoremap <silent><C-N> :call <sid>defx_open({ 'dir': expand('%:p:h') })<CR>
 nnoremap <silent><C-N>f :call <sid>defx_open({ 'find_current_file': v:true })<CR>
 
 function! s:defx_context_menu() abort
