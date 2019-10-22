@@ -58,6 +58,7 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
+Plug 'vimwiki/vimwiki'
 Plug 'cohama/lexima.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
