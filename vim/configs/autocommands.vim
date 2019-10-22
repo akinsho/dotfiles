@@ -150,9 +150,10 @@ function! CheckColorColumn()
 endfunction
 
 function! s:update_tmux_statusline_colors() abort
-  let night_owl = '#0F1D2A'
-  let bg_color=night_owl
+  " Get the color of the current vim background and update tmux accordingly
+  let bg_color=synIDattr(hlID('Normal'), 'bg')
   call jobstart('tmux set-option -g status-style bg=' . bg_color)
+  " TODO: on vim leave we should set this back to what it was
 endfunction
 
 if exists('$TMUX')
