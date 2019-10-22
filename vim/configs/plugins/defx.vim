@@ -72,7 +72,7 @@ function! s:defx_open(...) abort
     let l:path = l:opts.dir
   endif
 
-  let l:args = '-winwidth=40 -direction=topleft -split=vertical -listed -resume'
+  let l:args = '-winwidth=40 -direction=topleft -split=vertical'
 
   if has_key(l:opts, 'find_current_file')
     call execute(printf('Defx %s -search=%s %s', l:args, expand('%:p'), l:path))
