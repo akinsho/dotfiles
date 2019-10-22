@@ -203,9 +203,7 @@ endfunction
 ""---------------------------------------------------------------------------//
 function! utils#token_inspect() abort
   let synid = synID(line('.'), col('.'), 1)
-  let names = exists(':ColorSwatchGenerate')
-        \ ? s:hi_chain_with_colorswatch(synid)
-        \ : s:hi_chain(synid)
+  let names = s:hi_chain(synid)
   echo join(names, ' -> ')
 endfunction
 

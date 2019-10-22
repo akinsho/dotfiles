@@ -149,12 +149,20 @@ function! CheckColorColumn()
   endif
 endfunction
 
+function! s:update_tmux_statusline_colors() abort
+  let night_owl = '#0F1D2A'
+  let bg_color=night_owl
+  call jobstart('tmux set-option -g status-style bg=' . bg_color)
+endfunction
+
 if exists('$TMUX')
-  augroup TmuxTitle
+  augroup TmuxConfig
+    au!
     if has('nvim') " Figure out async api for vim to replicate this functionality
       autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
             \ if strlen(expand("%:t")) | call jobstart("tmux rename-window 'vim | " . expand("%:t") . "'") | endif
       autocmd VimLeave * call jobstart('tmux setw automatic-rename')
+      autocmd ColorScheme,FocusGained * call s:update_tmux_statusline_colors()
     endif
   augroup END
 endif
