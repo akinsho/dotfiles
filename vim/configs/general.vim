@@ -217,7 +217,7 @@ set background=dark
   " ========================
   " Night Owl
   " ========================
-  colorscheme night-owl
+  " colorscheme night-owl
   " ========================
   " Tender
   " ========================
@@ -226,8 +226,8 @@ set background=dark
   " ONE
   " ========================
   " See highlight.vim for colorscheme overrides
-  " let g:one_allow_italics = 1
-  " colorscheme one
+  let g:one_allow_italics = 1
+  colorscheme one
 endif
 
 "---------------------------------------------------------------------------//
