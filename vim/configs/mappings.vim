@@ -30,7 +30,6 @@ else
   tmap <C-l> <C-W>l
   tmap <C-x> <C-W><silent>q!<CR>
 endif
-"Opening splits with terminal in all directions
 "}}}
 
 ""---------------------------------------------------------------------------//
@@ -91,16 +90,6 @@ nnoremap <localleader>n :enew<cr>
 xnoremap p pgvy
 " search visual selection
 vnoremap // y/<C-R>"<CR>
-
-" nnoremap <silent> <c-m>k :<C-u>call utils#move_line_up()<CR>
-" nnoremap <silent> <c-m>j :<C-u>call utils#move_line_down()<CR>
-" inoremap <silent> <C-m>k <C-o>:call utils#move_line_up()<CR>
-" inoremap <silent> <C-m>j <C-o>:call utils#move_line_down()<CR>
-" vnoremap <silent> <C-Up> :<C-u>call utils#move_visual_up()<CR>
-" vnoremap <silent> <C-Down> :<C-u>call utils#move_visual_down()<CR>
-" xnoremap <silent> <C-Up> :<C-u>call utils#move_visual_up()<CR>
-" xnoremap <silent> <C-Down> :<C-u>call utils#move_visual_down()<CR>
-
 " Credit: JustinMK
 nnoremap g> :set nomore<bar>40messages<bar>set more<CR>
 
