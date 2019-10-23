@@ -204,7 +204,7 @@ augroup END
 " Add Per Window Highlights {{{
 function! s:handle_window_enter() abort
   if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber
+    setlocal nocursorline nonumber norelativenumber bufhidden=hide
     " if g:colors_name ==? 'one' || g:colors_name ==? 'onedark'
       " if exists('+winhighlight')
         "@TODO: figure out how to avoid highlighting fzf buffers
@@ -251,7 +251,6 @@ augroup FileType_all "{{{1
   autocmd!
 
   autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
   autocmd FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
