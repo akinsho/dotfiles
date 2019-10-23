@@ -71,6 +71,7 @@ Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
