@@ -101,8 +101,8 @@ for script in ~/Dotfiles/shell_scripts/*; do
 done
 
 # reference - https://unix.stackexchange.com/questions/252166/how-to-configure-zshrc-for-specfic-os
-if [ -f ${ZDOTDIR:-${HOME}}/.zshrc-`uname` ]; then
-  source "${ZDOTDIR:-${HOME}}/.zshrc-`uname`"
+if [ -f $DOTFILES/zsh/`uname`.zsh ]; then
+  source "$DOTFILES/zsh/`uname`.sh"
 fi
 
 ##---------------------------------------------------------------------------//
