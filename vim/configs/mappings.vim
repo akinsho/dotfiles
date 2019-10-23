@@ -16,7 +16,9 @@ if has('nvim')
   tmap <C-l> <C-\><C-n><C-l>
   " TODO: this mapping should delete the buffer and close the window
   tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
-  tnoremap <silent><leader><S-Tab> <C-\><C-n><Cmd>bprev<CR>
+  tnoremap <silent>]t <C-\><C-n><Cmd>tablast<CR>
+  tnoremap <silent>[t <C-\><C-n><Cmd>tabnext<CR>
+  tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
   tnoremap <silent><leader><Tab> <C-\><C-n><Cmd>bnext<cr>
   nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
   nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
