@@ -51,7 +51,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'janko-m/vim-test', {
       \ 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
-Plug 'honza/vim-snippets'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -71,7 +70,6 @@ Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
@@ -99,7 +97,6 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'terryma/vim-expand-region'
-Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
@@ -109,7 +106,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
-Plug 'kassio/neoterm', { 'on': ['Ttoggle', 'Tnew', 'Tmap', 'T'] }
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
@@ -117,10 +113,7 @@ Plug 'iamcco/markdown-preview.nvim', {
       \ 'do': 'cd app & yarn install',
       \ 'for': 'markdown', 'on': 'MarkdownPreview'
       \ }
-Plug 'heavenshell/vim-jsdoc', {
-      \ 'for': ['javascript','javascript.jsx', 'typescript', 'typescript.tsx'],
-      \ 'on': 'JSDoc'
-      \ }
+Plug 'kkoomen/vim-doge'
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 "Themes  {{{1
 "===============================
