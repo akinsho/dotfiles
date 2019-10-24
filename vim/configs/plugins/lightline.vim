@@ -2,11 +2,22 @@ if exists('g:gui_oni')
   finish
 endif
 
-let s:theme_opts = ['one', 'onedark', 'palenight', 'tender', 'nightowl']
+let s:theme_opts = {
+  \ 'one': { 'name': 'one', 'color': '#1b1e24' },
+  \ 'onedark': { 'name': 'onedark', 'color': '#1b1e24' },
+  \ 'palenight': { 'name': 'palenight', 'color': '' },
+  \ 'tender': { 'name': 'tender', 'color': '#1d1d1d' },
+  \ 'nightowl': { 'name': 'nightowl', 'color': '#060F1F' },
+  \ 'vim-monokai-tasty': { 'name': 'monokai_tasty', 'color': '#1d1d1d' }
+  \ }
 
 function! s:get_active_theme() abort
-  let l:theme = join(map(s:theme_opts, { key,val -> strlen(matchstr(val, g:colors_name)) ? val : ""}), '')
-  return l:theme
+  for [key, value] in items(s:theme_opts)
+    if strlen(matchstr(key, g:colors_name))
+      return value['name']
+    endif
+  endfor
+  return ""
 endfunction
 
 let s:active_theme = s:get_active_theme()
@@ -333,38 +344,30 @@ function! s:get_theme_background(highlight) abort
   if !strlen(l:gui_bgcolor)
     let l:gui_bgcolor = synIDattr(hlID(a:highlight), 'fg#')
   endif
-  let l:cterm_bgcolor = synIDattr(hlID(a:highlight), 'cterm') || 0 
-  return [l:gui_bgcolor, l:cterm_bgcolor]
+  return l:gui_bgcolor
 endfunction
 
 " Set the colorscheme. 
 if exists('g:lightline')
   " These are the colour codes that are used in the original onedark theme
   let s:normal_background = s:get_theme_background('Normal')
-  let s:gold         = ['#F5F478', 227]
-  let s:white        = ['#abb2bf', 145]
-  let s:light_red    = ['#e06c75', 204]
-  let s:dark_red     = ['#be5046', 196]
-  let s:green        = ['#98c379', 114]
-  let s:light_yellow = ['#e5c07b', 180]
-  let s:dark_yellow  = ['#d19a66', 173]
-  let s:blue         = ['#61afef', 39]
-  let s:dark_blue    = ['#4e88ff', 400]
-  let s:magenta      = ['#c678dd', 170]
-  let s:cyan         = ['#56b6c2', 38]
-  let s:gutter_grey  = ['#636d83', 238]
-  let s:comment_grey = ['#5c6370', 59]
-
-  let s:bufferline_colors = {
-        \ "tender": ['#1d1d1d', 59],
-        \ "onedark": ['#5A5E68', 59],
-        \ "night-owl": ['#060F1F', 58],
-        \ "one": ['#1b1e24', 59],
-        \}
+  let s:gold         = '#F5F478'
+  let s:white        = '#abb2bf'
+  let s:light_red    = '#e06c75'
+  let s:dark_red     = '#be5046'
+  let s:green        = '#98c379'
+  let s:light_yellow = '#e5c07b'
+  let s:dark_yellow  = '#d19a66'
+  let s:blue         = '#61afef'
+  let s:dark_blue    = '#4e88ff'
+  let s:magenta      = '#c678dd'
+  let s:cyan         = '#56b6c2'
+  let s:gutter_grey  = '#636d83'
+  let s:comment_grey = '#5c6370'
 
   "Lightline bufferline Colors
-  let s:bright_blue  = ['#A2E8F6', 58]
-  let s:tabline_background = s:bufferline_colors[g:colors_name]
+  let s:bright_blue  = '#A2E8F6'
+  let s:tabline_background = s:theme_opts[g:colors_name]['color']
   let s:tabline_foreground = s:get_theme_background('Comment')
   let s:selected_background = s:get_theme_background('Normal')
 
@@ -405,5 +408,6 @@ if exists('g:lightline')
 
   "Select colorscheme to augment
   let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
-  let g:[s:colorscheme_palette] = lightline#colorscheme#flatten(s:theme)
+  " using fill means we don't have to specify cterm colors
+  let g:[s:colorscheme_palette] = lightline#colorscheme#fill(s:theme)
 endif

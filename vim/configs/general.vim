@@ -228,6 +228,10 @@ set background=dark
   " See highlight.vim for colorscheme overrides
   let g:one_allow_italics = 1
   colorscheme one
+  " ========================
+  " Monokai Tasky
+  " ========================
+  " colorscheme vim-monokai-tasty
 endif
 
 "---------------------------------------------------------------------------//
