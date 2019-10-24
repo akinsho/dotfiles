@@ -22,6 +22,26 @@ endfunction
 
 let s:active_theme = s:get_active_theme()
 
+augroup LightlineColorscheme
+  autocmd!
+  autocmd ColorScheme * call s:lightline_update()
+augroup END
+
+function! s:lightline_update()
+  if !exists('g:loaded_lightline')
+    return
+  endif
+  try
+    " @TODO: Add a check here that the supported colorscheme is in our
+    " s:theme_opts
+    let g:lightline.colorscheme = s:get_active_theme()
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+  catch
+  endtry
+endfunction
+
 highlight LightLineClose guifg=white guibg=red
 
 let g:lightline = {
