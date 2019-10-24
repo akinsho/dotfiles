@@ -250,7 +250,7 @@ endfunction
 augroup FileType_all "{{{1
   autocmd!
 
-  autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  autocmd BufEnter,TabEnter * if &buftype == 'terminal' | :startinsert | endif
   autocmd FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
