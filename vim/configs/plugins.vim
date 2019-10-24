@@ -120,6 +120,7 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 Plug 'rakr/vim-one'
 Plug 'haishanh/night-owl.vim'
 Plug 'jacoborus/tender.vim'
+Plug 'patstockwell/vim-monokai-tasty'
 " Colorscheme Ideas
 " arzg/vim-substrata
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
