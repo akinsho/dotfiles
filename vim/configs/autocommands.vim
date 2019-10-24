@@ -198,7 +198,7 @@ augroup END
 
 augroup fileSettings "{{{1
   autocmd!
-  autocmd Filetype vim-plug setlocal nonumber norelativenumber
+  autocmd Filetype vim-plug,gitcommit setlocal nonumber norelativenumber
 augroup END
 
 " Add Per Window Highlights {{{
