@@ -35,6 +35,7 @@ function! s:lightline_update()
     " @TODO: Add a check here that the supported colorscheme is in our
     " s:theme_opts
     let g:lightline.colorscheme = s:get_active_theme()
+    call s:custom_lightline_theme()
     call lightline#init()
     call lightline#colorscheme()
     call lightline#update()
@@ -367,67 +368,71 @@ function! s:get_theme_background(highlight) abort
   return l:gui_bgcolor
 endfunction
 
-" Set the colorscheme. 
-if exists('g:lightline')
-  " These are the colour codes that are used in the original onedark theme
-  let s:normal_background = s:get_theme_background('Normal')
-  let s:gold         = '#F5F478'
-  let s:white        = '#abb2bf'
-  let s:light_red    = '#e06c75'
-  let s:dark_red     = '#be5046'
-  let s:green        = '#98c379'
-  let s:light_yellow = '#e5c07b'
-  let s:dark_yellow  = '#d19a66'
-  let s:blue         = '#61afef'
-  let s:dark_blue    = '#4e88ff'
-  let s:magenta      = '#c678dd'
-  let s:cyan         = '#56b6c2'
-  let s:gutter_grey  = '#636d83'
-  let s:comment_grey = '#5c6370'
+function! s:custom_lightline_theme() abort
+  " Set the colorscheme. 
+  if exists('g:lightline')
+    " These are the colour codes that are used in the original onedark theme
+    let s:normal_background = s:get_theme_background('Normal')
+    let s:gold         = '#F5F478'
+    let s:white        = '#abb2bf'
+    let s:light_red    = '#e06c75'
+    let s:dark_red     = '#be5046'
+    let s:green        = '#98c379'
+    let s:light_yellow = '#e5c07b'
+    let s:dark_yellow  = '#d19a66'
+    let s:blue         = '#61afef'
+    let s:dark_blue    = '#4e88ff'
+    let s:magenta      = '#c678dd'
+    let s:cyan         = '#56b6c2'
+    let s:gutter_grey  = '#636d83'
+    let s:comment_grey = '#5c6370'
 
-  "Lightline bufferline Colors
-  let s:bright_blue  = '#A2E8F6'
-  let s:tabline_background = s:theme_opts[g:colors_name]['color']
-  let s:tabline_foreground = s:get_theme_background('Comment')
-  let s:selected_background = s:get_theme_background('Normal')
-
-
-  let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
-
-  " Each subarray represents the [ForegroundColor, BackgroundColor]
-  let s:theme.normal.left     = [ [ s:gold, s:normal_background ], [ s:white, s:normal_background ], [ s:dark_blue, s:normal_background ] ]
-  let s:theme.normal.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
-  let s:theme.normal.middle   = [ [ s:comment_grey, s:normal_background ] ]
-
-  let s:theme.inactive.left   = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
-  let s:theme.inactive.right  = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
-  let s:theme.inactive.middle = [ [ s:comment_grey, s:normal_background ] ]
-
-  let s:theme.insert.left     = [ [ s:green, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
-  let s:theme.insert.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
-  let s:theme.insert.middle   = [ [ s:comment_grey, s:normal_background ] ]
-
-  let s:theme.replace.left    = [ [ s:light_red, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
-  let s:theme.replace.right   = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
-  let s:theme.replace.middle  = [ [ s:comment_grey, s:normal_background ] ]
-
-  let s:theme.visual.left     = [ [ s:magenta, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
-  let s:theme.visual.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
-  let s:theme.visual.middle   = [ [ s:comment_grey, s:normal_background ] ]
-
-  let s:theme.tabline.left    = [ [ s:tabline_foreground, s:tabline_background ] ]
-  let s:theme.tabline.right   = [ [ s:tabline_foreground, s:tabline_background ] ]
-  let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
-  let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
-
-  let s:theme.normal.checking = [ [s:light_yellow, s:normal_background ] ]
-  let s:theme.normal.error    = [ [ s:light_red, s:normal_background ] ]
-  let s:theme.normal.warning  = [ [ s:light_yellow, s:normal_background ] ]
-  let s:theme.normal.ok       = [ [ s:green, s:normal_background ] ]
+    "Lightline bufferline Colors
+    let s:bright_blue  = '#A2E8F6'
+    let s:tabline_background = s:theme_opts[g:colors_name]['color']
+    let s:tabline_foreground = s:get_theme_background('Comment')
+    let s:selected_background = s:get_theme_background('Normal')
 
 
-  "Select colorscheme to augment
-  let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
-  " using fill means we don't have to specify cterm colors
-  let g:[s:colorscheme_palette] = lightline#colorscheme#fill(s:theme)
-endif
+    let s:theme = {'normal':{}, 'inactive':{}, 'insert':{}, 'replace':{}, 'visual':{}, 'tabline':{}}
+
+    " Each subarray represents the [ForegroundColor, BackgroundColor]
+    let s:theme.normal.left     = [ [ s:gold, s:normal_background ], [ s:white, s:normal_background ], [ s:dark_blue, s:normal_background ] ]
+    let s:theme.normal.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+    let s:theme.normal.middle   = [ [ s:comment_grey, s:normal_background ] ]
+
+    let s:theme.inactive.left   = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+    let s:theme.inactive.right  = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+    let s:theme.inactive.middle = [ [ s:comment_grey, s:normal_background ] ]
+
+    let s:theme.insert.left     = [ [ s:green, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+    let s:theme.insert.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+    let s:theme.insert.middle   = [ [ s:comment_grey, s:normal_background ] ]
+
+    let s:theme.replace.left    = [ [ s:light_red, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+    let s:theme.replace.right   = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+    let s:theme.replace.middle  = [ [ s:comment_grey, s:normal_background ] ]
+
+    let s:theme.visual.left     = [ [ s:magenta, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
+    let s:theme.visual.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+    let s:theme.visual.middle   = [ [ s:comment_grey, s:normal_background ] ]
+
+    let s:theme.tabline.left    = [ [ s:tabline_foreground, s:tabline_background ] ]
+    let s:theme.tabline.right   = [ [ s:tabline_foreground, s:tabline_background ] ]
+    let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
+    let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
+
+    let s:theme.normal.checking = [ [s:light_yellow, s:normal_background ] ]
+    let s:theme.normal.error    = [ [ s:light_red, s:normal_background ] ]
+    let s:theme.normal.warning  = [ [ s:light_yellow, s:normal_background ] ]
+    let s:theme.normal.ok       = [ [ s:green, s:normal_background ] ]
+
+
+    "Select colorscheme to augment
+    let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
+    " using fill means we don't have to specify cterm colors
+    let g:[s:colorscheme_palette] = lightline#colorscheme#fill(s:theme)
+  endif
+endfunction
+
+call s:custom_lightline_theme()
