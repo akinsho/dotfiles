@@ -46,6 +46,8 @@ function! ApplyUserHighlights() abort
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
     call one#highlight('TabLineFill', 'abb2bf', '282c34', 'none')
     call one#highlight('TabLine', 'abb2bf', '282c34', 'none')
+  elseif g:colors_name ==? 'vim-monokai-tasty'
+    highlight clear SignColumn
   else
     highlight jsFuncCall gui=italic
     highlight Comment gui=italic cterm=italic

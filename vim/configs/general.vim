@@ -233,10 +233,6 @@ set background=dark
   " ========================
   let g:vim_monokai_tasty_italic = 1
   colorscheme vim-monokai-tasty
-  augroup MonokaiTasty
-    autocmd!
-    au Colorscheme * hi clear SignColumn
-  augroup END
 endif
 
 "---------------------------------------------------------------------------//
