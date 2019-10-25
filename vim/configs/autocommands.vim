@@ -13,8 +13,8 @@ augroup END
 "Whitespace Highlight {{{
 function! s:WhitespaceHighlight()
   " Don't highlight trailing spaces in certain filetypes.
-  if &filetype ==# 'help' || &filetype ==# 'vim-plug'
-    hi! ExtraWhitespace NONE
+  if &filetype ==# 'help' || &filetype ==# 'vim-plug' || &buftype == "quickfix"
+    setlocal nolist
   else
     hi! ExtraWhitespace guifg=red
   endif
