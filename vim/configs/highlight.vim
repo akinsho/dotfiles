@@ -48,6 +48,8 @@ function! ApplyUserHighlights() abort
     call one#highlight('TabLine', 'abb2bf', '282c34', 'none')
   elseif g:colors_name ==? 'vim-monokai-tasty'
     highlight clear SignColumn
+    highlight GitGutterAdd guifg=green
+    highlight GitGutterChange guifg=yellow
   else
     highlight jsFuncCall gui=italic
     highlight Comment gui=italic cterm=italic
