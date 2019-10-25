@@ -226,13 +226,17 @@ set background=dark
   " ONE
   " ========================
   " See highlight.vim for colorscheme overrides
-  let g:one_allow_italics = 1
-  colorscheme one
+  " let g:one_allow_italics = 1
+  " colorscheme one
   " ========================
   " Monokai Tasky
   " ========================
-  " let g:vim_monokai_tasty_italic = 1
-  " colorscheme vim-monokai-tasty
+  let g:vim_monokai_tasty_italic = 1
+  colorscheme vim-monokai-tasty
+  augroup MonokaiTasty
+    autocmd!
+    au Colorscheme * hi clear SignColumn
+  augroup END
 endif
 
 "---------------------------------------------------------------------------//
