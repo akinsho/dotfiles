@@ -1,3 +1,6 @@
+if !has_key(g:plugs, 'gina.vim')
+  finish
+endif
 " Plugin Mappings
 call gina#custom#mapping#nmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')
 call gina#custom#mapping#vmap('/.*', '<Tab>', '<Plug>(gina-builtin-choice)')

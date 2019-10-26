@@ -1,3 +1,6 @@
+if !has_key(g:plugs, 'vim-test')
+  finish
+endif
 " VIM-TEST {{{
 ""---------------------------------------------------------------------------//
 " this can be in the project-local .vimrc

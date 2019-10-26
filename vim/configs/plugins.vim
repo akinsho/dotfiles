@@ -49,8 +49,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-Plug 'janko-m/vim-test', {
-      \ 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
+" Plug 'janko-m/vim-test', {
+"       \ 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -66,7 +66,6 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-" Plug 'takac/vim-hardtime'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
@@ -88,6 +87,7 @@ Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
+Plug 'sodapopcan/vim-twiggy'
 Plug 'lambdalisue/gina.vim'
 Plug 'rhysd/conflict-marker.vim'
 " Text Objects {{{1

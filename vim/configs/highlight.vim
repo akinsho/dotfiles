@@ -50,6 +50,7 @@ function! ApplyUserHighlights() abort
     highlight clear SignColumn
     highlight GitGutterAdd guifg=green
     highlight GitGutterChange guifg=yellow
+    highlight GitGutterDelete guifg=red
   else
     highlight jsFuncCall gui=italic
     highlight Comment gui=italic cterm=italic

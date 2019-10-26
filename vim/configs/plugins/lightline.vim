@@ -369,7 +369,7 @@ function! s:get_theme_background(highlight) abort
 endfunction
 
 function! s:custom_lightline_theme() abort
-  " Set the colorscheme. 
+  " Set the colorscheme.
   if exists('g:lightline')
     " These are the colour codes that are used in the original onedark theme
     let s:normal_background = s:get_theme_background('Normal')
