@@ -61,7 +61,14 @@ Plug 'vimwiki/vimwiki'
 Plug 'cohama/lexima.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
-Plug 'chip/vim-fat-finger'
+Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
+" We lazy load vim fat finger because it otherwise takes 80ms ie. the slowest
+" thing to load blocking vim startup time
+augroup Lazy_load_fat_fingers
+    autocmd!
+    autocmd CursorHold,CursorHoldI * call plug#load('vim-fat-finger')
+          \ | autocmd! Lazy_load_fat_fingers
+augroup end
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'yuttie/comfortable-motion.vim'
@@ -88,8 +95,9 @@ Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
 Plug 'sodapopcan/vim-twiggy'
-Plug 'lambdalisue/gina.vim'
 Plug 'rhysd/conflict-marker.vim'
+" Plug 'tweekmonster/startuptime.vim'
+" Plug 'lambdalisue/gina.vim'
 " Text Objects {{{1
 " =====================
 Plug 'AndrewRadev/tagalong.vim'
@@ -130,8 +138,4 @@ call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
   packadd! matchit
 endif
-
-" Load immediately {{{1
-call plug#load('vim-fat-finger')
-""}}}
 " vim:foldmethod=marker

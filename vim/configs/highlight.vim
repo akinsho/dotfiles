@@ -35,12 +35,6 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   " JavascriptS/TypeScript highlights
   ""---------------------------------------------------------------------------//
-  if g:colors_name ==? 'vim-monokai-tasty'
-    highlight clear SignColumn
-    highlight GitGutterAdd guifg=green
-    highlight GitGutterChange guifg=yellow
-    highlight GitGutterDelete guifg=red
-  endif
   " Vim One does not allow directly overriding highlights
   if g:colors_name ==? 'one'
     call one#highlight('Folded', 'db7093', 'none', 'bold')
@@ -52,6 +46,15 @@ function! ApplyUserHighlights() abort
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
     call one#highlight('TabLineFill', 'abb2bf', '282c34', 'none')
     call one#highlight('TabLine', 'abb2bf', '282c34', 'none')
+  elseif g:colors_name ==? 'vim-monokai-tasty'
+    highlight clear SignColumn
+    highlight GitGutterAdd guifg=green
+    highlight GitGutterChange guifg=yellow
+    highlight GitGutterDelete guifg=red
+    " Italicise imports and exports without breaking their base highlights
+    call utils#extend_highlight('Special', 'SpecialItalic', 'gui=italic')
+    highlight link typescriptImport SpecialItalic
+    highlight link typescriptExport SpecialItalic
   else
     highlight jsFuncCall gui=italic
     highlight Comment gui=italic cterm=italic
@@ -65,6 +68,7 @@ function! ApplyUserHighlights() abort
     highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
     highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
     highlight Folded  gui=bold,italic cterm=bold
+
     highlight link typescriptExport jsImport
     highlight link typescriptImport jsImport
   endif
