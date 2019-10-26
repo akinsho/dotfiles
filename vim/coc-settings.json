@@ -13,14 +13,15 @@
     "<C-w>": "command:wincmd k"
   },
   "suggest.noselect": false,
-  "suggest.detailField": "menu",
   "javascript.referencesCodeLens.enable": true,
   "codeLens.enable": true,
   "codeLens.separator": "‣",
   "suggest.fixInsertedWord": true,
-  "diagnostic.virtualText": false,
   "coc.preferences.hoverTarget": "float",
-  "diagnostic.refreshOnInsertMode": false,
+  // Diagnostics
+  "diagnostic.virtualText": false,
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualTextPrefix": "ﯦ ",
   "diagnostic.errorSign": "✗",
   "diagnostic.warningSign": "",
