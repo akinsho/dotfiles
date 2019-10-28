@@ -94,9 +94,9 @@ Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
-Plug 'sodapopcan/vim-twiggy'
 Plug 'rhysd/conflict-marker.vim'
-" Plug 'lambdalisue/gina.vim'
+Plug 'lambdalisue/gina.vim'
+" Plug 'sodapopcan/vim-twiggy'
 " Text Objects {{{1
 " =====================
 Plug 'AndrewRadev/tagalong.vim'
