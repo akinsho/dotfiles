@@ -96,7 +96,6 @@ Plug 'sheerun/vim-polyglot'
 " ==============================
 Plug 'sodapopcan/vim-twiggy'
 Plug 'rhysd/conflict-marker.vim'
-" Plug 'tweekmonster/startuptime.vim'
 " Plug 'lambdalisue/gina.vim'
 " Text Objects {{{1
 " =====================
