@@ -544,13 +544,13 @@ nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
 
 " Repeatable window resizing mappings
-nnoremap <silent> <Plug>ResizeRight  :vertical resize +10<cr>
-      \ :call repeat#set("\<Plug>ResizeRight")<CR>
-nmap <leader>ll <Plug>ResizeRight
-
-nnoremap <silent> <Plug>ResizeLeft :vertical resize -10<cr>
+nnoremap <silent> <Plug>ResizeLeft  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeLeft")<CR>
-nmap <leader>hh <Plug>ResizeLeft
+nmap <leader>ll <Plug>ResizeLeft
+
+nnoremap <silent> <Plug>ResizeRight :vertical resize -10<cr>
+      \ :call repeat#set("\<Plug>ResizeRight")<CR>
+nmap <leader>hh <Plug>ResizeRight
 
 nnoremap <silent> <Plug>ResizeDown :resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeDown")<CR>
