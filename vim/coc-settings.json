@@ -84,5 +84,7 @@
     "snippet": "\ue60b",
     "typeParameter": "\uf728",
     "default": "\uf29c"
-  }
+  },
+  // Explorer
+  "explorer.icon.enableNerdfont": true
 }

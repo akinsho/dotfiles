@@ -20,7 +20,8 @@ let g:coc_global_extensions = [
       \ 'coc-flow',
       \ 'coc-git',
       \ 'coc-tabnine',
-      \ 'coc-reason'
+      \ 'coc-reason',
+      \ 'coc-explorer'
       \]
 
 " TODO Coc pairs is takes half a second to expand
@@ -200,6 +201,14 @@ xmap ah <Plug>(coc-text-object-outer)
 nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
 nnoremap <silent><leader>gl :<C-u>CocCommand git.copyUrl<CR>
+"--------------------------------------------------------------------------------
+" Coc Explorer
+"--------------------------------------------------------------------------------
+nnoremap <silent><C-N>
+    \ :CocCommand explorer
+    \ --toggle
+    \ --sources=buffer+,file+
+    \ --file-columns=git,selection,clip,indent,filename,size<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//
