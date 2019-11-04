@@ -239,6 +239,7 @@ endfunction
 function! s:show_plain_lightline() abort
   return s:is_ft('help') ||
         \ s:is_ft('ctrlsf')||
+        \ s:is_ft('coc-explorer') ||
         \ s:is_ft('terminal')||
         \ s:is_ft('neoterm')||
         \ s:is_ft('fugitive') ||
@@ -265,6 +266,7 @@ function! LightlineFilename()
         \ fname =~ '__Gundo\|NERD_tree' ? '' :
         \ s:is_ft('ctrlsf') ? '' :
         \ s:is_ft('defx') ? '' :
+        \ s:is_ft('coc-explorer') ? '' :
         \ s:is_ft('vimfiler') ? vimfiler#get_status_string() :
         \ s:is_ft('unite') ? unite#get_status_string() :
         \ s:is_ft('vimshell') ? vimshell#get_status_string() :
@@ -308,7 +310,7 @@ endfunction
 
 function! LightlineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD\|defx' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD\|defx' && !is_ft('coc-explorer') && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ' '
       let _ = fugitive#head()
       return strlen(_) ? mark._ : ''
@@ -330,6 +332,7 @@ function! LightlineMode()
         \ &ft == 'vim-plug' ? 'vim-plug ⚉':
         \ &ft == 'help' ? 'help ':
         \ &ft == 'undotree' ? 'UndoTree ⮌' :
+        \ &ft == 'coc-explorer' ? 'Coc Explorer' :
         \ lightline#mode()
 endfunction
 
