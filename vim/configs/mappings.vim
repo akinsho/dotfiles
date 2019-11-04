@@ -25,6 +25,13 @@ if has('nvim')
   nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
   nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
   nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
+  " if filereadable('~/.config/nvim/lua/navigation/init.lua')
+    " require the lua module
+    lua require("navigation")
+    " map the Terminal function in the lua module to some shortcuts
+    nnoremap <silent> <leader>tj :lua Terminal(1)<cr>
+    nnoremap <silent> <leader>tk :lua Terminal(2)<cr>
+  " endif
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j
