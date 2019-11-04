@@ -205,10 +205,7 @@ nnoremap <silent><leader>gl :<C-u>CocCommand git.copyUrl<CR>
 " Coc Explorer
 "--------------------------------------------------------------------------------
 nnoremap <silent><C-N>
-    \ :CocCommand explorer
-    \ --toggle
-    \ --sources=buffer+,file+
-    \ --file-columns=git,selection,clip,indent,filename,size<CR>
+    \ :CocCommand explorer<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//
