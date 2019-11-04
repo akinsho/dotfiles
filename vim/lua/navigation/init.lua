@@ -1,6 +1,7 @@
 -- to save terminals
 list_of_terms = {}
 
+-- FIXME: list of terms is not updated when buffer is deleted
 function Terminal(nr, ...)
   -- if the terminal with nr exists, set the current buffer to it
   if list_of_terms[nr] then

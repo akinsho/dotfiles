@@ -29,7 +29,7 @@ if has('nvim')
     " require the lua module
     lua require("navigation")
     " map the Terminal function in the lua module to some shortcuts
-    nnoremap <silent> <leader>tj :lua Terminal(1)<cr>
+    nnoremap <silent> <leader>tt :lua Terminal(1)<cr>
     nnoremap <silent> <leader>tk :lua Terminal(2)<cr>
   " endif
 else
