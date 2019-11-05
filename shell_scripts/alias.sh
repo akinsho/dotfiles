@@ -14,7 +14,6 @@ alias magit="nvim -c \"MagitOnly\""
 alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
 alias lp="lsp"
 alias la='ls -aG'
-alias fixcl='git commit --am "update changelog" && git push'
 alias v='nvim'
 alias brewupdate="brew bundle dump --force"
 alias vi='vim'
@@ -40,6 +39,7 @@ alias yt="clear && yarn test"
 alias ys="clear && yarn start"
 alias yd="cl && yarn develop"
 alias ydl="cl && yarn develop:local"
+alias gsac="git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD))"
 
 alias esy="nocorrect esy"
 #alias ctags if you used homebrew
