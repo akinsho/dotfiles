@@ -299,17 +299,14 @@ endif
 "-----------------------------------------------------------------------------
 "Turn swap files off - FOR GOD's SAKE they are ruining my life
 set noswapfile
+set nobackup
+set nowritebackup
 "This saves all back up files in a vim backup directory
-if exists('$SUDO_USER')
-  set nobackup                        " don't create root-owned files
-  set nowritebackup                   " don't create root-owned files
-else
-  set backupdir=~/.vim/.backup//
-  set backupdir+=~/local/.vim/tmp/backup
-  set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
-  if !isdirectory(&backupdir)
-    call mkdir(&backupdir, "p")
-  endif
+set backupdir=~/.vim/.backup//
+set backupdir+=~/local/.vim/tmp/backup
+set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
+if !isdirectory(&backupdir)
+  call mkdir(&backupdir, "p")
 endif
 if has ('persistent_undo')
   if !has('nvim')
