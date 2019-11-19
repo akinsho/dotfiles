@@ -68,7 +68,8 @@ augroup Lazy_load_fat_fingers
 augroup end
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'yuttie/comfortable-motion.vim'
+Plug 'psliwka/vim-smoothie'
+" Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 "TPOPE {{{1
 "====================================
