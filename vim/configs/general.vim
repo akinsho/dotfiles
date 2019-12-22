@@ -263,6 +263,10 @@ set title
 if has('nvim')
   set inccommand=nosplit
   set guicursor=n:blinkon1
+  " set guicursor=
+  " set guicursor=n-v-c:block-Cursor/lCursor
+  " set guicursor=i-ci:ver50-Cursor/lCursor
+  " set guicursor=r-cr:hor20-Cursor/lCursor
   let g:terminal_scrollback_buffer_size = 500000
 endif
 
