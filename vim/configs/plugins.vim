@@ -69,7 +69,6 @@ augroup end
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'psliwka/vim-smoothie'
-" Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 "TPOPE {{{1
 "====================================
