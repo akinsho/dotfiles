@@ -428,8 +428,10 @@ nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
 nnoremap <expr><silent> _ !v:count ? "<C-W>s<C-W><Down>"  : '_'
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
-"Close every window in the current tabview but the current one
-nnoremap <leader>q <C-W>o
+" Close every window in the current tabview but the current one
+" nnoremap <leader>q <C-W>o
+" Close the current window
+nnoremap <space>w <C-W>q
 "Swap top/bottom or left/right split
 nnoremap <leader>sw <C-W>R
 ""---------------------------------------------------------------------------//

@@ -262,11 +262,17 @@ set title
 "---------------------------------------------------------------------------//
 if has('nvim')
   set inccommand=nosplit
-  set guicursor=n:blinkon1
-  " set guicursor=
-  " set guicursor=n-v-c:block-Cursor/lCursor
-  " set guicursor=i-ci:ver50-Cursor/lCursor
-  " set guicursor=r-cr:hor20-Cursor/lCursor
+  " if on an older version of nvim the bug which causes the cursor
+  " not to reset to previous state using CocList hasn't been fixed 
+  " yet -> https://github.com/neoclide/coc.nvim/commit/65637efe99fbc24a40541801c2c9b5f2066530a4
+  if has('nvim-0.5')
+    set guicursor=
+    set guicursor=n-v-c:block-Cursor/lCursor
+    set guicursor=i-ci:ver50-Cursor/lCursor
+    set guicursor=r-cr:hor20-Cursor/lCursor
+  else
+    set guicursor=n:blinkon1
+  endif
   let g:terminal_scrollback_buffer_size = 500000
 endif
 
