@@ -3,7 +3,7 @@
 " ----------------------------------------------------------------------------
 let s:preset = "💾 AutoSaved at " . strftime("%H:%M:%S")
 let g:autosave_message =  "💾 Saving..."
-let g:autosave_enabled = 1
+let g:autosave_enabled = 0
 
 function! s:unset_autosaved() abort
     let b:autosaved_buffer = ""
