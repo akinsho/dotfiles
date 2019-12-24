@@ -32,6 +32,10 @@
   "suggest.languageSourcePriority": 999,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  // Go
+  "go.goplsOptions": {
+    "completeUnimported": true
+  },
   // emoji
   "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
   // Snippets
