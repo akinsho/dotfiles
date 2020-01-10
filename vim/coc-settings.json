@@ -31,7 +31,12 @@
   "signature.preferShownAbove": true,
   "suggest.languageSourcePriority": 999,
   "coc.preferences.previewAutoClose": true,
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   // Go
   "go.goplsOptions": {
     "completeUnimported": true
