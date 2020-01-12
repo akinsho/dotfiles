@@ -8,8 +8,9 @@ let g:go_fmt_options = {
   \ }
 
 let g:go_doc_popup_window               = 1
+let g:go_gopls_complete_unimported      = 1
+let g:go_gopls_staticcheck              = 1
 let g:go_highlight_space_tab_error      = 1
-let g:go_gocode_unimported_packages     = 1
 let g:go_term_enabled                   = 0
 let g:go_term_close_on_exit             = 1
 let g:go_term_height                    = 20

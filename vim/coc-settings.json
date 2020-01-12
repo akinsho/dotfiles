@@ -29,7 +29,6 @@
   "diagnostic.hintSign": "ﯦ",
   "signature.target": "float",
   "signature.preferShownAbove": true,
-  "suggest.languageSourcePriority": 999,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
