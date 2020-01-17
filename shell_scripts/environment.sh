@@ -12,12 +12,17 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.npm/bin:$PATH"
 
-# GO ============================================================
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  # GO ============================================================
     export GOPATH=$(go env GOPATH)
     export PATH=$PATH:/usr/local/go/bin
     export PATH=$PATH:$(go env GOPATH)/bin
     export PATH=$HOME/.local/bin:$PATH
+
+  # RUBY ==========================================================
+  if which ruby >/dev/null && which gem >/dev/null; then
+    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
@@ -30,11 +35,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 if [ -d "$HOME/bin" ] ; then
   PATH="$HOME/bin:$PATH"
-fi
-
-# RUBY ==========================================================
-if which ruby >/dev/null && which gem >/dev/null; then
-  PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
 export MANPATH="/usr/local/man:$MANPATH"
