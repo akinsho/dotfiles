@@ -68,27 +68,43 @@ if has('nvim')
       autocmd Filetype fzf setlocal winblend=7
     augroup end
   endif
+  function! FloatingFZF(width, height, border_highlight)
+    function! s:create_float(hl, opts)
+      let buf = nvim_create_buf(v:false, v:true)
+      let opts = extend({'relative': 'editor', 'style': 'minimal'}, a:opts)
+      let win = nvim_open_win(buf, v:true, opts)
+      " The line below is technically unnecessary it here as a reminder
+      " of how to change the window highlight for the floating buffer
+      " NOTE: these settings have to applied here after the buffer is open
+      call setwinvar(win, '&winhighlight', 'NormalFloat:'.a:hl)
+      " call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
+      call setwinvar(win, '&colorcolumn', '')
+      call setbufvar(buf, '&signcolumn', 'no')
+      return buf
+    endfunction
 
-  function! FloatingFZF()
-    let buf = nvim_create_buf(v:false, v:true)
+    " Size and position
+    let width = float2nr(&columns * a:width)
+    let height = float2nr(&lines * a:height)
+    let row = float2nr((&lines - height) / 2)
+    let col = float2nr((&columns - width) / 2)
 
-    let width = float2nr(&columns * 0.8)
-    let height = float2nr(&lines * 0.6)
-    let opts = {
-          \ 'relative': 'editor',
-          \ 'row': (&lines - height) / 2,
-          \ 'col': (&columns - width) / 2,
-          \ 'width': width,
-          \ 'height': height
-          \}
+    " Border
+    let top = '╭' . repeat('─', width - 2) . '╮'
+    let mid = '│' . repeat(' ', width - 2) . '│'
+    let bot = '╰' . repeat('─', width - 2) . '╯'
+    let border = [top] + repeat([mid], height - 2) + [bot]
 
-    let win = nvim_open_win(buf, v:true, opts)
-    " The line below is technically unnecessary it here as a reminder
-    " of how to change the window highlight for the floating buffer
-    " NOTE: these settings have to applied here after the buffer is open
-    call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
-    call setbufvar(buf, '&signcolumn', 'no')
+    " Draw frame
+    let s:frame = s:create_float(a:border_highlight, {'row': row, 'col': col, 'width': width, 'height': height})
+    call nvim_buf_set_lines(s:frame, 0, -1, v:true, border)
+
+    " Draw viewport
+    call s:create_float('Normal', {'row': row + 1, 'col': col + 2, 'width': width - 4, 'height': height - 2})
+    autocmd BufWipeout <buffer> execute 'bwipeout' s:frame
   endfunction
+
+  let g:fzf_layout = { 'window': 'call FloatingFZF(0.9, 0.6, "Comment")' }
 endif
 
 let s:diff_options =
