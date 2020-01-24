@@ -36,7 +36,7 @@ endfunction
 "================================
 " CORE {{{1
 "================================
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
       \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets'
 Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'

@@ -100,7 +100,7 @@ if has('nvim')
     call nvim_buf_set_lines(s:frame, 0, -1, v:true, border)
 
     " Draw viewport
-    call s:create_float('Normal', {'row': row + 1, 'col': col + 2, 'width': width - 4, 'height': height - 2})
+    call s:create_float('NormalFloat', {'row': row + 1, 'col': col + 2, 'width': width - 4, 'height': height - 2})
     autocmd BufWipeout <buffer> execute 'bwipeout' s:frame
   endfunction
 
