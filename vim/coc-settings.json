@@ -94,5 +94,6 @@
     "default": "\uf29c"
   },
   // Explorer
-  "explorer.icon.enableNerdfont": true
+  "explorer.icon.enableNerdfont": true,
+  "explorer.quitOnOpen": true
 }
