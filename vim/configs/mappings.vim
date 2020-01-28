@@ -284,6 +284,8 @@ else
   vnoremap <a-j> :m '>+1<CR>gv=gv
 endif
 
+" TODO: Remove this when coc/nvim floating window bug is resolved
+nnoremap <silent><leader>fc <c-w>p:q<cr>
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
 ""---------------------------------------------------------------------------//
