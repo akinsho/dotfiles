@@ -43,8 +43,8 @@ function! s:goyo_leave()
   endif
 endfunction
 
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
 " Goyo
 function! s:auto_goyo()
@@ -57,7 +57,7 @@ endfunction
 
 augroup goyo_markdown
   autocmd!
-  autocmd BufNewFile,BufRead * call s:auto_goyo()
-  autocmd User GoyoLeave nested call s:goyo_leave()
+  " autocmd BufNewFile,BufRead * call s:auto_goyo()
+  " autocmd User GoyoLeave nested call s:goyo_leave()
 augroup END
 "}}}
