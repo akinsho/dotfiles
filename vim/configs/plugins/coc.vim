@@ -15,14 +15,15 @@ let g:coc_global_extensions = [
       \ 'coc-prettier',
       \ 'coc-jest',
       \ 'coc-emoji',
-      \ 'coc-eslint',
       \ 'coc-yank',
       \ 'coc-flow',
       \ 'coc-git',
       \ 'coc-tabnine',
       \ 'coc-reason',
-      \ 'coc-explorer'
+      \ 'coc-explorer',
+      \ 'coc-eslint',
       \]
+
 
 " TODO Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
