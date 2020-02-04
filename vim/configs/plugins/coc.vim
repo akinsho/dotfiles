@@ -3,6 +3,7 @@ if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
 endif
 
 let g:coc_global_extensions = [
+      \ 'coc-explorer',
       \ 'coc-tag',
       \ 'coc-json',
       \ 'coc-go',
@@ -20,7 +21,6 @@ let g:coc_global_extensions = [
       \ 'coc-git',
       \ 'coc-tabnine',
       \ 'coc-reason',
-      \ 'coc-explorer',
       \ 'coc-eslint',
       \]
 
