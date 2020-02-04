@@ -55,6 +55,7 @@ function! ApplyUserHighlights() abort
     call utils#extend_highlight('Special', 'SpecialItalic', 'gui=italic')
     highlight link typescriptImport SpecialItalic
     highlight link typescriptExport SpecialItalic
+    highlight link jsxAttrib SpecialItalic
     highlight tsxAttrib gui=italic,bold
   else
     highlight jsFuncCall gui=italic
