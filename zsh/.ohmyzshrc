@@ -7,7 +7,7 @@ start_time="$(date +%s)"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -121,3 +121,4 @@ end_time="$(date +%s)"
 
 # archey -o
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+eval "$(starship init zsh)"
