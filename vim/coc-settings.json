@@ -95,5 +95,4 @@
   },
   // Explorer
   "explorer.icon.enableNerdfont": true,
-  "explorer.quitOnOpen": true
 }
