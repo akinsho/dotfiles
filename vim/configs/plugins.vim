@@ -38,7 +38,8 @@ endfunction
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
       \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets'
-      \ | Plug 'liuchengxu/vista.vim'
+Plug 'camspiers/animate.vim'
+Plug 'camspiers/lens.vim'
 Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
 Plug 'airblade/vim-rooter'

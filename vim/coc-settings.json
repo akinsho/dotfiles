@@ -16,7 +16,6 @@
   "javascript.referencesCodeLens.enable": true,
   "codeLens.enable": true,
   "codeLens.separator": "‣",
-  "coc.preferences.formatOnInsertLeave": true,
   "coc.preferences.hoverTarget": "float",
   // Diagnostics
   "diagnostic.virtualText": false,
