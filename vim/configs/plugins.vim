@@ -72,6 +72,8 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+Plug 'camspiers/animate.vim'
+Plug 'camspiers/lens.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
