@@ -42,21 +42,21 @@ let g:fzf_buffers_jump    = 1
 
 " Customize fzf colors to match your color scheme
 " bg+ controls the highlight of the selected item
-let g:fzf_colors = {
-      \ 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'NormalFloat'],
-      \ 'border':  ['fg', 'VertSplit'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment']
-      \}
+" let g:fzf_colors = {
+"       \ 'fg':      ['fg', 'Normal'],
+"       \ 'bg':      ['bg', 'NormalFloat'],
+"       \ 'border':  ['fg', 'VertSplit'],
+"       \ 'hl':      ['fg', 'Comment'],
+"       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"       \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
+"       \ 'hl+':     ['fg', 'Statement'],
+"       \ 'info':    ['fg', 'PreProc'],
+"       \ 'prompt':  ['fg', 'Conditional'],
+"       \ 'pointer': ['fg', 'Exception'],
+"       \ 'marker':  ['fg', 'Keyword'],
+"       \ 'spinner': ['fg', 'Label'],
+"       \ 'header':  ['fg', 'Comment']
+"       \}
 
 if has('nvim')
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
@@ -68,43 +68,9 @@ if has('nvim')
       autocmd Filetype fzf setlocal winblend=7
     augroup end
   endif
-  function! FloatingFZF(width, height, border_highlight)
-    function! s:create_float(hl, opts)
-      let buf = nvim_create_buf(v:false, v:true)
-      let opts = extend({'relative': 'editor', 'style': 'minimal'}, a:opts)
-      let win = nvim_open_win(buf, v:true, opts)
-      " The line below is technically unnecessary it here as a reminder
-      " of how to change the window highlight for the floating buffer
-      " NOTE: these settings have to applied here after the buffer is open
-      call setwinvar(win, '&winhighlight', 'NormalFloat:'.a:hl)
-      " call setwinvar(win, '&winhighlight', 'NormalFloat:NormalFloat')
-      call setwinvar(win, '&colorcolumn', '')
-      call setbufvar(buf, '&signcolumn', 'no')
-      return buf
-    endfunction
 
-    " Size and position
-    let width = float2nr(&columns * a:width)
-    let height = float2nr(&lines * a:height)
-    let row = float2nr((&lines - height) / 2)
-    let col = float2nr((&columns - width) / 2)
-
-    " Border
-    let top = '╭' . repeat('─', width - 2) . '╮'
-    let mid = '│' . repeat(' ', width - 2) . '│'
-    let bot = '╰' . repeat('─', width - 2) . '╯'
-    let border = [top] + repeat([mid], height - 2) + [bot]
-
-    " Draw frame
-    let s:frame = s:create_float(a:border_highlight, {'row': row, 'col': col, 'width': width, 'height': height})
-    call nvim_buf_set_lines(s:frame, 0, -1, v:true, border)
-
-    " Draw viewport
-    call s:create_float('NormalFloat', {'row': row + 1, 'col': col + 2, 'width': width - 4, 'height': height - 2})
-    autocmd BufWipeout <buffer> execute 'bwipeout' s:frame
-  endfunction
-
-  let g:fzf_layout = { 'window': 'call FloatingFZF(0.9, 0.6, "Comment")' }
+  " Border style (rounded / sharp / horizontal)
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
 endif
 
 let s:diff_options =
