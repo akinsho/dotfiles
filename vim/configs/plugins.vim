@@ -48,8 +48,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-" Plug 'janko-m/vim-test', {
-"       \ 'on': ['TestNearest', 'TestVisit', 'TestSuite', 'TestLast', 'TestFile']}
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -97,7 +95,6 @@ Plug 'sheerun/vim-polyglot'
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
 Plug 'lambdalisue/gina.vim'
-" Plug 'sodapopcan/vim-twiggy'
 " Text Objects {{{1
 " =====================
 Plug 'AndrewRadev/tagalong.vim'
@@ -130,7 +127,6 @@ Plug 'haishanh/night-owl.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'patstockwell/vim-monokai-tasty'
 " Colorscheme Ideas
-" arzg/vim-substrata
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
