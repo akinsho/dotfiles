@@ -37,7 +37,7 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-      \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets'
+      " \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets' " Broken
 Plug 'camspiers/animate.vim'
 Plug 'camspiers/lens.vim'
 Plug 'itchyny/lightline.vim'
@@ -112,12 +112,9 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
+Plug 'pechorin/any-jump.vim'
 "Filetype Plugins {{{1
 "======================
-Plug 'iamcco/markdown-preview.nvim', {
-      \ 'do': 'cd app & yarn install',
-      \ 'for': 'markdown', 'on': 'MarkdownPreview'
-      \ }
 Plug 'kkoomen/vim-doge'
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 "Themes  {{{1
