@@ -37,3 +37,4 @@ let g:go_highlight_function_calls       = 1
 let g:go_metalinter_autosave            = 1
 let g:go_jump_to_error                  = 0
 let g:go_metalinter_autosave_enabled = ['vet', 'errcheck', 'ineffassign'] ", 'golint'
+let g:go_gopls_enabled = 0
