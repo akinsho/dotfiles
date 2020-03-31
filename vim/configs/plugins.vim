@@ -37,7 +37,6 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-      " \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets' " Broken
 Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
 Plug 'airblade/vim-rooter'
@@ -108,7 +107,6 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
-Plug 'pechorin/any-jump.vim'
 "Filetype Plugins {{{1
 "======================
 Plug 'kkoomen/vim-doge'
