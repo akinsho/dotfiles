@@ -54,9 +54,9 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "============================
 Plug 'vimwiki/vimwiki'
 Plug 'cohama/lexima.vim'
-Plug 'liuchengxu/vim-which-key'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
+" Plug 'liuchengxu/vim-which-key'
 " We lazy load vim fat finger because it otherwise takes 80ms ie. the slowest
 " thing to load blocking vim startup time
 augroup Lazy_load_fat_fingers

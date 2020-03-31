@@ -1,3 +1,6 @@
+if !has_key(g:plugs, "vim-which-key")
+  finish
+endif
 " Define prefix dictionary
 let g:which_leader_key_map =  {}
 let g:which_localleader_key_map =  {}
