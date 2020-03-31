@@ -23,9 +23,12 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \]
 
-" \ 'coc-go',
-" TODO Coc pairs is takes half a second to expand
+" TODO: Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
+
+" TODO: investigate replacing vim-go with coc-go
+" currently doesn't do enough
+" \ 'coc-go',
 
 
 function! s:coc_init() abort
