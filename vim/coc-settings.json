@@ -36,9 +36,12 @@
     "typescriptreact"
   ],
   // Go
-  "go.goplsOptions": {
-    "completeUnimported": true
-  },
+  // "go.goplsArgs": ["-remote=auto"],
+  // "go.goplsOptions": {
+  //   "completeUnimported": true,
+  //   "deepCompletion": true,
+  //   "staticcheck": true
+  // },
   // emoji
   "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
   // Snippets
@@ -93,5 +96,5 @@
     "default": "\uf29c"
   },
   // Explorer
-  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.enableNerdfont": true
 }

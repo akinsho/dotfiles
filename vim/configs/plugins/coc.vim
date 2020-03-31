@@ -6,7 +6,6 @@ let g:coc_global_extensions = [
       \ 'coc-explorer',
       \ 'coc-tag',
       \ 'coc-json',
-      \ 'coc-go',
       \ 'coc-vimlsp',
       \ 'coc-tsserver',
       \ 'coc-rls',
@@ -24,9 +23,10 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \]
 
-
+" \ 'coc-go',
 " TODO Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
+
 
 function! s:coc_init() abort
   let s:languageservers = {}
@@ -65,6 +65,16 @@ function! s:coc_init() abort
           \ "filetypes": ["elm"],
           \ "rootPatterns": ["elm.json"],
           \}
+  endif
+
+  if executable("gopls")
+    let s:languageservers['golang'] = {
+      \ "command": "gopls",
+      \ "args": ["-remote=auto"],
+      \ "rootPatterns": ["go.mod"],
+      \ "disableWorkspaceFolders": v:true,
+      \ "filetypes": ["go"]
+      \ }
   endif
 
   if !empty(s:languageservers)

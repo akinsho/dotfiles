@@ -9,6 +9,8 @@ let g:go_fmt_options = {
 
 let g:go_doc_popup_window               = 1
 let g:go_gopls_complete_unimported      = 1
+let g:go_gopls_options                  = ['-remote=auto']
+let g:go_gopls_deep_completion          = 1
 let g:go_gopls_staticcheck              = 1
 let g:go_highlight_space_tab_error      = 1
 let g:go_term_enabled                   = 0
@@ -37,4 +39,4 @@ let g:go_highlight_function_calls       = 1
 let g:go_metalinter_autosave            = 1
 let g:go_jump_to_error                  = 0
 let g:go_metalinter_autosave_enabled = ['vet', 'errcheck', 'ineffassign'] ", 'golint'
-let g:go_gopls_enabled = 0
+let g:go_gopls_enabled                  = 0

@@ -38,8 +38,6 @@ endfunction
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
       " \ | Plug 'dsznajder/vscode-es7-javascript-react-snippets' " Broken
-" Plug 'camspiers/animate.vim'
-" Plug 'camspiers/lens.vim'
 Plug 'itchyny/lightline.vim'
       \ | Plug 'mengelbrecht/lightline-bufferline'
 Plug 'airblade/vim-rooter'
@@ -70,8 +68,6 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'camspiers/animate.vim'
-Plug 'camspiers/lens.vim'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
