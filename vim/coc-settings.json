@@ -30,6 +30,7 @@
   "signature.preferShownAbove": true,
   "coc.preferences.previewAutoClose": true,
   "coc.preferences.formatOnSaveFiletypes": [
+    "elm",
     "javascript",
     "javascriptreact",
     "typescript",

@@ -67,6 +67,7 @@ function! s:coc_init() abort
           \ "command": "elm-language-server",
           \ "filetypes": ["elm"],
           \ "rootPatterns": ["elm.json"],
+          \ "trace.server": "verbose",
           \}
   endif
 
