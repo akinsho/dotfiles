@@ -7,7 +7,9 @@
 # specified here
 export DOTFILES=$HOME/Dotfiles
 export RUNCOM=$DOTFILES/runcom/
-export PATH="$PATH:$(yarn global bin)"
+if which yarn >/dev/null; then
+  export PATH="$PATH:$(yarn global bin)"
+fi
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.npm/bin:$PATH"

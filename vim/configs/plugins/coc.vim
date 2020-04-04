@@ -69,7 +69,7 @@ function! s:coc_init() abort
           \ "rootPatterns": ["elm.json"],
           \ "trace.server": "verbose",
           \ "initializationOptions": {
-          \ "elmAnalyseTrigger": "change",
+          \     "elmAnalyseTrigger": "change",
           \}
           \}
   endif
@@ -96,7 +96,7 @@ augroup coc_commands
   autocmd VimEnter * call s:coc_init()
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  " autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
+  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder
@@ -110,17 +110,10 @@ augroup End
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 iunmap <TAB>
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-let g:coc_snippet_next = '<tab>'
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
@@ -137,7 +130,7 @@ imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-" let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_next = '<c-j>'
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
