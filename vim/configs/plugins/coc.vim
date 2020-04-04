@@ -68,6 +68,9 @@ function! s:coc_init() abort
           \ "filetypes": ["elm"],
           \ "rootPatterns": ["elm.json"],
           \ "trace.server": "verbose",
+          \ "initializationOptions": {
+          \ "elmAnalyseTrigger": "change",
+          \}
           \}
   endif
 
