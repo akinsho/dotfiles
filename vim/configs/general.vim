@@ -71,6 +71,11 @@ set formatoptions+=r                  " Continue comments when pressing Enter
 set formatoptions-=o                  " do not continue comment using o or O
 set formatoptions+=n                  " Recognize numbered lists
 set formatoptions+=2                  " Use indent from 2nd line of a paragraph
+set formatoptions+=t                  " autowrap lines using text width value
+" Only break if the line was not longer than 'textwidth' when the insert
+" started and only at a white character that has been entered during the
+" current insert command.
+set formatoptions+=lv
 if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j
 endif
@@ -128,7 +133,7 @@ set synmaxcol=1024 " don't syntax highlight long lines
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
-  let &showbreak='↪ '
+  set showbreak=↪
   " Options include -> '…', '↳ ', '→','↪ '
   if exists('&breakindentopt')
     set breakindentopt=sbr
