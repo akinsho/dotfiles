@@ -97,5 +97,7 @@
     "default": "\uf29c"
   },
   // Explorer
-  "explorer.icon.enableNerdfont": true
+  "explorer.icon.enableNerdfont": true,
+  "explorer.file.autoReveal": true,
+  "explorer.file.showHiddenFiles": true
 }
