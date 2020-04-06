@@ -1,7 +1,6 @@
 ""---------------------------------------------------------------------------//
 " VIM MARKDOWN {{{
 ""---------------------------------------------------------------------------//
-let g:markdown_composer_syntax_theme   ='hybrid'
 let g:vim_markdown_fenced_languages    = [
       \'css',
       \'js=javascript',
