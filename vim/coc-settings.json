@@ -99,5 +99,6 @@
   // Explorer
   "explorer.icon.enableNerdfont": true,
   "explorer.file.autoReveal": true,
-  "explorer.file.showHiddenFiles": true
+  "explorer.file.showHiddenFiles": true,
+  "explorer.width": 30
 }
