@@ -238,4 +238,5 @@ augroup END
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocActionAsync('format')
 " Use `:Fold` for fold current buffer
+set foldmethod=manual
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
