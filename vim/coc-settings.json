@@ -2,10 +2,12 @@
   "typescript.suggestionActions.enabled": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.preferences.colorSupport": true,
+  "list.source.outline.defaultOptions": ["--normal", "--auto-preview"],
   "list.normalMappings": {
     "t": "action:tabe",
     "v": "action:vsplit",
     "s": "action:split",
+    "p": "action:preview",
     "d": "expr:GetDeleteAction"
   },
   "list.insertMappings": {
