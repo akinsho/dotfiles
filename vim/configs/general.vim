@@ -43,13 +43,15 @@ if has('folding')
       set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
     endif
   endif
-    set foldlevelstart=999
-    set fdc=3
-    if has('nvim')
-      set foldmethod=syntax
-    else
-      set foldmethod=indent
-    endif
+  set foldlevelstart=999
+  if has('nvim-0.5')
+    set foldcolumn=auto:3
+  endif
+  if has('nvim')
+    set foldmethod=syntax
+  else
+    set foldmethod=indent
+  endif
 endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
