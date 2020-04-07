@@ -40,9 +40,11 @@ if has('folding')
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
       set fillchars+=eob:\              " suppress ~ at EndOfBuffer
+      set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
     endif
   endif
     set foldlevelstart=999
+    set fdc=3
     if has('nvim')
       set foldmethod=syntax
     else
@@ -231,13 +233,13 @@ set background=dark
   " ONE
   " ========================
   " See highlight.vim for colorscheme overrides
-  " let g:one_allow_italics = 1
-  " colorscheme one
+  let g:one_allow_italics = 1
+  colorscheme one
   " ========================
   " Monokai Tasky
   " ========================
-  let g:vim_monokai_tasty_italic = 1
-  colorscheme vim-monokai-tasty
+  " let g:vim_monokai_tasty_italic = 1
+  " colorscheme vim-monokai-tasty
 endif
 
 "---------------------------------------------------------------------------//
