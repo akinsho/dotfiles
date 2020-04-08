@@ -2,7 +2,7 @@
   "typescript.suggestionActions.enabled": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.preferences.colorSupport": true,
-  "list.source.outline.defaultOptions": ["--normal", "--auto-preview"],
+  "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.normalMappings": {
     "t": "action:tabe",
     "v": "action:vsplit",
