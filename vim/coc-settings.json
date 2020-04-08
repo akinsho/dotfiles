@@ -33,6 +33,7 @@
   "signature.target": "float",
   "coc.preferences.formatOnSaveFiletypes": [
     "elm",
+    "html",
     "css",
     "javascript",
     "javascriptreact",
