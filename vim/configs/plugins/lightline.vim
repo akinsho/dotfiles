@@ -48,10 +48,10 @@ highlight LightLineClose guifg=white guibg=red
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
-      \  'left':[['mode'], ['filename', 'filetype'], ['autosave']],
+      \  'left':[['mode'], ['filename', 'filetype', 'filesize']],
       \   'right': [
-      \     ['coc_git_repo', 'coc_git_buffer'],
-      \     ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+      \     ['coc_git_buffer','coc_git_repo'],
+      \     ['cocstatus'],
       \     ['lsp', 'current_function'],
       \     ['lineinfo'],
       \     ['csv']
@@ -81,19 +81,13 @@ let g:lightline = {
       \   'coc_git_buffer': 'CocGitStatus',
       \   'coc_git_repo': 'CocGitRepoStatus',
       \ },
-      \ 'component_expand': {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ },
       \ 'component_type': {
-      \     'linter_checking': 'checking',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'ok',
       \     'buffers': 'tabsel',
+      \     'minimal_tabs': 'raw'
       \ },
+      \ 'component_expand': {
+      \         'minimal_tabs': 'LightlineMinimalTabs'
+      \},
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
       \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
@@ -139,9 +133,6 @@ function! LightlineMinimalTabs() abort
   let l:item = join(map(l:tabs, { -> s:tab_renderer(v:val, 'TabLineSel') }))
   return l:item
 endfunction
-
-let g:lightline.component_type['minimal_tabs']   = 'raw'
-let g:lightline.component_expand['minimal_tabs'] = 'LightlineMinimalTabs'
 
 ""---------------------------------------------------------------------------//
 "Lightline Bufferline
