@@ -9,15 +9,15 @@ function! TypeScriptTransform(cmd) abort
 endfunction
 
 let g:test#custom_transformations = {"typescript": function("TypeScriptTransform")}
-let g:test#transformation = "typescript"
-let test#neovim#term_position = "vsplit"
-" exists(':Tnew') ? "neoterm" : 
-let test#strategy = has('nvim') ? 'neovim' : 'vimterminal'
 let test#javascript#jest#file_pattern = '\v(.*|(spec|test))\.(js|jsx|coffee|ts|tsx)$'
+let g:test#transformation = "typescript"
+
+let test#neovim#term_position = "vsplit"
+" let test#vim#term_position = "belowright"
 
 nnoremap <silent> t<C-w> :TestNearest --watch<CR>
 nnoremap <silent> t<C-n> :TestNearest<CR>
-nnoremap <silent> t<C-f> :TestFile<CR>
+nnoremap <silent> <localleader>t :TestFile<CR>
 nnoremap <silent> t<C-s> :TestSuite<CR>
 nnoremap <silent> t<C-l> :TestLast<CR>
 nnoremap <silent> t<C-g> :TestVisit<CR>

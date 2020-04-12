@@ -43,7 +43,7 @@ if has('folding')
       set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
     endif
   endif
-  set foldlevelstart=999
+  " set foldlevelstart=999
   if has('nvim-0.5')
     set foldcolumn=auto:3
   endif

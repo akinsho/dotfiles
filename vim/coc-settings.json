@@ -31,15 +31,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "ﯦ",
   "signature.target": "float",
-  "coc.preferences.formatOnSaveFiletypes": [
-    "elm",
-    "html",
-    "css",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
   // Go
   // "go.goplsArgs": ["-remote=auto"],
   // "go.goplsOptions": {

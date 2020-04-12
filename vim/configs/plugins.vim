@@ -45,6 +45,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
+Plug 'honza/vim-snippets'
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
@@ -67,6 +68,7 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+Plug 'janko/vim-test'
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
