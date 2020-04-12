@@ -289,7 +289,7 @@ endif
 " Utilities {{{1
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
-set sessionoptions-=blank,buffers,help,options
+set sessionoptions=curdir,folds,tabpages,winsize,resize
 set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
 set updatetime=200
 if has('virtualedit')
