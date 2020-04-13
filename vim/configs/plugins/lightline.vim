@@ -62,7 +62,7 @@ let g:lightline = {
       \   'right': [ [] ]
       \ },
       \ 'component': {
-      \   'lineinfo': '%3l:%-2v',
+      \   'lineinfo': '%3l:%-2L',
       \   'close': '%#LightLineClose#%999X X ',
       \ },
       \ 'component_function': {
