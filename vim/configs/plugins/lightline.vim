@@ -51,8 +51,8 @@ let g:lightline = {
       \  'left':[['mode'], ['filename', 'filetype', 'filesize']],
       \   'right': [
       \     ['coc_git_buffer','coc_git_repo'],
-      \     ['cocstatus'],
-      \     ['lsp', 'current_function'],
+      \     ['lsp'],
+      \     ['current_function'],
       \     ['lineinfo'],
       \     ['csv']
       \]
@@ -392,7 +392,7 @@ function! s:custom_lightline_theme() abort
 
     " Each subarray represents the [ForegroundColor, BackgroundColor]
     let s:theme.normal.left     = [ [ s:gold, s:normal_background ], [ s:white, s:normal_background ], [ s:dark_blue, s:normal_background ] ]
-    let s:theme.normal.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_red, s:normal_background ] ]
+    let s:theme.normal.right    = [ [ s:dark_blue, s:normal_background ], [ s:light_yellow, s:normal_background ] ]
     let s:theme.normal.middle   = [ [ s:comment_grey, s:normal_background ] ]
 
     let s:theme.inactive.left   = [ [ s:comment_grey, s:normal_background ], [ s:comment_grey, s:normal_background ] ]
@@ -416,11 +416,7 @@ function! s:custom_lightline_theme() abort
     let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
     let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
-    let s:theme.normal.checking = [ [s:light_yellow, s:normal_background ] ]
-    let s:theme.normal.error    = [ [ s:light_red, s:normal_background ] ]
-    let s:theme.normal.warning  = [ [ s:light_yellow, s:normal_background ] ]
-    let s:theme.normal.ok       = [ [ s:green, s:normal_background ] ]
-
+    let s:theme.normal.lsp      = [ [s:light_yellow, s:normal_background ] ]
 
     "Select colorscheme to augment
     let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
