@@ -33,6 +33,9 @@
   "diagnostic.hintSign": "ﯦ",
   "signature.target": "float",
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  // Rust
+  "rust.clippy_preference": "on",
+  "rust.show_hover_context": true,
   // Go
   // "go.goplsArgs": ["-remote=auto"],
   // "go.goplsOptions": {
