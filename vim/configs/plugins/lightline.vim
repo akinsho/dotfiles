@@ -93,6 +93,9 @@ let g:lightline = {
       \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
       \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
       \},
+      \ 'component_raw': {
+      \   'buffers': 1
+      \},
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
@@ -160,6 +163,7 @@ let g:lightline#bufferline#unicode_symbols   = 1
 let g:lightline#bufferline#show_number       = 2
 let g:lightline#bufferline#enable_devicons   = 1
 let g:lightline#bufferline#filename_modifier = ':t'
+let g:lightline#bufferline#clickable         = 1
 
 nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
 nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
