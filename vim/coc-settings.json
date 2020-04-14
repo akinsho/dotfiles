@@ -4,6 +4,7 @@
   "coc.preferences.colorSupport": true,
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
+  "list.source.diagnostics.defaultOptions": ["--normal"],
   "list.normalMappings": {
     "t": "action:tabe",
     "v": "action:vsplit",
