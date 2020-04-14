@@ -145,13 +145,12 @@ set showtabline=2
 let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
 let g:lightline.tabline = {'left': [ [ 'buffers' ] ], 'right': [ [ 'minimal_tabs','close' ] ]}
 
-let g:lightline#bufferline#number_map = {
-      \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
-      \ 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹',
-      \ 10: '¹⁰', 11: '¹¹', 12: '¹²', 13: '¹³', 14: '¹⁴',
-      \ 15: '¹⁵', 16: '¹⁶', 17: '¹⁷', 18: '¹⁸', 19: '¹⁹',
-      \ 20: '²⁰', 21: '²¹', 22: '²²', 23: '²³', 24: '²⁴'
-      \ }
+let g:lightline#bufferline#composed_number_map = {
+  \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵',
+  \ 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹', 10: '¹⁰', 11: '¹¹',
+  \ 12: '¹²', 13: '¹³', 14: '¹⁴', 15: '¹⁵', 16: '¹⁶',
+  \ 17: '¹⁷', 18: '¹⁸', 19: '¹⁹', 20: '²⁰'
+  \ }
 
 let g:lightline.tab = {
       \ 'active': [ 'tabnum', 'filename', 'modified' ],
@@ -165,16 +164,16 @@ let g:lightline#bufferline#enable_devicons   = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#clickable         = 1
 
-nmap <Localleader>1 <Plug>lightline#bufferline#go(1)
-nmap <Localleader>2 <Plug>lightline#bufferline#go(2)
-nmap <Localleader>3 <Plug>lightline#bufferline#go(3)
-nmap <Localleader>4 <Plug>lightline#bufferline#go(4)
-nmap <Localleader>5 <Plug>lightline#bufferline#go(5)
-nmap <Localleader>6 <Plug>lightline#bufferline#go(6)
-nmap <Localleader>7 <Plug>lightline#bufferline#go(7)
-nmap <Localleader>8 <Plug>lightline#bufferline#go(8)
-nmap <Localleader>9 <Plug>lightline#bufferline#go(9)
-nmap <Localleader>0 <Plug>lightline#bufferline#go(10)
+nnoremap <Localleader>1 <Plug>lightline#bufferline#go(1)
+nnoremap <Localleader>2 <Plug>lightline#bufferline#go(2)
+nnoremap <Localleader>3 <Plug>lightline#bufferline#go(3)
+nnoremap <Localleader>4 <Plug>lightline#bufferline#go(4)
+nnoremap <Localleader>5 <Plug>lightline#bufferline#go(5)
+nnoremap <Localleader>6 <Plug>lightline#bufferline#go(6)
+nnoremap <Localleader>7 <Plug>lightline#bufferline#go(7)
+nnoremap <Localleader>8 <Plug>lightline#bufferline#go(8)
+nnoremap <Localleader>9 <Plug>lightline#bufferline#go(9)
+nnoremap <Localleader>0 <Plug>lightline#bufferline#go(10)
 ""---------------------------------------------------------------------------//
 
 let g:lightline#ale#indicator_checking = "\uf110"
