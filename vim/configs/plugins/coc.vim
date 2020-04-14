@@ -234,14 +234,19 @@ nnoremap <silent><C-N>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//
+function s:apply_coc_highlights()
+  highlight CocErrorSign  ctermfg=Red guifg=#ff0000
+  highlight CocWarningSign  ctermfg=Brown guifg=#ff922b
+  highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
+  highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
+  highlight CocCodeLens ctermfg=Gray guifg=#999999
+  highlight CocHighlightText gui=underline,bold
+endfunction
+
 augroup Coc_highlights
   autocmd!
-  autocmd Colorscheme * highlight CocErrorSign  ctermfg=Red guifg=#ff0000
-  autocmd Colorscheme * highlight CocWarningSign  ctermfg=Brown guifg=#ff922b
-  autocmd ColorScheme * highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
-  autocmd Colorscheme * highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
-  autocmd Colorscheme * highlight CocCodeLens ctermfg=Gray guifg=#999999
-  autocmd ColorScheme * highlight CocHighlightText gui=underline,bold
+  autocmd VimEnter * call <SID>apply_coc_highlights()
+  autocmd Colorscheme * call <SID>apply_coc_highlights()
 augroup END
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocActionAsync('format')
