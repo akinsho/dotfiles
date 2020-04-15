@@ -203,13 +203,8 @@ nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 nmap <leader>x  <Plug>(coc-cursors-operator)
 nmap <silent> <C-i> <Plug>(coc-cursors-position)
 
-nmap <expr> <silent> <C-c> <SID>select_current_word()
-function! s:select_current_word()
-  if !get(g:, 'coc_cursors_activated', 0)
-    return "\<Plug>(coc-cursors-word)"
-  endif
-  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
-endfunc
+nmap <silent> <C-c> <Plug>(coc-cursors-word)*
+xmap <silent> <C-c> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//
@@ -229,8 +224,7 @@ nnoremap <silent><leader>gl :<C-u>CocCommand git.copyUrl<CR>
 "--------------------------------------------------------------------------------
 " Coc Explorer
 "--------------------------------------------------------------------------------
-nnoremap <silent><C-N>
-    \ :CocCommand explorer<CR>
+nnoremap <silent><C-N> :CocCommand explorer<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//
