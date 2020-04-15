@@ -111,8 +111,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
 "Filetype Plugins {{{1
 "======================
-Plug 'kkoomen/vim-doge'
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
+Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "Themes  {{{1
 "===============================
 Plug 'rakr/vim-one'
