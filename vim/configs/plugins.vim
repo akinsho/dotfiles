@@ -52,7 +52,7 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 Plug 'vimwiki/vimwiki'
 Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
