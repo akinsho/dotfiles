@@ -203,7 +203,10 @@ nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 nmap <leader>x  <Plug>(coc-cursors-operator)
 nmap <silent> <C-i> <Plug>(coc-cursors-position)
 
-nmap <silent> <C-c> <Plug>(coc-cursors-word)*
+" Remap the normal version of "*" into a plug mapping to combine
+" cursor word mapping
+nnoremap <Plug>(*) *
+nmap <silent> <C-c> <Plug>(coc-cursors-word)<Plug>(*)
 xmap <silent> <C-c> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 ""---------------------------------------------------------------------------//
 " Coc Git

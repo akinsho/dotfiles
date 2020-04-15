@@ -130,9 +130,7 @@ cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 command! -nargs=1 AutoResize call utils#auto_resize(<args>)
 nnoremap <leader>ar :AutoResize 70<CR>
 
-" TODO: figure out how to keep this mapping AS WELL as the Coc multicursor mapping
-" Asterix sets the current word as target for N and n jumps but does not trigger a jump itself
-" nnoremap * m`:keepjumps normal! *``<cr>
+nnoremap * m`:keepjumps normal! *``<cr>
 
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
