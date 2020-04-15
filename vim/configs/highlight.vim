@@ -37,7 +37,7 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   " Vim One does not allow directly overriding highlights
   if g:colors_name ==? 'one'
-    call one#highlight('Folded', '5c6370', 'none', 'italic')
+    call one#highlight('Folded', '5c6370', 'none', 'italic,bold')
     call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
     "Italicise imports
     call one#highlight('jsImport', '61afef', 'none', 'italic')
