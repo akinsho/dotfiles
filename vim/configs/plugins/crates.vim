@@ -3,7 +3,7 @@ if !has_key(g:plugs, "vim-crates") || !has('nvim')
 endif
 
 
-highlight link Crates Search
+highlight Crates guibg=green guifg=yellow
 
 augroup CratesToggle
   au!

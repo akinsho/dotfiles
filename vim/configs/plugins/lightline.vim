@@ -51,7 +51,7 @@ let g:lightline = {
       \  'left':[['mode'], ['filename', 'filetype', 'filesize']],
       \   'right': [
       \     ['coc_git_buffer','coc_git_repo'],
-      \     ['lsp'],
+      \     ['coc_status'],
       \     ['current_function'],
       \     ['lineinfo'],
       \     ['csv']
@@ -76,7 +76,7 @@ let g:lightline = {
       \   'mode': 'LightlineMode',
       \   'autosave': 'LightlineAutosave',
       \   'gitgutter': 'LightlineGitGutter',
-      \   'lsp': 'coc#status',
+      \   'coc_status': 'coc#status',
       \   'current_function': 'CocCurrentFunction',
       \   'coc_git_buffer': 'CocGitStatus',
       \   'coc_git_repo': 'CocGitRepoStatus',
@@ -420,7 +420,7 @@ function! s:custom_lightline_theme() abort
     let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
     let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
-    let s:theme.normal.lsp      = [ [s:light_yellow, s:normal_background ] ]
+    let s:theme.normal.coc_status     = [ [s:light_yellow, s:normal_background ] ]
 
     "Select colorscheme to augment
     let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
