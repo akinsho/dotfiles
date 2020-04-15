@@ -42,21 +42,20 @@ let g:fzf_buffers_jump    = 1
 
 " Customize fzf colors to match your color scheme
 " bg+ controls the highlight of the selected item
-" let g:fzf_colors = {
-"       \ 'fg':      ['fg', 'Normal'],
-"       \ 'bg':      ['bg', 'NormalFloat'],
-"       \ 'border':  ['fg', 'VertSplit'],
-"       \ 'hl':      ['fg', 'Comment'],
-"       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-"       \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
-"       \ 'hl+':     ['fg', 'Statement'],
-"       \ 'info':    ['fg', 'PreProc'],
-"       \ 'prompt':  ['fg', 'Conditional'],
-"       \ 'pointer': ['fg', 'Exception'],
-"       \ 'marker':  ['fg', 'Keyword'],
-"       \ 'spinner': ['fg', 'Label'],
-"       \ 'header':  ['fg', 'Comment']
-"       \}
+let g:fzf_colors = {
+      \ 'fg':      ['fg', 'Normal'],
+      \ 'border':  ['fg', 'VertSplit'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment']
+      \}
 
 if has('nvim')
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
