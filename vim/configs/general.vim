@@ -45,7 +45,7 @@ if has('folding')
   endif
   " set foldlevelstart=999
   if has('nvim-0.5')
-    set foldcolumn=auto:3
+    set foldcolumn=auto:8
   endif
   if has('nvim')
     set foldmethod=syntax
