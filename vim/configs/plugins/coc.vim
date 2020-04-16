@@ -175,6 +175,7 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+nmap <silent><leader>ca <Plug>(coc-codelens-action)
 vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
 nmap <silent><leader>a  <Plug>(coc-codeaction)
@@ -187,7 +188,7 @@ nmap <silent><leader>rn <Plug>(coc-rename)
 ""---------------------------------------------------------------------------//
 " Using CocList
 ""---------------------------------------------------------------------------//
-" nnoremap <silent> <localleader>y  :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> <localleader>y  :<C-u>CocList -A --normal yank<cr>
 " Show all diagnostics
 nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
 " Show commands
