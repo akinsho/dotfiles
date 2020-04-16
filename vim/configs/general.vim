@@ -47,10 +47,8 @@ if has('folding')
   if has('nvim-0.5')
     set foldcolumn=auto:8
   endif
-  if has('nvim')
+  if !has('nvim')
     set foldmethod=syntax
-  else
-    set foldmethod=indent
   endif
 endif
 ""---------------------------------------------------------------------------//
@@ -289,7 +287,7 @@ endif
 " Utilities {{{1
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
-set sessionoptions=buffers,curdir,folds,tabpages,winsize,resize
+set sessionoptions=buffers,curdir,tabpages,winsize,resize
 set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
 set updatetime=200
 if has('virtualedit')
