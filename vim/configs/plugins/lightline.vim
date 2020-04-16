@@ -48,9 +48,9 @@ highlight LightLineClose guifg=white guibg=red
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
-      \  'left':[['mode'], ['filename', 'filetype', 'filesize']],
+      \  'left':[['mode'], ['filename', 'filetype', 'filesize'], ['coc_git_repo']],
       \   'right': [
-      \     ['coc_git_buffer','coc_git_repo'],
+      \     ['coc_git_buffer'],
       \     ['coc_status'],
       \     ['current_function'],
       \     ['lineinfo'],
@@ -79,15 +79,14 @@ let g:lightline = {
       \   'current_function': 'CocCurrentFunction',
       \   'coc_git_buffer': 'CocGitStatus',
       \   'coc_git_repo': 'CocGitRepoStatus',
+      \    'coc_status': 'coc#status',
       \ },
       \ 'component_type': {
       \     'buffers': 'tabsel',
       \     'minimal_tabs': 'raw',
-      \     'coc_status': 'lsp'
       \ },
       \ 'component_expand': {
       \     'minimal_tabs': 'LightlineMinimalTabs',
-      \     'coc_status': 'coc#status',
       \},
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
@@ -306,10 +305,10 @@ endfunction
 
 function! LightlineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD\|defx' && !is_ft('coc-explorer') && &ft !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*FugitiveHead')
       let mark = ' '
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
+      let branch = FugitiveHead()
+      return branch !=# '' ? mark.branch : ''
     endif
   catch
   endtry
@@ -338,11 +337,6 @@ endfunction
 
 function! s:with_default(count, icon) abort
   return a:count > 0 ? a:icon . a:count : ''
-endfunction
-
-function! LightlineRepo() abort
-  let l:repo_name = utils#git_branch_dir(expand('%:p:h'))
-  return l:repo_name
 endfunction
 
 function! LightlineGinaStatus() abort
@@ -420,8 +414,6 @@ function! s:custom_lightline_theme() abort
     let s:theme.tabline.right   = [ [ s:tabline_foreground, s:tabline_background ] ]
     let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
     let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
-
-    let s:theme.normal.lsp     = [ [s:light_yellow, s:normal_background ] ]
 
     "Select colorscheme to augment
     let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'

@@ -203,7 +203,7 @@ nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
 " use normal command like `<leader>xi(`
 nmap <leader>x  <Plug>(coc-cursors-operator)
-nmap <silent> <C-i> <Plug>(coc-cursors-position)
+nmap <silent> <C-e> <Plug>(coc-cursors-position)
 
 " Remap the normal version of "*" into a plug mapping to combine
 " cursor word mapping
