@@ -22,6 +22,7 @@ let g:coc_global_extensions = [
       \ 'coc-tabnine',
       \ 'coc-reason',
       \ 'coc-eslint',
+      \ 'coc-postfix'
       \]
 
 " TODO: Coc pairs is takes half a second to expand
@@ -99,7 +100,8 @@ augroup coc_commands
   autocmd CursorHold * silent call CocActionAsync('highlight')
   autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json,javascript,javascript.jsx setlocal formatexpr=CocActionAsync('formatSelected')
+  autocmd FileType *
+        \ setlocal formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -206,9 +208,13 @@ nmap <silent> <C-i> <Plug>(coc-cursors-position)
 " Remap the normal version of "*" into a plug mapping to combine
 " cursor word mapping
 nnoremap <Plug>(*) *
-nmap <silent> <C-c> <Plug>(coc-cursors-word)<Plug>(*)
-" TODO this mapping still conflicts with easy motion search
-xmap <silent> <C-c> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
+nmap <expr> <silent> <C-c> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(g:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "\<Plug>(*)\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//

@@ -168,11 +168,6 @@ if exists('$TMUX')
   augroup END
 endif
 
-augroup mutltiple_filetype_settings "{{{1
-  autocmd!
-  autocmd FileType html,css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
-augroup END
-
 augroup config_filtetype_settings "{{{1
   autocmd!
   "==================================
@@ -269,6 +264,7 @@ augroup FileType_all "{{{1
         \ if &l:filetype ==# '' || exists('b:ftdetect')
         \ |   unlet! b:ftdetect
         \ |   filetype detect
+        \ |   echom 'Filetype set to ' . &ft
         \ | endif
 
   " Reload Vim script automatically if setlocal autoread
