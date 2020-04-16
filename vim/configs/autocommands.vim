@@ -299,7 +299,10 @@ function! NeatFoldText()
   let l:lines_count_text = '(' . ( l:lines_count ) . ')'
   let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
   let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
-  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + &foldcolumn
+  " NOTE: Foldcolumn can now be set to a value of auto:Count e.g auto:5
+  " so we split off the auto portion so we can still get the line count
+  let l:foldcolumn_length = split(&foldcolumn, ":")[-1]
+  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + l:foldcolumn_length
   "NOTE: fold start shows the start the next section replaces everything after the text with
   " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
   " fold length with 2 space padding
