@@ -259,3 +259,9 @@ command! -nargs=0 Format :call CocActionAsync('format')
 set foldmethod=manual
 
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
+
+nnoremap <silent> <leader>fr :Fold region<CR>
+
+nnoremap <silent> <leader>fi :Fold imports<CR>
+
+nnoremap <silent> <leader>fc :Fold comments<CR>
