@@ -207,6 +207,7 @@ nmap <silent> <C-i> <Plug>(coc-cursors-position)
 " cursor word mapping
 nnoremap <Plug>(*) *
 nmap <silent> <C-c> <Plug>(coc-cursors-word)<Plug>(*)
+" TODO this mapping still conflicts with easy motion search
 xmap <silent> <C-c> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 ""---------------------------------------------------------------------------//
 " Coc Git
@@ -247,6 +248,8 @@ augroup Coc_highlights
 augroup END
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocActionAsync('format')
+
 " Use `:Fold` for fold current buffer
 set foldmethod=manual
+
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)

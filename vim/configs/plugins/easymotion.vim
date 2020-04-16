@@ -15,8 +15,7 @@ omap f <Plug>(easymotion-bd-f)
 map s <Plug>(easymotion-f)
 nmap s <Plug>(easymotion-overwin-f)
 " Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
-nnoremap <leader>/ /
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+map <leader>L <Plug>(easymotion-bd-jk)
+nmap <leader>L <Plug>(easymotion-overwin-line)
+map  <leader>/ <Plug>(easymotion-sn)
+omap <leader>/ <Plug>(easymotion-tn)
