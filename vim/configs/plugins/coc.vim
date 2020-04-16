@@ -208,12 +208,13 @@ nmap <silent> <C-e> <Plug>(coc-cursors-position)
 " Remap the normal version of "*" into a plug mapping to combine
 " cursor word mapping
 nnoremap <Plug>(*) *
+nnoremap <Plug>(nohl) :nohlsearch<CR>
 nmap <expr> <silent> <C-c> <SID>select_current_word()
 function! s:select_current_word()
   if !get(g:, 'coc_cursors_activated', 0)
     return "\<Plug>(coc-cursors-word)"
   endif
-  return "\<Plug>(*)\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+  return "\<Plug>(*)\<Plug>(coc-cursors-word)\<Plug>(nohl)"
 endfunc
 ""---------------------------------------------------------------------------//
 " Coc Git
