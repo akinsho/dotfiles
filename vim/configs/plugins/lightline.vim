@@ -76,17 +76,18 @@ let g:lightline = {
       \   'mode': 'LightlineMode',
       \   'autosave': 'LightlineAutosave',
       \   'gitgutter': 'LightlineGitGutter',
-      \   'coc_status': 'coc#status',
       \   'current_function': 'CocCurrentFunction',
       \   'coc_git_buffer': 'CocGitStatus',
       \   'coc_git_repo': 'CocGitRepoStatus',
       \ },
       \ 'component_type': {
       \     'buffers': 'tabsel',
-      \     'minimal_tabs': 'raw'
+      \     'minimal_tabs': 'raw',
+      \     'coc_status': 'lsp'
       \ },
       \ 'component_expand': {
-      \         'minimal_tabs': 'LightlineMinimalTabs'
+      \     'minimal_tabs': 'LightlineMinimalTabs',
+      \     'coc_status': 'coc#status',
       \},
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
@@ -420,7 +421,7 @@ function! s:custom_lightline_theme() abort
     let s:theme.tabline.middle  = [ [ s:tabline_foreground, s:tabline_background ] ]
     let s:theme.tabline.tabsel  = [ [ s:bright_blue, s:selected_background ] ]
 
-    let s:theme.normal.coc_status     = [ [s:light_yellow, s:normal_background ] ]
+    let s:theme.normal.lsp     = [ [s:light_yellow, s:normal_background ] ]
 
     "Select colorscheme to augment
     let s:colorscheme_palette = 'lightline#colorscheme#'.s:active_theme.'#palette'
