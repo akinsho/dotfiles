@@ -269,6 +269,13 @@ let &titlestring=' ❐ %f  %r %m'
 set title
 
 "---------------------------------------------------------------------------//
+" Emoji {{{1
+"---------------------------------------------------------------------------//
+" emoji is true by default but makes (n)vim treat all emoji as double width
+" which breaks rendering so we turn this off.
+" CREDIT: https://www.youtube.com/watch?v=F91VWOelFNE
+set noemoji
+"---------------------------------------------------------------------------//
 "Nvim {{{1
 "---------------------------------------------------------------------------//
 if has('nvim')
