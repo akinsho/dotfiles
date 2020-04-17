@@ -81,7 +81,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 set foldopen+=search
 set foldmethod=syntax
-set foldlevelstart=4
+set foldlevelstart=3
 if has('nvim-0.5')
   set foldcolumn=auto:8
 endif

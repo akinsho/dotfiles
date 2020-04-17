@@ -2,6 +2,7 @@
   "typescript.suggestionActions.enabled": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "coc.preferences.colorSupport": true,
+  "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
   "list.source.diagnostics.defaultOptions": ["--normal"],

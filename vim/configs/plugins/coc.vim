@@ -5,6 +5,8 @@ endif
 let g:coc_global_extensions = [
       \ 'coc-explorer',
       \ 'coc-tag',
+      \ 'coc-marketplace',
+      \ 'coc-terminal',
       \ 'coc-json',
       \ 'coc-vimlsp',
       \ 'coc-tsserver',
@@ -14,7 +16,6 @@ let g:coc_global_extensions = [
       \ 'coc-highlight',
       \ 'coc-css',
       \ 'coc-prettier',
-      \ 'coc-jest',
       \ 'coc-emoji',
       \ 'coc-yank',
       \ 'coc-flow',
@@ -27,6 +28,7 @@ let g:coc_global_extensions = [
 
 " TODO: Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
+" \ 'coc-jest',
 
 " TODO: investigate replacing vim-go with coc-go
 " currently doesn't do enough
@@ -198,7 +200,9 @@ nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " " Find symbol of current document
 nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>s  :<C-u>CocList symbols<cr>
+" Search marketplace for coc symbols
+nnoremap <silent> <leader>m  :<C-u>CocList marketplace<cr>
 " Resume latest coc list
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
@@ -254,9 +258,19 @@ augroup Coc_highlights
   autocmd VimEnter * call <SID>apply_coc_highlights()
   autocmd Colorscheme * call <SID>apply_coc_highlights()
 augroup END
+
+""---------------------------------------------------------------------------//
+" Git
+""---------------------------------------------------------------------------//
+nmap <silent><localleader>tt <Plug>(coc-terminal-toggle)
+""---------------------------------------------------------------------------//
+" Formatting
+""---------------------------------------------------------------------------//
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocActionAsync('format')
-
+""---------------------------------------------------------------------------//
+" Folds {{{1
+""---------------------------------------------------------------------------//
 " Use `:Fold` for fold current buffer
 " set foldmethod=manual
 
@@ -267,3 +281,4 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " nnoremap <silent> <leader>fi :Fold imports<CR>
 
 " nnoremap <silent> <leader>fc :Fold comments<CR>
+"}}}
