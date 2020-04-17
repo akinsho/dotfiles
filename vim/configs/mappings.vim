@@ -27,10 +27,10 @@ if has('nvim')
   nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
   " if filereadable('~/.config/nvim/lua/navigation/init.lua')
     " require the lua module
-    lua require("navigation")
+    " lua require("navigation")
     " map the Terminal function in the lua module to some shortcuts
-    nnoremap <silent> <leader>tt :lua Terminal(1)<cr>
-    nnoremap <silent> <leader>tk :lua Terminal(2)<cr>
+    " nnoremap <silent> <leader>tt :lua Terminal(1)<cr>
+    " nnoremap <silent> <leader>tk :lua Terminal(2)<cr>
   " endif
 else
   tmap <C-h> <C-W>h
@@ -88,13 +88,6 @@ function! s:Repeatable(command)
   call repeat#set(':Repeatable '.a:command."\<cr>")
 endfunction
 "---------------------------------------------------------------------------//
-"Tab completion
-"---------------------------------------------------------------------------//
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible()?"\<C-p>":"\<TAB>"
-"---------------------------------------------------------------------------//
-" To open a new empty buffer
-nnoremap <localleader>n :enew<cr>
 " Paste in visual mode multiple times
 xnoremap p pgvy
 " search visual selection
@@ -249,10 +242,6 @@ nnoremap gl `[v`]
 " Capitalize.
 nnoremap <leader>U <ESC>gUiw`]
 inoremap <C-u> <ESC>gUiw`]a
-""---------------------------------------------------------------------------//
-" Insert Mode Bindings
-""---------------------------------------------------------------------------//
-inoremap <c-d> <esc>ddi
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
@@ -275,7 +264,7 @@ else
 endif
 
 " TODO: Remove this when coc/nvim floating window bug is resolved
-nnoremap <silent><leader>fc <c-w>p:q<cr>
+nnoremap <silent><leader>fc :call coc#util#close_popup()<CR>
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
 ""---------------------------------------------------------------------------//
@@ -420,8 +409,6 @@ nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
 nnoremap <expr><silent> _ !v:count ? "<C-W>s<C-W><Down>"  : '_'
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
-" Close every window in the current tabview but the current one
-" nnoremap <leader>q <C-W>o
 " Close the current window
 nnoremap <space>w <C-W>q
 "Swap top/bottom or left/right split
@@ -431,8 +418,6 @@ nnoremap <leader>sw <C-W>R
 ""---------------------------------------------------------------------------//
 nnoremap <leader>ez :e ~/.zshrc<cr>
 nnoremap <leader>et :e ~/.tmux.conf<cr>
-"Indent a page
-nnoremap <C-G>f gg=G<CR>
 
 nnoremap <down> <nop>
 nnoremap <up> <nop>
@@ -547,19 +532,19 @@ nnoremap <leader>} ciw{<c-r>"}<esc>
 " Repeatable window resizing mappings
 nnoremap <silent> <Plug>ResizeLeft  :vertical resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeLeft")<CR>
-nmap <leader>ll <Plug>ResizeLeft
+nmap <leader>h <Plug>ResizeLeft
 
 nnoremap <silent> <Plug>ResizeRight :vertical resize -10<cr>
       \ :call repeat#set("\<Plug>ResizeRight")<CR>
-nmap <leader>hh <Plug>ResizeRight
+nmap <leader>l <Plug>ResizeRight
 
 nnoremap <silent> <Plug>ResizeDown :resize +10<cr>
       \ :call repeat#set("\<Plug>ResizeDown")<CR>
-nmap <leader>jj <Plug>ResizeDown
+nmap <leader>j <Plug>ResizeDown
 
 nnoremap <silent> <Plug>ResizeUp :resize -10<cr>
       \ :call repeat#set("\<Plug>ResizeUp")<CR>
-nmap <leader>kk <Plug>ResizeUp
+nmap <leader>k <Plug>ResizeUp
 ""---------------------------------------------------------------------------//
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 ""---------------------------------------------------------------------------//
@@ -578,11 +563,9 @@ if !has_key(g:plugs, 'conflict-marker.vim')
   " Shortcut to jump to last conflict marker"
   nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 endif
-" Zoom - This function uses a tab to zoom the current split
-nnoremap <silent> <leader>Z :call utils#tab_zoom()<cr>
 " Zoom / Restore window. - Zooms by increasing window with smooshing the
 " Other window
-nnoremap <silent> <leader>z :call utils#buf_zoom()<CR>
+nnoremap <silent> <leader>z :call utils#tab_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 " Peekabo plugin handles this currently
