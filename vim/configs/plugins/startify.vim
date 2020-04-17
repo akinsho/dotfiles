@@ -4,7 +4,7 @@
 let g:startify_lists = [
     \ { 'type': 'sessions',  'header': ['  😸 Sessions']       },
     \ { 'type': 'files',     'header': ['   MRU']            },
-    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'dir',       'header': ['   Recently opened in '. getcwd()] },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]

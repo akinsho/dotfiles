@@ -6,17 +6,17 @@ if exists('g:gui_oni')
 endif
 
 function! ApplyUserHighlights() abort
-  " Highlight cursor column onwards - kind of cool
   "---------------------------------------------------------------------------//
-  " let &colorcolumn=join(range(81,999),",")
-  " set colorcolumn=80
-  " highlight link ColorColumn CursorLine
+  "Set the color column to highlight one column after the 'textwidth'
+  set colorcolumn=+1
   "---------------------------------------------------------------------------//
   " Highlight over 80 cols in red - moot now because -> prettier
   " Note: Match commands interact and this command prevents the command below from working
 
-  " Highlight VCS conflict markers
-  " match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  if !has_key(g:plugs, 'conflict-marker.vim')
+    " Highlight VCS conflict markers
+    match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  endif
 
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
