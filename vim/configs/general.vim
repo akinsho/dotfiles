@@ -43,13 +43,6 @@ if has('folding')
       set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
     endif
   endif
-  " set foldlevelstart=999
-  if has('nvim-0.5')
-    set foldcolumn=auto:8
-  endif
-  if !has('nvim')
-    set foldmethod=syntax
-  endif
 endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
@@ -87,6 +80,14 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " Folds {{{1
 " ----------------------------------------------------------------------------
 set foldopen+=search
+set foldmethod=syntax
+set foldlevelstart=4
+if has('nvim-0.5')
+  set foldcolumn=auto:8
+endif
+if !has('nvim')
+  set foldmethod=syntax
+endif
 ""---------------------------------------------------------------------------//
 " Vim Path {{{1
 " ----------------------------------------------------------------------------
