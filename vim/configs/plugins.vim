@@ -53,7 +53,6 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
-Plug 'vimwiki/vimwiki'
 Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
@@ -66,6 +65,11 @@ augroup Lazy_load_fat_fingers
 augroup end
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+""---------------------------------------------------------------------------//
+" Deprecated: Word transposition mappings from in favour of the plugin below:
+" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
+""---------------------------------------------------------------------------//
+Plug 'AndrewRadev/sideways.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'janko/vim-test'
