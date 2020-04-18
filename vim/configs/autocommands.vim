@@ -290,23 +290,3 @@ if v:version >= 700
     autocmd BufEnter * if (exists('b:winview')) | call winrestview(b:winview) | endif
   augroup END
 endif
-
-" Fold Text {{{
-"Stolen from HiCodin's Dotfiles a really cool set of fold text functions
-function! NeatFoldText()
-  let l:line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-  let l:lines_count = v:foldend - v:foldstart + 1
-  let l:lines_count_text = '(' . ( l:lines_count ) . ')'
-  let l:foldtextstart = strpart('✦ ----' . l:line, 0, (winwidth(0)*2)/3)
-  let l:foldtextend = l:lines_count_text . repeat(' ', 2 )
-  " NOTE: Foldcolumn can now be set to a value of auto:Count e.g auto:5
-  " so we split off the auto portion so we can still get the line count
-  let l:foldcolumn_length = split(&foldcolumn, ":")[-1]
-  let l:foldtextlength = strlen(substitute(l:foldtextstart . l:foldtextend, '.', 'x', 'g')) + l:foldcolumn_length
-  "NOTE: fold start shows the start the next section replaces everything after the text with
-  " spaces up to the length of the line but leaves 7 spaces for the fold length and finally shows the
-  " fold length with 2 space padding
-  return l:foldtextstart . repeat(' ', winwidth(0) - l:foldtextlength - 7) . l:foldtextend
-endfunction
-set foldtext=NeatFoldText()
-

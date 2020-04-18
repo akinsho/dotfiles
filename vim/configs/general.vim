@@ -53,7 +53,7 @@ if has("patch-8.1.0360") || has('nvim-0.3.2')
   set diffopt+=algorithm:histogram,indent-heuristic
 endif
 " ----------------------------------------------------------------------------
-"             Format Options {{{1
+" Format Options {{{1
 " ----------------------------------------------------------------------------
 " Input auto-formatting (global defaults)
 " Probably need to update these in after/ftplugin too since ftplugins will
@@ -79,6 +79,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Folds {{{1
 " ----------------------------------------------------------------------------
+set foldtext=utils#braces_fold_text()
 set foldopen+=search
 set foldmethod=syntax
 set foldlevelstart=3
@@ -212,7 +213,7 @@ endif
 set tags=./.tags,./.git/.tags,tags,~/.tags
 
 ""---------------------------------------------------------------------------//
-"Colorscheme {{{1
+" Colorscheme {{{1
 ""---------------------------------------------------------------------------//
 if !exists('g:gui_oni')
 set background=dark
@@ -277,7 +278,7 @@ set title
 " CREDIT: https://www.youtube.com/watch?v=F91VWOelFNE
 set noemoji
 "---------------------------------------------------------------------------//
-"Nvim {{{1
+" Nvim {{{1
 "---------------------------------------------------------------------------//
 if has('nvim')
   set inccommand=nosplit
@@ -366,7 +367,7 @@ augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 
 "====================================================================================
-"Spelling {{{1
+" Spelling {{{1
 "====================================================================================
 set spellfile=$DOTFILES/vim/.vim-spell-en.utf-8.add
 set nospell
@@ -376,7 +377,7 @@ endif
 set fileformats=unix,mac,dos
 set complete+=kspell
 "===================================================================================
-"Mouse {{{1
+" Mouse {{{1
 "===================================================================================
 set mousehide
 set mouse=nv

@@ -198,16 +198,19 @@ nnoremap <leader>E :Token<cr>
 ""---------------------------------------------------------------------------//
 function! utils#braces_fold_text(...)
   " column icon '≣'
-  let startchar = '✦'
-  let line = ' ' . substitute(getline(v:foldstart), '{.*', '{...}', ' ') . ' '
+  let start_char = '✦'
+  let line = ' ' . substitute(getline(v:foldstart), '{.*', '{…}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '(' . ( lines_count ) . ')'
-  let foldchar = matchstr(&fillchars, 'fold:\')
-  let l:window_width = winwidth(0)
-  let foldtextstart = strpart(startchar . repeat(foldchar, v:foldlevel * 2) . line, 0, (l:window_width * 2) / 3)
-  let foldtextend = lines_count_text . repeat(' ', 2)
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(' ', l:window_width - foldtextlength - 7) . foldtextend . ' ' 
+  let lines_count_text = '(' . ( lines_count ) . ' lines)'
+  let fold_char = matchstr(&fillchars, 'fold:\')
+  let window_width = winwidth(0)
+  let fold_text_start = strpart(start_char . repeat(fold_char, v:foldlevel * 2) . line, 0, (window_width * 2) / 3)
+  let fold_text_end = lines_count_text . repeat(' ', 2)
+  " NOTE: Foldcolumn can now be set to a value of auto:Count e.g auto:5
+  " so we split off the auto portion so we can still get the line count
+  let fold_column_length = split(&foldcolumn, ":")[-1]
+  let fold_text_length = strlen(substitute(fold_text_start . fold_text_end, '.', 'x', 'g')) + fold_column_length
+  return fold_text_start . repeat(' ', winwidth(0) - fold_text_length - 7) . fold_text_end
 endfunction
 
 
