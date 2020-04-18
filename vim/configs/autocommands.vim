@@ -63,14 +63,19 @@ augroup WhiteSpace "{{{1
   autocmd BufEnter * silent! call s:WhitespaceHighlight()
 augroup END
 
+function! s:smart_close()
+  if winnr('$') != 1
+    close
+  endif
+endfunction
+
 " Auto open grep quickfix window and SmartClose {{{
 augroup SmartClose
   au!
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,quickrun,qfreplace,ref,
-        \vcs-commit,Godoc,vcs-status,vim-hacks
+        \gitcommit,ref,Godoc,dbui,fugitive
         \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
