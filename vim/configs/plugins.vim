@@ -90,7 +90,7 @@ Plug 'Akin909/vim-dune', { 'for': ['dune']} " syntax highlighting for ocaml/reas
 Plug 'Yggdroot/indentLine'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
-" =====================
+" =============================
 "Git {{{1
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
@@ -126,7 +126,7 @@ Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "=======================
 "Themes  {{{1
-"===============================
+"=======================
 Plug 'rakr/vim-one'
 Plug 'haishanh/night-owl.vim'
 Plug 'patstockwell/vim-monokai-tasty'

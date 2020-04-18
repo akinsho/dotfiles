@@ -84,7 +84,10 @@ set foldopen+=search
 set foldmethod=syntax
 set foldlevelstart=3
 if has('nvim-0.5')
-  set foldcolumn=auto:8
+  " The fold open and close markers are visually distracting
+  " and if the code is too nested it starts rendering fold depth
+  " set foldcolumn=auto:8
+  set foldcolumn=0
 endif
 if !has('nvim')
   set foldmethod=syntax
