@@ -46,10 +46,12 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
+"============================
 "TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
+"============================
 "Utilities {{{1
 "============================
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
@@ -63,16 +65,10 @@ augroup Lazy_load_fat_fingers
     autocmd CursorHold,CursorHoldI * call plug#load('vim-fat-finger')
           \ | autocmd! Lazy_load_fat_fingers
 augroup end
-Plug 'AndrewRadev/switch.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-""---------------------------------------------------------------------------//
-" Deprecated: Word transposition mappings from in favour of the plugin below:
-" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
-""---------------------------------------------------------------------------//
-Plug 'AndrewRadev/sideways.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'janko/vim-test'
+" =====================
 "TPOPE {{{1
 "====================================
 Plug 'tpope/vim-rhubarb'
@@ -92,36 +88,45 @@ Plug 'Akin909/vim-dune', { 'for': ['dune']} " syntax highlighting for ocaml/reas
 Plug 'Yggdroot/indentLine'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
+" =====================
 "Git {{{1
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
 Plug 'lambdalisue/gina.vim'
 " Text Objects {{{1
 " =====================
+Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+""---------------------------------------------------------------------------//
+" Deprecated: Word transposition mappings from in favour of the plugin below:
+" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
+""---------------------------------------------------------------------------//
+Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
-Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'inside/vim-textobj-jsxattr'
+"=======================
 "Search Tools {{{1
 "=======================
-Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim' "TODO try CocSearch instead
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
-Plug 'junegunn/goyo.vim',     Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
+Plug 'junegunn/goyo.vim', Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
+"=======================
 "Filetype Plugins {{{1
 "======================
 Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
+"=======================
 "Themes  {{{1
 "===============================
 Plug 'rakr/vim-one'
 Plug 'haishanh/night-owl.vim'
-Plug 'jacoborus/tender.vim'
 Plug 'patstockwell/vim-monokai-tasty'
 " Colorscheme Ideas
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
