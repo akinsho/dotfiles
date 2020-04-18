@@ -104,14 +104,13 @@ let g:lightline = {
 " Minial tab indicators
 " ==============================
 highlight MinimalTabActive guifg=dodgerblue guibg=white
-"Soft red for cross - #E06C75
-highlight LightLineClose gui=bold guifg=black guibg=#E06C75
+call utils#extend_highlight('Normal', 'LightLineClose', 'gui=bold guifg=#E06C75')
 
 function s:tab_window_count(n) abort
   let number_of_windows = tabpagewinnr(a:n, '$')
   let window_count = ""
   if number_of_windows > 0
-    let window_count = " (" . number_of_windows . ") "
+    let window_count = "(" . number_of_windows . ")"
   endif
   return window_count
 endfunction
@@ -121,8 +120,11 @@ function s:tab_label(n) abort
     let buflist = tabpagebuflist(a:n)
     let winnr = tabpagewinnr(a:n)
     let full_path =  bufname(buflist[winnr - 1])
+    if full_path == ""
+      return "[No Name] "
+    endif
     let truncated = fnamemodify(full_path, ":t")
-    return truncated . s:tab_window_count(a:n)
+    return truncated . " " . s:tab_window_count(a:n) . " "
   catch /.*/
     echom v:exception
     return ""
@@ -140,8 +142,8 @@ function! s:tab_renderer(tabnr, highlight) abort
   " set the tab page number (for mouse clicks)
   let component .= '%' . a:tabnr . 'T'
   " add the label for the indicator
-  let component .= ' ' . a:tabnr
-  let component .=  "-" . label
+  let component .= ' ' . a:tabnr . '. '
+  let component .= label
   " after the last tab fill with TabLineFill and reset tab page nr
   let component .= '%#TabLineFill#%T'
   return component
@@ -161,9 +163,11 @@ function CocGitRepoStatus() abort
 endfunction
 
 function! LightlineMinimalTabs() abort
-  let l:tabs = range(1, tabpagenr('$'))
-  let l:item = join(map(l:tabs, { -> s:tab_renderer(v:val, 'TabLineSel') }))
-  return l:item
+  let tabs = range(1, tabpagenr('$'))
+  if len(tabs) < 1
+    return ""
+  endif
+  return join(map(l:tabs, { -> s:tab_renderer(v:val, 'TabLineSel') }))
 endfunction
 
 ""---------------------------------------------------------------------------//
