@@ -244,7 +244,8 @@ nnoremap <silent><C-N> :CocCommand explorer<CR>
 " Coc Highlights
 ""---------------------------------------------------------------------------//
 function s:apply_coc_highlights()
-  highlight CocErrorSign  ctermfg=Red guifg=#ff0000
+  highlight link CocErrorSign Error
+  highlight CocErrorFloat  ctermfg=Red guifg=#E06C75
   highlight CocWarningSign  ctermfg=Brown guifg=#ff922b
   highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
   highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
