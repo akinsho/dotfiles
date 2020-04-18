@@ -43,8 +43,6 @@ function! s:lightline_update()
   endtry
 endfunction
 
-highlight LightLineClose guifg=white guibg=red
-
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
@@ -63,7 +61,7 @@ let g:lightline = {
       \ },
       \ 'component': {
       \   'lineinfo': '%3l:%-2L',
-      \   'close': '%#LightLineClose#%999X X ',
+      \   'close': '%#LightLineClose#%999X ✗ ',
       \ },
       \ 'component_function': {
       \   'filesize': 'LightlineFileSize',
@@ -86,6 +84,7 @@ let g:lightline = {
       \     'minimal_tabs': 'raw',
       \ },
       \ 'component_expand': {
+      \     'buffers': 'lightline#bufferline#buffers',
       \     'minimal_tabs': 'LightlineMinimalTabs',
       \},
       \ 'component_visible_condition': {
@@ -97,26 +96,55 @@ let g:lightline = {
       \ 'component_raw': {
       \   'buffers': 1
       \},
-      \ 'subseparator': { 'left': '', 'right': '' }
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \ 'tabline': {'left': [ [ 'buffers' ] ], 'right': [ [ 'minimal_tabs','close' ] ]}
       \ }
 
 " ==============================
 " Minial tab indicators
 " ==============================
 highlight MinimalTabActive guifg=dodgerblue guibg=white
+"Soft red for cross - #E06C75
+highlight LightLineClose gui=bold guifg=black guibg=#E06C75
+
+function s:tab_window_count(n) abort
+  let number_of_windows = tabpagewinnr(a:n, '$')
+  let window_count = ""
+  if number_of_windows > 0
+    let window_count = " (" . number_of_windows . ") "
+  endif
+  return window_count
+endfunction
+
+function s:tab_label(n) abort
+  try
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    let full_path =  bufname(buflist[winnr - 1])
+    let truncated = fnamemodify(full_path, ":t")
+    return truncated . s:tab_window_count(a:n)
+  catch /.*/
+    echom v:exception
+    return ""
+  endtry
+endfunction
 
 function! s:tab_renderer(tabnr, highlight) abort
-  let l:component = ''
+  let component = ''
+
+  let label = s:tab_label(a:tabnr)
+
   " select the highlighting
-  let l:component .= a:tabnr == tabpagenr() ?
+  let component .= a:tabnr == tabpagenr() ?
         \ '%#'. a:highlight .'#' : '%#TabLine#'
   " set the tab page number (for mouse clicks)
-  let l:component .= '%' . a:tabnr . 'T'
+  let component .= '%' . a:tabnr . 'T'
   " add the label for the indicator
-  let l:component .= ' ' . a:tabnr . ' '
+  let component .= ' ' . a:tabnr
+  let component .=  "-" . label
   " after the last tab fill with TabLineFill and reset tab page nr
-  let l:component .= '%#TabLineFill#%T'
-  return l:component
+  let component .= '%#TabLineFill#%T'
+  return component
 endfunction
 
 function! CocCurrentFunction()
@@ -142,9 +170,6 @@ endfunction
 "Lightline Bufferline
 ""---------------------------------------------------------------------------//
 set showtabline=2
-
-let g:lightline.component_expand['buffers'] = 'lightline#bufferline#buffers'
-let g:lightline.tabline = {'left': [ [ 'buffers' ] ], 'right': [ [ 'minimal_tabs','close' ] ]}
 
 let g:lightline#bufferline#composed_number_map = {
   \ 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵',
