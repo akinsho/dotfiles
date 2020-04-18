@@ -205,12 +205,6 @@ nmap <Localleader>8 <Plug>lightline#bufferline#go(8)
 nmap <Localleader>9 <Plug>lightline#bufferline#go(9)
 nmap <Localleader>0 <Plug>lightline#bufferline#go(10)
 ""---------------------------------------------------------------------------//
-
-let g:lightline#ale#indicator_checking = "\uf110"
-let g:lightline#ale#indicator_warnings = "\uf071"
-let g:lightline#ale#indicator_errors   = "\uf05e"
-let g:lightline#ale#indicator_ok       = ''
-
 function! LightlineCsv()
   if has("statusline")
     hi User1 term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
