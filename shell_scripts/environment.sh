@@ -21,10 +21,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     export PATH=$PATH:$(go env GOPATH)/bin
     export PATH=$HOME/.local/bin:$PATH
 
-  # RUBY ==========================================================
-  if which ruby >/dev/null && which gem >/dev/null; then
-    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
