@@ -164,7 +164,7 @@ endfunction
 
 function! LightlineMinimalTabs() abort
   let tabs = range(1, tabpagenr('$'))
-  if len(tabs) < 1
+  if len(tabs) < 2
     return ""
   endif
   return join(map(l:tabs, { -> s:tab_renderer(v:val, 'TabLineSel') }))
