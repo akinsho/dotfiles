@@ -77,7 +77,7 @@ let g:lightline = {
       \   'current_function': 'CocCurrentFunction',
       \   'coc_git_buffer': 'CocGitStatus',
       \   'coc_git_repo': 'CocGitRepoStatus',
-      \    'coc_status': 'coc#status',
+      \   'coc_status': 'coc#status',
       \ },
       \ 'component_type': {
       \     'buffers': 'tabsel',
@@ -133,9 +133,7 @@ endfunction
 
 function! s:tab_renderer(tabnr, highlight) abort
   let component = ''
-
   let label = s:tab_label(a:tabnr)
-
   " select the highlighting
   let component .= a:tabnr == tabpagenr() ?
         \ '%#'. a:highlight .'#' : '%#TabLine#'

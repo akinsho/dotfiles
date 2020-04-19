@@ -1,3 +1,7 @@
+if has_key(g:plugs, "lightline.vim")
+  finish
+endif
+
 let g:mode_map = {
         \  'n': ['NORMAL',  'NormalMode' ],     'no': ['PENDING', 'NormalMode'  ],  'v': ['VISUAL',  'VisualMode' ],
         \  'V': ['V-LINE',  'VisualMode' ], "\<c-v>": ['V-BLOCK', 'VisualMode'  ],  's': ['SELECT',  'VisualMode' ],

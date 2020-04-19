@@ -37,7 +37,9 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bagrat/vim-buffet'
+Plug 'itchyny/lightline.vim'
+      \ | Plug 'mengelbrecht/lightline-bufferline'
+" Plug 'bagrat/vim-buffet'
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'
