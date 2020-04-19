@@ -46,7 +46,7 @@ endfunction
 let g:lightline = {
       \ 'colorscheme': s:active_theme,
       \ 'active': {
-      \  'left':[['mode'], ['filename', 'filetype', 'filesize'], ['coc_git_repo']],
+      \  'left':[['mode'], ['filename', 'filetype'], ['coc_git_repo']],
       \   'right': [
       \     ['coc_git_buffer'],
       \     ['coc_status'],
@@ -262,9 +262,6 @@ function! LightlineFilename()
         \ s:is_ft('ctrlsf') ? '' :
         \ s:is_ft('defx') ? '' :
         \ s:is_ft('coc-explorer') ? '' :
-        \ s:is_ft('vimfiler') ? vimfiler#get_status_string() :
-        \ s:is_ft('unite') ? unite#get_status_string() :
-        \ s:is_ft('vimshell') ? vimshell#get_status_string() :
         \ strlen(LightlineSpecialBuffers()) ? LightlineSpecialBuffers() :
         \ (strlen(LightlineReadonly()) ? LightlineReadonly() . ' ' : '') .
         \ (strlen(fname) ? fname : '[No Name]') .
@@ -337,19 +334,6 @@ endfunction
 
 function! s:with_default(count, icon) abort
   return a:count > 0 ? a:icon . a:count : ''
-endfunction
-
-function! LightlineGinaStatus() abort
-  if !has_key(g:plugs, 'gina.vim')
-    return ''
-  endif
-  let l:repo_name = gina#component#repo#name()
-  let l:project = l:repo_name !=# '' ? ' ' .l:repo_name : ''
-  " Manually recreate the traffic fancy preset as it doesn't allow granular control
-  let l:ahead = gina#component#traffic#ahead() 
-  let l:behind = gina#component#traffic#behind() 
-  let l:traffic = s:with_default(l:ahead, '↑ ') . s:with_default(l:behind, ' ↓ ')
-  return l:project . ' ' .l:traffic . ' ' " . l:status
 endfunction
 
 " Programatically derive colors for lightline mods
