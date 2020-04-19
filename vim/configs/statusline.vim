@@ -120,7 +120,7 @@ function! s:sep_if(item, condition, ...) abort
   return s:sep(a:item, l:opts)
 endfunction
 
-function! s:mode_statusline() abort
+function! s:mode() abort
   let l:mode = mode()
   call s:mode_highlight(l:mode)
 
@@ -173,7 +173,7 @@ function! StatusLine(...) abort
   let plain = statusline#show_plain_statusline()
 
   let title = statusline#filename()
-  let current_mode = s:mode_statusline()
+  let current_mode = s:mode()
   let file_type = statusline#filetype()
   let file_format = statusline#file_format()
   let line_info = s:line_info()

@@ -53,6 +53,19 @@ function! statusline#filename() abort
         \ s:is_ft('defx') ? '' :
         \ s:is_ft('dbui') ? '' :
         \ s:is_ft('coc-explorer') ? '' :
+        \ s:is_ft('fugitive') ? 'Fugitive ' :
+        \ s:is_ft('gitcommit') ? 'Fugitive  - Commit' :
+        \ s:is_ft('defx') ? 'Defx ⌨' :
+        \ s:is_ft('ctrlsf') ? 'CtrlSF 🔍' :
+        \ s:is_ft('vim-plug') ? 'vim-plug ⚉':
+        \ s:is_ft('help') ? 'help ':
+        \ s:is_ft('undotree') ? 'UndoTree ⮌' :
+        \ s:is_ft('coc-explorer') ? 'Coc Explorer' :
+        \ fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
         \ strlen(statusline#special_buffers()) ? statusline#special_buffers() :
         \ (strlen(statusline#readonly()) ? statusline#readonly() . ' ' : '') .
         \ (strlen(fname) ? fname : '[No Name]') .
