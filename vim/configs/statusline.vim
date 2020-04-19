@@ -16,28 +16,7 @@ let g:mode_map = {
 " =====================================================================
 " Resources: https://gabri.me/blog/diy-vim-statusline
 " =====================================================================
-
-function! LightlineFileSize() "{{{
-  let bytes = getfsize(expand("%:p"))
-  if bytes <= 0
-    return ""
-  endif
-  if bytes < 1024
-    return  bytes . " b"
-  else
-    return  (bytes / 1024) . " kb"
-  endif
-endfunction "}}}
-
-function! LightlineFileFormat()
-  if has('gui_running')
-    return winwidth(0) > 70 ? (&fileformat . ' ') : ''
-  else
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-  endif
-endfunction
-
-function! LightlineFileencoding()
+function! s:lightline_fileencoding()
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
@@ -78,15 +57,25 @@ function! s:file_size()
   endif
 endfunction
 
-function! s:read_only()
-  if &readonly || !&modifiable
-    return ''
-  elseif &modified
-    return g:mod_sym
-  else
-    return ''
-  endif
-endfunction
+let s:st_err = {'color': '%#StErr#', 'sep_color': '%#StErrSep#'}
+let s:st_warn = {'color': '%#StWarn#', 'sep_color': '%#StWarnSep#'}
+let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
+let s:st_info = { 'color': '%#StInfo#', 'sep_color': '%#StInfoSep#' }
+let s:st_ok =   { 'color': '%#StOk#', 'sep_color': '%#StOkSep#' }
+
+let s:gold         = '#F5F478'
+let s:white        = '#abb2bf'
+let s:light_red    = '#e06c75'
+let s:dark_red     = '#be5046'
+let s:green        = '#98c379'
+let s:light_yellow = '#e5c07b'
+let s:dark_yellow  = '#d19a66'
+let s:blue         = '#61afef'
+let s:dark_blue    = '#4e88ff'
+let s:magenta      = '#c678dd'
+let s:cyan         = '#56b6c2'
+let s:gutter_grey  = '#636d83'
+let s:comment_grey = '#5c6370'
 
 function! s:set_statusline_colors() abort
   let s:normal_bg = synIDattr(hlID('Normal'), 'bg')
@@ -100,6 +89,10 @@ function! s:set_statusline_colors() abort
   silent! exe 'highlight StErrSep guifg='.s:error_fg.' guibg=NONE gui=NONE'
   silent! exe 'highlight StWarn guibg='.s:warning_fg.' guifg='.s:normal_bg.' gui=bold'
   silent! exe 'highlight StWarnSep guifg='.s:warning_fg.' guibg=NONE gui=NONE'
+  silent! exe 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
+  silent! exe 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
+  silent! exe 'highlight StOk guifg='.s:normal_bg.' guibg='.s:green.' gui=NONE'
+  silent! exe 'highlight StOkSep guifg='.s:green.' guibg=NONE gui=NONE'
   silent! exe 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
 endfunction
 
@@ -119,10 +112,6 @@ function! s:sep_if(item, condition, ...) abort
   let l:opts = get(a:, '1', {})
   return s:sep(a:item, l:opts)
 endfunction
-
-let s:st_err = {'color': '%#StErr#', 'sep_color': '%#StErrSep#'}
-let s:st_warn = {'color': '%#StWarn#', 'sep_color': '%#StWarnSep#'}
-let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
 
 function! s:mode_statusline() abort
   let l:mode = mode()
@@ -149,37 +138,23 @@ function! s:mode_statusline() abort
         \ '!'  : 'SHELL',
         \ 't'  : 'TERMINAL'
         \}
-
   return get(l:mode_map, l:mode, 'UNKNOWN')
 endfunction
 
-let s:gold         = '#F5F478'
-let s:white        = '#abb2bf'
-let s:light_red    = '#e06c75'
-let s:dark_red     = '#be5046'
-let s:green        = '#98c379'
-let s:light_yellow = '#e5c07b'
-let s:dark_yellow  = '#d19a66'
-let s:blue         = '#61afef'
-let s:dark_blue    = '#4e88ff'
-let s:magenta      = '#c678dd'
-let s:cyan         = '#56b6c2'
-let s:gutter_grey  = '#636d83'
-let s:comment_grey = '#5c6370'
-
 function! s:mode_highlight(mode) abort
   if a:mode ==? 'i'
-    hi StMode guibg=#83a598 guifg=#3c3836
+    hi StMode guibg=#83a598 guifg=#3c3836 gui=bold
     hi StModeSep guifg=#83a598 guibg=NONE
   elseif a:mode =~? '\(v\|V\|\)'
-    hi StMode guibg=#fe8019 guifg=#3c3836
+    hi StMode guibg=#fe8019 guifg=#3c3836 gui=bold
     hi StModeSep guifg=#fe8019 guibg=NONE
   elseif a:mode ==? 'R'
-    hi StMode guibg=#8ec07c guifg=#3c3836
+    hi StMode guibg=#8ec07c guifg=#3c3836 gui=bold
     hi StModeSep guifg=#8ec07c guibg=NONE
   else
-    silent! exe 'highlight StMode guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=NONE'
-    silent! exe 'highlight StModeSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
+    let type_fg = synIDattr(hlID('Type'), 'fg')
+    silent! exe 'highlight StMode guibg='.type_fg.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.type_fg.' guibg=NONE gui=bold'
   endif
 endfunction
 
@@ -187,19 +162,28 @@ function! StatusLine() abort
   let current_mode = s:mode_statusline()
   let title = statusline#file_component()
   let plain =  statusline#show_plain_statusline()
+  let file_format = statusline#file_format()
+
 
   let statusline = s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let statusline .= s:sep(title, {})
-  let statusline .= s:sep_if("%{CocGitRepoStatus()}", !empty(get(g:, 'coc_git_status', '') || !plain))
-  let statusline .= "%{CocGitStatus()}"
+  let statusline .= s:sep(title, s:st_ok)
+
+  if plain " render a minimal statusline with only the mode and file component
+    return statusline
+  endif
+
+  let statusline .= " %#StInfoSep#%{CocGitRepoStatus()}"
+  let statusline .= "%#StInfoSep#%{CocGitStatus()}"
 
   " Start of the right side layout
   let statusline .= '%='
 
   let statusline .= '%{coc#status()}'
   let statusline .= s:sep_if("%{CocCurrentFunction()}", !empty(CocCurrentFunction()), {})
+
   "Are spaces or tabs used for indentation and how much spaces is single indent
-  let statusline .= s:sep('%{&expandtab?"spaces":"tabs"}: %{&sw}')
+  " let statusline .= s:sep('%{&expandtab? "spaces" : "tabs"}: %{&sw}')
+
   "Current line number/Total line numbers
   let statusline .= s:sep(': %l/%L (%p%%)', s:st_mode)
   let statusline .= '%<'

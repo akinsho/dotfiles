@@ -21,22 +21,30 @@ endfunction
 
 " This function allow me to specify titles for special case buffers
 " like the previewwindow or a quickfix window
-function! statusline#special_buffers()
+function! statusline#special_buffers() abort
   "Credit: https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
   let is_location_list = get(getloclist(0, {'winid':0}), 'winid', 0)
   return is_location_list ? 'Location List' :
         \ s:is_bt('quickfix') ? 'QuickFix' : &previewwindow ? 'preview' : ''
 endfunction
 
-function! statusline#modified()
+function! statusline#modified() abort
   return &ft =~ 'help' ? '' : &modified ? '✎' : &modifiable ? '' : '-'
 endfunction
 
-function! statusline#readonly()
+function! statusline#readonly() abort
   return &ft =~ 'help' || &previewwindow || &readonly ? '' : ''
 endfunction
 
-function! statusline#filename()
+function! statusline#file_format() abort
+  if has('gui_running')
+    return winwidth(0) > 70 ? (&fileformat . ' ') : ''
+  else
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  endif
+endfunction
+
+function! statusline#filename() abort
   let fname = expand('%:t')
   return fname == 'ControlP' ? 'ControlP' :
         \ fname == '__Tagbar__' ? '' :
@@ -51,7 +59,7 @@ function! statusline#filename()
         \ (strlen(statusline#modified()) ? ' ' . statusline#modified() : '')
 endfunction
 
-function! statusline#filetype()
+function! statusline#filetype() abort
   if !strlen(&filetype) || statusline#show_plain_statusline()
     return ''
   endif
@@ -59,6 +67,6 @@ function! statusline#filetype()
   return winwidth(0) > 70 ? l:icon : ''
 endfunction
 
-function! statusline#file_component()
+function! statusline#file_component() abort
   return statusline#filename() . " " . statusline#filetype()
 endfunction
