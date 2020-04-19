@@ -86,16 +86,16 @@ function! s:set_statusline_colors() abort
   let s:warning_fg = synIDattr(hlID('WarningMsg'), 'fg')
   let s:error_fg = synIDattr(hlID('ErrorMsg'), 'fg')
 
-  silent! exe 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=NONE'
-  silent! exe 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
-  silent! exe 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
-  silent! exe 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
-  silent! exe 'highlight StOk guifg='.s:normal_bg.' guibg='.s:green.' gui=NONE'
-  silent! exe 'highlight StOkSep guifg='.s:green.' guibg=NONE gui=NONE'
-  silent! exe 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
-  silent! exe 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
-  silent! exe 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
-  silent! exe 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
+  silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=NONE'
+  silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
+  silent! execute 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StOk guifg='.s:normal_bg.' guibg='.s:dark_yellow.' gui=NONE'
+  silent! execute 'highlight StOkSep guifg='.s:dark_yellow.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
+  silent! execute 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
+  silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
+  silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
 endfunction
 
 function! s:sep(item, ...) abort
@@ -148,56 +148,59 @@ endfunction
 
 function! s:mode_highlight(mode) abort
   if a:mode ==? 'i'
-    hi StMode guibg=#83a598 guifg=#3c3836 gui=bold
-    hi StModeSep guifg=#83a598 guibg=NONE
+    silent! exe 'highlight StMode guibg='.s:dark_blue.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:dark_blue.' guibg=NONE gui=bold'
   elseif a:mode =~? '\(v\|V\|\)'
-    hi StMode guibg=#fe8019 guifg=#3c3836 gui=bold
-    hi StModeSep guifg=#fe8019 guibg=NONE
+    silent! exe 'highlight StMode guibg='.s:magenta.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:magenta.' guibg=NONE gui=bold'
   elseif a:mode ==? 'R'
-    hi StMode guibg=#8ec07c guifg=#3c3836 gui=bold
-    hi StModeSep guifg=#8ec07c guibg=NONE
+    silent! exe 'highlight StMode guibg='.s:dark_red.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:dark_red.' guibg=NONE gui=bold'
   else
-    let type_fg = synIDattr(hlID('Type'), 'fg')
-    silent! exe 'highlight StMode guibg='.type_fg.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.type_fg.' guibg=NONE gui=bold'
+    silent! exe 'highlight StMode guibg='.s:green.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:green.' guibg=NONE gui=bold'
   endif
 endfunction
 
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
+  ""---------------------------------------------------------------------------//
+  " Modifiers
+  ""---------------------------------------------------------------------------//
   let inactive = get(opts, 'inactive', 0)
+  let plain = statusline#show_plain_statusline()
 
   let title = statusline#filename()
   let current_mode = s:mode_statusline()
   let file_type = statusline#filetype()
-  let plain = statusline#show_plain_statusline()
   let file_format = statusline#file_format()
-  let mode_component = s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let file_type_component = s:sep_if(file_type, !empty(file_type), { 'small': 1 })
 
+  let s:info_item = {component -> "%#StInfoSep#".component}
+  ""---------------------------------------------------------------------------//
+  " Mode
+  ""---------------------------------------------------------------------------//
   "show a minimal statusline with only the mode and file component
   if plain || inactive
     let statusline = s:sep(title, s:st_inactive) .
           \ s:sep_if(file_type, !empty(file_type), extend({ 'small': 1}, s:st_inactive))
     return statusline
   endif
-
-
-  let statusline =  mode_component
+  ""---------------------------------------------------------------------------//
+  " Setup
+  ""---------------------------------------------------------------------------//
+  let statusline =  s:sep(current_mode, extend({'before': ''}, s:st_mode))
   let statusline .= s:sep(title, {})
-  let statusline .= file_type_component
-
+  let statusline .= s:sep_if(file_type, !empty(file_type), { 'small': 1 })
 
   " Start of the right side layout
   let statusline .= '%='
-
-  let statusline .= " %#StInfoSep#%{StatuslineGitRepoStatus()}"
-  let statusline .= "%#StInfoSep#%{StatuslineGitStatus()}"
+  let statusline .=" "
+  let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
+  let statusline .= s:info_item("%{StatuslineGitStatus()}")
+  let statusline .=" "
   let statusline .= '%{coc#status()}'
-  let statusline .= s:sep_if("%{StatuslineCurrentFunction()}", !empty(StatuslineCurrentFunction()), {})
-
-  "Are spaces or tabs used for indentation and how much spaces is single indent
-  " let statusline .= s:sep('%{&expandtab? "spaces" : "tabs"}: %{&sw}')
+  let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
+        \ !empty(StatuslineCurrentFunction()), {})
 
   "Current line number/Total line numbers
   let statusline .= s:sep(': %l/%L (%p%%)', s:st_mode)
