@@ -25,16 +25,16 @@ function! s:lightline_fileencoding()
 endfunction
 
 
-function! CocCurrentFunction()
+function! StatuslineCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
 
-function! CocGitStatus() abort
+function! StatuslineGitStatus() abort
   let status = get(b:, "coc_git_status", "")
   return winwidth(0) > 120 ? status : ''
 endfunction
 
-function CocGitRepoStatus() abort
+function StatuslineGitRepoStatus() abort
   return get(g:, "coc_git_status", "")
 endfunction
 
@@ -103,10 +103,13 @@ endfunction
 function! s:sep(item, ...) abort
   let l:opts = get(a:, '1', {})
   let l:before = get(l:opts, 'before', ' ')
+  let l:small = get(l:opts, 'small', 0)
   let l:sep_color = get(l:opts, 'sep_color', '%#StSep#')
   let l:color = get(l:opts, 'color', '%#StItem#')
+  let sep_icon_left = l:small ? '' : '█'
+  let sep_icon_right = l:small ? '%*' : '█%*'
 
-  return l:before.l:sep_color.'█'.l:color.a:item.l:sep_color.'█%*'
+  return l:before.l:sep_color.sep_icon_left.l:color.a:item.l:sep_color.sep_icon_right
 endfunction
 
 function! s:sep_if(item, condition, ...) abort
@@ -164,26 +167,28 @@ endfunction
 
 function! StatusLine() abort
   let current_mode = s:mode_statusline()
-  let title = statusline#file_component()
+  let title = statusline#filename()
+  let l:filetype = statusline#filetype()
   let plain =  statusline#show_plain_statusline()
   let file_format = statusline#file_format()
 
 
   let statusline = s:sep(current_mode, extend({'before': ''}, s:st_mode))
   let statusline .= s:sep(title, s:st_ok)
+  let statusline .= s:sep_if(l:filetype, !empty(l:filetype), { 'small': 1 })
 
   if plain " render a minimal statusline with only the mode and file component
     return statusline
   endif
 
-  let statusline .= " %#StInfoSep#%{CocGitRepoStatus()}"
-  let statusline .= "%#StInfoSep#%{CocGitStatus()}"
+  let statusline .= " %#StInfoSep#%{StatuslineGitRepoStatus()}"
+  let statusline .= "%#StInfoSep#%{StatuslineGitStatus()}"
 
   " Start of the right side layout
   let statusline .= '%='
 
   let statusline .= '%{coc#status()}'
-  let statusline .= s:sep_if("%{CocCurrentFunction()}", !empty(CocCurrentFunction()), {})
+  let statusline .= s:sep_if("%{StatuslineCurrentFunction()}", !empty(StatuslineCurrentFunction()), {})
 
   "Are spaces or tabs used for indentation and how much spaces is single indent
   " let statusline .= s:sep('%{&expandtab? "spaces" : "tabs"}: %{&sw}')

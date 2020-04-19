@@ -60,13 +60,13 @@ let g:lightline = {
       \   'right': [ [] ]
       \ },
       \ 'component': {
-      \   'lineinfo': '%3l:%-2L',
+      \   'lineinfo': '%3l/%-2L (%p%%)',
       \   'close': '%#LightLineClose#%999X ✗ ',
       \ },
       \ 'component_function': {
       \   'filesize': 'LightlineFileSize',
       \   'fugitive': 'LightlineFugitive',
-      \   'filename': 'LightlineFilename',
+      \   'filename': 'statusline#filename',
       \   'fileformat': 'LightlineFileformat',
       \   'filetype': 'LightlineFiletype',
       \   'fileencoding': 'LightlineFileencoding',
@@ -252,20 +252,6 @@ function! LightlineSpecialBuffers()
         \ s:is_bt('quickfix') ? 'QuickFix' :
         \ &previewwindow ? 'preview' :
         \ ''
-endfunction
-
-function! LightlineFilename()
-  let fname = expand('%:t')
-  return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? '' :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ s:is_ft('ctrlsf') ? '' :
-        \ s:is_ft('defx') ? '' :
-        \ s:is_ft('coc-explorer') ? '' :
-        \ strlen(LightlineSpecialBuffers()) ? LightlineSpecialBuffers() :
-        \ (strlen(LightlineReadonly()) ? LightlineReadonly() . ' ' : '') .
-        \ (strlen(fname) ? fname : '[No Name]') .
-        \ (strlen(LightlineModified()) ? ' ' . LightlineModified() : '')
 endfunction
 
 function! LightlineFileSize() "{{{
