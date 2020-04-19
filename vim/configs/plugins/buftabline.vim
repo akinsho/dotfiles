@@ -2,7 +2,7 @@
 " BUFTABLINE
 "---------------------------------------------------------------------------//
 "#1A1B1F
-if exists('g:gui_oni')
+if exists('g:gui_oni') || !has_key(g:plugs, "vim-buftabline")
   finish
 endif
 

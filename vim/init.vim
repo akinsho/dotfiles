@@ -106,6 +106,7 @@ let s:config_files = [
   \ '/vim/configs/highlight.vim',
   \ '/vim/configs/mappings.vim',
   \ '/vim/configs/autocommands.vim',
+  \ '/vim/configs/statusline.vim'
   \]
 
 for file in s:config_files
