@@ -2,7 +2,7 @@ if has_key(g:plugs, "lightline.vim")
   finish
 endif
 
-let g:mode_map = {
+let s:mode_map = {
         \  'n': ['NORMAL',  'NormalMode' ],     'no': ['PENDING', 'NormalMode'  ],  'v': ['VISUAL',  'VisualMode' ],
         \  'V': ['V-LINE',  'VisualMode' ], "\<c-v>": ['V-BLOCK', 'VisualMode'  ],  's': ['SELECT',  'VisualMode' ],
         \  'S': ['S-LINE',  'VisualMode' ], "\<c-s>": ['S-BLOCK', 'VisualMode'  ],  'i': ['INSERT',  'InsertMode' ],
@@ -12,16 +12,18 @@ let g:mode_map = {
         \  'r': ['PROMPT',  'CommandMode'],     'rm': ['-MORE-',  'CommandMode' ], 'r?': ['CONFIRM', 'CommandMode'],
         \  '!': ['SHELL',   'CommandMode'],      't': ['TERMINAL', 'CommandMode']}
 
-  let g:ro_sym  = ''
-  let g:ma_sym  = "✗"
-  let g:mod_sym = "◇"
-  let g:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+  let s:ro_sym  = ''
+  let s:ma_sym  = "✗"
+  let s:mod_sym = "◇"
+  let s:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 
-" =====================================================================
-" Resources: https://gabri.me/blog/diy-vim-statusline
-" =====================================================================
-function! s:lightline_fileencoding()
+function! s:file_encoding()
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function s:line_info() abort
+  " TODO This component should truncate from the left not right
+  return winwidth(0) > 100 ? '%.15( %l/%L %p%%%)' : ''
 endfunction
 
 
@@ -86,7 +88,7 @@ function! s:set_statusline_colors() abort
   let s:warning_fg = synIDattr(hlID('WarningMsg'), 'fg')
   let s:error_fg = synIDattr(hlID('ErrorMsg'), 'fg')
 
-  silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=NONE'
+  silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
   silent! execute 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
@@ -174,6 +176,7 @@ function! StatusLine(...) abort
   let current_mode = s:mode_statusline()
   let file_type = statusline#filetype()
   let file_format = statusline#file_format()
+  let line_info = s:line_info()
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
@@ -203,7 +206,7 @@ function! StatusLine(...) abort
         \ !empty(StatuslineCurrentFunction()), {})
 
   "Current line number/Total line numbers
-  let statusline .= s:sep(': %l/%L (%p%%)', s:st_mode)
+  let statusline .= s:sep_if(line_info, !empty(line_info), s:st_mode)
   let statusline .= '%<'
   return statusline
 endfunction
@@ -218,3 +221,10 @@ augroup custom_statusline
   autocmd BufLeave,WinLeave * setlocal statusline=%!MinimalStatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
+
+
+" =====================================================================
+" Resources:
+" =====================================================================
+" 1. https://gabri.me/blog/diy-vim-statusline
+" 2. https://github.com/elenapan/dotfiles/blob/master/config/nvim/statusline.vim
