@@ -85,9 +85,12 @@ let s:comment_grey = '#5c6370'
 function! s:set_statusline_colors() abort
   let s:normal_bg = synIDattr(hlID('Normal'), 'bg')
   let s:normal_fg = synIDattr(hlID('Normal'), 'fg')
+  let s:pmenu_bg  = synIDattr(hlID('Pmenu'), 'bg')
   let s:warning_fg = synIDattr(hlID('WarningMsg'), 'fg')
   let s:error_fg = synIDattr(hlID('ErrorMsg'), 'fg')
 
+  silent! execute 'highlight StItemPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StItemPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
@@ -103,13 +106,27 @@ endfunction
 function! s:sep(item, ...) abort
   let l:opts = get(a:, '1', {})
   let l:before = get(l:opts, 'before', ' ')
+  let l:prefix = get(l:opts, 'prefix', '')
   let l:small = get(l:opts, 'small', 0)
-  let l:sep_color = get(l:opts, 'sep_color', '%#StSep#')
   let l:color = get(l:opts, 'color', '%#StItem#')
-  let sep_icon_left = l:small ? '' : '█'
-  let sep_icon_right = l:small ? '%*' : '█%*'
+  let l:prefix_color = get(l:opts, 'prefix_color', '%#StItem#')
+  let l:prefix_sep_color = get(l:opts, 'prefix_sep_color', '%#StItem#')
 
-  return l:before.l:sep_color.sep_icon_left.l:color.a:item.l:sep_color.sep_icon_right
+  let l:sep_color = get(l:opts, 'sep_color', '%#StSep#')
+  let l:sep_color_left = !empty(prefix) ? l:prefix_sep_color : l:sep_color
+  let l:prefix_item_left = l:prefix_color . l:prefix . " "
+
+  let l:sep_icon_left = !empty(prefix) ? ''. l:prefix_item_left :
+        \ l:small ? '' : '█'
+  let l:sep_icon_right = l:small ? '%*' : '█%*'
+
+  return l:before.
+        \ l:sep_color_left.
+        \ l:sep_icon_left.
+        \ l:color.
+        \ a:item.
+        \ l:sep_color.
+        \ l:sep_icon_right
 endfunction
 
 function! s:sep_if(item, condition, ...) abort
@@ -184,16 +201,17 @@ function! StatusLine(...) abort
   ""---------------------------------------------------------------------------//
   "show a minimal statusline with only the mode and file component
   if plain || inactive
-    let statusline = s:sep(title, s:st_inactive) .
-          \ s:sep_if(file_type, !empty(file_type), extend({ 'small': 1}, s:st_inactive))
-    return statusline
+    return s:sep(title, s:st_inactive)
   endif
   ""---------------------------------------------------------------------------//
   " Setup
   ""---------------------------------------------------------------------------//
   let statusline =  s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let statusline .= s:sep(title, {})
-  let statusline .= s:sep_if(file_type, !empty(file_type), { 'small': 1 })
+  let statusline .= s:sep(" " . title, {
+        \ 'prefix': file_type,
+        \ 'prefix_color': '%#StItemPrefix#',
+        \ 'prefix_sep_color': '%#StItemPrefixSep#'
+        \ })
 
   " Start of the right side layout
   let statusline .= '%='
