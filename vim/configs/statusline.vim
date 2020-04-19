@@ -181,12 +181,12 @@ function! StatusLine() abort
     return statusline
   endif
 
-  let statusline .= " %#StInfoSep#%{StatuslineGitRepoStatus()}"
-  let statusline .= "%#StInfoSep#%{StatuslineGitStatus()}"
 
   " Start of the right side layout
   let statusline .= '%='
 
+  let statusline .= " %#StInfoSep#%{StatuslineGitRepoStatus()}"
+  let statusline .= "%#StInfoSep#%{StatuslineGitStatus()}"
   let statusline .= '%{coc#status()}'
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}", !empty(StatuslineCurrentFunction()), {})
 
