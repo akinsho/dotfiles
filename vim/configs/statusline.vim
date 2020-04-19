@@ -61,11 +61,10 @@ function! s:file_size()
   endif
 endfunction
 
-let s:st_err = {'color': '%#StErr#', 'sep_color': '%#StErrSep#'}
-let s:st_warn = {'color': '%#StWarn#', 'sep_color': '%#StWarnSep#'}
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
 let s:st_info = { 'color': '%#StInfo#', 'sep_color': '%#StInfoSep#' }
 let s:st_ok =   { 'color': '%#StOk#', 'sep_color': '%#StOkSep#' }
+let s:st_inactive = { 'color': '%#StInactive#', 'sep_color': '%#StInactiveSep#' }
 
 let s:gold         = '#F5F478'
 let s:white        = '#abb2bf'
@@ -89,15 +88,14 @@ function! s:set_statusline_colors() abort
 
   silent! exe 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=NONE'
   silent! exe 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
-  silent! exe 'highlight StErr guibg='.s:error_fg.' guifg='.s:normal_bg.' gui=bold'
-  silent! exe 'highlight StErrSep guifg='.s:error_fg.' guibg=NONE gui=NONE'
-  silent! exe 'highlight StWarn guibg='.s:warning_fg.' guifg='.s:normal_bg.' gui=bold'
-  silent! exe 'highlight StWarnSep guifg='.s:warning_fg.' guibg=NONE gui=NONE'
   silent! exe 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
   silent! exe 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
   silent! exe 'highlight StOk guifg='.s:normal_bg.' guibg='.s:green.' gui=NONE'
   silent! exe 'highlight StOkSep guifg='.s:green.' guibg=NONE gui=NONE'
+  silent! exe 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
+  silent! exe 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
   silent! exe 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
+  silent! exe 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
 endfunction
 
 function! s:sep(item, ...) abort
@@ -165,21 +163,29 @@ function! s:mode_highlight(mode) abort
   endif
 endfunction
 
-function! StatusLine() abort
-  let current_mode = s:mode_statusline()
+function! StatusLine(...) abort
+  let opts = get(a:, '1', {})
+  let inactive = get(opts, 'inactive', 0)
+
   let title = statusline#filename()
-  let l:filetype = statusline#filetype()
-  let plain =  statusline#show_plain_statusline()
+  let current_mode = s:mode_statusline()
+  let file_type = statusline#filetype()
+  let plain = statusline#show_plain_statusline()
   let file_format = statusline#file_format()
+  let mode_component = s:sep(current_mode, extend({'before': ''}, s:st_mode))
+  let file_type_component = s:sep_if(file_type, !empty(file_type), { 'small': 1 })
 
-
-  let statusline = s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let statusline .= s:sep(title, s:st_ok)
-  let statusline .= s:sep_if(l:filetype, !empty(l:filetype), { 'small': 1 })
-
-  if plain " render a minimal statusline with only the mode and file component
+  "show a minimal statusline with only the mode and file component
+  if plain || inactive
+    let statusline = s:sep(title, s:st_inactive) .
+          \ s:sep_if(file_type, !empty(file_type), extend({ 'small': 1}, s:st_inactive))
     return statusline
   endif
+
+
+  let statusline =  mode_component
+  let statusline .= s:sep(title, {})
+  let statusline .= file_type_component
 
 
   " Start of the right side layout
@@ -199,9 +205,13 @@ function! StatusLine() abort
   return statusline
 endfunction
 
+function MinimalStatusLine() abort
+  return StatusLine({ 'inactive': 1 })
+endfunction
+
 augroup custom_statusline
   autocmd!
   autocmd BufEnter,WinEnter * setlocal statusline=%!StatusLine()
-  autocmd BufLeave,WinLeave * setlocal statusline=%f\ %y\ %m
+  autocmd BufLeave,WinLeave * setlocal statusline=%!MinimalStatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
