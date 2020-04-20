@@ -104,31 +104,31 @@ function! s:set_statusline_colors() abort
 endfunction
 
 function! s:sep(item, ...) abort
-  let l:opts = get(a:, '1', {})
-  let l:before = get(l:opts, 'before', ' ')
-  let l:prefix = get(l:opts, 'prefix', '')
-  let l:small = get(l:opts, 'small', 0)
-  let l:color = get(l:opts, 'color', '%#StItem#')
-  let l:prefix_color = get(l:opts, 'prefix_color', '%#StItemPrefix#')
-  let l:prefix_sep_color = get(l:opts, 'prefix_sep_color', '%#StItemPrefixSep#')
+  let opts = get(a:, '1', {})
+  let before = get(opts, 'before', ' ')
+  let prefix = get(opts, 'prefix', '')
+  let small = get(opts, 'small', 0)
+  let item_color = get(opts, 'color', '%#StItem#')
+  let prefix_color = get(opts, 'prefix_color', '%#StItemPrefix#')
+  let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StItemPrefixSep#')
 
-  let l:sep_color = get(l:opts, 'sep_color', '%#StSep#')
-  let l:sep_color_left = !empty(prefix) ? l:prefix_sep_color : l:sep_color
-  let l:prefix_item_left = l:prefix_color . l:prefix . " "
+  let sep_color = get(opts, 'sep_color', '%#StSep#')
+  let sep_color_left = !empty(prefix) ? l:prefix_sep_color : sep_color
+  let prefix_item = prefix_color . prefix . " "
 
-  let l:sep_icon_left = !empty(prefix) ? ''. l:prefix_item_left :
-        \ l:small ? '' : '█'
-  let l:sep_icon_right = l:small ? '%*' : '█%*'
+  let sep_icon_right = small ? '%*' : '█%*'
+
+  let sep_icon_left = !empty(prefix) ? ''. prefix_item : small ? '' : '█'
 
   let l:item = !empty(prefix) ? " " . a:item : a:item
 
-  return l:before.
-        \ l:sep_color_left.
-        \ l:sep_icon_left.
-        \ l:color.
+  return before.
+        \ sep_color_left.
+        \ sep_icon_left.
+        \ item_color.
         \ l:item.
-        \ l:sep_color.
-        \ l:sep_icon_right
+        \ sep_color.
+        \ sep_icon_right
 endfunction
 
 function! s:sep_if(item, condition, ...) abort
