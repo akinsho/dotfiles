@@ -69,6 +69,7 @@ augroup end
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'janko/vim-test'
+Plug 'norcalli/nvim-colorizer.lua'
 " =====================
 "TPOPE {{{1
 "====================================
