@@ -37,8 +37,15 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit'
       \ }
 
-let g:fzf_nvim_statusline = 1
+" let g:fzf_nvim_statusline = 1
 let g:fzf_buffers_jump    = 1
+
+" hide the statusline when FZF is activated
+if has('nvim') && !exists('g:fzf_layout')
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+        \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+endif
 
 " Customize fzf colors to match your color scheme
 " bg+ controls the highlight of the selected item

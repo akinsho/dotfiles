@@ -29,7 +29,7 @@ function! statusline#special_buffers() abort
 endfunction
 
 function! statusline#modified() abort
-  return &ft =~ 'help' ? '' : &modified ? '✎' : &modifiable ? '' : '-'
+  return &ft =~ 'help' ? '' : &modified ? '✎' : ''
 endfunction
 
 function! statusline#readonly() abort
