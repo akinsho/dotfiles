@@ -198,7 +198,7 @@ function! StatusLine(...) abort
   let file_type = statusline#filetype()
   let file_format = statusline#file_format()
   let line_info = s:line_info()
-  let file_modified = statusline#modified()
+  let file_modified = statusline#modified('●')
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//

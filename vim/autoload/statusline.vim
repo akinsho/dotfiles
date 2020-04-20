@@ -28,12 +28,14 @@ function! statusline#special_buffers() abort
         \ s:is_bt('quickfix') ? 'QuickFix' : &previewwindow ? 'preview' : ''
 endfunction
 
-function! statusline#modified() abort
-  return &ft =~ 'help' ? '' : &modified ? '✎' : ''
+function! statusline#modified(...) abort
+  let icon = get(a:, '1', '✎')
+  return &ft =~ 'help' ? '' : &modified ? icon : ''
 endfunction
 
-function! statusline#readonly() abort
-  return &ft =~ 'help' || &previewwindow || &readonly ? '' : ''
+function! statusline#readonly(...) abort
+  let icon = get(a:, '1', '')
+  return &ft =~ 'help' || &previewwindow || &readonly ? icon : ''
 endfunction
 
 function! statusline#file_format() abort
