@@ -23,7 +23,7 @@ endfunction
 
 function s:line_info() abort
   " TODO This component should truncate from the left not right
-  return winwidth(0) > 100 ? '%.15( %l/%L %p%%%)' : ''
+  return winwidth(0) > 100 ? '%.15(%l/%L %p%%%)' : ''
 endfunction
 
 
@@ -109,8 +109,8 @@ function! s:sep(item, ...) abort
   let l:prefix = get(l:opts, 'prefix', '')
   let l:small = get(l:opts, 'small', 0)
   let l:color = get(l:opts, 'color', '%#StItem#')
-  let l:prefix_color = get(l:opts, 'prefix_color', '%#StItem#')
-  let l:prefix_sep_color = get(l:opts, 'prefix_sep_color', '%#StItem#')
+  let l:prefix_color = get(l:opts, 'prefix_color', '%#StItemPrefix#')
+  let l:prefix_sep_color = get(l:opts, 'prefix_sep_color', '%#StItemPrefixSep#')
 
   let l:sep_color = get(l:opts, 'sep_color', '%#StSep#')
   let l:sep_color_left = !empty(prefix) ? l:prefix_sep_color : l:sep_color
@@ -120,11 +120,13 @@ function! s:sep(item, ...) abort
         \ l:small ? '' : '█'
   let l:sep_icon_right = l:small ? '%*' : '█%*'
 
+  let l:item = !empty(prefix) ? " " . a:item : a:item
+
   return l:before.
         \ l:sep_color_left.
         \ l:sep_icon_left.
         \ l:color.
-        \ a:item.
+        \ l:item.
         \ l:sep_color.
         \ l:sep_icon_right
 endfunction
@@ -207,11 +209,7 @@ function! StatusLine(...) abort
   " Setup
   ""---------------------------------------------------------------------------//
   let statusline =  s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let statusline .= s:sep(" " . title, {
-        \ 'prefix': file_type,
-        \ 'prefix_color': '%#StItemPrefix#',
-        \ 'prefix_sep_color': '%#StItemPrefixSep#'
-        \ })
+  let statusline .= s:sep(title, {'prefix': file_type})
 
   " Start of the right side layout
   let statusline .= '%='
@@ -224,7 +222,7 @@ function! StatusLine(...) abort
         \ !empty(StatuslineCurrentFunction()), {})
 
   "Current line number/Total line numbers
-  let statusline .= s:sep_if(line_info, !empty(line_info), s:st_mode)
+  let statusline .= s:sep_if(line_info, !empty(line_info), extend({ 'prefix': '' }, s:st_mode))
   let statusline .= '%<'
   return statusline
 endfunction
