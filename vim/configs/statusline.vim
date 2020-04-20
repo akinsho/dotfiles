@@ -219,7 +219,8 @@ function! StatusLine(...) abort
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
   let statusline .=" "
-  let statusline .= '%{coc#status()}'
+  " %* tells vim to reset the colors back to the original statusline highight
+  let statusline .= '%*%{coc#status()}'
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
         \ !empty(StatuslineCurrentFunction()), {})
 

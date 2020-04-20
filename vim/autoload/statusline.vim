@@ -44,6 +44,9 @@ function! statusline#file_format() abort
   endif
 endfunction
 
+" TODO this only works for a raw statusline
+" make this compatible with lightline
+" by passing the desired filename to this func
 function! statusline#filename() abort
   let fname = expand('%:t')
   return fname == 'ControlP' ? 'ControlP' :
@@ -54,7 +57,7 @@ function! statusline#filename() abort
         \ s:is_ft('dbui') ? '' :
         \ s:is_ft('coc-explorer') ? '' :
         \ s:is_ft('fugitive') ? 'Fugitive ' :
-        \ s:is_ft('gitcommit') ? 'Fugitive  - Commit' :
+        \ s:is_ft('gitcommit') ? 'Git commit ' :
         \ s:is_ft('defx') ? 'Defx ⌨' :
         \ s:is_ft('ctrlsf') ? 'CtrlSF 🔍' :
         \ s:is_ft('vim-plug') ? 'vim-plug ⚉':
@@ -68,8 +71,7 @@ function! statusline#filename() abort
         \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
         \ strlen(statusline#special_buffers()) ? statusline#special_buffers() :
         \ (strlen(statusline#readonly()) ? statusline#readonly() . ' ' : '') .
-        \ (strlen(fname) ? fname : '[No Name]') .
-        \ (strlen(statusline#modified()) ? ' ' . statusline#modified() : '')
+        \ (strlen(fname) ? "%f" : '[No Name]')
 endfunction
 
 function! statusline#filetype() abort
