@@ -116,6 +116,8 @@ function! s:sep(item, ...) abort
   let sep_color_left = strlen(prefix) ? l:prefix_sep_color : sep_color
   let prefix_item = prefix_color . prefix . " "
 
+  " %* resets the highlighting at the end of the separator so it
+  " doesn't interfere with the next component
   let sep_icon_right = small ? '%*' : '█%*'
 
   let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
@@ -215,7 +217,6 @@ function! StatusLine(...) abort
 
   " Start of the right side layout
   let statusline .= '%='
-  let statusline .=" "
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
   let statusline .=" "
@@ -247,3 +248,5 @@ augroup END
 " =====================================================================
 " 1. https://gabri.me/blog/diy-vim-statusline
 " 2. https://github.com/elenapan/dotfiles/blob/master/config/nvim/statusline.vim
+" 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
+" 4. Right sided truncation - https://stackoverflow.com/questions/20899651/how-to-truncate-a-vim-statusline-field-from-the-right
