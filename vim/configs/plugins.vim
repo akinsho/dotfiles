@@ -37,6 +37,8 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" vim-devicons must be loaded before vim buffet in order for icons to be used
+Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'bagrat/vim-buffet'
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim'
@@ -130,7 +132,6 @@ Plug 'rakr/vim-one'
 Plug 'haishanh/night-owl.vim'
 Plug 'patstockwell/vim-monokai-tasty'
 " Colorscheme Ideas
-Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
 call plug#end()
