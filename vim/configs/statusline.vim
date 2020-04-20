@@ -113,14 +113,14 @@ function! s:sep(item, ...) abort
   let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StItemPrefixSep#')
 
   let sep_color = get(opts, 'sep_color', '%#StSep#')
-  let sep_color_left = !empty(prefix) ? l:prefix_sep_color : sep_color
+  let sep_color_left = strlen(prefix) ? l:prefix_sep_color : sep_color
   let prefix_item = prefix_color . prefix . " "
 
   let sep_icon_right = small ? '%*' : '█%*'
 
-  let sep_icon_left = !empty(prefix) ? ''. prefix_item : small ? '' : '█'
+  let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
 
-  let l:item = !empty(prefix) ? " " . a:item : a:item
+  let l:item = strlen(prefix) ? " " . a:item : a:item
 
   return before.
         \ sep_color_left.
@@ -196,6 +196,7 @@ function! StatusLine(...) abort
   let file_type = statusline#filetype()
   let file_format = statusline#file_format()
   let line_info = s:line_info()
+  let file_modified = statusline#modified()
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
@@ -210,6 +211,7 @@ function! StatusLine(...) abort
   ""---------------------------------------------------------------------------//
   let statusline =  s:sep(current_mode, extend({'before': ''}, s:st_mode))
   let statusline .= s:sep(title, {'prefix': file_type})
+  let statusline .= s:sep_if(file_modified, strlen(file_modified), { 'small': 1 })
 
   " Start of the right side layout
   let statusline .= '%='
@@ -222,7 +224,7 @@ function! StatusLine(...) abort
         \ !empty(StatuslineCurrentFunction()), {})
 
   "Current line number/Total line numbers
-  let statusline .= s:sep_if(line_info, !empty(line_info), extend({ 'prefix': '' }, s:st_mode))
+  let statusline .= s:sep_if(line_info, strlen(line_info), extend({ 'prefix': '' }, s:st_mode))
   let statusline .= '%<'
   return statusline
 endfunction
