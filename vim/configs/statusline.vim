@@ -199,6 +199,7 @@ function! StatusLine(...) abort
   let file_format = statusline#file_format()
   let line_info = s:line_info()
   let file_modified = statusline#modified('●')
+  let title_component = "%.40(".title."%)"
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
@@ -206,14 +207,14 @@ function! StatusLine(...) abort
   ""---------------------------------------------------------------------------//
   "show a minimal statusline with only the mode and file component
   if plain || inactive
-    return s:sep(title, s:st_inactive)
+    return s:sep(title_component, s:st_inactive)
   endif
   ""---------------------------------------------------------------------------//
   " Setup
   ""---------------------------------------------------------------------------//
   let statusline =  s:sep(current_mode, extend({'before': ''}, s:st_mode))
   " Truncate file path length at 40 characters
-  let statusline .= s:sep("%.40(".title."%)", {'prefix': file_type})
+  let statusline .= s:sep(title_component, {'prefix': file_type})
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',
