@@ -86,11 +86,11 @@ function! s:set_statusline_colors() abort
   let s:normal_bg = synIDattr(hlID('Normal'), 'bg')
   let s:normal_fg = synIDattr(hlID('Normal'), 'fg')
   let s:pmenu_bg  = synIDattr(hlID('Pmenu'), 'bg')
-  let s:warning_fg = synIDattr(hlID('WarningMsg'), 'fg')
-  let s:error_fg = synIDattr(hlID('ErrorMsg'), 'fg')
+  let s:string_fg = synIDattr(hlID('String'), 'fg')
 
-  silent! execute 'highlight StItemPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
-  silent! execute 'highlight StItemPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
+  silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=none'
+  silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
@@ -109,8 +109,8 @@ function! s:sep(item, ...) abort
   let prefix = get(opts, 'prefix', '')
   let small = get(opts, 'small', 0)
   let item_color = get(opts, 'color', '%#StItem#')
-  let prefix_color = get(opts, 'prefix_color', '%#StItemPrefix#')
-  let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StItemPrefixSep#')
+  let prefix_color = get(opts, 'prefix_color', '%#StPrefix#')
+  let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StPrefixSep#')
 
   let sep_color = get(opts, 'sep_color', '%#StSep#')
   let sep_color_left = strlen(prefix) ? l:prefix_sep_color : sep_color
@@ -212,8 +212,13 @@ function! StatusLine(...) abort
   " Setup
   ""---------------------------------------------------------------------------//
   let statusline =  s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let statusline .= s:sep(title, {'prefix': file_type})
-  let statusline .= s:sep_if(file_modified, strlen(file_modified), { 'small': 1 })
+  " Truncate file path length at 40 characters
+  let statusline .= s:sep("%.40(".title."%)", {'prefix': file_type})
+  let statusline .= s:sep_if(file_modified, strlen(file_modified), {
+        \ 'small': 1,
+        \ 'color': '%#StModified#',
+        \ 'sep_color': '%#StPrefixSep#',
+        \ })
 
   " Start of the right side layout
   let statusline .= '%='
