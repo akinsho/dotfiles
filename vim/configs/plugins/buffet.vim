@@ -9,15 +9,20 @@ let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
 let g:buffet_modified_icon = ' ●' "✎ ◇
 
-function! g:BuffetSetCustomColors() abort
-  let s:bright_blue  = '#A2E8F6'
-  let s:dark_blue    = '#4e88ff'
-  let s:normal_bg = synIDattr(hlID('Normal'), 'bg')
-  let s:normal_fg = synIDattr(hlID('Normal'), 'fg')
-  let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
+let s:tabline_colors = tabline#get_colors()
 
-  silent! execute 'highlight! BuffetBuffer guifg='.s:comment_fg.' guibg=#1b1e24 gui=None'
-  silent! execute 'highlight! BuffetCurrentBuffer guifg='.s:bright_blue.' guibg='.s:normal_bg.' gui=bold'
-  silent! execute 'highlight! BuffetActiveBuffer guifg='.s:comment_fg.' guibg='.s:normal_bg.' gui=bold'
-  silent! execute 'highlight! BuffetTab guibg='.s:dark_blue
+function! g:BuffetSetCustomColors() abort
+  let dark_blue = s:tabline_colors['dark_blue']
+  let dark_yellow = s:tabline_colors['dark_yellow']
+  let bright_blue = s:tabline_colors['bright_blue']
+  let foreground = s:tabline_colors['tabline_foreground']
+  let background = s:tabline_colors['tabline_background']
+  let selected_background = s:tabline_colors['tabline_selected_background']
+
+  silent! execute 'highlight! BuffetBuffer guifg='.foreground.' guibg='.background.' gui=NONE'
+  silent! execute 'highlight! BuffetCurrentBuffer guifg='.bright_blue.' guibg='.selected_background.' gui=bold'
+  silent! execute 'highlight! BuffetActiveBuffer guifg='.foreground.' guibg='.selected_background.' gui=bold'
+  silent! execute 'highlight! BuffetTab guibg='.dark_blue
+  silent! execute 'highlight! BuffetModCurrentBuffer guifg='.dark_yellow.' guibg='.selected_background.' gui=bold'
+  silent! execute 'highlight! BuffetModActiveBuffer guifg='.dark_yellow.' guibg='.selected_background.' gui=NONE'
 endfunction
