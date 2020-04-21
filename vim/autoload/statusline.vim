@@ -46,11 +46,9 @@ function! statusline#file_format() abort
   endif
 endfunction
 
-" TODO this only works for a raw statusline
-" make this compatible with lightline
-" by passing the desired filename to this func
-function! statusline#filename() abort
-  let fname = expand('%:t')
+function! statusline#filename(...) abort
+  let filename_modifier = get(a:, '1', '%:t')
+  let fname = expand(filename_modifier)
   return fname == 'ControlP' ? 'ControlP' :
         \ fname == '__Tagbar__' ? 'Tagbar' :
         \ fname =~ '__Gundo\|NERD_tree' ? 'NERD Tree' :
@@ -72,7 +70,7 @@ function! statusline#filename() abort
         \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
         \ strlen(statusline#special_buffers()) ? statusline#special_buffers() :
         \ (strlen(statusline#readonly()) ? statusline#readonly() . ' ' : '') .
-        \ (strlen(fname) ? "%f" : '[No Name]')
+        \ (strlen(fname) ? fname : '[No Name]')
 endfunction
 
 function! statusline#filetype() abort

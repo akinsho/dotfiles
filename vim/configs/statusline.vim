@@ -193,13 +193,18 @@ function! StatusLine(...) abort
   let inactive = get(opts, 'inactive', 0)
   let plain = statusline#show_plain_statusline()
 
-  let title = statusline#filename()
   let current_mode = s:mode()
   let file_type = statusline#filetype()
   let file_format = statusline#file_format()
   let line_info = s:line_info()
   let file_modified = statusline#modified('●')
-  let title_component = "%.40(".title."%)"
+
+  " Evaluate the filename in the content of the statusline component
+  " -> %{func_call()}, items in this context are per window not global
+  " this means the function returns the containing windows filename
+  " not the active one i.e. fixes the bug where the wrong filename shows in
+  " inactive windows
+  let title_component = '%.40(%{statusline#filename("%:p:.")}%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
