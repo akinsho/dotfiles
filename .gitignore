@@ -13,3 +13,4 @@ plug.vim
 session/
 oh-my-zsh/
 /vim/autoload/plug.vim.old
+linux_startup.conf
