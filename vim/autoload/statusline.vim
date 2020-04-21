@@ -52,12 +52,11 @@ endfunction
 function! statusline#filename() abort
   let fname = expand('%:t')
   return fname == 'ControlP' ? 'ControlP' :
-        \ fname == '__Tagbar__' ? '' :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ s:is_ft('ctrlsf') ? '' :
-        \ s:is_ft('defx') ? '' :
-        \ s:is_ft('dbui') ? '' :
-        \ s:is_ft('coc-explorer') ? '' :
+        \ fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname =~ '__Gundo\|NERD_tree' ? 'NERD Tree' :
+        \ s:is_ft('ctrlsf') ? 'CtrlSF' :
+        \ s:is_ft('defx') ? 'Defx' :
+        \ s:is_ft('dbui') ? 'Dadbod UI' :
         \ s:is_ft('fugitive') ? 'Fugitive ' :
         \ s:is_ft('gitcommit') ? 'Git commit ' :
         \ s:is_ft('defx') ? 'Defx ⌨' :
