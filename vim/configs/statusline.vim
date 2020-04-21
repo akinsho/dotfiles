@@ -204,7 +204,7 @@ function! StatusLine(...) abort
   " this means the function returns the containing windows filename
   " not the active one i.e. fixes the bug where the wrong filename shows in
   " inactive windows
-  let title_component = '%.40(%{statusline#filename("%:p:.")}%)'
+  let title_component = '%.30(%{statusline#filename("%:p:.")}%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
@@ -232,7 +232,7 @@ function! StatusLine(...) abort
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
   let statusline .=" "
   " %* tells vim to reset the colors back to the original statusline highight
-  let statusline .= '%*%{coc#status()}'
+  let statusline .= '%#Type#%{coc#status()}'
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
         \ !empty(StatuslineCurrentFunction()), {})
 
@@ -248,6 +248,9 @@ endfunction
 
 augroup custom_statusline
   autocmd!
+  "NOTE: %! expressions get populated globally.
+  "That means all statuslines of all buffers get the expression
+  "result of the buffer being active.
   autocmd BufEnter,WinEnter * setlocal statusline=%!StatusLine()
   autocmd BufLeave,WinLeave * setlocal statusline=%!MinimalStatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
