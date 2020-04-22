@@ -33,6 +33,7 @@ endfunction
 let g:fzf_action = {
       \ 'ctrl-q': function('s:build_quickfix_list'),
       \ 'ctrl-t': 'tab split',
+      \ 'ctrl-e' : 'tab edit',
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
@@ -65,8 +66,6 @@ let g:fzf_colors = {
       \}
 
 if has('nvim')
-  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
   " Make fzf floating window quasi transparent in Neovim
   if exists('&winblend')
     augroup FZF_Settings
