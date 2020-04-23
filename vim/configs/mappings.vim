@@ -514,23 +514,6 @@ nnoremap <leader>" ciw"<c-r>""<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
-
-" Repeatable window resizing mappings
-nnoremap <silent> <Plug>ResizeLeft  :vertical resize +10<cr>
-      \ :call repeat#set("\<Plug>ResizeLeft")<CR>
-nmap <leader>h <Plug>ResizeLeft
-
-nnoremap <silent> <Plug>ResizeRight :vertical resize -10<cr>
-      \ :call repeat#set("\<Plug>ResizeRight")<CR>
-nmap <leader>l <Plug>ResizeRight
-
-nnoremap <silent> <Plug>ResizeDown :resize +10<cr>
-      \ :call repeat#set("\<Plug>ResizeDown")<CR>
-nmap <leader>j <Plug>ResizeDown
-
-nnoremap <silent> <Plug>ResizeUp :resize -10<cr>
-      \ :call repeat#set("\<Plug>ResizeUp")<CR>
-nmap <leader>k <Plug>ResizeUp
 ""---------------------------------------------------------------------------//
 " source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
 ""---------------------------------------------------------------------------//

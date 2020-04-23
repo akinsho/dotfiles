@@ -3,4 +3,4 @@ if !has_key(g:plugs, 'vim-win')
 endif
 
 map <localleader>w <plug>WinWin
-command Win :call win#Win()
+command! Win :call win#Win()
