@@ -10,11 +10,17 @@ function _t() {
 
 # Default to using `bat` https://github.com/sharkdp/bat#installation if it has been installed
 cat() {
-    if hash bat 2>/dev/null; then
-        bat "$@"
-    else
-        cat "$@"
+  if [[ $(uname -s) == "Linux" ]]; then
+    # bat has been renamed to batcat in Ubuntu 20.04
+    # https://github.com/sharkdp/bat/issues/905
+    if hash batcat 2>/dev/null; then
+      batcat "$@"
     fi
+  elif hash bat 2>/dev/null; then
+    bat "$@"
+  else
+    cat "$@"
+  fi
 }
 
 
@@ -25,7 +31,7 @@ cat() {
 # -X = specify request type
 # ***************************************************
 
-function git_repo_delete(){ 
+function git_repo_delete() {
   echo "deleting $1"
   curl -vL \
     -H "Authorization: token $GITHUB_SECRET" \
@@ -68,11 +74,6 @@ function colours() {
 # Vim
 function v() {
   nvim "$@"
-}
-
-# Teamocil
-function t() {
-  teamocil "$@"
 }
 
 # chmod a directory
@@ -138,11 +139,6 @@ function npmi() {
   npm install --save-dev "$@"
 }
 
-_cdls_chpwd_handler () {
-  emulate -L zsh
-  ls -A
-}
-
 fancy-ctrl-z () {
 if [[ $#BUFFER -eq 0 ]]; then
   BUFFER="fg"
@@ -172,6 +168,3 @@ fi
 zle -N sudo-command-line
 # Defined shortcut keys: [Esc] [Esc]
 bindkey "\e\e" sudo-command-line
-
-autoload -U add-zsh-hook
-add-zsh-hook chpwd _cdls_chpwd_handler
