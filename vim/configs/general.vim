@@ -261,7 +261,7 @@ function! GetTitleString() abort
   endif
   if filereadable(expand('%'))
     try
-      return fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
+      return "❐ " . fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
     catch
       return 'VIM'
     endtry
@@ -269,9 +269,10 @@ function! GetTitleString() abort
 
   return fnamemodify(getcwd(), ':t')
 endfunction
+" let &titlestring=' ❐ %f  %r %m'
 set titlestring=%{GetTitleString()}
-let &titlestring=' ❐ %f  %r %m'
 set title
+set titlelen=70
 
 "---------------------------------------------------------------------------//
 " Emoji {{{1
@@ -305,7 +306,7 @@ endif
 set noshowmode "No mode showing in command pane
 set sessionoptions=buffers,curdir,tabpages,winsize,resize
 set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
-set updatetime=200
+set updatetime=300
 if has('virtualedit')
   set virtualedit=block               " allow cursor to move where there is no text in visual block mode
 endif
