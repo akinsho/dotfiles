@@ -44,8 +44,8 @@ let g:fzf_buffers_jump    = 1
 " hide the statusline when FZF is activated
 if has('nvim') && !exists('g:fzf_layout')
   autocmd! FileType fzf
-  autocmd  FileType fzf set laststatus=0 noshowmode noruler
-        \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+  autocmd  FileType fzf set laststatus=0 noruler
+        \| autocmd BufLeave <buffer> set laststatus=2 ruler
 endif
 
 " Customize fzf colors to match your color scheme
