@@ -24,7 +24,8 @@ let s:colors = {
       \ 'green'        : '#98c379'
       \}
 
-let s:tabline_background = s:theme_opts[g:colors_name]['color']
+let theme_colors = get(s:theme_opts, g:colors_name, { 'color': '#1b1e24' })
+let s:tabline_background = theme_colors['color']
 let s:tabline_foreground = tabline#get_theme_background('Comment')
 let s:selected_background = tabline#get_theme_background('Normal')
 
