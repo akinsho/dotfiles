@@ -28,7 +28,7 @@ endfunction
 
 command! CloseVimWikis call s:close_wikis()
 
-augroup Wikis
-  au!
-  autocmd TabLeave * call s:close_wikis()
-augroup END
+" augroup Wikis
+"   au!
+"   autocmd TabLeave * call s:close_wikis()
+" augroup END
