@@ -100,7 +100,6 @@ augroup coc_commands
   autocmd VimEnter * call s:coc_init()
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd CursorHoldI * call CocActionAsync('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
   autocmd FileType *
         \ setlocal formatexpr=CocActionAsync('formatSelected')
