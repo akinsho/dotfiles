@@ -5,6 +5,9 @@
 " Plug Setup {{{1
 "=====================
 " auto-install vim-plug
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
 if has("nvim")
   if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -14,7 +17,7 @@ if has("nvim")
       autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     augroup END
   endif
-  call plug#begin('~/.config/nvim/plugged')
+  call plug#begin(stdpath('data') . '/plugged')
 else
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -56,6 +59,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "Utilities {{{1
 "============================
 Plug 'vimwiki/vimwiki'
+Plug 'arecarn/vim-fold-cycle'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim

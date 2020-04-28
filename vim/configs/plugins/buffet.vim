@@ -9,9 +9,8 @@ let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
 let g:buffet_modified_icon = ' ●' "✎ ◇
 
-let s:tabline_colors = tabline#get_colors()
-
 function! g:BuffetSetCustomColors() abort
+  let s:tabline_colors = tabline#get_colors()
   let dark_blue = s:tabline_colors['dark_blue']
   let dark_yellow = s:tabline_colors['dark_yellow']
   let bright_blue = s:tabline_colors['bright_blue']

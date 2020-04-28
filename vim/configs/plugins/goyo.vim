@@ -1,21 +1,20 @@
 ""---------------------------------------------------------------------------//
 " Goyo
 ""---------------------------------------------------------------------------//
-if exists("g:gui_oni")
+if exists("g:gui_oni") || !has_key(g:plugs, "goyo.vim")
   finish
 endif
 
-let g:goyo_width=100
-let g:goyo_height=60
 let g:goyo_margin_top = 2
 let g:goyo_margin_bottom = 2
-nnoremap <F3> :Goyo<CR>
+
+nnoremap <leader>G :Goyo<CR>
+
 function! s:goyo_enter()
-  if exists('$TMUX')
+  if executable('tmux') && strlen($TMUX)
     silent !tmux set status off
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
   endif
-  set nonumber norelativenumber
   set showtabline=0
   let b:quitting = 0
   let b:quitting_bang = 0
@@ -28,9 +27,7 @@ function! s:goyo_leave()
     silent !tmux set status on
     silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
   endif
-  set number relativenumber
   set showtabline=2
-  redraw!
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
     if b:quitting_bang
@@ -44,18 +41,20 @@ endfunction
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
-" Goyo
 function! s:auto_goyo()
-  if &ft == 'markdown' && winnr('$') == 1
-    Goyo
+  if &ft == 'markdown'
+    Goyo 80
   elseif exists('#goyo')
+    let bufnr = bufnr('%')
     Goyo!
+    execute 'b '.bufnr
   endif
 endfunction
 
-augroup goyo_markdown
-  autocmd!
-  " autocmd BufNewFile,BufRead * call s:auto_goyo()
-  " autocmd User GoyoLeave nested call s:goyo_leave()
-augroup END
+" FIXME specifically calling goyo in the context of a function
+" seems to cause the colorscheme from being refreshed
+" augroup goyo_markdown
+"   autocmd!
+"   autocmd BufEnter * call s:auto_goyo()
+" augroup END
 "}}}

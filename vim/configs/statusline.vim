@@ -253,7 +253,7 @@ augroup custom_statusline
   "result of the buffer being active.
   autocmd BufEnter,WinEnter * setlocal statusline=%!StatusLine()
   autocmd BufLeave,WinLeave * setlocal statusline=%!MinimalStatusLine()
-  autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
+  autocmd VimEnter,ColorScheme * call <SID>set_statusline_colors()
 augroup END
 
 
