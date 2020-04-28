@@ -1,4 +1,4 @@
-setlocal nonumber norelativenumber
+setlocal nonumber norelativenumber colorcolumn=
 
 if exists(":CloseVimWikis")
   nnoremap <buffer> <leader>wc :CloseVimWikis<CR>
