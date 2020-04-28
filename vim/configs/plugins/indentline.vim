@@ -6,15 +6,14 @@ let g:indentLine_fileTypeExclude = [
       \ 'nerdtree',
       \ 'markdown',
       \ 'json',
+      \ 'help'
       \]
 
 let g:indentLine_bufNameExclude = [
       \ 'Startify',
       \ 'terminal',
-      \ 'help',
       \ 'magit',
       \ 'peekabo',
-      \ 'vimwiki'
       \]
 let g:indentLine_bufTypeExclude = ['help', 'terminal', 'nofile']
 

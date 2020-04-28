@@ -128,29 +128,19 @@ augroup UpdateVim
     endif
   endif
   autocmd FocusLost * silent! wall
-  autocmd VimResized * redraw!
-  autocmd VimResized * wincmd =
+  autocmd VimResized * call CheckColorColumn()
 augroup END
 " }}}
 
 " Hide the colorcolumn when there isn't enough space
-"TODO Need to hook into more events to remove colorcolumn
 function! CheckColorColumn()
   if &ft ==# 'startify'
     return
   endif
-  let b:cl_size = &colorcolumn
   if winwidth('%') <= 120
     setl colorcolumn=
   else
-    try
-      let &colorcolumn=b:cl_size
-    catch
-      echohl WarningMsg
-      echom v:exception
-      echohl None
-      let &colorcolumn=80 "Desparate default
-    endtry
+      setl colorcolumn<
   endif
 endfunction
 

@@ -103,5 +103,6 @@
   "explorer.icon.enableNerdfont": true,
   "explorer.file.autoReveal": true,
   "explorer.file.showHiddenFiles": true,
-  "explorer.width": 30
+  "explorer.width": 30,
+  "explorer.previewAction.onHover": false
 }
