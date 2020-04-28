@@ -21,7 +21,7 @@ function! s:close_wikis() abort
   let l:bufs = range(1, bufnr('$'))
   for buf in l:bufs
     if bufexists(buf) && getbufvar(buf, '&filetype') == 'vimwiki' && winbufnr(buf) == -1
-      execute buf 'bdelete'
+      silent! execute buf 'bdelete'
     endif
   endfor
 endfunction
