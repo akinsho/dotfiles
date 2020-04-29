@@ -153,7 +153,6 @@ nnoremap <silent><C-S> :update<cr>
 "Save all files
 nnoremap <silent>qa :confirm wqa<CR>
 " Quit
-inoremap <C-Q>  <esc>:q<cr>
 vnoremap <C-Q>  <esc>
 
 " ----------------------------------------------------------------------------

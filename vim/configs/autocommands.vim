@@ -128,7 +128,7 @@ augroup UpdateVim
     endif
   endif
   autocmd FocusLost * silent! wall
-  autocmd VimResized,FocusGained * call CheckColorColumn()
+  autocmd VimResized,FocusGained,BufWinLeave,BufWinEnter * call CheckColorColumn()
 augroup END
 " }}}
 
