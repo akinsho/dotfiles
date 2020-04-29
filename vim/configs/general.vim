@@ -16,6 +16,7 @@ endif
 set shortmess+=t                      " truncate file messages at start
 set shortmess+=A                      " ignore annoying swapfile messages
 set shortmess+=o                      " file-read message overwrites previous
+set shortmess-=l
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
 set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
