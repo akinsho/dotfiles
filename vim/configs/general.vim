@@ -82,7 +82,9 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 set foldtext=utils#braces_fold_text()
 set foldopen+=search
-set foldmethod=syntax
+if !has_key(g:plugs, "coc.nvim")
+  set foldmethod=syntax
+endif
 set foldlevelstart=3
 if has('nvim-0.5')
   " The fold open and close markers are visually distracting
