@@ -271,13 +271,13 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " Folds {{{1
 ""---------------------------------------------------------------------------//
 " Use `:Fold` for fold current buffer
-" set foldmethod=manual
+set foldmethod=manual
 
-" command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
+command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
 
-" nnoremap <silent> <leader>fr :Fold region<CR>
+nnoremap <silent> <leader>fr :Fold region<CR>
 
-" nnoremap <silent> <leader>fi :Fold imports<CR>
+nnoremap <silent> <leader>fi :Fold imports<CR>
 
-" nnoremap <silent> <leader>fc :Fold comments<CR>
+nnoremap <silent> <leader>fc :Fold comments<CR>
 "}}}
