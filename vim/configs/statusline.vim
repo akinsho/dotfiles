@@ -17,7 +17,7 @@ let s:mode_map = {
   let s:mod_sym = "◇"
   let s:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 
-function! s:file_encoding()
+function! s:file_encoding() abort
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
@@ -30,8 +30,8 @@ function StatuslineLspInfo() abort
   return winwidth(0) > 100 ? coc#status() : ''
 endfunction
 
-function! StatuslineCurrentFunction()
-    return get(b:, 'coc_current_function', '')
+function! StatuslineCurrentFunction() abort
+  return winwidth(0) > 100 ? get(b:, 'coc_current_function', '') : ''
 endfunction
 
 function! StatuslineGitStatus() abort
