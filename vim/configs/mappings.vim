@@ -52,7 +52,8 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
-xnoremap @ <Cmd><C-u>call ExecuteMacroOverVisualRange()<CR>
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 "}}}
 " ----------------------------------------------------------------------------
 " Credit: JGunn Choi ?il | inner line
@@ -250,25 +251,6 @@ else
   vnoremap <a-j> :m '>+1<CR>gv=gv
 endif
 
-""---------------------------------------------------------------------------//
-" Paragrapgh Wise navigation
-""---------------------------------------------------------------------------//
-" Smart }."
-nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
-onoremap <silent> } :<C-u>call ForwardParagraph()<CR>
-xnoremap <silent> } <Esc>:<C-u>call ForwardParagraph()<CR>mzgv`z
-
-function! ForwardParagraph()
-  let cnt = v:count ? v:count : 1
-  let i = 0
-  while i < cnt
-    if !search('^\s*\n.*\S','W')
-      normal! G$
-      return
-    endif
-    let i = i + 1
-  endwhile
-endfunction
 "Change two horizontally split windows to vertical splits
 nnoremap <LocalLeader>h <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits

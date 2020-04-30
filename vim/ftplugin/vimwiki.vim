@@ -8,6 +8,6 @@ endif
 nnoremap <silent><S-tab> :bprevious<CR>
 nnoremap <silent><tab> :bnext<CR>
 
-nmap } <Plug>VimwikiPrevLink
-nmap { <Plug>VimwikiNextLink
-nmap <Leader>tt <Plug>VimwikiToggleListItem
+nmap <buffer> } <Plug>VimwikiPrevLink
+nmap <buffer> { <Plug>VimwikiNextLink
+nmap <buffer> <Leader>tt <Plug>VimwikiToggleListItem
