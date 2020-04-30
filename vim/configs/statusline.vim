@@ -23,7 +23,7 @@ endfunction
 
 function s:line_info() abort
   " TODO This component should truncate from the left not right
-  return winwidth(0) > 100 ? '%.15(%l/%L %p%%%)' : ''
+  return winwidth(0) > 120 ? '%.15(%l/%L %p%%%)' : ''
 endfunction
 
 function StatuslineLspInfo() abort
