@@ -50,6 +50,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
+Plug 'liuchengxu/vista.vim'
 "============================
 "TMUX {{{1
 "============================

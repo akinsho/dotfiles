@@ -75,7 +75,7 @@ augroup SmartClose
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,ref,Godoc,dbui,fugitive
+        \gitcommit,ref,Godoc,dbui,fugitive,log
         \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
@@ -119,7 +119,7 @@ augroup END
 " Reload vim and config automatically {{{
 augroup UpdateVim
   autocmd!
-  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*,$MYVIMRC nested'
+  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/*,$MYVIMRC nested'
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
@@ -144,6 +144,12 @@ function! CheckColorColumn()
       setl colorcolumn<
   endif
 endfunction
+
+" augroup remember_folds
+"   autocmd!
+"   autocmd BufWinLeave * mkview
+"   autocmd BufWinEnter * silent! loadview
+" augroup END
 
 function! s:update_tmux_statusline_colors() abort
   " Get the color of the current vim background and update tmux accordingly
