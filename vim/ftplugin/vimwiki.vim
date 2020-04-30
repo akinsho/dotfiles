@@ -4,7 +4,10 @@ if exists(":CloseVimWikis")
   nnoremap <buffer><silent> <leader>wc :CloseVimWikis<CR>
 endif
 
-nmap <Leader>tt <Plug>VimwikiToggleListItem
 " Restore broken/overriden mapping
 nnoremap <silent><S-tab> :bprevious<CR>
-nmap <c-tab> <Plug>VimwikiNextLink
+nnoremap <silent><tab> :bnext<CR>
+
+nmap } <Plug>VimwikiPrevLink
+nmap { <Plug>VimwikiNextLink
+nmap <Leader>tt <Plug>VimwikiToggleListItem
