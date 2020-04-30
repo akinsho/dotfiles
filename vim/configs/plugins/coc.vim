@@ -174,6 +174,8 @@ xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
+" TODO: Remove this when coc/nvim floating window bug is resolved
+nmap <silent><leader>cf <Plug>(coc-float-hide)
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
 vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
@@ -185,6 +187,14 @@ nmap <silent><leader>rf  <Plug>(coc-refactor)
 " Remap for rename current word
 nmap <silent><leader>rn <Plug>(coc-rename)
 
+" Scroll the floating window if open
+nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+""---------------------------------------------------------------------------//
+" Coc Statusline
+let g:coc_status_error_sign = "✗ "
+let g:coc_status_warning_sign = " "
+""---------------------------------------------------------------------------//
 ""---------------------------------------------------------------------------//
 " Using CocList
 ""---------------------------------------------------------------------------//
@@ -270,14 +280,25 @@ command! -nargs=0 Format :call CocActionAsync('format')
 ""---------------------------------------------------------------------------//
 " Folds {{{1
 ""---------------------------------------------------------------------------//
+
+" Rationale: If Coc is able to provide folding for a file i.e the lsp has a
+" provider  then set the foldmethod to manual so Coc can control folding otherwise
+" set it to syntax as that's the next best thing. Ideally this should only run if
+" the foldmethod isn't already set to what we want  it to be
+" function s:setup_coc_folds() abort
+"   if CocHasProvider('foldingRange') == v:true
+"     setlocal foldmethod=manual
+"   endif
+" endfunction
+
+" augroup CocFoldingSetup
+"   au!
+"   autocmd BufEnter,BufRead,BufNewFile  * call <SID>setup_coc_folds()
+" augroup end
+
 " Use `:Fold` for fold current buffer
-set foldmethod=manual
-
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
-
 nnoremap <silent> <leader>fr :Fold region<CR>
-
 nnoremap <silent> <leader>fi :Fold imports<CR>
-
 nnoremap <silent> <leader>fc :Fold comments<CR>
 "}}}

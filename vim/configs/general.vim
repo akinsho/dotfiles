@@ -82,19 +82,14 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 set foldtext=utils#braces_fold_text()
 set foldopen+=search
-" Coc offers folding but requires the foldmethod to be set to manual
-if !has_key(g:plugs, "coc.nvim")
-  set foldmethod=syntax
-endif
+" This is overwritten in lsp-fola compatible files by Coc
+set foldmethod=syntax
 set foldlevelstart=3
 if has('nvim-0.5')
   " The fold open and close markers are visually distracting
   " and if the code is too nested it starts rendering fold depth
   " set foldcolumn=auto:8
   set foldcolumn=0
-endif
-if !has('nvim')
-  set foldmethod=syntax
 endif
 ""---------------------------------------------------------------------------//
 " Vim Path {{{1

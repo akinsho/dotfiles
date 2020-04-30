@@ -250,8 +250,6 @@ else
   vnoremap <a-j> :m '>+1<CR>gv=gv
 endif
 
-" TODO: Remove this when coc/nvim floating window bug is resolved
-nnoremap <silent><leader>fc :call coc#util#close_popup()<CR>
 ""---------------------------------------------------------------------------//
 " Paragrapgh Wise navigation
 ""---------------------------------------------------------------------------//
