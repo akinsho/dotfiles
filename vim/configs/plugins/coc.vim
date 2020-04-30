@@ -281,21 +281,22 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " Folds {{{1
 ""---------------------------------------------------------------------------//
 
+" FIXME this shouldn't  run till Coc has loaded the language server
 " Rationale: If Coc is able to provide folding for a file i.e the lsp has a
 " provider  then set the foldmethod to manual so Coc can control folding otherwise
 " set it to syntax as that's the next best thing. Ideally this should only run if
 " the foldmethod isn't already set to what we want  it to be
-" function s:setup_coc_folds() abort
-"   if CocHasProvider('foldingRange') == v:true
-"     setlocal foldmethod=manual
-"   endif
-" endfunction
+function s:setup_coc_folds() abort
+  if &ft !=? 'startify' && &foldmethod !=? 'manual' && !strlen(&buftype)
+    echom "Calling has provider"
+    if CocHasProvider('foldingRange') == v:true
+      setlocal foldmethod=manual
+    endif
+  endif
+endfunction
 
-" augroup CocFoldingSetup
-"   au!
-"   autocmd BufEnter,BufRead,BufNewFile  * call <SID>setup_coc_folds()
-" augroup end
 
+set foldmethod=manual
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
 nnoremap <silent> <leader>fr :Fold region<CR>
