@@ -26,6 +26,9 @@ function s:line_info() abort
   return winwidth(0) > 100 ? '%.15(%l/%L %p%%%)' : ''
 endfunction
 
+function StatuslineLspInfo() abort
+  return winwidth(0) > 100 ? coc#status() : ''
+endfunction
 
 function! StatuslineCurrentFunction()
     return get(b:, 'coc_current_function', '')
@@ -33,7 +36,7 @@ endfunction
 
 function! StatuslineGitStatus() abort
   let status = get(b:, "coc_git_status", "")
-  return winwidth(0) > 120 ? status : ''
+  return winwidth(0) > 100 ? status : ''
 endfunction
 
 function StatuslineGitRepoStatus() abort
@@ -231,7 +234,7 @@ function! StatusLine(...) abort
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
   " Add padding before the CocStatus component
-  let statusline .= '  %#Type#%{coc#status()}'
+  let statusline .= "  %#Type#%{StatuslineLspInfo()}"
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
         \ !empty(StatuslineCurrentFunction()), {})
 
