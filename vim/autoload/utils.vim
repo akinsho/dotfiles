@@ -198,13 +198,14 @@ nnoremap <leader>E :Token<cr>
 ""---------------------------------------------------------------------------//
 function! utils#braces_fold_text(...)
   " column icon '≣'
-  let start_char = '✦'
-  let line = ' ' . substitute(getline(v:foldstart), '{.*', '{…}', ' ') . ' '
+  let line = substitute(getline(v:foldstart), '{.*', '{…}', ' ') . ' '
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '(' . ( lines_count ) . ' lines)'
   let fold_char = matchstr(&fillchars, 'fold:\')
   let window_width = winwidth(0)
-  let fold_text_start = strpart(start_char . repeat(fold_char, v:foldlevel * 2) . line, 0, (window_width * 2) / 3)
+  " OPTION: Add start char marker below strpart('✦ ' . repeat(....)
+  " this causes the fold text to be indented one character
+  let fold_text_start = strpart(repeat(fold_char, v:foldlevel * 2) . line, 0, (window_width * 2) / 3)
   let fold_text_end = lines_count_text . repeat(' ', 2)
   " NOTE: Foldcolumn can now be set to a value of auto:Count e.g auto:5
   " so we split off the auto portion so we can still get the line count
