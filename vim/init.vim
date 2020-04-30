@@ -29,7 +29,11 @@ elseif g:os == "Darwin"
 endif
 
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
-let g:dotfiles = $DOTFILES
+" Environment variables aren't consisitently available on GUIs or non-interactive shells
+" so don't use them If possible or default to the literal string if possible
+" EXAMPLE: https://github.com/kovidgoyal/kitty/issues/943
+" WARNING: Hardcoding the location of my dotfiles is brittle
+let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/Dotfiles'
 let g:inform_load_results = 0
 
 function! VimrcMessage(msg) abort
@@ -37,11 +41,6 @@ function! VimrcMessage(msg) abort
   echom a:msg
   echohl none
 endfunction
-" Environment variables aren't consisitently available on guis so dont use them
-" If possible or default to the literal string if possible
-if g:gui_neovim_running
-    let g:dotfiles = '~/Dotfiles'
-endif
 
 function! s:safely_source(arg) abort
     try

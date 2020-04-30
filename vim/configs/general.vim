@@ -82,6 +82,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 set foldtext=utils#braces_fold_text()
 set foldopen+=search
+" Coc offers folding but requires the foldmethod to be set to manual
 if !has_key(g:plugs, "coc.nvim")
   set foldmethod=syntax
 endif
