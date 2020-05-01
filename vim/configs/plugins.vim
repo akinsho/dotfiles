@@ -89,7 +89,7 @@ Plug 'tpope/vim-abolish'
 "sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-dadbod'
-      \ | Plug 'kristijanhusak/vim-dadbod-ui'
+      \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 " ===========================
 "Syntax {{{1
 "============================
