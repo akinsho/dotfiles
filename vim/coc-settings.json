@@ -36,9 +36,6 @@
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.formatOnInsertLeave": true,
   "suggest.acceptSuggestionOnCommitCharacter": true,
-  // Rust
-  "rust.clippy_preference": "on",
-  "rust.show_hover_context": true,
   // Go
   // "go.goplsArgs": ["-remote=auto"],
   // "go.goplsOptions": {
