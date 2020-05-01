@@ -201,7 +201,7 @@ nnoremap cQ :call SetupCR()<CR>#``qz
 vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
 vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
 "----------------------------------------------------------------------------
-"Buffers
+" Buffers
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 " This lists the open buffers then takes input re. which to delete

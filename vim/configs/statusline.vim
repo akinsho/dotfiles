@@ -202,12 +202,16 @@ function! StatusLine(...) abort
   let line_info = s:line_info()
   let file_modified = statusline#modified('●')
 
-  " Evaluate the filename in the content of the statusline component
+  " Evaluate the filename in the context of the statusline component
   " -> %{func_call()}, items in this context are per window not global
   " this means the function returns the containing windows filename
   " not the active one i.e. fixes the bug where the wrong filename shows in
   " inactive windows
-  let title_component = '%.30(%{statusline#filename("%:p:.")}%)'
+  " TODO make this smarter by proportionally increasing truncation based on how
+  " small a window is up till a maximum beyond which we won't be able to see the
+  " anything inteligibble
+  let truncation_amount = winwidth(0) < 70 ? 20 : 30
+  let title_component = '%.'.truncation_amount.'(%{statusline#filename("%:p:.")}%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
