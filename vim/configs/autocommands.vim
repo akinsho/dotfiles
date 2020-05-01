@@ -119,7 +119,7 @@ augroup END
 " Reload vim and config automatically {{{
 augroup UpdateVim
   autocmd!
-  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/*,$MYVIMRC nested'
+  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/*.vim,$MYVIMRC nested'
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
