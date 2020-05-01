@@ -260,6 +260,8 @@ function s:apply_coc_highlights()
   highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
   highlight CocCodeLens ctermfg=Gray guifg=#999999
   highlight CocHighlightText gui=underline,bold
+  " By default this links to CocHintSign but that keeps getting cleared mysteriously
+  highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
 endfunction
 
 augroup Coc_highlights
