@@ -37,6 +37,8 @@ if has('folding')
   if has('windows')
     set fillchars=vert:│
     set fillchars+=fold:-
+    " Add vertical separator for inactive statuslines
+    set fillchars+=stlnc:‾
     set fillchars+=diff:⣿
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
