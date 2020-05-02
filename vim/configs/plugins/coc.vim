@@ -6,10 +6,8 @@ let g:coc_global_extensions = [
       \ 'coc-explorer',
       \ 'coc-tag',
       \ 'coc-marketplace',
-      \ 'coc-terminal',
       \ 'coc-json',
       \ 'coc-vimlsp',
-      \ 'coc-tsserver',
       \ 'coc-rls',
       \ 'coc-html',
       \ 'coc-snippets',
@@ -71,10 +69,6 @@ function! s:coc_init() abort
           \ "command": "elm-language-server",
           \ "filetypes": ["elm"],
           \ "rootPatterns": ["elm.json"],
-          \ "trace.server": "verbose",
-          \ "initializationOptions": {
-          \     "elmAnalyseTrigger": "change",
-          \}
           \}
   endif
 
@@ -269,11 +263,6 @@ augroup Coc_highlights
   autocmd VimEnter * call <SID>apply_coc_highlights()
   autocmd Colorscheme * call <SID>apply_coc_highlights()
 augroup END
-
-""---------------------------------------------------------------------------//
-" Git
-""---------------------------------------------------------------------------//
-nmap <silent><localleader>tt <Plug>(coc-terminal-toggle)
 ""---------------------------------------------------------------------------//
 " Formatting
 ""---------------------------------------------------------------------------//
