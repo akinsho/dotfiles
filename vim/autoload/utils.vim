@@ -198,7 +198,18 @@ nnoremap <leader>E :Token<cr>
 ""---------------------------------------------------------------------------//
 function! utils#braces_fold_text(...)
   " column icon '≣'
-  let line = substitute(getline(v:foldstart), '{.*', '{…}', ' ') . ' '
+  let initial_line = getline(v:foldstart)
+  " Match the last brace on a line if there is one then the fold text should
+  " end with {…} otherwise it should end with …. Why do any of this?...
+  " because I think it looks nicer 🤷
+  " Issues:
+  " * Currently the folding doesn't show either character when the window is resized
+  if strlen(matchstr(initial_line, '{$'))
+    "Match any brace in the string -> '{.*' whereas '{$ matches the last'
+    let line = substitute(initial_line, '{$', '{…}', ' ') . ' '
+  else
+    let line = initial_line . '…'
+  endif
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '(' . ( lines_count ) . ' lines)'
   let fold_char = matchstr(&fillchars, 'fold:\')
