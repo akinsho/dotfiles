@@ -43,7 +43,9 @@ if has('folding')
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
       set fillchars+=eob:\              " suppress ~ at EndOfBuffer
-      set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
+      if has('nvim-0.5')
+        set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
+      endif
     endif
   endif
 endif
@@ -87,11 +89,11 @@ set foldopen+=search
 " This is overwritten in lsp-fola compatible files by Coc
 set foldmethod=syntax
 set foldlevelstart=3
-if has('nvim-0.5')
   " The fold open and close markers are visually distracting
   " and if the code is too nested it starts rendering fold depth
+set foldcolumn=0
+if has('nvim-0.5')
   " set foldcolumn=auto:8
-  set foldcolumn=0
 endif
 ""---------------------------------------------------------------------------//
 " Vim Path {{{1
