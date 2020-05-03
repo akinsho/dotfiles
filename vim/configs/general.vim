@@ -220,7 +220,7 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 " Colorscheme {{{1
 ""---------------------------------------------------------------------------//
 if !exists('g:gui_oni')
-set background=dark
+  set background=dark
   " ========================
   " OneDark
   " ========================
