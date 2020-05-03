@@ -124,7 +124,6 @@ Plug 'kana/vim-textobj-user'
 "=======================
 "Search Tools {{{1
 "=======================
-Plug 'dyng/ctrlsf.vim' "TODO try CocSearch instead
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
