@@ -104,7 +104,6 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'lambdalisue/gina.vim'
 " Text Objects {{{1
 " =====================
-Plug 'kana/vim-smartword'
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 ""---------------------------------------------------------------------------//
