@@ -147,7 +147,7 @@ set synmaxcol=1024 " don't syntax highlight long lines
 if has('linebreak') "Causes wrapped line to keep same indentation
   " This should cause lines to wrap around words rather than random characters
   set linebreak
-  set showbreak=↪ 
+  set showbreak=↪\ 
   " Options include -> '…', '↳ ', '→','↪ '
   if exists('&breakindentopt')
     set breakindentopt=sbr
