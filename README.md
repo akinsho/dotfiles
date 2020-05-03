@@ -1,10 +1,11 @@
 # Dotfiles
 
+![Screenshot of my setup](./vim_setup.png "Vim Setup")
+
 My dotfiles including Zsh, Vim and Tmux config files (stashed away in case of laptop Armageddon).
 
 I thought I'd document for myself and for others potentially some of the setup
-involved in the various programs my dotfiles cover. I'm no pro and some of
-this stuff has worked for me but may not be universal.
+involved in the various programs my dotfiles cover. Warning: This stuff has worked for me but may not be universal.
 
 ### Setup
 
@@ -44,7 +45,6 @@ have run and the filetype files from Vim so my settings definitely show up.
   .vim/
     autoload/
     ftplugin/
-    plugged/ [vim-plug]
     plugins/
     bundle/
     after/
@@ -69,10 +69,8 @@ directory to prevent having to manage and symlink to both.
 
 List of plugins I don't want to forget exist
 
-- `Plug 'MattesGroeger/vim-bookmarks'`
 - `Plug 'ap/vim-buftabline'`
 - `Plug 'wikitopian/hardmode'`
-- `Plug 'machakann/vim-highlightedyank'`
 - `Plug 'kana/vim-smartword'`
 - `Plug 'bkad/CamelCaseMotion`
 
@@ -85,12 +83,6 @@ List of plugins I don't want to forget exist
 - `Plug 'tyrannicaltoucan/vim-quantum'`
 
 ### Tmux
-
-Tmux is an amazing development tool, it is a `terminal multiplexer`. Which is matrix
-speak for saying it lets you have multiple terminal splits and windows all within _multiple_
-sessions, all within a single actual terminal pane (...inception...). It's easier seen than
-described.
-Here be a Giant rabbit hole you have been warned.
 
 ### _Italics_ in _TMUX_
 
