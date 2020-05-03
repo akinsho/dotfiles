@@ -105,6 +105,11 @@ augroup End
 ""---------------------------------------------------------------------------//
 " CoC Mappings
 ""---------------------------------------------------------------------------//
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+" Do NOT use tab as this is equivalent to <C-I> and so swallows jump list mapping
+nmap <silent> <C-A> <Plug>(coc-range-select)
+xmap <silent> <C-A> <Plug>(coc-range-select)
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -253,7 +258,7 @@ function s:apply_coc_highlights()
   highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
   highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
   highlight CocCodeLens ctermfg=Gray guifg=#999999
-  highlight CocHighlightText gui=underline,bold
+  highlight link CocHighlightText CursorLine
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
   highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
 endfunction
