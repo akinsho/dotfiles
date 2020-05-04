@@ -26,6 +26,24 @@ function s:line_info() abort
   return winwidth(0) > 120 ? '%.15(%l/%L %p%%%)' : ''
 endfunction
 
+" Sometimes special characters are passed into statusline components
+" this sanitizes theses strings to prevent them mangling the statusline
+" See: https://vi.stackexchange.com/questions/17704/how-to-remove-character-returned-by-system
+function! s:sanitize_string(item) abort
+  return substitute(a:item, '\n', '', 'g')
+endfunction
+
+function! s:truncate_string(item, ...) abort
+    let limit = get(a:, '1', 50)
+    let suffix = get(a: , '2', '…')
+    return strlen(a:item) > limit ? strpart(a:item, 0, limit) . suffix : a:item
+endfunction
+
+function! s:truncate_statusline_component(item, ...) abort
+    let limit = get(a:, '1', 50)
+    return '%.'.limit.'('.a:item.'%)'
+endfunction
+
 " Source: Coc documentation
 function! s:status_diagnostic() abort
   let info = get(b:, 'coc_diagnostic_info', {})
@@ -57,13 +75,15 @@ function s:get_diagnostic_highlight() abort
 endfunction
 
 function StatuslineLanguageServer() abort
-  return winwidth(0) > 100 ? get(g:, 'coc_status', '') : ''
+  return winwidth(0) > 100 ? s:truncate_string(get(g:, 'coc_status', '')) : ''
 endfunction
 
 function! StatuslineCurrentFunction() abort
   let current = get(b:, 'coc_current_function', '')
-  " Don't show the current function name if it's longer than 50 chars it buggers up the statusline
-  return winwidth(0) > 100 && strlen(current) < 50 ? current : ''
+  let sanitized = s:sanitize_string(current)
+  return winwidth(0) > 100 ?
+        \ s:truncate_string(sanitized, 30) :
+        \ ''
 endfunction
 
 function! StatuslineGitStatus() abort
@@ -230,11 +250,6 @@ function! s:mode_highlight(mode) abort
   endif
 endfunction
 
-function! s:truncate(item, ...) abort
-    let limit = get(a:, '1', 50)
-    return '%.'.limit.'('.a:item.'%)'
-endfunction
-
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
   ""---------------------------------------------------------------------------//
@@ -289,7 +304,7 @@ function! StatusLine(...) abort
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
-  let statusline .= s:truncate("%#Type#%{StatuslineLanguageServer()}")
+  let statusline .= "%#Type#%{StatuslineLanguageServer()}"
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
         \ !empty(StatuslineCurrentFunction()), {})
 
