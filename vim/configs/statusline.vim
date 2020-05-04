@@ -61,7 +61,9 @@ function StatuslineLanguageServer() abort
 endfunction
 
 function! StatuslineCurrentFunction() abort
-  return winwidth(0) > 100 ? get(b:, 'coc_current_function', '') : ''
+  let current = get(b:, 'coc_current_function', '')
+  " Don't show the current function name if it's longer than 50 chars it buggers up the statusline
+  return winwidth(0) > 100 && strlen(current) < 50 ? current : ''
 endfunction
 
 function! StatuslineGitStatus() abort
