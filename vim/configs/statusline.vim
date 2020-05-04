@@ -228,6 +228,11 @@ function! s:mode_highlight(mode) abort
   endif
 endfunction
 
+function! s:truncate(item, ...) abort
+    let limit = get(a:, '1', 50)
+    return '%.'.limit.'('.a:item.'%)'
+endfunction
+
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
   ""---------------------------------------------------------------------------//
@@ -282,7 +287,7 @@ function! StatusLine(...) abort
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
-  let statusline .= "%#Type#%{StatuslineLanguageServer()}"
+  let statusline .= s:truncate("%#Type#%{StatuslineLanguageServer()}")
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
         \ !empty(StatuslineCurrentFunction()), {})
 

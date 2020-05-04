@@ -338,7 +338,7 @@ nnoremap <Leader>sf :vsp <C-R>=expand("%:p:h") . "/" <CR>
 " when going to the end of the line in visual mode ignore whitespace characters
 vnoremap $ g_
 "Open command line window - :<c-f>
-nnoremap <localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <silent><localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 command! -nargs=+ -complete=command TabMessage call utils#tab_message(<q-args>)
 ""---------------------------------------------------------------------------//
