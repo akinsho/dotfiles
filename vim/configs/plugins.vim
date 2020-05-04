@@ -51,7 +51,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 "============================
-"TMUX {{{1
+" TMUX {{{1
 "============================
 "Navigate panes in vim and tmux with the same bindings
 Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
@@ -60,6 +60,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
 "============================
 Plug 'vimwiki/vimwiki'
 Plug 'arecarn/vim-fold-cycle'
+Plug 'dyng/ctrlsf.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
@@ -102,6 +103,7 @@ Plug 'sheerun/vim-polyglot'
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
 Plug 'lambdalisue/gina.vim'
+" =====================
 " Text Objects {{{1
 " =====================
 Plug 'AndrewRadev/switch.vim'

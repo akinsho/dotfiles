@@ -475,8 +475,6 @@ inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 "Map Q to replay q register
 nnoremap Q @q
-"Replace word under cursor
-nnoremap S "_diwP
 "}}}
 
 " Shortcut to jump to next conflict marker"
