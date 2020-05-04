@@ -26,8 +26,38 @@ function s:line_info() abort
   return winwidth(0) > 120 ? '%.15(%l/%L %p%%%)' : ''
 endfunction
 
-function StatuslineLspInfo() abort
-  return winwidth(0) > 100 ? coc#status() : ''
+" Source: Coc documentation
+function! s:status_diagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  let warning_sign = get(g:, 'coc_status_warning_sign', 'W')
+  let error_sign = get(g:, 'coc_status_error_sign', 'E')
+
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, error_sign . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, warning_sign . info['warning'])
+  endif
+  return join(msgs, ' ')
+endfunction
+
+" This checks if there are any errors if so the component
+" is highlighted with the error highlight, if there are
+" warnings it renders with a warning highlight. If neither
+" there is no highlight
+" TLDR: Error highlight > Warning highlight
+function s:get_diagnostic_highlight() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return {} | endif
+  if get(info, 'error', 0) > 1 | return s:st_error | endif
+  if get(info, 'warning', 0) > 1 | return s:st_warning | endif
+  return {}
+endfunction
+
+function StatuslineLanguageServer() abort
+  return winwidth(0) > 100 ? get(g:, 'coc_status', '') : ''
 endfunction
 
 function! StatuslineCurrentFunction() abort
@@ -70,6 +100,8 @@ let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
 let s:st_info = { 'color': '%#StInfo#', 'sep_color': '%#StInfoSep#' }
 let s:st_ok =   { 'color': '%#StOk#', 'sep_color': '%#StOkSep#' }
 let s:st_inactive = { 'color': '%#StInactive#', 'sep_color': '%#StInactiveSep#' }
+let s:st_error = {'color': '%#StError#', 'sep_color': '%#StErrorSep#' }
+let s:st_warning = {'color': '%#StWarning#', 'sep_color': '%#StWarningSep#' }
 
 let s:gold         = '#F5F478'
 let s:white        = '#abb2bf'
@@ -90,6 +122,9 @@ function! s:set_statusline_colors() abort
   let s:normal_fg = synIDattr(hlID('Normal'), 'fg')
   let s:pmenu_bg  = synIDattr(hlID('Pmenu'), 'bg')
   let s:string_fg = synIDattr(hlID('String'), 'fg')
+  let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
+  " OneDark vim uses the same color for warning msg as error so I've overriden it
+  let s:warning_fg = s:dark_yellow "synIDattr(hlID('WarningMsg'), 'fg')
 
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=none'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
@@ -104,6 +139,11 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
   silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
   silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
+  " Diagnostic highlights
+  silent! execute 'highlight StWarning guifg='.s:normal_bg.' guibg='.s:warning_fg.' gui=none'
+  silent! execute 'highlight StWarningSep guifg='.s:warning_fg.' guibg='.s:normal_bg.' gui=none'
+  silent! execute 'highlight StError guifg='.s:normal_bg.' guibg='.s:error_fg.' gui=none'
+  silent! execute 'highlight StErrorSep guifg='.s:error_fg.' guibg='.s:normal_bg.' gui=none'
 endfunction
 
 function! s:sep(item, ...) abort
@@ -238,7 +278,11 @@ function! StatusLine(...) abort
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
   " Add padding before the CocStatus component
-  let statusline .= "  %#Type#%{StatuslineLspInfo()}"
+  let statusline .= " "
+  let diagnostic_info = s:status_diagnostic()
+  let diagnostic_highlight = s:get_diagnostic_highlight()
+  let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
+  let statusline .= "%#Type#%{StatuslineLanguageServer()}"
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
         \ !empty(StatuslineCurrentFunction()), {})
 
