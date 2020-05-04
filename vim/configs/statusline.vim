@@ -69,8 +69,8 @@ endfunction
 function s:get_diagnostic_highlight() abort
   let info = get(b:, 'coc_diagnostic_info', {})
   if empty(info) | return {} | endif
-  if get(info, 'error', 0) > 1 | return s:st_error | endif
-  if get(info, 'warning', 0) > 1 | return s:st_warning | endif
+  if get(info, 'error', 0) | return s:st_error | endif
+  if get(info, 'warning', 0) | return s:st_warning | endif
   return {}
 endfunction
 
