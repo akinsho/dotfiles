@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'gina.vim')
+if CheckPluginLoaded("gina.vim")
   finish
 endif
 " Plugin Mappings

@@ -48,7 +48,7 @@
   // Snippets
   "suggest.snippetIndicator": " ",
   "snippets.ultisnips.enable": true,
-  "snippets.userSnippetsDirectory": "~/Dotfiles/vim/snippets",
+  "snippets.userSnippetsDirectory": "~/.dotfiles/vim/snippets",
   "snippets.ultisnips.directories": ["Ultisnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "cpp": ["c"],

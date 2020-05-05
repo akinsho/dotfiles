@@ -48,16 +48,16 @@ npm_install() {
 echo "Installing brew bundle"
 brew tap Homebrew/bundle
 
-# Clone my dotfiles repo into ~/Dotfiles/ if needed
+# Clone my dotfiles repo into ~/.dotfiles/ if needed
 echo "DOTFILES-------------------------------------------------"
 
-export DOTFILES="$HOME/Dotfiles"
+export DOTFILES="$HOME/.dotfiles"
 
 if [ -f "$DOTFILES" ]; then
   echo "Dotfiles have already been cloned into the home dir"
 else
   echo "Cloning Akin's dotfiles into Dotfiles"
-  git clone https://github.com/Akin909/Dotfiles.git ~/Dotfiles
+  git clone https://github.com/Akin909/.dotfiles.git ~/.dotfiles
 fi
 
 cd "$DOTFILES" || "Didn't cd into dotfiles this will be bad :("

@@ -1,12 +1,9 @@
 #!/usr/bin/zsh
-
+# NOTE: this script is not loaded first so crucial env vars should
+# not be set here or better still I should source this in the .profile
 #=======================================================================
 #       ENV VARIABLES
 #=======================================================================
-# NB for future notice this tries to install in dotfiles unless explicitly
-# specified here
-export DOTFILES=$HOME/Dotfiles
-export RUNCOM=$DOTFILES/runcom/
 if which yarn >/dev/null; then
   export PATH="$PATH:$(yarn global bin)"
 fi

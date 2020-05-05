@@ -1,20 +1,16 @@
-# Dotfiles
+# .dotfiles
 
 ![Screenshot of my setup](./vim_setup.png "Vim Setup")
 
-My dotfiles including Zsh, Vim and Tmux config files (stashed away in case of laptop Armageddon).
+My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in case of laptop armageddon).
 
 I thought I'd document for myself and for others potentially some of the setup
-involved in the various programs my dotfiles cover. Warning: This stuff has worked for me but may not be universal.
+involved in the various programs my dotfiles cover.
+⚠ Warning: This stuff has worked for me but may not be universal.
 
 ### Setup
 
-Having recently had to setup my mac multiple times in a short period of time
-I recently rediscovered the importance of having a check-list for the setup
-process
-
-- Clone Dotfiles repo into the HOME directory or get hold of the install script in the dotfiles repo
-- Run `./install.sh` (with or without a `minimal` flag) **WIP**
+TBC: Currently considering and automated system like `chezmoi`
 
 ### Organisation
 
@@ -58,44 +54,4 @@ As I mentioned above this directory allows a Vim user
 to lazy load utility functions which given the number
 and size of a users functions can improve startup.
 
-In my case I've manually symlinked the autoload script
-into then `~/.config/nvim/autoload` directory and
-`~/.vim/autoload/` directory.
-
-N.B. A better solution would be have the entire Neovim directory be a symlink to the vim
-directory to prevent having to manage and symlink to both.
-
-### Great Plugins
-
-List of plugins I don't want to forget exist
-
-- `Plug 'ap/vim-buftabline'`
-- `Plug 'wikitopian/hardmode'`
-- `Plug 'kana/vim-smartword'`
-- `Plug 'bkad/CamelCaseMotion`
-
-### Excellent Colorschemes
-
-- `Plug 'davidklsn/vim-sialoquent'`
-- `Plug 'joshdick/onedark.vim'`
-- `Plug 'trevordmiller/nova-vim'`
-- `Plug 'kristijanhusak/vim-hybrid-material'`
-- `Plug 'tyrannicaltoucan/vim-quantum'`
-
-### Tmux
-
-### _Italics_ in _TMUX_
-
-- Firstly you need to create a `$HOME/terminfo` folder.
-- Anywhere else (**not inside this folder**) you need to create a `tmux.terminfo`
-  file, a `tmux-256color.terminfo` file and an `xterm-256color.terminfo` file.
-- Finally run the command
-  NB. The advice I have seen given multiple times is to use the commands below.
-  Although a recent laptop setup proved unsuccessful using these command. I'll
-  leave them for future reference but what I in fact used successfully were :-
-
-```sh
-/Dotfiles/configs/
-tic xterm-256color.terminfo
-tic tmux-256color.terminfo
-```
+In my case I've symlinked the (n)vim directory to `$HOME/config/nvim`.

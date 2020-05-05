@@ -7,7 +7,7 @@ start_time="$(date +%s)"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-# ZSH_THEME="spaceship"
+export DOTFILES=$HOME/.dotfiles
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,7 +45,7 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd/mm/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-export ZSH_CUSTOM=$HOME/Dotfiles/oh-my-zsh
+export ZSH_CUSTOM=$DOTFILES/oh-my-zsh
 
 # Check for autosuggestions is installed if not install it
 if [[ ! -a ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]]; then
@@ -95,8 +95,8 @@ fi
 #=======================================================================
 #   LOCAL SCRIPTS
 #=======================================================================
-# source all zsh and sh files inside dotfile/runcom
-for script in ~/Dotfiles/shell_scripts/*; do
+# source all zsh and sh files
+for script in $DOTFILES/shell_scripts/*; do
   source $script
 done
 

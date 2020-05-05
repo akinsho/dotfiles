@@ -6,9 +6,9 @@ alias top="vtop"
 alias x="exit" # Exit Terminal
 alias t=_t
 alias del="rm -rf"
-alias dots="cd ~/Dotfiles"
+alias dots="cd $DOTFILES"
 alias coding="cd ~/Desktop/Coding"
-alias brewfile="cd ~/Dotfiles/configs/homebrew/ && brew bundle dump --force"
+alias brewfile="cd $DOTFILES/configs/homebrew/ && brew bundle dump --force"
 alias lp="lsp"
 alias la='ls -aG'
 alias v='nvim'
@@ -41,11 +41,6 @@ alias tkill="tmux kill-session -t"
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
-# Silence or turn up the volume
-# alias stfu="osascript -e 'set volume output muted true'"
-# alias pumpitup="osascript -e 'set volume 10'"
-# alias ctags if you used homebrew
-# alias ctags="\$(brew --prefix)/bin/ctags"
 
 alias -s js=nvim
 alias -s html=nvim

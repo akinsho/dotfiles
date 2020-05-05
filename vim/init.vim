@@ -33,7 +33,7 @@ let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gu
 " so don't use them If possible or default to the literal string if possible
 " EXAMPLE: https://github.com/kovidgoyal/kitty/issues/943
 " WARNING: Hardcoding the location of my dotfiles is brittle
-let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/Dotfiles'
+let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:inform_load_results = 0
 
 function! VimrcMessage(msg) abort

@@ -2,10 +2,9 @@ link() {
   ln -sf $1 $2
 }
 
-DOTFILES='~/Dotfiles'
-LINUXDIR='~/Dotfiles/linux'
+LINUXDIR=$DOTFILES/linux
 
-# Create the nvim dir and symlink vim dir to it 
+# Create the nvim dir and symlink vim dir to it
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 link ~/.vim $XDG_CONFIG_HOME/nvim
 link ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim

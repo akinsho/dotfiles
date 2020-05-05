@@ -153,4 +153,11 @@ call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
   packadd! matchit
 endif
+
+" SOURCE: https://github.com/junegunn/vim-plug/pull/875
+" Check if the files is in the plugs map but also IMPORTANTLY
+" that it is in the runtimepath
+function CheckPluginLoaded(plugin_name) abort
+  return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
+endfunction
 " vim:foldmethod=marker
