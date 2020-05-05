@@ -13,7 +13,7 @@
 [core]
   editor = nvim
   excludesfile ="~/Dotfiles/git/.gitignore_global"
-  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='TwoDark'
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [remote "origin"]
