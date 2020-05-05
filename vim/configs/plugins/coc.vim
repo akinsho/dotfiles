@@ -1,6 +1,10 @@
 if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
   finish
 endif
+""---------------------------------------------------------------------------//
+" Debug
+""---------------------------------------------------------------------------//
+let g:node_client_debug = 1
 
 let g:coc_global_extensions = [
       \ 'coc-explorer',

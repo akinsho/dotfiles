@@ -13,7 +13,7 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 # Reference: Man fzf - bind previous and next history commands explicitly or they will swallow up c-n and c-p
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history --bind=up:previous-history,down:next-history,ctrl-n:down,ctrl-p:up"
 
-# Usin ghighlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
+# Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
 export FZF_CTRL_T_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 
 # To apply to the command to CTRL-T as well
