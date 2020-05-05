@@ -102,7 +102,7 @@ Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
-Plug 'lambdalisue/gina.vim'
+Plug 'lambdalisue/gina.vim', { 'on': ['Gina push'] }
 " =====================
 " Text Objects {{{1
 " =====================
@@ -114,7 +114,14 @@ Plug 'AndrewRadev/splitjoin.vim'
 ""---------------------------------------------------------------------------//
 Plug 'AndrewRadev/sideways.vim'
 Plug 'dstein64/vim-win'
-Plug 'AndrewRadev/tagalong.vim'
+Plug 'AndrewRadev/tagalong.vim', {'for': [
+      \ 'typescriptreact',
+      \ 'javascriptreact',
+      \ 'reason',
+      \ 'html',
+      \ 'typescript',
+      \ 'javascript'
+      \ ]}
 Plug 'bkad/CamelCaseMotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
@@ -137,8 +144,8 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "Themes  {{{1
 "=======================
 Plug 'rakr/vim-one'
-Plug 'haishanh/night-owl.vim'
-Plug 'patstockwell/vim-monokai-tasty'
+" Plug 'haishanh/night-owl.vim'
+" Plug 'patstockwell/vim-monokai-tasty'
 " Colorscheme Ideas
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
