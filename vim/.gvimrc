@@ -10,9 +10,3 @@ set linespace=3
 set ballooneval
 let g:balloondelay = 600
 let g:gitgutter_enabled = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_alt_sep = ''
