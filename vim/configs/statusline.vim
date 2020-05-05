@@ -162,10 +162,10 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
   silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
   " Diagnostic highlights
-  silent! execute 'highlight StWarning guifg='.s:normal_bg.' guibg='.s:warning_fg.' gui=none'
-  silent! execute 'highlight StWarningSep guifg='.s:warning_fg.' guibg='.s:normal_bg.' gui=none'
-  silent! execute 'highlight StError guifg='.s:normal_bg.' guibg='.s:error_fg.' gui=none'
-  silent! execute 'highlight StErrorSep guifg='.s:error_fg.' guibg='.s:normal_bg.' gui=none'
+  silent! execute 'highlight StWarning guifg='.s:warning_fg.' guibg='.s:pmenu_bg.' gui=none'
+  silent! execute 'highlight StWarningSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=none'
+  silent! execute 'highlight StError guifg='.s:error_fg.' guibg='.s:pmenu_bg.' gui=none'
+  silent! execute 'highlight StErrorSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=none'
 endfunction
 
 function! s:sep(item, ...) abort
