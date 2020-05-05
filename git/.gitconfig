@@ -13,6 +13,7 @@
 [core]
   editor = nvim
   excludesfile ="~/Dotfiles/git/.gitignore_global"
+  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [remote "origin"]
@@ -33,6 +34,8 @@
   ureset = !git reset --hard $(git upstream)
   sl = log --oneline --decorate -20
    mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
+[interactive]
+  diffFilter = delta --color-only
 [push]
   default = current
 [push]
@@ -45,12 +48,5 @@
   prune = true
 [gitsh]
   prompt = "\n%D %c(%b%#)%w ➜"
-[pager]
-    diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 [rerere]
     enabled = true
-[merge]
-  tool = diffconflicts 
-[mergetool "diffconflicts"]
-  cmd = 'nvim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
-  trustExitCode = true
