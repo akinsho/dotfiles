@@ -102,7 +102,7 @@ Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
-Plug 'lambdalisue/gina.vim', { 'on': ['Gina push'] }
+Plug 'lambdalisue/gina.vim'
 " =====================
 " Text Objects {{{1
 " =====================
