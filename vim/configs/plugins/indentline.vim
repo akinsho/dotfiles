@@ -15,7 +15,7 @@ let g:indentLine_bufNameExclude = [
       \ 'magit',
       \ 'peekabo',
       \]
-let g:indentLine_bufTypeExclude = ['help', 'terminal', 'nofile']
+let g:indentLine_bufTypeExclude = ['help', 'terminal', 'nofile', 'vimwiki']
 
 let g:indentLine_faster         = 1
 let g:indentLine_setConceal     = 1
@@ -24,6 +24,5 @@ let g:indentLine_setColors      = 1
 " let g:indentLine_concealcursor = ''
 
 " Character options - ┊ ︙|
-" let g:indentLine_char          = '│'
 let g:indentLine_char_list = ['│', '¦', '┆', '┊']
 nnoremap <leader>il :IndentLinesToggle<CR>
