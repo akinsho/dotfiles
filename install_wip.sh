@@ -122,10 +122,6 @@ ln -sf "$DOTFILES/lint/.vintrc.yaml" ~/.vintrc.yaml
 
 ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
 
-echo "Adding Oni Config ----------------------------------------"
-mkdir -p ~/.config/oni
-ln -sf "$DOTFILES/vim/gui/config.tsx" ~/.config/oni/
-
 git config --global core.excludesfile "$DOTFILES/git/.gitignore_global"
 
 # Install rustup

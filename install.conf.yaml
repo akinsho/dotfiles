@@ -1,0 +1,23 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.dotfiles: ''
+    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.zshrc: zsh/.ohmyzshrc
+    ~/.gitconfig: git/.gitconfig
+    ~/.config/nvim: vim
+    ~/.config/kitty: configs/kitty/kitty.conf
+    ~/.config/alacritty:
+      if: '[`uname` = Darwin]'
+      path: configs/alacritty/macos.alacritty.yml
+    ~/.config/alacritty:
+      if: '[`uname` = Linux]'
+      path: configs/alacritty/linux.alacritty.yml
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
