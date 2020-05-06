@@ -57,6 +57,12 @@
     "typescript": ["javascript"],
     "rei": ["reason"]
   },
+  // Explorer
+  "explorer.file.column.git.icon.modified": "",
+  "explorer.file.column.git.icon.added": "",
+  "explorer.file.column.git.icon.deleted": "",
+  "explorer.file.column.git.icon.renamed": "",
+  "explorer.file.column.git.showIgnored": true,
   // Git sign alternatives
   // '' - added
   // '' - changed
