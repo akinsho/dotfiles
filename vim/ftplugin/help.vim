@@ -11,7 +11,6 @@ nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 " Credit: Tweekmonster!
 ""---------------------------------------------------------------------------//
 if &l:buftype == 'help' || expand('%') =~# '^'.$VIMRUNTIME
-      \ || (exists('g:_vimrc_plugins') && expand('%') =~# '^'.g:_vimrc_plugins)
   nnoremap <buffer> q :<c-u>q<cr>
   nnoremap <silent><buffer> <c-p> :Helptags<cr>
   finish

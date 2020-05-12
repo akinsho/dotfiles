@@ -1,12 +1,13 @@
-""---------------------------------------------------------------------------//
-"Indent Guide
-""-------------------------------------------------------------------------//
+if !has_key(g:plugs, 'indentLine')
+  finish
+endif
+
 let g:indentLine_fileTypeExclude = [
       \ 'vimwiki',
       \ 'nerdtree',
       \ 'markdown',
       \ 'json',
-      \ 'help'
+      \ 'txt',
       \]
 
 let g:indentLine_bufNameExclude = [
@@ -14,7 +15,9 @@ let g:indentLine_bufNameExclude = [
       \ 'terminal',
       \ 'magit',
       \ 'peekabo',
+      \ '*.txt',
       \]
+
 let g:indentLine_bufTypeExclude = ['help', 'terminal', 'nofile', 'vimwiki']
 
 let g:indentLine_faster         = 1
