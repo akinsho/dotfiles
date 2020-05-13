@@ -40,9 +40,7 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" vim-devicons must be loaded before vim buffet in order for icons to be used
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
-Plug 'bagrat/vim-buffet'
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'
@@ -148,6 +146,17 @@ Plug 'rakr/vim-one'
 " Plug 'patstockwell/vim-monokai-tasty'
 " Colorscheme Ideas
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
+
+"=======================
+" Personal plugins  {{{1
+"=======================
+if has('nvim')
+  " Plug '~/Desktop/Coding/nvim-bufferline'
+  Plug 'Akin909/nvim-bufferline'
+else
+  " vim-devicons must be loaded before vim buffet in order for icons to be used
+  Plug 'bagrat/vim-buffet'
+endif
 
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
