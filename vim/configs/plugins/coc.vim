@@ -295,3 +295,7 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " nnoremap <silent> <leader>fi :Fold imports<CR>
 " nnoremap <silent> <leader>fc :Fold comments<CR>
 "}}}
+""---------------------------------------------------------------------------//
+" Tags
+""---------------------------------------------------------------------------//
+set tagfunc=CocTagFunc
