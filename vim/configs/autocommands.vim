@@ -128,14 +128,14 @@ augroup UpdateVim
     endif
   endif
   autocmd FocusLost * silent! wall
-  autocmd VimResized,FocusGained,WinEnter * call CheckColorColumn()
+  autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call CheckColorColumn()
   autocmd WinLeave * setl colorcolumn=
 augroup END
 " }}}
 
 " Hide the colorcolumn when there isn't enough space
 function! CheckColorColumn()
-  if &ft ==# 'startify'
+  if &ft ==# 'startify' || !&buflisted
     return
   endif
   if winwidth('%') <= 120
