@@ -8,7 +8,5 @@ let g:bufferline_tab_selected = { "guifg": s:comment_fg, "guibg": s:tabline_sel_
 let g:bufferline_buffer = { "guifg": s:comment_fg, "guibg": "#1b1e24" }
 let g:bufferline_buffer_inactive = { "guifg": s:comment_fg, "guibg": s:normal_bg }
 let g:bufferline_background = { "guibg": "#1b1e24" }
-let g:bufferline_selected = {
-      \ "guifg": s:normal_fg,
-      \ "guibg": s:normal_bg, "gui": "bold,italic"
-      \ }
+let g:bufferline_separator = {"guibg": "#191c22"}
+let g:bufferline_selected = { "guifg": s:normal_fg, "guibg": s:normal_bg, "gui": "bold,italic" }

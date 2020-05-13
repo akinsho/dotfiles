@@ -1,4 +1,4 @@
-if !has_key(plugs, 'nvim-colorizer.lua')
+if !has_key(plugs, 'nvim-colorizer.lua') || exists('g:loaded_colorizer')
   finish
 endif
 
