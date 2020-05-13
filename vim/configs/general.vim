@@ -305,7 +305,9 @@ endif
 " Utilities {{{1
 "---------------------------------------------------------------------------//
 set noshowmode "No mode showing in command pane
-set sessionoptions=buffers,curdir,tabpages,winsize,resize
+" DO NOT include resize,winsize as these don't work if the nvim is re-opened
+" in a window that does not fit with the saved size
+set sessionoptions=buffers,curdir,tabpages
 set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
 set updatetime=300
 if has('virtualedit')
