@@ -9,8 +9,6 @@ let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
 
-let  g:startify_session_dir  = '~/.vim/session'
-
 let  g:startify_bookmarks    =  [
       \ {'v': '~/.vimrc'},
       \ {'z': '~/.zshrc'},
