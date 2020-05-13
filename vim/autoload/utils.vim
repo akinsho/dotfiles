@@ -198,6 +198,9 @@ nnoremap <leader>E :Token<cr>
 ""---------------------------------------------------------------------------//
 " Match the last brace on a line if there is one then the fold text should
 " end with {…} otherwise it should end with …
+" OPTION: Add start char marker '✦ '
+" NOTE: foldcolumn can now be set to a value of auto:Count e.g auto:5
+" so we split off the auto portion so we can still get the line count
 function! utils#braces_fold_text(...)
   " getline returns the line leading whitespace so we remove it
   " CREDIT: https://stackoverflow.com/questions/5992336/indenting-fold-text
@@ -210,11 +213,8 @@ function! utils#braces_fold_text(...)
   let count_text = '('.lines_count .' lines)'
   let fold_char = matchstr(&fillchars, 'fold:\')
   let indentation = indent(v:foldstart)
-  " OPTION: Add start char marker '✦ '
   let fold_start = repeat(' ', indentation) . line
   let fold_end = count_text . repeat(' ', 2)
-  " NOTE: Foldcolumn can now be set to a value of auto:Count e.g auto:5
-  " so we split off the auto portion so we can still get the line count
   let column_size = split(&foldcolumn, ":")[-1]
   let text_length = strlen(substitute(fold_start . fold_end, '.', 'x', 'g')) + column_size
   return fold_start . repeat(' ', winwidth(0) - text_length - 7) . fold_end
