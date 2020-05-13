@@ -194,35 +194,30 @@ command! -nargs=0 Token call utils#token_inspect()
 nnoremap <leader>E :Token<cr>
 
 ""---------------------------------------------------------------------------//
-" Fold Text (For Curly Brace languages)
+" Fold Text
 ""---------------------------------------------------------------------------//
+" Match the last brace on a line if there is one then the fold text should
+" end with {…} otherwise it should end with …
 function! utils#braces_fold_text(...)
-  " column icon '≣'
-  let initial_line = getline(v:foldstart)
-  " Match the last brace on a line if there is one then the fold text should
-  " end with {…} otherwise it should end with …. Why do any of this?...
-  " because I think it looks nicer 🤷
-  " Issues:
-  " * Currently the folding doesn't show either character when the window is resized
-  if strlen(matchstr(initial_line, '{$'))
-    "Match any brace in the string -> '{.*' whereas '{$ matches the last'
-    let line = substitute(initial_line, '{$', '{…}', ' ') . ' '
-  else
-    let line = initial_line . '…'
-  endif
+  " getline returns the line leading whitespace so we remove it
+  " CREDIT: https://stackoverflow.com/questions/5992336/indenting-fold-text
+  let start = substitute(getline(v:foldstart),'^\s*','','')
+  " Match any brace in the string -> '{.*' whereas '{$ matches the last'
+  let line = strlen(matchstr(start, '{$')) ?
+          \  substitute(start, '{$', '{…}', ' ') . ' ' :
+          \  start . '…'
   let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '(' . ( lines_count ) . ' lines)'
+  let count_text = '('.lines_count .' lines)'
   let fold_char = matchstr(&fillchars, 'fold:\')
-  let window_width = winwidth(0)
-  " OPTION: Add start char marker below strpart('✦ ' . repeat(....)
-  " this causes the fold text to be indented one character
-  let fold_text_start = strpart(repeat(fold_char, v:foldlevel * 2) . line, 0, (window_width * 2) / 3)
-  let fold_text_end = lines_count_text . repeat(' ', 2)
+  let indentation = indent(v:foldstart)
+  " OPTION: Add start char marker '✦ '
+  let fold_start = repeat(' ', indentation) . line
+  let fold_end = count_text . repeat(' ', 2)
   " NOTE: Foldcolumn can now be set to a value of auto:Count e.g auto:5
   " so we split off the auto portion so we can still get the line count
-  let fold_column_length = split(&foldcolumn, ":")[-1]
-  let fold_text_length = strlen(substitute(fold_text_start . fold_text_end, '.', 'x', 'g')) + fold_column_length
-  return fold_text_start . repeat(' ', winwidth(0) - fold_text_length - 7) . fold_text_end
+  let column_size = split(&foldcolumn, ":")[-1]
+  let text_length = strlen(substitute(fold_start . fold_end, '.', 'x', 'g')) + column_size
+  return fold_start . repeat(' ', winwidth(0) - text_length - 7) . fold_end
 endfunction
 
 
