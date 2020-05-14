@@ -81,9 +81,7 @@ endfunction
 function! StatuslineCurrentFunction() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
-  return winwidth(0) > 100 ?
-        \ s:truncate_string(sanitized, 30) :
-        \ ''
+  return winwidth(0) > 100 ? s:truncate_string(sanitized, 30) : ''
 endfunction
 
 function! StatuslineGitStatus() abort
@@ -295,6 +293,12 @@ function! StatusLine(...) abort
         \ 'sep_color': '%#StPrefixSep#',
         \ })
 
+  " Neovim allows unlimited alignment sections so we can put things in the
+  " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
+  let statusline .= '%='
+  let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
+        \ !empty(StatuslineCurrentFunction()), {})
+
   " Start of the right side layout
   let statusline .= '%='
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
@@ -304,10 +308,12 @@ function! StatusLine(...) abort
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
-  let statusline .= "%#Type#%{StatuslineLanguageServer()}"
-  let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
-        \ !empty(StatuslineCurrentFunction()), {})
+  let statusline .= "%#Type#%{StatuslineLanguageServer()}%*"
 
+  " spaces char ˽ or ⍽ / Tabs char - ⇥
+  let unexpected_indentation = &shiftwidth > 2 || !&expandtab
+  let l:statusline .= s:sep_if(&shiftwidth, unexpected_indentation,
+        \ extend({ 'prefix': &expandtab ? '˽' : '⇥', 'small': 1 }, {}))
   "Current line number/Total line numbers
   let statusline .= s:sep_if(line_info, strlen(line_info), extend({ 'prefix': '' }, s:st_mode))
   let statusline .= '%<'

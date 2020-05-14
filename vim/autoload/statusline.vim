@@ -19,10 +19,10 @@ function! statusline#show_plain_statusline() abort
         \ &previewwindow
 endfunction
 
-" This function allow me to specify titles for special case buffers
-" like the previewwindow or a quickfix window
+" This function allow me to specify titles for special case buffers like the preview window or a quickfix window
+" CREDIT:
+" https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
 function! statusline#special_buffers() abort
-  "Credit: https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
   let is_location_list = get(getloclist(0, {'winid':0}), 'winid', 0)
   return is_location_list ? 'Location List' :
         \ s:is_bt('quickfix') ? 'QuickFix' : &previewwindow ? 'preview' : ''
