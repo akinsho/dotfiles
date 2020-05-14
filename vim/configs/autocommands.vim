@@ -135,7 +135,7 @@ augroup END
 
 " Hide the colorcolumn when there isn't enough space
 function! CheckColorColumn()
-  if &ft ==# 'startify' || !&buflisted
+  if &ft ==# 'startify' || &ft ==# 'gitcommit' || !&buflisted
     return
   endif
   if winwidth('%') <= 120
@@ -144,12 +144,6 @@ function! CheckColorColumn()
       setl colorcolumn<
   endif
 endfunction
-
-" augroup remember_folds
-"   autocmd!
-"   autocmd BufWinLeave * mkview
-"   autocmd BufWinEnter * silent! loadview
-" augroup END
 
 function! s:update_tmux_statusline_colors() abort
   " Get the color of the current vim background and update tmux accordingly

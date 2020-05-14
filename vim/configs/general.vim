@@ -23,16 +23,14 @@ set shortmess+=a                      " use abbreviations in messages eg. `[RO]`
 set shortmess+=f                      " (file x of x) instead of just (x of x)
 set shortmess+=F                      "Dont give file info when editing a file
 set shortmess+=mnrxos
-if has('patch-7.4.314')
-  set shortmess+=c                    " Disable 'Pattern not found' messages
-endif
 " ----------------------------------------------------------------------------
 " Window splitting and buffers {{{1
 " ----------------------------------------------------------------------------
 set timeout timeoutlen=500 ttimeoutlen=10
-set nohidden
+set hidden " this allows changing vim buffers without saving
 set splitbelow splitright
-set switchbuf=useopen,usetab,vsplit
+" exclude usetab as we do not want to jump to buffers in already open tabs
+set switchbuf=useopen,vsplit
 if has('folding')
   if has('windows')
     set fillchars=vert:│
@@ -42,7 +40,8 @@ if has('folding')
     set fillchars+=diff:⣿
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
-      set fillchars+=eob:\              " suppress ~ at EndOfBuffer
+      " suppress ~ at EndOfBuffer
+      set fillchars+=eob:\ 
       if has('nvim-0.5')
         set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
       endif
@@ -76,9 +75,6 @@ set formatoptions+=t                  " autowrap lines using text width value
 " started and only at a white character that has been entered during the
 " current insert command.
 set formatoptions+=lv
-if v:version > 703 || v:version == 703 && has('patch541')
-  set formatoptions+=j
-endif
 set nrformats-=octal " never use octal when <C-x> or <C-a>"
 
 " ----------------------------------------------------------------------------
@@ -135,7 +131,7 @@ set wildignore+=*.*~,*~
 set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 if has('nvim-0.4')
   set wildoptions=pum
-  " set pumblend=2  "Make popup window translucent
+  set pumblend=1  " Make popup window translucent
 endif
 " ----------------------------------------------------------------------------
 " Display {{{1
@@ -185,18 +181,18 @@ if exists('&signcolumn')
     set signcolumn=yes "enables column that shows signs and error symbols
   endif
 endif
-set ruler
 set completeopt+=noinsert,noselect,longest
 set completeopt-=preview
 set nohlsearch
-"Automatically :write before running commands and changing files
-set autowriteall
+" Automatically :write before running commands and changing files
+" set autowriteall
 if has('unnamedplus')
   set clipboard+=unnamedplus
 elseif has('clipboard')
   set clipboard+=unnamed
 endif
 if !has('nvim')
+  set ruler
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set laststatus=2
   set incsearch
@@ -217,7 +213,6 @@ if has('termguicolors')
 endif
 " ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,./.git/.tags,tags,~/.tags
-
 ""---------------------------------------------------------------------------//
 " Colorscheme {{{1
 ""---------------------------------------------------------------------------//
@@ -304,12 +299,12 @@ endif
 "---------------------------------------------------------------------------//
 " Utilities {{{1
 "---------------------------------------------------------------------------//
-set noshowmode "No mode showing in command pane
+set noshowmode " no mode showing in command pane
 set sessionoptions=buffers,curdir,tabpages,folds,help,winpos
-set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
+set viewoptions=cursor,folds " save/restore just these (with `:{mk,load}view`)
 set updatetime=300
 if has('virtualedit')
-  set virtualedit=block               " allow cursor to move where there is no text in visual block mode
+  set virtualedit=block " allow cursor to move where there is no text in visual block mode
 endif
 " Add dictionary to vim's autocompletion
 set complete+=k
@@ -321,14 +316,6 @@ endif
 set encoding=utf-8
 scriptencoding utf-8
 set dictionary+=/usr/share/dict/words
-if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
-  set shell=/bin/bash
-endif
-set history=1000
-if !empty(&viminfo)
-  set viminfo^=!
-  set viminfo+='0
-endif
 "-----------------------------------------------------------------------------
 " BACKUP AND SWAPS {{{
 "-----------------------------------------------------------------------------
@@ -336,13 +323,6 @@ endif
 set noswapfile
 set nobackup
 set nowritebackup
-"This saves all back up files in a vim backup directory
-set backupdir=~/.vim/.backup//
-set backupdir+=~/local/.vim/tmp/backup
-set backupdir+=~/.vim/tmp/backup    " keep backup files out of the way
-if !isdirectory(&backupdir)
-  call mkdir(&backupdir, "p")
-endif
 if has ('persistent_undo')
   if !has('nvim')
     set autoread " reload files if they were edited elsewhere
@@ -364,20 +344,18 @@ if &filetype ==# 'html'
 endif
 augroup cursorline
   autocmd!
-  if !exists('g:gui_oni')
-    autocmd WinEnter,BufWinEnter * setlocal cursorline
-    autocmd WinLeave,BufWinLeave * setlocal nocursorline
-  endif
+  autocmd WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave,BufWinLeave * setlocal nocursorline
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
-
 "====================================================================================
 " Spelling {{{1
 "====================================================================================
 set spellfile=$DOTFILES/vim/.vim-spell-en.utf-8.add
 set nospell
 if has('syntax')
-  set spellcapcheck=                  " don't check for capital letters at start of sentence
+  " don't check for capital letters at start of sentence
+  set spellcapcheck=
 endif
 set fileformats=unix,mac,dos
 set complete+=kspell
