@@ -5,36 +5,17 @@
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
   "list.source.diagnostics.defaultOptions": ["--normal"],
-  "list.normalMappings": {
-    "t": "action:tabe",
-    "v": "action:vsplit",
-    "s": "action:split",
-    "p": "action:preview",
-    "d": "expr:GetDeleteAction"
-  },
-  "list.insertMappings": {
-    "<C-t>": "action:tabe",
-    "<C-w>": "command:wincmd k"
-  },
-  "suggest.noselect": false,
   "javascript.referencesCodeLens.enable": true,
   "codeLens.enable": true,
   "codeLens.separator": "‣",
-  "coc.preferences.hoverTarget": "float",
   // Diagnostics
-  "diagnostic.maxWindowHeight": 30,
-  "diagnostic.virtualText": false,
-  "diagnostic.refreshOnInsertMode": true,
-  "diagnostic.checkCurrentLine": false,
   "diagnostic.virtualTextPrefix": "ﯦ ",
   "diagnostic.errorSign": "✗",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "ﯦ",
-  "signature.target": "float",
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.formatOnInsertLeave": true,
-  "suggest.acceptSuggestionOnCommitCharacter": true,
   // Go
   // "go.goplsArgs": ["-remote=auto"],
   // "go.goplsOptions": {
