@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'nvim-bufferline')
+if !has_key(g:plugs, 'nvim-bufferline.lua')
   finish
 endif
 
