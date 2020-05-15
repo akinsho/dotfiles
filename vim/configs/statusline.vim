@@ -305,12 +305,14 @@ function! StatusLine(...) abort
   " Start of the right side layout
   let statusline .= '%='
   let diagnostic_info = s:status_diagnostic()
+  let diagnostic_highlight = s:get_diagnostic_highlight()
+  let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
+
+  let statusline .= " "
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
   " Add padding before the CocStatus component
   let statusline .= " "
-  let diagnostic_highlight = s:get_diagnostic_highlight()
-  let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
   let statusline .= "%#Type#%{StatuslineLanguageServer()}%*"
 
   " spaces char ˽ or ⍽ / Tabs char - ⇥
