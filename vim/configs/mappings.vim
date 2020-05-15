@@ -132,9 +132,6 @@ if !has_key(g:plugs, 'lexima.vim')
   inoremap [; [<CR>];<Esc>O<Tab>
   inoremap [, [<CR>],<Esc>O<Tab>
 endif
-""---------------------------------------------------------------------------//
-" => VISUAL MODE RELATED
-""---------------------------------------------------------------------------//
 " Store relative line number jumps in the jumplist.
 nnoremap <expr><silent> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
 nnoremap <expr><silent> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
@@ -271,48 +268,6 @@ onoremap nu :normal vin<CR>
 if exists('$TMUX')
   noremap <c-g> <c-a>
 endif
-" ----------------------------------------------------------------------------
-" ?ii / ?ai | indent-object
-" ?io       | strictly-indent-object
-" ----------------------------------------------------------------------------
-function! s:indent_object(op, skip_blank, b, e, bd, ed)
-  let i = min([s:indent_len(getline(a:b)), s:indent_len(getline(a:e))])
-  let x = line('$')
-  let d = [a:b, a:e]
-
-  if i == 0 && empty(getline(a:b)) && empty(getline(a:e))
-    let [b, e] = [a:b, a:e]
-    while b > 0 && e <= line('$')
-      let b -= 1
-      let e += 1
-      let i = min(filter(map([b, e], 's:indent_len(getline(v:val))'), 'v:val != 0'))
-      if i > 0
-        break
-      endif
-    endwhile
-  endif
-
-  for triple in [[0, 'd[o] > 1', -1], [1, 'd[o] < x', +1]]
-    let [o, ev, df] = triple
-
-    while eval(ev)
-      let line = getline(d[o] + df)
-      let idt = s:indent_len(line)
-
-      if eval('idt '.a:op.' i') && (a:skip_blank || !empty(line)) || (a:skip_blank && empty(line))
-        let d[o] += df
-      else | break | end
-    endwhile
-  endfor
-  execute printf('normal! %dGV%dG', max([1, d[0] + a:bd]), min([x, d[1] + a:ed]))
-endfunction
-xnoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), 0, 0)<cr>
-onoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), 0, 0)<cr>
-xnoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), -1, 1)<cr>
-onoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), -1, 1)<cr>
-xnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>"), 0, 0)<cr>
-onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
-
 " Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
 nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
@@ -335,8 +290,6 @@ vnoremap <leader>s :sort<CR>
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "open a new file in the same directory
 nnoremap <Leader>sf :vsp <C-R>=expand("%:p:h") . "/" <CR>
-" when going to the end of the line in visual mode ignore whitespace characters
-vnoremap $ g_
 "Open command line window - :<c-f>
 nnoremap <silent><localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
@@ -444,8 +397,10 @@ onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 ""---------------------------------------------------------------------------//
 " Navigation (CORE)
 ""---------------------------------------------------------------------------//
-"Zero should go to the first non-blank character not to the first column (which could be blank)
+" Zero should go to the first non-blank character not to the first column (which could be blank)
 noremap 0 ^
+" when going to the end of the line in visual mode ignore whitespace characters
+vnoremap $ g_
 " jk is escape, THEN move to the right to preserve the cursor position, unless
 " at the first column.  <esc> will continue to work the default way.
 inoremap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
@@ -520,9 +475,6 @@ function! ToggleColorColumn()
   endif
 endfunction
 nnoremap <F5> :call ToggleColorColumn()<CR>
-"Re-indent pasted text
-" nnoremap p p=`]<c-o>
-" nnoremap P P=`]<c-o>
 " ----------------------------------------------------------------------------
 " Profile
 " ----------------------------------------------------------------------------

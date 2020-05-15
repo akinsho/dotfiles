@@ -131,7 +131,7 @@ set wildignore+=*.*~,*~
 set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
 if has('nvim-0.4')
   set wildoptions=pum
-  set pumblend=1  " Make popup window translucent
+  set pumblend=3  " Make popup window translucent
 endif
 " ----------------------------------------------------------------------------
 " Display {{{1

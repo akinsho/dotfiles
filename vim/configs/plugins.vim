@@ -144,7 +144,7 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 Plug 'rakr/vim-one'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
-" Colorscheme Ideas
+
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
 "=======================
