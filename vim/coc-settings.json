@@ -62,7 +62,6 @@
   "git.addGBlameToVirtualText": false,
   // Suggest
   "suggest.noselect": false,
-  "suggest.maxPreviewWidth": 60,
   "suggest.enablePreselect": true,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
