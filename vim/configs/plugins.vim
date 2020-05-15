@@ -42,7 +42,7 @@ endfunction
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'airblade/vim-rooter'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'

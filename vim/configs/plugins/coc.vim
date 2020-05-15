@@ -22,7 +22,6 @@ let g:coc_global_extensions = [
       \ 'coc-yank',
       \ 'coc-flow',
       \ 'coc-git',
-      \ 'coc-tabnine',
       \ 'coc-reason',
       \ 'coc-eslint',
       \ 'coc-postfix'
@@ -31,6 +30,8 @@ let g:coc_global_extensions = [
 " TODO: Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
 " \ 'coc-jest',
+" NOTE: Tabnine is too resource intensive
+" \ 'coc-tabnine',
 
 " TODO: investigate replacing vim-go with coc-go
 " currently doesn't do enough
