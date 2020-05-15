@@ -152,7 +152,7 @@ Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 "=======================
 if has('nvim')
   " Plug '~/Desktop/Coding/nvim-bufferline'
-  Plug 'Akin909/nvim-bufferline'
+  Plug 'Akin909/nvim-bufferline.lua'
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
   Plug 'bagrat/vim-buffet'
