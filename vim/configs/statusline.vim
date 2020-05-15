@@ -122,6 +122,7 @@ let s:st_ok =   { 'color': '%#StOk#', 'sep_color': '%#StOkSep#' }
 let s:st_inactive = { 'color': '%#StInactive#', 'sep_color': '%#StInactiveSep#' }
 let s:st_error = {'color': '%#StError#', 'sep_color': '%#StErrorSep#' }
 let s:st_warning = {'color': '%#StWarning#', 'sep_color': '%#StWarningSep#' }
+let s:st_menu = {'color': '%#StMenu#', 'sep_color': '%#StMenuSep#' }
 
 let s:gold         = '#F5F478'
 let s:white        = '#abb2bf'
@@ -149,6 +150,8 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=none'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
+  silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
@@ -297,7 +300,7 @@ function! StatusLine(...) abort
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   let statusline .= '%='
   let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
-        \ !empty(StatuslineCurrentFunction()), {})
+        \ !empty(StatuslineCurrentFunction()), s:st_menu)
 
   " Start of the right side layout
   let statusline .= '%='
