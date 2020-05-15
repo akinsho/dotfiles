@@ -176,6 +176,10 @@ xmap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
+xmap im <Plug>(coc-classobj-i)
+omap im <Plug>(coc-classobj-i)
+xmap am <Plug>(coc-classobj-a)
+omap am <Plug>(coc-classobj-a)
 
 " TODO: Remove this when coc/nvim floating window bug is resolved
 nmap <silent><leader>cf <Plug>(coc-float-hide)
@@ -295,6 +299,7 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " nnoremap <silent> <leader>fi :Fold imports<CR>
 " nnoremap <silent> <leader>fc :Fold comments<CR>
 "}}}
+
 ""---------------------------------------------------------------------------//
 " Tags
 ""---------------------------------------------------------------------------//
