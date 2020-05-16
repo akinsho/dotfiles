@@ -13,16 +13,15 @@ endif
 ""---------------------------------------------------------------------------//
 " Message output on vim actions {{{1
 " ----------------------------------------------------------------------------
+set shortmess=                        " remove defaults
 set shortmess+=t                      " truncate file messages at start
 set shortmess+=A                      " ignore annoying swapfile messages
 set shortmess+=o                      " file-read message overwrites previous
-set shortmess-=l
+set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
-set shortmess+=W                      " don't echo "[w]"/"[written]" when writing
-set shortmess+=a                      " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 set shortmess+=f                      " (file x of x) instead of just (x of x)
 set shortmess+=F                      "Dont give file info when editing a file
-set shortmess+=mnrxos
+set shortmess+=s
 set shortmess+=c
 " ----------------------------------------------------------------------------
 " Window splitting and buffers {{{1
