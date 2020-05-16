@@ -92,7 +92,6 @@ Plug 'tpope/vim-dadbod'
 " ===========================
 "Syntax {{{1
 "============================
-Plug 'Akin909/vim-dune', { 'for': ['dune']} " syntax highlighting for ocaml/reason dune files
 Plug 'Yggdroot/indentLine'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'

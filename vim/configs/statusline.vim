@@ -309,11 +309,10 @@ function! StatusLine(...) abort
   let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
 
   let statusline .= " "
+  let statusline .= "%#Type#%{StatuslineLanguageServer()}%*"
+  let statusline .= " "
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
-  " Add padding before the CocStatus component
-  let statusline .= " "
-  let statusline .= "%#Type#%{StatuslineLanguageServer()}%*"
 
   " spaces char ˽ or ⍽ / Tabs char - ⇥
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab

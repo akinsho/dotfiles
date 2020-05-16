@@ -30,6 +30,7 @@ let g:coc_global_extensions = [
 " TODO: Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
 " \ 'coc-jest',
+
 " NOTE: Tabnine is too resource intensive
 " \ 'coc-tabnine',
 
