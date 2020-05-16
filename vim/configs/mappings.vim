@@ -147,7 +147,7 @@ cnoremap <C-N> <Down>
 " Insert escaped '/' while inputting a search pattern
 cnoremap <expr> / getcmdtype() == "/" ? "\/" : "/"
 "Save
-nnoremap <silent><C-S> :w<cr>
+nnoremap <silent><C-S> :silent w<cr>
 "Save all files
 nnoremap <silent>qa :confirm wqa<CR>
 " Quit

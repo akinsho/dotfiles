@@ -23,6 +23,7 @@ set shortmess+=a                      " use abbreviations in messages eg. `[RO]`
 set shortmess+=f                      " (file x of x) instead of just (x of x)
 set shortmess+=F                      "Dont give file info when editing a file
 set shortmess+=mnrxos
+set shortmess+=c
 " ----------------------------------------------------------------------------
 " Window splitting and buffers {{{1
 " ----------------------------------------------------------------------------
