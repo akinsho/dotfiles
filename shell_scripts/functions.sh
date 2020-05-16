@@ -10,13 +10,7 @@ function _t() {
 
 # Default to using `bat` https://github.com/sharkdp/bat#installation if it has been installed
 cat() {
-  if [[ $(uname -s) == "Linux" ]]; then
-    # bat has been renamed to batcat in Ubuntu 20.04
-    # https://github.com/sharkdp/bat/issues/905
-    if hash batcat 2>/dev/null; then
-      batcat "$@"
-    fi
-  elif hash bat 2>/dev/null; then
+  if hash bat 2>/dev/null; then
     bat "$@"
   else
     cat "$@"
