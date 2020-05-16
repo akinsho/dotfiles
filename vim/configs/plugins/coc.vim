@@ -105,6 +105,8 @@ augroup coc_commands
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
+  " Suggestions don't work and are not needed in the commandline window
+  autocmd FileType vim if bufname('%') == '[Command Line]' | let b:coc_suggest_disable = 1 | endif
 augroup End
 
 ""---------------------------------------------------------------------------//
