@@ -13,6 +13,7 @@ function! statusline#show_plain_statusline() abort
         \ s:is_ft('coc-explorer') ||
         \ s:is_ft('LuaTree') ||
         \ s:is_ft('neoterm')||
+        \ s:is_ft('vista') ||
         \ s:is_ft('fugitive') ||
         \ s:is_bt('terminal')||
         \ s:is_bt('quickfix') ||
@@ -57,6 +58,7 @@ function! statusline#filename(...) abort
         \ s:is_ft('ctrlsf') ? 'CtrlSF' :
         \ s:is_ft('defx') ? 'Defx' :
         \ s:is_ft('dbui') ? 'Dadbod UI' :
+        \ s:is_ft('vista') ? 'Vista' :
         \ s:is_ft('fugitive') ? 'Fugitive ' :
         \ s:is_ft('fugitiveblame') ? 'Git blame ' :
         \ s:is_ft('gitcommit') ? 'Git commit ' :
