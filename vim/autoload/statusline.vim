@@ -1,4 +1,4 @@
-= " Helpers -- generalise the methods for checking a ft or buftype
+" Helpers -- generalise the methods for checking a ft or buftype
 function! s:is_ft(ft) abort
   return &ft ==# a:ft
 endfunction
@@ -29,8 +29,8 @@ function! statusline#special_buffers() abort
 endfunction
 
 function! statusline#modified(...) abort
-  let icon = get(a:, '1', '✎')
-  return &ft =~ 'help' ? '' : &modified ? icon : ''
+  let l:icon = get(a:, '1', '✎')
+  return &ft =~ 'help' ? '' : &modified ? l:icon : ''
 endfunction
 
 function! statusline#readonly(...) abort
@@ -39,11 +39,11 @@ function! statusline#readonly(...) abort
 endfunction
 
 function! statusline#file_format() abort
-  let icon = &fileformat
+  let l:icon = &fileformat
   if exists("*WebDevIconsGetFileFormatSymbol") && !has('gui_running')
-    let icon = WebDevIconsGetFileFormatSymbol()
+    let l:icon = WebDevIconsGetFileFormatSymbol()
   endif
-  return winwidth(0) > 70 ? (&fileformat . ' ' . icon) : ''
+  return winwidth(0) > 70 ? (&fileformat . ' ' . l:icon) : ''
 endfunction
 
 function! statusline#filename(...) abort
@@ -77,10 +77,10 @@ function! statusline#filetype() abort
   if !strlen(&filetype) || statusline#show_plain_statusline()
     return ''
   endif
-  let icon = has('gui_running') || !exists('*WebDevIconsGetFileTypeSymbol') ?
+  let l:icon = has('gui_running') || !exists('*WebDevIconsGetFileTypeSymbol') ?
         \ &filetype :
         \ WebDevIconsGetFileTypeSymbol()
-  return winwidth(0) > 70 ? icon : ''
+  return winwidth(0) > 70 ? l:icon : ''
 endfunction
 
 function! statusline#file_component() abort
