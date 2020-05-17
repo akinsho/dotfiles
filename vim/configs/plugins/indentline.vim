@@ -26,8 +26,8 @@ let g:indentLine_setColors      = 1
 " the option below shows indent line even on the currently selected line
 " let g:indentLine_concealcursor = ''
 
-" Character options - ┊ ︙|
-let g:indentLine_char_list = ['│', '¦', '┆', '┊']
+" Character options - '︙', '|' , '¦', '┆', '┊'
+let g:indentLine_char_list = ['│']
 nnoremap <leader>il :IndentLinesToggle<CR>
 
 " FIXME
