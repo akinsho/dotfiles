@@ -18,9 +18,6 @@ function! ApplyUserHighlights() abort
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif
 
-  highlight link SpellLocal SpellCap
-  highlight link SpellRare SpellCap
-
   if has('nvim-0.3.2')
     " Add undercurl to existing spellbad highlight
     call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl')
