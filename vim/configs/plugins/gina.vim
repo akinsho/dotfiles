@@ -1,4 +1,4 @@
-if CheckPluginLoaded("gina.vim")
+if !PluginLoaded("gina.vim")
   finish
 endif
 " Plugin Mappings

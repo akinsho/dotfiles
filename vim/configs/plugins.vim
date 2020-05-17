@@ -49,11 +49,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'liuchengxu/vista.vim'
 "============================
 " TMUX {{{1
 "============================
-"Navigate panes in vim and tmux with the same bindings
-Plug 'christoomey/vim-tmux-navigator', Cond(!has('gui_running'))
+Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "============================
 "Utilities {{{1
 "============================
@@ -104,7 +104,6 @@ Plug 'sheerun/vim-polyglot'
 "Git {{{1
 " ==============================
 Plug 'rhysd/conflict-marker.vim'
-Plug 'lambdalisue/gina.vim'
 " =====================
 " Text Objects {{{1
 " =====================
@@ -136,11 +135,11 @@ Plug 'kana/vim-textobj-user'
 "=======================
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
-Plug 'junegunn/goyo.vim', Cond(!exists('g:gui_oni'),{ 'for':['vimwiki','markdown'] })
+Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
 "=======================
 "Filetype Plugins {{{1
 "======================
-Plug 'chrisbra/csv.vim', Cond(!exists('g:gui_oni'), { 'for': 'csv' })
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "=======================
 "Themes  {{{1
@@ -170,7 +169,7 @@ endif
 " SOURCE: https://github.com/junegunn/vim-plug/pull/875
 " Check if the files is in the plugs map but also IMPORTANTLY
 " that it is in the runtimepath
-function CheckPluginLoaded(plugin_name) abort
+function PluginLoaded(plugin_name) abort
   return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
 endfunction
 " vim:foldmethod=marker
