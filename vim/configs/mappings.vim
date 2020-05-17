@@ -30,6 +30,7 @@ if has('nvim')
   inoremap <silent><A-t> <Esc>:call terminal#toggle(12)<CR>
   tnoremap <silent><A-t> <C-\><C-n>:call terminal#toggle(12)<CR>
   nnoremap <silent><localleader>gp :call terminal#exec("git push")<CR>
+  nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j
