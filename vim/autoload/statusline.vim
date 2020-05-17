@@ -17,6 +17,7 @@ function! statusline#show_plain_statusline() abort
         \ s:is_bt('terminal')||
         \ s:is_bt('quickfix') ||
         \ s:is_bt('nofile') ||
+        \ s:is_bt('nowrite') ||
         \ &previewwindow
 endfunction
 
@@ -57,6 +58,7 @@ function! statusline#filename(...) abort
         \ s:is_ft('defx') ? 'Defx' :
         \ s:is_ft('dbui') ? 'Dadbod UI' :
         \ s:is_ft('fugitive') ? 'Fugitive ' :
+        \ s:is_ft('fugitiveblame') ? 'Git blame ' :
         \ s:is_ft('gitcommit') ? 'Git commit ' :
         \ s:is_ft('defx') ? 'Defx ⌨' :
         \ s:is_ft('ctrlsf') ? 'CtrlSF 🔍' :

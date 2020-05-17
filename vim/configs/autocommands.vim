@@ -149,7 +149,7 @@ endfunction
 
 function! s:update_tmux_statusline_colors() abort
   " Get the color of the current vim background and update tmux accordingly
-  let bg_color=synIDattr(hlID('Normal'), 'bg')
+  let bg_color = synIDattr(hlID('Normal'), 'bg')
   call jobstart('tmux set-option -g status-style bg=' . bg_color)
   " TODO: on vim leave we should set this back to what it was
 endfunction
@@ -256,11 +256,6 @@ augroup FileType_all "{{{1
         \ if &l:autoread > 0 | source <afile> |
         \   echo 'source '.bufname('%') |
         \ endif
-augroup END
-
-augroup fugitiveSettings
-  autocmd!
-  autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 augroup END
 
 augroup LongFiles "{{{1
