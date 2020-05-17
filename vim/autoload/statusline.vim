@@ -11,9 +11,9 @@ function! statusline#show_plain_statusline() abort
   return s:is_ft('help') ||
         \ s:is_ft('ctrlsf')||
         \ s:is_ft('coc-explorer') ||
-        \ s:is_ft('terminal')||
         \ s:is_ft('neoterm')||
         \ s:is_ft('fugitive') ||
+        \ s:is_bt('terminal')||
         \ s:is_bt('quickfix') ||
         \ s:is_bt('nofile') ||
         \ &previewwindow
@@ -63,6 +63,7 @@ function! statusline#filename(...) abort
         \ s:is_ft('help') ? 'help ':
         \ s:is_ft('undotree') ? 'UndoTree ⮌' :
         \ s:is_ft('coc-explorer') ? 'Coc Explorer' :
+        \ s:is_bt('terminal') ? '  '. expand('%:t') :
         \ fname == '__Tagbar__' ? 'Tagbar' :
         \ fname == 'ControlP' ? 'CtrlP' :
         \ fname == '__Gundo__' ? 'Gundo' :

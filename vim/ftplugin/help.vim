@@ -1,3 +1,5 @@
+wincmd L " automatically move window to the right
+
 setl spell spelllang=en_us
 setl nonumber norelativenumber
 nnoremap <buffer> <CR> <C-]>

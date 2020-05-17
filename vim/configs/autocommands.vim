@@ -197,7 +197,7 @@ augroup END
 " Add Per Window Highlights {{{
 function! s:handle_window_enter() abort
   if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber bufhidden=hide
+    setlocal nocursorline nonumber norelativenumber
     " if g:colors_name ==? 'one' || g:colors_name ==? 'onedark'
       " if exists('+winhighlight')
         "@TODO: figure out how to avoid highlighting fzf buffers
@@ -234,17 +234,10 @@ if has('nvim')
   augroup END
 endif
 
-" Setup Help Window "{{{1
-function! s:SetupHelpWindow()
-  wincmd L
-  vertical resize 80
-endfunction
-
 augroup FileType_all "{{{1
   autocmd!
 
-  autocmd BufEnter,TabEnter * if &buftype == 'terminal' | :startinsert | endif
-  autocmd FileType help au BufEnter,BufWinEnter <buffer> call <SID>SetupHelpWindow()
+  autocmd TermOpen,TermEnter * startinsert
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
