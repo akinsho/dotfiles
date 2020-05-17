@@ -7,7 +7,7 @@
 " Terminal settings
 if has('nvim')
   "Add neovim terminal escape with ESC mapping
-  tnoremap <ESC> <C-\><C-n>
+  tnoremap <esc> <C-\><C-n>
   tnoremap jk <C-\><C-n>
   " Recursive mappings so that the rebound <C-direction> mappings are triggerd
   tmap <C-h> <C-\><C-n><C-h>
@@ -24,14 +24,12 @@ if has('nvim')
   nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
   nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
   nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
-  nnoremap <Leader>te <Cmd>tabnew<CR><Cmd>te<CR>
-  " if filereadable('~/.config/nvim/lua/navigation/init.lua')
-    " require the lua module
-    " lua require("navigation")
-    " map the Terminal function in the lua module to some shortcuts
-    " nnoremap <silent> <leader>tt :lua Terminal(1)<cr>
-    " nnoremap <silent> <leader>tk :lua Terminal(2)<cr>
-  " endif
+  nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
+
+  nnoremap <silent><A-t> :call terminal#toggle(12)<CR>
+  inoremap <silent><A-t> <Esc>:call terminal#toggle(12)<CR>
+  tnoremap <silent><A-t> <C-\><C-n>:call terminal#toggle(12)<CR>
+  nnoremap <silent><localleader>gp :call terminal#exec("git push")<CR>
 else
   tmap <C-h> <C-W>h
   tmap <C-j> <C-W>j
