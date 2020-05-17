@@ -80,7 +80,8 @@ Plug 'norcalli/nvim-colorizer.lua'
 " =====================
 "TPOPE {{{1
 "====================================
-Plug 'tpope/vim-rhubarb'
+" FIXME currently breaks :Gblame functionality
+" Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
