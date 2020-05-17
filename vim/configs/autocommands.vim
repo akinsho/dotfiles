@@ -76,7 +76,7 @@ augroup SmartClose
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,ref,Godoc,dbui,fugitive,log
+        \gitcommit,ref,Godoc,dbui,fugitive,LuaTree,log
         \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
@@ -209,13 +209,6 @@ function! s:handle_window_enter() abort
   endif
   if &previewwindow
     setlocal nospell concealcursor=nv nocursorline colorcolumn=
-    " if exists('+winhighlight')
-    "   " These highlights set the preview to have the same foreground as the
-    "   " cursorline but not to show the tildes which mark the end of the buffer
-    "   let l:cursorline_background = synIDattr(hlID('CursorLine'), 'bg#')
-    "   execute 'silent highlight PreviewEndOfBuffer guifg='.l:cursorline_background
-    "   setlocal winhighlight=Normal:CursorLine,EndOfBuffer:PreviewEndOfBuffer
-    " endif
   endif
 endfunction
 
