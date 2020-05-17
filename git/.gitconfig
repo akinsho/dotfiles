@@ -12,7 +12,7 @@
   interactive = auto
 [core]
   editor = nvim
-  excludesfile ="~/Dotfiles/git/.gitignore_global"
+  excludesfile ="~/.dotfiles/git/.gitignore_global"
   pager = delta --plus-color="#012800" --minus-color="#340001" --theme='TwoDark'
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
@@ -33,7 +33,7 @@
   uncommit = reset --soft HEAD^
   ureset = !git reset --hard $(git upstream)
   sl = log --oneline --decorate -20
-   mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
+  mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
 [interactive]
   diffFilter = delta --color-only
 [push]
