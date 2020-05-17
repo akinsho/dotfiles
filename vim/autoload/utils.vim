@@ -2,7 +2,7 @@ function! utils#toggle_plugin_config() abort
   if &ft != 'vim'
     return
   endif
-  let l:config_file = expand('%:p') 
+  let l:config_file = expand('%:p')
   let l:toggled_config =  match(l:config_file, 'inactive.vim') != -1
         \ ? substitute(l:config_file, '\.inactive\.vim', '.vim','')
         \ : substitute(l:config_file, '\.vim', '.inactive.vim','')

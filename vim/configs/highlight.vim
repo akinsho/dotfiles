@@ -21,8 +21,6 @@ function! ApplyUserHighlights() abort
   highlight link SpellLocal SpellCap
   highlight link SpellRare SpellCap
 
-  highlight link DiffChange Search
-
   if has('nvim-0.3.2')
     " Add undercurl to existing spellbad highlight
     call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl')
