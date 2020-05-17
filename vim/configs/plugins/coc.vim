@@ -8,7 +8,6 @@ let g:node_client_debug = 1
 
 let g:coc_global_extensions = [
       \ 'coc-explorer',
-      \ 'coc-tag',
       \ 'coc-marketplace',
       \ 'coc-json',
       \ 'coc-vimlsp',
@@ -24,7 +23,6 @@ let g:coc_global_extensions = [
       \ 'coc-git',
       \ 'coc-reason',
       \ 'coc-eslint',
-      \ 'coc-postfix'
       \]
 
 " TODO: Coc pairs is takes half a second to expand
@@ -279,7 +277,8 @@ function s:apply_coc_highlights()
   call utils#extend_highlight(
         \ 'CursorLine',
         \ 'CocHighlightText',
-        \ 'gui=undercurl,bold')
+        \ 'gui=undercurl,bold'
+        \ )
 endfunction
 
 augroup Coc_highlights
