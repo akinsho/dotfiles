@@ -39,6 +39,7 @@ function! ApplyUserHighlights() abort
     call one#highlight('jsExport', '61afef', 'none', 'italic')
     call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
+    call one#highlight('vimCommentTitle', 'c678dd', 'none', 'bold,italic')
   elseif g:colors_name ==? 'vim-monokai-tasty'
     highlight clear SignColumn
     highlight GitGutterAdd guifg=green
