@@ -25,10 +25,10 @@ nnoremap <silent><leader>gl :Git pull<CR>
 nnoremap <silent><leader>gp :Git push<CR>
 nnoremap <silent><leader>gpf :Git push -f<CR>
 nnoremap <silent><leader>go :Git checkout<Space>
-"Open current file on github.com
-nnoremap <silent><leader>gb :GBrowse<CR>
-"Make it work in Visual mode to open with highlighted linenumbers
-vnoremap <silent><leader>gb :GBrowse<CR>
+" Open current file on github.com
+" nnoremap <silent><leader>gb :GBrowse<CR>
+" Make it work in Visual mode to open with highlighted linenumbers
+" vnoremap <silent><leader>gb :GBrowse<CR>
 
 function! s:setup() abort
   nnoremap <expr><buffer> } filter([search('\%(\_^#\?\s*\_$\)\\|\%$', 'W'), line('$')], 'v:val')[0].'G'

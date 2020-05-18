@@ -10,7 +10,8 @@
   "codeLens.enable": true,
   "codeLens.separator": "‣",
   // Diagnostics
-  "diagnostic.virtualTextPrefix": "ﯦ ",
+  //" "ﯦ
+  "diagnostic.virtualTextPrefix": "",
   "diagnostic.errorSign": "✗",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
@@ -38,7 +39,6 @@
     "typescript": ["javascript"],
     "rei": ["reason"]
   },
-  // Explorer
   "explorer.file.column.git.icon.modified": "",
   "explorer.file.column.git.icon.added": "",
   "explorer.file.column.git.icon.deleted": "",
@@ -49,6 +49,7 @@
   // '' - changed
   // '' - removed
   // '' - changed/removed
+  "git.showCommitInFloating": true,
   "git.stagedDecorator": " ●",
   "git.changedDecorator": " ",
   "git.changedSign.text": "•",
