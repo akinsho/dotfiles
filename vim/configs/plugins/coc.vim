@@ -269,7 +269,7 @@ function s:apply_coc_highlights()
   highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
   highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
   highlight CocCodeLens ctermfg=Gray guifg=#999999
-  highlight CocHighlightText gui=underline
+  call utils#extend_highlight('CursorColumn', 'CocHighlightText', "gui=underline")
 
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
   highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
