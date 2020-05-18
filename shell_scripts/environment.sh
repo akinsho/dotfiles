@@ -13,11 +13,12 @@ export PATH="$HOME/.npm/bin:$PATH"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # GO ============================================================
-    export GOPATH=$(go env GOPATH)
-    export PATH=$PATH:/usr/local/go/bin
-    export PATH=$PATH:$(go env GOPATH)/bin
-    export PATH=$HOME/.local/bin:$PATH
-    export PATH="$PATH:$HOME/flutter/bin"
+  export GOPATH=$(go env GOPATH)
+  export PATH=$PATH:/usr/local/go/bin
+  export PATH=$PATH:$(go env GOPATH)/bin
+  export PATH=$HOME/.local/bin:$PATH
+  export PATH="$PATH:$HOME/flutter/bin"
+  export PATH="$PATH":"$HOME/flutter/.pub-cache/bin"
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
@@ -34,18 +35,17 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export MANPATH="/usr/local/man:$MANPATH"
-export PATH=~/.rbenv:$PATH
 
 # you may need to manually set your language environment
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
 # preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+export EDITOR='nvim'
+# fi
 
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
