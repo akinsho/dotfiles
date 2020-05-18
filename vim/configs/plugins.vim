@@ -40,6 +40,10 @@ endfunction
 " CORE {{{1
 "================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" NOTE: early test of nvim-lsp. TOO EARLY
+" Plug 'neovim/nvim-lsp'
+" Plug 'haorenW1025/completion-nvim'
+" Plug 'haorenW1025/diagnostic-nvim'
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }

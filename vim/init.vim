@@ -114,6 +114,10 @@ endfor
 
 call s:load_plugin_configs(g:dotfiles . '/vim/configs/plugins')
 
+if has('nvim')
+  luafile $DOTFILES/vim/init.lua
+endif
+
 
 "NOTE: Order matters here as this works like an after overwriting Settings for oni
 if exists('g:gui_oni')
