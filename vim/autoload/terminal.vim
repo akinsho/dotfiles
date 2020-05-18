@@ -33,7 +33,6 @@ function! terminal#open(...) abort
       wincmd J
       execute "resize " . size
       buffer Terminal\ 1
-      startinsert!
       " Gets the id of the terminal window
       let s:terminal_window = win_getid()
     endif
