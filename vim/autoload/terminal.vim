@@ -7,7 +7,7 @@ let s:terminal_buffer = -1
 let s:terminal_job_id = -1
 
 function! terminal#open(...) abort
-  let size = get(a:, '1', 15)
+  let size = get(a:, '1', 10)
   " Check if buffer exists, if not create a window and a buffer
   if !bufexists(s:terminal_buffer)
     " Creates a window call monkey_terminal
