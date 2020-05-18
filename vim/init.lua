@@ -1,17 +1,6 @@
 local fn = _G.vim.fn
 local api = _G.vim.api
-
--- This plugin might not be installed so check it's there first
-local load_lsp = function ()
-  require'nvim_lsp'
-end
-
-local nvim_lsp_loaded, lsp = pcall(load_lsp)
-
-if not nvim_lsp_loaded then
-  return
-end
-
+local lsp = require'nvim_lsp'
 
 local function is_executable(name)
   if fn.executable(name) > 0 then

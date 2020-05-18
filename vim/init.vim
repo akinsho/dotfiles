@@ -114,7 +114,7 @@ endfor
 
 call s:load_plugin_configs(g:dotfiles . '/vim/configs/plugins')
 
-if has('nvim')
+if has('nvim') && has_key(g:plugs, 'nvim-lsp')
   luafile $DOTFILES/vim/init.lua
 endif
 
