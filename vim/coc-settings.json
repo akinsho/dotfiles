@@ -2,15 +2,18 @@
   // Language specific
   "typescript.suggestionActions.enabled": true,
   "javascript.referencesCodeLens.enable": true,
-  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  "html.autoClosingTags": true,
+  // List
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
   "list.source.diagnostics.defaultOptions": ["--normal"],
   "codeLens.enable": true,
   "codeLens.separator": "‣",
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   // Diagnostics
   //" "ﯦ
+  "diagnostic.separateRelatedInformationAsDiagnostics": true,
   "diagnostic.virtualTextPrefix": "",
   "diagnostic.errorSign": "✗",
   "diagnostic.warningSign": "",
