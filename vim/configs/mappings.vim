@@ -26,9 +26,9 @@ if has('nvim')
   nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
   nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
 
-  nnoremap <silent><A-t> :call terminal#toggle(10)<CR>
-  inoremap <silent><A-t> <Esc>:call terminal#toggle(10)<CR>
-  tnoremap <silent><A-t> <C-\><C-n>:call terminal#toggle(10)<CR>
+  nnoremap <silent><c-\> :call terminal#toggle(10)<CR>
+  inoremap <silent><c-\> <Esc>:call terminal#toggle(10)<CR>
+  tnoremap <silent><c-\> <C-\><C-n>:call terminal#toggle(10)<CR>
   nnoremap <silent><localleader>gp :call terminal#exec("git push")<CR>
   nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>
 else
