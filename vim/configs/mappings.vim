@@ -459,6 +459,16 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 ""---------------------------------------------------------------------------//
 MapToggle <F7> wrap
 MapToggle <F8> list
+
+function! s:toggle_bg() abort
+  if &background == 'dark'
+    set background=light
+  else
+    set background=dark
+  endif
+endfunction
+
+command! ToggleBackground call s:toggle_bg()
 ""---------------------------------------------------------------------------//
 " Behavior-altering option toggles
 ""---------------------------------------------------------------------------//
