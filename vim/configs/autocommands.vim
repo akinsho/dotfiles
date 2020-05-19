@@ -230,8 +230,8 @@ endif
 augroup FileType_all "{{{1
   autocmd!
 
-  autocmd TermOpen,TermEnter * startinsert
-  autocmd TermLeave * stopinsert
+  autocmd TermOpen,TermEnter * startinsert!
+  autocmd TermLeave * stopinsert!
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
