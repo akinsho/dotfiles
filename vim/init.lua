@@ -5,7 +5,7 @@ local api = _G.vim.api
 -- Helpers
 -----------------------------------------------------------------------------//
 local function is_plugin_loaded(plugin)
-  fn.has_key(vim.g.plugs, plugin)
+  return fn.has_key(vim.g.plugs, plugin) > 0
 end
 
 local function is_executable(name)
@@ -32,23 +32,31 @@ local lsp = require'nvim_lsp'
 -----------------------------------------------------------------------------//
 -- Setup plugins
 -----------------------------------------------------------------------------//
-function _G.setup_lsp()
+local function echo_msg(message)
+  api.nvim_command('echohl String')
+  api.nvim_command(string.format('echom "%s"', message))
+  api.nvim_command('echohl clear')
+end
+
+local function on_attach()
   if is_plugin_loaded('completion-nvim') then
     require'completion'.on_attach()
+    echo_msg("Loaded completion-nvim")
+
+    api.nvim_set_var('completion_enable_fuzzy_match', 1)
+    api.nvim_set_var('completion_enable_snippet', 'UltiSnips')
   end
   if is_plugin_loaded('diagnostic-nvim') then
     require'diagnostic'.on_attach()
+    echo_msg("Loaded diagnostic-nvim")
+    api.nvim_set_var('diagnostic_enable_virtual_text', 1)
   end
 end
 
-api.nvim_set_var('completion_enable_snippet ', 'UltiSnips')
-api.nvim_set_var('diagnostic_enable_virtual_text ', 1)
-
-fn.sign_define("LspDiagnosticsErrorSign", {text = "✗", texthl = "LspDiagnosticsError"})
-fn.sign_define("LspDiagnosticsWarningSign", {text = "", texthl = "LspDiagnosticsWarning"})
-fn.sign_define("LspDiagnosticInformationSign", {text = "", texthl = "LspDiagnosticsInformation"})
-fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsHint"})
-
+fn.sign_define("LspDiagnosticsErrorSign", {text = "✗", texthl = "LspDiagnosticsErrorSign"})
+fn.sign_define("LspDiagnosticsWarningSign", {text = "", texthl = "LspDiagnosticsWarningSign"})
+fn.sign_define("LspDiagnosticInformationSign", {text = "", texthl = "LspDiagnosticsInformationSign"})
+fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsHintSign"})
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
@@ -77,7 +85,6 @@ local mappings = {
   ['g0'] =    '<cmd>lua vim.lsp.buf.document_symbol()<CR>';
   ['gW'] =    '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>';
 }
-
 for key, mapping in pairs(mappings) do
     api.nvim_set_keymap('n', key, mapping, {
         nowait = true, noremap = true, silent = true
@@ -96,19 +103,29 @@ api.nvim_set_keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {
 -- Language servers
 -----------------------------------------------------------------------------//
 if is_executable('gopls') then
-  lsp.gopls.setup{}
+  lsp.gopls.setup{on_attach = on_attach}
 end
 
 if is_executable('vim-language-server') then
-  lsp.vimls.setup{}
+  lsp.vimls.setup{on_attach = on_attach}
 end
 
-lsp.rust_analyzer.setup{}
+if is_executable('flow') then
+  lsp.flow.setup{on_attach = on_attach}
+end
 
------------------------------------------------------------------------------//
--- Autocommands
------------------------------------------------------------------------------//
-api.nvim_command("augroup LuaInit")
-api.nvim_command("autocmd!")
-api.nvim_command("autocmd BufEnter * lua setup_lsp()")
-api.nvim_command("augroup END")
+if is_executable('vscode-html-languageserver') then
+  lsp.html.setup{on_attach = on_attach}
+end
+
+if is_executable('vscode-json-languageserver') then
+  lsp.jsonls.setup{on_attach = on_attach}
+end
+
+if is_executable('typescript-language-server') then
+  lsp.tsserver.setup{on_attach = on_attach}
+end
+
+lsp.sumneko_lua.setup{on_attach = on_attach}
+
+lsp.rust_analyzer.setup{on_attach = on_attach}
