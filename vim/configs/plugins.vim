@@ -36,10 +36,20 @@ function! Cond(cond, ...)
   return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
 endfunction
 
+let g:testing_nvim_lsp = 0
 "================================
 " CORE {{{1
 "================================
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if g:testing_nvim_lsp
+  " ===============================
+  " Nvim LSP:  TOO EARLY
+  " ===============================
+  Plug 'neovim/nvim-lsp'
+  Plug 'haorenW1025/completion-nvim'
+  Plug 'haorenW1025/diagnostic-nvim'
+else
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
@@ -52,13 +62,6 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'liuchengxu/vista.vim'
 " NOTE: this plugin adds mappings for window navigation OUTSIDE tmux as well
 Plug 'christoomey/vim-tmux-navigator'
-" ===============================
-" Nvim LSP
-" ===============================
-" NOTE: early test of nvim-lsp. TOO EARLY
-" Plug 'neovim/nvim-lsp'
-" Plug 'haorenW1025/completion-nvim'
-" Plug 'haorenW1025/diagnostic-nvim'
 "============================
 "Utilities {{{1
 "============================

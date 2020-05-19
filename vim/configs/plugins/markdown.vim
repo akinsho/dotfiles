@@ -8,9 +8,11 @@ let g:vim_markdown_fenced_languages    = [
       \'xml',
       \'html=html',
       \'py=python',
-      \'sql'
-      \'go'
-      \'elm'
+      \'sql',
+      \'go',
+      \'elm',
+      \'vim',
+      \'lua'
       \]
 let g:vim_markdown_autowrite           = 1
 let g:vim_markdown_json_frontmatter    = 1
