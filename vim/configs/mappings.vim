@@ -294,8 +294,14 @@ nnoremap <silent><localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync froms
 
 command! -nargs=+ -complete=command TabMessage call utils#tab_message(<q-args>)
 ""---------------------------------------------------------------------------//
-" Window resizing bindings
+" Window bindings
 ""---------------------------------------------------------------------------//
+if !PluginLoaded('vim-tmux-navigator')
+  nnoremap <c-j> <c-w>j
+  nnoremap <c-k> <c-w>k
+  nnoremap <c-h> <c-w>h
+  nnoremap <c-l> <c-w>l
+endif
 "Create a vertical split
 nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
 "Create a horizontal split

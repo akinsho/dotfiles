@@ -61,7 +61,7 @@ Plug 'honza/vim-snippets'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'liuchengxu/vista.vim'
 " NOTE: this plugin adds mappings for window navigation OUTSIDE tmux as well
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "============================
 "Utilities {{{1
 "============================
