@@ -3,8 +3,15 @@
 " You can toggle the terminal and also send a command to the same terminal.
 
 let s:terminal_window = -1
-let s:terminal_buffer = -1
+" FIXME this is can become invalid if this file is sourced as it will
+" be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
+let s:terminal_name = 'Terminal 1'
+" Assuming this file is sourced then a file with this terminal name
+" will still exist in vim causing the calle to file {name} to fail
+" to work around this instead we assign the buffer ID to the result
+" of searching for any buffer with a matching name
+let s:terminal_buffer = bufnr(s:terminal_name)
 
 function! terminal#open(...) abort
   let size = get(a:, '1', 10)
@@ -17,9 +24,8 @@ function! terminal#open(...) abort
     execute "resize " . size
     let s:terminal_job_id = termopen($SHELL, { 'detach': 1 })
 
-    " Change the name of the buffer to "Terminal 1"
-    " FIXME this is erroring because the filename already exists
-    silent file Terminal\ 1
+    " Change the name of the buffer to the terminal name
+    execute 'silent file '. s:terminal_name
     " Gets the id of the terminal window
     let s:terminal_window = win_getid()
     let s:terminal_buffer = bufnr('%')
@@ -34,7 +40,7 @@ function! terminal#open(...) abort
       " Moves to the window below the current one
       wincmd J
       execute "resize " . size
-      buffer Terminal\ 1
+      execute "buffer " . s:terminal_name
       lcd %:p:h
       " Gets the id of the terminal window
       let s:terminal_window = win_getid()
