@@ -18,6 +18,7 @@ function! terminal#open(...) abort
     let s:terminal_job_id = termopen($SHELL, { 'detach': 1 })
 
     " Change the name of the buffer to "Terminal 1"
+    " FIXME this is erroring because the filename already exists
     silent file Terminal\ 1
     " Gets the id of the terminal window
     let s:terminal_window = win_getid()
@@ -26,6 +27,7 @@ function! terminal#open(...) abort
     " The buffer of the terminal won't appear in the list of the buffers
     " when calling :buffers command
     set nobuflisted
+    lcd %:p:h
   else
     if !win_gotoid(s:terminal_window)
       sp
@@ -33,6 +35,7 @@ function! terminal#open(...) abort
       wincmd J
       execute "resize " . size
       buffer Terminal\ 1
+      lcd %:p:h
       " Gets the id of the terminal window
       let s:terminal_window = win_getid()
     endif
@@ -61,6 +64,8 @@ function! terminal#exec(cmd) abort
 
   " clear current input
   call jobsend(s:terminal_job_id, "clear\n")
+  " FIXME change the directory of the terminal to that of the current buffer
+  " call jobsend(s:terminal_job_id, "cd ".expand('%:p:h').'\n')
 
   " run cmd
   call jobsend(s:terminal_job_id, a:cmd . "\n")
