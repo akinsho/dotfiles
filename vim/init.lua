@@ -84,7 +84,9 @@ local mappings = {
   ['gr'] =    '<cmd>lua vim.lsp.buf.references()<CR>';
   ['g0'] =    '<cmd>lua vim.lsp.buf.document_symbol()<CR>';
   ['gW'] =    '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>';
+  ['ff'] =    '<cmd>lua vim.lsp.buf.formatting()<CR>';
 }
+
 for key, mapping in pairs(mappings) do
     api.nvim_set_keymap('n', key, mapping, {
         nowait = true, noremap = true, silent = true
