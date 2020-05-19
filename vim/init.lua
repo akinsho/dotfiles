@@ -45,6 +45,13 @@ local function on_attach()
 
     api.nvim_set_var('completion_enable_fuzzy_match', 1)
     api.nvim_set_var('completion_enable_snippet', 'UltiSnips')
+
+    api.nvim_set_keymap('n', '[c', '<cmd>NextDiagnostic<cr>', {
+        silent = true, nowait = true, noremap = true
+      })
+    api.nvim_set_keymap('n', ']c', '<cmd>PrevDiagnostic<cr>', {
+        silent = true, nowait = true, noremap = true
+      })
   end
   if is_plugin_loaded('diagnostic-nvim') then
     require'diagnostic'.on_attach()
@@ -60,14 +67,14 @@ fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsH
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
-api.nvim_command("highlight! LspDiagnosticsError guifg=red gui=undercurl,bold") -- used for "Error" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticsErrorSign guifg=red") -- used for "Error" diagnostic signs in sign column
-api.nvim_command("highlight! LspDiagnosticsWarning  guifg=yellow gui=undercurl") -- used for "Warning" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticsWarningSign guifg=yellow") -- used for "Warning" diagnostic signs in sign column
-api.nvim_command("highlight! LspDiagnosticInformation guifg=blue") -- used for "Information" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticInformationSign guifg=blue") -- used for "Information" signs in sign column
-api.nvim_command("highlight! LspDiagnosticHint guifg=yellow gui=bold") -- used for "Hint" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticHintSign guifg=yellow") -- used for "Hint" diagnostic signs in sign column
+api.nvim_command("highlight! LspDiagnosticsError ctermfg=Red guifg=#E06C75 gui=undercurl,bold") -- used for "Error" diagnostic virtual text
+api.nvim_command("highlight! LspDiagnosticsErrorSign guifg=#E06C75") -- used for "Error" diagnostic signs in sign column
+api.nvim_command("highlight! LspDiagnosticsWarning  guifg=#ff922b  gui=undercurl") -- used for "Warning" diagnostic virtual text
+api.nvim_command("highlight! LspDiagnosticsWarningSign guifg=#ff922b") -- used for "Warning" diagnostic signs in sign column
+api.nvim_command("highlight! LspDiagnosticInformation guifg=#fab005") -- used for "Information" diagnostic virtual text
+api.nvim_command("highlight! LspDiagnosticInformationSign guifg=#fab005") -- used for "Information" signs in sign column
+api.nvim_command("highlight! LspDiagnosticHint guifg=#fab005 gui=bold") -- used for "Hint" diagnostic virtual text
+api.nvim_command("highlight! LspDiagnosticHintSign guifg=#fab005") -- used for "Hint" diagnostic signs in sign column
 api.nvim_command("highlight! LspReferenceText gui=undercurl,bold") -- used for highlighting "text" references
 api.nvim_command("highlight! LspReferenceRead gui=undercurl,bold") -- used for highlighting "read" references
 -----------------------------------------------------------------------------//
