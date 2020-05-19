@@ -1,6 +1,12 @@
 local fn = _G.vim.fn
 local api = _G.vim.api
-local lsp = require'nvim_lsp'
+
+-----------------------------------------------------------------------------//
+-- Helpers
+-----------------------------------------------------------------------------//
+local function is_plugin_loaded(plugin)
+  fn.has_key(vim.g.plugs, plugin)
+end
 
 local function is_executable(name)
   if fn.executable(name) > 0 then
@@ -10,12 +16,29 @@ local function is_executable(name)
   end
 end
 
+
+-----------------------------------------------------------------------------//
+-- Init
+-----------------------------------------------------------------------------//
+local lsp_configs_loaded = is_plugin_loaded('nvim-lsp')
+
+-- NOTE: Don't load this file if we aren't using "nvim-lsp"
+if not lsp_configs_loaded then
+  return
+end
+
+local lsp = require'nvim_lsp'
+
 -----------------------------------------------------------------------------//
 -- Setup plugins
 -----------------------------------------------------------------------------//
-function _G.attach_lsp()
-  require'completion'.on_attach()
-  require'diagnostic'.on_attach()
+function _G.setup_lsp()
+  if is_plugin_loaded('completion-nvim') then
+    require'completion'.on_attach()
+  end
+  if is_plugin_loaded('diagnostic-nvim') then
+    require'diagnostic'.on_attach()
+  end
 end
 
 api.nvim_set_var('completion_enable_snippet ', 'UltiSnips')
@@ -87,5 +110,5 @@ lsp.rust_analyzer.setup{}
 -----------------------------------------------------------------------------//
 api.nvim_command("augroup LuaInit")
 api.nvim_command("autocmd!")
-api.nvim_command("autocmd BufEnter * lua attach_lsp()")
+api.nvim_command("autocmd BufEnter * lua setup_lsp()")
 api.nvim_command("augroup END")
