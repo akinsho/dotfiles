@@ -13,12 +13,20 @@ let s:terminal_name = 'Terminal 1'
 " of searching for any buffer with a matching name
 let s:terminal_buffer = bufnr(s:terminal_name)
 
+" Rather than call win_gotoid directly we call it with alt so
+" we don't set the alternate-file to the terminal so it should
+" be omitted when using b#,<C-^> to switch buffers
+function! s:go_to_winid(win_id) abort
+  keepalt call win_gotoid(a:win_id)
+  return win_getid() == s:terminal_window ? 1 : 0
+endfunction
+
 function! terminal#open(...) abort
   let size = get(a:, '1', 10)
   " Check if buffer exists, if not create a window and a buffer
   if !bufexists(s:terminal_buffer)
     " Creates a window call monkey_terminal
-    new monkey_terminal
+    keepalt new monkey_terminal
     " Moves to the window the right the current one
     wincmd J
     execute "resize " . size
@@ -35,7 +43,7 @@ function! terminal#open(...) abort
     set nobuflisted
     lcd %:p:h
   else
-    if !win_gotoid(s:terminal_window)
+    if !s:go_to_winid(s:terminal_window)
       sp
       " Moves to the window below the current one
       wincmd J
@@ -49,7 +57,7 @@ function! terminal#open(...) abort
 endfunction
 
 function! terminal#toggle(size) abort
-  if win_gotoid(s:terminal_window)
+  if s:go_to_winid(s:terminal_window)
     call terminal#close()
   else
     call terminal#open(a:size)
@@ -57,22 +65,19 @@ function! terminal#toggle(size) abort
 endfunction
 
 function! terminal#close() abort
-  if win_gotoid(s:terminal_window)
+  if s:go_to_winid(s:terminal_window)
     " close the current window
     hide
   endif
 endfunction
 
 function! terminal#exec(cmd) abort
-  if !win_gotoid(s:terminal_window)
+  if !s:go_to_winid(s:terminal_window)
     call terminal#open()
   endif
 
   " clear current input
   call jobsend(s:terminal_job_id, "clear\n")
-  " FIXME change the directory of the terminal to that of the current buffer
-  " call jobsend(s:terminal_job_id, "cd ".expand('%:p:h').'\n')
-
   " run cmd
   call jobsend(s:terminal_job_id, a:cmd . "\n")
   normal! G
