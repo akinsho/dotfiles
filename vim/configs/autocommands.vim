@@ -129,8 +129,12 @@ augroup UpdateVim
     endif
   endif
   autocmd FocusLost * silent! wall
+  " Autosave vim on typing stopped
+  autocmd CursorHold,CursorHoldI * silent! update
+  " Update the cursor column to match current window size
   autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call CheckColorColumn()
   autocmd WinLeave * setl colorcolumn=
+
   autocmd VimResized * wincmd =
 augroup END
 " }}}
