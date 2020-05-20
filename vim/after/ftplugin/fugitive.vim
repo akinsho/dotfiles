@@ -1,3 +1,3 @@
 setlocal nonumber norelativenumber
 setlocal winfixheight
-resize 12
+resize 14
