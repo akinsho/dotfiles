@@ -134,7 +134,7 @@ augroup UpdateVim
   " Update the cursor column to match current window size
   autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call CheckColorColumn()
   autocmd WinLeave * setl colorcolumn=
-
+  " Make windows equal size when vim resizes
   autocmd VimResized * wincmd =
 augroup END
 " }}}
