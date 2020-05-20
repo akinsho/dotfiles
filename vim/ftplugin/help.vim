@@ -1,4 +1,5 @@
-wincmd L " automatically move window to the right
+wincmd L " automatically move window to the left
+vertical resize 80
 
 setl spell spelllang=en_us
 setl nonumber norelativenumber
