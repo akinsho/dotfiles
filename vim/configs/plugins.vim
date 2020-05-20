@@ -149,7 +149,6 @@ Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
 "=======================
 "Filetype Plugins {{{1
 "======================
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "=======================
 "Themes  {{{1
