@@ -189,7 +189,8 @@ nmap <silent><leader>cf <Plug>(coc-float-hide)
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
 vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
-nmap <silent><leader>a  <Plug>(coc-codeaction)
+nmap <silent><leader>a  <Plug>(coc-codeaction-line)
+nmap <silent><leader>af  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <silent><leader>ff  <Plug>(coc-fix-current)
 nmap <silent><leader>rf  <Plug>(coc-refactor)
