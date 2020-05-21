@@ -151,7 +151,9 @@ if has('linebreak') "Causes wrapped line to keep same indentation
 endif
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
 set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
-" LIST =============================================================
+" ----------------------------------------------------------------------------
+" List chars {{{1
+" --------------------------------------------------------------------------
 set list                              " invisible chars
 set listchars+=tab:\¦\ ,
 set listchars+=extends:…
@@ -159,8 +161,7 @@ set listchars+=precedes:…
 " BULLET (U+2022, UTF-8: E2 80 A2)
 set listchars+=trail:•
 set listchars+=eol:\ ,
-" =====================================================================
-"-----------------------------------
+" --------------------------------------------------------------------------
 set iskeyword+=_,$,@
 set nojoinspaces
 set gdefault
@@ -169,6 +170,7 @@ set pumheight=15
 set number relativenumber
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
+set softtabstop=2
 set smartindent
 set wrap
 set wrapmargin=2
@@ -353,6 +355,7 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 set spellfile=$DOTFILES/vim/.vim-spell-en.utf-8.add
 set nospell
+set spellsuggest+=12
 if has('syntax')
   " don't check for capital letters at start of sentence
   set spellcapcheck=
