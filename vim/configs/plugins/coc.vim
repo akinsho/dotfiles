@@ -114,8 +114,8 @@ augroup End
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
 " Do NOT use tab as this is equivalent to <C-I> and so swallows jump list mapping
-nmap <silent> <C-A> <Plug>(coc-range-select)
-xmap <silent> <C-A> <Plug>(coc-range-select)
+nmap <silent> <C-S> <Plug>(coc-range-select)
+xmap <silent> <C-S> <Plug>(coc-range-select)
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -185,12 +185,15 @@ omap am <Plug>(coc-classobj-a)
 
 " TODO: Remove this when coc/nvim floating window bug is resolved
 nmap <silent><leader>cf <Plug>(coc-float-hide)
+
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
-vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
+
 " Remap for do codeAction of current line
 nmap <silent><leader>a  <Plug>(coc-codeaction-line)
+vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
 nmap <silent><leader>af  <Plug>(coc-codeaction)
+
 " Fix autofix problem of current line
 nmap <silent><leader>ff  <Plug>(coc-fix-current)
 nmap <silent><leader>rf  <Plug>(coc-refactor)
