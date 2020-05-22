@@ -191,7 +191,7 @@ nmap <silent><leader>ca <Plug>(coc-codelens-action)
 
 " Remap for do codeAction of current line
 nmap <silent><leader>a  <Plug>(coc-codeaction-line)
-vmap <silent><leader>a  <Plug>(coc-codeaction-selected)
+xmap <silent><leader>a  <Plug>(coc-codeaction-selected)
 nmap <silent><leader>af  <Plug>(coc-codeaction)
 
 " Fix autofix problem of current line
