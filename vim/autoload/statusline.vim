@@ -23,8 +23,7 @@ function! statusline#show_plain_statusline() abort
 endfunction
 
 " This function allow me to specify titles for special case buffers like the preview window or a quickfix window
-" CREDIT:
-" https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
+" CREDIT: https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
 function! statusline#special_buffers() abort
   let is_location_list = get(getloclist(0, {'winid':0}), 'winid', 0)
   return is_location_list ? 'Location List' :

@@ -70,9 +70,10 @@ function! s:smart_close()
   endif
 endfunction
 
-" Auto open grep quickfix window and SmartClose {{{
+" SmartClose {{{
 augroup SmartClose
   au!
+  " Auto open grep quickfix window
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
   autocmd FileType help,git-status,git-log,qf,
@@ -189,8 +190,9 @@ augroup CommandWindow "{{{1
   " map q to close command window on quit
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
-  autocmd QuickFixCmdPost [^l]* nested cwindow
-  autocmd QuickFixCmdPost    l* nested lwindow
+  " Automatically jump into the quickfix window on open
+  " autocmd QuickFixCmdPost [^l]* nested cwindow
+  " autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 
 augroup fileSettings "{{{1

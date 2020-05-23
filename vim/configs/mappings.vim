@@ -337,7 +337,9 @@ cnoremap <C-v> <C-r>"
 " ----------------------------------------------------------------------------
 " Todo - Check the repo for Todos and add to the qf list
 " ----------------------------------------------------------------------------
-command! Todo noautocmd vimgrep /TODO\|FIXME/j ** | cw
+" Use the external grepprg which is set to ag or rg
+" which is much faster than internal vimgrep progream
+command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
 " ----------------------------------------------------------------------------
 " Open FILENAME:LINE:COL
 " ----------------------------------------------------------------------------
