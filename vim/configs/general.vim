@@ -223,13 +223,13 @@ if !exists('g:gui_oni')
   " ========================
   " OneDark
   " ========================
-  " let g:onedark_terminal_italics = 1
+  let g:onedark_terminal_italics = 1
   " augroup ColorExtend
   "   autocmd!
   "   autocmd ColorScheme * call onedark#extend_highlight(
   "         \ "DiffChange", { "gui": "none", "cterm": "none" })
   " augroup END
-  " colorscheme onedark
+  colorscheme onedark
   " ========================
   " Night Owl
   " ========================
@@ -242,8 +242,8 @@ if !exists('g:gui_oni')
   " ONE
   " ========================
   " See highlight.vim for colorscheme overrides
-  let g:one_allow_italics = 1
-  colorscheme one
+  " let g:one_allow_italics = 1
+  " colorscheme one
   " ========================
   " Monokai Tasky
   " ========================

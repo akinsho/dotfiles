@@ -195,6 +195,15 @@ augroup CommandWindow "{{{1
   " autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 
+" This is only available in nightly neovim
+" Alternatively use coc-yank or vim-highlighted-yank
+if has('nvim-0.5')
+  augroup TextYankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank('IncSearch', 500)
+  augroup END
+endif
+
 augroup fileSettings "{{{1
   autocmd!
   autocmd Filetype vim-plug,gitcommit,log setlocal nonumber norelativenumber

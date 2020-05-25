@@ -153,7 +153,7 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "=======================
 "Themes  {{{1
 "=======================
-Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 
