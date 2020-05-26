@@ -29,6 +29,7 @@ set shortmess+=c
 set timeout timeoutlen=500 ttimeoutlen=10
 set hidden " this allows changing vim buffers without saving
 set splitbelow splitright
+set eadirection=hor
 " exclude usetab as we do not want to jump to buffers in already open tabs
 set switchbuf=useopen,vsplit
 if has('folding')
@@ -226,6 +227,12 @@ if !exists('g:gui_oni')
   let g:onedark_terminal_italics = 1
   colorscheme onedark
   " ========================
+  " ONE
+  " ========================
+  " See highlight.vim for colorscheme overrides
+  " let g:one_allow_italics = 1
+  " colorscheme one
+  " ========================
   " Night Owl
   " ========================
   " colorscheme night-owl
@@ -233,12 +240,6 @@ if !exists('g:gui_oni')
   " Tender
   " ========================
   " colorscheme tender
-  " ========================
-  " ONE
-  " ========================
-  " See highlight.vim for colorscheme overrides
-  " let g:one_allow_italics = 1
-  " colorscheme one
   " ========================
   " Monokai Tasky
   " ========================

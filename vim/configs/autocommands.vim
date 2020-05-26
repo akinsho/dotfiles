@@ -76,8 +76,7 @@ augroup SmartClose
   " Auto open grep quickfix window
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
-  autocmd FileType help,git-status,git-log,qf,
-        \gitcommit,ref,Godoc,dbui,fugitive,LuaTree,log
+  autocmd FileType help,git-status,git-log,gitcommit,ref,Godoc,dbui,fugitive,LuaTree,log
         \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
@@ -86,13 +85,10 @@ augroup SmartClose
   autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix')
         \ | bd | q | endif
 
-  autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
-  autocmd FileType qf nnoremap <buffer> <c-p> <up>
-        \|nnoremap <buffer> <c-n> <down>
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   " automatically close corresponding loclist when quitting a window
   if exists('##QuitPre')
-    autocmd QuitPre * nested if &filetype != 'qf' | silent! lclose | endif
+    autocmd QuitPre * nested if &filetype !=# 'qf' | silent! lclose | endif
   endif
 augroup END
 
