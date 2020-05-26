@@ -12,6 +12,16 @@ let s:terminal_name = 'Terminal 1'
 " to work around this instead we assign the buffer ID to the result
 " of searching for any buffer with a matching name
 let s:terminal_buffer = bufnr(s:terminal_name)
+let s:terminal_dir = getcwd()
+
+function s:set_working_dir() abort
+  let working_dir = getcwd()
+  if s:terminal_dir !=# working_dir
+    call jobsend(s:terminal_job_id, "cd ". working_dir ."\n")
+    call jobsend(s:terminal_job_id, "clear\n")
+    let s:terminal_dir = working_dir
+  endif
+endfunction
 
 " Rather than call win_gotoid directly we call it with alt so
 " we don't set the alternate-file to the terminal so it should
@@ -27,6 +37,7 @@ function! terminal#open(...) abort
   if !bufexists(s:terminal_buffer)
     " Creates a window call monkey_terminal
     keepalt new monkey_terminal
+    execute 'lcd '. getcwd()
     " Moves to the window the right the current one
     wincmd J
     execute "resize " . size
@@ -41,15 +52,14 @@ function! terminal#open(...) abort
     " The buffer of the terminal won't appear in the list of the buffers
     " when calling :buffers command
     set nobuflisted
-    lcd %:p:h
   else
     if !s:go_to_winid(s:terminal_window)
       sp
       " Moves to the window below the current one
       wincmd J
       execute "resize " . size
-      execute "buffer " . s:terminal_name
-      lcd %:p:h
+      execute "keepalt buffer " . s:terminal_name
+      call s:set_working_dir()
       " Gets the id of the terminal window
       let s:terminal_window = win_getid()
     endif
