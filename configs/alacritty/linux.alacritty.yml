@@ -41,7 +41,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background, but no title bar buttons
-  decorations: full
+  decorations: none
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -68,7 +68,7 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal:
-    family: Fira Code Nerd Font
+    family: FiraCode Nerd Font
     # family: Cascadia Code
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -118,7 +118,7 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    background: "0x262626"
+    background: "0x282c34"
     foreground: "0xF8F8F2"
 
   # Normal colors
