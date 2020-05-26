@@ -1,9 +1,10 @@
-"-----------------------------------------------------------
+"--------------------------------------------------------------------------------
 "PLUGINS
-"-----------------------------------------------------------
-"=====================
+"--------------------------------------------------------------------------------
+
+"--------------------------------------------------------------------------------
 " Plug Setup {{{1
-"=====================
+"--------------------------------------------------------------------------------
 " auto-install vim-plug
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
@@ -37,13 +38,13 @@ function! Cond(cond, ...)
 endfunction
 
 let g:testing_nvim_lsp = 0
-"================================
+"--------------------------------------------------------------------------------
 " CORE {{{1
-"================================
+"--------------------------------------------------------------------------------
 if g:testing_nvim_lsp
-  " ===============================
-  " Nvim LSP:  TOO EARLY
-  " ===============================
+"--------------------------------------------------------------------------------
+" Nvim LSP:  TOO EARLY
+"--------------------------------------------------------------------------------
   Plug 'neovim/nvim-lsp'
   Plug 'haorenW1025/completion-nvim'
   Plug 'haorenW1025/diagnostic-nvim'
@@ -63,16 +64,15 @@ Plug 'liuchengxu/vista.vim'
 if exists('$TMUX')
   Plug 'christoomey/vim-tmux-navigator'
 endif
-"============================
+"--------------------------------------------------------------------------------
 "Utilities {{{1
-"============================
+"--------------------------------------------------------------------------------
 Plug 'vimwiki/vimwiki'
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim'
-" Plugin must be loaded for both markdown and in vim plug buffers
 Plug 'iamcco/markdown-preview.nvim', {
       \ 'do': { -> mkdp#util#install() },
-      \ 'for': ['markdown', 'vim-plug']
+      \ 'for': ['markdown']
       \ }
 Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
@@ -88,42 +88,6 @@ Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'janko/vim-test'
 Plug 'norcalli/nvim-colorizer.lua'
-" =====================
-"TPOPE {{{1
-"====================================
-" FIXME currently breaks :Gblame functionality
-" Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-abolish'
-"sets searchable path for filetypes like go so 'gf' works
-Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-dadbod'
-      \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
-" ===========================
-"Syntax {{{1
-"============================
-Plug 'Yggdroot/indentLine'
-Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
-Plug 'sheerun/vim-polyglot'
-" =============================
-"Git {{{1
-" ==============================
-Plug 'rhysd/conflict-marker.vim'
-" =====================
-" Text Objects {{{1
-" =====================
-Plug 'AndrewRadev/switch.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-""---------------------------------------------------------------------------//
-" Deprecated: Word transposition mappings from in favour of the plugin below:
-" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
-""---------------------------------------------------------------------------//
-Plug 'AndrewRadev/sideways.vim'
 Plug 'dstein64/vim-win'
 Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescriptreact',
@@ -133,6 +97,42 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescript',
       \ 'javascript'
       \ ]}
+"--------------------------------------------------------------------------------
+"TPOPE {{{1
+"--------------------------------------------------------------------------------
+" FIXME currently breaks :Gblame functionality
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'
+"sets searchable path for filetypes like go so 'gf' works
+Plug 'tpope/vim-apathy'
+Plug 'tpope/vim-dadbod'
+      \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
+"--------------------------------------------------------------------------------
+"Syntax {{{1
+"--------------------------------------------------------------------------------
+Plug 'Yggdroot/indentLine'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
+Plug 'sheerun/vim-polyglot'
+"--------------------------------------------------------------------------------
+"Git {{{1
+"--------------------------------------------------------------------------------
+Plug 'tpope/vim-fugitive'
+Plug 'rhysd/conflict-marker.vim'
+" Plug 'tpope/vim-rhubarb'
+"--------------------------------------------------------------------------------
+" Text Objects {{{1
+"--------------------------------------------------------------------------------
+Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+""---------------------------------------------------------------------------//
+" Deprecated: Word transposition mappings from in favour of the plugin below:
+" http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
+""---------------------------------------------------------------------------//
+Plug 'AndrewRadev/sideways.vim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
@@ -140,28 +140,28 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'inside/vim-textobj-jsxattr'
-"=======================
+"--------------------------------------------------------------------------------
 "Search Tools {{{1
-"=======================
+"--------------------------------------------------------------------------------
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
-"=======================
+"--------------------------------------------------------------------------------
 "Filetype Plugins {{{1
-"======================
+"--------------------------------------------------------------------------------
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
-"=======================
+"--------------------------------------------------------------------------------
 "Themes  {{{1
-"=======================
+"--------------------------------------------------------------------------------
 Plug 'joshdick/onedark.vim'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
-"=======================
+"--------------------------------------------------------------------------------
 " Personal plugins  {{{1
-"=======================
+"--------------------------------------------------------------------------------
 if has('nvim')
   " Plug '~/Desktop/Coding/nvim-bufferline.lua'
   Plug 'Akin909/nvim-bufferline.lua'
