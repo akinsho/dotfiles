@@ -29,6 +29,14 @@ function! s:smart_close()
   endif
 endfunction
 
+" Autosize quickfix to match its minimum content
+" https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
+function! s:adjust_height(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+call s:adjust_height(3, 10)
+
 nnoremap <silent><buffer> <c-p> <up>
 nnoremap <silent><buffer> <c-n> <down>
 nnoremap <silent><nowait><buffer> p :call <SID>preview_file_under_cursor()<CR>
