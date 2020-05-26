@@ -47,6 +47,7 @@ function! ApplyUserHighlights() abort
     call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
     " Italices func calls
     call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
+    call onedark#extend_highlight('TabLineSel', { 'guibg': '#61AFEF' })
   elseif g:colors_name ==? 'vim-monokai-tasty'
     highlight clear SignColumn
     highlight GitGutterAdd guifg=green
