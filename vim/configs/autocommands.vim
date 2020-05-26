@@ -227,11 +227,6 @@ function! s:handle_window_enter() abort
   endif
 endfunction
 
-augroup GoError
-  autocmd Colorscheme *.go match goErr /\<err\>/
-  autocmd Colorscheme *.go highlight goErr guifg=#E06C75 gui=bold
-augroup end
-
 if has('nvim')
   augroup nvim
     au!
@@ -252,13 +247,17 @@ augroup FileType_all "{{{1
   autocmd BufWinLeave * if &buftype ==# 'terminal' | stopinsert! | endif
   autocmd BufWinEnter * if &buftype ==# 'terminal' | startinsert! | endif
 
+  " Surprisingly enough vim has added this to defaults.vim in vim8 but this
+  " is not standard behaviour still in neovim
+  if has('nvim')
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "keepjumps normal g`\"" |
-        \ endif
+    autocmd BufReadPost *
+          \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "keepjumps normal g`\"" |
+          \ endif
+  endif
 
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
@@ -282,11 +281,3 @@ augroup END
 augroup LongFiles "{{{1
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
-
-if v:version >= 700
-  " Save the buffers current cursor position
-  augroup CursorSave
-    autocmd BufLeave * let b:winview = winsaveview()
-    autocmd BufEnter * if (exists('b:winview')) | call winrestview(b:winview) | endif
-  augroup END
-endif
