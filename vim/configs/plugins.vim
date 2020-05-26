@@ -60,7 +60,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'liuchengxu/vista.vim'
 if exists('$TMUX')
   Plug 'christoomey/vim-tmux-navigator'
 endif
