@@ -40,6 +40,8 @@ function! ApplyUserHighlights() abort
     call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
     call one#highlight('vimCommentTitle', 'c678dd', 'none', 'bold,italic')
+  elseif g:colors_name ==? 'onedark'
+    call onedark#extend_highlight('Title', { 'gui': 'bold' })
   elseif g:colors_name ==? 'vim-monokai-tasty'
     highlight clear SignColumn
     highlight GitGutterAdd guifg=green
