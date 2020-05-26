@@ -247,6 +247,11 @@ augroup FileType_all "{{{1
 
   autocmd TermOpen,TermEnter * startinsert!
   autocmd TermLeave * stopinsert!
+  " The above autocommands don't cover leaving an already open terminal buffer
+  " which is in insert mode
+  autocmd BufWinLeave * if &buftype ==# 'terminal' | stopinsert! | endif
+  autocmd BufWinEnter * if &buftype ==# 'terminal' | startinsert! | endif
+
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
