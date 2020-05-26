@@ -23,6 +23,7 @@ let g:coc_global_extensions = [
       \ 'coc-git',
       \ 'coc-reason',
       \ 'coc-eslint',
+      \ 'coc-actions'
       \]
 
 " TODO: Coc pairs is takes half a second to expand
@@ -111,8 +112,6 @@ augroup End
 ""---------------------------------------------------------------------------//
 " CoC Mappings
 ""---------------------------------------------------------------------------//
-" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
 " Do NOT use tab as this is equivalent to <C-I> and so swallows jump list mapping
 nmap <silent> <C-S> <Plug>(coc-range-select)
 xmap <silent> <C-S> <Plug>(coc-range-select)
@@ -185,14 +184,18 @@ omap am <Plug>(coc-classobj-a)
 
 " TODO: Remove this when coc/nvim floating window bug is resolved
 nmap <silent><leader>cf <Plug>(coc-float-hide)
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+""---------------------------------------------------------------------------//
+" Code Actions
+""---------------------------------------------------------------------------//
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
-
-" Remap for do codeAction of current line
-nmap <silent><leader>a  <Plug>(coc-codeaction-line)
-xmap <silent><leader>a  <Plug>(coc-codeaction-selected)
+" Remap for do code action of current file
 nmap <silent><leader>af  <Plug>(coc-codeaction)
+" Remap for do codeAction of selected region
+function! s:coc_actions_from_selected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+xnoremap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nnoremap <silent> <leader>a :<C-u>set operatorfunc=<SID>coc_actions_from_selected<CR>g@
 
 " Fix autofix problem of current line
 nmap <silent><leader>ff  <Plug>(coc-fix-current)

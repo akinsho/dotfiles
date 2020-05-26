@@ -1,10 +1,6 @@
 ""---------------------------------------------------------------------------//
 " Highlights
 ""---------------------------------------------------------------------------//
-if exists('g:gui_oni')
-  finish
-endif
-
 function! ApplyUserHighlights() abort
   "---------------------------------------------------------------------------//
   "Set the color column to highlight one column after the 'textwidth'
@@ -23,7 +19,6 @@ function! ApplyUserHighlights() abort
     call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl')
   endif
 
-  highlight Conceal gui=bold
   highlight Todo gui=bold
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold

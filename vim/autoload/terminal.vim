@@ -82,4 +82,5 @@ function! terminal#exec(cmd) abort
   call jobsend(s:terminal_job_id, a:cmd . "\n")
   normal! G
   wincmd p
+  stopinsert!
 endfunction
