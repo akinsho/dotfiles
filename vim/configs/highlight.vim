@@ -30,18 +30,28 @@ function! ApplyUserHighlights() abort
   ""---------------------------------------------------------------------------//
   " Custom highlights
   ""---------------------------------------------------------------------------//
-  " Vim One does not allow directly overriding highlights
   if g:colors_name ==? 'one'
     call one#highlight('Folded', '5c6370', 'none', 'italic,bold')
     call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
-    "Italicise imports
+    " Italicise imports
     call one#highlight('jsImport', '61afef', 'none', 'italic')
     call one#highlight('jsExport', '61afef', 'none', 'italic')
     call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
     call one#highlight('vimCommentTitle', 'c678dd', 'none', 'bold,italic')
   elseif g:colors_name ==? 'onedark'
+    " Bold (+/- italicised) types
     call onedark#extend_highlight('Title', { 'gui': 'bold' })
+    call onedark#extend_highlight('Type', { 'gui': 'italic,bold' })
+    call onedark#extend_highlight('Folded', { 'gui': 'italic,bold' })
+    call onedark#extend_highlight('htmlArg', { 'gui': 'italic,bold' })
+    " Italicised imports
+    call onedark#extend_highlight('Include', { 'gui': 'italic' })
+    call onedark#extend_highlight('jsImport', { 'gui': 'italic' })
+    call onedark#extend_highlight('jsExport', { 'gui': 'italic' })
+    call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
+    " Italices func calls
+    call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
   elseif g:colors_name ==? 'vim-monokai-tasty'
     highlight clear SignColumn
     highlight GitGutterAdd guifg=green
@@ -53,7 +63,7 @@ function! ApplyUserHighlights() abort
     highlight link typescriptExport SpecialItalic
     highlight link jsxAttrib SpecialItalic
     highlight tsxAttrib gui=italic,bold
-  else
+  else " No specific colorscheme with overrides then do it manually
     highlight jsFuncCall gui=italic
     highlight Comment gui=italic cterm=italic
     highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
@@ -66,7 +76,6 @@ function! ApplyUserHighlights() abort
     highlight jsExportDefault gui=italic,bold cterm=italic ctermfg=179
     highlight htmlArg gui=italic,bold cterm=italic,bold ctermfg=yellow
     highlight Folded  gui=bold,italic cterm=bold
-
     highlight link typescriptExport jsImport
     highlight link typescriptImport jsImport
   endif
@@ -78,9 +87,6 @@ function! ApplyUserHighlights() abort
     highlight TermCursor ctermfg=green guifg=green
     highlight link MsgSeparator Comment
   endif
-
-  "Remove vertical separator
-  " highlight VertSplit guibg=bg guifg=bg
   "---------------------------------------------------------------------------//
 endfunction
 
