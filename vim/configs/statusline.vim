@@ -318,7 +318,7 @@ function! StatusLine(...) abort
   " spaces char ˽ or ⍽ / Tabs char - ⇥
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
   let l:statusline .= s:sep_if(&shiftwidth, unexpected_indentation,
-        \ extend({ 'prefix': &expandtab ? '˽' : '⇥', 'small': 1 }, {}))
+        \ extend({ 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 }, {}))
   "Current line number/Total line numbers
   let statusline .= s:sep_if(line_info, strlen(line_info), extend({ 'prefix': '' }, s:st_mode))
   let statusline .= '%<'

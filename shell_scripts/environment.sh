@@ -12,14 +12,18 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.npm/bin:$PATH"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  # JAVA ==========================================================
+  export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
+  export PATH=$JAVA_HOME/bin:$PATH
   # GO ============================================================
   export GOPATH=$(go env GOPATH)
   export PATH=$PATH:/usr/local/go/bin
   export PATH=$PATH:$(go env GOPATH)/bin
+  # ===============================================================
   export PATH=$HOME/.local/bin:$PATH
+  # FLUTTER =======================================================
   export PATH="$PATH:$HOME/flutter/bin"
-  export PATH="$PATH":"$HOME/flutter/.pub-cache/bin"
-
+  export PATH="$PATH:$HOME/flutter/.pub-cache/bin"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
