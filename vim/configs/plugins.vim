@@ -99,7 +99,6 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
 "--------------------------------------------------------------------------------
 "TPOPE {{{1
 "--------------------------------------------------------------------------------
-" FIXME currently breaks :Gblame functionality
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
@@ -120,7 +119,9 @@ Plug 'sheerun/vim-polyglot'
 "Git {{{1
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
+Plug 'sodapopcan/vim-twiggy'
 Plug 'rhysd/conflict-marker.vim'
+" FIXME currently breaks :Gblame functionality
 " Plug 'tpope/vim-rhubarb'
 "--------------------------------------------------------------------------------
 " Text Objects {{{1

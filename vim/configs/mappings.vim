@@ -159,7 +159,7 @@ nnoremap <silent> ]q :cnext<CR>zz
 nnoremap <silent> [q :cprev<CR>zz
 nnoremap <silent> ]l :lnext<cr>zz
 nnoremap <silent> [l :lprev<cr>zz
-nnoremap <silent> <localleader>q :cclose<cr>:lclose<cr>:pclose<cr>
+nnoremap <silent> <localleader>q :cclose \| lclose \| pclose<cr>
 " ----------------------------------------------------------------------------
 " Tabs
 " ----------------------------------------------------------------------------
