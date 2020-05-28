@@ -3,6 +3,7 @@
   "typescript.suggestionActions.enabled": true,
   "javascript.referencesCodeLens.enable": true,
   "html.autoClosingTags": true,
+  "xml.format.splitAttributes": true,
   // List
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],

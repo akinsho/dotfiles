@@ -51,4 +51,3 @@ Slightly beefier bits of functionality I use on an adhoc basis are in the autolo
       /ftplugins
         /go.vim <-- specific overrides
 ```
-
