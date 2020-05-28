@@ -190,4 +190,5 @@ let g:loaded_rrhelper          = 1
 function PluginLoaded(plugin_name) abort
   return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
 endfunction
+" }}}
 " vim:foldmethod=marker

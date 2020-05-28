@@ -196,25 +196,35 @@ nnoremap <leader>E :Token<cr>
 ""---------------------------------------------------------------------------//
 " Fold Text
 ""---------------------------------------------------------------------------//
-" Match the last brace on a line if there is one then the fold text should
-" end with {…} otherwise it should end with …
-" OPTION: Add start char marker '✦ '
-" NOTE: foldcolumn can now be set to a value of auto:Count e.g auto:5
-" so we split off the auto portion so we can still get the line count
+function s:replace_tabs(value) abort
+  return substitute(a:value, '\t', repeat(' ', &tabstop), 'g')
+endfunction
+
+" CREDIT:
+" getline returns the line leading whitespace so we remove it
+" https://stackoverflow.com/questions/5992336/indenting-fold-text
+function s:strip_whitespace(value) abort
+  return substitute(a:value, '^\s*', '', 'g')
+endfunction
+
+function s:prepare_fold_section(value) abort
+  return s:strip_whitespace(s:replace_tabs(a:value))
+endfunction
+
+" CREDIT:
+" 1. https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
 function! utils#braces_fold_text(...)
-  " getline returns the line leading whitespace so we remove it
-  " CREDIT: https://stackoverflow.com/questions/5992336/indenting-fold-text
-  let start = substitute(getline(v:foldstart),'^\s*','','')
-  " Match any brace in the string -> '{.*' whereas '{$ matches the last'
-  let line = strlen(matchstr(start, '{$')) ?
-          \  substitute(start, '{$', '{…}', ' ') . ' ' :
-          \  start . '…'
+  let start = s:prepare_fold_section(getline(v:foldstart))
+  let end = s:prepare_fold_section(getline(v:foldend))
+  let line = start . ' … ' .end
   let lines_count = v:foldend - v:foldstart + 1
   let count_text = '('.lines_count .' lines)'
   let fold_char = matchstr(&fillchars, 'fold:\')
   let indentation = indent(v:foldstart)
   let fold_start = repeat(' ', indentation) . line
   let fold_end = count_text . repeat(' ', 2)
+  " NOTE: foldcolumn can now be set to a value of auto:Count e.g auto:5
+  " so we split off the auto portion so we can still get the line count
   let column_size = split(&foldcolumn, ":")[-1]
   let text_length = strlen(substitute(fold_start . fold_end, '.', 'x', 'g')) + column_size
   return fold_start . repeat(' ', winwidth(0) - text_length - 7) . fold_end
@@ -277,19 +287,6 @@ function! utils#move_line_or_visual_up_or_down(move_arg)
   let col_num = virtcol(".")
   execute "silent! ".a:move_arg
   execute "normal! ".col_num."|"
-endfunction
-
-" open the current entry in th preview window
-function! utils#preview_file_under_cursor()
-  let cur_list = b:qf_isLoc == 1 ? getloclist('.') : getqflist()
-  let cur_line = getline(line('.'))
-  let cur_file = fnameescape(substitute(cur_line, '|.*$', '', ''))
-  if cur_line =~ '|\d\+'
-    let cur_pos  = substitute(cur_line, '^\(.\{-}|\)\(\d\+\)\(.*\)', '\2', '')
-    execute "pedit +" . cur_pos . " " . cur_file
-  else
-    execute "pedit " . cur_file
-  endif
 endfunction
 
 function! utils#tab_message(cmd)
