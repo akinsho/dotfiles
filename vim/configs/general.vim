@@ -72,6 +72,7 @@ set formatoptions-=o                  " do not continue comment using o or O
 set formatoptions+=n                  " Recognize numbered lists
 set formatoptions+=2                  " Use indent from 2nd line of a paragraph
 set formatoptions+=t                  " autowrap lines using text width value
+set formatoptions+=j                  " remove a comment leader when joining lines.
 " Only break if the line was not longer than 'textwidth' when the insert
 " started and only at a white character that has been entered during the
 " current insert command.
@@ -83,7 +84,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 set foldtext=utils#braces_fold_text()
 set foldopen+=search
-" This is overwritten in lsp-fola compatible files by Coc
+" This is overwritten in lsp-fold compatible files by Coc
 set foldmethod=syntax
 set foldlevelstart=3
   " The fold open and close markers are visually distracting

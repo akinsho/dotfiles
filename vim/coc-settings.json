@@ -8,11 +8,14 @@
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
   "list.source.diagnostics.defaultOptions": ["--normal"],
+  "list.nextKeymap": "<C-n>",
+  "list.previousKeymap": "<C-p>",
   "codeLens.enable": true,
   "codeLens.separator": "‣",
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  // This is now supported natively in neovim
+  "yank.highlight.enable": false,
   // Diagnostics
-  //" "ﯦ
   "diagnostic.separateRelatedInformationAsDiagnostics": true,
   "diagnostic.virtualTextPrefix": "",
   "diagnostic.errorSign": "✗",
@@ -66,7 +69,6 @@
   "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
   "git.addGBlameToVirtualText": false,
   // Suggest
-  "suggest.noselect": false,
   "suggest.enablePreselect": true,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
