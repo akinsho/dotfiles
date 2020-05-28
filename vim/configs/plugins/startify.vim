@@ -10,10 +10,17 @@ let g:startify_lists = [
     \ ]
 
 let  g:startify_bookmarks    =  [
-      \ {'v': '~/.vimrc'},
       \ {'z': '~/.zshrc'},
-      \ {'t': '~/.tmux.conf'}
+      \ {'v': '~/.config/nvim/init.vim'},
+      \ {'t': '~/.config/tmux/.tmux.conf'}
       \ ]
+
+
+let g:startify_commands = [
+    \ {'PU': ':PlugUpdate | PlugUpgrade'},
+    \ {'PS': ':PlugStatus'},
+    \ {'h': ':help'}
+    \ ]
 
 let g:startify_fortune_use_unicode    = 1
 let g:startify_session_autoload       = 1
