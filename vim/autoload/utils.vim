@@ -211,9 +211,19 @@ function s:prepare_fold_section(value) abort
   return s:strip_whitespace(s:replace_tabs(a:value))
 endfunction
 
+" List of filetypes to use default fold text for
+let s:fold_exclusions = ['vim']
+
+function s:is_ignored() abort
+  return index(s:fold_exclusions, &filetype) >= 0 || &diff
+endfunction
+
 " CREDIT:
 " 1. https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
 function! utils#braces_fold_text(...)
+  if s:is_ignored()
+    return foldtext()
+  endif
   let start = s:prepare_fold_section(getline(v:foldstart))
   let end = s:prepare_fold_section(getline(v:foldend))
   let line = start . ' … ' .end
@@ -229,7 +239,6 @@ function! utils#braces_fold_text(...)
   let text_length = strlen(substitute(fold_start . fold_end, '.', 'x', 'g')) + column_size
   return fold_start . repeat(' ', winwidth(0) - text_length - 7) . fold_end
 endfunction
-
 
 ""---------------------------------------------------------------------------//
 " Takes a base - highlight group to extend,

@@ -64,7 +64,7 @@ if exists('$TMUX')
   Plug 'christoomey/vim-tmux-navigator'
 endif
 "--------------------------------------------------------------------------------
-"Utilities {{{1
+" Utilities {{{1
 "--------------------------------------------------------------------------------
 Plug 'vimwiki/vimwiki'
 Plug 'arecarn/vim-fold-cycle'
@@ -97,7 +97,7 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'javascript'
       \ ]}
 "--------------------------------------------------------------------------------
-"TPOPE {{{1
+" TPOPE {{{1
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
@@ -110,13 +110,13 @@ Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-dadbod'
       \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
-"Syntax {{{1
+" Syntax {{{1
 "--------------------------------------------------------------------------------
 Plug 'Yggdroot/indentLine'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
 "--------------------------------------------------------------------------------
-"Git {{{1
+" Git {{{1
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'sodapopcan/vim-twiggy'
@@ -141,17 +141,17 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'inside/vim-textobj-jsxattr'
 "--------------------------------------------------------------------------------
-"Search Tools {{{1
+" Search Tools {{{1
 "--------------------------------------------------------------------------------
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
-"Filetype Plugins {{{1
+" Filetype Plugins {{{1
 "--------------------------------------------------------------------------------
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "--------------------------------------------------------------------------------
-"Themes  {{{1
+" Themes  {{{1
 "--------------------------------------------------------------------------------
 Plug 'joshdick/onedark.vim' " More actively maintained that vim-one
 " Plug 'rakr/vim-one' " alternative one dark with a light theme
@@ -190,5 +190,4 @@ let g:loaded_rrhelper          = 1
 function PluginLoaded(plugin_name) abort
   return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
 endfunction
-" }}}
 " vim:foldmethod=marker

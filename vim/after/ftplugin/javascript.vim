@@ -1,5 +1,4 @@
 setlocal foldmethod=manual "let coc.nvim control folding
-setlocal foldtext=utils#braces_fold_text()
 setl completeopt-=preview
 match Error /\%80v.\+/
 
