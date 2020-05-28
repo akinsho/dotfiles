@@ -3,23 +3,23 @@
 ""---------------------------------------------------------------------------//
 let g:startify_lists = [
     \ { 'type': 'sessions',  'header': ['  😸 Sessions']       },
-    \ { 'type': 'files',     'header': ['   MRU']            },
-    \ { 'type': 'dir',       'header': ['   Recently opened in '. getcwd()] },
+    \ { 'type': 'files',     'header': ['   Recent']            },
+    \ { 'type': 'dir',       'header': ['   Recently opened in '. fnamemodify(getcwd(), ':t')] },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
 
 let  g:startify_bookmarks    =  [
-      \ {'z': '~/.zshrc'},
-      \ {'v': '~/.config/nvim/init.vim'},
-      \ {'t': '~/.config/tmux/.tmux.conf'}
-      \ ]
+    \ {'z': '~/.zshrc'},
+    \ {'v': '~/.config/nvim/init.vim'},
+    \ {'t': '~/.config/tmux/.tmux.conf'}
+    \ ]
 
 
 let g:startify_commands = [
-    \ {'PU': ':PlugUpdate | PlugUpgrade'},
-    \ {'PS': ':PlugStatus'},
-    \ {'h': ':help'}
+    \ {'pu': ['Update plugins',':PlugUpdate | PlugUpgrade']},
+    \ {'ps': ['Plugins status', ':PlugStatus']},
+    \ {'h':  ['Help', ':help']}
     \ ]
 
 let g:startify_fortune_use_unicode    = 1
