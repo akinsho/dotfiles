@@ -218,6 +218,9 @@ function s:is_ignored() abort
   return index(s:fold_exclusions, &filetype) >= 0 || &diff
 endfunction
 
+" If the fold text includes alphabetical characters just append an
+" empty string. This avoids folds that look like func…end or
+" import 'pkg'…import 'pkg'
 function s:contains_alphabet(value) abort
   return strlen(matchstr(a:value, '\a', 'g'))
 endfunction
@@ -229,11 +232,8 @@ function! utils#braces_fold_text(...)
     return foldtext()
   endif
   let start = s:prepare_fold_section(getline(v:foldstart))
-  let foldend_text = getline(v:foldend)
-  " If the foldend text includes alphabetical characters just append an
-  " empty string. This avoids folds that look like func ... end or
-  " import 'pkg' ... import 'pkg'
-  let end = !s:contains_alphabet(foldend_text) ? s:prepare_fold_section(foldend_text) : ''
+  let end_text = getline(v:foldend)
+  let end = !s:contains_alphabet(end_text) ? s:prepare_fold_section(end_text) : ''
   let line = start . '…' .end
   let lines_count = v:foldend - v:foldstart + 1
   let count_text = '('.lines_count .' lines)'
