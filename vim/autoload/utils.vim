@@ -218,6 +218,10 @@ function s:is_ignored() abort
   return index(s:fold_exclusions, &filetype) >= 0 || &diff
 endfunction
 
+function s:contains_alphabet(value) abort
+  return strlen(matchstr(a:value, '\a', 'g'))
+endfunction
+
 " CREDIT:
 " 1. https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
 function! utils#braces_fold_text(...)
@@ -225,8 +229,12 @@ function! utils#braces_fold_text(...)
     return foldtext()
   endif
   let start = s:prepare_fold_section(getline(v:foldstart))
-  let end = s:prepare_fold_section(getline(v:foldend))
-  let line = start . ' … ' .end
+  let foldend_text = getline(v:foldend)
+  " If the foldend text includes alphabetical characters just append an
+  " empty string. This avoids folds that look like func ... end or
+  " import 'pkg' ... import 'pkg'
+  let end = !s:contains_alphabet(foldend_text) ? s:prepare_fold_section(foldend_text) : ''
+  let line = start . '…' .end
   let lines_count = v:foldend - v:foldstart + 1
   let count_text = '('.lines_count .' lines)'
   let fold_char = matchstr(&fillchars, 'fold:\')
