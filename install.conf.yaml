@@ -3,20 +3,25 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
-    ~/.dotfiles: ''
+    ~/.dotfiles: ""
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zshrc: zsh/.ohmyzshrc
+    ~/.zshenv: zsh/zshenv
     ~/.gitconfig: git/.gitconfig
     ~/.config/nvim: vim
-    ~/.config/kitty: configs/kitty/kitty.conf
-    ~/.config/alacritty:
-      if: '[`uname` = Darwin]'
+    ~/.config/kitty:
+      force: true
+      path: configs/kitty
+    ~/.config/alacritty/alacritty.yml:
+      if: "[`uname` = Darwin]"
+      force: true
       path: configs/alacritty/macos.alacritty.yml
     ~/.config/alacritty:
-      if: '[`uname` = Linux]'
+      if: "[`uname` = Linux]"
+      force: true
       path: configs/alacritty/linux.alacritty.yml
 
 - shell:
