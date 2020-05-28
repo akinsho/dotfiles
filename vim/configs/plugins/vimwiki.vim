@@ -17,7 +17,9 @@ let g:wiki = {
 let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:wiki, g:common_wiki]
 
-let g:vimwiki_folding = 'syntax'
+let g:vimwiki_global_ext = 0
+
+let g:vimwiki_folding = 'expr'
 
 function! s:close_wikis() abort
   let l:bufs = range(1, bufnr('$'))
