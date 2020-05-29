@@ -11,9 +11,9 @@ pacman() {
 }
 
 backup-gnome() {
-    dconf dump / > $DOTFILES/linux/gnome/dconf-settings.ini
+    dconf dump / > $HOME/Dropbox/gnome/dconf-settings.ini
 }
 
 restore-gnome() {
-    dconf load / < $DOTFILES/linux/gnome/dconf-settings.ini
+    dconf load / < $HOME/Dropbox/gnome/dconf-settings.ini
 }
