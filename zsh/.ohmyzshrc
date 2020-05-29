@@ -56,7 +56,7 @@ plugins=(
   last-working-dir
   vi-mode
   git
-  gitfast
+  thefuck
   zsh-completions
   command-not-found
   colored-man-pages
@@ -109,13 +109,15 @@ fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
+# Aliases 'hub' to git to allow for greater git powah!!
+eval "$(hub alias -s)"
+
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+eval "$(starship init zsh)"
+
 # STARTUP TIMES (CONTD)================================================
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
 echo load time: $((end_time - start_time)) seconds
 # zprof
-
-# archey -o
-fpath+=${ZDOTDIR:-~}/.zsh_functions
-eval "$(starship init zsh)"

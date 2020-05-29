@@ -9,7 +9,6 @@ alias del="rm -rf"
 alias dots="cd $DOTFILES"
 alias coding="cd ~/Desktop/Coding"
 alias lp="lsp"
-alias la='ls -aG'
 alias v='nvim'
 alias vi='vim'
 alias nv='nvim'
