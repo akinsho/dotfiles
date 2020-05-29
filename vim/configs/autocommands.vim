@@ -35,23 +35,28 @@ augroup vimrc-incsearch-highlight
   endif
 augroup END
 
+
+augroup fileSettings "{{{1
+  autocmd!
+  autocmd Filetype vim-plug,git setlocal nonumber norelativenumber
+augroup END
+
 augroup togglerelativelinenumbers
   autocmd!
   " If in normal mode show hybrid numbers
   " except in previewwindow and other readonly/ helper windows
   " OR if the ft has a setting to turn of numbers for that buffer
-  let s:exclusions = ["LuaTree", "vim-plug"]
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
         \ if &previewwindow
         \ |  setlocal nonumber norelativenumber
-        \ | elseif empty(&buftype) && &number && index(s:exclusions, &ft) == -1
+        \ | elseif empty(&buftype) && &number
         \ |  setlocal norelativenumber
         \ | endif
 
   autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
         \ if &previewwindow
         \ |  setlocal nonumber norelativenumber
-        \ | elseif empty(&buftype) && &number && index(s:exclusions, &ft) == -1
+        \ | elseif empty(&buftype) && &number
         \ |  setlocal number relativenumber
         \ | endif
 augroup end
