@@ -66,7 +66,6 @@ plugins=(
   zsh-autosuggestions
 )
 
-autoload -U compinit && compinit
 # ========================================================================
 # PLUGINS
 # ========================================================================
@@ -92,7 +91,7 @@ fi
 #   LOCAL SCRIPTS
 #=======================================================================
 # source all zsh and sh files
-for script in $DOTFILES/shell_scripts/*; do
+for script in $DOTFILES/zsh/scripts/*; do
   source $script
 done
 
