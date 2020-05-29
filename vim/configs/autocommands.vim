@@ -40,13 +40,20 @@ augroup togglerelativelinenumbers
   " If in normal mode show hybrid numbers
   " except in previewwindow and other readonly/ helper windows
   " OR if the ft has a setting to turn of numbers for that buffer
+  let s:exclusions = ['vimwiki', "LuaTree", "vim-plug", "gitcommit", "log"]
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
-        \ if &previewwindow | setlocal nonumber norelativenumber |
-        \ elseif empty(&buftype) | setlocal norelativenumber | endif
+        \ if &previewwindow
+        \ |  setlocal nonumber norelativenumber
+        \ | elseif empty(&buftype) && index(s:exclusions, &ft) == -1
+        \ |  setlocal norelativenumber
+        \ | endif
 
   autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
-        \ if &previewwindow | setlocal nonumber norelativenumber |
-        \ elseif empty(&buftype) | setlocal number relativenumber | endif
+        \ if &previewwindow
+        \ |  setlocal nonumber norelativenumber
+        \ | elseif empty(&buftype) && index(s:exclusions, &ft) == -1
+        \ |  setlocal number relativenumber
+        \ | endif
 augroup end
 
 augroup WhiteSpace "{{{1
@@ -194,11 +201,6 @@ if has('nvim-0.5')
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank('IncSearch', 500)
   augroup END
 endif
-
-augroup fileSettings "{{{1
-  autocmd!
-  autocmd Filetype vim-plug,gitcommit,log setlocal nonumber norelativenumber
-augroup END
 
 " Add Per Window Highlights {{{
 function! s:handle_window_enter() abort
