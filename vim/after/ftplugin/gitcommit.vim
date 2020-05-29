@@ -1,4 +1,4 @@
-setlocal nolist
+setlocal nolist nonumber norelativenumber
 "the queen's english..
 setlocal spell spelllang=en_gb
 " Disable showing tabs locally

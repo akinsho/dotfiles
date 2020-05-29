@@ -40,18 +40,18 @@ augroup togglerelativelinenumbers
   " If in normal mode show hybrid numbers
   " except in previewwindow and other readonly/ helper windows
   " OR if the ft has a setting to turn of numbers for that buffer
-  let s:exclusions = ['vimwiki', "LuaTree", "vim-plug", "gitcommit", "log"]
+  let s:exclusions = ["LuaTree", "vim-plug"]
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
         \ if &previewwindow
         \ |  setlocal nonumber norelativenumber
-        \ | elseif empty(&buftype) && index(s:exclusions, &ft) == -1
+        \ | elseif empty(&buftype) && &number && index(s:exclusions, &ft) == -1
         \ |  setlocal norelativenumber
         \ | endif
 
   autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
         \ if &previewwindow
         \ |  setlocal nonumber norelativenumber
-        \ | elseif empty(&buftype) && index(s:exclusions, &ft) == -1
+        \ | elseif empty(&buftype) && &number && index(s:exclusions, &ft) == -1
         \ |  setlocal number relativenumber
         \ | endif
 augroup end
