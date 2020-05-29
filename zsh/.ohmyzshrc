@@ -51,20 +51,20 @@ export ZSH_CUSTOM=$DOTFILES/oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 # PLUGINS =======================================================================
 plugins=(
-        zsh-syntax-highlighting
-        alias-tips
-        last-working-dir
-        vi-mode
-        git
-        gitfast
-        zsh-completions
-        command-not-found
-        colored-man-pages
-        z
-        common-aliases
-        brew
-        zsh-autosuggestions
-        )
+  zsh-syntax-highlighting
+  alias-tips
+  last-working-dir
+  vi-mode
+  git
+  gitfast
+  zsh-completions
+  command-not-found
+  colored-man-pages
+  z
+  common-aliases
+  brew
+  zsh-autosuggestions
+)
 
 # ========================================================================
 # PLUGINS
@@ -96,8 +96,8 @@ for script in $DOTFILES/shell_scripts/*; do
 done
 
 # reference - https://unix.stackexchange.com/questions/252166/how-to-configure-zshrc-for-specfic-os
-if [ -f $DOTFILES/zsh/`uname`.zsh ]; then
-  source "$DOTFILES/zsh/`uname`.sh"
+if [[ `uname` == 'Linux' ]]; then
+  source "$DOTFILES/linux/functions.sh"
 fi
 
 ##---------------------------------------------------------------------------//

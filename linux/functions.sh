@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Reference: https://bbs.archlinux.org/viewtopic.php?id=163075
 # This script runs pacman with sudo only if required
 pacman() {
@@ -9,8 +11,9 @@ pacman() {
 }
 
 backup-gnome() {
-    dconf dump / > dconf-settings.ini
-    mv -f dconf-settings.ini $DOTFILES/linux/gnome/
+    dconf dump / > $DOTFILES/linux/gnome/dconf-settings.ini
 }
 
-python3.7 -m site &> /dev/null && PATH="$PATH:`python3.7 -m site --user-base`/bin"
+restore-gnome() {
+    dconf load / < $DOTFILES/linux/gnome/dconf-settings.ini
+}
