@@ -45,7 +45,7 @@ alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_RE
 
 if [[ `uname` == 'Linux' ]]; then
   # https://stackoverflow.com/questions/53298843/how-do-i-install-bundletool
-  alias bundletool='java -jar bundletool-all.jar'
+  alias bundletool='java -jar ~/bundletool-all.jar'
   alias o='a -e xdg-open' # quick opening files with xdg-open
 
 elif [[ `uname` == 'Darwin' ]]; then
