@@ -8,15 +8,12 @@ alias t=_t
 alias del="rm -rf"
 alias dots="cd $DOTFILES"
 alias coding="cd ~/Desktop/Coding"
-alias brewfile="cd $DOTFILES/configs/homebrew/ && brew bundle dump --force"
 alias lp="lsp"
 alias la='ls -aG'
 alias v='nvim'
-alias brewupdate="brew bundle dump --force"
 alias vi='vim'
 alias nv='nvim'
 alias cl='clear'
-alias o='a -e xdg-open' # quick opening files with xdg-open
 alias gbs="git branch | fzf-tmux -d 15"
 alias restart='exec zsh'
 alias src='. ~/.zshrc'
@@ -30,7 +27,6 @@ alias yt="clear && yarn test"
 alias ys="clear && yarn start"
 
 alias esy="nocorrect esy"
-alias tmux="tmux"
 alias ta="tmux attach -t"
 alias td="tmux detach"
 alias tls="tmux ls"
@@ -47,3 +43,13 @@ alias -s css=nvim
 alias ta="tmux -CC attach"
 alias serve='python -m SimpleHTTPServer'
 alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
+
+if [[ `uname` == 'Linux' ]]; then
+  # https://stackoverflow.com/questions/53298843/how-do-i-install-bundletool
+  alias bundletool='java -jar bundletool-all.jar'
+  alias o='a -e xdg-open' # quick opening files with xdg-open
+
+elif [[ `uname` == 'Darwin' ]]; then
+  alias brewfile="cd $DOTFILES/configs/homebrew/ && brew bundle dump --force"
+  alias brewupdate="brew bundle dump --force"
+fi
