@@ -2,3 +2,15 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "oh-my-zsh/plugins/alias-tips"]
+	path = oh-my-zsh/plugins/alias-tips
+	url = https://github.com/djui/alias-tips
+[submodule "oh-my-zsh/plugins/zsh-syntax-highlighting"]
+	path = oh-my-zsh/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "oh-my-zsh/plugins/zsh-autosuggestions"]
+	path = oh-my-zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "oh-my-zsh/plugins/zsh-completions"]
+	path = oh-my-zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions

@@ -11,6 +11,5 @@ plug.vim
 .netrwhist
 *.code-workspace
 session/
-oh-my-zsh/
 /vim/autoload/plug.vim.old
 linux_startup.conf
