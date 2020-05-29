@@ -10,6 +10,7 @@ alias dots="cd $DOTFILES"
 alias coding="cd ~/Desktop/Coding"
 alias lp="lsp"
 alias v='nvim'
+alias minimalvim="nvim -u $DOTFILES/vim/minimal.vim"
 alias vi='vim'
 alias nv='nvim'
 alias cl='clear'
