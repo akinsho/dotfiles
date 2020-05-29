@@ -221,18 +221,19 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 " Colorscheme {{{1
 ""---------------------------------------------------------------------------//
 if !exists('g:gui_oni')
+  try
   set background=dark
   " ========================
   " OneDark
   " ========================
-  let g:onedark_terminal_italics = 1
-  colorscheme onedark
+  " let g:onedark_terminal_italics = 1
+  " colorscheme onedark
   " ========================
   " ONE
   " ========================
   " See highlight.vim for colorscheme overrides
-  " let g:one_allow_italics = 1
-  " colorscheme one
+  let g:one_allow_italics = 1
+  colorscheme one
   " ========================
   " Night Owl
   " ========================
@@ -246,6 +247,12 @@ if !exists('g:gui_oni')
   " ========================
   " let g:vim_monokai_tasty_italic = 1
   " colorscheme vim-monokai-tasty
+  catch /.*/
+    if exists('*VimrcMessage')
+      VimrcMessage(v:exception)
+    endif
+    colorscheme default
+  endtry
 endif
 
 "---------------------------------------------------------------------------//

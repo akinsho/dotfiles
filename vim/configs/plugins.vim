@@ -96,7 +96,7 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescript',
       \ 'javascript'
       \ ]}
-" Plug 'tweekmonster/startuptime.vim'
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
@@ -154,8 +154,12 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "--------------------------------------------------------------------------------
 " Themes  {{{1
 "--------------------------------------------------------------------------------
-Plug 'joshdick/onedark.vim' " More actively maintained that vim-one
-" Plug 'rakr/vim-one' " alternative one dark with a light theme
+" NOTE: vim-one has a MUCH better startup time than onedark
+Plug 'rakr/vim-one' " alternative one dark with a light theme
+" Plug 'joshdick/onedark.vim' " More actively maintained that vim-one
+"--------------------------------------------------------------------------------
+" Alternatives colorschemes {{{2
+"--------------------------------------------------------------------------------
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 
