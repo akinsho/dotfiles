@@ -211,8 +211,10 @@ if exists('&belloff')
 endif
 if has('termguicolors')
   " Not sure  if these are still necessary for vim
-  let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
+  if !has('nvim')
+    let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
+  endif
   set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
 endif
 " ctags - search for a tags file then in current dir then home dir
@@ -220,8 +222,7 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 " Colorscheme {{{1
 ""---------------------------------------------------------------------------//
-if !exists('g:gui_oni')
-  try
+try
   set background=dark
   " ========================
   " OneDark
@@ -247,13 +248,12 @@ if !exists('g:gui_oni')
   " ========================
   " let g:vim_monokai_tasty_italic = 1
   " colorscheme vim-monokai-tasty
-  catch /.*/
-    if exists('*VimrcMessage')
-      VimrcMessage(v:exception)
-    endif
-    colorscheme default
-  endtry
-endif
+catch /.*/
+  if exists('*VimrcMessage')
+    VimrcMessage(v:exception)
+  endif
+  colorscheme default
+endtry
 
 "---------------------------------------------------------------------------//
 " Title {{{1
