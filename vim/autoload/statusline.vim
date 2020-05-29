@@ -1,10 +1,10 @@
 " Helpers -- generalise the methods for checking a ft or buftype
 function! s:is_ft(ft) abort
-  return &ft ==# a:ft
+  return &ft ==? a:ft
 endfunction
 
 function! s:is_bt(bt) abort
-  return &bt ==# a:bt
+  return &bt ==? a:bt
 endfunction
 
 function! statusline#show_plain_statusline() abort
