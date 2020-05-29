@@ -66,6 +66,7 @@ plugins=(
   zsh-autosuggestions
 )
 
+autoload -U compinit && compinit
 # ========================================================================
 # PLUGINS
 # ========================================================================
@@ -106,12 +107,13 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # STARTUP TIMES (CONTD)================================================
 end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
 # difference
-# echo load time: $((end_time - start_time)) seconds
+echo load time: $((end_time - start_time)) seconds
 # zprof
 
 # archey -o
