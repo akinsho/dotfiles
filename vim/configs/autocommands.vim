@@ -108,10 +108,8 @@ augroup end
 " Disable paste.{{{
 augroup Cancel_Paste
   autocmd!
-  if !g:gui_neovim_running
     autocmd InsertLeave *
           \ if &paste | set nopaste | echo 'nopaste' | endif
-  endif
 augroup END
 
 " Reload vim and config automatically {{{

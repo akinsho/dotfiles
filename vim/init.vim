@@ -6,33 +6,26 @@
 "   \ \__\ \__\ \__\\ \__\ \__\ \__\\ \__\____\_\  \        \ \_______\ \_______\ \__\\ \__\ \__\   \ \__\ \_______\
 "    \|__|\|__|\|__| \|__|\|__|\|__| \|__|\_________\        \|_______|\|_______|\|__| \|__|\|__|    \|__|\|_______|
 "                                        \|_________|
-" Each section of my config has been separated out into subsections in
-" ./configs/
+" Each section of my config has been separated out into subsections in ./configs/
 filetype off " required  Prevents potential side-effects from system ftdetects scripts
 
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
 " Config Loader
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
 augroup vimrc "Ensure all autocommands are cleared
   autocmd!
 augroup END
 
 " The operating system is assigned to a global variable that
 " that can be used elsewhere for conditional system based logic
-" TODO: find out if a better alternative is `if has('mac') or if has('linux')`
-let g:os = substitute(system('uname'), "\n", "", "")
-
-if g:os == "Linux"
-  let g:open_command = 'xdg-open'
-elseif g:os == "Darwin"
+if has('mac')
   let g:open_command = 'open'
+elseif has('unix')
+  let g:open_command = 'xdg-open'
 endif
 
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
-" Environment variables aren't consisitently available on GUIs or non-interactive shells
-" so don't use them If possible or default to the literal string if possible
-" EXAMPLE: https://github.com/kovidgoyal/kitty/issues/943
-" WARNING: Hardcoding the location of my dotfiles is brittle
+" " WARNING: Hardcoding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:inform_load_results = 0
 
@@ -116,11 +109,5 @@ call s:load_plugin_configs(g:dotfiles . '/vim/configs/plugins')
 
 if has('nvim')
   luafile $DOTFILES/vim/init.lua
-endif
-
-
-"NOTE: Order matters here as this works like an after overwriting Settings for oni
-if exists('g:gui_oni')
-  call s:safely_source(g:dotfiles . '/vim/gui/oni.vim')
 endif
 "---------------------------------------------------------------------------//
