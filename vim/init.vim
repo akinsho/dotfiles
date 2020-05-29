@@ -25,7 +25,7 @@ elseif has('unix')
 endif
 
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
-" " WARNING: Hardcoding the location of my dotfiles is brittle
+" WARNING: Hardcoding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:inform_load_results = 0
 

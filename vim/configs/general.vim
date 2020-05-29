@@ -222,39 +222,31 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 " Colorscheme {{{1
 ""---------------------------------------------------------------------------//
-try
-  set background=dark
-  " ========================
-  " OneDark
-  " ========================
-  " let g:onedark_terminal_italics = 1
-  " colorscheme onedark
-  " ========================
-  " ONE
-  " ========================
-  " See highlight.vim for colorscheme overrides
-  let g:one_allow_italics = 1
-  colorscheme one
-  " ========================
-  " Night Owl
-  " ========================
-  " colorscheme night-owl
-  " ========================
-  " Tender
-  " ========================
-  " colorscheme tender
-  " ========================
-  " Monokai Tasky
-  " ========================
-  " let g:vim_monokai_tasty_italic = 1
-  " colorscheme vim-monokai-tasty
-catch /.*/
-  if exists('*VimrcMessage')
-    VimrcMessage(v:exception)
-  endif
-  colorscheme default
-endtry
-
+set background=dark
+" ========================
+" OneDark
+" ========================
+" let g:onedark_terminal_italics = 1
+" colorscheme onedark
+" ========================
+" ONE
+" ========================
+" See highlight.vim for colorscheme overrides
+let g:one_allow_italics = 1
+colorscheme one
+" ========================
+" Night Owl
+" ========================
+" colorscheme night-owl
+" ========================
+" Tender
+" ========================
+" colorscheme tender
+" ========================
+" Monokai Tasky
+" ========================
+" let g:vim_monokai_tasty_italic = 1
+" colorscheme vim-monokai-tasty
 "---------------------------------------------------------------------------//
 " Title {{{1
 "---------------------------------------------------------------------------//

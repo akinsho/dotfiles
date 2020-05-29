@@ -10,7 +10,7 @@ augroup Code Comments             "{{{1
   autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
 augroup END
 
-"Whitespace Highlight {{{
+"Whitespace Highlight {{{1
 function! s:WhitespaceHighlight()
   " Don't highlight trailing spaces in certain filetypes.
   let exclusions = ['help', 'vim-plug', 'log']
