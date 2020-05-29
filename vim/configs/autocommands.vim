@@ -42,14 +42,11 @@ augroup togglerelativelinenumbers
   " OR if the ft has a setting to turn of numbers for that buffer
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
         \ if &previewwindow | setlocal nonumber norelativenumber |
-        \ elseif &l:number && empty(&buftype) |
-        \ setlocal norelativenumber |
-        \ endif
+        \ elseif empty(&buftype) | setlocal norelativenumber | endif
+
   autocmd InsertLeave,BufEnter,WinEnter,FocusGained *
         \ if &previewwindow | setlocal nonumber norelativenumber |
-        \ elseif &l:number && empty(&buftype) |
-        \ setlocal relativenumber |
-        \ endif
+        \ elseif empty(&buftype) | setlocal number relativenumber | endif
 augroup end
 
 augroup WhiteSpace "{{{1

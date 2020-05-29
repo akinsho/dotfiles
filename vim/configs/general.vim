@@ -169,7 +169,6 @@ set nojoinspaces
 set gdefault
 " insert completion height and options
 set pumheight=15
-set number relativenumber
 set numberwidth=5
 set report=0 " Always show # number yanked/deleted lines
 set softtabstop=2
