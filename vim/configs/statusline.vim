@@ -287,7 +287,7 @@ function! StatusLine(...) abort
   ""---------------------------------------------------------------------------//
   " Setup
   ""---------------------------------------------------------------------------//
-  let statusline = ""
+  let statusline = " "
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
   " Truncate file path length at 40 characters
   let statusline .= s:sep(title_component, {'prefix': file_type})
