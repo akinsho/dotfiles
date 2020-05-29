@@ -1,4 +1,4 @@
-if !has_key(plugs, 'ultisnips')
+if !has_key(g:plugs, 'ultisnips')
   finish
 endif
 ""---------------------------------------------------------------------------//
