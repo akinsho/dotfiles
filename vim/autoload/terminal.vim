@@ -6,7 +6,7 @@ let s:terminal_window = -1
 " FIXME this is can become invalid if this file is sourced as it will
 " be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
-let s:terminal_name = 'Terminal 1'
+let s:terminal_name = 'Neovim Terminal'
 " Assuming this file is sourced then a file with this terminal name
 " will still exist in vim causing the calle to file {name} to fail
 " to work around this instead we assign the buffer ID to the result
@@ -94,3 +94,18 @@ function! terminal#exec(cmd) abort
   wincmd p
   stopinsert!
 endfunction
+
+function s:check_last_window()
+  if winnr('$') == 1 && winbufnr(0) == s:terminal_buffer
+    " Reset the window and the job ids so there are no hanging
+    " references to the terminal window
+    let s:terminal_window = -1
+    let s:terminal_job_id = -1
+    execute 'keepalt bnext'
+  endif
+endfunction
+
+augroup AutocloseTerminal
+  autocmd!
+  au! BufEnter * call s:check_last_window()
+augroup END
