@@ -17,8 +17,8 @@ let s:terminal_dir = getcwd()
 function s:set_working_dir() abort
   let working_dir = getcwd()
   if s:terminal_dir !=# working_dir
-    call jobsend(s:terminal_job_id, "cd ". working_dir ."\n")
-    call jobsend(s:terminal_job_id, "clear\n")
+    call chansend(s:terminal_job_id, "cd ". working_dir ."\n")
+    call chansend(s:terminal_job_id, "clear\n")
     let s:terminal_dir = working_dir
   endif
 endfunction
@@ -87,9 +87,9 @@ function! terminal#exec(cmd) abort
   endif
 
   " clear current input
-  call jobsend(s:terminal_job_id, "clear\n")
+  call chansend(s:terminal_job_id, "clear\n")
   " run cmd
-  call jobsend(s:terminal_job_id, a:cmd . "\n")
+  call chansend(s:terminal_job_id, a:cmd . "\n")
   normal! G
   wincmd p
   stopinsert!
