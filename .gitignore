@@ -12,4 +12,3 @@ plug.vim
 *.code-workspace
 session/
 /vim/autoload/plug.vim.old
-linux_startup.conf
