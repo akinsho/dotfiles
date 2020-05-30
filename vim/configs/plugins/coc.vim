@@ -69,6 +69,17 @@ function! s:coc_init() abort
           \}
   endif
 
+  " Borrowed from native lsp install path
+  let s:lua_lsp_path = $HOME.'/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server'
+  if executable(s:lua_lsp_path.'/bin/Linux/lua-language-server')
+    let s:languageservers['lua'] = {
+          \ 'command': s:lua_lsp_path.'/bin/Linux/lua-language-server',
+          \ 'args': ["-E", "-e", "LANG=en", s:lua_lsp_path."/main.lua"],
+          \ 'filetypes': ['lua'],
+          \ 'rootPatterns': ['.git/']
+          \}
+  endif
+
   if executable("elm-language-server")
     let s:languageservers["elmLS"]   = {
           \ "command": "elm-language-server",
