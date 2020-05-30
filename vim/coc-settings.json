@@ -5,6 +5,7 @@
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
   // List
+  "yank.priority": 50,
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
