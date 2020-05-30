@@ -427,6 +427,7 @@ nnoremap <silent><localleader>ev :tabnew $MYVIMRC<cr>
 nnoremap <silent><leader>sv :source $MYVIMRC<cr> <bar> :call utils#info_message('Sourced init.vim')<cr>
 " Surround word with quotes or braces
 nnoremap <leader>" ciw"<c-r>""<esc>
+nnoremap <leader>` ciw`<c-r>"`<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>

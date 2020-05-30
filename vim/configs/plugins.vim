@@ -70,8 +70,9 @@ endif
 Plug 'vimwiki/vimwiki'
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim'
+" https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', {
-      \ 'do': { -> mkdp#util#install() },
+      \ 'do': ':call mkdp#util#install()',
       \ 'for': ['markdown']
       \ }
 Plug 'cohama/lexima.vim'

@@ -103,8 +103,5 @@
   "explorer.file.autoReveal": true,
   "explorer.icon.enableNerdfont": true,
   "explorer.file.showHiddenFiles": false,
-  "explorer.previewAction.onHover": false,
-  "explorer.keyMappings": {
-    "o": ["expandable?", "expand", "open"]
-  }
+  "explorer.previewAction.onHover": false
 }
