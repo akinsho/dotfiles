@@ -41,14 +41,6 @@ let g:coc_global_extensions = [
 function! s:coc_init() abort
   let s:languageservers = {}
 
-  if executable('lua-lsp')
-    let s:languageservers['lua'] = {
-          \ 'command': 'lua-lsp',
-          \ 'filetypes': ['lua']
-          \}
-  endif
-
-
   if executable('ccls')
     let s:languageservers['ccls'] = {
           \ "command": "ccls",

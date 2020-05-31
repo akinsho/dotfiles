@@ -4,6 +4,7 @@
   "javascript.referencesCodeLens.enable": true,
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
+  "Lua.diagnostics.globals": ["vim"],
   // List
   "yank.priority": 50,
   "list.source.symbols.defaultOptions": ["--interactive"],
