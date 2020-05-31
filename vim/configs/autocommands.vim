@@ -180,6 +180,8 @@ augroup config_filtetype_settings "{{{1
   " Config files
   "==================================
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
+  " set filetype all variants of .env files
+  autocmd BufRead,BufNewFile .env.* set filetype=sh
 augroup END
 
 augroup FileType_html "{{{1
