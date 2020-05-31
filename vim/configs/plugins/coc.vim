@@ -279,7 +279,10 @@ nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
 "--------------------------------------------------------------------------------
 " Coc Explorer
 "--------------------------------------------------------------------------------
-nnoremap <silent><C-N> :CocCommand explorer<CR>
+function s:open_explorer() abort
+  execute 'CocCommand explorer '.getcwd()
+endfunction
+nnoremap <silent><C-N> :call <SID>open_explorer()<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//
