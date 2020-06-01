@@ -25,6 +25,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PATH="$PATH:$HOME/flutter/bin"
   export PATH="$PATH:$HOME/flutter/.pub-cache/bin"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # Don't try to control go variables on systems we don't have total control over
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
     export GOPATH=$HOME/Desktop/Coding/Go
