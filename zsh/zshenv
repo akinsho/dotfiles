@@ -33,8 +33,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=$PATH:/usr/local/opt/go/libexec/bin
     export PATH=$PATH:$(go env GOPATH)/bin
   fi
-
 fi
+
 if [ -d "$HOME/bin" ] ; then
   PATH="$HOME/bin:$PATH"
 fi
