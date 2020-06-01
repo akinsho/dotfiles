@@ -39,7 +39,7 @@ let g:fzf_action = {
       \ }
 
 let g:fzf_nvim_statusline = 1
-let g:fzf_buffers_jump    = 1
+let g:fzf_buffers_jump    = 0
 
 " Customize fzf colors to match your color scheme
 " bg+ controls the highlight of the selected item
