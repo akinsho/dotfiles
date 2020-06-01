@@ -218,22 +218,32 @@ function s:is_ignored() abort
   return index(s:fold_exclusions, &filetype) >= 0 || &diff
 endfunction
 
-" If the fold text includes alphabetical characters just append an
+" Naive regex to match closing delimiters (undoubtedly there are edge cases)
+" if the fold text doesn't include delimiter characters just append an
 " empty string. This avoids folds that look like func…end or
-" import 'pkg'…import 'pkg'
-function s:contains_alphabet(value) abort
-  return strlen(matchstr(a:value, '\a', 'g'))
+" import 'pkg'…import 'second-pkg'
+" this fold text should handle cases like
+"
+" value.Struct{
+"    Field : String
+" }.Method()
+" turns into
+"
+" value.Struct{…}.Method()
+"
+function s:contains_delimiter(value) abort
+  return strlen(matchstr(a:value, '}\|)\|]\|`', 'g'))
 endfunction
 
 " CREDIT:
 " 1. https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
-function! utils#braces_fold_text(...)
+function! utils#fold_text(...)
   if s:is_ignored()
     return foldtext()
   endif
   let start = s:prepare_fold_section(getline(v:foldstart))
   let end_text = getline(v:foldend)
-  let end = !s:contains_alphabet(end_text) ? s:prepare_fold_section(end_text) : ''
+  let end = s:contains_delimiter(end_text) ? s:prepare_fold_section(end_text) : ''
   let line = start . '…' .end
   let lines_count = v:foldend - v:foldstart + 1
   let count_text = '('.lines_count .' lines)'

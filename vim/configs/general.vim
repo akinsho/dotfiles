@@ -82,7 +82,7 @@ set nrformats-=octal " never use octal when <C-x> or <C-a>"
 " ----------------------------------------------------------------------------
 " Folds {{{1
 " ----------------------------------------------------------------------------
-set foldtext=utils#braces_fold_text()
+set foldtext=utils#fold_text()
 set foldopen+=search
 " This is overwritten in lsp-fold compatible files by Coc
 set foldmethod=syntax
