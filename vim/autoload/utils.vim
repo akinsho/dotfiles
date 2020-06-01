@@ -232,7 +232,7 @@ endfunction
 " value.Struct{…}.Method()
 "
 function s:contains_delimiter(value) abort
-  return strlen(matchstr(a:value, '}\|)\|]\|`', 'g'))
+  return strlen(matchstr(a:value, '}\|)\|]\|`\|>', 'g'))
 endfunction
 
 " CREDIT:
