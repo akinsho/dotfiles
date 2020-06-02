@@ -34,6 +34,9 @@ let g:coc_global_extensions = [
 " \ 'coc-tabnine',
 
 " TODO: investigate replacing vim-go with coc-go
+" NOTE: current issues with coc-go is that it doesn't support
+" fill struct, also doesn't permit the user to disable the workspace
+" support which doesn't work well in gopls with huge mono repos
 " currently doesn't do enough
 " \ 'coc-go',
 
@@ -70,6 +73,16 @@ function! s:coc_init() abort
           \ 'filetypes': ['lua'],
           \ 'rootPatterns': ['.git/']
           \}
+  endif
+
+  if executable("gopls")
+    let s:languageservers['golang'] = {
+      \ "command": "gopls",
+      \ "args": ["-remote=auto"],
+      \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      \ "disableWorkspaceFolders": v:true,
+      \ "filetypes": ["go"]
+      \ }
   endif
 
   if executable("elm-language-server")
