@@ -14,12 +14,3 @@ let g:indentLine_setColors      = 1
 " Character options - '︙', '|' , '¦', '┆', '┊'
 let g:indentLine_char_list = ['│']
 nnoremap <leader>il :IndentLinesToggle<CR>
-
-" FIXME
-" This is a hack around the fact that this plugin is broken
-" and does not respect the exclude list above
-" see https://github.com/plasticboy/vim-markdown/issues/395#issuecomment-436719952
-" and https://github.com/Yggdroot/indentLine/issues/303
-augroup IndentLinesDisabled
-  autocmd FileType help let b:indentLine_enabled = 0
-augroup END
