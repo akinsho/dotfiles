@@ -158,7 +158,6 @@ nnoremap <silent> ]q :cnext<CR>zz
 nnoremap <silent> [q :cprev<CR>zz
 nnoremap <silent> ]l :lnext<cr>zz
 nnoremap <silent> [l :lprev<cr>zz
-nnoremap <silent> <localleader>q :cclose \| lclose \| pclose<cr>
 " ----------------------------------------------------------------------------
 " Tabs
 " ----------------------------------------------------------------------------
@@ -309,8 +308,10 @@ nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
 nnoremap <expr><silent> _ !v:count ? "<C-W>s<C-W><Down>"  : '_'
 "Normalize all split sizes, which is very handy when resizing terminal
 nnoremap <leader>= <C-W>=
-"Swap top/bottom or left/right split
+" Swap top/bottom or left/right split
 nnoremap <leader>sw <C-W>R
+nnoremap <localleader>q <C-W>q
+" nnoremap <silent> <localleader>q :cclose \| lclose \| pclose<cr>
 ""---------------------------------------------------------------------------//
 "Open Common files
 ""---------------------------------------------------------------------------//
