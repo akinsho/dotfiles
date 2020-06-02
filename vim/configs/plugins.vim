@@ -162,6 +162,7 @@ Plug 'rakr/vim-one' " alternative one dark with a light theme
 "--------------------------------------------------------------------------------
 " Alternatives colorschemes {{{2
 "--------------------------------------------------------------------------------
+" Plug 'kaicataldo/material.vim'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 " Plug 'flrnd/candid.vim'

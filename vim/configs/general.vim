@@ -222,18 +222,29 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
 " Colorscheme {{{1
 ""---------------------------------------------------------------------------//
+" Okay so I'm a little obsessive about finding the perfect colorscheme
+" here are all my go-tos, these are all lovely but one is the nicest
+" and most performant.
 set background=dark
-" ========================
-" OneDark
-" ========================
-" let g:onedark_terminal_italics = 1
-" colorscheme onedark
 " ========================
 " ONE
 " ========================
 " See highlight.vim for colorscheme overrides
 let g:one_allow_italics = 1
 colorscheme one
+"--------------------------------------------------------------------------------
+" Alternative colorschemes {{{3
+"--------------------------------------------------------------------------------
+" ========================
+" OneDark
+" ========================
+" let g:onedark_terminal_italics = 1
+" colorscheme onedark
+" ========================
+" Material
+" ========================
+" let g:material_theme_style = 'default' | 'palenight' | 'ocean' | 'lighter' | 'darker'
+" colorscheme material
 " ========================
 " Candid
 " ========================
