@@ -164,6 +164,7 @@ Plug 'rakr/vim-one' " alternative one dark with a light theme
 "--------------------------------------------------------------------------------
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
+" Plug 'flrnd/candid.vim'
 
 Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
@@ -171,8 +172,8 @@ Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 " Personal plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
-  " Plug '~/Desktop/Coding/nvim-bufferline.lua'
-  Plug 'Akin909/nvim-bufferline.lua'
+  Plug '~/Desktop/Coding/nvim-bufferline.lua'
+  " Plug 'Akin909/nvim-bufferline.lua'
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
   Plug 'bagrat/vim-buffet'
