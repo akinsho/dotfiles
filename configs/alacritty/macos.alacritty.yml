@@ -72,7 +72,7 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal:
-    family: FiraCode Nerd Font Mono
+    family: Fira Code Nerd Font Mono
     # The `style` can be specified to pick a specific face.
     # style: Regular
 

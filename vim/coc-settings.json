@@ -5,6 +5,15 @@
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
   "Lua.diagnostics.globals": ["vim"],
+  "go.goplsOptions": {
+    "go.goplsArgs": ["-remote=auto"],
+    "completeUnimported": true,
+    "deepCompletion": true,
+    "staticcheck": true,
+    "codeLens": {
+      "test": true
+    }
+  },
   // List
   "yank.priority": 50,
   "list.source.symbols.defaultOptions": ["--interactive"],
@@ -27,13 +36,6 @@
   "diagnostic.hintSign": "ﯦ",
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.formatOnInsertLeave": true,
-  // Go
-  // "go.goplsArgs": ["-remote=auto"],
-  // "go.goplsOptions": {
-  //   "completeUnimported": true,
-  //   "deepCompletion": true,
-  //   "staticcheck": true
-  // },
   // emoji
   "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
   // Snippets

@@ -80,15 +80,6 @@ function! s:coc_init() abort
           \}
   endif
 
-  if executable("gopls")
-    let s:languageservers['golang'] = {
-      \ "command": "gopls",
-      \ "args": ["-remote=auto"],
-      \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      \ "filetypes": ["go"]
-      \ }
-  endif
-
   if !empty(s:languageservers)
     call coc#config('languageserver', s:languageservers)
   endif

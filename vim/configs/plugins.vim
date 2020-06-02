@@ -116,7 +116,7 @@ Plug 'tpope/vim-dadbod'
 " Syntax {{{1
 "--------------------------------------------------------------------------------
 Plug 'Yggdroot/indentLine'
-Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
+" Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
 "--------------------------------------------------------------------------------
 " Git {{{1

@@ -367,7 +367,10 @@ set mousefocus
 if !has('nvim')
   set ttymouse=xterm2
 endif
-set secure  " Disable autocmd etc for project local vimrc files.
+" If I've set a work directory then I trust the system I'm on if not set secure
+if !isdirectory(expand("$WORK_DIR"))
+  set secure  " Disable autocmd etc for project local vimrc files.
+endif
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc
 ""---------------------------------------------------------------------------//
 " vim:foldmethod=marker
