@@ -110,13 +110,13 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 "sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dadbod'
       \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
 Plug 'Yggdroot/indentLine'
-" Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go'] }
 Plug 'sheerun/vim-polyglot'
 "--------------------------------------------------------------------------------
 " Git {{{1
