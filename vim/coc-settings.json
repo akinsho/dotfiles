@@ -56,17 +56,18 @@
   "explorer.file.column.git.icon.renamed": "",
   "explorer.file.column.git.showIgnored": true,
   // Git sign alternatives
-  // '' - added
-  // '' - changed
-  // '' - removed
-  // '' - changed/removed
+  // '', '❖' - added
+  // '', '•' - changed
+  // '', '-' removed
+  // '', '±' - changed/removed
   "git.showCommitInFloating": true,
-  "git.stagedDecorator": " ●",
+  "git.changedSign.text": "▌",
+  "git.addedSign.text": "▌",
+  "git.removedSign.text": "▌",
+  "git.changeRemovedSign.text": "▌",
+  // Git statusline decorators
   "git.changedDecorator": " ",
-  "git.changedSign.text": "•",
-  "git.addedSign.text": "❖",
-  "git.removedSign.text": "-",
-  "git.changeRemovedSign.text": "±",
+  "git.stagedDecorator": "●",
   "git.addedSign.hlGroup": "GitGutterAdd",
   "git.changedSign.hlGroup": "GitGutterChange",
   "git.removedSign.hlGroup": "GitGutterDelete",
