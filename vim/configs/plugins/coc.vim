@@ -23,7 +23,8 @@ let g:coc_global_extensions = [
       \ 'coc-git',
       \ 'coc-reason',
       \ 'coc-eslint',
-      \ 'coc-actions'
+      \ 'coc-actions',
+      \ 'coc-go'
       \]
 
 " TODO: Coc pairs is takes half a second to expand
@@ -32,14 +33,6 @@ let g:coc_global_extensions = [
 
 " NOTE: Tabnine is too resource intensive
 " \ 'coc-tabnine',
-
-" TODO: investigate replacing vim-go with coc-go
-" NOTE: current issues with coc-go is that it doesn't support
-" fill struct, also doesn't permit the user to disable the workspace
-" support which doesn't work well in gopls with huge mono repos
-" currently doesn't do enough
-" \ 'coc-go',
-
 
 function! s:coc_init() abort
   let s:languageservers = {}
@@ -75,17 +68,17 @@ function! s:coc_init() abort
           \}
   endif
 
-  if executable("gopls")
+  " if executable("gopls")
   " use auto arg if running multiple gopls servers to re-use as much
   " the gopls daemon
   " \ "args": ["-remote=auto"],
-    let s:languageservers['golang'] = {
-      \ "command": "gopls",
-      \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      \ "disableWorkspaceFolders": v:true,
-      \ "filetypes": ["go"]
-      \ }
-  endif
+  " let s:languageservers['golang'] = {
+  "   \ "command": "gopls",
+  "   \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+  "   \ "disableWorkspaceFolders": v:true,
+  "   \ "filetypes": ["go"]
+  "   \ }
+  " endif
 
   if executable("elm-language-server")
     let s:languageservers["elmLS"]   = {
