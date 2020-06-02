@@ -59,3 +59,4 @@ _deps
 *.add.spl
 .vim-spell-en.utf-8.add.spl
 .nvimrc
+.projections.json
