@@ -10,3 +10,4 @@ let g:projectionist_heuristics['*.go'] = {
       \ }
 
 nnoremap <silent><leader>av :AV<CR>
+nnoremap <silent><leader>A :A<CR>

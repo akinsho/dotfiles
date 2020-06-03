@@ -7,7 +7,7 @@ if has('nvim')
 else
   let test#strategy = "vimterminal"
 endif
-let test#neovim#term_position = "vert botright 50"
+let test#neovim#term_position = "vert botright"
 
 nnoremap <silent> <localleader>t :TestFile<CR>
 nnoremap <silent> <localleader>tn :TestNearest<CR>
