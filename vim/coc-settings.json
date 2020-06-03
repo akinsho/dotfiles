@@ -5,15 +5,15 @@
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
   "Lua.diagnostics.globals": ["vim"],
-  // "go.goplsOptions": {
-  //   "go.goplsArgs": ["-remote=auto"],
-  //   "completeUnimported": true,
-  //   "deepCompletion": true,
-  //   "staticcheck": true,
-  //   "codeLens": {
-  //     "test": true
-  //   }
-  // },
+  "go.goplsOptions": {
+    //  "go.goplsArgs": ["-remote=auto"],
+    "completeUnimported": true,
+    "deepCompletion": true,
+    "staticcheck": true,
+    "codeLens": {
+      "test": true
+    }
+  },
   // List
   "yank.priority": 50,
   "list.source.symbols.defaultOptions": ["--interactive"],
