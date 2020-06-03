@@ -87,7 +87,7 @@ augroup Lazy_load_fat_fingers
 augroup end
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'janko/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
+Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'dstein64/vim-win'
 Plug 'AndrewRadev/tagalong.vim', {'for': [
