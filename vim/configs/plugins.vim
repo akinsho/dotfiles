@@ -99,6 +99,13 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'javascript'
       \ ]}
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+if strlen('$WORK_DIR')
+  " This plugin searches upwards up till the home dir for a lvimrc
+  " unlike setting exrc which will only look in the current directory
+  " there are situations where I cannot have the exrc in the current
+  " dir but only in an ancestor so this is preferable
+  Plug 'embear/vim-localvimrc'
+endif
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
@@ -124,8 +131,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'sodapopcan/vim-twiggy'
 Plug 'rhysd/conflict-marker.vim'
-" FIXME currently breaks :Gblame functionality
-" Plug 'tpope/vim-rhubarb'
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
 "--------------------------------------------------------------------------------
