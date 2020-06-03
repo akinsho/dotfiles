@@ -10,7 +10,7 @@
     "completeUnimported": true,
     "deepCompletion": true,
     "staticcheck": true,
-    "codeLens": {
+    "codelens": {
       "test": true
     }
   },
