@@ -218,6 +218,14 @@ function s:is_ignored() abort
   return index(s:fold_exclusions, &filetype) >= 0 || &diff
 endfunction
 
+function s:is_import(item) abort
+  return strlen(matchstr(a:item, "import")) > 0
+endfunction
+
+function s:transform_import(item) abort
+  return substitute(a:item, 'import', '^import\s{\n\_.*}\s', 'g')
+endfunction
+
 " Naive regex to match closing delimiters (undoubtedly there are edge cases)
 " if the fold text doesn't include delimiter characters just append an
 " empty string. This avoids folds that look like func…end or

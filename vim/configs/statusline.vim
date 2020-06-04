@@ -86,11 +86,11 @@ endfunction
 
 function! StatuslineGitStatus() abort
   let status = get(b:, "coc_git_status", "")
-  return winwidth(0) > 100 ? status : ''
+  return winwidth(0) > 100 ? s:truncate_string(status) : ''
 endfunction
 
 function StatuslineGitRepoStatus() abort
-  return get(g:, "coc_git_status", "")
+  return s:truncate_string(get(g:, "coc_git_status", ""), 30)
 endfunction
 
 " Find out current buffer's size and output it.
