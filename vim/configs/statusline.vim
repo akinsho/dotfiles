@@ -305,6 +305,8 @@ function! StatusLine(...) abort
 
   " Start of the right side layout
   let statusline .= '%='
+  " FIXME there is a bug causing this component to render with no highlight
+  " and a zero value, so strlen must be > 0 but unclear why
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
