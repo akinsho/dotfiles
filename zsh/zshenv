@@ -12,7 +12,10 @@ export PATH="$HOME/.npm/bin:$PATH"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # JAVA ==========================================================
-  export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
+  # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+  # Use Java 8 because
+  # https://stackoverflow.com/questions/49758849/flutter-io-android-license-status-unknown
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   export PATH=$JAVA_HOME/bin:$PATH
   # GO ============================================================
   export GOPATH=$(go env GOPATH)
