@@ -41,17 +41,14 @@ let g:testing_nvim_lsp = 0
 "--------------------------------------------------------------------------------
 " CORE {{{1
 "--------------------------------------------------------------------------------
-if g:testing_nvim_lsp
 "--------------------------------------------------------------------------------
 " Nvim LSP:  TOO EARLY
 "--------------------------------------------------------------------------------
-  Plug 'neovim/nvim-lsp'
-  Plug 'haorenW1025/completion-nvim'
-  Plug 'haorenW1025/diagnostic-nvim'
-else
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
-Plug 'ryanoasis/vim-devicons' , Cond(!has('gui_running'))
+Plug 'neovim/nvim-lsp', Cond(g:testing_nvim_lsp)
+Plug 'haorenW1025/completion-nvim', Cond(g:testing_nvim_lsp)
+Plug 'haorenW1025/diagnostic-nvim', Cond(g:testing_nvim_lsp)
+Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
+Plug 'ryanoasis/vim-devicons', Cond(!has('gui_running'))
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
 Plug 'easymotion/vim-easymotion'
@@ -99,13 +96,11 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'javascript'
       \ ]}
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-if isdirectory(expand('$WORK_DIR'))
   " This plugin searches upwards up till the home dir for a lvimrc
   " unlike setting exrc which will only look in the current directory
   " there are situations where I cannot have the exrc in the current
   " dir but only in an ancestor so this is preferable
-  Plug 'embear/vim-localvimrc'
-endif
+Plug 'embear/vim-localvimrc', Cond(isdirectory(expand('$WORK_DIR')))
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------

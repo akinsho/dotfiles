@@ -5,7 +5,10 @@ local api = _G.vim.api
 -- Helpers
 -----------------------------------------------------------------------------//
 local function is_plugin_loaded(plugin)
-  return fn.has_key(vim.g.plugs, plugin) > 0
+  local plugin_config = vim.g.plugs[plugin]
+  local is_in_runtime = plugin_config  and fn.stridx(vim.o.runtimepath, plugin_config.dir) > 0
+  local is_loaded = fn.has_key(vim.g.plugs, plugin) > 0
+  return is_loaded and is_in_runtime
 end
 
 local function is_executable(name)
