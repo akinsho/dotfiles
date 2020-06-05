@@ -1,10 +1,14 @@
 call plug#begin(stdpath('data') . '/plugged')
 " insert buggy plugins here
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mhinz/vim-startify'
 
-" This is just for prettiness
-Plug 'rakr/vim-one'
 call plug#end()
 
 set number relativenumber
 set list
+
+augroup CocAutocommands
+  autocmd!
+  autocmd FileType go let b:coc_root_patterns = ['Makefile']
+augroup END
