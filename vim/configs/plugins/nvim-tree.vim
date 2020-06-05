@@ -9,3 +9,4 @@ let g:lua_tree_bindings = {
       \ "edit": "o",
       \}
 let g:lua_tree_ignore = [ '.git', 'node_modules' ]
+let g:lua_tree_size = &columns * 0.25 " Make lua tree proportional in size
