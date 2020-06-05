@@ -127,20 +127,6 @@ command! -bang Dots
 command! Modified call fzf#run(fzf#wrap(
       \ {'source': 'git ls-files --exclude-standard --others --modified'}))
 
-" FZF Window to select and delete a single or multiple buffers
-function! s:list_buffers()
-  redir => list
-  silent ls
-  redir END
-  return split(list, "\n")
-endfunction
-
-command! Wipeout call fzf#run(fzf#wrap({
-  \ 'source': s:list_buffers(),
-  \ 'sink*': { lines -> execute('bwipeout '.join(map(lines, {_, line -> split(line)[0]}))) },
-  \ 'options': '--multi --reverse --bind ctrl-v:select-all+accept'
-\ }))
-
 nnoremap <localleader>mo :Modified<cr>
 nnoremap <localleader>bw :Wipeout<cr>
 nnoremap <silent> <localleader>bf :BranchFiles<cr>
@@ -161,7 +147,7 @@ else
   " otherwise, use :FZF
   nnoremap <silent><C-P> :Files<CR>
 endif
-nnoremap \ :Rg<CR>
+nnoremap <silent> \ :Rg<CR>
 "Find Word under cursor
 nnoremap <leader>f :Find <C-R><C-W><CR>
 nnoremap <leader>F :Find<space>
