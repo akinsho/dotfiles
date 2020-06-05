@@ -99,7 +99,7 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'javascript'
       \ ]}
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-if strlen('$WORK_DIR')
+if isdirectory(expand('$WORK_DIR'))
   " This plugin searches upwards up till the home dir for a lvimrc
   " unlike setting exrc which will only look in the current directory
   " there are situations where I cannot have the exrc in the current
