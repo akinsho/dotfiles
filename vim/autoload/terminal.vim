@@ -85,7 +85,6 @@ function! terminal#exec(cmd, ...) abort
   " When we execute a command we want to see what is actually going
   " on so make the size bigger
   let size = get(a:, '1', 15)
-  echom size
   if !s:go_to_winid(s:terminal_window)
     call terminal#open(size)
   endif
