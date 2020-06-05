@@ -44,9 +44,13 @@ let g:testing_nvim_lsp = 0
 "--------------------------------------------------------------------------------
 " Nvim LSP:  TOO EARLY
 "--------------------------------------------------------------------------------
+" The native lsp is still in it's early stages it doesn't provide anywhere near
+" the same/requisite (for my needs) functionality as coc.nvim but I'm occasionally
+" testing this out
 Plug 'neovim/nvim-lsp', Cond(g:testing_nvim_lsp)
 Plug 'haorenW1025/completion-nvim', Cond(g:testing_nvim_lsp)
 Plug 'haorenW1025/diagnostic-nvim', Cond(g:testing_nvim_lsp)
+"--------------------------------------------------------------------------------
 Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
 Plug 'ryanoasis/vim-devicons', Cond(!has('gui_running'))
 Plug 'airblade/vim-rooter'
@@ -56,8 +60,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
-" Plug 'kyazdani42/nvim-web-devicons' " for file icons
-" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 if exists('$TMUX')
   Plug 'christoomey/vim-tmux-navigator'
 endif
@@ -96,11 +100,13 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'javascript'
       \ ]}
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-  " This plugin searches upwards up till the home dir for a lvimrc
-  " unlike setting exrc which will only look in the current directory
-  " there are situations where I cannot have the exrc in the current
-  " dir but only in an ancestor so this is preferable
-Plug 'embear/vim-localvimrc', Cond(isdirectory(expand('$WORK_DIR')))
+" This plugin searches upwards up till the home dir for a lvimrc
+" unlike setting exrc which will only look in the current directory
+" there are situations where I cannot have the exrc in the current
+" dir but only in an ancestor so this is preferable
+if isdirectory(expand('$WORK_DIR'))
+  Plug 'embear/vim-localvimrc'
+endif
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
