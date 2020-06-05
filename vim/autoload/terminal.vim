@@ -41,6 +41,7 @@ function! terminal#open(...) abort
     " Moves to the window the right the current one
     wincmd J
     execute "resize " . size
+    setlocal winfixheight
     let s:terminal_job_id = termopen($SHELL, { 'detach': 1 })
 
     " Change the name of the buffer to the terminal name
@@ -58,6 +59,7 @@ function! terminal#open(...) abort
       " Moves to the window below the current one
       wincmd J
       execute "resize " . size
+      setlocal winfixheight
       execute "keepalt buffer " . s:terminal_name
       call s:set_working_dir()
       " Gets the id of the terminal window
