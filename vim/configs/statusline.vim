@@ -269,7 +269,10 @@ function! StatusLine(...) abort
 
   " The filename component should be 20% of the screen width but has a minimum
   " width of 10 since smaller than that is likely to be unintelligible
-  let truncation_amount = float2nr(round(winwidth(0) * 0.2))
+  " although if the window is plain i.e. terminal or tree buffer allow the file
+  " name to take up more space
+  let percentage = plain ? 0.4 : 0.2
+  let truncation_amount = float2nr(round(winwidth(0) * percentage))
   let title_component = '%10.'.truncation_amount.'(%{statusline#filename("%:p:.")}%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
