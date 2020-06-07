@@ -4,6 +4,7 @@
   "xml.format.splitAttributes": true,
   "Lua.diagnostics.globals": ["vim"],
   "go.goplsOptions": {
+    "go.goplsArgs": ["-remote=auto"],
     "completeUnimported": true,
     "deepCompletion": true,
     "staticcheck": true,

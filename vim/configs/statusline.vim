@@ -74,11 +74,13 @@ function! StatuslineCurrentFunction() abort
   return winwidth(0) > 100 ? s:truncate_string(sanitized, 30) : ''
 endfunction
 
+" This is automatically truncated by coc
 function! StatuslineGitStatus() abort
   let status = get(b:, "coc_git_status", "")
   return status
 endfunction
 
+" This is automatically truncated by coc
 function StatuslineGitRepoStatus() abort
   let status = get(g:, "coc_git_status", "")
   return status
