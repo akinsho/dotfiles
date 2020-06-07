@@ -1,12 +1,9 @@
 {
   // Language specific
-  "typescript.suggestionActions.enabled": true,
-  "javascript.referencesCodeLens.enable": true,
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
   "Lua.diagnostics.globals": ["vim"],
   "go.goplsOptions": {
-    //  "go.goplsArgs": ["-remote=auto"],
     "completeUnimported": true,
     "deepCompletion": true,
     "staticcheck": true,
