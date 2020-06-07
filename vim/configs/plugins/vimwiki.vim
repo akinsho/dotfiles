@@ -7,7 +7,7 @@ endif
 " Mac == Work (Don't/Can't sync work wiki files)
 let g:wiki_path = isdirectory($HOME.'/Dropbox') && !has('mac') ?
       \ $HOME.'/Dropbox/wiki' : $HOME . '/wiki'
-let g:common_wiki_path = $DOTFILES.'vim/wiki'
+let g:common_wiki_path = $DOTFILES.'/wiki'
 let g:common_wiki = {
       \'path': g:common_wiki_path,
       \'path_html': g:common_wiki_path . '/html',
