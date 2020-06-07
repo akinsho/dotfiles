@@ -137,21 +137,25 @@ augroup UpdateVim
   autocmd CursorHold,CursorHoldI * silent! update
   " Update the cursor column to match current window size
   autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call CheckColorColumn()
-  autocmd WinLeave * setl colorcolumn=
+  autocmd WinLeave * call CheckColorColumn(1)
   " Make windows equal size when vim resizes
   autocmd VimResized * wincmd =
 augroup END
 " }}}
 
+let s:column_exclusions = ['startify', 'gitcommit', 'vimwiki', 'vim-plug']
 " Hide the colorcolumn when there isn't enough space
-function! CheckColorColumn()
-  if &ft ==# 'startify' || &ft ==# 'gitcommit' || !&buflisted
+function! CheckColorColumn(...)
+  " if called from winleave event this value is 1
+  let leaving = get(a:, '0', 0)
+  if index(s:column_exclusions, &ft) != -1 || !&buflisted
     return
   endif
-  if winwidth('%') <= 120
+  if winwidth('%') <= 120 || leaving
     setl colorcolumn=
-  else
-      setl colorcolumn<
+  " only reset this value when it doesn't already exist
+  elseif !&colorcolumn
+    setl colorcolumn<
   endif
 endfunction
 
