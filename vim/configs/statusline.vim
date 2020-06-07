@@ -26,7 +26,7 @@ endfunction
 function! s:truncate_string(item, ...) abort
     let limit = get(a:, '1', 50)
     let suffix = get(a: , '2', '…')
-    return strlen(a:item) > limit ? strpart(a:item, 0, limit) . suffix : a:item
+    return strlen(a:item) > limit ? strpart(a:item, 0, limit) . " " . suffix : a:item
 endfunction
 
 function! s:truncate_statusline_component(item, ...) abort
@@ -80,7 +80,8 @@ function! StatuslineGitStatus() abort
 endfunction
 
 function StatuslineGitRepoStatus() abort
-  return s:truncate_string(get(g:, "coc_git_status", ""), 30)
+  let status = get(g:, "coc_git_status", "")
+  return winwidth(0) > 100 ? status : s:truncate_string(status)
 endfunction
 
 " Find out current buffer's size and output it.
