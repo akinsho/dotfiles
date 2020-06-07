@@ -237,8 +237,8 @@ function! s:mode_highlight(mode) abort
     silent! exe 'highlight StMode guibg='.s:dark_red.' guifg='.s:normal_bg.' gui=bold'
     silent! exe 'highlight StModeSep guifg='.s:dark_red.' guibg=NONE gui=bold'
   elseif a:mode =~? '\(c\|cv\|ce\)'
-    silent! exe 'highlight StMode guibg='.s:dark_yellow.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:dark_yellow.' guibg=NONE gui=bold'
+    silent! exe 'highlight StMode guibg='.s:cyan.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:cyan.' guibg=NONE gui=bold'
   else
     silent! exe 'highlight StMode guibg='.s:green.' guifg='.s:normal_bg.' gui=bold'
     silent! exe 'highlight StModeSep guifg='.s:green.' guibg=NONE gui=bold'
