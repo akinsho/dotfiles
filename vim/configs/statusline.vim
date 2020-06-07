@@ -2,20 +2,10 @@ if has_key(g:plugs, "lightline.vim")
   finish
 endif
 
-let s:mode_map = {
-        \  'n': ['NORMAL',  'NormalMode' ],     'no': ['PENDING', 'NormalMode'  ],  'v': ['VISUAL',  'VisualMode' ],
-        \  'V': ['V-LINE',  'VisualMode' ], "\<c-v>": ['V-BLOCK', 'VisualMode'  ],  's': ['SELECT',  'VisualMode' ],
-        \  'S': ['S-LINE',  'VisualMode' ], "\<c-s>": ['S-BLOCK', 'VisualMode'  ],  'i': ['INSERT',  'InsertMode' ],
-        \ 'ic': ['COMPLETE','InsertMode' ],     'ix': ['CTRL-X',  'InsertMode'  ],  'R': ['REPLACE', 'ReplaceMode'],
-        \ 'Rc': ['COMPLETE','ReplaceMode'],     'Rv': ['REPLACE', 'ReplaceMode' ], 'Rx': ['CTRL-X',  'ReplaceMode'],
-        \  'c': ['COMMAND', 'CommandMode'],     'cv': ['COMMAND', 'CommandMode' ], 'ce': ['COMMAND', 'CommandMode'],
-        \  'r': ['PROMPT',  'CommandMode'],     'rm': ['-MORE-',  'CommandMode' ], 'r?': ['CONFIRM', 'CommandMode'],
-        \  '!': ['SHELL',   'CommandMode'],      't': ['TERMINAL', 'CommandMode']}
-
-  let s:ro_sym  = ''
-  let s:ma_sym  = "✗"
-  let s:mod_sym = "◇"
-  let s:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
+let s:ro_sym  = ''
+let s:ma_sym  = "✗"
+let s:mod_sym = "◇"
+let s:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 
 function! s:file_encoding() abort
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
@@ -270,11 +260,11 @@ function! StatusLine(...) abort
   " this means the function returns the containing windows filename
   " not the active one i.e. fixes the bug where the wrong filename shows in
   " inactive windows
-  " TODO make this smarter by proportionally increasing truncation based on how
-  " small a window is up till a maximum beyond which we won't be able to see the
-  " anything inteligibble
-  let truncation_amount = winwidth(0) < 70 ? 20 : 30
-  let title_component = '%.'.truncation_amount.'(%{statusline#filename("%:p:.")}%)'
+
+  " The filename component should be 20% of the screen width but has a minimum
+  " width of 10 since smaller than that is likely to be unintelligible
+  let truncation_amount = float2nr(round(winwidth(0) * 0.2))
+  let title_component = '%10.'.truncation_amount.'(%{statusline#filename("%:p:.")}%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
