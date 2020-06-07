@@ -36,6 +36,11 @@ if has('folding')
   if has('windows')
     set fillchars=vert:│
     set fillchars+=fold:\ 
+    " TODO setting a fillchar here means this that the character or a replacement
+    " with ">" appears in inactive windows because the statusline is the same color
+    " as the background see:
+    " https://vi.stackexchange.com/questions/2381/hi-statusline-cterm-none-displays-whitespace-characters
+    " https://vi.stackexchange.com/questions/15873/carets-in-status-line
     " Add vertical separator for inactive statuslines
     set fillchars+=stlnc:‾
     set fillchars+=diff:⣿
