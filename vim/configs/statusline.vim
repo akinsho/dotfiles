@@ -161,7 +161,7 @@ function! s:set_statusline_colors() abort
   "
   " So instead we set the inactive statusline to have an underline
   silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
-  silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=underline cterm=NONE'
+  silent! execute 'highlight StatuslineNC guifg=black guibg='.s:normal_bg.' gui=underline cterm=NONE'
   " Diagnostic highlights
   silent! execute 'highlight StWarning guifg='.s:warning_fg.' guibg='.s:pmenu_bg.' gui=none'
   silent! execute 'highlight StWarningSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=none'
@@ -254,8 +254,16 @@ function! s:mode_highlight(mode) abort
   endif
 endfunction
 
+" Add underlines between stacked horizontal windows
+function! s:add_separators()
+  let [layout; rest] = winlayout()
+  let gui = layout ==# 'col' ? "underline" : "NONE"
+  silent! execute 'highlight Statusline guifg=black guibg='.s:normal_bg.' gui='.gui.' cterm=NONE'
+endfunction
+
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
+  call s:add_separators()
   ""---------------------------------------------------------------------------//
   " Modifiers
   ""---------------------------------------------------------------------------//
