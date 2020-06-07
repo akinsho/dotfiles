@@ -153,8 +153,15 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StOkSep guifg='.s:dark_yellow.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
   silent! execute 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
+  " setting a statsuline fillchar means this that the character or a replacement
+  " with ">" appears in inactive windows because the statusline is the same color
+  " as the background see:
+  " https://vi.stackexchange.com/questions/2381/hi-statusline-cterm-none-displays-whitespace-characters
+  " https://vi.stackexchange.com/questions/15873/carets-in-status-line
+  "
+  " So instead we set the inactive statusline to have an underline
   silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
-  silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
+  silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=underline cterm=NONE'
   " Diagnostic highlights
   silent! execute 'highlight StWarning guifg='.s:warning_fg.' guibg='.s:pmenu_bg.' gui=none'
   silent! execute 'highlight StWarningSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=none'
