@@ -35,7 +35,7 @@ set switchbuf=useopen,vsplit
 if has('folding')
   if has('windows')
     set fillchars=vert:│
-    set fillchars+=fold:-
+    set fillchars+=fold:\ 
     " Add vertical separator for inactive statuslines
     set fillchars+=stlnc:‾
     set fillchars+=diff:⣿
