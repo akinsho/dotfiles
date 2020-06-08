@@ -19,10 +19,12 @@
       if: "[`uname` = Darwin]"
       force: true
       path: configs/alacritty/macos.alacritty.yml
-    ~/.config/alacritty:
-      if: "[`uname` = Linux]"
-      force: true
-      path: configs/alacritty/linux.alacritty.yml
+    # FIXME: duplicate key if statements do not work
+    # https://github.com/anishathalye/dotbot/issues/208
+    # ~/.config/alacritty/alacritty.yml:
+    #   if: '[`uname` = Linux]'
+    #   force: true
+    #   path: configs/alacritty/linux.alacritty.yml
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

@@ -72,15 +72,15 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal:
-    family: Fira Code Nerd Font Mono
+    family: FiraCode Nerd Font
     # The `style` can be specified to pick a specific face.
-    # style: Regular
+    style: Retina
 
   # Bold font face
   bold:
-    family: Operator Mono
+    family: Operator Mono Bold
     # The `style` can be specified to pick a specific face.
-    style: Bold Italic
+    # style: Bold Italic
 
   # Italic font face
   italic:
