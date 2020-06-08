@@ -22,9 +22,6 @@ endif
 
 " "auto format with goimports as well as gofmt
 let g:go_fmt_command                    = "goimports"
-let g:go_fmt_options = {
-  \ 'goimports': '-local github.com/monzo/wearedev',
-  \ }
 
 let g:go_gopls_enabled                  = 1
 let g:go_gopls_complete_unimported      = 1
