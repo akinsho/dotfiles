@@ -5,7 +5,11 @@ endif
 
 lua << EOF
 require'bufferline'.setup {
-  mode = "multiwindow";
+  options = {
+    view = "multiwindow",
+    numbers = "ordinal",
+    number_style = "superscript",
+  };
   bufferline_tab_selected = {
     guifg = "#E5C07B",
     guibg = "#3E4452"
