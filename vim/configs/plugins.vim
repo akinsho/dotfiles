@@ -100,13 +100,6 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'javascript'
       \ ]}
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-" This plugin searches upwards up till the home dir for a lvimrc
-" unlike setting exrc which will only look in the current directory
-" there are situations where I cannot have the exrc in the current
-" dir but only in an ancestor so this is preferable
-if isdirectory(expand('$WORK_DIR'))
-  Plug 'embear/vim-localvimrc'
-endif
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------

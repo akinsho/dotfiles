@@ -288,8 +288,8 @@ function! StatusLine(...) abort
   " although if the window is plain i.e. terminal or tree buffer allow the file
   " name to take up more space
   let percentage = plain ? 0.4 : 0.2
+  let minwid = 5
   " Don't set a minimum width for plain status line filenames
-  let minwid = plain ? "" : "10"
   let truncation_amount = float2nr(round(winwidth(0) * percentage))
   let title_component = '%'.minwid.'.'.truncation_amount.'(%{statusline#filename("%:p:.")}%)'
 

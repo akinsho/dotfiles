@@ -90,6 +90,17 @@ call s:safely_source(g:dotfiles . '/vim/configs/plugins.vim')
 "---------------------------------------------------------------------------//
 filetype plugin indent on
 syntax enable
+
+"--------------------------------------------------------------------------------
+" Local vimrc
+"--------------------------------------------------------------------------------
+let s:vimrc_local=$HOME.'/.vimrc.local'
+if filereadable(s:vimrc_local)
+  execute 'source ' . s:vimrc_local
+  echohl String
+  echom 'Source local vimrc @ '.s:vimrc_local
+  echohl clear
+endif
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
