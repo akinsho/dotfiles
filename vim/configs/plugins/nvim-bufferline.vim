@@ -9,6 +9,7 @@ require'bufferline'.setup {
     view = "multiwindow",
     numbers = "ordinal",
     number_style = "superscript",
+    mappings = true
   };
   bufferline_tab_selected = {
     guifg = "#E5C07B",
