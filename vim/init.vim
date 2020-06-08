@@ -96,10 +96,7 @@ syntax enable
 "--------------------------------------------------------------------------------
 let s:vimrc_local=$HOME.'/.vimrc.local'
 if filereadable(s:vimrc_local)
-  execute 'source ' . s:vimrc_local
-  echohl String
-  echom 'Source local vimrc @ '.s:vimrc_local
-  echohl clear
+  call s:safely_source(s:vimrc_local)
 endif
 " ----------------------------------------------------------------------
 " Plugin Configurations
