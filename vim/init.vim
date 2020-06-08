@@ -1,6 +1,6 @@
 " ________  ___  __    ___  ________   ________           ________  ________  ________   ________ ___  ________
-"|\   __  \|\  \|\  \ |\  \|\   ___  \|\   ____\         |\   ____\|\   __  \|\   ___  \|\  _____\\  \|\   ____\
-"\ \  \|\  \ \  \/  /|\ \  \ \  \\ \  \ \  \___|_        \ \  \___|\ \  \|\  \ \  \\ \  \ \  \__/\ \  \ \  \___|
+" |\   __  \|\  \|\  \ |\  \|\   ___  \|\   ____\         |\   ____\|\   __  \|\   ___  \|\  _____\\  \|\   ____\
+" \ \  \|\  \ \  \/  /|\ \  \ \  \\ \  \ \  \___|_        \ \  \___|\ \  \|\  \ \  \\ \  \ \  \__/\ \  \ \  \___|
 " \ \   __  \ \   ___  \ \  \ \  \\ \  \ \_____  \        \ \  \    \ \  \\\  \ \  \\ \  \ \   __\\ \  \ \  \  ___
 "  \ \  \ \  \ \  \\ \  \ \  \ \  \\ \  \|____|\  \        \ \  \____\ \  \\\  \ \  \\ \  \ \  \_| \ \  \ \  \|\  \
 "   \ \__\ \__\ \__\\ \__\ \__\ \__\\ \__\____\_\  \        \ \_______\ \_______\ \__\\ \__\ \__\   \ \__\ \_______\
@@ -36,14 +36,14 @@ function! VimrcMessage(msg) abort
 endfunction
 
 function! s:safely_source(arg) abort
-    try
-        exe 'source ' . a:arg
-        return 1
-    catch
-      call VimrcMessage('Error ->' . v:exception)
-      call VimrcMessage('Could not load'. a:arg )
-      return 0
-    endtry
+  try
+    execute 'source ' . a:arg
+    return 1
+  catch
+    call VimrcMessage('Error ->' . v:exception)
+    call VimrcMessage('Could not load'. a:arg )
+    return 0
+  endtry
 endfunction
 
 function! s:inform_load_result(loaded, errors) abort
@@ -102,12 +102,12 @@ endif
 " Plugin Configurations
 " ----------------------------------------------------------------------
 let s:config_files = [
-  \ '/vim/configs/general.vim',
-  \ '/vim/configs/highlight.vim',
-  \ '/vim/configs/mappings.vim',
-  \ '/vim/configs/autocommands.vim',
-  \ '/vim/configs/statusline.vim'
-  \]
+    \ '/vim/configs/general.vim',
+    \ '/vim/configs/highlight.vim',
+    \ '/vim/configs/mappings.vim',
+    \ '/vim/configs/autocommands.vim',
+    \ '/vim/configs/statusline.vim'
+    \]
 
 for file in s:config_files
   call s:safely_source(g:dotfiles . file)
