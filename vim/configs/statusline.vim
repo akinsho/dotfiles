@@ -130,6 +130,7 @@ let s:magenta      = '#c678dd'
 let s:cyan         = '#56b6c2'
 let s:gutter_grey  = '#636d83'
 let s:comment_grey = '#5c6370'
+let s:inc_search_bg = synIDattr(hlID('Search'), 'bg')
 
 function! s:set_statusline_colors() abort
   let s:normal_bg = synIDattr(hlID('Normal'), 'bg')
@@ -246,8 +247,8 @@ function! s:mode_highlight(mode) abort
     silent! exe 'highlight StMode guibg='.s:dark_red.' guifg='.s:normal_bg.' gui=bold'
     silent! exe 'highlight StModeSep guifg='.s:dark_red.' guibg=NONE gui=bold'
   elseif a:mode =~? '\(c\|cv\|ce\)'
-    silent! exe 'highlight StMode guibg='.s:cyan.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:cyan.' guibg=NONE gui=bold'
+    silent! exe 'highlight StMode guibg='.s:inc_search_bg.' guifg='.s:normal_bg.' gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:inc_search_bg.' guibg=NONE gui=bold'
   else
     silent! exe 'highlight StMode guibg='.s:green.' guifg='.s:normal_bg.' gui=bold'
     silent! exe 'highlight StModeSep guifg='.s:green.' guibg=NONE gui=bold'
