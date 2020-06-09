@@ -138,7 +138,6 @@ function! s:set_statusline_colors() abort
   let s:pmenu_bg  = synIDattr(hlID('Pmenu'), 'bg')
   let s:string_fg = synIDattr(hlID('String'), 'fg')
   let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
-  " OneDark vim uses the same color for warning msg as error so I've overriden it
   let s:warning_fg = s:light_yellow "synIDattr(hlID('WarningMsg'), 'fg')
 
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=none'

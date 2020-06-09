@@ -36,7 +36,7 @@ if has('folding')
   if has('windows')
     set fillchars=vert:│
     set fillchars+=fold:\ 
-    set fillchars+=diff:⣿
+    set fillchars+=diff:░ "alternatives: ⣿
     if has('nvim-0.3.1')
       set fillchars+=msgsep:‾
       " suppress ~ at EndOfBuffer
