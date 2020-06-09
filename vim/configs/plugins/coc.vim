@@ -271,6 +271,12 @@ nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
 function s:open_explorer() abort
   execute 'CocCommand explorer '.getcwd()
 endfunction
+augroup CloseCocExplorer
+  autocmd!
+  autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer')
+        \ | q
+        \ | endif
+augroup END
 nnoremap <silent><C-N> :call <SID>open_explorer()<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
