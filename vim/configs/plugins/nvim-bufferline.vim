@@ -7,7 +7,7 @@ lua << EOF
 require'bufferline'.setup {
   options = {
     view = "multiwindow",
-    numbers = "ordinal",
+    numbers = "none",
     number_style = "superscript",
     mappings = true
   };
