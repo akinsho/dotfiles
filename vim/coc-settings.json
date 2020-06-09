@@ -12,8 +12,9 @@
       "test": true
     }
   },
-  // List
   "yank.priority": 50,
+  // List
+  "list.selectedSignText": " ",
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
   "list.source.extensions.defaultOptions": ["--normal"],
@@ -28,10 +29,10 @@
   // Diagnostics
   "diagnostic.separateRelatedInformationAsDiagnostics": true,
   "diagnostic.virtualTextPrefix": "",
-  "diagnostic.errorSign": "✗",
-  "diagnostic.warningSign": "",
-  "diagnostic.infoSign": "",
-  "diagnostic.hintSign": "ﯦ",
+  "diagnostic.errorSign": "", // ✗
+  "diagnostic.warningSign": "", // 
+  "diagnostic.infoSign": "", // 
+  "diagnostic.hintSign": "", // ﯦ
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.formatOnInsertLeave": true,
   // emoji
