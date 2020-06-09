@@ -71,7 +71,7 @@ endfunction
 function! StatuslineCurrentFunction() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
-  return winwidth(0) > 100 ? s:truncate_string(sanitized, 30) : ''
+  return winwidth(0) > 125 ? s:truncate_string(sanitized, 30) : ''
 endfunction
 
 " This is automatically truncated by coc
@@ -83,7 +83,7 @@ endfunction
 " This is automatically truncated by coc
 function StatuslineGitRepoStatus() abort
   let status = get(g:, "coc_git_status", "")
-  return winwidth(0) < 100 ? s:truncate_string(status, 30) : status
+  return winwidth(0) < 120 ? s:truncate_string(status, 30) : status
 endfunction
 
 " Find out current buffer's size and output it.
