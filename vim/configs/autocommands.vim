@@ -143,7 +143,13 @@ augroup UpdateVim
 augroup END
 " }}}
 
-let s:column_exclusions = ['startify', 'gitcommit', 'vimwiki', 'vim-plug']
+let s:column_exclusions = [
+      \ 'startify',
+      \ 'gitcommit',
+      \ 'vimwiki',
+      \ 'vim-plug',
+      \ 'help'
+      \ ]
 " Hide the colorcolumn when there isn't enough space
 function! CheckColorColumn(...)
   " if called from winleave event this value is 1

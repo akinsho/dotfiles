@@ -9,9 +9,8 @@ let g:indentLine_bufNameExclude  = ['Startify', 'terminal', 'peekabo']
 let g:indentLine_bufTypeExclude  = ['help', 'terminal', 'nofile', 'vimwiki']
 let g:indentLine_faster          = 1
 let g:indentLine_setConceal      = 1
-" we specifically set the colors here as the conceal highlights default does
-" sets the foreground color to the same as the background so it adds "patches"
-" to the cursorline
+" I specifically set the colors here as the conceal highlight's default does sets
+" the foreground color to the same as the background so it adds "patches" to the cursorline
 let g:indentLine_setColors       = 1
 let g:indentLine_char            = '│'
 let g:indentLine_color_gui       = s:gui_color

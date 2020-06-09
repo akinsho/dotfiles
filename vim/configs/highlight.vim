@@ -79,7 +79,6 @@ function! ApplyUserHighlights() abort
   endif
 
   call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
-  " call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none guibg=#282c34')
 
   if has('nvim')
     highlight TermCursor ctermfg=green guifg=green

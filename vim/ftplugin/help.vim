@@ -3,6 +3,7 @@ vertical resize 80
 
 setl spell spelllang=en_us
 setl nonumber norelativenumber
+setl colorcolumn=
 nnoremap <buffer> <CR> <C-]>
 nnoremap <buffer> <BS> <C-T>
 nnoremap <silent><buffer> o /'\l\{2,\}'<CR>
