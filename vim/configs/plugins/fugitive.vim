@@ -24,7 +24,8 @@ nnoremap <silent><leader>gt :Git commit -v -q %:p<CR>
 nnoremap <silent><leader>gl :Git pull<CR>
 nnoremap <silent><leader>gp :Git push<CR>
 nnoremap <silent><leader>gpf :Git push -f<CR>
-nnoremap <silent><leader>go :Git checkout<Space>
+nnoremap <silent><leader>go :Git checkout<space>
+nnoremap <silent><leader>gco :Git checkout -b<space>
 
 function! s:setup() abort
   nnoremap <expr><buffer> } filter([search('\%(\_^#\?\s*\_$\)\\|\%$', 'W'), line('$')], 'v:val')[0].'G'

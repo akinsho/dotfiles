@@ -1,5 +1,6 @@
 {
   // Language specific
+  "python.jediEnabled": false,
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
   "Lua.diagnostics.globals": ["vim"],
