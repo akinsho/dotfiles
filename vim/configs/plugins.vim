@@ -146,7 +146,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 " http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
 ""---------------------------------------------------------------------------//
 Plug 'AndrewRadev/sideways.vim'
-Plug 'bkad/CamelCaseMotion'
+Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
 Plug 'wellle/targets.vim'
 Plug 'kana/vim-textobj-user'
