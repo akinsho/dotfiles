@@ -44,6 +44,10 @@ alias ta="tmux -CC attach"
 alias serve='python -m SimpleHTTPServer'
 alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 
+if which kitty >/dev/null; then
+  alias icat="kitty +kitten icat"
+fi
+
 if [[ `uname` == 'Linux' ]]; then
   # https://stackoverflow.com/questions/53298843/how-do-i-install-bundletool
   alias bundletool='java -jar ~/bundletool-all.jar'

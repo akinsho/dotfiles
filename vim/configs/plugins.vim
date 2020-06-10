@@ -83,8 +83,13 @@ Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 " thing to load blocking vim startup time
 augroup Lazy_load_fat_fingers
     autocmd!
-    autocmd CursorHold,CursorHoldI * call plug#load('vim-fat-finger')
-          \ | autocmd! Lazy_load_fat_fingers
+    if !has('nvim')
+      autocmd CursorHold,CursorHoldI * call plug#load('vim-fat-finger')
+            \ | autocmd! Lazy_load_fat_fingers
+    else
+      " nvim supports running an autocommand only once
+      autocmd CursorHold,CursorHoldI * ++once call plug#load('vim-fat-finger')
+    endif
 augroup end
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
@@ -99,7 +104,13 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescript',
       \ 'javascript'
       \ ]}
-Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+"--------------------------------------------------------------------------------
+" Profiling
+"--------------------------------------------------------------------------------
+" Both are quite useful but their commands overlap so must use
+" one or the other
+" Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
