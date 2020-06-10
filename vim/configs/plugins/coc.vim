@@ -10,6 +10,7 @@ let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-vimlsp',
       \ 'coc-rls',
+      \ 'coc-python',
       \ 'coc-html',
       \ 'coc-snippets',
       \ 'coc-highlight',
