@@ -16,7 +16,7 @@ function! ApplyUserHighlights() abort
 
   if has('nvim-0.3.2')
     " Add undercurl to existing spellbad highlight
-    call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl')
+    call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl guibg=NONE')
   endif
 
   highlight Todo gui=bold
