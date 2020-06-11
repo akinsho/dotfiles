@@ -155,7 +155,8 @@ set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " List chars {{{1
 " --------------------------------------------------------------------------
 set list                              " invisible chars
-set listchars+=tab:\¦\ ,
+set listchars=
+set listchars+=tab:\│\ ,
 set listchars+=extends:…
 set listchars+=precedes:…
 " BULLET (U+2022, UTF-8: E2 80 A2)

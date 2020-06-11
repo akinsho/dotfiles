@@ -2,7 +2,6 @@
 " GO FILE SETTINGS
 ""---------------------------------------------------------------------------//
 setlocal noexpandtab
-setlocal list listchars+=tab:\│\ "(here is a space), this is to show indent line
 setlocal textwidth=100
 
 " create a go doc comment based on the word under the cursor
