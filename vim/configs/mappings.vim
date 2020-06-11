@@ -102,7 +102,6 @@ command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<ba
 cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"
 " Smart mappings on the command line
-cmap cwd lcd %:p:h<tab>
 cmap w!! w !sudo tee % >/dev/null
 " insert path of current file into a command
 cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
