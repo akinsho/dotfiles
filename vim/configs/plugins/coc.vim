@@ -67,18 +67,6 @@ function! s:coc_init() abort
           \}
   endif
 
-  " if executable("gopls")
-  " use auto arg if running multiple gopls servers to re-use as much
-  " the gopls daemon
-  " \ "args": ["-remote=auto"],
-  " let s:languageservers['golang'] = {
-  "   \ "command": "gopls",
-  "   \ "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-  "   \ "disableWorkspaceFolders": v:true,
-  "   \ "filetypes": ["go"]
-  "   \ }
-  " endif
-
   if executable("elm-language-server")
     let s:languageservers["elmLS"]   = {
           \ "command": "elm-language-server",
