@@ -151,7 +151,7 @@ let s:column_exclusions = [
       \ 'help'
       \ ]
 " Hide the colorcolumn when there isn't enough space
-function! CheckColorColumn(...)
+function! s:check_color_column(...)
   " if called from winleave event this value is 1
   let leaving = get(a:, '0', 0)
   if index(s:column_exclusions, &ft) != -1 || !&buflisted
