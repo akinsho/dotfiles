@@ -31,8 +31,19 @@ function! s:go_to_winid(win_id) abort
   return win_getid() == s:terminal_window ? 1 : 0
 endfunction
 
+function s:check_for_existing_window() abort
+  let is_terminal = getbufvar(s:terminal_buffer, "&buftype") ==? 'terminal'
+  if bufexists(s:terminal_buffer) && !is_terminal
+    execute 'bdelete! ' . s:terminal_buffer
+    s:terminal_buffer = -1
+  endif
+endfunction
+
 function! terminal#open(...) abort
   let size = get(a:, '1', 10)
+
+  " Check if there is a lingering buffer from a previous session
+  call s:check_for_existing_window()
   " Check if buffer exists, if not create a window and a buffer
   if !bufexists(s:terminal_buffer)
     " Creates a window call monkey_terminal
