@@ -136,8 +136,8 @@ augroup UpdateVim
   " Autosave vim on typing stopped
   autocmd CursorHold,CursorHoldI * silent! update
   " Update the cursor column to match current window size
-  autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call CheckColorColumn()
-  autocmd WinLeave * call CheckColorColumn(1)
+  autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call s:check_color_column()
+  autocmd WinLeave * call s:check_color_column(1)
   " Make windows equal size when vim resizes
   autocmd VimResized * wincmd =
 augroup END

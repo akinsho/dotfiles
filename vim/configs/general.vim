@@ -79,11 +79,11 @@ set foldopen+=search
 " This is overwritten in lsp-fold compatible files by Coc
 set foldmethod=syntax
 set foldlevelstart=3
-  " The fold open and close markers are visually distracting
-  " and if the code is too nested it starts rendering fold depth
+" The fold open and close markers are visually distracting
+" and if the code is too nested it starts rendering fold depth
 set foldcolumn=0
 " if has('nvim-0.5')
-" set foldcolumn=auto:8
+"  set foldcolumn=auto:8
 " endif
 ""---------------------------------------------------------------------------//
 " Vim Path {{{1
