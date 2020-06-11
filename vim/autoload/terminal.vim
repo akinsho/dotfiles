@@ -6,7 +6,7 @@ let s:terminal_window = -1
 " FIXME this is can become invalid if this file is sourced as it will
 " be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
-let s:terminal_name = 'neovim terminal'
+let s:terminal_name = 'Nvim Terminal'
 " Assuming this file is sourced then a file with this terminal name
 " will still exist in vim causing the calle to file {name} to fail
 " to work around this instead we assign the buffer ID to the result
@@ -35,6 +35,8 @@ function s:check_for_existing_window() abort
   let is_terminal = getbufvar(s:terminal_buffer, "&buftype") ==? 'terminal'
   if bufexists(s:terminal_buffer) && !is_terminal
     execute 'bdelete! ' . s:terminal_buffer
+    let s:terminal_buffer = -1
+    let s:terminal_window = -1
   endif
 endfunction
 
