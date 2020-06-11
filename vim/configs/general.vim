@@ -32,20 +32,16 @@ set splitbelow splitright
 set eadirection=hor
 " exclude usetab as we do not want to jump to buffers in already open tabs
 set switchbuf=useopen,vsplit
-if has('folding')
-  if has('windows')
-    set fillchars=vert:│
-    set fillchars+=fold:\ 
-    set fillchars+=diff:░ "alternatives: ⣿
-    if has('nvim-0.3.1')
-      set fillchars+=msgsep:‾
-      " suppress ~ at EndOfBuffer
-      set fillchars+=eob:\ 
-      if has('nvim-0.5')
-        set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
-      endif
-    endif
-  endif
+set fillchars=vert:│
+set fillchars+=fold:\ 
+set fillchars+=diff:░ "alternatives: ⣿
+if has('nvim-0.3.1')
+  set fillchars+=msgsep:‾
+  " suppress ~ at EndOfBuffer
+  set fillchars+=eob:\ 
+endif
+if has('nvim-0.5')
+  set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
 endif
 ""---------------------------------------------------------------------------//
 " Diffing {{{1
@@ -75,8 +71,6 @@ set formatoptions+=j                  " remove a comment leader when joining lin
 " started and only at a white character that has been entered during the
 " current insert command.
 set formatoptions+=lv
-set nrformats-=octal " never use octal when <C-x> or <C-a>"
-
 " ----------------------------------------------------------------------------
 " Folds {{{1
 " ----------------------------------------------------------------------------
@@ -195,15 +189,10 @@ elseif has('clipboard')
   set clipboard+=unnamed
 endif
 if !has('nvim')
-  set ruler
   set lazyredraw " Turns on lazyredraw which postpones redrawing for macros and command execution
   set laststatus=2
-  set incsearch
   set autoindent
-  set backspace=2 "Back space deletes like most programs in insert mode
   set ttyfast
-else
-  set nolazyredraw
 endif
 if exists('&belloff')
   set belloff=all
@@ -305,9 +294,7 @@ if has('nvim')
           \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
           \,sm:block-blinkwait175-blinkoff150-blinkon175
   endif
-  let g:terminal_scrollback_buffer_size = 500000
 endif
-
 "---------------------------------------------------------------------------//
 " Utilities {{{1
 "---------------------------------------------------------------------------//
