@@ -109,8 +109,8 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
 "--------------------------------------------------------------------------------
 " Both are quite useful but their commands overlap so must use
 " one or the other
-" Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+" Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
@@ -134,7 +134,6 @@ Plug 'sheerun/vim-polyglot'
 " Git {{{1
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
-Plug 'sodapopcan/vim-twiggy'
 Plug 'rhysd/conflict-marker.vim'
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
@@ -204,6 +203,15 @@ let g:loaded_tarPlugin         = 1
 let g:loaded_zip               = 1
 let g:loaded_zipPlugin         = 1
 let g:loaded_rrhelper          = 1
+
+" Install any missing plugins on vim enter
+augroup AutoInstallPlugins
+	autocmd!
+	autocmd VimEnter *
+	  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+	  \|   PlugInstall --sync | q
+	  \| endif
+augroup END
 
 " SOURCE: https://github.com/junegunn/vim-plug/pull/875
 " Check if the files is in the plugs map but also IMPORTANTLY
