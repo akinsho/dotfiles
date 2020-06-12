@@ -68,7 +68,8 @@ endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', {'on': ['VimwikiIndex']}
+Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim'
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
@@ -78,19 +79,6 @@ Plug 'iamcco/markdown-preview.nvim', {
       \ }
 Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
-Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
-" We lazy load vim fat finger because it otherwise takes 80ms ie. the slowest
-" thing to load blocking vim startup time
-augroup Lazy_load_fat_fingers
-    autocmd!
-    if !has('nvim')
-      autocmd CursorHold,CursorHoldI * call plug#load('vim-fat-finger')
-            \ | autocmd! Lazy_load_fat_fingers
-    else
-      " nvim supports running an autocommand only once
-      autocmd CursorHold,CursorHoldI * ++once call plug#load('vim-fat-finger')
-    endif
-augroup end
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
@@ -203,6 +191,31 @@ let g:loaded_tarPlugin         = 1
 let g:loaded_zip               = 1
 let g:loaded_zipPlugin         = 1
 let g:loaded_rrhelper          = 1
+
+" Lazy load plugins like vim fat finger
+" because it otherwise takes 80ms ie. the slowest
+" thing to load blocking vim startup time
+"
+" NOTE: these can't be lazy loaded using vim-plug's mechanism
+" because there is no specific filetype or command I want to
+" trigger these for
+function s:lazy_load_plugins() abort
+  let lazy_plugins = ['vim-fat-finger']
+  for p in lazy_plugins
+    call plug#load(p)
+  endfor
+endfunction
+
+augroup LazyLoadPlugins
+    autocmd!
+    if !has('nvim')
+      autocmd CursorHold,CursorHoldI * call s:lazy_load_plugins()
+            \ | autocmd! LazyLoadPlugins
+    else
+      " nvim supports running an autocommand only once
+      autocmd CursorHold,CursorHoldI * ++once call s:lazy_load_plugins()
+    endif
+augroup end
 
 " Install any missing plugins on vim enter
 augroup AutoInstallPlugins

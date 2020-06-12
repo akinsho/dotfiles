@@ -27,7 +27,6 @@ let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:wiki, g:common_wiki]
 
 let g:vimwiki_global_ext = 0
-
 let g:vimwiki_folding = 'expr'
 
 function! s:close_wikis() abort
@@ -40,3 +39,4 @@ function! s:close_wikis() abort
 endfunction
 
 command! CloseVimWikis call s:close_wikis()
+nnoremap <leader>ww <Cmd>VimwikiIndex<CR>
