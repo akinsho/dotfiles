@@ -254,6 +254,8 @@ function! s:mode_highlight(mode) abort
   endif
 endfunction
 
+" FIXME this functions should search through the
+" array and only apply this command for windows in column formation
 " Add underlines between stacked horizontal windows
 function! s:add_separators()
   let [layout; rest] = winlayout()
@@ -350,14 +352,16 @@ endfunction
 
 augroup custom_statusline
   autocmd!
-  "NOTE: %! expressions get populated globally.
-  "That means all statuslines of all buffers get the expression
-  "result of the buffer being active.
-  autocmd BufEnter,WinEnter * setlocal statusline=%!StatusLine()
+  " NOTE: %! expressions get populated globally.
+  " That means all statuslines of all buffers get the expression
+  " result of the buffer being active.
+
+  " The quickfix window sets it's own statusline, so we override it here
+  autocmd FileType qf setlocal statusline=%!StatusLine()
+  autocmd BufEnter,WinEnter,QuickFixCmdPost * setlocal statusline=%!StatusLine()
   autocmd BufLeave,WinLeave * setlocal statusline=%!MinimalStatusLine()
   autocmd VimEnter,ColorScheme * call <SID>set_statusline_colors()
 augroup END
-
 
 " =====================================================================
 " Resources:
