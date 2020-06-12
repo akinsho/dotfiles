@@ -258,8 +258,8 @@ endfunction
 function! s:add_separators()
   let [layout; rest] = winlayout()
   let gui = layout ==# 'col' ? "underline" : "NONE"
-  silent! execute 'highlight Statusline guifg=black gui='.gui
-  silent! execute 'highlight StatuslineNC guifg=black gui='.gui
+  silent! execute 'highlight Statusline gui='.gui
+  silent! execute 'highlight StatuslineNC gui='.gui
 endfunction
 
 function! StatusLine(...) abort
