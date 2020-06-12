@@ -179,9 +179,6 @@ xmap im <Plug>(coc-classobj-i)
 omap im <Plug>(coc-classobj-i)
 xmap am <Plug>(coc-classobj-a)
 omap am <Plug>(coc-classobj-a)
-
-" TODO: Remove this when coc/nvim floating window bug is resolved
-nmap <silent><leader>cf <Plug>(coc-float-hide)
 ""---------------------------------------------------------------------------//
 " Code Actions
 ""---------------------------------------------------------------------------//
@@ -214,7 +211,7 @@ let g:coc_status_warning_sign = " "
 ""---------------------------------------------------------------------------//
 nnoremap <silent> <localleader>y  :<C-u>CocList -A --normal yank<cr>
 " Show all diagnostics
-nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>d  :<C-u>CocList diagnostics<cr>
 " Show commands
 nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Manage extensions
