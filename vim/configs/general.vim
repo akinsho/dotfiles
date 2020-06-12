@@ -318,7 +318,7 @@ set dictionary+=/usr/share/dict/words
 "-----------------------------------------------------------------------------
 " BACKUP AND SWAPS {{{
 "-----------------------------------------------------------------------------
-"Turn swap files off - FOR GOD's SAKE they are ruining my life
+" Turn swap files off - FOR GOD's SAKE they are ruining my life
 set noswapfile
 set nobackup
 set nowritebackup
@@ -368,10 +368,7 @@ set mousefocus
 if !has('nvim')
   set ttymouse=xterm2
 endif
-" If I've set a work directory then I trust the system I'm on if not set secure
-if !isdirectory(expand("$WORK_DIR"))
-  set secure  " Disable autocmd etc for project local vimrc files.
-endif
+set secure  " Disable autocmd etc for project local vimrc files.
 set exrc " Allow project local vimrc files example .nvimrc see :h exrc
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
 " vim:foldmethod=marker
