@@ -23,7 +23,8 @@ let g:coc_global_extensions = [
       \ 'coc-reason',
       \ 'coc-eslint',
       \ 'coc-actions',
-      \ 'coc-go'
+      \ 'coc-go',
+      \ 'coc-bookmark'
       \]
 
 " TODO: Coc pairs is takes half a second to expand
@@ -243,7 +244,11 @@ endfunc
 "--------------------------------------------------------------------------------
 " Coc bookmarks
 "--------------------------------------------------------------------------------
-nnoremap <silent><leader>bm :CocList --auto-preview bookmark<CR>
+nnoremap <silent><leader>bl :CocList --auto-preview bookmark<CR>
+nmap <silent><leader>bm <Plug>(coc-bookmark-toggle)
+nmap <silent><leader>ba <Plug>(coc-bookmark-annotate)
+nmap <silent><Leader>bj <Plug>(coc-bookmark-next)
+nmap <silent><Leader>bk <Plug>(coc-bookmark-prev)
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//
