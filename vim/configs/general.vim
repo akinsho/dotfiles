@@ -172,7 +172,7 @@ set wrapmargin=2
 set textwidth=80
 if exists('&signcolumn')
   if has('nvim-0.4')
-   "yes confirms showing the column and the specified size
+   " yes confirms showing the column and the specified size
     set signcolumn=yes:2
   else
     set signcolumn=yes "enables column that shows signs and error symbols
