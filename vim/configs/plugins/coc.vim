@@ -256,6 +256,7 @@ xmap ih <Plug>(coc-git-chunk-inner)
 omap ah <Plug>(coc-git-chunk-outer)
 xmap ah <Plug>(coc-git-chunk-outer)
 nnoremap <silent><leader>gb :CocCommand git.browserOpen<CR>
+nnoremap <silent><leader>br :CocList branches<CR>
 nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
 nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
