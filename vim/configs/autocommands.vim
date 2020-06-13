@@ -194,12 +194,6 @@ augroup config_filtetype_settings "{{{1
   autocmd BufRead,BufNewFile .env.* set filetype=sh
 augroup END
 
-augroup FileType_html "{{{1
-  autocmd!
-  autocmd BufNewFile,BufEnter *.html setlocal nowrap
-augroup END
-
-
 augroup CommandWindow "{{{1
   autocmd!
   " map q to close command window on quit
