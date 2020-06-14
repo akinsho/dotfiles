@@ -47,9 +47,7 @@ augroup togglerelativelinenumbers
   " except in previewwindow and other readonly/ helper windows
   " OR if the ft has a setting to turn of numbers for that buffer
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
-        \ if &previewwindow
-        \ |  setlocal nonumber norelativenumber
-        \ | elseif empty(&buftype) && &number
+        \  if empty(&buftype) && &number
         \ |  setlocal norelativenumber
         \ | endif
 
@@ -213,36 +211,26 @@ if has('nvim-0.5')
   augroup END
 endif
 
-" Add Per Window Highlights {{{
-function! s:handle_window_enter() abort
+function s:setup_terminal() abort
   if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber
-    " if g:colors_name ==? 'one' || g:colors_name ==? 'onedark'
-      " if exists('+winhighlight')
-        "@TODO: figure out how to avoid highlighting fzf buffers
-        " highlight TerminalColors guibg=#22252B ctermbg=black
-        " highlight TerminalEndOfBuffer guifg=#22252B guibg=#22252B
-        " setlocal winhighlight=Normal:TerminalColors,NormalNC:TerminalColors,EndOfBuffer:TerminalEndOfBuffer
-      " endif
-    " endif
-  endif
-  if &previewwindow
-    setlocal nospell concealcursor=nv nocursorline colorcolumn=
+    setlocal nocursorline nonumber norelativenumber signcolumn=no
+    " calling "lua require'mod'func in between pipes(|) causes errors
+    silent lua require"color_helpers".darken_terminal(-30)
   endif
 endfunction
 
-if has('nvim')
-  augroup nvim
-    au!
-    autocmd ColorScheme,BufWinEnter,WinEnter,WinNew,TermOpen * call s:handle_window_enter()
-    "Close FZF in neovim with esc
-    autocmd FileType fzf
-          \ tnoremap <nowait><buffer> <esc> <c-g>
-  augroup END
-endif
-
-augroup FileType_all "{{{1
+augroup CustomWindowHighlights
   autocmd!
+  autocmd TermOpen,WinEnter,WinNew * call s:setup_terminal()
+  autocmd WinEnter,WinNew * if &previewwindow
+        \ | setlocal nospell concealcursor=nv nocursorline colorcolumn=
+        \ | endif
+augroup END
+
+augroup Utilities "{{{1
+  autocmd!
+  " close FZF in neovim with esc
+  autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
 
   autocmd TermOpen,TermEnter * startinsert!
   autocmd TermLeave * stopinsert!
@@ -280,8 +268,6 @@ augroup FileType_all "{{{1
         \ if &l:autoread > 0 | source <afile> |
         \   echo 'source '.bufname('%') |
         \ endif
-augroup END
 
-augroup LongFiles "{{{1
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
