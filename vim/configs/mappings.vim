@@ -210,12 +210,6 @@ nnoremap <leader><leader> <c-^>
 " use ,gf to go to file in a vertical split
 nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
 ""---------------------------------------------------------------------------//
-" Change operator arguments to a character representing the desired motion
-nnoremap ; :
-xnoremap ; :
-nnoremap : ;
-xnoremap : ;
-""---------------------------------------------------------------------------//
 " Last Inserted
 ""---------------------------------------------------------------------------//
 " select last paste in visual mode
