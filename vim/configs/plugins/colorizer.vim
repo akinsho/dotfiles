@@ -1,5 +1,8 @@
-if !has_key(plugs, 'nvim-colorizer.lua') || exists('g:loaded_colorizer')
+if !has_key(plugs, 'nvim-colorizer.lua')
   finish
 endif
 
-lua require'colorizer'.setup()
+augroup load_colorizer
+  au!
+  au CursorHold,CursorHoldI * ++once lua require('colorizer').setup{}
+augroup END
