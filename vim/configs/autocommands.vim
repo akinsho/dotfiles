@@ -14,7 +14,8 @@ augroup END
 function! s:WhitespaceHighlight()
   " Don't highlight trailing spaces in certain filetypes.
   let exclusions = ['help', 'vim-plug', 'log']
-  if index(exclusions, &filetype) >= 0 || &buftype == "quickfix"
+  let buftype_exclusions = ['nofile', 'quickfix']
+  if index(exclusions, &filetype) >= 0 || index(buftype_exclusions, &buftype) >= 0
     setlocal nolist
   else
     hi! ExtraWhitespace guifg=red

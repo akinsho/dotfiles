@@ -55,7 +55,6 @@ Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
 Plug 'ryanoasis/vim-devicons', Cond(!has('gui_running'))
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
-Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
@@ -143,6 +142,8 @@ Plug 'kana/vim-textobj-user'
 "--------------------------------------------------------------------------------
 " Search Tools {{{1
 "--------------------------------------------------------------------------------
+" Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
