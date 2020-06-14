@@ -58,18 +58,16 @@ let g:fzf_colors = {
       \ 'header':  ['fg', 'Comment']
       \}
 
-if has('nvim')
-  " Make fzf floating window quasi transparent in Neovim
-  if exists('&winblend')
-    augroup FZF_Settings
-      au!
-      autocmd Filetype fzf setlocal winblend=7
-    augroup end
-  endif
-
-  " Border style (rounded / sharp / horizontal)
-  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
+" Make fzf floating window quasi transparent in Neovim
+if exists('&winblend')
+  augroup FZF_Settings
+    au!
+    autocmd Filetype fzf setlocal winblend=7
+  augroup end
 endif
+
+" Border style (rounded / sharp / horizontal)
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
 
 let s:diff_options =
       \ '--reverse ' .

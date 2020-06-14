@@ -211,17 +211,15 @@ if has('nvim-0.5')
   augroup END
 endif
 
-function s:setup_terminal() abort
-  if &buftype ==# 'terminal'
-    setlocal nocursorline nonumber norelativenumber signcolumn=no
-    " calling "lua require'mod'func in between pipes(|) causes errors
-    silent lua require"color_helpers".darken_terminal(-30)
-  endif
-endfunction
-
-augroup CustomWindowHighlights
+augroup CustomWindowSettings
   autocmd!
-  autocmd TermOpen,WinEnter,WinNew * call s:setup_terminal()
+  " TODO: we match specifically against zsh terminals since we are trying
+  " to avoid highlighting fzf buffers.
+  "
+  " find an autocommand pattern to exclude fzf explicitly
+  " term://*fzf*
+  autocmd TermOpen term://*zsh*,term://*bash* silent! lua require"color_helpers".darken_terminal(-30)
+  autocmd TermOpen * setlocal nonumber norelativenumber
   autocmd WinEnter,WinNew * if &previewwindow
         \ | setlocal nospell concealcursor=nv nocursorline colorcolumn=
         \ | endif
