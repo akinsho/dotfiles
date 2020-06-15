@@ -1,8 +1,10 @@
 ""---------------------------------------------------------------------------//
 " VIM MARKDOWN {{{
 ""---------------------------------------------------------------------------//
+let g:vim_markdown_strikethrough       = 1
 let g:vim_markdown_fenced_languages    = [
       \'css',
+      \'sh=bash',
       \'js=javascript',
       \'json',
       \'xml',
