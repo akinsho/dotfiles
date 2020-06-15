@@ -220,7 +220,7 @@ nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " " Find symbol of current document
 nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <leader>s  :<C-u>CocList symbols<cr>
+nnoremap <silent> <localleader>s  :<C-u>CocList symbols<cr>
 " Search marketplace for coc symbols
 nnoremap <silent> <leader>m  :<C-u>CocList marketplace<cr>
 " Resume latest coc list
@@ -292,7 +292,6 @@ function s:apply_coc_highlights()
   highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
   highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
   highlight CocCodeLens ctermfg=Gray guifg=#999999
-  " call utils#extend_highlight('CursorColumn', 'CocHighlightText', "gui=underline")
   highlight link CocHighlightText Pmenu
 
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
