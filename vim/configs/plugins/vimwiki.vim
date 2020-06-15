@@ -39,4 +39,3 @@ function! s:close_wikis() abort
 endfunction
 
 command! CloseVimWikis call s:close_wikis()
-nnoremap <leader>ww <Cmd>VimwikiIndex<CR>
