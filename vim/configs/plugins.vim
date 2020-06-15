@@ -67,7 +67,7 @@ endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki', {'on': ['VimwikiIndex']}
+Plug 'vimwiki/vimwiki', {'on': [], 'for': []}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim'
@@ -201,7 +201,7 @@ let g:loaded_rrhelper          = 1
 " because there is no specific filetype or command I want to
 " trigger these for
 function s:lazy_load_plugins() abort
-  let lazy_plugins = ['vim-fat-finger']
+  let lazy_plugins = ['vim-fat-finger', 'vimwiki']
   for p in lazy_plugins
     call plug#load(p)
   endfor
