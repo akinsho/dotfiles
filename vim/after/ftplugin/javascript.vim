@@ -1,4 +1,3 @@
-" setlocal foldmethod=manual "let coc.nvim control folding
 setl completeopt-=preview
 match Error /\%80v.\+/
 
