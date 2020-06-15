@@ -87,13 +87,13 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 call s:safely_source(g:dotfiles . '/vim/configs/plugins.vim')
 "-----------------------------------------------------------------------
 " Essential Settings - Taken care of by Vim Plug
-"---------------------------------------------------------------------------//
+"-----------------------------------------------------------------------
 filetype plugin indent on
 syntax enable
 
-"--------------------------------------------------------------------------------
+"-----------------------------------------------------------------------
 " Local vimrc
-"--------------------------------------------------------------------------------
+"-----------------------------------------------------------------------
 let s:vimrc_local=$HOME.'/.vimrc.local'
 if filereadable(s:vimrc_local)
   call s:safely_source(s:vimrc_local)

@@ -142,7 +142,8 @@ Plug 'kana/vim-textobj-user'
 "--------------------------------------------------------------------------------
 " Search Tools {{{1
 "--------------------------------------------------------------------------------
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
