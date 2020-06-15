@@ -9,3 +9,6 @@ nnoremap <buffer><silent> gy :Goyo<CR>
 if PluginLoaded("markdown-preview.nvim")
   nmap <localleader>p <Plug>MarkdownPreviewToggle
 endif
+
+nnoremap <leader>t :s/\(\s*\)\[ \]/\1\[x\]/<cr>
+nnoremap <leader>T :s/\(\s*\)\[x\]/\1\[ \]/<cr>
