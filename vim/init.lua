@@ -5,30 +5,22 @@ local api = _G.vim.api
 -- Helpers
 -----------------------------------------------------------------------------//
 local function is_plugin_loaded(plugin)
-  local success = pcall(require, plugin)
-  return success
+  local success, plugin = pcall(require, plugin)
+  return success, plugin
 end
 
 local function is_executable(name)
-  if fn.executable(name) > 0 then
-    return true
-  else
-    return false
-  end
+  return fn.executable(name) > 0
 end
 
 
 -----------------------------------------------------------------------------//
 -- Init
 -----------------------------------------------------------------------------//
-local lsp_configs_loaded = is_plugin_loaded('nvim-lsp')
+local lsp_configs_loaded, lsp = is_plugin_loaded('nvim-lsp')
 
 -- NOTE: Don't load this file if we aren't using "nvim-lsp"
-if not lsp_configs_loaded then
-  return
-end
-
-local lsp = require'nvim_lsp'
+if not lsp_configs_loaded then return end
 
 -----------------------------------------------------------------------------//
 -- Setup plugins

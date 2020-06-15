@@ -119,6 +119,7 @@ command! -bang -nargs=* Rg
       \           : fzf#vim#with_preview('right:50%'),
       \   <bang>0)
 
+" FIXME: this includes git exluded files
 command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
