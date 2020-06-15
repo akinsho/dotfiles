@@ -221,7 +221,9 @@ augroup CustomWindowSettings
   " find an autocommand pattern to exclude fzf explicitly
   " term://*fzf*
   " SEE: https://github.com/junegunn/fzf/issues/576
-  autocmd TermOpen term://*zsh*,term://*bash* silent! lua require"color_helpers".darken_terminal(-30)
+  " FIXME this breaks on sourcing vimrc
+  autocmd TermOpen,WinNew,WinEnter term://*zsh*,term://*bash*
+        \ silent! lua require"color_helpers".darken_terminal(-30)
   autocmd TermOpen * setlocal nonumber norelativenumber
   autocmd WinEnter,WinNew * if &previewwindow
         \ | setlocal nospell concealcursor=nv nocursorline colorcolumn=
