@@ -27,7 +27,6 @@ endif
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 " WARNING: Hardcoding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
-let g:inform_load_results = 0
 
 function! VimrcMessage(msg) abort
   echohl WarningMsg
@@ -46,16 +45,6 @@ function! s:safely_source(arg) abort
   endtry
 endfunction
 
-function! s:inform_load_result(loaded, errors) abort
-  if a:errors == 0
-    echohl String
-  else
-    echohl WarningMsg
-  endif
-  echom 'loaded ' . a:loaded . ' configs successfully! ' . a:errors . ' errors'
-  echohl none
-endfunction
-
 function! s:load_plugin_configs(settings_dir) abort
   let s:plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
   let s:loaded = 0
@@ -70,10 +59,6 @@ function! s:load_plugin_configs(settings_dir) abort
       let s:loaded += s:result
     endif
   endfor
-  " Don't block VimEnter to inform of the results
-  if g:inform_load_results
-    call timer_start(800, { -> s:inform_load_result(s:loaded, s:errors) })
-  endif
 endfunction
 
 "-----------------------------------------------------------------------

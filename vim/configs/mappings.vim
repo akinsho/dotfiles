@@ -290,7 +290,7 @@ command! -nargs=+ -complete=command TabMessage call utils#tab_message(<q-args>)
 ""---------------------------------------------------------------------------//
 " Window bindings
 ""---------------------------------------------------------------------------//
-if !PluginLoaded('vim-tmux-navigator')
+if !exists('$TMUX')
   nnoremap <c-j> <c-w>j
   nnoremap <c-k> <c-w>k
   nnoremap <c-h> <c-w>h

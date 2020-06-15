@@ -52,25 +52,23 @@ Plug 'haorenW1025/completion-nvim', Cond(g:testing_nvim_lsp)
 Plug 'haorenW1025/diagnostic-nvim', Cond(g:testing_nvim_lsp)
 "--------------------------------------------------------------------------------
 Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
-Plug 'ryanoasis/vim-devicons', Cond(!has('gui_running'))
+Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
+Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 " Plug 'kyazdani42/nvim-web-devicons' " for file icons
 " Plug 'kyazdani42/nvim-tree.lua'
-if exists('$TMUX')
-  Plug 'christoomey/vim-tmux-navigator'
-endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
 Plug 'vimwiki/vimwiki', {'on': [], 'for': []}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
-Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF', 'CtrlSFOpen', 'CtrlSFToggle']}
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', {
       \ 'do': ':call mkdp#util#install()',
