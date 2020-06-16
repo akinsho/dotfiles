@@ -50,36 +50,59 @@ function! statusline#file_format() abort
   return winwidth(0) > 70 ? (&fileformat . ' ' . l:icon) : ''
 endfunction
 
+let s:filetype_map = {
+      \ 'dbui' : 'Dadbod UI',
+      \ 'vista' : 'Vista',
+      \ 'fugitive' : 'Fugitive ',
+      \ 'fugitiveblame' : 'Git blame ',
+      \ 'gitcommit' : 'Git commit ',
+      \ 'startify' : 'Startify',
+      \ 'defx' : 'Defx ⌨',
+      \ 'ctrlsf' : 'CtrlSF 🔍',
+      \ 'vim-plug' : 'vim-plug ⚉',
+      \ 'help' : 'help ',
+      \ 'undotree' : 'UndoTree ⮌',
+      \ 'coc-explorer' : 'Coc Explorer',
+      \ 'LuaTree' : 'Lua Tree',
+      \ }
+
+let s:filename_map = {
+      \ '__Tagbar__' : 'Tagbar',
+      \ 'ControlP' : 'CtrlP',
+      \ '__Gundo__' : 'Gundo',
+      \ '__Gundo_Preview__' : 'Gundo Preview',
+      \ 'NERD_tree' : 'NERDTree 🖿',
+      \}
+
 function! statusline#filename(...) abort
+  if s:is_bt('terminal')
+    return '  '. expand('%:t')
+  endif
+
+  let special_buffer_name = statusline#special_buffers()
+  if strlen(special_buffer_name)
+    return special_buffer_name
+  endif
+
+  let readonly_indicator = ' '. statusline#readonly()
+
+  let name = get(s:filetype_map, &filetype, '')
+  if strlen(name)
+    return name
+  endif
+
   let filename_modifier = get(a:, '1', '%:t')
   let fname = expand(filename_modifier)
-  return fname == 'ControlP' ? 'ControlP' :
-        \ fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname =~ '__Gundo\|NERD_tree' ? 'NERD Tree' :
-        \ s:is_ft('ctrlsf') ? 'CtrlSF' :
-        \ s:is_ft('defx') ? 'Defx' :
-        \ s:is_ft('dbui') ? 'Dadbod UI' :
-        \ s:is_ft('vista') ? 'Vista' :
-        \ s:is_ft('fugitive') ? 'Fugitive ' :
-        \ s:is_ft('fugitiveblame') ? 'Git blame ' :
-        \ s:is_ft('gitcommit') ? 'Git commit ' :
-        \ s:is_ft('startify') ? 'Startify' :
-        \ s:is_ft('defx') ? 'Defx ⌨' :
-        \ s:is_ft('ctrlsf') ? 'CtrlSF 🔍' :
-        \ s:is_ft('vim-plug') ? 'vim-plug ⚉':
-        \ s:is_ft('help') ? 'help ':
-        \ s:is_ft('undotree') ? 'UndoTree ⮌' :
-        \ s:is_ft('coc-explorer') ? 'Coc Explorer' :
-        \ s:is_ft('LuaTree') ? 'Lua Tree' :
-        \ s:is_bt('terminal') ? '  '. expand('%:t') :
-        \ fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree 🖿' :
-        \ strlen(statusline#special_buffers()) ? statusline#special_buffers() :
-        \ (strlen(statusline#readonly()) ? statusline#readonly() . ' ' : '') .
-        \ (strlen(fname) ? fname : '[No Name]')
+
+  let filename = get(s:filename_map, fname, '')
+  if strlen(filename)
+    return filename
+  endif
+
+  if !strlen(fname)
+    return '[No Name]'
+  endif
+  return fname . readonly_indicator
 endfunction
 
 function! statusline#filetype() abort
