@@ -144,7 +144,9 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
   silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
-  silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
+  silent! execute 'highlight StFilename guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
+  silent! execute 'highlight StFilenameInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=italic,bold'
+  silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
   silent! execute 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
@@ -277,6 +279,7 @@ function! StatusLine(...) abort
   let file_format = statusline#file_format()
   let line_info = s:line_info()
   let file_modified = statusline#modified('●')
+  let minimal = plain || inactive
 
   " Evaluate the filename in the context of the statusline component
   " -> %{func_call()}, items in this context are per window not global
@@ -292,14 +295,16 @@ function! StatusLine(...) abort
   let minwid = 5
   " Don't set a minimum width for plain status line filenames
   let truncation_amount = float2nr(round(winwidth(0) * percentage))
-  let title_component = '%'.minwid.'.'.truncation_amount.'(%{statusline#filename("%:p:.")}%)'
+  let filename_highlight = minimal ? "StFilenameInactive" : "StFilename"
+  let title_component = '%'.minwid.'.' .truncation_amount.
+        \ '(%{statusline#get_dir()}%#' .filename_highlight.'#%{statusline#filename("%:t")}%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
   " Mode
   ""---------------------------------------------------------------------------//
   "show a minimal statusline with only the mode and file component
-  if plain || inactive
+  if minimal
     return s:sep(title_component, s:st_inactive)
   endif
   ""---------------------------------------------------------------------------//

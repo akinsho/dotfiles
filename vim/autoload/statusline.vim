@@ -74,6 +74,14 @@ let s:filename_map = {
       \ 'NERD_tree' : 'NERDTree 🖿',
       \}
 
+function! statusline#get_dir() abort
+  if strlen(&buftype) || expand('%:t') == ''
+    return ''
+  endif
+  let relative_dir = expand("%:p:h")
+  return substitute(fnamemodify(relative_dir, ":~:."), "/$", "", "") . "/"
+endfunction
+
 function! statusline#filename(...) abort
   if s:is_bt('terminal')
     return '  '. expand('%:t')
