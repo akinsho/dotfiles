@@ -281,6 +281,9 @@ function! StatusLine(...) abort
   let file_modified = statusline#modified('●')
   let minimal = plain || inactive
 
+  "---------------------------------------------------------------------------//
+  " Filename
+  "---------------------------------------------------------------------------//
   " Evaluate the filename in the context of the statusline component
   " -> %{func_call()}, items in this context are per window not global
   " this means the function returns the containing windows filename
@@ -295,10 +298,6 @@ function! StatusLine(...) abort
   let minwid = 5
   " Don't set a minimum width for plain status line filenames
   let trunc_amount = float2nr(round(winwidth(0) * percentage))
-
-  "---------------------------------------------------------------------------//
-  " Filename
-  "---------------------------------------------------------------------------//
   " highlight the filename component separately
   let filename_hl = minimal ? "StFilenameInactive" : "StFilename"
   let filename = '%#'.filename_hl.'#%{statusline#filename("%:t")}'
