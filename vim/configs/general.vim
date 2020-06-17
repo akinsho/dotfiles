@@ -343,8 +343,8 @@ if &filetype ==# 'html'
 endif
 augroup cursorline
   autocmd!
-  autocmd WinEnter,BufWinEnter * setlocal cursorline
-  autocmd WinLeave,BufWinLeave * setlocal nocursorline
+  autocmd WinEnter,BufWinEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
+  autocmd WinLeave,BufWinLeave * if &buftype !=? 'terminal' | setlocal nocursorline | endif
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "====================================================================================
