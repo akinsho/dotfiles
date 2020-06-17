@@ -268,9 +268,9 @@ endfunction
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
   call s:add_separators()
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
   " Modifiers
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
   let inactive = get(opts, 'inactive', 0)
   let plain = statusline#show_plain_statusline()
 
@@ -296,25 +296,26 @@ function! StatusLine(...) abort
   " Don't set a minimum width for plain status line filenames
   let trunc_amount = float2nr(round(winwidth(0) * percentage))
 
-  " Title component ==========================================================//
+  "---------------------------------------------------------------------------//
+  " Filename
+  "---------------------------------------------------------------------------//
   " highlight the filename component separately
   let filename_hl = minimal ? "StFilenameInactive" : "StFilename"
   let filename = '%#'.filename_hl.'#%{statusline#filename("%:t")}'
   let directory = '%{statusline#get_dir()}'
   let title_component = '%'.minwid.'.' .trunc_amount.'('.directory.filename.'%)'
-  "===========================================================================//
-
-  let s:info_item = {component -> "%#StInfoSep#".component}
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
   " Mode
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
   "show a minimal statusline with only the mode and file component
   if minimal
     return s:sep(title_component, s:st_inactive)
   endif
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
   " Setup
-  ""---------------------------------------------------------------------------//
+  "---------------------------------------------------------------------------//
+  let s:info_item = {component -> "%#StInfoSep#".component}
+
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
   " Truncate file path length at 40 characters
