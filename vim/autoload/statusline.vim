@@ -81,8 +81,7 @@ function! statusline#get_dir() abort
         \ || &previewwindow
     return ''
   endif
-  let relative_dir = expand("%:p:h")
-  return substitute(fnamemodify(relative_dir, ":~:."), "/$", "", "") . "/"
+  return expand("%:h") . "/"
 endfunction
 
 function! statusline#filename(...) abort
