@@ -89,6 +89,10 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescript',
       \ 'javascript'
       \ ]}
+if has('mac')
+  " We're not in kansas(linux) anymore
+  Plug 'embear/vim-localvimrc'
+endif
 "--------------------------------------------------------------------------------
 " Profiling
 "--------------------------------------------------------------------------------

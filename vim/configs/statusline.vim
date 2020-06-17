@@ -300,7 +300,7 @@ function! StatusLine(...) abort
   let trunc_amount = float2nr(round(winwidth(0) * percentage))
   " highlight the filename component separately
   let filename_hl = minimal ? "StFilenameInactive" : "StFilename"
-  let filename = '%#'.filename_hl.'#%{statusline#filename("%:t")}'
+  let filename = '%#'.filename_hl.'#%{statusline#filename()}'
   let directory = '%{statusline#get_dir()}'
   let title_component = '%'.minwid.'.' .trunc_amount.'('.directory.filename.'%)'
   "---------------------------------------------------------------------------//
