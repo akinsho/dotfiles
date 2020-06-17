@@ -296,8 +296,10 @@ function! StatusLine(...) abort
   " Don't set a minimum width for plain status line filenames
   let truncation_amount = float2nr(round(winwidth(0) * percentage))
   let filename_highlight = minimal ? "StFilenameInactive" : "StFilename"
-  let title_component = '%'.minwid.'.' .truncation_amount.
-        \ '(%{statusline#get_dir()}%#' .filename_highlight.'#%{statusline#filename("%:t")}%)'
+  let title_component =  '%'.minwid.'.' .truncation_amount.'('
+  let title_component .= '%{statusline#get_dir()}%#' .filename_highlight.'#'
+  let title_component .= '%{statusline#filename("%:t")}'
+  let title_component .= '%)'
 
   let s:info_item = {component -> "%#StInfoSep#".component}
   ""---------------------------------------------------------------------------//
