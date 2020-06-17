@@ -89,9 +89,16 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescript',
       \ 'javascript'
       \ ]}
+"--------------------------------------------------------------------------------
+" Optional plugins
+"--------------------------------------------------------------------------------
 if has('mac')
   " We're not in kansas(linux) anymore
   Plug 'embear/vim-localvimrc'
+endif
+
+if has('nvim')
+  Plug 'rafcamlet/nvim-luapad'
 endif
 "--------------------------------------------------------------------------------
 " Profiling
