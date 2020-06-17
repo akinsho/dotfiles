@@ -75,7 +75,10 @@ let s:filename_map = {
       \}
 
 function! statusline#get_dir() abort
-  if strlen(&buftype) || expand('%:t') == ''
+  if strlen(&buftype)
+        \ || expand('%:t') == ''
+        \ || get(s:filetype_map, &ft, '') != ''
+        \ || &previewwindow
     return ''
   endif
   let relative_dir = expand("%:p:h")
