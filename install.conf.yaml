@@ -11,13 +11,14 @@
     ~/.zshrc: zsh/ohmyzshrc
     ~/.zshenv: zsh/zshenv
     ~/.gitconfig: git/.gitconfig
+    ~/.config/starship.toml: .config/starship.toml
     ~/.config/nvim: vim
     ~/.config/kitty:
       force: true
-      path: configs/kitty
+      path: .config/kitty
     ~/.config/alacritty/alacritty.yml:
       force: true
-      path: configs/alacritty/alacritty.yml
+      path: .config/alacritty/alacritty.yml
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

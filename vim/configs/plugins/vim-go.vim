@@ -23,14 +23,14 @@ endif
 " "auto format with goimports as well as gofmt
 let g:go_fmt_command                    = "goimports"
 
-let g:go_gopls_enabled                  = 1
+let g:go_gopls_enabled                  = 0
 let g:go_gopls_complete_unimported      = 1
 let g:go_gopls_options                  = ['-remote=auto']
 let g:go_gopls_deep_completion          = 1
 let g:go_gopls_staticcheck              = 1
-let g:go_def_mode                       = 'gopls'
-let g:go_info_mode                      = 'gopls'
-let g:go_referrers_mode                 = 'gopls'
+" let g:go_def_mode                       = 'gopls'
+" let g:go_info_mode                      = 'gopls'
+" let g:go_referrers_mode                 = 'gopls'
 
 let g:go_doc_popup_window                = 1
 let g:go_highlight_space_tab_error       = 1
