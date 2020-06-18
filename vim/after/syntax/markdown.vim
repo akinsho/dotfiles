@@ -4,11 +4,8 @@
 " based on: https://www.reddit.com/r/vim/comments/h8pgor/til_conceal_in_vim/
 
 " Custom conceal (does not work with existing syntax highlight plugin)
-" syntax match todoCheckbox "\[\ \]" conceal cchar=
-" syntax match todoCheckbox "\[x\]" conceal cchar=
-
-call matchadd('Conceal', '\[\ \]', 0, -1, {'conceal': ''})
-call matchadd('Conceal', '\[x\]', 0, -1, {'conceal': ''})
+syntax match todoCheckbox "- \[\ \]" conceal cchar=
+syntax match todoCheckbox "- \[x\]" conceal cchar=
 
 highlight def link todoCheckbox Todo
 
