@@ -66,3 +66,24 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 if ! type "$bat" > /dev/null; then
   export BAT_THEME="TwoDark"
 fi
+
+# Setting ag as the default source for fzf
+
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+# Need to escape the "!" and "*" characters using /
+# --no-ignore = this flag shows node modules etc
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+# Reference: Man fzf - bind previous and next history commands explicitly or they will swallow up c-n and c-p
+export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history --bind=up:previous-history,down:next-history,ctrl-n:down,ctrl-p:up"
+
+# Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
+export FZF_CTRL_T_OPTS="--select-1 --exit-0 --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+
+# To apply to the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_TMUX=1
