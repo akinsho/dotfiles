@@ -139,9 +139,9 @@ function! s:set_statusline_colors() abort
   let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
   let s:warning_fg = s:light_yellow "synIDattr(hlID('WarningMsg'), 'fg')
 
-  silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=none'
+  silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
-  silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
+  silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
   silent! execute 'highlight StFilename guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
@@ -164,10 +164,10 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
   silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
   " Diagnostic highlights
-  silent! execute 'highlight StWarning guifg='.s:warning_fg.' guibg='.s:pmenu_bg.' gui=none'
-  silent! execute 'highlight StWarningSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=none'
-  silent! execute 'highlight StError guifg='.s:error_fg.' guibg='.s:pmenu_bg.' gui=none'
-  silent! execute 'highlight StErrorSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=none'
+  silent! execute 'highlight StWarning guifg='.s:warning_fg.' guibg='.s:pmenu_bg.' gui=NONE'
+  silent! execute 'highlight StWarningSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=NONE'
+  silent! execute 'highlight StError guifg='.s:error_fg.' guibg='.s:pmenu_bg.' gui=NONE'
+  silent! execute 'highlight StErrorSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=NONE'
 endfunction
 
 function! s:sep(item, ...) abort
@@ -239,19 +239,19 @@ endfunction
 function! s:mode_highlight(mode) abort
   if a:mode ==? 'i'
     silent! exe 'highlight StMode guibg='.s:dark_blue.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:dark_blue.' guibg=NONE gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
   elseif a:mode =~? '\(v\|V\|\)'
     silent! exe 'highlight StMode guibg='.s:magenta.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:magenta.' guibg=NONE gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:magenta.' guibg=NONE gui=NONE'
   elseif a:mode ==? 'R'
     silent! exe 'highlight StMode guibg='.s:dark_red.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:dark_red.' guibg=NONE gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:dark_red.' guibg=NONE gui=NONE'
   elseif a:mode =~? '\(c\|cv\|ce\)'
     silent! exe 'highlight StMode guibg='.s:inc_search_bg.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:inc_search_bg.' guibg=NONE gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:inc_search_bg.' guibg=NONE gui=NONE'
   else
     silent! exe 'highlight StMode guibg='.s:green.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:green.' guibg=NONE gui=bold'
+    silent! exe 'highlight StModeSep guifg='.s:green.' guibg=NONE gui=NONE'
   endif
 endfunction
 
