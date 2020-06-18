@@ -69,13 +69,17 @@ font:
 
   # Bold font face
   bold:
-    family: Operator Mono
-    # The `style` can be specified to pick a specific face.
+    family: OperatorMono Nerd Font
+    style: Bold
+
+  bold_italic:
+    family: OperatorMono Nerd Font
     style: Bold Italic
 
   # Italic font face
   italic:
     family: Operator Mono Book
+    style: Book Italic
 
   # Point size
   size: 17.0
