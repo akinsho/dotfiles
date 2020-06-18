@@ -139,8 +139,13 @@ function! s:set_statusline_colors() abort
   let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
   let s:warning_fg = s:light_yellow "synIDattr(hlID('WarningMsg'), 'fg')
 
+  " NOTE: Unicode characters including vim devicons should NOT be highlighted
+  " as italic or bold, this is because the underlying bold font is not necessarily
+  " patched with the nerd font characters
+  " terminal emulators like kitty handle this by fetching nerd fonts elsewhere
+  " but this is not universal across terminals so should be avoided
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
