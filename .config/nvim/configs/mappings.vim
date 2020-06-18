@@ -145,7 +145,7 @@ cnoremap <C-N> <Down>
 " Insert escaped '/' while inputting a search pattern
 cnoremap <expr> / getcmdtype() == "/" ? "\/" : "/"
 "Save
-nnoremap <silent><leader>s :silent w<cr>
+nnoremap <silent><leader>w :silent w<cr>
 "Save all files
 nnoremap <silent>qa :confirm wqa<CR>
 " Quit
@@ -437,7 +437,7 @@ nnoremap Q @q
 "}}}
 
 " Shortcut to jump to next conflict marker"
-if !has_key(g:plugs, 'conflict-marker.vim')
+if !PluginLoaded('conflict-marker.vim')
   nnoremap <silent> ]x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
   " Shortcut to jump to last conflict marker"
   nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>

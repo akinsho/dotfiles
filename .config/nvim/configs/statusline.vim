@@ -343,7 +343,7 @@ function! StatusLine(...) abort
   let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
 
   let statusline .= " "
-  let statusline .= "%#Type#%{StatuslineLanguageServer()}%*"
+  let statusline .= "%#Comment#%{StatuslineLanguageServer()}%*"
   let statusline .= " "
   let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
   let statusline .= s:info_item("%{StatuslineGitStatus()}")
