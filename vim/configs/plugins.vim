@@ -54,7 +54,13 @@ Plug 'haorenW1025/diagnostic-nvim', Cond(g:testing_nvim_lsp)
 Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-rooter'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'javascriptreact', 'typescriptreact'] }
+Plug 'mattn/emmet-vim', { 'for': [
+      \ 'html',
+      \ 'javascript',
+      \ 'typescript',
+      \ 'javascriptreact',
+      \ 'typescriptreact',
+      \ ]}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
       \ | Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'

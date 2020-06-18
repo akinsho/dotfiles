@@ -1,6 +1,13 @@
-if !has_key(g:plugs, "nvim-tree.lua")
+if !PluginLoaded("nvim-tree.lua")
   finish
 endif
+
+let g:lua_tree_icons = {
+    \ 'folder': {
+    \   'default': "",
+    \   'open': ""
+    \   }
+    \ }
 
 nnoremap <silent><c-n> :LuaTreeToggle<CR>
 let g:lua_tree_auto_close = 1 " 0 by default, closes the tree when it's the last window
@@ -10,3 +17,8 @@ let g:lua_tree_bindings = {
       \}
 let g:lua_tree_ignore = [ '.git', 'node_modules' ]
 let g:lua_tree_size = &columns * 0.25 " Make lua tree proportional in size
+
+augroup LuaTreeOverrides
+  autocmd!
+  autocmd FileType LuaTree setlocal nowrap
+augroup END
