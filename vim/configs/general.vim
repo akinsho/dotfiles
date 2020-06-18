@@ -344,7 +344,7 @@ endif
 augroup cursorline
   autocmd!
   autocmd WinEnter,BufWinEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
-  autocmd WinLeave,BufWinLeave * if &buftype !=? 'terminal' | setlocal nocursorline | endif
+  autocmd WinLeave,BufWinLeave * setlocal nocursorline
 augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "====================================================================================
