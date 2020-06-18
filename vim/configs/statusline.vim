@@ -143,7 +143,7 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
-  silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=italic,bold'
+  silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StFilename guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StFilenameInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=italic,bold'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
