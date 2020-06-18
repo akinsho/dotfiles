@@ -34,7 +34,7 @@ set eadirection=hor
 set switchbuf=useopen,vsplit
 set fillchars=vert:│
 set fillchars+=fold:\ 
-set fillchars+=diff:░ "alternatives: ⣿
+set fillchars+=diff:⣿ "alternatives: ░
 if has('nvim-0.3.1')
   set fillchars+=msgsep:‾
   " suppress ~ at EndOfBuffer
