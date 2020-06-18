@@ -341,11 +341,6 @@ set ignorecase smartcase wrapscan " Searches wrap around the end of the file
 if &filetype ==# 'html'
   set matchpairs+=<:> "setting is super annoying if not html
 endif
-augroup cursorline
-  autocmd!
-  autocmd WinEnter,BufWinEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
-  autocmd WinLeave,BufWinLeave * setlocal nocursorline
-augroup END
 set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor movements from jumping to the start of a line
 "====================================================================================
 " Spelling {{{1

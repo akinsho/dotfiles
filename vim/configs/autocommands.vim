@@ -213,6 +213,12 @@ if has('nvim-0.5')
   augroup END
 endif
 
+augroup Cursorline
+  autocmd!
+  autocmd WinEnter,BufWinEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
+  autocmd WinLeave,BufWinLeave * setlocal nocursorline
+augroup END
+
 augroup CustomWindowSettings
   autocmd!
   " TODO: we match specifically against zsh terminals since we are trying
