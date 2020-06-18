@@ -15,8 +15,8 @@ omap f <Plug>(easymotion-bd-f)
 " nmap s <Plug>(easymotion-s)
 " Jump to anywhere with only `s{char}{target}`
 " `s<CR>` repeat last find motion.
-map s <Plug>(easymotion-f)
-nmap s <Plug>(easymotion-overwin-f)
+map <leader>s <Plug>(easymotion-f)
+nmap <leader>s <Plug>(easymotion-overwin-f)
 " Move to line
 map <leader>L <Plug>(easymotion-bd-jk)
 nmap <leader>L <Plug>(easymotion-overwin-line)

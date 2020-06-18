@@ -124,7 +124,7 @@ augroup END
 augroup UpdateVim
   autocmd!
   " NOTE: we should only reload config files for plugins not all vim files
-  execute 'autocmd UpdateVim BufWritePost '. g:dotfiles .'/vim/configs/*.vim,$MYVIMRC nested'
+  execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/*.vim,$MYVIMRC nested'
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')

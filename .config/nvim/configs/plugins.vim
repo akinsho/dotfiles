@@ -42,7 +42,7 @@ let g:testing_nvim_lsp = 0
 " CORE {{{1
 "--------------------------------------------------------------------------------
 "--------------------------------------------------------------------------------
-" Nvim LSP:  TOO EARLY
+" Nvim LSP:  Status: ALPHA ++
 "--------------------------------------------------------------------------------
 " The native lsp is still in it's early stages it doesn't provide anywhere near
 " the same/requisite (for my needs) functionality as coc.nvim but I'm occasionally
@@ -142,6 +142,7 @@ Plug 'rhysd/conflict-marker.vim'
 "--------------------------------------------------------------------------------
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'svermeulen/vim-subversive'
 ""---------------------------------------------------------------------------//
 " Deprecated: Word transposition mappings from in favour of the plugin below:
 " http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
@@ -178,8 +179,6 @@ Plug 'rakr/vim-one' " alternative one dark with a light theme
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 " Plug 'flrnd/candid.vim'
-
-Plug 'rhysd/try-colorscheme.vim', {'on':'TryColorscheme'}
 
 "--------------------------------------------------------------------------------
 " Personal plugins  {{{1

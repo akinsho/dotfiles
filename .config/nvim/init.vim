@@ -27,6 +27,7 @@ endif
 let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 " WARNING: Hardcoding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
+let g:vim_dir = g:dotfiles . '/.config/nvim'
 
 function! VimrcMessage(msg) abort
   echohl WarningMsg
@@ -69,7 +70,7 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "----------------------------------------------------------------------
 " Plugins
 "----------------------------------------------------------------------
-call s:safely_source(g:dotfiles . '/vim/configs/plugins.vim')
+call s:safely_source(g:vim_dir . '/configs/plugins.vim')
 "-----------------------------------------------------------------------
 " Essential Settings - Taken care of by Vim Plug
 "-----------------------------------------------------------------------
@@ -87,20 +88,20 @@ endif
 " Plugin Configurations
 " ----------------------------------------------------------------------
 let s:config_files = [
-    \ '/vim/configs/general.vim',
-    \ '/vim/configs/highlight.vim',
-    \ '/vim/configs/mappings.vim',
-    \ '/vim/configs/autocommands.vim',
-    \ '/vim/configs/statusline.vim'
+    \ '/configs/general.vim',
+    \ '/configs/highlight.vim',
+    \ '/configs/mappings.vim',
+    \ '/configs/autocommands.vim',
+    \ '/configs/statusline.vim'
     \]
 
 for file in s:config_files
-  call s:safely_source(g:dotfiles . file)
+  call s:safely_source(g:vim_dir . file)
 endfor
 
-call s:load_plugin_configs(g:dotfiles . '/vim/configs/plugins')
+call s:load_plugin_configs(g:vim_dir . '/configs/plugins')
 
 if has('nvim')
-  luafile $DOTFILES/vim/init.lua
+  luafile $DOTFILES/.config/nvim/init.lua
 endif
 "---------------------------------------------------------------------------//

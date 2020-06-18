@@ -12,7 +12,7 @@
     ~/.zshenv: zsh/zshenv
     ~/.gitconfig: git/.gitconfig
     ~/.config/starship.toml: .config/starship.toml
-    ~/.config/nvim: vim
+    ~/.config/nvim: .config/nvim
     ~/.config/kitty:
       force: true
       path: .config/kitty
