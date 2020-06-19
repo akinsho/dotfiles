@@ -3,6 +3,14 @@ if !PluginLoaded("nvim-tree.lua")
 endif
 
 let g:lua_tree_icons = {
+    \ 'default': '',
+    \ 'git': {
+    \   'unstaged': "",
+    \   'staged': "",
+    \   'unmerged': "═",
+    \   'renamed': "",
+    \   'untracked': "★"
+    \   },
     \ 'folder': {
     \   'default': "",
     \   'open': ""
