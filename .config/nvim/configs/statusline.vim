@@ -340,7 +340,11 @@ function! StatusLine(...) abort
   let statusline .= '%='
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
-  let statusline .= s:sep_if(diagnostic_info, strlen(diagnostic_info), diagnostic_highlight)
+  let statusline .= s:sep_if(
+        \ diagnostic_info,
+        \ strlen(diagnostic_info),
+        \ diagnostic_highlight
+        \ )
 
   let statusline .= " "
   let statusline .= "%#Comment#%{StatuslineLanguageServer()}%*"
@@ -353,7 +357,11 @@ function! StatusLine(...) abort
   let l:statusline .= s:sep_if(&shiftwidth, unexpected_indentation,
         \ extend({ 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 }, {}))
   " Current line number/Total line numbers
-  let statusline .= s:sep_if(line_info, strlen(line_info), extend({ 'prefix': '' }, s:st_mode))
+  let statusline .= s:sep_if(
+        \ line_info,
+        \ strlen(line_info),
+        \ extend({ 'prefix': '' }, s:st_mode)
+        \ )
   let statusline .= '%<'
   return statusline
 endfunction
