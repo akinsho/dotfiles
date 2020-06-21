@@ -33,6 +33,5 @@ execute 'highlight LuaTreeIndentMarker guifg=' . comment_fg
 
 augroup LuaTreeOverrides
   autocmd!
-  autocmd FileType LuaTree setlocal statusline=%!StatusLine()
   autocmd FileType LuaTree setlocal nowrap
 augroup END
