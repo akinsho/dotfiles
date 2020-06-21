@@ -1,4 +1,4 @@
-if !has_key(g:plugs, "vim-which-key")
+if !PluginLoaded("vim-which-key")
   finish
 endif
 " Define prefix dictionary
@@ -33,8 +33,8 @@ let g:which_localleader_key_map["["] = 'Open space above'
 let g:which_localleader_key_map["]"] = 'Insert space below'
 
 let g:which_leader_key_map.a = 'Coc: execute code action for selected range'
-let g:which_leader_key_map.n = { 'name': '+new' }
-let g:which_leader_key_map.e = { 'name': '+edit-buffer' }
+let g:which_leader_key_map.n = { 'name': 'new' }
+let g:which_leader_key_map.e = { 'name': 'edit-buffer' }
 let g:which_leader_key_map.ar = 'Toggle auto resize'
 let g:which_leader_key_map.f = 'Find cursor word (fzf)'
 let g:which_leader_key_map.F = 'Find word (prompt)'
@@ -45,22 +45,19 @@ let g:which_leader_key_map.r.f = 'Coc: refactor cursor word'
 let g:which_leader_key_map.r.n = 'Coc: rename cursor word'
 let g:which_leader_key_map.p = {'name': 'vim-plug'}
 let g:which_leader_key_map.g = 'Grep word under the cursor'
-let g:which_leader_key_map.gl = 'Copy git url for current line'
-let g:which_leader_key_map.gf = 'Open path under cursor in vertical split'
-let g:which_leader_key_map.sw = 'Swap top/bottom or left/right split'
-let g:which_leader_key_map.b = 'CamelCase: word beginning motion'
-let g:which_leader_key_map.e = 'CamelCase: word end motion'
-let g:which_leader_key_map.e = 'CamelCase: word motion'
+" let g:which_leader_key_map.gl = 'Copy git url for current line'
+" let g:which_leader_key_map.gf = 'Open path under cursor in vertical split'
+" let g:which_leader_key_map.sw = 'Swap top/bottom or left/right split'
 let g:which_leader_key_map.l = { 'name': 'left' }
 let g:which_leader_key_map.l.i = 'Toggle quickfix/location list'
-let g:which_leader_key_map.l['<CR>'] = 'open terminal right'
-let g:which_leader_key_map.L = 'Easymotion: jump to line'
+" let g:which_leader_key_map.l['<CR>'] = 'open terminal right'
 let g:which_leader_key_map.z = 'Zoom in current buffer'
 let g:which_leader_key_map.Z = 'Zoom in with tab'
 let g:which_leader_key_map.ev = 'Open vimrc in a new buffer'
 let g:which_leader_key_map.ez = 'Open zshrc in a new buffer'
 let g:which_leader_key_map.et = 'Open tmux config in a new buffer'
-let g:which_leader_key_map.s = 'Sort a visual selection'
+" let g:which_leader_key_map.s = 'Sort a visual selection'
+let g:which_leader_key_map.s = {'name': 'source'}
 let g:which_leader_key_map.sf = 'Create new file in a split'
 let g:which_leader_key_map.so = 'Source current buffer'
 let g:which_leader_key_map.sv = 'Source init.vim'
@@ -79,8 +76,21 @@ let g:which_leader_key_map["<s-tab>"] = 'Go to previous buffer'
 let g:which_leader_key_map["<tab>"] = 'Go to next buffer'
 
 " The map must be registered before the mappings below
-call which_key#register('<space>', "g:which_localleader_key_map")
-call which_key#register(',', "g:which_leader_key_map")
+augroup LazyLoadWhichKey
+  autocmd!
+  " To register the descriptions when using the on-demand load feature,
+  " use the autocmd hook to call which_key#register(), e.g., register for the Space key:
+  autocmd User vim-which-key call which_key#register(',', 'g:which_leader_key_map')
+  autocmd User vim-which-key call which_key#register('<Space>', 'g:which_localleader_key_map')
+  autocmd! FileType which_key
+  " Hide statusline
+  autocmd  FileType which_key set laststatus=0 noruler
+        \| autocmd BufLeave <buffer> set laststatus=2 ruler
+augroup END
 
 nnoremap <silent> <localleader>      :<c-u>WhichKey '<space>'<CR>
 nnoremap <silent> <leader>           :<c-u>WhichKey  ','<CR>
+
+let g:which_key_max_size = 15
+let g:which_key_use_floating_win = 1
+let g:which_key_disable_default_offset = 1
