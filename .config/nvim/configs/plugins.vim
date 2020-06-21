@@ -104,7 +104,7 @@ if has('mac')
 endif
 
 if has('nvim')
-  Plug 'rafcamlet/nvim-luapad'
+  Plug 'rafcamlet/nvim-luapad', { 'on': ['LuaPad'] }
 endif
 "--------------------------------------------------------------------------------
 " Profiling
@@ -125,7 +125,7 @@ Plug 'tpope/vim-abolish'
 "sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
       \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
 " Syntax {{{1
@@ -161,7 +161,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
-Plug 'junegunn/goyo.vim', { 'for':['vimwiki','markdown'] }
+Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 " Filetype Plugins {{{1
 "--------------------------------------------------------------------------------
