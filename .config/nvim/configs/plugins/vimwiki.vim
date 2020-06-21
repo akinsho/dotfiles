@@ -39,3 +39,6 @@ function! s:close_wikis() abort
 endfunction
 
 command! CloseVimWikis call s:close_wikis()
+" Add this mapping manually so we can lazy load vim wiki
+nnoremap <leader>ww <Cmd>VimwikiIndex<CR>
+nnoremap <leader>wt <Cmd>VimwikiTabIndex<CR>

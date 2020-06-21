@@ -71,7 +71,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki', {'on': [], 'for': []}
+Plug 'vimwiki/vimwiki', {'on': ['<Plug>VimwikiIndex', '<Plug>VimwikiTabIndex']}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF', 'CtrlSFOpen', 'CtrlSFToggle']}
@@ -214,7 +214,7 @@ let g:loaded_rrhelper          = 1
 " because there is no specific filetype or command I want to
 " trigger these for
 function s:lazy_load_plugins() abort
-  let lazy_plugins = ['vim-fat-finger', 'vimwiki']
+  let lazy_plugins = ['vim-fat-finger']
   for p in lazy_plugins
     call plug#load(p)
   endfor
