@@ -58,6 +58,9 @@ let g:fzf_colors = {
       \ 'header':  ['fg', 'Comment']
       \}
 
+" Always enable preview window on the right with 60% width
+let g:fzf_preview_window = 'right:50%'
+
 " Make fzf floating window quasi transparent in Neovim
 if exists('&winblend')
   augroup FZF_Settings
@@ -68,13 +71,6 @@ endif
 
 " Border style (rounded / sharp / horizontal)
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
-
-let s:diff_options =
-      \ '--reverse ' .
-      \ '--preview "(git diff --color=always master -- {} | tail -n +5 || cat {}) 2> /dev/null | head -'.&lines.'"'
-
-command! BranchFiles call fzf#run(fzf#wrap('BranchFiles',
-      \ extend(branch_files_options, { 'options': s:diff_options }), 0))
 
 function! Fzf_checkout_branch(b)
   "First element is the command e.g ctrl-x, second element is the selected branch
@@ -107,39 +103,19 @@ command! -bang -nargs=* Find call fzf#vim#grep(
       \ ' --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0
       \ )
 
-command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-command! -bang -nargs=? -complete=dir GFiles
-      \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-"To use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading'.
-      \ ' --color=always --smart-case '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%'),
-      \   <bang>0)
-
 " FIXME: this includes git exluded files
 command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
-command! Modified call fzf#run(fzf#wrap(
-      \ {'source': 'git ls-files --exclude-standard --others --modified'}))
-
-nnoremap <localleader>mo :Modified<cr>
-nnoremap <localleader>bw :Wipeout<cr>
-nnoremap <silent> <localleader>bf :BranchFiles<cr>
-nnoremap <silent> <localleader>f :Files<cr>
-nnoremap <silent> <localleader>d :Dots<CR>
-nnoremap <silent> <localleader>b :BTags<CR>
-nnoremap <silent> <localleader>o :Buffers<CR>
-nnoremap <silent> <localleader>m :History<CR>
-nnoremap <silent> <localleader>c :Commits<CR>
-nnoremap <silent> <localleader>li :Lines<CR>
-nnoremap <silent> <localleader>h :Helptags<CR>
+nnoremap <silent><localleader>gs :GFiles?<cr>
+nnoremap <silent><localleader>f :Files<cr>
+nnoremap <silent><localleader>d :Dots<CR>
+nnoremap <silent><localleader>b :BTags<CR>
+nnoremap <silent><localleader>o :Buffers<CR>
+nnoremap <silent><localleader>m :History<CR>
+nnoremap <silent><localleader>c :Commits<CR>
+nnoremap <silent><localleader>li :Lines<CR>
+nnoremap <silent><localleader>h :Helptags<CR>
 
 " Launch file search using FZF
 if isdirectory(".git")
