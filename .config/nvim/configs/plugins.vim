@@ -39,9 +39,6 @@ endfunction
 
 let g:testing_nvim_lsp = 0
 "--------------------------------------------------------------------------------
-" CORE {{{1
-"--------------------------------------------------------------------------------
-"--------------------------------------------------------------------------------
 " Nvim LSP:  Status: ALPHA ++
 "--------------------------------------------------------------------------------
 " The native lsp is still in it's early stages it doesn't provide anywhere near
@@ -50,6 +47,8 @@ let g:testing_nvim_lsp = 0
 Plug 'neovim/nvim-lsp', Cond(g:testing_nvim_lsp)
 Plug 'haorenW1025/completion-nvim', Cond(g:testing_nvim_lsp)
 Plug 'haorenW1025/diagnostic-nvim', Cond(g:testing_nvim_lsp)
+"--------------------------------------------------------------------------------
+" CORE {{{1
 "--------------------------------------------------------------------------------
 Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
 Plug 'ryanoasis/vim-devicons'
@@ -73,7 +72,7 @@ endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki', {'on': ['<Plug>VimwikiIndex', '<Plug>VimwikiTabIndex']}
+Plug 'vimwiki/vimwiki', {'on': [], 'for': []}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF', 'CtrlSFOpen', 'CtrlSFToggle']}
@@ -216,22 +215,24 @@ let g:loaded_rrhelper          = 1
 " because there is no specific filetype or command I want to
 " trigger these for
 function s:lazy_load_plugins() abort
-  let lazy_plugins = ['vim-fat-finger']
+  let lazy_plugins = ['vim-fat-finger', 'vimwiki']
   for p in lazy_plugins
     call plug#load(p)
   endfor
 endfunction
 
 augroup LazyLoadPlugins
-    autocmd!
-    if !has('nvim')
-      autocmd CursorHold,CursorHoldI * call s:lazy_load_plugins()
-            \ | autocmd! LazyLoadPlugins
-    else
-      " nvim supports running an autocommand only once
-      autocmd CursorHold,CursorHoldI * ++once call s:lazy_load_plugins()
+  autocmd!
+  autocmd VimEnter * call timer_start(500, "DeferredLoad")
+  autocmd User DeferPost call s:lazy_load_plugins()
+augroup END
+
+function! DeferredLoad(timer)
+    if !exists("g:deferred") || g:deferred == 0
+        doautocmd User DeferPost
+        let g:deferred = 1
     endif
-augroup end
+endfunction
 
 " Install any missing plugins on vim enter
 augroup AutoInstallPlugins
