@@ -306,6 +306,11 @@ nnoremap <leader>= <C-W>=
 nnoremap <leader>sw <C-W>R
 nnoremap <localleader>q <C-W>q
 " nnoremap <silent> <localleader>q :cclose \| lclose \| pclose<cr>
+" https://vim.fandom.com/wiki/Fast_window_resizing_with_plus/minus_keys
+if bufwinnr(1)
+  nnoremap <a-h> <C-W><
+  nnoremap <a-l> <C-W>>
+endif
 ""---------------------------------------------------------------------------//
 "Open Common files
 ""---------------------------------------------------------------------------//

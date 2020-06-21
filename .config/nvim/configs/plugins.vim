@@ -87,7 +87,6 @@ Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'dstein64/vim-win'
 Plug 'AndrewRadev/tagalong.vim', {'for': [
       \ 'typescriptreact',
       \ 'javascriptreact',
