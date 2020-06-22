@@ -234,13 +234,18 @@ function! DeferredLoad(timer)
     endif
 endfunction
 
-" Install any missing plugins on vim enter
+function s:install_missing_plugins() abort
+  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    PlugInstall --sync | q
+  endif
+endfunction
+
+" Install any missing plugins on vim enter or on writing this file
 augroup AutoInstallPlugins
-	autocmd!
-	autocmd VimEnter *
-	  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-	  \|   PlugInstall --sync | q
-	  \| endif
+  autocmd!
+  autocmd VimEnter * call s:install_missing_plugins()
+  execute 'autocmd BufWritePost '. g:vim_dir . '/configs/plugins.vim' .
+	\ ' call <SID>install_missing_plugins()'
 augroup END
 
 " SOURCE: https://github.com/junegunn/vim-plug/pull/875
