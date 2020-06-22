@@ -37,20 +37,10 @@ function! Cond(cond, ...)
   return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
 endfunction
 
-let g:testing_nvim_lsp = 0
-"--------------------------------------------------------------------------------
-" Nvim LSP:  Status: ALPHA ++
-"--------------------------------------------------------------------------------
-" The native lsp is still in it's early stages it doesn't provide anywhere near
-" the same/requisite (for my needs) functionality as coc.nvim but I'm occasionally
-" testing this out
-Plug 'neovim/nvim-lsp', Cond(g:testing_nvim_lsp)
-Plug 'haorenW1025/completion-nvim', Cond(g:testing_nvim_lsp)
-Plug 'haorenW1025/diagnostic-nvim', Cond(g:testing_nvim_lsp)
 "--------------------------------------------------------------------------------
 " CORE {{{1
 "--------------------------------------------------------------------------------
-Plug 'neoclide/coc.nvim', Cond(!g:testing_nvim_lsp, {'branch': 'release'})
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': [
@@ -163,6 +153,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
+Plug 'danilamihailov/vim-tips-wiki'
 "--------------------------------------------------------------------------------
 " Filetype Plugins {{{1
 "--------------------------------------------------------------------------------
@@ -246,6 +237,28 @@ augroup AutoInstallPlugins
   autocmd VimEnter * call s:install_missing_plugins()
   execute 'autocmd BufWritePost '. g:vim_dir . '/configs/plugins.vim' .
 	\ ' call <SID>install_missing_plugins()'
+augroup END
+
+function! s:scroll_preview(down)
+  silent! wincmd P
+  if &previewwindow
+    execute 'normal!' a:down ? "\<c-e>" : "\<c-y>"
+    wincmd p
+  endif
+endfunction
+
+function! s:setup_extra_keys()
+  nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
+  nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
+  nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
+  nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
+  nmap <silent> <buffer> <c-j> <c-n>o
+  nmap <silent> <buffer> <c-k> <c-p>o
+endfunction
+
+augroup PlugDiffExtra
+  autocmd!
+  autocmd FileType vim-plug call s:setup_extra_keys()
 augroup END
 
 " SOURCE: https://github.com/junegunn/vim-plug/pull/875
