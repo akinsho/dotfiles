@@ -220,7 +220,7 @@ endfunction
 
 augroup LazyLoadPlugins
   autocmd!
-  autocmd VimEnter * call timer_start(2500, "DeferredLoad")
+  autocmd CursorHold,CursorHoldI * call timer_start(2500, "DeferredLoad")
   autocmd User DeferPost call s:lazy_load_plugins()
 augroup END
 
