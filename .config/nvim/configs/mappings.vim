@@ -110,8 +110,6 @@ cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 command! -nargs=1 AutoResize call utils#auto_resize(<args>)
 nnoremap <leader>ar :AutoResize 70<CR>
 
-nnoremap * m`:keepjumps normal! *``<cr>
-
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
