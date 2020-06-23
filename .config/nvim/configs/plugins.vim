@@ -31,6 +31,12 @@ else
   call plug#begin('~/.vim/plugged')
 endif
 
+" SOURCE: https://github.com/junegunn/vim-plug/pull/875
+" Check if the files is in the plugs map but also IMPORTANTLY
+" that it is in the runtimepath
+function PluginLoaded(plugin_name) abort
+  return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
+endfunction
 
 function! Cond(cond, ...)
   let l:opts = get(a:000, 0, {})
@@ -152,7 +158,7 @@ Plug 'kana/vim-textobj-user'
 "--------------------------------------------------------------------------------
 " Search Tools {{{1
 "--------------------------------------------------------------------------------
-Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
@@ -263,11 +269,4 @@ augroup PlugDiffExtra
   autocmd!
   autocmd FileType vim-plug call s:setup_extra_keys()
 augroup END
-
-" SOURCE: https://github.com/junegunn/vim-plug/pull/875
-" Check if the files is in the plugs map but also IMPORTANTLY
-" that it is in the runtimepath
-function PluginLoaded(plugin_name) abort
-  return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
-endfunction
 " vim:foldmethod=marker

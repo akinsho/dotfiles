@@ -2,6 +2,6 @@ if !PluginLoaded('vim-subversive')
   finish
 endif
 " s for substitute
-nmap s <plug>(SubversiveSubstitute)
-nmap ss <plug>(SubversiveSubstituteLine)
-nmap S <plug>(SubversiveSubstituteToEndOfLine)
+nmap <leader>s <plug>(SubversiveSubstitute)
+nmap <leader>ss <plug>(SubversiveSubstituteLine)
+nmap <leader>S <plug>(SubversiveSubstituteToEndOfLine)
