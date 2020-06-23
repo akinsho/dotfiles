@@ -94,9 +94,6 @@ Plug 'AndrewRadev/tagalong.vim', {'for': [
 "--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------
-if has('python3') && has('timers')
-  Plug 'AlphaMycelium/pathfinder.vim'
-endif
 if has('mac')
   " We're not in kansas(linux) anymore
   Plug 'embear/vim-localvimrc'
