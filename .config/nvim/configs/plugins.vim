@@ -68,7 +68,10 @@ endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki', {'on': [], 'for': []}
+Plug 'vimwiki/vimwiki', {
+      \ 'on':  ['VimwikiIndex', 'VimwikiTabIndex'],
+      \ 'for': ['vimwiki', 'markdown']
+      \ }
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF', 'CtrlSFOpen', 'CtrlSFToggle']}
@@ -211,7 +214,7 @@ let g:loaded_rrhelper          = 1
 " because there is no specific filetype or command I want to
 " trigger these for
 function s:lazy_load_plugins() abort
-  let lazy_plugins = ['vim-fat-finger', 'vimwiki']
+  let lazy_plugins = ['vim-fat-finger']
   for p in lazy_plugins
     call plug#load(p)
   endfor
@@ -219,16 +222,8 @@ endfunction
 
 augroup LazyLoadPlugins
   autocmd!
-  autocmd CursorHold,CursorHoldI * call timer_start(2500, "DeferredLoad")
-  autocmd User DeferPost call s:lazy_load_plugins()
+  autocmd CursorHold,CursorHoldI * call s:lazy_load_plugins()
 augroup END
-
-function! DeferredLoad(timer)
-    if !exists("g:deferred") || g:deferred == 0
-        doautocmd User DeferPost
-        let g:deferred = 1
-    endif
-endfunction
 
 function s:install_missing_plugins() abort
   if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
