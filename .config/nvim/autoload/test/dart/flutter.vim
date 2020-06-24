@@ -11,10 +11,8 @@ function test#dart#flutter#build_position(type, position) abort
   if a:type ==# 'suite'
     return []
   else
-    let path = './'.fnamemodify(a:position['file'], ':h')
-
     if a:type ==# 'file' || a:type ==# 'nearest'
-      return [path]
+      return [a:position['file']]
     endif
   endif
 endfunction
