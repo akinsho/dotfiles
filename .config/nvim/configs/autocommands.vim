@@ -12,13 +12,12 @@ augroup END
 
 "Whitespace Highlight {{{1
 function! s:WhitespaceHighlight()
-  " Don't highlight trailing spaces in certain filetypes.
-  let exclusions = ['help', 'vim-plug', 'log']
-  let buftype_exclusions = ['nofile', 'quickfix']
-  if index(exclusions, &filetype) >= 0 || index(buftype_exclusions, &buftype) >= 0
+  let exclusions = ['log']
+  " Don't highlight trailing spaces in certain filetypes or special buffers
+  if index(exclusions, &filetype) >= 0 || &buftype != ""
     setlocal nolist
   else
-    hi! ExtraWhitespace guifg=red
+    highlight! ExtraWhitespace guifg=red
   endif
 endfunction
 

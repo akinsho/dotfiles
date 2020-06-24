@@ -46,10 +46,10 @@ call gina#custom#command#option(
 
 " Open these window types as small re-usable splits
 "NOTE: This and the command below should be specified separately
-" call gina#custom#command#option(
-"       \ '/\%(status\|commit\|branch\)',
-"       \ '--opener', &previewheight . 'split',
-"       \)
+call gina#custom#command#option(
+      \ '/\%(status\|commit\|branch\)',
+      \ '--opener', &previewheight . 'split',
+      \)
 
 " Open diffs in a vsplit but group all diff splits i.e. reopen new splits in the same window
 " call gina#custom#command#option('diff', '--opener', 'vsplit')
@@ -62,12 +62,12 @@ call gina#custom#mapping#nmap(
       \)
 
 call gina#custom#command#option(
-      \ '/\%(status\|commit\|branch\|diff\)',
+      \ '/\%(branch\|diff\)',
       \ '--opener', 'vsplit',
       \)
 
 call gina#custom#command#option(
-      \ '/\%(status\|commit\|branch\|diff\)',
+      \ '/\%(branch\|diff\)',
       \ '--group', 'sidepanel'
       \)
 
