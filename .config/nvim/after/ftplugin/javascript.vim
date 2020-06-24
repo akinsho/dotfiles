@@ -1,6 +1,8 @@
 setl completeopt-=preview
 match Error /\%80v.\+/
 
+setlocal foldlevel=4
+
 let b:switch_custom_definitions =
       \ [
       \   {
