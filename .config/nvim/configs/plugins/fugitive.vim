@@ -25,7 +25,17 @@ nnoremap <silent><leader>gl :Git pull<CR>
 nnoremap <silent><leader>gp :Git push<CR>
 nnoremap <silent><leader>gpf :Git push -f<CR>
 nnoremap <silent><leader>go :Git checkout<space>
-nnoremap <silent><leader>gco :Git checkout -b<space>
+
+nnoremap <silent><leader>gb :call CreateNewBranch()<CR>
+
+function CreateNewBranch() abort
+  " TODO add a new line at the end of the input
+  " consider highlighting for bonus point
+  let branch = input("Enter new branch name: \n")
+  if strlen(branch)
+    execute 'Git checkout -b ' . branch
+  endif
+endfunction
 
 function! s:setup() abort
   nnoremap <expr><buffer> } filter([search('\%(\_^#\?\s*\_$\)\\|\%$', 'W'), line('$')], 'v:val')[0].'G'
