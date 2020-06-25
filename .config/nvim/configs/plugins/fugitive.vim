@@ -25,13 +25,13 @@ nnoremap <silent><leader>gl :Git pull<CR>
 nnoremap <silent><leader>gp :Git push<CR>
 nnoremap <silent><leader>gpf :Git push -f<CR>
 nnoremap <silent><leader>go :Git checkout<space>
-
+nnoremap <silent><leader>gcm :Gcm<CR>
 nnoremap <silent><leader>gb :call CreateNewBranch()<CR>
 
 function CreateNewBranch() abort
   " TODO add a new line at the end of the input
   " consider highlighting for bonus point
-  let branch = input("Enter new branch name: \n")
+  let branch = input("Enter new branch name: ")
   if strlen(branch)
     execute 'Git checkout -b ' . branch
   endif
