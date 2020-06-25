@@ -40,6 +40,8 @@ function! s:setup() abort
   endif
 endfunction
 
+command! -nargs=0 Gcm :G checkout master
+command! -nargs=1 Gcb :G checkout -b <q-args>
 
 augroup vimrc_fugitive
   autocmd!
