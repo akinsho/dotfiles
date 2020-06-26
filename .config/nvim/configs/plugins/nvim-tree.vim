@@ -41,5 +41,5 @@ augroup LuaTreeOverrides
   autocmd FileType LuaTree setlocal nowrap
   " FIXME this shouldn't be necessary technically but nvim-tree.lua does not
   " pick up the correct statusline otherwise
-  autocmd FileType LuaTree setlocal statusline=%!StatusLine()
+  autocmd FileType LuaTree setlocal statusline=%!MinimalStatusLine()
 augroup END
