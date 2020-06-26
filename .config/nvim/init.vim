@@ -67,10 +67,6 @@ endfunction
 "-----------------------------------------------------------------------
 let g:mapleader      = ',' "Remap leader key
 let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
-"----------------------------------------------------------------------
-" Plugins
-"----------------------------------------------------------------------
-call s:safely_source(g:vim_dir . '/configs/plugins.vim')
 "-----------------------------------------------------------------------
 " Essential Settings - Taken care of by Vim Plug
 "-----------------------------------------------------------------------
@@ -87,7 +83,9 @@ endif
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
+"  Order matters here as the plugins should be loaded before the other setup
 let s:config_files = [
+    \ '/configs/plugins.vim',
     \ '/configs/general.vim',
     \ '/configs/highlight.vim',
     \ '/configs/mappings.vim',

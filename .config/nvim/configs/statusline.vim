@@ -379,10 +379,6 @@ augroup custom_statusline
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
 
-" FIXME this shouldn't be necessary technically but nvim-tree.lua does not
-" pick up the correct statusline otherwise
-set statusline=%!StatusLine()
-
 " =====================================================================
 " Resources:
 " =====================================================================

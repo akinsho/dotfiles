@@ -16,6 +16,11 @@ let g:lua_tree_icons = {
     \   'open': ""
     \   }
     \ }
+
+let g:lua_tree_bindings = {
+    \ 'cd': 'cd',
+    \}
+
 let g:lua_tree_indent_markers = 1
 nnoremap <silent><c-n> :LuaTreeToggle<CR>
 let g:lua_tree_auto_close = 1 " 0 by default, closes the tree when it's the last window
@@ -34,4 +39,7 @@ execute 'highlight LuaTreeIndentMarker guifg=' . comment_fg
 augroup LuaTreeOverrides
   autocmd!
   autocmd FileType LuaTree setlocal nowrap
+  " FIXME this shouldn't be necessary technically but nvim-tree.lua does not
+  " pick up the correct statusline otherwise
+  autocmd FileType LuaTree setlocal statusline=%!StatusLine()
 augroup END
