@@ -33,6 +33,7 @@ function CreateNewBranch() abort
   " consider highlighting for bonus point
   let branch = input("Enter new branch name: ")
   if strlen(branch)
+    redraw " clear the input message we just added
     execute 'Git checkout -b ' . branch
   endif
 endfunction
