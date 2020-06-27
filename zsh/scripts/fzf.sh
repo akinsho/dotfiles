@@ -64,7 +64,7 @@ fbr() {
 }
 
 vmod(){
-  vim "$(git status -s | fzf -m)"
+  ${EDITOR:-vim} "$(git status -s | fzf -m)"
 }
 
 # fs [FUZZY PATTERN] - Select selected tmux session
