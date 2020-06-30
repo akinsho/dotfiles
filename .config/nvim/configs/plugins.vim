@@ -62,8 +62,8 @@ Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 if has('nvim')
-  Plug 'kyazdani42/nvim-web-devicons' " for file icons
-  Plug 'kyazdani42/nvim-tree.lua'
+  " Plug 'kyazdani42/nvim-web-devicons' " for file icons
+  " Plug 'kyazdani42/nvim-tree.lua'
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
@@ -77,7 +77,7 @@ Plug 'arecarn/vim-fold-cycle'
 Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF', 'CtrlSFOpen', 'CtrlSFToggle']}
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', {
-      \ 'do': ':call mkdp#util#install()',
+      \ 'do': {-> mkdp#util#install()},
       \ 'for': ['markdown']
       \ }
 Plug 'cohama/lexima.vim'
@@ -162,7 +162,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
-Plug 'danilamihailov/vim-tips-wiki'
 "--------------------------------------------------------------------------------
 " Filetype Plugins {{{1
 "--------------------------------------------------------------------------------
