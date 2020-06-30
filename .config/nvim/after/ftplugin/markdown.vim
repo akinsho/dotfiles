@@ -1,4 +1,4 @@
-setlocal spell spelllang=en_gb "Detect .md files as mark down
+setlocal spell spelllang=en_gb
 setlocal expandtab
 
 onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>

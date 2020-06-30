@@ -2,6 +2,8 @@ if exists(":CloseVimWikis")
   nnoremap <buffer><silent> <leader>wc :CloseVimWikis<CR>
 endif
 
+setlocal spell spelllang=en_gb
+
 " Restore broken/overriden mapping
 nnoremap <silent><S-tab> :bprevious<CR>
 nnoremap <silent><tab> :bnext<CR>
