@@ -254,24 +254,26 @@ colorscheme one
 " Title {{{1
 "---------------------------------------------------------------------------//
 " Custom Terminal title
-function! GetTitleString() abort
-  if &filetype ==? 'fzf'
-    return 'FZF'
-  endif
-  if filereadable(expand('%'))
-    try
-      return "❐ " . fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
-    catch
-      return 'VIM'
-    endtry
-  endif
-
-  return fnamemodify(getcwd(), ':t')
-endfunction
-" let &titlestring=' ❐ %f  %r %m'
-set titlestring=%{GetTitleString()}
-set title
-set titlelen=70
+" BUG: kitty terminal's tabs flicker when setting the title
+if $SHELL !=# 'xterm-kitty'
+  function! GetTitleString() abort
+    if &filetype ==? 'fzf'
+      return 'FZF'
+    endif
+    if filereadable(expand('%'))
+      try
+        return "❐ " . fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
+      catch
+        return v:servername
+      endtry
+    endif
+    return fnamemodify(getcwd(), ':t')
+  endfunction
+  let &titlestring=' ❐ %t %r %m'
+  let &titleold='%{fnamemodify(getcwd(), ":t")}'
+  set title
+  set titlelen=70
+endif
 
 "---------------------------------------------------------------------------//
 " Emoji {{{1
