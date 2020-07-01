@@ -183,11 +183,15 @@ if exists('$TMUX')
   augroup END
 endif
 
+augroup LocalSpelling
+  " Set spell to the queens english for commonly used languages
+  " this could go into ftplugin files but that is a lot more
+  " work than doing this...
+  autocmd Filetype dart,javascript,typescript,rust,go,elm setlocal spell spelllang=en_gb
+augroup end
+
 augroup config_filtetype_settings "{{{1
   autocmd!
-  "==================================
-  " Config files
-  "==================================
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   " set filetype all variants of .env files
   autocmd BufRead,BufNewFile .env.* set filetype=sh

@@ -255,25 +255,23 @@ colorscheme one
 "---------------------------------------------------------------------------//
 " Custom Terminal title
 " BUG: kitty terminal's tabs flicker when setting the title
-if $SHELL !=# 'xterm-kitty'
-  function! GetTitleString() abort
-    if &filetype ==? 'fzf'
-      return 'FZF'
-    endif
-    if filereadable(expand('%'))
-      try
-        return "❐ " . fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
-      catch
-        return v:servername
-      endtry
-    endif
-    return fnamemodify(getcwd(), ':t')
-  endfunction
-  let &titlestring=' ❐ %t %r %m'
-  let &titleold='%{fnamemodify(getcwd(), ":t")}'
-  set title
-  set titlelen=70
-endif
+function! GetTitleString() abort
+  if &filetype ==? 'fzf'
+    return 'FZF'
+  endif
+  if filereadable(expand('%'))
+    try
+      return "❐ " . fnamemodify(fugitive#repo().tree(), ':p:s?/$??:t')
+    catch
+      return v:servername
+    endtry
+  endif
+  return fnamemodify(getcwd(), ':t')
+endfunction
+let &titlestring=' ❐ %t %r %m'
+let &titleold='%{fnamemodify(getcwd(), ":t")}'
+set title
+set titlelen=70
 
 "---------------------------------------------------------------------------//
 " Emoji {{{1
@@ -348,7 +346,6 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 " Spelling {{{1
 "====================================================================================
 set spellfile=$DOTFILES/vim/.vim-spell-en.utf-8.add
-set nospell
 set spellsuggest+=12
 if has('syntax')
   " don't check for capital letters at start of sentence
