@@ -9,10 +9,17 @@ function! ApplyUserHighlights() abort
   " Highlight over 80 cols in red - moot now because -> prettier
   " Note: Match commands interact and this command prevents the command below from working
 
-  if !has_key(g:plugs, 'conflict-marker.vim')
+  if !PluginLoaded('conflict-marker.vim')
     " Highlight VCS conflict markers
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif
+
+
+  " Define highlight for URIs e.g. http://stackoverflow.com
+  " this is used in the syntax after files for highlighting URIs in comments
+  let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
+  let s:special_fg = synIDattr(hlID('Special'), 'fg')
+  execute 'highlight URIHighlight guisp='.s:special_fg.' gui=undercurl guifg='.s:comment_fg
 
   if has('nvim-0.3.2')
     " Add undercurl to existing spellbad highlight

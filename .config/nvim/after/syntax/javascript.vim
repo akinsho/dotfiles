@@ -1,16 +1,3 @@
-" Vim syntax file
-" Add checkboxes to *.md files
-" source: https://gist.github.com/huytd/668fc018b019fbc49fa1c09101363397
-" based on: https://www.reddit.com/r/vim/comments/h8pgor/til_conceal_in_vim/
-
-" Custom conceal (does not work with existing syntax highlight plugin)
-syntax match todoCheckbox "- \[\ \]" conceal cchar=
-syntax match todoCheckbox "- \[x\]" conceal cchar=
-
-highlight def link todoCheckbox Todo
-
-highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-
 " Avoid highlighting any of the following as misspelled words:
 "
 " * URIs (i.e., words prefixed by one or more alphanumeric characters followed
@@ -28,5 +15,6 @@ highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 " "~/.vim/after/syntax/{filetype.vim}" filetype plugin rather than listed here.
 " See also this explanatory StackOverflow answer:
 "     https://vi.stackexchange.com/a/4003/16249
-syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
-syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>'  contains=@NoSpell
+syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell containedin=jsComment
+syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>'  contains=@NoSpell containedin=jsComment
+highlight def link NoSpellUri URIHighlight
