@@ -259,8 +259,6 @@ onoremap nu :normal vin<CR>
 if exists('$TMUX')
   noremap <c-g> <c-a>
 endif
-" Remap jumping to the last spot you were editing previously to bk as this is easier form me to remember
-nnoremap bk `.
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 ""---------------------------------------------------------------------------//
