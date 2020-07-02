@@ -14,16 +14,15 @@ function! ApplyUserHighlights() abort
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif
 
-
-  " Define highlight for URIs e.g. http://stackoverflow.com
-  " this is used in the syntax after files for highlighting URIs in comments
-  let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
-  let s:special_fg = synIDattr(hlID('Special'), 'fg')
-  execute 'highlight URIHighlight guisp='.s:special_fg.' gui=underline guifg='.s:comment_fg
-
   if has('nvim-0.3.2')
     " Add undercurl to existing spellbad highlight
     call utils#extend_highlight('SpellBad', 'SpellBad', 'gui=undercurl cterm=undercurl guibg=NONE')
+
+    " Define highlight for URIs e.g. http://stackoverflow.com
+    " this is used in the syntax after files for highlighting URIs in comments
+    let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
+    let s:special_fg = synIDattr(hlID('Special'), 'fg')
+    execute 'highlight URIHighlight guisp='.s:special_fg.' gui=underline guifg='.s:comment_fg
   endif
 
   highlight Todo gui=bold
@@ -43,20 +42,7 @@ function! ApplyUserHighlights() abort
     call one#highlight('typescriptExport', '61afef', 'none', 'italic')
     call one#highlight('vimCommentTitle', 'c678dd', 'none', 'bold,italic')
   elseif g:colors_name ==? 'onedark'
-    " Bold (+/- italicised) types
-    call onedark#extend_highlight('Title', { 'gui': 'bold' })
-    call onedark#extend_highlight('Type', { 'gui': 'italic,bold' })
-    call onedark#extend_highlight('Folded', { 'gui': 'italic,bold' })
-    call onedark#extend_highlight('htmlArg', { 'gui': 'italic,bold' })
-    " Italicised imports
-    call onedark#extend_highlight('Include', { 'gui': 'italic' })
-    call onedark#extend_highlight('jsImport', { 'gui': 'italic' })
-    call onedark#extend_highlight('jsExport', { 'gui': 'italic' })
-    call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
-    " Italices func calls
-    call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
-
-    call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF'} })
+    " Do nothing overrides have been done elsewhere
   elseif g:colors_name ==? 'vim-monokai-tasty'
     highlight clear SignColumn
     highlight GitGutterAdd guifg=green

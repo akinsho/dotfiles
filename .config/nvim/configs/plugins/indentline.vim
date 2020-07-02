@@ -2,7 +2,7 @@ if !has_key(g:plugs, 'indentLine')
   finish
 endif
 
-let s:gui_color = synIDattr(hlID('Conceal'), 'fg')
+let s:gui_color = synIDattr(hlID('Comment'), 'fg')
 
 let g:indentLine_fileTypeExclude = ['vimwiki', 'markdown', 'json', 'txt']
 let g:indentLine_bufNameExclude  = ['Startify', 'terminal', 'peekabo']
