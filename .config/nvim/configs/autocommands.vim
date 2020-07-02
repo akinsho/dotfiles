@@ -188,6 +188,13 @@ augroup LocalSpelling
   " this could go into ftplugin files but that is a lot more
   " work than doing this...
   autocmd Filetype dart,javascript,typescript,rust,go,elm setlocal spell spelllang=en_gb
+  " Ignore CamelCase words when spell checking
+  " source: https://stackoverflow.com/questions/7561603/vim-spell-check-ignore-capitalized-words
+  fun! s:ignore_camel_case()
+    syn match CamelCase /\<[A-Z][a-z]\+[A-Z].\{-}\>/ contains=@NoSpell transparent
+    syn cluster Spell add=CamelCase
+  endfun
+  autocmd BufRead,BufNewFile * call s:ignore_camel_case()
 augroup end
 
 augroup config_filtetype_settings "{{{1
