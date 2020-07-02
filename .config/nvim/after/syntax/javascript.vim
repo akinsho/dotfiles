@@ -16,5 +16,5 @@
 " See also this explanatory StackOverflow answer:
 "     https://vi.stackexchange.com/a/4003/16249
 syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell containedin=jsComment
-syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>'  contains=@NoSpell containedin=jsComment
+syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' transparent contains=@NoSpell containedin=jsComment,js.*String
 highlight def link NoSpellUri URIHighlight

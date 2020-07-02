@@ -29,4 +29,4 @@ highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 " See also this explanatory StackOverflow answer:
 "     https://vi.stackexchange.com/a/4003/16249
 syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
-syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>'  contains=@NoSpell
+syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
