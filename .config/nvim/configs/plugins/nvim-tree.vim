@@ -18,7 +18,7 @@ let g:lua_tree_icons = {
     \ }
 
 let g:lua_tree_bindings = {
-    \ 'cd': 'cd',
+    \ 'cd': '<BS>',
     \}
 
 let g:lua_tree_indent_markers = 1
