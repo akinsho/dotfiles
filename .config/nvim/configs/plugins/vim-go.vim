@@ -3,8 +3,8 @@
 "---------------------------------------------------------------------------//
 let g:go_highlight_types                 = 1
 let g:go_highlight_fields                = 1
-let g:go_highlight_variable_declarations = 0
-let g:go_highlight_variable_assignments  = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments  = 0
 let g:go_highlight_generate_tags         = 1
 let g:go_def_mapping_enabled             = 0
 let g:go_highlight_functions             = 1

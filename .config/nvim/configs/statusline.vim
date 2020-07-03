@@ -5,7 +5,6 @@ endif
 let s:ro_sym  = ''
 let s:ma_sym  = "✗"
 let s:mod_sym = "◇"
-let s:ff_map  = { "unix": "␊", "mac": "␍", "dos": "␍␊" }
 
 function! s:file_encoding() abort
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
