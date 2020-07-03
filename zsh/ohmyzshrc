@@ -110,9 +110,9 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # Aliases 'hub' to git to allow for greater git powah!!
 eval "$(hub alias -s)"
+eval "$(starship init zsh)"
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions
-eval "$(starship init zsh)"
 
 # STARTUP TIMES (CONTD)================================================
 # end_time="$(date +%s)"

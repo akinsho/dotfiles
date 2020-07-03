@@ -31,15 +31,9 @@ if [ -f $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh ]; then
   source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
 fi
 
-
-if [ -f ~/enhancd/init.sh ]; then
-  source ~/enhancd/init.sh
-else
-  git clone https://github.com/b4b4r07/enhancd ~/enhancd
-  source ~/enhancd/init.sh
-fi
-
 PLUGIN_DIR=$DOTFILES/zsh/plugins
+
+source $PLUGIN_DIR/enhancd/init.sh
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
@@ -66,6 +60,10 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 # Aliases 'hub' to git to allow for greater git powah!!
 eval "$(hub alias -s)"
 eval $(thefuck --alias)
+
+# Init completions
+autoload -Uz compinit
+compinit
 
 # STARTUP TIMES (CONTD)================================================
 # end_time="$(date +%s)"
