@@ -109,7 +109,7 @@ zstyle ':vcs_info:git:*' formats "(%F{blue}%b%f)%c%u"
 # Right prompt
 RPROMPT='${vim_mode}%F{240}%*%f'
 # Left prompt
-PROMPT='%(?.%F{green}.%F{red}?%?)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
+PROMPT='%(?.%F{green}.%F{red}✘)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 #-------------------------------------------------------------------------------
