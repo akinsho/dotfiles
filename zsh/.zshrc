@@ -116,24 +116,27 @@ function TRAPINT() {
 # %r - git repo
 # %* - reset highlight
 #
-# icon options =  ❯
+# icon options =  ❯
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt PROMPT_SUBST
 
+# Using named colors means that the prompt automatically adapts to how these
+# are set by the current terminal theme
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "%F{191} ●%f" # 194 honey dew
-zstyle ':vcs_info:*' unstagedstr "%F{167} ●%f" # 167 - Indian red
+zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" 
+zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f"
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
-zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{33}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
+zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
-prompt_icon_char=""
+dots_prompt_icon="%F{green} %f"
+dots_prompt_failure_icon="%F{red}✘ %f"
 # Right prompt
 RPROMPT='${vim_mode}%F{240}%*%f'
-# Left prompt: directory(gitbranch) ● ● 
-PROMPT='%B%F{240}%1~%f%b${vcs_info_msg_0_} %(?.${prompt_icon_char}.%F{red}✘)%f'
+# Left prompt: directory(gitbranch) ● ●
+PROMPT='%B%F{240}%1~%f%b${vcs_info_msg_0_} %(?.${dots_prompt_icon}.${dots_prompt_failure_icon})'
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
