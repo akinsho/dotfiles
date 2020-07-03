@@ -12,6 +12,57 @@
 autoload -Uz compinit
 compinit
 
+# Colorize completions using default `ls` colors.
+zstyle ':completion:*' list-colors
+
+# Categorize completion suggestions with headings:
+zstyle ':completion:*' group-name ''
+
+# Enable keyboard navigation of completions in menu
+# (not just tab/shift-tab but cursor keys as well):
+zstyle ':completion:*' menu select
+
+# persistent reshahing i.e puts new executables in the $path
+# if no command is set typing in a line will cd by default
+zstyle ':completion:*' rehash true
+#-------------------------------------------------------------------------------
+#               Mappings
+#-------------------------------------------------------------------------------
+export KEYTIMEOUT=1
+bindkey ‘^R’ history-incremental-search-backward
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^U' autosuggest-accept
+#-------------------------------------------------------------------------------
+#               Options
+#-------------------------------------------------------------------------------
+setopt AUTO_CD
+setopt RM_STAR_WAIT
+# command auto-correction
+setopt CORRECT
+# set some history options
+setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_VERIFY
+setopt AUTOPARAMSLASH # tab completing directory appends a slash
+
+# Share your history across all your terminal windows
+setopt share_history
+# Keep a ton of history.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+#-------------------------------------------------------------------------------
+#               Vi-mode
+#-------------------------------------------------------------------------------
+bindkey -v
+
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
