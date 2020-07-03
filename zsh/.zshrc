@@ -37,6 +37,15 @@ zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)
 zstyle ':completion:*' group-name ''
 # Style the group names
 zstyle ':completion:*:descriptions' format %F{default}%B%{$__DOTS[ITALIC_ON]%}--- %d ---%{$__DOTS[ITALIC_OFF]%}%b%f
+
+# Added by running `compinstall`
+zstyle ':completion:*' expand suffix
+zstyle ':completion:*' file-sort modification
+zstyle ':completion:*' format 'Completing %F{green}%d%f'
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' list-suffixes true
+# End of lines added by compinstall
+
 #-------------------------------------------------------------------------------
 #               Options
 #-------------------------------------------------------------------------------
@@ -112,6 +121,7 @@ RPROMPT='${vim_mode}%F{240}%*%f'
 PROMPT='%(?.%F{green}.%F{red}✘)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
+
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
