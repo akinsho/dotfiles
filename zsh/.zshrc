@@ -107,6 +107,15 @@ function TRAPINT() {
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
+# %F...%f - - foreground color
+# %F{a_color} - color specifier
+# %B..%b - bold
+# %c - git staged
+# %u - git untracked
+# %b - git branch
+# %r - git repo
+# %* - reset highlight
+#
 # icon options =  ❯
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
@@ -118,7 +127,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{191} ●%f" # 194 honey dew
 zstyle ':vcs_info:*' unstagedstr "%F{167} ●%f" # 167 - Indian red
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
-zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{33}%b%f%F{249})%f%c%u"
+zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{33}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
 prompt_icon_char=""
 # Right prompt
