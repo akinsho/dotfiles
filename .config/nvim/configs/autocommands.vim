@@ -187,7 +187,7 @@ augroup LocalSpelling
   " Set spell to the queens english for commonly used languages
   " this could go into ftplugin files but that is a lot more
   " work than doing this...
-  autocmd Filetype dart,javascript,typescript,rust,go,elm setlocal spell spelllang=en_gb
+  autocmd Filetype dart,javascript,typescript,rust,go,elm,text,vim,yaml setlocal spell spelllang=en_gb
   " Ignore CamelCase words when spell checking
   " source: https://stackoverflow.com/questions/7561603/vim-spell-check-ignore-capitalized-words
   fun! s:ignore_camel_case()
