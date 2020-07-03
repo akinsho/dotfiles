@@ -26,14 +26,6 @@ zstyle ':completion:*' menu select
 # if no command is set typing in a line will cd by default
 zstyle ':completion:*' rehash true
 #-------------------------------------------------------------------------------
-#               Mappings
-#-------------------------------------------------------------------------------
-export KEYTIMEOUT=1
-bindkey ‘^R’ history-incremental-search-backward
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^U' autosuggest-accept
-#-------------------------------------------------------------------------------
 #               Options
 #-------------------------------------------------------------------------------
 setopt AUTO_CD
@@ -61,8 +53,33 @@ HISTFILE=~/.zsh_history
 #-------------------------------------------------------------------------------
 #               Vi-mode
 #-------------------------------------------------------------------------------
-bindkey -v
+bindkey -v # enables vi mode, using -e = emacs
 
+# https://superuser.com/questions/151803/how-do-i-customize-zshs-vim-mode
+# http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
+vim_ins_mode=""
+vim_cmd_mode=" %F{green} %f"
+vim_mode=$vim_ins_mode
+
+function zle-keymap-select {
+  vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+
+function zle-line-finish {
+  vim_mode=$vim_ins_mode
+}
+zle -N zle-line-finish
+
+# When you C-c in CMD mode and you'd be prompted with CMD mode indicator,
+# while in fact you would be in INS mode Fixed by catching SIGINT (C-c),
+# set vim_mode to INS and then repropagate the SIGINT,
+# so if anything else depends on it, we will not break it
+function TRAPINT() {
+  vim_mode=$vim_ins_mode
+  return $(( 128 + $1 ))
+}
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
@@ -70,7 +87,8 @@ bindkey -v
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
+setopt PROMPT_SUBST
+
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" # default 'S'
@@ -78,7 +96,7 @@ zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # default 'U'
 zstyle ':vcs_info:git:*' formats "(%F{blue}%b%c%u%f)"
 
 # Right prompt
-RPROMPT='%F{240}%*%f'
+RPROMPT='${vim_mode}%F{240}%*%f'
 # Left prompt
 PROMPT='%(?.%F{green}.%F{red}?%?)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
 #-------------------------------------------------------------------------------
@@ -126,6 +144,15 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 # Aliases 'hub' to git to allow for greater git powah!!
 eval "$(hub alias -s)"
 eval $(thefuck --alias)
+
+#-------------------------------------------------------------------------------
+#               Mappings
+#-------------------------------------------------------------------------------
+export KEYTIMEOUT=1
+bindkey ‘^R’ history-incremental-search-backward
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^U' autosuggest-accept
 
 # STARTUP TIMES (CONTD)================================================
 # end_time="$(date +%s)"
