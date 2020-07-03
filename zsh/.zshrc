@@ -120,10 +120,11 @@ zstyle ':vcs_info:*' unstagedstr "%F{167} ●%f" # 167 - Indian red
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{33}%b%f%F{249})%f%c%u"
 
+prompt_icon_char=""
 # Right prompt
-RPROMPT='[${vim_mode}%F{240}%*%f]'
-# Left prompt: directory(gitbranch) ● ● ❯
-PROMPT='%B%F{240}%1~%f%b${vcs_info_msg_0_} %(?.%F{green}.%F{red}✘)%f '
+RPROMPT='${vim_mode}%F{240}%*%f'
+# Left prompt: directory(gitbranch) ● ● 
+PROMPT='%B%F{240}%1~%f%b${vcs_info_msg_0_} %(?.${prompt_icon_char}.%F{red}✘)%f'
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
