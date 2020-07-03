@@ -1,5 +1,9 @@
 #!/bin/zsh
 #-------------------------------------------------------------------------------
+# References:
+#-------------------------------------------------------------------------------
+# Color table - https://jonasjacek.github.io/colors/
+#-------------------------------------------------------------------------------
 #               STARTUP TIMES
 #-------------------------------------------------------------------------------
 # zmodload zsh/zprof
@@ -36,16 +40,17 @@ zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)
 # Categorize completion suggestions with headings:
 zstyle ':completion:*' group-name ''
 # Style the group names
-zstyle ':completion:*:descriptions' format %F{default}%B%{$__DOTS[ITALIC_ON]%}--- %d ---%{$__DOTS[ITALIC_OFF]%}%b%f
+zstyle ':completion:*' format %F{default}%B%{$__DOTS[ITALIC_ON]%}- %F{yellow}%f%d -%{$__DOTS[ITALIC_OFF]%}%b%f
 
 # Added by running `compinstall`
 zstyle ':completion:*' expand suffix
 zstyle ':completion:*' file-sort modification
-zstyle ':completion:*' format 'Completing %F{green}%d%f'
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' list-suffixes true
 # End of lines added by compinstall
 
+# case insensitive path-completion
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 #-------------------------------------------------------------------------------
 #               Options
 #-------------------------------------------------------------------------------
@@ -77,7 +82,7 @@ bindkey -v # enables vi mode, using -e = emacs
 # https://superuser.com/questions/151803/how-do-i-customize-zshs-vim-mode
 # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
 vim_ins_mode=""
-vim_cmd_mode=" %F{green} %f"
+vim_cmd_mode="%F{green} %f"
 vim_mode=$vim_ins_mode
 
 function zle-keymap-select {
@@ -110,15 +115,15 @@ setopt PROMPT_SUBST
 
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" # default 'S'
-zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # default 'U'
+zstyle ':vcs_info:*' stagedstr "%F{191} ●%f" # 194 honey dew
+zstyle ':vcs_info:*' unstagedstr "%F{167} ●%f" # 167 - Indian red
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
-zstyle ':vcs_info:git:*' formats "(%F{blue}%b%f)%c%u"
+zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{33}%b%f%F{249})%f%c%u"
 
 # Right prompt
-RPROMPT='${vim_mode}%F{240}%*%f'
-# Left prompt
-PROMPT='%(?.%F{green}.%F{red}✘)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
+RPROMPT='[${vim_mode}%F{240}%*%f]'
+# Left prompt: directory(gitbranch) ● ● ❯
+PROMPT='%B%F{240}%1~%f%b${vcs_info_msg_0_} %(?.%F{green}.%F{red}✘)%f '
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
