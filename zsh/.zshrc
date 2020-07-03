@@ -171,6 +171,15 @@ bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
 
+function -auto-ls-after-cd() {
+  emulate -L zsh
+  # Only in response to a user-initiated `cd`, not indirectly (eg. via another
+  # function).
+  if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
+    ls -a
+  fi
+}
+add-zsh-hook chpwd -auto-ls-after-cd
 # STARTUP TIMES (CONTD)================================================
 # end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
