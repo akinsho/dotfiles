@@ -95,7 +95,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" # default 'S'
 zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # default 'U'
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
-zstyle ':vcs_info:git:*' formats "(%F{blue}%b%c%u%f)"
+zstyle ':vcs_info:git:*' formats "(%F{blue}%b%f)%c%u"
 
 # Right prompt
 RPROMPT='${vim_mode}%F{240}%*%f'
@@ -104,11 +104,6 @@ PROMPT='%(?.%F{green}.%F{red}?%?)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
-# EMOJI-CLI
-if [ -f $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh ]; then
-  source $ZSH_CUSTOM/plugins/emoji-cli/emoji-cli.zsh
-fi
-
 # Enhancd can't be setup as a submodule because the init.sh script
 # deletes the source files on load...
 if [ -f ~/enhancd/init.sh ]; then
@@ -143,8 +138,7 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-# Aliases 'hub' to git to allow for greater git powah!!
-eval "$(hub alias -s)"
+eval "$(hub alias -s)" # Aliases 'hub' to git
 eval $(thefuck --alias)
 
 #-------------------------------------------------------------------------------
