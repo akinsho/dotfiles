@@ -5,6 +5,13 @@
 # zmodload zsh/zprof
 # start_time="$(date +%s)"
 
+# Create a hash table for globally stashing variables without polluting main
+# scope with a bunch of identifiers.
+typeset -A __DOTS
+
+__DOTS[ITALIC_ON]=$'\e[3m'
+__DOTS[ITALIC_OFF]=$'\e[23m'
+
 #-------------------------------------------------------------------------------
 #               Completion
 #-------------------------------------------------------------------------------
@@ -13,10 +20,7 @@ autoload -Uz compinit
 compinit
 
 # Colorize completions using default `ls` colors.
-zstyle ':completion:*' list-colors
-
-# Categorize completion suggestions with headings:
-zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors ''
 
 # Enable keyboard navigation of completions in menu
 # (not just tab/shift-tab but cursor keys as well):
@@ -25,13 +29,20 @@ zstyle ':completion:*' menu select
 # persistent reshahing i.e puts new executables in the $path
 # if no command is set typing in a line will cd by default
 zstyle ':completion:*' rehash true
+
+# Allow completion of ..<Tab> to ../ and beyond.
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)'
+
+# Categorize completion suggestions with headings:
+zstyle ':completion:*' group-name ''
+# Style the group names
+zstyle ':completion:*:descriptions' format %F{default}%B%{$__DOTS[ITALIC_ON]%}--- %d ---%{$__DOTS[ITALIC_OFF]%}%b%f
 #-------------------------------------------------------------------------------
 #               Options
 #-------------------------------------------------------------------------------
 setopt AUTO_CD
 setopt RM_STAR_WAIT
-# command auto-correction
-setopt CORRECT
+setopt CORRECT # command auto-correction
 setopt COMPLETE_ALIASES
 # set some history options
 setopt APPEND_HISTORY
@@ -44,9 +55,7 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt AUTOPARAMSLASH # tab completing directory appends a slash
-
-# Share your history across all your terminal windows
-setopt share_history
+setopt SHARE_HISTORY # Share your history across all your terminal windows
 # Keep a ton of history.
 HISTSIZE=100000
 SAVEHIST=100000
@@ -84,7 +93,7 @@ function TRAPINT() {
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
-# icon options = 
+# icon options =  ❯
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
@@ -101,6 +110,8 @@ zstyle ':vcs_info:git:*' formats "(%F{blue}%b%f)%c%u"
 RPROMPT='${vim_mode}%F{240}%*%f'
 # Left prompt
 PROMPT='%(?.%F{green}.%F{red}?%?)%f %B%F{240}%1~%f%b${vcs_info_msg_0_} '
+# Correction prompt
+SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
