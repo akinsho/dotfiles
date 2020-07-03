@@ -11,4 +11,4 @@ plug.vim
 .netrwhist
 *.code-workspace
 session/
-/vim/autoload/plug.vim.old
+plug.vim.old

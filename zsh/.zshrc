@@ -32,6 +32,7 @@ setopt AUTO_CD
 setopt RM_STAR_WAIT
 # command auto-correction
 setopt CORRECT
+setopt COMPLETE_ALIASES
 # set some history options
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
@@ -93,6 +94,7 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" # default 'S'
 zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # default 'U'
+zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
 zstyle ':vcs_info:git:*' formats "(%F{blue}%b%c%u%f)"
 
 # Right prompt
