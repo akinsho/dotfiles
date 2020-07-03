@@ -15,9 +15,9 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
-zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
-zstyle ':vcs_info:git:*' formats "(%F{blue}%b %c %u%f)"
+zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" # default 'S'
+zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # default 'U'
+zstyle ':vcs_info:git:*' formats "(%F{blue}%b%c%u%f)"
 
 # Right prompt
 RPROMPT='%F{240}%*%f'

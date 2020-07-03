@@ -14,7 +14,6 @@ alias minimalvim="nvim -u $DOTFILES/.config/nvim/minimal.vim"
 alias vi='vim'
 alias nv='nvim'
 alias cl='clear'
-alias gbs="git branch | fzf-tmux -d 15"
 alias restart="exec $SHELL"
 alias src='restart'
 alias dnd='do-not-disturb toggle'
@@ -58,3 +57,10 @@ elif [[ `uname` == 'Darwin' ]]; then
   alias brewfile="cd $DOTFILES/configs/homebrew/ && brew bundle dump --force"
   alias brewupdate="brew bundle dump --force"
 fi
+
+# Git aliases
+alias gbs="git branch | fzf-tmux -d 15"
+alias gss="git status -s"
+alias gst="git status"
+alias gc="git commit"
+alias gd="git diff"
