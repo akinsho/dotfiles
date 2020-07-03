@@ -3,7 +3,7 @@
 ""---------------------------------------------------------------------------//
 function! ApplyUserHighlights() abort
   "---------------------------------------------------------------------------//
-  "Set the color column to highlight one column after the 'textwidth'
+  "Set the colour column to highlight one column after the 'textwidth'
   set colorcolumn=+1
   "---------------------------------------------------------------------------//
   " Highlight over 80 cols in red - moot now because -> prettier
@@ -23,7 +23,7 @@ function! ApplyUserHighlights() abort
     " this is used in the syntax after files for highlighting URIs in comments
     let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
     let s:special_fg = synIDattr(hlID('Special'), 'fg')
-    execute 'highlight URIHighlight guisp='.s:special_fg.' gui=underline guifg='.s:comment_fg
+    execute 'highlight URIHighlight guisp='.s:special_fg.' gui=undercurl guifg='.s:comment_fg
   endif
 
   highlight Todo gui=bold
@@ -55,7 +55,7 @@ function! ApplyUserHighlights() abort
     highlight link typescriptExport SpecialItalic
     highlight link jsxAttrib SpecialItalic
     highlight tsxAttrib gui=italic,bold
-  else " No specific colorscheme with overrides then do it manually
+  else " No specific colour scheme with overrides then do it manually
     highlight jsFuncCall gui=italic
     highlight Comment gui=italic cterm=italic
     highlight xmlAttrib gui=italic,bold cterm=italic,bold ctermfg=121
