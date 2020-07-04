@@ -23,7 +23,7 @@ function! ApplyUserHighlights() abort
     " this is used in the syntax after files for highlighting URIs in comments
     let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
     let s:special_fg = synIDattr(hlID('Special'), 'fg')
-    execute 'highlight URIHighlight guisp='.s:special_fg.' gui=undercurl guifg='.s:comment_fg
+    execute 'highlight URIHighlight guisp='.s:special_fg.' gui=underline,italic guifg='.s:special_fg
   endif
 
   highlight Todo gui=bold
