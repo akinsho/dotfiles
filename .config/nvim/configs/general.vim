@@ -1,11 +1,11 @@
 if has("gui_running") && has("gui_macvim")
   set transparency=0
   set guioptions=
-  set guioptions+=g " gray menu items
+  set guioptions+=g " grey menu items
   set guioptions+=m " menu bar
   "Too find font proper run fc-list | grep name-of-font
   set guifont=FuraCode\ Nerd\ Font:h16
-  set guioptions+=e " nice gui tabs
+  set guioptions+=e " nice GUI tabs
   set linespace=1
   set antialias
   set macligatures
@@ -15,12 +15,12 @@ endif
 " ----------------------------------------------------------------------------
 set shortmess=                        " remove defaults
 set shortmess+=t                      " truncate file messages at start
-set shortmess+=A                      " ignore annoying swapfile messages
+set shortmess+=A                      " ignore annoying swap file messages
 set shortmess+=o                      " file-read message overwrites previous
 set shortmess+=O                      " file-read message overwrites previous
 set shortmess+=T                      " truncate non-file messages in middle
 set shortmess+=f                      " (file x of x) instead of just (x of x)
-set shortmess+=F                      "Dont give file info when editing a file
+set shortmess+=F                      "Don't give file info when editing a file
 set shortmess+=s
 set shortmess+=c
 " ----------------------------------------------------------------------------

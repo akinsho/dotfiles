@@ -143,3 +143,5 @@ undercurl
 loclist
 versioning
 iOS
+treesitter
+grep
