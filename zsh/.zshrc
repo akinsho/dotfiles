@@ -116,7 +116,7 @@ function TRAPINT() {
 # %r - git repo
 # %* - reset highlight
 #
-# icon options =  ❯
+# icon options =    ❯   
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
@@ -136,7 +136,7 @@ dots_prompt_failure_icon="%F{red}✘ %f"
 # Right prompt
 RPROMPT='${vim_mode}%F{240}%*%f'
 # Left prompt: directory(gitbranch) ● ●
-PROMPT='%B%F{240}%1~%f%b${vcs_info_msg_0_} %(?.${dots_prompt_icon}.${dots_prompt_failure_icon})'
+PROMPT='%B%F{10}%1~%f%b${vcs_info_msg_0_} %(?.${dots_prompt_icon}.${dots_prompt_failure_icon})'
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
