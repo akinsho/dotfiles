@@ -145,3 +145,7 @@ versioning
 iOS
 treesitter
 grep
+ftplugin
+neovim
+fzf
+vimrc

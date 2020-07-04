@@ -173,7 +173,7 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 " NOTE: vim-one has a MUCH better startup time than onedark
 Plug 'rakr/vim-one' " alternative one dark with a light theme
 "--------------------------------------------------------------------------------
-" Alternatives colorschemes {{{2
+" Alternatives color schemes {{{2
 "--------------------------------------------------------------------------------
 " Plug 'joshdick/onedark.vim' " More actively maintained that vim-one
 " Plug 'kaicataldo/material.vim'

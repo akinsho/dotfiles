@@ -3,6 +3,7 @@
 # References:
 #-------------------------------------------------------------------------------
 # Color table - https://jonasjacek.github.io/colors/
+# Wincent's dotfiles - https://github.com/wincent/wincent/blob/d6c52ed552/aspects/dotfiles/files/.zshrc
 #-------------------------------------------------------------------------------
 #               STARTUP TIMES
 #-------------------------------------------------------------------------------
