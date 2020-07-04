@@ -5,6 +5,7 @@ endif
 " Extensions
 ""---------------------------------------------------------------------------//
 let g:coc_global_extensions = [
+      \ 'coc-java',
       \ 'coc-explorer',
       \ 'coc-marketplace',
       \ 'coc-json',

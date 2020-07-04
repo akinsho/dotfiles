@@ -149,9 +149,9 @@ let s:column_exclusions = [
       \ 'vim-plug',
       \ 'help'
       \ ]
-" Hide the colorcolumn when there isn't enough space
+" Hide the colour column when there isn't enough space
 function! s:check_color_column(...)
-  " if called from winleave event this value is 1
+  " if called from WinLeave event this value is 1
   let leaving = get(a:, '0', 0)
   if index(s:column_exclusions, &ft) != -1 || !&buflisted
     return
@@ -197,7 +197,7 @@ augroup LocalSpelling
   autocmd BufRead,BufNewFile * call s:ignore_camel_case()
 augroup end
 
-augroup config_filtetype_settings "{{{1
+augroup config_filetype_settings "{{{1
   autocmd!
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   " set filetype all variants of .env files
@@ -210,8 +210,8 @@ augroup CommandWindow "{{{1
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   autocmd CmdwinEnter * nnoremap <CR> <CR>
   " Automatically jump into the quickfix window on open
-  " autocmd QuickFixCmdPost [^l]* nested cwindow
-  " autocmd QuickFixCmdPost    l* nested lwindow
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 
 " This is only available in nightly neovim
