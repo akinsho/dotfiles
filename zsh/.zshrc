@@ -143,7 +143,7 @@ function +vi-git-untracked() {
 function +vi-git-stash() {
   emulate -L zsh
   if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
-    hook_com[unstaged]+="%F{red} ??%f"
+    hook_com[unstaged]+="%F{red} ≡%f"
   fi
 }
 

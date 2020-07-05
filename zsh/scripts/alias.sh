@@ -1,6 +1,9 @@
 # =============================================================================
 # Aliases
 # =============================================================================
+alias l='ls -lFh'     #size,show type,human readable
+alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
+alias grep='grep --color'
 alias ls="ls --color=auto"
 alias top="vtop"
 alias x="exit" # Exit Terminal
@@ -55,13 +58,41 @@ if [[ `uname` == 'Linux' ]]; then
   alias open='xdg-open'
 
 elif [[ `uname` == 'Darwin' ]]; then
-  alias brewfile="cd $DOTFILES/configs/homebrew/ && brew bundle dump --force"
+  alias brewfile="cd $DOTFILES/.config/homebrew/ && brew bundle dump --force"
   alias brewupdate="brew bundle dump --force"
 fi
 
+# Check if main exists and use instead of master
+function git_main_branch() {
+  if [[ -n "$(git branch --list main)" ]]; then
+    echo main
+  else
+    echo master
+  fi
+}
+
 # Git aliases
-alias gbs="git branch | fzf-tmux -d 15"
+# source: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh#L53
+alias g="git"
 alias gss="git status -s"
 alias gst="git status"
 alias gc="git commit"
 alias gd="git diff"
+alias gco="git checkout"
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gbD='git branch -D'
+alias gbl='git blame -b -w'
+alias gbr='git branch --remote'
+alias gc='git commit -v'
+alias gd='git diff'
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+alias gfo='git fetch origin'
+alias gm='git merge'
+alias gma='git merge --abort'
+alias gmom="git merge origin/$(git_main_branch)"
+alias gp='git push'
+alias gbda='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*($(git_main_branch)|development|develop|devel|dev)\s*$)" | command xargs -n 1 git branch -d'
+alias gcl='git clone --recurse-submodules'
