@@ -111,6 +111,11 @@ function TRAPINT() {
 # vcs_info is a zsh native module for getting git info into your
 # prompt. It's not as fast as using git directly in some cases
 # but easy and well documented.
+# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
+# %c - git staged
+# %u - git untracked
+# %b - git branch
+# %r - git repo
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=(precmd_vcs_info)
@@ -119,10 +124,21 @@ precmd_functions+=(precmd_vcs_info)
 # are set by the current terminal theme
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "%F{green} ●%f" 
+zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
 zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f"
+zstyle ':vcs_info:*' use-simple true
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
+
+# this function adds a hook to the git vcs_info backend that depending
+# on the output of the git command adds an indicator to the the vcs info
+function +vi-git-untracked() {
+  emulate -L zsh
+  if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+    hook_com[unstaged]+="%F{blue} ●%f"
+  fi
+}
 
 # Multiline prompt source:
 # https://gist.github.com/romkatv/2a107ef9314f0d5f76563725b42f7cab
@@ -191,6 +207,12 @@ function fill-line() {
 
 # Sets PROMPT and RPROMPT.
 #
+# %F...%f - - foreground color
+# toggle color based on success %F{%(?.green.red)}
+# %F{a_color} - color specifier
+# %B..%b - bold
+# %* - reset highlight
+#
 # Requires: prompt_percent and no_prompt_subst.
 function set-prompt() {
   emulate -L zsh
@@ -205,16 +227,6 @@ function set-prompt() {
   # icon options =  ❯   
   # Bottom left:  ❯
   # Bottom right: empty
-  #
-  # %F...%f - - foreground color
-  # toggle color based on success %F{%(?.green.red)}
-  # %F{a_color} - color specifier
-  # %B..%b - bold
-  # %c - git staged
-  # %u - git untracked
-  # %b - git branch
-  # %r - git repo
-  # %* - reset highlight
 
 
   local dots_prompt_icon="%F{green}❯ %f"
