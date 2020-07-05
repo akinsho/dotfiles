@@ -127,7 +127,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
 zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f"
 zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
@@ -137,6 +137,13 @@ function +vi-git-untracked() {
   emulate -L zsh
   if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
     hook_com[unstaged]+="%F{blue} ●%f"
+  fi
+}
+
+function +vi-git-stash() {
+  emulate -L zsh
+  if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
+    hook_com[unstaged]+="%F{red} ??%f"
   fi
 }
 
