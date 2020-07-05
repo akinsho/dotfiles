@@ -108,20 +108,12 @@ function TRAPINT() {
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
-# %F...%f - - foreground color
-# %F{a_color} - color specifier
-# %B..%b - bold
-# %c - git staged
-# %u - git untracked
-# %b - git branch
-# %r - git repo
-# %* - reset highlight
-#
-# icon options =    ❯   
+# vcs_info is a zsh native module for getting git info into your
+# prompt. It's not as fast as using git directly in some cases
+# but easy and well documented.
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt PROMPT_SUBST
+precmd_functions+=(precmd_vcs_info)
 
 # Using named colors means that the prompt automatically adapts to how these
 # are set by the current terminal theme
@@ -132,15 +124,115 @@ zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f"
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
-dots_prompt_icon="%F{green} %f"
-dots_prompt_failure_icon="%F{red}✘ %f"
-# Right prompt
-RPROMPT='${vim_mode}%F{240}%*%f'
-# Left prompt: directory(gitbranch) ● ●
-PROMPT='%B%F{10}%1~%f%b${vcs_info_msg_0_} %(?.${dots_prompt_icon}.${dots_prompt_failure_icon})'
+# Multiline prompt source:
+# https://gist.github.com/romkatv/2a107ef9314f0d5f76563725b42f7cab
+
+# Usage: prompt-length TEXT [COLUMNS]
+#
+# If you run `print -P TEXT`, how many characters will be printed
+# on the last line?
+#
+# Or, equivalently, if you set PROMPT=TEXT with prompt_subst
+# option unset, on which column will the cursor be?
+#
+# The second argument specifies terminal width. Defaults to the
+# real terminal width.
+#
+# Assumes that `%{%}` and `%G` don't lie.
+#
+# Examples:
+#
+#   prompt-length ''            => 0
+#   prompt-length 'abc'         => 3
+#   prompt-length $'abc\nxy'    => 2
+#   prompt-length '❎'          => 2
+#   prompt-length $'\t'         => 8
+#   prompt-length $'\u274E'     => 2
+#   prompt-length '%F{red}abc'  => 3
+#   prompt-length $'%{a\b%Gb%}' => 1
+#   prompt-length '%D'          => 8
+#   prompt-length '%1(l..ab)'   => 2
+#   prompt-length '%(!.a.)'     => 1 if root, 0 if not
+function prompt-length() {
+  emulate -L zsh
+  local COLUMNS=${2:-$COLUMNS}
+  local -i x y=$#1 m
+  if (( y )); then
+    while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
+      x=y
+      (( y *= 2 ));
+    done
+    local xy
+    while (( y > x + 1 )); do
+      m=$(( x + (y - x) / 2 ))
+      typeset ${${(%):-$1%$m(l.x.y)}[-1]}=$m
+    done
+  fi
+  echo $x
+}
+
+# Usage: fill-line LEFT RIGHT
+#
+# Prints LEFT<spaces>RIGHT with enough spaces in the middle
+# to fill a terminal line.
+function fill-line() {
+  emulate -L zsh
+  local left_len=$(prompt-length $1)
+  local right_len=$(prompt-length $2 9999)
+  local pad_len=$((COLUMNS - left_len - right_len - ${ZLE_RPROMPT_INDENT:-1}))
+  if (( pad_len < 1 )); then
+    # Not enough space for the right part. Drop it.
+    echo -E - ${1}
+  else
+    local pad=${(pl.$pad_len.. .)}  # pad_len spaces
+    echo -E - ${1}${pad}${2}
+  fi
+}
+
+# Sets PROMPT and RPROMPT.
+#
+# Requires: prompt_percent and no_prompt_subst.
+function set-prompt() {
+  emulate -L zsh
+  # local git_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+  # git_branch=${git_branch//\%/%%}  # escape '%'
+
+  # directory(branch)                     10:51
+  # ❯  █
+  #
+  # Top left:     directory(gitbranch) ● ●
+  # Top right:    Time
+  # icon options =  ❯   
+  # Bottom left:  ❯
+  # Bottom right: empty
+  #
+  # %F...%f - - foreground color
+  # toggle color based on success %F{%(?.green.red)}
+  # %F{a_color} - color specifier
+  # %B..%b - bold
+  # %c - git staged
+  # %u - git untracked
+  # %b - git branch
+  # %r - git repo
+  # %* - reset highlight
+
+
+  local dots_prompt_icon="%F{green}❯ %f"
+  local dots_prompt_failure_icon="%F{red}✘ %f"
+
+  local top_left="%B%F{10}%1~%f%b${vcs_info_msg_0_}"
+  local top_right="${vim_mode}%F{240}%*%f"
+  local bottom_left="%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
+
+  PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
+}
+
 # Correction prompt
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
+setopt noprompt{bang,subst} prompt{cr,percent,sp}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd set-prompt
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
