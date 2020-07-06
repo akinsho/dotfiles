@@ -271,10 +271,23 @@ function set-prompt() {
 SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 setopt noprompt{bang,subst} prompt{cr,percent,sp}
+#-------------------------------------------------------------------------------
+#           Hooks
+#-------------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
+
+-change_working_dir_hook() {
+  # clear current vcs_info
+  vcs_info_msg_0_=
+}
+
 add-zsh-hook precmd () {
   async_job vcs_info _async_vcs_info $PWD
   set-prompt
+}
+
+ add-zsh-hook chpwd () {
+  -change_working_dir_hook
 }
 #-------------------------------------------------------------------------------
 #           Plugins
