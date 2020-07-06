@@ -134,7 +134,7 @@ zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
 zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f"
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash
-zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
+zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
 # TODO these functions should not be run outside of a git repository
@@ -205,11 +205,6 @@ setopt noprompt{bang,subst} prompt{cr,percent,sp}
 #-------------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
 
-add-zsh-hook chpwd () {
-  # clear current vcs_info
-  _git_status_prompt=
-}
-
 function -auto-ls-after-cd() {
   emulate -L zsh
   # Only in response to a user-initiated `cd`, not indirectly (eg. via another
@@ -238,6 +233,18 @@ _async_vcs_info_done() {
 add-zsh-hook precmd () {
   async_job vcs_worker _async_vcs_info $PWD
   set-prompt
+}
+
+add-zsh-hook preexec () {
+  # remove hanging async jobs
+  async_flush_jobs vcs_worker
+}
+
+add-zsh-hook chpwd () {
+  # clear current vcs_info
+  _git_status_prompt=
+  # remove hanging async jobs
+  async_flush_jobs vcs_worker
 }
 
 source $PLUGIN_DIR/zsh-async/async.zsh
