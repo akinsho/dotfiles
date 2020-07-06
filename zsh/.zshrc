@@ -137,6 +137,10 @@ zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash
 zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
+__in_git() {
+    [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]
+}
+
 # TODO these functions should not be run outside of a git repository
 # this function adds a hook to the git vcs_info backend that depending
 # on the output of the git command adds an indicator to the the vcs info
@@ -144,7 +148,7 @@ zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$_
 # https://stackoverflow.com/questions/11122410/fastest-way-to-get-git-status-in-bash
 function +vi-git-untracked() {
   emulate -L zsh
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+  if __in_git; then
     if [[ -n $(git ls-files --directory --no-empty-directory --exclude-standard --others 2> /dev/null) ]]; then
       hook_com[unstaged]+="%F{blue} ●%f"
     fi
@@ -153,7 +157,7 @@ function +vi-git-untracked() {
 
 function +vi-git-stash() {
   emulate -L zsh
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+  if __in_git; then
     if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
       hook_com[unstaged]+="%F{red} ≡%f"
     fi
@@ -231,20 +235,16 @@ _async_vcs_info_done() {
 }
 
 add-zsh-hook precmd () {
+  # remove hanging async jobs before starting a new one
+  async_flush_jobs vcs_worker
+  # start async job to populate git info
   async_job vcs_worker _async_vcs_info $PWD
   set-prompt
 }
 
-add-zsh-hook preexec () {
-  # remove hanging async jobs
-  async_flush_jobs vcs_worker
-}
-
 add-zsh-hook chpwd () {
   # clear current vcs_info
-  _git_status_prompt=
-  # remove hanging async jobs
-  async_flush_jobs vcs_worker
+  _git_status_prompt=""
 }
 
 source $PLUGIN_DIR/zsh-async/async.zsh
