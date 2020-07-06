@@ -120,26 +120,6 @@ function TRAPINT() {
 # %r - git repo
 autoload -Uz vcs_info
 
-_async_vcs_info() {
-  cd -q $1
-  vcs_info
-  print ${vcs_info_msg_0_}
-}
-
-source $PLUGIN_DIR/zsh-async/async.zsh
-async_init
-async_start_worker vcs_info
-async_register_callback vcs_info _async_vcs_info_done
-
-_async_vcs_info_done() {
-  local stdout=$3
-  vcs_info_msg_0_=$stdout
-  zle reset-prompt
-}
-
-# precmd_vcs_info() { vcs_info }
-# precmd_functions+=(precmd_vcs_info)
-
 # Using named colors means that the prompt automatically adapts to how these
 # are set by the current terminal theme
 zstyle ':vcs_info:*' enable git
@@ -169,6 +149,23 @@ function +vi-git-stash() {
       hook_com[unstaged]+="%F{red} ≡%f"
     fi
   fi
+}
+
+_async_vcs_info() {
+  cd -q $1
+  vcs_info
+  print ${vcs_info_msg_0_}
+}
+
+source $PLUGIN_DIR/zsh-async/async.zsh
+async_init
+async_start_worker vcs_info
+async_register_callback vcs_info _async_vcs_info_done
+
+_async_vcs_info_done() {
+  local stdout=$3
+  vcs_info_msg_0_=$stdout
+  zle reset-prompt
 }
 
 # Multiline prompt source:
