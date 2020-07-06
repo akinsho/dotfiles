@@ -3,6 +3,7 @@
 #-------------------------------------------------------------------------------
 # Color table - https://jonasjacek.github.io/colors/
 # Wincent's dotfiles - https://github.com/wincent/wincent/blob/d6c52ed552/aspects/dotfiles/files/.zshrc
+# https://github.com/vincentbernat/zshrc/blob/d66fd6b6ea5b3c899efb7f36141e3c8eb7ce348b/rc/vcs.zsh
 #-------------------------------------------------------------------------------
 #               STARTUP TIMES
 #-------------------------------------------------------------------------------
@@ -51,8 +52,13 @@ zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character t
 zstyle ':completion:*' list-suffixes true
 # End of lines added by compinstall
 
-# case insensitive path-completion
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+# Make completion:
+# (stolen from Wincent)
+# - Try exact (case-sensitive) match first.
+# - Then fall back to case-insensitive.
+# - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
+# - Substring complete (ie. bar -> foobar).
+zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 #-------------------------------------------------------------------------------
 #               Options
 #-------------------------------------------------------------------------------
@@ -131,12 +137,15 @@ zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash
 zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
 
+# TODO these functions should not be run outside of a git repository
 # this function adds a hook to the git vcs_info backend that depending
 # on the output of the git command adds an indicator to the the vcs info
+# use --directory and --no-empty-directory to speed up command
+# https://stackoverflow.com/questions/11122410/fastest-way-to-get-git-status-in-bash
 function +vi-git-untracked() {
   emulate -L zsh
   if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
-    if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+    if [[ -n $(git ls-files --directory --no-empty-directory --exclude-standard --others 2> /dev/null) ]]; then
       hook_com[unstaged]+="%F{blue} ●%f"
     fi
   fi
@@ -167,9 +176,6 @@ autoload -Uz _fill_line && _fill_line
 # Requires: prompt_percent and no_prompt_subst.
 function set-prompt() {
   emulate -L zsh
-  # local git_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-  # git_branch=${git_branch//\%/%%}  # escape '%'
-
   # directory(branch)                     10:51
   # ❯  █
   #
@@ -235,8 +241,11 @@ add-zsh-hook precmd () {
 }
 
 source $PLUGIN_DIR/zsh-async/async.zsh
+# init async plugin
 async_init
+# create a worker called "vcs_worker"
 async_start_worker vcs_worker
+# register a callback for when the worker is finished
 async_register_callback vcs_worker _async_vcs_info_done
 
 #-------------------------------------------------------------------------------
@@ -268,8 +277,6 @@ done
 if [[ `uname` == 'Linux' ]]; then
   source "$DOTFILES/linux/functions.sh"
 fi
-
-fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
