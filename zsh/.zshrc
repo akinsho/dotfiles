@@ -90,7 +90,7 @@ vim_mode=$vim_ins_mode
 
 function zle-keymap-select {
   vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
-  zle reset-prompt
+  set-prompt
 }
 zle -N zle-keymap-select
 
@@ -157,16 +157,18 @@ _async_vcs_info() {
   print ${vcs_info_msg_0_}
 }
 
-source $PLUGIN_DIR/zsh-async/async.zsh
-async_init
-async_start_worker vcs_info
-async_register_callback vcs_info _async_vcs_info_done
 
 _async_vcs_info_done() {
   local stdout=$3
-  vcs_info_msg_0_=$stdout
+  _git_status_prompt=$stdout
   zle reset-prompt
+  set-prompt
 }
+
+source $PLUGIN_DIR/zsh-async/async.zsh
+async_init
+async_start_worker vcs_worker
+async_register_callback vcs_worker _async_vcs_info_done
 
 # Multiline prompt source:
 # https://gist.github.com/romkatv/2a107ef9314f0d5f76563725b42f7cab
@@ -260,15 +262,15 @@ function set-prompt() {
   local dots_prompt_icon="%F{green}❯ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
 
-  local top_left="%B%F{10}%1~%f%b${vcs_info_msg_0_}"
+  local top_left="%B%F{10}%1~%f%b$_git_status_prompt"
   local top_right="${vim_mode}%F{240}%*%f"
   local bottom_left="%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
 
-  PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
+  export PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
 }
 
 # Correction prompt
-SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
+export SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 setopt noprompt{bang,subst} prompt{cr,percent,sp}
 #-------------------------------------------------------------------------------
@@ -276,18 +278,15 @@ setopt noprompt{bang,subst} prompt{cr,percent,sp}
 #-------------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
 
--change_working_dir_hook() {
-  # clear current vcs_info
-  vcs_info_msg_0_=
-}
+add-zsh-hook precmd set-prompt
 
 add-zsh-hook precmd () {
-  async_job vcs_info _async_vcs_info $PWD
-  set-prompt
+  async_job vcs_worker _async_vcs_info $PWD
 }
 
  add-zsh-hook chpwd () {
-  -change_working_dir_hook
+  # clear current vcs_info
+  _git_status_prompt=
 }
 #-------------------------------------------------------------------------------
 #           Plugins
