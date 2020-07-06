@@ -14,3 +14,6 @@
 [submodule "zsh-completions"]
 	path = zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
+[submodule "zsh/plugins/zsh-async"]
+	path = zsh/plugins/zsh-async
+	url = git@github.com:mafredri/zsh-async.git

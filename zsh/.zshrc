@@ -17,6 +17,8 @@ typeset -A __DOTS
 __DOTS[ITALIC_ON]=$'\e[3m'
 __DOTS[ITALIC_OFF]=$'\e[23m'
 
+
+PLUGIN_DIR=$DOTFILES/zsh/plugins
 #-------------------------------------------------------------------------------
 #               Completion
 #-------------------------------------------------------------------------------
@@ -117,8 +119,26 @@ function TRAPINT() {
 # %b - git branch
 # %r - git repo
 autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=(precmd_vcs_info)
+
+_async_vcs_info() {
+  cd -q $1
+  vcs_info
+  print ${vcs_info_msg_0_}
+}
+
+source $PLUGIN_DIR/zsh-async/async.zsh
+async_init
+async_start_worker vcs_info
+async_register_callback vcs_info _async_vcs_info_done
+
+_async_vcs_info_done() {
+  local stdout=$3
+  vcs_info_msg_0_=$stdout
+  zle reset-prompt
+}
+
+# precmd_vcs_info() { vcs_info }
+# precmd_functions+=(precmd_vcs_info)
 
 # Using named colors means that the prompt automatically adapts to how these
 # are set by the current terminal theme
@@ -135,15 +155,19 @@ zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$_
 # on the output of the git command adds an indicator to the the vcs info
 function +vi-git-untracked() {
   emulate -L zsh
-  if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-    hook_com[unstaged]+="%F{blue} ●%f"
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+    if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+      hook_com[unstaged]+="%F{blue} ●%f"
+    fi
   fi
 }
 
 function +vi-git-stash() {
   emulate -L zsh
-  if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
-    hook_com[unstaged]+="%F{red} ≡%f"
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+    if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
+      hook_com[unstaged]+="%F{red} ≡%f"
+    fi
   fi
 }
 
@@ -251,7 +275,10 @@ SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%
 
 setopt noprompt{bang,subst} prompt{cr,percent,sp}
 autoload -Uz add-zsh-hook
-add-zsh-hook precmd set-prompt
+add-zsh-hook precmd () {
+  async_job vcs_info _async_vcs_info $PWD
+  set-prompt
+}
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
@@ -263,8 +290,6 @@ else
   git clone https://github.com/b4b4r07/enhancd ~/enhancd
   source ~/enhancd/init.sh
 fi
-
-PLUGIN_DIR=$DOTFILES/zsh/plugins
 
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
