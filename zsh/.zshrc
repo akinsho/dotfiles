@@ -91,6 +91,7 @@ vim_mode=$vim_ins_mode
 function zle-keymap-select {
   vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
   set-prompt
+  zle reset-prompt
 }
 zle -N zle-keymap-select
 
@@ -150,25 +151,6 @@ function +vi-git-stash() {
     fi
   fi
 }
-
-_async_vcs_info() {
-  cd -q $1
-  vcs_info
-  print ${vcs_info_msg_0_}
-}
-
-
-_async_vcs_info_done() {
-  local stdout=$3
-  _git_status_prompt=$stdout
-  zle reset-prompt
-  set-prompt
-}
-
-source $PLUGIN_DIR/zsh-async/async.zsh
-async_init
-async_start_worker vcs_worker
-async_register_callback vcs_worker _async_vcs_info_done
 
 # Multiline prompt source:
 # https://gist.github.com/romkatv/2a107ef9314f0d5f76563725b42f7cab
@@ -262,11 +244,11 @@ function set-prompt() {
   local dots_prompt_icon="%F{green}❯ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
 
-  local top_left="%B%F{10}%1~%f%b$_git_status_prompt"
+  local top_left="%B%F{10}%1~%f%b${_git_status_prompt}"
   local top_right="${vim_mode}%F{240}%*%f"
   local bottom_left="%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
 
-  export PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
+  PROMPT="$(fill-line "$top_left" "$top_right")"$'\n'$bottom_left
 }
 
 # Correction prompt
@@ -278,16 +260,46 @@ setopt noprompt{bang,subst} prompt{cr,percent,sp}
 #-------------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
 
-add-zsh-hook precmd set-prompt
-
-add-zsh-hook precmd () {
-  async_job vcs_worker _async_vcs_info $PWD
-}
-
- add-zsh-hook chpwd () {
+add-zsh-hook chpwd () {
   # clear current vcs_info
   _git_status_prompt=
 }
+
+function -auto-ls-after-cd() {
+  emulate -L zsh
+  # Only in response to a user-initiated `cd`, not indirectly (eg. via another
+  # function).
+  if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
+    ls -a
+  fi
+}
+add-zsh-hook chpwd -auto-ls-after-cd
+
+
+_async_vcs_info() {
+  cd -q $1
+  vcs_info
+  print ${vcs_info_msg_0_}
+}
+
+
+_async_vcs_info_done() {
+  local stdout=$3
+  _git_status_prompt=$stdout
+  set-prompt
+  zle reset-prompt
+}
+
+add-zsh-hook precmd () {
+  async_job vcs_worker _async_vcs_info $PWD
+  set-prompt
+}
+
+source $PLUGIN_DIR/zsh-async/async.zsh
+async_init
+async_start_worker vcs_worker
+async_register_callback vcs_worker _async_vcs_info_done
+
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
@@ -335,15 +347,6 @@ bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
 
-function -auto-ls-after-cd() {
-  emulate -L zsh
-  # Only in response to a user-initiated `cd`, not indirectly (eg. via another
-  # function).
-  if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
-    ls -a
-  fi
-}
-add-zsh-hook chpwd -auto-ls-after-cd
 # STARTUP TIMES (CONTD)================================================
 # end_time="$(date +%s)"
 # Compares start time defined above with end time above and prints the
