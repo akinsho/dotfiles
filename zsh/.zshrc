@@ -7,6 +7,8 @@
 # sourcing autoloaded functions:
 # https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
 
+zmodload zsh/datetime
+
 # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.
 typeset -A __DOTS
@@ -283,42 +285,36 @@ function __auto-ls-after-cd() {
   fi
 }
 
+# Async prompt in Zsh
+# https://www.zsh.org/mla/users/2018/msg00424.html
+# https://github.com/sorin-ionescu/prezto/pull/1805/files#diff-6a24e7644c4c0969110e86872283ec82L79
+# https://github.com/zsh-users/zsh-autosuggestions/pull/338/files
 __async_vcs_start() {
-  # create a worker called "vcs_worker"
-  async_start_worker vcs_worker
-  # register a callback for when the worker is finished
-  async_register_callback vcs_worker __async_vcs_info_done
+  # Close the last file descriptor to invalidate old requests
+  if [[ -n "$__prompt_async_fd" ]] && { true <&$__prompt_async_fd } 2>/dev/null; then
+    exec {__prompt_async_fd}<&-
+    zle -F $__prompt_async_fd
+  fi
+  # fork a process to fetch the git status
+  exec {__prompt_async_fd}< <(
+    __async_vcs_info $PWD
+  )
+
+  zle -F "$__prompt_async_fd" __async_vcs_info_done
 }
 
 __async_vcs_info() {
-  cd -q $1
+  cd -q "$1"
   vcs_info
   print ${vcs_info_msg_0_}
 }
 
 __async_vcs_info_done() {
-  local job=$1
-  local return_code=$2
-  local stdout=$3
-  local stderr=$5
-  # Possible error return codes for the job name [async]:
-  #
-  # [1] Corrupt worker output.
-  # [2] ZLE watcher detected an error on the worker fd.
-  # [3] Response from async_job when worker is missing.
-  # [130] Async worker crashed, this should not happen
-  # but it can mean the file descriptor has become corrupt.
-  # This must be followed by a async_stop_worker [name] and then the worker
-  # and tasks should be restarted. It is unknown why this happens
-  if [[ $job == '[async]' ]]; then
-    if [[ $return_code -eq 2 ]]; then
-      # FIXME this error should be avoided and if not then swallowed
-      echo $stderr
-      __async_vcs_start
-      return
-    fi
-  fi
-  _git_status_prompt=$stdout
+  _git_status_prompt="$(<&$1)"
+  # remove the handler and close the file descriptor
+  zle -F "$1"
+  exec {1}<&-
+  # reset the the prompt
   set-prompt
   zle && zle reset-prompt
 }
@@ -326,7 +322,7 @@ __async_vcs_info_done() {
 add-zsh-hook precmd () {
   __timings_precmd
   # start async job to populate git info
-  async_job vcs_worker __async_vcs_info $PWD
+  __async_vcs_start
   set-prompt
 }
 
@@ -340,11 +336,6 @@ add-zsh-hook chpwd () {
 add-zsh-hook preexec () {
   __timings_preexec
 }
-
-source $PLUGIN_DIR/zsh-async/async.zsh
-# init async plugin
-async_init
-__async_vcs_start
 #-------------------------------------------------------------------------------
 #   LOCAL SCRIPTS
 #-------------------------------------------------------------------------------
