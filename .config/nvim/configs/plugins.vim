@@ -170,12 +170,13 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "--------------------------------------------------------------------------------
 " Themes  {{{1
 "--------------------------------------------------------------------------------
+" More actively maintained that vim-one
+Plug 'joshdick/onedark.vim' ", { 'branch': 'dartHighlighting' }
 " NOTE: vim-one has a MUCH better startup time than onedark
-Plug 'rakr/vim-one' " alternative one dark with a light theme
+" Plug 'rakr/vim-one' " alternative one dark with a light theme
 "--------------------------------------------------------------------------------
 " Alternatives color schemes {{{2
 "--------------------------------------------------------------------------------
-" Plug 'joshdick/onedark.vim' " More actively maintained that vim-one
 " Plug 'kaicataldo/material.vim'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'

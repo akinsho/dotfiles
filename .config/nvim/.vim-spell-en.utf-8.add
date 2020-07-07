@@ -152,3 +152,4 @@ vimrc
 keepalt
 buftype
 BufRead
+Ctags

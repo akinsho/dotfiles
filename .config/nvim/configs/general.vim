@@ -203,12 +203,12 @@ if has('termguicolors')
     let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
   endif
-  set termguicolors " set vim-specific sequences for rgb colors super important for truecolor support in vim
+  set termguicolors " set vim-specific sequences for RGB colors super important for true color support in vim
 endif
-" ctags - search for a tags file then in current dir then home dir
+" Ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,./.git/.tags,tags,~/.tags
 ""---------------------------------------------------------------------------//
-" Colorscheme {{{1
+" Color Scheme {{{1
 ""---------------------------------------------------------------------------//
 set background=dark
 if PluginLoaded('onedark.vim')
@@ -227,7 +227,9 @@ if PluginLoaded('onedark.vim')
     call onedark#extend_highlight('jsImport', { 'gui': 'italic' })
     call onedark#extend_highlight('jsExport', { 'gui': 'italic' })
     call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
-    " Italices func calls
+    call onedark#extend_highlight('SpellRare',
+          \ { 'guisp': '#D19A66', 'gui': 'undercurl', 'guifg': 'NONE' })
+    " Italicises function calls
     call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
     call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF'} })
   endfunc

@@ -41,3 +41,9 @@ let g:vim_markdown_conceal             = 1
 let g:vim_markdown_conceal_code_blocks = 1
 let g:vim_markdown_folding_disabled    = 0
 "}}}
+"
+""---------------------------------------------------------------------------//
+" DART
+""---------------------------------------------------------------------------//
+let g:dart_html_in_string=v:true
+let g:dart_style_guide = 2
