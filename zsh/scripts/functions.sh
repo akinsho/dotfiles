@@ -17,28 +17,6 @@ cat() {
   fi
 }
 
-
-# ***************************************************
-# -v = verbose; show request and response header info
-# -L = follow redirects if there are any
-# -H = specify header info
-# -X = specify request type
-# ***************************************************
-
-function git_repo_delete() {
-  echo "deleting $1"
-  curl -vL \
-    -H "Authorization: token $GITHUB_SECRET" \
-    -H "Content-Type: application/json" \
-    -X DELETE https://api.github.com/repos/$1 \
-    | jq .
-}
-
-function delete_repos_in_file() {
-  repos=$1
-  for repo in $repos; do (git_repo_delete "$repo"); done
-}
-
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 

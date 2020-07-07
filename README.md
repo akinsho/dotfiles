@@ -1,6 +1,6 @@
 # .dotfiles
 
-![Neovim Setup](./dotfiles-2.png "Vim Setup")
+![Neovim Setup](./dotfiles.png "Vim Setup")
 
 My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in case of laptop armageddon).
 
@@ -12,6 +12,10 @@ involved in the various programs my dotfiles cover.
 - [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
 - [Nvim (nightly)](https://github.com/neovim/neovim)
 - Language server support using [`coc.nvim`](https://github.com/neoclide/coc.nvim)
+
+- Minimal Zsh config without `oh-my-zsh`, async prompt for really large monorepos.
+
+  ![Zsh Prompt](./prompt.png)
 
 Feel free to copy and paste as needed, but I _strongly_ advise against cloning this repo.
 It wasn't designed to be used in that way 🤷.

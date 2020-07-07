@@ -60,7 +60,7 @@ zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)
 # Categorize completion suggestions with headings:
 zstyle ':completion:*' group-name ''
 # Style the group names
-zstyle ':completion:*' format %F{default}%B%{$__DOTS[ITALIC_ON]%}- %F{yellow}%f%d -%{$__DOTS[ITALIC_OFF]%}%b%f
+zstyle ':completion:*' format %F{yellow}%B%U%{$__DOTS[ITALIC_ON]%}%d%{$__DOTS[ITALIC_OFF]%}%b%u%f
 
 # Added by running `compinstall`
 zstyle ':completion:*' expand suffix
@@ -273,7 +273,7 @@ __timings_precmd() {
 #-------------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
 
-function -auto-ls-after-cd() {
+function __auto-ls-after-cd() {
   emulate -L zsh
   # Only in response to a user-initiated `cd`, not indirectly (eg. via another
   # function).
@@ -281,7 +281,6 @@ function -auto-ls-after-cd() {
     ls -a
   fi
 }
-add-zsh-hook chpwd -auto-ls-after-cd
 
 __async_vcs_start() {
   # create a worker called "vcs_worker"
@@ -333,11 +332,12 @@ add-zsh-hook precmd () {
 add-zsh-hook chpwd () {
   # clear current vcs_info
   _git_status_prompt=""
+  __auto-ls-after-cd
 }
 
 
 add-zsh-hook preexec () {
- __timings_preexec
+  __timings_preexec
 }
 
 source $PLUGIN_DIR/zsh-async/async.zsh
