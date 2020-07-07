@@ -48,7 +48,7 @@ let g:fzf_colors = {
       \ 'border':  ['fg', 'VertSplit'],
       \ 'hl':      ['fg', 'Comment'],
       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
+      \ 'bg+':     ['bg', 'Visual', 'PmenuSel', 'CursorColumn'],
       \ 'hl+':     ['fg', 'Statement'],
       \ 'info':    ['fg', 'PreProc'],
       \ 'prompt':  ['fg', 'Conditional'],

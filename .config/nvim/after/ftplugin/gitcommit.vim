@@ -1,5 +1,5 @@
 setlocal nolist nonumber norelativenumber
-"the queen's english..
+"the queen's English..
 setlocal spell spelllang=en_gb
 " Disable showing tabs locally
 setlocal listchars=tab:\ \ ,
