@@ -5,14 +5,38 @@ local api = _G.vim.api
 -- Helpers
 -----------------------------------------------------------------------------//
 local function is_plugin_loaded(plugin)
-  local success, plugin = pcall(require, plugin)
-  return success, plugin
+  local success, plug = pcall(require, plugin)
+  return success, plug
 end
 
 local function is_executable(name)
   return fn.executable(name) > 0
 end
 
+-- FIXME this only works when a command is used
+-- https://github.com/neovim/neovim/issues/1380#issuecomment-650664507
+local w = vim.loop.new_fs_poll()
+local function on_change(buf_nr, file_path)
+  vim.cmd('checktime ' .. buf_nr)
+  w:stop()
+  watch_file(buf_nr, file_path)
+end
+function _G.watch_file(buf_nr, file_path)
+  if not vim.bo.modifiable or file_path == "" then return end
+  w:start(file_path, 1000, vim.schedule_wrap(
+    function()
+      on_change(buf_nr, file_path)
+    end
+  ))
+end
+vim.cmd(
+  "command! -nargs=0 Watch call luaeval('watch_file(_A[1], _A[2])', [bufnr('%'), expand('%:p')])"
+)
+
+-- vim.cmd("augroup CheckFileSystem")
+-- vim.cmd("autocmd!")
+-- vim.cmd("autocmd BufEnter * Watch")
+-- vim.cmd("augroup end")
 
 -----------------------------------------------------------------------------//
 -- Init
