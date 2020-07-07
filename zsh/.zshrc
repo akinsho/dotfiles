@@ -238,8 +238,20 @@ _async_vcs_info_done() {
   local job=$1
   local return_code=$2
   local stdout=$3
+  local stderr=$5
+  # Possible error return codes for the job name [async]:
+  #
+  # [1] Corrupt worker output.
+  # [2] ZLE watcher detected an error on the worker fd.
+  # [3] Response from async_job when worker is missing.
+  # [130] Async worker crashed, this should not happen
+  # but it can mean the file descriptor has become corrupt.
+  # This must be followed by a async_stop_worker [name] and then the worker
+  # and tasks should be restarted. It is unknown why this happens
   if [[ $job == '[async]' ]]; then
     if [[ $return_code -eq 2 ]]; then
+      # FIXME this error should be avoided and if not then swallowed
+      echo $stderr
       _async_vcs_start
       return
     fi
@@ -250,8 +262,6 @@ _async_vcs_info_done() {
 }
 
 add-zsh-hook precmd () {
-  # remove hanging async jobs before starting a new one
-  async_flush_jobs vcs_worker
   # start async job to populate git info
   async_job vcs_worker _async_vcs_info $PWD
   set-prompt
