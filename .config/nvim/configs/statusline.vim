@@ -70,7 +70,7 @@ endfunction
 function! StatuslineCurrentFunction() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
-  return winwidth(0) > 125 ? s:truncate_string(sanitized, 30) : ''
+  return winwidth(0) > 140 ? s:truncate_string(sanitized, 30) : ''
 endfunction
 
 " This is automatically truncated by coc
