@@ -16,6 +16,11 @@ __DOTS[ITALIC_OFF]=$'\e[23m'
 
 
 PLUGIN_DIR=$DOTFILES/zsh/plugins
+
+# Init completions
+autoload -Uz compinit
+compinit
+
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
@@ -37,9 +42,6 @@ source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
 #-------------------------------------------------------------------------------
 #               Completion
 #-------------------------------------------------------------------------------
-# Init completions
-autoload -Uz compinit
-compinit
 
 # Colorize completions using default `ls` colors.
 zstyle ':completion:*' list-colors ''
