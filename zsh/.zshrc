@@ -4,11 +4,8 @@
 # Color table - https://jonasjacek.github.io/colors/
 # Wincent's dotfiles - https://github.com/wincent/wincent/blob/d6c52ed552/aspects/dotfiles/files/.zshrc
 # https://github.com/vincentbernat/zshrc/blob/d66fd6b6ea5b3c899efb7f36141e3c8eb7ce348b/rc/vcs.zsh
-#-------------------------------------------------------------------------------
-#               STARTUP TIMES
-#-------------------------------------------------------------------------------
-# zmodload zsh/zprof
-# start_time="$(date +%s)"
+# sourcing autoloaded functions:
+# https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
 
 # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.
@@ -114,7 +111,7 @@ function TRAPINT() {
   return $(( 128 + $1 ))
 }
 #-------------------------------------------------------------------------------
-#               Prompt
+#               Version control
 #-------------------------------------------------------------------------------
 # vcs_info is a zsh native module for getting git info into your
 # prompt. It's not as fast as using git directly in some cases
@@ -169,6 +166,9 @@ fpath+=$DOTFILES/zsh
 
 autoload -Uz _fill_line && _fill_line
 
+#-------------------------------------------------------------------------------
+#               Prompt
+#-------------------------------------------------------------------------------
 # Sets PROMPT and RPROMPT.
 #
 # %F...%f - - foreground color
@@ -188,13 +188,12 @@ function set-prompt() {
   # icon options =  ❯   
   # Bottom left:  ❯
   # Bottom right: empty
-
-
   local dots_prompt_icon="%F{green}❯ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
+  local execution_time="%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f "
 
   local top_left="%B%F{10}%1~%f%b${_git_status_prompt}"
-  local top_right="${vim_mode}%F{240}%*%f"
+  local top_right="${vim_mode}${execution_time}%F{240}%*%f"
   local bottom_left="%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
 
   PROMPT="$(_fill_line "$top_left" "$top_right")"$'\n'$bottom_left
@@ -204,6 +203,49 @@ function set-prompt() {
 export SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 setopt noprompt{bang,subst} prompt{cr,percent,sp}
+#-------------------------------------------------------------------------------
+#           Execution time
+#-------------------------------------------------------------------------------
+# Inspired by https://github.com/sindresorhus/pure/blob/81dd496eb380aa051494f93fd99322ec796ec4c2/pure.zsh#L47
+#
+# Turns seconds into human readable time.
+# 165392 => 1d 21h 56m 32s
+# https://github.com/sindresorhus/pretty-time-zsh
+__human_time_to_var() {
+  local human total_seconds=$1 var=$2
+  local days=$(( total_seconds / 60 / 60 / 24 ))
+  local hours=$(( total_seconds / 60 / 60 % 24 ))
+  local minutes=$(( total_seconds / 60 % 60 ))
+  local seconds=$(( total_seconds % 60 ))
+  (( days > 0 )) && human+="${days}d "
+  (( hours > 0 )) && human+="${hours}h "
+  (( minutes > 0 )) && human+="${minutes}m "
+  human+="${seconds}s"
+
+  # Store human readable time in a variable as specified by the caller
+  typeset -g "${var}"="${human}"
+}
+
+# Stores (into cmd_exec_time) the execution
+# time of the last command if set threshold was exceeded.
+__check_cmd_exec_time() {
+  integer elapsed
+  (( elapsed = EPOCHSECONDS - ${cmd_timestamp:-$EPOCHSECONDS} ))
+  typeset -g cmd_exec_time=
+  (( elapsed > 1 )) && {
+    __human_time_to_var $elapsed "cmd_exec_time"
+  }
+}
+
+__timings_preexec() {
+  emulate -L zsh
+  typeset -g cmd_timestamp=$EPOCHSECONDS
+}
+
+__timings_precmd() {
+  __check_cmd_exec_time
+  unset cmd_timestamp
+}
 #-------------------------------------------------------------------------------
 #           Hooks
 #-------------------------------------------------------------------------------
@@ -226,13 +268,11 @@ _async_vcs_start() {
   async_register_callback vcs_worker _async_vcs_info_done
 }
 
-
 _async_vcs_info() {
   cd -q $1
   vcs_info
   print ${vcs_info_msg_0_}
 }
-
 
 _async_vcs_info_done() {
   local job=$1
@@ -262,6 +302,7 @@ _async_vcs_info_done() {
 }
 
 add-zsh-hook precmd () {
+  __timings_precmd
   # start async job to populate git info
   async_job vcs_worker _async_vcs_info $PWD
   set-prompt
@@ -270,6 +311,11 @@ add-zsh-hook precmd () {
 add-zsh-hook chpwd () {
   # clear current vcs_info
   _git_status_prompt=""
+}
+
+
+add-zsh-hook preexec () {
+ __timings_preexec
 }
 
 source $PLUGIN_DIR/zsh-async/async.zsh
@@ -320,10 +366,3 @@ bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
-
-# STARTUP TIMES (CONTD)================================================
-# end_time="$(date +%s)"
-# Compares start time defined above with end time above and prints the
-# difference
-# echo load time: $((end_time - start_time)) seconds
-# zprof
