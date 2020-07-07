@@ -217,7 +217,8 @@ function set-prompt() {
   local dots_prompt_failure_icon="%F{red}✘ %f"
   local execution_time="%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f "
 
-  local top_left="%B%F{10}%1~%f%b${_git_status_prompt}"
+  local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}loading…%{$__DOTS[ITALIC_OFF]%}%f)"
+  local top_left="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
   local top_right="${vim_mode}${execution_time}%F{240}%*%f"
   local bottom_left="%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
 
