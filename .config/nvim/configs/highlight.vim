@@ -17,7 +17,10 @@ function! ApplyUserHighlights() abort
   if has('nvim-0.3.2')
     " Add undercurl to existing spellbad highlight
     let s:error_fg = synIDattr(hlID('Error'), 'fg')
+    let s:rare_fg = synIDattr(hlID('SpellRare'), 'fg')
     execute 'highlight SpellBad gui=undercurl guibg=tranparent guifg=tranparent guisp='.s:error_fg
+    execute 'highlight SpellRare gui=undercurl guibg=tranparent guifg=tranparent guisp='.s:rare_fg
+
 
     " Define highlight for URIs e.g. http://stackoverflow.com
     " this is used in the syntax after files for highlighting URIs in comments

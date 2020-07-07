@@ -227,8 +227,6 @@ if PluginLoaded('onedark.vim')
     call onedark#extend_highlight('jsImport', { 'gui': 'italic' })
     call onedark#extend_highlight('jsExport', { 'gui': 'italic' })
     call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
-    call onedark#extend_highlight('SpellRare',
-          \ { 'guisp': '#D19A66', 'gui': 'undercurl', 'guifg': 'NONE' })
     " Italicises function calls
     call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
     call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF'} })
