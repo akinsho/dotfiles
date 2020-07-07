@@ -219,6 +219,13 @@ function -auto-ls-after-cd() {
 }
 add-zsh-hook chpwd -auto-ls-after-cd
 
+_async_vcs_start() {
+  # create a worker called "vcs_worker"
+  async_start_worker vcs_worker
+  # register a callback for when the worker is finished
+  async_register_callback vcs_worker _async_vcs_info_done
+}
+
 
 _async_vcs_info() {
   cd -q $1
@@ -228,7 +235,15 @@ _async_vcs_info() {
 
 
 _async_vcs_info_done() {
+  local job=$1
+  local return_code=$2
   local stdout=$3
+  if [[ $job == '[async]' ]]; then
+    if [[ $return_code -eq 2 ]]; then
+      _async_vcs_start
+      return
+    fi
+  fi
   _git_status_prompt=$stdout
   set-prompt
   zle reset-prompt
@@ -250,11 +265,7 @@ add-zsh-hook chpwd () {
 source $PLUGIN_DIR/zsh-async/async.zsh
 # init async plugin
 async_init
-# create a worker called "vcs_worker"
-async_start_worker vcs_worker
-# register a callback for when the worker is finished
-async_register_callback vcs_worker _async_vcs_info_done
-
+_async_vcs_start
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
