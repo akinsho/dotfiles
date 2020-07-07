@@ -99,3 +99,4 @@ alias gcl='git clone --recurse-submodules'
 alias gl='git pull'
 alias gcm="git checkout $(git_main_branch)"
 alias gstp="git stash pop"
+alias gsts="git stash show -p"

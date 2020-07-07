@@ -164,7 +164,7 @@ function +vi-git-stash() {
 }
 
 # Add the zsh directory to the autoload dirs
-fpath+=$DOTFILES/zsh
+fpath+=$DOTFILES/zsh/zshfunctions
 
 autoload -Uz _fill_line && _fill_line
 
