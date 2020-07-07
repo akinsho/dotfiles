@@ -93,7 +93,7 @@ vim_mode=$vim_ins_mode
 function zle-keymap-select {
   vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
   set-prompt
-  zle reset-prompt
+  zle && zle reset-prompt
 }
 zle -N zle-keymap-select
 
@@ -140,6 +140,7 @@ __in_git() {
 
 # TODO these functions should not be run outside of a git repository
 # this function adds a hook to the git vcs_info backend that depending
+# they can also be quite slow...
 # on the output of the git command adds an indicator to the the vcs info
 # use --directory and --no-empty-directory to speed up command
 # https://stackoverflow.com/questions/11122410/fastest-way-to-get-git-status-in-bash
@@ -153,10 +154,11 @@ function +vi-git-untracked() {
 }
 
 function +vi-git-stash() {
+  local stash_icon="●" # 📦 $
   emulate -L zsh
   if __in_git; then
     if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
-      hook_com[unstaged]+="%F{red} ≡%f"
+      hook_com[unstaged]+=" %F{yellow}$stash_icon%f "
     fi
   fi
 }
@@ -298,7 +300,7 @@ _async_vcs_info_done() {
   fi
   _git_status_prompt=$stdout
   set-prompt
-  zle reset-prompt
+  zle && zle reset-prompt
 }
 
 add-zsh-hook precmd () {
