@@ -24,7 +24,8 @@ compinit
 #-------------------------------------------------------------------------------
 #           Plugins
 #-------------------------------------------------------------------------------
-# FIXME these are not working correctly
+# These should be source *BEFORE* setting up hooks
+#
 # Enhancd can't be setup as a submodule because the init.sh script
 # deletes the source files on load...
 if [ -f ~/enhancd/init.sh ]; then
