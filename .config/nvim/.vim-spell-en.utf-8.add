@@ -149,3 +149,6 @@ ftplugin
 neovim
 fzf
 vimrc
+keepalt
+buftype
+BufRead

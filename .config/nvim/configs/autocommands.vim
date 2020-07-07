@@ -44,7 +44,7 @@ augroup END
 augroup togglerelativelinenumbers
   autocmd!
   " If in normal mode show hybrid numbers
-  " except in previewwindow and other readonly/ helper windows
+  " except in previewwindow and other readonly helper windows
   " OR if the ft has a setting to turn of numbers for that buffer
   autocmd InsertEnter,BufLeave,WinLeave,FocusLost *
         \  if empty(&buftype) && &number
@@ -124,11 +124,11 @@ augroup UpdateVim
   autocmd!
   " NOTE: we should only reload config files for plugins not all vim files
   execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/*.vim,$MYVIMRC nested'
-        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme | doautocmd User ReloadedVim'
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
-      source $MYGVIMRC | echo 'Source .gvimrc'
+      source $MYGVIMRC | echo 'Sourced .gvimrc'
     endif
   endif
   autocmd FocusLost * silent! wall
@@ -229,18 +229,26 @@ augroup Cursorline
   autocmd WinLeave,BufWinLeave * setlocal nocursorline
 augroup END
 
+" TODO make sure this doesn't highlight FZF buffers
+function! s:terminal_setup()
+  if &buftype ==# 'terminal' && &ft == ''
+    setlocal nonumber norelativenumber
+    lua require"color_helpers".darken_terminal(-30)
+  endif
+endfunction
+
 augroup CustomWindowSettings
   autocmd!
   " TODO: we match specifically against zsh terminals since we are trying
   " to avoid highlighting fzf buffers.
-  "
-  " find an autocommand pattern to exclude fzf explicitly
-  " term://*fzf*
+  " find an autocommand pattern to exclude fzf explicitly term://*fzf*
   " SEE: https://github.com/junegunn/fzf/issues/576
-  " FIXME this breaks on sourcing vimrc
-  autocmd TermOpen,WinNew,WinEnter term://*zsh*,term://*bash*
-        \ silent! lua require"color_helpers".darken_terminal(-30)
-  autocmd TermOpen * setlocal nonumber norelativenumber
+  "
+  autocmd TermOpen,ColorScheme,WinNew,TermEnter term://*zsh*,term://*bash*
+        \ call s:terminal_setup()
+  " on BufRead the name of the toggle-able terminal will have changed
+  " so it will not be caught by the pattern above
+  autocmd BufEnter,ColorScheme * call s:terminal_setup()
   autocmd WinEnter,WinNew * if &previewwindow
         \ | setlocal nospell concealcursor=nv nocursorline colorcolumn=
         \ | endif
@@ -248,7 +256,7 @@ augroup END
 
 augroup Utilities "{{{1
   autocmd!
-  " close FZF in neovim with esc
+  " close FZF in neovim with <ESC>
   autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
 
   autocmd TermOpen,TermEnter * startinsert!
