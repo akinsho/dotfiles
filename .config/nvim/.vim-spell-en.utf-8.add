@@ -153,3 +153,4 @@ keepalt
 buftype
 BufRead
 Ctags
+dev

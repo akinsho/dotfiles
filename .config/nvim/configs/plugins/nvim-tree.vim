@@ -24,7 +24,7 @@ let g:lua_tree_bindings = {
 let g:lua_tree_indent_markers = 1
 nnoremap <silent><c-n> :LuaTreeToggle<CR>
 let g:lua_tree_auto_close = 1 " 0 by default, closes the tree when it's the last window
-let g:lua_tree_follow     = 1 " On bufEnter find the current file
+let g:lua_tree_follow     = 0 " On bufEnter find the current file
 let g:lua_tree_bindings = {
       \ "edit": "o",
       \}
