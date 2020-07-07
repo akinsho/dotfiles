@@ -17,6 +17,24 @@ __DOTS[ITALIC_OFF]=$'\e[23m'
 
 PLUGIN_DIR=$DOTFILES/zsh/plugins
 #-------------------------------------------------------------------------------
+#           Plugins
+#-------------------------------------------------------------------------------
+# FIXME these are not working correctly
+# Enhancd can't be setup as a submodule because the init.sh script
+# deletes the source files on load...
+if [ -f ~/enhancd/init.sh ]; then
+  source ~/enhancd/init.sh
+else
+  git clone https://github.com/b4b4r07/enhancd ~/enhancd
+  source ~/enhancd/init.sh
+fi
+
+source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
+source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#-------------------------------------------------------------------------------
 #               Completion
 #-------------------------------------------------------------------------------
 # Init completions
@@ -263,20 +281,20 @@ function -auto-ls-after-cd() {
 }
 add-zsh-hook chpwd -auto-ls-after-cd
 
-_async_vcs_start() {
+__async_vcs_start() {
   # create a worker called "vcs_worker"
   async_start_worker vcs_worker
   # register a callback for when the worker is finished
-  async_register_callback vcs_worker _async_vcs_info_done
+  async_register_callback vcs_worker __async_vcs_info_done
 }
 
-_async_vcs_info() {
+__async_vcs_info() {
   cd -q $1
   vcs_info
   print ${vcs_info_msg_0_}
 }
 
-_async_vcs_info_done() {
+__async_vcs_info_done() {
   local job=$1
   local return_code=$2
   local stdout=$3
@@ -294,7 +312,7 @@ _async_vcs_info_done() {
     if [[ $return_code -eq 2 ]]; then
       # FIXME this error should be avoided and if not then swallowed
       echo $stderr
-      _async_vcs_start
+      __async_vcs_start
       return
     fi
   fi
@@ -306,7 +324,7 @@ _async_vcs_info_done() {
 add-zsh-hook precmd () {
   __timings_precmd
   # start async job to populate git info
-  async_job vcs_worker _async_vcs_info $PWD
+  async_job vcs_worker __async_vcs_info $PWD
   set-prompt
 }
 
@@ -323,24 +341,7 @@ add-zsh-hook preexec () {
 source $PLUGIN_DIR/zsh-async/async.zsh
 # init async plugin
 async_init
-_async_vcs_start
-#-------------------------------------------------------------------------------
-#           Plugins
-#-------------------------------------------------------------------------------
-# Enhancd can't be setup as a submodule because the init.sh script
-# deletes the source files on load...
-if [ -f ~/enhancd/init.sh ]; then
-  source ~/enhancd/init.sh
-else
-  git clone https://github.com/b4b4r07/enhancd ~/enhancd
-  source ~/enhancd/init.sh
-fi
-
-source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
-source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+__async_vcs_start
 #-------------------------------------------------------------------------------
 #   LOCAL SCRIPTS
 #-------------------------------------------------------------------------------
