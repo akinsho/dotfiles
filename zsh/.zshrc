@@ -177,7 +177,7 @@ function +vi-git-untracked() {
 }
 
 function +vi-git-stash() {
-  local stash_icon="●" # 📦 $
+  local stash_icon="$" # 📦 ●
   emulate -L zsh
   if __in_git; then
     if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
@@ -209,12 +209,13 @@ function set-prompt() {
   # directory(branch)                     10:51
   # ❯  █
   #
+  # icon options =  ❯   
+  #
   # Top left:     directory(gitbranch) ● ●
   # Top right:    Time
-  # icon options =  ❯   
-  # Bottom left:  ❯
+  # Bottom left:  ➜
   # Bottom right: empty
-  local dots_prompt_icon="%F{green}❯ %f"
+  local dots_prompt_icon="%F{green}➜ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
   local execution_time="%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f "
 
