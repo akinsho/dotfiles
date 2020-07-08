@@ -246,7 +246,7 @@ augroup CustomWindowSettings
   "
   "
   " TODO split this logic out into a terminal toggle local plugin
-  autocmd BufEnter * call terminal#check_last_window()
+  autocmd BufEnter term://*toggleterm call terminal#check_last_window()
   autocmd TermOpen term://*toggleterm call terminal#restore_terminal()
 
   autocmd TermOpen,ColorScheme,WinNew,TermEnter term://*zsh*,term://*bash*
