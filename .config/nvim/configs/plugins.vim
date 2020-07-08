@@ -33,7 +33,7 @@ endif
 
 " SOURCE: https://github.com/junegunn/vim-plug/pull/875
 " Check if the files is in the plugs map but also IMPORTANTLY
-" that it is in the runtimepath
+" that it is in the runtime path
 function PluginLoaded(plugin_name) abort
   return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
 endfunction
@@ -86,14 +86,7 @@ Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'AndrewRadev/tagalong.vim', {'for': [
-      \ 'typescriptreact',
-      \ 'javascriptreact',
-      \ 'reason',
-      \ 'html',
-      \ 'typescript',
-      \ 'javascript'
-      \ ]}
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'stsewd/gx-extended.vim'
 "--------------------------------------------------------------------------------
 " Optional plugins
@@ -137,6 +130,7 @@ Plug 'sheerun/vim-polyglot'
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/conflict-marker.vim'
+Plug 'kdheepak/lazygit.nvim'
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
 "--------------------------------------------------------------------------------

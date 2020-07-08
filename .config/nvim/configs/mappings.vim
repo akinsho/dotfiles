@@ -5,38 +5,47 @@
 "Terminal {{{
 ""---------------------------------------------------------------------------//
 " Terminal settings
-if has('nvim')
-  "Add neovim terminal escape with ESC mapping
-  tnoremap <esc> <C-\><C-n>
-  tnoremap jk <C-\><C-n>
-  tnoremap <C-h> <C-\><C-n><C-W>h
-  tnoremap <C-j> <C-\><C-n><C-W>j
-  tnoremap <C-k> <C-\><C-n><C-W>k
-  tnoremap <C-l> <C-\><C-n><C-W>l
-  " TODO: this mapping should delete the buffer and close the window
-  tnoremap <silent><leader>x <c-\><c-n><Cmd>bp! <BAR> bd! #<CR>
-  tnoremap <silent>]t <C-\><C-n><Cmd>tablast<CR>
-  tnoremap <silent>[t <C-\><C-n><Cmd>tabnext<CR>
-  tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
-  tnoremap <silent><leader><Tab> <C-\><C-n><Cmd>bnext<cr>
-  nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
-  nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
-  nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
-  nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
-  nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
+function s:add_terminal_mappings()
+  if &filetype ==# '' || &filetype ==# 'toggleterm'
+    if has('nvim')
+      "Add neovim terminal escape with ESC mapping
+      tnoremap <esc> <C-\><C-n>
+      tnoremap jk <C-\><C-n>
+      tnoremap <C-h> <C-\><C-n><C-W>h
+      tnoremap <C-j> <C-\><C-n><C-W>j
+      tnoremap <C-k> <C-\><C-n><C-W>k
+      tnoremap <C-l> <C-\><C-n><C-W>l
+      tnoremap <silent>]t <C-\><C-n><Cmd>tablast<CR>
+      tnoremap <silent>[t <C-\><C-n><Cmd>tabnext<CR>
+      tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
+      tnoremap <silent><leader><Tab> <C-\><C-n><Cmd>bnext<cr>
+      tnoremap <silent><c-\> <C-\><C-n>:call terminal#toggle(10)<CR>
+    else
+      tmap <C-h> <C-W>h
+      tmap <C-j> <C-W>j
+      tmap <C-k> <C-W>k
+      tmap <C-l> <C-W>l
+      tmap <C-x> <C-W><silent>q!<CR>
+    endif
+  endif
+endfunction
 
-  nnoremap <silent><c-\> :call terminal#toggle(10)<CR>
-  inoremap <silent><c-\> <Esc>:call terminal#toggle(10)<CR>
-  tnoremap <silent><c-\> <C-\><C-n>:call terminal#toggle(10)<CR>
-  nnoremap <silent><localleader>gp :call terminal#exec("git push", 12)<CR>
-  nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>
-  nnoremap <silent><localleader>ht :call terminal#exec("htop", 40)<CR>
-else
-  tmap <C-h> <C-W>h
-  tmap <C-j> <C-W>j
-  tmap <C-k> <C-W>k
-  tmap <C-l> <C-W>l
-  tmap <C-x> <C-W><silent>q!<CR>
+augroup AddTerminalMappings
+  autocmd!
+  autocmd TermEnter call s:add_terminal_mappings()
+augroup END
+
+if has('nvim')
+    nnoremap <silent><c-\> :call terminal#toggle(10)<CR>
+    inoremap <silent><c-\> <Esc>:call terminal#toggle(10)<CR>
+    nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
+    nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
+    nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
+    nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
+    nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
+    nnoremap <silent><localleader>gp :call terminal#exec("git push", 12)<CR>
+    nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>
+    nnoremap <silent><localleader>ht :call terminal#exec("htop", 40)<CR>
 endif
 "}}}
 
