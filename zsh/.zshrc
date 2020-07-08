@@ -219,7 +219,7 @@ function set-prompt() {
   local dots_prompt_failure_icon="%F{red}✘ %f"
   local execution_time="%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f "
 
-  local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}loading…%{$__DOTS[ITALIC_OFF]%}%f)"
+  local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}…%{$__DOTS[ITALIC_OFF]%}%f)"
   local top_left="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
   local top_right="${vim_mode}${execution_time}%F{240}%*%f"
   local bottom_left="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
@@ -300,7 +300,7 @@ __async_vcs_start() {
     exec {__prompt_async_fd}<&-
     zle -F $__prompt_async_fd
   fi
-  # fork a process to fetch the git status and open a pipe to read from it
+  # fork a process to fetch the vcs status and open a pipe to read from it
   exec {__prompt_async_fd}< <(
     __async_vcs_info $PWD
   )
@@ -319,6 +319,12 @@ __async_vcs_info() {
 __async_vcs_info_done() {
   # Read everything from the fd
   _git_status_prompt="$(<&$1)"
+  # check if vcs info is returned, if not set the prompt
+  # to a non visible character to clear the placeholder
+  # NOTE: -z returns true if a string value has a length of 0
+  if [[ -z $_git_status_prompt ]]; then
+    _git_status_prompt=" "
+  fi
   # remove the handler and close the file descriptor
   zle -F "$1"
   exec {1}<&-

@@ -64,10 +64,12 @@ fi
 
 # Check if main exists and use instead of master
 function git_main_branch() {
-  if [[ -n "$(git branch --list main)" ]]; then
-    echo main
-  else
-    echo master
+  if __in_git; then
+    if [[ -n "$(git branch --list main)" ]]; then
+      echo main
+    else
+      echo master
+    fi
   fi
 }
 
@@ -92,11 +94,13 @@ alias gfa='git fetch --all --prune'
 alias gfo='git fetch origin'
 alias gm='git merge'
 alias gma='git merge --abort'
-alias gmom="git merge origin/$(git_main_branch)"
+# alias gmom="git merge origin/$(git_main_branch)"
+alias gmom="git merge origin/master"
 alias gp='git push'
 alias gbda='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*($(git_main_branch)|development|develop|devel|dev)\s*$)" | command xargs -n 1 git branch -d'
 alias gcl='git clone --recurse-submodules'
 alias gl='git pull'
-alias gcm="git checkout $(git_main_branch)"
+# alias gcm="git checkout $(git_main_branch)"
+alias gcm="git checkout master"
 alias gstp="git stash pop"
 alias gsts="git stash show -p"

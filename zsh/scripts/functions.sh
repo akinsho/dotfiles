@@ -68,7 +68,7 @@ function quickie() {
   git add .;git add -u :/;git commit -m "$@";
 }
 
-quickpush() {
+function quickpush() {
   git add .
   git commit -m "$@"
   echo "🍏 commit message: [$@]"
