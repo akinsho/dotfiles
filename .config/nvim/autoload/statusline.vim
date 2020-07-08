@@ -64,6 +64,7 @@ let s:filetype_map = {
       \ 'undotree' : 'UndoTree ⮌',
       \ 'coc-explorer' : 'Coc Explorer',
       \ 'LuaTree' : 'Lua Tree',
+      \ 'toggleterm': '  Terminal('.fnamemodify($SHELL, ':t').')'
       \ }
 
 let s:filename_map = {
@@ -85,7 +86,7 @@ function! statusline#get_dir() abort
 endfunction
 
 function! statusline#filename(...) abort
-  if s:is_bt('terminal')
+  if s:is_bt('terminal') && !s:is_ft('toggleterm')
     return '  '. expand('%:t')
   endif
 

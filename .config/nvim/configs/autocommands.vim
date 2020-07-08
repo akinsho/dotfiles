@@ -232,7 +232,7 @@ augroup END
 " TODO make sure this doesn't highlight FZF buffers
 function! s:terminal_setup()
   if &buftype ==# 'terminal' && &ft == ''
-    setlocal nonumber norelativenumber
+    setlocal nonumber norelativenumber nocursorline
     lua require"color_helpers".darken_terminal(-30)
   endif
 endfunction

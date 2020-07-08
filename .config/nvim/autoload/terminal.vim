@@ -1,17 +1,15 @@
 " CREDIT: https://gist.github.com/ram535/b1b7af6cd7769ec0481eb2eed549ea23
 " With this function you can reuse the same terminal in neovim.
 " You can toggle the terminal and also send a command to the same terminal.
+"
+" NOTE: We have to use Neovim's naming scheme for terminal buffers as otherwise these
+" will not be correctly restored when loading a session
 
 let s:terminal_window = -1
 " FIXME this is can become invalid if this file is sourced as it will
 " be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
-let s:terminal_name = 'terminal('.fnamemodify(&shell, ':t').')'
-" Assuming this file is sourced then a file with this terminal name
-" will still exist in vim causing the call to file {name} to fail
-" to work around this instead we assign the buffer ID to the result
-" of searching for any buffer with a matching name
-let s:terminal_buffer = bufnr(s:terminal_name)
+let s:terminal_buffer = -1
 let s:terminal_dir = getcwd()
 
 function s:set_working_dir() abort
@@ -51,10 +49,12 @@ function! terminal#open(...) abort
     wincmd J
     execute "resize " . size
     setlocal winfixheight
-    let s:terminal_job_id = termopen($SHELL, { 'detach': 1 })
+    " Namespace terminals opened via this functions so we can retrieve them later
+    " inspired by: https://github.com/kassio/neoterm/commit/64e861a410749fd637ef75fe080a67a95cecb377
+    let s:terminal_job_id = termopen($SHELL.';#toggleterm', { 'detach': 1 })
+    " Set a unique filetype for these terminal so they can be targeted specifically
+    setfiletype toggleterm
 
-    " Change the name of the buffer to the terminal name
-    execute 'silent file '. s:terminal_name
     " Gets the id of the terminal window
     let s:terminal_window = win_getid()
     let s:terminal_buffer = bufnr('%')
@@ -69,7 +69,7 @@ function! terminal#open(...) abort
       wincmd J
       execute "resize " . size
       setlocal winfixheight
-      execute "keepalt buffer " . s:terminal_name
+      execute "keepalt buffer " . s:terminal_buffer
       call s:set_working_dir()
       " Gets the id of the terminal window
       let s:terminal_window = win_getid()
@@ -104,7 +104,7 @@ function! terminal#exec(cmd, ...) abort
 
   " clear current input
   call chansend(s:terminal_job_id, "clear\n")
-  " run cmd
+  " run command
   call chansend(s:terminal_job_id, a:cmd . "\n")
   normal! G
   wincmd p
