@@ -264,12 +264,8 @@ augroup Utilities "{{{1
   " close FZF in neovim with <ESC>
   autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
 
-  autocmd TermOpen,TermEnter * startinsert!
-  autocmd TermLeave * stopinsert!
-  " The above autocommands don't cover leaving an already open terminal buffer
-  " which is in insert mode
-  autocmd BufWinLeave * if &buftype ==# 'terminal' | stopinsert! | endif
-  autocmd BufWinEnter * if &buftype ==# 'terminal' | startinsert! | endif
+  autocmd BufLeave * if &buftype ==# 'terminal' | stopinsert! | endif
+  autocmd BufEnter * if &buftype ==# 'terminal' | startinsert! | endif
 
   " Surprisingly enough vim has added this to defaults.vim in vim8 but this
   " is not standard behaviour still in neovim
