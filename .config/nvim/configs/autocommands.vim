@@ -225,8 +225,8 @@ endif
 
 augroup Cursorline
   autocmd!
-  autocmd WinEnter,BufWinEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
-  autocmd WinLeave,BufWinLeave * setlocal nocursorline
+  autocmd BufEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
+  autocmd BufLeave * setlocal nocursorline
 augroup END
 
 " TODO make sure this doesn't highlight FZF buffers
