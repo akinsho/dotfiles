@@ -18,8 +18,7 @@ let s:terminal_buffer = -1
 let s:terminal_dir = getcwd()
 
 " If there is a matching buffer toggle the terminal
-" this is primarily for restoring terminals from
-" post loading a vim session
+" this is primarily for restoring terminals post loading a vim session
 function terminal#restore_terminal() abort
   let s:terminal_buffer = bufnr('')
   let s:terminal_job_id = b:terminal_job_id

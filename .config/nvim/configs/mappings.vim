@@ -198,8 +198,8 @@ nnoremap <silent> <leader>li :call ToggleList("Location List", 'l')<CR>
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
-" If im not using a plugin then use homegrown mappings
-if !has_key(g:plugs, 'lexima.vim')
+" If I'm not using a plugin then use homegrown mappings
+if !PluginLoaded('lexima.vim')
   inoremap ( ()<left>
   inoremap { {}<left>
   inoremap ` ``<left>
