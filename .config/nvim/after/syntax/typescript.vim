@@ -15,5 +15,5 @@
 " "~/.vim/after/syntax/{filetype.vim}" filetype plugin rather than listed here.
 " See also this explanatory StackOverflow answer:
 "     https://vi.stackexchange.com/a/4003/16249
-syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
-syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>'  contains=@NoSpell
+syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell containedin=typescript.*Comment,typescript.*String
+syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' transparent contains=@NoSpell containedin=typescript.*Comment,typescript.*String
