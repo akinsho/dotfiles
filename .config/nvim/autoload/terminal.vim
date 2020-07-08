@@ -4,6 +4,10 @@
 "
 " NOTE: We have to use Neovim's naming scheme for terminal buffers as otherwise these
 " will not be correctly restored when loading a session
+" When the terminal starts, the buffer contents are updated and the buffer is
+" named in the form of `term://{cwd}//{pid}:{cmd}`. This naming scheme is used
+" by |:mksession| to restore a terminal buffer (by restarting the {cmd}).
+" SEE: help terminal-start
 
 let s:default_size = 12
 let s:terminal_window = -1

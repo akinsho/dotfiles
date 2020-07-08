@@ -9,17 +9,16 @@ function s:add_terminal_mappings()
   if &filetype ==# '' || &filetype ==# 'toggleterm'
     if has('nvim')
       "Add neovim terminal escape with ESC mapping
-      tnoremap <esc> <C-\><C-n>
-      tnoremap jk <C-\><C-n>
-      tnoremap <C-h> <C-\><C-n><C-W>h
-      tnoremap <C-j> <C-\><C-n><C-W>j
-      tnoremap <C-k> <C-\><C-n><C-W>k
-      tnoremap <C-l> <C-\><C-n><C-W>l
-      tnoremap <silent>]t <C-\><C-n><Cmd>tablast<CR>
-      tnoremap <silent>[t <C-\><C-n><Cmd>tabnext<CR>
-      tnoremap <silent><S-Tab> <C-\><C-n><Cmd>bprev<CR>
-      tnoremap <silent><leader><Tab> <C-\><C-n><Cmd>bnext<cr>
-      tnoremap <silent><c-\> <C-\><C-n>:call terminal#toggle(10)<CR>
+      tnoremap <buffer><esc> <C-\><C-n>
+      tnoremap <buffer>jk <C-\><C-n>
+      tnoremap <buffer><C-h> <C-\><C-n><C-W>h
+      tnoremap <buffer><C-j> <C-\><C-n><C-W>j
+      tnoremap <buffer><C-k> <C-\><C-n><C-W>k
+      tnoremap <buffer><C-l> <C-\><C-n><C-W>l
+      tnoremap <buffer><silent>]t <C-\><C-n>:tablast<CR>
+      tnoremap <buffer><silent>[t <C-\><C-n>:tabnext<CR>
+      tnoremap <buffer><silent><S-Tab> <C-\><C-n>:bprev<CR>
+      tnoremap <buffer><silent><leader><Tab> <C-\><C-n>:close \| :bnext<cr>
     else
       tmap <C-h> <C-W>h
       tmap <C-j> <C-W>j
@@ -32,20 +31,15 @@ endfunction
 
 augroup AddTerminalMappings
   autocmd!
-  autocmd TermEnter call s:add_terminal_mappings()
+  autocmd TermEnter,BufEnter term://* call s:add_terminal_mappings()
 augroup END
 
 if has('nvim')
-    nnoremap <silent><c-\> :call terminal#toggle(10)<CR>
-    inoremap <silent><c-\> <Esc>:call terminal#toggle(10)<CR>
-    nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
-    nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
-    nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
-    nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
-    nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
-    nnoremap <silent><localleader>gp :call terminal#exec("git push", 12)<CR>
-    nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>
-    nnoremap <silent><localleader>ht :call terminal#exec("htop", 40)<CR>
+  nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
+  nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
+  nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
+  nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
+  nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
 endif
 "}}}
 
