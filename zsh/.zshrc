@@ -201,6 +201,7 @@ autoload -Uz _fill_line && _fill_line
 # %F{a_color} - color specifier
 # %B..%b - bold
 # %* - reset highlight
+# %j - background jobs
 #
 # Requires: prompt_percent and no_prompt_subst.
 function set-prompt() {
@@ -220,7 +221,7 @@ function set-prompt() {
   local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}loading…%{$__DOTS[ITALIC_OFF]%}%f)"
   local top_left="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
   local top_right="${vim_mode}${execution_time}%F{240}%*%f"
-  local bottom_left="%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
+  local bottom_left="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
 
   PROMPT="$(_fill_line "$top_left" "$top_right")"$'\n'$bottom_left
 }
