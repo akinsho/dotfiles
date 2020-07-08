@@ -113,6 +113,88 @@ cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 command! -nargs=1 AutoResize call utils#auto_resize(<args>)
 nnoremap <leader>ar :AutoResize 70<CR>
 
+"--------------------------------------------------------------------------------
+" Grep Operator
+"--------------------------------------------------------------------------------
+function! s:GrepOperator(type)
+  let l:saved_unnamed_register = @@
+
+  if a:type ==# 'v'
+    execute 'normal! `<v`>y'
+  elseif a:type ==# 'char'
+    execute 'normal! `[v`]y'
+  else
+    return
+  endif
+  "Use Winnr to check if the cursor has moved it if has restore it
+  let l:winnr = winnr()
+  silent execute 'grep! ' . shellescape(@@) . ' .'
+  let @@ = l:saved_unnamed_register
+  if winnr() != l:winnr
+    wincmd p
+  endif
+endfunction
+
+nnoremap <silent><leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
+vnoremap <silent><leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
+"--------------------------------------------------------------------------------
+" LineBreakAt
+"--------------------------------------------------------------------------------
+" Insert a newline after each specified string (or before if use '!').
+" If no arguments, use previous search.
+command! -bang -nargs=* -range LineBreakAt <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
+function! LineBreakAt(bang, ...) range
+  let save_search = @/
+  if empty(a:bang)
+    let before = ''
+    let after = '\ze.'
+    let repl = '&\r'
+  else
+    let before = '.\zs'
+    let after = ''
+    let repl = '\r&'
+  endif
+  let pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~[')")
+  let find = empty(pat_list) ? @/ : join(pat_list, '\|')
+  let find = before . '\%(' . find . '\)' . after
+  " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
+  execute a:firstline . ',' . a:lastline . 's/'. find . '/' . repl . '/ge'
+  let @/ = save_search
+endfunction
+
+"--------------------------------------------------------------------------------
+" Toggle list
+"--------------------------------------------------------------------------------
+function! s:get_buffer_list()
+  redir => l:buflist
+  silent! ls!
+  redir END
+  return l:buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let l:buflist = s:get_buffer_list()
+  for l:bufnum in map(filter(split(l:buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(l:bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx ==# 'l' && len(getloclist(0)) ==# 0
+    echohl ErrorMsg
+    echo 'Location List is Empty.'
+    return
+  endif
+  let l:winnr = winnr()
+  exec(a:pfx.'open')
+  if winnr() != l:winnr
+    wincmd p
+  endif
+endfunction
+
+
+nnoremap <silent> <leader>ls :call ToggleList("Quickfix List", 'c')<CR>
+nnoremap <silent> <leader>li :call ToggleList("Location List", 'l')<CR>
 "---------------------------------------------------------------------------//
 " Auto Closing Pairs
 "---------------------------------------------------------------------------//
