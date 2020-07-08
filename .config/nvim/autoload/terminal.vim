@@ -5,12 +5,25 @@
 " NOTE: We have to use Neovim's naming scheme for terminal buffers as otherwise these
 " will not be correctly restored when loading a session
 
+let s:default_size = 12
 let s:terminal_window = -1
 " FIXME this is can become invalid if this file is sourced as it will
 " be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
 let s:terminal_buffer = -1
 let s:terminal_dir = getcwd()
+
+" If there is a matching buffer toggle the terminal
+" this is primarily for restoring terminals from
+" post loading a vim session
+function terminal#restore_terminal() abort
+  let s:terminal_buffer = bufnr('')
+  let s:terminal_job_id = b:terminal_job_id
+  let s:terminal_window = win_getid()
+  execute "resize " . s:default_size
+  setlocal winfixheight winfixwidth nobuflisted
+  setfiletype toggleterm
+endfunction
 
 function s:set_working_dir() abort
   let working_dir = getcwd()
@@ -39,7 +52,7 @@ function s:check_for_existing_window() abort
 endfunction
 
 function! terminal#open(...) abort
-  let size = get(a:, '1', 10)
+  let size = get(a:, '1', s:default_size)
   " Check if buffer exists, if not create a window and a buffer
   if !bufexists(s:terminal_buffer)
     " Creates a window call monkey_terminal
@@ -48,7 +61,9 @@ function! terminal#open(...) abort
     " Moves to the window the right the current one
     wincmd J
     execute "resize " . size
-    setlocal winfixheight
+    " The buffer of the terminal won't appear in the list of the buffers
+    " when calling :buffers command
+    setlocal winfixheight winfixwidth  nobuflisted
     " Namespace terminals opened via this functions so we can retrieve them later
     " inspired by: https://github.com/kassio/neoterm/commit/64e861a410749fd637ef75fe080a67a95cecb377
     let s:terminal_job_id = termopen($SHELL.';#toggleterm', { 'detach': 1 })
@@ -58,17 +73,13 @@ function! terminal#open(...) abort
     " Gets the id of the terminal window
     let s:terminal_window = win_getid()
     let s:terminal_buffer = bufnr('%')
-
-    " The buffer of the terminal won't appear in the list of the buffers
-    " when calling :buffers command
-    set nobuflisted
   else
     if !s:go_to_winid(s:terminal_window)
       sp
       " Moves to the window below the current one
       wincmd J
       execute "resize " . size
-      setlocal winfixheight
+      setlocal winfixheight winfixwidth
       execute "keepalt buffer " . s:terminal_buffer
       call s:set_working_dir()
       " Gets the id of the terminal window
@@ -111,7 +122,7 @@ function! terminal#exec(cmd, ...) abort
   stopinsert!
 endfunction
 
-function s:check_last_window()
+function terminal#check_last_window()
   if winnr('$') == 1 && winbufnr(0) == s:terminal_buffer
     " Reset the window id so there are no hanging
     " references to the terminal window
@@ -119,8 +130,3 @@ function s:check_last_window()
     execute 'keepalt bnext'
   endif
 endfunction
-
-augroup AutocloseTerminal
-  autocmd!
-  au! BufEnter * call s:check_last_window()
-augroup END
