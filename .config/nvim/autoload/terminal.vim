@@ -8,7 +8,7 @@ let s:terminal_window = -1
 let s:terminal_job_id = -1
 let s:terminal_name = 'terminal('.fnamemodify(&shell, ':t').')'
 " Assuming this file is sourced then a file with this terminal name
-" will still exist in vim causing the calle to file {name} to fail
+" will still exist in vim causing the call to file {name} to fail
 " to work around this instead we assign the buffer ID to the result
 " of searching for any buffer with a matching name
 let s:terminal_buffer = bufnr(s:terminal_name)
