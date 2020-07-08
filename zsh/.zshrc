@@ -287,6 +287,8 @@ function __auto-ls-after-cd() {
 }
 
 # Async prompt in Zsh
+# *fd - file descriptor
+#
 # https://www.zsh.org/mla/users/2018/msg00424.html
 # https://github.com/sorin-ionescu/prezto/pull/1805/files#diff-6a24e7644c4c0969110e86872283ec82L79
 # https://github.com/zsh-users/zsh-autosuggestions/pull/338/files
@@ -296,11 +298,12 @@ __async_vcs_start() {
     exec {__prompt_async_fd}<&-
     zle -F $__prompt_async_fd
   fi
-  # fork a process to fetch the git status
+  # fork a process to fetch the git status and open a pipe to read from it
   exec {__prompt_async_fd}< <(
     __async_vcs_info $PWD
   )
 
+  # When the fd is readable, call the response handler
   zle -F "$__prompt_async_fd" __async_vcs_info_done
 }
 
@@ -310,7 +313,9 @@ __async_vcs_info() {
   print ${vcs_info_msg_0_}
 }
 
+# Called when new data is ready to be read from the pipe
 __async_vcs_info_done() {
+  # Read everything from the fd
   _git_status_prompt="$(<&$1)"
   # remove the handler and close the file descriptor
   zle -F "$1"
