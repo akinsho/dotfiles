@@ -154,3 +154,5 @@ buftype
 BufRead
 Ctags
 dev
+hardcoded
+zshrc

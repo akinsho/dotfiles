@@ -177,7 +177,7 @@ function +vi-git-untracked() {
 }
 
 function +vi-git-stash() {
-  local stash_icon="$" # 📦 ●
+  local stash_icon="" # 📦 ● $
   emulate -L zsh
   if __in_git; then
     if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
@@ -289,6 +289,10 @@ function __auto-ls-after-cd() {
 }
 
 # Async prompt in Zsh
+# Rather than using zpty (a pseudo terminal) under the hood
+# as is the case with zsh-async this method forks a process sends
+# it the command to evaluate which is written to a file descriptor
+#
 # *fd - file descriptor
 #
 # https://www.zsh.org/mla/users/2018/msg00424.html
