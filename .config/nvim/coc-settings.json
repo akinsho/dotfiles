@@ -1,5 +1,6 @@
 {
     // Language specific
+    "eslint.enable": false, // only enable eslint per project
     "python.jediEnabled": false,
     "html.autoClosingTags": true,
     "xml.format.splitAttributes": true,
