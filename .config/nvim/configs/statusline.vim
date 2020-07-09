@@ -1,7 +1,3 @@
-if has_key(g:plugs, "lightline.vim")
-  finish
-endif
-
 let s:ro_sym  = ''
 let s:ma_sym  = "✗"
 let s:mod_sym = "◇"
