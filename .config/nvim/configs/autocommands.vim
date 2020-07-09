@@ -237,6 +237,29 @@ function! s:terminal_setup()
   endif
 endfunction
 
+" ----------------------------------------------------------------------------
+" Open FILENAME:LINE:COL
+" ----------------------------------------------------------------------------
+function! s:goto_line()
+  let tokens = split(expand('%'), ':')
+  if len(tokens) <= 1 || !filereadable(tokens[0])
+    return
+  endif
+
+  let file = tokens[0]
+  let rest = map(tokens[1:], 'str2nr(v:val)')
+  let line = get(rest, 0, 1)
+  let col  = get(rest, 1, 1)
+  bd!
+  silent execute 'e' file
+  execute printf('normal! %dG%d|', line, col)
+endfunction
+
+augroup GoToLine
+  au!
+  autocmd! BufRead * nested call s:goto_line()
+augroup END
+
 augroup CustomWindowSettings
   autocmd!
   " TODO: we match specifically against zsh terminals since we are trying
