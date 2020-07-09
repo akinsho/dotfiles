@@ -1,3 +1,6 @@
+if !PluginLoaded('ctrlsf.vim')
+  finish
+endif
 "--------------------------------------------
 " CTRLSF - CTRL-SHIFT-F
 "--------------------------------------------

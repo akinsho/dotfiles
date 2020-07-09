@@ -73,7 +73,6 @@ Plug 'vimwiki/vimwiki', {
       \ }
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
-Plug 'dyng/ctrlsf.vim', {'on': ['CtrlSF', 'CtrlSFOpen', 'CtrlSFToggle']}
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', {
       \ 'do': ':call mdkp#util#install()',

@@ -193,6 +193,9 @@ nmap <silent><leader>rf  <Plug>(coc-refactor)
 " Remap for rename current word
 nmap <silent><leader>rn <Plug>(coc-rename)
 
+" source: https://www.youtube.com/watch?v=q7gr6s8skt0
+nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+
 " Scroll the floating window if open
 nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
@@ -296,6 +299,7 @@ augroup Coc_highlights
   autocmd VimEnter * call <SID>apply_coc_highlights()
   autocmd Colorscheme * call <SID>apply_coc_highlights()
 augroup END
+
 ""---------------------------------------------------------------------------//
 " Formatting
 ""---------------------------------------------------------------------------//
