@@ -11,11 +11,21 @@
 
 let s:default_size = 12
 let s:terminal_window = -1
-" FIXME this is can become invalid if this file is sourced as it will
+" NOTE: this is can become invalid if this file is sourced as it will
 " be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
 let s:terminal_buffer = -1
 let s:terminal_dir = getcwd()
+
+" The arguments to the parent function are passed in as a list
+function s:set_terminal_opts(...) abort
+  let args = get(a:, '1', [])
+  let size = get(args, '1', s:default_size)
+  execute "resize " . size
+  " The buffer of the terminal won't appear in the list of the buffers
+  " when calling :buffers command
+  setlocal winfixheight winfixwidth nobuflisted
+endfunction
 
 " If there is a matching buffer toggle the terminal
 " this is primarily for restoring terminals post loading a vim session
@@ -23,8 +33,7 @@ function terminal#restore_terminal() abort
   let s:terminal_buffer = bufnr('')
   let s:terminal_job_id = b:terminal_job_id
   let s:terminal_window = win_getid()
-  execute "resize " . s:default_size
-  setlocal winfixheight winfixwidth nobuflisted
+  call s:set_terminal_opts()
   setfiletype toggleterm
 endfunction
 
@@ -45,17 +54,7 @@ function! s:go_to_winid(win_id) abort
   return win_getid() == s:terminal_window ? 1 : 0
 endfunction
 
-function s:check_for_existing_window() abort
-  let is_terminal = getbufvar(s:terminal_buffer, "&buftype") ==? 'terminal'
-  if bufexists(s:terminal_buffer) && !is_terminal
-    execute 'bdelete! ' . s:terminal_buffer
-    let s:terminal_buffer = -1
-    let s:terminal_window = -1
-  endif
-endfunction
-
 function! terminal#open(...) abort
-  let size = get(a:, '1', s:default_size)
   " Check if buffer exists, if not create a window and a buffer
   if !bufexists(s:terminal_buffer)
     " Creates a window call monkey_terminal
@@ -63,10 +62,7 @@ function! terminal#open(...) abort
     execute 'lcd '. getcwd()
     " Moves to the window the right the current one
     wincmd J
-    execute "resize " . size
-    " The buffer of the terminal won't appear in the list of the buffers
-    " when calling :buffers command
-    setlocal winfixheight winfixwidth  nobuflisted
+    call s:set_terminal_opts(a:000)
     " Namespace terminals opened via this functions so we can retrieve them later
     " inspired by: https://github.com/kassio/neoterm/commit/64e861a410749fd637ef75fe080a67a95cecb377
     let s:terminal_job_id = termopen($SHELL.';#toggleterm', { 'detach': 1 })
@@ -81,8 +77,7 @@ function! terminal#open(...) abort
       sp
       " Moves to the window below the current one
       wincmd J
-      execute "resize " . size
-      setlocal winfixheight winfixwidth
+      call s:set_terminal_opts(a:000)
       execute "keepalt buffer " . s:terminal_buffer
       call s:set_working_dir()
       " Gets the id of the terminal window
@@ -92,8 +87,6 @@ function! terminal#open(...) abort
 endfunction
 
 function! terminal#toggle(size) abort
-  " Check if there is a lingering buffer from a previous session
-  call s:check_for_existing_window()
   if s:go_to_winid(s:terminal_window)
     call terminal#close()
   else
