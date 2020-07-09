@@ -4,11 +4,8 @@ node_modules
 node
 local
 .DS_Store
-plugged
 *~
 .tern-port
-plug.vim
 .netrwhist
 *.code-workspace
 session/
-plug.vim.old
