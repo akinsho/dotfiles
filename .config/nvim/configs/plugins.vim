@@ -159,7 +159,9 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 " Filetype Plugins {{{1
 "--------------------------------------------------------------------------------
-Plug 'nvim-treesitter/nvim-treesitter'
+if !has('mac')
+  Plug 'nvim-treesitter/nvim-treesitter'
+endif
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "--------------------------------------------------------------------------------
 " Themes  {{{1
