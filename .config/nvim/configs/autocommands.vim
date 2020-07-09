@@ -47,12 +47,14 @@ let g:number_filetype_exclusions = [
       \ 'startify'
       \ ]
 
+" TODO this doesn't seem to work, it's not clear when the buftype is being set
 let g:number_buftype_exclusions = [
       \ 'terminal',
       \ 'nowrite',
       \ 'quickfix',
       \ 'help',
-      \ 'nofile'
+      \ 'nofile',
+      \ 'acwrite'
       \ ]
 
 augroup ToggleRelativeLineNumbers
