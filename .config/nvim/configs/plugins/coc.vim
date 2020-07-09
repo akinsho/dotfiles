@@ -25,7 +25,6 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-actions',
       \ 'coc-go',
-      \ 'coc-bookmark'
       \]
 
 " TODO: Coc pairs is takes half a second to expand
@@ -181,7 +180,7 @@ omap am <Plug>(coc-classobj-a)
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
 " Remap for do code action of current file
 nmap <silent><leader>af  <Plug>(coc-codeaction)
-" Remap for do codeAction of selected region
+" Remap for do code action of selected region
 function! s:coc_actions_from_selected(type) abort
   execute 'CocCommand actions.open ' . a:type
 endfunction

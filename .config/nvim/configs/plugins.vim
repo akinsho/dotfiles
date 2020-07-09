@@ -91,7 +91,7 @@ Plug 'stsewd/gx-extended.vim'
 " Optional plugins
 "--------------------------------------------------------------------------------
 if has('mac')
-  " We're not in kansas(linux) anymore
+  " We're not in Kansas(Linux) anymore
   Plug 'embear/vim-localvimrc'
 endif
 
@@ -191,7 +191,7 @@ else
 endif
 
 call plug#end()
-if has('patch-7.4.1649') && !has('nvim') " NeoVim loads matchit by default
+if has('patch-7.4.1649') && !has('nvim') " Neovim loads matchit by default
   packadd! matchit
 endif
 
@@ -204,7 +204,7 @@ let g:loaded_zipPlugin         = 1
 let g:loaded_rrhelper          = 1
 
 " Lazy load plugins like vim fat finger
-" because it otherwise takes 80ms ie. the slowest
+" because it otherwise takes 80ms i.e. the slowest
 " thing to load blocking vim startup time
 "
 " NOTE: these can't be lazy loaded using vim-plug's mechanism

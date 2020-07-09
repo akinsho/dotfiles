@@ -72,38 +72,13 @@ endif
 " Border style (rounded / sharp / horizontal)
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
 
-function! Fzf_checkout_branch(b)
-  "First element is the command e.g ctrl-x, second element is the selected branch
-  let l:str = split(a:b[1], '* ')
-  let l:branch = get(l:str, 1, '')
-  if exists('g:loaded_fugitive')
-    let cmd = get({ 'ctrl-x': 'Git branch -d '}, a:b[0], 'Git checkout ')
-    try
-      execute cmd . a:b[1]
-    catch
-      echohl WarningMsg
-      echom v:exception
-      echohl None
-    endtry
-  endif
-endfunction
-
-let branch_options = { 'source': '( git branch -a )', 'sink*': function('Fzf_checkout_branch') }
-let s:branch_log =
-      \'--reverse --expect=ctrl-x '.
-      \'--preview "(git log --color=always --graph --abbrev-commit --decorate  --first-parent -- {})"'
-
-" Home made git branch functionality
-command! Branches call fzf#run(fzf#wrap('Branches',
-      \ extend(branch_options, { 'options': s:branch_log  })))
-
 command! -bang -nargs=* Find call fzf#vim#grep(
       \ 'rg --column --line-number --no-heading'.
       \ ' --fixed-strings --ignore-case --no-ignore --hidden'.
       \ ' --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0
       \ )
 
-" FIXME: this includes git exluded files
+" FIXME: this includes git excluded files
 command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
