@@ -231,12 +231,9 @@ augroup END
 
 " TODO make sure this doesn't highlight FZF buffers
 function! s:terminal_setup()
-  if &buftype ==# 'terminal'
-    setlocal nonumber norelativenumber nocursorline
-    if &filetype ==# '' || &filetype ==# 'toggleterm'
+  if &buftype ==# 'terminal'&& (&filetype ==# '' || &filetype ==# 'toggleterm')
       lua require"color_helpers".darken_terminal(-30)
     endif
-  endif
 endfunction
 
 " ----------------------------------------------------------------------------
@@ -269,6 +266,8 @@ augroup CustomWindowSettings
   " find an autocommand pattern to exclude fzf explicitly term://*fzf*
   " SEE: https://github.com/junegunn/fzf/issues/576
 
+  " These overrides should apply to all buffers
+  autocmd TermOpen term://* setlocal nonumber norelativenumber nocursorline
   autocmd TermOpen,ColorScheme,WinNew,TermEnter term://*zsh*,term://*bash*
         \ call s:terminal_setup()
   " on BufRead the name of the toggle-able terminal will have changed
