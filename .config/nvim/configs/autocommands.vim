@@ -43,7 +43,8 @@ let g:number_filetype_exclusions = [
       \ 'coc-explorer',
       \ 'coc-list',
       \ 'list',
-      \ 'LuaTree'
+      \ 'LuaTree',
+      \ 'startify'
       \ ]
 
 let g:number_buftype_exclusions = [
