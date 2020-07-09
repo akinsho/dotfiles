@@ -324,7 +324,7 @@ if has('virtualedit')
 endif
 " Add dictionary to vim's autocompletion
 set complete+=k
-" Dont use included files for completion
+" Don't use included files for completion
 set complete-=i
 if !has('nvim')
   set display+=lastline

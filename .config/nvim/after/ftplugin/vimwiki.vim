@@ -1,3 +1,4 @@
 setlocal nonumber norelativenumber colorcolumn=
 setlocal concealcursor=
-highlight default link VimwikiLink URIHighlight
+
+highlight VimwikiLink guifg=#61AFEF gui=underline,italic,bold

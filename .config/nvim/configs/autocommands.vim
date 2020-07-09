@@ -86,7 +86,7 @@ function! s:smart_close()
   endif
 endfunction
 
-" SmartClose {{{
+" Smart Close {{{
 augroup SmartClose
   au!
   " Auto open grep quickfix window
