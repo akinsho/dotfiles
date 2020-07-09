@@ -8,6 +8,40 @@
 " named in the form of `term://{cwd}//{pid}:{cmd}`. This naming scheme is used
 " by |:mksession| to restore a terminal buffer (by restarting the {cmd}).
 " SEE: help terminal-start
+"
+"----------------------------------------------------------------------
+" internal utils
+"----------------------------------------------------------------------
+" returns nearest parent directory contains one of the markers
+function! s:find_root(name, markers, strict)
+  let name = fnamemodify((a:name != '')? a:name : bufname(), ':p')
+  let finding = ''
+  " iterate all markers
+  for marker in a:markers
+    if marker != ''
+      " search as a file
+      let x = findfile(marker, name . '/;')
+      let x = (x == '')? '' : fnamemodify(x, ':p:h')
+      " search as a directory
+      let y = finddir(marker, name . '/;')
+      let y = (y == '')? '' : fnamemodify(y, ':p:h:h')
+      " which one is the nearest directory ?
+      let z = (strchars(x) > strchars(y))? x : y
+      " keep the nearest one in finding
+      let finding = (strchars(z) > strchars(finding))? z : finding
+    endif
+  endfor
+  if finding == ''
+    return (a:strict == 0)? fnamemodify(name, ':h') : ''
+  endif
+  return fnamemodify(finding, ':p')
+endfunction
+
+" returns project root based on vim's current directory
+function! s:project_root()
+  let name = getcwd()
+  return s:find_root(name, g:terminal_rootmarkers, 0)
+endfunction
 
 let s:default_size = 12
 let s:terminal_window = -1
@@ -28,12 +62,15 @@ function terminal#restore_terminal() abort
   setfiletype toggleterm
 endfunction
 
+" Set the working directory to the project root
+" TODO consider replacing the current terminal
+" with one that is open in the correct directory
 function s:set_working_dir() abort
-  let working_dir = getcwd()
-  if s:terminal_dir !=# working_dir
-    call chansend(s:terminal_job_id, "cd ". working_dir ."\n")
+  let project_root = s:project_root()
+  if s:terminal_dir !=# project_root
+    call chansend(s:terminal_job_id, "cd ". project_root ."\n")
     call chansend(s:terminal_job_id, "clear\n")
-    let s:terminal_dir = working_dir
+    let s:terminal_dir = project_root
   endif
 endfunction
 

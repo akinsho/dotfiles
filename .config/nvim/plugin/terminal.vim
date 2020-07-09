@@ -1,5 +1,8 @@
 " Plugin file for terminal.vim
 " see: autoload/terminal.vim for more details
+
+let g:terminal_rootmarkers = ['.git', '.svn', '.hg']
+
 augroup ToggleTerminal
   autocmd!
   autocmd BufEnter term://*toggleterm call terminal#check_last_window()
