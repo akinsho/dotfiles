@@ -11,7 +11,7 @@
 
 let s:default_size = 12
 let s:terminal_window = -1
-" FIXME this is can become invalid if this file is sourced as it will
+" NOTE: this is can become invalid if this file is sourced as it will
 " be reset to -1 so subsequent exec calls will fail
 let s:terminal_job_id = -1
 let s:terminal_buffer = -1
@@ -43,15 +43,6 @@ endfunction
 function! s:go_to_winid(win_id) abort
   keepalt call win_gotoid(a:win_id)
   return win_getid() == s:terminal_window ? 1 : 0
-endfunction
-
-function s:check_for_existing_window() abort
-  let is_terminal = getbufvar(s:terminal_buffer, "&buftype") ==? 'terminal'
-  if bufexists(s:terminal_buffer) && !is_terminal
-    execute 'bdelete! ' . s:terminal_buffer
-    let s:terminal_buffer = -1
-    let s:terminal_window = -1
-  endif
 endfunction
 
 function! terminal#open(...) abort
@@ -92,8 +83,6 @@ function! terminal#open(...) abort
 endfunction
 
 function! terminal#toggle(size) abort
-  " Check if there is a lingering buffer from a previous session
-  call s:check_for_existing_window()
   if s:go_to_winid(s:terminal_window)
     call terminal#close()
   else
@@ -115,7 +104,6 @@ function! terminal#exec(cmd, ...) abort
   if !s:go_to_winid(s:terminal_window)
     call terminal#open(size)
   endif
-
   " clear current input
   call chansend(s:terminal_job_id, "clear\n")
   " run command
