@@ -181,7 +181,7 @@ Plug 'joshdick/onedark.vim' ", { 'branch': 'dartHighlighting' }
 " Personal plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
-  Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'regular-tab-sizes' }
+  Plug 'Akin909/nvim-bufferline.lua'
   if !has('mac')
     " Plug '~/Desktop/Coding/nvim-bufferline.lua'
   endif
