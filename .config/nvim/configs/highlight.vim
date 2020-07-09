@@ -25,8 +25,7 @@ function! ApplyUserHighlights() abort
     " Define highlight for URIs e.g. http://stackoverflow.com
     " this is used in the syntax after files for highlighting URIs in comments
     let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
-    let s:special_fg = synIDattr(hlID('Special'), 'fg')
-    execute 'highlight URIHighlight guisp='.s:special_fg.' gui=underline,italic guifg='.s:special_fg
+    execute 'highlight URIHighlight guisp='.s:comment_fg.' gui=underline,italic guifg='.s:comment_fg
   endif
 
   highlight Todo gui=bold
