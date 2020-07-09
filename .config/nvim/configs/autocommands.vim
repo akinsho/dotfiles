@@ -35,52 +35,36 @@ augroup vimrc-incsearch-highlight
   endif
 augroup END
 
- let s:number_filetype_exclusions = ['vim-plug', 'git', 'toggleterm', 'fugitive']
- let s:number_buftype_exclusions = ['terminal', 'nowrite']
-" Blacklist certain plugins and buffer types
-function! s:is_blacklisted()
-  for ft in s:number_buftype_exclusions
-    if &ft =~ ft
-      return 1
-    endif
-  endfor
+let g:number_filetype_exclusions = [
+      \ 'vim-plug',
+      \ 'git',
+      \ 'toggleterm',
+      \ 'fugitive',
+      \ 'coc-explorer',
+      \ 'coc-list',
+      \ 'list',
+      \ 'LuaTree'
+      \ ]
 
-  for buftype in s:number_buftype_exclusions
-    if &buftype =~ buftype
-      return 1
-    endif
-  endfor
-  return 0
-endfunction
+let g:number_buftype_exclusions = [
+      \ 'terminal',
+      \ 'nowrite',
+      \ 'quickfix',
+      \ 'help',
+      \ 'nofile'
+      \ ]
 
-function! s:enable_relative_number()
-  if s:is_blacklisted()
-    return
-  endif
-  setlocal number relativenumber
-endfunction
-
-function! s:disable_relative_number()
-  if s:is_blacklisted()
-    return
-  endif
-  setlocal number norelativenumber
-endfunction
-
-call s:enable_relative_number()
-augroup togglerelativelinenumbers
+augroup ToggleRelativeLineNumbers
   autocmd!
-  " If in normal mode show hybrid numbers
-  " except in previewwindow and other readonly helper windows
-  " OR if the ft has a setting to turn of numbers for that buffer
-  autocmd BufEnter *    if !pumvisible() | call s:enable_relative_number() | endif
-  autocmd BufLeave *    if !pumvisible() | call s:disable_relative_number() | endif
-  autocmd WinEnter *    if !pumvisible() | call s:enable_relative_number() | endif
-  autocmd WinLeave *    if !pumvisible() | call s:disable_relative_number() | endif
-  autocmd FocusLost *   call s:disable_relative_number()
-  autocmd FocusGained * call s:enable_relative_number()
-  autocmd InsertEnter * call s:disable_relative_number()
-  autocmd InsertLeave * call s:enable_relative_number()
+  autocmd VimEnter * call numbers#enable_relative_number()
+  autocmd BufEnter *    if !pumvisible() | call numbers#enable_relative_number() | endif
+  autocmd BufLeave *    if !pumvisible() | call numbers#disable_relative_number() | endif
+  autocmd WinEnter *    if !pumvisible() | call numbers#enable_relative_number() | endif
+  autocmd WinLeave *    if !pumvisible() | call numbers#disable_relative_number() | endif
+  autocmd FocusLost *   call numbers#disable_relative_number()
+  autocmd FocusGained * call numbers#enable_relative_number()
+  autocmd InsertEnter * call numbers#disable_relative_number()
+  autocmd InsertLeave * call numbers#enable_relative_number()
 augroup end
 
 augroup WhiteSpace "{{{1
@@ -292,7 +276,7 @@ augroup CustomWindowSettings
   " SEE: https://github.com/junegunn/fzf/issues/576
 
   " These overrides should apply to all buffers
-  autocmd TermOpen term://* setlocal nocursorline
+  autocmd TermOpen * setlocal nocursorline nonumber norelativenumber
   autocmd TermOpen,ColorScheme,WinNew,TermEnter term://*zsh*,term://*bash*
         \ call s:terminal_setup()
   " on BufRead the name of the toggle-able terminal will have changed
