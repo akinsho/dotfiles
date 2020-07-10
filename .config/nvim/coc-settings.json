@@ -8,6 +8,7 @@
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "Lua.diagnostics.disable": ["lowercase-global"],
     "Lua.diagnostics.globals": ["vim"],
+    "Lua.completion.keywordSnippet": "Both",
     "go.goplsOptions": {
         "go.goplsArgs": ["-remote=auto"],
         "completeUnimported": true,
