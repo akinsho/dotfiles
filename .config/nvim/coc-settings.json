@@ -4,6 +4,9 @@
     "python.jediEnabled": false,
     "html.autoClosingTags": true,
     "xml.format.splitAttributes": true,
+    // Schema file for sumneko lua lsp
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.diagnostics.disable": ["lowercase-global"],
     "Lua.diagnostics.globals": ["vim"],
     "go.goplsOptions": {
         "go.goplsArgs": ["-remote=auto"],

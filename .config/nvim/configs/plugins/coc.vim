@@ -56,8 +56,10 @@ function! s:coc_init() abort
           \}
   endif
 
-  " Borrowed from native lsp install path
-  let s:lua_lsp_path = $HOME.'/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server'
+  " manually compiled and installed
+  " using https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
+  " https://github.com/sumneko/lua-language-server/wiki/Setting-without-VSCode
+  let s:lua_lsp_path = $HOME.'/lua-language-server'
   if executable(s:lua_lsp_path.'/bin/Linux/lua-language-server')
     let s:languageservers['lua'] = {
           \ 'command': s:lua_lsp_path.'/bin/Linux/lua-language-server',
