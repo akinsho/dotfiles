@@ -132,6 +132,7 @@ function! s:set_statusline_colors() abort
   let s:pmenu_bg  = synIDattr(hlID('Pmenu'), 'bg')
   let s:string_fg = synIDattr(hlID('String'), 'fg')
   let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
+  let s:comment_fg =  synIDattr(hlID('Comment'), 'fg')
   let s:warning_fg = s:light_yellow "synIDattr(hlID('WarningMsg'), 'fg')
 
   " NOTE: Unicode characters including vim devicons should NOT be highlighted
@@ -139,6 +140,7 @@ function! s:set_statusline_colors() abort
   " patched with the nerd font characters
   " terminal emulators like kitty handle this by fetching nerd fonts elsewhere
   " but this is not universal across terminals so should be avoided
+  silent! execute 'highlight StMetadata guifg='.s:comment_fg.' guibg=NONE gui=italic,bold'
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
@@ -265,6 +267,9 @@ function! s:add_separators()
   silent! execute 'highlight StatuslineNC gui='.gui
 endfunction
 
+
+let s:item = {component,hl -> "%#".hl."#".component."%*"}
+
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
   call s:add_separators()
@@ -313,7 +318,6 @@ function! StatusLine(...) abort
   "---------------------------------------------------------------------------//
   " Setup
   "---------------------------------------------------------------------------//
-  let s:info_item = {component -> "%#StInfoSep#".component}
 
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
@@ -327,35 +331,35 @@ function! StatusLine(...) abort
 
   " Neovim allows unlimited alignment sections so we can put things in the
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-  let statusline .= '%='
-  let statusline .= s:sep_if("%{StatuslineCurrentFunction()}",
-        \ !empty(StatuslineCurrentFunction()), s:st_menu)
+  " let statusline .= '%='
 
   " Start of the right side layout
   let statusline .= '%='
+  let current_fn = StatuslineCurrentFunction()
+  let statusline .= !empty(current_fn) ? s:item(current_fn, "StMetadata") : ""
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(
         \ diagnostic_info,
         \ strlen(diagnostic_info),
         \ diagnostic_highlight
-        \ )
+        \)
 
   let statusline .= " "
-  let statusline .= "%#Comment#%{StatuslineLanguageServer()}%*"
+  let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
   let statusline .= " "
-  let statusline .= s:info_item("%{StatuslineGitRepoStatus()}")
-  let statusline .= s:info_item("%{StatuslineGitStatus()}")
+  let statusline .= s:item("%{StatuslineGitRepoStatus()}", "StInfoSep")
+  let statusline .= s:item("%{StatuslineGitStatus()}", "StInfoSep")
 
   " spaces char ˽ or ⍽ / Tabs char - ⇥
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
   let l:statusline .= s:sep_if(&shiftwidth, unexpected_indentation,
         \ extend({ 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 }, {}))
-  " Current line number/Total line numbers
+  " Current line number/Total line numbers,  alternatives 
   let statusline .= s:sep_if(
         \ line_info,
         \ strlen(line_info),
-        \ extend({ 'prefix': '' }, s:st_mode)
+        \ extend({ 'prefix': 'ℓ' }, s:st_mode)
         \ )
   let statusline .= '%<'
   return statusline
