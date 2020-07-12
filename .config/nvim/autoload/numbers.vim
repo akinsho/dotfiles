@@ -1,5 +1,9 @@
 " Blacklist certain plugins and buffer types
 function! s:is_blacklisted()
+  if buflisted(bufnr('')) == 0
+    return 1
+  endif
+
   if &previewwindow
     return 1
   endif

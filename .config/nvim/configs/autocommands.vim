@@ -35,42 +35,6 @@ augroup vimrc-incsearch-highlight
   endif
 augroup END
 
-let g:number_filetype_exclusions = [
-      \ 'vim-plug',
-      \ 'vimwiki',
-      \ 'git',
-      \ 'toggleterm',
-      \ 'fugitive',
-      \ 'coc-explorer',
-      \ 'coc-list',
-      \ 'list',
-      \ 'LuaTree',
-      \ 'startify'
-      \ ]
-
-" TODO this doesn't seem to work, it's not clear when the buftype is being set
-let g:number_buftype_exclusions = [
-      \ 'terminal',
-      \ 'nowrite',
-      \ 'quickfix',
-      \ 'help',
-      \ 'nofile',
-      \ 'acwrite'
-      \ ]
-
-augroup ToggleRelativeLineNumbers
-  autocmd!
-  autocmd VimEnter * call numbers#enable_relative_number()
-  autocmd BufEnter *    if !pumvisible() | call numbers#enable_relative_number() | endif
-  autocmd BufLeave *    if !pumvisible() | call numbers#disable_relative_number() | endif
-  autocmd WinEnter *    if !pumvisible() | call numbers#enable_relative_number() | endif
-  autocmd WinLeave *    if !pumvisible() | call numbers#disable_relative_number() | endif
-  autocmd FocusLost *   call numbers#disable_relative_number()
-  autocmd FocusGained * call numbers#enable_relative_number()
-  autocmd InsertEnter * call numbers#disable_relative_number()
-  autocmd InsertLeave * call numbers#enable_relative_number()
-augroup end
-
 augroup WhiteSpace "{{{1
   au!
   " Highlight Whitespace
