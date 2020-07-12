@@ -6,7 +6,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'joshdick/onedark.vim' " alternative one dark with a light theme
 call plug#end()
 
-
 set termguicolors
 set background=dark
 colorscheme onedark

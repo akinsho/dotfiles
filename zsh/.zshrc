@@ -6,6 +6,7 @@
 # https://github.com/vincentbernat/zshrc/blob/d66fd6b6ea5b3c899efb7f36141e3c8eb7ce348b/rc/vcs.zsh
 # sourcing autoloaded functions:
 # https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
+# Git prompt script: https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 
 zmodload zsh/datetime
 
