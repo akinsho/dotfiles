@@ -31,8 +31,7 @@ let g:coc_global_extensions = [
 " TODO: Coc pairs is takes half a second to expand
 " \ 'coc-pairs',
 " \ 'coc-jest',
-" NOTE: Tabnine is too resource intensive
-" \ 'coc-tabnine',
+" \ 'coc-tabnine', " NOTE: Tabnine is too resource intensive
 
 function! s:coc_init() abort
   let s:languageservers = {}
@@ -286,13 +285,7 @@ nnoremap <silent><C-N> :call <SID>open_explorer()<CR>
 " Coc Highlights
 ""---------------------------------------------------------------------------//
 function s:apply_coc_highlights()
-  highlight link CocErrorSign Error
-  highlight CocErrorFloat  ctermfg=Red guifg=#E06C75
-  highlight CocWarningSign  ctermfg=Brown guifg=#ff922b
-  highlight CocInfoSign  ctermfg=Yellow guifg=#fab005
-  highlight CocErrorHighlight guifg=#E06C75 gui=undercurl
-  highlight CocCodeLens ctermfg=Gray guifg=#999999
-
+  highlight CocErrorHighlight guisp=#FF0000 gui=undercurl
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
   highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
 endfunction
