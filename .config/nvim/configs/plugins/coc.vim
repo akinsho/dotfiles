@@ -25,6 +25,7 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-actions',
       \ 'coc-go',
+      \ 'coc-word',
       \]
 
 " TODO: Coc pairs is takes half a second to expand
