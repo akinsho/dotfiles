@@ -80,7 +80,7 @@
     "git.removedSign.hlGroup": "GitGutterDelete",
     "git.topRemovedSign.hlGroup": "GitGutterDelete",
     "git.changeRemovedSign.hlGroup": "Number",
-    "git.addGBlameToVirtualText": true,
+    "git.addGBlameToVirtualText": false,
     // Suggest
     "suggest.enablePreselect": true,
     "suggest.completionItemKindLabels": {
