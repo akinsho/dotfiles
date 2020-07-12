@@ -5,7 +5,8 @@
     "html.autoClosingTags": true,
     "xml.format.splitAttributes": true,
     // Schema file for sumneko lua lsp
-    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    // FIXME: Adding schema overrides the existing schema for the rest of the settings
+    // "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "Lua.diagnostics.disable": ["lowercase-global"],
     "Lua.diagnostics.globals": ["vim"],
     "Lua.completion.keywordSnippet": "Both",
@@ -79,7 +80,7 @@
     "git.removedSign.hlGroup": "GitGutterDelete",
     "git.topRemovedSign.hlGroup": "GitGutterDelete",
     "git.changeRemovedSign.hlGroup": "Number",
-    "git.addGBlameToVirtualText": false,
+    "git.addGBlameToVirtualText": true,
     // Suggest
     "suggest.enablePreselect": true,
     "suggest.completionItemKindLabels": {
