@@ -1,3 +1,9 @@
+" Inspiration
+" 1. vim-relativity
+" 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
+"
+" NOTE: it's important that we use BufReadPost as otherwise the buftype and filetype
+" variables might not be set correctly
 let g:number_filetype_exclusions = [
       \ 'vim-plug',
       \ 'vimwiki',
@@ -11,7 +17,6 @@ let g:number_filetype_exclusions = [
       \ 'startify'
       \ ]
 
-" TODO this doesn't seem to work, it's not clear when the buftype is being set
 let g:number_buftype_exclusions = [
       \ 'terminal',
       \ 'nowrite',
