@@ -311,6 +311,8 @@ augroup Utilities "{{{1
           \ endif
   endif
 
+  autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif

@@ -206,6 +206,12 @@ if has('termguicolors')
 endif
 " Ctags - search for a tags file then in current dir then home dir
 set tags=./.tags,./.git/.tags,tags,~/.tags
+"--------------------------------------------------------------------------------
+" Git editor
+"--------------------------------------------------------------------------------
+if has('nvim') && executable('nvr')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif
 ""---------------------------------------------------------------------------//
 " Color Scheme {{{1
 ""---------------------------------------------------------------------------//
