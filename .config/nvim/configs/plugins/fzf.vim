@@ -100,10 +100,9 @@ else
   " otherwise, use :FZF
   nnoremap <silent><C-P> :Files<CR>
 endif
-nnoremap <silent> \ :Rg<CR>
-"Find Word under cursor
-nnoremap <leader>f :Find <C-R><C-W><CR>
-nnoremap <leader>F :Find<space>
+" Find Word under cursor
+nnoremap <silent><leader>f :Rg<CR>
+nnoremap <silent><leader>F :Find <C-R><C-W><CR>
 
 nnoremap <localleader>ma  :Marks<CR>
 nnoremap <localleader>mm :Maps<CR>
