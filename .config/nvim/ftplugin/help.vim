@@ -1,5 +1,12 @@
-wincmd L " automatically move window to the left
-vertical resize 80
+function! s:setup_help_window()
+  wincmd L " automatically move window to the left
+  vertical resize 80
+endfunction
+
+augroup SetupHelp
+  autocmd!
+  autocmd BufWinEnter <buffer> call s:setup_help_window()
+augroup END
 
 setl spell spelllang=en_us
 setl nonumber norelativenumber
