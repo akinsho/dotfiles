@@ -73,8 +73,6 @@
     "git.removedSign.text": "▌",
     "git.changeRemovedSign.text": "▌",
     // Git statusline decorators
-    "git.changedDecorator": " ",
-    "git.stagedDecorator": " ●",
     "git.addedSign.hlGroup": "GitGutterAdd",
     "git.changedSign.hlGroup": "GitGutterChange",
     "git.removedSign.hlGroup": "GitGutterDelete",
