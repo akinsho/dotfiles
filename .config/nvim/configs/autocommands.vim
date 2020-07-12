@@ -37,6 +37,7 @@ augroup END
 
 let g:number_filetype_exclusions = [
       \ 'vim-plug',
+      \ 'vimwiki',
       \ 'git',
       \ 'toggleterm',
       \ 'fugitive',
