@@ -210,7 +210,7 @@ set tags=./.tags,./.git/.tags,tags,~/.tags
 " Git editor
 "--------------------------------------------------------------------------------
 if has('nvim') && executable('nvr')
-  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 endif
 ""---------------------------------------------------------------------------//
 " Color Scheme {{{1
