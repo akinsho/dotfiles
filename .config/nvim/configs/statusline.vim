@@ -77,7 +77,12 @@ endfunction
 
 function! StatuslineGitRepoStatus() abort
   let status = get(g:, "coc_git_status", "")
-  return winwidth(0) > 130 ? s:truncate_string(status, 30) : ''
+  let width = winwidth(0)
+  return width > 160 ?
+        \ status :
+        \ width > 130 && width <= 160 ?
+        \ s:truncate_string(status, 30) :
+        \ ''
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}

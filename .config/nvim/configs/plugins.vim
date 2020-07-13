@@ -171,6 +171,7 @@ Plug 'joshdick/onedark.vim'
 "--------------------------------------------------------------------------------
 " Alternatives color schemes {{{2
 "--------------------------------------------------------------------------------
+" Plug 'drewtempelmeyer/palenight.vim'
 " Plug 'kaicataldo/material.vim'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
