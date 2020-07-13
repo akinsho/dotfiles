@@ -77,12 +77,7 @@ endfunction
 
 function! StatuslineGitRepoStatus() abort
   let status = get(g:, "coc_git_status", "")
-  let width = winwidth(0)
-  return width > 160 ?
-        \ status :
-        \ width > 130 && width <= 160 ?
-        \ s:truncate_string(status, 30) :
-        \ ''
+  return s:truncate_string(status, 30)
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
@@ -354,8 +349,8 @@ augroup custom_statusline
   autocmd!
   " The quickfix window sets it's own statusline, so we override it here
   autocmd FileType qf setlocal statusline=%!StatusLine()
-  autocmd BufEnter,WinEnter,QuickFixCmdPost * setlocal statusline=%!StatusLine()
-  autocmd BufLeave,WinLeave * setlocal statusline=%!MinimalStatusLine()
+  autocmd BufEnter,WinEnter,FocusGained,QuickFixCmdPost * setlocal statusline=%!StatusLine()
+  autocmd BufLeave,WinLeave,FocusLost * setlocal statusline=%!MinimalStatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
 
