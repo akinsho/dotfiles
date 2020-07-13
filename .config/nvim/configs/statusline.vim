@@ -335,6 +335,9 @@ function! StatusLine(...) abort
 
   " Start of the right side layout
   let statusline .= '%='
+  let statusline .= s:item("%{StatuslineGitRepoStatus()}", "StInfoSep")
+  let statusline .= s:item("%{StatuslineGitStatus()}", "StInfoSep")
+  let statusline .= " "
   let current_fn = StatuslineCurrentFunction()
   let statusline .= !empty(current_fn) ? s:item(current_fn, "StMetadata") : ""
   let diagnostic_info = s:status_diagnostic()
@@ -348,8 +351,6 @@ function! StatusLine(...) abort
   let statusline .= " "
   let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
   let statusline .= " "
-  let statusline .= s:item("%{StatuslineGitRepoStatus()}", "StInfoSep")
-  let statusline .= s:item("%{StatuslineGitStatus()}", "StInfoSep")
 
   " spaces char ˽ or ⍽ / Tabs char - ⇥
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
