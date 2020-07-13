@@ -386,11 +386,12 @@ nnoremap <leader>= <C-W>=
 " Swap top/bottom or left/right split
 nnoremap <leader>sw <C-W>R
 nnoremap <localleader>q <C-W>q
-" nnoremap <silent> <localleader>q :cclose \| lclose \| pclose<cr>
 " https://vim.fandom.com/wiki/Fast_window_resizing_with_plus/minus_keys
 if bufwinnr(1)
   nnoremap <a-h> <C-W><
   nnoremap <a-l> <C-W>>
+  nnoremap <a-j> <C-W>-
+  nnoremap <a-k> <C-W>+
 endif
 ""---------------------------------------------------------------------------//
 "Open Common files
@@ -420,28 +421,6 @@ cnoremap <C-v> <C-r>"
 " Use the external grepprg which is set to ag or rg
 " which is much faster than internal vimgrep progream
 command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
-" ----------------------------------------------------------------------------
-" Open FILENAME:LINE:COL
-" ----------------------------------------------------------------------------
-function! s:goto_line()
-  let tokens = split(expand('%'), ':')
-  if len(tokens) <= 1 || !filereadable(tokens[0])
-    return
-  endif
-
-  let file = tokens[0]
-  let rest = map(tokens[1:], 'str2nr(v:val)')
-  let line = get(rest, 0, 1)
-  let col  = get(rest, 1, 1)
-  bd!
-  silent execute 'e' file
-  execute printf('normal! %dG%d|', line, col)
-endfunction
-
-augroup GoToLine
-  au!
-  autocmd! BufRead * nested call s:goto_line()
-augroup END
 " ----------------------------------------------------------------------------
 " Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
