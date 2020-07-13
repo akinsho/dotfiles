@@ -80,29 +80,6 @@ function! StatuslineGitRepoStatus() abort
   return winwidth(0) > 130 ? s:truncate_string(status, 30) : ''
 endfunction
 
-" Find out current buffer's size and output it.
-function! s:file_size()
-  let bytes = getfsize(expand('%:p'))
-  if (bytes >= 1024)
-    let kbytes = bytes / 1024
-  endif
-  if (exists('kbytes') && kbytes >= 1000)
-    let mbytes = kbytes / 1000
-  endif
-
-  if bytes <= 0
-    return '0'
-  endif
-
-  if (exists('mbytes'))
-    return mbytes . 'MB '
-  elseif (exists('kbytes'))
-    return kbytes . 'KB '
-  else
-    return bytes . 'B '
-  endif
-endfunction
-
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
 let s:st_info = { 'color': '%#StInfo#', 'sep_color': '%#StInfoSep#' }
 let s:st_ok =   { 'color': '%#StOk#', 'sep_color': '%#StOkSep#' }
@@ -133,7 +110,8 @@ function! s:set_statusline_colors() abort
   let s:string_fg = synIDattr(hlID('String'), 'fg')
   let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
   let s:comment_fg =  synIDattr(hlID('Comment'), 'fg')
-  let s:warning_fg = s:light_yellow "synIDattr(hlID('WarningMsg'), 'fg')
+  let s:warning_fg = g:colors_name =~ 'one' ?
+        \ s:light_yellow : synIDattr(hlID('WarningMsg'), 'fg')
 
   " NOTE: Unicode characters including vim devicons should NOT be highlighted
   " as italic or bold, this is because the underlying bold font is not necessarily
@@ -156,12 +134,11 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StOkSep guifg='.s:dark_yellow.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
   silent! execute 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
-  " setting a statsuline fillchar means this that the character or a replacement
+  " setting a statusline fillchar that the character or a replacement
   " with ">" appears in inactive windows because the statusline is the same color
   " as the background see:
   " https://vi.stackexchange.com/questions/2381/hi-statusline-cterm-none-displays-whitespace-characters
   " https://vi.stackexchange.com/questions/15873/carets-in-status-line
-  "
   " So instead we set the inactive statusline to have an underline
   silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
   silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
@@ -267,7 +244,6 @@ function! s:add_separators()
   silent! execute 'highlight StatuslineNC gui='.gui
 endfunction
 
-
 let s:item = {component,hl -> "%#".hl."#".component."%*"}
 
 function! StatusLine(...) abort
@@ -318,7 +294,6 @@ function! StatusLine(...) abort
   "---------------------------------------------------------------------------//
   " Setup
   "---------------------------------------------------------------------------//
-
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
   " Truncate file path length at 40 characters
@@ -356,7 +331,7 @@ function! StatusLine(...) abort
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
   let l:statusline .= s:sep_if(&shiftwidth, unexpected_indentation,
         \ extend({ 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 }, {}))
-  " Current line number/Total line numbers,  alternatives 
+  " Current line number/total line number,  alternatives 
   let statusline .= s:sep_if(
         \ line_info,
         \ strlen(line_info),
