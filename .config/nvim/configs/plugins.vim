@@ -180,9 +180,10 @@ Plug 'joshdick/onedark.vim'
 " Personal plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
-  Plug 'Akin909/nvim-bufferline.lua'
-  if !has('mac')
-    " Plug '~/Desktop/Coding/nvim-bufferline.lua'
+  if has('mac')
+    Plug 'Akin909/nvim-bufferline.lua'
+  else
+    Plug '~/Desktop/Coding/nvim-bufferline.lua'
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
