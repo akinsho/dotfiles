@@ -77,7 +77,7 @@ endfunction
 
 function! StatuslineGitRepoStatus() abort
   let status = get(g:, "coc_git_status", "")
-  return s:truncate_string(status, 30)
+  return status
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
