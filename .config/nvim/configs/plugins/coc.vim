@@ -285,7 +285,7 @@ nnoremap <silent><C-N> :call <SID>open_explorer()<CR>
 " Coc Highlights
 ""---------------------------------------------------------------------------//
 function s:apply_coc_highlights()
-  highlight CocErrorHighlight guisp=#FF0000 gui=undercurl
+  highlight CocErrorHighlight guisp=#E06C75 gui=undercurl
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
   highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
 endfunction
