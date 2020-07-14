@@ -108,9 +108,6 @@ augroup UpdateVim
     endif
   endif
   autocmd FocusLost * silent! wall
-  " Autosave vim on typing stopped
-  " make this autocommand nest so it triggers other autocommands
-  autocmd CursorHold,CursorHoldI * ++nested silent! update
   " Update the cursor column to match current window size
   autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call s:check_color_column()
   autocmd WinLeave * call s:check_color_column(1)
