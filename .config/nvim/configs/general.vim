@@ -169,6 +169,7 @@ set smartindent
 set wrap
 set wrapmargin=2
 set textwidth=80
+set confirm " make vim prompt me to save before doing destructive things
 if exists('&signcolumn')
   if has('nvim-0.4')
    " yes confirms showing the column and the specified size
