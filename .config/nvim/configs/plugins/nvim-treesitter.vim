@@ -15,7 +15,6 @@ local linux_config = {
 }
 
 local highlight_config = has_mac and mac_config or linux_config
-print(vim.inspect(highlight_config))
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
@@ -24,9 +23,9 @@ require'nvim-treesitter.configs'.setup {
         enable = true,
         keymaps = {                       -- mappings for incremental selection (visual mappings)
           init_selection = 'gnn',         -- maps in normal mode to init the node/scope selection
-          node_incremental = "trn",       -- increment to the upper named parent
-          scope_incremental = "trc",      -- increment to the upper scope (as defined in locals.scm)
-          node_decremental = "trm",       -- decrement to the previous node
+          node_incremental = "grn",       -- increment to the upper named parent
+          scope_incremental = "grc",      -- increment to the upper scope (as defined in locals.scm)
+          node_decremental = "grm",       -- decrement to the previous node
         }
   },
   refactor = {
