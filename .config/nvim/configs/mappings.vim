@@ -285,9 +285,10 @@ nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 " nnoremap <localleader>d :ls<cr>:bd<space>
 "Use wildmenu to cycle tabs
 nnoremap <localleader><tab> :b <C-Z>
-"Tab and Shift + Tab Circular buffer navigation
-nnoremap <silent><leader><tab>  :bnext<CR>
-nnoremap <silent><S-tab> :bprevious<CR>
+" Tab and Shift + Tab Circular buffer navigation
+" and save before moving buffers
+nnoremap <silent><leader><tab>  :update <bar> bnext<CR>
+nnoremap <silent><S-tab> :update <bar> bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 " use ,gf to go to file in a vertical split
@@ -421,6 +422,16 @@ cnoremap <C-v> <C-r>"
 " Use the external grepprg which is set to ag or rg
 " which is much faster than internal vimgrep progream
 command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
+" Nvim tree disables Netrw, this autocommand re-adds it
+if PluginLoaded('nvim-tree.lua')
+  function! s:open_url() abort
+    unlet! g:loaded_netrw
+    unlet! g:loaded_netrwPlugin
+    runtime! plugin/netrwPlugin.vim
+    return netrw#BrowseX(expand('<cfile>'), netrw#CheckIfRemote())
+  endfunction
+  nnoremap gx :call <sid>open_url()<CR>
+endif
 " ----------------------------------------------------------------------------
 " Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
