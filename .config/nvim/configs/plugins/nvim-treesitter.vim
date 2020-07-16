@@ -22,8 +22,12 @@ require'nvim-treesitter.configs'.setup {
   },
   refactor = {
     highlight_current_scope = {
-        enable = true
+        enable = false
     },
   }
 }
 EOF
+
+augroup TreeSitterFolds
+  autocmd FileType go,rust,java setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+augroup END
