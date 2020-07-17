@@ -75,7 +75,7 @@ Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', {
-      \ 'do': ':call mdkp#util#install()',
+      \ 'do': ':call mkdp#util#install()',
       \ 'for': ['markdown']
       \ }
 Plug 'cohama/lexima.vim'
@@ -182,7 +182,7 @@ Plug 'joshdick/onedark.vim'
 "--------------------------------------------------------------------------------
 if has('nvim')
   if has('mac')
-    Plug 'Akin909/nvim-bufferline.lua'
+    Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'dev' }
   else
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
   endif
