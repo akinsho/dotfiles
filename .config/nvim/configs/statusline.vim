@@ -81,10 +81,13 @@ function! StatuslineCurrentFunction() abort
   return winwidth(0) > 140 ? s:pad(trunctated, { 'start': 0 }) : ''
 endfunction
 
-function! StatuslineGitStatus() abort
+function! s:statusline_git_status() abort
   let repo_status = get(g:, "coc_git_status", "")
   let buffer_status = get(b:, "coc_git_status", "")
-  return s:pad(repo_status . buffer_status, { 'start': 0 })
+  if strlen(repo_status) == 0
+    return ''
+  endif
+  return s:truncate_statusline_component(repo_status, 30) . buffer_status
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
@@ -129,14 +132,14 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=bold'
   silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StFilename guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StFilenameInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=italic,bold'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
-  silent! execute 'highlight StInfo guifg='.s:normal_bg.' guibg='.s:dark_blue.' gui=NONE'
-  silent! execute 'highlight StInfoSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:pmenu_bg.' gui=bold'
+  silent! execute 'highlight StInfoSep guifg='.s:pmenu_bg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StOk guifg='.s:normal_bg.' guibg='.s:dark_yellow.' gui=NONE'
   silent! execute 'highlight StOkSep guifg='.s:dark_yellow.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
@@ -161,8 +164,6 @@ function! s:sep(item, ...) abort
   let before = get(opts, 'before', ' ')
   let prefix = get(opts, 'prefix', '')
   let small = get(opts, 'small', 0)
-  let padding_amount = get(opts, 'padding', 0)
-  let padding = padding_amount > 0 ? repeat(' ', padding_amount) : ''
   let item_color = get(opts, 'color', '%#StItem#')
   let prefix_color = get(opts, 'prefix_color', '%#StPrefix#')
   let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StPrefixSep#')
@@ -173,6 +174,7 @@ function! s:sep(item, ...) abort
 
   " %* resets the highlighting at the end of the separator so it
   " doesn't interfere with the next component
+  let padding = strlen(prefix) ? ' ' : ''
   let sep_icon_right = small ? '%*' : '█%*'
   let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
 
@@ -304,12 +306,7 @@ function! StatusLine(...) abort
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
 
-  let statusline .= s:sep(title_component, {
-        \ 'prefix': file_type,
-        \ 'small': 1,
-        \ 'padding': 1
-        \ })
-
+  let statusline .= s:sep(title_component, { 'prefix': file_type, 'small': 1 })
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',
@@ -318,19 +315,25 @@ function! StatusLine(...) abort
 
   " Neovim allows unlimited alignment sections so we can put things in the
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-  let statusline .= '%='
-  let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
+  " let statusline .= '%='
 
   " Start of the right side layout
   let statusline .= '%='
-  let statusline .= s:item("%.40{StatuslineGitStatus()}", "StInfoSep")
 
+  let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
+  " LSP Status
   let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
 
+  " LSP Diagnostics
   let diagnostics = s:status_diagnostic()
   let diagnostic_hl = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(diagnostics, strlen(diagnostics), diagnostic_hl)
 
+  " Git Status
+  let status = s:statusline_git_status()
+  let statusline .= s:sep_if(status, strlen(status), s:st_info)
+
+  " Indentation
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
   let l:statusline .= s:sep_if(
         \ &shiftwidth,
