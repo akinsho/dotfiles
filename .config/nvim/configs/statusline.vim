@@ -161,27 +161,27 @@ function! s:sep(item, ...) abort
   let before = get(opts, 'before', ' ')
   let prefix = get(opts, 'prefix', '')
   let small = get(opts, 'small', 0)
+  let padding_amount = get(opts, 'padding', 0)
+  let padding = padding_amount > 0 ? repeat(' ', padding_amount) : ''
   let item_color = get(opts, 'color', '%#StItem#')
   let prefix_color = get(opts, 'prefix_color', '%#StPrefix#')
   let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StPrefixSep#')
 
   let sep_color = get(opts, 'sep_color', '%#StSep#')
-  let sep_color_left = strlen(prefix) ? l:prefix_sep_color : sep_color
+  let sep_color_left = strlen(prefix) ? prefix_sep_color : sep_color
   let prefix_item = prefix_color . prefix . " "
 
   " %* resets the highlighting at the end of the separator so it
   " doesn't interfere with the next component
   let sep_icon_right = small ? '%*' : '█%*'
-
   let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
-
-  let l:item = strlen(prefix) ? " " . a:item : a:item
 
   return before.
         \ sep_color_left.
         \ sep_icon_left.
         \ item_color.
-        \ l:item.
+        \ padding.
+        \ a:item.
         \ sep_color.
         \ sep_icon_right
 endfunction
@@ -303,7 +303,13 @@ function! StatusLine(...) abort
   "---------------------------------------------------------------------------//
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  let statusline .= s:sep(title_component, {'prefix': file_type})
+
+  let statusline .= s:sep(title_component, {
+        \ 'prefix': file_type,
+        \ 'small': 1,
+        \ 'padding': 1
+        \ })
+
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',
@@ -319,15 +325,11 @@ function! StatusLine(...) abort
   let statusline .= s:item("%.40{StatuslineGitStatus()}", "StInfoSep")
   let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
 
-  let diagnostic_info = s:status_diagnostic()
-  let diagnostic_highlight = s:get_diagnostic_highlight()
-  let statusline .= s:sep_if(
-        \ diagnostic_info,
-        \ strlen(diagnostic_info),
-        \ diagnostic_highlight
-        \)
-
   let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
+
+  let diagnostics = s:status_diagnostic()
+  let diagnostic_hl = s:get_diagnostic_highlight()
+  let statusline .= s:sep_if(diagnostics, strlen(diagnostics), diagnostic_hl)
 
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
   let l:statusline .= s:sep_if(
@@ -336,7 +338,7 @@ function! StatusLine(...) abort
         \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 })
 
   " Current line number/total line number,  alternatives 
-  let statusline .= s:sep_if('ℓ ' . line_info, strlen(line_info), s:st_menu)
+  let statusline .= s:sep_if('ℓ ' . line_info, strlen(line_info), extend({ 'before': '' }, s:st_menu))
 
   let statusline .= '%<'
   return statusline
