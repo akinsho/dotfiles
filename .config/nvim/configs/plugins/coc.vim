@@ -95,9 +95,10 @@ augroup coc_commands
         \ setlocal formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  autocmd CursorHold * CocCommand git.refresh
   autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
-  " Suggestions don't work and are not needed in the commandline window
+  " Suggestions don't work and are not needed in the command line window
   autocmd FileType vim if bufname('%') == '[Command Line]' | let b:coc_suggest_disable = 1 | endif
 augroup End
 
