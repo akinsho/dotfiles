@@ -317,7 +317,7 @@ function! StatusLine(...) abort
 
   " Start of the right side layout
   let statusline .= '%='
-  let statusline .= s:item("%{StatuslineGitStatus()}", "StInfoSep")
+  let statusline .= s:item("%.40{StatuslineGitStatus()}", "StInfoSep")
   let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
 
   let diagnostic_info = s:status_diagnostic()
