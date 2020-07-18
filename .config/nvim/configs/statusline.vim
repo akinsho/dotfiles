@@ -318,12 +318,12 @@ function! StatusLine(...) abort
 
   " Neovim allows unlimited alignment sections so we can put things in the
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-  " let statusline .= '%='
+  let statusline .= '%='
+  let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
 
   " Start of the right side layout
   let statusline .= '%='
   let statusline .= s:item("%.40{StatuslineGitStatus()}", "StInfoSep")
-  let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
 
   let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
 
