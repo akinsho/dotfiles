@@ -59,25 +59,31 @@ function s:get_diagnostic_highlight() abort
   return {}
 endfunction
 
+function s:pad(string, ...) abort
+  let opts = get(a:, '1', { 'end': 1 , 'start': 1})
+  let opt_end = get(opts, 'end', 1)
+  let opt_start = get(opts, 'start', 1)
+  let end = opt_end ? ' ' : ''
+  let start = opt_start ? ' ' : ''
+  return strlen(a:string) > 0 ? start . a:string . end : ''
+endfunction
+
 function StatuslineLanguageServer() abort
-  return winwidth(0) > 100 ? s:truncate_string(get(g:, 'coc_status', '')) : ''
+  let lsp_status = get(g:, 'coc_status', '')
+  return winwidth(0) > 100 ? s:pad(s:truncate_string(lsp_status)) : ''
 endfunction
 
 function! StatuslineCurrentFunction() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
-  return winwidth(0) > 140 ? s:truncate_string(sanitized, 30) : ''
+  return winwidth(0) > 140 ? s:pad(s:truncate_string(sanitized, 30)) : ''
 endfunction
 
 " This is automatically truncated by coc
 function! StatuslineGitStatus() abort
-  let status = get(b:, "coc_git_status", "")
-  return status
-endfunction
-
-function! StatuslineGitRepoStatus() abort
-  let status = get(g:, "coc_git_status", "")
-  return status
+  let repo_status = get(g:, "coc_git_status", "")
+  let buffer_status = get(b:, "coc_git_status", "")
+  return s:pad(repo_status . buffer_status)
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
@@ -310,9 +316,7 @@ function! StatusLine(...) abort
 
   " Start of the right side layout
   let statusline .= '%='
-  let statusline .= s:item("%{StatuslineGitRepoStatus()}", "StInfoSep")
   let statusline .= s:item("%{StatuslineGitStatus()}", "StInfoSep")
-  let statusline .= " "
   let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
 
   let diagnostic_info = s:status_diagnostic()
