@@ -313,8 +313,8 @@ function! StatusLine(...) abort
   let statusline .= s:item("%{StatuslineGitRepoStatus()}", "StInfoSep")
   let statusline .= s:item("%{StatuslineGitStatus()}", "StInfoSep")
   let statusline .= " "
-  let current_fn = StatuslineCurrentFunction()
-  let statusline .= !empty(current_fn) ? s:item(current_fn, "StMetadata") : ""
+  let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
+
   let diagnostic_info = s:status_diagnostic()
   let diagnostic_highlight = s:get_diagnostic_highlight()
   let statusline .= s:sep_if(
@@ -323,20 +323,17 @@ function! StatusLine(...) abort
         \ diagnostic_highlight
         \)
 
-  let statusline .= " "
   let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
-  let statusline .= " "
 
-  " spaces char ˽ or ⍽ / Tabs char - ⇥
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
-  let l:statusline .= s:sep_if(&shiftwidth, unexpected_indentation,
-        \ extend({ 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 }, {}))
+  let l:statusline .= s:sep_if(
+        \ &shiftwidth,
+        \ unexpected_indentation,
+        \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 })
+
   " Current line number/total line number,  alternatives 
-  let statusline .= s:sep_if(
-        \ line_info,
-        \ strlen(line_info),
-        \ extend({ 'prefix': 'ℓ' }, s:st_mode)
-        \ )
+  let statusline .= s:sep_if('ℓ ' . line_info, strlen(line_info), s:st_menu)
+
   let statusline .= '%<'
   return statusline
 endfunction
