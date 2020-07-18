@@ -236,6 +236,11 @@ if PluginLoaded('onedark.vim')
     " Italicises function calls
     call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
     call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF'} })
+    call onedark#set_highlight('SpellRare', {
+          \ 'gui': 'undercurl',
+          \ 'bg': 'transparent',
+          \ 'fg': 'transparent'
+          \ })
   endfunc
   augroup OneDarkOverrides
     autocmd!
