@@ -273,7 +273,7 @@ function! StatusLine(...) abort
   " Filename
   "---------------------------------------------------------------------------//
   " Evaluate the filename in the context of the statusline component
-  " -> %{func_call()}, items in this context are per window not global
+  " -> %{function_call()}, items in this context are per window not global
   " this means the function returns the containing windows filename
   " not the active one i.e. fixes the bug where the wrong filename shows in
   " inactive windows
@@ -303,7 +303,6 @@ function! StatusLine(...) abort
   "---------------------------------------------------------------------------//
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
-  " Truncate file path length at 40 characters
   let statusline .= s:sep(title_component, {'prefix': file_type})
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
