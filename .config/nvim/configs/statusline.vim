@@ -338,7 +338,7 @@ function! StatusLine(...) abort
         \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 })
 
   " Current line number/total line number,  alternatives 
-  let statusline .= s:sep_if('ℓ ' . line_info, strlen(line_info), extend({ 'before': '' }, s:st_menu))
+  let statusline .= s:sep_if('ℓ ' . line_info, strlen(line_info), s:st_menu)
 
   let statusline .= '%<'
   return statusline
