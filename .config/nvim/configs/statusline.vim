@@ -70,20 +70,21 @@ endfunction
 
 function StatuslineLanguageServer() abort
   let lsp_status = get(g:, 'coc_status', '')
-  return winwidth(0) > 100 ? s:pad(s:truncate_string(lsp_status)) : ''
+  let truncated = s:truncate_string(lsp_status)
+  return winwidth(0) > 100 ? s:pad(truncated, { 'start': 0 }) : ''
 endfunction
 
 function! StatuslineCurrentFunction() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
-  return winwidth(0) > 140 ? s:pad(s:truncate_string(sanitized, 30)) : ''
+  let trunctated = s:truncate_string(sanitized, 30)
+  return winwidth(0) > 140 ? s:pad(trunctated, { 'start': 0 }) : ''
 endfunction
 
-" This is automatically truncated by coc
 function! StatuslineGitStatus() abort
   let repo_status = get(g:, "coc_git_status", "")
   let buffer_status = get(b:, "coc_git_status", "")
-  return s:pad(repo_status . buffer_status)
+  return s:pad(repo_status . buffer_status, { 'start': 0 })
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
