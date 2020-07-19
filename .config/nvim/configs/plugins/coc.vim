@@ -90,13 +90,12 @@ augroup coc_commands
   autocmd VimEnter * call s:coc_init()
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType *
-        \ setlocal formatexpr=CocActionAsync('formatSelected')
   " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  autocmd CursorHold * CocCommand git.refresh
   autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
+  autocmd CursorHold * CocCommand git.refresh
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType * setlocal formatexpr=CocActionAsync('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
   " Suggestions don't work and are not needed in the command line window
   autocmd FileType vim if bufname('%') == '[Command Line]' | let b:coc_suggest_disable = 1 | endif
