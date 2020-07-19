@@ -25,8 +25,11 @@ function! s:truncate_string(item, ...) abort
 endfunction
 
 function! s:truncate_statusline_component(item, ...) abort
-    let limit = get(a:, '1', 50)
-    return '%.'.limit.'('.a:item.'%)'
+  if !strlen(a:item)
+    return ''
+  endif
+  let limit = get(a:, '1', 50)
+  return '%.'.limit.'('.a:item.'%)'
 endfunction
 
 " Source: Coc documentation
@@ -101,7 +104,7 @@ function! s:statusline_git_status() abort
   let component = repo_status . " ". buffer_status
   let length = strlen(component)
   " if there is no branch info show nothing
-  if strlen(repo_status) == 0
+  if !strlen(repo_status)
     return ['', '']
   endif
   " if the window is small drop the buffer changes
@@ -352,8 +355,8 @@ function! StatusLine(...) abort
 
   " Git Status
   let [prefix, git_status] = s:statusline_git_status()
-  let statusline .= s:sep_if(git_status, strlen(git_status),
-        \ extend({ 'prefix':  prefix, 'small': 1, 'prefix_color': '%#StInfo#'}, s:st_info))
+  let git_opts = {'prefix':  prefix, 'small': 1, 'prefix_color': '%#StInfo#'}
+  let statusline .= s:sep_if(git_status, strlen(git_status), extend(git_opts, s:st_info))
 
   " Indentation
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
