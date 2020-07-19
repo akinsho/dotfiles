@@ -14,21 +14,21 @@ function! ApplyUserHighlights() abort
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif
 
-  if has('nvim-0.3.2')
-    " Add undercurl to existing spellbad highlight
-    let s:error_fg = synIDattr(hlID('Error'), 'fg')
-    let s:rare_fg = synIDattr(hlID('SpellRare'), 'fg')
-    execute 'highlight SpellBad gui=undercurl guibg=tranparent guifg=tranparent guisp='.s:error_fg
+  " Add undercurl to existing spellbad highlight
+  let s:error_fg = synIDattr(hlID('Error'), 'fg')
+  let s:rare_fg = synIDattr(hlID('SpellRare'), 'fg')
+  execute 'highlight SpellBad gui=undercurl guibg=tranparent guifg=tranparent guisp='.s:error_fg
 
-    " Define highlight for URIs e.g. http://stackoverflow.com
-    " this is used in the syntax after files for highlighting URIs in comments
-    let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
-    execute 'highlight URIHighlight guisp='.s:comment_fg.' gui=underline,italic guifg='.s:comment_fg
-  endif
+  " Define highlight for URIs e.g. http://stackoverflow.com
+  " this is used in the syntax after files for highlighting URIs in comments
+  let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
+  execute 'highlight URIHighlight guisp='.s:comment_fg.' gui=underline,italic guifg='.s:comment_fg
 
-  highlight Todo gui=bold
-  highlight Credit gui=bold
-  highlight CursorLineNr guifg=yellow gui=bold
+  highlight! Todo gui=bold
+  highlight! Credit gui=bold
+  highlight! CursorLineNr guifg=yellow gui=bold
+
+  highlight! link dartStorageClass Statement
   ""---------------------------------------------------------------------------//
   " Custom highlights
   ""---------------------------------------------------------------------------//
