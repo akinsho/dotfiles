@@ -82,12 +82,33 @@ function! StatuslineCurrentFunction() abort
 endfunction
 
 function! s:statusline_git_status() abort
+  let prefix = ''
+  let window_size = winwidth(0)
   let repo_status = get(g:, "coc_git_status", "")
-  let buffer_status = get(b:, "coc_git_status", "")
-  if strlen(repo_status) == 0
-    return ''
+  let buffer_status = trim(get(b:, "coc_git_status", ""))
+
+  let parts = split(repo_status)
+  if len(parts) > 0
+    let [prefix; rest] = parts
+    let repo_status = join(rest, " ")
   endif
-  return s:truncate_statusline_component(repo_status, 30) . buffer_status
+
+  " branch name should not exceed 30 chars if the window is under 200 columns
+  if window_size < 200
+    let repo_status = s:truncate_statusline_component(repo_status, 30)
+  endif
+
+  let component = repo_status . " ". buffer_status
+  let length = strlen(component)
+  " if there is no branch info show nothing
+  if strlen(repo_status) == 0
+    return ['', '']
+  endif
+  " if the window is small drop the buffer changes
+  if length > 30 && window_size < 140
+    return [prefix, repo_status]
+  endif
+    return [prefix, component]
 endfunction
 
 let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
@@ -330,8 +351,9 @@ function! StatusLine(...) abort
   let statusline .= s:sep_if(diagnostics, strlen(diagnostics), diagnostic_hl)
 
   " Git Status
-  let status = s:statusline_git_status()
-  let statusline .= s:sep_if(status, strlen(status), s:st_info)
+  let [prefix, git_status] = s:statusline_git_status()
+  let statusline .= s:sep_if(git_status, strlen(git_status),
+        \ extend({ 'prefix':  prefix, 'small': 1, 'prefix_color': '%#StInfo#'}, s:st_info))
 
   " Indentation
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
