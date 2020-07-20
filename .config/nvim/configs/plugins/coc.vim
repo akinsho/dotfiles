@@ -199,6 +199,7 @@ nmap <silent><leader>rn <Plug>(coc-rename)
 nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " Scroll the floating window if open
+" FIXME this breaks smooth scrolling
 " nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 " nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 ""---------------------------------------------------------------------------//

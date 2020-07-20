@@ -88,7 +88,7 @@ function! s:statusline_git_status() abort
   let prefix = ''
   let window_size = winwidth(0)
   let repo_status = get(g:, "coc_git_status", "")
-  let buffer_status = trim(get(b:, "coc_git_status", ""))
+  let buffer_status = trim(get(b:, "coc_git_status", "")) " remove excess whitespace
 
   let parts = split(repo_status)
   if len(parts) > 0
@@ -114,13 +114,13 @@ function! s:statusline_git_status() abort
     return [prefix, component]
 endfunction
 
-let s:st_mode = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
-let s:st_info = { 'color': '%#StInfo#', 'sep_color': '%#StInfoSep#' }
-let s:st_ok =   { 'color': '%#StOk#', 'sep_color': '%#StOkSep#' }
-let s:st_inactive = { 'color': '%#StInactive#', 'sep_color': '%#StInactiveSep#' }
-let s:st_error = {'color': '%#StError#', 'sep_color': '%#StErrorSep#' }
-let s:st_warning = {'color': '%#StWarning#', 'sep_color': '%#StWarningSep#' }
-let s:st_menu = {'color': '%#StMenu#', 'sep_color': '%#StMenuSep#' }
+let s:st_mode     = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
+let s:st_info     = {'color': '%#StInfo#', 'sep_color': '%#StInfoSep#'}
+let s:st_ok       = {'color': '%#StOk#', 'sep_color': '%#StOkSep#'}
+let s:st_inactive = {'color': '%#StInactive#', 'sep_color': '%#StInactiveSep#'}
+let s:st_error    = {'color': '%#StError#', 'sep_color': '%#StErrorSep#' }
+let s:st_warning  = {'color': '%#StWarning#', 'sep_color': '%#StWarningSep#' }
+let s:st_menu     = {'color': '%#StMenu#', 'sep_color': '%#StMenuSep#' }
 
 let s:gold         = '#F5F478'
 let s:white        = '#abb2bf'
@@ -138,13 +138,13 @@ let s:comment_grey = '#5c6370'
 let s:inc_search_bg = synIDattr(hlID('Search'), 'bg')
 
 function! s:set_statusline_colors() abort
-  let s:normal_bg = synIDattr(hlID('Normal'), 'bg')
-  let s:normal_fg = synIDattr(hlID('Normal'), 'fg')
-  let s:pmenu_bg  = synIDattr(hlID('Pmenu'), 'bg')
-  let s:string_fg = synIDattr(hlID('String'), 'fg')
-  let s:error_fg =  synIDattr(hlID('ErrorMsg'), 'fg')
-  let s:comment_fg =  synIDattr(hlID('Comment'), 'fg')
-  let s:warning_fg = g:colors_name =~ 'one' ?
+  let s:normal_bg     = synIDattr(hlID('Normal'), 'bg')
+  let s:normal_fg     = synIDattr(hlID('Normal'), 'fg')
+  let s:pmenu_bg      = synIDattr(hlID('Pmenu'), 'bg')
+  let s:string_fg     = synIDattr(hlID('String'), 'fg')
+  let s:error_fg      = synIDattr(hlID('ErrorMsg'), 'fg')
+  let s:comment_fg    =  synIDattr(hlID('Comment'), 'fg')
+  let s:warning_fg    = g:colors_name =~ 'one' ?
         \ s:light_yellow : synIDattr(hlID('WarningMsg'), 'fg')
 
   " NOTE: Unicode characters including vim devicons should NOT be highlighted
