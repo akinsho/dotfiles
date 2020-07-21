@@ -62,7 +62,7 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 if has('nvim')
   Plug 'kyazdani42/nvim-web-devicons'
-  Plug 'kyazdani42/nvim-tree.lua'
+  Plug 'kyazdani42/nvim-tree.lua', { 'branch': 'fix/remove-gotos' }
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
