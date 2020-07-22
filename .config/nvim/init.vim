@@ -46,18 +46,23 @@ function! s:safely_source(arg) abort
   endtry
 endfunction
 
+let g:dotfiles_plugins_loaded = 0
+let g:dotfiles_plugins_errored = 0
+
 function! s:load_plugin_configs(settings_dir) abort
-  let s:plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
-  let s:loaded = 0
-  let s:errors = 0
-  for fpath in s:plugins
+  let plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
+  let loaded = 0
+  let errors = 0
+  for fpath in plugins
     let s:inactive = match(fpath ,"inactive")
     if s:inactive == -1
       let s:result = s:safely_source(fpath)
       if s:result == 0
-        let s:errors += 1
+        let errors += 1
+        let g:dotfiles_plugins_errored += 1
       endif
-      let s:loaded += s:result
+      let loaded += s:result
+      let g:dotfiles_plugins_loaded += s:result
     endif
   endfor
 endfunction

@@ -16,6 +16,35 @@ let  g:startify_bookmarks    =  [
     \ {'d': $DOTFILES }
     \ ]
 
+let s:vim = [
+            \'██╗░░░██╗██╗███╗░░░███╗',
+            \'██║░░░██║██║████╗░████║',
+            \'╚██╗░██╔╝██║██╔████╔██║',
+            \'░╚████╔╝░██║██║╚██╔╝██║',
+            \'░░╚██╔╝░░██║██║░╚═╝░██║',
+            \'░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝'
+            \]
+
+let s:neovim = [
+            \'███╗░░██╗███████╗░█████╗░██╗░░░██╗██╗███╗░░░███╗',
+            \'████╗░██║██╔════╝██╔══██╗██║░░░██║██║████╗░████║',
+            \'██╔██╗██║█████╗░░██║░░██║╚██╗░██╔╝██║██╔████╔██║',
+            \'██║╚████║██╔══╝░░██║░░██║░╚████╔╝░██║██║╚██╔╝██║',
+            \'██║░╚███║███████╗╚█████╔╝░░╚██╔╝░░██║██║░╚═╝░██║',
+            \'╚═╝░░╚══╝╚══════╝░╚════╝░░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝',
+            \]
+
+let s:editor_header = has('nvim') ? s:neovim : s:vim
+let s:errored = g:dotfiles_plugins_errored ? ', errored: '.g:dotfiles_plugins_errored : ''
+
+let g:header = s:editor_header + [
+            \ '',
+            \ '',
+            \ ' Plugins loaded: '.len(g:plugs).' ',
+            \ ' config files loaded: '.g:dotfiles_plugins_loaded.s:errored
+            \]
+
+let g:startify_custom_header = 'startify#pad(g:header + startify#fortune#boxed())'
 
 let g:startify_commands = [
     \ {'pu': ['Update plugins',':PlugUpdate | PlugUpgrade']},
