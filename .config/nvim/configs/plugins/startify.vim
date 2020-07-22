@@ -40,7 +40,7 @@ let s:errored = g:dotfiles_plugins_errored ? ', errored: '.g:dotfiles_plugins_er
 let g:header = s:editor_header + [
             \ '',
             \ '',
-            \ ' Plugins loaded: '.len(g:plugs).' ',
+            \ ' Plugins loaded: '.len(get(g:, 'plugs', 0)).' ',
             \ ' config files loaded: '.g:dotfiles_plugins_loaded.s:errored
             \]
 
