@@ -221,6 +221,10 @@ endfunction
 augroup LazyLoadPlugins
   autocmd!
   autocmd CursorHold,CursorHoldI * call s:lazy_load_plugins()
+  " if we are lazy loading vimwiki we should set the filetype
+  " when we enter an associated file. this will force vim plug to
+  " load the plugin
+  autocmd BufEnter *.wiki set filetype=vimwiki
 augroup END
 
 function s:install_missing_plugins() abort
