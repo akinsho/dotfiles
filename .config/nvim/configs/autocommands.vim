@@ -194,7 +194,8 @@ augroup END
 if has('nvim-0.5')
   augroup TextYankHighlight
     autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank('IncSearch', 500)
+    " don't execute silently in case of errors
+    autocmd TextYankPost * lua require'vim.highlight'.on_yank({ timeout = 500, on_visual = false })
   augroup END
 endif
 
