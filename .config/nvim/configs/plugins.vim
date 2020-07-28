@@ -159,6 +159,7 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 " NOTE: Currently the neovim snap on Ubuntu is behind the latest master
 " which is required to run treesitter so I'm using the AppImage instead
+" Plug '~/Desktop/Coding/nvim-treesitter'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "--------------------------------------------------------------------------------
