@@ -4,6 +4,10 @@ function! s:is_blacklisted()
     return 1
   endif
 
+  if &diff
+    return 1
+  endif
+
   if &previewwindow
     return 1
   endif

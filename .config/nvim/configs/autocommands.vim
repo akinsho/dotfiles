@@ -127,7 +127,10 @@ let s:column_exclusions = [
 function! s:check_color_column(...)
   " if called from WinLeave event this value is 1
   let leaving = get(a:, '0', 0)
-  if index(s:column_exclusions, &ft) != -1 || !&buflisted
+  if index(s:column_exclusions, &ft) != -1 ||
+        \ !&modifiable ||
+        \ !&buflisted ||
+        \ strlen(&buftype) > 0
     return
   endif
   if winwidth('%') <= 120 || leaving
