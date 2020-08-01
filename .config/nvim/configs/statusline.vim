@@ -104,7 +104,7 @@ function! s:statusline_git_status() abort
   let component = repo_status . " ". buffer_status
   let length = strlen(component)
   " if there is no branch info show nothing
-  if !strlen(repo_status)
+  if !strlen(repo_status) || window_size < 100
     return ['', '']
   endif
   " if the window is small drop the buffer changes

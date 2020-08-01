@@ -7,8 +7,11 @@ export DOTFILES=$HOME/.dotfiles
 if which yarn >/dev/null; then
   export PATH="$PATH:$(yarn global bin)"
 fi
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.npm/bin:$PATH"
+# TODO remove this variable once no longer building neovim from source
+export PATH="$HOME/neovim/bin:$PATH"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # JAVA ==========================================================

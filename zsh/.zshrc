@@ -46,6 +46,10 @@ source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
 #-------------------------------------------------------------------------------
 #               Completion
 #-------------------------------------------------------------------------------
+# Completion for kitty
+if [[ "$TERM" == "xterm-kitty" ]]; then
+  kitty + complete setup zsh | source /dev/stdin
+fi
 
 # Colorize completions using default `ls` colors.
 zstyle ':completion:*' list-colors ''

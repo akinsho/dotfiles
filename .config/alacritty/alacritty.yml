@@ -48,7 +48,8 @@ window:
   #     - none: Neither borders nor title bar
   #     - buttonless: Title bar, transparent background and title bar buttons
   #     - transparent: Title bar, transparent background, but no title bar buttons
-  decorations: buttonless
+  #     set to Buttonless on macos
+  decorations: none
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -82,7 +83,7 @@ font:
     style: Book Italic
 
   # Point size
-  size: 17.0
+  size: 14.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
