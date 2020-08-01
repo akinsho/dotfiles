@@ -3,16 +3,20 @@
 ""---------------------------------------------------------------------------//
 function! ApplyUserHighlights() abort
   "---------------------------------------------------------------------------//
-  "Set the colour column to highlight one column after the 'textwidth'
+  " Set the colour column to highlight one column after the 'textwidth'
   set colorcolumn=+1
-  "---------------------------------------------------------------------------//
-  " Highlight over 80 cols in red - moot now because -> prettier
-  " Note: Match commands interact and this command prevents the command below from working
 
   if !PluginLoaded('conflict-marker.vim')
     " Highlight VCS conflict markers
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif
+
+  if has('nvim')
+    highlight TermCursor ctermfg=green guifg=green
+    highlight link MsgSeparator Comment
+  endif
+
+  call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
 
   " Add undercurl to existing spellbad highlight
   let s:error_fg = synIDattr(hlID('Error'), 'fg')
@@ -27,8 +31,13 @@ function! ApplyUserHighlights() abort
   highlight! Todo gui=bold
   highlight! Credit gui=bold
   highlight! CursorLineNr guifg=yellow gui=bold
-
   highlight! link dartStorageClass Statement
+
+  " Customize Diff highlighting
+  highlight! DiffAdd guibg=green guifg=NONE
+  highlight! DiffDelete guibg=red
+  highlight! DiffChange guibg=yellow guifg=NONE
+  highlight! DiffText guibg=DarkYellow guifg=NONE
   ""---------------------------------------------------------------------------//
   " Custom highlights
   ""---------------------------------------------------------------------------//
@@ -70,13 +79,6 @@ function! ApplyUserHighlights() abort
     highlight Folded  gui=bold,italic cterm=bold
     highlight link typescriptExport jsImport
     highlight link typescriptImport jsImport
-  endif
-
-  call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
-
-  if has('nvim')
-    highlight TermCursor ctermfg=green guifg=green
-    highlight link MsgSeparator Comment
   endif
   "---------------------------------------------------------------------------//
 endfunction
