@@ -342,6 +342,18 @@ __async_vcs_info_done() {
   zle && zle reset-prompt
 }
 
+# When the terminal is resized, the shell receives a SIGWINCH signal.
+# So redraw the prompt in a trap.
+# https://unix.stackexchange.com/questions/360600/reload-zsh-when-resizing-terminator-window
+#
+# Resource: [TRAP functions]
+# http://zsh.sourceforge.net/Doc/Release/Functions.html#Trap-Functions
+function TRAPWINCH () {
+  # potentially add a clear command here
+  set-prompt
+  zle && zle reset-prompt
+}
+
 add-zsh-hook precmd () {
   __timings_precmd
   # start async job to populate git info
