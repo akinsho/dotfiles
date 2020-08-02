@@ -157,10 +157,6 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 " Filetype Plugins {{{1
 "--------------------------------------------------------------------------------
-" NOTE: Currently the neovim snap on Ubuntu is behind the latest master
-" which is required to run treesitter so I'm using the AppImage instead
-" Plug '~/Desktop/Coding/nvim-treesitter'
-Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 "--------------------------------------------------------------------------------
 " Themes  {{{1
@@ -177,15 +173,18 @@ Plug 'rakr/vim-one' " alternative one dark with a light theme
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 " Plug 'flrnd/candid.vim'
-
 "--------------------------------------------------------------------------------
-" Personal plugins  {{{1
+" Dev plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
   if has('mac')
     Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'dev' }
+    Plug 'nvim-treesitter/nvim-treesitter'
   else
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
+    Plug '~/Desktop/Coding/nvim-treesitter'
+    " Plugin for visualising the tree sitter tree whilst developing
+    Plug 'nvim-treesitter/playground'
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
