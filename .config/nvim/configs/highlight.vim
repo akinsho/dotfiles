@@ -36,8 +36,8 @@ function! ApplyUserHighlights() abort
   " Customize Diff highlighting
   highlight! DiffAdd guibg=green guifg=NONE
   highlight! DiffDelete guibg=red
-  highlight! DiffChange guibg=yellow guifg=NONE
-  highlight! DiffText guibg=DarkYellow guifg=NONE
+  highlight! link DiffChange IncSearch
+  highlight! link DiffText Search
   ""---------------------------------------------------------------------------//
   " Custom highlights
   ""---------------------------------------------------------------------------//
