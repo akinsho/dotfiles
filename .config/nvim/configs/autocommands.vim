@@ -280,6 +280,7 @@ augroup Utilities "{{{1
 
   autocmd FileType gitcommit,gitrebase set bufhidden=delete
 
+  " FIXME should this be being called for all existing files
   if exists('*mkdir') "auto-create directories for new files
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
