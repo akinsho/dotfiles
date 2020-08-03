@@ -160,21 +160,6 @@ if exists('$TMUX')
   augroup END
 endif
 
-augroup LocalSpelling
-  " Set spell to English for commonly used languages
-  " this could go into ftplugin files but that is a lot more
-  " work than doing this...
-  " NOTE: do not include files that are highlighted by tree sitter
-  autocmd Filetype javascript,typescript,rust,elm,text,vim setlocal spell spelllang=en
-  " Ignore CamelCase words when spell checking
-  " source: https://stackoverflow.com/questions/7561603/vim-spell-check-ignore-capitalized-words
-  fun! s:ignore_camel_case()
-    syn match CamelCase /\<[A-Z][a-z]\+[A-Z].\{-}\>/ contains=@NoSpell transparent
-    syn cluster Spell add=CamelCase
-  endfun
-  autocmd BufRead,BufNewFile * call s:ignore_camel_case()
-augroup end
-
 augroup config_filetype_settings "{{{1
   autocmd!
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
