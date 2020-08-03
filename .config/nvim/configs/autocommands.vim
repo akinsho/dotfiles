@@ -270,6 +270,9 @@ augroup Utilities "{{{1
     autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
   endif
 
+  " Save a buffer when we leave it
+  autocmd BufLeave * silent! update
+
   " Update filetype on save if empty
   autocmd BufWritePost * nested
         \ if &l:filetype ==# '' || exists('b:ftdetect')

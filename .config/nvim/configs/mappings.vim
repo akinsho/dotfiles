@@ -63,13 +63,6 @@ onoremap <silent> il :<C-U>normal! ^vg_<CR>
 ""---------------------------------------------------------------------------//
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-""---------------------------------------------------------------------------//
-" Make the given command repeatable using repeat.vim
-command! -nargs=* Repeatable call s:Repeatable(<q-args>)
-function! s:Repeatable(command)
-  exe a:command
-  call repeat#set(':Repeatable '.a:command."\<cr>")
-endfunction
 "---------------------------------------------------------------------------//
 " Paste in visual mode multiple times
 xnoremap p pgvy
@@ -281,8 +274,8 @@ nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
 nnoremap <localleader><tab> :b <C-Z>
 " Tab and Shift + Tab Circular buffer navigation
 " and save before moving buffers
-nnoremap <silent><leader><tab>  :update <bar> bnext<CR>
-nnoremap <silent><S-tab> :update <bar> bprevious<CR>
+nnoremap <silent><leader><tab>  :bnext<CR>
+nnoremap <silent><S-tab> :bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 " use ,gf to go to file in a vertical split
