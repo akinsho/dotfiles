@@ -570,3 +570,5 @@ nnoremap <silent> g/ :silent! :grep!<space>
 nnoremap <silent> <localleader>, :call utils#modify_line_end_delimiter(',')<cr>
 nnoremap <silent> <localleader>; :call utils#modify_line_end_delimiter(';')<cr>
 
+command! -nargs=0 Token call utils#token_inspect()
+nnoremap <leader>E :Token<cr>

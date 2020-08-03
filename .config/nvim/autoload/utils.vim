@@ -189,9 +189,6 @@ function! s:hi_chain(synid) abort
 
   return names
 endfunction
-
-command! -nargs=0 Token call utils#token_inspect()
-nnoremap <leader>E :Token<cr>
 ""---------------------------------------------------------------------------//
 " Takes a base - highlight group to extend,
 " group - the new group name
