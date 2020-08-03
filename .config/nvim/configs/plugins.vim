@@ -119,7 +119,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
 " Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
-"       \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
+" Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
