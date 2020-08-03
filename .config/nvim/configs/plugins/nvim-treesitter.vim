@@ -8,8 +8,13 @@ lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
   highlight = {
-    enable = true,                                   -- false will disable the whole extension
-    disable = { 'lua', 'javascript', 'typescript' }, -- list of language that will be disabled
+    enable = true,   -- false will disable the whole extension
+    disable = {      -- list of language that will be disabled
+    'lua',
+    'javascript',
+    'typescript',
+    'json'
+    },
   },
   incremental_selection = {
         enable = true,
@@ -51,5 +56,5 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 augroup TreeSitterFolds
-  autocmd FileType go,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+  autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
 augroup END
