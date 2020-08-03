@@ -144,7 +144,6 @@ endif
 nmap <silent> ]c <Plug>(coc-diagnostic-prev)
 nmap <silent> [c <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -263,6 +262,7 @@ nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
 ""---------------------------------------------------------------------------//
 function s:apply_coc_highlights()
   highlight CocErrorHighlight guisp=#E06C75 gui=undercurl
+  highlight CocInfoHighlight guisp=#fab005 gui=undercurl
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
   highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
 endfunction
