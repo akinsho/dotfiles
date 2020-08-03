@@ -33,14 +33,6 @@ augroup AddTerminalMappings
   autocmd!
   autocmd TermEnter,BufEnter term://* call s:add_terminal_mappings()
 augroup END
-
-if has('nvim')
-  nnoremap <leader>h<CR> <Cmd>leftabove 60vnew<CR><Cmd>terminal<CR>
-  nnoremap <leader>l<CR> <Cmd>rightbelow 60vnew<CR><Cmd>terminal<CR>
-  nnoremap <leader>k<CR> <Cmd>leftabove 10new<CR><Cmd>terminal<CR>
-  nnoremap <leader><CR> <Cmd>rightbelow 10new<CR><Cmd>terminal<CR>
-  nnoremap <leader>te <Cmd>tabnew<CR><Cmd>te<CR>
-endif
 "}}}
 
 ""---------------------------------------------------------------------------//

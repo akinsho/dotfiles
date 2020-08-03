@@ -85,7 +85,7 @@ Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'AndrewRadev/tagalong.vim'
-Plug 'stsewd/gx-extended.vim'
+Plug 'liuchengxu/vim-which-key'
 "--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------

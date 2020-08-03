@@ -2,95 +2,133 @@ if !PluginLoaded("vim-which-key")
   finish
 endif
 " Define prefix dictionary
-let g:which_leader_key_map =  {}
-let g:which_localleader_key_map =  {}
+let g:which_leader_key_map =  {
+      \ '1' : 'which_key_ignore',
+      \ '2' : 'which_key_ignore',
+      \ '3' : 'which_key_ignore',
+      \ '4' : 'which_key_ignore',
+      \ '5' : 'which_key_ignore',
+      \ '6' : 'which_key_ignore',
+      \ '7' : 'which_key_ignore',
+      \ '8' : 'which_key_ignore',
+      \ '9' : 'which_key_ignore',
+      \ '10' : 'which_key_ignore',
+      \ 'A': 'Projectionist: edit alternate',
+      \ 'av': 'Projectionst: vsplit alternate',
+      \ 'a' : 'Coc codeaction (for text object)',
+      \ 'c' : {
+      \   'name': '+Coc command',
+      \   'f': 'search: cursor word',
+      \   'y': 'list: yank',
+      \   'b': 'list: branches',
+      \   'd': 'list: diagnostic',
+      \   'c': 'list: command',
+      \   'e': 'list: extension',
+      \   'o': 'list: outline',
+      \   's': 'list: symbol',
+      \   'm': 'list: marketplace',
+      \   'r': 'list: resume',
+      \   'a': 'codelens: action'
+      \},
+      \ 'h': {
+      \   'name': '+Git hunk',
+      \   's': 'stage',
+      \   'u': 'undo',
+      \},
+      \ 'r': {
+      \ 'name': '+Coc edit',
+      \   'a': 'codeaction: entire file',
+      \   'r': 'refactor',
+      \   'f': 'fix current line',
+      \   'n': 'rename cursor word'
+      \ },
+      \ 'n' : {
+      \  'name': '+new',
+      \  'f' :'Create a new file',
+      \ },
+      \ 'ar' : 'Toggle auto resize',
+      \ 'f' : 'Find cursor word (fzf)',
+      \ 'F' : 'Find word (prompt)',
+      \ 'E' : 'Show token under the cursor',
+      \ 'p' : {'name': 'vim-plug'},
+      \ 'g' : 'Grep word under the cursor',
+      \ 'l' : {
+      \   'name': '+list',
+      \   'i' : 'Toggle location list',
+      \   's': 'Toggle quickfix'
+      \ },
+      \ 'e' : {
+      \   'name': '+edit',
+      \   'v' : 'Open vimrc in a new buffer',
+      \   'z' : 'Open zshrc in a new buffer',
+      \   't' : 'Open tmux config in a new buffer',
+      \},
+      \ 'u': 'Toggle undo tree',
+      \ 's': 'Subversive: current word',
+      \ 'ss': 'Subversive: entire line',
+      \ 'S': 'Subversive: till end of line',
+      \ 'w' : 'Save',
+      \ 'z' : 'Zoom in current buffer',
+      \ 'Z' : 'Zoom in with tab',
+      \ 'sf' : 'Create new file in a split',
+      \ 'sw' : 'Swap buffers horizontally',
+      \ 'so' : 'Source current buffer',
+      \ 'sv' : 'Source init.vim',
+      \ 'U' : 'Uppercase all word',
+      \ "," : 'Go to previous buffer',
+      \ "=" : 'Make windows equal size',
+      \ ")" : 'Wrap with parens',
+      \ "}" : 'Wrap with braces',
+      \ "\"" : 'Wrap with double quotes',
+      \ "'" : 'Wrap with single quotes',
+      \ "`" : 'Wrap with back ticks',
+      \ 'on' : 'Close all other buffers',
+      \ "[" : 'Subsitute cursor word in file',
+      \ "]" : 'Substitute cursor word on line',
+      \ "<s-tab>" : 'Go to previous buffer',
+      \ "<tab>" : 'Go to next buffer',
+      \}
 
-let g:which_localleader_key_map.0 = 'which_key_ignore'
-let g:which_localleader_key_map.1 = 'which_key_ignore'
-let g:which_localleader_key_map.2 = 'which_key_ignore'
-let g:which_localleader_key_map.3 = 'which_key_ignore'
-let g:which_localleader_key_map.4 = 'which_key_ignore'
-let g:which_localleader_key_map.5 = 'which_key_ignore'
-let g:which_localleader_key_map.6 = 'which_key_ignore'
-let g:which_localleader_key_map.7 = 'which_key_ignore'
-let g:which_localleader_key_map.8 = 'which_key_ignore'
-let g:which_localleader_key_map.9 = 'which_key_ignore'
+let g:which_localleader_key_map =  {
+      \ '0' : 'which_key_ignore',
+      \ '1' : 'which_key_ignore',
+      \ '2' : 'which_key_ignore',
+      \ '3' : 'which_key_ignore',
+      \ '4' : 'which_key_ignore',
+      \ '5' : 'which_key_ignore',
+      \ '6' : 'which_key_ignore',
+      \ '7' : 'which_key_ignore',
+      \ '8' : 'which_key_ignore',
+      \ '9' : 'which_key_ignore',
+      \ 'h' : 'Change two horizontally split windows to vertical splits',
+      \ 'v' : 'Change two vertically split windows to horizontal splits',
+      \ 'l' : 'Redraw window',
+      \ 'q' : 'Close quickfix/location list',
+      \ 'z' : 'Center view port',
+      \ 'n' : 'New file',
+      \ 't' : {
+      \ 'n' : 'Test nearest',
+      \ 'ss': 'Save session',
+      \},
+      \ ',' : 'Add comma to end of line',
+      \ ';' : 'Add semicolon to end of line',
+      \ '?' : 'Search for word under cursor in google',
+      \ '!' : 'Search for word under cursor in google',
+      \ '<tab>' : 'Open vim bufferlist',
+      \ "[" : 'Open space above',
+      \ "]" : 'Insert space below',
+      \}
 
-let g:which_localleader_key_map.h = 'Change two horizontally split windows to vertical splits'
-let g:which_localleader_key_map.v = 'Change two vertically split windows to horizontal splits'
-let g:which_localleader_key_map.l = 'Redraw window'
-let g:which_localleader_key_map.q = 'Close quickfix/location list'
-let g:which_localleader_key_map.z = 'Center view port'
-let g:which_localleader_key_map.e = { 'name': '+edit-tab' }
-let g:which_localleader_key_map.e.v = 'Open vimrc in a new tab'
-let g:which_localleader_key_map.n = 'New file'
-let g:which_localleader_key_map[','] = 'Add comma to end of line'
-let g:which_localleader_key_map[';'] = 'Add semicolon to end of line'
-let g:which_localleader_key_map['?'] = 'Search for word under cursor in google'
-let g:which_localleader_key_map['!'] = 'Search for word under cursor in google'
-let g:which_localleader_key_map['<tab>'] = 'Open vim bufferlist'
-let g:which_localleader_key_map["["] = 'Open space above'
-let g:which_localleader_key_map["]"] = 'Insert space below'
-
-let g:which_leader_key_map.a = 'Coc: execute code action for selected range'
-let g:which_leader_key_map.n = { 'name': 'new' }
-let g:which_leader_key_map.e = { 'name': 'edit-buffer' }
-let g:which_leader_key_map.ar = 'Toggle auto resize'
-let g:which_leader_key_map.f = 'Find cursor word (fzf)'
-let g:which_leader_key_map.F = 'Find word (prompt)'
-let g:which_leader_key_map.E = 'Show token under the cursor'
-let g:which_leader_key_map.ff = 'Coc: fix diagnostic on current line'
-let g:which_leader_key_map.r = {'name': 'refactor'}
-let g:which_leader_key_map.r.f = 'Coc: refactor cursor word'
-let g:which_leader_key_map.r.n = 'Coc: rename cursor word'
-let g:which_leader_key_map.p = {'name': 'vim-plug'}
-let g:which_leader_key_map.g = 'Grep word under the cursor'
-" let g:which_leader_key_map.gl = 'Copy git url for current line'
-" let g:which_leader_key_map.gf = 'Open path under cursor in vertical split'
-" let g:which_leader_key_map.sw = 'Swap top/bottom or left/right split'
-let g:which_leader_key_map.l = { 'name': 'left' }
-let g:which_leader_key_map.l.i = 'Toggle quickfix/location list'
-" let g:which_leader_key_map.l['<CR>'] = 'open terminal right'
-let g:which_leader_key_map.z = 'Zoom in current buffer'
-let g:which_leader_key_map.Z = 'Zoom in with tab'
-let g:which_leader_key_map.ev = 'Open vimrc in a new buffer'
-let g:which_leader_key_map.ez = 'Open zshrc in a new buffer'
-let g:which_leader_key_map.et = 'Open tmux config in a new buffer'
-" let g:which_leader_key_map.s = 'Sort a visual selection'
-let g:which_leader_key_map.s = {'name': 'source'}
-let g:which_leader_key_map.sf = 'Create new file in a split'
-let g:which_leader_key_map.so = 'Source current buffer'
-let g:which_leader_key_map.sv = 'Source init.vim'
-let g:which_leader_key_map.U = 'Uppercase all word'
-let g:which_leader_key_map.n.f ='Create a new file'
-let g:which_leader_key_map[","] = 'Go to previous buffer'
-let g:which_leader_key_map["="] = 'Make windows equal size'
-let g:which_leader_key_map[")"] = 'Wrap with parens'
-let g:which_leader_key_map["}"] = 'Wrap with braces'
-let g:which_leader_key_map["\""] = 'Wrap with double quotes'
-let g:which_leader_key_map["\'"] = 'Wrap with single quotes'
-let g:which_leader_key_map['on'] = 'Close all other buffers'
-let g:which_leader_key_map["["] = 'Subsitute cursor word in file'
-let g:which_leader_key_map["]"] = 'Substitue cursor word on line'
-let g:which_leader_key_map["<s-tab>"] = 'Go to previous buffer'
-let g:which_leader_key_map["<tab>"] = 'Go to next buffer'
-
-" The map must be registered before the mappings below
-augroup LazyLoadWhichKey
-  autocmd!
-  " To register the descriptions when using the on-demand load feature,
-  " use the autocmd hook to call which_key#register(), e.g., register for the Space key:
-  autocmd User vim-which-key call which_key#register(',', 'g:which_leader_key_map')
-  autocmd User vim-which-key call which_key#register('<Space>', 'g:which_localleader_key_map')
-  autocmd! FileType which_key
-  " Hide statusline
-  autocmd  FileType which_key set laststatus=0 noruler
-        \| autocmd BufLeave <buffer> set laststatus=2 ruler
-augroup END
-
-nnoremap <silent> <localleader>      :<c-u>WhichKey '<space>'<CR>
-nnoremap <silent> <leader>           :<c-u>WhichKey  ','<CR>
-
-let g:which_key_max_size = 15
-let g:which_key_use_floating_win = 1
+let g:which_key_use_floating_win       = 0
 let g:which_key_disable_default_offset = 1
+
+if !g:which_key_use_floating_win
+  autocmd! FileType which_key
+  autocmd  FileType which_key set laststatus=0
+        \| autocmd BufLeave <buffer> set laststatus=2
+endif
+
+call which_key#register(',', 'g:which_leader_key_map')
+call which_key#register('<Space>', 'g:which_localleader_key_map')
+nnoremap <silent> <localleader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <leader>           :<c-u>WhichKey  ','<CR>

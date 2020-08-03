@@ -152,7 +152,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['help'], &filetype) >= 0)
+  if (index(['help', 'vim'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
@@ -180,8 +180,6 @@ omap am <Plug>(coc-classobj-a)
 " Code Actions
 ""---------------------------------------------------------------------------//
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
-" Remap for do code action of current file
-nmap <silent><leader>af  <Plug>(coc-codeaction)
 " Remap for do code action of selected region
 function! s:coc_actions_from_selected(type) abort
   execute 'CocCommand actions.open ' . a:type
@@ -190,13 +188,13 @@ xnoremap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmod
 nnoremap <silent> <leader>a :<C-u>set operatorfunc=<SID>coc_actions_from_selected<CR>g@
 
 " Fix autofix problem of current line
-nmap <silent><leader>ff  <Plug>(coc-fix-current)
-nmap <silent><leader>rf  <Plug>(coc-refactor)
+nmap <silent><leader>rf  <Plug>(coc-fix-current)
+nmap <silent><leader>rr  <Plug>(coc-refactor)
 " Remap for rename current word
 nmap <silent><leader>rn <Plug>(coc-rename)
 
 " source: https://www.youtube.com/watch?v=q7gr6s8skt0
-nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>cf :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " Scroll the floating window if open
 " FIXME this breaks smooth scrolling
@@ -210,21 +208,21 @@ let g:coc_status_warning_sign = " "
 ""---------------------------------------------------------------------------//
 " Using CocList
 ""---------------------------------------------------------------------------//
-nnoremap <silent> <localleader>y  :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> <leader>cy  :<C-u>CocList -A --normal yank<cr>
 " Show all diagnostics
-nnoremap <silent><nowait> <leader>d  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>cd  :<C-u>CocList diagnostics<cr>
 " Show commands
-nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
 " Manage extensions
-nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
 " " Find symbol of current document
-nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <localleader>s  :<C-u>CocList symbols<cr>
+nnoremap <silent> <leader>cs  :<C-u>CocList symbols<cr>
 " Search marketplace for coc symbols
-nnoremap <silent> <leader>m  :<C-u>CocList marketplace<cr>
+nnoremap <silent> <leader>cm  :<C-u>CocList marketplace<cr>
 " Resume latest coc list
-nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
 
 " use normal command like `<leader>xi(`
 nmap <leader>x  <Plug>(coc-cursors-operator)
@@ -241,14 +239,6 @@ function! s:select_current_word()
   endif
   return "\<Plug>(*)\<Plug>(coc-cursors-word)\<Plug>(nohl)"
 endfunc
-"--------------------------------------------------------------------------------
-" Coc bookmarks
-"--------------------------------------------------------------------------------
-nnoremap <silent><leader>bl :CocList --auto-preview --normal bookmark<CR>
-nmap <silent><leader>bm <Plug>(coc-bookmark-toggle)
-nmap <silent><leader>ba <Plug>(coc-bookmark-annotate)
-nmap <silent><Leader>bj <Plug>(coc-bookmark-next)
-nmap <silent><Leader>bk <Plug>(coc-bookmark-prev)
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//
@@ -265,23 +255,10 @@ xmap ih <Plug>(coc-git-chunk-inner)
 omap ah <Plug>(coc-git-chunk-outer)
 xmap ah <Plug>(coc-git-chunk-outer)
 nnoremap <silent><leader>gb :CocCommand git.browserOpen<CR>
-nnoremap <silent><leader>br :CocList branches<CR>
+nnoremap <silent><leader>cb :CocList branches<CR>
 nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
 nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
-"--------------------------------------------------------------------------------
-" Coc Explorer
-"--------------------------------------------------------------------------------
-function s:open_explorer() abort
-  execute 'CocCommand explorer '.getcwd()
-endfunction
-augroup CloseCocExplorer
-  autocmd!
-  autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer')
-        \ | q
-        \ | endif
-augroup END
-nnoremap <silent><C-N> :call <SID>open_explorer()<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
 ""---------------------------------------------------------------------------//

@@ -16,8 +16,6 @@ function! ApplyUserHighlights() abort
     highlight link MsgSeparator Comment
   endif
 
-  call utils#extend_highlight('Comment', 'FoldColumn', 'gui=none')
-
   " Add undercurl to existing spellbad highlight
   let s:error_fg = synIDattr(hlID('Error'), 'fg')
   let s:rare_fg = synIDattr(hlID('SpellRare'), 'fg')
@@ -32,8 +30,10 @@ function! ApplyUserHighlights() abort
   highlight! Credit gui=bold
   highlight! CursorLineNr guifg=yellow gui=bold
   highlight! link dartStorageClass Statement
+  highlight! FoldColumn guibg=NONE
 
   " Customize Diff highlighting
+  highlight! DiffAdded guibg=NONE
   highlight! DiffAdd guibg=green guifg=NONE
   highlight! DiffDelete guibg=red
   highlight! link DiffChange IncSearch
