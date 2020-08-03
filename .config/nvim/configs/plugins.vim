@@ -72,6 +72,7 @@ Plug 'vimwiki/vimwiki', {
       \ 'on':  ['VimwikiIndex', 'VimwikiTabIndex'],
       \ 'for': ['vimwiki', 'markdown']
       \ }
+Plug 'junegunn/vim-easy-align', {'for': ['vim']}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
@@ -117,8 +118,8 @@ Plug 'tpope/vim-abolish'
 "sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
-      \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
+" Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
+"       \ | Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
