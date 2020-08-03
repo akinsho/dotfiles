@@ -67,7 +67,7 @@ let g:which_leader_key_map = {
       \   's':    'toggle quickfix'
       \ },
       \ 'e':      {
-      \   'name': '+Edit',
+      \   'name': '+edit',
       \   'v':    'open vimrc in a new buffer',
       \   'z':    'open zshrc in a new buffer',
       \   't':    'open tmux config in a new buffer',
@@ -102,8 +102,8 @@ let g:which_leader_key_map = {
       \ "\"":     'wrap with double quotes',
       \ "'":      'wrap with single quotes',
       \ "`":      'wrap with back ticks',
-      \ "[":      'subsitute cursor word in file',
-      \ "]":      'substitute cursor word on line',
+      \ "[":      'open space above',
+      \ "]":      'insert space below',
       \ "<Tab>":  ['bnext', 'Go to next buffer'],
       \}
 
@@ -157,8 +157,8 @@ let g:which_localleader_key_map = {
       \ '?':         'search for word under cursor in google',
       \ '!':         'search for word under cursor in google',
       \ '<Tab>':     ['bnext', 'open vim bufferlist'],
-      \ "[":         'open space above',
-      \ "]":         'insert space below',
+      \ "[":         'abolish: subsitute cursor word in file',
+      \ "]":         'abolish: substitute cursor word on line',
       \}
 
 let g:which_key_use_floating_win       = 0
