@@ -16,6 +16,10 @@ alias v='nvim'
 alias minimalvim="nvim -u $DOTFILES/.config/nvim/minimal.vim"
 alias vi='vim'
 alias nv='nvim'
+# This allow using neovim remote when nvim is called from inside a running vim instance
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+fi
 alias cl='clear'
 alias restart="exec $SHELL"
 alias src='restart'
