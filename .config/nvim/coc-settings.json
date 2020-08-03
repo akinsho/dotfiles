@@ -118,5 +118,9 @@
     "explorer.icon.enableNerdfont": true,
     "explorer.file.showHiddenFiles": true,
     "explorer.previewAction.onHover": false,
-    "cSpell.language": "en-GB"
+    "cSpell.language": "en-GB",
+    "cSpell.userWords": [
+      "require'vim",
+      "vimwiki"
+    ]
 }
