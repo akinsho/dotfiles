@@ -118,7 +118,7 @@ let g:which_localleader_key_map =  {
       \   'b': 'Coc: Git browse',
       \   'u': 'Coc: Copy git URL',
       \   'p': 'Git push (terminal)',
-      \   'pf': 'Git push -force (terminal)',
+      \   'pf': 'Git push --force (terminal)',
       \},
       \ 'h' : 'Change two horizontally split windows to vertical splits',
       \ 'v' : 'Change two vertically split windows to horizontal splits',
