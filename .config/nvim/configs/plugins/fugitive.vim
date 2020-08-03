@@ -2,31 +2,26 @@
 " FUGITIVE
 ""---------------------------------------------------------------------------//
 " For fugitive.git, dp means :diffput. Define dg to mean :diffget
-nnoremap <silent> <leader>dg :diffget<CR>
-nnoremap <silent> <leader>dp :diffput<CR>
+nnoremap <silent><leader>dg :diffget<CR>
+nnoremap <silent><leader>dp :diffput<CR>
 "Fugitive bindings
-nnoremap <silent><leader>gs :Git<CR>
+nnoremap <silent><localleader>gs :Git<CR>
 "Stages the current file
-nnoremap <silent><leader>gw :Gwrite<CR>
+nnoremap <silent><localleader>gw :Gwrite<CR>
 "Rename the current file and the corresponding buffer
-nnoremap <silent><leader>gm :Gmove<Space>
+nnoremap <silent><localleader>gm :Gmove<Space>
 "Revert current file to last checked in version
-nnoremap <silent><leader>gre :Gread<CR>
+nnoremap <silent><localleader>gre :Gread<CR>
 "Remove the current file and the corresponding buffer
-nnoremap <silent><leader>grm :GRemove<CR>
+nnoremap <silent><localleader>grm :GRemove<CR>
 "See in a side window who is responsible for lines of code
-nnoremap <silent><leader>gbl :Git blame<CR>
-"Opens the index - i.e. git saved version of a file
-nnoremap <silent><leader>ge :Gedit<CR>
-nnoremap <silent><leader>gd :Gdiffsplit<CR>
-nnoremap <silent><leader>gc :Git commit<CR>
-nnoremap <silent><leader>gt :Git commit -v -q %:p<CR>
-nnoremap <silent><leader>gl :Git pull<CR>
-nnoremap <silent><leader>gp :Git push<CR>
-nnoremap <silent><leader>gpf :Git push -f<CR>
-nnoremap <silent><leader>go :Git checkout<space>
-nnoremap <silent><leader>gcm :Gcm<CR>
-nnoremap <silent><leader>gb :call CreateNewBranch()<CR>
+nnoremap <silent><localleader>gbl :Git blame<CR>
+nnoremap <silent><localleader>gd :Gdiffsplit<CR>
+nnoremap <silent><localleader>gc :Git commit<CR>
+nnoremap <silent><localleader>gl :Git pull<CR>
+nnoremap <silent><localleader>go :Git checkout<space>
+nnoremap <silent><localleader>gcm :Gcm<CR>
+nnoremap <silent><localleader>gn :call CreateNewBranch()<CR>
 
 function CreateNewBranch() abort
   " TODO add a new line at the end of the input

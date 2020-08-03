@@ -223,7 +223,11 @@ nnoremap <silent><leader>w :silent w<cr>
 nnoremap <silent>qa :confirm wqa<CR>
 " Quit
 vnoremap <C-Q>  <esc>
-
+""---------------------------------------------------------------------------//
+" TABS
+""---------------------------------------------------------------------------//
+nnoremap <silent><leader>tn :tabedit %<CR>
+nnoremap <silent><leader>tc :tabclose<CR>
 " ----------------------------------------------------------------------------
 " Quickfix
 " ----------------------------------------------------------------------------
@@ -407,7 +411,7 @@ xnoremap & :&&<CR>
 inoremap <C-p> <Esc>pa
 cnoremap <C-v> <C-r>"
 " ----------------------------------------------------------------------------
-" Todo - Check the repo for Todos and add to the qf list
+" Todo - Check for todos and add to the qf list
 " ----------------------------------------------------------------------------
 " Use the external grepprg which is set to ag or rg
 " which is much faster than internal vimgrep progream
@@ -425,7 +429,7 @@ endif
 " ----------------------------------------------------------------------------
 " Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
-function! s:goog(pat, lucky)
+function! s:google(pat, lucky)
   let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
   let q = substitute(q, '[[:punct:] ]',
         \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
@@ -433,10 +437,10 @@ function! s:goog(pat, lucky)
         \ a:lucky ? 'btnI&' : '', q))
 endfunction
 
-nnoremap <silent><localleader>? :call <SID>goog(expand("<cWORD>"), 0)<cr>
-nnoremap <silent><localleader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
-xnoremap <silent><localleader>? "gy:call <SID>goog(@g, 0)<cr>gv
-xnoremap <silent><localleader>! "gy:call <SID>goog(@g, 1)<cr>gv
+nnoremap <silent><localleader>? :call s:google(expand("<cWORD>"), 0)<cr>
+nnoremap <silent><localleader>! :call s:google(expand("<cWORD>"), 1)<cr>
+xnoremap <silent><localleader>? "gy:call s:google(@g, 0)<cr>gv
+xnoremap <silent><localleader>! "gy:call s:google(@g, 1)<cr>gv
 
 " ----------------------------------------------------------------------------
 " Credit: June Gunn  == ConnectChrome
@@ -507,8 +511,7 @@ if !PluginLoaded('conflict-marker.vim')
   " Shortcut to jump to last conflict marker"
   nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 endif
-" Zoom / Restore window. - Zooms by increasing window with smooshing the
-" Other window
+" Zoom / Restore window. - Zooms by increasing window width squashing the other window
 nnoremap <silent> <leader>z :call utils#tab_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade

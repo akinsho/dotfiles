@@ -246,7 +246,7 @@ nmap <silent> [h <Plug>(coc-git-nextchunk)
 " show chunk diff at current position
 nmap <silent> gi <Plug>(coc-git-chunkinfo)
 " show commit contains current position
-nmap <localleader>gc <Plug>(coc-git-commit)
+nmap <localleader>gv <Plug>(coc-git-commit)
 " create text object for git chunks
 omap ih <Plug>(coc-git-chunk-inner)
 xmap ih <Plug>(coc-git-chunk-inner)
@@ -255,7 +255,7 @@ xmap ah <Plug>(coc-git-chunk-outer)
 nnoremap <silent><leader>cb :CocList branches<CR>
 nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
-nnoremap <silent><localleader>gb :CocCommand git.browserOpen<CR>
+nnoremap <silent><localleader>gbo :CocCommand git.browserOpen<CR>
 nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights
