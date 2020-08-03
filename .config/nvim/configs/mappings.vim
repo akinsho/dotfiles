@@ -314,18 +314,15 @@ else
 endif
 
 "Change two horizontally split windows to vertical splits
-nnoremap <LocalLeader>h <C-W>t <C-W>K
+nnoremap <Localleader>wh <C-W>t <C-W>K
 "Change two vertically split windows to horizontal splits
-nnoremap <LocalLeader>v <C-W>t <C-W>H
+nnoremap <Localleader>wv <C-W>t <C-W>H
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
 " Switch from visual to visual block.
 xnoremap r <C-v>
-
-xnoremap nu :<C-u>call utils#Numbers()<CR>
-onoremap nu :normal vin<CR>
 
 " Move <C-A> functionality to <C-G> is in tmux
 " Prevents this useful binding from getting swallowed
