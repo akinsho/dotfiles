@@ -427,10 +427,10 @@ function! s:google(pat, lucky)
         \ a:lucky ? 'btnI&' : '', q))
 endfunction
 
-nnoremap <silent><localleader>? :call s:google(expand("<cWORD>"), 0)<cr>
-nnoremap <silent><localleader>! :call s:google(expand("<cWORD>"), 1)<cr>
-xnoremap <silent><localleader>? "gy:call s:google(@g, 0)<cr>gv
-xnoremap <silent><localleader>! "gy:call s:google(@g, 1)<cr>gv
+nnoremap <silent><localleader>? :call <SID>google(expand("<cWORD>"), 0)<cr>
+nnoremap <silent><localleader>! :call <SID>google(expand("<cWORD>"), 1)<cr>
+xnoremap <silent><localleader>? "gy:call <SID>google(@g, 0)<cr>gv
+xnoremap <silent><localleader>! "gy:call <SID>google(@g, 1)<cr>gv
 
 " ----------------------------------------------------------------------------
 " Credit: June Gunn  == ConnectChrome
