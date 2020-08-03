@@ -18,4 +18,3 @@ nnoremap <silent><c-\> :call terminal#toggle(10)<CR>
 inoremap <silent><c-\> <Esc>:call terminal#toggle(10)<CR>
 nnoremap <silent><localleader>gp :call terminal#exec("git push", 12)<CR>
 nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>
-nnoremap <silent><localleader>ht :call terminal#exec("htop", 40)<CR>

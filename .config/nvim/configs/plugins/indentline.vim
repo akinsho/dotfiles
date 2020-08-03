@@ -14,5 +14,3 @@ let g:indentLine_setConceal      = 1
 let g:indentLine_setColors       = 1
 let g:indentLine_char            = '│'
 let g:indentLine_color_gui       = s:gui_color
-
-nnoremap <leader>il :IndentLinesToggle<CR>

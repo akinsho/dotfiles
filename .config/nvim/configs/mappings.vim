@@ -103,8 +103,6 @@ cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
 cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 
 command! -nargs=1 AutoResize call utils#auto_resize(<args>)
-nnoremap <leader>ar :AutoResize 70<CR>
-
 "--------------------------------------------------------------------------------
 " Grep Operator
 "--------------------------------------------------------------------------------
@@ -130,7 +128,7 @@ endfunction
 nnoremap <silent><leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
 "--------------------------------------------------------------------------------
-" LineBreakAt
+" Line break at
 "--------------------------------------------------------------------------------
 " Insert a newline after each specified string (or before if use '!').
 " If no arguments, use previous search.
@@ -356,7 +354,7 @@ vnoremap <leader>s :sort<CR>
 "open a new file in the same directory
 nnoremap <Leader>nf :e <C-R>=expand("%:p:h") . "/" <CR>
 "open a new file in the same directory
-nnoremap <Leader>sf :vsp <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <Leader>ns :vsp <C-R>=expand("%:p:h") . "/" <CR>
 "Open command line window - :<c-f>
 nnoremap <silent><localleader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
@@ -383,8 +381,8 @@ nnoremap <localleader>q <C-W>q
 if bufwinnr(1)
   nnoremap <a-h> <C-W><
   nnoremap <a-l> <C-W>>
-  nnoremap <a-j> <C-W>-
-  nnoremap <a-k> <C-W>+
+  " nnoremap <a-j> <C-W>-
+  " nnoremap <a-k> <C-W>+
 endif
 ""---------------------------------------------------------------------------//
 "Open Common files
@@ -485,7 +483,6 @@ noremap <expr> zz (winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 
 
 "This line opens the vimrc in a vertical split
 nnoremap <silent><leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <silent><localleader>ev :tabnew $MYVIMRC<cr>
 "This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap <silent><leader>sv :source $MYVIMRC<cr> <bar> :call utils#info_message('Sourced init.vim')<cr>
 " Surround word with quotes or braces

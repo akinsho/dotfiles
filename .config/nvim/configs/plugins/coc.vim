@@ -224,8 +224,6 @@ nnoremap <silent> <leader>cm  :<C-u>CocList marketplace<cr>
 " Resume latest coc list
 nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
 
-" use normal command like `<leader>xi(`
-nmap <leader>x  <Plug>(coc-cursors-operator)
 nmap <silent> <C-e> <Plug>(coc-cursors-position)
 
 " Remap the normal version of "*" into a plug mapping to combine
@@ -254,10 +252,10 @@ omap ih <Plug>(coc-git-chunk-inner)
 xmap ih <Plug>(coc-git-chunk-inner)
 omap ah <Plug>(coc-git-chunk-outer)
 xmap ah <Plug>(coc-git-chunk-outer)
-nnoremap <silent><leader>gb :CocCommand git.browserOpen<CR>
 nnoremap <silent><leader>cb :CocList branches<CR>
 nnoremap <silent><leader>hs :<C-u>CocCommand git.chunkStage<CR>
 nnoremap <silent><leader>hu :<C-u>CocCommand git.chunkUndo<CR>
+nnoremap <silent><localleader>gb :CocCommand git.browserOpen<CR>
 nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
 ""---------------------------------------------------------------------------//
 " Coc Highlights

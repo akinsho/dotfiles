@@ -10,9 +10,6 @@ endif
 let test#neovim#term_position = "vert botright"
 let test#custom_runners = {'dart': ['flutter']}
 
-nnoremap <silent> <localleader>t :TestFile<CR>
+nnoremap <silent> <localleader>tf :TestFile<CR>
 nnoremap <silent> <localleader>tn :TestNearest<CR>
-nnoremap <silent> t<C-w> :TestNearest --watch<CR>
-nnoremap <silent> t<C-s> :TestSuite<CR>
-nnoremap <silent> t<C-l> :TestLast<CR>
-nnoremap <silent> t<C-g> :TestVisit<CR>
+nnoremap <silent> <localleader>ts :TestSuite<CR>

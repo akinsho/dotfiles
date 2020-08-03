@@ -85,7 +85,6 @@ command! -bang Dots
 nnoremap <silent><localleader>gs :GFiles?<cr>
 nnoremap <silent><localleader>f :Files<cr>
 nnoremap <silent><localleader>d :Dots<CR>
-nnoremap <silent><localleader>b :BTags<CR>
 nnoremap <silent><localleader>o :Buffers<CR>
 nnoremap <silent><localleader>m :History<CR>
 nnoremap <silent><localleader>c :Commits<CR>
