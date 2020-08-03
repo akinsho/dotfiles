@@ -2,7 +2,6 @@ if !PluginLoaded("vim-which-key")
   finish
 endif
 
-" Define prefix dictionary
 let g:which_leader_key_map = {
       \ '0':      'go to buffer 0',
       \ '1':      'go to buffer 1',
@@ -119,7 +118,7 @@ let g:which_localleader_key_map = {
       \   'cm':      'checkout master',
       \   'd':       'git diff (split)',
       \   'l':       'git pull (non-async)',
-      \   'o':       'fzf: buffers',
+      \   'o':       'git checkout <branchname>',
       \   'v':       'coc: view commit',
       \   'm':       'git move file',
       \   'n':       'git checkout new branch',
@@ -134,6 +133,7 @@ let g:which_localleader_key_map = {
       \   'p':       'git push (terminal)',
       \   'pf':      'git push --force (terminal)',
       \},
+      \   'o':       'fzf: buffers',
       \   'w':       {
       \     'name':  '+window',
       \     'h':     'change two vertically split windows to horizontal splits',

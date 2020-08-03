@@ -278,8 +278,6 @@ nnoremap <silent><leader><tab>  :bnext<CR>
 nnoremap <silent><S-tab> :bprevious<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-" use ,gf to go to file in a vertical split
-nnoremap <silent> <leader>gf   :vertical botright wincmd F<CR>
 ""---------------------------------------------------------------------------//
 " Last Inserted
 ""---------------------------------------------------------------------------//
