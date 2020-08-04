@@ -120,15 +120,17 @@
     "explorer.previewAction.onHover": false,
     "cSpell.language": "en-GB",
     "cSpell.userWords": [
-      "Neovim",
-      "colorscheme",
-      "nvim",
-      "require'vim",
-      "tabline",
-      "tabpage",
-      "unmerged",
-      "unstaged",
-      "vimscript",
-      "vimwiki"
+        "Neovim",
+        "colorscheme",
+        "emoji",
+        "nvim",
+        "struct",
+        "tabline",
+        "tabpage",
+        "ultisnips",
+        "unmerged",
+        "unstaged",
+        "vimscript",
+        "vimwiki"
     ]
 }

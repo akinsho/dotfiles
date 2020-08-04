@@ -44,7 +44,7 @@ if has('nvim-0.5')
   set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
 endif
 ""---------------------------------------------------------------------------//
-" Diffing {{{1
+" Diff {{{1
 " ----------------------------------------------------------------------------
 " Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
 set diffopt+=vertical,iwhite,hiddenoff,foldcolumn:0,context:4
@@ -274,7 +274,7 @@ elseif PluginLoaded('night-owl.vim')
   colorscheme night-owl
 elseif PluginLoaded('vim-monokai-tasty')
   " ========================
-  " Monokai Tasky
+  " Monokai Tasty
   " ========================
   let g:vim_monokai_tasty_italic = 1
   colorscheme vim-monokai-tasty

@@ -26,16 +26,16 @@ function! ApplyUserHighlights() abort
   let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
   execute 'highlight URIHighlight guisp='.s:comment_fg.' gui=underline,italic guifg='.s:comment_fg
 
-  highlight! Todo gui=bold
-  highlight! Credit gui=bold
-  highlight! CursorLineNr guifg=yellow gui=bold
+  highlight Todo gui=bold
+  highlight Credit gui=bold
+  highlight CursorLineNr guifg=yellow gui=bold
+  highlight FoldColumn guibg=background
   highlight! link dartStorageClass Statement
-  highlight! FoldColumn guibg=NONE
 
   " Customize Diff highlighting
-  highlight! DiffAdded guibg=NONE
-  highlight! DiffAdd guibg=green guifg=NONE
-  highlight! DiffDelete guibg=red
+  highlight DiffAdded guibg=NONE
+  highlight DiffAdd guibg=green guifg=NONE
+  highlight DiffDelete guibg=red guifg=NONE
   highlight! link DiffChange IncSearch
   highlight! link DiffText Search
   ""---------------------------------------------------------------------------//
