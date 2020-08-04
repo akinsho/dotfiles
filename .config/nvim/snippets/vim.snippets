@@ -28,4 +28,9 @@ if !has_key(g:plugs, ${1:pluginName})
 	finish
 endif
 endsnippet
-# vim:ft=snippets:
+
+snippet pl "plugin loaded check" b
+if !PluginLoaded('${1:`!p snip.rv = snip.basename`}')
+	finish
+endif
+endsnippet
