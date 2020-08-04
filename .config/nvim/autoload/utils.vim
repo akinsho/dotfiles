@@ -2,23 +2,23 @@ function! utils#toggle_plugin_config() abort
   if &ft != 'vim'
     return
   endif
-  let l:config_file = expand('%:p')
-  let l:toggled_config =  match(l:config_file, 'inactive.vim') != -1
-        \ ? substitute(l:config_file, '\.inactive\.vim', '.vim','')
-        \ : substitute(l:config_file, '\.vim', '.inactive.vim','')
+  let config_file = expand('%:p')
+  let toggled_config =  match(config_file, 'inactive.vim') != -1
+        \ ? substitute(config_file, '\.inactive\.vim', '.vim','')
+        \ : substitute(config_file, '\.vim', '.inactive.vim','')
 
   echohl String
-  echom 'moving ' . l:config_file ' to ' . l:toggled_config
+  echom 'moving ' . config_file ' to ' . toggled_config
   echohl clear
 
   try
-    let l:src_to_dest = l:config_file . ' ' . l:toggled_config
+    let src_to_dest = config_file . ' ' . toggled_config
     if exists('g:loaded_fugitive')
-      execute 'Gmove '. l:toggled_config
+      execute 'Gmove '. toggled_config
     elseif executable('git')
-      execute '!git mv '. l:src_to_dest
+      execute '!git mv '. src_to_dest
     else
-      execute '!mv '. l:src_to_dest
+      execute '!mv '. src_to_dest
     endif
   catch
     " error handle
@@ -77,7 +77,6 @@ function! utils#search() abort
   let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
   let @@ = regsave
 endfunction
-
 ""---------------------------------------------------------------------------//
 " Windows
 ""---------------------------------------------------------------------------//
@@ -101,7 +100,6 @@ function! utils#auto_resize(factor)
     echom 'Auto resize OFF'
   endif
 endfunction
-
 
 "==========[ ModifyLineEndDelimiter ]==========
 " Description:
@@ -170,20 +168,20 @@ endfunction
 " -> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
 ""---------------------------------------------------------------------------//
 function! utils#token_inspect() abort
-  let synid = synID(line('.'), col('.'), 1)
-  let names = s:hi_chain(synid)
+  let syn_id = synID(line('.'), col('.'), 1)
+  let names = s:hi_chain(syn_id)
   echo join(names, ' -> ')
 endfunction
 
 
-function! s:hi_chain(synid) abort
-  let name = synIDattr(a:synid, 'name')
+function! s:hi_chain(syn_id) abort
+  let name = synIDattr(a:syn_id, 'name')
   let names = []
 
   call add(names, name)
 
-  let original = synIDtrans(a:synid)
-  if a:synid != original
+  let original = synIDtrans(a:syn_id)
+  if a:syn_id != original
     call add(names, synIDattr(original, 'name'))
   endif
 
@@ -195,56 +193,12 @@ endfunction
 " add - the settings to add  to the highlight
 ""---------------------------------------------------------------------------//"
 function! utils#extend_highlight(base, group, add)
-  redir => basehi
+  redir => base_hi
   sil! exe 'highlight' a:base
   redir END
-  let grphi = split(basehi, '\n')[0]
-  let grphi = substitute(grphi, '^'.a:base.'\s\+xxx', '', '')
-  sil exe 'highlight' a:group grphi a:add
-endfunction
-
-function! utils#move_line_up()
-  call utils#move_line_or_visual_up(".", "")
-endfunction
-
-function! utils#move_line_down()
-  call utils#move_line_or_visual_down(".", "")
-endfunction
-
-function! utils#move_visual_up()
-  call utils#move_line_or_visual_up("'<", "'<,'>")
-  normal gv
-endfunction
-
-function! utils#move_visual_down()
-  call utils#move_line_or_visual_down("'>", "'<,'>")
-  normal gv
-endfunction
-
-function! utils#move_line_or_visual_up(line_getter, range)
-  let l_num = line(a:line_getter)
-  if l_num - v:count1 - 1 < 0
-    let move_arg = "0"
-  else
-    let move_arg = a:line_getter." -".(v:count1 + 1)
-  endif
-  call utils#move_line_or_visual_up_or_down(a:range."move ".move_arg)
-endfunction
-
-function! utils#move_line_or_visual_down(line_getter, range)
-  let l_num = line(a:line_getter)
-  if l_num + v:count1 > line("$")
-    let move_arg = "$"
-  else
-    let move_arg = a:line_getter." +".v:count1
-  endif
-  call utils#move_line_or_visual_up_or_down(a:range."move ".move_arg)
-endfunction
-
-function! utils#move_line_or_visual_up_or_down(move_arg)
-  let col_num = virtcol(".")
-  execute "silent! ".a:move_arg
-  execute "normal! ".col_num."|"
+  let grp_hi = split(base_hi, '\n')[0]
+  let grp_hi = substitute(grp_hi, '^'.a:base.'\s\+xxx', '', '')
+  sil exe 'highlight' a:group grp_hi a:add
 endfunction
 
 function! utils#tab_message(cmd)
