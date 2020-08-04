@@ -1,15 +1,6 @@
 "====================================================================================
 "AUTOCOMMANDS
 "===================================================================================
-augroup Code Comments             "{{{1
-  "------------------------------------+
-  au!
-  " Horizontal Rule (78 char long)
-  autocmd FileType vim                           nnoremap <leader>hr 0i""---------------------------------------------------------------------------//<ESC>
-  autocmd FileType javascript,php,c,cpp,css      nnoremap <leader>hr 0i/**-------------------------------------------------------------------------**/<ESC>
-  autocmd FileType python,perl,ruby,sh,zsh,conf  nnoremap <leader>hr 0i##---------------------------------------------------------------------------//<ESC>
-augroup END
-
 "Whitespace Highlight {{{1
 function! s:WhitespaceHighlight()
   let exclusions = ['log']
