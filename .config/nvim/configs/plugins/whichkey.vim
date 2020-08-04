@@ -140,6 +140,8 @@ let g:which_localleader_key_map = {
       \     'v':     'change two horizontally split windows to vertical splits',
       \},
       \ 'l':         'redraw window',
+      \ 'm':         'fzf: history',
+      \ 'mm':        'fzf: maps',
       \ 'q':         'close buffer (kill window)',
       \ 'z':         'center view port',
       \ 't':         {
