@@ -47,7 +47,6 @@ endfunction
 " CORE {{{1
 "--------------------------------------------------------------------------------
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': [
       \ 'html',
@@ -66,6 +65,8 @@ if has('nvim')
   Plug 'kyazdani42/nvim-tree.lua'
   " Plug '~/Desktop/Coding/nvim-tree.lua'
   " Plug '~/Desktop/Coding/nvim-web-devicons'
+else
+  Plug 'ryanoasis/vim-devicons'
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
@@ -194,6 +195,9 @@ else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
   Plug 'bagrat/vim-buffet'
 endif
+
+" Disable netrw
+let g:loaded_netrwPlugin = 0
 
 call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " Neovim loads matchit by default

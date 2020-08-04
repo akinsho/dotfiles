@@ -404,16 +404,19 @@ cnoremap <C-v> <C-r>"
 " Use the external grepprg which is set to ag or rg
 " which is much faster than internal vimgrep progream
 command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
-" Nvim tree disables Netrw, this autocommand re-adds it
-if PluginLoaded('nvim-tree.lua')
-  function! s:open_url() abort
-    unlet! g:loaded_netrw
-    unlet! g:loaded_netrwPlugin
-    runtime! plugin/netrwPlugin.vim
-    return netrw#BrowseX(expand('<cfile>'), netrw#CheckIfRemote())
-  endfunction
-  nnoremap gx :call <sid>open_url()<CR>
-endif
+
+"--------------------------------------------------------------------------------
+" Netrw - GX
+"--------------------------------------------------------------------------------
+" load netrw for gx functionality
+function! s:open_url() abort
+  unlet! g:loaded_netrw
+  unlet! g:loaded_netrwPlugin
+  runtime! plugin/netrwPlugin.vim
+  return netrw#BrowseX(expand('<cfile>'), netrw#CheckIfRemote())
+endfunction
+nnoremap gx :call <sid>open_url()<CR>
+
 " ----------------------------------------------------------------------------
 " Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
