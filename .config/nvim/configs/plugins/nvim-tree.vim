@@ -3,6 +3,7 @@ if !PluginLoaded("nvim-tree.lua")
 endif
 
 let g:lua_tree_icons = {
+    \ 'default': '',
     \ 'git': {
     \   'unstaged': "",
     \   'staged': "",
@@ -19,16 +20,16 @@ let g:lua_tree_bindings = {
 
 nnoremap <silent><c-n> :LuaTreeToggle<CR>
 
-let g:lua_tree_indent_markers = 1
-let g:lua_tree_git_hl = 1
-let g:lua_tree_auto_close = 1 " closes the tree when it's the last window
-let g:lua_tree_follow     = 1 " show selected file on open
-let g:lua_tree_ignore = [ '.git', 'node_modules' ]
-let g:lua_tree_size = &columns * 0.33 " Make lua tree proportional in size
+let g:lua_tree_indent_markers       = 1
+let g:lua_tree_git_hl               = 1
+let g:lua_tree_auto_close           = 1 " closes the tree when it's the last window
+let g:lua_tree_follow               = 1 " show selected file on open
+let g:lua_tree_size                 = 40
+let g:lua_tree_root_folder_modifier = ':.'
+let g:lua_tree_ignore               = [ '.git', 'node_modules', '.DS_store' ]
 
-let comment_fg = synIDattr(hlID('Comment'), 'fg')
-
-execute 'highlight LuaTreeIndentMarker guifg=' . comment_fg
+highlight link LuaTreeIndentMarker Comment
+highlight link LuaTreeRootFolder Title
 
 augroup LuaTreeOverrides
   autocmd!
