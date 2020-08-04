@@ -3,22 +3,22 @@ if !PluginLoaded("vim-which-key")
 endif
 
 let g:which_leader_key_map = {
-      \ '0':      'go to buffer 0',
-      \ '1':      'go to buffer 1',
-      \ '2':      'go to buffer 2',
-      \ '3':      'go to buffer 3',
-      \ '4':      'go to buffer 4',
-      \ '5':      'go to buffer 5',
-      \ '6':      'go to buffer 6',
-      \ '7':      'go to buffer 7',
-      \ '8':      'go to buffer 8',
-      \ '9':      'go to buffer 9',
+      \ '0':      'which_key_ignore',
+      \ '1':      'which_key_ignore',
+      \ '2':      'which_key_ignore',
+      \ '3':      'which_key_ignore',
+      \ '4':      'which_key_ignore',
+      \ '5':      'which_key_ignore',
+      \ '6':      'which_key_ignore',
+      \ '7':      'which_key_ignore',
+      \ '8':      'which_key_ignore',
+      \ '9':      'which_key_ignore',
       \ '10':     'which_key_ignore',
       \ 'A':      'projectionist: edit alternate',
       \ 'av':     'projectionist: vsplit alternate',
       \ 'a':      'coc codeaction (for text object)',
       \ 'c':      {
-      \   'name': '+coc command',
+      \   'name': '+coc-command',
       \   'f':    'search: cursor word',
       \   'y':    'list: yank',
       \   'b':    'list: branches',
@@ -31,13 +31,18 @@ let g:which_leader_key_map = {
       \   'r':    'list: resume',
       \   'a':    'codelens: action'
       \},
+      \ 'd': {
+      \   'name': '+diff-commands',
+      \   'g': 'diffget: get change from alternate buffer',
+      \   'p': 'diffput: put change into alternate buffer',
+      \},
       \ 'h':      {
-      \   'name': '+git hunk',
+      \   'name': '+git-hunk',
       \   's':    'stage',
       \   'u':    'undo',
       \},
       \ 'r':      {
-      \ 'name':   '+coc edit',
+      \ 'name':   '+coc-edit',
       \   'a':    'codeaction: entire file',
       \   'r':    'refactor',
       \   'f':    'fix current line',
@@ -52,7 +57,7 @@ let g:which_leader_key_map = {
       \ 'F':      'find word (prompt)',
       \ 'E':      'show token under the cursor',
       \ 'p':      {
-      \   'name': '+vim plug',
+      \   'name': '+vim-plug',
       \   'u':    'update',
       \   'c':    'clean',
       \   's':    'status',
@@ -101,16 +106,19 @@ let g:which_leader_key_map = {
       \ "\"":     'wrap with double quotes',
       \ "'":      'wrap with single quotes',
       \ "`":      'wrap with back ticks',
-      \ "[":      'open space above',
-      \ "]":      'insert space below',
+      \ "[":      'replace cursor word in file',
+      \ "]":      'replace cursor word in line',
       \ "<Tab>":  ['bnext', 'Go to next buffer'],
       \}
 
 let g:which_localleader_key_map = {
+      \ 'c': 'fzf: commits',
+      \ 'd': 'fzf: dotfiles',
+      \ 'f': 'fzf: files',
       \ 'g':         {
-      \   'name':    '+git commands',
+      \   'name':    '+git-commands',
       \   'b':       {
-      \      'name': '+git information',
+      \      'name': '+git-information',
       \      'o':    'coc: git open in browser',
       \      'l':    'git blame',
       \    },
@@ -123,7 +131,7 @@ let g:which_localleader_key_map = {
       \   'm':       'git move file',
       \   'n':       'git checkout new branch',
       \   'r':       {
-      \      'name': '+git remove',
+      \      'name': '+git-remove',
       \      'e':    'git read (remove changes)',
       \      'm':    'git remove',
       \},
@@ -133,6 +141,7 @@ let g:which_localleader_key_map = {
       \   'p':       'git push (terminal)',
       \   'pf':      'git push --force (terminal)',
       \},
+      \   'h': 'fzf: help',
       \   'o':       'fzf: buffers',
       \   'w':       {
       \     'name':  '+window',
@@ -141,11 +150,12 @@ let g:which_localleader_key_map = {
       \},
       \ 'l':         'redraw window',
       \ 'm':         'fzf: history',
+      \ 'ma':        'fzf: marks',
       \ 'mm':        'fzf: maps',
       \ 'q':         'close buffer (kill window)',
       \ 'z':         'center view port',
       \ 't':         {
-      \   'name':    '+vim test',
+      \   'name':    '+vim-test',
       \   'n':       'test nearest',
       \   'f':       'test file',
       \   's':       'test suite',

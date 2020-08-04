@@ -64,6 +64,8 @@ Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 if has('nvim')
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'kyazdani42/nvim-tree.lua'
+  " Plug '~/Desktop/Coding/nvim-tree.lua'
+  " Plug '~/Desktop/Coding/nvim-web-devicons'
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
@@ -197,14 +199,6 @@ call plug#end()
 if has('patch-7.4.1649') && !has('nvim') " Neovim loads matchit by default
   packadd! matchit
 endif
-
-" Disable unnecessary default plugins
-let g:loaded_gzip              = 1
-let g:loaded_tar               = 1
-let g:loaded_tarPlugin         = 1
-let g:loaded_zip               = 1
-let g:loaded_zipPlugin         = 1
-let g:loaded_rrhelper          = 1
 
 " Lazy load plugins like vim fat finger
 " because it otherwise takes 80ms i.e. the slowest
