@@ -108,6 +108,7 @@ alias gp='git push'
 alias gbda='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*($(git_main_branch)|development|develop|devel|dev)\s*$)" | command xargs -n 1 git branch -d'
 alias gcl='git clone --recurse-submodules'
 alias gl='git pull'
+alias glum='git pull upstream master'
 # alias gcm="git checkout $(git_main_branch)"
 alias gcm="git checkout master"
 alias gstp="git stash pop"
