@@ -62,14 +62,9 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 if has('nvim')
   if $DEVELOPING
-    Plug '~/Desktop/Coding/nvim-tree.lua'
-    Plug '~/Desktop/Coding/nvim-web-devicons'
   else
-    Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'kyazdani42/nvim-tree.lua'
   endif
 else
-  Plug 'ryanoasis/vim-devicons'
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
@@ -100,10 +95,6 @@ Plug 'liuchengxu/vim-which-key'
 if has('mac')
   " We're not in Kansas(Linux) anymore
   Plug 'embear/vim-localvimrc'
-endif
-
-if has('nvim')
-  Plug 'rafcamlet/nvim-luapad', { 'on': ['LuaPad'] }
 endif
 "--------------------------------------------------------------------------------
 " Profiling
@@ -185,19 +176,25 @@ Plug 'rakr/vim-one'
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
+  if !has('mac')
+    " Plugin for visualising the tree sitter tree whilst developing
+    Plug 'nvim-treesitter/playground'
+    Plug 'rafcamlet/nvim-luapad', { 'on': ['LuaPad'] }
+  endif
   if $DEVELOPING
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
+    Plug '~/Desktop/Coding/nvim-web-devicons'
+    Plug '~/Desktop/Coding/nvim-tree.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
   else
     Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'dev' }
     Plug 'nvim-treesitter/nvim-treesitter'
-    if !has('mac')
-      " Plugin for visualising the tree sitter tree whilst developing
-      Plug 'nvim-treesitter/playground'
-    endif
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'kyazdani42/nvim-tree.lua'
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
+  Plug 'ryanoasis/vim-devicons'
   Plug 'bagrat/vim-buffet'
 endif
 
