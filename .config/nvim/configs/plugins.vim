@@ -187,7 +187,7 @@ if has('nvim')
     Plug '~/Desktop/Coding/nvim-tree.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
   else
-    Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'dev' }
+    Plug 'akinsho/nvim-bufferline.lua', { 'branch': 'dev' }
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kyazdani42/nvim-tree.lua'
