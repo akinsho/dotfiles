@@ -61,10 +61,13 @@ Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 if has('nvim')
-  Plug 'kyazdani42/nvim-web-devicons'
-  Plug 'kyazdani42/nvim-tree.lua'
-  " Plug '~/Desktop/Coding/nvim-tree.lua'
-  " Plug '~/Desktop/Coding/nvim-web-devicons'
+  if $DEVELOPING
+    Plug '~/Desktop/Coding/nvim-tree.lua'
+    Plug '~/Desktop/Coding/nvim-web-devicons'
+  else
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'kyazdani42/nvim-tree.lua'
+  endif
 else
   Plug 'ryanoasis/vim-devicons'
 endif
@@ -182,14 +185,16 @@ Plug 'rakr/vim-one' " alternative one dark with a light theme
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
-  if has('mac')
-    Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'dev' }
-    Plug 'nvim-treesitter/nvim-treesitter'
-  else
+  if $DEVELOPING
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
-    " Plugin for visualising the tree sitter tree whilst developing
-    Plug 'nvim-treesitter/playground'
+  else
+    Plug 'Akin909/nvim-bufferline.lua', { 'branch': 'dev' }
+    Plug 'nvim-treesitter/nvim-treesitter'
+    if !has('mac')
+      " Plugin for visualising the tree sitter tree whilst developing
+      Plug 'nvim-treesitter/playground'
+    endif
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used

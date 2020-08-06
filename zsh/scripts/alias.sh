@@ -14,8 +14,12 @@ alias coding="cd ~/Desktop/Coding"
 alias lp="lsp"
 alias v='nvim'
 alias minimalvim="nvim -u $DOTFILES/.config/nvim/minimal.vim"
-alias vi='vim'
+alias vi='nvim'
 alias nv='nvim'
+# When working on local plugins set an environment variable to check
+# against inside nvim
+alias dv='DEVELOPING=1 nvim'
+alias dvim='DEVELOPING=1 nvim'
 # This allow using neovim remote when nvim is called from inside a running vim instance
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
