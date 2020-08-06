@@ -127,7 +127,8 @@ function! statusline#filetype() abort
   if has('nvim')
     let name = bufname()
     let extension = fnamemodify(name, ':e')
-    let l:icon = luaeval("require'nvim-web-devicons'.get_icon(_A[1], _A[2])", [name, extension])
+    let args = [name, extension, { 'default': v:true }]
+    let l:icon = luaeval("require'nvim-web-devicons'.get_icon(_A[1], _A[2], _A[3])", args)
   elseif exists('*WebDevIconsGetFileTypeSymbol')
     let l:icon = WebDevIconsGetFileTypeSymbol()
   endif
