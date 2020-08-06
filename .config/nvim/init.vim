@@ -103,8 +103,4 @@ for file in s:config_files
 endfor
 
 call s:load_plugin_configs(g:vim_dir . '/configs/plugins')
-
-if has('nvim')
-  luafile $DOTFILES/.config/nvim/init.lua
-endif
 "---------------------------------------------------------------------------//
