@@ -117,18 +117,25 @@ function! statusline#filename(...) abort
   return fname . readonly_indicator
 endfunction
 
+function s:get_lua_devicon() abort
+  try
+    let name = bufname()
+    let extension = fnamemodify(name, ':e')
+    let devicon = luaeval("require'nvim-web-devicons'.get_icon(_A[1], _A[2], _A[3])",
+          \ [name, extension, { 'default': v:true }])
+    return devicon
+  catch
+    return ''
+  endtry
+endfunction
+
 function! statusline#filetype() abort
   if !strlen(&filetype) || statusline#show_plain_statusline()
     return ''
   endif
   let l:icon = &filetype
-  if has('gui_running')
-  endif
   if has('nvim')
-    let name = bufname()
-    let extension = fnamemodify(name, ':e')
-    let args = [name, extension, { 'default': v:true }]
-    let l:icon = luaeval("require'nvim-web-devicons'.get_icon(_A[1], _A[2], _A[3])", args)
+    let l:icon = s:get_lua_devicon()
   elseif exists('*WebDevIconsGetFileTypeSymbol')
     let l:icon = WebDevIconsGetFileTypeSymbol()
   endif
