@@ -33,11 +33,14 @@ function! ApplyUserHighlights() abort
   highlight! link dartStorageClass Statement
 
   " Customize Diff highlighting
-  highlight DiffAdded guibg=NONE
   highlight DiffAdd guibg=green guifg=NONE
-  highlight DiffDelete guibg=red guifg=NONE
-  highlight! link DiffChange IncSearch
-  highlight! link DiffText Search
+  highlight DiffDelete guibg=red guifg=#5c6370
+
+  " NOTE: these highlights are used by fugitive's Git buffer
+  " highlight! link DiffAdded DiffAdd
+  " highlight! link DiffRemoved DiffDelete
+  highlight DiffChange guibg=#d19a66 guifg=NONE
+  highlight DiffText guibg=orange guifg=NONE
   ""---------------------------------------------------------------------------//
   " Custom highlights
   ""---------------------------------------------------------------------------//
