@@ -33,6 +33,14 @@ let g:which_leader_key_map = {
       \   'r':    'list: resume',
       \   'a':    'codelens: action'
       \},
+      \ 'd': {
+      \ 'name': '+debug',
+      \ 't': {
+      \   'name': '+treesitter',
+      \   'e': 'treesitter: enable highlight (buffer)',
+      \   'd': 'treesitter: disable highlight (buffer)',
+      \}
+      \},
       \ 'h':      {
       \   'name': '+git-hunk',
       \   's':    'stage',
