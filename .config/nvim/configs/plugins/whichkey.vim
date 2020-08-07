@@ -13,7 +13,6 @@ let g:which_leader_key_map = {
       \ '7':      'which_key_ignore',
       \ '8':      'which_key_ignore',
       \ '9':      'which_key_ignore',
-      \ '10':     'which_key_ignore',
       \ 'A':      'projectionist: edit alternate',
       \ 'av':     'projectionist: vsplit alternate',
       \ 'a':      'coc codeaction (for text object)',
@@ -147,6 +146,9 @@ let g:which_localleader_key_map = {
       \     'name':  '+window',
       \     'h':     'change two vertically split windows to horizontal splits',
       \     'v':     'change two horizontally split windows to vertical splits',
+      \     'x':     'swap current window with the next',
+      \     'j':     'resize: downwards',
+      \     'k':     'resize: upwards'
       \},
       \ 'l':         'redraw window',
       \ 'm':         'fzf: history',

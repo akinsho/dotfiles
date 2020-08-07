@@ -311,10 +311,21 @@ else
   vnoremap <a-j> :m '>+1<CR>gv=gv
 endif
 
-"Change two horizontally split windows to vertical splits
-nnoremap <Localleader>wh <C-W>t <C-W>K
-"Change two vertically split windows to horizontal splits
-nnoremap <Localleader>wv <C-W>t <C-W>H
+"--------------------------------------------------------------------------------
+" Windows
+"--------------------------------------------------------------------------------
+" Change two horizontally split windows to vertical splits
+nnoremap <localleader>wh <C-W>t <C-W>K
+" Change two vertically split windows to horizontal splits
+nnoremap <localleader>wv <C-W>t <C-W>H
+" Swap the current window with the (default: next)
+" see: :h ctrl-W_x
+nnoremap <localleader>wx <C-W>x
+" Resize window downwards
+nnoremap <localleader>wj <C-W>-
+" Resize window upwards
+nnoremap <localleader>wk <C-W>+
+
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
 " make . work with visually selected lines
@@ -322,6 +333,9 @@ vnoremap . :norm.<CR>
 " Switch from visual to visual block.
 xnoremap r <C-v>
 
+"--------------------------------------------------------------------------------
+" Operators
+"--------------------------------------------------------------------------------
 " Move <C-A> functionality to <C-G> is in tmux
 " Prevents this useful binding from getting swallowed
 if exists('$TMUX')
@@ -373,8 +387,6 @@ nnoremap <localleader>q <C-W>q
 if bufwinnr(1)
   nnoremap <a-h> <C-W><
   nnoremap <a-l> <C-W>>
-  " nnoremap <a-j> <C-W>-
-  " nnoremap <a-k> <C-W>+
 endif
 ""---------------------------------------------------------------------------//
 "Open Common files
