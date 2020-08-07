@@ -337,6 +337,13 @@ function! StatusLine(...) abort
         \ 'sep_color': '%#StPrefixSep#',
         \ })
 
+  " If local plugins are loaded and I'm developing locally show an indicator
+  let statusline .= s:sep_if(" Dev", $DEVELOPING && winwidth(0) > 100, {
+        \ 'small': 1,
+        \ 'color': '%#StWarning#',
+        \ 'sep_color': '%#StPrefixSep#',
+        \ })
+
   " Neovim allows unlimited alignment sections so we can put things in the
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   " let statusline .= '%='
