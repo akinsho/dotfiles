@@ -30,11 +30,6 @@ let g:which_leader_key_map = {
       \   'r':    'list: resume',
       \   'a':    'codelens: action'
       \},
-      \ 'd': {
-      \   'name': '+diff-commands',
-      \   'g': 'diffget: get change from alternate buffer',
-      \   'p': 'diffput: put change into alternate buffer',
-      \},
       \ 'h':      {
       \   'name': '+git-hunk',
       \   's':    'stage',

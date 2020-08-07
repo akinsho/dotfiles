@@ -1,9 +1,6 @@
 ""---------------------------------------------------------------------------//
 " FUGITIVE
 ""---------------------------------------------------------------------------//
-" For fugitive.git, dp means :diffput. Define dg to mean :diffget
-nnoremap <silent><leader>dg :diffget<CR>
-nnoremap <silent><leader>dp :diffput<CR>
 "Fugitive bindings
 nnoremap <silent><localleader>gs :Git<CR>
 "Stages the current file
