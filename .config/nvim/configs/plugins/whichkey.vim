@@ -2,6 +2,9 @@ if !PluginLoaded("vim-which-key")
   finish
 endif
 
+" remove link between diff added and vim which key
+highlight WhichKeySeperator guifg=green guibg=background
+
 let g:which_leader_key_map = {
       \ '0':      'which_key_ignore',
       \ '1':      'which_key_ignore',
