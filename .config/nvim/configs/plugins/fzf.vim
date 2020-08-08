@@ -90,14 +90,18 @@ nnoremap <silent><localleader>m :History<CR>
 nnoremap <silent><localleader>c :Commits<CR>
 nnoremap <silent><localleader>h :Helptags<CR>
 
-" Launch file search using FZF
-if isdirectory(".git")
-  " if in a git project, use :GFiles
-  nnoremap <silent><C-P> :GFiles --cached --others --exclude-standard<CR>
-else
-  " otherwise, use :FZF
-  nnoremap <silent><C-P> :Files<CR>
-endif
+function s:fzf_files() abort
+  " Launch file search using FZF
+  if isdirectory(".git")
+    " if in a git project, use :GFiles
+    GFiles --cached --others --exclude-standard
+  else
+    " otherwise, use :FZF
+    Files
+  endif
+endfunction
+
+nnoremap <silent><C-P> :call <SID>fzf_files()<CR>
 " Find Word under cursor
 nnoremap <silent><leader>f :Rg<CR>
 nnoremap <silent><leader>F :Find <C-R><C-W><CR>
