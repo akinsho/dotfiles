@@ -354,12 +354,12 @@ function! StatusLine(...) abort
   let statusline .= s:sep_if(
         \ develop_text,
         \ $DEVELOPING && available_space > 50,
-        \ extend(s:st_warning, {
+        \ extend({
         \ 'prefix': " ",
         \ 'padding': 'none',
         \ 'prefix_color': '%#StWarning#',
         \ 'small': 1,
-        \ }))
+        \ }, s:st_warning))
 
   " Neovim allows unlimited alignment sections so we can put things in the
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
@@ -390,7 +390,7 @@ function! StatusLine(...) abort
         \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1, 'padding': 'full' })
 
   " Current line number/total line number,  alternatives 
-  let statusline .= s:sep_if(line_info, strlen(line_info),extend(
+  let statusline .= s:sep_if(line_info, strlen(line_info), extend(
         \ { 'small': 1, 'prefix': 'ℓ' }, s:st_menu
         \))
 
