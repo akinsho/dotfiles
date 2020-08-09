@@ -172,6 +172,7 @@ Plug 'rakr/vim-one'
 " Plug 'haishanh/night-owl.vim'
 " Plug 'patstockwell/vim-monokai-tasty'
 " Plug 'flrnd/candid.vim'
+" Plug 'chuling/ci_dark'
 "--------------------------------------------------------------------------------
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------

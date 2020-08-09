@@ -2,6 +2,9 @@ if !PluginLoaded('nvim-treesitter')
   finish
 endif
 
+" Error higlights are distracting
+highlight! link TSError None
+
 " This plugin is an experimental application of tree sitter usage in Neovim
 " be careful when applying any functionality to a filetype as it might not work
 lua << EOF
@@ -29,28 +32,6 @@ require'nvim-treesitter.configs'.setup {
     highlight_current_scope = {
         enable = false
     },
-  },
-  textobjects = { -- syntax-aware textobjects
-      enable = true,
-      disable = {},
-      keymaps = {
-          -- queries from supported languages with textobjects.scm
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["aC"] = "@class.outer",
-          ["iC"] = "@class.inner",
-          ["ac"] = "@conditional.outer",
-          ["ic"] = "@conditional.inner",
-          ["ae"] = "@block.outer",
-          ["ie"] = "@block.inner",
-          ["al"] = "@loop.outer",
-          ["il"] = "@loop.inner",
-          ["is"] = "@statement.inner",
-          ["as"] = "@statement.outer",
-          ["ad"] = "@comment.outer",
-          ["am"] = "@call.outer",
-          ["im"] = "@call.inner"
-      }
   },
 }
 EOF
