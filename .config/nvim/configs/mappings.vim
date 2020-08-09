@@ -479,7 +479,8 @@ noremap 0 ^
 vnoremap $ g_
 " jk is escape, THEN move to the right to preserve the cursor position, unless
 " at the first column.  <esc> will continue to work the default way.
-inoremap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
+" NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
+imap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
 imap JK jk
 imap Jk jk
 xnoremap jk <ESC>

@@ -39,6 +39,7 @@ let g:which_leader_key_map = {
       \   'name': '+treesitter',
       \   'e': 'treesitter: enable highlight (buffer)',
       \   'd': 'treesitter: disable highlight (buffer)',
+      \   'p': 'treesitter: toggle playground',
       \}
       \},
       \ 'h':      {

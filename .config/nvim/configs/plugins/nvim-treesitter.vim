@@ -57,6 +57,7 @@ EOF
 
 nnoremap <silent><leader>dte :TSBufEnable highlight<CR>
 nnoremap <silent><leader>dtd :TSBufDisable highlight<CR>
+nnoremap <silent><leader>dtp :TSPlaygroundToggle<CR>
 
 augroup TreeSitterFolds
   autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
