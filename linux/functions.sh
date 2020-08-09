@@ -23,3 +23,13 @@ restore-gnome() {
     tar --extract --file $HOME/Dropbox/gnome/icons.tar.gz -C ~/ --strip-components=2
     tar --extract --file $HOME/Dropbox/gnome/themes.tar.gz -C ~/ --strip-components=2
 }
+
+build-nvim() {
+    if [[ ! -d "$HOME/Desktop/Coding/neovim" ]]; then
+        git clone git@github.com:neovim/neovim.git $HOME/Desktop/Coding/neovim
+    fi
+    cd $HOME/Desktop/Coding/neovim/
+    rm -r build/  # clear the CMake cache
+    make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
+    make install
+}
