@@ -78,7 +78,7 @@ set foldtext=folds#render()
 set foldopen+=search
 " This is overwritten in lsp-fold compatible files by Coc
 set foldmethod=syntax
-set foldlevelstart=3
+set foldlevelstart=10
 " The fold open and close markers are visually distracting
 " and if the code is too nested it starts rendering fold depth
 set foldcolumn=0
