@@ -188,17 +188,29 @@ function! s:sep(item, ...) abort
   let before = get(opts, 'before', ' ')
   let prefix = get(opts, 'prefix', '')
   let small = get(opts, 'small', 0)
+  let padding = get(opts, 'padding', 'prefix')
   let item_color = get(opts, 'color', '%#StItem#')
   let prefix_color = get(opts, 'prefix_color', '%#StPrefix#')
   let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StPrefixSep#')
 
   let sep_color = get(opts, 'sep_color', '%#StSep#')
   let sep_color_left = strlen(prefix) ? prefix_sep_color : sep_color
-  let prefix_item = prefix_color . prefix . " "
+
+  let prefix_item = prefix_color . prefix
+  let item = a:item
+
+  " depending on how padding is specified extra space
+  " will be injected at specific points
+  if padding == 'prefix' || padding == 'full'
+    let prefix_item .= ' '
+  endif
+
+  if padding == 'full'
+    let item = ' ' . item
+  endif
 
   " %* resets the highlighting at the end of the separator so it
   " doesn't interfere with the next component
-  let padding = strlen(prefix) ? ' ' : ''
   let sep_icon_right = small ? '%*' : '█%*'
   let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
 
@@ -206,8 +218,7 @@ function! s:sep(item, ...) abort
         \ sep_color_left.
         \ sep_icon_left.
         \ item_color.
-        \ padding.
-        \ a:item.
+        \ item.
         \ sep_color.
         \ sep_icon_right
 endfunction
@@ -282,6 +293,7 @@ let s:item = {component,hl -> "%#".hl."#".component."%*"}
 function! StatusLine(...) abort
   let opts = get(a:, '1', {})
   call s:add_separators()
+  let available_space = winwidth(0)
   "---------------------------------------------------------------------------//
   " Modifiers
   "---------------------------------------------------------------------------//
@@ -311,7 +323,7 @@ function! StatusLine(...) abort
   let percentage = plain ? 0.4 : 0.2
   let minwid = 5
   " Don't set a minimum width for plain status line filenames
-  let trunc_amount = float2nr(round(winwidth(0) * percentage))
+  let trunc_amount = float2nr(round(available_space * percentage))
   " highlight the filename component separately
   let filename_hl = minimal ? "StFilenameInactive" : "StFilename"
   let filename = '%#'.filename_hl.'#%{statusline#filename()}'
@@ -330,7 +342,7 @@ function! StatusLine(...) abort
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
 
-  let statusline .= s:sep(title_component, { 'prefix': file_type, 'small': 1 })
+  let statusline .= s:sep(title_component, { 'prefix': file_type, 'small': 1, 'padding': 'full' })
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',
@@ -338,11 +350,16 @@ function! StatusLine(...) abort
         \ })
 
   " If local plugins are loaded and I'm developing locally show an indicator
-  let statusline .= s:sep_if(" Dev", $DEVELOPING && winwidth(0) > 100, {
+  let develop_text = available_space > 100 ? 'local dev' : ''
+  let statusline .= s:sep_if(
+        \ develop_text,
+        \ $DEVELOPING && available_space > 50,
+        \ extend(s:st_warning, {
+        \ 'prefix': " ",
+        \ 'padding': 'none',
+        \ 'prefix_color': '%#StWarning#',
         \ 'small': 1,
-        \ 'color': '%#StWarning#',
-        \ 'sep_color': '%#StPrefixSep#',
-        \ })
+        \ }))
 
   " Neovim allows unlimited alignment sections so we can put things in the
   " middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
@@ -370,10 +387,12 @@ function! StatusLine(...) abort
   let l:statusline .= s:sep_if(
         \ &shiftwidth,
         \ unexpected_indentation,
-        \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1 })
+        \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1, 'padding': 'full' })
 
   " Current line number/total line number,  alternatives 
-  let statusline .= s:sep_if('ℓ ' . line_info, strlen(line_info), s:st_menu)
+  let statusline .= s:sep_if(line_info, strlen(line_info),extend(
+        \ { 'small': 1, 'prefix': 'ℓ' }, s:st_menu
+        \))
 
   let statusline .= '%<'
   return statusline
