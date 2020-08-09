@@ -16,7 +16,7 @@ gui:
     optionsTextColor:
       - blue
     selectedLineBgColor:
-      - default
+      - black
     selectedRangeBgColor:
       - blue
   commitLength:
