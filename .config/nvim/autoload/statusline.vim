@@ -10,6 +10,7 @@ endfunction
 function! statusline#show_plain_statusline() abort
   return s:is_ft('help') ||
         \ s:is_ft('ctrlsf')||
+        \ s:is_ft('tsplayground')||
         \ s:is_ft('coc-explorer') ||
         \ s:is_ft('LuaTree') ||
         \ s:is_ft('neoterm')||
@@ -53,6 +54,7 @@ endfunction
 
 let s:filetype_map = {
       \ 'dbui' : 'Dadbod UI',
+      \ 'tsplayground': 'Treesitter 侮',
       \ 'vista' : 'Vista',
       \ 'fugitive' : 'Fugitive ',
       \ 'fugitiveblame' : 'Git blame ',
