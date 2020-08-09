@@ -3,8 +3,8 @@
 ""---------------------------------------------------------------------------//
 let g:startify_lists = [
     \ { 'type': 'sessions',  'header': ['  😸 Sessions']       },
-    \ { 'type': 'files',     'header': ['   Recent']            },
     \ { 'type': 'dir',       'header': ['   Recently opened in '. fnamemodify(getcwd(), ':t')] },
+    \ { 'type': 'files',     'header': ['   Recent']            },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
