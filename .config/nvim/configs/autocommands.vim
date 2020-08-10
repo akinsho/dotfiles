@@ -2,7 +2,7 @@
 "AUTOCOMMANDS
 "===================================================================================
 "Whitespace Highlight {{{1
-function! s:WhitespaceHighlight()
+function! s:whitespace_highlight()
   let exclusions = ['log']
   " Don't highlight trailing spaces in certain filetypes or special buffers
   if index(exclusions, &filetype) >= 0 || &buftype != ""
@@ -12,7 +12,7 @@ function! s:WhitespaceHighlight()
   endif
 endfunction
 
-function! s:ClearMatches() abort
+function! s:clear_matches() abort
   try
     call clearmatches()
   endtry
@@ -34,8 +34,8 @@ augroup WhiteSpace "{{{1
   autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
   autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-  autocmd BufWinLeave * silent! s:ClearMatches()
-  autocmd BufEnter * silent! call s:WhitespaceHighlight()
+  autocmd BufWinLeave * call <SID>clear_matches()
+  autocmd BufEnter * call <SID>whitespace_highlight()
 augroup END
 
 function! s:smart_close()

@@ -342,7 +342,12 @@ function! StatusLine(...) abort
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
 
-  let statusline .= s:sep(title_component, { 'prefix': file_type, 'small': 1, 'padding': 'full' })
+  let statusline .= s:sep(title_component, {
+        \ 'prefix': file_type,
+        \ 'small': 1,
+        \ 'padding': 'full'
+        \ })
+
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',

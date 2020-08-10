@@ -135,13 +135,13 @@ function! statusline#filetype() abort
   if !strlen(&filetype) || statusline#show_plain_statusline()
     return ''
   endif
-  let l:icon = &filetype
+  let ft_icon = &filetype
   if has('nvim')
-    let l:icon = s:get_lua_devicon()
+    let ft_icon = s:get_lua_devicon()
   elseif exists('*WebDevIconsGetFileTypeSymbol')
-    let l:icon = WebDevIconsGetFileTypeSymbol()
+    let ft_icon = WebDevIconsGetFileTypeSymbol()
   endif
-  return winwidth(0) > 70 ? l:icon : ''
+  return winwidth(0) > 70 ? ft_icon : ''
 endfunction
 
 function! statusline#file_component() abort
