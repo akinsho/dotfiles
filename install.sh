@@ -7,17 +7,17 @@ sudo -v
 # Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-brew="/usr/local/bin/brew"
-
-if [ -f "$brew" ]
-then
-  echo "Homebrew is installed, nothing to do here"
-else
-  echo "Homebrew is not installed, installing now"
-  echo "This may take a while"
-  echo "Homebrew requires osx command lines tools, please download xcode first"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
+if [ "$(uname)" == "Darwin" ]; then
+  brew="/usr/local/bin/brew"
+  if [ -f "$brew" ]
+  then
+    echo "Homebrew is installed, nothing to do here"
+  else
+    echo "Homebrew is not installed, installing now"
+    echo "This may take a while"
+    echo "Homebrew requires osx command lines tools, please download xcode first"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
 fi
 
 packages=("git" "node")
@@ -45,19 +45,16 @@ npm_install() {
   fi
 }
 
-echo "Installing brew bundle"
-brew tap Homebrew/bundle
-
 # Clone my dotfiles repo into ~/.dotfiles/ if needed
-echo "DOTFILES-------------------------------------------------"
+echo "dotfiles -------------------------------------------------"
 
 export DOTFILES="$HOME/.dotfiles"
 
 if [ -f "$DOTFILES" ]; then
   echo "Dotfiles have already been cloned into the home dir"
 else
-  echo "Cloning Akin's dotfiles into Dotfiles"
-  git clone https://github.com/Akin909/.dotfiles.git ~/.dotfiles
+  echo "Cloning dotfiles"
+  git clone https://github.com/akinsho/dotfiles.git ~/.dotfiles
 fi
 
 cd "$DOTFILES" || "Didn't cd into dotfiles this will be bad :("
@@ -72,23 +69,20 @@ echo "running macos defaults"
 echo "this may take a while.. as well"
 echo "---------------------------------------------------------"
 
-# shellcheck source=/Users/Akin/Dotfiles/configs/.macos
-source "$DOTFILES/configs/.macos"
+if [ "$(uname)" == "Darwin" ]; then
+  source "$DOTFILES/configs/.macos"
+  brew_directory="$DOTFILES/.config/homebrew/"
 
-# If script is run as ./install.sh minimal
-if [ "$1" == "minimal" ]; then
-  echo "using minimal brew config"
-  brew_directory="$DOTFILES/configs/homebrew/minimal/"
-else
-  brew_directory="$DOTFILES/configs/homebrew/"
+  echo "Installing brew bundle"
+  brew tap Homebrew/bundle
+
+  cd "$brew_directory" || echo "Couldn't get into Homebrew subdir"
+
+  brew bundle
+  echo "Installing Homebrew apps from brew file"
 fi
 
-cd "$brew_directory" || echo "Couldn't get into Homebrew subdir"
-
-brew bundle
-echo "Installing Homebrew apps from brew file"
-
-pip3 install neovim --upgrade
+# pip3 install neovim --upgrade
 
 # Install n node version manager program
 curl -L https://git.io/n-install | bash
@@ -105,27 +99,7 @@ if [ ! -d "$HOME/.config" ]; then
   mkdir -p "$HOME/.config"
 fi
 
-# link() {
-#   target="$HOME/.config/$1"
-#   if [ -e $target ]; then
-#     echo "${target}" already exists
-#   fi
-# }
-
-echo "Creating symlinks"
-ln -sf "$DOTFILES/vim" ~/.config/nvim
-ln -sf "$DOTFILES/zsh/.zplugrc" ~/.zshrc
-ln -sf "$DOTFILES/configs/karabiner/" ~/.config/karabiner
-ln -sf "$DOTFILES/configs/kitty" ~/.config/kitty
-ln -sf "$DOTFILES/configs/.hyper.js" ~/.hyper.js
-ln -sf "$DOTFILES/lint/.vintrc.yaml" ~/.vintrc.yaml
-
-ln -s "$DOTFILES/git/.gitconfig_global" ~/.gitconfig
-
-git config --global core.excludesfile "$DOTFILES/git/.gitignore_global"
-
-# Install rustup
-curl https://sh.rustup.rs -sSf | sh
+. "$DOTFILES/install"
 
 mkdir -p ~/Desktop/Coding
 
