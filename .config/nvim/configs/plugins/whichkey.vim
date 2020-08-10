@@ -69,7 +69,8 @@ let g:which_leader_key_map = {
       \   's':    'status',
       \   'i':    'install'
       \ },
-      \ 'q':      'sayonara: close buffer (keep window)',
+      \ 'q':      'sayonara: close buffer & keep window',
+      \ 'Q':      'sayonara: close buffer & window',
       \ 'g':      'grep word under the cursor',
       \ 'l':      {
       \   'name': '+list',
@@ -161,7 +162,6 @@ let g:which_localleader_key_map = {
       \ 'm':         'fzf: history',
       \ 'ma':        'fzf: marks',
       \ 'mm':        'fzf: maps',
-      \ 'q':         'close buffer (kill window)',
       \ 'z':         'center view port',
       \ 't':         {
       \   'name':    '+vim-test',

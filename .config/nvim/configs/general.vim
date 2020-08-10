@@ -31,7 +31,8 @@ set hidden " this allows changing vim buffers without saving
 set splitbelow splitright
 set eadirection=hor
 " exclude usetab as we do not want to jump to buffers in already open tabs
-set switchbuf=useopen,vsplit
+" do not use split or vsplit to ensure we don't open any new windows
+set switchbuf=useopen,uselast
 set fillchars=vert:│
 set fillchars+=fold:\ 
 set fillchars+=diff: "alternatives: ⣿ ░
