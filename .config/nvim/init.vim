@@ -90,6 +90,7 @@ endif
 " ----------------------------------------------------------------------
 "  Order matters here as the plugins should be loaded before the other setup
 let s:config_files = [
+    \ '/configs/preload.vim',
     \ '/configs/plugins.vim',
     \ '/configs/general.vim',
     \ '/configs/highlight.vim',
