@@ -60,12 +60,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
-if has('nvim')
-  if $DEVELOPING
-  else
-  endif
-else
-endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
@@ -130,7 +124,8 @@ Plug 'sheerun/vim-polyglot'
 " Git {{{1
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
-Plug 'rhysd/conflict-marker.vim'
+" TODO re-add this once https://github.com/rhysd/conflict-marker.vim/pull/11 is merged
+" Plug 'rhysd/conflict-marker.vim'
 Plug 'kdheepak/lazygit.nvim'
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
@@ -191,8 +186,12 @@ if has('nvim')
     Plug '~/Desktop/Coding/nvim-web-devicons'
     Plug '~/Desktop/Coding/nvim-tree.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
+    " TODO remove this once rhysd/conflict-marker.vim#11 is merged
+    Plug '~/Desktop/Coding/conflict-marker.vim'
   else
     Plug 'akinsho/nvim-bufferline.lua', { 'branch': 'dev' }
+    " TODO remove this once rhysd/conflict-marker.vim#11 is merged
+    Plug 'akinsho/conflict-marker.vim', { 'branch': 'update-conflict-highlight-autocmds' }
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kyazdani42/nvim-tree.lua'
