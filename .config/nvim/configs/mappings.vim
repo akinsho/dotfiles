@@ -120,6 +120,8 @@ endfunction
 
 nnoremap <silent><leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
+" http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
+nnoremap <silent><localleader>g* :Ggrep --untracked <cword><CR>
 "--------------------------------------------------------------------------------
 " Line break at
 "--------------------------------------------------------------------------------
@@ -382,7 +384,6 @@ nnoremap <expr><silent> _ !v:count ? "<C-W>s<C-W><Down>"  : '_'
 nnoremap <leader>= <C-W>=
 " Swap top/bottom or left/right split
 nnoremap <leader>sw <C-W>R
-nnoremap <localleader>q <C-W>q
 " https://vim.fandom.com/wiki/Fast_window_resizing_with_plus/minus_keys
 if bufwinnr(1)
   nnoremap <a-h> <C-W><
@@ -576,12 +577,8 @@ function! s:profile(bang)
 endfunction
 command! -bang Profile call s:profile(<bang>0)
 ""---------------------------------------------------------------------------//
-" GREPPING
+" Delimiters
 ""---------------------------------------------------------------------------//
-nnoremap <silent> g* :silent! :grep! -w <C-R><C-W><CR>
-" Show last search in quickfix - http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
-nnoremap gl/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
-nnoremap <silent> g/ :silent! :grep!<space>
 " Conditionally modify character at end of line
 nnoremap <silent> <localleader>, :call utils#modify_line_end_delimiter(',')<cr>
 nnoremap <silent> <localleader>; :call utils#modify_line_end_delimiter(';')<cr>
