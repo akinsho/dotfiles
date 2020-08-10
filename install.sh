@@ -71,12 +71,11 @@ echo "---------------------------------------------------------"
 
 if [ "$(uname)" == "Darwin" ]; then
   source "$DOTFILES/configs/.macos"
-  brew_directory="$DOTFILES/.config/homebrew/"
 
   echo "Installing brew bundle"
   brew tap Homebrew/bundle
 
-  cd "$brew_directory" || echo "Couldn't get into Homebrew subdir"
+  cd "$DOTFILES/.config/homebrew/" || echo "Couldn't get into Homebrew subdir"
 
   brew bundle
   echo "Installing Homebrew apps from brew file"
