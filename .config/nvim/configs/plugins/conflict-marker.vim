@@ -1,3 +1,7 @@
+if !PluginLoaded('conflict-marker.vim')
+  finish
+endif
+
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''
 
@@ -14,5 +18,5 @@ endfunction
 
 augroup ConflictMarkerHighlights
   autocmd!
-  autocmd ColorScheme * call s:apply_highlights()
+  autocmd VimEnter,ColorScheme * call s:apply_highlights()
 augroup END

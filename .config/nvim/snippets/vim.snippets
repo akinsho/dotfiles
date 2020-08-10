@@ -23,12 +23,6 @@ snippet doc "header block"
 "--------------------------------------------------------------------------------
 endsnippet
 
-snippet key "not has_key check"
-if !has_key(g:plugs, ${1:pluginName})
-	finish
-endif
-endsnippet
-
 snippet pl "plugin loaded check" b
 if !PluginLoaded('${1:`!p snip.rv = snip.basename`}')
 	finish

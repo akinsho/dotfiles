@@ -405,16 +405,20 @@ cnoremap <C-v> <C-r>"
 command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
 
 "--------------------------------------------------------------------------------
-" Netrw - GX
+" GX - replicate netrw functionality
 "--------------------------------------------------------------------------------
 " load netrw for gx functionality
-function! s:open_url() abort
-  unlet! g:loaded_netrw
-  unlet! g:loaded_netrwPlugin
-  runtime! plugin/netrwPlugin.vim
-  return netrw#BrowseX(expand('<cfile>'), netrw#CheckIfRemote())
-endfunction
-nnoremap gx :call <sid>open_url()<CR>
+if has('nvim')
+  function! s:open_link() abort
+    let file = expand('<cfile>')
+    if isdirectory(file)
+      execute 'edit '. file
+    else
+      call jobstart(['xdg-open', file], {'detach': v:true})
+    endif
+  endfunction
+  nnoremap gx <Cmd>call <SID>open_link()<CR>
+endif
 
 " ----------------------------------------------------------------------------
 " Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
