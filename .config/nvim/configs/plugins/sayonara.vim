@@ -1,3 +1,7 @@
+if !PluginLoaded('vim-sayonara')
+  finish
+endif
+
 let g:sayonara_confirm_quit = 1
 
 let g:sayonara_filetypes = {
@@ -6,6 +10,6 @@ let g:sayonara_filetypes = {
       \ 'coc-explorer': 'CocCommand explorer'
       \ }
 
-nnoremap <leader>q :Sayonara<cr>
-nnoremap <leader>Q :Sayonara!<cr>
+nnoremap <silent><leader>q :Sayonara<cr>
+nnoremap <silent><leader>Q :Sayonara!<cr>
 if has('nvim') | tnoremap <silent><nowait><C-Q> <C-\><C-n><Cmd>Sayonara<cr> | endif
