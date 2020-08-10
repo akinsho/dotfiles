@@ -177,36 +177,24 @@ function! ToggleList(bufname, pfx)
   endif
 endfunction
 
-
 nnoremap <silent> <leader>ls :call ToggleList("Quickfix List", 'c')<CR>
 nnoremap <silent> <leader>li :call ToggleList("Location List", 'l')<CR>
-"---------------------------------------------------------------------------//
-" Auto Closing Pairs
-"---------------------------------------------------------------------------//
-" If I'm not using a plugin then use homegrown mappings
-if !PluginLoaded('lexima.vim')
-  inoremap ( ()<left>
-  inoremap { {}<left>
-  inoremap ` ``<left>
-  inoremap ```<CR> ```<CR>```<Esc>O<Tab>
-  inoremap (<CR> (<CR>)<Esc>O<Tab>
-  inoremap {<CR> {<CR>}<Esc>O<Tab>
-  inoremap {; {<CR>};<Esc>O<Tab>
-  inoremap {, {<CR>},<Esc>O<Tab>
-  inoremap [<CR> [<CR>]<Esc>O<Tab>
-  inoremap ([ ([<CR>])<Esc>O<Tab>
-  inoremap [; [<CR>];<Esc>O<Tab>
-  inoremap [, [<CR>],<Esc>O<Tab>
-endif
 " Store relative line number jumps in the jumplist.
 nnoremap <expr><silent> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
 nnoremap <expr><silent> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
+
+"--------------------------------------------------------------------------------
+" Commandline mappings
+"--------------------------------------------------------------------------------
+" https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
 " c-a / c-e everywhere - RSI.vim provides these
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>
+" move cursor one character backwards unless at the end of the command line
+cnoremap <expr> <C-f> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 " Scroll command history
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
@@ -214,10 +202,8 @@ cnoremap <C-N> <Down>
 cnoremap <expr> / getcmdtype() == "/" ? "\/" : "/"
 "Save
 nnoremap <silent><leader>w :silent w<cr>
-"Save all files
+" Write and quit all files
 nnoremap <silent>qa :confirm wqa<CR>
-" Quit
-vnoremap <C-Q>  <esc>
 ""---------------------------------------------------------------------------//
 " TABS
 ""---------------------------------------------------------------------------//
