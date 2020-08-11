@@ -1,7 +1,7 @@
 "====================================================================================
 "AUTOCOMMANDS
 "===================================================================================
-"Whitespace Highlight {{{1
+" Whitespace Highlight {{{1
 function! s:whitespace_highlight()
   let exclusions = ['log']
   " Don't highlight trailing spaces in certain filetypes or special buffers

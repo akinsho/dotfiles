@@ -15,6 +15,7 @@ func! s:open_preview() abort
   wincmd J
   setlocal modifiable
   setlocal nobuflisted
+  setlocal nolist
   nnoremap <silent><nowait><buffer>q :bd<cr>
   nnoremap <silent><nowait><buffer><CR> :bd<cr>
 endfunc
@@ -58,6 +59,7 @@ endfunction
 function! s:job_handler(job_id, data, event) dict
   let result = copy(a:data)
   call filter(result, 'len(v:val) > 0')
+  " source: `:h on_exit`
   if len(result)
     let s:state.data[-1] .= result[0]
     call extend(s:state.data, result[1:])
