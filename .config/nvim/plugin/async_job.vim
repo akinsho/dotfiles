@@ -15,6 +15,7 @@ func! s:open_preview() abort
   wincmd J
   setlocal modifiable
   setlocal nobuflisted
+  setlocal winfixheight
   setlocal nolist
   nnoremap <silent><nowait><buffer>q :bd<cr>
   nnoremap <silent><nowait><buffer><CR> :bd<cr>
@@ -61,6 +62,7 @@ function! s:job_handler(job_id, data, event) dict
   call filter(result, 'len(v:val) > 0')
   " source: `:h on_exit`
   if len(result)
+    let s:state.data[0] = self.shell .':'
     let s:state.data[-1] .= result[0]
     call extend(s:state.data, result[1:])
   endif
