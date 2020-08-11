@@ -100,7 +100,6 @@ endif
 " Both are quite useful but their commands overlap so must use
 " one or the other
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
-" Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
