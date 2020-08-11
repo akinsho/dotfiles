@@ -20,9 +20,6 @@ let $FZF_DEFAULT_OPTS .= ' --bind=ctrl-a:select-all --layout=reverse --margin=5%
 let branch_files_options = {
       \ 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'
       \ }
-let uncommited_files_options = {
-      \ 'source': '( git status --porcelain | awk ''{print $2}'' ) | sort | uniq'
-      \ }
 
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))

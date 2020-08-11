@@ -147,6 +147,7 @@ let g:which_localleader_key_map = {
       \   'u':       'coc: copy git url',
       \   'p':       'git push (async)',
       \   'pf':      'git push --force (async)',
+      \   'pt':      'git push (terminal)',
       \   '*':       'git grep current word',
       \},
       \   'h': 'fzf: help',
