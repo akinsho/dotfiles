@@ -6,7 +6,6 @@ endif
 ""---------------------------------------------------------------------------//
 let g:coc_global_extensions = [
       \ 'coc-java',
-      \ 'coc-explorer',
       \ 'coc-marketplace',
       \ 'coc-json',
       \ 'coc-vimlsp',
@@ -27,12 +26,8 @@ let g:coc_global_extensions = [
       \ 'coc-go',
       \ 'coc-word',
       \ 'coc-spell-checker',
+      \ 'coc-tabnine',
       \]
-
-" TODO: Coc pairs is takes half a second to expand
-" \ 'coc-pairs',
-" \ 'coc-jest',
-" \ 'coc-tabnine', " NOTE: Tabnine is too resource intensive
 
 function! s:coc_init() abort
   let s:languageservers = {}
@@ -60,11 +55,11 @@ function! s:coc_init() abort
   " manually compiled and installed
   " using https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
   " https://github.com/sumneko/lua-language-server/wiki/Setting-without-VSCode
-  let s:lua_lsp_path = $HOME.'/lua-language-server'
-  if executable(s:lua_lsp_path.'/bin/Linux/lua-language-server')
+  let s:lua_path = expand('$HOME/lua-language-server')
+  if executable(s:lua_path.'/bin/Linux/lua-language-server') && has('nvim')
     let s:languageservers['lua'] = {
-          \ 'command': s:lua_lsp_path.'/bin/Linux/lua-language-server',
-          \ 'args': ["-E", "-e", "LANG=en", s:lua_lsp_path."/main.lua"],
+          \ 'command': s:lua_path.'/bin/Linux/lua-language-server',
+          \ 'args': ["-E", "-e", "LANG=en", s:lua_path."/main.lua"],
           \ 'filetypes': ['lua'],
           \ 'rootPatterns': ['.git/']
           \}
