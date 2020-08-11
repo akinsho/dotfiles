@@ -14,7 +14,8 @@ function s:setup_toggle_term_maps() abort
   tnoremap <silent><c-\> <C-\><C-n>:call terminal#toggle(10)<CR>
 endfunction
 
+command! TermGitPush call terminal#exec("git push", 12)
+command! TermGitPushF call terminal#exec("git push -f", 12)
+
 nnoremap <silent><c-\> :call terminal#toggle(10)<CR>
 inoremap <silent><c-\> <Esc>:call terminal#toggle(10)<CR>
-nnoremap <silent><localleader>gp :call terminal#exec("git push", 12)<CR>
-nnoremap <silent><localleader>gpf :call terminal#exec("git push -f")<CR>

@@ -36,6 +36,14 @@ augroup AddTerminalMappings
 augroup END
 "}}}
 
+if exists(':GitPush')
+  nnoremap <localleader>gp :GitPush<CR>
+  nnoremap <localleader>gpf :GitPushF<CR>
+elseif exists(':TermGitPush')
+  nnoremap <localleader>gp :TermGitPush<CR>
+  nnoremap <localleader>gpf :TermGitPushF<CR>
+endif
+
 ""---------------------------------------------------------------------------//
 " MACROS {{{
 ""---------------------------------------------------------------------------//
