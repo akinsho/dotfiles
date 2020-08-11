@@ -21,11 +21,17 @@ func! s:open_preview() abort
   nnoremap <silent><nowait><buffer><CR> :bd<cr>
 endfunc
 
+function! s:echo(msg) abort
+  echohl String
+  echom a:msg
+  echohl clear
+endfunction
+
 func! s:process_data(shell, exit_code) abort
   " If the output is only 1 line and there was no error echo it
   if len(s:state.data) < 2 && !a:exit_code
     let str = join(s:state.data, "\n")
-    echom str
+    call s:echo(str)
   else
     " open the preview window in a modifieable state
     call s:open_preview()
@@ -62,7 +68,7 @@ function! s:job_handler(job_id, data, event) dict
   call filter(result, 'len(v:val) > 0')
   " source: `:h on_exit`
   if len(result)
-    let s:state.data[0] = self.shell .':'
+    let s:state.data[0] = self.shell .': '
     let s:state.data[-1] .= result[0]
     call extend(s:state.data, result[1:])
   endif
