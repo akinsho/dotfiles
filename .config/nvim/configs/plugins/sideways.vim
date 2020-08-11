@@ -1,4 +1,4 @@
-if !has_key(g:plugs, "sideways.vim")
+if !PluginLoaded("sideways.vim")
   finish
 endif
 

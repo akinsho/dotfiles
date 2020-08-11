@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'vim-smartword')
+if !PluginLoaded('vim-smartword')
   finish
 endif
 
@@ -7,7 +7,7 @@ map b  <Plug>(smartword-b)
 map e  <Plug>(smartword-e)
 map ge <Plug>(smartword-ge)
 
-if has_key(g:plugs, 'CamelCaseMotion')
+if !PluginLoaded('CamelCaseMotion')
   map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
   map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
   map <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e

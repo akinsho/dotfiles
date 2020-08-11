@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'vim-tmux-navigator')
+if !PluginLoaded('vim-tmux-navigator')
   finish
 endif
 ""---------------------------------------------------------------------------//

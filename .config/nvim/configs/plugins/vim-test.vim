@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'vim-test')
+if !PluginLoaded('vim-test')
   finish
 endif
 

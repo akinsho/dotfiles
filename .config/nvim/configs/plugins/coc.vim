@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'coc.nvim') || exists('g:gui_oni')
+if !PluginLoaded('coc.nvim')
   finish
 endif
 ""---------------------------------------------------------------------------//

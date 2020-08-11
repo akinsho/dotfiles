@@ -1,4 +1,4 @@
-if !has_key(g:plugs, "vim-gitgutter")
+if !PluginLoaded("vim-gitgutter")
   finish
 endif
 ""---------------------------------------------------------------------------//

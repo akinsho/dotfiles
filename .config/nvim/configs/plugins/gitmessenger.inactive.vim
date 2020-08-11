@@ -1,4 +1,4 @@
-if !has_key(g:plugs, "git-messenger.vim")
+if !PluginLoaded("git-messenger.vim")
   finish
 endif
 nmap <Leader>cm <Plug>(git-messenger)

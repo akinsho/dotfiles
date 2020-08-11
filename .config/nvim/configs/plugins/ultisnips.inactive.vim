@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'ultisnips')
+if !PluginLoaded('ultisnips')
   finish
 endif
 ""---------------------------------------------------------------------------//

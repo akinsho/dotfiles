@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'vimwiki')
+if !PluginLoaded('vimwiki')
   finish
 endif
 ""---------------------------------------------------------------------------//

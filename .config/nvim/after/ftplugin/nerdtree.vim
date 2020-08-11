@@ -1,4 +1,4 @@
-if !has_key(g:plugs, "nerdtree.vim")
+if !PluginLoaded("nerdtree.vim")
   finish
 endif
 " Bookmark shortcut

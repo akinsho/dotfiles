@@ -1,4 +1,4 @@
-if !has_key(g:plugs, "vim-crates") || !has('nvim')
+if !PluginLoaded("vim-crates") || !has('nvim')
   finish
 endif
 

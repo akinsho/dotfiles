@@ -1,4 +1,4 @@
-if !has_key(g:plugs, 'nerdtree')
+if !PluginLoaded('nerdtree')
   finish
 endif
 ""---------------------------------------------------------------------------//

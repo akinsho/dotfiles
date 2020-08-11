@@ -90,7 +90,7 @@ set foldcolumn=0
 " Vim Path {{{1
 " ----------------------------------------------------------------------------
 " NOTE: Use vim-apathy instead https://github.com/tpope/vim-apathy
-if !has_key(g:plugs, 'vim-apathy')
+if !PluginLoaded('vim-apathy')
   set path+=**/src/main/**,**
 endif
 " ----------------------------------------------------------------------------
