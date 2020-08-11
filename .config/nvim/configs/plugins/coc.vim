@@ -195,7 +195,8 @@ nmap <silent><leader>rr  <Plug>(coc-refactor)
 nmap <silent><leader>rn <Plug>(coc-rename)
 
 " source: https://www.youtube.com/watch?v=q7gr6s8skt0
-nnoremap <leader>cf :CocSearch <C-R>=expand("<cword>")<CR><CR>
+" add --hidden flag so dotfiles are always searched
+nnoremap <leader>cf :CocSearch --hidden <C-R>=expand("<cword>")<CR><CR>
 
 " Scroll the floating window if open
 " FIXME this breaks smooth scrolling
