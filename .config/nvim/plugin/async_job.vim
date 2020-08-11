@@ -24,10 +24,9 @@ func! s:open_preview(size) abort
 endfunc
 
 function! s:echo(msgs) abort
-  echohl String
-  for msg in a:msgs
-    echom msg
-  endfor
+  let msg = join(a:msgs, '\n')
+  echohl MoreMsg
+  echo msg
   echohl clear
 endfunction
 
