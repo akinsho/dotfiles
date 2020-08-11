@@ -1,18 +1,20 @@
 "--------------------------------------------------------------------------------
 " Async Job
-" =========
+"--------------------------------------------------------------------------------
 "
 " a simple plugin to execute async jobs using the jobstart API
+" inspiration: https://stackoverflow.com/questions/48709262/neovim-fugitive-plugin-gpush-locking-up
 "--------------------------------------------------------------------------------
 let s:state = {
       \ "data": [''],
       \}
 
-func! s:open_preview() abort
+func! s:open_preview(size) abort
   let s:shell_tmp_output = tempname()
   execute 'pedit '.s:shell_tmp_output
   wincmd P
   wincmd J
+  execute('resize '. a:size)
   setlocal modifiable
   setlocal nobuflisted
   setlocal winfixheight
@@ -28,25 +30,18 @@ function! s:echo(msg) abort
 endfunction
 
 func! s:process_data(shell, exit_code) abort
-  " If the output is only 1 line and there was no error echo it
   if len(s:state.data) < 2 && !a:exit_code
-    let str = join(s:state.data, "\n")
-    call s:echo(str)
+    call s:echo(join(s:state.data, "\n"))
   else
-    " open the preview window in a modifieable state
-    call s:open_preview()
-    " append each line to the modifiable preview buffer
+    call s:open_preview(len(s:state.data))
+    if a:exit_code " Add the exit code if it's non-zero
+      call insert(s:state.data, 'Command "'.a:shell.'" exited with '.a:exit_code)
+    endif
     for item in s:state.data
       if len(item)
         call append(line('$'), item)
       endif
     endfor
-    " resize the buffer to match the height of its content
-    execute('resize ' . line('$'))
-    " if there was a non zero exit code print that
-    if a:exit_code
-      call append(line('$'), 'Command "'.a:shell.'" exited with '.a:exit_code)
-    endif
     normal! G
     setlocal nomodifiable
     " return to original window
