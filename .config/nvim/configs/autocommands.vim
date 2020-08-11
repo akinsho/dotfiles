@@ -50,7 +50,7 @@ augroup SmartClose
   " Auto open grep quickfix window
   au QuickFixCmdPost *grep* cwindow
   " Close help and git window by pressing q.
-  autocmd FileType help,git-status,git-log,gitcommit,ref,Godoc,dbui,fugitive,LuaTree,log
+  autocmd FileType help,git-status,git-log,gitcommit,ref,Godoc,dbui,fugitive,LuaTree,log,tsplayground
         \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
@@ -90,8 +90,8 @@ augroup END
 augroup UpdateVim
   autocmd!
   " NOTE: we should only reload config files for plugins not all vim files
-  execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/*.vim,$MYVIMRC nested'
-        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme | doautocmd User ReloadedVim'
+  execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/plugins/*.vim,$MYVIMRC ++nested'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
@@ -270,11 +270,11 @@ augroup Utilities "{{{1
         \ |   echom 'Filetype set to ' . &ft
         \ | endif
 
+  " TODO add similar functionality for lua
   " Reload Vim script automatically if setlocal autoread
   autocmd BufWritePost,FileWritePost *.vim nested
-        \ if &l:autoread > 0 | source <afile> |
-        \   echo 'source '.bufname('%') |
-        \ endif
+        \ source <afile> |
+        \ echohl Title | echom 'sourced '.bufname('%') | echohl clear
 
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
