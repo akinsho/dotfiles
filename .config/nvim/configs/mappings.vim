@@ -37,11 +37,11 @@ augroup END
 "}}}
 
 if exists(':GitPush')
-  nnoremap <localleader>gp :GitPush<CR>
-  nnoremap <localleader>gpf :GitPushF<CR>
+  nnoremap <silent><localleader>gp :GitPush<CR>
+  nnoremap <silent><localleader>gpf :GitPushF<CR>
 elseif exists(':TermGitPush')
-  nnoremap <localleader>gp :TermGitPush<CR>
-  nnoremap <localleader>gpf :TermGitPushF<CR>
+  nnoremap <silent><localleader>gp :TermGitPush<CR>
+  nnoremap <silent><localleader>gpf :TermGitPushF<CR>
 endif
 
 ""---------------------------------------------------------------------------//
