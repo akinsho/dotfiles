@@ -63,7 +63,6 @@ function! s:job_handler(job_id, data, event) dict
   call filter(result, 'len(v:val) > 0')
   " source: `:h on_exit`
   if len(result)
-    let s:state.data[0] = self.shell .': '
     let s:state.data[-1] .= result[0]
     call extend(s:state.data, result[1:])
   endif
