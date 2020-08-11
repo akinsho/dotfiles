@@ -36,10 +36,11 @@ func! s:process_data(shell, exit_code) abort
     " resize the buffer to match the height of its content
     execute('resize ' . line('$'))
     " if there was a non zero exit code print that
+    " otherwise schedule closing the preview window
     if a:exit_code
       call append(line('$'), 'Command "'.a:shell.'" exited with '.a:exit_code)
     else
-      call timer_start(500, {-> execute("pclose!")})
+      call timer_start(1500, {-> execute("pclose!")})
     endif
     normal! G
     setlocal nomodifiable
