@@ -7,7 +7,7 @@ setlocal norelativenumber
 setlocal nowrap
 setlocal winfixheight
 setlocal colorcolumn=
-" I don't want quickfix buffers to pop up when doing :bn or :bp
+" quickfix buffers should notpop up when doing :bn or :bp
 set nobuflisted
 if has('nvim')
   highlight link QuickFixLine CursorLine
