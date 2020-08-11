@@ -30,7 +30,7 @@ function! s:echo(msg) abort
 endfunction
 
 func! s:process_data(shell, exit_code) abort
-  if len(s:state.data) < 2 && !a:exit_code
+  if len(s:state.data) <= &cmdheight && !a:exit_code
     call s:echo(join(s:state.data, "\n"))
   else
     call s:open_preview(len(s:state.data))
@@ -44,6 +44,7 @@ func! s:process_data(shell, exit_code) abort
     endfor
     normal! G
     setlocal nomodifiable
+    setlocal nomodified
     " return to original window
     " wincmd p
   endif
