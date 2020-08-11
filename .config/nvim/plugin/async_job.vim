@@ -27,6 +27,7 @@ function! s:echo(msgs) abort
   let msg = join(a:msgs, '\n')
   echohl MoreMsg
   " double quote message so \n is interpolated
+  " https://stackoverflow.com/questions/13435586/should-i-use-single-or-double-quotes-in-my-vimrc-file
   execute('echo "'.msg.'"')
   echohl clear
 endfunction
