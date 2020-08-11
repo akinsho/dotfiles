@@ -26,7 +26,8 @@ endfunc
 function! s:echo(msgs) abort
   let msg = join(a:msgs, '\n')
   echohl MoreMsg
-  echo msg
+  " double quote message so \n is interpolated
+  execute('echo "'.msg.'"')
   echohl clear
 endfunction
 
