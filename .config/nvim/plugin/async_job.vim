@@ -40,7 +40,7 @@ func! s:process_data(shell, exit_code) abort
     if a:exit_code
       call append(line('$'), 'Command "'.a:shell.'" exited with '.a:exit_code)
     else
-      call timer_start(1500, {-> execute("pclose!")})
+      call timer_start(6000, {-> execute("pclose!")})
     endif
     normal! G
     setlocal nomodifiable
