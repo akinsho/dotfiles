@@ -39,6 +39,8 @@ nnoremap <silent><localleader>gre :Gread<CR>
 nnoremap <silent><localleader>grm :GRemove<CR>
 "See in a side window who is responsible for lines of code
 nnoremap <silent><localleader>gbl :Git blame<CR>
+" Blame specific visual range
+vnoremap <silent><localleader>gbl :Gblame<CR>
 nnoremap <silent><localleader>gd :Gdiffsplit<CR>
 nnoremap <silent><localleader>gc :Git commit<CR>
 nnoremap <silent><localleader>gl :Git pull<CR>
