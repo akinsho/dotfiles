@@ -23,15 +23,17 @@ func! s:open_preview(size) abort
   nnoremap <silent><nowait><buffer><CR> :bd<cr>
 endfunc
 
-function! s:echo(msg) abort
+function! s:echo(msgs) abort
   echohl String
-  echom a:msg
+  for msg in a:msgs
+    echom msg
+  endfor
   echohl clear
 endfunction
 
 func! s:process_data(shell, exit_code) abort
   if len(s:state.data) <= &cmdheight && !a:exit_code
-    call s:echo(join(s:state.data, "\n"))
+    call s:echo(s:state.data)
   else
     call s:open_preview(len(s:state.data))
     if a:exit_code " Add the exit code if it's non-zero
