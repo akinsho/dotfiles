@@ -206,9 +206,10 @@ endif
 let g:loaded_netrwPlugin = 0
 
 call plug#end()
-if has('patch-7.4.1649') && !has('nvim') " Neovim loads matchit by default
-  packadd! matchit
-endif
+
+" cfilter plugin allows filter down an existing quickfix list
+packadd! cfilter
+packadd! matchit
 
 " Lazy load plugins like vim fat finger
 " because it otherwise takes 80ms i.e. the slowest
