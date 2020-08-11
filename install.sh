@@ -98,7 +98,7 @@ if [ ! -d "$HOME/.config" ]; then
   mkdir -p "$HOME/.config"
 fi
 
-. "$DOTFILES/install"
+$DOTFILES/install
 
 mkdir -p ~/Desktop/Coding
 

@@ -5,6 +5,7 @@ Plug 'rakr/vim-one' " alternative one dark with a light theme
 call plug#end()
 
 set background=dark
+set termguicolors
 colorscheme one
 
 " lua require'bufferline'.setup()
