@@ -23,6 +23,14 @@ func! s:open_preview(size) abort
   nnoremap <silent><nowait><buffer><CR> :bd<cr>
 endfunc
 
+function! s:close_preview_window() abort
+  normal! G
+  setlocal nomodifiable
+  setlocal nomodified
+  " return to original window
+  " wincmd p
+endfunction
+
 function! s:echo(msgs) abort
   let msg = join(a:msgs, '\n')
   echohl MoreMsg
@@ -45,11 +53,7 @@ func! s:process_data(shell, exit_code) abort
         call append(line('$'), item)
       endif
     endfor
-    normal! G
-    setlocal nomodifiable
-    setlocal nomodified
-    " return to original window
-    " wincmd p
+    call s:close_preview_window()
   endif
 endfunc
 
