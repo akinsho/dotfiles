@@ -110,11 +110,11 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
-"sets searchable path for filetypes like go so 'gf' works
+" sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
-" Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
-" Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
+Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
+Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 " TODO re-add this once https://github.com/rhysd/conflict-marker.vim/pull/11 is merged
 " Plug 'rhysd/conflict-marker.vim'
-Plug 'kdheepak/lazygit.nvim'
+Plug 'kdheepak/lazygit.nvim', {'on': 'Lazygit'}
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
 "--------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ Plug 'rakr/vim-one'
 if has('nvim')
   if !has('mac')
     " Plugin for visualising the tree sitter tree whilst developing
-    Plug 'nvim-treesitter/playground'
+    Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
     Plug 'rafcamlet/nvim-luapad', { 'on': ['LuaPad'] }
   endif
   if $DEVELOPING
