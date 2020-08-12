@@ -105,8 +105,9 @@ augroup UpdateVim
   autocmd!
   " FIXME: this is too slow and interacts with the other command to source the init.vim
   " NOTE: we should only reload config files for plugins not all vim files
-  " execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/plugins/*.vim,$MYVIMRC ++nested'
-  "       \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme | echom "sourced init.vim"'
+  execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/*.vim,$MYVIMRC ++nested'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme |'
+        \ .' echohl Title | echom "sourced init.vim" | echohl clear'
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
@@ -284,12 +285,6 @@ augroup Utilities "{{{1
         \ |   filetype detect
         \ |   echom 'Filetype set to ' . &ft
         \ | endif
-
-  " TODO add similar functionality for lua
-  " Reload Vim script automatically if setlocal autoread
-  autocmd BufWritePost,FileWritePost *.vim nested
-        \ source <afile> |
-        \ echohl Title | echom 'sourced '.bufname('%') | echohl clear
 
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END
