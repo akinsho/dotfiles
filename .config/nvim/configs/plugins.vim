@@ -268,4 +268,9 @@ augroup PlugDiffExtra
   autocmd!
   autocmd FileType vim-plug call s:setup_extra_keys()
 augroup END
+
+nnoremap <silent><leader>pi :PlugInstall<CR>
+nnoremap <silent><leader>ps :PlugStatus<CR>
+nnoremap <silent><leader>pc :PlugClean<CR>
+nnoremap <silent><leader>pu :PlugUpdate<CR>
 " vim:foldmethod=marker
