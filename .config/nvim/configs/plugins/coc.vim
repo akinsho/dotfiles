@@ -90,7 +90,7 @@ augroup coc_commands
   autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
   autocmd CursorHold * CocCommand git.refresh
   " Setup formatexpr specified filetype(s).
-  autocmd FileType * setlocal formatexpr=CocActionAsync('formatSelected')
+  autocmd FileType go,dart,vim,javascript,typescript setlocal formatexpr=CocActionAsync('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
   " Suggestions don't work and are not needed in the command line window
