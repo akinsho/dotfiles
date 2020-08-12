@@ -4,6 +4,7 @@ endif
 
 " Error higlights are distracting
 highlight! link TSError None
+highlight TSParameter gui=italic,bold
 
 " This plugin is an experimental application of tree sitter usage in Neovim
 " be careful when applying any functionality to a filetype as it might not work
@@ -13,6 +14,7 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,   -- false will disable the whole extension
     disable = {      -- list of language that will be disabled
+    'lua',
     'dart',
     'json',
     'javascript',
