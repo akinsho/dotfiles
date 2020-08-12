@@ -286,6 +286,7 @@ inoremap <C-u> <ESC>gUiw`]a
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
+" source: https://www.reddit.com/r/vim/comments/i8b5z1/is_there_a_more_elegant_way_to_move_lines_than_eg/
 " Move visual block
 if has('mac')
   " Allow using alt in macOS without enabling “Use Option as Meta key”
@@ -293,15 +294,15 @@ if has('mac')
   nmap ˙ <a-h>
   nmap ∆ <a-j>
   nmap ˚ <a-k>
-  nnoremap <silent> ∆ :move+<cr>
-  nnoremap <silent> ˚ :move-2<cr>
-  vnoremap ˚ :m '<-2<CR>gv=gv
-  vnoremap ∆ :m '>+1<CR>gv=gv
+  nnoremap <silent> ∆ :<C-u>move-2<CR>==
+  nnoremap <silent> ˚ :<C-u>move+<CR>==
+  xnoremap ˚ :move-2<CR>='[gv
+  xnoremap ∆ :move'>+<CR>='[gv
 else
-  nnoremap <silent> <a-k> :move-2<cr>
-  nnoremap <silent> <a-j> :move+<cr>
-  vnoremap <a-k> :m '<-2<CR>gv=gv
-  vnoremap <a-j> :m '>+1<CR>gv=gv
+  nnoremap <silent><a-k> :<C-u>move-2<CR>==
+  nnoremap <silent><a-j> :<C-u>move+<CR>==
+  xnoremap <silent><a-k> :move-2<CR>='[gv
+  xnoremap <silent><a-j> :move'>+<CR>='[gv
 endif
 
 "--------------------------------------------------------------------------------
@@ -518,6 +519,7 @@ command! PU PlugUpdate | PlugUpgrade
 " Peekabo plugin handles this currently
 command! -nargs=0 Reg call utils#reg()
 
+command! TogglePluginConfig call utils#toggle_plugin_config()
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
 ""---------------------------------------------------------------------------//

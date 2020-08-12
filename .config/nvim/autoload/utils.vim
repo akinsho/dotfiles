@@ -26,8 +26,6 @@ function! utils#toggle_plugin_config() abort
   endtry
 endfunction
 
-command! TogglePluginConfig call utils#toggle_plugin_config()
-
 function! utils#info_message(msg) abort
   echohl String
   echom a:msg
