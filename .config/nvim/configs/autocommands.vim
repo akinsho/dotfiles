@@ -52,6 +52,7 @@ function s:setup_smart_close() abort
         \ "gitcommit",
         \ "dbui",
         \ "fugitive",
+        \ "fugitiveblame",
         \ "LuaTree",
         \ "log",
         \ "tsplayground"
