@@ -44,21 +44,34 @@ function! s:smart_close()
   endif
 endfunction
 
+function s:setup_smart_close() abort
+  let filetypes = [
+        \ "help",
+        \ "git-status",
+        \ "git-log",
+        \ "gitcommit",
+        \ "dbui",
+        \ "fugitive",
+        \ "LuaTree",
+        \ "log",
+        \ "tsplayground"
+        \]
+  let is_readonly = (&readonly || !&modifiable) && !hasmapto('q', 'n')
+  if index(filetypes, &ft) >= 0 || is_readonly
+    nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
+  endif
+endfunction
+
 " Smart Close {{{
 augroup SmartClose
   au!
   " Auto open grep quickfix window
-  au QuickFixCmdPost *grep* cwindow
-  " Close help and git window by pressing q.
-  autocmd FileType help,git-status,git-log,gitcommit,ref,Godoc,dbui,fugitive,LuaTree,log,tsplayground
-        \ nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
-  autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
-        \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
-
+  autocmd QuickFixCmdPost *grep* cwindow
+  " Close certain filetypes by pressing q.
+  autocmd FileType * call <SID>setup_smart_close()
   " Close quick fix window if the file containing it was closed
   autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix')
         \ | bd | q | endif
-
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   " automatically close corresponding loclist when quitting a window
   if exists('##QuitPre')
@@ -89,9 +102,10 @@ augroup END
 " Reload vim and config automatically {{{
 augroup UpdateVim
   autocmd!
+  " FIXME: this is too slow and interacts with the other command to source the init.vim
   " NOTE: we should only reload config files for plugins not all vim files
-  execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/plugins/*.vim,$MYVIMRC ++nested'
-        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+  " execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/configs/plugins/*.vim,$MYVIMRC ++nested'
+  "       \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme | echom "sourced init.vim"'
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
