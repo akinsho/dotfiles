@@ -126,7 +126,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 " TODO re-add this once https://github.com/rhysd/conflict-marker.vim/pull/11 is merged
 " Plug 'rhysd/conflict-marker.vim'
-Plug 'kdheepak/lazygit.nvim', {'on': 'Lazygit'}
+Plug 'kdheepak/lazygit.nvim', {'on': 'LazyGit'}
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
 "--------------------------------------------------------------------------------

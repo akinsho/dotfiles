@@ -103,8 +103,7 @@ augroup END
 " Reload vim and config automatically {{{
 augroup UpdateVim
   autocmd!
-  " FIXME: this is too slow and interacts with the other command to source the init.vim
-  " NOTE: we should only reload config files for plugins not all vim files
+  " NOTE: This takes ${VIM_STARTUP_TIME} duration to run
   execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/*.vim,$MYVIMRC ++nested'
         \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme |'
         \ .' echohl Title | echom "sourced init.vim" | echohl clear'
@@ -123,20 +122,18 @@ augroup UpdateVim
 augroup END
 " }}}
 
-let s:column_exclusions = [
-      \ 'startify',
-      \ 'vimwiki',
-      \ 'vim-plug',
-      \ 'help'
-      \ ]
+let s:column_exclusions = ['startify', 'vimwiki', 'vim-plug', 'help']
 " Hide the colour column when there isn't enough space
 function! s:check_color_column(...)
-  " if called from WinLeave event this value is 1
-  let leaving = get(a:, '0', 0)
-  if index(s:column_exclusions, &ft) != -1 || !&modifiable || !&buflisted || strlen(&buftype) > 0
+  if index(s:column_exclusions, &ft) != -1
+        \ || !&modifiable
+        \ || !&buflisted
+        \ || strlen(&buftype) > 0
       setlocal colorcolumn=
     return
   endif
+  " if called from WinLeave event this value is 1
+  let leaving = get(a:, '0', 0)
   if winwidth('%') <= 120 || leaving
     setlocal colorcolumn=
   " only reset this value when it doesn't already exist
