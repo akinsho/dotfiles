@@ -14,7 +14,8 @@ let g:number_filetype_exclusions = [
       \ 'coc-list',
       \ 'list',
       \ 'LuaTree',
-      \ 'startify'
+      \ 'startify',
+      \ 'help'
       \ ]
 
 let g:number_buftype_exclusions = [
