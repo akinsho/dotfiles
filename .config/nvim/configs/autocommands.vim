@@ -2,41 +2,47 @@
 "AUTOCOMMANDS
 "===================================================================================
 " Whitespace Highlight {{{1
-function! s:whitespace_highlight()
-  let exclusions = ['log']
-  " Don't highlight trailing spaces in certain filetypes or special buffers
-  if index(exclusions, &filetype) >= 0 || &buftype != ""
-    setlocal nolist
+" source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+" (comment at the bottom)
+function! s:toggle_whitespace_match(mode)
+  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+  if exists('w:whitespace_match_number')
+    call matchdelete(w:whitespace_match_number)
+    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
   else
-    highlight! ExtraWhitespace guifg=red
+    " Something went wrong, try to be graceful.
+    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
   endif
 endfunction
 
-function! s:clear_matches() abort
-  try
-    call clearmatches()
-  endtry
+function s:is_applicable_buf() abort
+  return strlen(&buftype) == 0
 endfunction
 
-augroup vimrc-incsearch-highlight
+augroup WhitespaceMatch
+  highlight ExtraWhitespace ctermfg=red guifg=red
+  " Remove ALL autocommands for the WhitespaceMatch group.
   autocmd!
-  if exists('+CmdlineEnter')
+  autocmd ColorScheme * highlight ExtraWhitespace ctermfg=red guifg=red
+  autocmd BufWinEnter * if s:is_applicable_buf()
+        \| let w:whitespace_match_number = matchadd('ExtraWhitespace', '\s\+$')
+        \| endif
+  autocmd InsertEnter * if s:is_applicable_buf()
+        \ | call s:toggle_whitespace_match('i')
+        \ | endif
+  autocmd InsertLeave * if s:is_applicable_buf()
+        \ | call s:toggle_whitespace_match('n')
+        \ | endif
+augroup END
+
+if exists('+CmdlineEnter')
+  augroup VimrcIncSearchHighlight
+    autocmd!
+    " autotically clear search highlight once
     autocmd CmdlineEnter [/\?] :set hlsearch
     autocmd CmdlineLeave [/\?] :set nohlsearch
-  endif
-augroup END
-
-augroup WhiteSpace "{{{1
-  au!
-  " Highlight Whitespace
-  highlight ExtraWhitespace ctermfg=red guifg=red
-  match ExtraWhitespace /\s\+$/
-  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-  autocmd BufWinLeave * call <SID>clear_matches()
-  autocmd BufEnter * call <SID>whitespace_highlight()
-augroup END
+  augroup END
+endif
 
 function! s:smart_close()
   if winnr('$') != 1
@@ -105,7 +111,7 @@ augroup UpdateVim
   autocmd!
   " NOTE: This takes ${VIM_STARTUP_TIME} duration to run
   execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/*.vim,$MYVIMRC ++nested'
-        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme | '
         \ .' echohl Title | echom "sourced '.fnamemodify($MYVIMRC, ':t').'" | echohl clear'
 
   if has('gui_running')
