@@ -36,6 +36,8 @@ alias nt="clear && npm test"
 alias yt="clear && yarn test"
 alias ys="clear && yarn start"
 
+alias md="mkdir -p"
+
 alias esy="nocorrect esy"
 alias ta="tmux attach -t"
 alias td="tmux detach"
