@@ -105,7 +105,7 @@ augroup UpdateVim
   autocmd!
   " NOTE: This takes ${VIM_STARTUP_TIME} duration to run
   execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/*.vim,$MYVIMRC ++nested'
-        \ .' source $MYVIMRC | redraw |'
+        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme'
         \ .' echohl Title | echom "sourced '.fnamemodify($MYVIMRC, ':t').'" | echohl clear'
 
   if has('gui_running')

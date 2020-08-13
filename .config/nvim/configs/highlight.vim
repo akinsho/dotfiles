@@ -39,8 +39,8 @@ function! ApplyUserHighlights() abort
   " NOTE: these highlights are used by fugitive's Git buffer
   " highlight! link DiffAdded DiffAdd
   " highlight! link DiffRemoved DiffDelete
-  highlight DiffChange guibg=#d19a66 guifg=NONE
-  highlight DiffText guibg=orange guifg=NONE
+  highlight DiffChange guibg=#344f69 guifg=NONE
+  highlight DiffText guibg=#2f628e guifg=NONE
   ""---------------------------------------------------------------------------//
   " Custom highlights
   ""---------------------------------------------------------------------------//
