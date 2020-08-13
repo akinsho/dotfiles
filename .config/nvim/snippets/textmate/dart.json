@@ -1,0 +1,232 @@
+{
+  "Scaffold widget snippet": {
+    "prefix": "fscaff",
+    "body": [
+      "Scaffold(",
+      "  appBar: AppBar(",
+      "    title: Text('${1:Title}'),",
+      "  ),",
+      "  body: ${2:Container()}${0},",
+      ");"
+    ],
+    "description": "Scaffold widget snippet"
+  },
+  "EdgeInsets widget snippet with named constructor `all`": {
+    "prefix": "fedgall",
+    "body": ["EdgeInsets.all(${1:32.0})${0}"],
+    "description": "EdgeInsets widget snippet with named constructor `all`"
+  },
+  "Text widget snippet": {
+    "prefix": "ftxt",
+    "body": ["Text('${1:text}')${0}"],
+    "description": "Text widget snippet"
+  },
+  "Dart Public Instance variable snippet": {
+    "prefix": "dinvar",
+    "body": ["${1:dynamic} ${2:variableName}${0}"],
+    "description": "Instance variable snippet"
+  },
+  "Dart Private instance variable snippet": {
+    "prefix": "dprinvar",
+    "body": ["${1:dynamic} _${2:variableName};${0}"],
+    "description": "Dart Private instance variable snippet"
+  },
+  "Flutter initState lifecycle method snippet": {
+    "prefix": "finitlf",
+    "body": [
+      "@override",
+      "void initState() {",
+      "  super.initState();",
+      "  ${0}",
+      "}"
+    ],
+    "description": "Flutter initState lifecycle method"
+  },
+  "Dart private method snippet": {
+    "prefix": "dprmt",
+    "body": ["${1:void} _${2:methodName}(${3}) ${4}{", "  ${0}", "}"],
+    "description": "Dart private method snippet"
+  },
+  "Dart optional named parameters constructor snippet": {
+    "prefix": "dopnctor",
+    "body": ["${1:constructorName}({${2}});${0}"],
+    "description": "Dart optional named parameters constructor snippet"
+  },
+  "Flutter Icon widget snippet": {
+    "prefix": "fic",
+    "body": ["Icon(Icons.${1:clear})${0}"],
+    "description": "Flutter Icon widget snippet"
+  },
+  "Flutter Container widget snippet": {
+    "prefix": "fcont",
+    "body": ["Container(", "  child: ${1:Widget}(${0}),", ")"],
+    "description": "Flutter Container widget snippet"
+  },
+  "Flutter Center widget snippet": {
+    "prefix": "fcent",
+    "body": ["Center(", "  child: ${1:Widget}(${0}),", ")"],
+    "description": "Flutter Center widget snippet"
+  },
+  "Flutter Row widget snippet": {
+    "prefix": "frow",
+    "body": ["Row(", "  children: <Widget>[${0}],", ")"],
+    "description": "Flutter Row widget snippet"
+  },
+  "Flutter Column widget snippet": {
+    "prefix": "fcol",
+    "body": ["Column(", "  children: <Widget>[${0}],", ")"],
+    "description": "Flutter Column widget snippet"
+  },
+  "SizedBox widget snippet with width and height arguments": {
+    "prefix": "fszb",
+    "body": ["SizedBox(width: ${1:0.0}, height: ${2:0.0})${0}"],
+    "description": "SizedBox widget with width and height arguments"
+  },
+  "SizedBox widget snippet with just width argument": {
+    "prefix": "fszbw",
+    "body": ["SizedBox(", "  width: ${1:0.0},${0}", ")"],
+    "description": "SizedBox widget snippet with just width argument"
+  },
+  "SizedBox widget snippet with just height argument": {
+    "prefix": "fszbh",
+    "body": ["SizedBox(", "  height: ${1:0.0},${0}", ")"],
+    "description": "SizedBox widget snippet with just height argument"
+  },
+  "Expand widget snippet": {
+    "prefix": "fex",
+    "body": ["Expanded(", "  child: ${1:null},${0}", ")"],
+    "description": "Expand widget snippet"
+  },
+  "EdgeInsets widget snippet with named constructor `only`": {
+    "prefix": "fedgonly",
+    "body": ["EdgeInsets.only(${1})${0}"],
+    "description": "EdgeInsets widget snippet with named constructor `only`"
+  },
+  "EdgeInsets widget snippet with symmetric contructor `symmetric`": {
+    "prefix": "fedgsym",
+    "body": [
+      "EdgeInsets.symmetric(vertical: ${1:8.0}, horizontal: ${2:8.0},)${0}"
+    ],
+    "description": "EdgeInsets widget snippet with named constructor `symmetric`"
+  },
+  "EdgeInsets widget snippet with symmetric contructor `symmetric` with only vertical parameter": {
+    "prefix": "fedgsymv",
+    "body": ["EdgeInsets.symmetric(vertical: ${1:8.0},)${0}"],
+    "description": "EdgeInsets widget snippet with named constructor `symmetric` with only vertical parameter"
+  },
+  "EdgeInsets widget snippet with symmetric contructor `symmetric` with only horizontal parameter": {
+    "prefix": "fedgsymh",
+    "body": ["EdgeInsets.symmetric(horizontal: ${1:8.0},)${0}"],
+    "description": "EdgeInsets widget snippet with named constructor `symmetric` with only horizontal parameter"
+  },
+  "Dart `List` collection snippet": {
+    "prefix": "dlist",
+    "body": ["List<${1:dynamic}> ${2:listName}${0}"],
+    "description": "Dart `List` collection snippet"
+  },
+  "Dart `Map` collection snippet": {
+    "prefix": "dmap",
+    "body": ["Map<${1:dynamic}, ${2:dynamic}> ${3:mapName}${0}"],
+    "description": "Dart `Map` collection snippet"
+  },
+  "Dart `Set` collection snippet": {
+    "prefix": "dset",
+    "body": ["Set<${1:dynamic}> ${2:setName}${0}"],
+    "description": "Dart `Set` collection snippet"
+  },
+  "Dart arrow function getter snippet": {
+    "prefix": "dgetarr",
+    "body": ["${1:dynamic} get ${2:name} => ${3:returnValue};${0}"],
+    "description": "Dart arrow function getter snippet"
+  },
+  "Dart `import as` snippet": {
+    "prefix": "dimpas",
+    "body": ["import '${1:packageName}' as ${2:alias}${0};"],
+    "description": "Dart `import as` snippet"
+  },
+  "Dart `import show` snippet": {
+    "prefix": "dimpshow",
+    "body": ["import '${1:packageName}' show ${2:member}${0};"],
+    "description": "Dart `import show` snippet"
+  },
+  "Dart `import deffered as` snippet": {
+    "prefix": "dimplazy",
+    "body": ["import '${1:packageName}' deferred as ${2:alias}${0};"],
+    "description": "Dart `import deffered as` snippet"
+  },
+  "Dart `import hide` snippet": {
+    "prefix": "dimphide",
+    "body": ["import '${1:packageName}' hide ${2:excludedMember}${0};"],
+    "description": "Dart `import hide` snippet"
+  },
+  "Dart `export hide` snippet": {
+    "prefix": "dexhide",
+    "body": ["export '${1:file}' hide ${2:excludedMember}${0};"],
+    "description": "Dart `export hide` snippet"
+  },
+  "Dart `export show` snippet": {
+    "prefix": "dexshow",
+    "body": ["export '${1:file}' show ${2:member}${0};"],
+    "description": "Dart `export show` snippet"
+  },
+  "Dart public method snippet": {
+    "prefix": "dmt",
+    "body": ["${1:void} ${2:methodName}(${3}) ${4}{", "  ${0}", "}"],
+    "description": "Dart public method snippet"
+  },
+  "Dart `convert` lib import snippet": {
+    "prefix": "dconvert",
+    "body": ["import 'dart:convert'${0};"],
+    "description": "Dart `convert` lib import snippet"
+  },
+  "Dart `var` variable declaration snippet": {
+    "prefix": "dvar",
+    "body": ["var ${1:variableName}${0};"],
+    "description": "Dart `var` variable declaration snippet"
+  },
+  "Dart `final` variable declaration snippet": {
+    "prefix": "dfinal",
+    "body": ["final ${1:type} ${2:variableName} ${3:= }${0};"],
+    "description": "Dart `final` variable declaration snippet"
+  },
+  "Dart `const` variable declaration snippet": {
+    "prefix": "dconst",
+    "body": ["const ${1:type} ${2:variableName} ${3:= }${0};"],
+    "description": "Dart `const` variable declaration snippet"
+  },
+  "Dart public arrow function snippet": {
+    "prefix": "darr",
+    "body": ["${1:Object} ${2:methodName}(${3}) ${4}=> ${0};"],
+    "description": "Dart public arrow function snippet"
+  },
+  "Dart private arrow function snippet": {
+    "prefix": "dprarr",
+    "body": ["${1:Object} _${2:methodName}(${3}) ${4}=> ${0};"],
+    "description": "Dart private arrow function snippet"
+  },
+  "Add material's package import statement": {
+    "prefix": "fimpmat",
+    "body": ["import 'package:flutter/material.dart';"],
+    "description": "Add material's package import statement"
+  },
+  "Flutter StreamBuilder widget snippet": {
+    "prefix": "fstream",
+    "body": [
+      "StreamBuilder<${1:dynamic}>(        ",
+      "  stream: ${2:yourStream},",
+      "  builder: (BuildContext context, AsyncSnapshot<${1:dynamic}> snapshot) {",
+      "      if (snapshot.hasData) {",
+      "       // TODO: do something with the data",
+      "       return ${3:Container()};",
+      "      } else if (snapshot.hasError) {",
+      "      // TODO: do something with the error",
+      "       return ${4:Text(snapshot.error.toString())};",
+      "      }",
+      "      // TODO: the data is not ready, show a loading indicator",
+      "      return ${5:Center(child: CircularProgressIndicator())};",
+      "   },",
+      ")"
+    ],
+    "description": "Flutter StreamBuilder widget snippet"
+  }
+}

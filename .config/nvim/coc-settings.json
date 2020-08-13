@@ -1,138 +1,141 @@
 {
-    // Language specific
-    "eslint.enable": false, // only enable eslint per project
-    "python.jediEnabled": false,
-    "html.autoClosingTags": true,
-    "xml.format.splitAttributes": true,
-    "json.schemas": [
-        // Schema file for sumneko lua lsp
-        {
-            "url": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json"
-        }
-    ],
-    "Lua.diagnostics.disable": ["lowercase-global"],
-    "Lua.diagnostics.globals": ["vim"],
-    "Lua.completion.keywordSnippet": "Both",
-    "go.goplsOptions": {
-        "go.goplsArgs": ["-remote=auto"],
-        "completeUnimported": true,
-        "deepCompletion": true,
-        "staticcheck": true,
-        "codelens": {
-            "test": true
-        }
-    },
-    "yank.priority": 50,
-    // List
-    "list.selectedSignText": " ",
-    "list.source.symbols.defaultOptions": ["--interactive"],
-    "list.source.outline.defaultOptions": ["--auto-preview"],
-    "list.source.extensions.defaultOptions": ["--normal"],
-    "list.source.diagnostics.defaultOptions": ["--normal"],
-    "list.source.branches.defaultArgs": ["--sort", "-committerdate"],
-    "list.nextKeymap": "<C-n>",
-    "list.previousKeymap": "<C-p>",
-    "codeLens.enable": true,
-    "codeLens.separator": "‣",
-    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
-    // This is now supported natively in neovim
-    "yank.highlight.enable": false,
-    // Diagnostics
-    "diagnostic.separateRelatedInformationAsDiagnostics": true,
-    "diagnostic.virtualTextPrefix": "",
-    "diagnostic.errorSign": "", // ✗
-    "diagnostic.warningSign": "", // 
-    "diagnostic.infoSign": "", // 
-    "diagnostic.hintSign": "", // ﯦ
-    "coc.preferences.formatOnSaveFiletypes": ["*"],
-    "coc.preferences.formatOnInsertLeave": true,
-    // emoji
-    "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
-    // Snippets
-    "suggest.snippetIndicator": " ",
-    "snippets.ultisnips.enable": true,
-    "snippets.userSnippetsDirectory": "~/.dotfiles/.config/nvim/snippets",
-    "snippets.ultisnips.directories": ["Ultisnips", "gosnippets/UltiSnips"],
-    "snippets.extends": {
-        "cpp": ["c"],
-        "javascriptreact": ["javascript"],
-        "typescriptreact": ["javascript"],
-        "typescript": ["javascript"],
-        "rei": ["reason"]
-    },
-    "explorer.file.column.git.icon.modified": "",
-    "explorer.file.column.git.icon.added": "",
-    "explorer.file.column.git.icon.deleted": "",
-    "explorer.file.column.git.icon.renamed": "",
-    "explorer.file.column.git.showIgnored": true,
-    // Git sign alternatives
-    // '', '❖' - added
-    // '', '•' - changed
-    // '', '-' removed
-    // '', '±' - changed/removed
-    "git.showCommitInFloating": true,
-    "git.changedSign.text": "▌",
-    "git.addedSign.text": "▌",
-    "git.removedSign.text": "▌",
-    "git.changeRemovedSign.text": "▌",
-    "git.untrackedDecorator": " ",
-    // Git statusline decorators
-    "git.addedSign.hlGroup": "GitGutterAdd",
-    "git.changedSign.hlGroup": "GitGutterChange",
-    "git.removedSign.hlGroup": "GitGutterDelete",
-    "git.topRemovedSign.hlGroup": "GitGutterDelete",
-    "git.changeRemovedSign.hlGroup": "Number",
-    "git.addGBlameToVirtualText": false,
-    // Suggest
-    "suggest.enablePreselect": true,
-    "suggest.completionItemKindLabels": {
-        "keyword": "\uf1de",
-        "variable": "\ue79b",
-        "value": "\uf89f",
-        "operator": "\u03a8",
-        "function": "\u0192",
-        "reference": "\ufa46",
-        "constant": "\uf8fe",
-        "method": "\uf09a",
-        "struct": "\ufb44",
-        "class": "\uf0e8",
-        "interface": "\uf417",
-        "text": "\ue612",
-        "enum": "\uf435",
-        "enumMember": "\uf02b",
-        "module": "\uf40d",
-        "color": "\ue22b",
-        "property": "\ue624",
-        "field": "\uf9be",
-        "unit": "\uf475",
-        "event": "\ufacd",
-        "file": "\uf723",
-        "folder": "\uf114",
-        "snippet": "\ue60b",
-        "typeParameter": "\uf728",
-        "default": "\uf29c"
-    },
-    // Explorer
-    "explorer.width": 30,
-    "explorer.file.autoReveal": true,
-    "explorer.icon.enableNerdfont": true,
-    "explorer.file.showHiddenFiles": true,
-    "explorer.previewAction.onHover": false,
-    "cSpell.language": "en-GB",
-    "cSpell.userWords": [
-      "Neovim",
-      "Setup",
-      "colorscheme",
-      "devicons",
-      "emoji",
-      "nvim",
-      "struct",
-      "tabline",
-      "tabpage",
-      "ultisnips",
-      "unmerged",
-      "unstaged",
-      "vimscript",
-      "vimwiki"
-    ]
+  // Language specific
+  "eslint.enable": false, // only enable eslint per project
+  "python.jediEnabled": false,
+  "html.autoClosingTags": true,
+  "xml.format.splitAttributes": true,
+  "json.schemas": [
+    // Schema file for sumneko lua lsp
+    {
+      "url": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json"
+    }
+  ],
+  "Lua.diagnostics.disable": ["lowercase-global"],
+  "Lua.diagnostics.globals": ["vim"],
+  "Lua.completion.keywordSnippet": "Both",
+  "go.goplsOptions": {
+    "go.goplsArgs": ["-remote=auto"],
+    "completeUnimported": true,
+    "deepCompletion": true,
+    "staticcheck": true,
+    "codelens": {
+      "test": true
+    }
+  },
+  "yank.priority": 50,
+  // List
+  "list.selectedSignText": " ",
+  "list.source.symbols.defaultOptions": ["--interactive"],
+  "list.source.outline.defaultOptions": ["--auto-preview"],
+  "list.source.extensions.defaultOptions": ["--normal"],
+  "list.source.diagnostics.defaultOptions": ["--normal"],
+  "list.source.branches.defaultArgs": ["--sort", "-committerdate"],
+  "list.nextKeymap": "<C-n>",
+  "list.previousKeymap": "<C-p>",
+  "codeLens.enable": true,
+  "codeLens.separator": "‣",
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  // This is now supported natively in neovim
+  "yank.highlight.enable": false,
+  // Diagnostics
+  "diagnostic.separateRelatedInformationAsDiagnostics": true,
+  "diagnostic.virtualTextPrefix": "",
+  "diagnostic.errorSign": "", // ✗
+  "diagnostic.warningSign": "", // 
+  "diagnostic.infoSign": "", // 
+  "diagnostic.hintSign": "", // ﯦ
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "coc.preferences.formatOnInsertLeave": true,
+  // emoji
+  "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
+  // Snippets
+  "suggest.snippetIndicator": " ",
+  "snippets.ultisnips.enable": true,
+  "snippets.textmateSnippetsRoots": [
+    "~/.dotfiles/.config/nvim/snippets/textmate"
+  ],
+  "snippets.userSnippetsDirectory": "~/.dotfiles/.config/nvim/snippets/ultisnips",
+  "snippets.ultisnips.directories": ["Ultisnips", "gosnippets/UltiSnips"],
+  "snippets.extends": {
+    "cpp": ["c"],
+    "javascriptreact": ["javascript"],
+    "typescriptreact": ["javascript"],
+    "typescript": ["javascript"],
+    "rei": ["reason"]
+  },
+  "explorer.file.column.git.icon.modified": "",
+  "explorer.file.column.git.icon.added": "",
+  "explorer.file.column.git.icon.deleted": "",
+  "explorer.file.column.git.icon.renamed": "",
+  "explorer.file.column.git.showIgnored": true,
+  // Git sign alternatives
+  // '', '❖' - added
+  // '', '•' - changed
+  // '', '-' removed
+  // '', '±' - changed/removed
+  "git.showCommitInFloating": true,
+  "git.changedSign.text": "▌",
+  "git.addedSign.text": "▌",
+  "git.removedSign.text": "▌",
+  "git.changeRemovedSign.text": "▌",
+  "git.untrackedDecorator": " ",
+  // Git statusline decorators
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "Number",
+  "git.addGBlameToVirtualText": false,
+  // Suggest
+  "suggest.enablePreselect": true,
+  "suggest.completionItemKindLabels": {
+    "keyword": "\uf1de",
+    "variable": "\ue79b",
+    "value": "\uf89f",
+    "operator": "\u03a8",
+    "function": "\u0192",
+    "reference": "\ufa46",
+    "constant": "\uf8fe",
+    "method": "\uf09a",
+    "struct": "\ufb44",
+    "class": "\uf0e8",
+    "interface": "\uf417",
+    "text": "\ue612",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "module": "\uf40d",
+    "color": "\ue22b",
+    "property": "\ue624",
+    "field": "\uf9be",
+    "unit": "\uf475",
+    "event": "\ufacd",
+    "file": "\uf723",
+    "folder": "\uf114",
+    "snippet": "\ue60b",
+    "typeParameter": "\uf728",
+    "default": "\uf29c"
+  },
+  // Explorer
+  "explorer.width": 30,
+  "explorer.file.autoReveal": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.file.showHiddenFiles": true,
+  "explorer.previewAction.onHover": false,
+  "cSpell.language": "en-GB",
+  "cSpell.userWords": [
+    "Neovim",
+    "Setup",
+    "colorscheme",
+    "devicons",
+    "emoji",
+    "nvim",
+    "struct",
+    "tabline",
+    "tabpage",
+    "ultisnips",
+    "unmerged",
+    "unstaged",
+    "vimscript",
+    "vimwiki"
+  ]
 }
