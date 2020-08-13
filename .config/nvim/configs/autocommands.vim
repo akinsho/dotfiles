@@ -58,7 +58,7 @@ function s:setup_smart_close() abort
         \ "tsplayground"
         \]
   let is_readonly = (&readonly || !&modifiable) && !hasmapto('q', 'n')
-  if index(filetypes, &ft) >= 0 || is_readonly
+  if index(filetypes, &ft) >= 0 || is_readonly || &buftype == 'nofile'
     nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   endif
 endfunction
