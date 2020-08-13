@@ -17,13 +17,6 @@ require'nvim-treesitter.configs'.setup {
   },
   highlight = {
     enable = disable,   -- false will disable the whole extension
-    disable = {      -- list of language that will be disabled
-    'lua',
-    'dart',
-    'json',
-    'javascript',
-    'typescript',
-    },
   },
   -- incremental_selection = {
   --       enable = true,

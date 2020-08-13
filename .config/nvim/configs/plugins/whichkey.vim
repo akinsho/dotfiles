@@ -97,6 +97,7 @@ let g:which_leader_key_map = {
       \ 's':      'subversive: current word',
       \ 'ss':     'subversive: entire line',
       \ 'S':      'subversive: till end of line',
+      \ 'v':      'vista: toggle',
       \ 'w':      'save',
       \ 'wt':     'open vimwiki index',
       \ 'ws':     'vimwiki UI select',
