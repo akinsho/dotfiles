@@ -16,7 +16,7 @@ setlocal winfixheight
 setlocal colorcolumn=
 set nobuflisted " quickfix buffers should notpop up when doing :bn or :bp
 if has('nvim')
-  highlight link QuickFixLine CursorLine
+  highlight! link QuickFixLine CursorLine
 endif
 
 function s:preview_matches(lnum) abort

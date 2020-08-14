@@ -237,11 +237,11 @@ if PluginLoaded('onedark.vim')
     call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
     " Italicises function calls
     call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
-    call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF'} })
+    call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF', 'cterm': 8} })
     call onedark#set_highlight('SpellRare', {
           \ 'gui': 'undercurl',
-          \ 'bg': 'transparent',
-          \ 'fg': 'transparent'
+          \ 'bg': { 'gui': 'transparent', 'cterm': 'NONE', 'cterm16': 'NONE'   },
+          \ 'fg': { 'gui': 'transparent', 'cterm': 'NONE', 'cterm16': 'NONE'  },
           \ })
   endfunc
   augroup OneDarkOverrides
