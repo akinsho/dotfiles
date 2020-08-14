@@ -55,8 +55,8 @@ Plug 'mattn/emmet-vim', { 'for': [
       \ 'javascriptreact',
       \ 'typescriptreact',
       \ ]}
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-      \ | Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
@@ -159,9 +159,9 @@ Plug 'mhinz/vim-crates', {'for': ['rust', 'toml']}
 " Themes  {{{1
 "--------------------------------------------------------------------------------
 " vim-one has a MUCH better startup time than onedark and has a light theme
-" Plug 'rakr/vim-one'
+Plug 'rakr/vim-one'
 " More actively maintained that vim-one
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
 "--------------------------------------------------------------------------------
 " Alternatives color schemes {{{2
 "--------------------------------------------------------------------------------

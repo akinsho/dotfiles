@@ -44,7 +44,7 @@ augroup SmartClose
   autocmd FileType * call <SID>setup_smart_close()
   " Close quick fix window if the file containing it was closed
   autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix')
-        \ | bd | q | endif
+        \ | bd! | endif
   autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   " automatically close corresponding loclist when quitting a window
   if exists('##QuitPre')
