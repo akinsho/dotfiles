@@ -1,40 +1,6 @@
 "====================================================================================
-"AUTOCOMMANDS
+" AUTOCOMMANDS
 "===================================================================================
-" Whitespace Highlight {{{1
-" source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
-" (comment at the bottom)
-function! s:toggle_whitespace_match(mode)
-  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
-  if exists('w:whitespace_match_number')
-    call matchdelete(w:whitespace_match_number)
-    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
-  else
-    " Something went wrong, try to be graceful.
-    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
-  endif
-endfunction
-
-function s:is_applicable_buf() abort
-  return strlen(&buftype) == 0
-endfunction
-
-augroup WhitespaceMatch
-  highlight ExtraWhitespace ctermfg=red guifg=red
-  " Remove ALL autocommands for the WhitespaceMatch group.
-  autocmd!
-  autocmd ColorScheme * highlight ExtraWhitespace ctermfg=red guifg=red
-  autocmd BufWinEnter * if s:is_applicable_buf()
-        \| let w:whitespace_match_number = matchadd('ExtraWhitespace', '\s\+$')
-        \| endif
-  autocmd InsertEnter * if s:is_applicable_buf()
-        \ | call s:toggle_whitespace_match('i')
-        \ | endif
-  autocmd InsertLeave * if s:is_applicable_buf()
-        \ | call s:toggle_whitespace_match('n')
-        \ | endif
-augroup END
-
 if exists('+CmdlineEnter')
   augroup VimrcIncSearchHighlight
     autocmd!
