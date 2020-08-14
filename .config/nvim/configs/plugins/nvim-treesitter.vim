@@ -34,6 +34,7 @@ nnoremap <silent><leader>dte :TSEnable highlight<CR>
 nnoremap <silent><leader>dtd :TSDisable highlight<CR>
 nnoremap <silent><leader>dtp :TSPlaygroundToggle<CR>
 
-augroup TreeSitterFolds
-  autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
-augroup END
+" TODO reactivate when treesitter updates are less broken
+" augroup TreeSitterFolds
+"   autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+" augroup END
