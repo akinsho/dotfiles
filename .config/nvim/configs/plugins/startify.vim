@@ -35,13 +35,11 @@ let s:neovim = [
             \]
 
 let s:editor_header = has('nvim') ? s:neovim : s:vim
-let s:errored = g:dotfiles_plugins_errored ? ', errored: '.g:dotfiles_plugins_errored : ''
 let g:header = s:editor_header + ["", ""]
 
 let g:header_suffix = [
             \ '',
             \ ' Plugins loaded: '.len(get(g:, 'plugs', 0)).' ',
-            \ ' config files loaded: '.g:dotfiles_plugins_loaded.s:errored
             \]
 
 let g:startify_custom_header = 'startify#pad(g:header + startify#fortune#boxed() + g:header_suffix)'

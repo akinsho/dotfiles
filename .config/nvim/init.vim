@@ -24,7 +24,6 @@ elseif has('unix')
   let g:open_command = 'xdg-open'
 endif
 
-let g:gui_neovim_running = has('gui_running') || has('gui_vimr') || exists('g:gui_oni')
 " WARNING: Hard coding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:vim_dir = g:dotfiles . '/.config/nvim'
@@ -34,39 +33,6 @@ function! VimrcMessage(msg) abort
   echom a:msg
   echohl none
 endfunction
-
-function! s:safely_source(arg) abort
-  try
-    execute 'source ' . a:arg
-    return 1
-  catch
-    call VimrcMessage('Error ->' . v:exception)
-    call VimrcMessage('Could not load'. a:arg )
-    return 0
-  endtry
-endfunction
-
-let g:dotfiles_plugins_loaded = 0
-let g:dotfiles_plugins_errored = 0
-
-function! s:load_plugin_configs(settings_dir) abort
-  let plugins = split(globpath(a:settings_dir, '*.vim'), '\n')
-  let loaded = 0
-  let errors = 0
-  for fpath in plugins
-    let s:inactive = match(fpath ,"inactive")
-    if s:inactive == -1
-      let s:result = s:safely_source(fpath)
-      if s:result == 0
-        let errors += 1
-        let g:dotfiles_plugins_errored += 1
-      endif
-      let loaded += s:result
-      let g:dotfiles_plugins_loaded += s:result
-    endif
-  endfor
-endfunction
-
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
@@ -81,27 +47,22 @@ syntax enable
 "-----------------------------------------------------------------------
 " Local vimrc
 "-----------------------------------------------------------------------
-let s:vimrc_local=$HOME.'/.vimrc.local'
+let s:vimrc_local = $HOME.'/.vimrc.local'
 if filereadable(s:vimrc_local)
-  call s:safely_source(s:vimrc_local)
+  source s:vimrc_local
 endif
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-"  Order matters here as the plugins should be loaded before the other setup
-let s:config_files = [
-    \ '/configs/preload.vim',
-    \ '/configs/plugins.vim',
-    \ '/configs/general.vim',
-    \ '/configs/highlight.vim',
-    \ '/configs/mappings.vim',
-    \ '/configs/autocommands.vim',
-    \ '/configs/statusline.vim'
-    \]
+" Order matters here as the plugins should be loaded before the other setup
+" :h runtime - this fuzzy maches files within vim's runtime path
+runtime /configs/preload.vim
+runtime /configs/plugins.vim
+runtime /configs/general.vim
+runtime /configs/highlight.vim
+runtime /configs/mappings.vim
+runtime /configs/autocommands.vim
+runtime /configs/statusline.vim
 
-for file in s:config_files
-  call s:safely_source(g:vim_dir . file)
-endfor
-
-call s:load_plugin_configs(g:vim_dir . '/configs/plugins')
+runtime! /configs/plugins/*.vim
 "---------------------------------------------------------------------------//
