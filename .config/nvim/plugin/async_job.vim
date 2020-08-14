@@ -5,6 +5,8 @@
 " a simple plugin to execute async jobs using the jobstart API
 " inspiration: https://stackoverflow.com/questions/48709262/neovim-fugitive-plugin-gpush-locking-up
 "--------------------------------------------------------------------------------
+" TODO when there are multiple concurrent jobs the data will be
+" erased so data should be name spaced by PID
 let s:state = {
       \ "data": [''],
       \}

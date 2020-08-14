@@ -127,30 +127,6 @@ nnoremap <silent><leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
 vnoremap <silent><leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
 " http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
 nnoremap <silent><localleader>g* :Ggrep --untracked <cword><CR>
-"--------------------------------------------------------------------------------
-" Line break at
-"--------------------------------------------------------------------------------
-" Insert a newline after each specified string (or before if use '!').
-" If no arguments, use previous search.
-command! -bang -nargs=* -range LineBreakAt <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
-function! LineBreakAt(bang, ...) range
-  let save_search = @/
-  if empty(a:bang)
-    let before = ''
-    let after = '\ze.'
-    let repl = '&\r'
-  else
-    let before = '.\zs'
-    let after = ''
-    let repl = '\r&'
-  endif
-  let pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~[')")
-  let find = empty(pat_list) ? @/ : join(pat_list, '\|')
-  let find = before . '\%(' . find . '\)' . after
-  " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
-  execute a:firstline . ',' . a:lastline . 's/'. find . '/' . repl . '/ge'
-  let @/ = save_search
-endfunction
 
 "--------------------------------------------------------------------------------
 " Toggle list
@@ -261,8 +237,6 @@ vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '
 " Buffers
 "----------------------------------------------------------------------------
 nnoremap <leader>on :w <bar> %bd <bar> e#<CR>
-" This lists the open buffers then takes input re. which to delete
-" nnoremap <localleader>d :ls<cr>:bd<space>
 "Use wildmenu to cycle tabs
 nnoremap <localleader><tab> :b <C-Z>
 " Tab and Shift + Tab Circular buffer navigation

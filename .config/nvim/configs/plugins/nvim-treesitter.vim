@@ -3,7 +3,7 @@ if !PluginLoaded('nvim-treesitter')
 endif
 
 " Error higlights are distracting
-highlight! link TSError None
+highlight link TSError Normal
 highlight TSParameter gui=italic,bold
 
 " This plugin is an experimental application of tree sitter usage in Neovim

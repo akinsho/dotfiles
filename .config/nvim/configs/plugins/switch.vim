@@ -1,3 +1,7 @@
+if !PluginLoaded('switch.vim')
+  finish
+endif
+
 let g:switch_custom_definitions =
     \ [
     \   {
