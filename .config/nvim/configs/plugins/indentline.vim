@@ -4,7 +4,7 @@ endif
 
 let s:gui_color = synIDattr(hlID('Comment'), 'fg')
 
-let g:indentLine_fileTypeExclude = ['vimwiki', 'markdown', 'json', 'txt']
+let g:indentLine_fileTypeExclude = ['vimwiki', 'markdown', 'json', 'txt', 'vista']
 let g:indentLine_bufNameExclude  = ['Startify', 'terminal', 'peekabo']
 let g:indentLine_bufTypeExclude  = ['help', 'terminal', 'nofile', 'vimwiki']
 let g:indentLine_faster          = 1
