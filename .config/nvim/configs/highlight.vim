@@ -48,6 +48,7 @@ function! ApplyUserHighlights() abort
     call one#highlight('Folded', '5c6370', 'none', 'italic,bold')
     call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
     " Italicise imports
+    call one#highlight('jsxComponentName', '61afef', 'none', 'bold,italic')
     call one#highlight('Include', '61afef', 'none', 'italic')
     call one#highlight('jsImport', '61afef', 'none', 'italic')
     call one#highlight('jsExport', '61afef', 'none', 'italic')

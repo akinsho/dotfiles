@@ -15,7 +15,12 @@
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 
-let $FZF_DEFAULT_OPTS .= ' --bind=ctrl-a:select-all --layout=reverse --margin=5%,5%'
+" since this mutates an environment variable we check that it has already
+" been appended before attempting to append it again
+let opts = ' --bind=ctrl-a:select-all --layout=reverse --margin=5%,5%'
+if stridx(expand('$FZF_DEFAULT_OPTS'), opts) == -1
+  let $FZF_DEFAULT_OPTS .= opts
+endif
 
 let branch_files_options = {
       \ 'source': '( git status --porcelain | awk ''{print $2}''; git diff --name-only HEAD $(git merge-base HEAD master) ) | sort | uniq'
@@ -67,7 +72,7 @@ if exists('&winblend')
 endif
 
 " Border style (rounded / sharp / horizontal)
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7, 'border': 'rounded' } }
 
 command! -bang -nargs=* Find call fzf#vim#grep(
       \ 'rg --column --line-number --no-heading'.
