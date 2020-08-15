@@ -78,6 +78,23 @@ function on_read(job, err, data)
   end
 end
 
+--- @param buf_id number
+--- @param hl string
+--- @param lines table
+function add_highlight(buf_id, hl, lines)
+  local namespace_id = api.nvim_create_namespace('async-job')
+  for _, line in ipairs(lines) do
+    api.nvim_buf_add_highlight(
+      buf_id,
+      namespace_id,
+      hl,
+      line.number,
+      line.column_start,
+      line.column_end
+    )
+  end
+end
+
 --- @param title string
 --- @param data table
 --- @param width number
@@ -122,6 +139,11 @@ function open_window(job)
       anchor = 'SE',
       style = 'minimal'
     }
+    add_highlight(buf, 'Question', {
+        {number = 0, column_end = -1, column_start = 0},
+        {number = 1, column_end = -1, column_start = 0},
+        {number = 2, column_end = -1, column_start = 0},
+      })
     local win = api.nvim_open_win(buf, false, opts)
     api.nvim_buf_set_option(buf, 'modifiable', false)
 

@@ -179,7 +179,7 @@ if has('nvim')
   if !has('mac')
     " Plugin for visualising the tree sitter tree whilst developing
     Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
-    Plug 'rafcamlet/nvim-luapad', { 'on': ['LuaPad'] }
+    Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
   endif
   if $DEVELOPING
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
