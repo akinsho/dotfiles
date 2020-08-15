@@ -76,9 +76,9 @@ augroup END
 augroup UpdateVim
   autocmd!
   " NOTE: This takes ${VIM_STARTUP_TIME} duration to run
-  execute 'autocmd UpdateVim BufWritePost '. g:vim_dir .'/*.vim,$MYVIMRC ++nested'
-        \ .' source $MYVIMRC | redraw | silent doautocmd ColorScheme | '
-        \ .' echohl Title | echom "sourced '.fnamemodify($MYVIMRC, ':t').'" | echohl clear'
+  autocmd BufWritePost $DOTFILES/**/nvim/configs/*.vim,$MYVIMRC ++nested
+        \  source $MYVIMRC | redraw | silent doautocmd ColorScheme |
+        \  call VimrcMessage("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
@@ -254,6 +254,13 @@ augroup Utilities "{{{1
         \ |   filetype detect
         \ |   echom 'Filetype set to ' . &ft
         \ | endif
+
+  " Reload Vim script automatically if setlocal autoread
+  if has('nvim')
+    autocmd BufWritePost,FileWritePost **/nvim/lua/**/*.lua nested
+          \ execute ('luafile ' . fnamemodify(expand('<afile>'), ':p'))
+          \ | call VimrcMessage('sourced '.bufname('%'), 'Title')
+  endif
 
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
 augroup END

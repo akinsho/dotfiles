@@ -28,8 +28,12 @@ endif
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:vim_dir = g:dotfiles . '/.config/nvim'
 
-function! VimrcMessage(msg) abort
-  echohl WarningMsg
+function! VimrcMessage(msg, ...) abort
+  let hl = 'WarningMsg'
+  if a:0 " a:0 is the number of optional args provided
+    let hl = a:1
+  endif
+  execute 'echohl '. hl
   echom a:msg
   echohl none
 endfunction
