@@ -161,12 +161,12 @@ function echo(msg, hl)
 end
 
 --- @param job table
-function handle_result(job, code)
+function handle_result(job, code, auto_close)
   local num_of_lines = table.getn(job.data)
   if num_of_lines > vim.o.cmdheight then
     local win_id = open_window(job, code)
 
-    if code == 0 then -- only automatically close window if successful
+    if code == 0 and auto_close then -- only automatically close window if successful
       vim.defer_fn(function()
         api.nvim_win_close(win_id, true)
       end, 10000)
@@ -185,7 +185,12 @@ function handle_result(job, code)
 end
 
 --- @param cmd string
-function M.exec(cmd)
+--- @param count number
+function M.exec(cmd, count)
+  local auto_close = true
+  if type(count) == "number" then
+    auto_close = false
+  end
   local parts = vim.split(cmd, " ")
   local program = parts[1]
 
@@ -203,7 +208,7 @@ function M.exec(cmd)
       stderr:close()
       handle:close()
       code = code or 0
-      handle_result(jobs[pid], code)
+      handle_result(jobs[pid], code, auto_close)
   end))
 
   jobs[pid] = {

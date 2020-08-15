@@ -1,4 +1,4 @@
-command! -nargs=+ -complete=shellcmd Exec lua require'async_job'.exec(<q-args>)
-command! GitPush lua require'async_job'.exec('git push')
-command! GitStatus lua require'async_job'.exec('git status')
-command! GitPushF lua require'async_job'.exec('git push -f')
+command! -count -nargs=+ -complete=shellcmd Exec lua require'async_job'.exec(<q-args>, <count>)
+command! -count GitPush lua require'async_job'.exec('git push --porcelain', <count>)
+command! -count GitStatus lua require'async_job'.exec('git status', <count>)
+command! -count GitPushF lua require'async_job'.exec('git push -f', <count>)
