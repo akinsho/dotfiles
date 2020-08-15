@@ -1,3 +1,8 @@
+----------------------------------------------------------------------------------
+-- Async Job
+----------------------------------------------------------------------------------
+-- inspiration: https://stackoverflow.com/questions/48709262/neovim-fugitive-plugin-gpush-locking-up
+
 local luv = vim.loop
 local api = vim.api
 
@@ -15,6 +20,39 @@ local jobs = {}
 -----------------------------------------------------------
 -- Functions
 -----------------------------------------------------------
+-- TODO reproduce in lua
+-- func! s:open_preview(size) abort
+--   let s:shell_tmp_output = tempname()
+--   execute 'pedit '.s:shell_tmp_output
+--   wincmd P
+--   wincmd J
+--   execute('resize '. a:size)
+--   setlocal modifiable
+--   setlocal nobuflisted
+--   setlocal winfixheight
+--   setlocal nolist
+--   nnoremap <silent><nowait><buffer>q :bd<cr>
+--   nnoremap <silent><nowait><buffer><CR> :bd<cr>
+-- endfunc
+
+-- function! s:close_preview_window() abort
+--   normal! G
+--   setlocal nomodifiable
+--   setlocal nomodified
+--   " return to original window
+--   " wincmd p
+-- endfunction
+
+-- function! s:echo(msgs) abort
+--   let msg = join(a:msgs, '\n')
+--   echohl MoreMsg
+--   " double quote message so \n is interpolated
+--   " https://stackoverflow.com/questions/13435586/should-i-use-single-or-double-quotes-in-my-vimrc-file
+--   echom a:msgs
+--   execute('echo "'.shellescape(msg).'"')
+--   echohl clear
+-- endfunction
+
 --- @param job string
 --- @param err string
 --- @param data table
@@ -91,7 +129,7 @@ end
 
 --- @param job table
 function handle_result(job)
-  if table.getn(job.data) > 1 then
+  if table.getn(job.data) > vim.o.cmdheight then
     open_window(job)
   else
     api.nvim_out_write(table.concat(job.data, '\n'))
