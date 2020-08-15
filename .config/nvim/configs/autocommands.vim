@@ -45,7 +45,6 @@ augroup SmartClose
   " Close quick fix window if the file containing it was closed
   autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix')
         \ | bd! | endif
-  autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
   " automatically close corresponding loclist when quitting a window
   if exists('##QuitPre')
     autocmd QuitPre * nested if &filetype !=# 'qf' | silent! lclose | endif
@@ -143,8 +142,7 @@ augroup END
 augroup CommandWindow "{{{1
   autocmd!
   " map q to close command window on quit
-  autocmd CmdwinEnter * nnoremap <silent><buffer> q <C-W>c
-  autocmd CmdwinEnter * nnoremap <CR> <CR>
+  autocmd CmdwinEnter * nnoremap <silent><buffer><nowait> q <C-W>c
   " Automatically jump into the quickfix window on open
   autocmd QuickFixCmdPost [^l]* nested cwindow
   autocmd QuickFixCmdPost    l* nested lwindow
