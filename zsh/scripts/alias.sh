@@ -13,7 +13,7 @@ alias dots="cd $DOTFILES"
 alias coding="cd ~/Desktop/Coding"
 alias lp="lsp"
 alias v='nvim'
-alias minimalvim="nvim -u $DOTFILES/.config/nvim/minimal.vim"
+alias minimalvim="nvim -u ~/minimal.vim"
 alias vi='nvim'
 alias nv='nvim'
 # When working on local plugins set an environment variable to check

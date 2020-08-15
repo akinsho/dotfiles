@@ -24,3 +24,4 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+    - [cp ./.config/nvim/minimal.vim ~/] # this is not a symlink just copying a template
