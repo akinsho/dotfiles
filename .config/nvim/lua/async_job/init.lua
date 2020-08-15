@@ -106,7 +106,8 @@ end
 function open_window(job)
     local width = 60
     local height = 15
-    local row = vim.o.lines - vim.o.cmdheight - 1
+    local statusline_padding = 2
+    local row = vim.o.lines - vim.o.cmdheight - statusline_padding
 
     local data = format_data(job.cmd, job.data, width)
 
@@ -121,16 +122,19 @@ function open_window(job)
       anchor = 'SE',
       style = 'minimal'
     }
-    local win = api.nvim_open_win(buf, 0, opts)
+    local win = api.nvim_open_win(buf, false, opts)
+    api.nvim_buf_set_option(buf, 'modifiable', false)
 
-    vim.cmd('setlocal nomodifiable')
     return win
 end
 
 --- @param job table
 function handle_result(job)
   if table.getn(job.data) > vim.o.cmdheight then
-    open_window(job)
+    local win_id = open_window(job)
+    vim.defer_fn(function()
+      api.nvim_win_close(win_id, true)
+    end, 10000)
   else
     api.nvim_out_write(table.concat(job.data, '\n'))
   end
