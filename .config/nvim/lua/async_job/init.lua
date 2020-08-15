@@ -150,15 +150,26 @@ function open_window(job)
     return win
 end
 
+---@param msg string
+---@param hl string
+function echo(msg, hl)
+  vim.cmd("echohl ".. hl)
+  vim.cmd("echom ".. vim.fn.shellescape(msg))
+  vim.cmd("echohl clear")
+end
+
 --- @param job table
 function handle_result(job)
-  if table.getn(job.data) > vim.o.cmdheight then
+  local num_of_lines = table.getn(job.data)
+  if num_of_lines > vim.o.cmdheight then
     local win_id = open_window(job)
     vim.defer_fn(function()
       api.nvim_win_close(win_id, true)
     end, 10000)
   else
-    api.nvim_out_write(table.concat(job.data, '\n'))
+    local default_msg = job.cmd .. ' completed successfully'
+    local msg = num_of_lines > 0 and table.concat(job.data, '\n') or default_msg
+    echo(msg, "Title")
   end
   jobs[job.pid] = nil
 end
@@ -173,7 +184,7 @@ function M.exec(cmd)
   handle, pid = luv.spawn(program, {
       args = parts,
       stdio = {stdout, stderr}
-  },vim.schedule_wrap(function ()
+  }, vim.schedule_wrap(function ()
       stdout:read_stop()
       stderr:read_stop()
       stdout:close()
@@ -188,6 +199,8 @@ function M.exec(cmd)
     data = {},
   }
 
+  ---@param err table
+  ---@param data table
   local handle_read = function (err, data)
     on_read(jobs[pid], err, data)
   end
