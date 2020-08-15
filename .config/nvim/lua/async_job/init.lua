@@ -120,7 +120,7 @@ function format_data(title, data, width)
 end
 
 --- @param job table
-function open_window(job)
+function open_window(job, code)
     local width = 60
     local height = 15
     local statusline_padding = 2
@@ -139,7 +139,9 @@ function open_window(job)
       anchor = 'SE',
       style = 'minimal'
     }
-    add_highlight(buf, 'Question', {
+    local highlight = code > 0 and 'Error' or 'Question'
+
+    add_highlight(buf, highlight, {
         {number = 0, column_end = -1, column_start = 0},
         {number = 1, column_end = -1, column_start = 0},
         {number = 2, column_end = -1, column_start = 0},
@@ -159,15 +161,23 @@ function echo(msg, hl)
 end
 
 --- @param job table
-function handle_result(job)
+function handle_result(job, code)
   local num_of_lines = table.getn(job.data)
   if num_of_lines > vim.o.cmdheight then
-    local win_id = open_window(job)
-    vim.defer_fn(function()
-      api.nvim_win_close(win_id, true)
-    end, 10000)
+    local win_id = open_window(job, code)
+
+    if code == 0 then -- only automatically close window if successful
+      vim.defer_fn(function()
+        api.nvim_win_close(win_id, true)
+      end, 10000)
+    end
   else
-    local default_msg = job.cmd .. ' completed successfully'
+    local default_msg = job.cmd
+    if code > 0 then
+      default_msg = default_msg .. ' exited with code: '.. code
+    else
+      default_msg = default_msg .. ' completed successfully'
+    end
     local msg = num_of_lines > 0 and table.concat(job.data, '\n') or default_msg
     echo(msg, "Title")
   end
@@ -184,13 +194,14 @@ function M.exec(cmd)
   handle, pid = luv.spawn(program, {
       args = parts,
       stdio = {stdout, stderr}
-  }, vim.schedule_wrap(function ()
+  }, vim.schedule_wrap(function (code, _) -- signal is the second argument
       stdout:read_stop()
       stderr:read_stop()
       stdout:close()
       stderr:close()
       handle:close()
-      handle_result(jobs[pid])
+      code = code or 0
+      handle_result(jobs[pid], code)
   end))
 
   jobs[pid] = {
