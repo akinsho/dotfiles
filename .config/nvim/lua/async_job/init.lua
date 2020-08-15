@@ -187,12 +187,14 @@ end
 --- @param cmd string
 function M.exec(cmd)
   local parts = vim.split(cmd, " ")
-  local program = table.remove(parts, 1)
+  local program = parts[1]
+
   local handle
   local stdout = luv.new_pipe(false)
   local stderr = luv.new_pipe(false)
+
   handle, pid = luv.spawn(program, {
-      args = parts,
+      args = {unpack(parts, 2)},
       stdio = {stdout, stderr}
   }, vim.schedule_wrap(function (code, _) -- signal is the second argument
       stdout:read_stop()
@@ -220,7 +222,7 @@ function M.exec(cmd)
 end
 
 function M.introspect()
-  print("Existing jobs ->"..vim.inspect(jobs))
+  print("Existing jobs -> "..vim.inspect(jobs))
   return jobs
 end
 
