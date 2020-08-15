@@ -105,16 +105,18 @@ function format_data(title, data, width)
   local side_size = math.floor(remainder / 2) - 1
   local side = string.rep(" ", side_size)
   local heading = side .. title ..side
+
   if string.len(heading) ~= width - 2 then
     local offset = (width - 2) - string.len(heading)
     heading = heading .. string.rep(" ", offset)
   end
+
   local top = "╭" .. string.rep("─", width - 2) .. "╮"
   local mid = "│" ..         heading            .. "│"
   local bot = "╰" .. string.rep("─", width - 2) .. "╯"
 
   for i, item in ipairs(formatted) do
-      formatted[i] = " " .. item
+    formatted[i] = " " .. item .. " "
   end
   return vim.list_extend({top, mid, bot}, formatted)
 end
@@ -122,7 +124,9 @@ end
 --- @param job table
 function open_window(job, code)
     local width = 60
-    local height = 15
+    local header_size = 3
+    local num_lines = table.getn(job.data)
+    local height =  num_lines < 15 and num_lines + header_size or 15
     local statusline_padding = 2
     local row = vim.o.lines - vim.o.cmdheight - statusline_padding
 
@@ -156,17 +160,19 @@ end
 ---@param hl string
 function echo(msg, hl)
   vim.cmd("echohl ".. hl)
-  vim.cmd("echom ".. vim.fn.shellescape(msg))
+  vim.cmd("echo ".. vim.fn.shellescape(msg))
   vim.cmd("echohl clear")
 end
 
 --- @param job table
 function handle_result(job, code, auto_close)
   local num_of_lines = table.getn(job.data)
-  if num_of_lines > vim.o.cmdheight then
+  -- if the output is more than a few lines longer than
+  -- the command msg area open a window
+  if num_of_lines > vim.o.cmdheight + 2 then
     local win_id = open_window(job, code)
-
-    if code == 0 and auto_close then -- only automatically close window if successful
+    -- only automatically close window if successful
+    if code == 0 and auto_close then
       vim.defer_fn(function()
         api.nvim_win_close(win_id, true)
       end, 10000)
@@ -185,10 +191,10 @@ function handle_result(job, code, auto_close)
 end
 
 --- @param cmd string
---- @param count number
+--- @param count number @comment count's default is 0
 function M.exec(cmd, count)
   local auto_close = true
-  if type(count) == "number" then
+  if type(count) == "number" and count > 0 then
     auto_close = false
   end
   local parts = vim.split(cmd, " ")
