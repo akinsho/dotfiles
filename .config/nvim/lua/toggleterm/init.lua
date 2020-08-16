@@ -53,7 +53,9 @@ end
 ---@param num number
 ---@param size number
 function M.open(num, size)
-  size = size or default_size
+  vim.validate{num={num, 'number'}, size={size, 'number', true}}
+
+  size = (size and size > 0) and size or default_size
   local term = find_term(num)
 
   if vim.fn.bufexists(term.bufnr) == 0 then
@@ -62,13 +64,14 @@ function M.open(num, size)
     term.bufnr = api.nvim_create_buf(false, false)
     api.nvim_set_current_buf(term.bufnr)
     api.nvim_win_set_buf(term.window, term.bufnr)
-    term.job_id = fn.termopen(vim.o.shell..';#toggleterm', { detach = 1 })
+    term.job_id = fn.termopen(vim.o.shell..';#toggleterm#'..num, { detach = 1 })
     vim.b.filetype = 'toggleterm'
     vim.b.winfixwidth = true
     vim.b.winfixheight = true
     terminals[num] = term
   else
     open_split(size)
+    vim.cmd('resize '.. size)
     vim.cmd('keepalt buffer '..term.bufnr)
     vim.b.winfixwidth = true
     vim.b.winfixheight = true
@@ -77,7 +80,18 @@ function M.open(num, size)
   end
 end
 
-function M.exec(cmd, size)
+---@param cmd string
+---@param num number
+---@param size number
+function M.exec(cmd, num, size)
+  local term = find_term(num)
+  if not find_window(term) then
+    M.open(num, size)
+  end
+  fn.chansend(term.job_id, "clear".."\n"..cmd.."\n")
+  vim.cmd('normal! G')
+  vim.cmd('wincmd! p')
+  vim.cmd('stopinsert!')
 end
 
 function M.close(num)
@@ -88,6 +102,7 @@ function M.close(num)
 end
 
 function M.toggle(num, size)
+  vim.validate{num={num, 'number'}, size={size, 'number', true}}
   local term = find_term(num)
   if find_window(term.window) then
     M.close(num)
