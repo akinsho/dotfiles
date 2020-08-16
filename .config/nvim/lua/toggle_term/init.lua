@@ -44,10 +44,14 @@ function find_window(win_id)
   return fn.win_gotoid(win_id) > 0
 end
 
+--- get existing terminal or create an empty term table
+--- @param num number
 function find_term(num)
   return terminals[num] or create_term()
 end
 
+--- Change the directory of the current terminal
+--- to vim's cwd/the project root
 --- @param term table
 function set_directory(term)
   local cwd = fn.getcwd()
@@ -57,6 +61,9 @@ function set_directory(term)
   end
 end
 
+--- get the toggle term number from
+--- the name e.g. term://~/.dotfiles//3371887:/usr/bin/zsh;#toggleterm#1
+--- the number in this case is 1
 --- @param name string
 function get_number_from_name(name)
   local parts = vim.split(name, '#')
@@ -64,6 +71,9 @@ function get_number_from_name(name)
   return num
 end
 
+--- Find the the first open terminal window
+--- by iterating all windows and matching the
+--- containing buffers filetype
 function find_first_open_window()
   local wins = api.nvim_list_wins()
   local is_open = false
@@ -79,6 +89,7 @@ function find_first_open_window()
   return is_open, term_win
 end
 
+--- Add terminal buffer specific options
 --- @param num number
 --- @param bufnr number
 --- @param win_id number
@@ -229,6 +240,13 @@ function M.close(num)
   end
 end
 
+--- If a count is provided we operate on the specific terminal buffer
+--- i.e. 2ToggleTerm => open or close Term 2
+--- if the count is 1 we use a heuristic which is as follows
+--- if there is no open terminal window we toggle the first one i.e. assumed
+--- to be the primary. However if several are open we close them.
+--- this can be used with the count commands to allow specific operations
+--- per term or mass actions
 --- @param count number
 --- @param size number
 function M.toggle(count, size)
