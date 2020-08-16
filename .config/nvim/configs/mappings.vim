@@ -314,9 +314,9 @@ nnoremap Y y$
 ""---------------------------------------------------------------------------//
 " Quick find/replace
 ""---------------------------------------------------------------------------//
-nnoremap <Leader>[ :%s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <leader>[ :%s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <leader>] :s/\<<C-r>=expand("<cword>")<CR>\>/
-vnoremap <Leader>[ "zy:%s/<C-r><C-o>"/
+vnoremap <leader>[ "zy:%s/<C-r><C-o>"/
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
