@@ -70,7 +70,7 @@ echo "this may take a while.. as well"
 echo "---------------------------------------------------------"
 
 if [ "$(uname)" == "Darwin" ]; then
-  source "$DOTFILES/configs/.macos"
+  # source "$DOTFILES/configs/.macos"
 
   echo "Installing brew bundle"
   brew tap Homebrew/bundle

@@ -349,7 +349,7 @@ __async_vcs_info_done() {
 # Resource: [TRAP functions]
 # http://zsh.sourceforge.net/Doc/Release/Functions.html#Trap-Functions
 function TRAPWINCH () {
-  clear
+  # clear
   set-prompt
   zle && zle reset-prompt
 }
