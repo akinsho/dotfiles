@@ -100,17 +100,21 @@ function set_opts(num, bufnr, win_id)
   api.nvim_buf_set_var(bufnr, "toggle_number", num)
 end
 
+--- FIXME problem for DEV when reloading a file
+--- we lose all state and windows can't be reconciled
 function M.__reparent_term()
-  local win = fn.win_getid()
+  --- NOTE try checking if the buffer is a terminal with a matching
+  --- name if so see if we have it's number stored
   local is_term = vim.bo.filetype ~= term_ft
   if is_term then return end
-  local buf = fn.bufnr()
   local name = fn.bufname()
   local name_matches = string.find(name, term_ft)
   if name_matches then
-    print("Setting details")
     local num = get_number_from_name(name)
-    set_opts(num, buf, win)
+    if not terminals[num] then
+      print("reparenting window")
+      M.on_term_open()
+    end
   end
 end
 
@@ -120,7 +124,7 @@ function add_autocommands(num, bufnr)
   vim.cmd('augroup ToggleTerm'..num)
   vim.cmd('au!')
   vim.cmd(string.format('autocmd TermClose <buffer=%d> lua require"toggle_term".delete(%d)', bufnr, num))
-  -- vim.cmd('autocmd WinEnter term://*toggleterm#* lua require"toggle_term".__reparent_term()')
+  -- vim.cmd('autocmd BufEnter term://*toggleterm#* lua require"toggle_term".__reparent_term()')
   vim.cmd('augroup END')
 end
 
@@ -139,11 +143,19 @@ function smart_toggle(_, size)
     -- count backwards from the end of the list
     for i = #terminals, 1, -1 do
       local term = terminals[i]
+      if not term then
+        vim.cmd(string.format(
+          'echomsg "Term does not exist %s"',
+          vim.inspect(term)
+        ))
+        goto continue
+      end
       local wins = find_windows_by_bufnr(term.bufnr)
       if table.getn(wins) > 0 then
         target = i
         break
       end
+      ::continue::
     end
     M.close(target)
   end
