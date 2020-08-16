@@ -70,13 +70,15 @@ end
 --- Find the the first open terminal window
 --- by iterating all windows and matching the
 --- containing buffers filetype
-function find_open_windows()
+--- @param comparator function
+function find_open_windows(comparator)
+  comparator = comparator or function (buf) return vim.bo[buf].filetype == term_ft end
   local wins = api.nvim_list_wins()
   local is_open = false
   local term_wins = {}
   for _, win in pairs(wins) do
       local buf = api.nvim_win_get_buf(win)
-      if vim.bo[buf].filetype == term_ft then
+      if comparator(buf) then
         is_open = true
         table.insert(term_wins, win)
       end
@@ -101,7 +103,6 @@ function add_autocommands(num, bufnr)
   vim.cmd('augroup ToggleTerm'..num)
   vim.cmd('au!')
   vim.cmd(string.format('autocmd TermClose <buffer=%d> lua require"toggle_term".delete(%d)', bufnr, num))
-  -- vim.cmd('autocmd BufEnter term://*toggleterm#* lua require"toggle_term".__reparent_term()')
   vim.cmd('augroup END')
 end
 
@@ -125,14 +126,13 @@ function smart_toggle(_, size)
           'echomsg "Term does not exist %s"',
           vim.inspect(term)
         ))
-        goto continue
+        break
       end
       local wins = find_windows_by_bufnr(term.bufnr)
       if table.getn(wins) > 0 then
         target = i
         break
       end
-      ::continue::
     end
     M.close(target)
   end
@@ -149,21 +149,35 @@ function toggle_nth_term(num, size)
   end
 end
 
---- FIXME problem for DEV when reloading a file
+--- FIXME
 --- we lose all state and windows can't be reconciled
 --- NOTE try checking if the buffer is a terminal with a matching
 --- name if so see if we have it's number stored
-function M.__reparent_term()
-  local is_term = vim.bo.filetype ~= term_ft
-  if is_term then return end
-  local name = fn.bufname()
-  local name_matches = string.find(name, term_ft)
-  if name_matches then
-    local num = get_number_from_name(name)
-    if not terminals[num] then
-      print("reparenting window")
-      M.on_term_open()
-    end
+--- 1. Find out if the name matches
+--- 2. Check if the number is the list of terminals if not add it
+--- 3. If it is not the correct type make it so
+function reconcile_terminals()
+  local has_open, windows = find_open_windows(function (buf)
+    return string.match(api.nvim_buf_get_name(buf), term_ft) ~= nil
+  end)
+  -- print('reconciling: '..vim.inspect(windows))
+  if not has_open then return end
+  local set = {}
+  for _, t in ipairs(terminals) do set[t.window] = true end
+  for _, win in pairs(windows) do
+      if not set[win] then
+        local buf = api.nvim_win_get_buf(win)
+        local name = api.nvim_buf_get_name(buf)
+        local num = get_number_from_name(name)
+        local term = {
+          bufnr = fn.bufnr(),
+          window = fn.win_getid(),
+          job_id = vim.b.terminal_job_id,
+          number = num,
+          dir = fn.getcwd()
+        }
+        terminals[num] = term
+      end
   end
 end
 
@@ -287,6 +301,7 @@ function M.toggle(count, size)
     count={count, 'number', true},
     size={size, 'number', true},
   }
+  -- reconcile_terminals()
   if count > 1 then
     toggle_nth_term(count, size)
   else
