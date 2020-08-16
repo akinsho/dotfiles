@@ -67,13 +67,12 @@ function term_is_open()
   return is_open, term_win
 end
 
---- TODO make sure terminal list stays up to date
---- currently not triggering
 --- @param num string
-function add_autocommands(num)
+--- @param bufnr string
+function add_autocommands(num, bufnr)
   vim.cmd('augroup ToggleTerm'..num)
   vim.cmd('au!')
-  vim.cmd(string.format('autocmd BufDelete <buffer> lua require"toggle_term".delete(%d)', num))
+  vim.cmd(string.format('autocmd TermClose <buffer=%d> lua require"toggle_term".delete(%d)', bufnr, num))
   vim.cmd('augroup END')
 end
 
@@ -97,8 +96,7 @@ function M.on_term_open()
 end
 
 function M.delete(num)
-  vim.cmd(string.format('echom "Buffer to delete: %d"', num))
-  terminals[num] = nil
+  if terminals[num] then terminals[num] = nil end
 end
 
 --- @param num number
@@ -122,7 +120,7 @@ function M.open(num, size)
     vim.b.filetype = 'toggleterm'
     vim.wo.winfixheight = true
     api.nvim_buf_set_var(term.bufnr, "toggle_number", num)
-    add_autocommands(num)
+    add_autocommands(num, term.bufnr)
     terminals[num] = term
   else
     open_split(size)
