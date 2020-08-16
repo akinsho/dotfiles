@@ -7,10 +7,26 @@ augroup ToggleTerminal
   autocmd!
   autocmd BufEnter term://*toggleterm#* call terminal#check_last_window()
   autocmd TermOpen term://*toggleterm#* lua require'toggle_term'.on_term_open()
-  autocmd TermEnter term://*toggleterm#* call s:setup_toggle_term_maps()
+  autocmd TermEnter term://*toggleterm#* call <SID>setup_toggle_term_maps()
+  " Colorize terminal buffers
+  " TODO this is brittle as it does not cover all available shells
+  autocmd TermOpen,ColorScheme,WinNew,TermEnter term://*zsh*,term://*bash*
+        \ call <SID>terminal_setup()
+  " on BufRead the name of the toggle-able terminal will have changed
+  " so it will not be caught by the pattern above
+  autocmd BufEnter,ColorScheme * call <SID>terminal_setup()
 augroup END
 
 command! -count ToggleTerm lua require'toggle_term'.toggle(<count>, 12)
+
+" FIXME normal terminals have no filetype. The only other type of terminal
+" we should color is toggleterm. This can be done in a clear way though.
+function! s:terminal_setup()
+  if &buftype ==# 'terminal' &&
+        \ (&filetype ==# '' || &filetype ==# 'toggleterm')
+      lua require"toggle_term".darken_terminal(-30)
+    endif
+endfunction
 
 function s:setup_toggle_term_maps() abort
   tnoremap <silent><c-\> <C-\><C-n>:exe v:count1 . "ToggleTerm"<CR>

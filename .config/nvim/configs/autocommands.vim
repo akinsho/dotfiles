@@ -164,14 +164,6 @@ augroup Cursorline
   autocmd BufLeave * setlocal nocursorline
 augroup END
 
-" TODO make sure this doesn't highlight FZF buffers
-" find a nicer way to highlight "toggleterm" as well
-function! s:terminal_setup()
-  if &buftype ==# 'terminal'&& (&filetype ==# '' || &filetype ==# 'toggleterm')
-      lua require"color_helpers".darken_terminal(-30)
-    endif
-endfunction
-
 " ----------------------------------------------------------------------------
 " Open FILENAME:LINE:COL
 " ----------------------------------------------------------------------------
@@ -204,11 +196,6 @@ augroup CustomWindowSettings
 
   " These overrides should apply to all buffers
   autocmd TermOpen * setlocal nocursorline nonumber norelativenumber
-  autocmd TermOpen,ColorScheme,WinNew,TermEnter term://*zsh*,term://*bash*
-        \ call s:terminal_setup()
-  " on BufRead the name of the toggle-able terminal will have changed
-  " so it will not be caught by the pattern above
-  autocmd BufEnter,ColorScheme * call s:terminal_setup()
   autocmd WinEnter,WinNew * if &previewwindow
         \ | setlocal nospell concealcursor=nv nocursorline colorcolumn=
         \ | endif
