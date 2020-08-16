@@ -115,11 +115,16 @@ function M.open(num, size)
     api.nvim_win_set_buf(term.window, term.bufnr)
     local name = vim.o.shell..';#toggleterm#'..num
     term.job_id = fn.termopen(name, { detach = 1 })
-    --- TODO this is duplicating work done in on_term_open but
+
+    ------------------------------------------------------
+    --- FIXME this is duplicating work done in on_term_open but
     --- which one gets called and when is a little unclear
+    ------------------------------------------------------
     vim.b.filetype = 'toggleterm'
     vim.wo.winfixheight = true
     api.nvim_buf_set_var(term.bufnr, "toggle_number", num)
+    ------------------------------------------------------
+
     add_autocommands(num, term.bufnr)
     terminals[num] = term
   else
