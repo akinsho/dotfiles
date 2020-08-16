@@ -93,24 +93,6 @@ function set_opts(num, bufnr, win_id)
   api.nvim_buf_set_var(bufnr, "toggle_number", num)
 end
 
---- FIXME problem for DEV when reloading a file
---- we lose all state and windows can't be reconciled
-function M.__reparent_term()
-  --- NOTE try checking if the buffer is a terminal with a matching
-  --- name if so see if we have it's number stored
-  local is_term = vim.bo.filetype ~= term_ft
-  if is_term then return end
-  local name = fn.bufname()
-  local name_matches = string.find(name, term_ft)
-  if name_matches then
-    local num = get_number_from_name(name)
-    if not terminals[num] then
-      print("reparenting window")
-      M.on_term_open()
-    end
-  end
-end
-
 --- @param num string
 --- @param bufnr string
 function add_autocommands(num, bufnr)
@@ -165,6 +147,43 @@ function toggle_nth_term(num, size)
   end
 end
 
+--- FIXME problem for DEV when reloading a file
+--- we lose all state and windows can't be reconciled
+--- NOTE try checking if the buffer is a terminal with a matching
+--- name if so see if we have it's number stored
+function M.__reparent_term()
+  local is_term = vim.bo.filetype ~= term_ft
+  if is_term then return end
+  local name = fn.bufname()
+  local name_matches = string.find(name, term_ft)
+  if name_matches then
+    local num = get_number_from_name(name)
+    if not terminals[num] then
+      print("reparenting window")
+      M.on_term_open()
+    end
+  end
+end
+
+
+function M.close_last_window()
+  local buf = api.nvim_get_current_buf()
+  local only_one_window = fn.winnr('$') == 1
+  if only_one_window and vim.bo[buf].filetype == term_ft then
+    -- Reset the window id so there are no hanging
+    -- references to the terminal window
+    for _, term in pairs(terminals) do
+        if term.bufnr == buf then
+            term.window = -1
+            break
+        end
+    end
+    -- FIXME switching causes the buffer
+    -- switch to to have highlighting
+    vim.cmd('keepalt bnext')
+  end
+end
+
 function M.on_term_open()
   local title = fn.bufname()
   local num = get_number_from_name(title)
@@ -180,7 +199,8 @@ function M.on_term_open()
   end
 end
 
----@param num string
+--- Remove the in memory reference to the no longer open terminal
+--- @param num string
 function M.delete(num)
   if terminals[num] then terminals[num] = nil end
 end
@@ -216,7 +236,6 @@ function M.open(num, size)
   end
 end
 
---- TODO fails on the first call
 --- @param cmd string
 --- @param num number
 --- @param size number
@@ -226,6 +245,8 @@ function M.exec(cmd, num, size)
     num={num, "number"},
     size={size, "number", true},
   }
+  -- count
+  num = num < 1 and 1 or num
   local term = find_term(num)
   if not find_window(term.window) then
     M.open(num, size)
@@ -245,7 +266,6 @@ function M.close(num)
   else if num then
       vim.cmd(string.format('echoerr "Failed to close window: %d does not exist"', num))
     else
-      print(vim.inspect(num))
       vim.cmd('echoerr "Failed to close window: invalid term number"')
     end
   end
