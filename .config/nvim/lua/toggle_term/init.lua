@@ -135,7 +135,7 @@ function smart_toggle(_, size)
   if not already_open then
     M.open(1, size)
   else
-    local target
+    local target = #terminals
     -- count backwards from the end of the list
     for i = #terminals, 1, -1 do
       local term = terminals[i]
@@ -237,6 +237,12 @@ function M.close(num)
   local term = find_term(num)
   if find_window(term.window) then
     vim.cmd('hide')
+  else if num then
+      vim.cmd(string.format('echoerr "Failed to close window: %d does not exist"', num))
+    else
+      print(vim.inspect(num))
+      vim.cmd('echoerr "Failed to close window: invalid term number"')
+    end
   end
 end
 
