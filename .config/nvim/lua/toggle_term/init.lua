@@ -33,8 +33,11 @@ end
 
 --- @param size number
 function open_split(size)
-  local has_open = find_first_open_window()
+  local has_open, win_ids = find_open_windows()
   if has_open then
+    -- we need to be in the terminal window most recently opened
+    -- terminal in order to split to the right of it
+    fn.win_gotoid(win_ids[#win_ids])
     vim.cmd('vsp')
   else
     vim.cmd(size .. 'sp')
@@ -67,19 +70,18 @@ end
 --- Find the the first open terminal window
 --- by iterating all windows and matching the
 --- containing buffers filetype
-function find_first_open_window()
+function find_open_windows()
   local wins = api.nvim_list_wins()
   local is_open = false
-  local term_win
+  local term_wins = {}
   for _, win in pairs(wins) do
       local buf = api.nvim_win_get_buf(win)
       if vim.bo[buf].filetype == term_ft then
         is_open = true
-        term_win = win
-        break
+        table.insert(term_wins, win)
       end
   end
-  return is_open, term_win
+  return is_open, term_wins
 end
 
 --- Add terminal buffer specific options
@@ -110,7 +112,7 @@ end
 
 --- @param size number
 function smart_toggle(_, size)
-  local already_open = find_first_open_window()
+  local already_open = find_open_windows()
   if not already_open then
     M.open(1, size)
   else
