@@ -102,6 +102,9 @@ function! statusline#filename(...) abort
 
   let name = get(s:filetype_map, &filetype, '')
   if strlen(name)
+    if s:is_ft('toggleterm') && exists('b:toggle_number')
+      let name .= '['.b:toggle_number.']'
+    endif
     return name
   endif
 
