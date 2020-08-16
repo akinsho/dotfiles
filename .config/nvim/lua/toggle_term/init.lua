@@ -1,10 +1,11 @@
 local api = vim.api
 local fn = vim.fn
+local colors = require("toggle_term/colors")
 -----------------------------------------------------------
 -- Export
 -----------------------------------------------------------
 local M = {
-  darken_terminal = require("toggle_term/colors").darken_terminal,
+  darken_terminal = colors.darken_terminal,
 }
 
 -----------------------------------------------------------
@@ -25,7 +26,7 @@ function create_term()
     window = -1,
     job_id = -1,
     bufnr = -1,
-    dir = vim.fn.getcwd(),
+    dir = fn.getcwd(),
     number = next_num,
   }
 end
@@ -51,17 +52,6 @@ end
 --- @param num number
 function find_term(num)
   return terminals[num] or create_term()
-end
-
---- Change the directory of the current terminal
---- to vim's cwd/the project root
---- @param term table
-function set_directory(term)
-  local cwd = fn.getcwd()
-  if term.dir ~= cwd then
-    fn.chansend(term.job_id, "cd "..cwd.."\n".."clear\n")
-    term.dir = cwd
-  end
 end
 
 --- get the toggle term number from
@@ -211,6 +201,7 @@ function M.open(num, size)
     api.nvim_set_current_buf(term.bufnr)
     api.nvim_win_set_buf(term.window, term.bufnr)
 
+    vim.cmd('lcd '.. fn.getcwd())
     local name = vim.o.shell..';#'..term_ft..'#'..num
     term.job_id = fn.termopen(name, { detach = 1 })
 
@@ -221,7 +212,6 @@ function M.open(num, size)
     vim.cmd('resize '.. size)
     vim.cmd('keepalt buffer '..term.bufnr)
     vim.wo.winfixheight = true
-    set_directory(term)
     term.window = fn.win_getid()
   end
 end
