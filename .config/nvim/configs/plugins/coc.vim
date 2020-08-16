@@ -137,8 +137,8 @@ else
   imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 " Use `[c` and `]c` for navigate diagnostics
-nmap <silent> ]c <Plug>(coc-diagnostic-prev)
-nmap <silent> [c <Plug>(coc-diagnostic-next)
+nmap <expr><silent> ]c &diff ? ']c' : "\<Plug>(coc-diagnostic-prev)"
+nmap <expr><silent> [c &diff ? '[c' : "\<Plug>(coc-diagnostic-next)"
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -227,7 +227,7 @@ nmap <silent> <C-e> <Plug>(coc-cursors-position)
 " cursor word mapping
 nnoremap <Plug>(*) *
 nnoremap <Plug>(nohl) :nohlsearch<CR>
-nmap <expr> <silent> <C-c> <SID>select_current_word()
+nmap <expr> <silent> <C-e> <SID>select_current_word()
 function! s:select_current_word()
   if !get(g:, 'coc_cursors_activated', 0)
     return "\<Plug>(coc-cursors-word)"
@@ -289,7 +289,7 @@ nnoremap <silent> <leader>fc :Fold comments<CR>
 "}}}
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 ""---------------------------------------------------------------------------//
 " Tags
 ""---------------------------------------------------------------------------//
