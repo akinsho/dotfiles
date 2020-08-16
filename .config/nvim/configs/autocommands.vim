@@ -243,7 +243,8 @@ augroup Utilities "{{{1
   endif
 
   " Save a buffer when we leave it
-  autocmd BufLeave * silent! update
+  let save_excluded = ['lua.luapad']
+  autocmd BufLeave * if index(save_excluded, &ft) == -1 | silent! update | endif
 
   " Update filetype on save if empty
   autocmd BufWritePost * nested
