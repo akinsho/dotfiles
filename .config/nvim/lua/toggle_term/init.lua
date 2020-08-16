@@ -9,6 +9,7 @@ local M = {}
 -- Constants
 -----------------------------------------------------------
 local default_size = 12
+local term_ft = 'toggleterm'
 -----------------------------------------------------------
 -- State
 -----------------------------------------------------------
@@ -28,9 +29,14 @@ end
 
 --- @param size number
 function open_split(size)
-  local has_open = term_is_open()
-  local split_cmd = has_open and 'vsp' or size .. 'sp'
-  vim.cmd(split_cmd)
+  local has_open = find_first_open_window()
+  if has_open then
+    vim.cmd('vsp')
+  else
+    vim.cmd(size .. 'sp')
+    -- move horizontal split to the bottom
+    vim.cmd('wincmd J')
+  end
 end
 
 --- @param win_id number
@@ -51,14 +57,20 @@ function set_directory(term)
   end
 end
 
-function term_is_open()
+--- @param name string
+function get_number_from_name(name)
+  local parts = vim.split(name, '#')
+  local num = tonumber(parts[#parts])
+  return num
+end
+
+function find_first_open_window()
   local wins = api.nvim_list_wins()
   local is_open = false
   local term_win
   for _, win in pairs(wins) do
       local buf = api.nvim_win_get_buf(win)
-      local filetype = api.nvim_buf_get_option(buf, 'filetype')
-      if filetype == 'toggleterm' then
+      if vim.bo[buf].filetype == term_ft then
         is_open = true
         term_win = win
         break
@@ -67,19 +79,79 @@ function term_is_open()
   return is_open, term_win
 end
 
+--- @param num number
+--- @param bufnr number
+--- @param win_id number
+function set_opts(num, bufnr, win_id)
+  vim.wo[win_id].winfixheight = true
+  vim.bo[bufnr].buflisted = false
+  vim.bo[bufnr].filetype = term_ft
+  api.nvim_buf_set_var(bufnr, "toggle_number", num)
+end
+
+function M.__reparent_term()
+  local win = fn.win_getid()
+  local is_term = vim.bo.filetype ~= term_ft
+  if is_term then return end
+  local buf = fn.bufnr()
+  local name = fn.bufname()
+  local name_matches = string.find(name, term_ft)
+  if name_matches then
+    print("Setting details")
+    local num = get_number_from_name(name)
+    set_opts(num, buf, win)
+  end
+end
+
 --- @param num string
 --- @param bufnr string
 function add_autocommands(num, bufnr)
   vim.cmd('augroup ToggleTerm'..num)
   vim.cmd('au!')
   vim.cmd(string.format('autocmd TermClose <buffer=%d> lua require"toggle_term".delete(%d)', bufnr, num))
+  -- vim.cmd('autocmd WinEnter term://*toggleterm#* lua require"toggle_term".__reparent_term()')
   vim.cmd('augroup END')
+end
+
+--- @param bufnr number
+function find_windows_by_bufnr(bufnr)
+  return fn.win_findbuf(bufnr)
+end
+
+--- @param size number
+function smart_toggle(_, size)
+  local already_open = find_first_open_window()
+  if not already_open then
+    M.open(1, size)
+  else
+    local target
+    -- count backwards from the end of the list
+    for i = #terminals, 1, -1 do
+      local term = terminals[i]
+      local wins = find_windows_by_bufnr(term.bufnr)
+      if table.getn(wins) > 0 then
+        target = i
+        break
+      end
+    end
+    M.close(target)
+  end
+end
+
+--- @param num number
+--- @param size number
+function toggle_nth_term(num, size)
+  local term = find_term(num)
+  if find_window(term.window) then
+    M.close(num)
+  else
+    M.open(num, size)
+  end
 end
 
 function M.on_term_open()
   local title = fn.bufname()
-  local parts = vim.split(title, '#')
-  local num = tonumber(parts[#parts])
+  local num = get_number_from_name(title)
   if not terminals[num] then
     local term = create_term()
     term.bufnr = fn.bufnr()
@@ -88,13 +160,11 @@ function M.on_term_open()
     terminals[num] = term
 
     vim.cmd("resize "..default_size)
-    vim.wo[term.window].winfixheight = true
-    vim.bo[term.bufnr].buflisted = false
-    vim.bo[term.bufnr].filetype = 'toggleterm'
-    api.nvim_buf_set_var(term.bufnr, "toggle_number", num)
+    set_opts(num, term.bufnr, term.window)
   end
 end
 
+---@param num string
 function M.delete(num)
   if terminals[num] then terminals[num] = nil end
 end
@@ -111,19 +181,12 @@ function M.open(num, size)
     open_split(size)
     term.window = fn.win_getid()
     term.bufnr = api.nvim_create_buf(false, false)
+
     api.nvim_set_current_buf(term.bufnr)
     api.nvim_win_set_buf(term.window, term.bufnr)
-    local name = vim.o.shell..';#toggleterm#'..num
-    term.job_id = fn.termopen(name, { detach = 1 })
 
-    ------------------------------------------------------
-    --- FIXME this is duplicating work done in on_term_open but
-    --- which one gets called and when is a little unclear
-    ------------------------------------------------------
-    vim.b.filetype = 'toggleterm'
-    vim.wo.winfixheight = true
-    api.nvim_buf_set_var(term.bufnr, "toggle_number", num)
-    ------------------------------------------------------
+    local name = vim.o.shell..';#'..term_ft..'#'..num
+    term.job_id = fn.termopen(name, { detach = 1 })
 
     add_autocommands(num, term.bufnr)
     terminals[num] = term
@@ -158,6 +221,7 @@ function M.exec(cmd, num, size)
   vim.cmd('stopinsert!')
 end
 
+--- @param num number
 function M.close(num)
   local term = find_term(num)
   if find_window(term.window) then
@@ -165,13 +229,17 @@ function M.close(num)
   end
 end
 
-function M.toggle(num, size)
-  vim.validate{num={num, 'number'}, size={size, 'number', true}}
-  local term = find_term(num)
-  if find_window(term.window) then
-    M.close(num)
+--- @param count number
+--- @param size number
+function M.toggle(count, size)
+  vim.validate{
+    count={count, 'number', true},
+    size={size, 'number', true},
+  }
+  if count > 1 then
+    toggle_nth_term(count, size)
   else
-    M.open(num, size)
+    smart_toggle(count, size)
   end
 end
 
