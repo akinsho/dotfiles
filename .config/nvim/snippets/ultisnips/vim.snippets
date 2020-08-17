@@ -28,3 +28,7 @@ if !PluginLoaded('${1:`!p snip.rv = snip.basename`}')
 	finish
 endif
 endsnippet
+
+snippet pplug "vim-plug Paste Plugin" b
+Plug '${1:`!v substitute(@+, '\([^\/]*\/\/[^\/]*\/\)\([^/]*\/[^/]*\)\(.*\)', '\2', '' )`}'
+endsnippet

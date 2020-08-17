@@ -7,6 +7,12 @@ My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in c
 I thought I'd document for myself and for others potentially some of the setup
 involved in the various programs my dotfiles cover.
 
+### Installation
+
+```
+curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | bash
+```
+
 ### Highlights / Tools
 
 - [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
