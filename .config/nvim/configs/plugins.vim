@@ -64,7 +64,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 " Utilities {{{1
 "--------------------------------------------------------------------------------
 Plug 'vimwiki/vimwiki', {
-      \ 'on':  ['VimwikiIndex', 'VimwikiTabIndex'],
+      \ 'on':  ['VimwikiIndex', 'VimwikiUISelect', 'VimwikiTabIndex'],
       \ 'for': ['vimwiki', 'markdown']
       \ }
 Plug 'junegunn/vim-easy-align', {'for': ['vim']}
