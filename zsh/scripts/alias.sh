@@ -1,10 +1,15 @@
 # =============================================================================
 # Aliases
 # =============================================================================
-alias l='ls -lFh'     #size,show type,human readable
+# LS does not work on macos as it uses a BSD version
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias ls="ls -G"
+else
+  alias ls="ls --color=auto"
+  alias l='ls -lFh'     #size,show type,human readable
+fi
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias grep='grep --color'
-alias ls="ls --color=auto"
 alias top="vtop"
 alias x="exit" # Exit Terminal
 alias t=_t

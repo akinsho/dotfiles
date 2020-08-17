@@ -21,6 +21,9 @@
     ~/.config/jesseduffield/lazygit/config.yml:
       force: true
       path: .config/jesseduffield/lazygit/config.yml
+    ~/.config/karabiner:
+      force: true
+      path: .config/karabiner
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
