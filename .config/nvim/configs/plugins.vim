@@ -55,7 +55,7 @@ Plug 'mattn/emmet-vim', { 'for': [
       \ 'javascriptreact',
       \ 'typescriptreact',
       \ ]}
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
