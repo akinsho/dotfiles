@@ -243,7 +243,7 @@ augroup Utilities "{{{1
 
   " Reload Vim script automatically if setlocal autoread
   if has('nvim')
-    autocmd BufWritePost,FileWritePost **/nvim/lua/**/*.lua nested
+    autocmd BufWritePost,FileWritePost **/nvim/lua/*.lua nested
           \ execute ('luafile ' . fnamemodify(expand('<afile>'), ':p'))
           \ | call VimrcMessage('sourced '.bufname('%'), 'Title')
   endif

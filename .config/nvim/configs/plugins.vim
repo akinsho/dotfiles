@@ -182,11 +182,13 @@ if has('nvim')
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
   endif
   if $DEVELOPING
+    Plug '~/Desktop/Coding/nvim-toggleterm.lua'
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
     Plug '~/Desktop/Coding/nvim-web-devicons'
     Plug '~/Desktop/Coding/nvim-tree.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
   else
+    Plug 'akinsho/nvim-toggleterm.lua'
     Plug 'akinsho/nvim-bufferline.lua', { 'branch': 'dev' }
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'kyazdani42/nvim-web-devicons'
