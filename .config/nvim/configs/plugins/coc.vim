@@ -28,6 +28,7 @@ let g:coc_global_extensions = [
       \ 'coc-tabnine',
       \ 'coc-flutter-tools',
       \ 'coc-xml',
+      \ 'coc-tsserver'
       \]
 
 " \ 'coc-reason',
