@@ -20,15 +20,17 @@ let g:coc_global_extensions = [
       \ 'coc-yank',
       \ 'coc-flow',
       \ 'coc-git',
-      \ 'coc-reason',
       \ 'coc-eslint',
       \ 'coc-actions',
       \ 'coc-go',
       \ 'coc-word',
       \ 'coc-spell-checker',
       \ 'coc-tabnine',
+      \ 'coc-flutter-tools',
+      \ 'coc-xml',
       \]
 
+" \ 'coc-reason',
 function! s:coc_init() abort
   let s:languageservers = {}
 
