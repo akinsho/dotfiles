@@ -13,7 +13,7 @@
 [core]
   editor = nvim
   excludesfile ="~/.dotfiles/git/.gitignore_global"
-  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='TwoDark'
+  pager = delta
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [remote "origin"]
@@ -34,6 +34,11 @@
   ureset = !git reset --hard $(git upstream)
   sl = log --oneline --decorate -20
   mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
+[delta]
+  features = line-numbers decorations
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
 [interactive]
   diffFilter = delta --color-only
 [push]

@@ -56,6 +56,6 @@ let g:startify_session_delete_buffers = 1
 let g:startify_session_persistence    = 1
 let g:startify_update_oldfiles        = 1
 let g:startify_session_sort           = 1
-let g:startify_change_to_vcs_root     = 0
+let g:startify_change_to_vcs_root     = 1
 nnoremap <localleader>ss :SSave!<CR>
 "}}}
