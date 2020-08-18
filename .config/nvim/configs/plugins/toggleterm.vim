@@ -2,6 +2,7 @@
 " Mappings
 "--------------------------------------------------------------------------------
 let g:toggleterm_terminal_mapping = '<c-\>'
+" let g:toggleterm_shade_filetypes = []
 
 command! ResetToggleTerm :ResetLuaPlugin "^nvim%-toggleterm%.lua"<CR>
 command! -count=1 TermGitPush lua require'toggleterm'.exec("git push", <count>, 12)
