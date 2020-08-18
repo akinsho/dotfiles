@@ -3,7 +3,6 @@
 ----------------------------------------------------------------------------------
 -- inspiration: https://stackoverflow.com/questions/48709262/neovim-fugitive-plugin-gpush-locking-up
 
-local luv = vim.loop
 local api = vim.api
 
 local msg_prefix = "[Async job]: "
@@ -53,27 +52,20 @@ local jobs = {}
 --   echohl clear
 -- endfunction
 
+--- We don't use stderr since it doesn seem like it is a trustworthy
+--- sign of a true error given that programs like git tend to write
+--- non error message to stderr
 --- @param job string
---- @param err string
+--- @param _ boolean
 --- @param data table
-function on_read(job, err, data)
-  if err then
-    vim.schedule_wrap(function()
-      api.nvim_err_writeln(err)
-    end)
-  end
+function on_read(job, _, data)
   if data then
     if not job then
-      vim.schedule_wrap(function()
-        api.nvim_err_writeln(msg_prefix..'failed to find existing job with id '..pid)
-      end)
+      api.nvim_err_writeln(msg_prefix..'failed to find existing job with id '..job)
       return
     end
-    local vals = vim.split(data, "\n")
-    for _, value in pairs(vals) do
-      if value == "" then goto continue end
-        table.insert(job.data, value)
-      ::continue::
+    for _, value in ipairs(data) do
+      table.insert(job.data, value)
     end
   end
 end
@@ -130,20 +122,26 @@ function open_window(job, code)
     local statusline_padding = 2
     local row = vim.o.lines - vim.o.cmdheight - statusline_padding
 
+    for _, line in pairs(job.data) do
+        local line_length = string.len(line)
+        if line_length > width and line_length < vim.o.columns / 2 then
+          width = string.len(line)
+        end
+    end
     local data = format_data(job.cmd, job.data, width)
 
     local buf = api.nvim_create_buf(false, true)
     api.nvim_buf_set_lines(buf, 0, -1, false, data)
     local opts = {
       relative = 'editor',
-      width = width,
+      width = width + 2,
       height = height,
       col = vim.o.columns,
       row = row,
       anchor = 'SE',
       style = 'minimal'
     }
-    local highlight = code > 0 and 'Error' or 'Question'
+    local highlight = code > 0 and 'Identifier' or 'Question'
 
     add_highlight(buf, highlight, {
         {number = 0, column_end = -1, column_start = 0},
@@ -172,10 +170,11 @@ function handle_result(job, code, auto_close)
   if num_of_lines > vim.o.cmdheight + 2 then
     local win_id = open_window(job, code)
     -- only automatically close window if successful
-    if code == 0 and auto_close then
+    local timeout = code == 0 and 10000 or 15000
+    if auto_close then
       vim.defer_fn(function()
         api.nvim_win_close(win_id, true)
-      end, 10000)
+      end, timeout)
     end
   else
     local default_msg = job.cmd
@@ -197,39 +196,37 @@ function M.exec(cmd, count)
   if type(count) == "number" and count > 0 then
     auto_close = false
   end
-  local parts = vim.split(cmd, " ")
-  local program = parts[1]
 
-  local handle
-  local stdout = luv.new_pipe(false)
-  local stderr = luv.new_pipe(false)
+  ---@param pid number
+  ---@param data table
+  ---@param name string
+  local handle_read = function (pid, data, name)
+    if name == 'stdout' then
+      on_read(jobs[pid], false, data)
+    else
+      on_read(jobs[pid], true, data)
+    end
+  end
 
-  handle, pid = luv.spawn(program, {
-      args = {unpack(parts, 2)},
-      stdio = {stdout, stderr}
-  }, vim.schedule_wrap(function (code, _) -- signal is the second argument
-      stdout:read_stop()
-      stderr:read_stop()
-      stdout:close()
-      stderr:close()
-      handle:close()
+  ---@param pid number
+  ---@param code number
+  ---@param _ string
+  function handle_exit(pid, code, _)
       code = code or 0
       handle_result(jobs[pid], code, auto_close)
-  end))
+  end
+
+  local pid = vim.fn.jobstart(cmd, {
+      on_stdout = handle_read,
+      on_stderr = handle_read,
+      on_exit = handle_exit,
+    })
 
   jobs[pid] = {
     cmd = cmd,
     pid = pid,
     data = {},
   }
-
-  ---@param err table
-  ---@param data table
-  local handle_read = function (err, data)
-    on_read(jobs[pid], err, data)
-  end
-  luv.read_start(stdout,  handle_read)
-  luv.read_start(stderr, handle_read)
 end
 
 function M.introspect()
