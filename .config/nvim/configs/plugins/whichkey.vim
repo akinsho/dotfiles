@@ -69,8 +69,11 @@ let g:which_leader_key_map = {
       \   's':    'status',
       \   'i':    'install'
       \ },
-      \ 'q':      'sayonara: close buffer & keep window',
-      \ 'Q':      'sayonara: close buffer & window',
+      \ 'q':       {
+      \   'name':   '+quit',
+      \   'w':      'sayonara: close window (and buffer)',
+      \   'q':      'sayonara: delete buffer',
+      \},
       \ 'g':      'grep word under the cursor',
       \ 'l':      {
       \   'name': '+list',

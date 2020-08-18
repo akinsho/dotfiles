@@ -394,7 +394,7 @@ if has('nvim')
     if isdirectory(file)
       execute 'edit '. file
     else
-      call jobstart(['xdg-open', file], {'detach': v:true})
+      call jobstart([g:open_command, file], {'detach': v:true})
     endif
   endfunction
   nnoremap gx <Cmd>call <SID>open_link()<CR>
