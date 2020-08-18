@@ -45,7 +45,6 @@ nnoremap <silent><localleader>gbl :Git blame --date=short<CR>
 vnoremap <silent><localleader>gbl :Gblame --date=short<CR>
 nnoremap <silent><localleader>gd :Gdiffsplit<CR>
 nnoremap <silent><localleader>gc :Git commit<CR>
-nnoremap <silent><localleader>gl :Git pull<CR>
 nnoremap <silent><localleader>gcm :Gcm<CR>
 nnoremap <silent><localleader>gn :call <SID>create_new_branch()<CR>
 " command is not silent as this obscures the preceding command

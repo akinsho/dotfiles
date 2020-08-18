@@ -36,6 +36,7 @@ augroup AddTerminalMappings
 augroup END
 "}}}
 
+nnoremap <silent><localleader>gl :GitPull<CR>
 nnoremap <silent><localleader>gp :GitPush<CR>
 nnoremap <silent><localleader>gpf :GitPushF<CR>
 nnoremap <silent><localleader>gpt :TermGitPush<CR>
