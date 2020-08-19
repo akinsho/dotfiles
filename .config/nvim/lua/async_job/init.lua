@@ -91,7 +91,7 @@ end
 --- @param data table
 --- @param width number
 function format_data(title, data, width)
-  local formatted = vim.deepcopy(data)
+  local formatted = {}
   -- If title is too long it should be truncated
   local remainder = width - string.len(title)
   local side_size = math.floor(remainder / 2) - 1
@@ -107,8 +107,8 @@ function format_data(title, data, width)
   local mid = "│" ..         heading            .. "│"
   local bot = "╰" .. string.rep("─", width - 2) .. "╯"
 
-  for i, item in ipairs(formatted) do
-    formatted[i] = " " .. item .. " "
+  for _, item in ipairs(data) do
+    table.insert(formatted , " " .. item .. " ")
   end
   return vim.list_extend({top, mid, bot}, formatted)
 end
@@ -116,9 +116,6 @@ end
 --- @param job table
 function open_window(job, code)
     local width = 60
-    local header_size = 3
-    local num_lines = table.getn(job.data)
-    local height =  num_lines < 15 and num_lines + header_size or 15
     local statusline_padding = 2
     local row = vim.o.lines - vim.o.cmdheight - statusline_padding
 
@@ -129,6 +126,9 @@ function open_window(job, code)
         end
     end
     local data = format_data(job.cmd, job.data, width)
+
+    local num_lines = table.getn(data)
+    local height =  num_lines < 15 and num_lines or 15
 
     local buf = api.nvim_create_buf(false, true)
     api.nvim_buf_set_lines(buf, 0, -1, false, data)
