@@ -6,6 +6,7 @@
 " variables might not be set correctly
 let g:number_filetype_exclusions = [
       \ 'vim-plug',
+      \ 'gitcommit',
       \ 'vimwiki',
       \ 'toggleterm',
       \ 'fugitive',
