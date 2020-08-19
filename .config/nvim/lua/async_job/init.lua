@@ -125,7 +125,7 @@ function open_window(job, code)
     for _, line in pairs(job.data) do
         local line_length = string.len(line)
         if line_length > width and line_length < vim.o.columns / 2 then
-          width = string.len(line)
+          width = string.len(line) + 2
         end
     end
     local data = format_data(job.cmd, job.data, width)
@@ -134,7 +134,7 @@ function open_window(job, code)
     api.nvim_buf_set_lines(buf, 0, -1, false, data)
     local opts = {
       relative = 'editor',
-      width = width + 2,
+      width = width,
       height = height,
       col = vim.o.columns,
       row = row,
