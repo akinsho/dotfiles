@@ -150,6 +150,7 @@ function open_window(job, code)
       })
     local win = api.nvim_open_win(buf, false, opts)
     api.nvim_buf_set_option(buf, 'modifiable', false)
+    vim.wo[win].winblend = 20
 
     return win
 end
