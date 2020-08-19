@@ -57,14 +57,6 @@ let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "-----------------------------------------------------------------------
 filetype plugin indent on
 syntax enable
-
-"-----------------------------------------------------------------------
-" Local vimrc
-"-----------------------------------------------------------------------
-let s:vimrc_local = $HOME.'/.vimrc.local'
-if filereadable(s:vimrc_local)
-  source s:vimrc_local
-endif
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
@@ -79,4 +71,10 @@ runtime /configs/autocommands.vim
 runtime /configs/statusline.vim
 
 runtime! /configs/plugins/*.vim
+"-----------------------------------------------------------------------
+" Local vimrc
+"-----------------------------------------------------------------------
+if filereadable(fnamemodify('~/.vimrc.local', ':p'))
+  source ~/.vimrc.local
+endif
 "---------------------------------------------------------------------------//

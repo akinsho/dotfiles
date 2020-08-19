@@ -165,11 +165,11 @@ set gdefault
 set pumheight=15
 set numberwidth=4
 set report=0 " Always show # number yanked/deleted lines
-set softtabstop=2
 set smartindent
 set wrap
 set wrapmargin=2
-set textwidth=80
+set softtabstop=2
+set textwidth=80 " this is a default that might be too aggressive on modern screens
 set confirm " make vim prompt me to save before doing destructive things
 if exists('&signcolumn')
   if has('nvim-0.4')

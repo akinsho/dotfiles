@@ -206,8 +206,8 @@ function! utils#tab_message(cmd)
   if empty(message)
     echoerr "no output"
   else
-    " use "new" instead of "tabnew" below if you prefer split windows instead of tabs
-    tabnew
+    " use "tabnew" instead of "new" below if you prefer tabs instead of split windows
+    vnew
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
     silent put=message
   endif

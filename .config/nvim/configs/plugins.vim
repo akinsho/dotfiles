@@ -136,6 +136,7 @@ Plug 'svermeulen/vim-subversive'
 " Deprecated: Word transposition mappings from in favour of the plugin below:
 " http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
 ""---------------------------------------------------------------------------//
+Plug 'AndrewRadev/dsf.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tommcdo/vim-exchange'
