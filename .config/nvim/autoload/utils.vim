@@ -83,11 +83,12 @@ endfunction
 
 let s:auto_resize_on = 0
 
-function! utils#auto_resize(factor)
-  let l:fraction = a:factor / 10
+function! utils#auto_resize(...)
   if s:auto_resize_on == 0
-    let &winheight = &lines * l:fraction / 10
-    let &winwidth = &columns * l:fraction / 10
+    let factor = get(a:, '1', 70)
+    let fraction = factor / 10
+    let &winheight = &lines * fraction / 10
+    let &winwidth = &columns * fraction / 10
     let s:auto_resize_on = 1
     echom 'Auto resize ON'
   else

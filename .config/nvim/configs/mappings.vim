@@ -101,7 +101,7 @@ cmap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-r>=fnameescape(expand('%'))<cr>
 cnoremap :: <C-r>=fnameescape(expand('%:p:h'))<cr>/
 
-command! -nargs=1 AutoResize call utils#auto_resize(<args>)
+command! -nargs=? AutoResize call utils#auto_resize(<args>)
 "--------------------------------------------------------------------------------
 " Grep Operator
 "--------------------------------------------------------------------------------
@@ -388,7 +388,6 @@ command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
 "--------------------------------------------------------------------------------
 " GX - replicate netrw functionality
 "--------------------------------------------------------------------------------
-" load netrw for gx functionality
 if has('nvim')
   function! s:open_link() abort
     let file = expand('<cfile>')
