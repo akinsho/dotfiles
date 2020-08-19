@@ -384,7 +384,7 @@ function! StatusLine(...) abort
 
   " Git Status
   let [prefix, git_status] = s:statusline_git_status()
-  let git_opts = {'prefix':  prefix, 'small': 1, 'prefix_color': '%#StInfo#'}
+  let git_opts = {'prefix':  prefix, 'small': 1, 'prefix_color': '%#StInfo#', 'padding': 'full'}
   let statusline .= s:sep_if(git_status, strlen(git_status), extend(git_opts, s:st_info))
 
   " Indentation
