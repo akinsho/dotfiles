@@ -103,9 +103,9 @@ function format_data(title, data, width)
     heading = heading .. string.rep(" ", offset)
   end
 
-  local top = "╭" .. string.rep("─", width - 2) .. "╮"
-  local mid = "│" ..         heading            .. "│"
-  local bot = "╰" .. string.rep("─", width - 2) .. "╯"
+  local top = "╔" .. string.rep("═", width - 2)  .. "╗"
+  local mid = "║" ..         heading             .. "║"
+  local bot = "╚" .. string.rep("═", width - 2)  .. "╝"
 
   for _, item in ipairs(data) do
     table.insert(formatted , " " .. item .. " ")
