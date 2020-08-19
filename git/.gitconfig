@@ -1,6 +1,9 @@
 [user]
   name = "Akin Sowemimo"
-  email = akin.sowemimo@gmail.com
+[includeIf "gitdir:work/"]
+  path = .gitconfig-work
+[includeIf "gitdir:Coding/"]
+  path = .gitconfig-projects
 [status]
   submoduleSummary = true
 [color]
