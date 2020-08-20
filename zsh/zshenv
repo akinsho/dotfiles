@@ -10,10 +10,13 @@ fi
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.npm/bin:$PATH"
-# TODO remove this variable once no longer building neovim from source
-export PATH="$HOME/neovim/bin:$PATH"
 
+# FLUTTER =======================================================
+export PATH="$PATH:$HOME/flutter/bin"
+export PATH="$PATH:$HOME/flutter/.pub-cache/bin"
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  # TODO remove this variable once no longer building neovim from source
+  export PATH="$HOME/neovim/bin:$PATH"
   # JAVA ==========================================================
   # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
   # Use Java 8 because
@@ -26,9 +29,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export PATH=$PATH:$(go env GOPATH)/bin
   # ===============================================================
   export PATH=$HOME/.local/bin:$PATH
-  # FLUTTER =======================================================
-  export PATH="$PATH:$HOME/flutter/bin"
-  export PATH="$PATH:$HOME/flutter/.pub-cache/bin"
   # RUST ==========================================================
   export PATH="$HOME/.cargo/bin:$PATH"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
