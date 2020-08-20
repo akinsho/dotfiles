@@ -15,6 +15,7 @@ local M = {}
 -- State
 -----------------------------------------------------------
 local jobs = {}
+local last_open_window = -1
 
 -----------------------------------------------------------
 -- Functions
@@ -118,6 +119,10 @@ function open_window(job, code)
     local width = 60
     local statusline_padding = 2
     local row = vim.o.lines - vim.o.cmdheight - statusline_padding
+    if last_open_window > -1 then
+      local config = api.nvim_win_get_config(last_open_window)
+      row = row - config.height - 1
+    end
 
     for _, line in pairs(job.data) do
         local line_length = string.len(line)
@@ -150,8 +155,9 @@ function open_window(job, code)
       })
     local win = api.nvim_open_win(buf, false, opts)
     api.nvim_buf_set_option(buf, 'modifiable', false)
-    vim.wo[win].winblend = 20
+    vim.wo[win].winblend = 10
 
+    last_open_window = win
     return win
 end
 
@@ -174,6 +180,8 @@ function handle_result(job, code, auto_close)
     local timeout = code == 0 and 10000 or 15000
     if auto_close then
       vim.defer_fn(function()
+        -- clear the last open window
+        last_open_window = -1
         api.nvim_win_close(win_id, true)
       end, timeout)
     end
