@@ -492,8 +492,6 @@ nnoremap <silent> <leader>z :call utils#tab_zoom()<CR>
 command! PU PlugUpdate | PlugUpgrade
 " Peekabo plugin handles this currently
 command! -nargs=0 Reg call utils#reg()
-
-command! TogglePluginConfig call utils#toggle_plugin_config()
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
 ""---------------------------------------------------------------------------//

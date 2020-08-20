@@ -1,31 +1,3 @@
-function! utils#toggle_plugin_config() abort
-  if &ft != 'vim'
-    return
-  endif
-  let config_file = expand('%:p')
-  let toggled_config =  match(config_file, 'inactive.vim') != -1
-        \ ? substitute(config_file, '\.inactive\.vim', '.vim','')
-        \ : substitute(config_file, '\.vim', '.inactive.vim','')
-
-  echohl String
-  echom 'moving ' . config_file ' to ' . toggled_config
-  echohl clear
-
-  try
-    let src_to_dest = config_file . ' ' . toggled_config
-    if exists('g:loaded_fugitive')
-      execute 'Gmove '. toggled_config
-    elseif executable('git')
-      execute '!git mv '. src_to_dest
-    else
-      execute '!mv '. src_to_dest
-    endif
-  catch
-    " error handle
-    call VimrcMessage("Toggling plugin failed because ". v:exception)
-  endtry
-endfunction
-
 function! utils#info_message(msg) abort
   echohl String
   echom a:msg
