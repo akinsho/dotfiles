@@ -269,8 +269,8 @@ if has('mac')
   nmap ˙ <a-h>
   nmap ∆ <a-j>
   nmap ˚ <a-k>
-  nnoremap <silent> ∆ :<C-u>move-2<CR>==
-  nnoremap <silent> ˚ :<C-u>move+<CR>==
+  nnoremap <silent> ∆ :<C-u>move+<CR>==
+  nnoremap <silent> ˚ :<C-u>move-2<CR>==
   xnoremap ˚ :move-2<CR>='[gv
   xnoremap ∆ :move'>+<CR>='[gv
 else
