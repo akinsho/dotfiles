@@ -14,6 +14,7 @@ let g:which_localleader_key_map.d.c  = 'flutter: commands'
 let g:which_localleader_key_map.d.e  = 'flutter: emulators'
 let g:which_localleader_key_map.d.l = 'flutter: dev log'
 let g:which_localleader_key_map.d.r = {
+      \ 'name': '+dev-server',
       \ 'n': 'run',
       \ 's': 'restart'
       \}
