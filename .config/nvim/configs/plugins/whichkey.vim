@@ -42,6 +42,13 @@ let g:which_leader_key_map = {
       \   'p': 'treesitter: toggle playground',
       \}
       \},
+      \ 'f':      {
+      \  'name': '+fold',
+      \  'a':    'all',
+      \  'i':    'imports',
+      \  'c':    'comments',
+      \  'r':    'region'
+      \},
       \ 'h':      {
       \   'name': '+git-hunk',
       \   's':    'stage',
@@ -59,8 +66,6 @@ let g:which_leader_key_map = {
       \  'f':     'create a new file',
       \  's':     'create new file in a split',
       \ },
-      \ 'f':      'find cursor word (fzf)',
-      \ 'F':      'find word (prompt)',
       \ 'E':      'show token under the cursor',
       \ 'p':      {
       \   'name': '+vim-plug',
@@ -132,6 +137,8 @@ let g:which_localleader_key_map = {
       \   'd':       'dotfiles',
       \   'o':       'buffers',
       \   'h':       'history',
+      \   's':       'rg',
+      \   'S':       'rg: <cursor word> ',
       \},
       \ 'g':         {
       \   'name':    '+git-commands',

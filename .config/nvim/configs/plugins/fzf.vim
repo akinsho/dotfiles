@@ -72,7 +72,13 @@ if exists('&winblend')
 endif
 
 " Border style (rounded / sharp / horizontal)
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7, 'border': 'rounded' } }
+let g:fzf_layout = {
+      \ 'window': {
+      \   'width': 0.9,
+      \   'height': 0.7,
+      \   'border': 'rounded'
+      \   }
+      \ }
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -110,6 +116,6 @@ endfunction
 
 nnoremap <silent><C-P> :call <SID>fzf_files()<CR>
 " Find Word under cursor
-nnoremap <silent><leader>f :Rg<CR>
-nnoremap <silent><leader>F :Find <C-R><C-W><CR>
+nnoremap <silent><localleader>fs :Rg<CR>
+nnoremap <silent><localleader>fS :Find <C-R><C-W><CR>
 "}}}
