@@ -90,7 +90,6 @@ augroup coc_commands
   autocmd CursorHold * silent call CocActionAsync('highlight')
   " Update signature help on jump placeholder
   autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
-  autocmd CursorHold * CocCommand git.refresh
   " Setup formatexpr specified filetype(s).
   autocmd FileType go,dart,vim,javascript,typescript setlocal formatexpr=CocActionAsync('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
