@@ -83,7 +83,8 @@ Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'liuchengxu/vim-which-key'
-Plug 'liuchengxu/vista.vim'
+Plug 'liuchengxu/vista.vim', {'on': ['Vista', 'Vista!!']}
+Plug 'luochen1990/rainbow'
 "--------------------------------------------------------------------------------
 " Experimental
 "--------------------------------------------------------------------------------

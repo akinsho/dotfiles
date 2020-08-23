@@ -1,3 +1,5 @@
+nnoremap <silent> <leader>v :Vista!!<CR>
+
 if !PluginLoaded("vista.vim")
   finish
 endif
@@ -12,5 +14,3 @@ endif
 
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_sidebar_keepalt = 1
-
-nnoremap <silent> <leader>v :Vista!!<CR>

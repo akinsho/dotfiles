@@ -74,6 +74,11 @@ endif
 " Border style (rounded / sharp / horizontal)
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7, 'border': 'rounded' } }
 
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
 command! -bang -nargs=* Find call fzf#vim#grep(
       \ 'rg --column --line-number --no-heading'.
       \ ' --fixed-strings --ignore-case --no-ignore --hidden'.
@@ -85,12 +90,12 @@ command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
 nnoremap <silent><localleader>gS :GFiles?<cr>
-nnoremap <silent><localleader>f :Files<cr>
-nnoremap <silent><localleader>d :Dots<CR>
-nnoremap <silent><localleader>o :Buffers<CR>
-nnoremap <silent><localleader>m :History<CR>
-nnoremap <silent><localleader>c :Commits<CR>
-nnoremap <silent><localleader>h :Helptags<CR>
+nnoremap <silent><localleader>ff :Files<cr>
+nnoremap <silent><localleader>fd :Dots<CR>
+nnoremap <silent><localleader>fo :Buffers<CR>
+nnoremap <silent><localleader>fh :History<CR>
+nnoremap <silent><localleader>fc :Commits<CR>
+nnoremap <silent><localleader>f? :Helptags<CR>
 
 function s:fzf_files() abort
   " Launch file search using FZF
@@ -107,7 +112,4 @@ nnoremap <silent><C-P> :call <SID>fzf_files()<CR>
 " Find Word under cursor
 nnoremap <silent><leader>f :Rg<CR>
 nnoremap <silent><leader>F :Find <C-R><C-W><CR>
-
-nnoremap <localleader>ma  :Marks<CR>
-nnoremap <localleader>mm :Maps<CR>
 "}}}

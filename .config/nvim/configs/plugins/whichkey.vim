@@ -124,9 +124,15 @@ let g:which_leader_key_map = {
       \}
 
 let g:which_localleader_key_map = {
-      \ 'c': 'fzf: commits',
-      \ 'd': 'fzf: dotfiles',
-      \ 'f': 'fzf: files',
+      \ 'f':         {
+      \   'name':    '+fzf',
+      \   'c':       'commits',
+      \   'f':       'files',
+      \   '?':       'help',
+      \   'd':       'dotfiles',
+      \   'o':       'buffers',
+      \   'h':       'history',
+      \},
       \ 'g':         {
       \   'name':    '+git-commands',
       \   'b':       {
@@ -155,8 +161,6 @@ let g:which_localleader_key_map = {
       \   'pt':      'git push (terminal)',
       \   '*':       'git grep current word',
       \},
-      \   'h': 'fzf: help',
-      \   'o':       'fzf: buffers',
       \   'w':       {
       \     'name':  '+window',
       \     'h':     'change two vertically split windows to horizontal splits',
@@ -166,9 +170,6 @@ let g:which_localleader_key_map = {
       \     'k':     'resize: upwards'
       \},
       \ 'l':         'redraw window',
-      \ 'm':         'fzf: history',
-      \ 'ma':        'fzf: marks',
-      \ 'mm':        'fzf: maps',
       \ 'z':         'center view port',
       \ 't':         {
       \   'name':    '+vim-test',

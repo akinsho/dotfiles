@@ -8,12 +8,12 @@ let g:projectionist_heuristics = {
       \   "*_test.go": { "alternate": "{}.go", "type": "test" },
       \},
       \ "lib/*.dart": {
-      \   "lib/screens/*.dart": {
-      \     "alternate": "lib/screens/view_models/{}_view_model.dart",
+      \   "lib/screens/*.dart|lib/widgets/*.dart": {
+      \     "alternate": "lib/view_models/{}_view_model.dart",
       \     "type": "source",
       \   },
-      \   "lib/screens/view_models/*_view_model.dart": {
-      \     "alternate": "lib/screens/{}.dart",
+      \   "lib/view_models/*_view_model.dart": {
+      \     "alternate": "lib/screens/{}.dart|lib/widgets/{}.dart",
       \     "type": "source",
       \   }
       \  }
