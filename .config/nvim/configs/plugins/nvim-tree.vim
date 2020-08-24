@@ -25,7 +25,7 @@ let g:lua_tree_auto_close           = 0 " closes the tree when it's the last win
 let g:lua_tree_follow               = 1 " show selected file on open
 let g:lua_tree_width                 = 30
 let g:lua_tree_root_folder_modifier = ':t'
-let g:lua_tree_ignore               = [ '.git', 'node_modules', '.DS_store', 'fugitive:' ]
+let g:lua_tree_ignore               = [ '.DS_store', 'fugitive:' ]
 
 highlight link LuaTreeIndentMarker Comment
 highlight LuaTreeRootFolder gui=bold,italic
