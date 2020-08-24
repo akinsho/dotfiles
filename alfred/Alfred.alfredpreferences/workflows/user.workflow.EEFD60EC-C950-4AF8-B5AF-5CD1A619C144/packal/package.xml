@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Homebrew and Cask for Alfred</name>
-  <version>4.4</version>
-  <bundle>com.fniephaus.homebrew</bundle>
-  <updated>1502252175</updated>
-  <file>homebrew-for-alfred.alfredworkflow</file>
-</workflow>
