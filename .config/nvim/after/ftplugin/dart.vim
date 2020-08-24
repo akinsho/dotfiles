@@ -6,7 +6,7 @@ nnoremap <silent><localleader>de  :CocCommand flutter.emulators<CR>
 nnoremap <silent><localleader>dl  :CocCommand flutter.dev.openDevLog<CR>
 nnoremap <silent><localleader>do  :CocCommand flutter.toggleOutline<CR>
 nnoremap <silent><localleader>drn  :CocCommand flutter.run<CR>
-nnoremap <silent><localleader>drs  :CocCommand flutter.hotRestart<CR>
+nnoremap <silent><localleader>drs  :CocCommand flutter.dev.hotRestart<CR>
 nnoremap <silent><localleader>dd  :CocCommand flutter.devices<CR>
 
 let g:which_localleader_key_map.d = { 'name': '+dart' }
