@@ -13,7 +13,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
   custom_captures = {
     ["error"] = nil,
-    -- ["parameter.named"] = "TSParameter"
+    -- ["variable.parameter"] = "TSParameter"
   },
   highlight = {
     enable = disable,   -- false will disable the whole extension

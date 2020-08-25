@@ -8,7 +8,6 @@ else
   let test#strategy = "vimterminal"
 endif
 let test#neovim#term_position = "vert botright"
-let test#custom_runners = {'dart': ['flutter']}
 
 nnoremap <silent> <localleader>tf :TestFile<CR>
 nnoremap <silent> <localleader>tn :TestNearest<CR>
