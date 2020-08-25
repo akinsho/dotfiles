@@ -24,12 +24,10 @@
       "test": true
     }
   },
-  "yank.priority": 50,
   // List
   "list.selectedSignText": " ",
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
-  "list.source.extensions.defaultOptions": ["--normal"],
   "list.source.diagnostics.defaultOptions": ["--normal"],
   "list.source.branches.defaultArgs": ["--sort", "-committerdate"],
   "list.nextKeymap": "<C-n>",

@@ -99,14 +99,6 @@ command! -bang WikiSearch
       \ call fzf#vim#files(g:wiki_path, fzf#vim#with_preview(), <bang>0)
 
 
-nnoremap <silent><leader>gS :GFiles?<cr>
-nnoremap <silent><leader>ff :Files<cr>
-nnoremap <silent><leader>fd :Dots<CR>
-nnoremap <silent><leader>fo :Buffers<CR>
-nnoremap <silent><leader>fh :History<CR>
-nnoremap <silent><leader>fc :Commits<CR>
-nnoremap <silent><leader>f? :Helptags<CR>
-
 function s:fzf_files() abort
   " Launch file search using FZF
   if isdirectory(".git")
@@ -119,7 +111,15 @@ function s:fzf_files() abort
 endfunction
 
 nnoremap <silent><C-P> :call <SID>fzf_files()<CR>
+
+nnoremap <silent><leader>gS :GFiles?<cr>
+nnoremap <silent><leader>ff :Files<cr>
+nnoremap <silent><leader>fd :Dots<CR>
+nnoremap <silent><leader>fo :Buffers<CR>
+nnoremap <silent><leader>fh :History<CR>
+nnoremap <silent><leader>fc :Commits<CR>
+nnoremap <silent><leader>f? :Helptags<CR>
 " Find Word under cursor
-nnoremap <silent><localleader>fs :Rg<CR>
-nnoremap <silent><localleader>fS :Find <C-R><C-W><CR>
+nnoremap <silent><leader>fs :Rg<CR>
+nnoremap <silent><leader>fw :Find <C-R><C-W><CR>
 "}}}

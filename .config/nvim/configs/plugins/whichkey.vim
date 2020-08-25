@@ -72,7 +72,7 @@ let g:which_leader_key_map = {
       \   'o':       'buffers',
       \   'h':       'history',
       \   's':       'rg',
-      \   'S':       'rg: <cursor word> ',
+      \   'w':       'rg: <cursor word> ',
       \},
       \ 'g':      'grep word under the cursor',
       \ 'l':      {
@@ -124,7 +124,6 @@ let g:which_leader_key_map = {
       \ "[":      'replace cursor word in file',
       \ "]":      'replace cursor word in line',
       \ "<Tab>":  ['bnext', 'Go to next buffer'],
-      \ "<F9>":   'vimspector: toggle breakpoint'
       \}
 
 let g:which_localleader_key_map = {
