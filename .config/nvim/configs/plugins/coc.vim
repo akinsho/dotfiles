@@ -219,6 +219,8 @@ nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
 nnoremap <silent> <leader>cs  :<C-u>CocList symbols<cr>
 " Search marketplace for coc symbols
 nnoremap <silent> <leader>cm  :<C-u>CocList marketplace<cr>
+" Search snippets
+nnoremap <silent> <leader>cn  :<C-u>CocList snippets <CR>
 " Resume latest coc list
 nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
 
