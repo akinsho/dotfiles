@@ -156,7 +156,7 @@ let g:which_localleader_key_map = {
       \   'l':       'git pull (non-async)',
       \   'o':       'git checkout <branchname>',
       \   'v':       'coc: view commit',
-      \   'm':       'git move file',
+      \   'm':       'git list merge conflicts',
       \   'n':       'git checkout new branch',
       \   'r':       {
       \      'name': '+git-remove',
