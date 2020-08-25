@@ -9,7 +9,6 @@ let g:wiki_path = isdirectory(expand('$HOME/Dropbox')) ?
 let g:wiki = {
       \'path': g:wiki_path,
       \'path_html': g:wiki_path,
-      \'auto_export': 1,
       \'auto_toc': 1,
       \}
 
@@ -50,3 +49,4 @@ command! CloseVimWikis call s:close_wikis()
 " Add this mapping manually so we can lazy load vim wiki
 nnoremap <silent><leader>ww :VimwikiIndex<CR>
 nnoremap <silent><leader>wt :VimwikiTabIndex<CR>
+nnoremap <silent><leader>wf :WikiSearch<CR>

@@ -95,6 +95,9 @@ command! -bang -nargs=* Find call fzf#vim#grep(
 command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
+command! -bang WikiSearch
+      \ call fzf#vim#files(g:wiki_path, fzf#vim#with_preview(), <bang>0)
+
 
 nnoremap <silent><leader>gS :GFiles?<cr>
 nnoremap <silent><leader>ff :Files<cr>
