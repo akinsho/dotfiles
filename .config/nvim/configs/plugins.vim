@@ -86,10 +86,6 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'liuchengxu/vista.vim', {'on': ['Vista', 'Vista!!']}
 Plug 'luochen1990/rainbow'
 "--------------------------------------------------------------------------------
-" Experimental
-"--------------------------------------------------------------------------------
-Plug 'puremourning/vimspector'
-"--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------
 if has('mac')
@@ -114,8 +110,6 @@ Plug 'tpope/vim-abolish'
 " sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-dadbod', { 'on': ['DB'] }
-Plug 'kristijanhusak/vim-dadbod-ui', { 'on': ['DBUI', 'DBUIToggle'] }
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
