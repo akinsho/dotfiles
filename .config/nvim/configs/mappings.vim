@@ -185,6 +185,13 @@ cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 " Insert escaped '/' while inputting a search pattern
 cnoremap <expr> / getcmdtype() == "/" ? "\/" : "/"
+""---------------------------------------------------------------------------//
+" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
+""---------------------------------------------------------------------------//
+"Move to beginning of a line in insert mode
+inoremap <c-a> <c-o>0
+inoremap <c-e> <c-o>$
+""---------------------------------------------------------------------------//
 " Save
 nnoremap <silent><c-s> :silent w<cr>
 " Write and quit all files
@@ -346,12 +353,6 @@ if !exists('$TMUX')
   nnoremap <c-h> <c-w>h
   nnoremap <c-l> <c-w>l
 endif
-"Create a vertical split
-nnoremap <expr><silent> \| !v:count ? "<C-W>v<C-W><Right>" : '\|'
-"Create a horizontal split
-nnoremap <expr><silent> _ !v:count ? "<C-W>s<C-W><Down>"  : '_'
-"Normalize all split sizes, which is very handy when resizing terminal
-nnoremap <leader>= <C-W>=
 " Swap top/bottom or left/right split
 nnoremap <leader>sw <C-W>R
 " https://vim.fandom.com/wiki/Fast_window_resizing_with_plus/minus_keys
@@ -376,11 +377,6 @@ inoremap <right> <nop>
 " Repeat last substitute with flags
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
-""---------------------------------------------------------------------------//
-" Insert & Commandline mode Paste
-""---------------------------------------------------------------------------//
-inoremap <C-p> <Esc>pa
-cnoremap <C-v> <C-r>"
 " ----------------------------------------------------------------------------
 " Todo - Check for todos and add to the qf list
 " ----------------------------------------------------------------------------
@@ -473,18 +469,12 @@ nnoremap <leader>` ciw`<c-r>"`<esc>
 nnoremap <leader>' ciw'<c-r>"'<esc>
 nnoremap <leader>) ciw(<c-r>")<esc>
 nnoremap <leader>} ciw{<c-r>"}<esc>
-""---------------------------------------------------------------------------//
-" source : https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/
-""---------------------------------------------------------------------------//
-"Move to beginning of a line in insert mode
-inoremap <c-a> <c-o>0
-inoremap <c-e> <c-o>$
 "Map Q to replay q register
 nnoremap Q @q
 "}}}
 
-" Shortcut to jump to next conflict marker"
 if !PluginLoaded('conflict-marker.vim')
+  " Shortcut to jump to next conflict marker"
   nnoremap <silent> ]x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
   " Shortcut to jump to last conflict marker"
   nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
