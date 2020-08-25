@@ -95,13 +95,14 @@ command! -bang -nargs=* Find call fzf#vim#grep(
 command! -bang Dots
       \ call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)
 
-nnoremap <silent><localleader>gS :GFiles?<cr>
-nnoremap <silent><localleader>ff :Files<cr>
-nnoremap <silent><localleader>fd :Dots<CR>
-nnoremap <silent><localleader>fo :Buffers<CR>
-nnoremap <silent><localleader>fh :History<CR>
-nnoremap <silent><localleader>fc :Commits<CR>
-nnoremap <silent><localleader>f? :Helptags<CR>
+
+nnoremap <silent><leader>gS :GFiles?<cr>
+nnoremap <silent><leader>ff :Files<cr>
+nnoremap <silent><leader>fd :Dots<CR>
+nnoremap <silent><leader>fo :Buffers<CR>
+nnoremap <silent><leader>fh :History<CR>
+nnoremap <silent><leader>fc :Commits<CR>
+nnoremap <silent><leader>f? :Helptags<CR>
 
 function s:fzf_files() abort
   " Launch file search using FZF

@@ -33,13 +33,6 @@ let g:which_leader_key_map = {
       \   'r':    'list: resume',
       \   'a':    'codelens: action'
       \},
-      \ 'f':      {
-      \  'name': '+fold',
-      \  'a':    'all',
-      \  'i':    'imports',
-      \  'c':    'comments',
-      \  'r':    'region'
-      \},
       \ 'h':      {
       \   'name': '+git-hunk',
       \   's':    'stage',
@@ -69,6 +62,17 @@ let g:which_leader_key_map = {
       \   'name':   '+quit',
       \   'w':      'sayonara: close window (and buffer)',
       \   'q':      'sayonara: delete buffer',
+      \},
+      \ 'f':         {
+      \   'name':    '+fzf',
+      \   'c':       'commits',
+      \   'f':       'files',
+      \   '?':       'help',
+      \   'd':       'dotfiles',
+      \   'o':       'buffers',
+      \   'h':       'history',
+      \   's':       'rg',
+      \   'S':       'rg: <cursor word> ',
       \},
       \ 'g':      'grep word under the cursor',
       \ 'l':      {
@@ -133,16 +137,12 @@ let g:which_localleader_key_map = {
       \   'p': 'treesitter: toggle playground',
       \}
       \},
-      \ 'f':         {
-      \   'name':    '+fzf',
-      \   'c':       'commits',
-      \   'f':       'files',
-      \   '?':       'help',
-      \   'd':       'dotfiles',
-      \   'o':       'buffers',
-      \   'h':       'history',
-      \   's':       'rg',
-      \   'S':       'rg: <cursor word> ',
+      \ 'f':      {
+      \  'name': '+fold',
+      \  'a':    'all',
+      \  'i':    'imports',
+      \  'c':    'comments',
+      \  'r':    'region'
       \},
       \ 'g':         {
       \   'name':    '+git-commands',

@@ -282,10 +282,10 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " Coc folds are inconsistent and don't integrate with vim bindings and behaviour
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
-nnoremap <silent> <leader>fa :Fold<CR>
-nnoremap <silent> <leader>fr :Fold region<CR>
-nnoremap <silent> <leader>fi :Fold imports<CR>
-nnoremap <silent> <leader>fc :Fold comments<CR>
+nnoremap <silent> <localleader>fa :Fold<CR>
+nnoremap <silent> <localleader>fr :Fold region<CR>
+nnoremap <silent> <localleader>fi :Fold imports<CR>
+nnoremap <silent> <localleader>fc :Fold comments<CR>
 "}}}
 
 " Add `:OR` command for organize imports of the current buffer.
