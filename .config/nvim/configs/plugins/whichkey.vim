@@ -33,15 +33,6 @@ let g:which_leader_key_map = {
       \   'r':    'list: resume',
       \   'a':    'codelens: action'
       \},
-      \ 'd': {
-      \ 'name': '+debug',
-      \ 't': {
-      \   'name': '+treesitter',
-      \   'e': 'treesitter: enable highlight (buffer)',
-      \   'd': 'treesitter: disable highlight (buffer)',
-      \   'p': 'treesitter: toggle playground',
-      \}
-      \},
       \ 'f':      {
       \  'name': '+fold',
       \  'a':    'all',
@@ -133,6 +124,15 @@ let g:which_leader_key_map = {
       \}
 
 let g:which_localleader_key_map = {
+      \ 'd': {
+      \ 'name': '+debug',
+      \ 't': {
+      \   'name': '+treesitter',
+      \   'e': 'treesitter: enable highlight (buffer)',
+      \   'd': 'treesitter: disable highlight (buffer)',
+      \   'p': 'treesitter: toggle playground',
+      \}
+      \},
       \ 'f':         {
       \   'name':    '+fzf',
       \   'c':       'commits',

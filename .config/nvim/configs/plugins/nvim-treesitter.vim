@@ -30,9 +30,9 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-nnoremap <silent><leader>dte :TSEnable highlight<CR>
-nnoremap <silent><leader>dtd :TSDisable highlight<CR>
-nnoremap <silent><leader>dtp :TSPlaygroundToggle<CR>
+nnoremap <silent><localleader>dte :TSEnable highlight<CR>
+nnoremap <silent><localleader>dtd :TSDisable highlight<CR>
+nnoremap <silent><localleader>dtp :TSPlaygroundToggle<CR>
 
 " TODO reactivate when treesitter updates are less broken
 " augroup TreeSitterFolds
