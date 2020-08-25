@@ -28,7 +28,7 @@
   "list.selectedSignText": " ",
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
-  "list.source.diagnostics.defaultOptions": ["--normal"],
+  "list.source.diagnostics.defaultOptions": ["--normal", "--no-quit"],
   "list.source.branches.defaultArgs": ["--sort", "-committerdate"],
   "list.nextKeymap": "<C-n>",
   "list.previousKeymap": "<C-p>",

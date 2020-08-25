@@ -174,3 +174,7 @@ refetch
 linux
 spellbad
 vimscript
+unstash
+unstashed
+chmod
+unstaged
