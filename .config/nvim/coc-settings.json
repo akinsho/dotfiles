@@ -1,6 +1,7 @@
 {
   // Language specific
   "flutter.UIPath": false,
+  "flutter.openDevLogSplitCommand": "70vsp",
   "flutter.outlineWidth": 35,
   "eslint.enable": false, // only enable eslint per project
   "python.jediEnabled": false,
