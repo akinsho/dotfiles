@@ -9,7 +9,8 @@ let g:lua_tree_icons = {
     \   'staged': "",
     \   'unmerged': "",
     \   'renamed': "",
-    \   'untracked': ""
+    \   'untracked': "",
+    \   'deleted' : ""
     \   },
     \ }
 
