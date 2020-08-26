@@ -4,6 +4,9 @@ let g:rainbow_active = 1
 let g:rainbow_conf = {
       \ 'separately': {
       \ '*': 0,
-      \ 'dart': { 'operators': '' },
+      \ 'dart': {
+      \   'operators': '',
+      \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold']
+      \   },
       \ }
       \}
