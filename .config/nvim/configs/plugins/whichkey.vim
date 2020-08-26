@@ -202,6 +202,7 @@ let g:which_localleader_key_map = {
 
 let g:which_key_use_floating_win       = 0
 let g:which_key_disable_default_offset = 1
+let g:which_key_display_names = {'<CR>': '↵', '<TAB>': '⇆'}
 
 if !g:which_key_use_floating_win
   autocmd! FileType which_key
