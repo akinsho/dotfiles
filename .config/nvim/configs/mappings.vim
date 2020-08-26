@@ -297,9 +297,6 @@ endif
 nnoremap <localleader>wh <C-W>t <C-W>K
 " Change two vertically split windows to horizontal splits
 nnoremap <localleader>wv <C-W>t <C-W>H
-" Swap the current window with the (default: next)
-" see: :h ctrl-W_x
-nnoremap <localleader>wx <C-W>x
 " Resize window downwards
 nnoremap <localleader>wj <C-W>-
 " Resize window upwards
