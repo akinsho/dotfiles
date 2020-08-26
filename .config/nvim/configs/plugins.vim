@@ -85,6 +85,12 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'liuchengxu/vista.vim', {'on': ['Vista', 'Vista!!']}
 Plug 'luochen1990/rainbow'
+" TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
+" so disable mark related plugins. Remove this guard when this problem is fixed
+if !has('nvim')
+  Plug 'Yilin-Yang/vim-markbar'
+  Plug 'kshenoy/vim-signature'
+endif
 "--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------
@@ -144,7 +150,6 @@ Plug 'kana/vim-textobj-user'
 "--------------------------------------------------------------------------------
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
-Plug 'kshenoy/vim-signature'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 " Themes  {{{1
