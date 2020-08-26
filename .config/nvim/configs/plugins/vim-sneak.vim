@@ -10,6 +10,7 @@ highlight Sneak guifg=red guibg=background
 highlight SneakLabel gui=italic,bold,underline guifg=red guibg=background
 highlight SneakLabelMask guifg=red guibg=background
 
+let g:sneak#prompt     = ' '
 let g:sneak#label      = 1
 let g:sneak#s_next     = 0
 let g:sneak#use_ic_scs = 1
