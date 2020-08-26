@@ -1,29 +1,24 @@
-function! s:setup_help_window()
-  wincmd L " automatically move window to the left
-  vertical resize 80
-endfunction
+wincmd L " automatically move window to the left
+vertical resize 80
 
-augroup SetupHelp
-  autocmd!
-  autocmd BufWinEnter <buffer> call s:setup_help_window()
-augroup END
-
-setl spell spelllang=en_us
-setl nonumber norelativenumber
+setl spell spelllang=en_gb
+setl nonumber norelativenumber nolist
 setl colorcolumn=
-nnoremap <buffer> <CR> <C-]>
-nnoremap <buffer> <BS> <C-T>
-nnoremap <silent><buffer> o /'\l\{2,\}'<CR>
-nnoremap <silent><buffer> O ?'\l\{2,\}'<CR>
-nnoremap <silent><buffer> s /\|\zs\S\+\ze\|<CR>
-nnoremap <silent><buffer> S ?\|\zs\S\+\ze\|<CR>
 
 ""---------------------------------------------------------------------------//
 " Credit: Tweekmonster!
 ""---------------------------------------------------------------------------//
+" if this a vim help file rather than one I'm creating
+" add mappings otherwise do not
 if &l:buftype == 'help' || expand('%') =~# '^'.$VIMRUNTIME
   nnoremap <buffer> q :<c-u>q<cr>
   nnoremap <silent><buffer> <c-p> :Helptags<cr>
+  nnoremap <buffer> <CR> <C-]>
+  nnoremap <buffer> <BS> <C-T>
+  nnoremap <silent><buffer> o /'\l\{2,\}'<CR>
+  nnoremap <silent><buffer> O ?'\l\{2,\}'<CR>
+  nnoremap <silent><buffer> s /\|\zs\S\+\ze\|<CR>
+  nnoremap <silent><buffer> S ?\|\zs\S\+\ze\|<CR>
   finish
 endif
 
