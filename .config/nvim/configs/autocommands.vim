@@ -68,7 +68,13 @@ augroup end
 augroup Cancel_Paste
   autocmd!
     autocmd InsertLeave *
-          \ if &paste | set nopaste | echo 'nopaste' | endif
+          \ if &paste | set nopaste | call VimrcMessage('Paste off', 'Title') | endif
+augroup END
+
+" See :h skeleton
+augroup templates
+  autocmd!
+  autocmd BufNewFile *.sh 0r $DOTFILES/.config/nvim/templates/skeleton.sh
 augroup END
 
 " Reload vim and config automatically {{{
