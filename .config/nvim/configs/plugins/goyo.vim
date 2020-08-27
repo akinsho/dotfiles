@@ -10,7 +10,7 @@ let g:goyo_margin_bottom = 2
 
 nnoremap <leader>G :Goyo<CR>
 
-function! s:goyo_enter()
+function! s:goyo_enter() abort
   if executable('tmux') && strlen($TMUX)
     silent !tmux set status off
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
@@ -22,7 +22,7 @@ function! s:goyo_enter()
   cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
 endfunction
 
-function! s:goyo_leave()
+function! s:goyo_leave() abort
   if exists('$TMUX')
     silent !tmux set status on
     silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
@@ -41,24 +41,24 @@ endfunction
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
-function! s:auto_goyo()
+function! s:auto_goyo() abort
   let fts = ['markdown', 'vimwiki']
   if index(fts, &ft) >= 0
     Goyo 120
   elseif exists('#goyo')
     let bufnr = bufnr('%')
     Goyo!
-    execute 'b '.bufnr
-    " NOTE: specifically calling goyo in the context of a function
-    " seems to prevent the colorscheme from being refreshed
-    " this is a bug fix for that
-    doautocmd ColorScheme
-    doautocmd BufEnter
+    call execute('buffer '.bufnr)
+    doautocmd ColorScheme,BufEnter,WinEnter
   endif
 endfunction
 
 augroup automatic_goyo
   autocmd!
+  " BUG:
+  " s:auto_goyo cannot be called in a nested autocommand
+  " as this causes an infinite loop because of a FileType autocommand
+  " so the function manually triggers necessary autocommands
   autocmd BufEnter * call s:auto_goyo()
 augroup END
 "}}}
