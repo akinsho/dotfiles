@@ -1,7 +1,7 @@
 ""---------------------------------------------------------------------------//
 " Goyo
 ""---------------------------------------------------------------------------//
-if exists("g:gui_oni") || !has_key(g:plugs, "goyo.vim")
+if !PluginLoaded("goyo.vim")
   finish
 endif
 
@@ -42,19 +42,22 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
 function! s:auto_goyo()
-  if &ft == 'markdown'
-    Goyo 80
+  let fts = ['markdown', 'vimwiki']
+  if index(fts, &ft) >= 0
+    Goyo 120
   elseif exists('#goyo')
     let bufnr = bufnr('%')
     Goyo!
     execute 'b '.bufnr
+    " NOTE: specifically calling goyo in the context of a function
+    " seems to prevent the colorscheme from being refreshed
+    " this is a bug fix for that
+    doautocmd ColorScheme
   endif
 endfunction
 
-" FIXME specifically calling goyo in the context of a function
-" seems to cause the colorscheme from being refreshed
-" augroup goyo_markdown
-"   autocmd!
-"   autocmd BufEnter * call s:auto_goyo()
-" augroup END
+augroup automatic_goyo
+  autocmd!
+  autocmd BufEnter * call s:auto_goyo()
+augroup END
 "}}}
