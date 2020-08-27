@@ -49,4 +49,5 @@ command! CloseVimWikis call s:close_wikis()
 " Add this mapping manually so we can lazy load vim wiki
 nnoremap <silent><leader>ww :VimwikiIndex<CR>
 nnoremap <silent><leader>wt :VimwikiTabIndex<CR>
+nnoremap <silent><leader>ws :VimwikiUISelect<CR>
 nnoremap <silent><leader>wf :WikiSearch<CR>
