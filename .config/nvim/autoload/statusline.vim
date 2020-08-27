@@ -22,6 +22,8 @@ function! statusline#show_plain_statusline() abort
         \ s:is_bt('nowrite') ||
         \ s:is_bt('acwrite') ||
         \ s:is_ft('startify') ||
+        \ s:is_ft('vimwiki') ||
+        \ s:is_ft('markdown') ||
         \ exists('#goyo') ||
         \ &previewwindow
 endfunction

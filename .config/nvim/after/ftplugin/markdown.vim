@@ -6,6 +6,8 @@ let b:sleuth_automatic = 0
 setlocal expandtab
 setlocal shiftwidth=2
 setlocal softtabstop=2
+" no distractions in markdown files
+setlocal nonumber norelativenumber
 
 onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
 onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>

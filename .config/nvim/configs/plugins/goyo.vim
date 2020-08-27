@@ -53,14 +53,13 @@ function! s:auto_goyo() abort
   endif
 endfunction
 
-augroup automatic_goyo
-  autocmd!
+" augroup automatic_goyo
+  " autocmd!
   " BUG:
   " 1. s:auto_goyo cannot be called in a nested autocommand
   " as this causes an infinite loop because of a FileType autocommand
   " so the function manually triggers necessary autocommands
-  "
   " 2. Floating windows cause this to break BADLY
-  autocmd BufEnter * call s:auto_goyo()
-augroup END
+  " autocmd BufEnter * call s:auto_goyo()
+" augroup END
 "}}}

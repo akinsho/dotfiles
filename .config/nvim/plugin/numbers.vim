@@ -5,9 +5,10 @@
 " NOTE: it's important that we use BufReadPost as otherwise the buftype and filetype
 " variables might not be set correctly
 let g:number_filetype_exclusions = [
+      \ 'markdown',
+      \ 'vimwiki',
       \ 'vim-plug',
       \ 'gitcommit',
-      \ 'vimwiki',
       \ 'toggleterm',
       \ 'fugitive',
       \ 'coc-explorer',
