@@ -7,8 +7,9 @@ endif
 
 let g:goyo_margin_top = 2
 let g:goyo_margin_bottom = 2
+let g:goyo_width = '60%'
 
-nnoremap <leader>G :Goyo<CR>
+nnoremap <silent><leader>G :Goyo<CR>
 
 function! s:goyo_enter() abort
   if executable('tmux') && strlen($TMUX)
