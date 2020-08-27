@@ -8,6 +8,10 @@ function! s:is_blacklisted()
     return 1
   endif
 
+  if exists('#goyo')
+    return 1
+  endif
+
   if &previewwindow
     return 1
   endif
