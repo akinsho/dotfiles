@@ -2,20 +2,6 @@ if !PluginLoaded('vim-sneak')
   finish
 endif
 
-" Highlighting sneak and it's label is a little complicated
-" The plugin creates a colorscheme autocommand that
-" checks for the existence of these highlight groups
-" it is best to leave this as is as they are picked up on colorscheme loading
-highlight Sneak guifg=red guibg=background
-highlight SneakLabel gui=italic,bold,underline guifg=red guibg=background
-highlight SneakLabelMask guifg=red guibg=background
-
-augroup sneak_highlights
-  autocmd ColorScheme * highlight Sneak guifg=red guibg=background
-  autocmd ColorScheme * highlight SneakLabel gui=italic,bold,underline guifg=red guibg=background
-  autocmd ColorScheme * highlight SneakLabelMask guifg=red guibg=background
-augroup end
-
 let g:sneak#prompt     = ' '
 let g:sneak#label      = 1
 let g:sneak#s_next     = 0

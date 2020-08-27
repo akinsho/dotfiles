@@ -131,6 +131,8 @@ endif
 " ----------------------------------------------------------------------------
 " Display {{{1
 " --------------------------------------------------------------------------
+" Set the colour column to highlight one column after the 'textwidth'
+set colorcolumn=+1
 set cmdheight=2 " Set command line height to two lines
 set conceallevel=2
 set concealcursor=nv

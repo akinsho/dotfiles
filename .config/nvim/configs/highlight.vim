@@ -1,21 +1,32 @@
 ""---------------------------------------------------------------------------//
 " Highlights
 ""---------------------------------------------------------------------------//
-function! ApplyUserHighlights() abort
-  "---------------------------------------------------------------------------//
-  " Set the colour column to highlight one column after the 'textwidth'
-  set colorcolumn=+1
+
+"--------------------------------------------------------------------------------
+" Plugin highlights
+"--------------------------------------------------------------------------------
+function! s:plugin_highlights() abort
+  if PluginLoaded('vim-sneak')
+    " Highlighting sneak and it's label is a little complicated
+    " The plugin creates a colorscheme autocommand that
+    " checks for the existence of these highlight groups
+    " it is best to leave this as is as they are picked up on colorscheme loading
+    highlight Sneak guifg=red guibg=background
+    highlight SneakLabel gui=italic,bold,underline guifg=red guibg=background
+    highlight SneakLabelMask guifg=red guibg=background
+  endif
+
+  if PluginLoaded('vim-which-key')
+    highlight WhichKeySeperator guifg=green guibg=background
+  endif
 
   if !PluginLoaded('conflict-marker.vim')
     " Highlight VCS conflict markers
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif
+endfunction
 
-  if has('nvim')
-    highlight TermCursor ctermfg=green guifg=green
-    highlight link MsgSeparator Comment
-  endif
-
+function! s:general_overrides() abort
   " Add undercurl to existing spellbad highlight
   let s:error_fg = synIDattr(hlID('Error'), 'fg')
   let s:rare_fg = synIDattr(hlID('SpellRare'), 'fg')
@@ -41,9 +52,12 @@ function! ApplyUserHighlights() abort
   " highlight! link DiffRemoved DiffDelete
   highlight DiffChange guibg=#344f69 guifg=NONE
   highlight DiffText guibg=#2f628e guifg=NONE
-  ""---------------------------------------------------------------------------//
-  " Custom highlights
-  ""---------------------------------------------------------------------------//
+endfunction
+
+""---------------------------------------------------------------------------//
+" Colorscheme highlights
+""---------------------------------------------------------------------------//
+function! s:colorscheme_overrides() abort
   if g:colors_name ==? 'one'
     call one#highlight('Folded', '5c6370', 'none', 'italic,bold')
     call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
@@ -84,12 +98,21 @@ function! ApplyUserHighlights() abort
     highlight link typescriptExport jsImport
     highlight link typescriptImport jsImport
   endif
-  "---------------------------------------------------------------------------//
+endfunction
+
+function! s:apply_user_highlights() abort
+  if has('nvim')
+    highlight TermCursor ctermfg=green guifg=green
+    highlight link MsgSeparator Comment
+  endif
+  call s:plugin_highlights()
+  call s:general_overrides()
+  call s:colorscheme_overrides()
 endfunction
 
 
 augroup InitHighlights
   au!
-  autocmd VimEnter * call ApplyUserHighlights()
-  autocmd ColorScheme * call ApplyUserHighlights()
+  autocmd VimEnter * call s:apply_user_highlights()
+  autocmd ColorScheme * call s:apply_user_highlights()
 augroup END
