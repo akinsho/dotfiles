@@ -108,8 +108,11 @@ let g:which_leader_key_map = {
       \  't':     'open vimwiki index in a tab',
       \  'i':     'open vimwiki diary',
       \},
-      \ 'z':      'zoom in current buffer',
-      \ 'Z':      'zoom in with tab',
+      \ 'z':      {
+      \  'name': '+zoom/zen',
+      \  't': 'zoom in current buffer',
+      \  'g': 'goyo: toggle'
+      \},
       \ 'sw':     'swap buffers horizontally',
       \ 'so':     'source current buffer',
       \ 'sv':     'source init.vim',

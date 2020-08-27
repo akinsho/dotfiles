@@ -476,12 +476,14 @@ if !PluginLoaded('conflict-marker.vim')
   " Shortcut to jump to last conflict marker"
   nnoremap <silent> [x ?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 endif
-" Zoom / Restore window. - Zooms by increasing window width squashing the other window
-nnoremap <silent> <leader>z :call utils#tab_zoom()<CR>
 
 command! PU PlugUpdate | PlugUpgrade
 " Peekabo plugin handles this currently
 command! -nargs=0 Reg call utils#reg()
+
+" Zoom / Restore window. - Zooms by increasing window width squashing the other window
+" z is the zoom/zen prefix
+nnoremap <silent> <leader>zt :call utils#tab_zoom()<CR>
 ""---------------------------------------------------------------------------//
 " Map key to toggle opt
 ""---------------------------------------------------------------------------//
