@@ -15,9 +15,14 @@ let g:projectionist_heuristics = {
       \   "lib/view_models/*_view_model.dart": {
       \     "alternate": "lib/screens/{}.dart",
       \     "type": "source",
+      \   },
+      \   "test/view_models/*_view_model_test.dart": {
+      \     "alternate": "lib/view_models/{}_view_model.dart",
+      \     "type": "test",
       \   }
       \  }
       \}
 
 nnoremap <silent><leader>av :AV<CR>
+nnoremap <silent><leader>at :Vtest<CR>
 nnoremap <silent><leader>A :A<CR>
