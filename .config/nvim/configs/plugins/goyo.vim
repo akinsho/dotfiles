@@ -53,6 +53,7 @@ function! s:auto_goyo()
     " seems to prevent the colorscheme from being refreshed
     " this is a bug fix for that
     doautocmd ColorScheme
+    doautocmd BufEnter
   endif
 endfunction
 

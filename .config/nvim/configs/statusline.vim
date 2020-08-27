@@ -407,23 +407,12 @@ function MinimalStatusLine() abort
   return StatusLine({ 'inactive': 1 })
 endfunction
 
-function s:set_statuline_if_applicable(minimal) abort
-  if exists('#goyo')
-    return
-  endif
-  if a:minimal
-    setlocal statusline=%!MinimalStatusLine()
-  else
-    setlocal statusline=%!StatusLine()
-  endif
-endfunction
-
 augroup custom_statusline
   autocmd!
   " The quickfix window sets it's own statusline, so we override it here
-  autocmd FileType qf call s:set_statuline_if_applicable(1)
-  autocmd BufEnter,WinEnter,FocusGained,QuickFixCmdPost * call s:set_statuline_if_applicable(0)
-  autocmd BufLeave,WinLeave,FocusLost * call s:set_statuline_if_applicable(1)
+  autocmd FileType qf setlocal statusline=%!MinimalStatusLine()
+  autocmd BufEnter,WinEnter,FocusGained * setlocal statusline=%!StatusLine()
+  autocmd BufLeave,WinLeave,FocusLost,QuickFixCmdPost * setlocal statusline=%!MinimalStatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
 
