@@ -1,6 +1,7 @@
 local fn = _G.vim.fn
 local api = _G.vim.api
 
+if vim.g.dotfiles_lsp_setup then return end
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
@@ -16,8 +17,7 @@ end
 -----------------------------------------------------------------------------//
 -- Init
 -----------------------------------------------------------------------------//
-local lsp_configs_loaded, lsp = is_plugin_loaded('nvim-lsp')
-
+local lsp_configs_loaded, lsp = is_plugin_loaded('nvim_lsp')
 -- NOTE: Don't load this file if we aren't using "nvim-lsp"
 if not lsp_configs_loaded then return end
 
@@ -25,18 +25,19 @@ if not lsp_configs_loaded then return end
 -- Setup plugins
 -----------------------------------------------------------------------------//
 local function echo_msg(message)
-  api.nvim_command('echohl String')
-  api.nvim_command(string.format('echom "%s"', message))
-  api.nvim_command('echohl clear')
+  vim.cmd('echohl String')
+  vim.cmd(string.format('echom "%s"', message))
+  vim.cmd('echohl clear')
 end
 
 local function on_attach()
+  print("calling on attach")
   if is_plugin_loaded('completion-nvim') then
     require'completion'.on_attach()
     echo_msg("Loaded completion-nvim")
 
-    api.nvim_set_var('completion_enable_fuzzy_match', 1)
-    api.nvim_set_var('completion_enable_snippet', 'UltiSnips')
+    vim.g.completion_enable_fuzzy_match = true
+    vim.g.completion_enable_snippet =  'UltiSnips'
 
     api.nvim_set_keymap('n', '[c', '<cmd>NextDiagnostic<cr>', {
         silent = true, nowait = true, noremap = true
@@ -48,7 +49,7 @@ local function on_attach()
   if is_plugin_loaded('diagnostic-nvim') then
     require'diagnostic'.on_attach()
     echo_msg("Loaded diagnostic-nvim")
-    api.nvim_set_var('diagnostic_enable_virtual_text', 1)
+    vim.g.diagnostic_enable_virtual_text = true
   end
 end
 
@@ -59,16 +60,16 @@ fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsH
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
-api.nvim_command("highlight! LspDiagnosticsError ctermfg=Red guifg=#E06C75 gui=undercurl,bold") -- used for "Error" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticsErrorSign guifg=#E06C75") -- used for "Error" diagnostic signs in sign column
-api.nvim_command("highlight! LspDiagnosticsWarning  guifg=#ff922b  gui=undercurl") -- used for "Warning" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticsWarningSign guifg=#ff922b") -- used for "Warning" diagnostic signs in sign column
-api.nvim_command("highlight! LspDiagnosticInformation guifg=#fab005") -- used for "Information" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticInformationSign guifg=#fab005") -- used for "Information" signs in sign column
-api.nvim_command("highlight! LspDiagnosticHint guifg=#fab005 gui=bold") -- used for "Hint" diagnostic virtual text
-api.nvim_command("highlight! LspDiagnosticHintSign guifg=#fab005") -- used for "Hint" diagnostic signs in sign column
-api.nvim_command("highlight! LspReferenceText gui=undercurl,bold") -- used for highlighting "text" references
-api.nvim_command("highlight! LspReferenceRead gui=undercurl,bold") -- used for highlighting "read" references
+vim.cmd("highlight! LspDiagnosticsError ctermfg=Red guifg=#E06C75 gui=undercurl,bold") -- used for "Error" diagnostic virtual text
+vim.cmd("highlight! LspDiagnosticsErrorSign guifg=#E06C75") -- used for "Error" diagnostic signs in sign column
+vim.cmd("highlight! LspDiagnosticsWarning  guifg=#ff922b  gui=undercurl") -- used for "Warning" diagnostic virtual text
+vim.cmd("highlight! LspDiagnosticsWarningSign guifg=#ff922b") -- used for "Warning" diagnostic signs in sign column
+vim.cmd("highlight! LspDiagnosticInformation guifg=#fab005") -- used for "Information" diagnostic virtual text
+vim.cmd("highlight! LspDiagnosticInformationSign guifg=#fab005") -- used for "Information" signs in sign column
+vim.cmd("highlight! LspDiagnosticHint guifg=#fab005 gui=bold") -- used for "Hint" diagnostic virtual text
+vim.cmd("highlight! LspDiagnosticHintSign guifg=#fab005") -- used for "Hint" diagnostic signs in sign column
+vim.cmd("highlight! LspReferenceText gui=undercurl,bold") -- used for highlighting "text" references
+vim.cmd("highlight! LspReferenceRead gui=undercurl,bold") -- used for highlighting "read" references
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -130,3 +131,5 @@ end
 lsp.sumneko_lua.setup{on_attach = on_attach}
 
 lsp.rust_analyzer.setup{on_attach = on_attach}
+
+vim.g.dotfiles_lsp_setup = true
