@@ -8,6 +8,9 @@ function! s:adjust_height(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
+" force quickfix to open beneath all other splits
+wincmd J
+
 call s:adjust_height(1, 10)
 setlocal nonumber
 setlocal norelativenumber
