@@ -7,19 +7,24 @@ endif
 let g:wiki_path = isdirectory(expand('$HOME/Dropbox')) ?
       \ $HOME.'/Dropbox/wiki' : $HOME . '/wiki'
 let g:wiki = {
+      \'name': 'knowledge base',
       \'path': g:wiki_path,
       \'path_html': g:wiki_path,
       \'auto_toc': 1,
+      \'auto_diary_index': 1,
+      \'auto_generate_links': 1
       \}
 
 let g:common_wiki_path = $HOME.'/wiki'
 let g:common_wiki = {
+      \'name': 'Learnings',
       \'path': g:common_wiki_path,
       \'path_html': g:common_wiki_path . '/html',
       \}
 
 let g:dotfiles_wiki_path = $DOTFILES.'/wiki'
 let g:dotfiles_wiki = {
+      \'name': 'Dotfiles Wiki',
       \'path': g:dotfiles_wiki_path,
       \'path_html': g:dotfiles_wiki_path . '/html',
       \'auto_export': 1,
