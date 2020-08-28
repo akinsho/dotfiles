@@ -18,6 +18,7 @@ let g:which_leader_key_map = {
       \ '9':      'which_key_ignore',
       \ 'A':      'projectionist: edit alternate',
       \ 'av':     'projectionist: vsplit alternate',
+      \ 'at':     'projectionist: vsplit test',
       \ 'a':      'coc codeaction (for text object)',
       \ 'c':      {
       \   'name': '+coc-command',
@@ -103,6 +104,15 @@ let g:which_leader_key_map = {
       \ 'v':      'vista: toggle',
       \ 'w':      {
       \  'name':  '+wiki',
+      \  ',':     {
+      \   'name': '+diary',
+      \   'i':  'generate diary links',
+      \   'm':  "edit tomorrow's diary entry",
+      \   't':  'edit diary entry (tab)',
+      \   'y':  "edit yesterday's diary entry",
+      \   'w':  "edit today's diary entry"
+      \  },
+      \  'q':     'close all wikis',
       \  'w':     'open vimwiki index',
       \  's':     'vimwiki UI select',
       \  't':     'open vimwiki index in a tab',
