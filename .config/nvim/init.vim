@@ -40,10 +40,6 @@ endfunction
 
 " stolen from ThePrimegean's video
 " https://www.youtube.com/watch?v=9L4sW047oow
-func! s:debug_toggleterm(lua_regex) abort
-call luaeval( a:lua_regex)
-endfunc
-
 if has('nvim-0.5')
   command! -nargs=? ResetLuaPlugin lua require"devtools".reset_package(<q-args>)
 endif

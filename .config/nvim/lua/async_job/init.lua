@@ -17,42 +17,6 @@ local M = {}
 local jobs = {}
 local last_open_window = -1
 
------------------------------------------------------------
--- Functions
------------------------------------------------------------
--- TODO reproduce in lua
--- func! s:open_preview(size) abort
---   let s:shell_tmp_output = tempname()
---   execute 'pedit '.s:shell_tmp_output
---   wincmd P
---   wincmd J
---   execute('resize '. a:size)
---   setlocal modifiable
---   setlocal nobuflisted
---   setlocal winfixheight
---   setlocal nolist
---   nnoremap <silent><nowait><buffer>q :bd<cr>
---   nnoremap <silent><nowait><buffer><CR> :bd<cr>
--- endfunc
-
--- function! s:close_preview_window() abort
---   normal! G
---   setlocal nomodifiable
---   setlocal nomodified
---   " return to original window
---   " wincmd p
--- endfunction
-
--- function! s:echo(msgs) abort
---   let msg = join(a:msgs, '\n')
---   echohl MoreMsg
---   " double quote message so \n is interpolated
---   " https://stackoverflow.com/questions/13435586/should-i-use-single-or-double-quotes-in-my-vimrc-file
---   echom a:msgs
---   execute('echo "'.shellescape(msg).'"')
---   echohl clear
--- endfunction
-
 --- We don't use stderr since it doesn seem like it is a trustworthy
 --- sign of a true error given that programs like git tend to write
 --- non error message to stderr
@@ -114,6 +78,7 @@ function format_data(title, data, width)
   return vim.list_extend({top, mid, bot}, formatted)
 end
 
+-- TODO find a way to dismiss oldest window if messages collide
 --- @param job table
 function open_window(job, code)
     local width = 60
@@ -177,6 +142,8 @@ function handle_result(job, code, auto_close)
   -- the command msg area open a window
   if num_of_lines > vim.o.cmdheight + 2 then
     local win_id = open_window(job, code)
+    -- TODO figure out how to update fugitive
+    -- vim.cmd('doautocmd User FugitiveChanged')
     -- only automatically close window if successful
     local timeout = code == 0 and 10000 or 15000
     if auto_close then
