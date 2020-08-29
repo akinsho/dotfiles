@@ -139,16 +139,49 @@ function! statusline#filename(...) abort
   return fname . readonly_indicator
 endfunction
 
+" this is required since devicons returns 2 values which need to be collected
+" into a table before they can be read out in vimscript
+lua << EOF
+  _G.__statusline_icon = function(name, extension)
+    local icon, hl = require'nvim-web-devicons'.get_icon(name, extension, {
+      default = true
+    })
+    return {icon, hl}
+  end
+EOF
+
 function s:get_lua_devicon() abort
   try
-    let name = bufname()
-    let extension = fnamemodify(name, ':e')
-    let devicon = luaeval("require'nvim-web-devicons'.get_icon(_A[1], _A[2], _A[3])",
-          \ [name, extension, { 'default': v:true }])
-    return devicon
+    let extension = fnamemodify(bufname(), ':e')
+    let icon_data = v:lua.__statusline_icon(bufname(), extension)
+    return icon_data
   catch
-    return ''
+    echoerr v:errmsg
+    return ['', '']
   endtry
+endfunction
+
+" cache of statusline icon highlight names
+" e.g.
+" {
+"  "VimDevIconStatusline": 1
+" }
+let s:icon_hl_cache = {}
+
+function statusline#filetype_icon_highlight(hl_name) abort
+  let [_, hl] = s:get_lua_devicon()
+  let name = hl.'Statusline'
+  " prevent recreating highlight group for every buffer instead save
+  " the newly created highlight name's status i.e. created or not
+  let already_created = get(s:icon_hl_cache, name, 0)
+
+  if !already_created
+    let bg_color = synIDattr(hlID(a:hl_name), 'bg')
+    let fg_color = synIDattr(hlID(hl), 'fg')
+    silent execute 'highlight '.name.' guibg='.bg_color.' guifg='.fg_color
+    let s:icon_hl_cache[name] = 1
+  endif
+  return name
 endfunction
 
 function! statusline#filetype() abort
@@ -158,9 +191,10 @@ function! statusline#filetype() abort
   elseif strlen(&buftype) > 0
     return ''
   endif
+
   let ft_icon = &ft
   if has('nvim')
-    let ft_icon = s:get_lua_devicon()
+    let [ft_icon; _] = s:get_lua_devicon()
   elseif exists('*WebDevIconsGetFileTypeSymbol')
     let ft_icon = WebDevIconsGetFileTypeSymbol()
   endif

@@ -339,10 +339,12 @@ function! StatusLine(inactive) abort
   let statusline = ""
   let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
 
+  let icon_highlight = statusline#filetype_icon_highlight('StPrefix')
   let statusline .= s:sep(title_component, {
         \ 'prefix': file_type,
+        \ 'prefix_color': '%#'.icon_highlight.'#',
+        \ 'padding': 'full',
         \ 'small': 1,
-        \ 'padding': 'full'
         \ })
 
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
