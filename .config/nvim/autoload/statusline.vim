@@ -7,25 +7,32 @@ function! s:is_bt(bt) abort
   return &bt ==? a:bt
 endfunction
 
+let s:plain_filetypes = [
+      \ 'help',
+      \ 'ctrlsf',
+      \ 'tsplayground',
+      \ 'coc-explorer',
+      \ 'LuaTree',
+      \ 'neoterm',
+      \ 'vista',
+      \ 'fugitive',
+      \ 'startify',
+      \ 'vimwiki',
+      \ 'markdown'
+      \]
+
+let s:plain_buftypes = [
+      \ 'terminal',
+      \ 'quickfix',
+      \ 'nofile',
+      \ 'nowrite',
+      \ 'acwrite',
+      \]
+
 function! statusline#show_plain_statusline() abort
-  return s:is_ft('help') ||
-        \ s:is_ft('ctrlsf')||
-        \ s:is_ft('tsplayground')||
-        \ s:is_ft('coc-explorer') ||
-        \ s:is_ft('LuaTree') ||
-        \ s:is_ft('neoterm')||
-        \ s:is_ft('vista') ||
-        \ s:is_ft('fugitive') ||
-        \ s:is_bt('terminal')||
-        \ s:is_bt('quickfix') ||
-        \ s:is_bt('nofile') ||
-        \ s:is_bt('nowrite') ||
-        \ s:is_bt('acwrite') ||
-        \ s:is_ft('startify') ||
-        \ s:is_ft('vimwiki') ||
-        \ s:is_ft('markdown') ||
-        \ exists('#goyo') ||
-        \ &previewwindow
+  return index(s:plain_filetypes, &ft) >= 0 || index(s:plain_buftypes, &bt) >= 0
+        \ || exists('#goyo')
+        \ || &previewwindow
 endfunction
 
 " This function allow me to specify titles for special case buffers
@@ -55,36 +62,48 @@ function! statusline#file_format() abort
   return winwidth(0) > 70 ? (&fileformat . ' ' . l:icon) : ''
 endfunction
 
-let s:filetype_map = {
-      \ 'dbui' : 'Dadbod UI',
-      \ 'tsplayground': 'Treesitter 侮',
-      \ 'vista' : 'Vista',
-      \ 'fugitive' : 'Fugitive ',
-      \ 'fugitiveblame' : 'Git blame ',
-      \ 'gitcommit' : 'Git commit ',
-      \ 'startify' : 'Startify',
-      \ 'defx' : 'Defx ⌨',
-      \ 'ctrlsf' : 'CtrlSF 🔍',
-      \ 'vim-plug' : 'vim-plug ⚉',
-      \ 'help' : 'help ',
-      \ 'undotree' : 'UndoTree ⮌',
-      \ 'coc-explorer' : 'Coc Explorer',
-      \ 'LuaTree' : 'Lua Tree',
-      \ 'toggleterm': '  Terminal('.fnamemodify($SHELL, ':t').')'
+let s:exceptions_ft_icons = {
+      \ 'dbui' : '',
+      \ 'vista' : 'פּ',
+      \ 'tsplayground': '侮',
+      \ 'fugitive' : '',
+      \ 'fugitiveblame' : '',
+      \ 'gitcommit' : '',
+      \ 'startify' : '',
+      \ 'defx' : '⌨',
+      \ 'ctrlsf' : '🔍',
+      \ 'vim-plug' : '⚉',
+      \ 'vimwiki': 'ﴬ',
+      \ 'help' : '',
+      \ 'undotree' : 'פּ',
+      \ 'coc-explorer' : '',
+      \ 'LuaTree' : 'פּ',
+      \ 'toggleterm': ' '
       \ }
 
-let s:filename_map = {
-      \ '__Tagbar__' : 'Tagbar',
-      \ 'ControlP' : 'CtrlP',
-      \ '__Gundo__' : 'Gundo',
-      \ '__Gundo_Preview__' : 'Gundo Preview',
-      \ 'NERD_tree' : 'NERDTree 🖿',
+let s:exceptions_ft_names = {
+      \ 'dbui' : 'Dadbod UI',
+      \ 'tsplayground': 'Treesitter',
+      \ 'vista' : 'Vista',
+      \ 'fugitive' : 'Fugitive',
+      \ 'fugitiveblame' : 'Git blame',
+      \ 'gitcommit' : 'Git commit',
+      \ 'startify' : 'Startify',
+      \ 'defx' : 'Defx',
+      \ 'ctrlsf' : 'CtrlSF',
+      \ 'vim-plug' : 'vim plug',
+      \ 'vimwiki': 'vim wiki',
+      \ 'help' : 'help',
+      \ 'undotree' : 'UndoTree',
+      \ 'coc-explorer' : 'Coc Explorer',
+      \ 'LuaTree' : 'Lua Tree',
+      \ 'toggleterm': 'Terminal('.fnamemodify($SHELL, ':t').')'
       \}
 
 function! statusline#get_dir() abort
   if strlen(&buftype)
         \ || expand('%:t') == ''
-        \ || get(s:filetype_map, &ft, '') != ''
+        \ || get(s:exceptions_ft_names, &ft, '') != ''
         \ || &previewwindow
     return ''
   endif
@@ -103,7 +122,7 @@ function! statusline#filename(...) abort
 
   let readonly_indicator = ' '. statusline#readonly()
 
-  let name = get(s:filetype_map, &filetype, '')
+  let name = get(s:exceptions_ft_names, &filetype, '')
   if strlen(name)
     if s:is_ft('toggleterm') && exists('b:toggle_number')
       let name .= '['.b:toggle_number.']'
@@ -113,11 +132,6 @@ function! statusline#filename(...) abort
 
   let filename_modifier = get(a:, '1', '%:t')
   let fname = expand(filename_modifier)
-
-  let filename = get(s:filename_map, fname, '')
-  if strlen(filename)
-    return filename
-  endif
 
   if !strlen(fname)
     return '[No Name]'
@@ -138,18 +152,17 @@ function s:get_lua_devicon() abort
 endfunction
 
 function! statusline#filetype() abort
-  if !strlen(&filetype) || statusline#show_plain_statusline()
+  let exception = get(s:exceptions_ft_icons, &ft, '')
+  if strlen(exception) > 0
+    return exception
+  elseif strlen(&buftype) > 0
     return ''
   endif
-  let ft_icon = &filetype
+  let ft_icon = &ft
   if has('nvim')
     let ft_icon = s:get_lua_devicon()
   elseif exists('*WebDevIconsGetFileTypeSymbol')
     let ft_icon = WebDevIconsGetFileTypeSymbol()
   endif
-  return winwidth(0) > 70 ? ft_icon : ''
-endfunction
-
-function! statusline#file_component() abort
-  return statusline#filename() . " " . statusline#filetype()
+  return ft_icon
 endfunction

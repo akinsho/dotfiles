@@ -406,6 +406,9 @@ augroup custom_statusline
 
   " The quickfix window sets it's own statusline, so we override it here
   autocmd FileType qf setlocal statusline=%!StatusLine(1)
+  " FIXME this shouldn't be necessary technically but nvim-tree.lua does not
+  " pick up the correct statusline otherwise
+  autocmd FileType LuaTree setlocal statusline=%!StatusLine(1)
 
   autocmd BufEnter,WinEnter,FocusGained * setlocal statusline=%!StatusLine(0)
   autocmd BufLeave,WinLeave,FocusLost,QuickFixCmdPost * setlocal statusline=%!StatusLine(1)
