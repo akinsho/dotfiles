@@ -17,7 +17,7 @@ function! s:plugin_highlights() abort
   endif
 
   if PluginLoaded('vim-which-key')
-    highlight WhichKeySeperator guifg=green guibg=background
+    highlight WhichKeySeperator guifg=LightGreen guibg=background
   endif
 
   if !PluginLoaded('conflict-marker.vim')
