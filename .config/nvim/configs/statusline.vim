@@ -290,22 +290,18 @@ endfunction
 
 let s:item = {component,hl -> "%#".hl."#".component."%*"}
 
-function! StatusLine(...) abort
-  let opts = get(a:, '1', {})
-  call s:add_separators()
+function! StatusLine(inactive) abort
   let available_space = winwidth(0)
   "---------------------------------------------------------------------------//
   " Modifiers
   "---------------------------------------------------------------------------//
-  let inactive = get(opts, 'inactive', 0)
   let plain = statusline#show_plain_statusline()
 
   let current_mode = s:mode()
-  let file_type = statusline#filetype()
-  let file_format = statusline#file_format()
+  let file_type = '%{statusline#filetype()}'
   let line_info = s:line_info()
   let file_modified = statusline#modified('●')
-  let minimal = plain || inactive
+  let minimal = plain || a:inactive
 
   "---------------------------------------------------------------------------//
   " Filename
@@ -332,9 +328,10 @@ function! StatusLine(...) abort
   "---------------------------------------------------------------------------//
   " Mode
   "---------------------------------------------------------------------------//
-  "show a minimal statusline with only the mode and file component
+  " show a minimal statusline with only the mode and file component
   if minimal
-    return s:sep(title_component, s:st_inactive)
+    return s:sep(title_component,
+          \ extend({'prefix': file_type, 'padding': 'full'}, s:st_inactive))
   endif
   "---------------------------------------------------------------------------//
   " Setup
@@ -403,16 +400,15 @@ function! StatusLine(...) abort
   return statusline
 endfunction
 
-function MinimalStatusLine() abort
-  return StatusLine({ 'inactive': 1 })
-endfunction
-
 augroup custom_statusline
   autocmd!
+  autocmd BufEnter,WinEnter * call s:add_separators()
+
   " The quickfix window sets it's own statusline, so we override it here
-  autocmd FileType qf setlocal statusline=%!MinimalStatusLine()
-  autocmd BufEnter,WinEnter,FocusGained * setlocal statusline=%!StatusLine()
-  autocmd BufLeave,WinLeave,FocusLost,QuickFixCmdPost * setlocal statusline=%!MinimalStatusLine()
+  autocmd FileType qf setlocal statusline=%!StatusLine(1)
+
+  autocmd BufEnter,WinEnter,FocusGained * setlocal statusline=%!StatusLine(0)
+  autocmd BufLeave,WinLeave,FocusLost,QuickFixCmdPost * setlocal statusline=%!StatusLine(1)
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
 
