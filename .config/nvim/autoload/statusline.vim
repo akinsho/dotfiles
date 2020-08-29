@@ -41,7 +41,9 @@ endfunction
 function! statusline#special_buffers() abort
   let is_location_list = get(getloclist(0, {'filewinid':0}), 'filewinid', 0)
   return is_location_list ? 'Location List' :
-        \ s:is_bt('quickfix') ? 'QuickFix' : &previewwindow ? 'preview' : ''
+        \ s:is_bt('quickfix') ? 'QuickFix' :
+        \ s:is_bt('terminal') && &ft ==# '' ? 'Terminal('.fnamemodify($SHELL, ':t').')' :
+        \ &previewwindow ? 'preview' : ''
 endfunction
 
 function! statusline#modified(...) abort
@@ -78,8 +80,12 @@ let s:exceptions_ft_icons = {
       \ 'undotree' : 'פּ',
       \ 'coc-explorer' : '',
       \ 'LuaTree' : 'פּ',
-      \ 'toggleterm': ' '
+      \ 'toggleterm': ' ',
       \ }
+
+let s:exceptions_bt_icons = {
+      \ 'terminal': ' ',
+      \}
 
 let s:exceptions_ft_names = {
       \ 'dbui' : 'Dadbod UI',
@@ -97,7 +103,7 @@ let s:exceptions_ft_names = {
       \ 'undotree' : 'UndoTree',
       \ 'coc-explorer' : 'Coc Explorer',
       \ 'LuaTree' : 'Lua Tree',
-      \ 'toggleterm': 'Terminal('.fnamemodify($SHELL, ':t').')'
+      \ 'toggleterm': {-> 'Terminal('.fnamemodify($SHELL, ':t').')['.b:toggle_number.']'}
       \}
 
 function! statusline#get_dir() abort
@@ -111,10 +117,6 @@ function! statusline#get_dir() abort
 endfunction
 
 function! statusline#filename(...) abort
-  if s:is_bt('terminal') && !s:is_ft('toggleterm')
-    return '  '. expand('%:t')
-  endif
-
   let special_buffer_name = statusline#special_buffers()
   if strlen(special_buffer_name)
     return special_buffer_name
@@ -122,12 +124,13 @@ function! statusline#filename(...) abort
 
   let readonly_indicator = ' '. statusline#readonly()
 
-  let name = get(s:exceptions_ft_names, &filetype, '')
-  if strlen(name)
-    if s:is_ft('toggleterm') && exists('b:toggle_number')
-      let name .= '['.b:toggle_number.']'
-    endif
-    return name
+  " as the name can be a reference to a function it must
+  " be uppercase as all function references must be.
+  let Name = get(s:exceptions_ft_names, &filetype, '')
+  if type(Name) == v:t_func
+    return Name()
+  elseif strlen(Name)
+    return Name
   endif
 
   let filename_modifier = get(a:, '1', '%:t')
@@ -185,9 +188,14 @@ function statusline#filetype_icon_highlight(hl_name) abort
 endfunction
 
 function! statusline#filetype() abort
-  let exception = get(s:exceptions_ft_icons, &ft, '')
-  if strlen(exception) > 0
-    return exception
+  let ft_exception = get(s:exceptions_ft_icons, &ft, '')
+  if strlen(ft_exception) > 0
+    return ft_exception
+  endif
+
+  let bt_exception = get(s:exceptions_bt_icons, &bt, '')
+  if strlen(bt_exception) > 0
+    return bt_exception
   elseif strlen(&buftype) > 0
     return ''
   endif
