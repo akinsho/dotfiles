@@ -63,3 +63,6 @@ _deps
 .classpath
 .factorypath
 .settings/
+
+# Vim Wiki tag files
+.vimwiki_tags

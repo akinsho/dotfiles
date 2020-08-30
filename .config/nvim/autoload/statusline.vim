@@ -175,6 +175,10 @@ endfunction
 let s:icon_hl_cache = {}
 
 function statusline#filetype_icon_highlight(hl_name) abort
+  if !has('nvim')
+    return ''
+  endif
+
   let [_, hl] = s:get_lua_devicon()
   let name = hl.'Statusline'
   " prevent recreating highlight group for every buffer instead save

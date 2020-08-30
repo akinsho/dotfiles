@@ -63,7 +63,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 Plug 'junegunn/vim-easy-align', {'for': ['vim']}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
@@ -215,15 +215,6 @@ function s:lazy_load_plugins() abort
     call plug#load(p)
   endfor
 endfunction
-
-augroup LazyLoadPlugins
-  autocmd!
-  autocmd CursorHold,CursorHoldI * call s:lazy_load_plugins()
-  " if we are lazy loading vimwiki we should set the filetype
-  " when we enter an associated file. this will force vim plug to
-  " load the plugin
-  autocmd BufEnter *.wiki set filetype=vimwiki
-augroup END
 
 function s:install_missing_plugins() abort
   if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
