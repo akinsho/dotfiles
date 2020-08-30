@@ -202,9 +202,12 @@ let g:which_localleader_key_map = {
       \   's':       'test suite',
       \},
       \ 's':         {
-      \  'name':     '+session',
-      \  's':        'save'
-      \} ,
+      \  'name':     '+sideways',
+      \  'i':        'insert argument before',
+      \  'a':        'insert argument after',
+      \  'I':        'insert argument first',
+      \  'A':        'insert argument last',
+      \},
       \ ',':         'add comma to end of line',
       \ ';':         'add semicolon to end of line',
       \ '?':         'search for word under cursor in google',
