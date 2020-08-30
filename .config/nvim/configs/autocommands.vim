@@ -4,7 +4,7 @@
 if exists('+CmdlineEnter')
   augroup VimrcIncSearchHighlight
     autocmd!
-    " autotically clear search highlight once
+    " automatically clear search highlight once
     autocmd CmdlineEnter [/\?] :set hlsearch
     autocmd CmdlineLeave [/\?] :set nohlsearch
   augroup END
@@ -207,6 +207,26 @@ augroup CustomWindowSettings
         \ | endif
 augroup END
 
+
+function! s:ensure_directory_exists()
+  let required_dir = expand("%:h")
+  if !exists('*mkdir')
+    echoerr 'This version of (n)vim cannot create directories'
+    return
+  endif
+
+  if !isdirectory(required_dir)
+    if !confirm("Directory '" . required_dir . "' doesn't exist. Create it?")
+      return
+    endif
+    try
+      call mkdir(required_dir, 'p')
+    catch
+      echoerr "Can't create '" . required_dir . "'"
+    endtry
+  endif
+endfunction
+
 augroup Utilities "{{{1
   autocmd!
   " close FZF in neovim with <ESC>
@@ -230,10 +250,7 @@ augroup Utilities "{{{1
 
   autocmd FileType gitcommit,gitrebase set bufhidden=delete
 
-  " FIXME should this be being called for all existing files
-  if exists('*mkdir') "auto-create directories for new files
-    autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
-  endif
+  autocmd BufNewFile * call s:ensure_directory_exists()
 
   " Save a buffer when we leave it
   let save_excluded = ['lua.luapad']
