@@ -40,9 +40,11 @@ endfunction
 " CREDIT: https://vi.stackexchange.com/questions/18079/how-to-check-whether-the-location-list-for-the-current-window-is-open?rq=1
 function! statusline#special_buffers() abort
   let is_location_list = get(getloclist(0, {'filewinid':0}), 'filewinid', 0)
+  let is_regular_terminal = s:is_bt('terminal') && &ft ==# ''
+
   return is_location_list ? 'Location List' :
         \ s:is_bt('quickfix') ? 'QuickFix' :
-        \ s:is_bt('terminal') && &ft ==# '' ? 'Terminal('.fnamemodify($SHELL, ':t').')' :
+        \ is_regular_terminal ? 'Terminal('.fnamemodify($SHELL, ':t').')' :
         \ &previewwindow ? 'preview' : ''
 endfunction
 
@@ -85,6 +87,7 @@ let s:exceptions_ft_icons = {
 
 let s:exceptions_bt_icons = {
       \ 'terminal': ' ',
+      \ 'quickfix': '',
       \}
 
 let s:exceptions_ft_names = {
@@ -196,8 +199,6 @@ function! statusline#filetype() abort
   let bt_exception = get(s:exceptions_bt_icons, &bt, '')
   if strlen(bt_exception) > 0
     return bt_exception
-  elseif strlen(&buftype) > 0
-    return ''
   endif
 
   let ft_icon = &ft
