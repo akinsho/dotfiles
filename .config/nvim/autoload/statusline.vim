@@ -184,7 +184,12 @@ function statusline#filetype_icon_highlight(hl_name) abort
   if !already_created
     let bg_color = synIDattr(hlID(a:hl_name), 'bg')
     let fg_color = synIDattr(hlID(hl), 'fg')
-    silent execute 'highlight '.name.' guibg='.bg_color.' guifg='.fg_color
+    let cmd = 'highlight '.name.' guibg='.bg_color.' guifg='.fg_color
+    silent execute cmd
+    execute 'augroup '.name
+    execute 'autocmd!'
+    execute 'autocmd ColorScheme * '.cmd
+    execute 'augroup END'
     let s:icon_hl_cache[name] = 1
   endif
   return name
