@@ -9,4 +9,4 @@ function M.reset_package(regex)
   end
 end
 
-return {}
+return M
