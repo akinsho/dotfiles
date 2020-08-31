@@ -186,25 +186,17 @@ function! s:open_file_or_create_new() abort
     exe 'norm!gf'
   catch /.*/
     let new_path = fnamemodify(expand('%:p:h') . '/' . path, ':p')
-    echohl Title
-    echom 'creating new file: '.new_path
-    echohl clear
-    if !empty(fnamemodify(new_path, ':e')) "Edit immediately if file has extension
+    if !empty(fnamemodify(new_path, ':e')) " Edit immediately if file has extension
       return execute('edit '.new_path)
     endif
     let l:suffixes = split(&suffixesadd, ',')
-    for l:suffix in l:suffixes
-      if filereadable(l:new_path.l:suffix)
-        return execute('edit '.l:new_path.l:suffix)
-      endif
-    endfor
-
     if empty(l:suffixes)
       echoerr "No extensions for this filetype found"
       return
     endif
-
-    return execute('edit '.l:new_path.l:suffixes[0])
+    let full_path = new_path.l:suffixes[0]
+    call VimrcMessage('creating new file: '.full_path, 'Title')
+    return execute('edit '.full_path)
   endtry
 endfunction
 "--------------------------------------------------------------------------------
