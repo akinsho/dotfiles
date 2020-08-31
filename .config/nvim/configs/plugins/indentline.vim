@@ -4,9 +4,9 @@ endif
 
 let s:gui_color = synIDattr(hlID('Comment'), 'fg')
 
-let g:indentLine_fileTypeExclude = ['vimwiki', 'markdown', 'json', 'txt', 'vista']
+let g:indentLine_fileTypeExclude = ['vimwiki', 'markdown', 'json', 'txt', 'vista', 'help']
 let g:indentLine_bufNameExclude  = ['Startify', 'terminal', 'peekabo']
-let g:indentLine_bufTypeExclude  = ['help', 'terminal', 'nofile', 'vimwiki']
+let g:indentLine_bufTypeExclude  = ['terminal', 'nofile']
 let g:indentLine_faster          = 1
 let g:indentLine_setConceal      = 1
 " I specifically set the colours here as the conceal highlight's default does sets
