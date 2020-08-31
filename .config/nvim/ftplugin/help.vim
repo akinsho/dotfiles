@@ -1,6 +1,3 @@
-wincmd L " automatically move window to the left
-vertical resize 80
-
 setl spell spelllang=en_gb
 setl nonumber norelativenumber nolist
 setl colorcolumn=
@@ -11,6 +8,9 @@ setl colorcolumn=
 " if this a vim help file rather than one I'm creating
 " add mappings otherwise do not
 if &l:buftype == 'help' || expand('%') =~# '^'.$VIMRUNTIME
+  wincmd L " automatically move window to the left
+  vertical resize 80
+
   nnoremap <buffer> q :<c-u>q<cr>
   nnoremap <silent><buffer> <c-p> :Helptags<cr>
   nnoremap <buffer> <CR> <C-]>

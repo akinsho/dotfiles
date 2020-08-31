@@ -9,7 +9,7 @@ let g:wiki_path = isdirectory(expand('$HOME/Dropbox')) ?
 let g:wiki = {
       \'name': 'knowledge base',
       \'path': g:wiki_path,
-      \'path_html': g:wiki_path,
+      \'path_html': g:wiki_path.'/public/',
       \'auto_toc': 1,
       \'auto_diary_index': 1,
       \'auto_generate_links': 1,
@@ -20,20 +20,22 @@ let g:common_wiki_path = $HOME.'/wiki'
 let g:common_wiki = {
       \'name': 'Learnings',
       \'path': g:common_wiki_path,
-      \'path_html': g:common_wiki_path . '/html',
+      \'path_html': g:common_wiki_path . '/public',
       \'auto_tags': 1,
+      \'auto_export': 1,
       \}
 
 let g:dotfiles_wiki_path = $DOTFILES.'/wiki'
 let g:dotfiles_wiki = {
       \'name': 'Dotfiles Wiki',
       \'path': g:dotfiles_wiki_path,
-      \'path_html': g:dotfiles_wiki_path . '/html',
-      \'auto_export': 1,
+      \'path_html': g:dotfiles_wiki_path . '/public',
       \'auto_toc': 1,
       \'auto_tags': 1,
       \}
 
+let g:vimwiki_auto_chdir    = 1
+let g:vimwiki_tags_header   = 'Wiki tags'
 let g:vimwiki_auto_header   = 1
 let g:vimwiki_hl_headers    = 1 " too colourful
 let g:vimwiki_conceal_pre   = 1
@@ -45,8 +47,8 @@ let g:vimwiki_global_ext = 0
 let g:vimwiki_folding = 'expr'
 
 function! s:close_wikis() abort
-  let l:bufs = range(1, bufnr('$'))
-  for buf in l:bufs
+  let bufs = range(1, bufnr('$'))
+  for buf in bufs
     if bufexists(buf) && getbufvar(buf, '&filetype') == 'vimwiki' && winbufnr(buf) == -1
       silent! execute buf 'bdelete'
     endif
