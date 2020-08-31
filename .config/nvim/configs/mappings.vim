@@ -168,6 +168,45 @@ nnoremap <silent> <leader>li :call ToggleList("Location List", 'l')<CR>
 nnoremap <expr><silent> j (v:count > 1 ? 'm`' . v:count : '') . 'gj'
 nnoremap <expr><silent> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 
+" if the file under the cursor doesn't exist create it
+" see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
+"
+" If you select require('buffers/file') in lua for example
+" this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
+" CREDIT: https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
+nnoremap <silent> gf :call <sid>open_file_or_create_new()<CR>
+
+function! s:open_file_or_create_new() abort
+  let path = expand('<cfile>')
+  if empty(path)
+    return
+  endif
+
+  try
+    exe 'norm!gf'
+  catch /.*/
+    let new_path = fnamemodify(expand('%:p:h') . '/' . path, ':p')
+    echohl Title
+    echom 'creating new file: '.new_path
+    echohl clear
+    if !empty(fnamemodify(new_path, ':e')) "Edit immediately if file has extension
+      return execute('edit '.new_path)
+    endif
+    let l:suffixes = split(&suffixesadd, ',')
+    for l:suffix in l:suffixes
+      if filereadable(l:new_path.l:suffix)
+        return execute('edit '.l:new_path.l:suffix)
+      endif
+    endfor
+
+    if empty(l:suffixes)
+      echoerr "No extensions for this filetype found"
+      return
+    endif
+
+    return execute('edit '.l:new_path.l:suffixes[0])
+  endtry
+endfunction
 "--------------------------------------------------------------------------------
 " Commandline mappings
 "--------------------------------------------------------------------------------
