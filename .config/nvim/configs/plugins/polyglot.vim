@@ -52,3 +52,9 @@ let g:dart_style_guide = 2
 " JSX
 ""---------------------------------------------------------------------------//
 let g:jsx_ext_required          = 0 "Allow jsx in .js files REQUIRED
+
+""---------------------------------------------------------------------------//
+" VIM-JAVASCRIPT
+""---------------------------------------------------------------------------//
+let g:javascript_plugin_flow            = 1
+let g:javascript_plugin_jsdoc           = 1

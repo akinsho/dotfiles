@@ -80,7 +80,6 @@ Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'liuchengxu/vim-which-key'
-Plug 'liuchengxu/vista.vim', {'on': ['Vista', 'Vista!!']}
 Plug 'luochen1990/rainbow'
 " TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
 " so disable mark related plugins. Remove this guard when this problem is fixed
@@ -149,23 +148,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
-" Themes  {{{1
-"--------------------------------------------------------------------------------
-" vim-one has a MUCH better startup time than onedark and has a light theme
-Plug 'rakr/vim-one'
-" More actively maintained that vim-one
-" Plug 'joshdick/onedark.vim'
-"--------------------------------------------------------------------------------
-" Alternatives color schemes {{{2
-"--------------------------------------------------------------------------------
-" Plug 'drewtempelmeyer/palenight.vim'
-" Plug 'kaicataldo/material.vim'
-" Plug 'haishanh/night-owl.vim'
-" Plug 'patstockwell/vim-monokai-tasty'
-" Plug 'flrnd/candid.vim'
-" Plug 'chuling/ci_dark'
-" Plug 'tomasiser/vim-code-dark'
-"--------------------------------------------------------------------------------
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
@@ -192,6 +174,23 @@ else
   Plug 'ryanoasis/vim-devicons'
   Plug 'bagrat/vim-buffet'
 endif
+"--------------------------------------------------------------------------------
+" Themes  {{{1
+"--------------------------------------------------------------------------------
+" vim-one has a MUCH better startup time than onedark and has a light theme
+Plug 'rakr/vim-one'
+" More actively maintained that vim-one
+" Plug 'joshdick/onedark.vim'
+"--------------------------------------------------------------------------------
+" Alternatives color schemes {{{2
+"--------------------------------------------------------------------------------
+" Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'kaicataldo/material.vim'
+" Plug 'haishanh/night-owl.vim'
+" Plug 'patstockwell/vim-monokai-tasty'
+" Plug 'flrnd/candid.vim'
+" Plug 'chuling/ci_dark'
+" Plug 'tomasiser/vim-code-dark'
 
 " Disable netrw
 let g:loaded_netrwPlugin = 0
@@ -230,17 +229,7 @@ augroup AutoInstallPlugins
 	\ ' call <SID>install_missing_plugins()'
 augroup END
 
-function! s:scroll_preview(down)
-  silent! wincmd P
-  if &previewwindow
-    execute 'normal!' a:down ? "\<c-e>" : "\<c-y>"
-    wincmd p
-  endif
-endfunction
-
 function! s:setup_extra_keys()
-  nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
-  nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
   nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
   nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
   nmap <silent> <buffer> <c-j> <c-n>o
