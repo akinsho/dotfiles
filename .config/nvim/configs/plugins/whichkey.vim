@@ -6,6 +6,7 @@ endif
 highlight WhichKeySeperator guifg=green guibg=background
 
 let g:which_leader_key_map = {
+      \ 'name':   'leader',
       \ '0':      'which_key_ignore',
       \ '1':      'which_key_ignore',
       \ '2':      'which_key_ignore',
@@ -140,6 +141,7 @@ let g:which_leader_key_map = {
       \}
 
 let g:which_localleader_key_map = {
+      \ 'name': 'local leader',
       \ 'd': {
       \ 'name': '+debug',
       \ 't': {
@@ -219,7 +221,7 @@ let g:which_localleader_key_map = {
 
 let g:which_key_use_floating_win       = 0
 let g:which_key_disable_default_offset = 1
-let g:which_key_display_names = {'<CR>': '↵', '<TAB>': '⇆'}
+let g:which_key_display_names = {' ': 'Space', '<CR>': '↵', '<TAB>': '⇆'}
 
 if !g:which_key_use_floating_win
   autocmd! FileType which_key
