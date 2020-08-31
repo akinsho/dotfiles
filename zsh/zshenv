@@ -11,9 +11,6 @@ fi
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.npm/bin:$PATH"
 
-# FLUTTER =======================================================
-export PATH="$PATH:$HOME/flutter/bin"
-export PATH="$PATH:$HOME/flutter/.pub-cache/bin"
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # TODO remove this variable once no longer building neovim from source
   export PATH="$HOME/neovim/bin:$PATH"
@@ -32,6 +29,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # RUST ==========================================================
   export PATH="$HOME/.cargo/bin:$PATH"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # FLUTTER =======================================================
+  export PATH="$PATH:$HOME/flutter/bin"
+  export PATH="$PATH:$HOME/flutter/.pub-cache/bin"
   # Don't try to control go variables on systems we don't have total control over
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
