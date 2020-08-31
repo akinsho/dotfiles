@@ -6,6 +6,6 @@
 "
 " you can do let g:vimwiki_mappings = { 'links': 0 }
 " but this would involve having to manually map about 12 keys
-nmap <buffer> } <Plug>VimwikiPrevLink
-nmap <buffer> { <Plug>VimwikiNextLink
+nmap <buffer> ] <Plug>VimwikiPrevLink
+nmap <buffer> [ <Plug>VimwikiNextLink
 nmap <buffer> <Leader>tt <Plug>VimwikiToggleListItem

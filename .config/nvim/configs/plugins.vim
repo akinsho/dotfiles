@@ -63,7 +63,7 @@ Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+Plug 'vimwiki/vimwiki'
 Plug 'junegunn/vim-easy-align', {'for': ['vim']}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
