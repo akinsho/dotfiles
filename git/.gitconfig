@@ -19,8 +19,6 @@
   pager = delta
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
-[remote "origin"]
-  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [alias]
   pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; } ; f"
   bam     = "!source ~/.dotfiles/git/githelpers.sh && delete_local_merged_branches"
