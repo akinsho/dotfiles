@@ -103,7 +103,7 @@ function s:fzf_files() abort
   " Launch file search using FZF
   if isdirectory(".git")
     " if in a git project, use :GFiles
-    GFiles --cached --others --exclude-standard
+    GFiles --others --exclude-standard --full-name
   else
     " otherwise, use :FZF
     Files
