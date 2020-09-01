@@ -1,15 +1,3 @@
-if has("gui_running") && has("gui_macvim")
-  set transparency=0
-  set guioptions=
-  set guioptions+=g " grey menu items
-  set guioptions+=m " menu bar
-  "Too find font proper run fc-list | grep name-of-font
-  set guifont=FuraCode\ Nerd\ Font:h16
-  set guioptions+=e " nice GUI tabs
-  set linespace=1
-  set antialias
-  set macligatures
-endif
 ""---------------------------------------------------------------------------//
 " Message output on vim actions {{{1
 " ----------------------------------------------------------------------------
@@ -273,7 +261,6 @@ if !has('nvim')
 endif
 set encoding=utf-8
 set fileencoding=utf-8
-scriptencoding utf-8
 set dictionary+=/usr/share/dict/words
 "-----------------------------------------------------------------------------
 " BACKUP AND SWAPS {{{
