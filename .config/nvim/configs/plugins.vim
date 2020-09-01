@@ -61,7 +61,6 @@ Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'vimwiki/vimwiki'
 Plug 'junegunn/vim-easy-align', {'for': ['vim']}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
@@ -85,7 +84,12 @@ if !has('nvim')
   Plug 'Yilin-Yang/vim-markbar'
   Plug 'kshenoy/vim-signature'
 endif
-Plug 'itchyny/calendar.vim'
+"--------------------------------------------------------------------------------
+" Knowledge and task management
+"--------------------------------------------------------------------------------
+Plug 'vimwiki/vimwiki'
+Plug 'itchyny/calendar.vim', {'on': ['Calendar']}
+Plug 'romgrk/todoist.vim', { 'do': ':TodoistInstall' }
 "--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------

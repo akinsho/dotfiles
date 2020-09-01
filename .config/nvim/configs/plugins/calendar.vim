@@ -2,7 +2,7 @@ if !PluginLoaded('calendar.vim')
   finish
 endif
 
-let g:calendar_frame           = "unicode"
+let g:calendar_frame = "unicode"
 
 if filereadable(expand('~/.cache/calendar.vim/credentials.vim'))
   let g:calendar_google_calendar = 1

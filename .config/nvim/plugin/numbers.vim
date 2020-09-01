@@ -16,7 +16,8 @@ let g:number_filetype_exclusions = [
       \ 'list',
       \ 'LuaTree',
       \ 'startify',
-      \ 'help'
+      \ 'help',
+      \ 'todoist'
       \ ]
 
 let g:number_buftype_exclusions = [
