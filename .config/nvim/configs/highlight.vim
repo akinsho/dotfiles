@@ -1,6 +1,69 @@
 ""---------------------------------------------------------------------------//
-" Highlights
+" Color Scheme {{{1
 ""---------------------------------------------------------------------------//
+set background=dark
+if PluginLoaded('onedark.vim')
+  " ========================
+  " OneDark
+  " ========================
+  func s:one_dark_overrides() abort
+    " These overrides should be called before the plugin loads
+    " Bold (+/- italicised) types
+    call onedark#extend_highlight('Title', { 'gui': 'bold' })
+    call onedark#extend_highlight('Type', { 'gui': 'italic,bold' })
+    call onedark#extend_highlight('Folded', { 'gui': 'italic,bold' })
+    call onedark#extend_highlight('htmlArg', { 'gui': 'italic,bold' })
+    " Italicised imports
+    call onedark#extend_highlight('Include', { 'gui': 'italic' })
+    call onedark#extend_highlight('jsImport', { 'gui': 'italic' })
+    call onedark#extend_highlight('jsExport', { 'gui': 'italic' })
+    call onedark#extend_highlight('jsExportDefault', { 'gui': 'italic,bold' })
+    " Italicises function calls
+    call onedark#extend_highlight('jsFuncCall', { 'gui': 'italic' })
+    call onedark#extend_highlight('TabLineSel', { 'bg': { 'gui': '#61AFEF', 'cterm': 8} })
+    call onedark#set_highlight('SpellRare', {
+          \ 'gui': 'undercurl',
+          \ 'bg': { 'gui': 'transparent', 'cterm': 'NONE', 'cterm16': 'NONE'   },
+          \ 'fg': { 'gui': 'transparent', 'cterm': 'NONE', 'cterm16': 'NONE'  },
+          \ })
+  endfunc
+  augroup OneDarkOverrides
+    autocmd!
+    autocmd ColorScheme * call s:one_dark_overrides()
+  augroup END
+
+  let g:onedark_terminal_italics = 1
+  colorscheme onedark
+elseif PluginLoaded('vim-one')
+  " ========================
+  " ONE
+  " ========================
+  " See highlight.vim for colorscheme overrides
+  let g:one_allow_italics = 1
+  colorscheme one
+elseif PluginLoaded('material.vim')
+  " ========================
+  " Material
+  " ========================
+  " let g:material_theme_style = 'default' | 'palenight' | 'ocean' | 'lighter' | 'darker'
+  colorscheme material
+elseif PluginLoaded('candid.vim')
+  " ========================
+  " Candid
+  " ========================
+  colorscheme candid
+elseif PluginLoaded('night-owl.vim')
+  " ========================
+  " Night Owl
+  " ========================
+  colorscheme night-owl
+elseif PluginLoaded('vim-monokai-tasty')
+  " ========================
+  " Monokai Tasty
+  " ========================
+  let g:vim_monokai_tasty_italic = 1
+  colorscheme vim-monokai-tasty
+endif
 
 "--------------------------------------------------------------------------------
 " Plugin highlights

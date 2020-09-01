@@ -59,8 +59,8 @@ syntax enable
 " Order matters here as the plugins should be loaded before the other setup
 " :h runtime - this fuzzy maches files within vim's runtime path
 runtime /configs/preload.vim
-runtime /configs/plugins.vim
 runtime /configs/general.vim
+runtime /configs/plugins.vim
 runtime /configs/highlight.vim
 runtime /configs/mappings.vim
 runtime /configs/autocommands.vim
