@@ -83,6 +83,7 @@ let s:exceptions_ft_icons = {
       \ 'coc-explorer' : '',
       \ 'LuaTree' : 'פּ',
       \ 'toggleterm': ' ',
+      \ 'calendar': ''
       \ }
 
 let s:exceptions_bt_icons = {
