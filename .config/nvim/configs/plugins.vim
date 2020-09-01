@@ -1,5 +1,3 @@
-" spell-checker:disable
-" NOTE: this file is way too cumbersome to spellcheck
 "--------------------------------------------------------------------------------
 "PLUGINS
 "--------------------------------------------------------------------------------
@@ -87,6 +85,7 @@ if !has('nvim')
   Plug 'Yilin-Yang/vim-markbar'
   Plug 'kshenoy/vim-signature'
 endif
+Plug 'itchyny/calendar.vim'
 "--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------
@@ -157,6 +156,7 @@ if has('nvim')
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
   endif
   if $DEVELOPING
+    Plug '~/Desktop/Coding/nvim-line-highlights'
     Plug '~/Desktop/Coding/nvim-toggleterm.lua'
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
     Plug '~/Desktop/Coding/nvim-web-devicons'
