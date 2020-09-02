@@ -82,12 +82,14 @@ let g:fzf_layout = {
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   'rg --hidden --column --line-number --no-heading  --glob "!.git"'.
+  \   ' --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
 command! -bang -nargs=* Find call fzf#vim#grep(
       \ 'rg --column --line-number --no-heading'.
       \ ' --fixed-strings --ignore-case --no-ignore --hidden'.
+      \ ' --glob "!.git"'.
       \ ' --follow  --color "always" '.shellescape(<q-args>), 1, <bang>0
       \ )
 
