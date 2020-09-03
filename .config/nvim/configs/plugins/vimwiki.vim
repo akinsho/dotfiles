@@ -16,11 +16,11 @@ let g:wiki = {
       \'auto_tags': 1,
       \}
 
-let g:common_wiki_path = $HOME.'/wiki'
-let g:common_wiki = {
+let g:learnings_wiki_path = $HOME.'/wiki'
+let g:learnings_wiki = {
       \'name': 'Learnings',
-      \'path': g:common_wiki_path,
-      \'path_html': g:common_wiki_path . '/public',
+      \'path': g:learnings_wiki_path,
+      \'path_html': g:learnings_wiki_path . '/public',
       \'auto_tags': 1,
       \'auto_export': 1,
       \}
@@ -41,7 +41,7 @@ let g:vimwiki_hl_headers    = 1 " too colourful
 let g:vimwiki_conceal_pre   = 1
 let g:vimwiki_hl_cb_checked = 1
 let g:vimwiki_listsyms = '✗○◐●✓'
-let g:vimwiki_list = [g:wiki, g:common_wiki, g:dotfiles_wiki]
+let g:vimwiki_list = [g:wiki, g:learnings_wiki, g:dotfiles_wiki]
 
 let g:vimwiki_global_ext = 0
 let g:vimwiki_folding = 'expr'
