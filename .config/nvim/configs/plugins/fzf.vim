@@ -29,11 +29,10 @@ let branch_files_options = {
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
   copen
-  cc
 endfunction
 
 let g:fzf_action = {
-      \ 'ctrl-q': function('s:build_quickfix_list'),
+      \ 'ctrl-l': function('s:build_quickfix_list'),
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-e' : 'tab edit',
       \ 'ctrl-s': 'split',
