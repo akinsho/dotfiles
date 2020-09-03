@@ -55,5 +55,36 @@ function! s:close_wikis() abort
   endfor
 endfunction
 
+function! s:autocommit() abort
+  try
+lua << EOF
+  local jobs = require"async_job"
+  local msg = 'Auto commit'
+  local path = vim.g.learnings_wiki_path
+  local add_job = jobs.exec('git -C '..path..' add .')
+  local result = vim.fn.jobwait({add_job})
+  if result and result[1] > 0 then
+    local err_cmd = string.format(
+      'echoerr "Failed to commit %s"', vim.g.learnings_wiki_path
+    )
+    vim.cmd(err_cmd)
+  end
+  jobs.exec('git -C '..path..' commit -m "'..msg..'" .')
+EOF
+  catch /.*/
+    echoerr v:exception
+    echo 'occurred at: '.v:throwpoint
+    echoerr 'failed to commit '.g:learnings_wiki_path
+  endtry
+endfunction
+
+
+if has('nvim') " autocommit is a lua based function
+  augroup AutoCommitLearningsWiki
+    autocmd!
+    execute 'autocmd BufWritePost '. g:learnings_wiki_path . '/*.wiki call <SID>autocommit()'
+  augroup END
+endif
+
 command! CloseVimWikis call s:close_wikis()
 nnoremap <silent> <leader>wq :CloseVimWikis<CR>
