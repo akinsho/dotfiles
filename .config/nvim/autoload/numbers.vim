@@ -17,13 +17,13 @@ function! s:is_blacklisted()
   endif
 
   for ft in g:number_filetype_exclusions
-    if &ft =~ ft
+    if &ft ==# ft
       return 1
     endif
   endfor
 
   for buftype in g:number_buftype_exclusions
-    if &buftype =~ buftype
+    if &buftype ==# buftype
       return 1
     endif
   endfor

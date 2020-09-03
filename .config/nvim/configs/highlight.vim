@@ -108,7 +108,7 @@ function! s:general_overrides() abort
 
   " Customize Diff highlighting
   highlight DiffAdd guibg=green guifg=NONE
-  highlight DiffDelete guibg=red guifg=#5c6370
+  highlight DiffDelete guibg=red guifg=#5c6370 gui=NONE
 
   " NOTE: these highlights are used by fugitive's Git buffer
   " highlight! link DiffAdded DiffAdd
