@@ -57,20 +57,10 @@ endfunction
 
 function! s:autocommit() abort
   try
-lua << EOF
-  local jobs = require"async_job"
-  local msg = 'Auto commit'
-  local path = vim.g.learnings_wiki_path
-  local add_job = jobs.exec('git -C '..path..' add .')
-  local result = vim.fn.jobwait({add_job})
-  if result and result[1] > 0 then
-    local err_cmd = string.format(
-      'echoerr "Failed to commit %s"', vim.g.learnings_wiki_path
-    )
-    vim.cmd(err_cmd)
-  end
-  jobs.exec('git -C '..path..' commit -m "'..msg..'" .')
-EOF
+    let msg = 'Auto commit'
+    let add = 'git -C '.g:learnings_wiki_path.' add .'
+    let commit = 'git -C '.g:learnings_wiki_path.' commit -m "'.msg.'" .'
+    call luaeval('require("async_job").execSync(_A)', [add, commit])
   catch /.*/
     echoerr v:exception
     echo 'occurred at: '.v:throwpoint
@@ -78,11 +68,39 @@ EOF
   endtry
 endfunction
 
+function! s:auto_push(...) abort
+  try
+    call VimrcMessage('pushing '.g:learnings_wiki_path.'...', 'Title')
+    let cmd = 'git -C '. g:learnings_wiki_path. ' push -q origin master'
+    call luaeval('require("async_job").exec(_A, 0)', cmd)
+  catch /.*/
+    echoerr v:exception
+  endtry
+endfunction
+
+let s:timer = -1
+
+function! s:auto_save_start() abort
+  if s:timer < 0
+    call VimrcMessage('Starting learning wiki auto save', 'Title')
+    let s:timer = timer_start(1000 * 60 * 5, function('s:auto_push'), { 'repeat': -1 })
+  endif
+endfunction
+
+function! s:auto_save_stop() abort
+  call VimrcMessage('Stopping learning wiki auto save', 'Title')
+  call timer_stop(s:timer)
+  let s:timer = -1
+endfunction
+
 
 if has('nvim') " autocommit is a lua based function
+  let s:target_wiki = g:learnings_wiki_path . '/*.wiki'
   augroup AutoCommitLearningsWiki
     autocmd!
-    execute 'autocmd BufWritePost '. g:learnings_wiki_path . '/*.wiki call <SID>autocommit()'
+    execute 'autocmd BufWritePost '. s:target_wiki .' call <SID>autocommit()'
+    execute 'autocmd BufEnter,FocusGained '. s:target_wiki .' call <SID>auto_save_start()'
+    execute 'autocmd BufLeave,FocusLost '. s:target_wiki .' call <SID>auto_save_stop()'
   augroup END
 endif
 

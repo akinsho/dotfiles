@@ -204,6 +204,26 @@ function M.exec(cmd, count)
     pid = pid,
     data = {},
   }
+  return pid
+end
+
+---@param pid number
+function M.wait(pid)
+  return vim.fn.jobwait({pid})
+end
+
+---@param cmds table<string>
+function M.execSync(cmds)
+  for _, cmd in ipairs(cmds) do
+    local pid = M.exec(cmd, 0)
+    local result = M.wait(pid)
+    if result[1] > 0 then
+      local err_cmd = string.format('echoerr "Failed to complete task %s"', cmd)
+      local escaped_cmd = string.format("%q", err_cmd)
+      vim.cmd(escaped_cmd)
+      return
+    end
+  end
 end
 
 function M.introspect()
