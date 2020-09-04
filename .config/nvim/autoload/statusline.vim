@@ -163,7 +163,7 @@ function s:get_lua_devicon() abort
     let icon_data = v:lua.__statusline_icon(bufname(), extension)
     return icon_data
   catch
-    echoerr v:errmsg
+    echoerr v:exception
     return ['', '']
   endtry
 endfunction
@@ -181,6 +181,9 @@ function statusline#filetype_icon_highlight(hl_name) abort
   endif
 
   let [_, hl] = s:get_lua_devicon()
+  if !strlen(hl)
+    return ''
+  endif
   let name = hl.'Statusline'
   " prevent recreating highlight group for every buffer instead save
   " the newly created highlight name's status i.e. created or not
