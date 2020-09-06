@@ -1,0 +1,6 @@
+# Info on how this configuration works is
+# here: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+# Using glob patterns to include/exclude files or folders
+--glob=!git/*
+
+# vim:fileencoding=utf-8:ft=conf

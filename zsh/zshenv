@@ -75,6 +75,10 @@ if ! type "$bat" > /dev/null; then
   export BAT_THEME="TwoDark"
 fi
 
+# By specifying a path this means ripgrep will check this
+# config file and use the arguments within it when it begins a search
+export RIPGREP_CONFIG_PATH="$DOTFILES/.config/.rgconfig"
+
 # Setting ag as the default source for fzf
 
 # --files: List files that would be searched but do not search
@@ -84,7 +88,7 @@ fi
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 # Need to escape the "!" and "*" characters using /
 # --no-ignore = this flag shows node modules etc
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --glob "!.git"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 # Reference: Man fzf - bind previous and next history commands explicitly or they will swallow up c-n and c-p
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history --bind=up:previous-history,down:next-history,ctrl-n:down,ctrl-p:up"
 

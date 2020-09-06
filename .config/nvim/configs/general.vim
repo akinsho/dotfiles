@@ -79,7 +79,7 @@ set foldcolumn=0
 " ----------------------------------------------------------------------------
 " Use faster grep alternatives if possible
 if executable('rg')
-  set grepprg=rg\ --hidden\ --glob\ \"!.git\"\ --no-heading\ --smart-case\ --vimgrep\ --follow\ $*
+  set grepprg=rg\ --hidden\ --no-heading\ --smart-case\ --vimgrep\ --follow\ $*
   set grepformat^=%f:%l:%c:%m
 elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
