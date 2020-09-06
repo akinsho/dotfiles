@@ -1,5 +1,3 @@
-" it gets this wrong
-let b:sleuth_automatic = 0
 setlocal spell spelllang=en_gb
 setlocal expandtab
 setlocal shiftwidth=2

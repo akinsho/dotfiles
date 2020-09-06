@@ -107,7 +107,6 @@ Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
@@ -115,6 +114,7 @@ Plug 'tpope/vim-abolish'
 " sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
+" Plug 'tpope/vim-sleuth'
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
