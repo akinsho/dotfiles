@@ -73,7 +73,7 @@ Plug 'cohama/lexima.vim'
 Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
 Plug 'psliwka/vim-smoothie'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLatest'] }
+Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestSuite'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'liuchengxu/vim-which-key'
