@@ -208,21 +208,16 @@ augroup CustomWindowSettings
 augroup END
 
 
-function! s:ensure_directory_exists()
-  let required_dir = expand("%:h")
-  if !exists('*mkdir')
-    echoerr 'This version of (n)vim cannot create directories'
+function! s:ensure_directory_exists(required_dir)
+  if !exists('*mkdir') " exit silently as this will be very noisy
     return
   endif
 
-  if !isdirectory(required_dir)
-    if !confirm("Directory '" . required_dir . "' doesn't exist. Create it?")
-      return
-    endif
+  if !isdirectory(a:required_dir)
     try
-      call mkdir(required_dir, 'p')
+      call mkdir(a:required_dir, 'p')
     catch
-      echoerr "Can't create '" . required_dir . "'"
+      echoerr "Can't create '" . a:required_dir . "'"
     endtry
   endif
 endfunction
@@ -250,7 +245,7 @@ augroup Utilities "{{{1
 
   autocmd FileType gitcommit,gitrebase set bufhidden=delete
 
-  autocmd BufNewFile * call s:ensure_directory_exists()
+  autocmd BufWritePre,FileWritePre * silent! call <SID>ensure_directory_exits(expand('<afile>:p:h'))
 
   " Save a buffer when we leave it
   let save_excluded = ['lua.luapad']
