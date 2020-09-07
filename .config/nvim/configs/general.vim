@@ -147,7 +147,6 @@ set gdefault
 " insert completion height and options
 set pumheight=15
 set numberwidth=4
-set report=0 " Always show # number yanked/deleted lines
 set wrap
 set wrapmargin=2
 set softtabstop=2
