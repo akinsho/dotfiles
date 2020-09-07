@@ -33,7 +33,7 @@ endif
 " SOURCE: https://github.com/junegunn/vim-plug/pull/875
 " Check if the files is in the plugs map but also IMPORTANTLY
 " that it is in the runtime path
-function PluginLoaded(plugin_name) abort
+function! PluginLoaded(plugin_name) abort
   return has_key(g:plugs, a:plugin_name) && stridx(&rtp, g:plugs[a:plugin_name].dir)
 endfunction
 
@@ -114,7 +114,6 @@ Plug 'tpope/vim-abolish'
 " sets searchable path for filetypes like go so 'gf' works
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-projectionist'
-" Plug 'tpope/vim-sleuth'
 "--------------------------------------------------------------------------------
 " Syntax {{{1
 "--------------------------------------------------------------------------------
@@ -160,7 +159,8 @@ if has('nvim')
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
   endif
   if $DEVELOPING
-    Plug '~/Desktop/Coding/nvim-line-highlights'
+    " FIXME too broken to have turned on
+    " Plug '~/Desktop/Coding/nvim-line-highlights'
     Plug '~/Desktop/Coding/nvim-toggleterm.lua'
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
     Plug '~/Desktop/Coding/nvim-web-devicons'
