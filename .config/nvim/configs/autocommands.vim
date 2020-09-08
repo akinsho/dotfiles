@@ -214,6 +214,9 @@ function! s:ensure_directory_exists(required_dir)
   endif
 
   if !isdirectory(a:required_dir)
+    if !confirm("Directory '" . required_dir . "' doesn't exist. Create it?")
+      return
+    endif
     try
       call mkdir(a:required_dir, 'p')
     catch
