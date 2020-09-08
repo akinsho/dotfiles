@@ -14,6 +14,7 @@ function! s:apply_highlights() abort
   highlight ConflictMarkerOurs guibg=#2e5049
   highlight ConflictMarkerTheirs guibg=#344f69
   highlight ConflictMarkerEnd guibg=#2f628e
+  highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 endfunction
 
 augroup ConflictMarkerHighlights
