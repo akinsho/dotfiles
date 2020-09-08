@@ -23,18 +23,17 @@
   pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; } ; f"
   bam     = "!source ~/.dotfiles/git/githelpers.sh && delete_local_merged_branches"
   bamr    = "!source ~/.dotfiles/git/githelpers.sh && delete_remote_merged_branches"
-  standup = !"git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local"
   fix='$EDITOR `git diff --name-only | uniq`'
-# List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
+  # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
   aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
-# Destroy all local changes and reset to HEAD.
+  # Destroy all local changes and reset to HEAD.
   fuckit = reset --hard HEAD
   fall = fetch --all
-# Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
+  # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
   uncommit = reset --soft HEAD^
-  ureset = !git reset --hard $(git upstream)
+  ureset = reset --hard $(git upstream)
   sl = log --oneline --decorate -20
-  mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
+  n = checkout -b
 [delta]
   features = line-numbers decorations
 [delta "decorations"]
