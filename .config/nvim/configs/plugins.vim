@@ -236,8 +236,6 @@ augroup END
 function! s:setup_extra_keys()
   nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
   nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
-  nmap <silent> <buffer> <c-j> <c-n>o
-  nmap <silent> <buffer> <c-k> <c-p>o
 endfunction
 
 augroup PlugDiffExtra
