@@ -127,8 +127,6 @@ if has('linebreak') "Causes wrapped line to keep same indentation
     set breakindentopt=sbr
   endif
 endif
-set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %trror\ -\ %m
-set errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %tarning\ -\ %m
 " ----------------------------------------------------------------------------
 " List chars {{{1
 " --------------------------------------------------------------------------
