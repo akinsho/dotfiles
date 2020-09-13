@@ -154,6 +154,11 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 if has('nvim')
   if !has('mac')
+    " TODO try this at intervals, currently too janky
+    " Plug 'neovim/nvim-lspconfig'
+    " Plug 'nvim-lua/diagnostic-nvim'
+    " Plug 'nvim-lua/completion-nvim'
+
     " Plugin for visualising the tree sitter tree whilst developing
     Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }

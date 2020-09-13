@@ -31,13 +31,13 @@ local function echo_msg(message)
 end
 
 local function on_attach()
-  print("calling on attach")
-  if is_plugin_loaded('completion-nvim') then
-    require'completion'.on_attach()
+  local success, completion = is_plugin_loaded('completion')
+  if success then
+    completion.on_attach()
     echo_msg("Loaded completion-nvim")
-
     vim.g.completion_enable_fuzzy_match = true
     vim.g.completion_enable_snippet =  'UltiSnips'
+    vim.g.completion_matching_strategy_list = {'substring', 'fuzzy', 'exact', 'all'}
 
     api.nvim_set_keymap('n', '[c', '<cmd>NextDiagnostic<cr>', {
         silent = true, nowait = true, noremap = true
@@ -46,20 +46,21 @@ local function on_attach()
         silent = true, nowait = true, noremap = true
       })
   end
-  if is_plugin_loaded('diagnostic-nvim') then
-    require'diagnostic'.on_attach()
-    echo_msg("Loaded diagnostic-nvim")
+  local d_success, diagnostic = is_plugin_loaded('diagnostic')
+  if d_success then
     vim.g.diagnostic_enable_virtual_text = true
+    fn.sign_define("LspDiagnosticsErrorSign", {text = "✗", texthl = "LspDiagnosticsErrorSign"})
+    fn.sign_define("LspDiagnosticsWarningSign", {text = "", texthl = "LspDiagnosticsWarningSign"})
+    fn.sign_define("LspDiagnosticInformationSign", {text = "", texthl = "LspDiagnosticsInformationSign"})
+    fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsHintSign"})
+    diagnostic.on_attach()
+    echo_msg("Loaded diagnostic-nvim")
   end
 end
-
-fn.sign_define("LspDiagnosticsErrorSign", {text = "✗", texthl = "LspDiagnosticsErrorSign"})
-fn.sign_define("LspDiagnosticsWarningSign", {text = "", texthl = "LspDiagnosticsWarningSign"})
-fn.sign_define("LspDiagnosticInformationSign", {text = "", texthl = "LspDiagnosticsInformationSign"})
-fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsHintSign"})
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
+--
 vim.cmd("highlight! LspDiagnosticsError ctermfg=Red guifg=#E06C75 gui=undercurl,bold") -- used for "Error" diagnostic virtual text
 vim.cmd("highlight! LspDiagnosticsErrorSign guifg=#E06C75") -- used for "Error" diagnostic signs in sign column
 vim.cmd("highlight! LspDiagnosticsWarning  guifg=#ff922b  gui=undercurl") -- used for "Warning" diagnostic virtual text
@@ -70,6 +71,14 @@ vim.cmd("highlight! LspDiagnosticHint guifg=#fab005 gui=bold") -- used for "Hint
 vim.cmd("highlight! LspDiagnosticHintSign guifg=#fab005") -- used for "Hint" diagnostic signs in sign column
 vim.cmd("highlight! LspReferenceText gui=undercurl,bold") -- used for highlighting "text" references
 vim.cmd("highlight! LspReferenceRead gui=undercurl,bold") -- used for highlighting "read" references
+vim.cmd('highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red')
+vim.cmd('highlight! LspDiagnosticsUnderlineHint gui=undercurl guisp=purple')
+vim.cmd('highlight! LspDiagnosticsUnderlineInfo gui=undercurl guisp=blue')
+vim.cmd('highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=orange')
+-----------------------------------------------------------------------------//
+-- Autocommands
+-----------------------------------------------------------------------------//
+vim.cmd('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -101,6 +110,9 @@ api.nvim_set_keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {
     silent = true, nowait = true, noremap = true, expr = true
 })
 
+vim.cmd [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
+vim.cmd [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
+vim.cmd [[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
@@ -128,7 +140,28 @@ if is_executable('typescript-language-server') then
   lsp.tsserver.setup{on_attach = on_attach}
 end
 
-lsp.sumneko_lua.setup{on_attach = on_attach}
+lsp.dartls.setup{
+  cmd = {
+    "dart",
+    "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
+    "--lsp",
+  },
+  on_attach = on_attach
+}
+
+lsp.sumneko_lua.setup{
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = {[vim.fn.expand("$VIMRUNTIME/lua")] = true}
+      }
+    }
+  }
+}
 
 lsp.rust_analyzer.setup{on_attach = on_attach}
 

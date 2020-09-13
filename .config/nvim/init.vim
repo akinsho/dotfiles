@@ -75,6 +75,6 @@ if filereadable(fnamemodify('~/.vimrc.local', ':p'))
 endif
 "---------------------------------------------------------------------------//
 
-if PluginLoaded('nvim-lsp')
-  luafile ~/.config/nvim/lua/lsp.lua
+if PluginLoaded('nvim-lspconfig')
+  luafile $DOTFILES/.config/nvim/lua/lsp.lua
 endif
