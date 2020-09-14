@@ -41,7 +41,7 @@ local function mapper(key, mode, mapping, expr)
 end
 
 local mappings = {
-  ['gd']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.declaration()<CR>'};
+  ['gd']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.definition()<CR>'};
   ['<c-]>']    = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.definition()<CR>'};
   ['K']        = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.hover()<CR>'};
   ['gD']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.implementation()<CR>'};
@@ -170,7 +170,18 @@ lsp.dartls.setup{
     "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
     "--lsp",
   },
-  on_attach = on_attach
+  on_attach = on_attach,
+  callbacks = {
+    ["textDocument/codeAction"] = function (_, _, value)
+      print('code actions'..vim.inspect(value))
+    end,
+    ["dart/textDocument/publishFlutterOutline"] = function (_, _, value)
+        print(vim.inspect(value))
+    end,
+    ["dart/textDocument/publishClosingLabels"] = function(_, _, value)
+      print('closing labels: '..value);
+    end
+  }
 }
 
 lsp.sumneko_lua.setup{
@@ -188,5 +199,7 @@ lsp.sumneko_lua.setup{
 }
 
 lsp.rust_analyzer.setup{on_attach = on_attach}
+
+vim.cmd('command! ListEmulators lua require"flutter".flutter_emulators()')
 
 vim.g.dotfiles_lsp_setup = true

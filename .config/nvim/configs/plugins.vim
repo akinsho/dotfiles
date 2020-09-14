@@ -44,7 +44,15 @@ endfunction
 "--------------------------------------------------------------------------------
 " CORE {{{1
 "--------------------------------------------------------------------------------
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if !$DEVELOPING
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+else " trial native lsp at home
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'hrsh7th/vim-vsnip-integ'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-lua/diagnostic-nvim'
+  Plug 'nvim-lua/completion-nvim'
+end
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': [
       \ 'html',
@@ -154,11 +162,6 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 "--------------------------------------------------------------------------------
 if has('nvim')
   if !has('mac')
-    " TODO try this at intervals, currently too janky
-    " Plug 'neovim/nvim-lspconfig'
-    " Plug 'nvim-lua/diagnostic-nvim'
-    " Plug 'nvim-lua/completion-nvim'
-
     " Plugin for visualising the tree sitter tree whilst developing
     Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
