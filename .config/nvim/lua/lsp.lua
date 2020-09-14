@@ -27,7 +27,7 @@ if not lsp_configs_loaded then return end
 local function setup_autocommands()
   vim.cmd [[autocmd CursorHold  <buffer> lua vim.lsp.util.show_line_diagnostics()]]
   vim.cmd [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-  vim.cmd [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
+  vim.cmd [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()]]
   vim.cmd [[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
 end
 -----------------------------------------------------------------------------//
@@ -45,7 +45,7 @@ local mappings = {
   ['<c-]>']    = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.definition()<CR>'};
   ['K']        = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.hover()<CR>'};
   ['gD']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.implementation()<CR>'};
-  ['<c-k>']    = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.signature_help()<CR>'};
+  ['<c-k>']    = {mode = 'i', mapping = '<cmd>lua vim.lsp.buf.signature_help()<CR>'};
   ['1gD']      = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.type_definition()<CR>'};
   ['gr']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.references()<CR>'};
   ['g0']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.document_symbol()<CR>'};
@@ -54,13 +54,18 @@ local mappings = {
   ['rn']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.rename()<CR>'};
   ['<tab>']    = {mode = 'i', mapping = [[pumvisible() ? "\<C-n>" : "\<Tab>"]], expr = true};
   ['<s-tab>']  = {mode = 'i', mapping = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], expr = true};
-  ['<c-j>']    = {mode = 'i', mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
-  ['<c-j>']    = {mode = 's', mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
+  ['<c-j>']    = {mode = {'i', 's'}, mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
 }
 
 local function setup_mappings()
   for key, entry in pairs(mappings) do
-    mapper(key, entry.mode, entry.mapping, entry.expr)
+    if type(entry.mode) == 'table' then
+      for _, mode in ipairs(entry.mode) do
+          mapper(key, mode, entry.mapping, entry.expr)
+      end
+    else
+      mapper(key, entry.mode, entry.mapping, entry.expr)
+    end
   end
 end
 
@@ -70,6 +75,7 @@ end
 local function on_attach()
   setup_autocommands()
   setup_mappings()
+
 
   local completion_loaded, completion = is_plugin_loaded('completion')
   if completion_loaded then
@@ -129,7 +135,7 @@ vim.g.completion_customize_lsp_label = {
   Keyword = '',
   Variable = '',
   Folder = '',
-  Snippet = '',
+  Snippet = ' ',
   Operator = '',
   Module = '',
   Text = 'ﮜ',

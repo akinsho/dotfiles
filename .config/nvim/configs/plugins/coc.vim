@@ -63,7 +63,23 @@ function! s:coc_init() abort
           \ 'command': s:lua_path.'/bin/Linux/lua-language-server',
           \ 'args': ["-E", "-e", "LANG=en", s:lua_path."/main.lua"],
           \ 'filetypes': ['lua'],
-          \ 'rootPatterns': ['.git/']
+          \ 'rootPatterns': ['.git/'],
+          \ 'settings': {
+          \  'Lua': {
+          \   'workspace': {
+          \     'library': {
+          \       expand("$VIMRUNTIME/lua"): v:true
+          \     },
+          \   },
+          \   'diagnostics': {
+          \      'globals': ['vim'],
+          \      'disable': ['lowercase-global']
+          \    },
+          \   'completion': {
+          \     'keywordSnippet': 'Both'
+          \   }
+          \  }
+          \ },
           \}
   endif
 
