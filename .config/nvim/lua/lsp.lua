@@ -22,97 +22,121 @@ local lsp_configs_loaded, lsp = is_plugin_loaded('nvim_lsp')
 if not lsp_configs_loaded then return end
 
 -----------------------------------------------------------------------------//
--- Setup plugins
+-- Autocommands
 -----------------------------------------------------------------------------//
-local function echo_msg(message)
-  vim.cmd('echohl String')
-  vim.cmd(string.format('echom "%s"', message))
-  vim.cmd('echohl clear')
+local function setup_autocommands()
+  vim.cmd [[autocmd CursorHold  <buffer> lua vim.lsp.util.show_line_diagnostics()]]
+  vim.cmd [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
+  vim.cmd [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
+  vim.cmd [[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+end
+-----------------------------------------------------------------------------//
+-- Mappings
+-----------------------------------------------------------------------------//
+local function mapper(key, mode, mapping, expr)
+  expr = not expr and false or expr
+  api.nvim_buf_set_keymap(0, mode, key, mapping, {
+      nowait = true, noremap = true, silent = true, expr = expr
+    })
 end
 
-local function on_attach()
-  local success, completion = is_plugin_loaded('completion')
-  if success then
-    completion.on_attach()
-    echo_msg("Loaded completion-nvim")
-    vim.g.completion_enable_fuzzy_match = true
-    vim.g.completion_enable_snippet =  'UltiSnips'
-    vim.g.completion_matching_strategy_list = {'substring', 'fuzzy', 'exact', 'all'}
+local mappings = {
+  ['gd']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.declaration()<CR>'};
+  ['<c-]>']    = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.definition()<CR>'};
+  ['K']        = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.hover()<CR>'};
+  ['gD']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.implementation()<CR>'};
+  ['<c-k>']    = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.signature_help()<CR>'};
+  ['1gD']      = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.type_definition()<CR>'};
+  ['gr']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.references()<CR>'};
+  ['g0']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.document_symbol()<CR>'};
+  ['gW']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>'};
+  ['ff']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.formatting()<CR>'};
+  ['rn']       = {mode = 'n', mapping = '<cmd>lua vim.lsp.buf.rename()<CR>'};
+  ['<tab>']    = {mode = 'i', mapping = [[pumvisible() ? "\<C-n>" : "\<Tab>"]], expr = true};
+  ['<s-tab>']  = {mode = 'i', mapping = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], expr = true};
+  ['<c-j>']    = {mode = 'i', mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
+  ['<c-j>']    = {mode = 's', mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
+}
 
-    api.nvim_set_keymap('n', '[c', '<cmd>NextDiagnostic<cr>', {
-        silent = true, nowait = true, noremap = true
-      })
-    api.nvim_set_keymap('n', ']c', '<cmd>PrevDiagnostic<cr>', {
-        silent = true, nowait = true, noremap = true
-      })
+local function setup_mappings()
+  for key, entry in pairs(mappings) do
+    mapper(key, entry.mode, entry.mapping, entry.expr)
   end
-  local d_success, diagnostic = is_plugin_loaded('diagnostic')
-  if d_success then
+end
+
+-----------------------------------------------------------------------------//
+-- Setup plugins
+-----------------------------------------------------------------------------//
+local function on_attach()
+  setup_autocommands()
+  setup_mappings()
+
+  local completion_loaded, completion = is_plugin_loaded('completion')
+  if completion_loaded then
+    completion.on_attach()
+    vim.g.completion_enable_fuzzy_match = true
+    vim.g.completion_enable_snippet =  'vim-vsnip'
+    vim.g.completion_matching_strategy_list = {'substring', 'fuzzy', 'exact', 'all'}
+    mapper('[c', 'n', '<cmd>NextDiagnostic<cr>')
+    mapper(']c', 'n', '<cmd>PrevDiagnostic<cr>')
+  end
+
+  local diagnostics_loaded, diagnostic = is_plugin_loaded('diagnostic')
+  if diagnostics_loaded then
     vim.g.diagnostic_enable_virtual_text = true
     fn.sign_define("LspDiagnosticsErrorSign", {text = "✗", texthl = "LspDiagnosticsErrorSign"})
     fn.sign_define("LspDiagnosticsWarningSign", {text = "", texthl = "LspDiagnosticsWarningSign"})
-    fn.sign_define("LspDiagnosticInformationSign", {text = "", texthl = "LspDiagnosticsInformationSign"})
-    fn.sign_define("LspDiagnosticHintSign", {text = "ﯦ", texthl = "LspDiagnosticsHintSign"})
+    fn.sign_define("LspDiagnosticsInformationSign", {text = "", texthl = "LspDiagnosticsInformationSign"})
+    fn.sign_define("LspDiagnosticsHintSign", {text = "ﯦ", texthl = "LspDiagnosticsHintSign"})
     diagnostic.on_attach()
-    echo_msg("Loaded diagnostic-nvim")
   end
 end
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
---
-vim.cmd("highlight! LspDiagnosticsError ctermfg=Red guifg=#E06C75 gui=undercurl,bold") -- used for "Error" diagnostic virtual text
-vim.cmd("highlight! LspDiagnosticsErrorSign guifg=#E06C75") -- used for "Error" diagnostic signs in sign column
-vim.cmd("highlight! LspDiagnosticsWarning  guifg=#ff922b  gui=undercurl") -- used for "Warning" diagnostic virtual text
-vim.cmd("highlight! LspDiagnosticsWarningSign guifg=#ff922b") -- used for "Warning" diagnostic signs in sign column
-vim.cmd("highlight! LspDiagnosticInformation guifg=#fab005") -- used for "Information" diagnostic virtual text
-vim.cmd("highlight! LspDiagnosticInformationSign guifg=#fab005") -- used for "Information" signs in sign column
-vim.cmd("highlight! LspDiagnosticHint guifg=#fab005 gui=bold") -- used for "Hint" diagnostic virtual text
-vim.cmd("highlight! LspDiagnosticHintSign guifg=#fab005") -- used for "Hint" diagnostic signs in sign column
-vim.cmd("highlight! LspReferenceText gui=undercurl,bold") -- used for highlighting "text" references
-vim.cmd("highlight! LspReferenceRead gui=undercurl,bold") -- used for highlighting "read" references
-vim.cmd('highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red')
-vim.cmd('highlight! LspDiagnosticsUnderlineHint gui=undercurl guisp=purple')
-vim.cmd('highlight! LspDiagnosticsUnderlineInfo gui=undercurl guisp=blue')
-vim.cmd('highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=orange')
------------------------------------------------------------------------------//
--- Autocommands
------------------------------------------------------------------------------//
-vim.cmd('autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()')
------------------------------------------------------------------------------//
--- Mappings
------------------------------------------------------------------------------//
--- TODO combine all mappings into this table
-local mappings = {
-  ['gd'] =    '<cmd>lua vim.lsp.buf.declaration()<CR>';
-  ['<c-]>'] =  '<cmd>lua vim.lsp.buf.definition()<CR>';
-  ['K']    = '<cmd>lua vim.lsp.buf.hover()<CR>';
-  ['gD'] =    '<cmd>lua vim.lsp.buf.implementation()<CR>';
-  ['<c-k>'] =  '<cmd>lua vim.lsp.buf.signature_help()<CR>';
-  ['1gD'] =   '<cmd>lua vim.lsp.buf.type_definition()<CR>';
-  ['gr'] =    '<cmd>lua vim.lsp.buf.references()<CR>';
-  ['g0'] =    '<cmd>lua vim.lsp.buf.document_symbol()<CR>';
-  ['gW'] =    '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>';
-  ['ff'] =    '<cmd>lua vim.lsp.buf.formatting()<CR>';
-}
-
-for key, mapping in pairs(mappings) do
-    api.nvim_set_keymap('n', key, mapping, {
-        nowait = true, noremap = true, silent = true
-    })
+function _G.__apply_lsp_highlights()
+  vim.cmd("highlight! LspDiagnosticsError ctermfg=Red guifg=#E06C75 gui=undercurl,bold") -- used for "Error" diagnostic virtual text
+  vim.cmd("highlight! LspDiagnosticsErrorSign guifg=#E06C75") -- used for "Error" diagnostic signs in sign column
+  vim.cmd("highlight! LspDiagnosticsWarning  guifg=#ff922b  gui=undercurl") -- used for "Warning" diagnostic virtual text
+  vim.cmd("highlight! LspDiagnosticsWarningSign guifg=#ff922b") -- used for "Warning" diagnostic signs in sign column
+  vim.cmd("highlight! LspDiagnosticsInformation guifg=#fab005") -- used for "Information" diagnostic virtual text
+  vim.cmd("highlight! LspDiagnosticsInformationSign guifg=#fab005") -- used for "Information" signs in sign column
+  vim.cmd("highlight! LspDiagnosticsHint guifg=#fab005 gui=bold") -- used for "Hint" diagnostic virtual text
+  vim.cmd("highlight! LspDiagnosticsHintSign guifg=#fab005") -- used for "Hint" diagnostic signs in sign column
+  vim.cmd("highlight! LspReferenceText gui=undercurl,bold") -- used for highlighting "text" references
+  vim.cmd("highlight! LspReferenceRead gui=undercurl,bold") -- used for highlighting "read" references
+  vim.cmd('highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red')
+  vim.cmd('highlight! LspDiagnosticsUnderlineHint gui=undercurl guisp=purple')
+  vim.cmd('highlight! LspDiagnosticsUnderlineInfo gui=undercurl guisp=blue')
+  vim.cmd('highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=orange')
 end
 
-api.nvim_set_keymap('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {
-    silent = true, nowait = true, noremap = true, expr = true
-})
+_G.__apply_lsp_highlights()
 
-api.nvim_set_keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {
-    silent = true, nowait = true, noremap = true, expr = true
-})
+vim.cmd('augroup LspHighlights')
+vim.cmd('au!')
+vim.cmd('autocmd ColorScheme * lua _G.__apply_lsp_highlights()')
+vim.cmd('augroup END')
 
-vim.cmd [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-vim.cmd [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
-vim.cmd [[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+-- see https://github.com/nvim-lua/completion-nvim/wiki/Customizing-LSP-label
+-- for how to do this without completion-nvim
+vim.g.completion_customize_lsp_label = {
+  Function = '',
+  Method = '',
+  Reference = '',
+  Enum = '',
+  Field = 'ﰠ',
+  Keyword = '',
+  Variable = '',
+  Folder = '',
+  Snippet = '',
+  Operator = '',
+  Module = '',
+  Text = 'ﮜ',
+  Buffers = '',
+  Class = '',
+  Interface = ''
+}
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
