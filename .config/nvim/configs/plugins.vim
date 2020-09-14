@@ -46,7 +46,7 @@ endfunction
 "--------------------------------------------------------------------------------
 if !$DEVELOPING
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-else " trial native lsp at home
+else
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'
   Plug 'neovim/nvim-lspconfig'
