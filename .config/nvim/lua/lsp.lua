@@ -55,6 +55,7 @@ local mappings = {
   ['<tab>']    = {mode = 'i', mapping = [[pumvisible() ? "\<C-n>" : "\<Tab>"]], expr = true};
   ['<s-tab>']  = {mode = 'i', mapping = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], expr = true};
   ['<c-j>']    = {mode = {'i', 's'}, mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
+  ['<leader>ca'] = {mode ='n', mapping = '<cmd>lua vim.lsp.buf.code_action()<CR>'}
 }
 
 local function setup_mappings()
@@ -170,7 +171,8 @@ if is_executable('typescript-language-server') then
   lsp.tsserver.setup{on_attach = on_attach}
 end
 
-local function flutter_closing_tags(response)
+local function flutter_closing_tags(err, _, response)
+  if err then return end
   local namespace = api.nvim_create_namespace('flutter_lsp_closing_labels')
 
   for _, item in ipairs(response.labels) do
@@ -187,7 +189,7 @@ lsp.dartls.setup{
     suggestFromUnimportedLibraries = true,
     closingLabels = true,
     outline = true,
-    flutterOutline = false
+    flutterOutline = true
   },
   cmd = {
     "dart",
@@ -196,15 +198,10 @@ lsp.dartls.setup{
   },
   on_attach = on_attach,
   callbacks = {
-    ["textDocument/codeAction"] = function (_, _, value)
-      print('code actions'..vim.inspect(value))
-    end,
     ["dart/textDocument/publishFlutterOutline"] = function (_, _, value)
-      print('outline: '..vim.inspect(value))
+      -- print('outline: '..vim.inspect(value))
     end,
-    ["dart/textDocument/publishClosingLabels"] = function(_, _, response)
-      flutter_closing_tags(response)
-    end
+    ["dart/textDocument/publishClosingLabels"] = flutter_closing_tags
   }
 }
 

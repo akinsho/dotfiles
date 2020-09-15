@@ -128,20 +128,19 @@ function! statusline#filename(...) abort
 
   let readonly_indicator = ' '. statusline#readonly()
 
+  let filename_modifier = get(a:, '1', '%:t')
+  let fname = expand(filename_modifier)
   " as the name can be a reference to a function it must
   " be uppercase as all function references must be.
   let Name = get(s:exceptions_ft_names, &filetype, '')
   if type(Name) == v:t_func
-    return Name()
+    return Name(fname)
   elseif strlen(Name)
     return Name
   endif
 
-  let filename_modifier = get(a:, '1', '%:t')
-  let fname = expand(filename_modifier)
-
   if !strlen(fname)
-    return '[No Name]'
+    return 'No Name'
   endif
   return fname . readonly_indicator
 endfunction
