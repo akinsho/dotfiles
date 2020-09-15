@@ -45,13 +45,17 @@ endfunction
 " CORE {{{1
 "--------------------------------------------------------------------------------
 if !$DEVELOPING
+  " reigning lsp champion
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
-  Plug 'hrsh7th/vim-vsnip'
-  Plug 'hrsh7th/vim-vsnip-integ'
+  " common configurations for native lsp
   Plug 'neovim/nvim-lspconfig'
+  " make diagnostics and completion work better
   Plug 'nvim-lua/diagnostic-nvim'
   Plug 'nvim-lua/completion-nvim'
+  " native lsp snippet supprt
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'hrsh7th/vim-vsnip-integ'
 end
 Plug 'airblade/vim-rooter'
 Plug 'mattn/emmet-vim', { 'for': [
