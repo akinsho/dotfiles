@@ -96,8 +96,6 @@ endif
 " Knowledge and task management
 "--------------------------------------------------------------------------------
 Plug 'vimwiki/vimwiki'
-Plug 'itchyny/calendar.vim', {'on': ['Calendar']}
-Plug 'romgrk/todoist.vim', { 'do': ':TodoistInstall' }
 "--------------------------------------------------------------------------------
 " Optional plugins
 "--------------------------------------------------------------------------------

@@ -29,7 +29,6 @@ let g:coc_global_extensions = [
       \ 'coc-tsserver'
       \]
       "\ 'coc-spell-checker'
-      "\ 'coc-reason',
 
 function! s:coc_init() abort
   let s:languageservers = {}
