@@ -170,7 +170,25 @@ if is_executable('typescript-language-server') then
   lsp.tsserver.setup{on_attach = on_attach}
 end
 
+local function flutter_closing_tags(response)
+  local namespace = api.nvim_create_namespace('flutter_lsp_closing_labels')
+
+  for _, item in ipairs(response.labels) do
+    local line = item.range['end'].line
+    api.nvim_buf_set_virtual_text(0, namespace, tonumber(line), {
+        {'//' .. item.label, 'Comment' }
+      }, {})
+  end
+end
+
 lsp.dartls.setup{
+  init_options = {
+    onlyAnalyzeProjectsWithOpenFiles = false,
+    suggestFromUnimportedLibraries = true,
+    closingLabels = true,
+    outline = true,
+    flutterOutline = false
+  },
   cmd = {
     "dart",
     "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
@@ -182,10 +200,10 @@ lsp.dartls.setup{
       print('code actions'..vim.inspect(value))
     end,
     ["dart/textDocument/publishFlutterOutline"] = function (_, _, value)
-        print(vim.inspect(value))
+      print('outline: '..vim.inspect(value))
     end,
-    ["dart/textDocument/publishClosingLabels"] = function(_, _, value)
-      print('closing labels: '..value);
+    ["dart/textDocument/publishClosingLabels"] = function(_, _, response)
+      flutter_closing_tags(response)
     end
   }
 }
