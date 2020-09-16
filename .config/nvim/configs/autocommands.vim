@@ -207,24 +207,6 @@ augroup CustomWindowSettings
         \ | endif
 augroup END
 
-
-function! s:ensure_directory_exists(required_dir)
-  if !exists('*mkdir') " exit silently as this will be very noisy
-    return
-  endif
-
-  if !isdirectory(a:required_dir)
-    if !confirm("Directory '" . required_dir . "' doesn't exist. Create it?")
-      return
-    endif
-    try
-      call mkdir(a:required_dir, 'p')
-    catch
-      echoerr "Can't create '" . a:required_dir . "'"
-    endtry
-  endif
-endfunction
-
 augroup Utilities "{{{1
   autocmd!
   " close FZF in neovim with <ESC>
@@ -248,7 +230,9 @@ augroup Utilities "{{{1
 
   autocmd FileType gitcommit,gitrebase set bufhidden=delete
 
-  autocmd BufWritePre,FileWritePre * silent! call <SID>ensure_directory_exits(expand('<afile>:p:h'))
+  if exists('*mkdir') "auto-create directories for new files
+    autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
+  endif
 
   " Save a buffer when we leave it
   let save_excluded = ['lua.luapad']
