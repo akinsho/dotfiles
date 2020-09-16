@@ -52,6 +52,10 @@ function! s:smart_close()
   endif
 endfunction
 
+" Remove the current line from the qflist
+" https://stackoverflow.com/questions/42905008/quickfix-list-how-to-add-and-remove-entries
+nnoremap <buffer> <silent> dd
+      \ <Cmd>call setqflist(filter(getqflist(), {idx -> idx != line('.') - 1}), 'r')<CR>
 nnoremap <silent><buffer> <c-p> <up><bar>:call <SID>preview_file_under_cursor()<CR>
 nnoremap <silent><buffer> <c-n> <down><bar>:call <SID>preview_file_under_cursor()<CR>
 nnoremap <silent><nowait><buffer> p :call <SID>preview_file_under_cursor()<CR>
