@@ -2,8 +2,7 @@ if !PluginLoaded('nvim-treesitter')
   finish
 endif
 
-" Error higlights are distracting
-highlight link TSError Normal
+highlight link TSKeyword Statement
 highlight TSParameter gui=italic,bold
 
 " This plugin is an experimental application of tree sitter usage in Neovim
@@ -12,7 +11,7 @@ lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
   custom_captures = {
-    -- ["variable.parameter"] = "TSParameter"
+    ["variable.parameter"] = "TSParameter",
   },
   highlight = {
     enable = true,
