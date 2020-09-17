@@ -1,5 +1,4 @@
 setlocal foldmethod=manual " Leave folding to Coc
-setlocal spell
 
 " Open flutter only commands in dart files
 nnoremap <silent> <leader>dc  :CocList --input=flutter commands<CR>

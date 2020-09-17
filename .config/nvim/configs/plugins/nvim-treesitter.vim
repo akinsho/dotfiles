@@ -15,8 +15,8 @@ require'nvim-treesitter.configs'.setup {
     -- ["variable.parameter"] = "TSParameter"
   },
   highlight = {
-    enable = false,
-    disable = {"dart", "json"}
+    enable = true,
+    disable = {"json"}
   },
   incremental_selection = {
     enable = false,
