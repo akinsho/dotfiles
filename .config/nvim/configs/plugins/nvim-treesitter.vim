@@ -10,9 +10,6 @@ highlight TSParameter gui=italic,bold
 lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
-  custom_captures = {
-    ["variable.parameter"] = "TSParameter",
-  },
   highlight = {
     enable = true,
     disable = {"json"}
