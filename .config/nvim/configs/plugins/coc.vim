@@ -70,6 +70,7 @@ function! s:coc_init() abort
           \       expand("$VIMRUNTIME/lua"): v:true
           \     },
           \   },
+          \   'runtime': {'version': "LuaJIT"},
           \   'diagnostics': {
           \      'globals': ['vim'],
           \      'disable': ['lowercase-global']
