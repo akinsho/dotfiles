@@ -93,6 +93,9 @@ nnoremap zO zCzO
 " => Command mode related
 ""---------------------------------------------------------------------------//
 " Commands {{{1
+" source https://superuser.com/a/540519
+" write the visual selection to the filename passed in as a command argument then delete the
+" selection placing into the black hole register
 command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _
 command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _
 " smooth searching
@@ -214,6 +217,9 @@ cnoremap <C-d> <Del>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>
 " move cursor one character backwards unless at the end of the command line
 cnoremap <expr> <C-f> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
+" see :h cmdline-editing
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
 " Scroll command history
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
