@@ -35,6 +35,7 @@ augroup ToggleRelativeLineNumbers
   autocmd!
   autocmd BufReadPost * call numbers#enable_relative_number()
   autocmd BufNewFile  * call numbers#enable_relative_number()
+  autocmd WinNew      * call numbers#enable_relative_number()
   autocmd WinEnter    * call numbers#enable_relative_number()
   autocmd WinLeave    * call numbers#disable_relative_number()
   autocmd FocusLost   * call numbers#disable_relative_number()
