@@ -404,8 +404,6 @@ endfunction
 
 augroup custom_statusline
   autocmd!
-  autocmd BufEnter,WinEnter * call s:add_separators()
-
   " The quickfix window sets it's own statusline, so we override it here
   autocmd FileType qf setlocal statusline=%!StatusLine(1)
   " FIXME this shouldn't be necessary technically but nvim-tree.lua does not
