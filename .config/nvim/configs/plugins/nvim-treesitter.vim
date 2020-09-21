@@ -30,6 +30,6 @@ nnoremap <silent><localleader>dte :TSEnable highlight<CR>
 nnoremap <silent><localleader>dtd :TSDisable highlight<CR>
 nnoremap <silent><localleader>dtp :TSPlaygroundToggle<CR>
 
-augroup TreeSitterFolds
-  autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
-augroup END
+" augroup TreeSitterFolds
+"   autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+" augroup END
