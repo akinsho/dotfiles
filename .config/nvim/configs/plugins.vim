@@ -157,8 +157,6 @@ if has('nvim')
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
   endif
   if $DEVELOPING
-    " FIXME too broken to have turned on
-    " Plug '~/Desktop/Coding/nvim-line-highlights'
     Plug '~/Desktop/Coding/nvim-toggleterm.lua'
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
     Plug '~/Desktop/Coding/nvim-web-devicons'
