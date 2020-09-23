@@ -52,6 +52,8 @@ function! s:smart_close()
   endif
 endfunction
 
+nnoremap <buffer> H :colder<CR>
+nnoremap <buffer> L :cnewer<CR>
 " Remove the current line from the qflist
 " https://stackoverflow.com/questions/42905008/quickfix-list-how-to-add-and-remove-entries
 nnoremap <buffer> <silent> dd
