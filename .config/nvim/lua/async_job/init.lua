@@ -135,12 +135,30 @@ function echo(msg, hl)
   vim.cmd("echohl clear")
 end
 
+local function save_urls(lines)
+  local matches = {}
+  for _, line in ipairs(lines) do
+    local match = line:match("^[https?://]+%w+%.%w+[/%w_%.%s*(%%20)(%-)]+$")
+    if match then table.insert(matches, {
+          module = "Async Job ",
+          text = match,
+          pattern = 'URL',
+          valid = false,
+      }) end
+  end
+  if table.getn(matches) > 0 then
+    vim.fn.setqflist(matches)
+    vim.cmd(':copen')
+  end
+end
+
 --- @param job table
 function handle_result(job, code, auto_close)
   local num_of_lines = table.getn(job.data)
   -- if the output is more than a few lines longer than
   -- the command msg area open a window
   if num_of_lines > vim.o.cmdheight + 2 then
+    save_urls(job.data)
     local win_id = open_window(job, code)
     -- TODO figure out how to update fugitive
     -- vim.cmd('doautocmd User FugitiveChanged')
