@@ -161,7 +161,7 @@ function s:get_lua_devicon() abort
     let extension = fnamemodify(bufname(), ':e')
     let icon_data = v:lua.__statusline_icon(bufname(), extension)
     return icon_data
-  catch
+  catch /.*/
     echoerr v:exception
     return ['', '']
   endtry
@@ -179,7 +179,12 @@ function statusline#filetype_icon_highlight(hl_name) abort
     return ''
   endif
 
-  let [_, hl] = s:get_lua_devicon()
+  try
+    let [_, hl] = s:get_lua_devicon()
+  catch /.*/
+    return ''
+  endtry
+
   if !strlen(hl)
     return ''
   endif
