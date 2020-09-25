@@ -55,7 +55,8 @@ local mappings = {
   ['<tab>']    = {mode = 'i', mapping = [[pumvisible() ? "\<C-n>" : "\<Tab>"]], expr = true};
   ['<s-tab>']  = {mode = 'i', mapping = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], expr = true};
   ['<c-j>']    = {mode = {'i', 's'}, mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], expr = true};
-  ['<leader>ca'] = {mode ='n', mapping = '<cmd>lua vim.lsp.buf.code_action()<CR>'}
+  ['<leader>ca'] = {mode ='n', mapping = '<cmd>lua vim.lsp.buf.code_action()<CR>'},
+  ['ca'] ={mode = 'x', mapping = "<cmd>'<'>lua vim.lsp.buf.range_code_action()"}
 }
 
 local function setup_mappings()
@@ -183,6 +184,25 @@ local function flutter_closing_tags(err, _, response)
   end
 end
 
+local dart_capabilities = vim.lsp.protocol.make_client_capabilities()
+dart_capabilities.textDocument.codeAction = {
+  dynamicRegistration = false;
+  codeActionLiteralSupport = {
+    codeActionKind = {
+      valueSet = {
+        "",
+        "quickfix",
+        "refactor",
+        "refactor.extract",
+        "refactor.inline",
+        "refactor.rewrite",
+        "source",
+        "source.organizeImports",
+      };
+    };
+  };
+}
+
 lsp.dartls.setup{
   init_options = {
     onlyAnalyzeProjectsWithOpenFiles = false,
@@ -191,6 +211,7 @@ lsp.dartls.setup{
     outline = true,
     flutterOutline = true
   },
+  capabilities = dart_capabilities,
   cmd = {
     "dart",
     "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
