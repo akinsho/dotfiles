@@ -24,6 +24,11 @@ require'nvim-treesitter.configs'.setup {
     }
   },
 }
+
+-- Disable parentheses highlights
+require "nvim-treesitter.highlight"
+local hlmap = vim.treesitter.highlighter.hl_map
+hlmap["punctuation.bracket"] = nil
 EOF
 
 nnoremap <silent><localleader>dte :TSEnable highlight<CR>
