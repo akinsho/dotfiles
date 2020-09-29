@@ -96,12 +96,14 @@ endfunction
 
 if has('nvim') " autocommit is a lua based function
   let s:target_wiki = g:learnings_wiki_path . '/*.wiki'
-  augroup AutoCommitLearningsWiki
-    autocmd!
-    execute 'autocmd BufWritePost '. s:target_wiki .' call <SID>autocommit()'
-    execute 'autocmd BufEnter,FocusGained '. s:target_wiki .' call <SID>auto_save_start()'
-    execute 'autocmd BufLeave,FocusLost '. s:target_wiki .' call <SID>auto_save_stop()'
-  augroup END
+  if isdirectory(g:learnings_wiki_path . '/.git')
+    augroup AutoCommitLearningsWiki
+      autocmd!
+      execute 'autocmd BufWritePost '. s:target_wiki .' call <SID>autocommit()'
+      execute 'autocmd BufEnter,FocusGained '. s:target_wiki .' call <SID>auto_save_start()'
+      execute 'autocmd BufLeave,FocusLost '. s:target_wiki .' call <SID>auto_save_stop()'
+    augroup END
+  endif
 endif
 
 command! CloseVimWikis call s:close_wikis()
