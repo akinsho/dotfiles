@@ -10,6 +10,7 @@ endfunction
 let s:plain_filetypes = [
       \ 'help',
       \ 'ctrlsf',
+      \ 'minimap',
       \ 'tsplayground',
       \ 'coc-explorer',
       \ 'LuaTree',
@@ -92,6 +93,7 @@ let s:exceptions_bt_icons = {
       \}
 
 let s:exceptions_ft_names = {
+      \ 'minimap': 'minimap',
       \ 'dbui' : 'Dadbod UI',
       \ 'tsplayground': 'Treesitter',
       \ 'vista' : 'Vista',

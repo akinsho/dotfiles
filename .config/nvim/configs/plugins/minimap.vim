@@ -4,3 +4,8 @@ endif
 
 let g:minimap_auto_start = 0
 let g:minimap_highlight  = 'PreProc'
+
+augroup MinimapStart
+  autocmd!
+  autocmd SessionLoadPost * Minimap
+augroup END
