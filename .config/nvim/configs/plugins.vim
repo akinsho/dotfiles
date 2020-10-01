@@ -57,6 +57,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
+Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "--------------------------------------------------------------------------------
 " Utilities {{{1
