@@ -114,8 +114,25 @@ alias gp='git push'
 alias gbda='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*($(git_main_branch)|development|develop|devel|dev)\s*$)" | command xargs -n 1 git branch -d'
 alias gcl='git clone --recurse-submodules'
 alias gl='git pull'
-alias glum='git pull upstream master'
-alias grbm='git rebase master'
+alias glum='git pull upstream $(git_main_branch)'
+alias grhh='git reset --hard'
+alias groh='git reset origin/$(git_current_branch) --hard'
+alias grbi='git rebase -i'
+alias grbm='git rebase $(git_main_branch)'
 alias gcm="git checkout $(git_main_branch)"
 alias gstp="git stash pop"
 alias gsts="git stash show -p"
+
+function grename() {
+  if [[ -z "$1" || -z "$2" ]]; then
+    echo "Usage: $0 old_branch new_branch"
+    return 1
+  fi
+
+  # Rename branch locally
+  git branch -m "$1" "$2"
+  # Rename branch in origin remote
+  if git push origin :"$1"; then
+    git push --set-upstream origin "$2"
+  fi
+}
