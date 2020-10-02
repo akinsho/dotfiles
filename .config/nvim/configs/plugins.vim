@@ -46,13 +46,6 @@ endfunction
 "--------------------------------------------------------------------------------
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-rooter'
-Plug 'mattn/emmet-vim', { 'for': [
-      \ 'html',
-      \ 'javascript',
-      \ 'typescript',
-      \ 'javascriptreact',
-      \ 'typescriptreact',
-      \ ]}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
