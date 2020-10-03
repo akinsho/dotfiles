@@ -127,6 +127,8 @@ if has('linebreak') "Causes wrapped line to keep same indentation
     set breakindentopt=sbr
   endif
 endif
+" allow embedded syntax highlighting for lua,python and ruby
+let g:vimsyn_embed = 'lPr'
 " ----------------------------------------------------------------------------
 " List chars {{{1
 " --------------------------------------------------------------------------
