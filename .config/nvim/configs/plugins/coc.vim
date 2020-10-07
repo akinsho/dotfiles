@@ -143,14 +143,10 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" TODO this interacts with autopairs command breaking dot repeatability
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Use `[c` and `]c` for navigate diagnostics
 nmap <expr><silent> ]c &diff ? ']c' : "\<Plug>(coc-diagnostic-prev)"
 nmap <expr><silent> [c &diff ? '[c' : "\<Plug>(coc-diagnostic-next)"
