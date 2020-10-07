@@ -7,5 +7,5 @@ let g:minimap_highlight  = 'PreProc'
 
 augroup MinimapStart
   autocmd!
-  autocmd SessionLoadPost * if exists(':Minimap') | Minimap | endif
+  autocmd SessionLoadPost * if exists(':Minimap') | execute 'Minimap' | endif
 augroup END
