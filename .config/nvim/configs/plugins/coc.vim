@@ -20,7 +20,6 @@ let g:coc_global_extensions = [
       \ 'coc-yank',
       \ 'coc-git',
       \ 'coc-eslint',
-      \ 'coc-actions',
       \ 'coc-go',
       \ 'coc-word',
       \ 'coc-tabnine',
@@ -187,12 +186,10 @@ omap am <Plug>(coc-classobj-a)
 " Code Actions
 ""---------------------------------------------------------------------------//
 nmap <silent><leader>ca <Plug>(coc-codelens-action)
-" Remap for do code action of selected region
-function! s:coc_actions_from_selected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-xnoremap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-nnoremap <silent> <leader>a :<C-u>set operatorfunc=<SID>coc_actions_from_selected<CR>g@
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <silent><leader>a  <Plug>(coc-codeaction-selected)
+nmap <silent><leader>a  <Plug>(coc-codeaction-selected)
 
 " Fix autofix problem of current line
 nmap <silent><leader>rf  <Plug>(coc-fix-current)
