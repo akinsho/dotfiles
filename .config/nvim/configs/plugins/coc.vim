@@ -230,20 +230,6 @@ nnoremap <silent> <leader>cm  :<C-u>CocList marketplace<cr>
 nnoremap <silent> <leader>cn  :<C-u>CocList snippets <CR>
 " Resume latest coc list
 nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
-
-nmap <silent> <C-e> <Plug>(coc-cursors-position)
-
-" Remap the normal version of "*" into a plug mapping to combine
-" cursor word mapping
-nnoremap <Plug>(*) *
-nnoremap <Plug>(nohl) :nohlsearch<CR>
-nmap <expr> <silent> <C-e> <SID>select_current_word()
-function! s:select_current_word()
-  if !get(g:, 'coc_cursors_activated', 0)
-    return "\<Plug>(coc-cursors-word)"
-  endif
-  return "\<Plug>(*)\<Plug>(coc-cursors-word)\<Plug>(nohl)"
-endfunc
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//

@@ -71,6 +71,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'luochen1990/rainbow'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
 " so disable mark related plugins. Remove this guard when this problem is fixed
 if !has('nvim')
