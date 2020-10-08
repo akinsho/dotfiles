@@ -134,7 +134,6 @@ Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
       \ | Plug 'inside/vim-textobj-jsxattr'
-      \ | Plug 'kana/vim-niceblock'
 "--------------------------------------------------------------------------------
 " Search Tools {{{1
 "--------------------------------------------------------------------------------
