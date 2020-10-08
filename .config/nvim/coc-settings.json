@@ -1,13 +1,6 @@
 {
   // Language specific
-  "graphql.filetypes": [
-    "graphql"
-    // "javascriptreact",
-    // "typescript",
-    // "typescriptreact",
-    // "reason"
-    // "javascript",
-  ],
+  "graphql.filetypes": ["graphql"],
   "flutter.UIPath": false,
   "flutter.outlineIconPadding": 1,
   "flutter.openDevLogSplitCommand": "tabedit",
