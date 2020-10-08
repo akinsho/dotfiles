@@ -29,12 +29,22 @@ require'nvim-treesitter.configs'.setup {
 require "nvim-treesitter.highlight"
 local hlmap = vim.treesitter.highlighter.hl_map
 hlmap["punctuation.bracket"] = nil
+
+-- Only apply folding to supported files
+-- inspired by:
+-- https://github.com/Happy-Dude/dotfiles/blob/71172469884481c0da4743928df1b1296d1d7a47/vim/.vim/lua/treesitter.lua#L57
+local parsers = require 'nvim-treesitter.parsers'
+local configs = parsers.get_parser_configs()
+local ft_str = table.concat(
+  vim.tbl_map(
+    function(ft)
+      return configs[ft].filetype or ft
+    end, parsers.available_parsers()),
+  ','
+)
+vim.cmd('autocmd Filetype '..ft_str..' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()')
 EOF
 
 nnoremap <silent><localleader>dte :TSEnable highlight<CR>
 nnoremap <silent><localleader>dtd :TSDisable highlight<CR>
 nnoremap <silent><localleader>dtp :TSPlaygroundToggle<CR>
-
-" augroup TreeSitterFolds
-"   autocmd FileType go,dart,rust,java,c setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
-" augroup END
