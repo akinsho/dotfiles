@@ -1,4 +1,4 @@
-" GetPreviewWindow() {{
+" get_preview_window() {{
 "
 " This function will return the window ID of the preview window;
 " if no preview window is currently open it will return zero.
@@ -13,13 +13,20 @@ function! s:get_preview_window()
 endfunction
 " }}
 
+function! s:open_preview_window(entry) abort
+  let original_height = &previewheight
+  execute 'set previewheight='.b:preview_height
+  execute 'pedit +' . a:entry.lnum . ' ' . bufname(a:entry.bufnr)
+  execute 'set previewheight='.original_height
+endfunction
+
 function! s:preview_matches(opts) abort
   let entry = a:opts.entry
   let is_listed = a:opts.buf_listed
   let preview_open = a:opts.preview_open
 
   if !preview_open
-    execute "pedit +" . entry.lnum . " " . bufname(entry.bufnr)
+    silent call s:open_preview_window(entry)
   endif
 
   set eventignore+=all
@@ -81,9 +88,17 @@ function! quickfix_preview#open(lnum)
   endif
 endfunction
 
-func! quickfix_preview#setup() abort
+function! s:enter_quickfix() abort
+  pclose!
+  execute "normal! \<cr>"
+endfunction
+
+func! quickfix_preview#setup(opts) abort
+  let b:preview_height = a:opts.preview_height
   let b:prev_lnum = 0
   let b:prev_bufnum = 0
+
+  nnoremap <buffer> <CR> :call <SID>enter_quickfix()<CR>
 
   augroup QFMove
     au! * <buffer>

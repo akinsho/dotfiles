@@ -31,7 +31,7 @@ endfunction
 
 
 " Setup plugin for auto previewing quickfix content
-call quickfix_preview#setup()
+call quickfix_preview#setup({ 'preview_height': 8 })
 
 nnoremap <buffer> H :colder<CR>
 nnoremap <buffer> L :cnewer<CR>
@@ -39,5 +39,4 @@ nnoremap <buffer> L :cnewer<CR>
 " https://stackoverflow.com/questions/42905008/quickfix-list-how-to-add-and-remove-entries
 nnoremap <buffer> <silent> dd
       \ <Cmd>call setqflist(filter(getqflist(), {idx -> idx != line('.') - 1}), 'r')<CR>
-nnoremap <silent><nowait><buffer> P :pclose<CR>
 nnoremap <silent><nowait><buffer> q :call <SID>smart_close()<CR>
