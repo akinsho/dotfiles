@@ -203,8 +203,12 @@ nnoremap <leader>cf :CocSearch --hidden <C-R>=expand("<cword>")<CR><CR>
 
 " Scroll the floating window if open
 " FIXME this breaks smooth scrolling
-" nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
-" nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+nnoremap <silent><expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <silent><expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+inoremap <silent><expr> <c-f> coc#util#has_float() ? coc#util#float_scroll_i( 1) : "\<c-f>"
+inoremap <silent><expr> <c-b> coc#util#has_float() ? coc#util#float_scroll_i(-1) : "\<c-b>"
+vnoremap <silent><expr> <c-f> coc#util#has_float() ? coc#util#float_scroll_i( 1) : "\<c-f>"
+vnoremap <silent><expr> <c-b> coc#util#has_float() ? coc#util#float_scroll_i(-1) : "\<c-b>"
 ""---------------------------------------------------------------------------//
 " Coc Statusline
 ""---------------------------------------------------------------------------//
@@ -257,6 +261,7 @@ function s:apply_coc_highlights()
   highlight CocErrorHighlight guisp=#E06C75 gui=undercurl
   highlight CocInfoHighlight guisp=#fab005 gui=undercurl
   highlight CocHighlightText gui=underline
+  highlight link CocOutlineIndentLine LineNr
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
   highlight CocRustChainingHint  ctermfg=Blue guifg=#15aabf
 endfunction
