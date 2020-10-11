@@ -586,3 +586,6 @@ nnoremap <silent> <localleader>; :call utils#modify_line_end_delimiter(';')<cr>
 
 command! -nargs=0 Token call utils#token_inspect()
 nnoremap <leader>E :Token<cr>
+
+nmap <silent> <ScrollWheelDown> <c-d>
+nmap <silent> <ScrollWheelUp>   <c-u>
