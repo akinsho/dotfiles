@@ -27,10 +27,12 @@ function s:setup_smart_close() abort
         \ "fugitiveblame",
         \ "LuaTree",
         \ "log",
-        \ "tsplayground"
+        \ "tsplayground",
+        \ "qf"
         \]
+  let buftypes = ['nofile']
   let is_readonly = (&readonly || !&modifiable) && !hasmapto('q', 'n')
-  if index(filetypes, &ft) >= 0 || is_readonly || &buftype == 'nofile'
+  if index(filetypes, &ft) >= 0 || is_readonly || &previewwindow || index(buftypes, &bt) >= 0
     nnoremap <buffer><nowait><silent> q :<C-u>call <sid>smart_close()<CR>
   endif
 endfunction
