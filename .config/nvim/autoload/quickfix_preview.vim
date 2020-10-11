@@ -1,3 +1,8 @@
+" File: quickfix_preview.vim
+" Author: Akin Sowemimo
+" Description: A copy/paste/edit of ronakg/quickr-preview.vim
+" Last Modified: October 11, 2020
+
 " get_preview_window() {{
 "
 " This function will return the window ID of the preview window;
