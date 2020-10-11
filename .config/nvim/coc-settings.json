@@ -15,7 +15,9 @@
     "deepCompletion": true,
     "staticcheck": true,
     "codelens": {
-      "test": true
+      "tidy": true,
+      "vendor": true,
+      "generate": true
     }
   },
   // List
@@ -28,6 +30,7 @@
   "codeLens.enable": true,
   "codeLens.separator": "‣",
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  "coc.source.word.priority": 0,
   // This is now supported natively in neovim
   "yank.highlight.enable": false,
   // Diagnostics
@@ -108,28 +111,5 @@
     "snippet": "\ue60b",
     "typeParameter": "\uf728",
     "default": "\uf29c"
-  },
-  // Explorer
-  "explorer.width": 30,
-  "explorer.file.autoReveal": true,
-  "explorer.icon.enableNerdfont": true,
-  "explorer.file.showHiddenFiles": true,
-  "explorer.previewAction.onHover": false,
-  "cSpell.language": "en-GB",
-  "cSpell.userWords": [
-    "Neovim",
-    "Setup",
-    "colorscheme",
-    "devicons",
-    "emoji",
-    "nvim",
-    "struct",
-    "tabline",
-    "tabpage",
-    "ultisnips",
-    "unmerged",
-    "unstaged",
-    "vimscript",
-    "vimwiki"
-  ]
+  }
 }
