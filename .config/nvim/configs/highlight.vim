@@ -74,9 +74,9 @@ function! s:plugin_highlights() abort
     " The plugin creates a colorscheme autocommand that
     " checks for the existence of these highlight groups
     " it is best to leave this as is as they are picked up on colorscheme loading
-    highlight Sneak guifg=red guibg=background
-    highlight SneakLabel gui=italic,bold,underline guifg=red guibg=background
-    highlight SneakLabelMask guifg=red guibg=background
+    highlight Sneak guifg=red
+    highlight SneakLabel gui=italic,bold,underline guifg=red
+    highlight SneakLabelMask guifg=red
   endif
 
   if PluginLoaded('vim-which-key')
