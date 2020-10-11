@@ -11,7 +11,7 @@ let g:startify_lists = [
 
 let  g:startify_bookmarks    =  [
     \ {'z': '~/.zshrc'},
-    \ {'v': '~/.config/nvim/init.vim'},
+    \ {'i': '~/.config/nvim/init.vim'},
     \ {'t': '~/.config/tmux/.tmux.conf'},
     \ {'d': $DOTFILES }
     \ ]
