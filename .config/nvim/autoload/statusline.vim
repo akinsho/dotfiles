@@ -222,7 +222,10 @@ function! statusline#filetype() abort
 
   let ft_icon = &ft
   if has('nvim')
-    let [ft_icon; _] = s:get_lua_devicon()
+    try
+      let [ft_icon; _] = s:get_lua_devicon()
+    catch /.*/
+    endtry
   elseif exists('*WebDevIconsGetFileTypeSymbol')
     let ft_icon = WebDevIconsGetFileTypeSymbol()
   endif
