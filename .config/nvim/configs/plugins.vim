@@ -54,7 +54,6 @@ Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'junegunn/vim-easy-align', {'for': ['vim']}
 Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
 Plug 'arecarn/vim-fold-cycle'
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
