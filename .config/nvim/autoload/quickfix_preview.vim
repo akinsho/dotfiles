@@ -87,9 +87,19 @@ function quickfix_preview#view_file(lnum) abort
   let b:prev_bufnum = entry.bufnr
 endfunction
 
+function s:debounced_preview()
+  if exists('b:qf_timer')
+    unlet b:qf_timer
+  endif
+  call quickfix_preview#view_file(line('.'))
+endfunction
+
 function! quickfix_preview#open(lnum)
   if a:lnum != b:prev_lnum
-    call quickfix_preview#view_file(a:lnum)
+    if exists('b:qf_timer')
+      call timer_stop(b:qf_timer)
+    endif
+    let b:qf_timer = timer_start(500, {-> s:debounced_preview()})
   endif
 endfunction
 
