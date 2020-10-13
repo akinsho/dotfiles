@@ -37,7 +37,8 @@ call quickfix_preview#setup({ 'preview_height': 8 })
 nnoremap <buffer> H :colder<CR>
 nnoremap <buffer> L :cnewer<CR>
 
-nnoremap <silent><buffer><nowait> p :pclose!<CR>
+nnoremap <silent><buffer><nowait> P :pclose!<CR>
+nnoremap <silent><buffer><nowait> p :call quickfix_preview#toggle()<CR>
 nnoremap <silent><nowait><buffer> q :call <SID>smart_close()<CR>
 nnoremap <buffer> <silent> dd :call <SID>s:delete_qf_entry()<CR>
 

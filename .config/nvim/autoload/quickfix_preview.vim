@@ -108,6 +108,21 @@ function! s:enter_quickfix() abort
   execute "normal! \<cr>"
 endfunction
 
+let s:enabled = 0
+
+function quickfix_preview#toggle() abort
+  if s:enabled
+    let is_open = s:get_preview_window()
+    if is_open
+      pclose!
+    endif
+    let s:enabled = 0
+  else
+    call quickfix_preview#open(line('.'))
+    let s:enabled = 1
+  end
+endfunction
+
 func! quickfix_preview#setup(opts) abort
   let b:preview_height = a:opts.preview_height
   let b:prev_lnum = 0
@@ -118,9 +133,11 @@ func! quickfix_preview#setup(opts) abort
   augroup QFMove
     au! * <buffer>
     " Auto close preview window when closing/deleting the qf/loc list
-    autocmd BufDelete,WinClosed <buffer> pclose
+    autocmd WinClosed <buffer> pclose
     " we create a nested autocommand to ensure that when we open the preview buffer
     " things like syntax highlighting and statuslines get set correctly
-    autocmd CursorMoved <buffer> nested call quickfix_preview#open(line('.'))
+    autocmd CursorMoved <buffer> nested if s:enabled
+          \ | call quickfix_preview#open(line('.'))
+          \ | endif
   augroup END
 endfunc
