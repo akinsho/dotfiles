@@ -99,7 +99,7 @@ function! quickfix_preview#open(lnum)
     if exists('b:qf_timer')
       call timer_stop(b:qf_timer)
     endif
-    let b:qf_timer = timer_start(500, {-> s:debounced_preview()})
+    let b:qf_timer = timer_start(300, {-> s:debounced_preview()})
   endif
 endfunction
 
