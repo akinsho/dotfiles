@@ -50,8 +50,6 @@ function s:diff_current_quickfix_entry() abort
   endfor
   cc
   " Ignore the cursor moved autocommand which will trigger a preview
-  setlocal eventignore+=CursorMoved
-  autocmd! BufDelete,WinClosed <buffer> setlocal eventignore-=CursorMoved
   call s:add_mappings()
   let qf = getqflist({'context': 0, 'idx': 0})
   if get(qf, 'idx') && type(get(qf, 'context')) == type({}) && type(get(qf.context, 'items')) == type([])
