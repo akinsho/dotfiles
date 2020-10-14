@@ -37,6 +37,11 @@ function s:setup_smart_close() abort
   endif
 endfunction
 
+augroup external_commands
+  " Open images in an image viewer (probably Preview)
+  autocmd BufEnter *.png,*.jpg,*.gif exec "silent !".g:open_command." ".expand("%") | :bw
+augroup END
+
 " Smart Close {{{
 augroup SmartClose
   au!
