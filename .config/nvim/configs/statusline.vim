@@ -32,34 +32,31 @@ function! s:truncate_statusline_component(item, ...) abort
   return '%.'.limit.'('.a:item.'%)'
 endfunction
 
-" Source: Coc documentation
-function! s:status_diagnostic() abort
+function s:diagnostic_info() abort
+  let msgs = {'error': '', 'warning': '', 'information': ''}
   let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info)
+    return msgs
+  endif
+
   let warning_sign = get(g:, 'coc_status_warning_sign', 'W')
   let error_sign = get(g:, 'coc_status_error_sign', 'E')
+  let information_sign = get(g:, 'coc_status_information_sign', '')
 
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, error_sign . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, warning_sign . info['warning'])
-  endif
-  return join(msgs, ' ')
-endfunction
+  let has_error = get(info, 'error', 0)
+  let has_warning = get(info, 'warning', 0)
+  let has_information = get(info, 'information', 0)
 
-" This checks if there are any errors if so the component
-" is highlighted with the error highlight, if there are
-" warnings it renders with a warning highlight. If neither
-" there is no highlight
-" TLDR: Error highlight > Warning highlight
-function s:get_diagnostic_highlight() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return {} | endif
-  if get(info, 'error', 0) | return s:st_error | endif
-  if get(info, 'warning', 0) | return s:st_warning | endif
-  return {}
+  if has_error
+    let msgs.error = error_sign . info['error']
+  endif
+  if has_warning
+    let msgs.warning =  warning_sign . info['warning']
+  endif
+  if has_information
+    let msgs.information = information_sign . info['information']
+  endif
+  return msgs
 endfunction
 
 function s:pad(string, ...) abort
@@ -144,6 +141,7 @@ function! s:set_statusline_colors() abort
   let s:string_fg     = synIDattr(hlID('String'), 'fg')
   let s:error_fg      = synIDattr(hlID('ErrorMsg'), 'fg')
   let s:comment_fg    =  synIDattr(hlID('Comment'), 'fg')
+  let s:wildmenu_bg    =  synIDattr(hlID('Wildmenu'), 'bg')
   let s:warning_fg    = g:colors_name =~ 'one' ?
         \ s:light_yellow : synIDattr(hlID('WarningMsg'), 'fg')
 
@@ -158,11 +156,12 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=bold'
   silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StFilename guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic,bold'
-  silent! execute 'highlight StFilenameInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=italic,bold'
+  silent! execute 'highlight StFilename guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StFilenameInactive guifg='.s:comment_grey.' guibg='.s:normal_bg.' gui=italic,bold'
+  silent! execute 'highlight StItemText guibg='.s:normal_bg.' guifg='.s:wildmenu_bg.' gui=italic'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
-  silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:pmenu_bg.' gui=bold'
+  silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:normal_bg.' gui=bold'
   silent! execute 'highlight StInfoSep guifg='.s:pmenu_bg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StOk guifg='.s:normal_bg.' guibg='.s:dark_yellow.' gui=NONE'
   silent! execute 'highlight StOkSep guifg='.s:dark_yellow.' guibg=NONE gui=NONE'
@@ -261,20 +260,15 @@ endfunction
 
 function! s:mode_highlight(mode) abort
   if a:mode ==? 'i'
-    silent! exe 'highlight StMode guibg='.s:dark_blue.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:dark_blue.' guibg=NONE gui=NONE'
+    silent! exe 'highlight StModeText guifg='.s:dark_blue.' guibg=NONE gui=bold'
   elseif a:mode =~? '\(v\|V\|\)'
-    silent! exe 'highlight StMode guibg='.s:magenta.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:magenta.' guibg=NONE gui=NONE'
+    silent! exe 'highlight StModeText guifg='.s:magenta.' guibg=NONE gui=bold'
   elseif a:mode ==? 'R'
-    silent! exe 'highlight StMode guibg='.s:dark_red.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:dark_red.' guibg=NONE gui=NONE'
+    silent! exe 'highlight StModeText guifg='.s:dark_red.' guibg=NONE gui=build'
   elseif a:mode =~? '\(c\|cv\|ce\)'
-    silent! exe 'highlight StMode guibg='.s:inc_search_bg.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:inc_search_bg.' guibg=NONE gui=NONE'
+    silent! exe 'highlight StModeText guifg='.s:inc_search_bg.' guibg=NONE gui=bold'
   else
-    silent! exe 'highlight StMode guibg='.s:green.' guifg='.s:normal_bg.' gui=bold'
-    silent! exe 'highlight StModeSep guifg='.s:green.' guibg=NONE gui=NONE'
+    silent! exe 'highlight StModeText guifg='.s:green.' guibg=NONE gui=bold'
   endif
 endfunction
 
@@ -288,7 +282,29 @@ function! s:add_separators()
   silent! execute 'highlight StatuslineNC gui='.gui
 endfunction
 
-let s:item = {component,hl -> "%#".hl."#".component."%*"}
+function s:hl(hl) abort
+  return "%#".a:hl."#"
+endfunction
+
+func! s:item(component, hl, ...) abort
+  if !strlen(a:component)
+    return ''
+  endif
+  let opts = get(a:, '1', {})
+  let before = get(opts, 'before', '')
+  let after = get(opts, 'after', ' ')
+  let prefix = get(opts, 'prefix', '')
+  let prefix_color = get(opts, 'prefix_color', a:hl)
+  return before . s:hl(prefix_color) . prefix .' '
+        \ . s:hl(a:hl) . a:component . after . "%*"
+endfunc
+
+function s:item_if(item, condition, hl, ...) abort
+  if !a:condition
+    return ''
+  endif
+  return s:item(a:item, a:hl, get(a:, 1, {}))
+endfunction
 
 function! StatusLine(inactive) abort
   let available_space = winwidth(0)
@@ -330,21 +346,18 @@ function! StatusLine(inactive) abort
   "---------------------------------------------------------------------------//
   " show a minimal statusline with only the mode and file component
   if minimal
-    return s:sep(title_component,
-          \ extend({'prefix': file_type, 'padding': 'full'}, s:st_inactive))
+    return s:item(title_component, 'StInactiveSep', {'prefix': file_type, 'before': ' '})
   endif
   "---------------------------------------------------------------------------//
   " Setup
   "---------------------------------------------------------------------------//
   let statusline = ""
-  let statusline .=  s:sep(current_mode, extend({'before': ''}, s:st_mode))
+  let statusline .=  s:item(current_mode, 'StModeText', {'before': ''})
 
-  let icon_highlight = statusline#filetype_icon_highlight('StPrefix')
-  let statusline .= s:sep(title_component, {
+  let icon_highlight = statusline#filetype_icon_highlight('Normal')
+  let statusline .= s:item(title_component, 'StItemText', {
         \ 'prefix': file_type,
-        \ 'prefix_color': '%#'.icon_highlight.'#',
-        \ 'padding': 'full',
-        \ 'small': 1,
+        \ 'prefix_color': icon_highlight,
         \ })
 
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
@@ -372,31 +385,35 @@ function! StatusLine(inactive) abort
   " Start of the right side layout
   let statusline .= '%='
 
-  let statusline .= s:item("%{StatuslineCurrentFunction()}", "StMetadata")
-  " LSP Status
-  let statusline .= s:item("%{StatuslineLanguageServer()}", "Comment")
-
-  " LSP Diagnostics
-  let diagnostics = s:status_diagnostic()
-  let diagnostic_hl = s:get_diagnostic_highlight()
-  let statusline .= s:sep_if(diagnostics, strlen(diagnostics), diagnostic_hl)
-
   " Git Status
   let [prefix, git_status] = s:statusline_git_status()
-  let git_opts = {'prefix':  prefix, 'small': 1, 'prefix_color': '%#StInfo#', 'padding': 'full'}
-  let statusline .= s:sep_if(git_status, strlen(git_status), extend(git_opts, s:st_info))
+  let statusline .= s:item(git_status, 'StInfo', {'prefix': prefix})
+
+  " LSP Diagnostics
+  let info = s:diagnostic_info()
+  let statusline .= s:item(info.error, 'Error')
+  let statusline .= s:item(info.warning, 'PreProc')
+  let statusline .= s:item(info.information, 'String')
+
+  " LSP Status
+  let statusline .= s:item(StatuslineLanguageServer(), "Comment")
+  let statusline .= s:item(StatuslineCurrentFunction(), "StMetadata")
 
   " Indentation
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
-  let l:statusline .= s:sep_if(
+  let statusline .= s:item_if(
         \ &shiftwidth,
         \ unexpected_indentation,
-        \ { 'prefix': &expandtab ? 'Ξ' : '⇥', 'small': 1, 'padding': 'full' })
+        \ 'Title',
+        \ {'prefix': &expandtab ? 'Ξ' : '⇥'}
+        \)
 
   " Current line number/total line number,  alternatives 
-  let statusline .= s:sep_if(line_info, strlen(line_info), extend(
-        \ { 'small': 1, 'prefix': 'ℓ' }, s:st_menu
-        \))
+  let statusline .= s:item_if(
+        \ line_info,
+        \ strlen(line_info),
+        \ 'Title',
+        \ {'prefix': 'ℓ', 'prefix_color': 'StatusLine'})
 
   let statusline .= '%<'
   return statusline
