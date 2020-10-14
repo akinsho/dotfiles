@@ -259,7 +259,8 @@ nnoremap <silent><localleader>gu :<C-u>CocCommand git.copyUrl<CR>
 ""---------------------------------------------------------------------------//
 function s:apply_coc_highlights()
   highlight CocErrorHighlight guisp=#E06C75 gui=undercurl
-  highlight CocInfoHighlight guisp=#fab005 gui=undercurl
+  highlight CocInfoHighlight guisp=blue gui=undercurl
+  highlight CocWarningHighlight guisp=orange gui=undercurl
   highlight CocHighlightText gui=underline
   highlight link CocOutlineIndentLine LineNr
   " By default this links to CocHintSign but that keeps getting cleared mysteriously
