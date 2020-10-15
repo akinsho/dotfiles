@@ -358,13 +358,14 @@ function! StatusLine(inactive) abort
   let statusline .= s:item(title_component, 'StItemText', {
         \ 'prefix': file_type,
         \ 'prefix_color': icon_highlight,
-        \ })
+        \ 'after': '',
+        \})
 
   let statusline .= s:sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',
         \ 'sep_color': '%#StPrefixSep#',
-        \ })
+        \})
 
   " If local plugins are loaded and I'm developing locally show an indicator
   let develop_text = available_space > 100 ? 'local dev' : ''
@@ -405,15 +406,14 @@ function! StatusLine(inactive) abort
         \ &shiftwidth,
         \ unexpected_indentation,
         \ 'Title',
-        \ {'prefix': &expandtab ? 'Ξ' : '⇥'}
-        \)
+        \ {'prefix': &expandtab ? 'Ξ' : '⇥'})
 
   " Current line number/total line number,  alternatives 
   let statusline .= s:item_if(
         \ line_info,
         \ strlen(line_info),
-        \ 'Title',
-        \ {'prefix': 'ℓ', 'prefix_color': 'StatusLine'})
+        \ 'StMetadata',
+        \ {'prefix': 'ℓ'})
 
   let statusline .= '%<'
   return statusline
