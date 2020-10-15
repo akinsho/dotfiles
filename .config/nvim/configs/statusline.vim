@@ -151,6 +151,7 @@ function! s:set_statusline_colors() abort
   " terminal emulators like kitty handle this by fetching nerd fonts elsewhere
   " but this is not universal across terminals so should be avoided
   silent! execute 'highlight StMetadata guifg='.s:comment_fg.' guibg=NONE gui=italic,bold'
+  silent! execute 'highlight StMetadataPrefix guifg='.s:comment_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
@@ -158,7 +159,7 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StFilename guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StFilenameInactive guifg='.s:comment_grey.' guibg='.s:normal_bg.' gui=italic,bold'
-  silent! execute 'highlight StItemText guibg='.s:normal_bg.' guifg='.s:wildmenu_bg.' gui=italic'
+  silent! execute 'highlight StItemText guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:normal_bg.' gui=bold'
@@ -413,7 +414,7 @@ function! StatusLine(inactive) abort
         \ line_info,
         \ strlen(line_info),
         \ 'StMetadata',
-        \ {'prefix': 'ℓ'})
+        \ {'prefix': 'ℓ', 'prefix_color': 'StMetadataPrefix'})
 
   let statusline .= '%<'
   return statusline
