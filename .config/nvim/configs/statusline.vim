@@ -1,7 +1,6 @@
-let s:ro_sym  = ''
-let s:ma_sym  = "✗"
-let s:mod_sym = "◇"
-
+"--------------------------------------------------------------------------------
+" Statusline
+"--------------------------------------------------------------------------------
 function! s:file_encoding() abort
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
@@ -68,13 +67,13 @@ function s:pad(string, ...) abort
   return strlen(a:string) > 0 ? start . a:string . end : ''
 endfunction
 
-function StatuslineLanguageServer() abort
+function s:statusline_lsp_status() abort
   let lsp_status = get(g:, 'coc_status', '')
   let truncated = s:truncate_string(lsp_status)
   return winwidth(0) > 100 ? s:pad(truncated, { 'start': 0 }) : ''
 endfunction
 
-function! StatuslineCurrentFunction() abort
+function! s:statusline_current_fn() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
   let trunctated = s:truncate_string(sanitized, 30)
@@ -111,13 +110,7 @@ function! s:statusline_git_status() abort
     return [prefix, component]
 endfunction
 
-let s:st_mode     = {'color': '%#StMode#', 'sep_color': '%#StModeSep#'}
-let s:st_info     = {'color': '%#StInfo#', 'sep_color': '%#StInfoSep#'}
-let s:st_ok       = {'color': '%#StOk#', 'sep_color': '%#StOkSep#'}
-let s:st_inactive = {'color': '%#StInactive#', 'sep_color': '%#StInactiveSep#'}
-let s:st_error    = {'color': '%#StError#', 'sep_color': '%#StErrorSep#' }
 let s:st_warning  = {'color': '%#StWarning#', 'sep_color': '%#StWarningSep#' }
-let s:st_menu     = {'color': '%#StMenu#', 'sep_color': '%#StMenuSep#' }
 
 let s:gold         = '#F5F478'
 let s:white        = '#abb2bf'
@@ -155,8 +148,6 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StMenu guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=bold'
-  silent! execute 'highlight StMenuSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StFilename guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic,bold'
   silent! execute 'highlight StFilenameInactive guifg='.s:comment_grey.' guibg='.s:normal_bg.' gui=italic,bold'
   silent! execute 'highlight StItemText guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic'
@@ -164,8 +155,6 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:normal_bg.' gui=bold'
   silent! execute 'highlight StInfoSep guifg='.s:pmenu_bg.' guibg=NONE gui=NONE'
-  silent! execute 'highlight StOk guifg='.s:normal_bg.' guibg='.s:dark_yellow.' gui=NONE'
-  silent! execute 'highlight StOkSep guifg='.s:dark_yellow.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
   silent! execute 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
   " setting a statusline fillchar that the character or a replacement
@@ -398,8 +387,8 @@ function! StatusLine(inactive) abort
   let statusline .= s:item(info.information, 'String')
 
   " LSP Status
-  let statusline .= s:item(StatuslineLanguageServer(), "Comment")
-  let statusline .= s:item(StatuslineCurrentFunction(), "StMetadata")
+  let statusline .= s:item(s:statusline_lsp_status(), "Comment")
+  let statusline .= s:item(s:statusline_current_fn(), "StMetadata")
 
   " Indentation
   let unexpected_indentation = &shiftwidth > 2 || !&expandtab
@@ -407,7 +396,7 @@ function! StatusLine(inactive) abort
         \ &shiftwidth,
         \ unexpected_indentation,
         \ 'Title',
-        \ {'prefix': &expandtab ? 'Ξ' : '⇥'})
+        \ {'prefix': &expandtab ? 'Ξ' : '⇥', 'prefix_color': 'PmenuSbar'})
 
   " Current line number/total line number,  alternatives 
   let statusline .= s:item_if(
