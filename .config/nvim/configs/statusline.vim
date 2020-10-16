@@ -297,6 +297,8 @@ function s:item_if(item, condition, hl, ...) abort
 endfunction
 
 function! StatusLine(inactive) abort
+  " TODO reduce the available space whenever we addition
+  " a component so we can use it to determine what to add
   let available_space = winwidth(0)
   "---------------------------------------------------------------------------//
   " Modifiers
@@ -322,7 +324,7 @@ function! StatusLine(inactive) abort
   " width of 10 since smaller than that is likely to be unintelligible
   " although if the window is plain i.e. terminal or tree buffer allow the file
   " name to take up more space
-  let percentage = plain ? 0.4 : 0.2
+  let percentage = plain ? 0.4 : 0.5
   let minwid = 5
   " Don't set a minimum width for plain status line filenames
   let trunc_amount = float2nr(round(available_space * percentage))
