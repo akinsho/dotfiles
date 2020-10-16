@@ -4,16 +4,17 @@ function! s:adjust_height(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
+" FIXME this currently breaks neovim rendering i.e. duplicate statuslines etc.
 " force quickfix to open beneath all other splits
-wincmd J
+" wincmd J
 
-call s:adjust_height(1, 10)
-setlocal nonumber
+setlocal number
 setlocal norelativenumber
 setlocal nowrap
 setlocal winfixheight
 setlocal colorcolumn=
 set nobuflisted " quickfix buffers should not pop up when doing :bn or :bp
+call s:adjust_height(1, 10)
 
 if has('nvim')
   highlight! link QuickFixLine CursorLine
