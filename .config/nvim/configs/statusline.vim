@@ -148,9 +148,9 @@ function! s:set_statusline_colors() abort
   silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
   silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
   silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StFilename guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic,bold'
+  silent! execute 'highlight StDirectory guibg='.s:normal_bg.' guifg=Gray gui=italic'
+  silent! execute 'highlight StFilename guibg='.s:normal_bg.' guifg=LightGray gui=italic,bold'
   silent! execute 'highlight StFilenameInactive guifg='.s:comment_grey.' guibg='.s:normal_bg.' gui=italic,bold'
-  silent! execute 'highlight StItemText guibg='.s:normal_bg.' guifg='.s:normal_fg.' gui=italic'
   silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
   silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
   silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:normal_bg.' gui=bold'
@@ -347,7 +347,7 @@ function! StatusLine(inactive) abort
   let statusline .=  s:item(current_mode, 'StModeText', {'before': ''})
 
   let icon_highlight = statusline#filetype_icon_highlight('Normal')
-  let statusline .= s:item(title_component, 'StItemText', {
+  let statusline .= s:item(title_component, 'StDirectory', {
         \ 'prefix': file_type,
         \ 'prefix_color': icon_highlight,
         \ 'after': '',
