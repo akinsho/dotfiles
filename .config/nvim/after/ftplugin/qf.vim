@@ -8,7 +8,7 @@ endfunction
 " force quickfix to open beneath all other splits
 " wincmd J
 
-setlocal number
+setlocal nonumber
 setlocal norelativenumber
 setlocal nowrap
 setlocal winfixheight
