@@ -16,6 +16,8 @@
 "
 " See also this explanatory StackOverflow answer:
 " https://vi.stackexchange.com/a/4003/16249
-syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell containedin=vim.*Comment,vim.*String
-syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' transparent contains=@NoSpell containedin=vim.*Comment,vim.*String
-highlight def link NoSpellUri URIHighlight
+if hlexists('vimLineComment')
+  syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell containedin=vim.*Comment,vim.*String
+  syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' transparent contains=@NoSpell containedin=vim.*Comment,vim.*String
+  highlight def link NoSpellUri URIHighlight
+endif

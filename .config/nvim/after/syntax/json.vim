@@ -1,7 +1,6 @@
 " Highlight // as comments in json
 syntax match Comment +\/\/.\+$+
 
-
 " Avoid highlighting any of the following as misspelled words:
 "
 " * URIs (i.e., words prefixed by one or more alphanumeric characters followed
