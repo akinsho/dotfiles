@@ -296,49 +296,65 @@ function s:item_if(item, condition, hl, ...) abort
   return s:item(a:item, a:hl, get(a:, 1, {}))
 endfunction
 
-function! StatusLine(inactive) abort
+function! StatusLine() abort
+  " use the statusline global variable which is set inside of statusline
+  " functions to the window for *that* statusline
+  let curbuf = winbufnr(g:statusline_winid)
   " TODO reduce the available space whenever we addition
   " a component so we can use it to determine what to add
-  let available_space = winwidth(0)
+  let available_space = winwidth(g:statusline_winid)
+
+  let context = {
+        \ 'bufnum': curbuf,
+        \ 'winid': g:statusline_winid,
+        \ 'preview': getwinvar(g:statusline_winid, '&previewwindow'),
+        \ 'readonly': getbufvar(curbuf, '&readonly'),
+        \ 'filetype': getbufvar(curbuf, '&ft'),
+        \ 'buftype': getbufvar(curbuf, '&bt'),
+        \ 'modified': getbufvar(curbuf, '&modified'),
+        \ 'fileformat': getbufvar(curbuf, '&fileformat'),
+        \ 'shiftwidth': getbufvar(curbuf, '&shiftwidth'),
+        \ 'expandtab': getbufvar(curbuf, '&expandtab'),
+        \ }
   "---------------------------------------------------------------------------//
   " Modifiers
   "---------------------------------------------------------------------------//
-  let plain = statusline#show_plain_statusline()
+  let plain = statusline#is_plain(context)
 
   let current_mode = s:mode()
-  let file_type = '%{statusline#filetype()}'
   let line_info = s:line_info()
-  let file_modified = statusline#modified('●')
-  let minimal = plain || a:inactive
+  let file_modified = statusline#modified(context, '●')
+  let inactive = !has('nvim') ? 1 : nvim_get_current_win() != g:statusline_winid
+  let minimal = plain || inactive
 
   "---------------------------------------------------------------------------//
   " Filename
   "---------------------------------------------------------------------------//
-  " Evaluate the filename in the context of the statusline component
-  " -> %{function_call()}, items in this context are per window not global
-  " this means the function returns the containing windows filename
-  " not the active one i.e. fixes the bug where the wrong filename shows in
-  " inactive windows
-
   " The filename component should be 20% of the screen width but has a minimum
   " width of 10 since smaller than that is likely to be unintelligible
   " although if the window is plain i.e. terminal or tree buffer allow the file
   " name to take up more space
   let percentage = plain ? 0.4 : 0.5
   let minwid = 5
+
   " Don't set a minimum width for plain status line filenames
   let trunc_amount = float2nr(round(available_space * percentage))
+
   " highlight the filename component separately
   let filename_hl = minimal ? "StFilenameInactive" : "StFilename"
-  let filename = '%#'.filename_hl.'#%{statusline#filename()}'
-  let directory = '%{statusline#get_dir()}'
-  let title_component = '%'.minwid.'.' .trunc_amount.'('.directory.filename.'%)'
+
+  let [directory, filename] = statusline#filename(context)
+  let [ft_icon, icon_highlight] = statusline#filetype(context)
+
+  let filename = directory . '%#'.filename_hl.'#'. filename
+  let title_component = '%'.minwid.'.' .trunc_amount.'('.filename.'%)'
+
   "---------------------------------------------------------------------------//
   " Mode
   "---------------------------------------------------------------------------//
   " show a minimal statusline with only the mode and file component
   if minimal
-    return s:item(title_component, 'StInactiveSep', {'prefix': file_type, 'before': ' '})
+    return s:item(title_component, 'StInactiveSep', {'prefix': ft_icon, 'before': ' '})
   endif
   "---------------------------------------------------------------------------//
   " Setup
@@ -346,9 +362,8 @@ function! StatusLine(inactive) abort
   let statusline = ""
   let statusline .=  s:item(current_mode, 'StModeText', {'before': ''})
 
-  let icon_highlight = statusline#filetype_icon_highlight('Normal')
   let statusline .= s:item(title_component, 'StDirectory', {
-        \ 'prefix': file_type,
+        \ 'prefix': ft_icon,
         \ 'prefix_color': icon_highlight,
         \ 'after': '',
         \})
@@ -393,9 +408,9 @@ function! StatusLine(inactive) abort
   let statusline .= s:item(s:statusline_current_fn(), "StMetadata")
 
   " Indentation
-  let unexpected_indentation = &shiftwidth > 2 || !&expandtab
+  let unexpected_indentation = context.shiftwidth > 2 || !context.expandtab
   let statusline .= s:item_if(
-        \ &shiftwidth,
+        \ context.shiftwidth,
         \ unexpected_indentation,
         \ 'Title',
         \ {'prefix': &expandtab ? 'Ξ' : '⇥', 'prefix_color': 'PmenuSbar'})
@@ -411,16 +426,12 @@ function! StatusLine(inactive) abort
   return statusline
 endfunction
 
+set statusline=%!StatusLine()
+
 augroup custom_statusline
   autocmd!
   " The quickfix window sets it's own statusline, so we override it here
-  autocmd FileType qf setlocal statusline=%!StatusLine(1)
-  " FIXME this shouldn't be necessary technically but nvim-tree.lua does not
-  " pick up the correct statusline otherwise
-  autocmd FileType LuaTree setlocal statusline=%!StatusLine(1)
-
-  autocmd BufEnter,WinEnter,FocusGained * setlocal statusline=%!StatusLine(0)
-  autocmd BufLeave,WinLeave,FocusLost,QuickFixCmdPost * setlocal statusline=%!StatusLine(1)
+  autocmd FileType qf setlocal statusline=%!StatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
 
