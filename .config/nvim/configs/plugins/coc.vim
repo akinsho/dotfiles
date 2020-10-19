@@ -203,13 +203,12 @@ nnoremap <leader>cf :CocSearch --hidden <C-R>=expand("<cword>")<CR><CR>
 
 " Scroll the floating window if open
 " FIXME this breaks smooth scrolling
-nnoremap <silent><expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
-nnoremap <silent><expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
-inoremap <silent><expr> <c-f> coc#util#has_float() ? coc#util#float_scroll_i( 1) : "\<c-f>"
-inoremap <silent><expr> <c-b> coc#util#has_float() ? coc#util#float_scroll_i(-1) : "\<c-b>"
-vnoremap <silent><expr> <c-f> coc#util#has_float() ? coc#util#float_scroll_i( 1) : "\<c-f>"
-vnoremap <silent><expr> <c-b> coc#util#has_float() ? coc#util#float_scroll_i(-1) : "\<c-b>"
-""---------------------------------------------------------------------------//
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
+inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
+"---------------------------------------------------------------------------//
 " Coc Statusline
 ""---------------------------------------------------------------------------//
 let g:coc_status_error_sign = "✗ "
