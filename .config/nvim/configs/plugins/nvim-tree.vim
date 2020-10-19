@@ -29,9 +29,9 @@ let g:lua_tree_root_folder_modifier = ':t'
 let g:lua_tree_ignore               = ['.DS_Store', 'fugitive:', '.git']
 
 highlight link LuaTreeIndentMarker Comment
-highlight LuaTreeRootFolder gui=bold,italic
 
 augroup LuaTreeOverrides
   autocmd!
   autocmd FileType LuaTree setlocal nowrap
+  autocmd ColorScheme * highlight LuaTreeRootFolder gui=bold,italic
 augroup END
