@@ -325,7 +325,8 @@ function! StatusLine() abort
   let line_info = s:line_info()
   let file_modified = statusline#modified(context, '●')
   let inactive = !has('nvim') ? 1 : nvim_get_current_win() != g:statusline_winid
-  let minimal = plain || inactive
+  let focused = get(g: , 'vim_in_focus', 1)
+  let minimal = plain || inactive || !focused
 
   "---------------------------------------------------------------------------//
   " Filename
@@ -426,15 +427,16 @@ function! StatusLine() abort
   return statusline
 endfunction
 
-set statusline=%!StatusLine()
-
 augroup custom_statusline
   autocmd!
+  autocmd FocusGained *  let g:vim_in_focus = 1
+  autocmd FocusLost * let g:vim_in_focus = 0
   " The quickfix window sets it's own statusline, so we override it here
   autocmd FileType qf setlocal statusline=%!StatusLine()
   autocmd VimEnter,ColorScheme * call s:set_statusline_colors()
 augroup END
 
+set statusline=%!StatusLine()
 " =====================================================================
 " Resources:
 " =====================================================================
