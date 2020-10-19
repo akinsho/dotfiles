@@ -102,7 +102,7 @@ let s:exceptions_ft_names = {
       \ 'undotree' : 'UndoTree',
       \ 'coc-explorer' : 'Coc Explorer',
       \ 'LuaTree' : 'Lua Tree',
-      \ 'toggleterm': {-> 'Terminal('.fnamemodify($SHELL, ':t').')['.b:toggle_number.']'}
+      \ 'toggleterm': {_,bufnum -> 'Terminal('.fnamemodify($SHELL, ':t').')['.getbufvar(bufnum, 'toggle_number').']'}
       \}
 
 function s:buf_expand(bufnum, mod) abort
@@ -124,7 +124,7 @@ function! statusline#filename(context, ...) abort
   let Name = get(s:exceptions_ft_names, a:context.filetype, '')
 
   if type(Name) == v:t_func
-    return ['', Name(fname)]
+    return ['', Name(fname, a:context.bufnum)]
   endif
 
   if strlen(Name)
