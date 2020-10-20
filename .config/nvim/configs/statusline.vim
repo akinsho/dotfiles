@@ -70,14 +70,14 @@ endfunction
 function s:statusline_lsp_status() abort
   let lsp_status = get(g:, 'coc_status', '')
   let truncated = s:truncate_string(lsp_status)
-  return winwidth(0) > 100 ? truncated : ''
+  return winwidth(0) > 100 ? trim(truncated) : ''
 endfunction
 
 function! s:statusline_current_fn() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
   let trunctated = s:truncate_string(sanitized, 30)
-  return winwidth(0) > 140 ? trunctated : ''
+  return winwidth(0) > 140 ? trim(trunctated) : ''
 endfunction
 
 function! s:statusline_git_status() abort
@@ -405,8 +405,11 @@ function! StatusLine() abort
   let statusline .= s:item(info.information, 'String')
 
   " LSP Status
-  let statusline .= s:item(s:statusline_lsp_status(), "Comment")
-  let statusline .= s:item(s:statusline_current_fn(), "StMetadata")
+  let lsp_status = s:statusline_lsp_status()
+  let current_fn = s:statusline_current_fn()
+
+  let statusline .= s:item(lsp_status, "Comment")
+  let statusline .= s:item(current_fn, "StMetadata")
 
   " Indentation
   let unexpected_indentation = context.shiftwidth > 2 || !context.expandtab
