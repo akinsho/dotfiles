@@ -5,6 +5,7 @@ function! s:adjust_height(minheight, maxheight)
 endfunction
 
 " FIXME this currently breaks neovim rendering i.e. duplicate statuslines etc.
+" See https://github.com/neovim/neovim/issues/13104
 " force quickfix to open beneath all other splits
 " wincmd J
 
