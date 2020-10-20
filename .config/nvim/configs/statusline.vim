@@ -70,14 +70,14 @@ endfunction
 function s:statusline_lsp_status() abort
   let lsp_status = get(g:, 'coc_status', '')
   let truncated = s:truncate_string(lsp_status)
-  return winwidth(0) > 100 ? s:pad(truncated, { 'start': 0 }) : ''
+  return winwidth(0) > 100 ? truncated : ''
 endfunction
 
 function! s:statusline_current_fn() abort
   let current = get(b:, 'coc_current_function', '')
   let sanitized = s:sanitize_string(current)
   let trunctated = s:truncate_string(sanitized, 30)
-  return winwidth(0) > 140 ? s:pad(trunctated, { 'start': 0 }) : ''
+  return winwidth(0) > 140 ? trunctated : ''
 endfunction
 
 function! s:statusline_git_status() abort
@@ -315,7 +315,7 @@ function! StatusLine() abort
         \ 'fileformat': getbufvar(curbuf, '&fileformat'),
         \ 'shiftwidth': getbufvar(curbuf, '&shiftwidth'),
         \ 'expandtab': getbufvar(curbuf, '&expandtab'),
-        \ }
+        \}
   "---------------------------------------------------------------------------//
   " Modifiers
   "---------------------------------------------------------------------------//
