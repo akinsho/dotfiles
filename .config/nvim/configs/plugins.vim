@@ -217,9 +217,8 @@ endfunction
 " Install any missing plugins on vim enter or on writing this file
 augroup AutoInstallPlugins
   autocmd!
-  autocmd VimEnter * call s:install_missing_plugins()
-  execute 'autocmd BufWritePost '. g:vim_dir . '/configs/plugins.vim' .
-	\ ' call <SID>install_missing_plugins()'
+  autocmd VimEnter * call <SID>install_missing_plugins()
+  autocmd BufWritePost <buffer> call <SID>install_missing_plugins()
 augroup END
 
 function! s:setup_extra_keys()
