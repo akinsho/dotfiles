@@ -179,9 +179,6 @@ nnoremap <expr><silent> k (v:count > 1 ? 'm`' . v:count : '') . 'gk'
 " CREDIT: https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
 nnoremap <silent> gf :call <sid>open_file_or_create_new()<CR>
 
-" list the open buffers and type a number or fuzzy description to open one
-nnoremap gb :ls<CR>:b<space>
-
 function! s:open_file_or_create_new() abort
   let path = expand('<cfile>')
   if empty(path)
