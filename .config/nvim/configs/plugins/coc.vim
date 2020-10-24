@@ -73,7 +73,6 @@ function! s:coc_init() abort
           \   'runtime': {'version': "LuaJIT"},
           \   'diagnostics': {
           \      'globals': ['vim'],
-          \      'disable': ['lowercase-global']
           \    },
           \   'completion': {
           \     'keywordSnippet': 'Both'
