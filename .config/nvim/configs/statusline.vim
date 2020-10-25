@@ -40,7 +40,7 @@ function s:diagnostic_info() abort
 
   let warning_sign = get(g:, 'coc_status_warning_sign', 'W')
   let error_sign = get(g:, 'coc_status_error_sign', 'E')
-  let information_sign = get(g:, 'coc_status_information_sign', '')
+  let information_sign = get(g:, 'coc_status_information_sign', '')
 
   let has_error = get(info, 'error', 0)
   let has_warning = get(info, 'warning', 0)
