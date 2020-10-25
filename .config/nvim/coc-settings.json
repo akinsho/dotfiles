@@ -38,7 +38,7 @@
   "diagnostic.virtualTextPrefix": "",
   "diagnostic.errorSign": "", // ✗
   "diagnostic.warningSign": "", // 
-  "diagnostic.infoSign": "", // 
+  "diagnostic.infoSign": "", //   
   "diagnostic.hintSign": "", // ﯦ
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.formatOnInsertLeave": true,
