@@ -74,7 +74,6 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
 " so disable mark related plugins. Remove this guard when this problem is fixed
 if !has('nvim')
-  Plug 'Yilin-Yang/vim-markbar'
   Plug 'kshenoy/vim-signature'
 endif
 "--------------------------------------------------------------------------------
