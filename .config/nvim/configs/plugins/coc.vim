@@ -26,9 +26,9 @@ let g:coc_global_extensions = [
       \ 'coc-flutter-tools',
       \ 'coc-xml',
       \ 'coc-tsserver',
-      \ 'coc-graphql'
+      \ 'coc-graphql',
+      \ 'coc-spell-checker'
       \]
-      "\ 'coc-spell-checker'
 
 function! s:coc_init() abort
   let s:languageservers = {}
