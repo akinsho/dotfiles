@@ -157,7 +157,8 @@ if has('nvim')
   else
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'akinsho/nvim-toggleterm.lua'
-    Plug 'akinsho/nvim-bufferline.lua' ", { 'branch': 'dev' }
+    Plug 'akinsho/nvim-bufferline.lua' ,
+          \ { 'branch': 'feature/consistent-buffer-position' }
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kyazdani42/nvim-tree.lua'
   endif
