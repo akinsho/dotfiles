@@ -1,114 +1,6 @@
 "--------------------------------------------------------------------------------
 " Statusline
 "--------------------------------------------------------------------------------
-function! s:file_encoding() abort
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-
-function s:line_info() abort
-  " TODO This component should truncate from the left not right
-  return winwidth(0) > 120 ? '%.15(%l/%L %p%%%)' : ''
-endfunction
-
-" Sometimes special characters are passed into statusline components
-" this sanitizes theses strings to prevent them mangling the statusline
-" See: https://vi.stackexchange.com/questions/17704/how-to-remove-character-returned-by-system
-function! s:sanitize_string(item) abort
-  return substitute(a:item, '\n', '', 'g')
-endfunction
-
-function! s:truncate_string(item, ...) abort
-    let limit = get(a:, '1', 50)
-    let suffix = get(a: , '2', '…')
-    return strlen(a:item) > limit ? strpart(a:item, 0, limit) . suffix : a:item
-endfunction
-
-function! s:truncate_statusline_component(item, ...) abort
-  if !strlen(a:item)
-    return ''
-  endif
-  let limit = get(a:, '1', 50)
-  return '%.'.limit.'('.a:item.'%)'
-endfunction
-
-function s:diagnostic_info() abort
-  let msgs = {'error': '', 'warning': '', 'information': ''}
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info)
-    return msgs
-  endif
-
-  let warning_sign = get(g:, 'coc_status_warning_sign', 'W')
-  let error_sign = get(g:, 'coc_status_error_sign', 'E')
-  let information_sign = get(g:, 'coc_status_information_sign', '')
-
-  let has_error = get(info, 'error', 0)
-  let has_warning = get(info, 'warning', 0)
-  let has_information = get(info, 'information', 0)
-
-  if has_error
-    let msgs.error = error_sign . info['error']
-  endif
-  if has_warning
-    let msgs.warning =  warning_sign . info['warning']
-  endif
-  if has_information
-    let msgs.information = information_sign . info['information']
-  endif
-  return msgs
-endfunction
-
-function s:pad(string, ...) abort
-  let opts = get(a:, '1', { 'end': 1 , 'start': 1})
-  let opt_end = get(opts, 'end', 1)
-  let opt_start = get(opts, 'start', 1)
-  let end = opt_end ? ' ' : ''
-  let start = opt_start ? ' ' : ''
-  return strlen(a:string) > 0 ? start . a:string . end : ''
-endfunction
-
-function s:statusline_lsp_status() abort
-  let lsp_status = get(g:, 'coc_status', '')
-  let truncated = s:truncate_string(lsp_status)
-  return winwidth(0) > 100 ? trim(truncated) : ''
-endfunction
-
-function! s:statusline_current_fn() abort
-  let current = get(b:, 'coc_current_function', '')
-  let sanitized = s:sanitize_string(current)
-  let trunctated = s:truncate_string(sanitized, 30)
-  return winwidth(0) > 140 ? trim(trunctated) : ''
-endfunction
-
-function! s:statusline_git_status() abort
-  let prefix = ''
-  let window_size = winwidth(0)
-  let repo_status = get(g:, "coc_git_status", "")
-  let buffer_status = trim(get(b:, "coc_git_status", "")) " remove excess whitespace
-
-  let parts = split(repo_status)
-  if len(parts) > 0
-    let [prefix; rest] = parts
-    let repo_status = join(rest, " ")
-  endif
-
-  " branch name should not exceed 30 chars if the window is under 200 columns
-  if window_size < 200
-    let repo_status = s:truncate_statusline_component(repo_status, 30)
-  endif
-
-  let component = repo_status . " ". buffer_status
-  let length = strlen(component)
-  " if there is no branch info show nothing
-  if !strlen(repo_status) || window_size < 100
-    return ['', '']
-  endif
-  " if the window is small drop the buffer changes
-  if length > 30 && window_size < 140
-    return [prefix, repo_status]
-  endif
-    return [prefix, component]
-endfunction
 
 let s:st_warning  = {'color': '%#StWarning#', 'sep_color': '%#StWarningSep#' }
 
@@ -128,14 +20,14 @@ let s:comment_grey = '#5c6370'
 let s:inc_search_bg = synIDattr(hlID('Search'), 'bg')
 
 function! s:set_statusline_colors() abort
-  let s:normal_bg     = synIDattr(hlID('Normal'), 'bg')
-  let s:normal_fg     = synIDattr(hlID('Normal'), 'fg')
-  let s:pmenu_bg      = synIDattr(hlID('Pmenu'), 'bg')
-  let s:string_fg     = synIDattr(hlID('String'), 'fg')
-  let s:error_fg      = synIDattr(hlID('ErrorMsg'), 'fg')
-  let s:comment_fg    =  synIDattr(hlID('Comment'), 'fg')
-  let s:wildmenu_bg    =  synIDattr(hlID('Wildmenu'), 'bg')
-  let s:warning_fg    = g:colors_name =~ 'one' ?
+  let normal_bg      = synIDattr(hlID('Normal'), 'bg')
+  let normal_fg      = synIDattr(hlID('Normal'), 'fg')
+  let pmenu_bg       = synIDattr(hlID('Pmenu'), 'bg')
+  let string_fg      = synIDattr(hlID('String'), 'fg')
+  let error_fg       = synIDattr(hlID('ErrorMsg'), 'fg')
+  let comment_fg     = synIDattr(hlID('Comment'), 'fg')
+  let wildmenu_bg    = synIDattr(hlID('Wildmenu'), 'bg')
+  let warning_fg     = g:colors_name =~ 'one' ?
         \ s:light_yellow : synIDattr(hlID('WarningMsg'), 'fg')
 
   " NOTE: Unicode characters including vim devicons should NOT be highlighted
@@ -143,19 +35,19 @@ function! s:set_statusline_colors() abort
   " patched with the nerd font characters
   " terminal emulators like kitty handle this by fetching nerd fonts elsewhere
   " but this is not universal across terminals so should be avoided
-  silent! execute 'highlight StMetadata guifg='.s:comment_fg.' guibg=NONE gui=italic,bold'
-  silent! execute 'highlight StMetadataPrefix guifg='.s:comment_fg.' guibg=NONE gui=NONE'
-  silent! execute 'highlight StModified guifg='.s:string_fg.' guibg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StPrefix guibg='.s:pmenu_bg.' guifg='.s:normal_fg.' gui=NONE'
-  silent! execute 'highlight StPrefixSep guibg='.s:normal_bg.' guifg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StDirectory guibg='.s:normal_bg.' guifg=Gray gui=italic'
-  silent! execute 'highlight StFilename guibg='.s:normal_bg.' guifg=LightGray gui=italic,bold'
-  silent! execute 'highlight StFilenameInactive guifg='.s:comment_grey.' guibg='.s:normal_bg.' gui=italic,bold'
-  silent! execute 'highlight StItem guibg='.s:normal_fg.' guifg='.s:normal_bg.' gui=italic'
-  silent! execute 'highlight StSep guifg='.s:normal_fg.' guibg=NONE gui=NONE'
-  silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.s:normal_bg.' gui=bold'
-  silent! execute 'highlight StInfoSep guifg='.s:pmenu_bg.' guibg=NONE gui=NONE'
-  silent! execute 'highlight StInactive guifg='.s:normal_bg.' guibg='.s:comment_grey.' gui=NONE'
+  silent! execute 'highlight StMetadata guifg='.comment_fg.' guibg=NONE gui=italic,bold'
+  silent! execute 'highlight StMetadataPrefix guifg='.comment_fg.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StModified guifg='.string_fg.' guibg='.pmenu_bg.' gui=NONE'
+  silent! execute 'highlight StPrefix guibg='.pmenu_bg.' guifg='.normal_fg.' gui=NONE'
+  silent! execute 'highlight StPrefixSep guibg='.normal_bg.' guifg='.pmenu_bg.' gui=NONE'
+  silent! execute 'highlight StDirectory guibg='.normal_bg.' guifg=Gray gui=italic'
+  silent! execute 'highlight StFilename guibg='.normal_bg.' guifg=LightGray gui=italic,bold'
+  silent! execute 'highlight StFilenameInactive guifg='.s:comment_grey.' guibg='.normal_bg.' gui=italic,bold'
+  silent! execute 'highlight StItem guibg='.normal_fg.' guifg='.normal_bg.' gui=italic'
+  silent! execute 'highlight StSep guifg='.normal_fg.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StInfo guifg='.s:dark_blue.' guibg='.normal_bg.' gui=bold'
+  silent! execute 'highlight StInfoSep guifg='.pmenu_bg.' guibg=NONE gui=NONE'
+  silent! execute 'highlight StInactive guifg='.normal_bg.' guibg='.s:comment_grey.' gui=NONE'
   silent! execute 'highlight StInactiveSep guifg='.s:comment_grey.' guibg=NONE gui=NONE'
   " setting a statusline fillchar that the character or a replacement
   " with ">" appears in inactive windows because the statusline is the same color
@@ -163,61 +55,13 @@ function! s:set_statusline_colors() abort
   " https://vi.stackexchange.com/questions/2381/hi-statusline-cterm-none-displays-whitespace-characters
   " https://vi.stackexchange.com/questions/15873/carets-in-status-line
   " So instead we set the inactive statusline to have an underline
-  silent! execute 'highlight Statusline guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
-  silent! execute 'highlight StatuslineNC guifg=NONE guibg='.s:normal_bg.' gui=NONE cterm=NONE'
+  silent! execute 'highlight Statusline guifg=NONE guibg='.normal_bg.' gui=NONE cterm=NONE'
+  silent! execute 'highlight StatuslineNC guifg=NONE guibg='.normal_bg.' gui=NONE cterm=NONE'
   " Diagnostic highlights
-  silent! execute 'highlight StWarning guifg='.s:warning_fg.' guibg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StWarningSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=NONE'
-  silent! execute 'highlight StError guifg='.s:error_fg.' guibg='.s:pmenu_bg.' gui=NONE'
-  silent! execute 'highlight StErrorSep guifg='.s:pmenu_bg.' guibg='.s:normal_bg.' gui=NONE'
-endfunction
-
-function! s:sep(item, ...) abort
-  let opts = get(a:, '1', {})
-  let before = get(opts, 'before', ' ')
-  let prefix = get(opts, 'prefix', '')
-  let small = get(opts, 'small', 0)
-  let padding = get(opts, 'padding', 'prefix')
-  let item_color = get(opts, 'color', '%#StItem#')
-  let prefix_color = get(opts, 'prefix_color', '%#StPrefix#')
-  let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StPrefixSep#')
-
-  let sep_color = get(opts, 'sep_color', '%#StSep#')
-  let sep_color_left = strlen(prefix) ? prefix_sep_color : sep_color
-
-  let prefix_item = prefix_color . prefix
-  let item = a:item
-
-  " depending on how padding is specified extra space
-  " will be injected at specific points
-  if padding == 'prefix' || padding == 'full'
-    let prefix_item .= ' '
-  endif
-
-  if padding == 'full'
-    let item = ' ' . item
-  endif
-
-  " %* resets the highlighting at the end of the separator so it
-  " doesn't interfere with the next component
-  let sep_icon_right = small ? '%*' : '█%*'
-  let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
-
-  return before.
-        \ sep_color_left.
-        \ sep_icon_left.
-        \ item_color.
-        \ item.
-        \ sep_color.
-        \ sep_icon_right
-endfunction
-
-function! s:sep_if(item, condition, ...) abort
-  if !a:condition
-    return ''
-  endif
-  let l:opts = get(a:, '1', {})
-  return s:sep(a:item, l:opts)
+  silent! execute 'highlight StWarning guifg='.warning_fg.' guibg='.pmenu_bg.' gui=NONE'
+  silent! execute 'highlight StWarningSep guifg='.pmenu_bg.' guibg='.normal_bg.' gui=NONE'
+  silent! execute 'highlight StError guifg='.error_fg.' guibg='.pmenu_bg.' gui=NONE'
+  silent! execute 'highlight StErrorSep guifg='.pmenu_bg.' guibg='.normal_bg.' gui=NONE'
 endfunction
 
 function! s:mode() abort
@@ -262,45 +106,12 @@ function! s:mode_highlight(mode) abort
   endif
 endfunction
 
-" FIXME this functions should search through the
-" array and only apply this command for windows in column formation
-" Add underlines between stacked horizontal windows
-function! s:add_separators()
-  let [layout; rest] = winlayout()
-  let gui = layout ==# 'col' ? "underline" : "NONE"
-  silent! execute 'highlight Statusline gui='.gui
-  silent! execute 'highlight StatuslineNC gui='.gui
-endfunction
-
-function s:hl(hl) abort
-  return "%#".a:hl."#"
-endfunction
-
-func! s:item(component, hl, ...) abort
-  if !strlen(a:component)
-    return ''
-  endif
-  let opts = get(a:, '1', {})
-  let before = get(opts, 'before', '')
-  let after = get(opts, 'after', ' ')
-  let prefix = get(opts, 'prefix', '')
-  let prefix_color = get(opts, 'prefix_color', a:hl)
-  return before . s:hl(prefix_color) . prefix .' '
-        \ . s:hl(a:hl) . a:component . after . "%*"
-endfunc
-
-function s:item_if(item, condition, hl, ...) abort
-  if !a:condition
-    return ''
-  endif
-  return s:item(a:item, a:hl, get(a:, 1, {}))
-endfunction
-
 function! StatusLine() abort
   " use the statusline global variable which is set inside of statusline
   " functions to the window for *that* statusline
   let curbuf = winbufnr(g:statusline_winid)
-  " TODO reduce the available space whenever we addition
+
+  " TODO reduce the available space whenever we add
   " a component so we can use it to determine what to add
   let available_space = winwidth(g:statusline_winid)
 
@@ -322,7 +133,7 @@ function! StatusLine() abort
   let plain = statusline#is_plain(context)
 
   let current_mode = s:mode()
-  let line_info = s:line_info()
+  let line_info = statusline#line_info()
   let file_modified = statusline#modified(context, '●')
   let inactive = !has('nvim') ? 1 : nvim_get_current_win() != g:statusline_winid
   let focused = get(g: , 'vim_in_focus', 1)
@@ -355,21 +166,21 @@ function! StatusLine() abort
   "---------------------------------------------------------------------------//
   " show a minimal statusline with only the mode and file component
   if minimal
-    return s:item(title_component, 'StInactiveSep', {'prefix': ft_icon, 'before': ' '})
+    return statusline#item(title_component, 'StInactiveSep', {'prefix': ft_icon, 'before': ' '})
   endif
   "---------------------------------------------------------------------------//
   " Setup
   "---------------------------------------------------------------------------//
   let statusline = ""
-  let statusline .=  s:item(current_mode, 'StModeText', {'before': ''})
+  let statusline .=  statusline#item(current_mode, 'StModeText', {'before': ''})
 
-  let statusline .= s:item(title_component, 'StDirectory', {
+  let statusline .= statusline#item(title_component, 'StDirectory', {
         \ 'prefix': ft_icon,
         \ 'prefix_color': icon_highlight,
         \ 'after': '',
         \})
 
-  let statusline .= s:sep_if(file_modified, strlen(file_modified), {
+  let statusline .= statusline#sep_if(file_modified, strlen(file_modified), {
         \ 'small': 1,
         \ 'color': '%#StModified#',
         \ 'sep_color': '%#StPrefixSep#',
@@ -377,7 +188,7 @@ function! StatusLine() abort
 
   " If local plugins are loaded and I'm developing locally show an indicator
   let develop_text = available_space > 100 ? 'local dev' : ''
-  let statusline .= s:sep_if(
+  let statusline .= statusline#sep_if(
         \ develop_text,
         \ $DEVELOPING && available_space > 50,
         \ extend({
@@ -395,32 +206,32 @@ function! StatusLine() abort
   let statusline .= '%='
 
   " Git Status
-  let [prefix, git_status] = s:statusline_git_status()
-  let statusline .= s:item(git_status, 'StInfo', {'prefix': prefix})
+  let [prefix, git_status] = statusline#statusline_git_status()
+  let statusline .= statusline#item(git_status, 'StInfo', {'prefix': prefix})
 
   " LSP Diagnostics
-  let info = s:diagnostic_info()
-  let statusline .= s:item(info.error, 'Error')
-  let statusline .= s:item(info.warning, 'PreProc')
-  let statusline .= s:item(info.information, 'String')
+  let info = statusline#diagnostic_info()
+  let statusline .= statusline#item(info.error, 'Error')
+  let statusline .= statusline#item(info.warning, 'PreProc')
+  let statusline .= statusline#item(info.information, 'String')
 
   " LSP Status
-  let lsp_status = s:statusline_lsp_status()
-  let current_fn = s:statusline_current_fn()
+  let lsp_status = statusline#statusline_lsp_status()
+  let current_fn = statusline#statusline_current_fn()
 
-  let statusline .= s:item(lsp_status, "Comment")
-  let statusline .= s:item(current_fn, "StMetadata")
+  let statusline .= statusline#item(lsp_status, "Comment")
+  let statusline .= statusline#item(current_fn, "StMetadata")
 
   " Indentation
   let unexpected_indentation = context.shiftwidth > 2 || !context.expandtab
-  let statusline .= s:item_if(
+  let statusline .= statusline#item_if(
         \ context.shiftwidth,
         \ unexpected_indentation,
         \ 'Title',
         \ {'prefix': &expandtab ? 'Ξ' : '⇥', 'prefix_color': 'PmenuSbar'})
 
   " Current line number/total line number,  alternatives 
-  let statusline .= s:item_if(
+  let statusline .= statusline#item_if(
         \ line_info,
         \ strlen(line_info),
         \ 'StMetadata',

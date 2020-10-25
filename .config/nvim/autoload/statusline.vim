@@ -225,3 +225,194 @@ function! statusline#filetype(context) abort
   endif
   return [ft_icon, hl]
 endfunction
+
+" FIXME this functions should search through the
+" array and only apply this command for windows in column formation
+" Add underlines between stacked horizontal windows
+function! statusline#add_separators()
+  let [layout; rest] = winlayout()
+  let gui = layout ==# 'col' ? "underline" : "NONE"
+  silent! execute 'highlight Statusline gui='.gui
+  silent! execute 'highlight StatuslineNC gui='.gui
+endfunction
+
+function! statusline#file_encoding() abort
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function statusline#line_info() abort
+  " TODO This component should truncate from the left not right
+  return winwidth(0) > 120 ? '%.15(%l/%L %p%%%)' : ''
+endfunction
+
+" Sometimes special characters are passed into statusline components
+" this sanitizes theses strings to prevent them mangling the statusline
+" See: https://vi.stackexchange.com/questions/17704/how-to-remove-character-returned-by-system
+function! s:sanitize_string(item) abort
+  return substitute(a:item, '\n', '', 'g')
+endfunction
+
+function! s:truncate_string(item, ...) abort
+  let limit = get(a:, '1', 50)
+  let suffix = get(a: , '2', '…')
+  return strlen(a:item) > limit ? strpart(a:item, 0, limit) . suffix : a:item
+endfunction
+
+function! s:truncate_statusline_component(item, ...) abort
+  if !strlen(a:item)
+    return ''
+  endif
+  let limit = get(a:, '1', 50)
+  return '%.'.limit.'('.a:item.'%)'
+endfunction
+
+function statusline#diagnostic_info() abort
+  let msgs = {'error': '', 'warning': '', 'information': ''}
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info)
+    return msgs
+  endif
+
+  let warning_sign = get(g:, 'coc_status_warning_sign', 'W')
+  let error_sign = get(g:, 'coc_status_error_sign', 'E')
+  let information_sign = get(g:, 'coc_status_information_sign', '')
+
+  let has_error = get(info, 'error', 0)
+  let has_warning = get(info, 'warning', 0)
+  let has_information = get(info, 'information', 0)
+
+  if has_error
+    let msgs.error = error_sign . info['error']
+  endif
+  if has_warning
+    let msgs.warning =  warning_sign . info['warning']
+  endif
+  if has_information
+    let msgs.information = information_sign . info['information']
+  endif
+  return msgs
+endfunction
+
+function s:pad(string, ...) abort
+  let opts = get(a:, '1', { 'end': 1 , 'start': 1})
+  let opt_end = get(opts, 'end', 1)
+  let opt_start = get(opts, 'start', 1)
+  let end = opt_end ? ' ' : ''
+  let start = opt_start ? ' ' : ''
+  return strlen(a:string) > 0 ? start . a:string . end : ''
+endfunction
+
+function statusline#statusline_lsp_status() abort
+  let lsp_status = get(g:, 'coc_status', '')
+  let truncated = s:truncate_string(lsp_status)
+  return winwidth(0) > 100 ? trim(truncated) : ''
+endfunction
+
+function! statusline#statusline_current_fn() abort
+  let current = get(b:, 'coc_current_function', '')
+  let sanitized = s:sanitize_string(current)
+  let trunctated = s:truncate_string(sanitized, 30)
+  return winwidth(0) > 140 ? trim(trunctated) : ''
+endfunction
+
+function! statusline#statusline_git_status() abort
+  let prefix = ''
+  let window_size = winwidth(0)
+  let repo_status = get(g:, "coc_git_status", "")
+  let buffer_status = trim(get(b:, "coc_git_status", "")) " remove excess whitespace
+
+  let parts = split(repo_status)
+  if len(parts) > 0
+    let [prefix; rest] = parts
+    let repo_status = join(rest, " ")
+  endif
+
+  " branch name should not exceed 30 chars if the window is under 200 columns
+  if window_size < 200
+    let repo_status = s:truncate_statusline_component(repo_status, 30)
+  endif
+
+  let component = repo_status . " ". buffer_status
+  let length = strlen(component)
+  " if there is no branch info show nothing
+  if !strlen(repo_status) || window_size < 100
+    return ['', '']
+  endif
+  " if the window is small drop the buffer changes
+  if length > 30 && window_size < 140
+    return [prefix, repo_status]
+  endif
+  return [prefix, component]
+endfunction
+
+function statusline#hl(hl) abort
+  return "%#".a:hl."#"
+endfunction
+
+function! statusline#sep(item, ...) abort
+  let opts = get(a:, '1', {})
+  let before = get(opts, 'before', ' ')
+  let prefix = get(opts, 'prefix', '')
+  let small = get(opts, 'small', 0)
+  let padding = get(opts, 'padding', 'prefix')
+  let item_color = get(opts, 'color', '%#StItem#')
+  let prefix_color = get(opts, 'prefix_color', '%#StPrefix#')
+  let prefix_sep_color = get(opts, 'prefix_sep_color', '%#StPrefixSep#')
+
+  let sep_color = get(opts, 'sep_color', '%#StSep#')
+  let sep_color_left = strlen(prefix) ? prefix_sep_color : sep_color
+
+  let prefix_item = prefix_color . prefix
+  let item = a:item
+
+  " depending on how padding is specified extra space
+  " will be injected at specific points
+  if padding == 'prefix' || padding == 'full'
+    let prefix_item .= ' '
+  endif
+
+  if padding == 'full'
+    let item = ' ' . item
+  endif
+
+  " %* resets the highlighting at the end of the separator so it
+  " doesn't interfere with the next component
+  let sep_icon_right = small ? '%*' : '█%*'
+  let sep_icon_left = strlen(prefix) ? ''. prefix_item : small ? '' : '█'
+
+  return before.
+        \ sep_color_left.
+        \ sep_icon_left.
+        \ item_color.
+        \ item.
+        \ sep_color.
+        \ sep_icon_right
+endfunction
+
+function! statusline#sep_if(item, condition, ...) abort
+  if !a:condition
+    return ''
+  endif
+  let l:opts = get(a:, '1', {})
+  return statusline#sep(a:item, l:opts)
+endfunction
+
+func! statusline#item(component, hl, ...) abort
+  if !strlen(a:component)
+    return ''
+  endif
+  let opts = get(a:, '1', {})
+  let before = get(opts, 'before', '')
+  let after = get(opts, 'after', ' ')
+  let prefix = get(opts, 'prefix', '')
+  let prefix_color = get(opts, 'prefix_color', a:hl)
+  return before . statusline#hl(prefix_color) . prefix .' '
+        \ . statusline#hl(a:hl) . a:component . after . "%*"
+endfunc
+
+function statusline#item_if(item, condition, hl, ...) abort
+  if !a:condition
+    return ''
+  endif
+  return statusline#item(a:item, a:hl, get(a:, 1, {}))
+endfunction
