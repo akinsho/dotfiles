@@ -207,6 +207,8 @@ endfunction
 "--------------------------------------------------------------------------------
 " https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
 " c-a / c-e everywhere - RSI.vim provides these
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
 " TODO <C-A> allows you to insert all matches on the command line e.g. bd *.js <c-a>
 " will insert all matching files e.g. :bd a.js b.js c.js
 cnoremap <c-x><c-a> <c-a>
