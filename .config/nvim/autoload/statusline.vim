@@ -188,13 +188,15 @@ function s:set_ft_icon_highlight(hl, bg_hl) abort
   if !already_created
     let bg_color = synIDattr(hlID(a:bg_hl), 'bg')
     let fg_color = synIDattr(hlID(a:hl), 'fg')
-    let cmd = 'highlight '.name.' guibg='.bg_color.' guifg='.fg_color
-    silent execute cmd
-    execute 'augroup '.name
-    execute 'autocmd!'
-    execute 'autocmd ColorScheme * '.cmd
-    execute 'augroup END'
-    let s:icon_hl_cache[name] = 1
+    if strlen(bg_color) && strlen(fg_color)
+      let cmd = 'highlight '.name.' guibg='.bg_color.' guifg='.fg_color
+      silent execute cmd
+      execute 'augroup '.name
+      execute 'autocmd!'
+      execute 'autocmd ColorScheme * '.cmd
+      execute 'augroup END'
+      let s:icon_hl_cache[name] = 1
+    endif
   endif
   return name
 endfunction
