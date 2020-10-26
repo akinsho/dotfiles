@@ -306,7 +306,10 @@ function! CCR()
     return "\<CR>:"
   elseif cmdline =~ '\v\C^(dli|il)'
     " like :dlist or :ilist but prompts for a count for :djump or :ijump
-    return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
+    let parts = split(cmdline, " ")
+    return len(parts) >= 2 ?
+          \ "\<CR>:" . cmdline[0] . "j  " . parts[1] . "\<S-Left>\<Left>" :
+          \ "\<c-]>\<CR>"
   elseif cmdline =~ '\v\C^(cli|lli)'
     " like :clist or :llist but prompts for an error/location number
     return "\<CR>:sil " . repeat(cmdline[0], 2) . "\<Space>"
