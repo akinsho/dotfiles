@@ -129,17 +129,14 @@ endfunction
 function! s:update_tmux_statusline_colors() abort
   " Get the color of the current vim background and update tmux accordingly
   let bg_color = synIDattr(hlID('Normal'), 'bg')
-  call jobstart('tmux set-option -g status-style bg=' . bg_color)
   " TODO: on vim leave we should set this back to what it was
+  call jobstart('tmux set-option -g status-style bg=' . bg_color)
 endfunction
 
 if exists('$TMUX')
   augroup TmuxConfig
     au!
-    if has('nvim') " Figure out async api for vim to replicate this functionality
-      autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
-            \ if strlen(expand("%:t")) | call jobstart("tmux rename-window 'vim | " . expand("%:t") . "'") | endif
-      autocmd VimLeave * call jobstart('tmux setw automatic-rename')
+    if has('nvim')
       autocmd ColorScheme,FocusGained * call s:update_tmux_statusline_colors()
     endif
   augroup END
