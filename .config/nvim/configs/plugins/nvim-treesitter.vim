@@ -11,8 +11,8 @@ lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',
   highlight = {
-    enable = false,
-    disable = {"json", "dart"}
+    enable = true,
+    disable = {"json"}
   },
   incremental_selection = {
     enable = true,
