@@ -133,12 +133,19 @@ function! s:update_tmux_statusline_colors() abort
   " TODO: on vim leave we should set this back to what it was
 endfunction
 
+function s:set_tmux_window_title() abort
+  if strlen(expand("%:t"))
+    let [ft_icon; _] = statusline#get_devicon(bufname())
+    call jobstart("tmux rename-window 'nvim | " . ft_icon .' '. expand("%:t") . "'")
+  endif
+endfunction
+
 if exists('$TMUX')
   augroup TmuxConfig
     au!
     if has('nvim') " Figure out async api for vim to replicate this functionality
       autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
-            \ if strlen(expand("%:t")) | call jobstart("tmux rename-window 'vim | " . expand("%:t") . "'") | endif
+            \ call s:set_tmux_window_title()
       autocmd VimLeave * call jobstart('tmux setw automatic-rename')
       autocmd ColorScheme,FocusGained * call s:update_tmux_statusline_colors()
     endif

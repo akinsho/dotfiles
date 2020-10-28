@@ -158,7 +158,7 @@ lua << EOF
   end
 EOF
 
-function s:get_lua_devicon(bufname) abort
+function statusline#get_devicon(bufname) abort
   try
     let extension = fnamemodify(a:bufname, ':e')
     let icon_data = v:lua.__statusline_icon(a:bufname, extension)
@@ -217,7 +217,7 @@ function! statusline#filetype(context) abort
 
   if has('nvim')
     try
-      let [ft_icon, raw_hl] = s:get_lua_devicon(bufname(a:context.bufnum))
+      let [ft_icon, raw_hl] = statusline#get_devicon(bufname(a:context.bufnum))
       let hl = s:set_ft_icon_highlight(raw_hl, 'Normal')
     catch /.*/
       echoerr v:exception
