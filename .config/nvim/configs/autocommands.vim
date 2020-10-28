@@ -137,7 +137,10 @@ function s:set_tmux_window_title() abort
   if strlen(expand("%:t"))
     let [ft_icon, hl] = statusline#get_devicon(bufname())
     let color = synIDattr(hlID(hl), 'fg')
-    call jobstart("tmux rename-window 'nvim | " . '#[fg='.color.']' . ft_icon .' '. expand("%:t") . "'")
+    let title_color = synIDattr(hlID('Title'), 'fg')
+    call jobstart("tmux rename-window 'nvim | "
+          \ . '#[fg='.color.']' . ft_icon
+          \ .' #[fg='.title_color.']' . expand("%:t") . "'")
   endif
 endfunction
 
