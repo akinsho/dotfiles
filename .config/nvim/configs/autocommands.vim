@@ -138,7 +138,7 @@ function s:set_tmux_window_title() abort
     let [ft_icon, hl] = statusline#get_devicon(bufname())
     let color = synIDattr(hlID(hl), 'fg')
     let title_color = synIDattr(hlID('Title'), 'fg')
-    call jobstart("tmux rename-window 'nvim | "
+    call jobstart("tmux rename-window '[NVIM] "
           \ . '#[fg='.color.']' . ft_icon
           \ .' #[fg='.title_color.']' . expand("%:t") . "'")
   endif
@@ -150,7 +150,7 @@ if exists('$TMUX')
     if has('nvim') " Figure out async api for vim to replicate this functionality
       autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
             \ call s:set_tmux_window_title()
-      autocmd VimLeave * call jobstart('tmux setw automatic-rename')
+      autocmd VimLeave * call jobstart('tmux setw automatic-rename on')
       autocmd ColorScheme,FocusGained * call s:update_tmux_statusline_colors()
     endif
   augroup END
