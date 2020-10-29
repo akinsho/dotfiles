@@ -147,10 +147,10 @@ endfunction
 if exists('$TMUX')
   augroup TmuxConfig
     au!
-    if has('nvim') " Figure out async api for vim to replicate this functionality
-      autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter *
+    if has('nvim')
+      autocmd FocusGained,BufReadPost,FileReadPost,BufNewFile,BufEnter *
             \ call s:set_tmux_window_title()
-      autocmd VimLeave * call jobstart('tmux setw automatic-rename on')
+      autocmd FocusLost * call jobstart('tmux set-window-option automatic-rename on')
       autocmd ColorScheme,FocusGained * call s:update_tmux_statusline_colors()
     endif
   augroup END
