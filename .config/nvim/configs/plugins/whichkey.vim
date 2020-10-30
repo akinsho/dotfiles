@@ -169,6 +169,8 @@ let g:which_localleader_key_map = {
       \   'cm':      'checkout master',
       \   'cl':      'commit log',
       \   'd':       'git diff (split)',
+			\   'dt':      'git difftool (against HEAD)',
+			\   'da':     'git difftool -y (against HEAD)',
       \   'l':       'git pull (non-async)',
       \   'o':       'git checkout <branchname>',
       \   'v':       'coc: view commit',
