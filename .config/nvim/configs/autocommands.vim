@@ -133,12 +133,15 @@ function! s:update_tmux_statusline_colors() abort
   " TODO: on vim leave we should set this back to what it was
 endfunction
 
-function s:set_tmux_window_title() abort
+function! s:set_tmux_window_title() abort
   if strlen(expand("%:t"))
     let [ft_icon, hl] = statusline#get_devicon(bufname())
     let color = synIDattr(hlID(hl), 'fg')
     let title_color = synIDattr(hlID('Title'), 'fg')
-    call jobstart("tmux rename-window '[NVIM] "
+
+    let session_name = fnamemodify(v:this_session, ':t')
+    let s:tmux_title_id = jobstart("tmux rename-window '"
+          \ . session_name . ' • '
           \ . '#[fg='.color.']' . ft_icon
           \ .' #[fg='.title_color.']' . expand("%:t") . "'")
   endif
@@ -150,7 +153,7 @@ if exists('$TMUX')
     if has('nvim')
       autocmd FocusGained,BufReadPost,FileReadPost,BufNewFile,BufEnter *
             \ call s:set_tmux_window_title()
-      autocmd FocusLost * call jobstart('tmux set-window-option automatic-rename on')
+      autocmd VimLeave * call jobstart('tmux set-window-option automatic-rename on')
       autocmd ColorScheme,FocusGained * call s:update_tmux_statusline_colors()
     endif
   augroup END
