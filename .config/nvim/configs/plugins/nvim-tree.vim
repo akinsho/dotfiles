@@ -33,6 +33,5 @@ highlight link LuaTreeIndentMarker Comment
 
 augroup LuaTreeOverrides
   autocmd!
-  autocmd FileType LuaTree setlocal nowrap
   autocmd ColorScheme * highlight LuaTreeRootFolder gui=bold,italic
 augroup END
