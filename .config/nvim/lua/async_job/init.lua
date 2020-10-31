@@ -23,230 +23,230 @@ local last_open_window = -1
 --- @param job string
 --- @param _ boolean
 --- @param data table
-function on_read(job, _, data)
-  if data then
-    if not job then
-      api.nvim_err_writeln(msg_prefix..'failed to find existing job with id '..job)
-      return
-    end
-    for _, value in ipairs(data) do
-      table.insert(job.data, value)
-    end
-  end
+local function on_read(job, _, data)
+	if data then
+		if not job then
+			api.nvim_err_writeln(msg_prefix..'failed to find existing job with id '..job)
+			return
+		end
+		for _, value in ipairs(data) do
+			table.insert(job.data, value)
+		end
+	end
 end
 
 --- @param buf_id number
 --- @param hl string
 --- @param lines table
-function add_highlight(buf_id, hl, lines)
-  local namespace_id = api.nvim_create_namespace('async-job')
-  for _, line in ipairs(lines) do
-    api.nvim_buf_add_highlight(
-      buf_id,
-      namespace_id,
-      hl,
-      line.number,
-      line.column_start,
-      line.column_end
-    )
-  end
+local function add_highlight(buf_id, hl, lines)
+	local namespace_id = api.nvim_create_namespace('async-job')
+	for _, line in ipairs(lines) do
+		api.nvim_buf_add_highlight(
+			buf_id,
+			namespace_id,
+			hl,
+			line.number,
+			line.column_start,
+			line.column_end
+			)
+	end
 end
 
 --- @param title string
 --- @param data table
 --- @param width number
-function format_data(title, data, width)
-  local formatted = {}
-  -- If title is too long it should be truncated
-  local remainder = width - string.len(title)
-  local side_size = math.floor(remainder / 2) - 1
-  local side = string.rep(" ", side_size)
-  local heading = side .. title ..side
+local function format_data(title, data, width)
+	local formatted = {}
+	-- If title is too long it should be truncated
+	local remainder = width - string.len(title)
+	local side_size = math.floor(remainder / 2) - 1
+	local side = string.rep(" ", side_size)
+	local heading = side .. title ..side
 
-  if string.len(heading) ~= width - 2 then
-    local offset = (width - 2) - string.len(heading)
-    heading = heading .. string.rep(" ", offset)
-  end
+	if string.len(heading) ~= width - 2 then
+		local offset = (width - 2) - string.len(heading)
+		heading = heading .. string.rep(" ", offset)
+	end
 
-  local top = "╔" .. string.rep("═", width - 2)  .. "╗"
-  local mid = "║" ..         heading             .. "║"
-  local bot = "╚" .. string.rep("═", width - 2)  .. "╝"
+	local top = "╔" .. string.rep("═", width - 2)  .. "╗"
+	local mid = "║" ..         heading             .. "║"
+	local bot = "╚" .. string.rep("═", width - 2)  .. "╝"
 
-  for _, item in ipairs(data) do
-    table.insert(formatted , " " .. item .. " ")
-  end
-  return vim.list_extend({top, mid, bot}, formatted)
+	for _, item in ipairs(data) do
+		table.insert(formatted , " " .. item .. " ")
+	end
+	return vim.list_extend({top, mid, bot}, formatted)
 end
 
 -- TODO find a way to dismiss oldest window if messages collide
 --- @param job table
-function open_window(job, code)
-    local width = 60
-    local statusline_padding = 2
-    local row = vim.o.lines - vim.o.cmdheight - statusline_padding
-    if last_open_window > -1 then
-      local config = api.nvim_win_get_config(last_open_window)
-      row = row - config.height - 1
-    end
+local function open_window(job, code)
+	local width = 60
+	local statusline_padding = 2
+	local row = vim.o.lines - vim.o.cmdheight - statusline_padding
+	if last_open_window > -1 then
+		local config = api.nvim_win_get_config(last_open_window)
+		row = row - config.height - 1
+	end
 
-    for _, line in pairs(job.data) do
-        local line_length = string.len(line)
-        if line_length > width and line_length < vim.o.columns / 2 then
-          width = string.len(line) + 2
-        end
-    end
-    local data = format_data(job.cmd, job.data, width)
+	for _, line in pairs(job.data) do
+		local line_length = string.len(line)
+		if line_length > width and line_length < vim.o.columns / 2 then
+			width = string.len(line) + 2
+		end
+	end
+	local data = format_data(job.cmd, job.data, width)
 
-    local num_lines = table.getn(data)
-    local height =  num_lines < 15 and num_lines or 15
+	local num_lines = table.getn(data)
+	local height =  num_lines < 15 and num_lines or 15
 
-    local buf = api.nvim_create_buf(false, true)
-    api.nvim_buf_set_lines(buf, 0, -1, false, data)
-    local opts = {
-      relative = 'editor',
-      width = width,
-      height = height,
-      col = vim.o.columns,
-      row = row,
-      anchor = 'SE',
-      style = 'minimal'
-    }
-    local highlight = code > 0 and 'Identifier' or 'Question'
+	local buf = api.nvim_create_buf(false, true)
+	api.nvim_buf_set_lines(buf, 0, -1, false, data)
+	local opts = {
+		relative = 'editor',
+		width = width,
+		height = height,
+		col = vim.o.columns,
+		row = row,
+		anchor = 'SE',
+		style = 'minimal'
+	}
+	local highlight = code > 0 and 'Identifier' or 'Question'
 
-    add_highlight(buf, highlight, {
-        {number = 0, column_end = -1, column_start = 0},
-        {number = 1, column_end = -1, column_start = 0},
-        {number = 2, column_end = -1, column_start = 0},
-      })
-    local win = api.nvim_open_win(buf, false, opts)
-    api.nvim_buf_set_option(buf, 'modifiable', false)
-    vim.wo[win].wrap = true
-    vim.wo[win].winblend = 10
+	add_highlight(buf, highlight, {
+			{number = 0, column_end = -1, column_start = 0},
+			{number = 1, column_end = -1, column_start = 0},
+			{number = 2, column_end = -1, column_start = 0},
+		})
+	local win = api.nvim_open_win(buf, false, opts)
+	api.nvim_buf_set_option(buf, 'modifiable', false)
+	vim.wo[win].wrap = true
+	vim.wo[win].winblend = 10
 
-    last_open_window = win
-    return win
+	last_open_window = win
+	return win
 end
 
 ---@param msg string
 ---@param hl string
-function echo(msg, hl)
-  vim.cmd("echohl ".. hl)
-  vim.cmd("echo ".. vim.fn.shellescape(msg))
-  vim.cmd("echohl clear")
+local function echo(msg, hl)
+	vim.cmd("echohl ".. hl)
+	vim.cmd("echo ".. vim.fn.shellescape(msg))
+	vim.cmd("echohl clear")
 end
 
 local function save_urls(lines)
-  local matches = {}
-  for _, line in ipairs(lines) do
-    local match = line:match("^[https?://]+%w+%.%w+[/%w_%.%s*(%%20)(%-)]+$")
-    if match then table.insert(matches, {
-          module = "Async Job ",
-          text = match,
-          pattern = 'URL',
-          valid = false,
-      }) end
-  end
-  if table.getn(matches) > 0 then
-    vim.fn.setqflist(matches)
-    vim.cmd(':copen')
-  end
+	local matches = {}
+	for _, line in ipairs(lines) do
+		local match = line:match("^[https?://]+%w+%.%w+[/%w_%.%s*(%%20)(%-)]+$")
+		if match then table.insert(matches, {
+					module = "Async Job ",
+					text = match,
+					pattern = 'URL',
+					valid = false,
+			}) end
+	end
+	if table.getn(matches) > 0 then
+		vim.fn.setqflist(matches)
+		vim.cmd(':copen')
+	end
 end
 
 --- @param job table
-function handle_result(job, code, auto_close)
-  local num_of_lines = table.getn(job.data)
-  -- if the output is more than a few lines longer than
-  -- the command msg area open a window
-  if num_of_lines > vim.o.cmdheight + 2 then
-    save_urls(job.data)
-    local win_id = open_window(job, code)
-    -- TODO figure out how to update fugitive
-    -- vim.cmd('doautocmd User FugitiveChanged')
-    -- only automatically close window if successful
-    local timeout = code == 0 and 10000 or 15000
-    if auto_close then
-      vim.defer_fn(function()
-        -- clear the last open window
-        last_open_window = -1
-        api.nvim_win_close(win_id, true)
-      end, timeout)
-    end
-  else
-    local default_msg = job.cmd
-    if code > 0 then
-      default_msg = default_msg .. ' exited with code: '.. code
-    else
-      default_msg = default_msg .. ' completed successfully'
-    end
-    local msg = num_of_lines > 0 and table.concat(job.data, '\n') or default_msg
-    echo(msg, "Title")
-  end
-  jobs[job.pid] = nil
+local function handle_result(job, code, auto_close)
+	local num_of_lines = table.getn(job.data)
+	-- if the output is more than a few lines longer than
+	-- the command msg area open a window
+	if num_of_lines > vim.o.cmdheight + 2 then
+		save_urls(job.data)
+		local win_id = open_window(job, code)
+		-- TODO figure out how to update fugitive
+		-- vim.cmd('doautocmd User FugitiveChanged')
+		-- only automatically close window if successful
+		local timeout = code == 0 and 10000 or 15000
+		if auto_close then
+			vim.defer_fn(function()
+				-- clear the last open window
+				last_open_window = -1
+				api.nvim_win_close(win_id, true)
+			end, timeout)
+	end
+else
+	local default_msg = job.cmd
+	if code > 0 then
+		default_msg = default_msg .. ' exited with code: '.. code
+	else
+		default_msg = default_msg .. ' completed successfully'
+	end
+	local msg = num_of_lines > 0 and table.concat(job.data, '\n') or default_msg
+	echo(msg, "Title")
+end
+jobs[job.pid] = nil
 end
 
 --- @param cmd string
 --- @param count number @comment count's default is 0
 function M.exec(cmd, count)
-  local auto_close = true
-  if type(count) == "number" and count > 0 then
-    auto_close = false
-  end
+	local auto_close = true
+	if type(count) == "number" and count > 0 then
+		auto_close = false
+	end
 
-  ---@param pid number
-  ---@param data table
-  ---@param name string
-  local handle_read = function (pid, data, name)
-    if name == 'stdout' then
-      on_read(jobs[pid], false, data)
-    else
-      on_read(jobs[pid], true, data)
-    end
-  end
+	---@param pid number
+	---@param data table
+	---@param name string
+	local handle_read = function (pid, data, name)
+		if name == 'stdout' then
+			on_read(jobs[pid], false, data)
+		else
+			on_read(jobs[pid], true, data)
+		end
+	end
 
-  ---@param pid number
-  ---@param code number
-  ---@param _ string
-  function handle_exit(pid, code, _)
-      code = code or 0
-      handle_result(jobs[pid], code, auto_close)
-  end
+	---@param pid number
+	---@param code number
+	---@param _ string
+	local function handle_exit(pid, code, _)
+		code = code or 0
+		handle_result(jobs[pid], code, auto_close)
+	end
 
-  local pid = vim.fn.jobstart(cmd, {
-      on_stdout = handle_read,
-      on_stderr = handle_read,
-      on_exit = handle_exit,
-    })
+	local pid = vim.fn.jobstart(cmd, {
+			on_stdout = handle_read,
+			on_stderr = handle_read,
+			on_exit = handle_exit,
+		})
 
-  jobs[pid] = {
-    cmd = cmd,
-    pid = pid,
-    data = {},
-  }
-  return pid
+	jobs[pid] = {
+		cmd = cmd,
+		pid = pid,
+		data = {},
+	}
+	return pid
 end
 
 ---@param pid number
 function M.wait(pid)
-  return vim.fn.jobwait({pid})
+	return vim.fn.jobwait({pid})
 end
 
 ---@param cmds table<string>
 function M.execSync(cmds)
-  for _, cmd in ipairs(cmds) do
-    local pid = M.exec(cmd, 0)
-    local result = M.wait(pid)
-    if result[1] > 0 then
-      local err_cmd = string.format('echoerr "Failed to complete task %s"', cmd)
-      local escaped_cmd = string.format("%q", err_cmd)
-      vim.cmd(escaped_cmd)
-      return
-    end
-  end
+	for _, cmd in ipairs(cmds) do
+		local pid = M.exec(cmd, 0)
+		local result = M.wait(pid)
+		if result[1] > 0 then
+			local err_cmd = string.format('echoerr "Failed to complete task %s"', cmd)
+			local escaped_cmd = string.format("%q", err_cmd)
+			vim.cmd(escaped_cmd)
+			return
+		end
+	end
 end
 
 function M.introspect()
-  print("Existing jobs -> "..vim.inspect(jobs))
-  return jobs
+	print("Existing jobs -> "..vim.inspect(jobs))
+	return jobs
 end
 
 return M
