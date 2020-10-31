@@ -139,7 +139,8 @@ function! s:set_tmux_window_title() abort
     let color = synIDattr(hlID(hl), 'fg')
     let title_color = synIDattr(hlID('Title'), 'fg')
 
-    let session_name = fnamemodify(v:this_session, ':t')
+    let session = strlen(v:this_session) ? v:this_session : 'no session'
+    let session_name = fnamemodify(session, ':t')
     let s:tmux_title_id = jobstart("tmux rename-window '"
           \ . session_name . ' • '
           \ . '#[fg='.color.']' . ft_icon
