@@ -154,10 +154,12 @@ if has('nvim')
     Plug '~/Desktop/Coding/nvim-web-devicons'
     Plug '~/Desktop/Coding/nvim-tree.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
+    Plug '~/Desktop/Coding/dependency-assist.nvim'
   else
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'akinsho/nvim-toggleterm.lua'
     Plug 'akinsho/nvim-bufferline.lua'
+    Plug 'akinsho/dependency-assist.nvim', {'branch': 'main'}
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kyazdani42/nvim-tree.lua'
   endif
