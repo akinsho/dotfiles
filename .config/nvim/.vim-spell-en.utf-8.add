@@ -183,3 +183,15 @@ ultisnips
 vimwiki
 mixin
 Ok
+Buf
+buf
+fallback
+bool
+Wipeout
+ui
+Levenshtein
+utils
+levenshtein
+guifg
+gui
+yaml
