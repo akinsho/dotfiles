@@ -293,6 +293,7 @@ set scrolloff=9 sidescrolloff=10 sidescroll=1 nostartofline " Stops some cursor 
 "====================================================================================
 set spellfile=$DOTFILES/.config/nvim/.vim-spell-en.utf-8.add
 set spellsuggest+=12
+set spelloptions=camel
 if has('syntax')
   " don't check for capital letters at start of sentence
   set spellcapcheck=
