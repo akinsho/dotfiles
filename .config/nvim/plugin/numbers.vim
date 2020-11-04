@@ -38,8 +38,6 @@ augroup ToggleRelativeLineNumbers
   autocmd WinNew      * call numbers#enable_relative_number()
   autocmd WinEnter    * call numbers#enable_relative_number()
   autocmd WinLeave    * call numbers#disable_relative_number()
-  autocmd BufWinEnter * call numbers#enable_relative_number()
-  autocmd BufWinLeave * call numbers#disable_relative_number()
   autocmd FocusLost   * call numbers#disable_relative_number()
   autocmd FocusGained * call numbers#enable_relative_number()
   autocmd InsertEnter * call numbers#disable_relative_number()
