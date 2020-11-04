@@ -641,3 +641,11 @@ nnoremap <leader>E :Token<cr>
 
 nmap <silent> <ScrollWheelDown> <c-d>
 nmap <silent> <ScrollWheelUp>   <c-u>
+
+" "in number" (next number after cursor on current line)
+xnoremap <silent> in :<c-u>call utils#in_number()<cr>
+onoremap <silent> in :<c-u>call utils#in_number()<cr>
+
+" "around number" (next number on line and possible surrounding white-space)
+xnoremap <silent> an :<c-u>call utils#around_number()<cr>
+onoremap <silent> an :<c-u>call utils#around_number()<cr>
