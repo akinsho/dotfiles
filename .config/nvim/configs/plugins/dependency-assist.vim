@@ -3,7 +3,5 @@ if !PluginLoaded('dependency-assist.nvim')
 endif
 
 lua << EOF
-  require'dependency_assist'.setup{
-    key = '<C-P>'
-  }
+  require'dependency_assist'.setup{}
 EOF
