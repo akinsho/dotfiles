@@ -186,9 +186,13 @@ if has('nvim-0.5')
   augroup END
 endif
 
+function s:should_show_cursorline() abort
+  return &buftype !=? 'terminal' && &ft != ''
+endfunction
+
 augroup Cursorline
   autocmd!
-  autocmd BufEnter * if &buftype !=? 'terminal' | setlocal cursorline | endif
+  autocmd BufEnter * if s:should_show_cursorline() | setlocal cursorline | endif
   autocmd BufLeave * setlocal nocursorline
 augroup END
 
