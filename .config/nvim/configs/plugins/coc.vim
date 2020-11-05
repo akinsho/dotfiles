@@ -283,7 +283,7 @@ augroup END
 " Formatting
 ""---------------------------------------------------------------------------//
 " Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=0 CocFormat :call CocActionAsync('format')
 ""---------------------------------------------------------------------------//
 " Folds {{{1
 ""---------------------------------------------------------------------------//

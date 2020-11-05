@@ -143,7 +143,9 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
+  Plug 'kyazdani42/nvim-tree.lua'
   if !has('mac')
+    Plug 'lukas-reineke/format.nvim'
     " Plugin for visualising the tree sitter tree whilst developing
     Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
@@ -152,7 +154,6 @@ if has('nvim')
     Plug '~/Desktop/Coding/nvim-toggleterm.lua'
     Plug '~/Desktop/Coding/nvim-bufferline.lua'
     Plug '~/Desktop/Coding/nvim-web-devicons'
-    Plug '~/Desktop/Coding/nvim-tree.lua'
     Plug '~/Desktop/Coding/nvim-treesitter'
     Plug '~/Desktop/Coding/dependency-assist.nvim'
   else
@@ -161,7 +162,6 @@ if has('nvim')
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'akinsho/dependency-assist.nvim', {'branch': 'main'}
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'kyazdani42/nvim-tree.lua'
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
