@@ -103,11 +103,10 @@ augroup coc_commands
   autocmd VimEnter * call s:coc_init()
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  " Update signature help on jump placeholder
-  autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
+	" Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Setup formatexpr specified filetype(s).
   autocmd FileType go,dart,vim,javascript,typescript setlocal formatexpr=CocActionAsync('formatSelected')
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
   " Suggestions don't work and are not needed in the command line window
   autocmd CmdwinEnter * let b:coc_suggest_disable = 1
