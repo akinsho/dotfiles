@@ -34,6 +34,6 @@ snippet param "Add annotation" b
 --- @param ${1:name} ${2:type}
 endsnippet
 
-snippet vi "vim inspect" b
-print(vim.inspect(${1:arg}))
+snippet vi "vim inspect" i
+print("${1:arg}:"..vim.inspect(${1:arg}))
 endsnippet
