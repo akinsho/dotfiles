@@ -1,4 +1,3 @@
-" Helpers -- generalise the methods for checking a ft or buftype
 let s:plain_filetypes = [
       \ 'help',
       \ 'ctrlsf',
@@ -6,6 +5,7 @@ let s:plain_filetypes = [
       \ 'tsplayground',
       \ 'coc-explorer',
       \ 'LuaTree',
+      \ 'undotree',
       \ 'neoterm',
       \ 'vista',
       \ 'fugitive',
@@ -150,12 +150,10 @@ endfunction
 " this is required since devicons returns 2 values which need to be collected
 " into a table before they can be read out in vimscript
 lua << EOF
-  _G.__statusline_icon = function(name, extension)
-    local icon, hl = require'nvim-web-devicons'.get_icon(name, extension, {
-      default = true
-    })
+function _G.__statusline_icon(name, extension)
+    local icon, hl = require "nvim-web-devicons".get_icon(name, extension, {default = true})
     return {icon, hl}
-  end
+end
 EOF
 
 function statusline#get_devicon(bufname) abort
