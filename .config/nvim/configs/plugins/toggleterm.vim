@@ -1,9 +1,15 @@
 "--------------------------------------------------------------------------------
 " Mappings
 "--------------------------------------------------------------------------------
-let g:toggleterm_terminal_mapping = '<c-\>'
-" let g:toggleterm_shade_filetypes = []
-
-command! ResetToggleTerm :ResetLuaPlugin "^nvim%-toggleterm%.lua"<CR>
+command! ResetToggleTerm :ResetLuaPlugin '^nvim%-toggleterm%.lua'<CR>
 command! -count=1 TermGitPush lua require'toggleterm'.exec("git push", <count>, 12)
 command! -count=1 TermGitPushF lua require'toggleterm'.exec("git push -f", <count>, 12)
+
+lua << EOF
+require"toggleterm".setup{
+  size = 55,
+  open_mapping = [[<c-\>]],
+  shade_filetypes = {},
+  direction = 'vertical',
+}
+EOF
