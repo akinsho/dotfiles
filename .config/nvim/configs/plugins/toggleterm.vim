@@ -7,9 +7,8 @@ command! -count=1 TermGitPushF lua require'toggleterm'.exec("git push -f", <coun
 
 lua << EOF
 require"toggleterm".setup{
-  size = 55,
+  size = 15,
   open_mapping = [[<c-\>]],
   shade_filetypes = {},
-  direction = 'vertical',
 }
 EOF
