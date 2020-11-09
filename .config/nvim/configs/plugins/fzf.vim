@@ -17,7 +17,7 @@
 
 " since this mutates an environment variable we check that it has already
 " been appended before attempting to append it again
-let opts = ' --bind=ctrl-a:select-all --layout=reverse --margin=5%,5%'
+let opts = ' --bind=ctrl-a:select-all --layout=reverse'
 if stridx(expand('$FZF_DEFAULT_OPTS'), opts) == -1
   let $FZF_DEFAULT_OPTS .= opts
 endif
@@ -46,7 +46,7 @@ let g:fzf_buffers_jump    = 0
 " bg+ controls the highlight of the selected item
 let g:fzf_colors = {
       \ 'fg':      ['fg', 'Normal'],
-      \ 'border':  ['fg', 'VertSplit'],
+      \ 'border':  ['fg', 'Comment'],
       \ 'hl':      ['fg', 'Comment'],
       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
       \ 'bg+':     ['bg', 'Visual', 'PmenuSel', 'CursorColumn'],
@@ -60,7 +60,7 @@ let g:fzf_colors = {
       \}
 
 " Always enable preview window on the right with 60% width
-let g:fzf_preview_window = 'right:50%'
+let g:fzf_preview_window = 'right:55%'
 
 " Make fzf floating window quasi transparent in Neovim
 if exists('&winblend')
@@ -73,7 +73,7 @@ endif
 " Border style (rounded / sharp / horizontal)
 let g:fzf_layout = {
       \ 'window': {
-      \   'width': 0.9,
+      \   'width': 0.8,
       \   'height': 0.7,
       \   'border': 'rounded'
       \   }
