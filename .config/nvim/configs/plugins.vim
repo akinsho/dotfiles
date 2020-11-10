@@ -149,6 +149,8 @@ if has('nvim')
     " Plugin for visualising the tree sitter tree whilst developing
     Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
+    Plug 'p00f/nvim-ts-rainbow'
+    Plug 'nvim-treesitter/nvim-treesitter'
   endif
   if $DEVELOPING
     Plug '~/Desktop/Coding/nvim-toggleterm.lua'
@@ -156,11 +158,9 @@ if has('nvim')
     Plug '~/Desktop/Coding/nvim-web-devicons'
     Plug '~/Desktop/Coding/nvim-treesitter'
     Plug '~/Desktop/Coding/dependency-assist.nvim'
-    Plug '~/Desktop/nvim-tree.lua'
+    Plug '~/Desktop/Coding/nvim-tree.lua'
   else
     Plug 'kyazdani42/nvim-tree.lua'
-    " Plug 'p00f/nvim-ts-rainbow'
-    Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'akinsho/nvim-toggleterm.lua'
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'akinsho/dependency-assist.nvim'

@@ -11,7 +11,7 @@ lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
   highlight = {
-    enable = false,
+    enable = true,
     disable = {"json"}
   },
   incremental_selection = {
@@ -23,10 +23,10 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = 'grm',       -- decrement to the previous node
     }
   },
-  -- rainbow = {
-  --   enable = true,
-  --   disable = {'lua'}
-  -- }
+  rainbow = {
+    enable = true,
+    disable = {'lua'}
+  }
 }
 
 -- Disable parentheses highlights
