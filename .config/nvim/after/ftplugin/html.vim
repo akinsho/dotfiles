@@ -6,3 +6,5 @@ setlocal indentkeys-=*<Return>
 
 " Make lines longer, and don't break them automatically
 setlocal tw=120 linebreak textwidth=0
+setlocal nowrap
+setlocal matchpairs+=<:>
