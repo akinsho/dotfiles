@@ -42,7 +42,5 @@ augroup ToggleRelativeLineNumbers
   autocmd FocusGained * call numbers#enable_relative_number()
   autocmd InsertEnter * call numbers#disable_relative_number()
   autocmd InsertLeave * call numbers#enable_relative_number()
-  autocmd FileType    * if !&l:number
-        \ | call numbers#enable_relative_number()
-        \ | endif
+  autocmd FileType    * call numbers#enable_relative_number()
 augroup end
