@@ -32,14 +32,16 @@ endfunction
 
 function! numbers#enable_relative_number()
   if s:is_blacklisted()
-    return
+    setlocal nonumber norelativenumber
+  else
+    setlocal number relativenumber
   endif
-  setlocal number relativenumber
 endfunction
 
 function! numbers#disable_relative_number()
   if s:is_blacklisted()
-    return
+    setlocal nonumber norelativenumber
+  else
+    setlocal number norelativenumber
   endif
-  setlocal number norelativenumber
 endfunction

@@ -29,18 +29,13 @@ let g:number_buftype_exclusions = [
       \ 'acwrite'
       \ ]
 
-call numbers#enable_relative_number()
-
 augroup ToggleRelativeLineNumbers
   autocmd!
-  autocmd BufReadPost * call numbers#enable_relative_number()
-  autocmd BufNewFile  * call numbers#enable_relative_number()
-  autocmd WinNew      * call numbers#enable_relative_number()
-  autocmd WinEnter    * call numbers#enable_relative_number()
-  autocmd WinLeave    * call numbers#disable_relative_number()
-  autocmd FocusLost   * call numbers#disable_relative_number()
+  autocmd BufEnter    * call numbers#enable_relative_number()
+  autocmd BufLeave    * call numbers#disable_relative_number()
+  autocmd FileType    * call numbers#enable_relative_number()
   autocmd FocusGained * call numbers#enable_relative_number()
+  autocmd FocusLost   * call numbers#disable_relative_number()
   autocmd InsertEnter * call numbers#disable_relative_number()
   autocmd InsertLeave * call numbers#enable_relative_number()
-  autocmd FileType    * call numbers#enable_relative_number()
 augroup end
