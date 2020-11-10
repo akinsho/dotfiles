@@ -85,6 +85,7 @@ nnoremap <silent><localleader>gbl :Git blame --date=short<CR>
 " Blame specific visual range
 vnoremap <silent><localleader>gbl :Gblame --date=short<CR>
 nnoremap <silent><localleader>gd  :Gdiffsplit<CR>
+nnoremap <silent><localleader>gdc :call fugitive#DiffClose()<CR>
 nnoremap <silent><localleader>gdt :G difftool<CR>
 nnoremap <silent><localleader>gda :G difftool -y<CR>
 nnoremap <silent><localleader>gc  :Git commit<CR>
