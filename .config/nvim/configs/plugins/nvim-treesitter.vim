@@ -9,7 +9,7 @@ highlight TSParameter gui=italic,bold
 " be careful when applying any functionality to a filetype as it might not work
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = 'all',
+  ensure_installed = 'maintained',
   highlight = {
     enable = false,
     disable = {"json"}
@@ -23,6 +23,10 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = 'grm',       -- decrement to the previous node
     }
   },
+  -- rainbow = {
+  --   enable = true,
+  --   disable = {'lua'}
+  -- }
 }
 
 -- Disable parentheses highlights

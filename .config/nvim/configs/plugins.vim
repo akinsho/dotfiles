@@ -144,7 +144,6 @@ Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
 if has('nvim')
-  Plug 'kyazdani42/nvim-tree.lua'
   if !has('mac')
     Plug 'lukas-reineke/format.nvim'
     " Plugin for visualising the tree sitter tree whilst developing
@@ -157,7 +156,10 @@ if has('nvim')
     Plug '~/Desktop/Coding/nvim-web-devicons'
     Plug '~/Desktop/Coding/nvim-treesitter'
     Plug '~/Desktop/Coding/dependency-assist.nvim'
+    Plug '~/Desktop/nvim-tree.lua'
   else
+    Plug 'kyazdani42/nvim-tree.lua'
+    " Plug 'p00f/nvim-ts-rainbow'
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'akinsho/nvim-toggleterm.lua'
     Plug 'akinsho/nvim-bufferline.lua'
