@@ -161,7 +161,7 @@ if has('nvim')
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'akinsho/nvim-toggleterm.lua'
     Plug 'akinsho/nvim-bufferline.lua'
-    Plug 'akinsho/dependency-assist.nvim', {'branch': 'main'}
+    Plug 'akinsho/dependency-assist.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
   endif
 else
