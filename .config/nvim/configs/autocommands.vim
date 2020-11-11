@@ -134,20 +134,17 @@ function! s:update_tmux_statusline_colors() abort
 endfunction
 
 function! s:color(item, color) abort
-  return '#[fg='.a:color.']'.a:item
+  return ''.a:item
 endfunction
 
 function! s:set_tmux_window_title() abort
   let fname = expand("%:t")
   if strlen(fname)
-    let title_color = synIDattr(hlID('Title'), 'fg')
-    let session_file = strlen(v:this_session) ? v:this_session : 'no session'
+    let session_file = strlen(v:this_session) ? v:this_session : 'Neovim'
     let session = fnamemodify(session_file, ':t')
     let [icon, hl] = statusline#get_devicon(bufname())
     let color = synIDattr(hlID(hl), 'fg')
-    let filename = ' • '.s:color(icon, color).' '.s:color(fname, title_color)
-    let title = session . ' • '.icon.' '.fname
-    let window_title = session . filename
+    let window_title = icon . ' • ' . session
     let cmd = printf("tmux rename-window '%s'", window_title)
     call jobstart(cmd)
   endif
