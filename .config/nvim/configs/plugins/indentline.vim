@@ -2,8 +2,6 @@ if !PluginLoaded('indentLine')
   finish
 endif
 
-let s:gui_color = synIDattr(hlID('Comment'), 'fg')
-
 let g:indentLine_fileTypeExclude = [
       \ 'vimwiki',
       \ 'markdown',
@@ -21,4 +19,4 @@ let g:indentLine_setConceal      = 1
 " the foreground colour to the same as the background so it adds "patches" to the cursor line
 let g:indentLine_setColors       = 1
 let g:indentLine_char            = '│'
-let g:indentLine_color_gui       = s:gui_color
+let g:indentLine_defaultGroup = 'Comment'
