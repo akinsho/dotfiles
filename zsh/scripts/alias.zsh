@@ -79,17 +79,23 @@ fi
 
 # Check if main exists and use instead of master
 function git_main_branch() {
-  if __in_git; then
-    if [[ -n "$(git branch --list main)" ]]; then
-      echo main
-    else
-      echo master
+  local branch
+  for branch in main trunk; do
+    if command git show-ref -q --verify refs/heads/$branch; then
+      echo $branch
+      return
     fi
-  fi
+  done
+  echo master
 }
 
+# -------------------------------------------------------------------------------
 # Git aliases
+# -------------------------------------------------------------------------------
 # source: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh#L53
+# NOTE: a lot of these commands are single quoted ON PURPOSE to prevent them
+# from being evaluated immediately rather than in the shell when the alias is
+# expanded
 alias g="git"
 alias gss="git status -s"
 alias gst="git status"
@@ -98,6 +104,7 @@ alias gd="git diff"
 alias gco="git checkout"
 alias ga='git add'
 alias gaa='git add --all'
+alias gcb='git checkout -b'
 alias gb='git branch'
 alias gbD='git branch -D'
 alias gbl='git blame -b -w'
@@ -109,9 +116,10 @@ alias gfa='git fetch --all --prune'
 alias gfo='git fetch origin'
 alias gm='git merge'
 alias gma='git merge --abort'
-alias gmom="git merge origin/$(git_main_branch)"
+alias gmom='git merge origin/$(git_main_branch)'
 alias gp='git push'
 alias gbda='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*($(git_main_branch)|development|develop|devel|dev)\s*$)" | command xargs -n 1 git branch -d'
+alias gpristine='git reset --hard && git clean -dffx'
 alias gcl='git clone --recurse-submodules'
 alias gl='git pull'
 alias glum='git pull upstream $(git_main_branch)'
@@ -119,7 +127,7 @@ alias grhh='git reset --hard'
 alias groh='git reset origin/$(git_current_branch) --hard'
 alias grbi='git rebase -i'
 alias grbm='git rebase $(git_main_branch)'
-alias gcm="git checkout $(git_main_branch)"
+alias gcm='git checkout $(git_main_branch)'
 alias gstp="git stash pop"
 alias gsts="git stash show -p"
 
@@ -136,3 +144,9 @@ function grename() {
     git push --set-upstream origin "$2"
   fi
 }
+
+
+function gdnolock() {
+  git diff "$@" ":(exclude)package-lock.json" ":(exclude)*.lock"
+}
+compdef _git gdnolock=git-diff
