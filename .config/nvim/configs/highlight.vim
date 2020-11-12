@@ -93,14 +93,14 @@ endfunction
 
 function! s:general_overrides() abort
   " Add undercurl to existing spellbad highlight
-  execute 'highlight SpellBad gui=undercurl guibg=transparent guifg=transparent guisp=green'
+  highlight SpellBad gui=undercurl guibg=transparent guifg=transparent guisp=green
 
   " Define highlight for URIs e.g. http://stackoverflow.com
   " this is used in the syntax after files for highlighting URIs in comments
   let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
   execute 'highlight URIHighlight guisp='.s:comment_fg.' gui=underline,italic guifg='.s:comment_fg
 
-  highlight MatchParen gui=bold guifg=lightGreen guibg=NONE
+  highlight MatchParen gui=bold,underline guifg=lightGreen guibg=NONE
   highlight Todo gui=bold
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
