@@ -100,6 +100,7 @@ function! s:general_overrides() abort
   let s:comment_fg = synIDattr(hlID('Comment'), 'fg')
   execute 'highlight URIHighlight guisp='.s:comment_fg.' gui=underline,italic guifg='.s:comment_fg
 
+  highlight MatchParen gui=bold guifg=lightGreen guibg=NONE
   highlight Todo gui=bold
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
