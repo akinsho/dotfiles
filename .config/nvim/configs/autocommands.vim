@@ -132,7 +132,6 @@ if exists('$TMUX')
     if has('nvim')
       autocmd FocusGained,BufReadPost,FileReadPost,BufNewFile,BufEnter *
             \ call tmux#on_enter()
-      autocmd FocusLost * call tmux#on_leave()
       autocmd VimLeave * tmux#on_leave()
       autocmd ColorScheme,FocusGained * call tmux#statusline_colors()
     endif
