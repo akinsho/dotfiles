@@ -144,7 +144,7 @@ function! s:set_tmux_window_title() abort
     let session = fnamemodify(session_file, ':t')
     let [icon, hl] = statusline#get_devicon(bufname())
     let color = synIDattr(hlID(hl), 'fg')
-    let window_title = icon . ' • ' . session
+    let window_title = session . ' • ' . '#[fg='.color.']'.icon
     let cmd = printf("tmux rename-window '%s'", window_title)
     call jobstart(cmd)
   endif
