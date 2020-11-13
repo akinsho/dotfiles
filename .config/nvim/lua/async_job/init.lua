@@ -54,7 +54,6 @@ local function add_highlight(buf_id, hl, lines)
   end
 end
 
---- @param title string
 --- @param data table
 --- @param width number
 local function format_data(data, width)
@@ -114,7 +113,7 @@ local function open_window(job, code)
     row = row,
     anchor = "SE",
     style = "minimal",
-    focusable = false,
+    focusable = false
   }
   local highlight = code > 0 and "Identifier" or "Question"
 
@@ -139,7 +138,13 @@ local function open_window(job, code)
   api.nvim_buf_set_option(child, "modifiable", false)
 
   local child_win = api.nvim_open_win(child, true, opts)
-  vim.cmd(string.format([[au BufWipeout,WinClosed <buffer=%d> exe 'bw %d']], child, buf))
+  vim.cmd(
+    string.format(
+      [[au BufWipeout,WinClosed <buffer=%d> exe 'bw %d']],
+      child,
+      buf
+    )
+  )
   vim.wo[child_win].wrap = true
   vim.wo[child_win].winblend = 10
 
@@ -181,7 +186,7 @@ local function save_urls(lines)
       )
     end
   end
-  if table.getn(matches) > 0 then
+  if #matches > 0 then
     vim.fn.setqflist(matches)
     vim.cmd(":copen")
   end
@@ -190,16 +195,15 @@ end
 local function reload_fugitive(cmd)
   -- if this was a git related command reload the vim fugitive status buffer
   -- for alternatives consider using windo
-  --
   -- https://github.com/wookayin/dotfiles/commit/5c7ab2347c8e46b3980c0f6a51fe6477ad8675ba
-  if cmd:match('git') and vim.fn.exists('*fugitive#ReloadStatus') > 0 then
-    vim.fn['fugitive#ReloadStatus']()
+  if cmd:match("git") and vim.fn.exists("*fugitive#ReloadStatus") > 0 then
+    vim.fn["fugitive#ReloadStatus"]()
   end
 end
 
 --- @param job table
 local function handle_result(job, code, auto_close)
-  local num_of_lines = table.getn(job.data)
+  local num_of_lines = #job.data
   -- if the output is more than a few lines longer than
   -- the command msg area open a window
   if num_of_lines > vim.o.cmdheight + 2 then
