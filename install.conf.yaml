@@ -21,6 +21,9 @@
     ~/.config/jesseduffield/lazygit/config.yml:
       force: true
       path: .config/jesseduffield/lazygit/config.yml
+    ~/.config/jesseduffield:
+      if: "[`uname` = Darwin ]"
+      path: "~/Library/Application Support/jesseduffield"
     ~/.config/karabiner:
       force: true
       path: .config/karabiner
