@@ -55,8 +55,7 @@ local function add_highlight(buf_id, hl, lines)
 end
 
 --- @param data table
---- @param width number
-local function format_data(data, width)
+local function format_data(data)
   local formatted = {}
   for _, item in ipairs(data) do
     table.insert(formatted, " " .. item .. " ")
@@ -81,7 +80,7 @@ local function open_window(job, code)
       width = string.len(line) + 2
     end
   end
-  local data = format_data(job.data, width)
+  local data = format_data(job.data)
 
   local title = job.cmd
   -- If title is too long it should be truncated
