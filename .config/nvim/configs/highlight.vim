@@ -123,16 +123,16 @@ endfunction
 ""---------------------------------------------------------------------------//
 function! s:colorscheme_overrides() abort
   if g:colors_name ==? 'one'
-    call one#highlight('Folded', '5c6370', 'none', 'italic,bold')
-    call one#highlight('Type', 'e5c07b', 'none', 'italic,bold')
+    call one#highlight('Folded', '5c6370', '', 'italic,bold')
+    call one#highlight('Type', 'e5c07b', '', 'italic,bold')
     " Italicise imports
-    call one#highlight('jsxComponentName', '61afef', 'none', 'bold,italic')
-    call one#highlight('Include', '61afef', 'none', 'italic')
-    call one#highlight('jsImport', '61afef', 'none', 'italic')
-    call one#highlight('jsExport', '61afef', 'none', 'italic')
-    call one#highlight('typescriptImport', 'c678dd', 'none', 'italic')
-    call one#highlight('typescriptExport', '61afef', 'none', 'italic')
-    call one#highlight('vimCommentTitle', 'c678dd', 'none', 'bold,italic')
+    call one#highlight('jsxComponentName', '61afef', '', 'bold,italic')
+    call one#highlight('Include', '61afef', '', 'italic')
+    call one#highlight('jsImport', '61afef', '', 'italic')
+    call one#highlight('jsExport', '61afef', '', 'italic')
+    call one#highlight('typescriptImport', 'c678dd', '', 'italic')
+    call one#highlight('typescriptExport', '61afef', '', 'italic')
+    call one#highlight('vimCommentTitle', 'c678dd', '', 'bold,italic')
   elseif g:colors_name ==? 'onedark'
     " Do nothing overrides have been done elsewhere
   elseif g:colors_name ==? 'vim-monokai-tasty'
