@@ -187,6 +187,16 @@ local function save_urls(lines)
   end
 end
 
+local function reload_fugitive(cmd)
+  -- if this was a git related command reload the vim fugitive status buffer
+  -- for alternatives consider using windo
+  --
+  -- https://github.com/wookayin/dotfiles/commit/5c7ab2347c8e46b3980c0f6a51fe6477ad8675ba
+  if cmd:match('git') and vim.fn.exists('*fugitive#ReloadStatus') > 0 then
+    vim.fn['fugitive#ReloadStatus']()
+  end
+end
+
 --- @param job table
 local function handle_result(job, code, auto_close)
   local num_of_lines = table.getn(job.data)
@@ -205,6 +215,7 @@ local function handle_result(job, code, auto_close)
           -- clear the last open window
           last_open_window = -1
           api.nvim_win_close(win_id, true)
+          reload_fugitive(job.cmd)
         end,
         timeout
       )
