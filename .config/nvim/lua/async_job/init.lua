@@ -57,27 +57,12 @@ end
 --- @param title string
 --- @param data table
 --- @param width number
-local function format_data(title, data, width)
+local function format_data(data, width)
   local formatted = {}
-  -- If title is too long it should be truncated
-  local remainder = width - string.len(title)
-  local side_size = math.floor(remainder / 2) - 1
-  local side = string.rep(" ", side_size)
-  local heading = side .. title .. side
-
-  if string.len(heading) ~= width - 2 then
-    local offset = (width - 2) - string.len(heading)
-    heading = heading .. string.rep(" ", offset)
-  end
-
-  local top = "╔" .. string.rep("═", width - 2) .. "╗"
-  local mid = "║" .. heading .. "║"
-  local bot = "╚" .. string.rep("═", width - 2) .. "╝"
-
   for _, item in ipairs(data) do
     table.insert(formatted, " " .. item .. " ")
   end
-  return vim.list_extend({top, mid, bot}, formatted)
+  return formatted
 end
 
 -- TODO find a way to dismiss oldest window if messages collide
@@ -97,13 +82,30 @@ local function open_window(job, code)
       width = string.len(line) + 2
     end
   end
-  local data = format_data(job.cmd, job.data, width)
+  local data = format_data(job.data, width)
 
-  local num_lines = table.getn(data)
-  local height = num_lines < 15 and num_lines or 15
+  local title = job.cmd
+  -- If title is too long it should be truncated
+  local remainder = width - 1 - string.len(title)
+  local side_size = math.floor(remainder) - 1
+  local side = string.rep("═", side_size)
+  local heading = title .. side
+
+  local height = #data < 15 and #data or 15
+
+  local top = "╔" .. heading .. "╗"
+  local content = {top}
+  local padding = string.rep(" ", width - 2)
+  for _ = 1, height do
+    table.insert(content, "║" .. padding .. "║")
+  end
+  local bot = "╚" .. string.rep("═", width - 2) .. "╝"
+  table.insert(content, bot)
+
+  height = #content
 
   local buf = api.nvim_create_buf(false, true)
-  api.nvim_buf_set_lines(buf, 0, -1, false, data)
+  api.nvim_buf_set_lines(buf, 0, -1, false, content)
   local opts = {
     relative = "editor",
     width = width,
@@ -111,7 +113,8 @@ local function open_window(job, code)
     col = vim.o.columns,
     row = row,
     anchor = "SE",
-    style = "minimal"
+    style = "minimal",
+    focusable = false,
   }
   local highlight = code > 0 and "Identifier" or "Question"
 
@@ -119,18 +122,39 @@ local function open_window(job, code)
     buf,
     highlight,
     {
-      {number = 0, column_end = -1, column_start = 0},
-      {number = 1, column_end = -1, column_start = 0},
-      {number = 2, column_end = -1, column_start = 0}
+      {number = 0, column_end = #title + 3, column_start = 3}
     }
   )
-  local win = api.nvim_open_win(buf, false, opts)
-  api.nvim_buf_set_option(buf, "modifiable", false)
-  vim.wo[win].wrap = true
-  vim.wo[win].winblend = 10
+  local parent_win = api.nvim_open_win(buf, false, opts)
+  vim.wo[parent_win].winblend = 10
 
-  last_open_window = win
-  return win
+  opts.row = opts.row - 1
+  opts.height = opts.height - 2
+  opts.col = opts.col - 2
+  opts.width = opts.width - 4
+  opts.focusable = true
+
+  local child = api.nvim_create_buf(false, true)
+  api.nvim_buf_set_lines(child, 0, -1, false, data)
+  api.nvim_buf_set_option(child, "modifiable", false)
+
+  local child_win = api.nvim_open_win(child, true, opts)
+  vim.cmd(string.format([[au BufWipeout,WinClosed <buffer=%d> exe 'bw %d']], child, buf))
+  vim.wo[child_win].wrap = true
+  vim.wo[child_win].winblend = 10
+
+  -- we need to place the cursor in the window to make sure it is
+  -- brought to the foreground but a naked wincmd doesn't work to
+  -- restore focus so we defer the call
+  vim.defer_fn(
+    function()
+      vim.cmd("wincmd p")
+    end,
+    1
+  )
+
+  last_open_window = parent_win
+  return child_win
 end
 
 ---@param msg string
