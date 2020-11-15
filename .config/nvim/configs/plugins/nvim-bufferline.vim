@@ -8,7 +8,8 @@ require'bufferline'.setup {
   options = {
     view = "multiwindow",
     mappings = true,
-    sort_by = "extension"
+    sort_by = "extension",
+    separator_style = "slant"
   };
 }
 EOF
