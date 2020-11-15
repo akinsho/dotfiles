@@ -210,7 +210,7 @@ local function handle_result(job, code, auto_close)
   -- if the output is more than a few lines longer than
   -- the command msg area open a window
   if num_of_lines > vim.o.cmdheight + 2 then
-    -- save_urls(job.data)
+    save_urls(job.data)
     local win_id = open_window(job, code)
     -- only automatically close window if successful
     local timeout = code == 0 and 10000 or 15000
