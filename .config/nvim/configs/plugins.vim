@@ -67,7 +67,7 @@ Plug 'psliwka/vim-smoothie'
 Plug 'moll/vim-bbye'
 Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestSuite'] }
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'AndrewRadev/tagalong.vim'
+Plug 'AndrewRadev/tagalong.vim', {'for': ['typescriptreact', 'javascriptreact', 'html']}
 Plug 'liuchengxu/vim-which-key'
 Plug 'luochen1990/rainbow'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
