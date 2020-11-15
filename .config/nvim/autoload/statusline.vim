@@ -316,6 +316,7 @@ function! statusline#statusline_current_fn() abort
 endfunction
 
 function! statusline#statusline_git_status() abort
+  " symbol opts -  , "\uf408"
   let prefix = ''
   let window_size = winwidth(0)
   let repo_status = get(g:, "coc_git_status", "")

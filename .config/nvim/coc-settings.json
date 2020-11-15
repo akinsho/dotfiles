@@ -64,7 +64,7 @@
   // '', '•' - changed
   // '', '-' removed
   // '', '±' - changed/removed
-  "git.branchCharacter": "\uf408", // github icon
+  "git.branchCharacter": "", // "\uf408" // github icon
   "git.showCommitInFloating": true,
   "git.changedSign.text": "▌",
   "git.addedSign.text": "▌",
