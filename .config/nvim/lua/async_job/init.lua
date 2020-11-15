@@ -169,15 +169,18 @@ local function echo(msg, hl)
   vim.cmd("echohl clear")
 end
 
---- source: https://stackoverflow.com/a/23592008
+--- current regex is hacked out of vim-highlighturl
 local url_regex =
-  [[()(([%w_.~!*:@&+$/?%%#-]-)(%w[-.%w]*%.)(%w+)(:?)(%d*)(/?)([%w_.~!*:@&+$/?%%#=-]*))]]
+  [[\v\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%(]] ..
+  [[[&:#*@~%_\-=?!+;/0-9A-Za-z]+%(%([.,;/?]|[.][.]+)[&:#*@~%_\-=?!+/0-9A-Za-z]+|:\d+)*|]] ..
+    [[\([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\)|\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]|]] ..
+      [[\{%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*|\{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\})\})+]]
 
 local function save_urls(lines)
   local matches = {}
   for _, line in ipairs(lines) do
-    local _, url = line:match(url_regex)
-    if url then
+    local url = vim.fn.matchstr(line, url_regex)
+    if url ~= "" then
       table.insert(
         matches,
         {
