@@ -16,6 +16,5 @@
 " See also this explanatory StackOverflow answer:
 "     https://vi.stackexchange.com/a/4003/16249
 if hlexists('typescriptComment')
-  syntax match NoSpellUri '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell containedin=typescript.*Comment,typescript.*String
   syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' transparent contains=@NoSpell containedin=typescript.*Comment,typescript.*String
 endif
