@@ -208,17 +208,22 @@ local function handle_result(job, code, auto_close)
   if num_of_lines > vim.o.cmdheight + 2 then
     save_urls(job.data)
     local win_id = open_window(job, code)
-    -- TODO figure out how to update fugitive
-    -- vim.cmd('doautocmd User FugitiveChanged')
     -- only automatically close window if successful
     local timeout = code == 0 and 10000 or 15000
     if auto_close then
+      if code <= 0 then
+        vim.defer_fn(
+          function()
+            reload_fugitive(job.cmd)
+          end,
+          100
+        )
+      end
       vim.defer_fn(
         function()
           -- clear the last open window
           last_open_window = -1
           api.nvim_win_close(win_id, true)
-          reload_fugitive(job.cmd)
         end,
         timeout
       )
