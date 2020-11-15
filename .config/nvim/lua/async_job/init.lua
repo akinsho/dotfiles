@@ -169,16 +169,20 @@ local function echo(msg, hl)
   vim.cmd("echohl clear")
 end
 
+--- source: https://stackoverflow.com/a/23592008
+local url_regex =
+  [[()(([%w_.~!*:@&+$/?%%#-]-)(%w[-.%w]*%.)(%w+)(:?)(%d*)(/?)([%w_.~!*:@&+$/?%%#=-]*))]]
+
 local function save_urls(lines)
   local matches = {}
   for _, line in ipairs(lines) do
-    local match = line:match("^[https?://]+%w+%.%w+[/%w_%.%s*(%%20)(%-)]+$")
-    if match then
+    local _, url = line:match(url_regex)
+    if url then
       table.insert(
         matches,
         {
           module = "Async Job ",
-          text = match,
+          text = url,
           pattern = "URL",
           valid = false
         }
