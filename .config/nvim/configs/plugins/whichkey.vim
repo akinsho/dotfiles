@@ -220,6 +220,7 @@ let g:which_localleader_key_map = {
       \ '<Tab>':     ['bnext', 'open vim bufferlist'],
       \ "[":         'abolish: subsitute cursor word in file',
       \ "]":         'abolish: substitute cursor word on line',
+      \ "/":         'find matching word in buffer',
       \}
 
 let g:which_key_use_floating_win       = 0
