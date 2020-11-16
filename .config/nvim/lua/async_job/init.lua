@@ -221,11 +221,16 @@ local function handle_result(job, code, auto_close)
         vim.defer_fn(
           function()
             reload_fugitive(job.cmd)
-            save_urls(job.data)
           end,
           100
         )
       end
+      vim.defer_fn(
+        function()
+          save_urls(job.data)
+        end,
+        300
+      )
       vim.defer_fn(
         function()
           -- clear the last open window
