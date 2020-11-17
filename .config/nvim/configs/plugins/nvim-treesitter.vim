@@ -12,7 +12,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
   highlight = {
     enable = true,
-    disable = {"json"}
+    disable = {"json", "dart"}
   },
   incremental_selection = {
     enable = true,
@@ -24,7 +24,7 @@ require'nvim-treesitter.configs'.setup {
     }
   },
   rainbow = {
-    enable = true,
+    enable = disable,
     disable = {'lua'}
   }
 }
