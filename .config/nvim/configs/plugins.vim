@@ -191,9 +191,6 @@ Plug 'rakr/vim-one'
 " Plug 'chuling/ci_dark'
 " Plug 'tomasiser/vim-code-dark'
 
-" Disable netrw
-let g:loaded_netrwPlugin = 0
-
 call plug#end()
 
 " cfilter plugin allows filter down an existing quickfix list
