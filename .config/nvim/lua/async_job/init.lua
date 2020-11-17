@@ -227,15 +227,10 @@ local function handle_result(job, code, auto_close)
       end
       vim.defer_fn(
         function()
-          save_urls(job.data)
-        end,
-        300
-      )
-      vim.defer_fn(
-        function()
           -- clear the last open window
           last_open_window = -1
           api.nvim_win_close(win_id, true)
+          save_urls(job.data)
         end,
         timeout
       )
