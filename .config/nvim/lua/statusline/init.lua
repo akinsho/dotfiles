@@ -26,7 +26,7 @@ function M.colors()
   local error_fg = utils.get_hl_color("ErrorMsg", "fg")
   local comment_fg = utils.get_hl_color("Comment", "fg")
   local warning_fg =
-    vim.g.colors_name == "one" and light_yellow or
+    vim.g.colors_name == "one" and P.light_yellow or
     utils.get_hl_color("WarningMsg", "fg")
 
   local highlights = {
