@@ -65,7 +65,7 @@ runtime configs/highlight.vim
 runtime configs/mappings.vim
 runtime configs/autocommands.vim
 
-if has('nvim')
+if has('nvim-0.5')
   lua require('statusline')
   lua require('lsp')
 endif
