@@ -396,7 +396,7 @@ function M.sep_if(item, condition, opts)
 end
 
 function M.item(component, hl, opts)
-  if not component then
+  if not component or component == "" then
     return ""
   end
   opts = opts or {}
