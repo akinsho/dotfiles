@@ -2,9 +2,9 @@ local loaded, devicons = pcall(require, "nvim-web-devicons")
 local palette = require "statusline/palette"
 
 local exists = vim.fn.exists
-local has = vim.fn.has
 local expand = vim.fn.expand
 local strwidth = vim.fn.strwidth
+local contains = vim.tbl_contains
 
 local highlight_cache = {}
 
@@ -109,10 +109,10 @@ M.prioritize = memoize(prioritize)
 
 --- @param ctx table
 function M.is_plain(ctx)
-  return vim.tbl_contains(plain_filetypes, ctx.filetype) or
-    vim.tbl_contains(plain_buftypes, ctx.buftype) or
+  return contains(plain_filetypes, ctx.filetype) or
+    contains(plain_buftypes, ctx.buftype) or
     ctx.preview or
-    vim.fn.exists("#goyo") > 0
+    exists("#goyo") > 0
 end
 
 --- This function allow me to specify titles for special case buffers
