@@ -36,49 +36,38 @@ function M.colors()
     vim.g.colors_name == "one" and light_yellow or
     utils.get_hl_color("WarningMsg", "fg")
 
-  utils.set_highlight("StMetadata", {guifg = comment_fg, gui = "italic,bold"})
-  utils.set_highlight("StMetadataPrefix", {guifg = comment_fg})
-  utils.set_highlight("StModified", {guifg = string_fg, guibg = pmenu_bg})
-  utils.set_highlight("StPrefix", {guibg = pmenu_bg, guifg = normal_fg})
-  utils.set_highlight("StPrefixSep", {guibg = normal_bg, guifg = pmenu_bg})
-  utils.set_highlight(
-    "StDirectory",
-    {guibg = normal_bg, guifg = "Gray", gui = "italic"}
-  )
-  utils.set_highlight(
-    "StFilename",
-    {guibg = normal_bg, guifg = "LightGray", gui = "italic,bold"}
-  )
-  utils.set_highlight(
-    "StFilenameInactive",
-    {guifg = comment_grey, guibg = normal_bg, gui = "italic,bold"}
-  )
-  utils.set_highlight(
-    "StItem",
-    {guibg = normal_fg, guifg = normal_bg, gui = "italic"}
-  )
-  utils.set_highlight("StSep", {guifg = normal_fg})
-  utils.set_highlight(
-    "StInfo",
-    {guifg = dark_blue, guibg = normal_bg, gui = "bold"}
-  )
-  utils.set_highlight("StInfoSep", {guifg = pmenu_bg, " guibg=NONE gui=NONE"})
-  utils.set_highlight("StInactive", {guifg = normal_bg, guibg = comment_grey})
-  utils.set_highlight("StInactiveSep", {guifg = comment_grey})
+  local highlights = {
+    {"StMetadata", {guifg = comment_fg, gui = "italic,bold"}},
+    {"StMetadataPrefix", {guifg = comment_fg}},
+    {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
+    {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
+    {"StPrefixSep", {guibg = normal_bg, guifg = pmenu_bg}},
+    {"StDirectory", {guibg = normal_bg, guifg = "Gray", gui = "italic"}},
+    {
+      "StFilename",
+      {guibg = normal_bg, guifg = "LightGray", gui = "italic,bold"}
+    },
+    {
+      "StFilenameInactive",
+      {guifg = comment_grey, guibg = normal_bg, gui = "italic,bold"}
+    },
+    {"StItem", {guibg = normal_fg, guifg = normal_bg, gui = "italic"}},
+    {"StSep", {guifg = normal_fg}},
+    {"StInfo", {guifg = dark_blue, guibg = normal_bg, gui = "bold"}},
+    {"StInfoSep", {guifg = pmenu_bg, " guibg=NONE gui=NONE"}},
+    {"StInactive", {guifg = normal_bg, guibg = comment_grey}},
+    {"StInactiveSep", {guifg = comment_grey}},
+    {"StatusLine", {guibg = normal_bg}},
+    {"StatusLineNC", {guibg = normal_bg}},
+    {"StWarning", {guifg = warning_fg, guibg = pmenu_bg}},
+    {"StWarningSep", {guifg = pmenu_bg, guibg = normal_bg}},
+    {"StError", {guifg = error_fg, guibg = pmenu_bg}},
+    {"StErrorSep", {guifg = pmenu_bg, guibg = normal_bg}}
+  }
 
-  -- setting a statusline fillchar that the character or a replacement
-  -- with ">" appears in inactive windows because the statusline is the same color
-  -- as the background see:
-  -- https://vi.stackexchange.com/questions/2381/hi-statusline-cterm-none-displays-whitespace-characters
-  -- https://vi.stackexchange.com/questions/15873/carets-in-status-line
-  -- So instead we set the inactive statusline to have an underline
-  utils.set_highlight("StatusLine", {guibg = normal_bg})
-  utils.set_highlight("StatusLineNC", {guibg = normal_bg})
-  --   " Diagnostic highlights
-  utils.set_highlight("StWarning", {guifg = warning_fg, guibg = pmenu_bg})
-  utils.set_highlight("StWarningSep", {guifg = pmenu_bg, guibg = normal_bg})
-  utils.set_highlight("StError", {guifg = error_fg, guibg = pmenu_bg})
-  utils.set_highlight("StErrorSep", {guifg = pmenu_bg, guibg = normal_bg})
+  for _, hl in ipairs(highlights) do
+    utils.set_highlight(unpack(hl))
+  end
 end
 
 local function mode_highlight(mode)
