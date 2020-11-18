@@ -1,4 +1,6 @@
 local loaded, devicons = pcall(require, "nvim-web-devicons")
+local palette = require "statusline/palette"
+
 local exists = vim.fn.exists
 local has = vim.fn.has
 local expand = vim.fn.expand
@@ -367,6 +369,51 @@ function M.git_status()
     return prefix, repo_status
   end
   return prefix, component
+end
+
+local function mode_highlight(mode)
+  local visual_regex = vim.regex([[\(v\|V\|\)]])
+  local command_regex = vim.regex([[\(c\|cv\|ce\)]])
+  local inc_search_bg = M.get_hl_color("Search", "bg")
+  if mode == "i" then
+    M.set_highlight("StModeText", {guifg = palette.dark_blue, gui = "bold"})
+  elseif visual_regex:match_str(mode) then
+    M.set_highlight("StModeText", {guifg = palette.magenta, gui = "bold"})
+  elseif mode == "R" then
+    M.set_highlight("StModeText", {guifg = palette.dark_red, gui = "bold"})
+  elseif command_regex:match_str(mode) then
+    M.set_highlight("StModeText", {guifg = inc_search_bg, gui = "bold"})
+  else
+    M.set_highlight("StModeText", {guifg = palette.green, gui = "bold"})
+  end
+end
+
+function M.mode()
+  local current_mode = vim.fn.mode()
+  mode_highlight(current_mode)
+
+  local mode_map = {
+    ["n"] = "NORMAL",
+    ["no"] = "N·OPERATOR PENDING ",
+    ["v"] = "VISUAL",
+    ["V"] = "V·LINE",
+    [""] = "V·BLOCK",
+    ["s"] = "SELECT",
+    ["S"] = "S·LINE",
+    ["^S"] = "S·BLOCK",
+    ["i"] = "INSERT",
+    ["R"] = "REPLACE",
+    ["Rv"] = "V·REPLACE",
+    ["c"] = "COMMAND",
+    ["cv"] = "VIM EX",
+    ["ce"] = "EX",
+    ["r"] = "PROMPT",
+    ["rm"] = "MORE",
+    ["r?"] = "CONFIRM",
+    ["!"] = "SHELL",
+    ["t"] = "TERMINAL"
+  }
+  return mode_map[current_mode] or "UNKNOWN"
 end
 
 --- @param hl string

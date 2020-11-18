@@ -7,18 +7,11 @@
 --- 4. Right sided truncation - https://stackoverflow.com/questions/20899651/how-to-truncate-a-vim-statusline-field-from-the-right
 
 local utils = require "statusline/utils"
+local P = require "statusline/palette"
 
 local M = {}
 
 local st_warning = {color = "%#StWarning#", sep_color = "%#StWarningSep#"}
-
-local dark_red = "#be5046"
-local green = "#98c379"
-local light_yellow = "#e5c07b"
-local dark_blue = "#4e88ff"
-local magenta = "#c678dd"
-local comment_grey = "#5c6370"
-local inc_search_bg = utils.get_hl_color("Search", "bg")
 
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
@@ -49,14 +42,14 @@ function M.colors()
     },
     {
       "StFilenameInactive",
-      {guifg = comment_grey, guibg = normal_bg, gui = "italic,bold"}
+      {guifg = P.comment_grey, guibg = normal_bg, gui = "italic,bold"}
     },
     {"StItem", {guibg = normal_fg, guifg = normal_bg, gui = "italic"}},
     {"StSep", {guifg = normal_fg}},
-    {"StInfo", {guifg = dark_blue, guibg = normal_bg, gui = "bold"}},
+    {"StInfo", {guifg = P.dark_blue, guibg = normal_bg, gui = "bold"}},
     {"StInfoSep", {guifg = pmenu_bg}},
-    {"StInactive", {guifg = normal_bg, guibg = comment_grey}},
-    {"StInactiveSep", {guifg = comment_grey}},
+    {"StInactive", {guifg = normal_bg, guibg = P.comment_grey}},
+    {"StInactiveSep", {guifg = P.comment_grey}},
     {"StatusLine", {guibg = normal_bg}},
     {"StatusLineNC", {guibg = normal_bg}},
     {"StWarning", {guifg = warning_fg, guibg = pmenu_bg}},
@@ -68,50 +61,6 @@ function M.colors()
   for _, hl in ipairs(highlights) do
     utils.set_highlight(unpack(hl))
   end
-end
-
-local function mode_highlight(mode)
-  local visual_regex = vim.regex([[\(v\|V\|\)]])
-  local command_regex = vim.regex([[\(c\|cv\|ce\)]])
-  if mode == "i" then
-    utils.set_highlight("StModeText", {guifg = dark_blue, gui = "bold"})
-  elseif visual_regex:match_str(mode) then
-    utils.set_highlight("StModeText", {guifg = magenta, gui = "bold"})
-  elseif mode == "R" then
-    utils.set_highlight("StModeText", {guifg = dark_red, gui = "bold"})
-  elseif command_regex:match_str(mode) then
-    utils.set_highlight("StModeText", {guifg = inc_search_bg, gui = "bold"})
-  else
-    utils.set_highlight("StModeText", {guifg = green, gui = "bold"})
-  end
-end
-
-local function mode()
-  local current_mode = vim.fn.mode()
-  mode_highlight(current_mode)
-
-  local mode_map = {
-    ["n"] = "NORMAL",
-    ["no"] = "N·OPERATOR PENDING ",
-    ["v"] = "VISUAL",
-    ["V"] = "V·LINE",
-    [""] = "V·BLOCK",
-    ["s"] = "SELECT",
-    ["S"] = "S·LINE",
-    ["^S"] = "S·BLOCK",
-    ["i"] = "INSERT",
-    ["R"] = "REPLACE",
-    ["Rv"] = "V·REPLACE",
-    ["c"] = "COMMAND",
-    ["cv"] = "VIM EX",
-    ["ce"] = "EX",
-    ["r"] = "PROMPT",
-    ["rm"] = "MORE",
-    ["r?"] = "CONFIRM",
-    ["!"] = "SHELL",
-    ["t"] = "TERMINAL"
-  }
-  return mode_map[current_mode] or "UNKNOWN"
 end
 
 local function append(tbl, next)
@@ -148,7 +97,7 @@ function _G.statusline()
   ----------------------------------------------------------------------------//
   local plain = utils.is_plain(context)
 
-  local current_mode = mode()
+  local current_mode = utils.mode()
   local line_info = utils.line_info()
   local file_modified = utils.modified(context, "●")
   local inactive = vim.api.nvim_get_current_win() ~= curwin
