@@ -64,7 +64,11 @@ runtime configs/plugins.vim
 runtime configs/highlight.vim
 runtime configs/mappings.vim
 runtime configs/autocommands.vim
-runtime configs/statusline.vim
+
+if has('nvim')
+  lua require('statusline').setup()
+  lua require('lsp')
+endif
 
 runtime! configs/plugins/*.vim
 "-----------------------------------------------------------------------
@@ -74,7 +78,3 @@ if filereadable(fnamemodify('~/.vimrc.local', ':p'))
   source ~/.vimrc.local
 endif
 "---------------------------------------------------------------------------//
-
-if PluginLoaded('nvim-lspconfig')
-  luafile $DOTFILES/.config/nvim/lua/lsp.lua
-endif

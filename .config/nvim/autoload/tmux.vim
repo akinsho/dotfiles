@@ -10,7 +10,7 @@ function! tmux#on_enter() abort
   if strlen(fname)
     let session_file = strlen(v:this_session) ? v:this_session : 'Neovim'
     let session = fnamemodify(session_file, ':t')
-    let [icon, hl] = statusline#get_devicon(bufname())
+    let [icon, hl] = utils#get_devicon(bufname())
     let color = synIDattr(hlID(hl), 'fg')
     let window_title = session . ' • ' . '#[fg='.color.']'.icon
     let cmd = printf("tmux rename-window '%s'", window_title)

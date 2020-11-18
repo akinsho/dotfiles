@@ -265,3 +265,27 @@ function! utils#around_number()
   " restore magic
   let &magic = l:magic
 endfunction
+
+lua << EOF
+-- this is required since devicons returns 2 values which need to be collected
+-- into a table before they can be read out in vimscript
+function _G.__devicon_icon(name, extension)
+    local loaded, devicons = pcall(require, "nvim-web-devicons")
+    if not loaded then
+        return {}
+    end
+    local icon, hl = devicons.get_icon(name, extension, {default = true})
+    return {icon, hl}
+end
+EOF
+
+function utils#get_devicon(bufname) abort
+  try
+    let extension = fnamemodify(a:bufname, ':e')
+    let icon_data = v:lua.__devicon_icon(a:bufname, extension)
+    return icon_data
+  catch /.*/
+    echoerr v:exception
+    return ['', '']
+  endtry
+endfunction
