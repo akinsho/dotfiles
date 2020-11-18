@@ -287,7 +287,7 @@ function _G.statusline()
   return table.concat(statusline)
 end
 
-function M.setup()
+local function setup_autocommands()
   vim.cmd [[augroup custom_statusline]]
   vim.cmd [[autocmd!]]
   vim.cmd [[autocmd FocusGained *  let g:vim_in_focus = v:true]]
@@ -296,7 +296,12 @@ function M.setup()
   vim.cmd [[autocmd FileType qf setlocal statusline=%!v:lua.statusline()]]
   vim.cmd [[autocmd VimEnter,ColorScheme * lua require'statusline'.colors()]]
   vim.cmd [[augroup END]]
-  vim.o.statusline = "%!v:lua.statusline()"
 end
+
+-- attach autocommands
+setup_autocommands()
+
+-- set the statusline
+vim.o.statusline = "%!v:lua.statusline()"
 
 return M

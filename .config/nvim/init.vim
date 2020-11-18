@@ -66,7 +66,7 @@ runtime configs/mappings.vim
 runtime configs/autocommands.vim
 
 if has('nvim')
-  lua require('statusline').setup()
+  lua require('statusline')
   lua require('lsp')
 endif
 
