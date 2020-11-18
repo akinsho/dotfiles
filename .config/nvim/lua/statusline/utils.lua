@@ -31,6 +31,7 @@ local plain_buftypes = {
   "acwrite"
 }
 
+--- @param context table
 function M.is_plain(context)
   return vim.tbl_contains(plain_filetypes, context.filetype) or
     vim.tbl_contains(plain_buftypes, context.buftype) or
@@ -38,9 +39,10 @@ function M.is_plain(context)
     vim.fn.exists("#goyo") > 0
 end
 
--- This function allow me to specify titles for special case buffers
--- like the preview window or a quickfix window
--- CREDIT: https://vi.stackexchange.com/a/18090
+--- This function allow me to specify titles for special case buffers
+--- like the preview window or a quickfix window
+--- CREDIT: https://vi.stackexchange.com/a/18090
+--- @param context table
 local function special_buffers(context)
   local location_list = vim.fn.getloclist(0, {filewinid = 0})
   local is_loc_list = location_list.filewinid > 0
@@ -62,6 +64,8 @@ local function special_buffers(context)
   return nil
 end
 
+--- @param context table
+--- @param icon string | nil
 function M.modified(context, icon)
   icon = icon or "✎"
   if context.filetype == "help" then
@@ -70,6 +74,8 @@ function M.modified(context, icon)
   return context.modified and icon or ""
 end
 
+--- @param context table
+--- @param icon string | nil
 local function readonly(context, icon)
   icon = icon or ""
   if context.filetype == "help" or context.preview or context.readonly then
@@ -79,6 +85,7 @@ local function readonly(context, icon)
   end
 end
 
+--- @param context table
 function M.fileformat(context)
   local format_icon = context.fileformat
   if exists("*WebDevIconsGetFileFormatSymbol") and has("gui_running") then
@@ -139,10 +146,14 @@ local exceptions = {
   }
 }
 
+--- @param bufnum number
+--- @param mod string
 local function buf_expand(bufnum, mod)
   return expand("#" .. bufnum .. mod)
 end
 
+--- @param context table
+--- @param modifier string
 function M.filename(context, modifier)
   local special_buf = special_buffers(context)
   if special_buf then
@@ -175,10 +186,13 @@ function M.filename(context, modifier)
   return (directory or ""), (fname or "")
 end
 
+--- @param hl string | nil
 local function or_none(hl)
   return (hl and hl ~= "") and hl or "NONE"
 end
 
+--- @param name string
+--- @param hl table
 function M.set_highlight(name, hl)
   if hl and vim.tbl_count(hl) > 0 then
     local cmd = "highlight! " .. name
@@ -197,10 +211,14 @@ function M.set_highlight(name, hl)
   end
 end
 
+--- @param hl string
+--- @param attr string
 function M.get_hl_color(hl, attr)
   return vim.fn.synIDattr(vim.fn.hlID(hl), attr)
 end
 
+--- @param hl string
+--- @param bg_hl string
 local function set_ft_icon_highlight(hl, bg_hl)
   if not hl then
     return ""
@@ -228,6 +246,7 @@ local function set_ft_icon_highlight(hl, bg_hl)
   return name
 end
 
+--- @param context table
 function M.filetype(context)
   local ft_exception = exceptions.filetypes[context.filetype]
   if ft_exception then
@@ -246,6 +265,7 @@ function M.filetype(context)
   return icon, hl
 end
 
+--- @param id number
 function M.encoding(id)
   return vim.fn.winwidth(0) > 70 and (vim.bo[id].fenc or vim.bo[id].enc) or ""
 end
@@ -273,6 +293,8 @@ local function truncate_string(item, limit, suffix)
   return #item > limit and item:sub(0, limit) .. suffix or item
 end
 
+--- @param item string
+--- @param limit number | nil
 function M.truncate_component(item, limit)
   if not item or item == "" then
     return ""
