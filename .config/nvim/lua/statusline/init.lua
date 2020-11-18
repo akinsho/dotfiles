@@ -11,7 +11,7 @@ local P = require "statusline/palette"
 
 local M = {}
 
-local st_warning = {color = "%#StWarning#", sep_color = "%#StWarningSep#"}
+local st_warning = {color = "StWarning", sep_color = "StWarningSep"}
 
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
@@ -63,10 +63,31 @@ function M.colors()
   end
 end
 
-local function append(tbl, next)
-  if next and tbl then
-    table.insert(tbl, next)
+--- @param tbl table
+--- @param next string
+--- @param priority table
+local function append(tbl, next, priority)
+  priority = priority or 0
+  local component, length = unpack(next)
+  if component and component ~= "" and next and tbl then
+    table.insert(
+      tbl,
+      {component = component, priority = priority, length = length}
+    )
   end
+end
+
+--- @param statusline table
+--- @param available_space number
+local function display(statusline, available_space)
+  local str = ""
+  local items = utils.prioritize(statusline, available_space)
+  for _, item in ipairs(items) do
+    if type(item.component) == "string" then
+      str = str .. item.component
+    end
+  end
+  return str
 end
 
 function _G.statusline()
@@ -79,7 +100,7 @@ function _G.statusline()
   -- a component so we can use it to determine what to add
   local available_space = vim.fn.winwidth(curwin)
 
-  local context = {
+  local ctx = {
     bufnum = curbuf,
     winid = curwin,
     bufname = vim.fn.bufname(curbuf),
@@ -95,11 +116,11 @@ function _G.statusline()
   ----------------------------------------------------------------------------//
   -- Modifiers
   ----------------------------------------------------------------------------//
-  local plain = utils.is_plain(context)
+  local plain = utils.is_plain(ctx)
 
   local current_mode = utils.mode()
   local line_info = utils.line_info()
-  local file_modified = utils.modified(context, "●")
+  local file_modified = utils.modified(ctx, "●")
   local inactive = vim.api.nvim_get_current_win() ~= curwin
   local focused = vim.g.vim_in_focus or true
   local minimal = plain or inactive or not focused
@@ -120,29 +141,35 @@ function _G.statusline()
   -- highlight the filename component separately
   local filename_hl = minimal and "StFilenameInactive" or "StFilename"
 
-  local directory, filename = utils.filename(context)
-  local ft_icon, icon_highlight = utils.filetype(context)
+  local directory, filename = utils.filename(ctx)
+  local ft_icon, icon_highlight = utils.filetype(ctx)
 
-  filename = directory .. "%#" .. filename_hl .. "#" .. filename
+  filename = directory .. utils.wrap(filename_hl) .. filename
   local title_component =
     "%" .. minwid .. "." .. trunc_amount .. "(" .. filename .. "%)"
+
+  ----------------------------------------------------------------------------//
+  -- Setup
+  ----------------------------------------------------------------------------//
+  local statusline = {}
 
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   if minimal then
-    return utils.item(
-      title_component,
-      "StInactiveSep",
-      {prefix = ft_icon, before = " "}
+    append(
+      statusline,
+      utils.item(
+        title_component,
+        "StInactiveSep",
+        {prefix = ft_icon, before = " "}
+      )
     )
+    return display(statusline, available_space)
   end
-  ----------------------------------------------------------------------------//
-  -- Setup
-  ----------------------------------------------------------------------------//
-  local statusline = {}
-  append(statusline, utils.item(current_mode, "StModeText", {before = ""}))
+
+  append(statusline, utils.item(current_mode, "StModeText", {before = ""}), 0)
 
   append(
     statusline,
@@ -154,20 +181,22 @@ function _G.statusline()
         prefix_color = icon_highlight,
         after = ""
       }
-    )
+    ),
+    0
   )
 
   append(
     statusline,
     utils.sep_if(
       file_modified,
-      context.modified,
+      ctx.modified,
       {
         small = 1,
-        color = "%#StModified#",
-        sep_color = "%#StPrefixSep#"
+        color = "StModified",
+        sep_color = "StPrefixSep"
       }
-    )
+    ),
+    1
   )
 
   -- If local plugins are loaded and I'm developing locally show an indicator
@@ -181,12 +210,13 @@ function _G.statusline()
         {
           prefix = " ",
           padding = "none",
-          prefix_color = "%#StWarning#",
+          prefix_color = "StWarning",
           small = 1
         },
         st_warning
       )
-    )
+    ),
+    1
   )
 
   -- Neovim allows unlimited alignment sections so we can put things in the
@@ -194,32 +224,33 @@ function _G.statusline()
   -- local statusline .= '%='
 
   -- Start of the right side layout
-  append(statusline, "%=")
+  append(statusline, {"%="})
 
   -- Git Status
   local prefix, git_status = utils.git_status()
-  append(statusline, utils.item(git_status, "StInfo", {prefix = prefix}))
+  append(statusline, utils.item(git_status, "StInfo", {prefix = prefix}), 1)
 
   -- LSP Diagnostics
   local info = utils.diagnostic_info()
-  append(statusline, utils.item(info.error, "Error"))
-  append(statusline, utils.item(info.warning, "PreProc"))
-  append(statusline, utils.item(info.information, "String"))
+  append(statusline, utils.item(info.error, "Error"), 1)
+  append(statusline, utils.item(info.warning, "PreProc"), 1)
+  append(statusline, utils.item(info.information, "String"), 2)
 
   -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "Comment"))
-  append(statusline, utils.item(utils.current_fn(), "StMetadata"))
+  append(statusline, utils.item(utils.lsp_status(), "Comment"), 2)
+  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 3)
 
   -- Indentation
-  local unexpected_indentation = context.shiftwidth > 2 or not context.expandtab
+  local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab
   append(
     statusline,
     utils.item_if(
-      context.shiftwidth,
+      ctx.shiftwidth,
       unexpected_indentation,
       "Title",
-      {prefix = context.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
-    )
+      {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
+    ),
+    3
   )
 
   -- Current line number/total line number,  alternatives 
@@ -229,11 +260,12 @@ function _G.statusline()
       line_info,
       "StMetadata",
       {prefix = "ℓ", prefix_color = "StMetadataPrefix"}
-    )
+    ),
+    3
   )
 
-  append(statusline, "%<")
-  return table.concat(statusline)
+  append(statusline, {"%<"})
+  return display(statusline, available_space)
 end
 
 local function setup_autocommands()
