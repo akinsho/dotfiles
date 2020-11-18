@@ -71,6 +71,7 @@ Plug 'AndrewRadev/tagalong.vim', {'for': ['typescriptreact', 'javascriptreact', 
 Plug 'liuchengxu/vim-which-key'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'itchyny/vim-highlighturl'
+Plug 'luochen1990/rainbow'
 " TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
 " so disable mark related plugins. Remove this guard when this problem is fixed
 if !has('nvim')
@@ -86,8 +87,6 @@ Plug 'vimwiki/vimwiki'
 if has('mac')
   " We're not in Kansas(Linux) anymore
   Plug 'embear/vim-localvimrc'
-  " we use rainbow on mac as we aren't using treesitter yet
-  Plug 'luochen1990/rainbow'
 endif
 "--------------------------------------------------------------------------------
 " Profiling
