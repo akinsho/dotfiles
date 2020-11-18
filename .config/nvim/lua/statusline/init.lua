@@ -54,7 +54,7 @@ function M.colors()
     {"StItem", {guibg = normal_fg, guifg = normal_bg, gui = "italic"}},
     {"StSep", {guifg = normal_fg}},
     {"StInfo", {guifg = dark_blue, guibg = normal_bg, gui = "bold"}},
-    {"StInfoSep", {guifg = pmenu_bg, " guibg=NONE gui=NONE"}},
+    {"StInfoSep", {guifg = pmenu_bg}},
     {"StInactive", {guifg = normal_bg, guibg = comment_grey}},
     {"StInactiveSep", {guifg = comment_grey}},
     {"StatusLine", {guibg = normal_bg}},
