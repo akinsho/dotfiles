@@ -222,7 +222,7 @@ local function handle_result(job, code, auto_close)
           function()
             reload_fugitive(job.cmd)
           end,
-          100
+          1000
         )
       end
       vim.defer_fn(
