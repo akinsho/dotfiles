@@ -261,6 +261,9 @@ local function sanitize_string(item)
   return vim.fn.substitute(item, "\n", "", "g")
 end
 
+--- @param item string
+--- @param limit number | nil
+--- @param suffix string | nil
 local function truncate_string(item, limit, suffix)
   if not item or item == "" then
     return item
@@ -344,10 +347,13 @@ function M.git_status()
   return prefix, component
 end
 
+--- @param hl string
 function M.hl(hl)
   return "%#" .. hl .. "#"
 end
 
+--- @param item string
+--- @param opts table
 function M.sep(item, opts)
   local before = opts.before or " "
   local prefix = opts.prefix or ""
@@ -388,6 +394,9 @@ function M.sep(item, opts)
   )
 end
 
+--- @param item string
+--- @param condition boolean
+--- @param opts table
 function M.sep_if(item, condition, opts)
   if not condition then
     return ""
@@ -395,6 +404,9 @@ function M.sep_if(item, condition, opts)
   return M.sep(item, opts)
 end
 
+--- @param component string
+--- @param hl string
+--- @param opts table
 function M.item(component, hl, opts)
   if not component or component == "" then
     return ""
@@ -418,6 +430,10 @@ function M.item(component, hl, opts)
   )
 end
 
+--- @param item string
+--- @param condition boolean
+--- @param hl string
+--- @param opts table
 function M.item_if(item, condition, hl, opts)
   if not condition then
     return ""
