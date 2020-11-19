@@ -81,6 +81,27 @@ local function memoize(fn)
   end
 end
 
+local function is_lowest(item, lowest)
+  -- if there hasn't been a lowest selected so far
+  -- then the item is the lowest
+  if not lowest or not lowest.length then
+    return true
+  end
+  -- if the item doesn't have a priority or a length
+  -- it is likely a special character so should never
+  -- be the lowest
+  if not item.priority or not item.length then
+    return false
+  end
+  -- if the item has the same priority as the lowest then if the item
+  -- has a greater length it should become the lowest
+  if item.priority == lowest.priority then
+    return item.length > lowest.length
+  end
+
+  return item.priority > lowest.priority
+end
+
 --- Take the lowest priority items out of the statusline if we don't have
 --- space for them.
 --- TODO currently this doesn't account for if an item that has a lower priority
@@ -96,7 +117,7 @@ local function prioritize(statusline, space, length)
   local lowest
   local index_to_remove
   for idx, c in ipairs(statusline) do
-    if c.priority and (not lowest or c.priority > lowest.priority) then
+    if is_lowest(c, lowest) then
       lowest = c
       index_to_remove = idx
     end
