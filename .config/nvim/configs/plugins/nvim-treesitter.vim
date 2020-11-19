@@ -12,7 +12,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
   highlight = {
     enable = true,
-    disable = {"json", "dart"}
+    disable = {"json"}
   },
   incremental_selection = {
     enable = true,
@@ -35,8 +35,7 @@ local hlmap = vim.treesitter.highlighter.hl_map
 hlmap["punctuation.bracket"] = nil
 
 local function add_folds()
-  -- Only apply folding to supported files
-  -- inspired by:
+  -- Only apply folding to supported files, inspired by:
   -- https://github.com/Happy-Dude/dotfiles/blob/71172469884481c0da4743928df1b1296d1d7a47/vim/.vim/lua/treesitter.lua#L57
   local parsers = require 'nvim-treesitter.parsers'
   local configs = parsers.get_parser_configs()
@@ -52,6 +51,8 @@ local function add_folds()
     ' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()'
   )
 end
+
+add_folds()
 
 EOF
 

@@ -151,7 +151,6 @@ if has('nvim')
     Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
     Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
     Plug 'p00f/nvim-ts-rainbow'
-    Plug 'nvim-treesitter/nvim-treesitter'
   endif
   if $DEVELOPING
     Plug '~/Desktop/Coding/nvim-toggleterm.lua'
@@ -166,6 +165,7 @@ if has('nvim')
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'akinsho/dependency-assist.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'nvim-treesitter/nvim-treesitter'
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
