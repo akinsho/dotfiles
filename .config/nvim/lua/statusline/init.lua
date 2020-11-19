@@ -77,6 +77,13 @@ local function append(tbl, next, priority)
   end
 end
 
+local function add_min_width(item, minwid, trunc_amount)
+  if not item or item == "" then
+    return item
+  end
+  return "%" .. minwid .. "." .. trunc_amount .. "(" .. item .. "%)"
+end
+
 --- @param statusline table
 --- @param available_space number
 local function display(statusline, available_space)
@@ -126,6 +133,12 @@ function _G.statusline()
   local minimal = plain or inactive or not focused
 
   ----------------------------------------------------------------------------//
+  -- Setup
+  ----------------------------------------------------------------------------//
+  local statusline = {}
+  append(statusline, {" ", 1})
+
+  ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
   -- The filename component should be 20% of the screen width but has a minimum
@@ -140,50 +153,43 @@ function _G.statusline()
 
   -- highlight the filename component separately
   local filename_hl = minimal and "StFilenameInactive" or "StFilename"
+  local directory_hl = minimal and "StInactiveSep" or "StDirectory"
 
   local directory, filename = utils.filename(ctx)
   local ft_icon, icon_highlight = utils.filetype(ctx)
 
-  filename = directory .. utils.wrap(filename_hl) .. filename
-  local title_component =
-    "%" .. minwid .. "." .. trunc_amount .. "(" .. filename .. "%)"
+  local opts = {prefix = ft_icon, before = "", after = ""}
+  local file_opts = {before = ""}
 
-  ----------------------------------------------------------------------------//
-  -- Setup
-  ----------------------------------------------------------------------------//
-  local statusline = {}
+  if not minimal then
+    opts.prefix_color = icon_highlight
+  end
+
+  if not directory or directory == "" then
+    file_opts.prefix = ft_icon
+    if not minimal then
+      file_opts.prefix_color = icon_highlight
+    end
+  end
+
+  directory = add_min_width(directory, minwid, trunc_amount)
+  local dir_item = utils.item(directory, directory_hl, opts)
+  local file_item = utils.item(filename, filename_hl, file_opts)
 
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   if minimal then
-    append(
-      statusline,
-      utils.item(
-        title_component,
-        "StInactiveSep",
-        {prefix = ft_icon, before = " "}
-      )
-    )
+    append(statusline, dir_item, 0)
+    append(statusline, file_item, 0)
     return display(statusline, available_space)
   end
 
-  append(statusline, utils.item(current_mode, "StModeText", {before = ""}), 0)
+  append(statusline, utils.item(current_mode, "StModeText"), 0)
 
-  append(
-    statusline,
-    utils.item(
-      title_component,
-      "StDirectory",
-      {
-        prefix = ft_icon,
-        prefix_color = icon_highlight,
-        after = ""
-      }
-    ),
-    0
-  )
+  append(statusline, dir_item, 0)
+  append(statusline, file_item, 0)
 
   append(
     statusline,

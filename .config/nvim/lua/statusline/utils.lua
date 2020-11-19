@@ -540,7 +540,7 @@ function M.item(component, hl, opts)
   local prefix = opts.prefix or ""
 
   local prefix_color = opts.prefix_color or hl
-  prefix = prefix ~= "" and M.wrap(prefix_color) .. prefix or ""
+  prefix = prefix ~= "" and M.wrap(prefix_color) .. prefix .. " " or ""
 
   --- handle numeric inputs etc.
   if type(component) ~= "string" then
@@ -550,7 +550,6 @@ function M.item(component, hl, opts)
   local parts = {
     before,
     prefix,
-    " ",
     M.wrap(hl),
     component,
     after,
