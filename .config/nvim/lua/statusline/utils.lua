@@ -513,12 +513,26 @@ function M.sep(item, opts)
   }
 end
 
+--- Creates a spacer statusline component i.e. for padding
+--- or to represent an empty component
+--- @param size number
+--- @param filler string | nil
+function M.spacer(size, filler)
+  filler = filler or " "
+  if size and size >= 1 then
+    local spacer = string.rep(filler, size)
+    return {spacer, #spacer}
+  else
+    return {"", 0}
+  end
+end
+
 --- @param item string
 --- @param condition boolean
 --- @param opts table
 function M.sep_if(item, condition, opts)
   if not condition then
-    return {"", 0}
+    return M.spacer()
   end
   return M.sep(item, opts)
 end
@@ -528,7 +542,7 @@ end
 --- @param opts table
 function M.item(component, hl, opts)
   if not component or component == "" then
-    return {"", 0}
+    return M.spacer()
   end
   opts = opts or {}
   local before = opts.before or ""
@@ -560,7 +574,7 @@ end
 --- @param opts table
 function M.item_if(item, condition, hl, opts)
   if not condition then
-    return {"", 0}
+    return M.spacer()
   end
   return M.item(item, hl, opts)
 end

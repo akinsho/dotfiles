@@ -136,7 +136,7 @@ function _G.statusline()
   -- Setup
   ----------------------------------------------------------------------------//
   local statusline = {}
-  append(statusline, {" ", 1})
+  append(statusline, utils.spacer(1))
 
   ----------------------------------------------------------------------------//
   -- Filename
