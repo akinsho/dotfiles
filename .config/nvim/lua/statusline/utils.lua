@@ -4,6 +4,7 @@ local palette = require "statusline/palette"
 local exists = vim.fn.exists
 local expand = vim.fn.expand
 local strwidth = vim.fn.strwidth
+local fnamemodify = vim.fn.fnamemodify
 local contains = vim.tbl_contains
 
 local highlight_cache = {}
@@ -152,7 +153,7 @@ local function special_buffers(ctx)
     return "Quickfix"
   end
   if normal_term then
-    return "Terminal(" .. vim.fn.fnamemodify(vim.env.SHELL, ":t") .. ")"
+    return "Terminal(" .. fnamemodify(vim.env.SHELL, ":t") .. ")"
   end
   if ctx.preview then
     return "preview"
@@ -183,7 +184,7 @@ local function readonly(ctx, icon)
 end
 
 local function get_toggleterm_name(_, bufnum)
-  local shell = vim.fn.fnamemodify(vim.env.SHELL, ":t")
+  local shell = fnamemodify(vim.env.SHELL, ":t")
   local terminal_prefix = "Terminal(" .. shell .. ")["
   return terminal_prefix .. vim.fn.getbufvar(bufnum, "toggle_number") .. "]"
 end
@@ -345,16 +346,11 @@ function M.filetype(ctx)
   end
   local icon, hl
   if loaded then
-    local extension = vim.fn.fnamemodify(ctx.bufname, ":e")
+    local extension = fnamemodify(ctx.bufname, ":e")
     icon, hl = devicons.get_icon(ctx.bufname, extension, {default = true})
     hl = set_ft_icon_highlight(hl, "Normal")
   end
   return icon, hl
-end
-
---- @param id number
-function M.encoding(id)
-  return vim.fn.winwidth(0) > 70 and (vim.bo[id].fenc or vim.bo[id].enc) or ""
 end
 
 function M.line_info()
