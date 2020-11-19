@@ -470,39 +470,41 @@ end
 --- @param item string
 --- @param opts table
 function M.sep(item, opts)
-  local before = opts.before or " "
-  local prefix = opts.prefix or ""
-  local small = opts.small or false
-  local padding = opts.padding or "prefix"
-  local item_color = opts.color or "StItem"
-  local prefix_color = opts.prefix_color or "StPrefix"
-  local prefix_sep_color = opts.prefix_sep_color or "StPrefixSep"
-  local sep_color = opts.sep_color or "StSep"
-  local sep_color_left = prefix and prefix_sep_color or sep_color
-  local prefix_item = prefix_color .. prefix
+  opts = opts or {}
+  opts.before = opts.before or " "
+  opts.prefix = opts.prefix or ""
+  opts.small = opts.small or false
+  opts.padding = opts.padding or "prefix"
+  opts.color = M.wrap(opts.color or "StItem")
+  opts.prefix_color = M.wrap(opts.prefix_color or "StPrefix")
+  opts.prefix_sep_color = M.wrap(opts.prefix_sep_color or "StPrefixSep")
+  opts.sep_color = M.wrap(opts.sep_color or "StSep")
+  opts.sep_color_left = opts.prefix and opts.prefix_sep_color or opts.sep_color
+  opts.prefix_item = opts.prefix_color .. opts.prefix
+
   -- depending on how padding is specified extra space
   -- will be injected at specific points
-  if padding == "prefix" or padding == "full" then
-    prefix_item = prefix_item .. " "
+  if opts.padding == "prefix" or opts.padding == "full" then
+    opts.prefix_item = opts.prefix_item .. " "
   end
 
-  if padding == "full" then
+  if opts.padding == "full" then
     item = " " .. item
   end
 
   -- %* resets the highlighting at the end of the separator so it
   -- doesn't interfere with the next component
-  local sep_icon_right = small and "%*" or "█%*"
+  local sep_icon_right = opts.small and "%*" or "█%*"
   local sep_icon_left =
-    prefix ~= "" and "" .. prefix_item or small and "" or "█"
+    opts.prefix ~= "" and "" .. opts.prefix_item or opts.small and "" or "█"
 
   local parts = {
-    before,
-    M.wrap(sep_color_left),
+    opts.before,
+    opts.sep_color_left,
     sep_icon_left,
-    M.wrap(item_color),
+    opts.color,
     item,
-    M.wrap(sep_color),
+    opts.sep_color,
     sep_icon_right
   }
 
