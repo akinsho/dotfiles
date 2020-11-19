@@ -7,9 +7,14 @@ local strwidth = vim.fn.strwidth
 local fnamemodify = vim.fn.fnamemodify
 local contains = vim.tbl_contains
 
+local M = {}
 local highlight_cache = {}
 
-local M = {}
+local function get_toggleterm_name(_, bufnum)
+  local shell = fnamemodify(vim.env.SHELL, ":t")
+  local terminal_prefix = "Terminal(" .. shell .. ")["
+  return terminal_prefix .. vim.fn.getbufvar(bufnum, "toggle_number") .. "]"
+end
 
 local plain_filetypes = {
   "help",
@@ -33,6 +38,51 @@ local plain_buftypes = {
   "nofile",
   "nowrite",
   "acwrite"
+}
+
+local exceptions = {
+  buftypes = {
+    terminal = " ",
+    quickfix = ""
+  },
+  filetypes = {
+    dbui = "",
+    vista = "פּ",
+    tsplayground = "侮",
+    fugitive = "",
+    fugitiveblame = "",
+    gitcommit = "",
+    startify = "",
+    defx = "⌨",
+    ctrlsf = "🔍",
+    ["vim-plug"] = "⚉",
+    vimwiki = "ﴬ",
+    help = "",
+    undotree = "פּ",
+    ["coc-explorer"] = "",
+    LuaTree = "פּ",
+    toggleterm = " ",
+    calendar = ""
+  },
+  names = {
+    minimap = "minimap",
+    dbui = "Dadbod UI",
+    tsplayground = "Treesitter",
+    vista = "Vista",
+    fugitive = "Fugitive",
+    fugitiveblame = "Git blame",
+    gitcommit = "Git commit",
+    startify = "Startify",
+    defx = "Defx",
+    ctrlsf = "CtrlSF",
+    ["vim-plug"] = "vim plug",
+    vimwiki = "vim wiki",
+    help = "help",
+    undotree = "UndoTree",
+    ["coc-explorer"] = "Coc Explorer",
+    LuaTree = "Lua Tree",
+    toggleterm = get_toggleterm_name
+  }
 }
 
 --- @param value table
@@ -182,57 +232,6 @@ local function readonly(ctx, icon)
     return ""
   end
 end
-
-local function get_toggleterm_name(_, bufnum)
-  local shell = fnamemodify(vim.env.SHELL, ":t")
-  local terminal_prefix = "Terminal(" .. shell .. ")["
-  return terminal_prefix .. vim.fn.getbufvar(bufnum, "toggle_number") .. "]"
-end
-
-local exceptions = {
-  buftypes = {
-    terminal = " ",
-    quickfix = ""
-  },
-  filetypes = {
-    dbui = "",
-    vista = "פּ",
-    tsplayground = "侮",
-    fugitive = "",
-    fugitiveblame = "",
-    gitcommit = "",
-    startify = "",
-    defx = "⌨",
-    ctrlsf = "🔍",
-    ["vim-plug"] = "⚉",
-    vimwiki = "ﴬ",
-    help = "",
-    undotree = "פּ",
-    ["coc-explorer"] = "",
-    LuaTree = "פּ",
-    toggleterm = " ",
-    calendar = ""
-  },
-  names = {
-    minimap = "minimap",
-    dbui = "Dadbod UI",
-    tsplayground = "Treesitter",
-    vista = "Vista",
-    fugitive = "Fugitive",
-    fugitiveblame = "Git blame",
-    gitcommit = "Git commit",
-    startify = "Startify",
-    defx = "Defx",
-    ctrlsf = "CtrlSF",
-    ["vim-plug"] = "vim plug",
-    vimwiki = "vim wiki",
-    help = "help",
-    undotree = "UndoTree",
-    ["coc-explorer"] = "Coc Explorer",
-    LuaTree = "Lua Tree",
-    toggleterm = get_toggleterm_name
-  }
-}
 
 --- @param bufnum number
 --- @param mod string
