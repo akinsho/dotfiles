@@ -8,11 +8,19 @@ highlight TSParameter gui=italic,bold
 " This plugin is an experimental application of tree sitter usage in Neovim
 " be careful when applying any functionality to a filetype as it might not work
 lua << EOF
+-- Disable treesitter for certian filetypes when running on MacOs
+-- because that is work and the bugs are more annoying in that context
+local is_mac = vim.loop.os_uname().sysname == "Darwin"
+local disabled = {"json"}
+if is_mac then
+  table.insert(disabled, "dart")
+end
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
   highlight = {
     enable = true,
-    disable = {"json"}
+    disable = disabled
   },
   incremental_selection = {
     enable = true,
