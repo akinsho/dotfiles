@@ -217,19 +217,14 @@ local function handle_result(job, code, auto_close)
     -- only automatically close window if successful
     local timeout = code == 0 and 10000 or 15000
     if auto_close then
-      if code <= 0 then
-        vim.defer_fn(
-          function()
-            reload_fugitive(job.cmd)
-          end,
-          1000
-        )
-      end
       vim.defer_fn(
         function()
           -- clear the last open window
           last_open_window = -1
           api.nvim_win_close(win_id, true)
+          if code <= 0 then
+            reload_fugitive(job.cmd)
+          end
           save_urls(job.data)
         end,
         timeout
