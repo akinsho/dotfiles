@@ -577,19 +577,8 @@ command! -nargs=0 Reg call utils#reg()
 " z is the zoom/zen prefix
 nnoremap <silent> <leader>zt :call utils#tab_zoom()<CR>
 ""---------------------------------------------------------------------------//
-" Map key to toggle opt
-""---------------------------------------------------------------------------//
-function! MapToggle(key, opt)
-  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-  exec 'nnoremap '.a:key.' '.cmd
-  exec 'inoremap '.a:key." \<C-O>".cmd
-endfunction
-command! -nargs=+ MapToggle call MapToggle(<f-args>)
-""---------------------------------------------------------------------------//
 " Display-altering option toggles
 ""---------------------------------------------------------------------------//
-MapToggle <F7> wrap
-MapToggle <F8> list
 
 function! s:toggle_bg() abort
   if &background == 'dark'
@@ -603,8 +592,6 @@ command! ToggleBackground call s:toggle_bg()
 ""---------------------------------------------------------------------------//
 " Behavior-altering option toggles
 ""---------------------------------------------------------------------------//
-MapToggle <F9> scrollbind
-
 set pastetoggle=<F6>
 
 function! ToggleColorColumn()
