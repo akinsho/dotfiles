@@ -1,6 +1,6 @@
 setlocal iskeyword+=:,#
 setlocal foldmethod=marker
-nnoremap <silent><buffer><leader>so :source % <bar> :call VimrcMessage('Sourced ' . expand('%'), 'Title')<CR>
+nnoremap <silent><buffer><leader>so :source % <bar> :call utils#message('Sourced ' . expand('%'), 'Title')<CR>
 
 " add custom vim-surround mappings for vim
 " https://github.com/AndrewRadev/Vimfiles/blob/eada7a20dc705729f963348357d7754124d0b183/ftplugin/vim.vim#L3

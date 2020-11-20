@@ -75,7 +75,7 @@ augroup end
 augroup Cancel_Paste
   autocmd!
     autocmd InsertLeave *
-          \ if &paste | set nopaste | call VimrcMessage('Paste off', 'Title') | endif
+          \ if &paste | set nopaste | call utils#message('Paste off', 'Title') | endif
 augroup END
 
 " See :h skeleton
@@ -90,7 +90,7 @@ augroup UpdateVim
   " NOTE: This takes ${VIM_STARTUP_TIME} duration to run
   autocmd BufWritePost $DOTFILES/**/nvim/configs/*.vim,$MYVIMRC ++nested
         \  source $MYVIMRC | redraw | silent doautocmd ColorScheme |
-        \  call VimrcMessage("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
+        \  call utils#message("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
@@ -258,7 +258,7 @@ augroup Utilities "{{{1
   if has('nvim')
     autocmd BufWritePost,FileWritePost **/nvim/lua/*.lua nested
           \ execute ('luafile ' . fnamemodify(expand('<afile>'), ':p'))
-          \ | call VimrcMessage('sourced '.bufname('%'), 'Title')
+          \ | call utils#message('sourced '.bufname('%'), 'Title')
   endif
 
   autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif

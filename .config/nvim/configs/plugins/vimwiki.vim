@@ -70,7 +70,7 @@ endfunction
 
 function! s:auto_push(...) abort
   try
-    call VimrcMessage('pushing '.g:learnings_wiki_path.'...', 'Title')
+    call utils#message('pushing '.g:learnings_wiki_path.'...', 'Title')
     let cmd = 'git -C '. g:learnings_wiki_path. ' push -q origin master'
     call luaeval('require("async_job").exec(_A, 0)', cmd)
   catch /.*/
@@ -82,13 +82,13 @@ let s:timer = -1
 
 function! s:auto_save_start() abort
   if s:timer < 0
-    call VimrcMessage('Starting learning wiki auto save', 'Title')
+    call utils#message('Starting learning wiki auto save', 'Title')
     let s:timer = timer_start(1000 * 60 * 5, function('s:auto_push'), { 'repeat': -1 })
   endif
 endfunction
 
 function! s:auto_save_stop() abort
-  call VimrcMessage('Stopping learning wiki auto save', 'Title')
+  call utils#message('Stopping learning wiki auto save', 'Title')
   call timer_stop(s:timer)
   let s:timer = -1
 endfunction

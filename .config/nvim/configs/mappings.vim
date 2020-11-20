@@ -198,7 +198,7 @@ function! s:open_file_or_create_new() abort
       return
     endif
     let full_path = new_path . extensions[0]
-    call VimrcMessage('creating new file: '.full_path, 'Title')
+    call utils#message('creating new file: '.full_path, 'Title')
     return execute('edit '.full_path)
   endtry
 endfunction
