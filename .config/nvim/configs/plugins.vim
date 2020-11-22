@@ -50,7 +50,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
-Plug 'christoomey/vim-tmux-navigator', Cond(exists('$TMUX'))
+if exists('$TMUX')
+  Plug 'christoomey/vim-tmux-navigator'
+endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
@@ -162,7 +164,7 @@ if has('nvim')
   else
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'akinsho/nvim-toggleterm.lua'
-    Plug 'akinsho/nvim-bufferline.lua', {'branch': 'deduplicate-names'}
+    Plug 'akinsho/nvim-bufferline.lua' ", {'branch': 'deduplicate-names'}
     Plug 'akinsho/dependency-assist.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-treesitter/nvim-treesitter'
