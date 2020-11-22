@@ -85,18 +85,6 @@ local exceptions = {
   }
 }
 
---- @param value table
-local function serialize(value)
-  if type(value) ~= "table" then
-    return value
-  end
-  local key = ""
-  for _, v in pairs(value) do
-    key = key .. v.component
-  end
-  return key
-end
-
 local function sum_lengths(tbl)
   local length = 0
   for _, c in ipairs(tbl) do
@@ -105,31 +93,6 @@ local function sum_lengths(tbl)
     end
   end
   return length
-end
-
---- memoizing a function in lua
---- https://stackoverflow.com/a/141689
-local function memoize(fn)
-  local cache = {}
-  setmetatable(cache, {__mode = "v"}) -- make values weak
-  return function(stl, space, length)
-    local key =
-      table.concat(
-      {
-        serialize(stl),
-        tostring(space),
-        tostring(length)
-      },
-      "-"
-    )
-    if cache[key] then
-      return cache[key]
-    else
-      local y = fn(stl, space, length)
-      cache[key] = y
-      return y
-    end
-  end
 end
 
 local function is_lowest(item, lowest)
@@ -160,7 +123,7 @@ end
 --- @param statusline table
 --- @param space number
 --- @param length number
-local function prioritize(statusline, space, length)
+function M.prioritize(statusline, space, length)
   length = length or sum_lengths(statusline)
   if length <= space then
     return statusline
@@ -174,10 +137,8 @@ local function prioritize(statusline, space, length)
     end
   end
   table.remove(statusline, index_to_remove)
-  return prioritize(statusline, space, length - lowest.length)
+  return M.prioritize(statusline, space, length - lowest.length)
 end
-
-M.prioritize = memoize(prioritize)
 
 --- @param ctx table
 function M.is_plain(ctx)
