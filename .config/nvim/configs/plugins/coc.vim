@@ -65,9 +65,11 @@ function! s:coc_init() abort
           \ 'rootPatterns': ['.git/'],
           \ 'settings': {
           \  'Lua': {
+          \   'awakened': { 'cat': v:true },
           \   'workspace': {
           \     'library': {
-          \       expand("$VIMRUNTIME/lua"): v:true
+          \       expand("$VIMRUNTIME/lua"): v:true,
+          \       expand("$VIMRUNTIME/lua/vim/lsp"): v:true
           \     },
           \   },
           \   'runtime': {'version': "LuaJIT"},
