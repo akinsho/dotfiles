@@ -314,7 +314,7 @@ function M.filetype(ctx)
 end
 
 function M.line_info()
-  return "%.15(%l/%L %p%%%)"
+  return "%l of %L lines"
 end
 
 -- Sometimes special characters are passed into statusline components
