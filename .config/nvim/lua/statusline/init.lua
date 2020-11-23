@@ -181,14 +181,14 @@ function _G.statusline()
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   if minimal then
-    append(statusline, dir_item, 0)
+    append(statusline, dir_item, 1)
     append(statusline, file_item, 0)
     return display(statusline, available_space)
   end
 
   append(statusline, utils.item(current_mode, "StModeText"), 0)
 
-  append(statusline, dir_item, 0)
+  append(statusline, dir_item, 1)
   append(statusline, file_item, 0)
 
   append(
@@ -222,7 +222,7 @@ function _G.statusline()
         st_warning
       )
     ),
-    1
+    2
   )
 
   -- Neovim allows unlimited alignment sections so we can put things in the
@@ -239,12 +239,12 @@ function _G.statusline()
   -- LSP Diagnostics
   local info = utils.diagnostic_info()
   append(statusline, utils.item(info.error, "Error"), 1)
-  append(statusline, utils.item(info.warning, "PreProc"), 1)
-  append(statusline, utils.item(info.information, "String"), 2)
+  append(statusline, utils.item(info.warning, "PreProc"), 2)
+  append(statusline, utils.item(info.information, "String"), 3)
 
   -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "Comment"), 2)
-  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 3)
+  append(statusline, utils.item(utils.lsp_status(), "Comment"), 3)
+  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
 
   -- Indentation
   local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab
@@ -256,7 +256,7 @@ function _G.statusline()
       "Title",
       {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
     ),
-    3
+    4
   )
 
   -- Current line number/total line number,  alternatives 
@@ -267,7 +267,7 @@ function _G.statusline()
       "StMetadata",
       {prefix = "ℓ", prefix_color = "StMetadataPrefix"}
     ),
-    3
+    4
   )
 
   append(statusline, {"%<"})
