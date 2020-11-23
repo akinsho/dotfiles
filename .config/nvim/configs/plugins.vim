@@ -164,7 +164,7 @@ if has('nvim')
   else
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'akinsho/nvim-toggleterm.lua'
-    Plug 'akinsho/nvim-bufferline.lua' ", {'branch': 'deduplicate-names'}
+    Plug 'akinsho/nvim-bufferline.lua'
     Plug 'akinsho/dependency-assist.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-treesitter/nvim-treesitter'
