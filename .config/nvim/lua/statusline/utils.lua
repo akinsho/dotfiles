@@ -188,7 +188,7 @@ end
 local function readonly(ctx, icon)
   icon = icon or ""
   if ctx.filetype == "help" or ctx.preview or ctx.readonly then
-    return icon
+    return " " .. icon
   else
     return ""
   end
@@ -208,7 +208,7 @@ function M.filename(ctx, modifier)
     return "", special_buf
   end
 
-  local readonly_indicator = " " .. readonly(ctx)
+  local readonly_indicator = readonly(ctx)
   modifier = modifier or ":t"
   local fname = buf_expand(ctx.bufnum, modifier)
 

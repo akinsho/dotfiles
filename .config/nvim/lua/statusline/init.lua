@@ -159,7 +159,7 @@ function _G.statusline()
   local ft_icon, icon_highlight = utils.filetype(ctx)
 
   local opts = {prefix = ft_icon, before = "", after = ""}
-  local file_opts = {before = ""}
+  local file_opts = {before = "", after = ""}
 
   if not minimal then
     opts.prefix_color = icon_highlight
