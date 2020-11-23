@@ -143,8 +143,6 @@ augroup config_filetype_settings "{{{1
   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
   " set filetype all variants of .env files
   autocmd BufRead,BufNewFile .env.* set filetype=sh
-  " source: :h matchpairs
-  autocmd FileType c,cpp,java,dart set mps+==:;
 augroup END
 
 augroup CommandWindow "{{{1
