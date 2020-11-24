@@ -25,11 +25,15 @@ restore-gnome() {
 }
 
 build-nvim() {
-    if [[ ! -d "$PROJECTS_DIR/contributing/neovim" ]]; then
-        git clone git@github.com:neovim/neovim.git $HOME/Desktop/Coding/neovim
+    neovim_dir="$PROJECTS_DIR/contributing/neovim"
+    if [[ ! -d $neovim_dir  ]]; then
+        git clone git@github.com:neovim/neovim.git $neovim_dir
     fi
-    cd $HOME/Desktop/Coding/neovim/
-    rm -r build/  # clear the CMake cache
+    cd $neovim_dir
+    git pull origin master
+    if [[ -d "$neovim_dir/build/" ]]; then
+        rm -r ./build/  # clear the CMake cache
+    fi
     make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
     make install
 }

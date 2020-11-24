@@ -23,6 +23,8 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   export GOPATH=$(go env GOPATH)
   path+=(
+    # add locally built nvim to path, remove this once snaps are working
+    "$HOME/neovim/bin"
     "$HOME/flutter/bin"
     "$JAVA_HOME/bin"
     # GO ============================================================
