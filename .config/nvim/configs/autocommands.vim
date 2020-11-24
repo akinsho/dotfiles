@@ -170,7 +170,11 @@ if has('nvim-0.5')
   augroup TextYankHighlight
     autocmd!
     " don't execute silently in case of errors
-    autocmd TextYankPost * lua require'vim.highlight'.on_yank({ timeout = 500, on_visual = false })
+    autocmd TextYankPost * lua require'vim.highlight'.on_yank({
+          \   timeout = 500,
+          \   on_visual = false,
+          \   higroup = 'Visual'
+          \ })
   augroup END
 endif
 
