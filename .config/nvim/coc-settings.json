@@ -6,7 +6,6 @@
   "flutter.openDevLogSplitCommand": "tabedit",
   "flutter.outlineWidth": 35,
   "eslint.enable": false, // only enable eslint per project
-  "python.jediEnabled": false,
   "html.autoClosingTags": true,
   "xml.format.splitAttributes": true,
   "go.goplsOptions": {
@@ -24,9 +23,7 @@
   "list.selectedSignText": " ",
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
-  "list.source.diagnostics.defaultOptions": ["--no-quit"],
   "list.source.branches.defaultArgs": ["--sort", "-committerdate"],
-  "coc.preferences.extensionUpdateCheck": "daily",
   "codeLens.enable": true,
   "codeLens.separator": "‣",
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
@@ -52,13 +49,6 @@
   ],
   "snippets.userSnippetsDirectory": "~/.dotfiles/.config/nvim/snippets/ultisnips",
   "snippets.ultisnips.directories": ["Ultisnips", "gosnippets/UltiSnips"],
-  "snippets.extends": {
-    "cpp": ["c"],
-    "javascriptreact": ["javascript"],
-    "typescriptreact": ["javascript"],
-    "typescript": ["javascript"],
-    "rei": ["reason"]
-  },
   // Git sign alternatives
   // '', '❖' - added
   // '', '•' - changed
