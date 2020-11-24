@@ -11,6 +11,7 @@ set shortmess+=f                      " (file x of x) instead of just (x of x)
 set shortmess+=F                      "Don't give file info when editing a file
 set shortmess+=s
 set shortmess+=c
+set shortmess+=W                      " Dont show [w] or written when writing
 " ----------------------------------------------------------------------------
 " Window splitting and buffers {{{1
 " ----------------------------------------------------------------------------
