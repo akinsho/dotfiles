@@ -2,9 +2,9 @@
 "MAPPINGS
 ""---------------------------------------------------------------------------//
 
-""---------------------------------------------------------------------------//
-"Terminal {{{
-""---------------------------------------------------------------------------//
+"---------------------------------------------------------------------------//
+" Terminal {{{
+"---------------------------------------------------------------------------//
 " Terminal settings
 function s:add_terminal_mappings()
   if &filetype ==# '' || &filetype ==# 'toggleterm'
@@ -44,10 +44,9 @@ nnoremap <silent><localleader>gpt :TermGitPush<CR>
 ""---------------------------------------------------------------------------//
 " MACROS {{{
 ""---------------------------------------------------------------------------//
-"--------------------------------------------
-"Absolutely fantastic function from stoeffel/.dotfiles which allows you to
-"repeat macros across a visual range
-"--------------------------------------------
+" Absolutely fantastic function from stoeffel/.dotfiles which allows you to
+" repeat macros across a visual range
+"-----------------------------------------------------------------------------
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
@@ -471,7 +470,7 @@ xnoremap & :&&<CR>
 " ----------------------------------------------------------------------------
 " Use the external grepprg which is set to ag or rg
 " which is much faster than internal vimgrep progream
-command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen 12
+command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen
 
 "--------------------------------------------------------------------------------
 " GX - replicate netrw functionality
