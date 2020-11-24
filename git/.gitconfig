@@ -2,7 +2,7 @@
   name = "Akin Sowemimo"
 [includeIf "gitdir:work/"]
   path = .gitconfig-work
-[includeIf "gitdir:Coding/"]
+[includeIf "gitdir:projects/"]
   path = .gitconfig-projects
 [status]
   submoduleSummary = true
