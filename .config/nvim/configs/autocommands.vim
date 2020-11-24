@@ -106,14 +106,24 @@ augroup UpdateVim
 augroup END
 " }}}
 
-let s:column_exclusions = ['startify', 'vimwiki', 'vim-plug', 'help']
-" Hide the colour column when there isn't enough space
+let s:column_exclude = ['gitcommit']
+let s:column_clear = [
+      \ 'startify',
+      \ 'vimwiki',
+      \ 'vim-plug',
+      \ 'help',
+      \ 'fugitive'
+      \]
+" Don't set the colour column when there isn't enough space
 function! s:check_color_column(...)
-  if index(s:column_exclusions, &ft) != -1
+  if index(s:column_exclude, &ft) >= 0
+    return
+  endif
+  if index(s:column_clear, &ft) >= 0
         \ || !&modifiable
         \ || !&buflisted
-        \ || strlen(&buftype) > 0
-      setlocal colorcolumn=
+        \ || strlen(&buftype)
+    setlocal colorcolumn=
     return
   endif
   " if called from WinLeave event this value is 1
@@ -121,7 +131,7 @@ function! s:check_color_column(...)
   if winwidth('%') <= 120 || leaving
     setlocal colorcolumn=
   " only reset this value when it doesn't already exist
-  elseif !&colorcolumn
+  elseif &l:colorcolumn == '' || !&l:colorcolumn
     setlocal colorcolumn<
   endif
 endfunction
