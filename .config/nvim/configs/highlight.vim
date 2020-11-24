@@ -105,6 +105,8 @@ function! s:general_overrides() abort
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
   highlight FoldColumn guibg=background
+  highlight Folded guibg=NONE gui=italic,bold
+
   highlight! link dartStorageClass Statement
 
   " Customize Diff highlighting
@@ -123,7 +125,6 @@ endfunction
 ""---------------------------------------------------------------------------//
 function! s:colorscheme_overrides() abort
   if g:colors_name ==? 'one'
-    call one#highlight('Folded', '5c6370', '', 'italic,bold')
     call one#highlight('Type', 'e5c07b', '', 'italic,bold')
     " Italicise imports
     call one#highlight('jsxComponentName', '61afef', '', 'bold,italic')
