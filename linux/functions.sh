@@ -25,7 +25,7 @@ restore-gnome() {
 }
 
 build-nvim() {
-    if [[ ! -d "$HOME/Desktop/Coding/neovim" ]]; then
+    if [[ ! -d "$PROJECTS_DIR/contributing/neovim" ]]; then
         git clone git@github.com:neovim/neovim.git $HOME/Desktop/Coding/neovim
     fi
     cd $HOME/Desktop/Coding/neovim/

@@ -3,6 +3,8 @@
 #       ENV VARIABLES
 #=======================================================================
 export DOTFILES=$HOME/.dotfiles
+export PROJECTS_DIR=$HOME/Desktop/projects
+export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal
 
 if which yarn >/dev/null; then
   path+=("$(yarn global bin)")

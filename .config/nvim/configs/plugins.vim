@@ -154,12 +154,13 @@ if has('nvim')
     Plug 'p00f/nvim-ts-rainbow'
   endif
   if $DEVELOPING
-    Plug '~/Desktop/Coding/nvim-toggleterm.lua'
-    Plug '~/Desktop/Coding/nvim-bufferline.lua'
-    Plug '~/Desktop/Coding/nvim-web-devicons'
-    Plug '~/Desktop/Coding/nvim-treesitter'
-    Plug '~/Desktop/Coding/dependency-assist.nvim'
-    Plug '~/Desktop/Coding/nvim-tree.lua'
+    Plug '~/Desktop/projects/personal/nvim-toggleterm.lua'
+    Plug '~/Desktop/projects/personal/nvim-bufferline.lua'
+    Plug '~/Desktop/projects/personal/dependency-assist.nvim'
+
+    Plug '~/Desktop/projects/contributing/nvim-web-devicons'
+    Plug '~/Desktop/projects/contributing/nvim-treesitter'
+    Plug '~/Desktop/projects/contributing/nvim-tree.lua'
   else
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'akinsho/nvim-toggleterm.lua'

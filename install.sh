@@ -100,7 +100,7 @@ fi
 
 $DOTFILES/install
 
-mkdir -p ~/Desktop/Coding
+mkdir -p ~/Desktop/projects/
 
 echo 'done'
 echo "---------------------------------------------------------"
