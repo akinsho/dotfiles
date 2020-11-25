@@ -313,8 +313,37 @@ function M.filetype(ctx)
   return icon, hl
 end
 
-function M.line_info()
-  return "%l of %L lines"
+--- This function gets and decorates the current and total line count
+--- it derives this using the line() function rather than the %l/%L statusline
+--- format strings because these cannot be
+-- @param opts table
+function M.line_info(opts)
+  local sep = opts.sep or "/"
+  local prefix = opts.prefix or "L"
+  local prefix_color = opts.prefix_color or "StMetadataPrefix"
+  local current_hl = opts.current_hl or "Comment"
+  local total_hl = opts.total_hl or "Title"
+
+  local current = vim.fn.line(".")
+  local last = vim.fn.line("$")
+
+  local length = strwidth(prefix .. current .. sep .. last)
+  return {
+    table.concat(
+      {
+        M.wrap(prefix_color),
+        prefix,
+        " ",
+        M.wrap(current_hl),
+        current,
+        sep,
+        M.wrap(total_hl),
+        last,
+        " "
+      }
+    ),
+    length
+  }
 end
 
 -- Sometimes special characters are passed into statusline components

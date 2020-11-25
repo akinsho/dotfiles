@@ -126,7 +126,6 @@ function _G.statusline()
   local plain = utils.is_plain(ctx)
 
   local current_mode = utils.mode()
-  local line_info = utils.line_info()
   local file_modified = utils.modified(ctx, "●")
   local inactive = vim.api.nvim_get_current_win() ~= curwin
   local focused = vim.g.vim_in_focus or true
@@ -262,11 +261,7 @@ function _G.statusline()
   -- Current line number/total line number,  alternatives 
   append(
     statusline,
-    utils.item(
-      line_info,
-      "StMetadata",
-      {prefix = "ℓ", prefix_color = "StMetadataPrefix"}
-    ),
+    utils.line_info({prefix = "ℓ", prefix_color = "StMetadataPrefix"}),
     4
   )
 
