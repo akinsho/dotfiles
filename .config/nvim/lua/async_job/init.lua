@@ -215,7 +215,7 @@ local function handle_result(job, code, auto_close)
   if num_of_lines > vim.o.cmdheight + 2 then
     local win_id = open_window(job, code)
     -- only automatically close window if successful
-    local timeout = code == 0 and 8000 or 15000
+    local timeout = code == 0 and 3000 or 15000
     if auto_close then
       vim.defer_fn(
         function()
