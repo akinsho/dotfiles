@@ -1,10 +1,11 @@
 local loaded, devicons = pcall(require, "nvim-web-devicons")
 local palette = require "statusline/palette"
 
-local exists = vim.fn.exists
-local expand = vim.fn.expand
-local strwidth = vim.fn.strwidth
-local fnamemodify = vim.fn.fnamemodify
+local fn = vim.fn
+local exists = fn.exists
+local expand = fn.expand
+local strwidth = fn.strwidth
+local fnamemodify = fn.fnamemodify
 local contains = vim.tbl_contains
 
 local M = {}
@@ -13,7 +14,7 @@ local highlight_cache = {}
 local function get_toggleterm_name(_, bufnum)
   local shell = fnamemodify(vim.env.SHELL, ":t")
   local terminal_prefix = "Terminal(" .. shell .. ")["
-  return terminal_prefix .. vim.fn.getbufvar(bufnum, "toggle_number") .. "]"
+  return terminal_prefix .. fn.getbufvar(bufnum, "toggle_number") .. "]"
 end
 
 local plain_filetypes = {
@@ -153,7 +154,7 @@ end
 --- CREDIT: https://vi.stackexchange.com/a/18090
 --- @param ctx table
 local function special_buffers(ctx)
-  local location_list = vim.fn.getloclist(0, {filewinid = 0})
+  local location_list = fn.getloclist(0, {filewinid = 0})
   local is_loc_list = location_list.filewinid > 0
   local normal_term = ctx.buftype == "terminal" and ctx.filetype == ""
 
@@ -262,7 +263,7 @@ end
 --- @param hl string
 --- @param attr string
 function M.get_hl_color(hl, attr)
-  return vim.fn.synIDattr(vim.fn.hlID(hl), attr)
+  return fn.synIDattr(fn.hlID(hl), attr)
 end
 
 --- @param hl string
@@ -325,8 +326,8 @@ function M.line_info(opts)
   local total_hl = opts.total_hl or "Comment"
   local sep_hl = opts.total_hl or "NonText"
 
-  local current = vim.fn.line(".")
-  local last = vim.fn.line("$")
+  local current = fn.line(".")
+  local last = fn.line("$")
 
   local length = strwidth(prefix .. current .. sep .. last)
   return {
@@ -353,7 +354,7 @@ end
 -- this sanitizes theses strings to prevent them mangling the statusline
 -- See: https://vi.stackexchange.com/questions/17704/how-to-remove-character-returned-by-system
 local function sanitize_string(item)
-  return vim.fn.substitute(item, "\n", "", "g")
+  return fn.substitute(item, "\n", "", "g")
 end
 
 function M.diagnostic_info()
@@ -386,7 +387,7 @@ end
 function M.current_fn()
   local current = vim.b.coc_current_function or ""
   local sanitized = sanitize_string(current)
-  return vim.fn.trim(sanitized)
+  return fn.trim(sanitized)
 end
 
 --- @param result table
@@ -416,13 +417,26 @@ end
 local function git_update_job()
   local cmd = "git rev-list --count --left-right @{upstream}...HEAD"
   local result = {}
-  return vim.fn.jobstart(
+  return fn.jobstart(
     cmd,
     {
       on_stdout = git_read(result),
       on_exit = git_update_status(result)
     }
   )
+end
+
+local function is_git_repo()
+  return fn.isdirectory(fn.getcwd() .. "/" .. ".git")
+end
+
+function M.git_update_toggle()
+  local on = is_git_repo()
+  if on then
+    M.git_updates()
+  end
+  local status = on and 0 or 1
+  fn.timer_pause(vim.g.git_statusline_updates_timer, status)
 end
 
 -- TODO:
@@ -437,7 +451,7 @@ function M.git_updates()
   git_update_job()
   local timer =
     vim.fn.timer_start(
-    60000,
+    30000,
     function()
       -- clear previous job
       if pending_job then
@@ -447,9 +461,7 @@ function M.git_updates()
     end,
     {["repeat"] = -1}
   )
-  return function()
-    vim.fn.timer_stop(timer)
-  end
+  vim.g.git_statusline_updates_timer = timer
 end
 
 function M.git_status()
