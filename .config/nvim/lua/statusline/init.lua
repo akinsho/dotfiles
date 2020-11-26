@@ -254,13 +254,23 @@ function _G.statusline()
     utils.item_if(
       ahead,
       ahead > 0,
-      "StInfo",
-      {prefix = "↑", after = behind > 0 and "" or " "}
+      "Title",
+      {
+        prefix = "⇡",
+        prefix_color = "String",
+        after = behind > 0 and "" or " ",
+        before = ""
+      }
     )
   )
   append(
     statusline,
-    utils.item_if(behind, behind > 0, "StInfo", {prefix = "↓", after = " "})
+    utils.item_if(
+      behind,
+      behind > 0,
+      "Title",
+      {prefix = "⇣", prefix_color = "Number", after = " "}
+    )
   )
 
   -- LSP Diagnostics
