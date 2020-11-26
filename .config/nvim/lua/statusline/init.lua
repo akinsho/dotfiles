@@ -210,8 +210,9 @@ function _G.statusline()
     statusline,
     utils.sep_if(
       develop_text,
-      vim.env.DEVELOPING and available_space > 50,
-      vim.fn.extend(
+      vim.env.DEVELOPING,
+      vim.tbl_extend(
+        "keep",
         {
           prefix = " ",
           padding = "none",
