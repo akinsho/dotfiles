@@ -13,6 +13,8 @@ local M = {}
 
 local st_warning = {color = "StWarning", sep_color = "StWarningSep"}
 
+M.git_updates = utils.git_updates
+
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
 --- patched with the nerd font characters
@@ -243,6 +245,23 @@ function _G.statusline()
   local prefix, git_status = utils.git_status()
   append(statusline, utils.item(git_status, "StInfo", {prefix = prefix}), 1)
 
+  local updates = vim.g.git_statusline_updates or {}
+  local ahead = updates.ahead and tonumber(updates.ahead) or 0
+  local behind = updates.behind and tonumber(updates.behind) or 0
+  append(
+    statusline,
+    utils.item_if(
+      ahead,
+      ahead > 0,
+      "StInfo",
+      {prefix = "↑", after = behind > 0 and "" or " "}
+    )
+  )
+  append(
+    statusline,
+    utils.item_if(behind, behind > 0, "StInfo", {prefix = "↓", after = " "})
+  )
+
   -- LSP Diagnostics
   local info = utils.diagnostic_info()
   append(statusline, utils.item(info.error, "Error"), 1)
@@ -279,6 +298,7 @@ local function setup_autocommands()
   -- The quickfix window sets it's own statusline, so we override it here
   vim.cmd [[autocmd FileType qf setlocal statusline=%!v:lua.statusline()]]
   vim.cmd [[autocmd VimEnter,ColorScheme * lua require'statusline'.colors()]]
+  vim.cmd [[autocmd VimEnter * lua require'statusline'.git_updates()]]
   vim.cmd [[augroup END]]
 end
 

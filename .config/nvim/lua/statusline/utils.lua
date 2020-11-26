@@ -389,6 +389,69 @@ function M.current_fn()
   return vim.fn.trim(sanitized)
 end
 
+--- @param result table
+local function git_read(result)
+  return function(_, data, _)
+    for _, v in ipairs(data) do
+      if v and v ~= "" then
+        table.insert(result, v)
+      end
+    end
+  end
+end
+
+--- @param result table
+local function git_update_status(result)
+  return function(_, code, _)
+    if code == 0 and result and #result > 0 then
+      local parts = vim.split(result[1], "\t")
+      if parts and #parts > 1 then
+        local formatted = {behind = parts[1], ahead = parts[2]}
+        vim.g.git_statusline_updates = formatted
+      end
+    end
+  end
+end
+
+local function git_update_job()
+  local cmd = "git rev-list --count --left-right @{upstream}...HEAD"
+  local result = {}
+  return vim.fn.jobstart(
+    cmd,
+    {
+      on_stdout = git_read(result),
+      on_exit = git_update_status(result)
+    }
+  )
+end
+
+-- TODO:
+--  1. add a function to check if the current
+--  directory is a git dir if not stop this timer
+--  2. add a User autocommand hook for async jobs so
+--  we can listen for them and trigger this function
+--- starts a timer to check for the whether
+--- we are currently ahead or behind upstream
+function M.git_updates()
+  local pending_job
+  git_update_job()
+  local timer =
+    vim.fn.timer_start(
+    60000,
+    function()
+      -- clear previous job
+      if pending_job then
+        vim.fn.jobstop(pending_job)
+      end
+      pending_job = git_update_job()
+    end,
+    {["repeat"] = -1}
+  )
+  return function()
+    vim.fn.timer_stop(timer)
+  end
+end
+
 function M.git_status()
   -- symbol opts -  , "\uf408"
   local prefix = ""
