@@ -37,7 +37,7 @@ function! s:view_git_history() abort
   " Bind <CR> for current quickfix window to properly set up diff split layout after selecting an item
   " There's probably a better way to map this without changing the window
   copen
-  nnoremap <buffer> <CR> <CR><BAR>:call <sid>diff_current_quickfix_entry()<CR>
+  nnoremap <silent><buffer> <CR> <CR><BAR>:call <sid>diff_current_quickfix_entry()<CR>
   wincmd p
 endfunction
 
