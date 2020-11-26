@@ -232,6 +232,13 @@ function _G.statusline()
   -- Start of the right side layout
   append(statusline, {"%="})
 
+  -- Current line number/total line number,  alternatives 
+  append(
+    statusline,
+    utils.line_info({prefix = "ℓ", prefix_color = "StMetadataPrefix"}),
+    4
+  )
+
   -- Git Status
   local prefix, git_status = utils.git_status()
   append(statusline, utils.item(git_status, "StInfo", {prefix = prefix}), 1)
@@ -259,15 +266,9 @@ function _G.statusline()
     4
   )
 
-  -- Current line number/total line number,  alternatives 
-  append(
-    statusline,
-    utils.line_info({prefix = "ℓ", prefix_color = "StMetadataPrefix"}),
-    4
-  )
-
   append(statusline, {"%<"})
-  return display(statusline, available_space)
+  -- removes 5 columns to add some padding
+  return display(statusline, available_space - 5)
 end
 
 local function setup_autocommands()

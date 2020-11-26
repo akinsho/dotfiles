@@ -321,8 +321,9 @@ function M.line_info(opts)
   local sep = opts.sep or "/"
   local prefix = opts.prefix or "L"
   local prefix_color = opts.prefix_color or "StMetadataPrefix"
-  local current_hl = opts.current_hl or "Comment"
-  local total_hl = opts.total_hl or "Title"
+  local current_hl = opts.current_hl or "Title"
+  local total_hl = opts.total_hl or "Comment"
+  local sep_hl = opts.total_hl or "NonText"
 
   local current = vim.fn.line(".")
   local last = vim.fn.line("$")
@@ -331,11 +332,13 @@ function M.line_info(opts)
   return {
     table.concat(
       {
+        " ",
         M.wrap(prefix_color),
         prefix,
         " ",
         M.wrap(current_hl),
         current,
+        M.wrap(sep_hl),
         sep,
         M.wrap(total_hl),
         last,
