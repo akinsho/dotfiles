@@ -303,8 +303,10 @@ lwd() {
 # Jump to last directory automatically unless:
 # - this isn't the first time the plugin is loaded
 # - it's not in $HOME directory
-if ! [[ -n "$ZSH_LAST_WORKING_DIRECTORY" ]] || ! [[ "$PWD" != "$HOME" ]] || ! [[ -n "$TMUX" ]]; then
-  lwd 2>/dev/null && ZSH_LAST_WORKING_DIRECTORY=1 || true
+if ! [[ -n $TMUX ]] ; then
+  if ! [[ -n "$ZSH_LAST_WORKING_DIRECTORY" ]] || ! [[ "$PWD" != "$HOME" ]]; then
+    lwd 2>/dev/null && ZSH_LAST_WORKING_DIRECTORY=1 || true
+  fi
 fi
 
 #-------------------------------------------------------------------------------
