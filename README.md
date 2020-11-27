@@ -58,13 +58,3 @@ plugin and I'd rather not delete these and have to figure it all out again
 
 Filetype specific overrides and settings where possible are in `ftplugin` files in the after directory.
 Slightly beefier bits of functionality I use on an adhoc basis are in the autoload directory.
-
-```vim
-  .vim/
-    autoload/
-    ftplugin/
-    plugins/
-    after/
-      /ftplugins
-        /go.vim <-- specific overrides
-```
