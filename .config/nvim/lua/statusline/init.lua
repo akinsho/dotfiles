@@ -15,6 +15,7 @@ local st_warning = {color = "StWarning", sep_color = "StWarningSep"}
 
 M.git_updates = utils.git_updates
 M.git_toggle_updates = utils.git_update_toggle
+M.git_updates_refresh = utils.git_updates_refresh
 
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
@@ -311,6 +312,8 @@ local function setup_autocommands()
   vim.cmd [[autocmd VimEnter,ColorScheme * lua require'statusline'.colors()]]
   vim.cmd [[autocmd VimEnter * lua require'statusline'.git_updates()]]
   vim.cmd [[autocmd DirChanged * lua require'statusline'.git_toggle_updates()]]
+  vim.cmd [[autocmd User AsyncGitJobComplete lua require'statusline'.git_updates_refresh()]]
+  vim.cmd [[autocmd User FugitiveChanged lua require'statusline'.git_updates_refresh()]]
   vim.cmd [[augroup END]]
 end
 

@@ -6,6 +6,13 @@
 local api = vim.api
 
 local msg_prefix = "[Async job]: "
+
+--- current regex is hacked out of vim-highlighturl
+local url_regex =
+  [[\v\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%(]] ..
+  [[[&:#*@~%_\-=?!+;/0-9A-Za-z]+%(%([.,;/?]|[.][.]+)[&:#*@~%_\-=?!+/0-9A-Za-z]+|:\d+)*|]] ..
+    [[\([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\)|\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]|]] ..
+      [[\{%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*|\{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\})\})+]]
 -----------------------------------------------------------
 -- Export
 -----------------------------------------------------------
@@ -61,6 +68,14 @@ local function format_data(data)
     table.insert(formatted, " " .. item .. " ")
   end
   return formatted
+end
+
+local function publish_events(is_git_cmd)
+  if is_git_cmd then
+    vim.cmd("doautocmd User AsyncGitJobComplete")
+  else
+    vim.cmd("doautocmd User AsyncJobComplete")
+  end
 end
 
 -- TODO find a way to dismiss oldest window if messages collide
@@ -169,13 +184,6 @@ local function echo(msg, hl)
   vim.cmd("echohl clear")
 end
 
---- current regex is hacked out of vim-highlighturl
-local url_regex =
-  [[\v\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%(]] ..
-  [[[&:#*@~%_\-=?!+;/0-9A-Za-z]+%(%([.,;/?]|[.][.]+)[&:#*@~%_\-=?!+/0-9A-Za-z]+|:\d+)*|]] ..
-    [[\([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\)|\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]|]] ..
-      [[\{%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*|\{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\})\})+]]
-
 local function save_urls(lines)
   local matches = {}
   for _, line in ipairs(lines) do
@@ -198,11 +206,11 @@ local function save_urls(lines)
   end
 end
 
-local function reload_fugitive(cmd)
+local function reload_fugitive()
   -- if this was a git related command reload the vim fugitive status buffer
   -- for alternatives consider using windo
   -- https://github.com/wookayin/dotfiles/commit/5c7ab2347c8e46b3980c0f6a51fe6477ad8675ba
-  if cmd:match("git") and vim.fn.exists("*fugitive#ReloadStatus") > 0 then
+  if vim.fn.exists("*fugitive#ReloadStatus") > 0 then
     vim.fn["fugitive#ReloadStatus"]()
   end
 end
@@ -223,7 +231,11 @@ local function handle_result(job, code, auto_close)
           last_open_window = -1
           api.nvim_win_close(win_id, true)
           if code <= 0 then
-            reload_fugitive(job.cmd)
+            local is_git_cmd = job.cmd:match("git")
+            publish_events(is_git_cmd)
+            if is_git_cmd then
+              reload_fugitive()
+            end
           end
           save_urls(job.data)
         end,

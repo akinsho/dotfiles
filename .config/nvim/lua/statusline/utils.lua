@@ -430,6 +430,10 @@ local function is_git_repo()
   return fn.isdirectory(fn.getcwd() .. "/" .. ".git")
 end
 
+function M.git_updates_refresh()
+  git_update_job()
+end
+
 function M.git_update_toggle()
   local on = is_git_repo()
   if on then
