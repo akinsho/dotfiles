@@ -18,7 +18,7 @@ function! s:setup() abort
   if expand('%') =~# 'COMMIT_EDITMSG'
     setlocal spell
     " delete the commit message storing it in "g, and go back to Gstatus
-    nnoremap <silent><buffer> Q gg"gd/#<cr>:let @/=''<cr>:<c-u>wq<cr>:Gstatus<cr>:call histdel('search', -1)<cr>
+    nnoremap <silent><buffer> Q gg0"gd/#<cr>:let @/=''<cr>:<c-u>wq<cr>:Gstatus<cr>:call histdel('search', -1)<cr>
     " Restore register "g
     nnoremap <silent><buffer> <leader>u gg"gP
   endif
