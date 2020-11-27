@@ -112,6 +112,7 @@ augroup coc_commands
   autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
   " Suggestions don't work and are not needed in the command line window
   autocmd CmdwinEnter * let b:coc_suggest_disable = 1
+  autocmd User CocOpenFloat setlocal foldlevel=20 foldcolumn=0
 augroup End
 
 ""---------------------------------------------------------------------------//
