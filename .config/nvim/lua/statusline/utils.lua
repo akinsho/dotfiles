@@ -443,11 +443,6 @@ function M.git_update_toggle()
   fn.timer_pause(vim.g.git_statusline_updates_timer, status)
 end
 
--- TODO:
---  1. add a function to check if the current
---  directory is a git dir if not stop this timer
---  2. add a User autocommand hook for async jobs so
---  we can listen for them and trigger this function
 --- starts a timer to check for the whether
 --- we are currently ahead or behind upstream
 function M.git_updates()
