@@ -102,4 +102,5 @@ export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 
 # To apply to the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_TMUX=1
+# Don't open FZF in a separate split in tmux
+export FZF_TMUX=0
