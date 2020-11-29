@@ -6,7 +6,6 @@ endif
 lua << EOF
 require'bufferline'.setup {
   options = {
-    view = "multiwindow",
     mappings = true,
     sort_by = "directory",
     separator_style = "slant"
