@@ -1,6 +1,7 @@
 setlocal spell spelllang=en_gb
 setlocal expandtab
 setlocal shiftwidth=2
+setlocal nowrap
 setlocal softtabstop=2
 setlocal colorcolumn=
 setlocal concealcursor=
