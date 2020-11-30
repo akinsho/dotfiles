@@ -142,6 +142,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
+Plug 'voldikss/vim-skylight'
 "--------------------------------------------------------------------------------
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
@@ -167,7 +168,7 @@ if has('nvim')
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'akinsho/dependency-assist.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'}
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
