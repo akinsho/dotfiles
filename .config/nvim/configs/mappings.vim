@@ -352,7 +352,8 @@ nnoremap <leader><leader> <c-^>
 ""---------------------------------------------------------------------------//
 " select last paste in visual mode
 " source: https://vim.fandom.com/wiki/Selecting_your_pasted_text
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+" TODO find a free mapping for this or delete it
+" nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 ""---------------------------------------------------------------------------//
 " Capitalize
 ""---------------------------------------------------------------------------//
