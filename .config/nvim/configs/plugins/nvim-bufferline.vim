@@ -7,7 +7,7 @@ lua << EOF
 require'bufferline'.setup {
   options = {
     mappings = true,
-    sort_by = "directory",
+    sort_by = "extension",
     separator_style = "slant"
   };
 }
