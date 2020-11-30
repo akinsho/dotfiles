@@ -72,9 +72,6 @@ set foldlevelstart=10
 " The fold open and close markers are visually distracting
 " and if the code is too nested it starts rendering fold depth
 set foldcolumn=0
-" if has('nvim-0.5')
-"  set foldcolumn=auto:8
-" endif
 " ----------------------------------------------------------------------------
 " Wild and file globbing stuff in command mode {{{1
 " ----------------------------------------------------------------------------
@@ -152,6 +149,8 @@ set wrap
 set wrapmargin=2
 set softtabstop=2
 set textwidth=80 " this is a default that might be too aggressive on modern screens
+set shiftwidth=2
+set expandtab
 set confirm " make vim prompt me to save before doing destructive things
 if exists('&signcolumn')
   if has('nvim-0.4')
