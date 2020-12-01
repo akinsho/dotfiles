@@ -31,16 +31,7 @@ let g:lua_tree_ignore               = ['.DS_Store', 'fugitive:']
 
 highlight link LuaTreeIndentMarker Comment
 
-function! s:darken_explorer() abort
-  let normal_bg = synIDattr(hlID('Normal'), 'bg')
-  let bg_color = v:lua.require('bufferline').shade_color(normal_bg, -30)
-  echomsg 'darkening to '.bg_color
-  silent execute 'highlight ExplorerBackground guibg='.bg_color
-  setlocal winhighlight=Normal:ExplorerBackground
-endfunction
-
 augroup LuaTreeOverrides
   autocmd!
   autocmd ColorScheme * highlight LuaTreeRootFolder gui=bold,italic
-  autocmd BufEnter * if &ft == 'LuaTree' | call s:darken_explorer() | endif
 augroup END

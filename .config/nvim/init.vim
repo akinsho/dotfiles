@@ -23,12 +23,6 @@ endif
 " WARNING: Hard coding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:vim_dir = g:dotfiles . '/.config/nvim'
-
-" stolen from ThePrimegean's video
-" https://www.youtube.com/watch?v=9L4sW047oow
-if has('nvim-0.5')
-  command! -nargs=? ResetLuaPlugin lua require"devtools".reset_package(<q-args>)
-endif
 "-----------------------------------------------------------------------
 "Leader bindings
 "-----------------------------------------------------------------------
@@ -54,6 +48,7 @@ runtime configs/autocommands.vim
 if has('nvim-0.5')
   lua require('statusline')
   lua require('lsp')
+  lua require('highlights')
 endif
 
 runtime! configs/plugins/*.vim
