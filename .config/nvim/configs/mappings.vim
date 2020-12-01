@@ -404,11 +404,6 @@ xnoremap r <C-v>
 "--------------------------------------------------------------------------------
 " Operators
 "--------------------------------------------------------------------------------
-" Move <C-A> functionality to <C-G> is in tmux
-" Prevents this useful binding from getting swallowed
-if exists('$TMUX')
-  noremap <c-g> <c-a>
-endif
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 ""---------------------------------------------------------------------------//
