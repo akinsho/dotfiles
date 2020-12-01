@@ -1,5 +1,6 @@
 local loaded, devicons = pcall(require, "nvim-web-devicons")
-local palette = require "statusline/palette"
+local palette = require("statusline/palette")
+local h = require("highlights")
 
 local fn = vim.fn
 local exists = fn.exists
@@ -240,6 +241,9 @@ local function or_none(hl)
   return (hl and hl ~= "") and hl or "NONE"
 end
 
+--- TODO investigate merging this with the function in highlights
+--- they have slightly different requirements though since here we
+--- explicitly want empty values to be set to NONE
 --- @param name string
 --- @param hl table
 function M.set_highlight(name, hl)
@@ -258,6 +262,40 @@ function M.set_highlight(name, hl)
       )
     end
   end
+end
+
+--- @param win_id integer
+function M.has_win_highlight(win_id)
+  local win_hl = vim.wo[win_id].winhighlight
+  return win_hl ~= nil and win_hl ~= "", win_hl
+end
+
+--- @param win_id integer
+--- @param name string
+--- @param default string
+function M.adopt_winhighlight(win_id, name, default)
+  name = name .. win_id
+  local _, win_hl = M.has_win_highlight(win_id)
+  local hl_exists = vim.fn.hlexists(name) > 0
+  if not hl_exists then
+    local parts = vim.split(win_hl, ",")
+    local found
+    for _, p in ipairs(parts) do
+      if p:match("Normal") then
+        found = p
+        break
+      end
+    end
+    if not found then
+      return
+    end
+    local hl_group = vim.split(found, ":")[2]
+    local bg = h.hl_value(hl_group, "bg")
+    local fg = h.hl_value(default, "fg")
+    local gui = h.gui_attr(default)
+    h.highlight({name = name, guibg = bg, guifg = fg, gui = gui})
+  end
+  return name
 end
 
 --- @param hl string

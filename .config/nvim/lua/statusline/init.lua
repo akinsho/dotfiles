@@ -157,6 +157,12 @@ function _G.statusline()
   -- highlight the filename component separately
   local filename_hl = minimal and "StFilenameInactive" or "StFilename"
   local directory_hl = minimal and "StInactiveSep" or "StDirectory"
+  if utils.has_win_highlight(curwin) then
+    directory_hl =
+      utils.adopt_winhighlight(curwin, "StCustomDirectory", directory_hl)
+    filename_hl =
+      utils.adopt_winhighlight(curwin, "StCustomFilename", filename_hl)
+  end
 
   local directory, filename = utils.filename(ctx)
   local ft_icon, icon_highlight = utils.filetype(ctx)
