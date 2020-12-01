@@ -6,13 +6,14 @@ local M = {}
 
 local explorer_fts = {"LuaTree"}
 
-function M.highlight(opts)
-  local name = opts.name
+---@param name string
+---@param opts table
+function M.highlight(name, opts)
   local guifg = opts.guifg
   local guibg = opts.guibg
   local gui = opts.gui
   local cterm = opts.cterm
-  if name and #opts then
+  if name and vim.tbl_count(opts) > 0 then
     local cmd = {"highlight", name}
     if guifg and guifg ~= "" then
       table.insert(cmd, "guifg=" .. guifg)
@@ -26,7 +27,13 @@ function M.highlight(opts)
     if cterm and cterm ~= "" then
       table.insert(cmd, "cterm=" .. cterm)
     end
-    vim.cmd(table.concat(cmd, " "))
+    local success = pcall(vim.cmd, table.concat(cmd, " "))
+    if not success then
+      vim.api.nvim_err_writeln(
+        "Failed setting " ..
+          name .. " highlight, something isn't configured correctly" .. "\n"
+      )
+    end
   end
 end
 
@@ -55,12 +62,12 @@ function M.set_explorer_highlight()
   local normal_bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
   local bg_color = require("bufferline").shade_color(normal_bg, -15)
   local hls = {
-    {name = "ExplorerBackground", guibg = bg_color},
-    {name = "ExplorerVertSplit", guifg = bg_color, guibg = bg_color},
-    {name = "ExplorerStNC", guibg = bg_color, cterm = "italic"}
+    {"ExplorerBackground", {guibg = bg_color}},
+    {"ExplorerVertSplit", {guifg = bg_color, guibg = bg_color}},
+    {"ExplorerStNC", {guibg = bg_color, cterm = "italic"}}
   }
   for _, grp in ipairs(hls) do
-    M.highlight(grp)
+    M.highlight(unpack(grp))
   end
 end
 

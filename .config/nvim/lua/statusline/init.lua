@@ -8,6 +8,7 @@
 
 local utils = require "statusline/utils"
 local P = require "statusline/palette"
+local H = require("highlights")
 
 local M = {}
 
@@ -55,7 +56,7 @@ function M.colors()
     {"StInactive", {guifg = normal_bg, guibg = P.comment_grey}},
     {"StInactiveSep", {guifg = P.comment_grey}},
     {"StatusLine", {guibg = normal_bg}},
-    {"StatusLineNC", {guibg = normal_bg}},
+    {"StatusLineNC", {guibg = normal_bg, gui = "NONE"}},
     {"StWarning", {guifg = warning_fg, guibg = pmenu_bg}},
     {"StWarningSep", {guifg = pmenu_bg, guibg = normal_bg}},
     {"StError", {guifg = error_fg, guibg = pmenu_bg}},
@@ -63,7 +64,7 @@ function M.colors()
   }
 
   for _, hl in ipairs(highlights) do
-    utils.set_highlight(unpack(hl))
+    H.highlight(unpack(hl))
   end
 end
 

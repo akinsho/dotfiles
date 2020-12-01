@@ -1,6 +1,6 @@
 local loaded, devicons = pcall(require, "nvim-web-devicons")
 local palette = require("statusline/palette")
-local h = require("highlights")
+local H = require("highlights")
 
 local fn = vim.fn
 local exists = fn.exists
@@ -236,34 +236,6 @@ function M.filename(ctx, modifier)
   return (directory or ""), (fname or "")
 end
 
---- @param hl string | nil
-local function or_none(hl)
-  return (hl and hl ~= "") and hl or "NONE"
-end
-
---- TODO investigate merging this with the function in highlights
---- they have slightly different requirements though since here we
---- explicitly want empty values to be set to NONE
---- @param name string
---- @param hl table
-function M.set_highlight(name, hl)
-  if hl and vim.tbl_count(hl) > 0 then
-    local cmd = "highlight! " .. name
-    cmd = cmd .. " " .. "gui=" .. or_none(hl.gui)
-    cmd = cmd .. " " .. "guifg=" .. or_none(hl.guifg)
-    cmd = cmd .. " " .. "guibg=" .. or_none(hl.guibg)
-    -- TODO using api here as it warns of an error if setting highlight fails
-    local success, err = pcall(vim.api.nvim_command, cmd)
-    if not success then
-      vim.api.nvim_err_writeln(
-        "Failed setting " ..
-          name ..
-            " highlight, something isn't configured correctly" .. "\n" .. err
-      )
-    end
-  end
-end
-
 --- @param win_id integer
 function M.has_win_highlight(win_id)
   local win_hl = vim.wo[win_id].winhighlight
@@ -290,10 +262,10 @@ function M.adopt_winhighlight(win_id, name, default)
       return
     end
     local hl_group = vim.split(found, ":")[2]
-    local bg = h.hl_value(hl_group, "bg")
-    local fg = h.hl_value(default, "fg")
-    local gui = h.gui_attr(default)
-    h.highlight({name = name, guibg = bg, guifg = fg, gui = gui})
+    local bg = H.hl_value(hl_group, "bg")
+    local fg = H.hl_value(default, "fg")
+    local gui = H.gui_attr(default)
+    H.highlight(name, {guibg = bg, guifg = fg, gui = gui})
   end
   return name
 end
@@ -527,15 +499,15 @@ local function mode_highlight(mode)
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
   local inc_search_bg = M.get_hl_color("Search", "bg")
   if mode == "i" then
-    M.set_highlight("StModeText", {guifg = palette.dark_blue, gui = "bold"})
+    H.highlight("StModeText", {guifg = palette.dark_blue, gui = "bold"})
   elseif visual_regex:match_str(mode) then
-    M.set_highlight("StModeText", {guifg = palette.magenta, gui = "bold"})
+    H.highlight("StModeText", {guifg = palette.magenta, gui = "bold"})
   elseif mode == "R" then
-    M.set_highlight("StModeText", {guifg = palette.dark_red, gui = "bold"})
+    H.highlight("StModeText", {guifg = palette.dark_red, gui = "bold"})
   elseif command_regex:match_str(mode) then
-    M.set_highlight("StModeText", {guifg = inc_search_bg, gui = "bold"})
+    H.highlight("StModeText", {guifg = inc_search_bg, gui = "bold"})
   else
-    M.set_highlight("StModeText", {guifg = palette.green, gui = "bold"})
+    H.highlight("StModeText", {guifg = palette.green, gui = "bold"})
   end
 end
 
