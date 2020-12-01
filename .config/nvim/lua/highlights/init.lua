@@ -60,7 +60,7 @@ end
 
 function M.set_explorer_highlight()
   local normal_bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
-  local bg_color = require("bufferline").shade_color(normal_bg, -15)
+  local bg_color = require("bufferline").shade_color(normal_bg, -8)
   local hls = {
     {"ExplorerBackground", {guibg = bg_color}},
     {"ExplorerVertSplit", {guifg = bg_color, guibg = bg_color}},
