@@ -22,7 +22,7 @@ set eadirection=hor
 " exclude usetab as we do not want to jump to buffers in already open tabs
 " do not use split or vsplit to ensure we don't open any new windows
 set switchbuf=useopen,uselast
-set fillchars=vert:│
+set fillchars=vert:▕ "alternatives │
 set fillchars+=fold:\ 
 set fillchars+=diff: "alternatives: ⣿ ░
 if has('nvim-0.3.1')

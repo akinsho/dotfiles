@@ -59,11 +59,12 @@ function M.gui_attr(hl_group)
 end
 
 function M.set_explorer_highlight()
-  local normal_bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
+  local normal_bg = M.hl_value("Normal", "bg")
+  local split_color = M.hl_value("Pmenu", "bg")
   local bg_color = require("bufferline").shade_color(normal_bg, -8)
   local hls = {
     {"ExplorerBackground", {guibg = bg_color}},
-    {"ExplorerVertSplit", {guifg = bg_color, guibg = bg_color}},
+    {"ExplorerVertSplit", {guifg = split_color, guibg = bg_color}},
     {"ExplorerStNC", {guibg = bg_color, cterm = "italic"}}
   }
   for _, grp in ipairs(hls) do
