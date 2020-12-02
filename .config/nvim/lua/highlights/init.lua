@@ -60,7 +60,7 @@ end
 
 function M.set_explorer_highlight()
   local normal_bg = M.hl_value("Normal", "bg")
-  local split_color = M.hl_value("Pmenu", "bg")
+  local split_color = M.hl_value("VertSplit", "fg")
   local bg_color = require("bufferline").shade_color(normal_bg, -8)
   local hls = {
     {"ExplorerBackground", {guibg = bg_color}},
