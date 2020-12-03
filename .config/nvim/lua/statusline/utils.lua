@@ -236,40 +236,6 @@ function M.filename(ctx, modifier)
   return (directory or ""), (fname or "")
 end
 
---- @param win_id integer
-function M.has_win_highlight(win_id)
-  local win_hl = vim.wo[win_id].winhighlight
-  return win_hl ~= nil and win_hl ~= "", win_hl
-end
-
---- @param win_id integer
---- @param name string
---- @param default string
-function M.adopt_winhighlight(win_id, name, default)
-  name = name .. win_id
-  local _, win_hl = M.has_win_highlight(win_id)
-  local hl_exists = vim.fn.hlexists(name) > 0
-  if not hl_exists then
-    local parts = vim.split(win_hl, ",")
-    local found
-    for _, p in ipairs(parts) do
-      if p:match("Normal") then
-        found = p
-        break
-      end
-    end
-    if not found then
-      return
-    end
-    local hl_group = vim.split(found, ":")[2]
-    local bg = H.hl_value(hl_group, "bg")
-    local fg = H.hl_value(default, "fg")
-    local gui = H.gui_attr(default)
-    H.highlight(name, {guibg = bg, guifg = fg, gui = gui})
-  end
-  return name
-end
-
 --- @param hl string
 --- @param attr string
 function M.get_hl_color(hl, attr)

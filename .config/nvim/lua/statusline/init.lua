@@ -156,11 +156,24 @@ function _G.statusline()
   local trunc_amount = math.ceil(available_space * percentage)
 
   -- highlight the filename component separately
-  local file_hl = minimal and "StFilenameInactive" or "StFilename"
-  local dir_hl = minimal and "StInactiveSep" or "StDirectory"
-  if utils.has_win_highlight(curwin) then
-    dir_hl = utils.adopt_winhighlight(curwin, "StCustomDirectory", dir_hl)
-    file_hl = utils.adopt_winhighlight(curwin, "StCustomFilename", file_hl)
+  local filename_hl = minimal and "StFilenameInactive" or "StFilename"
+  local directory_hl = minimal and "StInactiveSep" or "StDirectory"
+
+  if H.has_win_highlight(curwin) then
+    directory_hl =
+      H.adopt_winhighlight(
+      curwin,
+      "StatusLine",
+      "StCustomDirectory",
+      directory_hl
+    )
+    filename_hl =
+      H.adopt_winhighlight(
+      curwin,
+      "StatusLine",
+      "StCustomFilename",
+      filename_hl
+    )
   end
 
   local directory, filename = utils.filename(ctx)
@@ -181,8 +194,8 @@ function _G.statusline()
   end
 
   directory = add_min_width(directory, minwid, trunc_amount)
-  local dir_item = utils.item(directory, dir_hl, opts)
-  local file_item = utils.item(filename, file_hl, file_opts)
+  local dir_item = utils.item(directory, directory_hl, opts)
+  local file_item = utils.item(filename, filename_hl, file_opts)
 
   ----------------------------------------------------------------------------//
   -- Mode
