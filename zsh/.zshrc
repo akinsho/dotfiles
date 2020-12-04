@@ -28,16 +28,8 @@ compinit
 #           Plugins
 #-------------------------------------------------------------------------------
 # These should be source *BEFORE* setting up hooks
-#
-# Enhancd can't be setup as a submodule because the init.sh script
-# deletes the source files on load...
-if [ -f ~/enhancd/init.sh ]; then
-  source ~/enhancd/init.sh
-else
-  git clone https://github.com/b4b4r07/enhancd ~/enhancd
-  source ~/enhancd/init.sh
-fi
 
+source $PLUGIN_DIR/enhancd/init.sh
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
