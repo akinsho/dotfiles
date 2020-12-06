@@ -13,7 +13,7 @@ let g:projectionist_heuristics = {
       \     "type": "source",
       \   },
       \   "lib/view_models/*_view_model.dart": {
-      \     "alternate": "lib/screens/{}.dart",
+      \     "alternate": ["lib/screens/{}.dart", "lib/widgets/{}.dart"],
       \     "type": "source",
       \   },
       \   "test/view_models/*_view_model_test.dart": {
