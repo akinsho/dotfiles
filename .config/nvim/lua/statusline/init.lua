@@ -161,19 +161,9 @@ function _G.statusline()
 
   if H.has_win_highlight(curwin) then
     directory_hl =
-      H.adopt_winhighlight(
-      curwin,
-      "StatusLine",
-      "StCustomDirectory",
-      directory_hl
-    )
+      H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "Title")
     filename_hl =
-      H.adopt_winhighlight(
-      curwin,
-      "StatusLine",
-      "StCustomFilename",
-      filename_hl
-    )
+      H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "Title")
   end
 
   local directory, filename = utils.filename(ctx)
