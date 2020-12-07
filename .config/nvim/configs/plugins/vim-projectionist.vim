@@ -10,15 +10,17 @@ let g:projectionist_heuristics = {
       \ "lib/*.dart": {
       \   "lib/screens/*.dart": {
       \     "alternate": "lib/view_models/{}_view_model.dart",
-      \     "type": "source",
+      \     "type": "view",
       \   },
       \   "lib/view_models/*_view_model.dart": {
       \     "alternate": ["lib/screens/{}.dart", "lib/widgets/{}.dart"],
-      \     "type": "source",
+      \     "type": "model",
+      \     "template": ["class {camelcase|capitalize} extends BaseViewModel {", "}"]
       \   },
       \   "test/view_models/*_view_model_test.dart": {
       \     "alternate": "lib/view_models/{}_view_model.dart",
       \     "type": "test",
+      \     "template": ["void main() async {", "  group('TODO', () {", "// TODO:", "})", "}"]
       \   }
       \  }
       \}
