@@ -15,7 +15,7 @@ let g:lua_tree_icons = {
     \ }
 
 let g:lua_tree_bindings = {
-      \ "cd": ["<bs>", "cd"],
+      \ "cd": ["cd"],
       \}
 
 nnoremap <silent><c-n> :LuaTreeToggle<CR>
