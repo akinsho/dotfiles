@@ -15,7 +15,7 @@ let g:projectionist_heuristics = {
       \   "lib/view_models/*_view_model.dart": {
       \     "alternate": ["lib/screens/{}.dart", "lib/widgets/{}.dart"],
       \     "type": "model",
-      \     "template": ["class {camelcase|capitalize} extends BaseViewModel {", "}"]
+      \     "template": ["class {camelcase|capitalize}ViewModel extends BaseViewModel {", "}"]
       \   },
       \   "test/view_models/*_view_model_test.dart": {
       \     "alternate": "lib/view_models/{}_view_model.dart",
