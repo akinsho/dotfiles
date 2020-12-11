@@ -8,7 +8,8 @@
 
 local utils = require "statusline/utils"
 local P = require "statusline/palette"
-local H = require("highlights")
+local H = require "highlights"
+local autocommands = require "autocommands"
 
 local M = {}
 
@@ -311,18 +312,27 @@ function _G.statusline()
 end
 
 local function setup_autocommands()
-  vim.cmd [[augroup custom_statusline]]
-  vim.cmd [[autocmd!]]
-  vim.cmd [[autocmd FocusGained *  let g:vim_in_focus = v:true]]
-  vim.cmd [[autocmd FocusLost * let g:vim_in_focus = v:false]]
-  -- The quickfix window sets it's own statusline, so we override it here
-  vim.cmd [[autocmd FileType qf setlocal statusline=%!v:lua.statusline()]]
-  vim.cmd [[autocmd VimEnter,ColorScheme * lua require'statusline'.colors()]]
-  vim.cmd [[autocmd VimEnter * lua require'statusline'.git_updates()]]
-  vim.cmd [[autocmd DirChanged * lua require'statusline'.git_toggle_updates()]]
-  vim.cmd [[autocmd User AsyncGitJobComplete lua require'statusline'.git_updates_refresh()]]
-  vim.cmd [[autocmd User FugitiveChanged lua require'statusline'.git_updates_refresh()]]
-  vim.cmd [[augroup END]]
+  autocommands.create(
+    {
+      CustomStatusline = {
+        {"FocusGained", "*", "let g:vim_in_focus = v:true"},
+        {"FocusLost", "*", "let g:vim_in_focus = v:false"},
+        -- The quickfix window sets it's own statusline, so we override it here
+        {"FileType", "qf ", "setlocal statusline=%!v:lua.statusline()"},
+        {"VimEnter,ColorScheme", "*", "lua require'statusline'.colors()"},
+        {"VimEnter", "*", "lua require'statusline'.git_updates()"},
+        {"DirChanged", "*", "lua require'statusline'.git_toggle_updates()"},
+        {
+          "User AsyncGitJobComplete",
+          "lua require'statusline'.git_updates_refresh()"
+        },
+        {
+          "User FugitiveChanged",
+          "lua require'statusline'.git_updates_refresh()"
+        }
+      }
+    }
+  )
 end
 
 -- attach autocommands
