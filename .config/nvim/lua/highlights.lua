@@ -57,6 +57,7 @@ function M.highlight(name, opts)
   local guifg = opts.guifg
   local guibg = opts.guibg
   local gui = opts.gui
+  local guisp = opts.guisp
   local cterm = opts.cterm
   if name and vim.tbl_count(opts) > 0 then
     local cmd = {"highlight", name}
@@ -68,6 +69,9 @@ function M.highlight(name, opts)
     end
     if gui and gui ~= "" then
       table.insert(cmd, "gui=" .. gui)
+    end
+    if guisp and guisp ~= "" then
+      table.insert(cmd, "guisp=" .. guisp)
     end
     if cterm and cterm ~= "" then
       table.insert(cmd, "cterm=" .. cterm)

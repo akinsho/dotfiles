@@ -83,7 +83,7 @@ local mappings = {
     mode = "n",
     mapping = "<cmd>lua vim.lsp.buf.type_definition()<CR>"
   },
-  ["<leader>gi"] = {
+  ["gI"] = {
     mode = "n",
     mapping = "<cmd>vim.lsp.buf.incoming_calls()<CR>"
   },
@@ -212,25 +212,12 @@ end
 -----------------------------------------------------------------------------//
 function _G.__apply_lsp_highlights()
   local highlights = {
-    {"LspDiagnosticsError", {guifg = "#E06C75", gui = "undercurl,bold"}},
-    -- used for "Error" diagnostic signs in sign column
-    {"LspDiagnosticsSignError", {guifg = "#E06C75"}},
-    -- used for "Warning" diagnostic virtual text
-    {"LspDiagnosticsWarning", {guifg = "#ff922b", gui = "undercurl"}},
-    -- used for "Warning" diagnostic signs in sign column
-    {"LspDiagnosticsSignWarning", {guifg = "#ff922b"}},
-    -- used for "Information" diagnostic virtual text
-    {"LspDiagnosticsInformation", {guifg = "#fab005"}},
-    -- used for "Information" signs in sign column
-    {"LspDiagnosticsSignInformation", {guifg = "#fab005"}},
-    {"LspDiagnosticsHint", {guifg = "#fab005", gui = "bold"}},
-    -- used for "Hint" diagnostic virtual text
-    {"LspDiagnosticsSignHint", {guifg = "#fab005"}},
-    -- used for "Hint" diagnostic signs in sign column
     {"LspReferenceText", {gui = "underline"}},
-    -- used for highlighting "text" references
     {"LspReferenceRead", {gui = "underline"}},
-    -- used for highlighting "read" references
+    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
+    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
+    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
+    {"LspDiagnosticsDefaultInformation", {guifg = "#fab005"}},
     {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
     {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
     {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "blue"}},
