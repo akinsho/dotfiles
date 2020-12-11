@@ -55,81 +55,48 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
-local function mapper(key, mode, mapping, expr)
-  expr = not expr and false or expr
-  api.nvim_buf_set_keymap(
-    0,
-    mode,
-    key,
-    mapping,
-    {
-      nowait = true,
-      noremap = true,
-      silent = true,
-      expr = expr
-    }
-  )
+local function map(...)
+  api.nvim_buf_set_keymap(0, ...)
 end
 
-local mappings = {
-  ["[c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
-  ["]c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"},
-  ["gd"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.definition()<CR>"},
-  ["<c-]>"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.definition()<CR>"},
-  ["K"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.hover()<CR>"},
-  ["gi"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.implementation()<CR>"},
-  ["<c-k>"] = {
-    mode = "i",
-    mapping = "<cmd>lua vim.lsp.buf.signature_help()<CR>"
-  },
-  ["<leader>gd"] = {
-    mode = "n",
-    mapping = "<cmd>lua vim.lsp.buf.type_definition()<CR>"
-  },
-  ["gI"] = {
-    mode = "n",
-    mapping = "<cmd>vim.lsp.buf.incoming_calls()<CR>"
-  },
-  ["gr"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.references()<CR>"},
-  ["g0"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.document_symbol()<CR>"},
-  ["gW"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"},
-  ["ff"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.formatting()<CR>"},
-  ["rn"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.rename()<CR>"},
-  ["<tab>"] = {
-    mode = "i",
-    mapping = [[pumvisible() ? "\<C-n>" : "\<Tab>"]],
-    expr = true
-  },
-  ["<s-tab>"] = {
-    mode = "i",
-    mapping = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]],
-    expr = true
-  },
-  ["<c-j>"] = {
-    mode = {"i", "s"},
-    mapping = [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    expr = true
-  },
-  ["<leader>ca"] = {
-    mode = "n",
-    mapping = "<cmd>lua vim.lsp.buf.code_action()<CR>"
-  },
-  ["ca"] = {
-    mode = "x",
-    mapping = "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>"
-  }
-}
-
 local function setup_mappings()
-  for key, entry in pairs(mappings) do
-    if type(entry.mode) == "table" then
-      for _, mode in ipairs(entry.mode) do
-        mapper(key, mode, entry.mapping, entry.expr)
-      end
-    else
-      mapper(key, entry.mode, entry.mapping, entry.expr)
-    end
-  end
+  local opts = {nowait = true, noremap = true, silent = true}
+  map("n", "[c", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+  map("n", "]c", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+  map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  map("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  map("i", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+  map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+  map("n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>", opts)
+  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
+  map("n", "<leader>gs", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
+  map("n", "<leader>ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+  map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
+  map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
+  map(
+    "x",
+    "<c-j>",
+    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
+    {expr = true}
+  )
+  map(
+    "i",
+    "<c-j>",
+    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
+    {expr = true}
+  )
+  map(
+    "s",
+    "<c-j>",
+    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
+    {expr = true}
+  )
+  map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  map("x", "ca", "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 end
 -----------------------------------------------------------------------------//
 -- Signs
@@ -318,7 +285,11 @@ local servers = {
 for server, config in pairs(servers) do
   config.on_attach = on_attach
   config.capabilities =
-    vim.tbl_deep_extend("keep", config.capabilities or {}, lsp_status.capabilities)
+    vim.tbl_deep_extend(
+    "keep",
+    config.capabilities or {},
+    lsp_status.capabilities
+  )
   lspconfig[server].setup(config)
 end
 
