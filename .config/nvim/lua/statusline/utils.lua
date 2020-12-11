@@ -439,25 +439,41 @@ function M.git_updates()
   vim.g.git_statusline_updates_timer = timer
 end
 
+local function add_if(cond, value, default)
+  default = default or ""
+  if cond then
+    return value
+  end
+  return default
+end
+
 function M.git_status()
   -- symbol opts -  , "\uf408"
-  local prefix = ""
-  local repo_status = vim.g.coc_git_status or ""
-  local buffer_status = vim.fn.trim(vim.b.coc_git_status or "") -- remove excess whitespace
+  if vim.g.coc_git_status then
+    local prefix = ""
+    local repo_status = vim.g.coc_git_status or ""
+    local buffer_status = vim.fn.trim(vim.b.coc_git_status or "") -- remove excess whitespace
 
-  local parts = vim.split(repo_status, " ")
-  if #parts > 0 then
-    prefix = parts[1]
-    table.remove(parts, 1)
-    repo_status = table.concat(parts, " ")
-  end
+    local parts = vim.split(repo_status, " ")
+    if #parts > 0 then
+      prefix = parts[1]
+      table.remove(parts, 1)
+      repo_status = table.concat(parts, " ")
+    end
 
-  local component = repo_status .. " " .. buffer_status
-  -- if there is no branch info show nothing
-  if not repo_status then
-    return "", ""
+    local component = repo_status .. " " .. buffer_status
+    -- if there is no branch info show nothing
+    if not repo_status then
+      return "", ""
+    end
+    return prefix, component
+  elseif vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head then
+    local signs = vim.b.gitsigns_status_dict
+    return "", signs.head ..
+      add_if(signs.added > 0, "  " .. signs.added) ..
+        add_if(signs.changed > 0, "  " .. signs.changed) ..
+          add_if(signs.removed > 0, "  " .. signs.removed) .. " "
   end
-  return prefix, component
 end
 
 local function mode_highlight(mode)

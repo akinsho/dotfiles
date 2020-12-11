@@ -49,6 +49,7 @@ if has('nvim-0.5')
   lua require('statusline')
   lua require('lsp')
   lua require('highlights')
+  lua require('plugins')
 endif
 
 runtime! configs/plugins/*.vim

@@ -1,15 +1,11 @@
 local fn = vim.fn
 local api = vim.api
 local H = require("highlights")
+local U = require("utils")
 local autocommands = require("autocommands")
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
-local function is_plugin_loaded(plugin)
-  local success, plug = pcall(require, plugin)
-  return success, plug
-end
-
 local function is_executable(name)
   return fn.executable(name) > 0
 end
@@ -23,7 +19,7 @@ vim.cmd [[command! ReloadLSP lua reload_lsp()]]
 -----------------------------------------------------------------------------//
 -- Init
 -----------------------------------------------------------------------------//
-local lsp_configs_loaded, lsp = is_plugin_loaded("lspconfig")
+local lsp_configs_loaded, lsp = U.is_plugin_loaded("lspconfig")
 -- NOTE: Don't load this file if we aren't using "nvim-lsp"
 if not lsp_configs_loaded then
   return
@@ -203,7 +199,7 @@ local function on_attach()
   setup_autocommands()
   setup_mappings()
 
-  local completion_loaded, completion = is_plugin_loaded("completion")
+  local completion_loaded, completion = U.is_plugin_loaded("completion")
   if completion_loaded then
     completion.on_attach()
     vim.g.completion_enable_snippet = "vim-vsnip"
