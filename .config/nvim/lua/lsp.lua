@@ -96,7 +96,12 @@ local function setup_mappings()
     {expr = true}
   )
   map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  map("x", "ca", "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>", opts)
+  map(
+    "x",
+    "<leader>a",
+    "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>",
+    opts
+  )
 end
 -----------------------------------------------------------------------------//
 -- Signs
@@ -132,6 +137,7 @@ vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
 vim.g.completion_enable_snippet = "vim-vsnip"
 vim.g.completion_enable_fuzzy_match = true
 vim.g.completion_matching_smart_case = 1
+vim.g.completion_menu_length = 25
 vim.g.completion_sorting = "none"
 vim.g.completion_matching_strategy_list = {
   "exact",
