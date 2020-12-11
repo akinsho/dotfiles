@@ -1,7 +1,6 @@
-local U = require "utils"
-
-if U.is_plugin_loaded("gitsigns") then
-  require("gitsigns").setup {
+local gitsigns_loaded, gitsigns = pcall(require, "gitsigns")
+if gitsigns_loaded then
+  gitsigns.setup {
     signs = {
       add = {hl = "GitGutterAdd", text = "▌"},
       change = {hl = "GitGutterChange", text = "▌"},
