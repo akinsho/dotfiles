@@ -1,29 +1,30 @@
+-----------------------------------------------------------------------------//
+-- Init
+-----------------------------------------------------------------------------//
+local success, lspconfig = pcall(require, "lspconfig")
+-- NOTE: Don't load this file if we aren't using "nvim-lsp"
+if not success then
+  return
+end
+-----------------------------------------------------------------------------//
+
 local fn = vim.fn
 local api = vim.api
-local H = require("highlights")
-local U = require("utils")
-local autocommands = require("autocommands")
+
+local M = {}
+
+local H = require "highlights"
+local autocommands = require "autocommands"
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
-local function is_executable(name)
-  return fn.executable(name) > 0
-end
-
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
   vim.cmd [[edit]]
 end
 
 vim.cmd [[command! ReloadLSP lua reload_lsp()]]
------------------------------------------------------------------------------//
--- Init
------------------------------------------------------------------------------//
-local lsp_configs_loaded, lsp = U.is_plugin_loaded("lspconfig")
--- NOTE: Don't load this file if we aren't using "nvim-lsp"
-if not lsp_configs_loaded then
-  return
-end
+vim.cmd [[command! DebugLSP lua print(vim.inspect(vim.lsp.get_active_clients()))]]
 
 -----------------------------------------------------------------------------//
 -- Autocommands
@@ -44,7 +45,7 @@ local function setup_autocommands()
         {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
       },
       LspHighlights = {
-        {"ColorScheme", "*", "lua _G.__apply_lsp_highlights()"}
+        {"ColorScheme", "*", "lua require('lsp').setup_lsp_highlights()"}
       }
     }
   )
@@ -69,8 +70,8 @@ local function mapper(key, mode, mapping, expr)
 end
 
 local mappings = {
-  ["[c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>"},
-  ["]c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>"},
+  ["[c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
+  ["]c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"},
   ["gd"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.definition()<CR>"},
   ["<c-]>"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.definition()<CR>"},
   ["K"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.hover()<CR>"},
@@ -158,6 +159,8 @@ end
 -- Setup plugins
 -----------------------------------------------------------------------------//
 vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
+vim.g.completion_matching_smart_case = 1
+vim.g.completion_sorting = "none"
 vim.g.completion_matching_strategy_list = {
   "exact",
   "substring",
@@ -200,7 +203,7 @@ local function on_attach()
   setup_autocommands()
   setup_mappings()
 
-  local completion_loaded, completion = U.is_plugin_loaded("completion")
+  local completion_loaded, completion = pcall(require, "completion")
   if completion_loaded then
     completion.on_attach()
     vim.g.completion_enable_snippet = "vim-vsnip"
@@ -210,7 +213,7 @@ end
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
-function _G.__apply_lsp_highlights()
+function M.setup_lsp_highlights()
   local highlights = {
     {"LspReferenceText", {gui = "underline"}},
     {"LspReferenceRead", {gui = "underline"}},
@@ -228,7 +231,7 @@ function _G.__apply_lsp_highlights()
   end
 end
 
-__apply_lsp_highlights()
+M.setup_lsp_highlights()
 
 -----------------------------------------------------------------------------//
 -- Handler overrides
@@ -246,46 +249,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-if is_executable("gopls") then
-  lsp.gopls.setup {on_attach = on_attach}
-end
-
-if is_executable("vim-language-server") then
-  lsp.vimls.setup {on_attach = on_attach}
-end
-
-if is_executable("flow") then
-  lsp.flow.setup {on_attach = on_attach}
-end
-
-if is_executable("vscode-html-languageserver") then
-  lsp.html.setup {on_attach = on_attach}
-end
-
-if is_executable("vscode-json-languageserver") then
-  lsp.jsonls.setup {on_attach = on_attach}
-end
-
-if is_executable("typescript-language-server") then
-  lsp.tsserver.setup {on_attach = on_attach}
-end
-
-lsp.rust_analyzer.setup {on_attach = on_attach}
-
-lsp.sumneko_lua.setup {
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = {"vim"}
-      },
-      workspace = {
-        library = {[vim.fn.expand("$VIMRUNTIME/lua")] = true}
-      }
-    }
-  }
-}
-
 local function flutter_closing_tags(err, _, response)
   if err then
     return
@@ -306,43 +269,48 @@ local function flutter_closing_tags(err, _, response)
   end
 end
 
-local dart_capabilities = vim.lsp.protocol.make_client_capabilities()
-dart_capabilities.textDocument.codeAction = {
-  dynamicRegistration = false,
-  codeActionLiteralSupport = {
-    codeActionKind = {
-      valueSet = {
-        "",
-        "quickfix",
-        "refactor",
-        "refactor.extract",
-        "refactor.inline",
-        "refactor.rewrite",
-        "source",
-        "source.organizeImports"
+local servers = {
+  rust_analyzer = {},
+  vimls = {},
+  gopls = {},
+  flow = {},
+  jsonls = {},
+  html = {},
+  tsserver = {},
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = {"vim"}
+        },
+        runtime = {version = "LuaJIT", path = vim.split(package.path, ";")},
+        workspace = {
+          library = {
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+          }
+        }
       }
+    }
+  },
+  dartls = {
+    init_options = {
+      closingLabels = true,
+      outline = true,
+      flutterOutline = true
+    },
+    on_attach = on_attach,
+    handlers = {
+      ["dart/textDocument/publishClosingLabels"] = flutter_closing_tags,
+      ["dart/textDocument/publishFlutterOutline"] = function(_, _, _)
+      end
     }
   }
 }
 
-lsp.dartls.setup {
-  init_options = {
-    onlyAnalyzeProjectsWithOpenFiles = false,
-    suggestFromUnimportedLibraries = true,
-    closingLabels = true,
-    outline = true,
-    flutterOutline = true
-  },
-  capabilities = dart_capabilities,
-  cmd = {
-    "dart",
-    "/usr/lib/dart/bin/snapshots/analysis_server.dart.snapshot",
-    "--lsp"
-  },
-  on_attach = on_attach,
-  handlers = {
-    ["dart/textDocument/publishClosingLabels"] = flutter_closing_tags,
-    ["dart/textDocument/publishFlutterOutline"] = function(_, _, _)
-    end
-  }
-}
+for server, config in pairs(servers) do
+  config.on_attach = on_attach
+  lspconfig[server].setup(config)
+end
+
+return M
