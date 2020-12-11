@@ -15,6 +15,8 @@ local M = {}
 
 local H = require "highlights"
 local autocommands = require "autocommands"
+local lsp_status = require "lsp-status"
+local completion = require "completion"
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
@@ -159,6 +161,9 @@ end
 -- Setup plugins
 -----------------------------------------------------------------------------//
 vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
+
+vim.g.completion_enable_snippet = "vim-vsnip"
+vim.g.completion_enable_fuzzy_match = true
 vim.g.completion_matching_smart_case = 1
 vim.g.completion_sorting = "none"
 vim.g.completion_matching_strategy_list = {
@@ -199,17 +204,16 @@ vim.g.completion_customize_lsp_label = {
   Snippet = " "
 }
 
-local function on_attach()
+local function on_attach(client)
   setup_autocommands()
   setup_mappings()
 
-  local completion_loaded, completion = pcall(require, "completion")
-  if completion_loaded then
-    completion.on_attach()
-    vim.g.completion_enable_snippet = "vim-vsnip"
-    vim.g.completion_enable_fuzzy_match = true
-  end
+  completion.on_attach()
+  lsp_status.on_attach(client)
 end
+
+lsp_status.config {kind_labels = vim.g.completion_customize_lsp_label}
+lsp_status.register_progress()
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
@@ -249,17 +253,20 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+local closing_labels_namespace =
+  api.nvim_create_namespace("flutter_lsp_closing_labels")
+
 local function flutter_closing_tags(err, _, response)
   if err then
     return
   end
-  local namespace = api.nvim_create_namespace("flutter_lsp_closing_labels")
+  vim.api.nvim_buf_clear_namespace(0, closing_labels_namespace, 0, -1)
 
   for _, item in ipairs(response.labels) do
     local line = item.range["end"].line
     api.nvim_buf_set_virtual_text(
       0,
-      namespace,
+      closing_labels_namespace,
       tonumber(line),
       {
         {"//" .. item.label, "Comment"}
@@ -310,6 +317,8 @@ local servers = {
 
 for server, config in pairs(servers) do
   config.on_attach = on_attach
+  config.capabilities =
+    vim.tbl_deep_extend("keep", config.capabilities or {}, lsp_status.capabilities)
   lspconfig[server].setup(config)
 end
 

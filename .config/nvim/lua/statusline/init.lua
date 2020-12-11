@@ -283,15 +283,20 @@ function _G.statusline()
     )
   )
 
-  -- LSP Diagnostics
-  local info = utils.diagnostic_info()
-  append(statusline, utils.item(info.error, "Error"), 1)
-  append(statusline, utils.item(info.warning, "PreProc"), 2)
-  append(statusline, utils.item(info.information, "String"), 3)
+  local loaded, lsp_status = pcall(require, "lsp-status")
+  if loaded then
+    append(statusline, utils.item(lsp_status.status(), "StMetadata"))
+  else
+    -- LSP Diagnostics
+    local info = utils.diagnostic_info()
+    append(statusline, utils.item(info.error, "Error"), 1)
+    append(statusline, utils.item(info.warning, "PreProc"), 2)
+    append(statusline, utils.item(info.information, "String"), 3)
 
-  -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "Comment"), 3)
-  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
+    -- LSP Status
+    append(statusline, utils.item(utils.lsp_status(), "Comment"), 3)
+    append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
+  end
 
   -- Indentation
   local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab

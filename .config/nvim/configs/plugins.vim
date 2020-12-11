@@ -52,6 +52,7 @@ else
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'
   Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-lua/lsp-status.nvim'
   Plug 'lewis6991/gitsigns.nvim'
 endif
 Plug 'airblade/vim-rooter'
