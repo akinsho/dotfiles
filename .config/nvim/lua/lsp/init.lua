@@ -142,11 +142,11 @@ local signs = {
   },
   {
     "LspDiagnosticsSignInformation",
-    {text = "", texthl = "LspDiagnosticsSignInformation"}
+    {text = "", texthl = "LspDiagnosticsSignInformation"}
   },
   {
-    "LspDiagnosticsHintSign",
-    {text = "ﯦ", texthl = "LspDiagnosticsSignHint"}
+    "LspDiagnosticsSignHint",
+    {text = "", texthl = "LspDiagnosticsSignHint"}
   }
 }
 
@@ -157,6 +157,7 @@ end
 -----------------------------------------------------------------------------//
 -- Setup plugins
 -----------------------------------------------------------------------------//
+vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
 vim.g.completion_matching_strategy_list = {
   "exact",
   "substring",
@@ -212,18 +213,27 @@ end
 function _G.__apply_lsp_highlights()
   local highlights = {
     {"LspDiagnosticsError", {guifg = "#E06C75", gui = "undercurl,bold"}},
-    {"LspDiagnosticsSignError", {guifg = "#E06C75"}}, -- used for "Error" diagnostic signs in sign colum}n
-    {"LspDiagnosticsWarning", {guifg = "#ff922b", gui = "undercurl"}}, -- used for "Warning" diagnostic virtual text
-    {"LspDiagnosticsSignWarning", {guifg = "#ff922b"}}, -- used for "Warning" diagnostic signs in sign column
-    {"LspDiagnosticsInformation", {guifg = "#fab005"}}, -- used for "Information" diagnostic virtual text
-    {"LspDiagnosticsSignInformation", {guifg = "#fab005"}}, -- used for "Information" signs in sign column
-    {"LspDiagnosticsHint", {guifg = "#fab005", gui = "bold"}}, -- used for "Hint" diagnostic virtual text
-    {"LspDiagnosticsSignHint", {guifg = "#fab005"}}, -- used for "Hint" diagnostic signs in sign column
-    {"LspReferenceText", {gui = "underline"}}, -- used for highlighting "text" references
-    {"LspReferenceRead", {gui = "underline"}}, -- used for highlighting "read" references
-    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "red"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "purple"}},
-    {"LspDiagnosticsUnderlineInfo", {gui = "undercurl", guisp = "blue"}},
+    -- used for "Error" diagnostic signs in sign column
+    {"LspDiagnosticsSignError", {guifg = "#E06C75"}},
+    -- used for "Warning" diagnostic virtual text
+    {"LspDiagnosticsWarning", {guifg = "#ff922b", gui = "undercurl"}},
+    -- used for "Warning" diagnostic signs in sign column
+    {"LspDiagnosticsSignWarning", {guifg = "#ff922b"}},
+    -- used for "Information" diagnostic virtual text
+    {"LspDiagnosticsInformation", {guifg = "#fab005"}},
+    -- used for "Information" signs in sign column
+    {"LspDiagnosticsSignInformation", {guifg = "#fab005"}},
+    {"LspDiagnosticsHint", {guifg = "#fab005", gui = "bold"}},
+    -- used for "Hint" diagnostic virtual text
+    {"LspDiagnosticsSignHint", {guifg = "#fab005"}},
+    -- used for "Hint" diagnostic signs in sign column
+    {"LspReferenceText", {gui = "underline"}},
+    -- used for highlighting "text" references
+    {"LspReferenceRead", {gui = "underline"}},
+    -- used for highlighting "read" references
+    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "blue"}},
     {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}}
   }
   for _, hl in pairs(highlights) do
