@@ -14,6 +14,12 @@ local function is_executable(name)
   return fn.executable(name) > 0
 end
 
+function _G.reload_lsp()
+  vim.lsp.stop_client(vim.lsp.get_active_clients())
+  vim.cmd [[edit]]
+end
+
+vim.cmd [[command! ReloadLSP lua reload_lsp()]]
 -----------------------------------------------------------------------------//
 -- Init
 -----------------------------------------------------------------------------//
@@ -66,39 +72,25 @@ local function mapper(key, mode, mapping, expr)
   )
 end
 
------------------------------------------------------------------------------//
--- Signs
------------------------------------------------------------------------------//
-fn.sign_define(
-  "LspDiagnosticsSignError",
-  {text = "✗", texthl = "LspDiagnosticsSignError"}
-)
-fn.sign_define(
-  "LspDiagnosticsSignWarning",
-  {text = "", texthl = "LspDiagnosticsSignWarning"}
-)
-fn.sign_define(
-  "LspDiagnosticsSignInformation",
-  {text = "", texthl = "LspDiagnosticsSignInformation"}
-)
-fn.sign_define(
-  "LspDiagnosticsHintSign",
-  {text = "ﯦ", texthl = "LspDiagnosticsSignHint"}
-)
-
 local mappings = {
   ["[c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>"},
   ["]c"] = {mode = "n", mapping = "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>"},
   ["gd"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.definition()<CR>"},
   ["<c-]>"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.definition()<CR>"},
   ["K"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.hover()<CR>"},
-  ["gD"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.implementation()<CR>"},
+  ["gi"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.implementation()<CR>"},
   ["<c-k>"] = {
     mode = "i",
     mapping = "<cmd>lua vim.lsp.buf.signature_help()<CR>"
   },
-  ["1gD"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.type_definition()<CR>"},
-  ["gc"] = {mode = "n", mapping = "<cmd>vim.lsp.buf.incoming_calls()<CR>"},
+  ["<leader>gd"] = {
+    mode = "n",
+    mapping = "<cmd>lua vim.lsp.buf.type_definition()<CR>"
+  },
+  ["<leader>gi"] = {
+    mode = "n",
+    mapping = "<cmd>vim.lsp.buf.incoming_calls()<CR>"
+  },
   ["gr"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.references()<CR>"},
   ["g0"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.document_symbol()<CR>"},
   ["gW"] = {mode = "n", mapping = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"},
@@ -125,7 +117,7 @@ local mappings = {
   },
   ["ca"] = {
     mode = "x",
-    mapping = "<cmd>'<'>lua vim.lsp.buf.range_code_action()"
+    mapping = "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>"
   }
 }
 
@@ -140,6 +132,31 @@ local function setup_mappings()
     end
   end
 end
+-----------------------------------------------------------------------------//
+-- Signs
+-----------------------------------------------------------------------------//
+local signs = {
+  {
+    "LspDiagnosticsSignError",
+    {text = "✗", texthl = "LspDiagnosticsSignError"}
+  },
+  {
+    "LspDiagnosticsSignWarning",
+    {text = "", texthl = "LspDiagnosticsSignWarning"}
+  },
+  {
+    "LspDiagnosticsSignInformation",
+    {text = "", texthl = "LspDiagnosticsSignInformation"}
+  },
+  {
+    "LspDiagnosticsHintSign",
+    {text = "ﯦ", texthl = "LspDiagnosticsSignHint"}
+  }
+}
+
+for _, sign in pairs(signs) do
+  fn.sign_define(unpack(sign))
+end
 
 -----------------------------------------------------------------------------//
 -- Setup plugins
@@ -149,6 +166,37 @@ vim.g.completion_matching_strategy_list = {
   "substring",
   "fuzzy",
   "all"
+}
+
+-- see https://github.com/nvim-lua/completion-nvim/wiki/Customizing-LSP-label
+-- for how to do this without completion-nvim
+vim.g.completion_customize_lsp_label = {
+  Keyword = "\u{f1de}",
+  Variable = "\u{e79b}",
+  Value = "\u{f89f}",
+  Operator = "\u{03a8}",
+  Function = "\u{0192}",
+  Reference = "\u{fa46}",
+  Constant = "\u{f8fe}",
+  Method = "\u{f09a}",
+  Struct = "\u{fb44}",
+  Class = "\u{f0e8}",
+  Interface = "\u{f417}",
+  Text = "\u{e612}",
+  Enum = "\u{f435}",
+  EnumMember = "\u{f02b}",
+  Module = "\u{f40d}",
+  Color = "\u{e22b}",
+  Property = "\u{e624}",
+  Field = "\u{f9be}",
+  Unit = "\u{f475}",
+  Event = "\u{facd}",
+  File = "\u{f723}",
+  Folder = "\u{f114}",
+  TypeParameter = "\u{f728}",
+  Default = "\u{f29c}",
+  Buffers = "",
+  Snippet = " "
 }
 
 local function on_attach()
@@ -189,25 +237,19 @@ end
 
 __apply_lsp_highlights()
 
--- see https://github.com/nvim-lua/completion-nvim/wiki/Customizing-LSP-label
--- for how to do this without completion-nvim
-vim.g.completion_customize_lsp_label = {
-  Function = '',
-  Method = '',
-  Reference = '',
-  Enum = '',
-  Field = 'ﰠ',
-  Keyword = '',
-  Variable = '',
-  Folder = '',
-  Snippet = ' ',
-  Operator = '',
-  Module = '',
-  Text = 'ﮜ',
-  Buffers = '',
-  Class = '',
-  Interface = ''
-}
+-----------------------------------------------------------------------------//
+-- Handler overrides
+-----------------------------------------------------------------------------//
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+  vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  {
+    underline = true,
+    virtual_text = true,
+    signs = true,
+    update_in_insert = false
+  }
+)
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
@@ -235,6 +277,22 @@ if is_executable("typescript-language-server") then
   lsp.tsserver.setup {on_attach = on_attach}
 end
 
+lsp.rust_analyzer.setup {on_attach = on_attach}
+
+lsp.sumneko_lua.setup {
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = {"vim"}
+      },
+      workspace = {
+        library = {[vim.fn.expand("$VIMRUNTIME/lua")] = true}
+      }
+    }
+  }
+}
+
 local function flutter_closing_tags(err, _, response)
   if err then
     return
@@ -254,17 +312,6 @@ local function flutter_closing_tags(err, _, response)
     )
   end
 end
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-    underline = true,
-    virtual_text = true,
-    signs = true,
-    update_in_insert = false
-  }
-)
 
 local dart_capabilities = vim.lsp.protocol.make_client_capabilities()
 dart_capabilities.textDocument.codeAction = {
@@ -306,19 +353,3 @@ lsp.dartls.setup {
     end
   }
 }
-
-lsp.sumneko_lua.setup {
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = {"vim"}
-      },
-      workspace = {
-        library = {[vim.fn.expand("$VIMRUNTIME/lua")] = true}
-      }
-    }
-  }
-}
-
-lsp.rust_analyzer.setup {on_attach = on_attach}
