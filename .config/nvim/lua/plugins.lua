@@ -13,11 +13,11 @@ if U.is_plugin_loaded("gitsigns") then
       -- Default keymap options
       noremap = true,
       buffer = true,
-      ["n ]h"] = {
+      ["n [h"] = {
         expr = true,
         '&diff ? \']h\' : \'<cmd>lua require"gitsigns".next_hunk()<CR>\''
       },
-      ["n [h"] = {
+      ["n ]h"] = {
         expr = true,
         '&diff ? \'[h\' : \'<cmd>lua require"gitsigns".prev_hunk()<CR>\''
       },
@@ -28,7 +28,7 @@ if U.is_plugin_loaded("gitsigns") then
       ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>'
     },
     status_formatter = function(status)
-      local added = status.added > 0 and " " .. status.added or ""
+      local added = status.added > 0 and "  " .. status.added or ""
       local changed = status.changed > 0 and "  " .. status.changed or ""
       local removed = status.removed > 0 and "  " .. status.removed or ""
       return status.head .. added .. changed .. removed .. " "
