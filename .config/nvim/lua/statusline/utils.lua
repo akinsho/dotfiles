@@ -439,14 +439,6 @@ function M.git_updates()
   vim.g.git_statusline_updates_timer = timer
 end
 
-local function add_if(cond, value, default)
-  default = default or ""
-  if cond then
-    return value
-  end
-  return default
-end
-
 function M.git_status()
   -- symbol opts -  , "\uf408"
   if vim.g.coc_git_status then
@@ -467,12 +459,8 @@ function M.git_status()
       return "", ""
     end
     return prefix, component
-  elseif vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head then
-    local signs = vim.b.gitsigns_status_dict
-    return "", signs.head ..
-      add_if(signs.added > 0, "  " .. signs.added) ..
-        add_if(signs.changed > 0, "  " .. signs.changed) ..
-          add_if(signs.removed > 0, "  " .. signs.removed) .. " "
+  elseif vim.b.gitsigns_status then
+    return "", vim.b.gitsigns_status
   end
 end
 

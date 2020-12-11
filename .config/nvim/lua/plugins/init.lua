@@ -1,5 +1,5 @@
-local U = require 'utils'
-if not U.is_plugin_loaded('gitsigns') then
+local U = require "utils"
+if not U.is_plugin_loaded("gitsigns") then
   return
 end
 
@@ -28,5 +28,11 @@ require("gitsigns").setup {
     ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
     ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
     ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>'
-  }
+  },
+  status_formatter = function(status)
+    local added = status.added > 0 and " " .. status.added or ""
+    local changed = status.changed > 0 and "  " .. status.changed or ""
+    local removed = status.removed > 0 and "  " .. status.removed or ""
+    return status.head .. added .. changed .. removed .. " "
+  end
 }
