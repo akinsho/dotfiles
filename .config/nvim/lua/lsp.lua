@@ -197,11 +197,14 @@ function M.setup_lsp_highlights()
     {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
     {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
-    {"LspDiagnosticsDefaultInformation", {guifg = "#fab005"}},
+    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
     {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
     {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
-    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "blue"}},
-    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}}
+    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
+    {
+      "LspDiagnosticsUnderlineInformation",
+      {gui = "undercurl", guisp = "#15aabf"}
+    }
   }
   for _, hl in pairs(highlights) do
     H.highlight(unpack(hl))
@@ -274,6 +277,7 @@ local servers = {
     }
   },
   dartls = {
+    flags = {allow_incremental_sync = true},
     init_options = {
       closingLabels = true,
       outline = true,
