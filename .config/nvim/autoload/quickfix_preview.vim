@@ -50,6 +50,7 @@ function! s:preview_matches(opts) abort
     setlocal nobuflisted        " don't list this buffer
     setlocal noswapfile         " don't create swap file for this buffer
     setlocal bufhidden=delete   " clear out settings when buffer is hidden
+    setlocal number norelativenumber
   endif
   " Open any folds we may be in
   silent! foldopen!
@@ -63,7 +64,8 @@ endfunction
 
 function quickfix_preview#view_file(lnum) abort
   " Close the preview window if the user has selected a same entry again
-  if a:lnum == b:prev_lnum
+  let prev_lnum = get(b:, 'prev_lnum', 0)
+  if a:lnum == prev_lnum
     pclose
     let b:prev_lnum = 0
     return
@@ -110,7 +112,7 @@ function! s:enter_quickfix() abort
   execute "normal! \<cr>"
 endfunction
 
-let s:enabled = 0
+let s:enabled = 1
 
 function quickfix_preview#toggle() abort
   if s:enabled
