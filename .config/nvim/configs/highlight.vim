@@ -11,7 +11,6 @@ if PluginLoaded('onedark.vim')
     " Bold (+/- italicised) types
     call onedark#extend_highlight('Title', { 'gui': 'bold' })
     call onedark#extend_highlight('Type', { 'gui': 'italic,bold' })
-    call onedark#extend_highlight('Folded', { 'gui': 'italic,bold' })
     call onedark#extend_highlight('htmlArg', { 'gui': 'italic,bold' })
     " Italicised imports
     call onedark#extend_highlight('Include', { 'gui': 'italic' })
@@ -96,9 +95,10 @@ function! s:general_overrides() abort
   highlight Credit gui=bold
   highlight CursorLineNr guifg=yellow gui=bold
   highlight FoldColumn guibg=background
-  highlight Folded guibg=NONE gui=italic,bold
+  highlight! link Folded Comment
   highlight MatchParen gui=bold guifg=lightGreen guibg=NONE
   highlight IncSearch guibg=NONE guifg=LightGreen gui=italic,bold,underline
+  highlight clear mkdLineBreak
   " Add undercurl to existing spellbad highlight
   highlight SpellBad gui=undercurl guibg=transparent guifg=transparent guisp=green
 
