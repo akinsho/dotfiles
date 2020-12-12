@@ -98,7 +98,8 @@ function! s:general_overrides() abort
   highlight! link Folded Comment
   highlight MatchParen gui=bold guifg=lightGreen guibg=NONE
   highlight IncSearch guibg=NONE guifg=LightGreen gui=italic,bold,underline
-  highlight clear mkdLineBreak
+  " this links to visual by default which is very distracting
+  highlight! link mkdLineBreak NONE
   " Add undercurl to existing spellbad highlight
   highlight SpellBad gui=undercurl guibg=transparent guifg=transparent guisp=green
 
