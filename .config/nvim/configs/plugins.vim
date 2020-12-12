@@ -48,7 +48,6 @@ Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
-Plug 'honza/vim-snippets'
 if exists('$TMUX')
   Plug 'christoomey/vim-tmux-navigator'
 endif
@@ -57,6 +56,7 @@ endif
 "--------------------------------------------------------------------------------
 if has('mac')
   Plug 'neoclide/coc.nvim'
+  Plug 'honza/vim-snippets'
 else
   " configs for neovim's lsp
   Plug 'neovim/nvim-lspconfig'
