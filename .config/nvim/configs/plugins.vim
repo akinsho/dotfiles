@@ -44,17 +44,6 @@ endfunction
 "--------------------------------------------------------------------------------
 " CORE {{{1
 "--------------------------------------------------------------------------------
-if has('mac')
-  Plug 'neoclide/coc.nvim'
-else
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'nvim-lua/completion-nvim'
-  Plug 'hrsh7th/vim-vsnip'
-  Plug 'hrsh7th/vim-vsnip-integ'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-lua/lsp-status.nvim'
-  Plug 'lewis6991/gitsigns.nvim'
-endif
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -62,6 +51,25 @@ Plug 'mhinz/vim-startify'
 Plug 'honza/vim-snippets'
 if exists('$TMUX')
   Plug 'christoomey/vim-tmux-navigator'
+endif
+"--------------------------------------------------------------------------------
+" Language server {{{1
+"--------------------------------------------------------------------------------
+if has('mac')
+  Plug 'neoclide/coc.nvim'
+else
+  " configs for neovim's lsp
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-lua/completion-nvim'
+  " lsp + snippets
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'hrsh7th/vim-vsnip-integ'
+  " lsp status line
+  Plug 'nvim-lua/lsp-status.nvim'
+  " gitgutter but in lua
+  Plug 'lewis6991/gitsigns.nvim'
+  " dependencies
+  Plug 'nvim-lua/plenary.nvim'
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
