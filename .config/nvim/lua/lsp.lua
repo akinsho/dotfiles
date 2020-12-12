@@ -185,7 +185,9 @@ local function on_attach(client)
   lsp_status.on_attach(client)
 end
 
-lsp_status.config {kind_labels = vim.g.completion_customize_lsp_label}
+lsp_status.config {
+  kind_labels = vim.g.completion_customize_lsp_label
+}
 lsp_status.register_progress()
 -----------------------------------------------------------------------------//
 -- Highlights
@@ -221,7 +223,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
   vim.lsp.diagnostic.on_publish_diagnostics,
   {
     underline = true,
-    virtual_text = true,
+    virtual_text = false,
     signs = true,
     update_in_insert = false
   }
