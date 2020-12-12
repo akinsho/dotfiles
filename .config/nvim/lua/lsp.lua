@@ -135,6 +135,10 @@ end
 vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
 
 vim.g.completion_enable_snippet = "vim-vsnip"
+vim.g.completion_enable_auto_paren = 1
+vim.g.completion_items_priority = {
+  ["vim-vsnip"] = 0
+}
 vim.g.completion_enable_fuzzy_match = true
 vim.g.completion_matching_smart_case = 1
 vim.g.completion_menu_length = 25
@@ -174,7 +178,8 @@ vim.g.completion_customize_lsp_label = {
   TypeParameter = "\u{f728}",
   Default = "\u{f29c}",
   Buffers = "",
-  Snippet = " "
+  Snippet = "",
+  ["vim-vsnip"] = ""
 }
 
 local function on_attach(client)
