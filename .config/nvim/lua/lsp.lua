@@ -238,6 +238,12 @@ local function flutter_closing_tags(err, _, response)
   if err then
     return
   end
+  local uri = response.uri
+  -- This check is meant to prevent stray events from over-writing labels that
+  -- don't match the current buffer.
+  if uri ~= vim.uri_from_bufnr(0) then
+    return
+  end
   vim.api.nvim_buf_clear_namespace(0, closing_labels_namespace, 0, -1)
 
   for _, item in ipairs(response.labels) do
