@@ -139,15 +139,12 @@ vim.g.completion_enable_auto_paren = 1
 vim.g.completion_items_priority = {
   ["vim-vsnip"] = 0
 }
-vim.g.completion_enable_fuzzy_match = true
 vim.g.completion_matching_smart_case = 1
 vim.g.completion_menu_length = 25
 vim.g.completion_sorting = "none"
 vim.g.completion_matching_strategy_list = {
   "exact",
-  "substring",
-  "fuzzy",
-  "all"
+  "substring"
 }
 
 -- see https://github.com/nvim-lua/completion-nvim/wiki/Customizing-LSP-label
