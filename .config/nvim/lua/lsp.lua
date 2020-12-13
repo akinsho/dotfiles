@@ -79,28 +79,6 @@ local function setup_mappings()
   map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
   map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
-  map("i", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'")
-  map("s", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'")
-  map("i", "<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'")
-  map("s", "<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'")
-  map(
-    "x",
-    "<c-j>",
-    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    {expr = true}
-  )
-  map(
-    "i",
-    "<c-j>",
-    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    {expr = true}
-  )
-  map(
-    "s",
-    "<c-j>",
-    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    {expr = true}
-  )
   map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   map(
     "x",
