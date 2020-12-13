@@ -17,6 +17,7 @@ local H = require "highlights"
 local autocommands = require "autocommands"
 local lsp_status = require "lsp-status"
 local completion = require "completion"
+local flutter = require "flutter-tools"
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
@@ -55,6 +56,7 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
+
 local function map(...)
   api.nvim_buf_set_keymap(0, ...)
 end
@@ -71,12 +73,16 @@ local function setup_mappings()
   map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
   map("n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>", opts)
   map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-  map("n", "<leader>gs", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-  map("n", "<leader>ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  map("n", "<leader>ld", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
+  map("n", "<leader>ls", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
+  map("n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
   map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
+  map("i", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'")
+  map("s", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'")
+  map("i", "<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'")
+  map("s", "<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'")
   map(
     "x",
     "<c-j>",
@@ -132,6 +138,8 @@ end
 -----------------------------------------------------------------------------//
 -- Setup plugins
 -----------------------------------------------------------------------------//
+flutter.setup {}
+
 vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
 
 vim.g.completion_enable_snippet = "vim-vsnip"
@@ -233,35 +241,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local closing_labels_namespace =
-  api.nvim_create_namespace("flutter_lsp_closing_labels")
-
-local function flutter_closing_tags(err, _, response)
-  if err then
-    return
-  end
-  local uri = response.uri
-  -- This check is meant to prevent stray events from over-writing labels that
-  -- don't match the current buffer.
-  if uri ~= vim.uri_from_bufnr(0) then
-    return
-  end
-  vim.api.nvim_buf_clear_namespace(0, closing_labels_namespace, 0, -1)
-
-  for _, item in ipairs(response.labels) do
-    local line = item.range["end"].line
-    api.nvim_buf_set_virtual_text(
-      0,
-      closing_labels_namespace,
-      tonumber(line),
-      {
-        {"//" .. item.label, "Comment"}
-      },
-      {}
-    )
-  end
-end
-
 local servers = {
   rust_analyzer = {},
   vimls = {},
@@ -295,7 +274,7 @@ local servers = {
     },
     on_attach = on_attach,
     handlers = {
-      ["dart/textDocument/publishClosingLabels"] = flutter_closing_tags,
+      ["dart/textDocument/publishClosingLabels"] = flutter.closing_tags,
       ["dart/textDocument/publishFlutterOutline"] = function(_, _, _)
       end
     }

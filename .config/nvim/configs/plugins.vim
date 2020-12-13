@@ -82,12 +82,16 @@ Plug 'iamcco/markdown-preview.nvim', {
       \ 'for': ['markdown']
       \ }
 Plug 'cohama/lexima.vim'
-Plug 'mbbill/undotree', {'on': ['UndotreeToggle']} " undo plugin for vim
+Plug 'mbbill/undotree', {'on': ['UndotreeToggle']}
 Plug 'psliwka/vim-smoothie'
 Plug 'moll/vim-bbye'
-Plug 'vim-test/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestSuite'] }
+Plug 'vim-test/vim-test', {
+      \ 'on': ['TestFile', 'TestNearest', 'TestSuite']
+      \ }
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'AndrewRadev/tagalong.vim', {'for': ['typescriptreact', 'javascriptreact', 'html']}
+Plug 'AndrewRadev/tagalong.vim', {
+      \ 'for': ['typescriptreact', 'javascriptreact', 'html']
+      \ }
 Plug 'liuchengxu/vim-which-key'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'itchyny/vim-highlighturl'
@@ -176,6 +180,7 @@ if has('nvim')
     Plug '~/Desktop/projects/personal/nvim-toggleterm.lua'
     Plug '~/Desktop/projects/personal/nvim-bufferline.lua'
     Plug '~/Desktop/projects/personal/dependency-assist.nvim'
+    Plug '~/Desktop/projects/personal/flutter-tools.nvim'
 
     Plug '~/Desktop/projects/contributing/nvim-web-devicons'
     Plug '~/Desktop/projects/contributing/nvim-treesitter'
@@ -185,6 +190,7 @@ if has('nvim')
     Plug 'akinsho/nvim-toggleterm.lua'
     Plug 'akinsho/nvim-bufferline.lua'
     Plug 'akinsho/dependency-assist.nvim'
+    Plug 'akinsho/flutter-tools.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'}
   endif
