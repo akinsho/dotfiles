@@ -33,29 +33,30 @@ vim.cmd [[command! DebugLSP lua print(vim.inspect(vim.lsp.get_active_clients()))
 -- Autocommands
 -----------------------------------------------------------------------------//
 
-local function setup_autocommands()
-  autocommands.create(
-    {
-      LspCursorCommands = {
-        {
-          "CursorHold",
-          "<buffer>",
-          "lua vim.lsp.diagnostic.show_line_diagnostics()"
-        },
-        {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-        {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-        {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"},
-        {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
+local function setup_autocommands(client)
+  local commands = {
+    LspCursorCommands = {
+      {
+        "CursorHold",
+        "<buffer>",
+        "lua vim.lsp.diagnostic.show_line_diagnostics()"
       },
-      LspHighlights = {
-        {"ColorScheme", "*", "lua require('lsp').setup_lsp_highlights()"}
-      },
-      -- format on save
-      LspFormat = {
-        {"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync()"}
-      }
+      {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+      {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+      {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"},
+      {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
+    },
+    LspHighlights = {
+      {"ColorScheme", "*", "lua require('lsp').setup_lsp_highlights()"}
     }
-  )
+  }
+  if client and client.resolved_capabilities.document_formatting then
+    -- format on save
+    commands.LspFormat = {
+      {"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync()"}
+    }
+  end
+  autocommands.create(commands)
 end
 -----------------------------------------------------------------------------//
 -- Mappings
@@ -170,7 +171,7 @@ vim.g.completion_customize_lsp_label = {
 }
 
 local function on_attach(client)
-  setup_autocommands()
+  setup_autocommands(client)
   setup_mappings()
 
   completion.on_attach()
