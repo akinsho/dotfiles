@@ -49,6 +49,10 @@ local function setup_autocommands()
       },
       LspHighlights = {
         {"ColorScheme", "*", "lua require('lsp').setup_lsp_highlights()"}
+      },
+      -- format on save
+      LspFormat = {
+        {"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync()"}
       }
     }
   )

@@ -37,7 +37,7 @@ syntax enable
 " Plugin Configurations
 " ----------------------------------------------------------------------
 " Order matters here as the plugins should be loaded before the other setup
-" :h runtime - this fuzzy maches files within vim's runtime path
+" :h runtime - this fuzzy matches files within vim's runtime path
 runtime configs/preload.vim
 runtime configs/general.vim
 runtime configs/plugins.vim
