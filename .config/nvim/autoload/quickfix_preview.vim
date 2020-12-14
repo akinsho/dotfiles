@@ -75,7 +75,10 @@ function quickfix_preview#view_file(lnum) abort
   " get the qf entry for the current line which includes the line number
   " and the buffer number. Using those open the preview window to the specific
   " position
-  let entry = cur_list[a:lnum - 1]
+  let entry = get(cur_list, a:lnum - 1, {})
+  if empty(entry)
+    return
+  endif
   let b:prev_lnum = a:lnum
 
   let already_open = s:get_preview_window() && entry.bufnr == b:prev_bufnum
