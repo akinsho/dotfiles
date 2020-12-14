@@ -22,11 +22,8 @@ endif
 "--------------------------------------------------------------------------------
 " Helper functions
 "--------------------------------------------------------------------------------
-" Remove the current line from the qflist
-" https://stackoverflow.com/questions/42905008/quickfix-list-how-to-add-and-remove-entries
-function! s:delete_qf_entry() abort
-  call setqflist(filter(getqflist(), {idx -> idx != line('.') - 1}), 'r')
-endfunction
+nnoremap <silent><buffer>dd :call utils#qf_delete(bufnr())<CR>
+vnoremap <silent><buffer>d  :call utils#qf_delete(bufnr())<CR>
 
 " Setup plugin for auto previewing quickfix content
 call quickfix_preview#setup({ 'preview_height': 8 })
@@ -40,7 +37,6 @@ nnoremap <buffer> L :cnewer<CR>
 nnoremap <silent><buffer><nowait> P :pclose!<CR>
 nnoremap <silent><buffer><nowait> p :call quickfix_preview#toggle()<CR>
 nnoremap <silent><nowait><buffer> q :call <SID>smart_close()<CR>
-nnoremap <buffer> <silent> dd :call <SID>delete_qf_entry()<CR>
 
 " Resources and inspiration
 " 1. https://github.com/ronakg/quickr-preview.vim/blob/357229d656c0340b096a16920e82cff703f1fe93/after/ftplugin/qf.vim#L215
