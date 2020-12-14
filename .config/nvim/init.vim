@@ -46,10 +46,10 @@ runtime configs/mappings.vim
 runtime configs/autocommands.vim
 
 if has('nvim-0.5')
-  lua require('statusline')
-  lua require('lsp')
-  lua require('highlights')
-  lua require('plugins')
+  lua require('akinsho.statusline')
+  lua require('akinsho.lsp')
+  lua require('akinsho.highlights')
+  lua require('akinsho.plugins')
 endif
 
 runtime! configs/plugins/*.vim

@@ -13,11 +13,12 @@ local api = vim.api
 
 local M = {}
 
-local H = require "highlights"
-local autocommands = require "autocommands"
 local lsp_status = require "lsp-status"
 local completion = require "completion"
 local flutter = require "flutter-tools"
+
+local H = require "akinsho.highlights"
+local autocommands = require "akinsho.autocommands"
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
@@ -47,7 +48,7 @@ local function setup_autocommands(client)
       {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
     },
     LspHighlights = {
-      {"ColorScheme", "*", "lua require('lsp').setup_lsp_highlights()"}
+      {"ColorScheme", "*", "lua require('akinsho.lsp').setup_lsp_highlights()"}
     }
   }
   if client and client.resolved_capabilities.document_formatting then

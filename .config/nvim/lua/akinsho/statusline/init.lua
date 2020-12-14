@@ -6,10 +6,10 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/questions/20899651/how-to-truncate-a-vim-statusline-field-from-the-right
 
-local utils = require "statusline/utils"
-local P = require "statusline/palette"
-local H = require "highlights"
-local autocommands = require "autocommands"
+local utils = require "akinsho.statusline.utils"
+local P = require "akinsho.statusline.palette"
+local H = require "akinsho.highlights"
+local autocommands = require "akinsho.autocommands"
 
 local M = {}
 
@@ -324,16 +324,24 @@ local function setup_autocommands()
         {"FocusLost", "*", "let g:vim_in_focus = v:false"},
         -- The quickfix window sets it's own statusline, so we override it here
         {"FileType", "qf ", "setlocal statusline=%!v:lua.statusline()"},
-        {"VimEnter,ColorScheme", "*", "lua require'statusline'.colors()"},
-        {"VimEnter", "*", "lua require'statusline'.git_updates()"},
-        {"DirChanged", "*", "lua require'statusline'.git_toggle_updates()"},
+        {
+          "VimEnter,ColorScheme",
+          "*",
+          "lua require'akinsho.statusline'.colors()"
+        },
+        {"VimEnter", "*", "lua require'akinsho.statusline'.git_updates()"},
+        {
+          "DirChanged",
+          "*",
+          "lua require'akinsho.statusline'.git_toggle_updates()"
+        },
         {
           "User AsyncGitJobComplete",
-          "lua require'statusline'.git_updates_refresh()"
+          "lua require'akinsho.statusline'.git_updates_refresh()"
         },
         {
           "User FugitiveChanged",
-          "lua require'statusline'.git_updates_refresh()"
+          "lua require'akinsho.statusline'.git_updates_refresh()"
         }
       }
     }

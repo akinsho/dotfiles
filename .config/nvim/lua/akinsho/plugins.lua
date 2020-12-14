@@ -10,6 +10,7 @@ if plugin_loaded("gitsigns.nvim") > 0 then
       topdelete = {hl = "GitGutterDelete", text = "▌"},
       changedelete = {hl = "GitGutterChange", text = "▌"}
     },
+    numhl = false,
     keymaps = {
       -- Default keymap options
       noremap = true,

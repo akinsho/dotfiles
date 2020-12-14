@@ -1,4 +1,4 @@
-local autocommands = require("autocommands")
+local autocommands = require("akinsho.autocommands")
 local synIDattr = vim.fn.synIDattr
 local hlID = vim.fn.hlID
 
@@ -147,12 +147,12 @@ autocommands.create(
       {
         "VimEnter,ColorScheme",
         "*",
-        "lua require('highlights').set_explorer_highlight()"
+        "lua require('akinsho.highlights').set_explorer_highlight()"
       },
       {
         "FileType",
         "LuaTree",
-        "lua require('highlights').on_enter()"
+        "lua require('akinsho.highlights').on_enter()"
       }
     }
   }
