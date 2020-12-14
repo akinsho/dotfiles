@@ -11,11 +11,11 @@ if PluginLoaded('coc.nvim')
   nnoremap <silent> <leader>drs :CocCommand flutter.dev.hotRestart<CR>
   nnoremap <silent> <leader>dd  :CocCommand flutter.devices<CR>
 elseif PluginLoaded('flutter-tools.nvim')
-  nnoremap <silent> <leader>de  :lua require('flutter-tools').emulators()<CR>
-  nnoremap <silent> <leader>dq  :lua require('flutter-tools').quit()<CR>
-  nnoremap <silent> <leader>drn :lua require('flutter-tools').run()<CR>
-  nnoremap <silent> <leader>drs :lua require('flutter-tools').restart()<CR>
-  nnoremap <silent> <leader>dd  :lua require('flutter-tools').devices()<CR>
+  nnoremap <silent> <leader>de  :FlutterEmulators()<CR>
+  nnoremap <silent> <leader>dq  :FlutterQuit()<CR>
+  nnoremap <silent> <leader>drn :FlutterRun()<CR>
+  nnoremap <silent> <leader>drs :FlutterRestart()<CR>
+  nnoremap <silent> <leader>dd  :FlutterDevices()<CR>
   " nnoremap <silent> <leader>dl  :CocCommand flutter.dev.openDevLog<CR>
   " nnoremap <silent> <leader>do  :CocCommand flutter.toggleOutline<CR>
 endif
