@@ -1,5 +1,5 @@
 local loaded, devicons = pcall(require, "nvim-web-devicons")
-local palette = require("akinsho.statusline/palette")
+local palette = require("akinsho.statusline.palette")
 local H = require("akinsho.highlights")
 
 local fn = vim.fn

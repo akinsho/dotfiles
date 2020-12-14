@@ -13,7 +13,7 @@ end
 --  https://www.youtube.com/watch?v=9L4sW047oow
 if vim.fn.has("nvim-0.5") then
   vim.cmd(
-    'command! -nargs=? ResetLuaPlugin lua require"devtools".reset_package(<q-args>)'
+    'command! -nargs=? ResetLuaPlugin lua require"asdevtools".reset_package(<q-args>)'
   )
 end
 
