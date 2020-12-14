@@ -1,4 +1,3 @@
-local map = vim.api.nvim_set_keymap
 local plugin_loaded = vim.fn.PluginLoaded
 
 if plugin_loaded("gitsigns.nvim") > 0 then
@@ -38,47 +37,3 @@ if plugin_loaded("gitsigns.nvim") > 0 then
   }
 end
 
-if plugin_loaded("vim-vsnip") > 0 then
-  map(
-    "i",
-    "<c-l>",
-    "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'",
-    {expr = true}
-  )
-  map(
-    "s",
-    "<c-l>",
-    "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'",
-    {expr = true}
-  )
-  map(
-    "i",
-    "<c-h>",
-    "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'",
-    {expr = true}
-  )
-  map(
-    "s",
-    "<c-h>",
-    "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'",
-    {expr = true}
-  )
-  map(
-    "x",
-    "<c-j>",
-    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    {expr = true}
-  )
-  map(
-    "i",
-    "<c-j>",
-    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    {expr = true}
-  )
-  map(
-    "s",
-    "<c-j>",
-    [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']],
-    {expr = true}
-  )
-end
