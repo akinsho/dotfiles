@@ -20,7 +20,8 @@ endfunction
 
 function! s:open_preview_window(entry) abort
   let original_height = &previewheight
-  execute 'set previewheight='.b:preview_height
+  let preview_height = get(b:, 'preview_height', original_height)
+  execute 'set previewheight='.preview_height
   execute 'pedit +' . a:entry.lnum . ' ' . bufname(a:entry.bufnr)
   execute 'set previewheight='.original_height
 endfunction
