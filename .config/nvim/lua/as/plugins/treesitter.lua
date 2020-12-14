@@ -33,8 +33,8 @@ require "nvim-treesitter.configs".setup {
   }
 }
 
-local parsers = require "nvim-treesitter.parsers"
 -- Only apply folding to supported files, inspired by:
+local parsers = require "nvim-treesitter.parsers"
 local configs = parsers.get_parser_configs()
 local ft_str =
   table.concat(
