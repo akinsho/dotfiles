@@ -6,10 +6,10 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/questions/20899651/how-to-truncate-a-vim-statusline-field-from-the-right
 
-local utils = require "akinsho.statusline.utils"
-local P = require "akinsho.statusline.palette"
-local H = require "akinsho.highlights"
-local autocommands = require "akinsho.autocommands"
+local utils = require "as.statusline.utils"
+local P = require "as.statusline.palette"
+local H = require "as.highlights"
+local autocommands = require "as.autocommands"
 
 local M = {}
 
@@ -327,21 +327,21 @@ local function setup_autocommands()
         {
           "VimEnter,ColorScheme",
           "*",
-          "lua require'akinsho.statusline'.colors()"
+          "lua require'as.statusline'.colors()"
         },
-        {"VimEnter", "*", "lua require'akinsho.statusline'.git_updates()"},
+        {"VimEnter", "*", "lua require'as.statusline'.git_updates()"},
         {
           "DirChanged",
           "*",
-          "lua require'akinsho.statusline'.git_toggle_updates()"
+          "lua require'as.statusline'.git_toggle_updates()"
         },
         {
           "User AsyncGitJobComplete",
-          "lua require'akinsho.statusline'.git_updates_refresh()"
+          "lua require'as.statusline'.git_updates_refresh()"
         },
         {
           "User FugitiveChanged",
-          "lua require'akinsho.statusline'.git_updates_refresh()"
+          "lua require'as.statusline'.git_updates_refresh()"
         }
       }
     }

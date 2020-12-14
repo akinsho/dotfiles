@@ -60,7 +60,7 @@ function! s:autocommit() abort
     let msg = 'Auto commit'
     let add = 'git -C '.g:learnings_wiki_path.' add .'
     let commit = 'git -C '.g:learnings_wiki_path.' commit -m "'.msg.'" .'
-    call luaeval('require("akinsho.async_job").execSync(_A)', [add, commit])
+    call luaeval('require("as.async_job").execSync(_A)', [add, commit])
   catch /.*/
     echoerr v:exception
     echo 'occurred at: '.v:throwpoint
@@ -72,7 +72,7 @@ function! s:auto_push(...) abort
   try
     call utils#message('pushing '.g:learnings_wiki_path.'...', 'Title')
     let cmd = 'git -C '. g:learnings_wiki_path. ' push -q origin master'
-    call luaeval('require("akinsho.async_job").exec(_A, 0)', cmd)
+    call luaeval('require("as.async_job").exec(_A, 0)', cmd)
   catch /.*/
     echoerr v:exception
   endtry
