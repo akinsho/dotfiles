@@ -88,7 +88,7 @@ Plug 'moll/vim-bbye'
 Plug 'vim-test/vim-test', {
       \ 'on': ['TestFile', 'TestNearest', 'TestSuite']
       \ }
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'AndrewRadev/tagalong.vim', {
       \ 'for': ['typescriptreact', 'javascriptreact', 'html']
       \ }
