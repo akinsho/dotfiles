@@ -322,8 +322,6 @@ local function setup_autocommands()
       CustomStatusline = {
         {"FocusGained", "*", "let g:vim_in_focus = v:true"},
         {"FocusLost", "*", "let g:vim_in_focus = v:false"},
-        -- The quickfix window sets it's own statusline, so we override it here
-        {"FileType", "qf ", "setlocal statusline=%!v:lua.statusline()"},
         {
           "VimEnter,ColorScheme",
           "*",
@@ -350,6 +348,9 @@ end
 
 -- attach autocommands
 setup_autocommands()
+
+-- :h qf.vim, disable qf statusline
+vim.g.qf_disable_statusline = 1
 
 -- set the statusline
 vim.o.statusline = "%!v:lua.statusline()"
