@@ -76,7 +76,7 @@ function quickfix_preview#view_file(lnum) abort
   " and the buffer number. Using those open the preview window to the specific
   " position
   let entry = get(cur_list, a:lnum - 1, {})
-  if empty(entry)
+  if empty(entry) || !entry.lnum
     return
   endif
   let b:prev_lnum = a:lnum
