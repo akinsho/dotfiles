@@ -157,7 +157,6 @@ Plug 'wellle/targets.vim'
 Plug 'kana/vim-textobj-user'
       \ | Plug 'kana/vim-operator-user'
       \ | Plug 'glts/vim-textobj-comment'
-      \ | Plug 'inside/vim-textobj-jsxattr'
 "--------------------------------------------------------------------------------
 " Search Tools {{{1
 "--------------------------------------------------------------------------------
