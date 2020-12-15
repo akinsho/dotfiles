@@ -239,6 +239,33 @@ nnoremap <silent> <leader>cm  :<C-u>CocList marketplace<cr>
 nnoremap <silent> <leader>cn  :<C-u>CocList snippets <CR>
 " Resume latest coc list
 nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
+
+if PluginLoaded('vim-which-key')
+  if !get(g:, 'which_leader_key_map')
+    let g:which_leader_key_map.a = 'coc codeaction (for text object)'
+    let g:which_leader_key_map.c = {
+          \   'name': '+coc-command',
+          \   'f':    'search: cursor word',
+          \   'y':    'list: yank',
+          \   'b':    'list: branches',
+          \   'd':    'list: diagnostic',
+          \   'c':    'list: command',
+          \   'e':    'list: extension',
+          \   'o':    'list: outline',
+          \   's':    'list: symbol',
+          \   'm':    'list: marketplace',
+          \   'r':    'list: resume',
+          \   'a':    'codelens: action'
+          \}
+    let g:which_leader_key_map.g =  {
+          \ 'name':   '+coc-edit',
+          \   'a':    'codeaction: entire file',
+          \   'r':    'refactor',
+          \   'f':    'fix current line',
+          \   'n':    'rename cursor word'
+          \ }
+  endif
+endif
 ""---------------------------------------------------------------------------//
 " Coc Git
 ""---------------------------------------------------------------------------//

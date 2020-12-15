@@ -20,33 +20,11 @@ let g:which_leader_key_map = {
       \ 'A':      'projectionist: edit alternate',
       \ 'av':     'projectionist: vsplit alternate',
       \ 'at':     'projectionist: vsplit test',
-      \ 'a':      'coc codeaction (for text object)',
-      \ 'c':      {
-      \   'name': '+coc-command',
-      \   'f':    'search: cursor word',
-      \   'y':    'list: yank',
-      \   'b':    'list: branches',
-      \   'd':    'list: diagnostic',
-      \   'c':    'list: command',
-      \   'e':    'list: extension',
-      \   'o':    'list: outline',
-      \   's':    'list: symbol',
-      \   'm':    'list: marketplace',
-      \   'r':    'list: resume',
-      \   'a':    'codelens: action'
-      \},
       \ 'h':      {
       \   'name': '+git-hunk',
       \   's':    'stage',
       \   'u':    'undo',
       \},
-      \ 'r':      {
-      \ 'name':   '+coc-edit',
-      \   'a':    'codeaction: entire file',
-      \   'r':    'refactor',
-      \   'f':    'fix current line',
-      \   'n':    'rename cursor word'
-      \ },
       \ 'n':      {
       \  'name':  '+new',
       \  'f':     'create a new file',
