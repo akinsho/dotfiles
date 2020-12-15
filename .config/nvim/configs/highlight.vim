@@ -122,6 +122,7 @@ endfunction
 function! s:colorscheme_overrides() abort
   if g:colors_name ==? 'one'
     call one#highlight('Type', 'e5c07b', '', 'italic,bold')
+    call one#highlight('VertSplit', '2c323c', 'bg', '')
     " Italicise imports
     call one#highlight('jsxComponentName', '61afef', '', 'bold,italic')
     call one#highlight('Include', '61afef', '', 'italic')
