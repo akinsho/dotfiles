@@ -39,6 +39,7 @@
   "diagnostic.hintSign": "", // ﯦ
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "coc.preferences.formatOnInsertLeave": true,
+  "coc.preferences.colorSupport": false,
   // emoji
   "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
   // Snippets
