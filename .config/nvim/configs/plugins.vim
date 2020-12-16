@@ -82,9 +82,9 @@ Plug 'iamcco/markdown-preview.nvim', {
       \ 'for': ['markdown']
       \ }
 Plug 'cohama/lexima.vim'
-Plug 'mbbill/undotree', {'on': ['UndotreeToggle']}
 Plug 'psliwka/vim-smoothie'
-Plug 'moll/vim-bbye'
+Plug 'mbbill/undotree', {'on': ['UndotreeToggle']}
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'vim-test/vim-test', {
       \ 'on': ['TestFile', 'TestNearest', 'TestSuite']
       \ }
