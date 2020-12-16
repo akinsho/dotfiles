@@ -5,7 +5,15 @@ endif
 " remove link between diff added and vim which key
 highlight WhichKeySeperator guifg=green guibg=background
 
-let g:which_leader_key_map = {
+if !exists('g:which_leader_key_map')
+  let g:which_leader_key_map = {}
+endif
+
+if !exists('g:which_localleader_key_map')
+  let g:which_localleader_key_map = {}
+endif
+
+call extend(g:which_leader_key_map, {
       \ 'name':   'leader',
       \ '0':      'which_key_ignore',
       \ '1':      'which_key_ignore',
@@ -116,9 +124,9 @@ let g:which_leader_key_map = {
       \ "[":      'replace cursor word in file',
       \ "]":      'replace cursor word in line',
       \ "<Tab>":  ['bnext', 'Go to next buffer'],
-      \}
+      \})
 
-let g:which_localleader_key_map = {
+call extend(g:which_localleader_key_map, {
       \ 'name': 'local leader',
       \ 'd': {
       \ 'name': '+debug',
@@ -199,7 +207,7 @@ let g:which_localleader_key_map = {
       \ "[":         'abolish: subsitute cursor word in file',
       \ "]":         'abolish: substitute cursor word on line',
       \ "/":         'find matching word in buffer',
-      \}
+      \})
 
 let g:which_key_use_floating_win       = 0
 let g:which_key_disable_default_offset = 1

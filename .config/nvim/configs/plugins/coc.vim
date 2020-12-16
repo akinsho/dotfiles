@@ -241,7 +241,7 @@ nnoremap <silent> <leader>cn  :<C-u>CocList snippets <CR>
 nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
 
 if PluginLoaded('vim-which-key')
-  if !get(g:, 'which_leader_key_map')
+  if exists('g:which_leader_key_map')
     let g:which_leader_key_map.a = 'coc codeaction (for text object)'
     let g:which_leader_key_map.c = {
           \   'name': '+coc-command',
