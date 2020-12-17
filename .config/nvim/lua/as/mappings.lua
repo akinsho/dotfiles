@@ -1,1 +1,1 @@
-vim.cmd [[command! ReloadModule -nargs=1 lua require('plenary.reload').reload_module(<q-args>)]]
+vim.cmd [[command!  -nargs=1 ReloadModule lua require('plenary.reload').reload_module(<q-args>)]]
