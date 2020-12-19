@@ -41,16 +41,30 @@ local function setup_autocommands(client)
         "CursorHold",
         "<buffer>",
         "lua vim.lsp.diagnostic.show_line_diagnostics()"
-      },
-      {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-      {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-      {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"},
-      {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
+      }
     },
     LspHighlights = {
       {"ColorScheme", "*", "lua require('as.lsp').setup_lsp_highlights()"}
     }
   }
+  if client and client.resolved_capabilities.signature_help then
+    vim.list_extend(
+      commands.LspCursorCommands,
+      {
+        {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"}
+      }
+    )
+  end
+  if client and client.resolved_capabilities.document_highlight then
+    vim.list_extend(
+      commands.LspCursorCommands,
+      {
+        {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+        {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+        {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
+      }
+    )
+  end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
     commands.LspFormat = {
@@ -259,8 +273,7 @@ local servers = {
     on_attach = on_attach,
     handlers = {
       ["dart/textDocument/publishClosingLabels"] = flutter.closing_tags,
-      ["dart/textDocument/publishFlutterOutline"] = function(_, _, _)
-      end
+      ["dart/textDocument/publishOutline"] = flutter.outline
     }
   }
 }
