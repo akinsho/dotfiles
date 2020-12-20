@@ -31,6 +31,7 @@ function M.colors()
   local string_fg = utils.get_hl_color("String", "fg")
   local error_fg = utils.get_hl_color("ErrorMsg", "fg")
   local comment_fg = utils.get_hl_color("Comment", "fg")
+  local tabline_sel_bg = utils.get_hl_color("TabLineSel", "bg")
   local warning_fg =
     vim.g.colors_name == "one" and P.light_yellow or
     utils.get_hl_color("WarningMsg", "fg")
@@ -38,6 +39,7 @@ function M.colors()
   local highlights = {
     {"StMetadata", {guifg = comment_fg, gui = "italic,bold"}},
     {"StMetadataPrefix", {guifg = comment_fg}},
+    {"StIndicator", {guifg = tabline_sel_bg}},
     {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
     {"StPrefixSep", {guibg = normal_bg, guifg = pmenu_bg}},
@@ -141,6 +143,19 @@ function _G.statusline()
   -- Setup
   ----------------------------------------------------------------------------//
   local statusline = {}
+  append(
+    statusline,
+    utils.item_if(
+      "▌",
+      not minimal,
+      "StIndicator",
+      {
+        before = "",
+        after = ""
+      }
+    ),
+    0
+  )
   append(statusline, utils.spacer(1))
 
   ----------------------------------------------------------------------------//
