@@ -26,6 +26,8 @@ M.git_updates_refresh = utils.git_updates_refresh
 --- but this is not universal across terminals so should be avoided
 function M.colors()
   local normal_bg = H.hl_value("Normal", "bg")
+  local bg_color = require("bufferline").shade_color(normal_bg, -10)
+
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
   local string_fg = H.hl_value("String", "fg")
@@ -41,32 +43,35 @@ function M.colors()
 
   local highlights = {
     {"StMetadata", {guifg = comment_fg, gui = "italic,bold"}},
-    {"StMetadataPrefix", {guifg = comment_fg}},
-    {"StIndicator", {guifg = tabline_sel_bg}},
+    {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
+    {"StIndicator", {guibg = bg_color, guifg = tabline_sel_bg}},
     {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
+    {"StGreen", {guifg = string_fg, guibg = bg_color}},
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
-    {"StPrefixSep", {guibg = normal_bg, guifg = pmenu_bg}},
-    {"StDirectory", {guibg = normal_bg, guifg = "Gray", gui = "italic"}},
+    {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
+    {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
+    {"StTitle", {guibg = bg_color, guifg = title_fg, gui = title_gui}},
+    {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
+    {"StItem", {guibg = normal_fg, guifg = bg_color, gui = "italic"}},
+    {"StSep", {guifg = normal_fg}},
+    {"StInfo", {guifg = P.dark_blue, guibg = bg_color, gui = "bold"}},
+    {"StInfoSep", {guifg = pmenu_bg}},
+    {"StInactive", {guifg = bg_color, guibg = P.comment_grey}},
+    {"StInactiveSep", {guibg = bg_color, guifg = P.comment_grey}},
+    {"StatusLine", {guibg = bg_color}},
+    {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
+    {"StWarning", {guifg = warning_fg, guibg = pmenu_bg}},
+    {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
+    {"StError", {guifg = error_fg, guibg = pmenu_bg}},
+    {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
     {
       "StFilename",
-      {guibg = normal_bg, guifg = "LightGray", gui = "italic,bold"}
+      {guibg = bg_color, guifg = "LightGray", gui = "italic,bold"}
     },
     {
       "StFilenameInactive",
-      {guifg = P.comment_grey, guibg = normal_bg, gui = "italic,bold"}
-    },
-    {"StItem", {guibg = normal_fg, guifg = normal_bg, gui = "italic"}},
-    {"StSep", {guifg = normal_fg}},
-    {"StInfo", {guifg = P.dark_blue, guibg = normal_bg, gui = "bold"}},
-    {"StInfoSep", {guifg = pmenu_bg}},
-    {"StInactive", {guifg = normal_bg, guibg = P.comment_grey}},
-    {"StInactiveSep", {guifg = P.comment_grey}},
-    {"StatusLine", {guibg = normal_bg}},
-    {"StatusLineNC", {guibg = normal_bg, gui = "NONE"}},
-    {"StWarning", {guifg = warning_fg, guibg = pmenu_bg}},
-    {"StWarningSep", {guifg = pmenu_bg, guibg = normal_bg}},
-    {"StError", {guifg = error_fg, guibg = pmenu_bg}},
-    {"StErrorSep", {guifg = pmenu_bg, guibg = normal_bg}}
+      {guifg = P.comment_grey, guibg = bg_color, gui = "italic,bold"}
+    }
   }
 
   for _, hl in ipairs(highlights) do
@@ -180,13 +185,14 @@ function _G.statusline()
 
   if H.has_win_highlight(curwin) then
     directory_hl =
-      H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "Title")
+      H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
     filename_hl =
-      H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "Title")
+      H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
   end
 
   local directory, filename = utils.filename(ctx)
-  local ft_icon, icon_highlight = utils.filetype(ctx)
+  local ft_icon, icon_highlight =
+    utils.filetype(ctx, {icon_bg = "StatusLine", default = "StComment"})
 
   local opts = {prefix = ft_icon, before = "", after = ""}
   local file_opts = {before = "", after = ""}
@@ -266,7 +272,15 @@ function _G.statusline()
   -- Current line number/total line number,  alternatives 
   append(
     statusline,
-    utils.line_info({prefix = "ℓ", prefix_color = "StMetadataPrefix"}),
+    utils.line_info(
+      {
+        prefix = "ℓ",
+        prefix_color = "StMetadataPrefix",
+        current_hl = "StTitle",
+        total_hl = "StComment",
+        sep_hl = "StComment"
+      }
+    ),
     4
   )
 
@@ -282,10 +296,10 @@ function _G.statusline()
     utils.item_if(
       ahead,
       ahead > 0,
-      "Title",
+      "StTitle",
       {
         prefix = "⇡",
-        prefix_color = "String",
+        prefix_color = "StGreen",
         after = behind > 0 and "" or " ",
         before = ""
       }
@@ -296,7 +310,7 @@ function _G.statusline()
     utils.item_if(
       behind,
       behind > 0,
-      "Title",
+      "StTitle",
       {prefix = "⇣", prefix_color = "Number", after = " "}
     )
   )
@@ -320,7 +334,7 @@ function _G.statusline()
     utils.item_if(
       ctx.shiftwidth,
       unexpected_indentation,
-      "Title",
+      "StTitle",
       {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
     ),
     4

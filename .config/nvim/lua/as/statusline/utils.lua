@@ -267,20 +267,21 @@ local function set_ft_icon_highlight(hl, bg_hl)
 end
 
 --- @param ctx table
-function M.filetype(ctx)
+--- @param opts table
+function M.filetype(ctx, opts)
   local ft_exception = exceptions.filetypes[ctx.filetype]
   if ft_exception then
-    return ft_exception, ""
+    return ft_exception, opts.default
   end
   local bt_exception = exceptions.buftypes[ctx.buftype]
   if bt_exception then
-    return bt_exception, ""
+    return bt_exception, opts.default
   end
   local icon, hl
-  if loaded then
+  if icons_loaded then
     local extension = fnamemodify(ctx.bufname, ":e")
     icon, hl = devicons.get_icon(ctx.bufname, extension, {default = true})
-    hl = set_ft_icon_highlight(hl, "Normal")
+    hl = set_ft_icon_highlight(hl, opts.icon_bg)
   end
   return icon, hl
 end
@@ -292,10 +293,10 @@ end
 function M.line_info(opts)
   local sep = opts.sep or "/"
   local prefix = opts.prefix or "L"
-  local prefix_color = opts.prefix_color or "StMetadataPrefix"
-  local current_hl = opts.current_hl or "Title"
-  local total_hl = opts.total_hl or "Comment"
-  local sep_hl = opts.total_hl or "NonText"
+  local prefix_color = opts.prefix_color
+  local current_hl = opts.current_hl
+  local total_hl = opts.total_hl
+  local sep_hl = opts.total_hl
 
   local current = fn.line(".")
   local last = fn.line("$")
@@ -468,15 +469,24 @@ local function mode_highlight(mode)
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
   local inc_search_bg = H.hl_value("Search", "bg")
   if mode == "i" then
-    H.highlight("StModeText", {guifg = palette.dark_blue, gui = "bold"})
+    H.highlight(
+      "StModeText",
+      {guibg = bg, guifg = palette.dark_blue, gui = "bold"}
+    )
   elseif visual_regex:match_str(mode) then
-    H.highlight("StModeText", {guifg = palette.magenta, gui = "bold"})
+    H.highlight(
+      "StModeText",
+      {guibg = bg, guifg = palette.magenta, gui = "bold"}
+    )
   elseif mode == "R" then
-    H.highlight("StModeText", {guifg = palette.dark_red, gui = "bold"})
+    H.highlight(
+      "StModeText",
+      {guibg = bg, guifg = palette.dark_red, gui = "bold"}
+    )
   elseif command_regex:match_str(mode) then
-    H.highlight("StModeText", {guifg = inc_search_bg, gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
   else
-    H.highlight("StModeText", {guifg = palette.green, gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = palette.green, gui = "bold"})
   end
 end
 
