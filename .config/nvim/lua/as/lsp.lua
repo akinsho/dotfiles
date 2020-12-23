@@ -9,6 +9,7 @@ end
 -----------------------------------------------------------------------------//
 
 local fn = vim.fn
+local extend = vim.list_extend
 local api = vim.api
 
 local M = {}
@@ -48,7 +49,7 @@ local function setup_autocommands(client)
     }
   }
   if client and client.resolved_capabilities.signature_help then
-    vim.list_extend(
+    extend(
       commands.LspCursorCommands,
       {
         {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"}
@@ -56,7 +57,7 @@ local function setup_autocommands(client)
     )
   end
   if client and client.resolved_capabilities.document_highlight then
-    vim.list_extend(
+    extend(
       commands.LspCursorCommands,
       {
         {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
