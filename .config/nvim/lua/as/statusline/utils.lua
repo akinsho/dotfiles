@@ -1,4 +1,5 @@
-local loaded, devicons = pcall(require, "nvim-web-devicons")
+local icons_loaded, devicons = pcall(require, "nvim-web-devicons")
+local lsp_loaded, lsp_status = pcall(require, "lsp-status")
 local palette = require("as.statusline.palette")
 local H = require("as.highlights")
 
@@ -356,8 +357,11 @@ function M.diagnostic_info()
 end
 
 function M.lsp_status()
-  local lsp_status = vim.g.coc_status or ""
-  return vim.fn.trim(lsp_status)
+  if lsp_loaded then
+    return lsp_status.status()
+  end
+  local coc_status = vim.g.coc_status or ""
+  return vim.fn.trim(coc_status)
 end
 
 function M.current_fn()

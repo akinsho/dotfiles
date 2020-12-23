@@ -298,20 +298,17 @@ function _G.statusline()
     )
   )
 
-  local loaded, lsp_status = pcall(require, "lsp-status")
-  if loaded then
-    append(statusline, utils.item(lsp_status.status(), "StMetadata"))
-  else
-    -- LSP Diagnostics
-    local info = utils.diagnostic_info()
+  -- LSP Diagnostics
+  local info = utils.diagnostic_info()
+  if info and not vim.tbl_isempty(info) then
     append(statusline, utils.item(info.error, "Error"), 1)
     append(statusline, utils.item(info.warning, "PreProc"), 2)
     append(statusline, utils.item(info.information, "String"), 3)
-
-    -- LSP Status
-    append(statusline, utils.item(utils.lsp_status(), "Comment"), 3)
-    append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
   end
+
+  -- LSP Status
+  append(statusline, utils.item(utils.lsp_status(), "StComment"), 3)
+  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
 
   -- Indentation
   local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab
