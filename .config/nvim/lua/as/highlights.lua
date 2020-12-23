@@ -87,6 +87,9 @@ function M.highlight(name, opts)
 end
 
 function M.hl_value(grp, attr)
+  if attr == "gui" then
+    return M.gui_attr(grp)
+  end
   return synIDattr(hlID(grp), attr)
 end
 
