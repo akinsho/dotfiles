@@ -25,16 +25,19 @@ M.git_updates_refresh = utils.git_updates_refresh
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 function M.colors()
-  local normal_bg = utils.get_hl_color("Normal", "bg")
-  local normal_fg = utils.get_hl_color("Normal", "fg")
-  local pmenu_bg = utils.get_hl_color("Pmenu", "bg")
-  local string_fg = utils.get_hl_color("String", "fg")
-  local error_fg = utils.get_hl_color("ErrorMsg", "fg")
-  local comment_fg = utils.get_hl_color("Comment", "fg")
-  local tabline_sel_bg = utils.get_hl_color("TabLineSel", "bg")
+  local normal_bg = H.hl_value("Normal", "bg")
+  local normal_fg = H.hl_value("Normal", "fg")
+  local pmenu_bg = H.hl_value("Pmenu", "bg")
+  local string_fg = H.hl_value("String", "fg")
+  local error_fg = H.hl_value("ErrorMsg", "fg")
+  local comment_fg = H.hl_value("Comment", "fg")
+  local comment_gui = H.hl_value("Comment", "gui")
+  local title_fg = H.hl_value("Title", "fg")
+  local title_gui = H.hl_value("Title", "gui")
+  local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
   local warning_fg =
     vim.g.colors_name == "one" and P.light_yellow or
-    utils.get_hl_color("WarningMsg", "fg")
+    H.hl_value("WarningMsg", "fg")
 
   local highlights = {
     {"StMetadata", {guifg = comment_fg, gui = "italic,bold"}},

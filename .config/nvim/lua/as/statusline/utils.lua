@@ -238,12 +238,6 @@ function M.filename(ctx, modifier)
 end
 
 --- @param hl string
---- @param attr string
-function M.get_hl_color(hl, attr)
-  return fn.synIDattr(fn.hlID(hl), attr)
-end
-
---- @param hl string
 --- @param bg_hl string
 local function set_ft_icon_highlight(hl, bg_hl)
   if not hl then
@@ -257,8 +251,8 @@ local function set_ft_icon_highlight(hl, bg_hl)
   if created then
     return name
   end
-  local bg_color = M.get_hl_color(bg_hl, "bg")
-  local fg_color = M.get_hl_color(hl, "fg")
+  local bg_color = H.hl_value(bg_hl, "bg")
+  local fg_color = H.hl_value(hl, "fg")
   if bg_color and fg_color then
     local cmd = {"highlight ", name, " guibg=", bg_color, " guifg=", fg_color}
     local str = table.concat(cmd)
@@ -469,9 +463,10 @@ function M.git_status()
 end
 
 local function mode_highlight(mode)
+  local bg = H.hl_value("StatusLine", "bg")
   local visual_regex = vim.regex([[\(v\|V\|\)]])
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
-  local inc_search_bg = M.get_hl_color("Search", "bg")
+  local inc_search_bg = H.hl_value("Search", "bg")
   if mode == "i" then
     H.highlight("StModeText", {guifg = palette.dark_blue, gui = "bold"})
   elseif visual_regex:match_str(mode) then
