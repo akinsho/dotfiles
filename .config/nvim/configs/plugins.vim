@@ -163,7 +163,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
-Plug 'voldikss/vim-skylight'
 "--------------------------------------------------------------------------------
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
