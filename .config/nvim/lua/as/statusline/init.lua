@@ -13,8 +13,6 @@ local autocommands = require "as.autocommands"
 
 local M = {}
 
-local st_warning = {color = "StWarning", sep_color = "StWarningSep"}
-
 M.git_updates = utils.git_updates
 M.git_toggle_updates = utils.git_update_toggle
 M.git_updates_refresh = utils.git_updates_refresh
@@ -60,7 +58,7 @@ function M.colors()
     {"StInactiveSep", {guibg = bg_color, guifg = P.comment_grey}},
     {"StatusLine", {guibg = bg_color}},
     {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
-    {"StWarning", {guifg = warning_fg, guibg = pmenu_bg}},
+    {"StWarning", {guifg = warning_fg, guibg = bg_color}},
     {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
     {"StError", {guifg = error_fg, guibg = pmenu_bg}},
     {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
@@ -245,19 +243,17 @@ function _G.statusline()
   local develop_text = available_space > 100 and "local dev" or ""
   append(
     statusline,
-    utils.sep_if(
+    utils.item_if(
       develop_text,
-      vim.env.DEVELOPING,
-      vim.tbl_extend(
-        "keep",
-        {
-          prefix = " ",
-          padding = "none",
-          prefix_color = "StWarning",
-          small = 1
-        },
-        st_warning
-      )
+      vim.env.DEVELOPING ~= nil,
+      "StComment",
+      {
+        prefix = "",
+        padding = "none",
+        before = "  ",
+        prefix_color = "StWarning",
+        small = 1
+      }
     ),
     2
   )
