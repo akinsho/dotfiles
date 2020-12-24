@@ -225,6 +225,14 @@ augroup CustomWindowSettings
         \ | endif
 augroup END
 
+let s:save_excluded = ['lua.luapad']
+function s:can_save() abort
+  return empty(&buftype)
+        \ && !empty(&filetype)
+        \ && &modifiable
+        \ && index(s:save_excluded, &ft) > 0
+endfunction
+
 augroup Utilities "{{{1
   autocmd!
   " close FZF in neovim with <ESC>
@@ -255,8 +263,7 @@ augroup Utilities "{{{1
   endif
 
   " Save a buffer when we leave it
-  let save_excluded = ['lua.luapad']
-  autocmd BufLeave * if index(save_excluded, &ft) == -1 | silent! update | endif
+  autocmd BufLeave * if s:can_save() | silent! update | endif
 
   " Update filetype on save if empty
   autocmd BufWritePost * nested
