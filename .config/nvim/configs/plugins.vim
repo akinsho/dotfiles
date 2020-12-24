@@ -39,13 +39,13 @@ endfunction
 
 function! Cond(cond, ...)
   let l:opts = get(a:000, 0, {})
-  return a:cond ? l:opts : extend(l:opts, { 'on': [], 'for': [] })
+  return a:cond ? l:opts : extend(l:opts, #{on: [], for: []})
 endfunction
 "--------------------------------------------------------------------------------
 " CORE {{{1
 "--------------------------------------------------------------------------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', #{dir: '~/.fzf', do: './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 if exists('$TMUX')
@@ -74,26 +74,19 @@ endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
 "--------------------------------------------------------------------------------
-Plug 'chip/vim-fat-finger', {'on': [], 'for': []}
+Plug 'chip/vim-fat-finger', #{on: [], for: []}
 Plug 'arecarn/vim-fold-cycle'
 " https://github.com/iamcco/markdown-preview.nvim/issues/50
-Plug 'iamcco/markdown-preview.nvim', {
-      \ 'do': ':call mkdp#util#install()',
-      \ 'for': ['markdown']
-      \ }
+Plug 'iamcco/markdown-preview.nvim', #{do: ':call mkdp#util#install()', for: ['markdown']}
 Plug 'cohama/lexima.vim'
 Plug 'psliwka/vim-smoothie'
-Plug 'mbbill/undotree', {'on': ['UndotreeToggle']}
-Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'vim-test/vim-test', {
-      \ 'on': ['TestFile', 'TestNearest', 'TestSuite']
-      \ }
+Plug 'mbbill/undotree', #{on: ['UndotreeToggle']}
+Plug 'mhinz/vim-sayonara', #{on:'Sayonara' }
+Plug 'vim-test/vim-test', #{on: ['TestFile', 'TestNearest', 'TestSuite']}
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'AndrewRadev/tagalong.vim', {
-      \ 'for': ['typescriptreact', 'javascriptreact', 'html']
-      \ }
+Plug 'AndrewRadev/tagalong.vim', #{for: ['typescriptreact','javascriptreact','html']}
 Plug 'liuchengxu/vim-which-key'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'mg979/vim-visual-multi', #{branch: 'master'}
 Plug 'itchyny/vim-highlighturl'
 Plug 'luochen1990/rainbow'
 " TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
@@ -117,7 +110,7 @@ endif
 "--------------------------------------------------------------------------------
 " Both are quite useful but their commands overlap so must use
 " one or the other
-Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+Plug 'tweekmonster/startuptime.vim', #{on: 'StartupTime'}
 "--------------------------------------------------------------------------------
 " TPOPE {{{1
 "--------------------------------------------------------------------------------
@@ -139,7 +132,7 @@ Plug 'sheerun/vim-polyglot'
 "--------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/conflict-marker.vim'
-Plug 'kdheepak/lazygit.nvim', {'on': 'LazyGit'}
+Plug 'kdheepak/lazygit.nvim', #{on: 'LazyGit'}
 "--------------------------------------------------------------------------------
 " Text Objects {{{1
 "--------------------------------------------------------------------------------
@@ -162,7 +155,7 @@ Plug 'kana/vim-textobj-user'
 "--------------------------------------------------------------------------------
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/goyo.vim', { 'for': ['vimwiki','markdown'] }
+Plug 'junegunn/goyo.vim', #{for: ['vimwiki','markdown']}
 "--------------------------------------------------------------------------------
 " Dev plugins  {{{1
 "--------------------------------------------------------------------------------
@@ -170,8 +163,8 @@ if has('nvim')
   if !has('mac')
     Plug 'lukas-reineke/format.nvim'
     " Plugin for visualising the tree sitter tree whilst developing
-    Plug 'nvim-treesitter/playground', {'on': 'TSPlaygroundToggle'}
-    Plug 'rafcamlet/nvim-luapad', { 'on': ['Luapad'] }
+    Plug 'nvim-treesitter/playground', #{on: 'TSPlaygroundToggle'}
+    Plug 'rafcamlet/nvim-luapad', #{on: ['Luapad']}
     Plug 'p00f/nvim-ts-rainbow'
   endif
   if $DEVELOPING
@@ -190,7 +183,7 @@ if has('nvim')
     Plug 'akinsho/dependency-assist.nvim'
     Plug 'akinsho/flutter-tools.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter', #{do: 'TSUpdate'}
   endif
 else
   " vim-devicons must be loaded before vim buffet in order for icons to be used
