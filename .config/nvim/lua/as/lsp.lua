@@ -88,8 +88,12 @@ local function setup_mappings(client)
   map("n", "]c", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
   map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   map("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  if client.resolved_capabilities.hover then
+    map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  end
+  if client.resolved_capabilities.implementation then
+    map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  end
   map("i", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
   map("n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>", opts)
@@ -189,7 +193,6 @@ vim.g.completion_customize_lsp_label = {
 local function on_attach(client)
   setup_autocommands(client)
   setup_mappings(client)
-
   completion.on_attach()
   lsp_status.on_attach(client)
 end
@@ -257,6 +260,21 @@ vim.lsp.handlers["workspace/symbol"] =
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+local function get_lua_runtime()
+  local result = {
+    -- This loads the `lua` files from nvim into the runtime.
+    [fn.expand("$VIMRUNTIME/lua")] = true,
+    [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+  }
+  for _, path in pairs(api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua"
+    if fn.isdirectory(lua_path) > 0 then
+      result[lua_path] = true
+    end
+  end
+  return result
+end
+
 local servers = {
   rust_analyzer = {},
   vimls = {},
@@ -271,12 +289,18 @@ local servers = {
         diagnostics = {
           globals = {"vim"}
         },
-        runtime = {version = "LuaJIT", path = vim.split(package.path, ";")},
+        completion = {
+          keywordSnippet = "Disable"
+        },
+        runtime = {
+          version = "LuaJIT",
+          path = vim.split(package.path, ";")
+        },
+        awakened = {cat = true},
         workspace = {
-          library = {
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-          }
+          maxPreload = 1000,
+          preloadFileSize = 1000,
+          library = get_lua_runtime()
         }
       }
     }
