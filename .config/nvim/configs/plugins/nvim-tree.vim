@@ -30,7 +30,7 @@ let g:lua_tree_root_folder_modifier = ':t'
 let g:lua_tree_ignore               = ['.DS_Store', 'fugitive:']
 
 highlight link LuaTreeIndentMarker Comment
-highlight LuaTreeRootFolder gui=bold,italic
+highlight LuaTreeRootFolder gui=bold,italic guifg=LightMagenta
 
 augroup LuaTreeOverrides
   autocmd!
