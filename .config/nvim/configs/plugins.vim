@@ -58,18 +58,18 @@ if has('mac')
   Plug 'neoclide/coc.nvim'
   Plug 'honza/vim-snippets'
 else
+  Plug 'RishabhRD/nvim-lsputils'
+    \ | Plug 'RishabhRD/popfix'
   " configs for neovim's lsp
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/completion-nvim'
+    \ | Plug 'nvim-lua/plenary.nvim'
   " lsp + snippets
   Plug 'hrsh7th/vim-vsnip'
-  Plug 'hrsh7th/vim-vsnip-integ'
+    \ | Plug 'hrsh7th/vim-vsnip-integ'
   " lsp status line
   Plug 'nvim-lua/lsp-status.nvim'
-  " gitgutter but in lua
   Plug 'lewis6991/gitsigns.nvim'
-  " dependencies
-  Plug 'nvim-lua/plenary.nvim'
 endif
 "--------------------------------------------------------------------------------
 " Utilities {{{1
