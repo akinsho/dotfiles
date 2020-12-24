@@ -4,7 +4,7 @@
 --- 1. https://gabri.me/blog/diy-vim-statusline
 --- 2. https://github.com/elenapan/dotfiles/blob/master/config/nvim/statusline.vim
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
---- 4. Right sided truncation - https://stackoverflow.com/questions/20899651/how-to-truncate-a-vim-statusline-field-from-the-right
+--- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
 local utils = require "as.statusline.utils"
 local P = require "as.statusline.palette"
