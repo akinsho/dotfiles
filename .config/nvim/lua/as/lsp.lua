@@ -158,6 +158,16 @@ vim.g.completion_matching_strategy_list = {
   "substring"
 }
 
+vim.g.completion_tabnine_sort_by_details = 1
+
+vim.g.completion_chain_complete_list = {
+  default = {
+    {complete_items = {"lsp", "snippet", "tabnine"}},
+    {mode = "<c-p>"},
+    {mode = "<c-n>"}
+  }
+}
+
 -- see https://github.com/nvim-lua/completion-nvim/wiki/Customizing-LSP-label
 -- for how to do this without completion-nvim
 vim.g.completion_customize_lsp_label = {

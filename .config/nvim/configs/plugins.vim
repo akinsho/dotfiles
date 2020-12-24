@@ -63,6 +63,7 @@ else
   " configs for neovim's lsp
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/completion-nvim'
+    \ | Plug 'aca/completion-tabnine', #{do: 'version=3.1.9 ./install.sh'}
     \ | Plug 'nvim-lua/plenary.nvim'
   " lsp + snippets
   Plug 'hrsh7th/vim-vsnip'
