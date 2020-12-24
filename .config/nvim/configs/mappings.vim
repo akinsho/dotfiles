@@ -231,7 +231,7 @@ inoremap <c-a> <c-o>0
 inoremap <c-e> <c-o>$
 ""---------------------------------------------------------------------------//
 " Save
-nnoremap <silent><c-s> :silent w<cr>
+nnoremap <silent><c-s> :silent! w<cr>
 " Write and quit all files
 nnoremap <silent>qa :confirm wqa<CR>
 ""---------------------------------------------------------------------------//
