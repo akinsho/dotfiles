@@ -197,16 +197,6 @@ endif
 Plug 'rakr/vim-one'
 " More actively maintained that vim-one
 " Plug 'joshdick/onedark.vim'
-"--------------------------------------------------------------------------------
-" Alternatives color schemes {{{2
-"--------------------------------------------------------------------------------
-" Plug 'drewtempelmeyer/palenight.vim'
-" Plug 'kaicataldo/material.vim'
-" Plug 'haishanh/night-owl.vim'
-" Plug 'patstockwell/vim-monokai-tasty'
-" Plug 'flrnd/candid.vim'
-" Plug 'chuling/ci_dark'
-" Plug 'tomasiser/vim-code-dark'
 
 call plug#end()
 
