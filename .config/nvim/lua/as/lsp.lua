@@ -82,7 +82,7 @@ local function map(...)
   api.nvim_buf_set_keymap(0, ...)
 end
 
-local function setup_mappings()
+local function setup_mappings(client)
   local opts = {nowait = true, noremap = true, silent = true}
   map("n", "[c", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
   map("n", "]c", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
@@ -188,7 +188,7 @@ vim.g.completion_customize_lsp_label = {
 
 local function on_attach(client)
   setup_autocommands(client)
-  setup_mappings()
+  setup_mappings(client)
 
   completion.on_attach()
   lsp_status.on_attach(client)
