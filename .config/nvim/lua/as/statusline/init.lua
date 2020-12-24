@@ -40,7 +40,7 @@ function M.colors()
     H.hl_value("WarningMsg", "fg")
 
   local highlights = {
-    {"StMetadata", {guifg = comment_fg, gui = "italic,bold"}},
+    {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic,bold"}},
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
     {"StIndicator", {guibg = bg_color, guifg = tabline_sel_bg}},
     {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
@@ -320,7 +320,7 @@ function _G.statusline()
   end
 
   -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "StComment"), 3)
+  append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 3)
   append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
 
   -- Indentation

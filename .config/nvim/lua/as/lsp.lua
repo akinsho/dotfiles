@@ -208,7 +208,11 @@ local function on_attach(client)
 end
 
 lsp_status.config {
-  kind_labels = vim.g.completion_customize_lsp_label
+  kind_labels = vim.g.completion_customize_lsp_label,
+  indicator_hint = "",
+  indicator_info = "",
+  indicator_errors = "✗",
+  indicator_warnings = ""
 }
 lsp_status.register_progress()
 -----------------------------------------------------------------------------//
