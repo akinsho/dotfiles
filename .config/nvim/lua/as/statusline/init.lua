@@ -24,7 +24,7 @@ M.git_updates_refresh = utils.git_updates_refresh
 --- but this is not universal across terminals so should be avoided
 function M.colors()
   local normal_bg = H.hl_value("Normal", "bg")
-  local bg_color = require("bufferline").shade_color(normal_bg, -10)
+  local bg_color = require("bufferline").shade_color(normal_bg, -5)
 
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
