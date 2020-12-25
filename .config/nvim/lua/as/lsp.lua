@@ -212,7 +212,8 @@ lsp_status.config {
   indicator_hint = "",
   indicator_info = "",
   indicator_errors = "✗",
-  indicator_warnings = ""
+  indicator_warnings = "",
+  status_symbol = ""
 }
 lsp_status.register_progress()
 -----------------------------------------------------------------------------//
