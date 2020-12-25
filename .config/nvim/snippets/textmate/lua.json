@@ -32,13 +32,13 @@
     "scope": "source.lua"
   },
   "fun": {
-    "body": "function ${1:function_name}( ${2:...} )\n\t${0:-- body}\nend",
+    "body": "function ${1:function_name}(${2:...})\n\t${0:-- body}\nend",
     "description": "function",
     "prefix": "fun",
     "scope": "source.lua"
   },
   "function": {
-    "body": "function ${1:function_name}( ${2:...} )\n\t${0:-- body}\nend",
+    "body": "function ${1:function_name}(${2:...})\n\t${0:-- body}\nend",
     "description": "function",
     "prefix": "function",
     "scope": "source.lua"
@@ -170,13 +170,13 @@
     "scope": "source.lua"
   },
   "string.byte": {
-    "body": "string.byte( ${1:s}${2:[, i]}${3:[, j]} )",
+    "body": "string.byte(${1:s}${2:[, i]}${3:[, j]})",
     "description": "5.1,5.2,5.3\n\nstring.byte",
     "prefix": "string.byte",
     "scope": "source.lua"
   },
   "string.char": {
-    "body": "string.char( ${1:...} )",
+    "body": "string.char(${1:...})",
     "description": "5.1,5.2,5.3\n\nstring.char",
     "prefix": "string.char",
     "scope": "source.lua"
@@ -188,43 +188,43 @@
     "scope": "source.lua"
   },
   "string.find": {
-    "body": "string.find( ${1:s},${2:pattern}${3:[, init]}${4:[, plain]} )",
+    "body": "string.find(${1:s},${2:pattern}${3:[, init]}${4:[, plain]})",
     "description": "5.1,5.2,5.3\n\nstring.find",
     "prefix": "string.find",
     "scope": "source.lua"
   },
   "string.format": {
-    "body": "string.format( \"${1:formatstring}\",${2:...} )",
+    "body": "string.format(\"${1:formatstring}\",${2:...})",
     "description": "5.1,5.2,5.3\n\nstring.format",
     "prefix": "string.format",
     "scope": "source.lua"
   },
   "string.gmatch": {
-    "body": "string.gmatch( ${1:s},${2:pattern} )",
+    "body": "string.gmatch(${1:s},${2:pattern})",
     "description": "5.1,5.2,5.3\n\nstring.gmatch",
     "prefix": "string.gmatch",
     "scope": "source.lua"
   },
   "string.gsub": {
-    "body": "string.gsub( ${1:s},${2:pattern},${3:repl}${4:[, n]} )",
+    "body": "string.gsub(${1:s},${2:pattern},${3:repl}${4:[, n]})",
     "description": "5.1,5.2,5.3\n\nstring.gsub",
     "prefix": "string.gsub",
     "scope": "source.lua"
   },
   "string.len": {
-    "body": "string.len( ${1:s} )",
+    "body": "string.len(${1:s})",
     "description": "5.1,5.2,5.3\n\nstring.len",
     "prefix": "string.len",
     "scope": "source.lua"
   },
   "string.lower": {
-    "body": "string.lower( ${1:s} )",
+    "body": "string.lower(${1:s})",
     "description": "5.1,5.2,5.3\n\nstring.lower",
     "prefix": "string.lower",
     "scope": "source.lua"
   },
   "string.match": {
-    "body": "string.match( ${1:s},${2:pattern}${3:[, init]} )",
+    "body": "string.match(${1:s},${2:pattern}${3:[, init]})",
     "description": "5.1,5.2,5.3\n\nstring.match",
     "prefix": "string.match",
     "scope": "source.lua"
@@ -242,19 +242,19 @@
     "scope": "source.lua"
   },
   "string.rep": {
-    "body": "string.rep( ${1:s}, ${2:n}${3:[, rep]} )",
+    "body": "string.rep(${1:s}, ${2:n}${3:[, rep]})",
     "description": "5.1,5.2,5.3\n\nstring.rep",
     "prefix": "string.rep",
     "scope": "source.lua"
   },
   "string.reverse": {
-    "body": "string.reverse( ${1:s} )",
+    "body": "string.reverse(${1:s})",
     "description": "5.1,5.2,5.3\n\nstring.reverse",
     "prefix": "string.reverse",
     "scope": "source.lua"
   },
   "string.sub": {
-    "body": "string.sub( ${1:s}, ${2:i}${3:[, j]} )",
+    "body": "string.sub(${1:s}, ${2:i}${3:[, j]})",
     "description": "5.1,5.2,5.3\n\nstring.sub",
     "prefix": "string.sub",
     "scope": "source.lua"
@@ -266,19 +266,19 @@
     "scope": "source.lua"
   },
   "string.upper": {
-    "body": "string.upper( ${1:s} )",
+    "body": "string.upper(${1:s})",
     "description": "5.1,5.2,5.3\n\nstring.upper",
     "prefix": "string.upper",
     "scope": "source.lua"
   },
   "table.concat": {
-    "body": "table.concat( ${1:tablename}${2:, \", \"}${3:, start_index}${4:, end_index} )",
+    "body": "table.concat(${1:tablename}${2:, \", \"}${3:, start_index}${4:, end_index})",
     "description": "5.1,5.2,5.3\n\ntable.concat",
     "prefix": "table.concat",
     "scope": "source.lua"
   },
   "table.insert": {
-    "body": "table.insert( ${1:list},${2: [pos,]}${3: value} )",
+    "body": "table.insert(${1:list},${2: [pos,]}${3: value})",
     "description": "5.1,5.2,5.3\n\ntable.insert",
     "prefix": "table.insert",
     "scope": "source.lua"
@@ -302,13 +302,13 @@
     "scope": "source.lua"
   },
   "table.remove": {
-    "body": "table.remove( ${1:list},${2: [pos,]} )",
+    "body": "table.remove(${1:list},${2: [pos,]})",
     "description": "5.1,5.2,5.3\n\ntable.remove",
     "prefix": "table.remove",
     "scope": "source.lua"
   },
   "table.sort": {
-    "body": "table.sort( ${1:tablename}${2:, sortfunction} )",
+    "body": "table.sort(${1:tablename}${2:, sortfunction})",
     "description": "5.1,5.2,5.3\n\ntable.sort",
     "prefix": "table.sort",
     "scope": "source.lua"
