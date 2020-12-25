@@ -20,7 +20,7 @@ autocommands.create(
 
 vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
 
-vim.g.completion_auto_change_source = 1
+vim.g.completion_auto_change_source = 0
 vim.g.completion_enable_snippet = "vim-vsnip"
 vim.g.completion_enable_auto_paren = 1
 vim.g.completion_items_priority = {
