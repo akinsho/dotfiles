@@ -219,7 +219,21 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
     signs = true,
     update_in_insert = false
   }
-)
+  )
+
+vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
+  if err ~= nil or result == nil then
+    return
+  end
+  if not vim.bo[bufnr].modified then
+    local view = vim.fn.winsaveview()
+    vim.lsp.util.apply_text_edits(result, bufnr)
+    vim.fn.winrestview(view)
+    if bufnr == vim.api.nvim_get_current_buf() then
+      vim.cmd("noautocmd :update")
+    end
+  end
+end
 
 vim.lsp.handlers["textDocument/codeAction"] = require "lsputil.codeAction".code_action_handler
 vim.lsp.handlers["textDocument/references"] = require "lsputil.locations".references_handler
@@ -281,7 +295,7 @@ local servers = {
   },
   efm = {
     init_options = {documentFormatting = true},
-    filetypes = {"yaml", "json", "html", "scss", "markdown", "lua"},
+    filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
     settings = {
       rootMarkers = {".git/"},
       languages = {

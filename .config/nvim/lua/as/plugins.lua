@@ -149,10 +149,7 @@ return require("packer").startup {
     use "chaoren/vim-wordmotion"
     use "tommcdo/vim-exchange"
     use "wellle/targets.vim"
-    use {
-      "kana/vim-textobj-user",
-      requires = {"kana/vim-operator-user", "glts/vim-textobj-comment"}
-    }
+    use {"kana/vim-textobj-user", requires = {"kana/vim-operator-user", "glts/vim-textobj-comment"}}
     --------------------------------------------------------------------------------
     -- Search Tools {{{1
     --------------------------------------------------------------------------------
