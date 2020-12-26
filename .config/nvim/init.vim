@@ -20,6 +20,10 @@ elseif has('unix')
   let g:open_command = 'xdg-open'
 endif
 
+function! PluginLoaded(plugin_name) abort
+  return !empty(glob('~/.local/share/nvim/site/pack/packer/*/'.a:plugin_name))
+endfunction
+
 " WARNING: Hard coding the location of my dotfiles is brittle
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:vim_dir = g:dotfiles . '/.config/nvim'
@@ -39,8 +43,11 @@ syntax enable
 " Order matters here as the plugins should be loaded before the other setup
 " :h runtime - this fuzzy matches files within vim's runtime path
 runtime configs/preload.vim
+if has('nvim-0.5')
+  lua require("as.plugins")
+endif
+
 runtime configs/general.vim
-runtime configs/plugins.vim
 runtime configs/highlight.vim
 runtime configs/mappings.vim
 runtime configs/autocommands.vim

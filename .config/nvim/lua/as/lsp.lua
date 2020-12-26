@@ -243,7 +243,7 @@ local servers = {
     settings = {
       Lua = {
         diagnostics = {
-          globals = {"vim"}
+          globals = {"vim", "use"}
         },
         completion = {
           keywordSnippet = "Disable"
