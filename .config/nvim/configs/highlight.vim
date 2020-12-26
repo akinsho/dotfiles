@@ -175,6 +175,5 @@ endfunction
 
 augroup InitHighlights
   au!
-  autocmd VimEnter * call s:apply_user_highlights()
-  autocmd ColorScheme * call s:apply_user_highlights()
+  autocmd VimEnter,ColorScheme * call s:apply_user_highlights()
 augroup END
