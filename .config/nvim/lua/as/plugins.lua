@@ -33,7 +33,7 @@ api.nvim_set_keymap("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]], opts)
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased function
 --- or local variables
-return require("packer").startup(
+return require("packer").startup {
   function(use)
     local function local_use(path)
       local home = "~/Desktop/projects/"
@@ -193,9 +193,14 @@ return require("packer").startup(
       use "akinsho/dependency-assist.nvim"
       use "akinsho/flutter-tools.nvim"
       use "kyazdani42/nvim-web-devicons"
-      use {"nvim-treesitter/nvim-treesitter", run = "TSUpdate"}
+      use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
     end
-  end
-)
+  end,
+  config = {
+    display = {
+      open_cmd = "topleft 65vnew [packer]"
+    }
+  }
+}
 
 -- vim:foldmethod=marker
