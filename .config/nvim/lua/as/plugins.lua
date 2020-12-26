@@ -19,13 +19,21 @@ execute "packadd packer.nvim"
 execute "autocmd BufWritePost plugins.lua PackerCompile"
 
 local opts = {noremap = true, silent = true}
-api.nvim_set_keymap("n", "<leader>pi", [[:PlugInstall<CR>]], opts)
-api.nvim_set_keymap("n", "<leader>ps", [[:PlugStatus<CR>]], opts)
-api.nvim_set_keymap("n", "<leader>pc", [[:PlugClean<CR>]], opts)
-api.nvim_set_keymap("n", "<leader>pu", [[:PlugUpdate<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>pi", [[<Cmd>PackerInstall<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>pc", [[<Cmd>PackerClean<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]], opts)
 
 return require("packer").startup(
-  function()
+  function(use)
+    local function local_use(path)
+      local home = "~/Desktop/projects/"
+      local plug_path = home .. path
+      if fn.isdirectory(fn.expand(plug_path)) == 1 then
+        use(plug_path)
+      end
+    end
+
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
 
@@ -92,7 +100,7 @@ return require("packer").startup(
     use {"kshenoy/vim-signature", disabled = true}
     use {
       "liuchengxu/vim-which-key",
-      setup = function()
+      config = function()
         vim.g.which_leader_key_map = {}
         vim.g.which_localleader_key_map = {}
       end
@@ -177,14 +185,14 @@ return require("packer").startup(
     end
 
     if env.DEVELOPING then
-      use "~/Desktop/projects/personal/nvim-toggleterm.lua"
-      use "~/Desktop/projects/personal/nvim-bufferline.lua"
-      use "~/Desktop/projects/personal/dependency-assist.nvim"
-      use "~/Desktop/projects/personal/flutter-tools.nvim"
+      local_use "personal/nvim-toggleterm.lua"
+      local_use "personal/nvim-bufferline.lua"
+      local_use "personal/dependency-assist.nvim"
+      local_use "personal/flutter-tools.nvim"
 
-      use "~/Desktop/projects/contributing/nvim-web-devicons"
-      use "~/Desktop/projects/contributing/nvim-treesitter"
-      use "~/Desktop/projects/contributing/nvim-tree.lua"
+      local_use "contributing/nvim-web-devicons"
+      local_use "contributing/nvim-treesitter"
+      local_use "contributing/nvim-tree.lua"
     else
       use "kyazdani42/nvim-tree.lua"
       use "akinsho/nvim-toggleterm.lua"
