@@ -104,12 +104,7 @@ local function setup_mappings(client)
   map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
   map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
   map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  map(
-    "x",
-    "<leader>a",
-    "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>",
-    opts
-  )
+  map("x", "<leader>a", "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 end
 -----------------------------------------------------------------------------//
 -- Signs
@@ -197,22 +192,14 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
   }
 )
 
-vim.lsp.handlers["textDocument/codeAction"] =
-  require "lsputil.codeAction".code_action_handler
-vim.lsp.handlers["textDocument/references"] =
-  require "lsputil.locations".references_handler
-vim.lsp.handlers["textDocument/definition"] =
-  require "lsputil.locations".definition_handler
-vim.lsp.handlers["textDocument/declaration"] =
-  require "lsputil.locations".declaration_handler
-vim.lsp.handlers["textDocument/typeDefinition"] =
-  require "lsputil.locations".typeDefinition_handler
-vim.lsp.handlers["textDocument/implementation"] =
-  require "lsputil.locations".implementation_handler
-vim.lsp.handlers["textDocument/documentSymbol"] =
-  require "lsputil.symbols".document_handler
-vim.lsp.handlers["workspace/symbol"] =
-  require "lsputil.symbols".workspace_handler
+vim.lsp.handlers["textDocument/codeAction"] = require "lsputil.codeAction".code_action_handler
+vim.lsp.handlers["textDocument/references"] = require "lsputil.locations".references_handler
+vim.lsp.handlers["textDocument/definition"] = require "lsputil.locations".definition_handler
+vim.lsp.handlers["textDocument/declaration"] = require "lsputil.locations".declaration_handler
+vim.lsp.handlers["textDocument/typeDefinition"] = require "lsputil.locations".typeDefinition_handler
+vim.lsp.handlers["textDocument/implementation"] = require "lsputil.locations".implementation_handler
+vim.lsp.handlers["textDocument/documentSymbol"] = require "lsputil.symbols".document_handler
+vim.lsp.handlers["workspace/symbol"] = require "lsputil.symbols".workspace_handler
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
@@ -243,7 +230,7 @@ local servers = {
     settings = {
       Lua = {
         diagnostics = {
-          globals = {"vim", "use"}
+          globals = {"vim"}
         },
         completion = {
           keywordSnippet = "Disable"
@@ -279,11 +266,7 @@ local servers = {
 for server, config in pairs(servers) do
   config.on_attach = on_attach
   config.capabilities =
-    vim.tbl_deep_extend(
-    "keep",
-    config.capabilities or {},
-    lsp_status.capabilities
-  )
+    vim.tbl_deep_extend("keep", config.capabilities or {}, lsp_status.capabilities)
   lspconfig[server].setup(config)
 end
 
