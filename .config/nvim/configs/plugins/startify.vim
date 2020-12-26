@@ -39,14 +39,12 @@ let g:header = s:editor_header + ["", ""]
 
 let g:header_suffix = [
             \ '',
-            \ ' Plugins loaded: '.len(get(g:, 'plugs', 0)).' ',
+            \ ' Plugins loaded: '.v:lua.require('as.utils').plugins_count.total.' ',
             \]
 
 let g:startify_custom_header = 'startify#pad(g:header + startify#fortune#boxed() + g:header_suffix)'
 
 let g:startify_commands = [
-    \ {'pu': ['Update plugins',':PlugUpdate | PlugUpgrade']},
-    \ {'ps': ['Plugins status', ':PlugStatus']},
     \ {'h':  ['Help', ':help']}
     \ ]
 
