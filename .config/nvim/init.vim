@@ -42,7 +42,6 @@ syntax enable
 " ----------------------------------------------------------------------
 " Order matters here as the plugins should be loaded before the other setup
 " :h runtime - this fuzzy matches files within vim's runtime path
-runtime configs/preload.vim
 if has('nvim-0.5')
   lua require("as.plugins")
 endif

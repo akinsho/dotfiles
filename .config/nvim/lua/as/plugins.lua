@@ -9,9 +9,7 @@ end
 local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute(
-    "!git clone https://github.com/wbthomason/packer.nvim " .. install_path
-  )
+  execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
 end
 
 -- cfilter plugin allows filter down an existing quickfix list
@@ -88,23 +86,27 @@ return require("packer").startup(
       "AndrewRadev/tagalong.vim",
       ft = {"typescriptreact", "javascriptreact", "html"}
     }
-    use "liuchengxu/vim-which-key"
     use {"mg979/vim-visual-multi", branch = "master"}
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
     use {"kshenoy/vim-signature", disabled = true}
+    use {
+      "liuchengxu/vim-which-key",
+      setup = function()
+        vim.g.which_leader_key_map = {}
+        vim.g.which_localleader_key_map = {}
+      end
+    }
     ---------------------------------------------------------------------------------
     -- Knowledge and task management
     ---------------------------------------------------------------------------------
     -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     -- so disable mark related plugins. Remove this guard when this problem is fixed
     use {"vimwiki/vimwiki", ft = {"<Plug>VimwikiIndex", "<Plug>ViwikiTabIndex"}}
-
     --------------------------------------------------------------------------------
     -- Profiling {{{1
     --------------------------------------------------------------------------------
     use {"tweekmonster/startuptime.vim", cmd = "StartupTime", opt = true}
-
     --------------------------------------------------------------------------------
     -- TPOPE {{{1
     --------------------------------------------------------------------------------
@@ -123,7 +125,7 @@ return require("packer").startup(
     use {
       "sheerun/vim-polyglot",
       setup = function()
-        vim.g.polyglot_disabled = {}
+        vim.g.polyglot_disabled = {"sensible"}
       end
     }
     --------------------------------------------------------------------------------
@@ -156,7 +158,6 @@ return require("packer").startup(
     use "justinmk/vim-sneak"
     use "junegunn/vim-peekaboo"
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}}
-
     ---------------------------------------------------------------------------------
     -- Themes  {{{1
     ----------------------------------------------------------------------------------
@@ -164,7 +165,6 @@ return require("packer").startup(
     use "rakr/vim-one"
     -- More actively maintained that vim-one
     -- use {'joshdick/onedark.vim'}
-
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------

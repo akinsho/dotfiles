@@ -116,6 +116,12 @@ local plugins = {
     only_setup = false,
     path = "/home/akin/.local/share/nvim/site/pack/packer/opt/vim-tmux-navigator"
   },
+  ["vim-which-key"] = {
+    loaded = false,
+    only_sequence = true,
+    only_setup = true,
+    path = "/home/akin/.local/share/nvim/site/pack/packer/opt/vim-which-key"
+  },
   vimwiki = {
     loaded = false,
     only_sequence = false,
@@ -244,8 +250,11 @@ end
 -- Runtimepath customization
 
 -- Pre-load configuration
+-- Setup for: vim-which-key
+loadstring("\27LJ\2\n`\0\0\2\0\4\0\t6\0\0\0009\0\1\0004\1\0\0=\1\2\0006\0\0\0009\0\1\0004\1\0\0=\1\3\0K\0\1\0\30which_localleader_key_map\25which_leader_key_map\6g\bvim\0")()
+vim.cmd("packadd vim-which-key")
 -- Setup for: vim-polyglot
-loadstring("\27LJ\2\n3\0\0\2\0\3\0\0056\0\0\0009\0\1\0004\1\0\0=\1\2\0K\0\1\0\22polyglot_disabled\6g\bvim\0")()
+loadstring("\27LJ\2\n@\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rsensible\22polyglot_disabled\6g\bvim\0")()
 vim.cmd("packadd vim-polyglot")
 -- Post-load configuration
 -- Conditional loads
@@ -270,8 +279,8 @@ command! -nargs=* -range -bang -complete=file TestSuite call s:load(['vim-test']
 command! -nargs=* -range -bang -complete=file LazyGit call s:load(['lazygit.nvim'], { "cmd": "LazyGit", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file TSPlaygroundToggle call s:load(['playground'], { "cmd": "TSPlaygroundToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file Luapad call s:load(['nvim-luapad'], { "cmd": "Luapad", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file UndotreeToggle call s:load(['undotree'], { "cmd": "UndotreeToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file Luapad call s:load(['nvim-luapad'], { "cmd": "Luapad", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Sayonara call s:load(['vim-sayonara'], { "cmd": "Sayonara", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 
 " Keymap lazy-loads
@@ -280,10 +289,10 @@ augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
   au FileType javascriptreact ++once call s:load(['tagalong.vim'], { "ft": "javascriptreact" })
-  au FileType markdown ++once call s:load(['goyo.vim', 'markdown-preview.nvim'], { "ft": "markdown" })
-  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
-  au FileType <Plug>ViwikiTabIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>ViwikiTabIndex" })
   au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
+  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
+  au FileType markdown ++once call s:load(['markdown-preview.nvim', 'goyo.vim'], { "ft": "markdown" })
+  au FileType <Plug>ViwikiTabIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>ViwikiTabIndex" })
   au FileType <Plug>VimwikiIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>VimwikiIndex" })
   au FileType typescriptreact ++once call s:load(['tagalong.vim'], { "ft": "typescriptreact" })
   " Event lazy-loads
