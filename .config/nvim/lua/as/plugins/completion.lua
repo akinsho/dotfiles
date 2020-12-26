@@ -27,7 +27,7 @@ vim.g.completion_items_priority = {
   ["vim-vsnip"] = 0
 }
 vim.g.completion_matching_smart_case = 1
-vim.g.completion_menu_length = 25
+vim.g.completion_menu_length = 45
 vim.g.completion_sorting = "none"
 vim.g.completion_matching_strategy_list = {
   "exact",
@@ -39,11 +39,12 @@ vim.g.completion_tabnine_sort_by_details = 1
 vim.g.completion_chain_complete_list = {
   default = {
     {complete_items = {"lsp", "snippet", "tabnine"}},
+    {complete_items = {"lsp", "snippet", "tabnine"}},
     {mode = "<c-p>"},
     {mode = "<c-n>"}
   },
   string = {
-    {complete_items = {"path"}}
+    {complete_items = {"path", "lsp", "tabnine", "snippet"}}
   }
 }
 
