@@ -12,9 +12,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
 end
 
+execute "packadd packer.nvim"
+
 -- cfilter plugin allows filter down an existing quickfix list
 execute "packadd! cfilter"
-execute "packadd packer.nvim"
 
 execute "autocmd BufWritePost plugins.lua PackerCompile"
 
@@ -24,9 +25,9 @@ api.nvim_set_keymap("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]], opts)
 api.nvim_set_keymap("n", "<leader>pc", [[<Cmd>PackerClean<CR>]], opts)
 api.nvim_set_keymap("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]], opts)
 
-vim.g.which_leader_key_map = {}
-vim.g.which_localleader_key_map = {}
-
+--- NOTE "use" functions cannot call *upvalues* i.e. the functions
+--- passed to setup or config etc. cannot reference aliased function
+--- or local variables
 return require("packer").startup(
   function(use)
     local function local_use(path)
@@ -48,32 +49,32 @@ return require("packer").startup(
       "christoomey/vim-tmux-navigator",
       opt = true,
       cond = function()
-        return env.TMUX ~= nil
+        return vim.env.TMUX ~= nil
       end
     }
-    use {
-      "RishabhRD/nvim-lsputils",
-      requires = {"RishabhRD/popfix"}
-    }
-    -- configs for neovim's lsp
-    use "neovim/nvim-lspconfig"
-    use "nvim-lua/plenary.nvim"
-    use {
-      "nvim-lua/completion-nvim",
-      requires = {
-        {
-          "aca/completion-tabnine",
-          run = "version=3.1.9 ./install.sh",
-          opt = true
+
+    if has("mac") then
+      use "neoclide/coc.nvim"
+      use "honza/vim-snippets"
+    else
+      use "neovim/nvim-lspconfig"
+      use "nvim-lua/plenary.nvim"
+      use {"RishabhRD/nvim-lsputils", requires = {"RishabhRD/popfix"}}
+      use {
+        "nvim-lua/completion-nvim",
+        requires = {
+          {
+            "aca/completion-tabnine",
+            run = "version=3.1.9 ./install.sh",
+            opt = true
+          }
         }
       }
-    }
-    -- lsp + snippets
-    use "hrsh7th/vim-vsnip"
-    use "hrsh7th/vim-vsnip-integ"
-    -- lsp status line
-    use "nvim-lua/lsp-status.nvim"
-    use "lewis6991/gitsigns.nvim"
+      use "hrsh7th/vim-vsnip"
+      use "hrsh7th/vim-vsnip-integ"
+      use "nvim-lua/lsp-status.nvim"
+      use "lewis6991/gitsigns.nvim"
+    end
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     ---------------------------------------------------------------------------------
@@ -92,15 +93,12 @@ return require("packer").startup(
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {"rrethy/vim-hexokinase", run = "make hexokinase"}
-    use {
-      "AndrewRadev/tagalong.vim",
-      ft = {"typescriptreact", "javascriptreact", "html"}
-    }
-    use {"mg979/vim-visual-multi", branch = "master"}
+    use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
+    use "mg979/vim-visual-multi"
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
+    use "liuchengxu/vim-which-key"
     use {"kshenoy/vim-signature", disabled = true}
-    use {"liuchengxu/vim-which-key"}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management
     ---------------------------------------------------------------------------------

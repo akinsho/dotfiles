@@ -240,7 +240,7 @@ vim.cmd("packadd vim-polyglot")
 -- Post-load configuration
 -- Conditional loads
 if
-  loadstring("\27LJ\2\n.\0\0\1\1\1\0\b-\0\0\0009\0\0\0\v\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\1\0\tTMUX\0")()
+  loadstring("\27LJ\2\n8\0\0\1\0\3\0\t6\0\0\0009\0\1\0009\0\2\0\v\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\tTMUX\benv\bvim\0")()
 then
 	vim.cmd("packadd vim-tmux-navigator")
 end
@@ -254,14 +254,14 @@ endfunction
 
 
 " Command lazy-loads
-command! -nargs=* -range -bang -complete=file TSPlaygroundToggle call s:load(['playground'], { "cmd": "TSPlaygroundToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file Luapad call s:load(['nvim-luapad'], { "cmd": "Luapad", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file UndotreeToggle call s:load(['undotree'], { "cmd": "UndotreeToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file TestSuite call s:load(['vim-test'], { "cmd": "TestSuite", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Sayonara call s:load(['vim-sayonara'], { "cmd": "Sayonara", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file TestFile call s:load(['vim-test'], { "cmd": "TestFile", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file TestNearest call s:load(['vim-test'], { "cmd": "TestNearest", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file TestSuite call s:load(['vim-test'], { "cmd": "TestSuite", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file TSPlaygroundToggle call s:load(['playground'], { "cmd": "TSPlaygroundToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file Luapad call s:load(['nvim-luapad'], { "cmd": "Luapad", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file LazyGit call s:load(['lazygit.nvim'], { "cmd": "LazyGit", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 
 " Keymap lazy-loads
@@ -269,12 +269,12 @@ command! -nargs=* -range -bang -complete=file LazyGit call s:load(['lazygit.nvim
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
-  au FileType <Plug>VimwikiIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>VimwikiIndex" })
   au FileType <Plug>ViwikiTabIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>ViwikiTabIndex" })
+  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
+  au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
+  au FileType <Plug>VimwikiIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>VimwikiIndex" })
   au FileType typescriptreact ++once call s:load(['tagalong.vim'], { "ft": "typescriptreact" })
   au FileType javascriptreact ++once call s:load(['tagalong.vim'], { "ft": "javascriptreact" })
-  au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
-  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
   au FileType markdown ++once call s:load(['markdown-preview.nvim', 'goyo.vim'], { "ft": "markdown" })
   " Event lazy-loads
   au CursorHoldI *  ++once call s:load(['vim-fat-finger'], { "event": "CursorHoldI * " })
