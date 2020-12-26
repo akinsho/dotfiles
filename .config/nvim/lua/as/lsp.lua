@@ -247,6 +247,8 @@ local function get_lua_runtime()
   return result
 end
 
+local prettier = {formatCommand = "prettier"}
+
 local servers = {
   rust_analyzer = {},
   vimls = {},
@@ -273,6 +275,24 @@ local servers = {
           maxPreload = 1000,
           preloadFileSize = 1000,
           library = get_lua_runtime()
+        }
+      }
+    }
+  },
+  efm = {
+    init_options = {documentFormatting = true},
+    filetypes = {"yaml", "json", "html", "scss", "markdown", "lua"},
+    settings = {
+      rootMarkers = {".git/"},
+      languages = {
+        yaml = {prettier},
+        json = {prettier},
+        html = {prettier},
+        css = {prettier},
+        markdown = {prettier},
+        -- npm i -g lua-fmt
+        lua = {
+          {formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin", formatStdin = true}
         }
       }
     }

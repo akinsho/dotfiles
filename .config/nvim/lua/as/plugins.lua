@@ -168,7 +168,6 @@ return require("packer").startup {
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
     if not has("mac") then
-      use "lukas-reineke/format.nvim"
       -- Plugin for visualising the tree sitter tree whilst developing
       use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
       use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
