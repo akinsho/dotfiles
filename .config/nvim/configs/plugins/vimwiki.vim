@@ -40,6 +40,7 @@ let g:vimwiki_auto_header   = 1
 let g:vimwiki_hl_headers    = 1 " too colourful
 let g:vimwiki_conceal_pre   = 1
 let g:vimwiki_hl_cb_checked = 1
+" let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:wiki, g:learnings_wiki, g:dotfiles_wiki]
 
 let g:vimwiki_global_ext = 0
@@ -106,6 +107,4 @@ if has('nvim') " autocommit is a lua based function
 endif
 
 command! CloseVimWikis call s:close_wikis()
-nnoremap <silent> <leader>wt :VimwikiTabIndex<CR>
-nnoremap <silent> <leader>ww :VimwikiIndex<CR>
-nnoremap <silent> <leader>wq :CloseVimWikis<CR>
+nnoremap <silent> <leader>wq <Cmd>CloseVimWikis<CR>

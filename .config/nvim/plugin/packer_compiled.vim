@@ -101,7 +101,7 @@ local plugins = {
     path = "/home/akin/.local/share/nvim/site/pack/packer/opt/vim-tmux-navigator"
   },
   vimwiki = {
-    commands = { "VimwikiIndex", "ViwikiTabIndex" },
+    keys = { { "", ",ww" }, { "", ",wi" } },
     loaded = false,
     only_sequence = false,
     only_setup = false,
@@ -249,28 +249,28 @@ endfunction
 
 
 " Command lazy-loads
-command! -nargs=* -range -bang -complete=file ViwikiTabIndex call s:load(['vimwiki'], { "cmd": "ViwikiTabIndex", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file UndotreeToggle call s:load(['undotree'], { "cmd": "UndotreeToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file LazyGit call s:load(['lazygit.nvim'], { "cmd": "LazyGit", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file TSPlaygroundToggle call s:load(['playground'], { "cmd": "TSPlaygroundToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file VimwikiIndex call s:load(['vimwiki'], { "cmd": "VimwikiIndex", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file Luapad call s:load(['nvim-luapad'], { "cmd": "Luapad", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file TestNearest call s:load(['vim-test'], { "cmd": "TestNearest", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file TestSuite call s:load(['vim-test'], { "cmd": "TestSuite", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file TestFile call s:load(['vim-test'], { "cmd": "TestFile", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Sayonara call s:load(['vim-sayonara'], { "cmd": "Sayonara", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file TestFile call s:load(['vim-test'], { "cmd": "TestFile", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file TSPlaygroundToggle call s:load(['playground'], { "cmd": "TSPlaygroundToggle", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file TestSuite call s:load(['vim-test'], { "cmd": "TestSuite", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file Luapad call s:load(['nvim-luapad'], { "cmd": "Luapad", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file LazyGit call s:load(['lazygit.nvim'], { "cmd": "LazyGit", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file TestNearest call s:load(['vim-test'], { "cmd": "TestNearest", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 
 " Keymap lazy-loads
+noremap <silent> ,ww <cmd>call <SID>load(['vimwiki'], { "keys": ",ww", "prefix": "" })<cr>
+noremap <silent> ,wi <cmd>call <SID>load(['vimwiki'], { "keys": ",wi", "prefix": "" })<cr>
 
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
+  au FileType markdown ++once call s:load(['goyo.vim', 'markdown-preview.nvim'], { "ft": "markdown" })
+  au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
+  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
   au FileType typescriptreact ++once call s:load(['tagalong.vim'], { "ft": "typescriptreact" })
   au FileType javascriptreact ++once call s:load(['tagalong.vim'], { "ft": "javascriptreact" })
-  au FileType markdown ++once call s:load(['markdown-preview.nvim', 'goyo.vim'], { "ft": "markdown" })
-  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
-  au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
   " Event lazy-loads
   au BufEnter *.wiki ++once call s:load(['vimwiki'], { "event": "BufEnter *.wiki" })
   au CursorHoldI *  ++once call s:load(['vim-fat-finger'], { "event": "CursorHoldI * " })
