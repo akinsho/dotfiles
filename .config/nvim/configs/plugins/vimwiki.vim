@@ -40,7 +40,6 @@ let g:vimwiki_auto_header   = 1
 let g:vimwiki_hl_headers    = 1 " too colourful
 let g:vimwiki_conceal_pre   = 1
 let g:vimwiki_hl_cb_checked = 1
-let g:vimwiki_listsyms = '✗○◐●✓'
 let g:vimwiki_list = [g:wiki, g:learnings_wiki, g:dotfiles_wiki]
 
 let g:vimwiki_global_ext = 0
