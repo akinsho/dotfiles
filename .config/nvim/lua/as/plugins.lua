@@ -45,7 +45,7 @@ return require("packer").startup(
       "christoomey/vim-tmux-navigator",
       opt = true,
       cond = function()
-        return vim.env["TMUX"] ~= nil
+        return env.TMUX ~= nil
       end
     }
     use {
@@ -57,7 +57,6 @@ return require("packer").startup(
     use "nvim-lua/plenary.nvim"
     use {
       "nvim-lua/completion-nvim",
-      opt = true,
       requires = {
         {
           "aca/completion-tabnine",

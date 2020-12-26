@@ -3,6 +3,7 @@ if !PluginLoaded('indentLine')
 endif
 
 let g:indentLine_fileTypeExclude = [
+      \ 'packer',
       \ 'vimwiki',
       \ 'markdown',
       \ 'json',
