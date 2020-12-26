@@ -1,7 +1,7 @@
-local plugin_loaded = vim.fn.PluginLoaded
+local loaded, gitsigns = pcall(require, "gitsigns")
 
-if plugin_loaded("gitsigns.nvim") > 0 then
-  require("gitsigns").setup {
+if loaded then
+  gitsigns.setup {
     signs = {
       add = {hl = "GitGutterAdd", text = "▌"},
       change = {hl = "GitGutterChange", text = "▌"},
@@ -36,4 +36,3 @@ if plugin_loaded("gitsigns.nvim") > 0 then
     end
   }
 end
-
