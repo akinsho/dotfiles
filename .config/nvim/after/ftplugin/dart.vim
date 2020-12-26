@@ -1,5 +1,3 @@
-setlocal foldmethod=manual " Leave folding to Coc
-
 " Open flutter only commands in dart files
 if PluginLoaded('coc.nvim')
   nnoremap <silent> <leader>dc  :CocList --input=flutter commands<CR>
