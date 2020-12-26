@@ -238,8 +238,6 @@ end
 loadstring("\27LJ\2\n@\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rsensible\22polyglot_disabled\6g\bvim\0")()
 vim.cmd("packadd vim-polyglot")
 -- Post-load configuration
--- Config for: vim-which-key
-loadstring("\27LJ\2\n`\0\0\2\0\4\0\t6\0\0\0009\0\1\0004\1\0\0=\1\2\0006\0\0\0009\0\1\0004\1\0\0=\1\3\0K\0\1\0\30which_localleader_key_map\25which_leader_key_map\6g\bvim\0")()
 -- Conditional loads
 if
   loadstring("\27LJ\2\n.\0\0\1\1\1\0\b-\0\0\0009\0\0\0\v\0\0\0X\0\2€+\0\1\0X\1\1€+\0\2\0L\0\2\0\1\0\tTMUX\0")()

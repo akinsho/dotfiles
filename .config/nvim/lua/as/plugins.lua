@@ -24,6 +24,9 @@ api.nvim_set_keymap("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]], opts)
 api.nvim_set_keymap("n", "<leader>pc", [[<Cmd>PackerClean<CR>]], opts)
 api.nvim_set_keymap("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]], opts)
 
+vim.g.which_leader_key_map = {}
+vim.g.which_localleader_key_map = {}
+
 return require("packer").startup(
   function(use)
     local function local_use(path)
@@ -97,13 +100,7 @@ return require("packer").startup(
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
     use {"kshenoy/vim-signature", disabled = true}
-    use {
-      "liuchengxu/vim-which-key",
-      config = function()
-        vim.g.which_leader_key_map = {}
-        vim.g.which_localleader_key_map = {}
-      end
-    }
+    use {"liuchengxu/vim-which-key"}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management
     ---------------------------------------------------------------------------------
@@ -113,7 +110,7 @@ return require("packer").startup(
     --------------------------------------------------------------------------------
     -- Profiling {{{1
     --------------------------------------------------------------------------------
-    use {"tweekmonster/startuptime.vim", cmd = "StartupTime", opt = true}
+    use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
     --------------------------------------------------------------------------------
     -- TPOPE {{{1
     --------------------------------------------------------------------------------
@@ -140,7 +137,7 @@ return require("packer").startup(
     --------------------------------------------------------------------------------
     use "tpope/vim-fugitive"
     use "rhysd/conflict-marker.vim"
-    use {"kdheepak/lazygit.nvim", cmd = "LazyGit", opt = true}
+    use {"kdheepak/lazygit.nvim", cmd = "LazyGit"}
     --------------------------------------------------------------------------------
     -- Text Objects {{{1
     --------------------------------------------------------------------------------
