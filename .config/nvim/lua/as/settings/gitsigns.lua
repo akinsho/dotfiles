@@ -36,3 +36,4 @@ if plugin_loaded("gitsigns.nvim") > 0 then
     end
   }
 end
+

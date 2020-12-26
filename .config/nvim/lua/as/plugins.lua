@@ -1,4 +1,5 @@
 local execute = vim.cmd
+local api = vim.api
 local fn = vim.fn
 local env = vim.env
 local has = function(feature)
@@ -13,11 +14,17 @@ if fn.empty(fn.glob(install_path)) > 0 then
   )
 end
 
-execute "packadd packer.nvim"
 -- cfilter plugin allows filter down an existing quickfix list
 execute "packadd! cfilter"
+execute "packadd packer.nvim"
 
 execute "autocmd BufWritePost plugins.lua PackerCompile"
+
+local opts = {noremap = true, silent = true}
+api.nvim_set_keymap("n", "<leader>pi", [[:PlugInstall<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>ps", [[:PlugStatus<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>pc", [[:PlugClean<CR>]], opts)
+api.nvim_set_keymap("n", "<leader>pu", [[:PlugUpdate<CR>]], opts)
 
 return require("packer").startup(
   function()
