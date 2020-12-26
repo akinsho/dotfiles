@@ -9,12 +9,6 @@ endif
 
 lua << END
 local plugins = {
-  ["completion-tabnine"] = {
-    loaded = false,
-    only_sequence = false,
-    only_setup = false,
-    path = "/home/akin/.local/share/nvim/site/pack/packer/opt/completion-tabnine"
-  },
   ["goyo.vim"] = {
     loaded = false,
     only_sequence = false,
@@ -270,12 +264,12 @@ augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
   au FileType <Plug>ViwikiTabIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>ViwikiTabIndex" })
-  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
-  au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
   au FileType <Plug>VimwikiIndex ++once call s:load(['vimwiki'], { "ft": "<Plug>VimwikiIndex" })
+  au FileType html ++once call s:load(['tagalong.vim'], { "ft": "html" })
   au FileType typescriptreact ++once call s:load(['tagalong.vim'], { "ft": "typescriptreact" })
   au FileType javascriptreact ++once call s:load(['tagalong.vim'], { "ft": "javascriptreact" })
-  au FileType markdown ++once call s:load(['markdown-preview.nvim', 'goyo.vim'], { "ft": "markdown" })
+  au FileType markdown ++once call s:load(['goyo.vim', 'markdown-preview.nvim'], { "ft": "markdown" })
+  au FileType vimwiki ++once call s:load(['goyo.vim'], { "ft": "vimwiki" })
   " Event lazy-loads
   au CursorHoldI *  ++once call s:load(['vim-fat-finger'], { "event": "CursorHoldI * " })
 augroup END

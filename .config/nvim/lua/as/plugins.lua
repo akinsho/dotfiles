@@ -9,7 +9,12 @@ end
 local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  local output =
+    vim.fn.system(
+    string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
+  )
+  print(output)
+  print("Downloading packer.nvim...")
 end
 
 execute "packadd packer.nvim"
@@ -40,9 +45,11 @@ return require("packer").startup(
 
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
-
+    --------------------------------------------------------------------------------
+    -- Core {{{1
+    ---------------------------------------------------------------------------------
     use "airblade/vim-rooter"
-    use {"junegunn/fzf", dir = "~/.fzf", run = "./install --all"}
+    use {"junegunn/fzf", run = "./install --all"}
     use "junegunn/fzf.vim"
     use "mhinz/vim-startify"
     use {
@@ -62,13 +69,7 @@ return require("packer").startup(
       use {"RishabhRD/nvim-lsputils", requires = {"RishabhRD/popfix"}}
       use {
         "nvim-lua/completion-nvim",
-        requires = {
-          {
-            "aca/completion-tabnine",
-            run = "version=3.1.9 ./install.sh",
-            opt = true
-          }
-        }
+        requires = {{"aca/completion-tabnine", run = "version=3.1.9 ./install.sh"}}
       }
       use "hrsh7th/vim-vsnip"
       use "hrsh7th/vim-vsnip-integ"
@@ -165,8 +166,6 @@ return require("packer").startup(
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
     use "rakr/vim-one"
-    -- More actively maintained that vim-one
-    -- use {'joshdick/onedark.vim'}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
