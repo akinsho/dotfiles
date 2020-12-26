@@ -4,7 +4,7 @@ endif
 
 augroup LuaFormat
   autocmd!
-  autocmd BufWritePost $PERSONAL_PROJECTS_DIR/*.lua,$DOTFILES/*.lua,$DOTFILES/*.vim FormatWrite
+  autocmd BufWritePost $PERSONAL_PROJECTS_DIR/*.lua,$DOTFILES/*.lua,$DOTFILES/*.vim silent! FormatWrite
 augroup END
 
 lua << EOF
