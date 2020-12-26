@@ -1,14 +1,12 @@
 local execute = vim.cmd
 local api = vim.api
-local fn = vim.fn
-local env = vim.env
 local has = function(feature)
-  return fn.has(feature) > 0
+  return vim.fn.has(feature) > 0
 end
 
-local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
-if fn.empty(fn.glob(install_path)) > 0 then
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   local output =
     vim.fn.system(
     string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
@@ -38,7 +36,7 @@ return require("packer").startup {
     local function local_use(path)
       local home = "~/Desktop/projects/"
       local plug_path = home .. path
-      if fn.isdirectory(fn.expand(plug_path)) == 1 then
+      if vim.fn.isdirectory(vim.fn.expand(plug_path)) == 1 then
         use(plug_path)
       end
     end
@@ -177,7 +175,7 @@ return require("packer").startup {
       use "p00f/nvim-ts-rainbow"
     end
 
-    if env.DEVELOPING then
+    if vim.env.DEVELOPING then
       local_use "personal/nvim-toggleterm.lua"
       local_use "personal/nvim-bufferline.lua"
       local_use "personal/dependency-assist.nvim"
