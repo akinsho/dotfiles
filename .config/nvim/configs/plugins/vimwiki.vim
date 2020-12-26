@@ -107,6 +107,6 @@ if has('nvim') " autocommit is a lua based function
 endif
 
 command! CloseVimWikis call s:close_wikis()
-nmap <silent> <leader>wt <Plug>VimwikiTabIndex
-nmap <silent> <leader>ww <Plug>VimwikiIndex
+nnoremap <silent> <leader>wt :VimwikiTabIndex<CR>
+nnoremap <silent> <leader>ww :VimwikiIndex<CR>
 nnoremap <silent> <leader>wq :CloseVimWikis<CR>

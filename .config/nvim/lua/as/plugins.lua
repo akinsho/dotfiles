@@ -99,13 +99,13 @@ return require("packer").startup {
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
     use "liuchengxu/vim-which-key"
+    -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
+    -- so disable mark related plugins. Remove this guard when this problem is fixed
     use {"kshenoy/vim-signature", disabled = true}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management
     ---------------------------------------------------------------------------------
-    -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    -- so disable mark related plugins. Remove this guard when this problem is fixed
-    use {"vimwiki/vimwiki", ft = {"<Plug>VimwikiIndex", "<Plug>ViwikiTabIndex"}}
+    use {"vimwiki/vimwiki", event = {"BufEnter *.wiki"}, cmd = {"VimwikiIndex", "ViwikiTabIndex"}}
     --------------------------------------------------------------------------------
     -- Profiling {{{1
     --------------------------------------------------------------------------------
