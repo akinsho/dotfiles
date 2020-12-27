@@ -76,13 +76,7 @@ function M.highlight(name, opts)
     if cterm and cterm ~= "" then
       table.insert(cmd, "cterm=" .. cterm)
     end
-    local success = pcall(vim.cmd, table.concat(cmd, " "))
-    if not success then
-      vim.api.nvim_err_writeln(
-        "Failed setting " ..
-          name .. " highlight, something isn't configured correctly" .. "\n"
-      )
-    end
+    vim.cmd(table.concat(cmd, " "))
   end
 end
 

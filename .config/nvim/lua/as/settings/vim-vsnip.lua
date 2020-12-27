@@ -1,7 +1,8 @@
-local map = vim.api.nvim_set_keymap
-if vim.fn.PluginLoaded("vim-vsnip") < 1 then
+if not _G.plugin_loaded("vim-vsnip") then
   return
 end
+
+local map = vim.api.nvim_set_keymap
 
 map(
   "i",

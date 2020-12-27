@@ -1,9 +1,8 @@
-local autocommands = require("as.autocommands")
-local loaded = pcall(require, "completion")
-
-if not loaded then
+if not _G.plugin_loaded("completion-nvim") then
   return
 end
+
+local autocommands = require("as.autocommands")
 
 -- Use completion-nvim in every buffer
 autocommands.create(
