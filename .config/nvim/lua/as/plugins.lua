@@ -170,12 +170,11 @@ return require("packer").startup {
       -- Plugin for visualising the tree sitter tree whilst developing
       use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
       use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
-      use "p00f/nvim-ts-rainbow"
     end
 
     use "kyazdani42/nvim-tree.lua"
     use "kyazdani42/nvim-web-devicons"
-    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate", requires = {"p00f/nvim-ts-rainbow"}}
 
     if vim.env.DEVELOPING or not has("mac") then
       -- FIXME: packer doesn't swap between both groups of plugins
