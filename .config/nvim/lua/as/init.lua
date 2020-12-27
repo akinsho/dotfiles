@@ -1,4 +1,4 @@
-function _G.plugin_loaded (name)
+function _G.plugin_loaded(name)
   return vim.fn.PluginLoaded(name) > 0
 end
 

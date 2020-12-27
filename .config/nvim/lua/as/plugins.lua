@@ -171,23 +171,29 @@ return require("packer").startup {
       use "p00f/nvim-ts-rainbow"
     end
 
-    if vim.env.DEVELOPING then
+    use "kyazdani42/nvim-tree.lua"
+    use "kyazdani42/nvim-web-devicons"
+    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+
+    if vim.env.DEVELOPING or not has("mac") then
+      -- FIXME: packer doesn't swap between both groups of plugins
+      -- as it doesn't recognise that the plugin set have changed so local
+      -- plugins aren't loaded. awaiting:
+      -- https://github.com/wbthomason/packer.nvim/issues/137
+      -- https://github.com/wbthomason/packer.nvim/issues/118
+      -- local_use "contributing/nvim-tree.lua"
+      -- local_use "contributing/nvim-web-devicons"
+      -- local_use "contributing/nvim-treesitter"
+
       local_use "personal/nvim-toggleterm.lua"
       local_use "personal/nvim-bufferline.lua"
       local_use "personal/dependency-assist.nvim"
       local_use "personal/flutter-tools.nvim"
-
-      local_use "contributing/nvim-web-devicons"
-      local_use "contributing/nvim-treesitter"
-      local_use "contributing/nvim-tree.lua"
     else
-      use "kyazdani42/nvim-tree.lua"
       use "akinsho/nvim-toggleterm.lua"
       use "akinsho/nvim-bufferline.lua"
       use "akinsho/dependency-assist.nvim"
       use "akinsho/flutter-tools.nvim"
-      use "kyazdani42/nvim-web-devicons"
-      use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
     end
   end,
   config = {

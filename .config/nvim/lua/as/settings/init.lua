@@ -1,4 +1,3 @@
-
 --- dynamically load all the plugin settings in this module
 --- this essentially replicates the "runtime" call in vimscript
 local function load_settings(dir)
