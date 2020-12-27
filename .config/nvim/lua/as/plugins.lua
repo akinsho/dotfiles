@@ -147,10 +147,6 @@ return require("packer").startup {
     use "AndrewRadev/splitjoin.vim"
     use "svermeulen/vim-subversive"
     use "AndrewRadev/dsf.vim"
-    ----------------------------------------------------------------------------//
-    -- Deprecated: Word transposition mappings from in favour of the plugin below:
-    -- http://superuser.com/questions/290360/how-to-switch-words-in-an-easy-manner-in-vim/290449#290449
-    ----------------------------------------------------------------------------//
     use "AndrewRadev/sideways.vim"
     use "chaoren/vim-wordmotion"
     use "tommcdo/vim-exchange"

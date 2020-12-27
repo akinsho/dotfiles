@@ -406,6 +406,11 @@ xnoremap r <C-v>
 "--------------------------------------------------------------------------------
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
+
+" Swap the word the cursor is on with the next word (which can be on a
+" newline, and punctuation is "skipped"):
+" source: https://superuser.com/a/290449
+nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>
 ""---------------------------------------------------------------------------//
 " Quick find/replace
 ""---------------------------------------------------------------------------//
