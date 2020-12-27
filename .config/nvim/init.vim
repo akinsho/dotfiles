@@ -28,7 +28,7 @@ endfunction
 let g:dotfiles = strlen($DOTFILES) ? $DOTFILES : '~/.dotfiles'
 let g:vim_dir = g:dotfiles . '/.config/nvim'
 "-----------------------------------------------------------------------
-"Leader bindings
+" Leader bindings
 "-----------------------------------------------------------------------
 let g:mapleader      = ',' "Remap leader key
 let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES

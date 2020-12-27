@@ -33,7 +33,7 @@ let g:dotfiles_wiki = {
       \'auto_toc': 1,
       \'auto_tags': 1,
       \}
-
+let g:taskwiki_disable_concealcursor = "yes"
 let g:vimwiki_auto_chdir    = 1
 let g:vimwiki_tags_header   = 'Wiki tags'
 let g:vimwiki_auto_header   = 1
