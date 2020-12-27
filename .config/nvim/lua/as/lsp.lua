@@ -19,6 +19,7 @@ local flutter = require "flutter-tools"
 
 local H = require "as.highlights"
 local autocommands = require "as.autocommands"
+local utils = require "as.utils"
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
@@ -329,7 +330,7 @@ local servers = {
 for server, config in pairs(servers) do
   config.on_attach = on_attach
   config.capabilities =
-    vim.tbl_deep_extend("keep", config.capabilities or {}, lsp_status.capabilities)
+    utils.deep_merge(config.capabilities or {}, lsp_status.capabilities)
   lspconfig[server].setup(config)
 end
 
