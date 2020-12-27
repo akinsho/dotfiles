@@ -21,7 +21,7 @@ elseif has('unix')
 endif
 
 function! PluginLoaded(plugin_name) abort
-  return !empty(glob('~/.local/share/nvim/site/pack/packer/*/'.a:plugin_name))
+  return !empty(globpath(&rtp, 'pack/packer/*/'.a:plugin_name))
 endfunction
 
 " WARNING: Hard coding the location of my dotfiles is brittle
