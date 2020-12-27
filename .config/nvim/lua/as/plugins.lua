@@ -99,7 +99,7 @@ return require("packer").startup {
     use "liuchengxu/vim-which-key"
     -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     -- so disable mark related plugins. Remove this guard when this problem is fixed
-    use {"kshenoy/vim-signature", disabled = true}
+    use {"kshenoy/vim-signature", disable = true}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management
     ---------------------------------------------------------------------------------
