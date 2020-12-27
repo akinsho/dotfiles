@@ -33,7 +33,7 @@ let g:vim_dir = g:dotfiles . '/.config/nvim'
 let g:mapleader      = ',' "Remap leader key
 let g:maplocalleader = "\<space>" "Local leader key MUST BE DOUBLE QUOTES
 "-----------------------------------------------------------------------
-" Essential Settings - Taken care of by Vim Plug
+" Essential Settings
 "-----------------------------------------------------------------------
 filetype plugin indent on
 syntax enable
