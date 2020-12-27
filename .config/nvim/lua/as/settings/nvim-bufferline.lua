@@ -1,8 +1,6 @@
-if not plugin_loaded("nvim-bufferline.lua") then
+if not as_utils.plugin_loaded("nvim-bufferline.lua") then
   return
 end
-
-local api = vim.api
 
 require("bufferline").setup {
   options = {
@@ -12,9 +10,8 @@ require("bufferline").setup {
   }
 }
 
-local opts = {noremap = true, silent = true}
-api.nvim_set_keymap("n", "gb", [[<cmd>BufferLinePick<CR>]], opts)
-api.nvim_set_keymap("n", "<leader><tab> ", [[<cmd>BufferLineCycleNext<CR>]], opts)
-api.nvim_set_keymap("n", "<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]], opts)
-api.nvim_set_keymap("n", "[b", [[<cmd>BufferLineMoveNext<CR>]], opts)
-api.nvim_set_keymap("n", "]b", [[<cmd>BufferLineMovePrev<CR>]], opts)
+as_utils.map("n", "gb", [[<cmd>BufferLinePick<CR>]])
+as_utils.map("n", "<leader><tab> ", [[<cmd>BufferLineCycleNext<CR>]])
+as_utils.map("n", "<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
+as_utils.map("n", "[b", [[<cmd>BufferLineMoveNext<CR>]])
+as_utils.map("n", "]b", [[<cmd>BufferLineMovePrev<CR>]])

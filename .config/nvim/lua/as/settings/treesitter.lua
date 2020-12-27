@@ -1,8 +1,7 @@
-if vim.fn.PluginLoaded("nvim-treesitter") < 1 then
+if not as_utils.plugin_loaded("nvim-treesitter") then
   return
 end
 
-local api = vim.api
 local has = vim.fn.has
 
 vim.cmd [[highlight link TSKeyword Statement]]
@@ -11,7 +10,7 @@ vim.cmd [[highlight TSParameter gui=italic,bold]]
 -- This plugin is an experimental application of tree sitter usage in Neovim
 -- be careful when applying any functionality to a filetype as it might not work
 local disabled = {"json"}
-if has('mac') > 0 then
+if has("mac") > 0 then
   table.insert(disabled, "dart")
 end
 
@@ -52,25 +51,9 @@ local ft_str =
 )
 
 vim.cmd(
-  "autocmd Filetype " ..
-    ft_str .. " setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
+  "autocmd! Filetype " .. ft_str .. " setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
 )
 
-api.nvim_set_keymap(
-  "n",
-  "<localleader>dte",
-  [[:TSEnable highlight<CR>]],
-  {noremap = true, silent = true}
-)
-api.nvim_set_keymap(
-  "n",
-  "<localleader>dtd",
-  [[:TSDisable highlight<CR>]],
-  {noremap = true, silent = true}
-)
-api.nvim_set_keymap(
-  "n",
-  "<localleader>dtp",
-  [[:TSPlaygroundToggle<CR>]],
-  {noremap = true, silent = true}
-)
+as_utils.map("n", "<localleader>dte", "<cmd>TSEnable highlight<CR>")
+as_utils.map("n", "<localleader>dtd", "<cmd>TSDisable highlight<CR>")
+as_utils.map("n", "<localleader>dtp", "<cmd>TSPlaygroundToggle<CR>")

@@ -1,5 +1,4 @@
 local execute = vim.cmd
-local api = vim.api
 local has = function(feature)
   return vim.fn.has(feature) > 0
 end
@@ -22,15 +21,16 @@ execute "packadd! cfilter"
 
 execute "autocmd BufWritePost plugins.lua PackerCompile"
 
-local opts = {noremap = true, silent = true}
-api.nvim_set_keymap("n", "<leader>pi", [[<Cmd>PackerInstall<CR>]], opts)
-api.nvim_set_keymap("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]], opts)
-api.nvim_set_keymap("n", "<leader>pc", [[<Cmd>PackerClean<CR>]], opts)
-api.nvim_set_keymap("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]], opts)
+as_utils.map("n", "<leader>pi", [[<Cmd>PackerInstall<CR>]])
+as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
+as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
+as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 
---- NOTE "use" functions cannot call *upvalues* i.e. the functions
---- passed to setup or config etc. cannot reference aliased function
---- or local variables
+--[[
+    NOTE "use" functions cannot call *upvalues* i.e. the functions
+    passed to setup or config etc. cannot reference aliased function
+    or local variables
+--]]
 return require("packer").startup {
   function(use)
     local function local_use(path)

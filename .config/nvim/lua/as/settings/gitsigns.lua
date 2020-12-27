@@ -1,7 +1,7 @@
-local loaded, gitsigns = pcall(require, "gitsigns")
+local loaded = as_utils.plugin_loaded("gitsigns.nvim")
 
 if loaded then
-  gitsigns.setup {
+  require("gitsigns").setup {
     signs = {
       add = {hl = "GitGutterAdd", text = "▌"},
       change = {hl = "GitGutterChange", text = "▌"},

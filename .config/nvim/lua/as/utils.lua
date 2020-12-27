@@ -37,4 +37,13 @@ function M.profile(filename)
   end
 end
 
+function M.map(mode, lhs, rhs, opts)
+  opts = opts or {noremap = true, silent = true}
+  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+end
+
+function M.plugin_loaded(name)
+  return vim.fn.PluginLoaded(name) > 0
+end
+
 return M

@@ -1,4 +1,4 @@
-if not plugin_loaded("completion-nvim") then
+if not as_utils.plugin_loaded("completion-nvim") then
   return
 end
 

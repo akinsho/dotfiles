@@ -40,9 +40,11 @@ syntax enable
 " ----------------------------------------------------------------------
 " Plugin Configurations
 " ----------------------------------------------------------------------
-" Order matters here as the plugins should be loaded before the other setup
+" ORDER MATTERS HERE
+"
 " :h runtime - this fuzzy matches files within vim's runtime path
 if has('nvim-0.5')
+  lua require("as.globals")
   lua require("as.plugins")
 endif
 

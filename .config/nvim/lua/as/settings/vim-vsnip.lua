@@ -1,8 +1,8 @@
-if not plugin_loaded("vim-vsnip") then
+if not as_utils.plugin_loaded("vim-vsnip") then
   return
 end
 
-local map = vim.api.nvim_set_keymap
+local map = as_utils.map
 
 map("i", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", {expr = true})
 map("s", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", {expr = true})
