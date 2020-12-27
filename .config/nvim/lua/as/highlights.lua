@@ -4,7 +4,7 @@ local hlID = vim.fn.hlID
 
 local M = {}
 
-local explorer_fts = {"LuaTree"}
+local explorer_fts = {"NvimTree"}
 
 --- @param win_id integer
 function M.has_win_highlight(win_id)
@@ -122,20 +122,18 @@ function M.set_explorer_highlight()
 end
 
 function M.on_enter()
-  if vim.tbl_contains(explorer_fts, vim.bo.filetype) then
-    local highlights =
-      table.concat(
-      {
-        "Normal:ExplorerBackground",
-        "StatusLine:ExplorerSt",
-        "StatusLineNC:ExplorerStNC",
-        "SignColumn:ExplorerBackground",
-        "VertSplit:ExplorerVertSplit"
-      },
-      ","
-    )
-    vim.cmd("setlocal winhighlight=" .. highlights)
-  end
+  local highlights =
+    table.concat(
+    {
+      "Normal:ExplorerBackground",
+      "StatusLine:ExplorerSt",
+      "StatusLineNC:ExplorerStNC",
+      "SignColumn:ExplorerBackground",
+      "VertSplit:ExplorerVertSplit"
+    },
+    ","
+  )
+  vim.cmd("setlocal winhighlight=" .. highlights)
 end
 
 autocommands.create(
@@ -148,7 +146,7 @@ autocommands.create(
       },
       {
         "FileType",
-        "LuaTree",
+        table.concat(explorer_fts, ","),
         "lua require('as.highlights').on_enter()"
       }
     }
