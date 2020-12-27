@@ -233,7 +233,7 @@ inoremap <c-e> <c-o>$
 " Save
 nnoremap <silent><c-s> :silent! w<cr>
 " Write and quit all files
-nnoremap <silent>qa :confirm wqa<CR>
+nnoremap <silent>qa <cmd>call utils#message('Use ZZ instead')<CR>
 ""---------------------------------------------------------------------------//
 " TABS
 ""---------------------------------------------------------------------------//
