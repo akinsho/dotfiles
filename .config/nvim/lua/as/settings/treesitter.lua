@@ -53,7 +53,3 @@ local ft_str =
 vim.cmd(
   "autocmd! Filetype " .. ft_str .. " setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
 )
-
-as_utils.map("n", "<localleader>dte", "<cmd>TSEnable highlight<CR>")
-as_utils.map("n", "<localleader>dtd", "<cmd>TSDisable highlight<CR>")
-as_utils.map("n", "<localleader>dtp", "<cmd>TSPlaygroundToggle<CR>")
