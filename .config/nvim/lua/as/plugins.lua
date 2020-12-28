@@ -52,7 +52,6 @@ return require("packer").startup {
     use "mhinz/vim-startify"
     use {
       "christoomey/vim-tmux-navigator",
-      opt = true,
       cond = function()
         return vim.env.TMUX ~= nil
       end
@@ -75,34 +74,36 @@ return require("packer").startup {
       use "hrsh7th/vim-vsnip-integ"
       use "nvim-lua/lsp-status.nvim"
       use "lewis6991/gitsigns.nvim"
-      use "mfussenegger/nvim-dap"
+      use {
+        "theHamsta/nvim-dap-virtual-text",
+        requires = {"mfussenegger/nvim-dap"},
+        config = function()
+          vim.g.dap_virtual_text = true
+          vim.g.dap_virtual_text = true
+        end
+      }
     end
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     ---------------------------------------------------------------------------------
     use {"chip/vim-fat-finger", event = "CursorHoldI * "}
     use "arecarn/vim-fold-cycle"
-    -- https://github.com/iamcco/markdown-preview.nvim/issues/50
-    use {
-      "iamcco/markdown-preview.nvim",
-      opt = true,
-      run = ":call mkdp#util#install()",
-      ft = {"markdown"}
-    }
     use "cohama/lexima.vim"
     use "psliwka/vim-smoothie"
+    use "mg979/vim-visual-multi"
+    use "itchyny/vim-highlighturl"
+    use "luochen1990/rainbow"
+    use "liuchengxu/vim-which-key"
+    -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected
+    -- on restarting nvim so disable mark related plugins.
+    use {"kshenoy/vim-signature", disable = true}
     use {"mbbill/undotree", cmd = {"UndotreeToggle"}}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {"rrethy/vim-hexokinase", run = "make hexokinase"}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
-    use "mg979/vim-visual-multi"
-    use "itchyny/vim-highlighturl"
-    use "luochen1990/rainbow"
-    use "liuchengxu/vim-which-key"
-    -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    -- so disable mark related plugins. Remove this guard when this problem is fixed
-    use {"kshenoy/vim-signature", disable = true}
+    -- https://github.com/iamcco/markdown-preview.nvim/issues/50
+    use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management
     ---------------------------------------------------------------------------------
@@ -169,16 +170,9 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
-    if not has("mac") then
-      -- Plugin for visualising the tree sitter tree whilst developing
-      use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
-      use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
-    end
-
     use "kyazdani42/nvim-tree.lua"
     use "kyazdani42/nvim-web-devicons"
     use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate", requires = {"p00f/nvim-ts-rainbow"}}
-
     if not has("mac") then
       -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
       -- packer doesn't swap between both groups of plugins
@@ -189,6 +183,10 @@ return require("packer").startup {
       -- local_use "contributing/nvim-tree.lua"
       -- local_use "contributing/nvim-web-devicons"
       -- local_use "contributing/nvim-treesitter"
+
+      -- Plugin for visualising the tree sitter tree whilst developing
+      use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
+      use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
 
       local_use "personal/nvim-toggleterm.lua"
       local_use "personal/nvim-bufferline.lua"
