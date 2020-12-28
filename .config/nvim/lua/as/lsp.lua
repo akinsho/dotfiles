@@ -100,7 +100,7 @@ local function setup_autocommands(client)
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
     commands.LspFormat = {
-      {"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync()"}
+      {"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync(nil, 1000)"}
     }
   end
   autocommands.create(commands)
