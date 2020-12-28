@@ -65,6 +65,7 @@ return require("packer").startup {
       use "neovim/nvim-lspconfig"
       use "nvim-lua/plenary.nvim"
       use {"RishabhRD/nvim-lsputils", requires = {"RishabhRD/popfix"}}
+      use 'RishabhRD/nvim-cheat.sh'
       use {
         "nvim-lua/completion-nvim",
         requires = {{"aca/completion-tabnine", run = "version=3.1.9 ./install.sh"}}
