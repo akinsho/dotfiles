@@ -14,7 +14,7 @@ let g:number_filetype_exclusions = [
       \ 'coc-explorer',
       \ 'coc-list',
       \ 'list',
-      \ 'LuaTree',
+      \ 'NvimTree',
       \ 'startify',
       \ 'help',
       \ 'todoist'
