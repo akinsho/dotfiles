@@ -1,19 +1,13 @@
 -----------------------------------------------------------------------------//
 -- Init
 -----------------------------------------------------------------------------//
-local success, lspconfig = pcall(require, "lspconfig")
--- NOTE: Don't load this file if we aren't using "nvim-lsp"
-if not success then
-  return
-end
------------------------------------------------------------------------------//
-
 local fn = vim.fn
 local extend = vim.list_extend
 local api = vim.api
 
 local M = {}
 
+local lspconfig = require "lspconfig"
 local lsp_status = require "lsp-status"
 local flutter = require "flutter-tools"
 
@@ -226,7 +220,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
     signs = true,
     update_in_insert = false
   }
-  )
+)
 
 vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
   if err ~= nil or result == nil then
@@ -336,8 +330,8 @@ local servers = {
 
 for server, config in pairs(servers) do
   config.on_attach = on_attach
-  config.capabilities =
-    utils.deep_merge(config.capabilities or {}, lsp_status.capabilities)
+  local status_capabilities = lsp_status.capabilities
+  config.capabilities = utils.deep_merge(config.capabilities or {}, status_capabilities)
   lspconfig[server].setup(config)
 end
 

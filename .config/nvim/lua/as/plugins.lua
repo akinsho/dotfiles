@@ -8,8 +8,8 @@ local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvi
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   local output =
     vim.fn.system(
-      string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
-    )
+    string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
+  )
   print(output)
   print("Downloading packer.nvim...")
 end
@@ -26,9 +26,9 @@ as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
 as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
 as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 
-local function lpath(path)
-  local home = "~/Desktop/projects/"
-  return home .. path
+local function dev(path)
+  local projects = "~/Desktop/projects/"
+  return projects .. path
 end
 
 --[[
@@ -39,7 +39,7 @@ end
 return require("packer").startup {
   function(use)
     local function local_use(path)
-      local plug_path = lpath(path)
+      local plug_path = dev(path)
       if vim.fn.isdirectory(vim.fn.expand(plug_path)) == 1 then
         use(plug_path)
       end
@@ -65,23 +65,34 @@ return require("packer").startup {
       use "neoclide/coc.nvim"
       use "honza/vim-snippets"
     else
-      use "neovim/nvim-lspconfig"
-      use "nvim-lua/plenary.nvim"
-      use "RishabhRD/popfix"
-      use "RishabhRD/nvim-lsputils"
-      use 'RishabhRD/nvim-cheat.sh'
+      use {
+        "neovim/nvim-lspconfig",
+        config = [[require("as.lsp")]],
+        requires = {
+          "RishabhRD/popfix",
+          "RishabhRD/nvim-lsputils",
+          "nvim-lua/plenary.nvim",
+          "nvim-lua/lsp-status.nvim",
+          dev "personal/flutter-tools.nvim"
+        }
+      }
+      use "RishabhRD/nvim-cheat.sh"
       use {
         "nvim-lua/completion-nvim",
-        config = require('as.settings.completion'),
+        config = require("as.settings.completion"),
         requires = {{"aca/completion-tabnine", run = "./install.sh"}}
       }
-      use "nvim-lua/lsp-status.nvim"
-      use {"lewis6991/gitsigns.nvim", config = require('as.settings.gitsigns')}
-      use {"mfussenegger/nvim-dap", config = require('as.settings.dap')}
-      use {"theHamsta/nvim-dap-virtual-text", config = function() vim.g.dap_virtual_text = true end}
+      use {"lewis6991/gitsigns.nvim", config = require("as.settings.gitsigns")}
+      use {"mfussenegger/nvim-dap", config = require("as.settings.dap")}
+      use {
+        "theHamsta/nvim-dap-virtual-text",
+        config = function()
+          vim.g.dap_virtual_text = true
+        end
+      }
       use {
         "hrsh7th/vim-vsnip",
-        config = require('as.settings.vim-vsnip'),
+        config = require("as.settings.vim-vsnip"),
         requires = {"hrsh7th/vim-vsnip-integ"}
       }
     end
@@ -141,7 +152,12 @@ return require("packer").startup {
     -- Syntax {{{1
     --------------------------------------------------------------------------------
     use "Yggdroot/indentLine"
-    use {"sheerun/vim-polyglot", setup = function() vim.g.polyglot_disabled = {"sensible"} end}
+    use {
+      "sheerun/vim-polyglot",
+      setup = function()
+        vim.g.polyglot_disabled = {"sensible"}
+      end
+    }
     --------------------------------------------------------------------------------
     -- Git {{{1
     --------------------------------------------------------------------------------
@@ -178,12 +194,12 @@ return require("packer").startup {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
       keys = {"<c-n>"},
-      config = require('as.settings.nvim-tree'),
+      config = require("as.settings.nvim-tree")
     }
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      config = require('as.settings.treesitter'),
+      config = require("as.settings.treesitter"),
       requires = {"p00f/nvim-ts-rainbow"}
     }
     if not has("mac") then
@@ -201,12 +217,10 @@ return require("packer").startup {
       use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
       use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
 
-      local_use "personal/flutter-tools.nvim"
       local_use "personal/dependency-assist.nvim"
       local_use "personal/nvim-toggleterm.lua"
-      use {lpath"personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
+      use {dev "personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     else
-      use "akinsho/flutter-tools.nvim"
       use "akinsho/dependency-assist.nvim"
       use "akinsho/nvim-toggleterm.lua"
       use {"akinsho/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
