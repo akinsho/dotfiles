@@ -79,7 +79,6 @@ return require("packer").startup {
         requires = {"mfussenegger/nvim-dap"},
         config = function()
           vim.g.dap_virtual_text = true
-          vim.g.dap_virtual_text = true
         end
       }
     end
