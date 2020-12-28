@@ -1,6 +1,4 @@
-local loaded = as_utils.plugin_loaded("gitsigns.nvim")
-
-if loaded then
+return function()
   require("gitsigns").setup {
     signs = {
       add = {hl = "GitGutterAdd", text = "▌"},

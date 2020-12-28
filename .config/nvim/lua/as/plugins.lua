@@ -8,8 +8,8 @@ local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvi
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   local output =
     vim.fn.system(
-    string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
-  )
+      string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
+    )
   print(output)
   print("Downloading packer.nvim...")
 end
@@ -26,6 +26,11 @@ as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
 as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
 as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 
+local function lpath(path)
+  local home = "~/Desktop/projects/"
+  return home .. path
+end
+
 --[[
     NOTE "use" functions cannot call *upvalues* i.e. the functions
     passed to setup or config etc. cannot reference aliased function
@@ -34,8 +39,7 @@ as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 return require("packer").startup {
   function(use)
     local function local_use(path)
-      local home = "~/Desktop/projects/"
-      local plug_path = home .. path
+      local plug_path = lpath(path)
       if vim.fn.isdirectory(vim.fn.expand(plug_path)) == 1 then
         use(plug_path)
       end
@@ -68,18 +72,22 @@ return require("packer").startup {
       use 'RishabhRD/nvim-cheat.sh'
       use {
         "nvim-lua/completion-nvim",
+        config = require('as.settings.completion'),
         requires = {{"aca/completion-tabnine", run = "version=3.1.9 ./install.sh"}}
       }
-      use "hrsh7th/vim-vsnip"
-      use "hrsh7th/vim-vsnip-integ"
       use "nvim-lua/lsp-status.nvim"
-      use "lewis6991/gitsigns.nvim"
+      use {"lewis6991/gitsigns.nvim", config = require('as.settings.gitsigns')}
+      use {"mfussenegger/nvim-dap", config = require('as.settings.dap')}
       use {
         "theHamsta/nvim-dap-virtual-text",
-        requires = {"mfussenegger/nvim-dap"},
         config = function()
           vim.g.dap_virtual_text = true
         end
+      }
+      use {
+        "hrsh7th/vim-vsnip",
+        config = require('as.settings.vim-vsnip'),
+        requires = {"hrsh7th/vim-vsnip-integ"}
       }
     end
     --------------------------------------------------------------------------------
@@ -99,7 +107,13 @@ return require("packer").startup {
     use {"mbbill/undotree", cmd = {"UndotreeToggle"}}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
-    use {"rrethy/vim-hexokinase", run = "make hexokinase"}
+    use {
+      "rrethy/vim-hexokinase",
+      run = "make hexokinase",
+      config = function()
+        vim.g.Hexokinase_ftDisabled = {"vimwiki"}
+      end
+    }
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     -- https://github.com/iamcco/markdown-preview.nvim/issues/50
     use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
@@ -171,7 +185,12 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     use "kyazdani42/nvim-tree.lua"
     use "kyazdani42/nvim-web-devicons"
-    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate", requires = {"p00f/nvim-ts-rainbow"}}
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+      config = require('as.settings.treesitter'),
+      requires = {"p00f/nvim-ts-rainbow"}
+    }
     if not has("mac") then
       -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
       -- packer doesn't swap between both groups of plugins
@@ -187,15 +206,15 @@ return require("packer").startup {
       use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
       use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
 
-      local_use "personal/nvim-toggleterm.lua"
-      local_use "personal/nvim-bufferline.lua"
-      local_use "personal/dependency-assist.nvim"
       local_use "personal/flutter-tools.nvim"
+      local_use "personal/dependency-assist.nvim"
+      local_use "personal/nvim-toggleterm.lua"
+      use {lpath"personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     else
-      use "akinsho/nvim-toggleterm.lua"
-      use "akinsho/nvim-bufferline.lua"
-      use "akinsho/dependency-assist.nvim"
       use "akinsho/flutter-tools.nvim"
+      use "akinsho/dependency-assist.nvim"
+      use "akinsho/nvim-toggleterm.lua"
+      use {"akinsho/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     end
   end,
   config = {
