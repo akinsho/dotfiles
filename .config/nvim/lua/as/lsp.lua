@@ -282,7 +282,8 @@ local servers = {
     settings = {
       Lua = {
         diagnostics = {
-          globals = {"vim"}
+          globals = {"vim"},
+          workspaceDelay = -1
         },
         completion = {
           keywordSnippet = "Disable"
