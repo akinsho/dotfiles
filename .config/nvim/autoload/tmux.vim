@@ -6,16 +6,19 @@ function! tmux#statusline_colors() abort
 endfunction
 
 function! tmux#on_enter() abort
-  let fname = expand("%:t")
-  if strlen(fname)
-    let session_file = strlen(v:this_session) ? v:this_session : 'Neovim'
-    let session = fnamemodify(session_file, ':t')
-    let [icon, hl] = utils#get_devicon(bufname())
-    let color = synIDattr(hlID(hl), 'fg')
-    let window_title = session . ' • ' . '#[fg='.color.']'.icon
-    let cmd = printf("tmux rename-window '%s'", window_title)
-    call jobstart(cmd)
-  endif
+  try
+    let fname = expand("%:t")
+    if strlen(fname)
+      let session_file = strlen(v:this_session) ? v:this_session : 'Neovim'
+      let session = fnamemodify(session_file, ':t')
+      let [icon, hl] = utils#get_devicon(bufname())
+      let color = synIDattr(hlID(hl), 'fg')
+      let window_title = session . ' • ' . '#[fg='.color.']'.icon
+      let cmd = printf("tmux rename-window '%s'", window_title)
+      call jobstart(cmd)
+    endif
+  catch /.*/
+  endtry
 endfunction
 
 function! tmux#on_leave() abort
