@@ -73,17 +73,12 @@ return require("packer").startup {
       use {
         "nvim-lua/completion-nvim",
         config = require('as.settings.completion'),
-        requires = {{"aca/completion-tabnine", run = "version=3.1.9 ./install.sh"}}
+        requires = {{"aca/completion-tabnine", run = "./install.sh"}}
       }
       use "nvim-lua/lsp-status.nvim"
       use {"lewis6991/gitsigns.nvim", config = require('as.settings.gitsigns')}
       use {"mfussenegger/nvim-dap", config = require('as.settings.dap')}
-      use {
-        "theHamsta/nvim-dap-virtual-text",
-        config = function()
-          vim.g.dap_virtual_text = true
-        end
-      }
+      use {"theHamsta/nvim-dap-virtual-text", config = function() vim.g.dap_virtual_text = true end}
       use {
         "hrsh7th/vim-vsnip",
         config = require('as.settings.vim-vsnip'),
@@ -146,12 +141,7 @@ return require("packer").startup {
     -- Syntax {{{1
     --------------------------------------------------------------------------------
     use "Yggdroot/indentLine"
-    use {
-      "sheerun/vim-polyglot",
-      setup = function()
-        vim.g.polyglot_disabled = {"sensible"}
-      end
-    }
+    use {"sheerun/vim-polyglot", setup = function() vim.g.polyglot_disabled = {"sensible"} end}
     --------------------------------------------------------------------------------
     -- Git {{{1
     --------------------------------------------------------------------------------
@@ -183,8 +173,13 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
-    use "kyazdani42/nvim-tree.lua"
     use "kyazdani42/nvim-web-devicons"
+    use {
+      "kyazdani42/nvim-tree.lua",
+      cmd = "NvimTreeOpen",
+      keys = {"<c-n>"},
+      config = require('as.settings.nvim-tree'),
+    }
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
