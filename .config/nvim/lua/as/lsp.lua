@@ -163,12 +163,12 @@ end
 -----------------------------------------------------------------------------//
 flutter.setup {}
 
-local function on_attach(client)
+local function on_attach(client, bufnr)
   setup_autocommands(client)
   setup_mappings(client)
 
   if client.resolved_capabilities.goto_definition then
-    api.nvim_buf_set_option(0, "tagfunc", "v:lua.require('as.lsp').tagfunc")
+    api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.require('as.lsp').tagfunc")
   end
   lsp_status.on_attach(client)
 end
