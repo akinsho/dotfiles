@@ -28,8 +28,14 @@ function _G.reload_lsp()
   vim.cmd [[edit]]
 end
 
+function _G.open_lsp_log()
+  local path = vim.lsp.get_log_path()
+  vim.cmd("edit " .. path)
+end
+
 vim.cmd [[command! ReloadLSP lua reload_lsp()]]
 vim.cmd [[command! DebugLSP lua print(vim.inspect(vim.lsp.get_active_clients()))]]
+vim.cmd [[command! LogLSP lua open_lsp_log()]]
 
 function M.tagfunc(pattern, flags)
   if flags ~= "c" then
