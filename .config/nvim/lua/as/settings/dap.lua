@@ -18,7 +18,7 @@ if loaded then
       cwd = "${workspaceFolder}",
     }
   }
-  local map = as_utils.map()
+  local map = as_utils.map
   map("n", "<localleader>dc", [[<cmd>lua require'dap'.continue()<CR>]])
   map("n", "<localleader>do", [[<cmd>lua require'dap'.step_over()<CR>]])
   map("n", "<localleader>di", [[<cmd>lua require'dap'.step_into()<CR>]])
