@@ -1,13 +1,14 @@
 local execute = vim.cmd
+local fn = vim.fn
 local has = function(feature)
-  return vim.fn.has(feature) > 0
+  return fn.has(feature) > 0
 end
 
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+if fn.empty(fn.glob(install_path)) > 0 then
   local output =
-    vim.fn.system(
+    fn.system(
     string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
   )
   print(output)
@@ -40,7 +41,7 @@ return require("packer").startup {
   function(use)
     local function local_use(path)
       local plug_path = dev(path)
-      if vim.fn.isdirectory(vim.fn.expand(plug_path)) == 1 then
+      if fn.isdirectory(fn.expand(plug_path)) == 1 then
         use(plug_path)
       end
     end
@@ -200,7 +201,16 @@ return require("packer").startup {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = require("as.settings.treesitter"),
-      requires = {"p00f/nvim-ts-rainbow"}
+      requires = {
+        "p00f/nvim-ts-rainbow",
+        {
+          "nvim-treesitter/playground",
+          cmd = {"TSPlaygroundToggle"},
+          cond = function()
+            return vim.fn.has("mac") == 0
+          end
+        }
+      }
     }
     if not has("mac") then
       -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
@@ -213,8 +223,6 @@ return require("packer").startup {
       -- local_use "contributing/nvim-web-devicons"
       -- local_use "contributing/nvim-treesitter"
 
-      -- Plugin for visualising the tree sitter tree whilst developing
-      use {"nvim-treesitter/playground", cmd = {"TSPlaygroundToggle"}}
       use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
 
       local_use "personal/dependency-assist.nvim"
