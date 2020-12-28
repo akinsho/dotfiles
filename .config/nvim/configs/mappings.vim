@@ -348,13 +348,6 @@ nnoremap <localleader><tab> :b <C-Z>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 ""---------------------------------------------------------------------------//
-" Last Inserted
-""---------------------------------------------------------------------------//
-" select last paste in visual mode
-" source: https://vim.fandom.com/wiki/Selecting_your_pasted_text
-" TODO find a free mapping for this or delete it
-" nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-""---------------------------------------------------------------------------//
 " Capitalize
 ""---------------------------------------------------------------------------//
 " Capitalize.
