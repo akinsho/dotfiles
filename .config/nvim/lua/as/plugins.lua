@@ -106,7 +106,7 @@ return require("packer").startup {
     use {
       "vimwiki/vimwiki",
       branch = "dev",
-      keys = {",ww", ",wi"},
+      keys = {",ww", ",wt", ",wi"},
       event = {"BufEnter *.wiki"},
       requires = {"tools-life/taskwiki"}
     }
@@ -176,8 +176,9 @@ return require("packer").startup {
     use "kyazdani42/nvim-web-devicons"
     use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate", requires = {"p00f/nvim-ts-rainbow"}}
 
-    if vim.env.DEVELOPING or not has("mac") then
-      -- FIXME: packer doesn't swap between both groups of plugins
+    if not has("mac") then
+      -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
+      -- packer doesn't swap between both groups of plugins
       -- as it doesn't recognise that the plugin set have changed so local
       -- plugins aren't loaded. awaiting:
       -- https://github.com/wbthomason/packer.nvim/issues/137
