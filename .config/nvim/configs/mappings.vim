@@ -393,6 +393,10 @@ nnoremap <localleader>wv <C-W>t <C-W>H
 nnoremap <localleader>wj <C-W>-
 " Resize window upwards
 nnoremap <localleader>wk <C-W>+
+" equivalent to gf but opens the window in a vertical split
+" vim doesn't have a native mapping for this as <C-w>f normally
+" opens a horizontal split
+nnoremap <C-w>f <C-w>vgf
 
 " find visually selected text
 vnoremap * y/<C-R>"<CR>
