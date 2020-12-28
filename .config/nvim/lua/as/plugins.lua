@@ -27,9 +27,9 @@ as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
 as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
 as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 
+---@param path string
 local function dev(path)
-  local projects = "~/Desktop/projects/"
-  return projects .. path
+  return "~/Desktop/projects/" .. path
 end
 
 --[[
@@ -39,6 +39,7 @@ end
 --]]
 return require("packer").startup {
   function(use)
+    ---@param path string
     local function local_use(path)
       local plug_path = dev(path)
       if fn.isdirectory(fn.expand(plug_path)) == 1 then
@@ -49,7 +50,7 @@ return require("packer").startup {
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
     --------------------------------------------------------------------------------
-    -- Core {{{1
+    -- Core {{{
     ---------------------------------------------------------------------------------
     use "airblade/vim-rooter"
     use {"junegunn/fzf", run = "./install --all"}
@@ -97,8 +98,9 @@ return require("packer").startup {
         requires = {"hrsh7th/vim-vsnip-integ"}
       }
     end
+    --}}}
     --------------------------------------------------------------------------------
-    -- Utilities {{{1
+    -- Utilities {{{
     ---------------------------------------------------------------------------------
     use {"chip/vim-fat-finger", event = "CursorHoldI * "}
     use "arecarn/vim-fold-cycle"
@@ -124,8 +126,9 @@ return require("packer").startup {
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     -- https://github.com/iamcco/markdown-preview.nvim/issues/50
     use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
+    --}}}
     ---------------------------------------------------------------------------------
-    -- Knowledge and task management
+    -- Knowledge and task management {{{
     ---------------------------------------------------------------------------------
     use {
       "vimwiki/vimwiki",
@@ -134,12 +137,14 @@ return require("packer").startup {
       event = {"BufEnter *.wiki"},
       requires = {"tools-life/taskwiki"}
     }
+    --}}}
     --------------------------------------------------------------------------------
-    -- Profiling {{{1
+    -- Profiling {{{
     --------------------------------------------------------------------------------
     use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
+    --}}}
     --------------------------------------------------------------------------------
-    -- TPOPE {{{1
+    -- TPOPE {{{
     --------------------------------------------------------------------------------
     use "tpope/vim-commentary"
     use "tpope/vim-surround"
@@ -149,8 +154,9 @@ return require("packer").startup {
     -- sets searchable path for filetypes like go so 'gf' works
     use "tpope/vim-apathy"
     use "tpope/vim-projectionist"
+    --}}}
     --------------------------------------------------------------------------------
-    -- Syntax {{{1
+    -- Syntax {{{
     --------------------------------------------------------------------------------
     use "Yggdroot/indentLine"
     use {
@@ -159,14 +165,16 @@ return require("packer").startup {
         vim.g.polyglot_disabled = {"sensible"}
       end
     }
+    ---}}}
     --------------------------------------------------------------------------------
-    -- Git {{{1
+    -- Git {{{
     --------------------------------------------------------------------------------
     use "tpope/vim-fugitive"
     use "rhysd/conflict-marker.vim"
     use {"kdheepak/lazygit.nvim", cmd = "LazyGit"}
+    ---}}}
     --------------------------------------------------------------------------------
-    -- Text Objects {{{1
+    -- Text Objects {{{
     --------------------------------------------------------------------------------
     use "AndrewRadev/splitjoin.vim"
     use "svermeulen/vim-subversive"
@@ -176,19 +184,22 @@ return require("packer").startup {
     use "tommcdo/vim-exchange"
     use "wellle/targets.vim"
     use {"kana/vim-textobj-user", requires = {"kana/vim-operator-user", "glts/vim-textobj-comment"}}
+    --}}}
     --------------------------------------------------------------------------------
-    -- Search Tools {{{1
+    -- Search Tools {{{
     --------------------------------------------------------------------------------
     use "justinmk/vim-sneak"
     use "junegunn/vim-peekaboo"
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}}
+    --}}}
     ---------------------------------------------------------------------------------
-    -- Themes  {{{1
+    -- Themes  {{{
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
     use "rakr/vim-one"
+    --}}}
     ---------------------------------------------------------------------------------
-    -- Dev plugins  {{{1
+    -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
     use "kyazdani42/nvim-web-devicons"
     use {
@@ -233,6 +244,8 @@ return require("packer").startup {
       use "akinsho/nvim-toggleterm.lua"
       use {"akinsho/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     end
+    --}}}
+    ---------------------------------------------------------------------------------
   end,
   config = {
     display = {
@@ -240,5 +253,6 @@ return require("packer").startup {
     }
   }
 }
+--}}}
 
 -- vim:foldmethod=marker
