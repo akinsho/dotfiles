@@ -64,7 +64,8 @@ return require("packer").startup {
     else
       use "neovim/nvim-lspconfig"
       use "nvim-lua/plenary.nvim"
-      use {"RishabhRD/nvim-lsputils", requires = {"RishabhRD/popfix"}}
+      use "RishabhRD/popfix"
+      use "RishabhRD/nvim-lsputils"
       use 'RishabhRD/nvim-cheat.sh'
       use {
         "nvim-lua/completion-nvim",
@@ -74,6 +75,7 @@ return require("packer").startup {
       use "hrsh7th/vim-vsnip-integ"
       use "nvim-lua/lsp-status.nvim"
       use "lewis6991/gitsigns.nvim"
+      use "mfussenegger/nvim-dap"
     end
     --------------------------------------------------------------------------------
     -- Utilities {{{1
