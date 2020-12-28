@@ -66,6 +66,7 @@ function M.disable_relative_number()
 end
 
 vim.g.number_filetype_exclusions = {
+  "man",
   "dap-repl",
   "markdown",
   "vimwiki",
