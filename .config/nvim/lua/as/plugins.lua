@@ -112,7 +112,7 @@ return require("packer").startup {
     -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected
     -- on restarting nvim so disable mark related plugins.
     use {"kshenoy/vim-signature", disable = true}
-    use {"mbbill/undotree", cmd = {"UndotreeToggle"}}
+    use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {
@@ -215,7 +215,7 @@ return require("packer").startup {
         "p00f/nvim-ts-rainbow",
         {
           "nvim-treesitter/playground",
-          cmd = {"TSPlaygroundToggle"},
+          cmd = "TSPlaygroundToggle",
           cond = function()
             return vim.fn.has("mac") == 0
           end
@@ -233,7 +233,7 @@ return require("packer").startup {
       -- local_use "contributing/nvim-web-devicons"
       -- local_use "contributing/nvim-treesitter"
 
-      use {"rafcamlet/nvim-luapad", cmd = {"Luapad"}}
+      use {"rafcamlet/nvim-luapad", cmd = "Luapad"}
 
       local_use "personal/dependency-assist.nvim"
       local_use "personal/nvim-toggleterm.lua"
