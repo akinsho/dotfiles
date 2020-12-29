@@ -35,9 +35,7 @@ function M.colors()
   local title_fg = H.hl_value("Title", "fg")
   local title_gui = H.hl_value("Title", "gui")
   local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
-  local warning_fg =
-    vim.g.colors_name == "one" and P.light_yellow or
-    H.hl_value("WarningMsg", "fg")
+  local warning_fg = vim.g.colors_name == "one" and P.light_yellow or H.hl_value("WarningMsg", "fg")
 
   local highlights = {
     {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic,bold"}},
@@ -84,10 +82,7 @@ local function append(tbl, next, priority)
   priority = priority or 0
   local component, length = unpack(next)
   if component and component ~= "" and next and tbl then
-    table.insert(
-      tbl,
-      {component = component, priority = priority, length = length}
-    )
+    table.insert(tbl, {component = component, priority = priority, length = length})
   end
 end
 
@@ -182,10 +177,8 @@ function _G.statusline()
   local directory_hl = minimal and "StInactiveSep" or "StDirectory"
 
   if H.has_win_highlight(curwin) then
-    directory_hl =
-      H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
-    filename_hl =
-      H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
+    directory_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
+    filename_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
   end
 
   local directory, filename = utils.filename(ctx)

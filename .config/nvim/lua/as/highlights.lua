@@ -44,7 +44,7 @@ function M.adopt_winhighlight(win_id, target, name, default)
       local hl_group = vim.split(found, ":")[2]
       local bg = M.hl_value(hl_group, "bg")
       local fg = M.hl_value(default, "fg")
-      local gui = M.gui_attr(default)
+      local gui = M.hl_value(default, "gui")
       M.highlight(name, {guibg = bg, guifg = fg, gui = gui})
     end
   end
