@@ -8,7 +8,7 @@ return function()
   }
 
   as_utils.map("n", "gb", [[<cmd>BufferLinePick<CR>]])
-  as_utils.map("n", "<leader><tab> ", [[<cmd>BufferLineCycleNext<CR>]])
+  as_utils.map("n", "<leader><tab>", [[<cmd>BufferLineCycleNext<CR>]])
   as_utils.map("n", "<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
   as_utils.map("n", "[b", [[<cmd>BufferLineMoveNext<CR>]])
   as_utils.map("n", "]b", [[<cmd>BufferLineMovePrev<CR>]])
