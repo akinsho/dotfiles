@@ -9,13 +9,27 @@ local autocommands = require("as.autocommands")
 local fn = vim.fn
 local M = {}
 
+local function is_floating_win()
+  return vim.fn.win_gettype() == "popup"
+end
+
 -- block list certain plugins and buffer types
 local function is_blocked()
+  local win_type = vim.fn.win_gettype()
+
+  if win_type == "popup" then
+    return false
+  end
+
   if fn.buflisted(fn.bufnr("")) == 0 then
     return true
   end
 
   if vim.wo.diff then
+    return true
+  end
+
+  if win_type == "command" then
     return true
   end
 
@@ -42,6 +56,9 @@ local function is_blocked()
 end
 
 function M.enable_relative_number()
+  if is_floating_win() then
+    return
+  end
   if is_blocked() then
     -- setlocal nonumber norelativenumber
     vim.wo.number = false
@@ -54,6 +71,9 @@ function M.enable_relative_number()
 end
 
 function M.disable_relative_number()
+  if is_floating_win() then
+    return
+  end
   if is_blocked() then
     -- setlocal nonumber norelativenumber
     vim.wo.number = false
