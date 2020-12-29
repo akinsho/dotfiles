@@ -52,6 +52,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
+    use "nvim-lua/plenary.nvim" -- the mother of dependencies
     use "airblade/vim-rooter"
     use {"junegunn/fzf", run = "./install --all"}
     use "junegunn/fzf.vim"
@@ -71,10 +72,8 @@ return require("packer").startup {
         "neovim/nvim-lspconfig",
         config = [[require("as.lsp")]],
         requires = {
-          "RishabhRD/popfix",
-          "RishabhRD/nvim-lsputils",
-          "nvim-lua/plenary.nvim",
-          "nvim-lua/lsp-status.nvim",
+          {"nvim-lua/lsp-status.nvim"},
+          {"RishabhRD/nvim-lsputils", requires = {"RishabhRD/popfix"}},
           dev "personal/flutter-tools.nvim"
         }
       }
