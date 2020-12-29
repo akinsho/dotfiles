@@ -101,7 +101,9 @@ vim.g.number_filetype_exclusions = {
   "NvimTree",
   "startify",
   "help",
-  "todoist"
+  "todoist",
+  "lsputil_locations_list",
+  "lsputil_symbols_list"
 }
 
 vim.g.number_buftype_exclusions = {

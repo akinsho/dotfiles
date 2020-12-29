@@ -1,7 +1,11 @@
 return function()
   vim.g.lsp_utils_codeaction_opts = {
-    height = 8,
-    numbering = false
+    height = 8
+  }
+  vim.g.lsp_utils_location_opts = {
+    list = {
+      numbering = false
+    }
   }
   vim.lsp.handlers["textDocument/codeAction"] = require "lsputil.codeAction".code_action_handler
   vim.lsp.handlers["textDocument/references"] = require "lsputil.locations".references_handler
