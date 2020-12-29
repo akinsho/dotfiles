@@ -110,12 +110,6 @@ return require("packer").startup {
       use {"lewis6991/gitsigns.nvim", config = require("as.settings.gitsigns")}
       use {"mfussenegger/nvim-dap", config = require("as.settings.dap")}
       use {
-        "theHamsta/nvim-dap-virtual-text",
-        config = function()
-          vim.g.dap_virtual_text = true
-        end
-      }
-      use {
         "hrsh7th/vim-vsnip",
         config = require("as.settings.vim-vsnip"),
         requires = {"hrsh7th/vim-vsnip-integ"}
@@ -125,7 +119,6 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
-    use {"chip/vim-fat-finger", event = "CursorHoldI * "}
     use "arecarn/vim-fold-cycle"
     use "cohama/lexima.vim"
     use "psliwka/vim-smoothie"
@@ -133,12 +126,14 @@ return require("packer").startup {
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
     use "liuchengxu/vim-which-key"
-    -- TODO marks are currently broken in neovim i.e. deleted marks are resurrected
-    -- on restarting nvim so disable mark related plugins.
-    use {"kshenoy/vim-signature", disable = true}
-    use {"mbbill/undotree", cmd = "UndotreeToggle"}
+    -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
+    use {"kshenoy/vim-signature"}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
+    use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
+    use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
+    -- https://github.com/iamcco/markdown-preview.nvim/issues/50
+    use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
     use {
       "rrethy/vim-hexokinase",
       run = "make hexokinase",
@@ -146,9 +141,6 @@ return require("packer").startup {
         vim.g.Hexokinase_ftDisabled = {"vimwiki"}
       end
     }
-    use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
-    -- https://github.com/iamcco/markdown-preview.nvim/issues/50
-    use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
     --}}}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management {{{
@@ -184,9 +176,8 @@ return require("packer").startup {
     use "Yggdroot/indentLine"
     use {
       "sheerun/vim-polyglot",
-      setup = function()
-        vim.g.polyglot_disabled = {"sensible"}
-      end
+      config = require("as.settings.polyglot"),
+      setup = [[vim.g.polyglot_disabled = {"sensible"}]]
     }
     ---}}}
     --------------------------------------------------------------------------------
