@@ -29,7 +29,28 @@ as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 
 ---@param path string
 local function dev(path)
-  return "~/Desktop/projects/" .. path
+  return os.getenv("HOME") .. "/Desktop/projects/" .. path
+end
+
+-- helper function to allow deriving the base path
+-- for local plugins. If this is hard coded
+-- moving things around (which I've done previously) becomes painful
+---@param use function
+local function create_local(use)
+  ---@param spec string | table
+  return function(spec)
+    local path = ""
+    if type(spec) == "table" then
+      path = dev(spec[1])
+      spec[1] = path
+    elseif type(spec) == "string" then
+      path = dev(spec)
+      spec = path
+    end
+    if fn.isdirectory(fn.expand(path)) == 1 then
+      use(spec)
+    end
+  end
 end
 
 --[[
@@ -39,14 +60,7 @@ end
 --]]
 return require("packer").startup {
   function(use)
-    ---@param path string
-    local function local_use(path)
-      local plug_path = dev(path)
-      if fn.isdirectory(fn.expand(plug_path)) == 1 then
-        use(plug_path)
-      end
-    end
-
+    local local_use = create_local(use)
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true}
     --------------------------------------------------------------------------------
@@ -238,9 +252,14 @@ return require("packer").startup {
 
       use {"rafcamlet/nvim-luapad", cmd = "Luapad"}
 
-      local_use "personal/dependency-assist.nvim"
-      local_use "personal/nvim-toggleterm.lua"
-      use {dev "personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
+      local_use {"personal/nvim-toggleterm.lua"}
+      local_use {
+        "personal/dependency-assist.nvim",
+        config = function()
+          require "dependency_assist".setup {}
+        end
+      }
+      local_use {"personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     else
       use "akinsho/dependency-assist.nvim"
       use "akinsho/nvim-toggleterm.lua"
