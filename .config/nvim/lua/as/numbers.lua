@@ -86,6 +86,7 @@ function M.disable_relative_number()
 end
 
 vim.g.number_filetype_exclusions = {
+  "log",
   "man",
   "dap-repl",
   "markdown",
