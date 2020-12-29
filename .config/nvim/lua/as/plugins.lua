@@ -70,7 +70,14 @@ return require("packer").startup {
     use "airblade/vim-rooter"
     use {"junegunn/fzf", run = "./install --all"}
     use "junegunn/fzf.vim"
-    use "mhinz/vim-startify"
+    use {
+      "dhruvasagar/vim-prosession",
+      requires = {"tpope/vim-obsession"},
+      config = function()
+        vim.g.prosession_dir = vim.fn.stdpath("data") .. "/session"
+        vim.g.prosession_on_startup = 1
+      end
+    }
     use {
       "christoomey/vim-tmux-navigator",
       cond = function()
