@@ -100,9 +100,7 @@ local function setup_autocommands(client)
   if client and client.resolved_capabilities.signature_help then
     extend(
       commands.LspCursorCommands,
-      {
-        {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"}
-      }
+      {{"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"}}
     )
   end
   if client and client.resolved_capabilities.document_highlight then
@@ -158,22 +156,10 @@ end
 -- Signs
 -----------------------------------------------------------------------------//
 local signs = {
-  {
-    "LspDiagnosticsSignError",
-    {text = "✗", texthl = "LspDiagnosticsSignError"}
-  },
-  {
-    "LspDiagnosticsSignWarning",
-    {text = "", texthl = "LspDiagnosticsSignWarning"}
-  },
-  {
-    "LspDiagnosticsSignInformation",
-    {text = "", texthl = "LspDiagnosticsSignInformation"}
-  },
-  {
-    "LspDiagnosticsSignHint",
-    {text = "", texthl = "LspDiagnosticsSignHint"}
-  }
+  {"LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsSignError"}},
+  {"LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsSignWarning"}},
+  {"LspDiagnosticsSignInformation", {text = "", texthl = "LspDiagnosticsSignInformation"}},
+  {"LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsSignHint"}}
 }
 
 local function on_attach(client, bufnr)
@@ -290,6 +276,7 @@ function M.setup()
       init_options = {documentFormatting = true},
       filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
       settings = {
+        -- add ".lua-format" to root if using lua-format
         rootMarkers = {".git/"},
         languages = {
           yaml = {prettier},
@@ -298,8 +285,12 @@ function M.setup()
           css = {prettier},
           markdown = {prettier},
           -- npm i -g lua-fmt
+          --'lua-format -i -c ./.lua-format'
           lua = {
-            {formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin", formatStdin = true}
+            {
+              formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
+              formatStdin = true
+            }
           }
         }
       }

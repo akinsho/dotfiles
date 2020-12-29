@@ -100,7 +100,7 @@ return require("packer").startup {
         requires = {"hrsh7th/vim-vsnip-integ"}
       }
     end
-    --}}}
+    -- }}}
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
@@ -139,12 +139,12 @@ return require("packer").startup {
       event = {"BufEnter *.wiki"},
       requires = {"tools-life/taskwiki"}
     }
-    --}}}
+    -- }}}
     --------------------------------------------------------------------------------
     -- Profiling {{{
     --------------------------------------------------------------------------------
     use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
-    --}}}
+    -- }}}
     --------------------------------------------------------------------------------
     -- TPOPE {{{
     --------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ return require("packer").startup {
     -- sets searchable path for filetypes like go so 'gf' works
     use "tpope/vim-apathy"
     use "tpope/vim-projectionist"
-    --}}}
+    -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
@@ -186,20 +186,20 @@ return require("packer").startup {
     use "tommcdo/vim-exchange"
     use "wellle/targets.vim"
     use {"kana/vim-textobj-user", requires = {"kana/vim-operator-user", "glts/vim-textobj-comment"}}
-    --}}}
+    -- }}}
     --------------------------------------------------------------------------------
     -- Search Tools {{{
     --------------------------------------------------------------------------------
     use "justinmk/vim-sneak"
     use "junegunn/vim-peekaboo"
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}}
-    --}}}
+    -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
     use "rakr/vim-one"
-    --}}}
+    -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ return require("packer").startup {
       use "akinsho/nvim-toggleterm.lua"
       use {"akinsho/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     end
-    --}}}
+    -- }}}
     ---------------------------------------------------------------------------------
   end,
   config = {
@@ -255,6 +255,6 @@ return require("packer").startup {
     }
   }
 }
---}}}
+-- }}}
 
 -- vim:foldmethod=marker
