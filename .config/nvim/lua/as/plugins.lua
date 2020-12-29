@@ -70,11 +70,14 @@ return require("packer").startup {
     else
       use {
         "neovim/nvim-lspconfig",
-        config = [[require("as.lsp")]],
         requires = {
           {"nvim-lua/lsp-status.nvim"},
-          {"RishabhRD/nvim-lsputils", requires = {"RishabhRD/popfix"}},
-          dev "personal/flutter-tools.nvim"
+          {
+            "RishabhRD/nvim-lsputils",
+            requires = {"RishabhRD/popfix"},
+            config = require("as.settings.lsputils")
+          },
+          {dev("personal/flutter-tools.nvim")}
         }
       }
       use "RishabhRD/nvim-cheat.sh"

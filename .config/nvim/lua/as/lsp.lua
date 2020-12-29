@@ -1,19 +1,43 @@
 -----------------------------------------------------------------------------//
--- Init
+-- Native LSP config
 -----------------------------------------------------------------------------//
+local M = {}
+
 local fn = vim.fn
 local extend = vim.list_extend
 local api = vim.api
-
-local M = {}
 
 local lspconfig = require "lspconfig"
 local lsp_status = require "lsp-status"
 local flutter = require "flutter-tools"
 
-local H = require "as.highlights"
 local autocommands = require "as.autocommands"
 local utils = require "as.utils"
+
+-----------------------------------------------------------------------------//
+-- Highlights
+-----------------------------------------------------------------------------//
+function M.highlight()
+  local highlights = {
+    {"LspReferenceText", {gui = "underline"}},
+    {"LspReferenceRead", {gui = "underline"}},
+    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
+    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
+    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
+    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
+    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
+    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
+    {
+      "LspDiagnosticsUnderlineInformation",
+      {gui = "undercurl", guisp = "#15aabf"}
+    }
+  }
+  for _, hl in pairs(highlights) do
+    require("as.highlights").highlight(unpack(hl))
+  end
+end
+
 -----------------------------------------------------------------------------//
 -- Helpers
 -----------------------------------------------------------------------------//
@@ -70,7 +94,7 @@ local function setup_autocommands(client)
       }
     },
     LspHighlights = {
-      {"ColorScheme", "*", "lua require('as.lsp').setup_lsp_highlights()"}
+      {"VimEnter,ColorScheme", "*", "lua require('as.lsp').highlight()"}
     }
   }
   if client and client.resolved_capabilities.signature_help then
@@ -127,8 +151,6 @@ local function setup_mappings(client)
   map("n", "<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
   map("n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
-  map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
   map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   map("x", "<leader>a", "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 end
@@ -154,15 +176,6 @@ local signs = {
   }
 }
 
-for _, sign in pairs(signs) do
-  fn.sign_define(unpack(sign))
-end
-
------------------------------------------------------------------------------//
--- Setup plugins
------------------------------------------------------------------------------//
-flutter.setup {}
-
 local function on_attach(client, bufnr)
   setup_autocommands(client)
   setup_mappings(client)
@@ -173,166 +186,145 @@ local function on_attach(client, bufnr)
   lsp_status.on_attach(client)
 end
 
-lsp_status.config {
-  kind_labels = vim.g.completion_customize_lsp_label,
-  indicator_hint = "",
-  indicator_info = "",
-  indicator_errors = "✗",
-  indicator_warnings = "",
-  status_symbol = ""
-}
-lsp_status.register_progress()
------------------------------------------------------------------------------//
--- Highlights
------------------------------------------------------------------------------//
-function M.setup_lsp_highlights()
-  local highlights = {
-    {"LspReferenceText", {gui = "underline"}},
-    {"LspReferenceRead", {gui = "underline"}},
-    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
-    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
-    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
-    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
-    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
-    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
+function M.setup()
+  M.highlight()
+
+  for _, sign in pairs(signs) do
+    fn.sign_define(unpack(sign))
+  end
+
+  -----------------------------------------------------------------------------//
+  -- Setup plugins
+  -----------------------------------------------------------------------------//
+  flutter.setup {}
+
+  lsp_status.config {
+    kind_labels = vim.g.completion_customize_lsp_label,
+    indicator_hint = "",
+    indicator_info = "",
+    indicator_errors = "✗",
+    indicator_warnings = "",
+    status_symbol = ""
+  }
+  lsp_status.register_progress()
+
+  -----------------------------------------------------------------------------//
+  -- Handler overrides
+  -----------------------------------------------------------------------------//
+  vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
     {
-      "LspDiagnosticsUnderlineInformation",
-      {gui = "undercurl", guisp = "#15aabf"}
+      underline = true,
+      virtual_text = false,
+      signs = true,
+      update_in_insert = false
     }
-  }
-  for _, hl in pairs(highlights) do
-    H.highlight(unpack(hl))
-  end
-end
+  )
 
-M.setup_lsp_highlights()
-
------------------------------------------------------------------------------//
--- Handler overrides
------------------------------------------------------------------------------//
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-    underline = true,
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false
-  }
-)
-
-vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-  if err ~= nil or result == nil then
-    return
-  end
-  if not vim.bo[bufnr].modified then
-    local view = vim.fn.winsaveview()
-    vim.lsp.util.apply_text_edits(result, bufnr)
-    vim.fn.winrestview(view)
-    if bufnr == vim.api.nvim_get_current_buf() then
-      vim.cmd("noautocmd :update")
+  vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
+    if err ~= nil or result == nil then
+      return
+    end
+    if not vim.bo[bufnr].modified then
+      local view = vim.fn.winsaveview()
+      vim.lsp.util.apply_text_edits(result, bufnr)
+      vim.fn.winrestview(view)
+      if bufnr == vim.api.nvim_get_current_buf() then
+        vim.cmd("noautocmd :update")
+      end
     end
   end
-end
-
-vim.lsp.handlers["textDocument/codeAction"] = require "lsputil.codeAction".code_action_handler
-vim.lsp.handlers["textDocument/references"] = require "lsputil.locations".references_handler
-vim.lsp.handlers["textDocument/definition"] = require "lsputil.locations".definition_handler
-vim.lsp.handlers["textDocument/declaration"] = require "lsputil.locations".declaration_handler
-vim.lsp.handlers["textDocument/typeDefinition"] = require "lsputil.locations".typeDefinition_handler
-vim.lsp.handlers["textDocument/implementation"] = require "lsputil.locations".implementation_handler
-vim.lsp.handlers["textDocument/documentSymbol"] = require "lsputil.symbols".document_handler
-vim.lsp.handlers["workspace/symbol"] = require "lsputil.symbols".workspace_handler
------------------------------------------------------------------------------//
--- Language servers
------------------------------------------------------------------------------//
-local function get_lua_runtime()
-  local result = {
-    -- This loads the `lua` files from nvim into the runtime.
-    [fn.expand("$VIMRUNTIME/lua")] = true,
-    [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-  }
-  for _, path in pairs(api.nvim_list_runtime_paths()) do
-    local lua_path = path .. "/lua"
-    if fn.isdirectory(lua_path) > 0 then
-      result[lua_path] = true
+  -----------------------------------------------------------------------------//
+  -- Language servers
+  -----------------------------------------------------------------------------//
+  local function get_lua_runtime()
+    local result = {
+      -- This loads the `lua` files from nvim into the runtime.
+      [fn.expand("$VIMRUNTIME/lua")] = true,
+      [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+    }
+    for _, path in pairs(api.nvim_list_runtime_paths()) do
+      local lua_path = path .. "/lua"
+      if fn.isdirectory(lua_path) > 0 then
+        result[lua_path] = true
+      end
     end
+    return result
   end
-  return result
-end
 
-local prettier = {formatCommand = "prettier"}
+  local prettier = {formatCommand = "prettier"}
 
-local servers = {
-  rust_analyzer = {},
-  vimls = {},
-  gopls = {},
-  flow = {},
-  jsonls = {},
-  html = {},
-  tsserver = {},
-  sumneko_lua = {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = {"vim"},
-          workspaceDelay = -1
-        },
-        completion = {
-          keywordSnippet = "Disable"
-        },
-        runtime = {
-          version = "LuaJIT",
-          path = vim.split(package.path, ";")
-        },
-        awakened = {cat = true},
-        workspace = {
-          maxPreload = 1000,
-          preloadFileSize = 1000,
-          library = get_lua_runtime()
+  local servers = {
+    rust_analyzer = {},
+    vimls = {},
+    gopls = {},
+    flow = {},
+    jsonls = {},
+    html = {},
+    tsserver = {},
+    sumneko_lua = {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {"vim"},
+            workspaceDelay = -1
+          },
+          completion = {
+            keywordSnippet = "Disable"
+          },
+          runtime = {
+            version = "LuaJIT",
+            path = vim.split(package.path, ";")
+          },
+          awakened = {cat = true},
+          workspace = {
+            maxPreload = 1000,
+            preloadFileSize = 1000,
+            library = get_lua_runtime()
+          }
         }
       }
-    }
-  },
-  efm = {
-    init_options = {documentFormatting = true},
-    filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
-    settings = {
-      rootMarkers = {".git/"},
-      languages = {
-        yaml = {prettier},
-        json = {prettier},
-        html = {prettier},
-        css = {prettier},
-        markdown = {prettier},
-        -- npm i -g lua-fmt
-        lua = {
-          {formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin", formatStdin = true}
-        }
-      }
-    }
-  },
-  dartls = {
-    flags = {allow_incremental_sync = true},
-    init_options = {
-      closingLabels = true,
-      outline = true,
-      flutterOutline = true
     },
-    on_attach = on_attach,
-    handlers = {
-      ["dart/textDocument/publishClosingLabels"] = flutter.closing_tags,
-      ["dart/textDocument/publishOutline"] = flutter.outline
+    efm = {
+      init_options = {documentFormatting = true},
+      filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
+      settings = {
+        rootMarkers = {".git/"},
+        languages = {
+          yaml = {prettier},
+          json = {prettier},
+          html = {prettier},
+          css = {prettier},
+          markdown = {prettier},
+          -- npm i -g lua-fmt
+          lua = {
+            {formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin", formatStdin = true}
+          }
+        }
+      }
+    },
+    dartls = {
+      flags = {allow_incremental_sync = true},
+      init_options = {
+        closingLabels = true,
+        outline = true,
+        flutterOutline = true
+      },
+      on_attach = on_attach,
+      handlers = {
+        ["dart/textDocument/publishClosingLabels"] = flutter.closing_tags,
+        ["dart/textDocument/publishOutline"] = flutter.outline
+      }
     }
   }
-}
 
-for server, config in pairs(servers) do
-  config.on_attach = on_attach
-  local status_capabilities = lsp_status.capabilities
-  config.capabilities = utils.deep_merge(config.capabilities or {}, status_capabilities)
-  lspconfig[server].setup(config)
+  for server, config in pairs(servers) do
+    config.on_attach = on_attach
+    local status_capabilities = lsp_status.capabilities
+    config.capabilities = utils.deep_merge(config.capabilities or {}, status_capabilities)
+    lspconfig[server].setup(config)
+  end
 end
 
 return M
