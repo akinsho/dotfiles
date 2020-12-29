@@ -240,6 +240,10 @@ return require("packer").startup {
       }
     }
 
+    local dep_assist = function()
+      return require("dependency_assist").setup()
+    end
+
     if not has("mac") then
       -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
       -- packer doesn't swap between both groups of plugins
@@ -253,11 +257,11 @@ return require("packer").startup {
 
       use {"rafcamlet/nvim-luapad", cmd = "Luapad"}
 
-      local_use {"personal/dependency-assist.nvim", config = require("dependency_assist").setup}
+      local_use {"personal/dependency-assist.nvim", config = dep_assist}
       local_use {"personal/nvim-toggleterm.lua", config = require("as.settings.toggleterm")}
       local_use {"personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     else
-      use {"akinsho/dependency-assist.nvim", config = require("dependency_assist").setup}
+      use {"akinsho/dependency-assist.nvim", config = dep_assist}
       use {"akinsho/nvim-toggleterm.lua", config = require("as.settings.toggleterm")}
       use {"akinsho/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
     end
