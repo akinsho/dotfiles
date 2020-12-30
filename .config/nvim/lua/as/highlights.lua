@@ -188,7 +188,7 @@ local function general_overrides()
     {"typecriptParens", {link = "NONE", force = true}},
     -- Add undercurl to existing spellbad highlight
     {"SpellBad", {gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green"}},
-    {"dartStorageClass", {link = "DiffAdd", force = true}},
+    {"dartStorageClass", {link = "Statement", force = true}},
     -- Customize Diff highlighting
     {"DiffAdd", {guibg = "green", guifg = "NONE"}},
     {"DiffDelete", {guibg = "red", guifg = "#5c6370", gui = "NONE"}},
