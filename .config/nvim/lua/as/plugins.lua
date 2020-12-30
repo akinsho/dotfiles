@@ -125,12 +125,13 @@ return require("packer").startup {
     use "mg979/vim-visual-multi"
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
-    use "liuchengxu/vim-which-key"
-    -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
+    -- NOTE: marks are currently broken in neovim i.e.
+    -- deleted marks are resurrected on restarting nvim
     use {"kshenoy/vim-signature"}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
+    use {"liuchengxu/vim-which-key", config = require("as.settings.whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     -- https://github.com/iamcco/markdown-preview.nvim/issues/50
     use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
