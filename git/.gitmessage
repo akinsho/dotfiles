@@ -50,4 +50,3 @@
 # A specification for adding human and machine readable meaning to commit messages
 # Ref: https://www.conventionalcommits.org
 # --------------------o
-# vim:ft=gitcommit

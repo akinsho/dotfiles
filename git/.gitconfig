@@ -33,7 +33,7 @@
   fall = fetch --all
   # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
   uncommit = reset --soft HEAD^
-  hard-reset = reset --hard $(git upstream)
+  reset-up = reset --hard $(git upstream)
   sl = log --oneline --decorate -20
   new = checkout -b
 [delta]
