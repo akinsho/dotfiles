@@ -25,7 +25,7 @@ local plain_filetypes = {
   "minimap",
   "tsplayground",
   "coc-explorer",
-  "LuaTree",
+  "NvimTree",
   "undotree",
   "neoterm",
   "vista",
@@ -63,7 +63,7 @@ local exceptions = {
     help = "",
     undotree = "פּ",
     ["coc-explorer"] = "",
-    LuaTree = "פּ",
+    NvimTree = "פּ",
     toggleterm = " ",
     calendar = ""
   },
@@ -83,7 +83,7 @@ local exceptions = {
     help = "help",
     undotree = "UndoTree",
     ["coc-explorer"] = "Coc Explorer",
-    LuaTree = "Lua Tree",
+    NvimTree = "Nvim Tree",
     toggleterm = get_toggleterm_name
   }
 }
@@ -145,8 +145,7 @@ end
 
 --- @param ctx table
 function M.is_plain(ctx)
-  return contains(plain_filetypes, ctx.filetype) or
-    contains(plain_buftypes, ctx.buftype) or
+  return contains(plain_filetypes, ctx.filetype) or contains(plain_buftypes, ctx.buftype) or
     ctx.preview or
     exists("#goyo") > 0
 end
@@ -469,20 +468,11 @@ local function mode_highlight(mode)
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
   local inc_search_bg = H.hl_value("Search", "bg")
   if mode == "i" then
-    H.highlight(
-      "StModeText",
-      {guibg = bg, guifg = palette.dark_blue, gui = "bold"}
-    )
+    H.highlight("StModeText", {guibg = bg, guifg = palette.dark_blue, gui = "bold"})
   elseif visual_regex:match_str(mode) then
-    H.highlight(
-      "StModeText",
-      {guibg = bg, guifg = palette.magenta, gui = "bold"}
-    )
+    H.highlight("StModeText", {guibg = bg, guifg = palette.magenta, gui = "bold"})
   elseif mode == "R" then
-    H.highlight(
-      "StModeText",
-      {guibg = bg, guifg = palette.dark_red, gui = "bold"}
-    )
+    H.highlight("StModeText", {guibg = bg, guifg = palette.dark_red, gui = "bold"})
   elseif command_regex:match_str(mode) then
     H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
   else
@@ -551,8 +541,7 @@ function M.sep(item, opts)
   -- %* resets the highlighting at the end of the separator so it
   -- doesn't interfere with the next component
   local sep_icon_right = opts.small and "%*" or "█%*"
-  local sep_icon_left =
-    opts.prefix ~= "" and "" .. opts.prefix_item or opts.small and "" or "█"
+  local sep_icon_left = opts.prefix ~= "" and "" .. opts.prefix_item or opts.small and "" or "█"
 
   local parts = {
     opts.before,
