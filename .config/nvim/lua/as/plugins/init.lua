@@ -20,7 +20,7 @@ execute "packadd packer.nvim"
 -- cfilter plugin allows filter down an existing quickfix list
 execute "packadd! cfilter"
 
-execute "autocmd! BufWritePost plugins/init.lua PackerCompile"
+execute "autocmd! BufWritePost init.lua PackerCompile"
 
 as_utils.map("n", "<leader>pi", [[<Cmd>PackerInstall<CR>]])
 as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
