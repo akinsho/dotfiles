@@ -37,7 +37,7 @@ function M.colors()
   local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
   local warning_fg = vim.g.colors_name == "one" and P.light_yellow or H.hl_value("WarningMsg", "fg")
 
-  local highlights = {
+  H.all {
     {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic,bold"}},
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
     {"StIndicator", {guibg = bg_color, guifg = tabline_sel_bg}},
@@ -69,10 +69,6 @@ function M.colors()
       {guifg = P.comment_grey, guibg = bg_color, gui = "italic,bold"}
     }
   }
-
-  for _, hl in ipairs(highlights) do
-    H.highlight(unpack(hl))
-  end
 end
 
 --- @param tbl table
