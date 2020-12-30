@@ -13,11 +13,14 @@ return function()
   -- since this mutates an environment variable we check that it has already
   -- been appended before attempting to append it again
   local opts = " --bind=ctrl-a:select-all --layout=reverse"
-  if vim.fn.stridx(vim.fn.expand("$FZF_DEFAULT_OPTS"), opts) == -1 then
+  if vim.fn.stridx(vim.env.FZF_DEFAULT_OPTS, opts) == -1 then
     vim.env.FZF_DEFAULT_OPTS = vim.env.FZF_DEFAULT_OPTS .. opts
   end
 
-  local function build_quickfix_list(lines)
+  -- FIXME: can't pass function references in lua
+  -- fix this once there is a way to pass func refs
+  -- via lua, otherwise create this func in vimscript
+  function _G.__build_quickfix_list(lines)
     vim.fn.setqflist(
       vim.tbl_map(
         function(line)
@@ -30,16 +33,15 @@ return function()
   end
 
   vim.g.fzf_action = {
-    -- ["ctrl-l"] = build_quickfix_list,
+    -- ["ctrl-l"] = vim.fn["function"]("v:lua.__build_quickfix_list"),
     ["ctrl-t"] = "tab split",
     ["ctrl-e"] = "tab edit",
     ["ctrl-s"] = "split",
     ["ctrl-v"] = "vsplit"
   }
-
   vim.g.fzf_nvim_statusline = 1
   vim.g.fzf_buffers_jump = 0
-
+  vim.g.fzf_preview_window = "right:55%"
   -- Customize fzf colors to match your color scheme
   -- bg+ controls the highlight of the selected item
   vim.g.fzf_colors = {
@@ -57,8 +59,6 @@ return function()
     header = {"fg", "Comment"}
   }
 
-  vim.g.fzf_preview_window = "right:55%"
-
   require("as.autocommands").create(
     {
       FzfSettings = {
@@ -71,23 +71,6 @@ return function()
     window = {width = 0.8, height = 0.7, border = "rounded"}
   }
 
-  vim.cmd [[command! -bang -nargs=* Rg
-      call fzf#vim#grep(
-          \ 'rg --hidden --column --line-number --no-heading  --glob "!.git"'.
-          \ ' --color=always --smart-case -- '.shellescape(<q-args>), 1,
-          \ fzf#vim#with_preview(), <bang>0
-          \)
-        ]]
-
-  vim.cmd [[
-  command! -bang -nargs=* Find call fzf#vim#grep(
-    \ 'rg --column --line-number --no-heading'.
-    \ '--fixed-strings --ignore-case --no-ignore --hidden'.
-    \ '--glob "!.git"'.
-    \ '--follow  --color "always" '.shellescape(<q-args>), 1, <bang>0
-    \)]]
-
-  -- FIXME: this includes git excluded files
   vim.cmd [[command! -bang Dots call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)]]
   vim.cmd [[command! -bang WikiSearch call fzf#vim#files(g:wiki_path, fzf#vim#with_preview(), <bang>0)]]
 
@@ -102,6 +85,4 @@ return function()
   map("n", "<leader>fc", "<cmd>Commits<CR>")
   map("n", "<leader>f?", "<cmd>Helptags<CR>")
   map("n", "<leader>fs", "<cmd>Rg<CR>")
-  -- Find Word under cursor
-  map("n", "<leader>fw", "<cmd>Find <C-R><C-W><CR>")
 end
