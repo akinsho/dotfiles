@@ -20,7 +20,7 @@ execute "packadd packer.nvim"
 -- cfilter plugin allows filter down an existing quickfix list
 execute "packadd! cfilter"
 
-execute "autocmd BufWritePost plugins.lua PackerCompile"
+execute "autocmd! BufWritePost plugins/init.lua PackerCompile"
 
 as_utils.map("n", "<leader>pi", [[<Cmd>PackerInstall<CR>]])
 as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
@@ -97,21 +97,21 @@ return require("packer").startup {
           {
             "RishabhRD/nvim-lsputils",
             requires = {"RishabhRD/popfix"},
-            config = require("as.settings.lsputils")
+            config = require("as.plugins.lsputils")
           }
         }
       }
       use "RishabhRD/nvim-cheat.sh"
       use {
         "nvim-lua/completion-nvim",
-        config = require("as.settings.completion"),
+        config = require("as.plugins.completion"),
         requires = {{"aca/completion-tabnine", run = "./install.sh"}}
       }
-      use {"lewis6991/gitsigns.nvim", config = require("as.settings.gitsigns")}
-      use {"mfussenegger/nvim-dap", config = require("as.settings.dap")}
+      use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
+      use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
       use {
         "hrsh7th/vim-vsnip",
-        config = require("as.settings.vim-vsnip"),
+        config = require("as.plugins.vim-vsnip"),
         requires = {"hrsh7th/vim-vsnip-integ"}
       }
     end
@@ -131,7 +131,7 @@ return require("packer").startup {
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
-    use {"liuchengxu/vim-which-key", config = require("as.settings.whichkey")}
+    use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     -- https://github.com/iamcco/markdown-preview.nvim/issues/50
     use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
@@ -174,10 +174,10 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
-    use {"Yggdroot/indentLine", config = require("as.settings.indentline")}
+    use {"Yggdroot/indentLine", config = require("as.plugins.indentline")}
     use {
       "sheerun/vim-polyglot",
-      config = require("as.settings.polyglot"),
+      config = require("as.plugins.polyglot"),
       setup = [[vim.g.polyglot_disabled = {"sensible"}]]
     }
     ---}}}
@@ -221,12 +221,12 @@ return require("packer").startup {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
       keys = {"<c-n>"},
-      config = require("as.settings.nvim-tree")
+      config = require("as.plugins.nvim-tree")
     }
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      config = require("as.settings.treesitter"),
+      config = require("as.plugins.treesitter"),
       requires = {
         "p00f/nvim-ts-rainbow",
         {
@@ -257,12 +257,12 @@ return require("packer").startup {
       use {"rafcamlet/nvim-luapad", cmd = "Luapad"}
 
       local_use {"personal/dependency-assist.nvim", config = dep_assist}
-      local_use {"personal/nvim-toggleterm.lua", config = require("as.settings.toggleterm")}
-      local_use {"personal/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
+      local_use {"personal/nvim-toggleterm.lua", config = require("as.plugins.toggleterm")}
+      local_use {"personal/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline")}
     else
       use {"akinsho/dependency-assist.nvim", config = dep_assist}
-      use {"akinsho/nvim-toggleterm.lua", config = require("as.settings.toggleterm")}
-      use {"akinsho/nvim-bufferline.lua", config = require("as.settings.nvim-bufferline")}
+      use {"akinsho/nvim-toggleterm.lua", config = require("as.plugins.toggleterm")}
+      use {"akinsho/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline")}
     end
     -- }}}
     ---------------------------------------------------------------------------------
