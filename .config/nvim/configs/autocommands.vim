@@ -88,9 +88,9 @@ augroup END
 augroup UpdateVim
   autocmd!
   " NOTE: This takes ${VIM_STARTUP_TIME} duration to run
-  autocmd BufWritePost $DOTFILES/**/nvim/configs/*.vim,$MYVIMRC ++nested
-        \  source $MYVIMRC | redraw | silent doautocmd ColorScheme |
-        \  call utils#message("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
+  " autocmd BufWritePost $DOTFILES/**/nvim/configs/*.vim,$MYVIMRC ++nested
+  "       \  luafile $MYVIMRC | redraw | silent doautocmd ColorScheme |
+  "       \  call utils#message("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
 
   if has('gui_running')
     if filereadable($MYGVIMRC)
