@@ -206,8 +206,11 @@ return function()
     require("as.autocommands").create(
       {
         which_key = {
-          {"FileType", "which_key", [[set laststatus=0]]},
-          {"BufLeave", "<buffer>", [[set laststatus=2]]}
+          {
+            "FileType",
+            "which_key",
+            [[setlocal laststatus=0 | autocmd BufLeave <buffer> set laststatus=2]]
+          }
         }
       }
     )
