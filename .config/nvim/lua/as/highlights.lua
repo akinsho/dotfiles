@@ -59,24 +59,29 @@ function M.highlight(name, opts)
   local gui = opts.gui
   local guisp = opts.guisp
   local cterm = opts.cterm
+  local link = opts.link
   if name and vim.tbl_count(opts) > 0 then
+    if link and link ~= "" then
+      vim.cmd("highlight def link " .. name .. " " .. link)
+    else
     local cmd = {"highlight", name}
-    if guifg and guifg ~= "" then
-      table.insert(cmd, "guifg=" .. guifg)
+      if guifg and guifg ~= "" then
+        table.insert(cmd, "guifg=" .. guifg)
+      end
+      if guibg and guibg ~= "" then
+        table.insert(cmd, "guibg=" .. guibg)
+      end
+      if gui and gui ~= "" then
+        table.insert(cmd, "gui=" .. gui)
+      end
+      if guisp and guisp ~= "" then
+        table.insert(cmd, "guisp=" .. guisp)
+      end
+      if cterm and cterm ~= "" then
+        table.insert(cmd, "cterm=" .. cterm)
+      end
+      vim.cmd(table.concat(cmd, " "))
     end
-    if guibg and guibg ~= "" then
-      table.insert(cmd, "guibg=" .. guibg)
-    end
-    if gui and gui ~= "" then
-      table.insert(cmd, "gui=" .. gui)
-    end
-    if guisp and guisp ~= "" then
-      table.insert(cmd, "guisp=" .. guisp)
-    end
-    if cterm and cterm ~= "" then
-      table.insert(cmd, "cterm=" .. cterm)
-    end
-    vim.cmd(table.concat(cmd, " "))
   end
 end
 
