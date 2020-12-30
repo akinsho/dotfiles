@@ -1,0 +1,53 @@
+
+# <type>[(optional scope)]: <subject>
+# <BLANK LINE>
+# [optional body]
+# <BLANK LINE>
+# [optional footer(s)]
+
+# type
+#   fix:      A bug fix
+#   feat:     A new features
+#   docs:     Documentation only changes
+#   style:    Changes that do not affect the meaning of the code
+#   refactor: A code change that neither fixes a bug nor adds a feature
+#   perf:     A code change that improves performance
+#   test:     Adding missing or correcting existing tests
+#   build:    Changes that affect the build system or external dependencies
+#   ci:       Changes to our CI configuration files and scripts
+#   chore:    Other changes that don't modify src or test files
+#   revert:   Reverts a previous commit
+
+# optional scope
+#   init:     Initialize commit
+#   security: Security to invite users to upgrade in case of vulnerabilities
+#   deps:     Dependencies upgrading or downgrading
+#   config:   Configuration changes
+#   i18n:     Internationalization and localization
+#   ...
+
+# subject: Short summary
+#   - Do nt end with a period
+#   - Not cased
+#   - Start writing in lower case
+#   - 100 chars or less
+#   - Use the imperative mood
+
+# optional body: Explain why this change is being made.
+#   - Wrap it to about 100 characters or so
+#   - Can use multiple lines with "-" for bullet points
+#   - Explain what and why vs. how
+
+# optional footer(s): Provide links or keys to any relevant tickets
+#   - Wrap it to about 100 characters or so
+#   Linking a pull request to an issue using a keyword
+#     - close #ISSUE-NUMBER
+#     - fix #ISSUE-NUMBER
+#     - resolve #ISSUE-NUMBER
+
+# --------------------
+# Conventional Commits
+# A specification for adding human and machine readable meaning to commit messages
+# Ref: https://www.conventionalcommits.org
+# --------------------o
+# vim:ft=gitcommit

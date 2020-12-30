@@ -6,6 +6,8 @@
   path = .gitconfig-projects
 [status]
   submoduleSummary = true
+[commit]
+  template = ~/.gitmessage
 [color]
   ui = auto
   status = auto
@@ -31,9 +33,9 @@
   fall = fetch --all
   # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
   uncommit = reset --soft HEAD^
-  ureset = reset --hard $(git upstream)
+  hard-reset = reset --hard $(git upstream)
   sl = log --oneline --decorate -20
-  n = checkout -b
+  new = checkout -b
 [delta]
   features = line-numbers decorations
 [delta "decorations"]
@@ -56,6 +58,6 @@
 [rerere]
   enabled = true
 [hub]
-	protocol = ssh
+  protocol = ssh
 [init]
-	defaultBranch = main
+  defaultBranch = main
