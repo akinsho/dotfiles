@@ -124,12 +124,12 @@ return require("packer").startup {
     use "mg979/vim-visual-multi"
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
-    use "RishabhRD/nvim-cheat.sh" -- TODO check that I actually use this
     -- NOTE: marks are currently broken in neovim i.e.
     -- deleted marks are resurrected on restarting nvim
     -- use {"kshenoy/vim-signature"}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
+    use {"RishabhRD/nvim-cheat.sh", cmd = {"Cheat"}} -- TODO check that I actually use this
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
@@ -228,13 +228,11 @@ return require("packer").startup {
       run = ":TSUpdate",
       config = require("as.plugins.treesitter"),
       requires = {
-        "p00f/nvim-ts-rainbow",
+        {"p00f/nvim-ts-rainbow"},
         {
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
-          cond = function()
-            return vim.fn.has("mac") == 0
-          end
+          cond = [[vim.fn.has("mac") == 0]]
         }
       }
     }
