@@ -52,32 +52,26 @@ end
 ---@param name string
 ---@param opts table
 function M.highlight(name, opts)
-  local guifg = opts.guifg
-  local guibg = opts.guibg
-  local gui = opts.gui
-  local guisp = opts.guisp
-  local cterm = opts.cterm
-  local link = opts.link
   local force = opts.force or false
   if name and vim.tbl_count(opts) > 0 then
-    if link and link ~= "" then
-      vim.cmd("highlight" .. (force and "!" or "") .. " link " .. name .. " " .. link)
+    if opts.link and opts.link ~= "" then
+      vim.cmd("highlight" .. (force and "!" or "") .. " link " .. name .. " " .. opts.link)
     else
       local cmd = {"highlight", name}
-      if guifg and guifg ~= "" then
-        table.insert(cmd, "guifg=" .. guifg)
+      if opts.guifg and opts.guifg ~= "" then
+        table.insert(cmd, "guifg=" .. opts.guifg)
       end
-      if guibg and guibg ~= "" then
-        table.insert(cmd, "guibg=" .. guibg)
+      if opts.guibg and opts.guibg ~= "" then
+        table.insert(cmd, "guibg=" .. opts.guibg)
       end
-      if gui and gui ~= "" then
-        table.insert(cmd, "gui=" .. gui)
+      if opts.gui and opts.gui ~= "" then
+        table.insert(cmd, "gui=" .. opts.gui)
       end
-      if guisp and guisp ~= "" then
-        table.insert(cmd, "guisp=" .. guisp)
+      if opts.guisp and opts.guisp ~= "" then
+        table.insert(cmd, "guisp=" .. opts.guisp)
       end
-      if cterm and cterm ~= "" then
-        table.insert(cmd, "cterm=" .. cterm)
+      if opts.cterm and opts.cterm ~= "" then
+        table.insert(cmd, "cterm=" .. opts.cterm)
       end
       vim.cmd(table.concat(cmd, " "))
     end
