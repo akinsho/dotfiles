@@ -109,7 +109,9 @@ vim.g.number_filetype_exclusions = {
 vim.g.number_buftype_exclusions = {
   "terminal",
   "quickfix",
-  "help"
+  "help",
+  "nofile",
+  "acwrite"
 }
 
 autocommands.create(

@@ -173,7 +173,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
-    use "Yggdroot/indentLine"
+    use {"Yggdroot/indentLine", config = require("as.settings.indentline")}
     use {
       "sheerun/vim-polyglot",
       config = require("as.settings.polyglot"),

@@ -28,10 +28,7 @@ function M.highlight()
     {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
     {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
     {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
-    {
-      "LspDiagnosticsUnderlineInformation",
-      {gui = "undercurl", guisp = "#15aabf"}
-    }
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf"}}
   }
   for _, hl in pairs(highlights) do
     require("as.highlights").highlight(unpack(hl))
@@ -87,15 +84,9 @@ end
 local function setup_autocommands(client)
   local commands = {
     LspCursorCommands = {
-      {
-        "CursorHold",
-        "<buffer>",
-        "lua vim.lsp.diagnostic.show_line_diagnostics()"
-      }
+      {"CursorHold", "<buffer>", "lua vim.lsp.diagnostic.show_line_diagnostics()"}
     },
-    LspHighlights = {
-      {"VimEnter,ColorScheme", "*", "lua require('as.lsp').highlight()"}
-    }
+    LspHighlights = {{"VimEnter,ColorScheme", "*", "lua require('as.lsp').highlight()"}}
   }
   if client and client.resolved_capabilities.signature_help then
     extend(
@@ -115,9 +106,7 @@ local function setup_autocommands(client)
   end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    commands.LspFormat = {
-      {"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync(nil, 1000)"}
-    }
+    commands.LspFormat = {{"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync(nil, 1000)"}}
   end
   autocommands.create(commands)
 end
@@ -256,9 +245,7 @@ function M.setup()
             globals = {"vim"},
             workspaceDelay = -1
           },
-          completion = {
-            keywordSnippet = "Disable"
-          },
+          completion = {keywordSnippet = "Both"},
           runtime = {
             version = "LuaJIT",
             path = vim.split(package.path, ";")
@@ -285,12 +272,9 @@ function M.setup()
           css = {prettier},
           markdown = {prettier},
           -- npm i -g lua-fmt
-          --'lua-format -i -c ./.lua-format'
+          -- 'lua-format -i -c ./.lua-format'
           lua = {
-            {
-              formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
-              formatStdin = true
-            }
+            {formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin", formatStdin = true}
           }
         }
       }
