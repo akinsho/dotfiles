@@ -32,11 +32,6 @@ vim.g.vim_dir = vim.g.dotfiles .. "/.config/nvim"
 vim.g.mapleader = "," -- Remap leader key
 vim.g.maplocalleader = " " -- Local leader is <Space>
 
--------------------------------------------------------------------------
--- Essential Settings
--------------------------------------------------------------------------
-vim.cmd [[filetype plugin indent on]]
-vim.cmd [[syntax enable]]
 ------------------------------------------------------------------------
 -- Plugin Configurations
 ------------------------------------------------------------------------
