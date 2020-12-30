@@ -69,7 +69,7 @@ return require("packer").startup {
     use "nvim-lua/plenary.nvim" -- the mother of dependencies
     use "airblade/vim-rooter"
     use {"junegunn/fzf", run = "./install --all"}
-    use "junegunn/fzf.vim"
+    use {"junegunn/fzf.vim", config = require("as.plugins.fzf")}
     use {
       "dhruvasagar/vim-prosession",
       requires = {"tpope/vim-obsession"},
