@@ -7,6 +7,11 @@ local fn = vim.fn
 local extend = vim.list_extend
 local api = vim.api
 
+-- Deactivate for work machines
+if fn.has("mac") then
+  return
+end
+
 local lspconfig = require "lspconfig"
 local lsp_status = require "lsp-status"
 local flutter = require "flutter-tools"
@@ -18,7 +23,7 @@ local utils = require "as.utils"
 -- Highlights
 -----------------------------------------------------------------------------//
 function M.highlight()
-  local highlights = {
+  require("as.highlights").all {
     {"LspReferenceText", {link = "Visual"}},
     {"LspReferenceRead", {link = "Visual"}},
     {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
@@ -30,9 +35,6 @@ function M.highlight()
     {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
     {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf"}}
   }
-  for _, hl in pairs(highlights) do
-    require("as.highlights").highlight(unpack(hl))
-  end
 end
 
 -----------------------------------------------------------------------------//
