@@ -89,6 +89,8 @@ return require("packer").startup {
       use "neoclide/coc.nvim"
       use "honza/vim-snippets"
     else
+      use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
+      use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
       use {
         "neovim/nvim-lspconfig",
         requires = {
@@ -101,14 +103,11 @@ return require("packer").startup {
           }
         }
       }
-      use "RishabhRD/nvim-cheat.sh"
       use {
         "nvim-lua/completion-nvim",
         config = require("as.plugins.completion"),
         requires = {{"aca/completion-tabnine", run = "./install.sh"}}
       }
-      use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
-      use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
       use {
         "hrsh7th/vim-vsnip",
         config = require("as.plugins.vim-vsnip"),
@@ -125,9 +124,10 @@ return require("packer").startup {
     use "mg979/vim-visual-multi"
     use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
+    use "RishabhRD/nvim-cheat.sh" -- TODO check that I actually use this
     -- NOTE: marks are currently broken in neovim i.e.
     -- deleted marks are resurrected on restarting nvim
-    use {"kshenoy/vim-signature"}
+    -- use {"kshenoy/vim-signature"}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
@@ -138,7 +138,7 @@ return require("packer").startup {
     use {
       "rrethy/vim-hexokinase",
       run = "make hexokinase",
-      config = function()
+      setup = function()
         vim.g.Hexokinase_ftDisabled = {"vimwiki"}
       end
     }
