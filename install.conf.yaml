@@ -11,6 +11,7 @@
     ~/.zshrc: zsh/.zshrc
     ~/.zshenv: zsh/zshenv
     ~/.gitconfig: git/.gitconfig
+    ~/.gitmessage: git/.gitmessage
     ~/.config/nvim: .config/nvim
     ~/.config/kitty:
       force: true
