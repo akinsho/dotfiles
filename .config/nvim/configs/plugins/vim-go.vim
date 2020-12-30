@@ -16,7 +16,7 @@ let g:go_highlight_build_constraints     = 1
 let g:go_highlight_function_arguments    = 1
 let g:go_highlight_function_calls        = 1
 
-if !PluginLoaded('vim-go')
+if !v:lua.plugin_loaded('vim-go')
   finish
 endif
 

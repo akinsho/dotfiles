@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-test')
+if !v:lua.plugin_loaded('vim-test')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !PluginLoaded('lexima.vim')
+if !v:lua.plugin_loaded('lexima.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !PluginLoaded("nerdtree.vim")
+if !v:lua.plugin_loaded("nerdtree.vim")
   finish
 endif
 " Bookmark shortcut

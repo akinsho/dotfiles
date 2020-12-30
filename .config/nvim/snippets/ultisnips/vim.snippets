@@ -24,7 +24,7 @@ snippet doc "header block"
 endsnippet
 
 snippet pl "plugin loaded check" b
-if !PluginLoaded('${1:`!p snip.rv = snip.basename`}')
+if !v:lua.plugin_loaded('${1:`!p snip.rv = snip.basename`}')
 	finish
 endif
 endsnippet

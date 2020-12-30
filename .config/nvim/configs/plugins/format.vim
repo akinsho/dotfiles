@@ -1,4 +1,4 @@
-if !PluginLoaded('format.nvim')
+if !v:lua.plugin_loaded('format.nvim')
   finish
 endif
 

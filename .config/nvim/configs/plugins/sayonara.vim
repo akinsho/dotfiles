@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-sayonara')
+if !v:lua.plugin_loaded('vim-sayonara')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !PluginLoaded('vimwiki')
+if !v:lua.plugin_loaded('vimwiki')
   finish
 endif
 ""---------------------------------------------------------------------------//

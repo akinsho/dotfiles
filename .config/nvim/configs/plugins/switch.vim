@@ -1,4 +1,4 @@
-if !PluginLoaded('switch.vim')
+if !v:lua.plugin_loaded('switch.vim')
   finish
 endif
 

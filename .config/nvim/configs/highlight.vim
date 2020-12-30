@@ -2,7 +2,7 @@
 " Color Scheme {{{1
 ""---------------------------------------------------------------------------//
 set background=dark
-if PluginLoaded('onedark.vim')
+if v:lua.plugin_loaded('onedark.vim')
   " ========================
   " OneDark
   " ========================
@@ -33,30 +33,30 @@ if PluginLoaded('onedark.vim')
 
   let g:onedark_terminal_italics = 1
   colorscheme onedark
-elseif PluginLoaded('vim-one')
+elseif v:lua.plugin_loaded('vim-one')
   " ========================
   " ONE
   " ========================
   " See highlight.vim for colorscheme overrides
   let g:one_allow_italics = 1
   colorscheme one
-elseif PluginLoaded('material.vim')
+elseif v:lua.plugin_loaded('material.vim')
   " ========================
   " Material
   " ========================
   " let g:material_theme_style = 'default' | 'palenight' | 'ocean' | 'lighter' | 'darker'
   colorscheme material
-elseif PluginLoaded('candid.vim')
+elseif v:lua.plugin_loaded('candid.vim')
   " ========================
   " Candid
   " ========================
   colorscheme candid
-elseif PluginLoaded('night-owl.vim')
+elseif v:lua.plugin_loaded('night-owl.vim')
   " ========================
   " Night Owl
   " ========================
   colorscheme night-owl
-elseif PluginLoaded('vim-monokai-tasty')
+elseif v:lua.plugin_loaded('vim-monokai-tasty')
   " ========================
   " Monokai Tasty
   " ========================
@@ -68,7 +68,7 @@ endif
 " Plugin highlights
 "--------------------------------------------------------------------------------
 function! s:plugin_highlights() abort
-  if PluginLoaded('vim-sneak')
+  if v:lua.plugin_loaded('vim-sneak')
     " Highlighting sneak and it's label is a little complicated
     " The plugin creates a colorscheme autocommand that
     " checks for the existence of these highlight groups
@@ -80,11 +80,11 @@ function! s:plugin_highlights() abort
     highlight SneakLabelMask guifg=red guibg=background
   endif
 
-  if PluginLoaded('vim-which-key')
+  if v:lua.plugin_loaded('vim-which-key')
     highlight WhichKeySeperator guifg=LightGreen guibg=background
   endif
 
-  if !PluginLoaded('conflict-marker.vim')
+  if !v:lua.plugin_loaded('conflict-marker.vim')
     " Highlight VCS conflict markers
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
   endif

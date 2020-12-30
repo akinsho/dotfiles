@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-easy-align')
+if !v:lua.plugin_loaded('vim-easy-align')
   finish
 endif
 " Start interactive EasyAlign in visual mode (e.g. vipga)

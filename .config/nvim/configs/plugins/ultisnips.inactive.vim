@@ -1,4 +1,4 @@
-if !PluginLoaded('ultisnips')
+if !v:lua.plugin_loaded('ultisnips')
   finish
 endif
 ""---------------------------------------------------------------------------//

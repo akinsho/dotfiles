@@ -1,4 +1,4 @@
-if !PluginLoaded('minimap.vim')
+if !v:lua.plugin_loaded('minimap.vim')
   finish
 endif
 

@@ -559,7 +559,7 @@ nnoremap <leader>} ciw{<c-r>"}<esc>
 nnoremap Q @q
 "}}}
 
-if !PluginLoaded('conflict-marker.vim')
+if !v:lua.plugin_loaded('conflict-marker.vim')
   " Shortcut to jump to next conflict marker"
   nnoremap <silent> ]x /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
   " Shortcut to jump to last conflict marker"

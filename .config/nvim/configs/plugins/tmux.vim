@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-tmux-navigator')
+if !v:lua.plugin_loaded('vim-tmux-navigator')
   finish
 endif
 let g:tmux_navigator_no_mappings = 1

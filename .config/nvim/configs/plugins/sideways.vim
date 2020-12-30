@@ -1,4 +1,4 @@
-if !PluginLoaded("sideways.vim")
+if !v:lua.plugin_loaded("sideways.vim")
   finish
 endif
 

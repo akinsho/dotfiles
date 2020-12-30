@@ -1,4 +1,4 @@
-if !PluginLoaded('nvim-colorizer.lua')
+if !v:lua.plugin_loaded('nvim-colorizer.lua')
   finish
 endif
 

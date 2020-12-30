@@ -1,4 +1,4 @@
-if !PluginLoaded("vim-gitgutter")
+if !v:lua.plugin_loaded("vim-gitgutter")
   finish
 endif
 ""---------------------------------------------------------------------------//

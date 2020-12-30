@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-localvimrc')
+if !v:lua.plugin_loaded('vim-localvimrc')
   finish
 endif
 let g:localvimrc_persistent = 1

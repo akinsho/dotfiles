@@ -1,5 +1,5 @@
 " Open flutter only commands in dart files
-if PluginLoaded('coc.nvim')
+if v:lua.plugin_loaded('coc.nvim')
   nnoremap <silent> <leader>dc  :CocList --input=flutter commands<CR>
   nnoremap <silent> <leader>de  :CocCommand flutter.emulators<CR>
   nnoremap <silent> <leader>dl  :CocCommand flutter.dev.openDevLog<CR>
@@ -8,7 +8,7 @@ if PluginLoaded('coc.nvim')
   nnoremap <silent> <leader>drn :CocCommand flutter.run<CR>
   nnoremap <silent> <leader>drs :CocCommand flutter.dev.hotRestart<CR>
   nnoremap <silent> <leader>dd  :CocCommand flutter.devices<CR>
-elseif PluginLoaded('flutter-tools.nvim')
+elseif v:lua.plugin_loaded('flutter-tools.nvim')
   nnoremap <silent> <leader>de  :FlutterEmulators<CR>
   nnoremap <silent> <leader>dq  :FlutterQuit<CR>
   nnoremap <silent> <leader>drn :FlutterRun<CR>

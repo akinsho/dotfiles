@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-subversive')
+if !v:lua.plugin_loaded('vim-subversive')
   finish
 endif
 " s for substitute

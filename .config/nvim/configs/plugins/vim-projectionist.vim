@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-projectionist')
+if !v:lua.plugin_loaded('vim-projectionist')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !PluginLoaded("git-messenger.vim")
+if !v:lua.plugin_loaded("git-messenger.vim")
   finish
 endif
 nmap <Leader>cm <Plug>(git-messenger)

@@ -1,4 +1,4 @@
-if !PluginLoaded('ctrlsf.vim')
+if !v:lua.plugin_loaded('ctrlsf.vim')
   finish
 endif
 "--------------------------------------------

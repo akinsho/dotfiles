@@ -54,8 +54,4 @@ function M.map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
-function M.plugin_loaded(name)
-  return vim.fn.PluginLoaded(name) > 0
-end
-
 return M

@@ -1,4 +1,4 @@
-if !PluginLoaded('dsf.vim')
+if !v:lua.plugin_loaded('dsf.vim')
   finish
 endif
 

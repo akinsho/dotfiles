@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-visual-multi')
+if !v:lua.plugin_loaded('vim-visual-multi')
   finish
 endif
 

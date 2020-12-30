@@ -1,4 +1,4 @@
-if !PluginLoaded("vim-which-key")
+if !v:lua.plugin_loaded("vim-which-key")
   finish
 endif
 

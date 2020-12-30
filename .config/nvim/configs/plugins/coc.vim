@@ -1,4 +1,4 @@
-if !PluginLoaded('coc.nvim')
+if !v:lua.plugin_loaded('coc.nvim')
   finish
 endif
 ""---------------------------------------------------------------------------//
@@ -240,7 +240,7 @@ nnoremap <silent> <leader>cn  :<C-u>CocList snippets <CR>
 " Resume latest coc list
 nnoremap <silent> <leader>cr  :<C-u>CocListResume<CR>
 
-if PluginLoaded('vim-which-key')
+if v:lua.plugin_loaded('vim-which-key')
   if exists('g:which_leader_key_map')
     let g:which_leader_key_map.a = 'coc codeaction (for text object)'
     let g:which_leader_key_map.c = {

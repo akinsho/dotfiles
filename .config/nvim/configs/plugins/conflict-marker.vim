@@ -1,4 +1,4 @@
-if !PluginLoaded('conflict-marker.vim')
+if !v:lua.plugin_loaded('conflict-marker.vim')
   finish
 endif
 

@@ -9,7 +9,6 @@ local utils = require("as.utils")
 
 _G.as_utils = {
   map = utils.map,
-  plugin_loaded = utils.plugin_loaded,
   profile = utils.profile
 }
 

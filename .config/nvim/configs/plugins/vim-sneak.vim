@@ -1,4 +1,4 @@
-if !PluginLoaded('vim-sneak')
+if !v:lua.plugin_loaded('vim-sneak')
   finish
 endif
 
