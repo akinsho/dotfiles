@@ -7,11 +7,6 @@ local fn = vim.fn
 local extend = vim.list_extend
 local api = vim.api
 
--- Deactivate for work machines
-if fn.has("mac") then
-  return
-end
-
 local lspconfig = require "lspconfig"
 local lsp_status = require "lsp-status"
 local flutter = require "flutter-tools"
@@ -164,6 +159,11 @@ local function on_attach(client, bufnr)
 end
 
 function M.setup()
+  -- Deactivate for work machines
+  if fn.has("mac") then
+    return
+  end
+
   M.highlight()
 
   for _, sign in pairs(signs) do
