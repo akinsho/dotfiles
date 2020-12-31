@@ -78,12 +78,7 @@ return require("packer").startup {
         vim.g.prosession_on_startup = 1
       end
     }
-    use {
-      "christoomey/vim-tmux-navigator",
-      cond = function()
-        return vim.env.TMUX ~= nil
-      end
-    }
+    use "christoomey/vim-tmux-navigator"
 
     if has("mac") then
       use "neoclide/coc.nvim"

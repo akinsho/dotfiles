@@ -180,12 +180,6 @@ map(
 -----------------------------------------------------------------------------//
 -- Window bindings
 -----------------------------------------------------------------------------//
-if not vim.env.TMUX then
-  map("n", "<c-j>", "<c-w>j")
-  map("n", "<c-k>", "<c-w>k")
-  map("n", "<c-h>", "<c-w>h")
-  map("n", "<c-l>", "<c-w>l")
-end
 -- https://vim.fandom.com/wiki/Fast_window_resizing_with_plus/minus_keys
 if fn.bufwinnr(1) then
   map("n", "<a-h>", "<C-W><")
