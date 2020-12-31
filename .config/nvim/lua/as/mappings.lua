@@ -3,6 +3,7 @@ local map = as_utils.map
 local buf_map = as_utils.buf_map
 local fn = vim.fn
 local api = vim.api
+local cmd = as_utils.cmd
 --- work around to place functions in the global scope but
 --- namespaced within a table.
 --- TODO refactor this once nvim allows passing lua functions to mappings
@@ -95,8 +96,6 @@ map("n", "zO", [[zCzO]])
 map("n", "<localleader>,", "<cmd>call utils#modify_line_end_delimiter(',')<cr>")
 map("n", "<localleader>;", "<cmd>call utils#modify_line_end_delimiter(';')<cr>")
 
--- FIXME this doesn't work with tree sitter
-vim.cmd [[command! -nargs=0 Token call utils#token_inspect()]]
 map("n", "<leader>E", "<cmd>Token<cr>")
 
 map("n", "<ScrollWheelDown>", "<c-d>", {silent = true, noremap = false})
@@ -496,7 +495,7 @@ function _G._mappings.toggle_bg()
   vim.o.background = vim.o.background == "dark" and "light" or "dark"
 end
 
-vim.cmd [[command! ToggleBackground lua _mappings.toggle_bg()]]
+cmd("ToggleBackground", [[lua _mappings.toggle_bg()]])
 ------------------------------------------------------------------------------
 -- Profile
 ------------------------------------------------------------------------------
@@ -510,14 +509,23 @@ function _G._mappings.vim_profile(bang)
     vim.cmd [[profile file *]]
   end
 end
-vim.cmd [[command! -bang Profile call s:profile(<bang>0)]]
+cmd("Profile", "call s:profile(<bang>0)", {"-bang"})
 ------------------------------------------------------------------------------
-vim.cmd [[command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen]]
-vim.cmd [[command!  -nargs=1 ReloadModule lua require('plenary.reload').reload_module(<q-args>)]]
-vim.cmd [[command! -nargs=+ -complete=command TabMessage call utils#tab_message(<q-args>)]]
+cmd("Token", "-nargs=0", [[call utils#token_inspect()]]) -- FIXME this doesn't work with tree sitter
+cmd("Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]])
+cmd("ReloadModule", [[lua require('plenary.reload').reload_module(<q-args>)]], {"-nargs=1"})
+cmd("TabMessage", [[call utils#tab_message(<q-args>)]], {"-nargs=+", "-complete=command"})
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
 -- selection placing into the black hole register
-vim.cmd [[command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]]
-vim.cmd [[command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]]
-vim.cmd [[command! -nargs=? AutoResize call utils#auto_resize(<args>)]]
+cmd(
+  "MoveWrite",
+  [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]],
+  {"-bang", "-range", "-nargs=1", "-complete=file"}
+)
+cmd(
+  "MoveAppend",
+  [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]],
+  {"-bang", "-range", "-nargs=1", "-complete=file"}
+)
+cmd("AutoResize", [[call utils#auto_resize(<args>)]], {"-nargs=?"})

@@ -63,4 +63,14 @@ function M.buf_map(bufnr, mode, lhs, rhs, opts)
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
+function M.cmd(name, rhs, types)
+  vim.validate {
+    name = {name, "string"},
+    rhs = {rhs, "string"},
+    types = {types, "table", true}
+  }
+  types = (types and type(types) == "table") and types or {}
+  vim.cmd(string.format("command! %s %s %s", table.concat(types, " "), name, rhs))
+end
+
 return M

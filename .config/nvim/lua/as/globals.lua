@@ -9,6 +9,7 @@ local utils = require("as.utils")
 
 _G.as_utils = {
   map = utils.map,
+  cmd = utils.cmd,
   buf_map = utils.buf_map,
   profile = utils.profile
 }
