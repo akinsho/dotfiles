@@ -12,7 +12,7 @@ _G._mappings = {}
 ------------------------------------------------------------------------------//
 function _G._mappings.add_terminal_mappings()
   if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-    local opts = { silent = false, noremap = true }
+    local opts = {silent = false, noremap = true}
     buf_map(0, "t", "<esc>", [[<C-\><C-n>]], opts)
     buf_map(0, "t", "jk", [[<C-\><C-n>]], opts)
     buf_map(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
@@ -291,11 +291,7 @@ map(
 map("n", "<leader>ev", [[:vsplit $MYVIMRC<cr>]])
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-map(
-  "n",
-  "<leader>sv",
-  [[:luafile $MYVIMRC<cr> <bar> :call utils#message('Sourced init.vim')<cr>]]
-)
+map("n", "<leader>sv", [[:luafile $MYVIMRC<cr> <bar> :call utils#message('Sourced init.vim')<cr>]])
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
@@ -397,18 +393,12 @@ end
 -----------------------------------------------------------------------------//
 -- Command mode related
 -----------------------------------------------------------------------------//
--- source https://superuser.com/a/540519
--- write the visual selection to the filename passed in as a command argument then delete the
--- selection placing into the black hole register
-vim.cmd [[command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]]
-vim.cmd [[command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]]
 -- Smart mappings on the command line
 map("c", "w!!", [[w !sudo tee % >/dev/null]])
 -- insert path of current file into a command
 map("c", "%%", "<C-r>=fnameescape(expand('%'))<cr>")
 map("c", "::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
-vim.cmd [[command! -nargs=? AutoResize call utils#auto_resize(<args>)]]
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
@@ -472,8 +462,35 @@ function _G._mappings.open_link()
   end
 end
 map("n", "gx", [[<cmd>lua _mappings.open_link()<CR>]])
+---------------------------------------------------------------------------------
+-- Toggle list
+---------------------------------------------------------------------------------
+function _mappings.toggle_list(prefix)
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local location_list = fn.getloclist(0, {filewinid = 0})
+    local is_loc_list = location_list.filewinid > 0
+    if vim.bo[buf].filetype == "qf" or is_loc_list then
+      fn.execute(prefix .. "close")
+      return
+    end
+  end
+  if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
+    fn["utils#message"]("Location List is Empty.", "Title")
+    return
+  end
+
+  local winnr = fn.winnr()
+  fn.execute(prefix .. "open")
+  if fn.winnr() ~= winnr then
+    vim.cmd [[wincmd p]]
+  end
+end
+
+map("n", "<leader>ls", [[<cmd>lua _mappings.toggle_list('c')<CR>]])
+map("n", "<leader>li", [[<cmd>lua _mappings.toggle_list('l')<CR>]])
 -----------------------------------------------------------------------------//
--- Toggles
+-- Commands
 -----------------------------------------------------------------------------//
 function _G._mappings.toggle_bg()
   vim.o.background = vim.o.background == "dark" and "light" or "dark"
@@ -494,45 +511,13 @@ function _G._mappings.vim_profile(bang)
   end
 end
 vim.cmd [[command! -bang Profile call s:profile(<bang>0)]]
----------------------------------------------------------------------------------
--- Toggle list
----------------------------------------------------------------------------------
--- TODO currently broken
-function _mappings.toggle_list(bufname, prefix)
-  local buflist = api.nvim_list_bufs()
-  local special_bufs =
-    vim.tbl_filter(
-    function(buf)
-      return fn.bufname(buf) == bufname
-    end,
-    buflist
-  )
-  for bufnum in ipairs(special_bufs) do
-    if fn.bufwinnr(bufnum) ~= -1 then
-      fn.execute(prefix .. "close")
-      return
-    end
-  end
-  if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
-    fn["utils#message"]('Location List is Empty.', "Title")
-    return
-  else
-    local winnr = fn.winnr()
-    fn.execute(prefix .. "open")
-    if fn.winnr() ~= winnr then
-      vim.cmd [[wincmd p]]
-    end
-  end
-end
-
-map("n", "<leader>ls", [[<cmd>lua _mappings.toggle_list("Quickfix List", 'c')<CR>]])
-map("n", "<leader>li", [[<cmd>lua _mappings.toggle_list("Location List", 'l')<CR>]])
--------------------------------------------------------------------------------
--- Todo - Check for todos and add to the qf list
--------------------------------------------------------------------------------
--- Use the external grepprg which is set to ag or rg
--- which is much faster than internal vimgrep progream
+------------------------------------------------------------------------------
 vim.cmd [[command! Todo noautocmd silent! grep! 'TODO\|FIXME' | copen]]
-
 vim.cmd [[command!  -nargs=1 ReloadModule lua require('plenary.reload').reload_module(<q-args>)]]
 vim.cmd [[command! -nargs=+ -complete=command TabMessage call utils#tab_message(<q-args>)]]
+-- source https://superuser.com/a/540519
+-- write the visual selection to the filename passed in as a command argument then delete the
+-- selection placing into the black hole register
+vim.cmd [[command! -bang -range -nargs=1 -complete=file MoveWrite  <line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]]
+vim.cmd [[command! -bang -range -nargs=1 -complete=file MoveAppend <line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]]
+vim.cmd [[command! -nargs=? AutoResize call utils#auto_resize(<args>)]]
