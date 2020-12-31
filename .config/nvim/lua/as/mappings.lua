@@ -80,7 +80,7 @@ map("v", "//", [[y/<C-R>"<CR>]])
 map("n", "g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
 
 -- Enter key should repeat the last macro recorded or just act as enter
--- map("n", "<CR>", [[empty(&buftype) ? '@@' : '<CR>']], {expr = true})
+map("n", "<leader><CR>", [[empty(&buftype) ? '@@' : '<CR>']], {expr = true})
 
 -- Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 map("n", "<space>", [[@=(foldlevel('.')?'za':"\<Space>")<CR>]])
@@ -100,7 +100,6 @@ map("n", "<leader>E", "<cmd>Token<cr>")
 
 map("n", "<ScrollWheelDown>", "<c-d>", {silent = true, noremap = false})
 map("n", "<ScrollWheelUp>", "<c-u>", {silent = true, noremap = false})
-
 ------------------------------------------------------------------------------
 -- Buffers
 ------------------------------------------------------------------------------
@@ -156,10 +155,6 @@ map("x", "r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], {silent = fal
 ----------------------------------------------------------------------------------
 -- Yank from the cursor to the end of the line, to be consistent with C and D.
 map("n", "Y", "y$")
--- Swap the word the cursor is on with the next word (which can be on a
--- newline, and punctuation is "skipped"):
--- source: https://superuser.com/a/290449
-map("n", "gw", [["_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>:noh<CR>]])
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
@@ -294,7 +289,6 @@ map("n", "<leader>sv", [[:luafile $MYVIMRC<cr> <bar> :call utils#message('Source
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
--- Surround word with quotes or braces
 map("n", [[<leader>"]], [[ciw"<c-r>""<esc>]])
 map("n", "<leader>`", [[ciw`<c-r>"`<esc>]])
 map("n", "<leader>'", [[ciw'<c-r>"'<esc>]])
@@ -303,8 +297,6 @@ map("n", "<leader>}", [[ciw{<c-r>"}<esc>]])
 
 -- Map Q to replay q register
 map("n", "Q", [[@q]])
-
---}}}
 
 if not plugin_loaded("conflict-marker.vim") then
   -- Shortcut to jump to next conflict marker"
@@ -316,7 +308,6 @@ end
 -- Zoom / Restore window. - Zooms by increasing window width squashing the other window
 -- z is the zoom/zen prefix
 map("n", "<leader>zt", [[:call utils#tab_zoom()<CR>]])
-
 -----------------------------------------------------------------------------//
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -336,19 +327,18 @@ function _G._mappings.setup_CR()
   )
 end
 
--- TODO work out how to do this in lua
-api.nvim_exec(
-  [[
-  let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>""
-  vnoremap <expr> cn g:mc . "``cgn"
-  vnoremap <expr> cN g:mc . "``cgN"
-  nnoremap cq :lua _mappings.setup_CR()<CR>*``qz
-  nnoremap cQ :lua _mappings.setup_CR()<CR>#``qz
-
-  vnoremap <expr> cq ":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"
-  vnoremap <expr> cQ ":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
-]],
-  ""
+-- NOTE: this line is done as a vim command as handling the string in lua breaks
+vim.cmd [[let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>""]]
+map("v", "cn", [[g:mc . "``cgn"]], {expr = true, silent = true})
+map("v", "cN", [[g:mc . "``cgN"]], {expr = true, silent = true})
+map("n", "cq", [[:lua _mappings.setup_CR()<CR>*``qz]])
+map("n", "cQ", [[:lua _mappings.setup_CR()<CR>#``qz]])
+map("v", "cq", [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], {expr = true})
+map(
+  "v",
+  "cQ",
+  [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  {expr = true}
 )
 
 map("n", "gf", ":lua _mappings.open_file_or_create_new()<CR>")
@@ -356,9 +346,8 @@ map("n", "gf", ":lua _mappings.open_file_or_create_new()<CR>")
 -- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- CREDIT:
--- 1.) https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
--- 2.) https://github.com/kristijanhusak/neovim-config/blob/5474d932386c3724d2ce02a5963528fe5d5e1015/nvim/lua/partials/mappings.lua#L154
+-- https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
+-- https://github.com/kristijanhusak/neovim-config/blob/5474d932386c3724d2ce02a5963528fe5d5e1015/nvim/lua/partials/mappings.lua#L154
 function _G._mappings.open_file_or_create_new()
   local path = fn.expand("<cfile>")
   if not path or path == "" then
@@ -397,7 +386,6 @@ map("c", "w!!", [[w !sudo tee % >/dev/null]])
 -- insert path of current file into a command
 map("c", "%%", "<C-r>=fnameescape(expand('%'))<cr>")
 map("c", "::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
-
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
@@ -432,13 +420,13 @@ api.nvim_exec(
     else
       return
     endif
-      "Use Winnr to check if the cursor has moved it if has restore it
-      let l:winnr = winnr()
-      silent execute 'grep! ' . shellescape(@@) . ' .'
-      let @@ = l:saved_unnamed_register
-      if winnr() != l:winnr
-        wincmd p
-      endif
+    "Use Winnr to check if the cursor has moved it if has restore it
+    let l:winnr = winnr()
+    silent execute 'grep! ' . shellescape(@@) . ' .'
+    let @@ = l:saved_unnamed_register
+    if winnr() != l:winnr
+      wincmd p
+    endif
   endfunction
   ]],
   ""
@@ -511,7 +499,7 @@ function _G._mappings.vim_profile(bang)
 end
 cmd("Profile", "call s:profile(<bang>0)", {"-bang"})
 ------------------------------------------------------------------------------
-cmd("Token", "-nargs=0", [[call utils#token_inspect()]]) -- FIXME this doesn't work with tree sitter
+cmd("Token", [[call utils#token_inspect()]], {"-nargs=0"}) -- FIXME this doesn't work with tree sitter
 cmd("Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]])
 cmd("ReloadModule", [[lua require('plenary.reload').reload_module(<q-args>)]], {"-nargs=1"})
 cmd("TabMessage", [[call utils#tab_message(<q-args>)]], {"-nargs=+", "-complete=command"})
