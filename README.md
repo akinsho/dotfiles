@@ -17,7 +17,7 @@ curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | b
 
 - [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
 - [Nvim (nightly)](https://github.com/neovim/neovim)
-- Language server support using [`coc.nvim`](https://github.com/neoclide/coc.nvim)
+- Language server support using [`coc.nvim`](https://github.com/neoclide/coc.nvim)/[`neovim's lsp`](https://neovim.io/doc/user/lsp.html)
 
 - Minimal Zsh config without `oh-my-zsh`, async prompt for really large monorepos.
 
@@ -31,30 +31,5 @@ It wasn't designed to be used in that way 🤷.
 Setup is managed using [dotbot](https://github.com/anishathalye/dotbot). To setup symlinks run
 `./install` in the root directory of the repository
 
-NOTE: I've symlinked the (n)vim directory to `$HOME/config/nvim`.
-
-### Structure
-
-After struggling with a 2500+ line long `init.vim`. Which I personally found quite difficult to navigate
-and reason about. I decided to modularise my `init.vim`.
-
-Having taken a look at several patterns online I decided on the following approach.
-My `init.vim` is essentially a hub of links to the various sections of my configuration.
-
-These are divided into:
-
-- autocommands
-- mappings
-- general settings
-- plugins (home made or stolen vim script)
-
-Specific configurations for plugins I've used/am using are in the `plugin` directory as `<plugin-name>.vim`.
-All vim files in this are sourced, but they all include a check to see if the particular plugin is loaded
-first (currently hard coded within each file).
-
-I tend to keep all configuration around as I often change my mind
-about plugins and some of these settings took ages to find and are usually set to exactly what I want from that
-plugin and I'd rather not delete these and have to figure it all out again
-
-Filetype specific overrides and settings where possible are in `ftplugin` files in the after directory.
-Slightly beefier bits of functionality I use on an adhoc basis are in the autoload directory.
+This package manages symlinking my config files to the correct directories.
+It's a little more complex than `GNU Stow` but much less than `Ansible`
