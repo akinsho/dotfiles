@@ -49,9 +49,18 @@ function M.profile(filename)
   end
 end
 
+local function get_defaults(mode)
+  return {noremap = true, silent = not mode == "c"}
+end
+
 function M.map(mode, lhs, rhs, opts)
-  opts = opts or {noremap = true, silent = true}
+  opts = opts or get_defaults(mode)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+end
+
+function M.buf_map(bufnr, mode, lhs, rhs, opts)
+  opts = opts or get_defaults(mode)
+  vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
 return M

@@ -47,4 +47,9 @@ nnoremap <silent><leader>pi :PlugInstall<CR>
 nnoremap <silent><leader>ps :PlugStatus<CR>
 nnoremap <silent><leader>pc :PlugClean<CR>
 nnoremap <silent><leader>pu :PlugUpdate<CR>
+tnoremap <C-h> <C-W>h
+tnoremap <C-j> <C-W>j
+tnoremap <C-k> <C-W>k
+tnoremap <C-l> <C-W>l
+tnoremap <C-x> <C-W><silent>q!<CR>
 " vim:foldmethod=marker
