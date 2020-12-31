@@ -36,7 +36,6 @@ nnoremap <buffer> L :cnewer<CR>
 
 nnoremap <silent><buffer><nowait> P :pclose!<CR>
 nnoremap <silent><buffer><nowait> p :call quickfix_preview#toggle()<CR>
-nnoremap <silent><nowait><buffer> q :call <SID>smart_close()<CR>
 
 " Resources and inspiration
 " 1. https://github.com/ronakg/quickr-preview.vim/blob/357229d656c0340b096a16920e82cff703f1fe93/after/ftplugin/qf.vim#L215
