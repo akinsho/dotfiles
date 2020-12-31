@@ -43,7 +43,6 @@ require("as.plugins")
 
 -- TODO: eventually refactor to lua
 vim.cmd [[runtime configs/general.vim]]
-vim.cmd [[runtime configs/mappings.vim]]
 vim.cmd [[runtime configs/autocommands.vim]]
 
 require("as")
