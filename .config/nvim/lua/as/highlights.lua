@@ -49,6 +49,9 @@ function M.adopt_winhighlight(win_id, target, name, default)
   return name
 end
 
+--- TODO eventually move to using `nvim_set_hl`
+--- however for the time being that expects colors
+--- to be specified as rgb not hex
 ---@param name string
 ---@param opts table
 function M.highlight(name, opts)

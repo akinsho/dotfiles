@@ -160,7 +160,7 @@ end
 
 function M.setup()
   -- Deactivate for work machines
-  if fn.has("mac") then
+  if fn.has("mac") > 0 then
     return
   end
 
