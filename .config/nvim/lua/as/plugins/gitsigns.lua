@@ -27,9 +27,9 @@ return function()
       ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>'
     },
     status_formatter = function(status)
-      local added = status.added > 0 and "  " .. status.added or ""
-      local changed = status.changed > 0 and "  " .. status.changed or ""
-      local removed = status.removed > 0 and "  " .. status.removed or ""
+      local added = status.added and status.added > 0 and "  " .. status.added or ""
+      local changed = status.changed and status.changed > 0 and "  " .. status.changed or ""
+      local removed = status.removed and status.removed > 0 and "  " .. status.removed or ""
       return status.head .. added .. changed .. removed .. " "
     end
   }
