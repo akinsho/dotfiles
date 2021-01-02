@@ -11,7 +11,6 @@ local fnamemodify = fn.fnamemodify
 local contains = vim.tbl_contains
 
 local M = {}
-local highlight_cache = {}
 
 local function get_toggleterm_name(_, bufnum)
   local shell = fnamemodify(vim.env.SHELL, ":t")
@@ -243,11 +242,7 @@ local function set_ft_icon_highlight(hl, bg_hl)
     return ""
   end
   local name = hl .. "Statusline"
-  -- prevent recreating highlight group for every buffer instead save
-  -- the newly created highlight name's status i.e. created or not
-  local created = highlight_cache[name]
-
-  if created then
+  if fn.hlexists(name) > 0 then
     return name
   end
   local bg_color = H.hl_value(bg_hl, "bg")
@@ -255,12 +250,8 @@ local function set_ft_icon_highlight(hl, bg_hl)
   if bg_color and fg_color then
     local cmd = {"highlight ", name, " guibg=", bg_color, " guifg=", fg_color}
     local str = table.concat(cmd)
+    require("as.autocommands").create({[name] = {{"ColorScheme", "*", str}}})
     vim.cmd(string.format("silent execute '%s'", str))
-    vim.cmd("augroup " .. name)
-    vim.cmd("autocmd!")
-    vim.cmd("autocmd ColorScheme * " .. str)
-    vim.cmd("augroup END")
-    highlight_cache[name] = true
   end
   return name
 end

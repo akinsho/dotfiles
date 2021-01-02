@@ -128,7 +128,6 @@ return require("packer").startup {
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
-    -- https://github.com/iamcco/markdown-preview.nvim/issues/50
     use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
     use {
       "rrethy/vim-hexokinase",
