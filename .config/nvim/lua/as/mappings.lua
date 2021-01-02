@@ -375,6 +375,21 @@ end
 -----------------------------------------------------------------------------//
 -- Command mode related
 -----------------------------------------------------------------------------//
+-- smooth searching, allow tabbing between search results similar to using <c-g>
+-- or <c-t> the main difference being tab is easier to hit and remapping those keys
+-- to these would swallow up a tab mapping
+map(
+  "c",
+  "<Tab>",
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+  {expr = true}
+)
+map(
+  "c",
+  "<S-Tab>",
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
+  {expr = true}
+)
 -- Smart mappings on the command line
 map("c", "w!!", [[w !sudo tee % >/dev/null]])
 -- insert path of current file into a command
