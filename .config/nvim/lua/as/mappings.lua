@@ -384,21 +384,21 @@ map("c", "::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
 function _G._mappings.google(pat, lucky)
-  local q = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
-  q = fn.substitute(q, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
+  local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
+  query = fn.substitute(query, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
   fn.system(
     fn.printf(
       vim.g.open_command .. ' "https://www.google.com/search?%sq=%s"',
       lucky and "btnI&" or "",
-      q
+      query
     )
   )
 end
 
-map("n", "<localleader>?", [[:lua _mappings.google(vim.fn.expand("<cWORD>"), 0)<cr>]])
-map("n", "<localleader>!", [[:lua _mappings.google(vim.fn.expand("<cWORD>"), 1)<cr>]])
-map("x", "<localleader>?", [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), 0)<cr>gv]])
-map("x", "<localleader>!", [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), 0, 1)<cr>gv]])
+map("n", "<localleader>?", [[:lua _mappings.google(vim.fn.expand("<cWORD>"), false)<cr>]])
+map("n", "<localleader>!", [[:lua _mappings.google(vim.fn.expand("<cWORD>"), true)<cr>]])
+map("x", "<localleader>?", [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
+map("x", "<localleader>!", [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]])
 ----------------------------------------------------------------------------------
 -- Grep Operator
 ----------------------------------------------------------------------------------
