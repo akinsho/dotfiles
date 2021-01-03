@@ -354,7 +354,11 @@ function _G._mappings.open_file_or_create_new()
     return true
   end
 
-  fn.nvim_out_write("Creating new file.\n")
+  local answer = fn.input("Create a new file, (Y)es or (N)o? ")
+  if not answer or string.lower(answer) ~= "y" then
+    return vim.cmd "redraw"
+  end
+  vim.cmd "redraw"
   local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
   local ext = fn.fnamemodify(new_path, ":e")
 
