@@ -181,8 +181,8 @@ local function general_overrides()
     {"MatchParen", {gui = "bold", guifg = "LightGreen", guibg = "NONE"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
     -- Floating window overrides
-    {"mkdLineBreak", {link = "NONE", force = true}},
-    {"typecriptParens", {link = "NONE", force = true}},
+    {"mkdLineBreak", {link = "None", force = true}},
+    {"typescriptParens", {link = "None", force = true}},
     -- Add undercurl to existing spellbad highlight
     {"SpellBad", {gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green"}},
     {"dartStorageClass", {link = "Statement", force = true}},
