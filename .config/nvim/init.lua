@@ -14,8 +14,10 @@ vim.cmd [[augroup END]]
 local uname = vim.loop.os_uname()
 if uname.sysname == "Darwin" then
   vim.g.open_command = "open"
+  vim.g.system_name = "macOS"
 elseif uname.sysname == "Linux" then
   vim.g.open_command = "xdg-open"
+  vim.g.system_name = "Linux"
 end
 
 function _G.plugin_loaded(plugin_name)
