@@ -160,7 +160,7 @@ local function plugin_highlights()
   end
 
   if plugin_loaded("vim-which-key") then
-    M.highlight("WhichKeySeperator", {guifg = "LightGreen", guibg = "background"})
+    M.highlight("WhichKeySeperator", {guifg = "LightGreen"})
   end
 
   if plugin_loaded("conflict-marker.vim") then

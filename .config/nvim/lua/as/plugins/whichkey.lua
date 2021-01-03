@@ -1,7 +1,4 @@
 return function()
-  -- remove link between diff added and vim which key
-  vim.cmd [[highlight WhichKeySeperator guifg=green guibg=background]]
-
   vim.g.which_leader_key_map = {
     name = "leader",
     ["0"] = "which_key_ignore",

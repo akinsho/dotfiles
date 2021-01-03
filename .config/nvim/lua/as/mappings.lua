@@ -335,7 +335,7 @@ map(
   {expr = true}
 )
 
-map("n", "gf", ":lua _mappings.open_file_or_create_new()<CR>")
+map("n", "gf", "<cmd>lua _mappings.open_file_or_create_new()<CR>")
 -- if the file under the cursor doesn't exist create it
 -- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
 -- If you select require('buffers/file') in lua for example
