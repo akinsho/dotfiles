@@ -100,6 +100,7 @@ return function()
     so = "source current buffer",
     sv = "source init.vim",
     U = "uppercase all word",
+    ["<CR>"] = "repeat previous macro",
     [","] = "go to previous buffer",
     ["="] = "make windows equal size",
     [")"] = "wrap with parens",
@@ -195,7 +196,7 @@ return function()
     ["/"] = "find matching word in buffer"
   }
 
-  vim.g.which_key_use_floating_win = 1
+  vim.g.which_key_use_floating_win = 0
   vim.g.which_key_disable_default_offset = 1
   vim.g.which_key_display_names = {[" "] = "Space", ["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
