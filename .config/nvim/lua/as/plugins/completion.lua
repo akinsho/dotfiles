@@ -12,9 +12,10 @@ return function()
     }
   )
 
+  local map = as_utils.map
   -- cycle the completion menu with <TAB>
-  as_utils.map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
-  as_utils.map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
+  map("i", "<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
+  map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
 
   vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
 
@@ -36,8 +37,7 @@ return function()
 
   vim.g.completion_chain_complete_list = {
     default = {
-      {complete_items = {"lsp", "snippet", "tabnine"}},
-      {complete_items = {"lsp", "snippet", "tabnine"}},
+      {complete_items = {"lsp", "snippet", "ts", "tabnine"}},
       {mode = "<c-p>"},
       {mode = "<c-n>"}
     },

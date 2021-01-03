@@ -101,7 +101,10 @@ return require("packer").startup {
       use {
         "nvim-lua/completion-nvim",
         config = require("as.plugins.completion"),
-        requires = {{"aca/completion-tabnine", run = "./install.sh"}}
+        requires = {
+          {"nvim-treesitter/completion-treesitter"},
+          {"aca/completion-tabnine", run = "./install.sh"}
+        }
       }
       use {
         "hrsh7th/vim-vsnip",
