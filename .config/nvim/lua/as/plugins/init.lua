@@ -124,7 +124,6 @@ return require("packer").startup {
     -- use {"kshenoy/vim-signature"}
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
-    use {"RishabhRD/nvim-cheat.sh", cmd = {"Cheat"}} -- TODO check that I actually use this
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}

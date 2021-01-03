@@ -161,6 +161,7 @@ local function plugin_highlights()
 
   if plugin_loaded("vim-which-key") then
     M.highlight("WhichKeySeperator", {guifg = "LightGreen"})
+    M.highlight("WhichKeyFloating", {link = "Normal", force = true})
   end
 
   if plugin_loaded("conflict-marker.vim") then

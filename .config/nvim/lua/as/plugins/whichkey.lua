@@ -195,7 +195,7 @@ return function()
     ["/"] = "find matching word in buffer"
   }
 
-  vim.g.which_key_use_floating_win = 0
+  vim.g.which_key_use_floating_win = 1
   vim.g.which_key_disable_default_offset = 1
   vim.g.which_key_display_names = {[" "] = "Space", ["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
