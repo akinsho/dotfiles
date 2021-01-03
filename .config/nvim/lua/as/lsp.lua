@@ -268,11 +268,11 @@ function M.setup()
         -- add ".lua-format" to root if using lua-format
         rootMarkers = {".git/"},
         languages = {
-          yaml = {prettier},
           json = {prettier},
           html = {prettier},
           css = {prettier},
           markdown = {prettier},
+          -- yaml = {prettier},
           -- npm i -g lua-fmt
           -- 'lua-format -i -c ./.lua-format'
           lua = {
