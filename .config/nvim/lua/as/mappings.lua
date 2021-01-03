@@ -290,7 +290,7 @@ map("n", "<leader>)", [[ciw(<c-r>")<esc>]])
 map("n", "<leader>}", [[ciw{<c-r>"}<esc>]])
 
 -- Map Q to replay q register
-map("n", "Q", [[@q]])
+map("n", "Q", "@q")
 
 if not plugin_loaded("conflict-marker.vim") then
   -- Shortcut to jump to next conflict marker"
@@ -354,7 +354,7 @@ function _G._mappings.open_file_or_create_new()
     return true
   end
 
-  fn.nvim_out_write("New file.\n")
+  fn.nvim_out_write("Creating new file.\n")
   local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
   local ext = fn.fnamemodify(new_path, ":e")
 

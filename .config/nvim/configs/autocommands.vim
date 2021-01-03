@@ -230,7 +230,7 @@ function s:can_save() abort
   return empty(&buftype)
         \ && !empty(&filetype)
         \ && &modifiable
-        \ && index(s:save_excluded, &ft) > 0
+        \ && index(s:save_excluded, &ft) == -1
 endfunction
 
 augroup Utilities "{{{1
