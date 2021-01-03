@@ -19,8 +19,8 @@ local utils = require "as.utils"
 -----------------------------------------------------------------------------//
 function M.highlight()
   require("as.highlights").all {
-    {"LspReferenceText", {link = "CursorLine"}},
-    {"LspReferenceRead", {link = "CursorLine"}},
+    {"LspReferenceText", {gui = "underline"}},
+    {"LspReferenceRead", {gui = "underline"}},
     {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
     {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},

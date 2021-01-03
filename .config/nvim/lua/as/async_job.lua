@@ -305,7 +305,7 @@ function M.wait(pid)
   return vim.fn.jobwait({pid})
 end
 
----@param cmds table<string>
+---@param cmds table
 function M.execSync(cmds)
   for _, cmd in ipairs(cmds) do
     local pid = M.exec(cmd, 0)
