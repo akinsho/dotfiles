@@ -340,8 +340,7 @@ map("n", "gf", "<cmd>lua _mappings.open_file_or_create_new()<CR>")
 -- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
--- https://github.com/kristijanhusak/neovim-config/blob/5474d932386c3724d2ce02a5963528fe5d5e1015/nvim/lua/partials/mappings.lua#L154
+-- Credit: 1,2
 function _G._mappings.open_file_or_create_new()
   local path = fn.expand("<cfile>")
   if not path or path == "" then
@@ -530,3 +529,9 @@ cmd(
   {"-bang", "-range", "-nargs=1", "-complete=file"}
 )
 cmd("AutoResize", [[call utils#auto_resize(<args>)]], {"-nargs=?"})
+
+-----------------------------------------------------------------------------//
+-- References
+-----------------------------------------------------------------------------//
+-- 1.) https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
+-- 2.) https://github.com/kristijanhusak/neovim-config/blob/5474d932386c3724d2ce02a5963528fe5d5e1015/nvim/lua/partials/mappings.lua#L154
