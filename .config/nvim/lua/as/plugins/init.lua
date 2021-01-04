@@ -13,9 +13,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
   )
   print(output)
   print("Downloading packer.nvim...")
+  execute "packadd packer.nvim"
+  execute "PackerInstall"
+else
+  execute "packadd packer.nvim"
 end
 
-execute "packadd packer.nvim"
 
 -- cfilter plugin allows filter down an existing quickfix list
 execute "packadd! cfilter"

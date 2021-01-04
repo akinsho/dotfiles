@@ -9,3 +9,4 @@ local
 .netrwhist
 *.code-workspace
 session/
+packer_compiled.vim

@@ -7,10 +7,6 @@ local fn = vim.fn
 local extend = vim.list_extend
 local api = vim.api
 
-local lspconfig = require "lspconfig"
-local lsp_status = require "lsp-status"
-local flutter = require "flutter-tools"
-
 local autocommands = require "as.autocommands"
 local utils = require "as.utils"
 
@@ -163,6 +159,9 @@ function M.setup()
   if fn.has("mac") > 0 then
     return
   end
+  local lspconfig = require "lspconfig"
+  local lsp_status = require "lsp-status"
+  local flutter = require "flutter-tools"
 
   M.highlight()
 
