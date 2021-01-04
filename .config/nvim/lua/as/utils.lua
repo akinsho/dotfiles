@@ -49,6 +49,10 @@ function M.profile(filename)
   end
 end
 
+function M.has(feature)
+  return vim.fn.has(feature) > 0
+end
+
 local function get_defaults(mode)
   return {noremap = true, silent = not mode == "c"}
 end

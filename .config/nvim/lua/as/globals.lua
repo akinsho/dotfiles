@@ -11,7 +11,8 @@ _G.as_utils = {
   map = utils.map,
   cmd = utils.cmd,
   buf_map = utils.buf_map,
-  profile = utils.profile
+  profile = utils.profile,
+  has = utils.has
 }
 
 -- inspect the contents of an object very quickly in your code or from the command-line:

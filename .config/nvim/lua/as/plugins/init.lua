@@ -1,8 +1,6 @@
 local execute = vim.cmd
 local fn = vim.fn
-local has = function(feature)
-  return fn.has(feature) > 0
-end
+local has = as_utils.has
 
 local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 

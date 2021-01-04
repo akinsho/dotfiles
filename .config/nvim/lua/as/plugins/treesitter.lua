@@ -1,5 +1,5 @@
 return function()
-  local has = vim.fn.has
+  local has = as_utils.has
 
   vim.cmd [[highlight link TSKeyword Statement]]
   vim.cmd [[highlight TSParameter gui=italic,bold]]
@@ -7,7 +7,7 @@ return function()
   -- This plugin is an experimental application of tree sitter usage in Neovim
   -- be careful when applying any functionality to a filetype as it might not work
   local disabled = {"json"}
-  if has("mac") > 0 then
+  if has("mac") then
     table.insert(disabled, "dart")
   end
 

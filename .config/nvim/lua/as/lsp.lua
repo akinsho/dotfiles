@@ -155,8 +155,9 @@ local function on_attach(client, bufnr)
 end
 
 function M.setup()
+  local has = as_utils.has
   -- Deactivate for work machines
-  if fn.has("mac") > 0 then
+  if has("mac") then
     return
   end
   local lspconfig = require "lspconfig"
@@ -281,7 +282,7 @@ function M.setup()
           lua = {
             {
               formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
-              formatStdin = true,
+              formatStdin = true
             }
           }
         }

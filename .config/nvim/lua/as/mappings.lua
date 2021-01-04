@@ -1,6 +1,7 @@
 local autocommands = require("as.autocommands")
 local map = as_utils.map
 local buf_map = as_utils.buf_map
+local has = as_utils.has
 local fn = vim.fn
 local api = vim.api
 local cmd = as_utils.cmd
@@ -117,7 +118,7 @@ map("i", "<C-u>", "<cmd>gUiw`]a<CR>")
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
 -- source: https://www.reddit.com/r/vim/comments/i8b5z1/is_there_a_more_elegant_way_to_move_lines_than_eg/
-if fn.has("mac") > 0 then
+if has("mac") then
   -- Allow using alt in macOS without enabling “Use Option as Meta key”
   map("n", "¬", "<a-l>", {noremap = false})
   map("n", "˙", "<a-h>", {noremap = false})
