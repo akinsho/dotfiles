@@ -80,9 +80,10 @@ return require("packer").startup {
       end
     }
     use "christoomey/vim-tmux-navigator"
-    use "nvim-lua/plenary.nvim" -- the mother of dependencies
+    use "nvim-lua/plenary.nvim"
+    -- }}}
     -----------------------------------------------------------------------------//
-    -- LSP,Completion & Debugger
+    -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}

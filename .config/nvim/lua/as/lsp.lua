@@ -279,7 +279,10 @@ function M.setup()
           -- npm i -g lua-fmt
           -- 'lua-format -i -c ./.lua-format'
           lua = {
-            {formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin", formatStdin = true}
+            {
+              formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
+              formatStdin = true,
+            }
           }
         }
       }
