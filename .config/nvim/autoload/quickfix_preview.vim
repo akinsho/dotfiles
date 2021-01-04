@@ -51,10 +51,10 @@ function! s:preview_matches(opts) abort
     setlocal nobuflisted        " don't list this buffer
     setlocal noswapfile         " don't create swap file for this buffer
     setlocal bufhidden=delete   " clear out settings when buffer is hidden
-    setlocal number norelativenumber
   endif
   " Open any folds we may be in
   silent! foldopen!
+  setlocal number
   " highlight the line
   execute 'match Search /\%'.entry.lnum.'l^\s*\zs.\{-}\ze\s*$/'
   " go back to the quickfix
