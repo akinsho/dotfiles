@@ -88,7 +88,7 @@ return require("packer").startup {
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
     if has("mac") then
-      use "neoclide/coc.nvim"
+      use {"neoclide/coc.nvim", config = require("as.plugins.coc")}
       use "honza/vim-snippets"
     else
       use {
