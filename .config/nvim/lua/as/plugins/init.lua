@@ -19,7 +19,6 @@ else
   execute "packadd packer.nvim"
 end
 
-
 -- cfilter plugin allows filter down an existing quickfix list
 execute "packadd! cfilter"
 

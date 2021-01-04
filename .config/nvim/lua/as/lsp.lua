@@ -151,7 +151,7 @@ local function on_attach(client, bufnr)
   if client.resolved_capabilities.goto_definition then
     api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.require('as.lsp').tagfunc")
   end
-  lsp_status.on_attach(client)
+  require("lsp-status").on_attach(client)
 end
 
 function M.setup()
