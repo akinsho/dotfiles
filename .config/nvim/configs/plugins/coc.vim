@@ -18,7 +18,6 @@ let g:coc_global_extensions = [
       \ 'coc-prettier',
       \ 'coc-emoji',
       \ 'coc-yank',
-      \ 'coc-git',
       \ 'coc-eslint',
       \ 'coc-go',
       \ 'coc-word',

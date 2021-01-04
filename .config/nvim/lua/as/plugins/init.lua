@@ -69,7 +69,6 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
-    use "nvim-lua/plenary.nvim" -- the mother of dependencies
     use "airblade/vim-rooter"
     use {"junegunn/fzf", run = "./install --all"}
     use {"junegunn/fzf.vim", config = require("as.plugins.fzf")}
@@ -82,18 +81,21 @@ return require("packer").startup {
       end
     }
     use "christoomey/vim-tmux-navigator"
-
+    use "nvim-lua/plenary.nvim" -- the mother of dependencies
+    -----------------------------------------------------------------------------//
+    -- LSP,Completion & Debugger
+    -----------------------------------------------------------------------------//
+    use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
+    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
     if has("mac") then
       use "neoclide/coc.nvim"
       use "honza/vim-snippets"
     else
-      use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
-      use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
       use {
         "neovim/nvim-lspconfig",
         requires = {
           "nvim-lua/lsp-status.nvim",
-          dev("personal/flutter-tools.nvim"),
+          dev "personal/flutter-tools.nvim",
           {
             "RishabhRD/nvim-lsputils",
             requires = {"RishabhRD/popfix"},
@@ -211,6 +213,7 @@ return require("packer").startup {
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
     use "rakr/vim-one"
+    -- use "bluz71/vim-nightfly-guicolors"
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
