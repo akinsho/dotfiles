@@ -231,8 +231,8 @@ function M.setup()
 
   local prettier = {formatCommand = "prettier"}
 
-  local sumneko_root_path = vim.fn.stdpath("cache") .. "/lspconfig/sumneko_lua/lua-language-server"
-  local sumneko_binary = sumneko_root_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
+  local sumneko_path = os.getenv("HOME") .. "/lua-language-server"
+  local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
 
   local servers = {
     rust_analyzer = {},
@@ -243,7 +243,7 @@ function M.setup()
     html = {},
     tsserver = {},
     sumneko_lua = {
-      cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+      cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
       settings = {
         Lua = {
           diagnostics = {
