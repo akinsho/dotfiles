@@ -12,7 +12,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
   print(output)
   print("Downloading packer.nvim...")
   execute "packadd packer.nvim"
-  execute "PackerInstall"
+  execute "PackerSync"
 else
   execute "packadd packer.nvim"
 end
@@ -22,10 +22,8 @@ execute "packadd! cfilter"
 
 execute "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
 
-as_utils.map("n", "<leader>pi", [[<Cmd>PackerInstall<CR>]])
-as_utils.map("n", "<leader>ps", [[<Cmd>PackerStatus<CR>]])
+as_utils.map("n", "<leader>ps", [[<Cmd>PackerSync<CR>]])
 as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
-as_utils.map("n", "<leader>pu", [[<Cmd>PackerUpdate<CR>]])
 
 ---@param path string
 local function dev(path)
