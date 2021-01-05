@@ -82,6 +82,7 @@ augroup END
 augroup templates
   autocmd!
   autocmd BufNewFile *.sh 0r $DOTFILES/.config/nvim/templates/skeleton.sh
+  autocmd BufNewFile *.lua 0r $DOTFILES/.config/nvim/templates/skeleton.lua
 augroup END
 
 " Reload vim and config automatically {{{
