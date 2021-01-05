@@ -287,25 +287,18 @@ function M.setup()
           }
         }
       }
-    },
-    dartls = {
-      flags = {allow_incremental_sync = true},
-      init_options = {
-        closingLabels = true,
-        outline = true,
-        flutterOutline = true
-      },
-      on_attach = on_attach,
-      handlers = {
-        ["dart/textDocument/publishClosingLabels"] = flutter.closing_tags,
-        ["dart/textDocument/publishOutline"] = flutter.outline
-      }
     }
+  }
+
+  local status_capabilities = lsp_status.capabilities
+
+  flutter.setup_lsp {
+    on_attach = on_attach,
+    capabilities = status_capabilities
   }
 
   for server, config in pairs(servers) do
     config.on_attach = on_attach
-    local status_capabilities = lsp_status.capabilities
     config.capabilities = utils.deep_merge(config.capabilities or {}, status_capabilities)
     lspconfig[server].setup(config)
   end
