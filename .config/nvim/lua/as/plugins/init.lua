@@ -51,6 +51,11 @@ local function create_local(use)
   end
 end
 
+local function is_work_machine()
+  return has('mac')
+end
+
+local is_work = is_work_machine()
 --[[
     NOTE "use" functions cannot call *upvalues* i.e. the functions
     passed to setup or config etc. cannot reference aliased function
@@ -83,36 +88,36 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
-    if has("mac") then
-      use {"neoclide/coc.nvim", config = require("as.plugins.coc")}
-      use "honza/vim-snippets"
-    else
-      use {
-        "neovim/nvim-lspconfig",
-        requires = {
-          "nvim-lua/lsp-status.nvim",
-          dev "personal/flutter-tools.nvim",
-          {
-            "RishabhRD/nvim-lsputils",
-            requires = {"RishabhRD/popfix"},
-            config = require("as.plugins.lsputils")
-          }
+    use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = not is_work}
+    use {"honza/vim-snippets", disable = not is_work}
+    use {
+      "neovim/nvim-lspconfig",
+      disable = is_work,
+      requires = {
+        "nvim-lua/lsp-status.nvim",
+        dev "personal/flutter-tools.nvim",
+        {
+          "RishabhRD/nvim-lsputils",
+          requires = {"RishabhRD/popfix"},
+          config = require("as.plugins.lsputils")
         }
       }
-      use {
-        "nvim-lua/completion-nvim",
-        config = require("as.plugins.completion"),
-        requires = {
-          {"nvim-treesitter/completion-treesitter"},
-          {"aca/completion-tabnine", run = "./install.sh"}
-        }
+    }
+    use {
+      "nvim-lua/completion-nvim",
+      config = require("as.plugins.completion"),
+      disable = is_work,
+      requires = {
+        {"nvim-treesitter/completion-treesitter"},
+        {"aca/completion-tabnine", run = "./install.sh"}
       }
-      use {
-        "hrsh7th/vim-vsnip",
-        config = require("as.plugins.vim-vsnip"),
-        requires = {"hrsh7th/vim-vsnip-integ"}
-      }
-    end
+    }
+    use {
+      "hrsh7th/vim-vsnip",
+      disable = is_work,
+      config = require("as.plugins.vim-vsnip"),
+      requires = {"hrsh7th/vim-vsnip-integ"}
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Utilities {{{
@@ -239,27 +244,23 @@ return require("packer").startup {
       return require("dependency_assist").setup()
     end
 
-    if not has("mac") then
-      -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
-      -- packer doesn't swap between both groups of plugins
-      -- as it doesn't recognise that the plugin set have changed so local
-      -- plugins aren't loaded. awaiting:
-      -- https://github.com/wbthomason/packer.nvim/issues/137
-      -- https://github.com/wbthomason/packer.nvim/issues/118
-      -- local_use "contributing/nvim-tree.lua"
-      -- local_use "contributing/nvim-web-devicons"
-      -- local_use "contributing/nvim-treesitter"
+    -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
+    -- packer doesn't swap between both groups of plugins
+    -- as it doesn't recognise that the plugin set have changed so local
+    -- plugins aren't loaded. awaiting:
+    -- https://github.com/wbthomason/packer.nvim/issues/137
+    -- https://github.com/wbthomason/packer.nvim/issues/118
+    -- local_use "contributing/nvim-tree.lua"
+    -- local_use "contributing/nvim-web-devicons"
+    -- local_use "contributing/nvim-treesitter"
 
-      use {"rafcamlet/nvim-luapad", cmd = "Luapad"}
-
-      local_use {"personal/dependency-assist.nvim", config = dep_assist}
-      local_use {"personal/nvim-toggleterm.lua", config = require("as.plugins.toggleterm")}
-      local_use {"personal/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline")}
-    else
-      use {"akinsho/dependency-assist.nvim", config = dep_assist}
-      use {"akinsho/nvim-toggleterm.lua", config = require("as.plugins.toggleterm")}
-      use {"akinsho/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline")}
-    end
+    use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
+    use {"akinsho/dependency-assist.nvim", config = dep_assist}
+    use {"akinsho/nvim-toggleterm.lua", config = require("as.plugins.toggleterm"), disable = not is_work}
+    use {"akinsho/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline"), disable = not is_work}
+    local_use {"personal/dependency-assist.nvim", config = dep_assist, disable = is_work}
+    local_use {"personal/nvim-toggleterm.lua", config = require("as.plugins.toggleterm"), disable = is_work}
+    local_use {"personal/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline"), disable = is_work}
     -- }}}
     ---------------------------------------------------------------------------------
   end,
