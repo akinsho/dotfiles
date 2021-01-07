@@ -4,13 +4,23 @@ local executable = function(e)
   return fn.executable(e) > 0
 end
 
-local function set_opt(key, value, scope)
-  if not scope == "w" or not scope == "b" then
-    return api.nvim_err_writeln("You should use this for 'w' or 'b' options")
+local function opt_mt(_, scope)
+  if scope ~= "bo" and scope ~= "wo" then
+    api.nvim_err_writeln("You should use this for 'w' or 'b' options")
+    return nil
   end
-  vim[scope][key] = value
-  vim.o[key] = value
+  return setmetatable(
+    {},
+    {
+      __newindex = function(_, option, value)
+        vim.o[option] = value
+        vim[scope][option] = value
+      end
+    }
+  )
 end
+
+local opt = setmetatable({}, {__index = setmetatable({}, {__index = opt_mt})})
 
 local function add(value, str, sep)
   sep = sep or ","
@@ -108,7 +118,7 @@ vim.o.formatoptions =
 vim.o.foldtext = "folds#render()"
 vim.o.foldopen = add(vim.o.foldopen, "search")
 vim.o.foldlevelstart = 10
-set_opt("foldmethod", "syntax", "w")
+opt.wo.foldmethod = "syntax"
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
@@ -149,12 +159,12 @@ vim.o.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
-set_opt("conceallevel", 2, "w")
-set_opt("breakindentopt", "sbr", "w")
-set_opt("linebreak", true, "w") -- lines wrap at words rather than random characters
-set_opt("synmaxcol", 1024, "b") -- don't syntax highlight long lines
-set_opt("signcolumn", "yes:2", "w")
-set_opt("colorcolumn", "+1", "w") -- Set the colour column to highlight one column after the 'textwidth'
+opt.wo.conceallevel = 2
+opt.wo.breakindentopt = "sbr"
+opt.wo.linebreak = true -- lines wrap at words rather than random characters
+opt.bo.synmaxcol = 1024 -- don't syntax highlight long lines
+opt.wo.signcolumn = "yes:2"
+opt.wo.colorcolumn = "+1" -- Set the colour column to highlight one column after the 'textwidth'
 vim.o.cmdheight = 2 -- Set command line height to two lines
 vim.o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
@@ -173,14 +183,14 @@ vim.o.listchars =
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-set_opt("wrap", true, "w")
-set_opt("wrapmargin", 2, "b")
-set_opt("softtabstop", 2, "b")
-set_opt("textwidth", 80, "b")
-set_opt("shiftwidth", 2, "b")
-set_opt("expandtab", true, "b")
-set_opt("autoindent", true, "b")
-set_opt("autoindent", true, "b")
+opt.wo.wrap = true
+opt.bo.wrapmargin = 2
+opt.bo.softtabstop = 2
+opt.bo.textwidth = 80
+opt.bo.shiftwidth = 2
+opt.bo.expandtab = true
+opt.bo.autoindent = true
+opt.bo.autoindent = true
 -----------------------------------------------------------------------------//
 vim.o.joinspaces = false
 vim.o.gdefault = true
@@ -246,7 +256,7 @@ vim.o.writebackup = false
 if fn.isdirectory(vim.o.undodir) == 0 then
   fn.mkdir(vim.o.undodir, "p")
 end
-set_opt("undofile", true, "b")
+opt.bo.undofile = true
 --}}}
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
