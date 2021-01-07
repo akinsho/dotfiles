@@ -6,6 +6,7 @@ local M = {}
 local fn = vim.fn
 local extend = vim.list_extend
 local api = vim.api
+local cmd = as_utils.cmd
 
 local autocommands = require "as.autocommands"
 local utils = require "as.utils"
@@ -41,9 +42,9 @@ function _G.open_lsp_log()
   vim.cmd("edit " .. path)
 end
 
-vim.cmd [[command! ReloadLSP lua reload_lsp()]]
-vim.cmd [[command! DebugLSP lua print(vim.inspect(vim.lsp.get_active_clients()))]]
-vim.cmd [[command! LogLSP lua open_lsp_log()]]
+cmd("ReloadLSP", [[lua reload_lsp()]])
+cmd("DebugLSP", [[lua print(vim.inspect(vim.lsp.get_active_clients()))]])
+cmd("LogLSP", [[lua open_lsp_log()]])
 
 function M.tagfunc(pattern, flags)
   if flags ~= "c" then
