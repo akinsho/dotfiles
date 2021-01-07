@@ -67,6 +67,13 @@ function M.buf_map(bufnr, mode, lhs, rhs, opts)
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
+function M.echomsg(message, hl)
+  hl = hl or "Title"
+  vim.cmd("echohl " .. hl)
+  vim.cmd(string.format([[echoms "%s"]], message))
+  vim.cmd("echohl clear")
+end
+
 function M.cmd(name, rhs, types)
   vim.validate {
     name = {name, "string"},

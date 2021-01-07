@@ -21,20 +21,26 @@ local function clear_messages()
     if id then
       fn.timer_stop(id)
     end
-    id = fn.timer_start(2000, function()
-      if fn.mode() == "n" then
-        vim.cmd [[echon '']]
+    id =
+      fn.timer_start(
+      2000,
+      function()
+        if fn.mode() == "n" then
+          vim.cmd [[echon '']]
+        end
       end
-    end)
+    )
   end
 end
 
 M.clear_messages = clear_messages()
 
-M.create({
-  ClearCommandMessages = {
-    {"CmdlineLeave", ":","lua require('as.autocommands').clear_messages()"}
+M.create(
+  {
+    ClearCommandMessages = {
+      {"CmdlineLeave", ":", "lua require('as.autocommands').clear_messages()"}
+    }
   }
-})
+)
 
 return M

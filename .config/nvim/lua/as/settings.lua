@@ -6,8 +6,10 @@ end
 
 local function opt_mt(_, scope)
   if scope ~= "bo" and scope ~= "wo" then
-    api.nvim_err_writeln("You should use this for 'w' or 'b' options")
-    return nil
+    return require("as.utils").echomsg(
+      "You should use this for 'window' or 'buffer' options",
+      "Error"
+    )
   end
   return setmetatable(
     {},
