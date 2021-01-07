@@ -52,7 +52,7 @@ local function create_local(use)
 end
 
 local function is_work_machine()
-  return has('mac')
+  return has("mac")
 end
 
 local is_work = is_work_machine()
@@ -253,14 +253,34 @@ return require("packer").startup {
     -- local_use "contributing/nvim-tree.lua"
     -- local_use "contributing/nvim-web-devicons"
     -- local_use "contributing/nvim-treesitter"
-
-    use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
-    use {"akinsho/dependency-assist.nvim", config = dep_assist}
-    use {"akinsho/nvim-toggleterm.lua", config = require("as.plugins.toggleterm"), disable = not is_work}
-    use {"akinsho/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline"), disable = not is_work}
-    local_use {"personal/dependency-assist.nvim", config = dep_assist, disable = is_work}
-    local_use {"personal/nvim-toggleterm.lua", config = require("as.plugins.toggleterm"), disable = is_work}
-    local_use {"personal/nvim-bufferline.lua", config = require("as.plugins.nvim-bufferline"), disable = is_work}
+    if is_work then
+      use {"akinsho/dependency-assist.nvim", config = dep_assist, disable = not is_work}
+      use {
+        "akinsho/nvim-toggleterm.lua",
+        config = require("as.plugins.toggleterm"),
+        disable = not is_work
+      }
+      use {
+        "akinsho/nvim-bufferline.lua",
+        config = require("as.plugins.nvim-bufferline"),
+        disable = not is_work
+      }
+    else
+      use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
+      local_use {"personal/dependency-assist.nvim", config = dep_assist, disable = is_work}
+      local_use {
+        "personal/nvim-toggleterm.lua",
+        config = require("as.plugins.toggleterm"),
+        disable = is_work
+      }
+      local_use {
+        "personal/nvim-bufferline.lua",
+        -- dofile("<full-path>/lua/as/plugins/nvim-bufferline.lua"),
+        -- get's round the caching of require issue
+        config = dofile("/home/akin/.config/nvim/lua/as/plugins/nvim-bufferline.lua"),
+        disable = is_work
+      }
+    end
     -- }}}
     ---------------------------------------------------------------------------------
   end,
