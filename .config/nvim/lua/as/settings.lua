@@ -4,6 +4,14 @@ local executable = function(e)
   return fn.executable(e) > 0
 end
 
+local function set_opt(key, value, scope)
+  if not scope == "w" or not scope == "b" then
+    return api.nvim_err_writeln("You should use this for 'w' or 'b' options")
+  end
+  vim[scope][key] = value
+  vim.o[key] = value
+end
+
 local function add(value, str, sep)
   sep = sep or ","
   str = str or ""
@@ -100,9 +108,9 @@ vim.o.formatoptions =
 vim.o.foldtext = "folds#render()"
 vim.o.foldopen = add(vim.o.foldopen, "search")
 vim.o.foldlevelstart = 10
-vim.wo.foldmethod = "syntax"
+set_opt("foldmethod", "syntax", "w")
 -----------------------------------------------------------------------------//
--- Wild and file globbing stuff in command mode {{{1
+-- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
 if executable("rg") then
@@ -112,6 +120,9 @@ elseif executable("ag") then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   vim.o.grepformat = add("%f:%l:%c:%m", vim.o.grepformat)
 end
+-----------------------------------------------------------------------------//
+-- Wild and file globbing stuff in command mode {{{1
+-----------------------------------------------------------------------------//
 vim.o.wildcharm = api.nvim_eval([[char2nr("\<C-Z>")]]) -- FIXME: what's the correct way to do this?
 vim.o.wildmenu = true
 vim.o.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
@@ -138,15 +149,14 @@ vim.o.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
-vim.wo.conceallevel = 2 -- Set the colour column to highlight one column after the 'textwidth'
-vim.wo.colorcolumn = "+1"
-vim.wo.signcolumn = "yes:2"
+set_opt("conceallevel", 2, "w")
+set_opt("breakindentopt", "sbr", "w")
+set_opt("linebreak", true, "w") -- lines wrap at words rather than random characters
+set_opt("synmaxcol", 1024, "b") -- don't syntax highlight long lines
+set_opt("signcolumn", "yes:2", "w")
+set_opt("colorcolumn", "+1", "w") -- Set the colour column to highlight one column after the 'textwidth'
 vim.o.cmdheight = 2 -- Set command line height to two lines
-vim.o.synmaxcol = 1024 -- don't syntax highlight long lines
-vim.bo.synmaxcol = 1024 -- don't syntax highlight long lines
 vim.o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
-vim.wo.linebreak = true -- lines wrap at words rather than random characters
-vim.wo.breakindentopt = "sbr"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 -----------------------------------------------------------------------------//
 -- List chars {{{1
@@ -161,16 +171,20 @@ vim.o.listchars =
   "trail:•" -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
+-- Indentation
+-----------------------------------------------------------------------------//
+set_opt("wrap", true, "w")
+set_opt("wrapmargin", 2, "b")
+set_opt("softtabstop", 2, "b")
+set_opt("textwidth", 80, "b")
+set_opt("shiftwidth", 2, "b")
+set_opt("expandtab", true, "b")
+set_opt("autoindent", true, "b")
+set_opt("autoindent", true, "b")
+-----------------------------------------------------------------------------//
 vim.o.joinspaces = false
 vim.o.gdefault = true
 vim.o.pumheight = 15
-vim.o.numberwidth = 4
-vim.o.wrap = true
-vim.o.wrapmargin = 2
-vim.o.softtabstop = 2
-vim.o.textwidth = 80
-vim.o.shiftwidth = 2
-vim.o.expandtab = true
 vim.o.confirm = true -- make vim prompt me to save before doing destructive things
 vim.o.completeopt = add {"menu", "noinsert", "noselect", "longest"}
 vim.o.hlsearch = false
@@ -178,8 +192,6 @@ vim.o.autowriteall = true -- automatically :write before running commands and ch
 vim.o.clipboard = "unnamedplus"
 vim.o.lazyredraw = true
 vim.o.laststatus = 2
-vim.o.autoindent = true
-vim.bo.autoindent = true
 vim.o.ttyfast = true
 vim.o.belloff = "all"
 vim.o.termguicolors = true
@@ -234,8 +246,7 @@ vim.o.writebackup = false
 if fn.isdirectory(vim.o.undodir) == 0 then
   fn.mkdir(vim.o.undodir, "p")
 end
-vim.o.undofile = true
-vim.bo.undofile = true
+set_opt("undofile", true, "b")
 --}}}
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
