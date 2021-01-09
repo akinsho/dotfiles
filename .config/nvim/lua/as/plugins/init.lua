@@ -277,7 +277,7 @@ return require("packer").startup {
         "personal/nvim-bufferline.lua",
         -- dofile("<full-path>/lua/as/plugins/nvim-bufferline.lua"),
         -- get's round the caching of require issue
-        config = dofile("/home/akin/.config/nvim/lua/as/plugins/nvim-bufferline.lua"),
+        config = require("as.plugins.nvim-bufferline"),
         disable = is_work
       }
     end
