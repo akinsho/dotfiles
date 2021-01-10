@@ -224,63 +224,82 @@ return require("packer").startup {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
       keys = {"<c-n>"},
-      config = require("as.plugins.nvim-tree")
+      config = require("as.plugins.nvim-tree"),
+      disable = vim.env.DEVELOPING
     }
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = require("as.plugins.treesitter"),
+      disable = vim.env.DEVELOPING,
       requires = {
         {"p00f/nvim-ts-rainbow"},
         {
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
-          cond = [[vim.fn.has("mac") == 0]]
+          cond = function()
+            return vim.fn.has("mac") == 0
+          end
         }
       }
+    }
+    local_use {
+      "contributing/nvim-tree.lua",
+      as = "local-nvim-tree",
+      disable = not vim.env.DEVELOPING
+    }
+    local_use {
+      "contributing/nvim-treesitter",
+      as = "local-treesitter",
+      disable = not vim.env.DEVELOPING
     }
 
     local dep_assist = function()
       return require("dependency_assist").setup()
     end
 
-    -- FIXME: toggling plugins with "vim.env.DEVELOPING" doesn't work
-    -- packer doesn't swap between both groups of plugins
-    -- as it doesn't recognise that the plugin set have changed so local
-    -- plugins aren't loaded. awaiting:
-    -- https://github.com/wbthomason/packer.nvim/issues/137
-    -- https://github.com/wbthomason/packer.nvim/issues/118
-    -- local_use "contributing/nvim-tree.lua"
-    -- local_use "contributing/nvim-web-devicons"
-    -- local_use "contributing/nvim-treesitter"
-    if is_work then
-      use {"akinsho/dependency-assist.nvim", config = dep_assist, disable = not is_work}
-      use {
-        "akinsho/nvim-toggleterm.lua",
-        config = require("as.plugins.toggleterm"),
-        disable = not is_work
-      }
-      use {
-        "akinsho/nvim-bufferline.lua",
-        config = require("as.plugins.nvim-bufferline"),
-        disable = not is_work
-      }
-    else
-      use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
-      local_use {"personal/dependency-assist.nvim", config = dep_assist, disable = is_work}
-      local_use {
-        "personal/nvim-toggleterm.lua",
-        config = require("as.plugins.toggleterm"),
-        disable = is_work
-      }
-      local_use {
-        "personal/nvim-bufferline.lua",
-        -- dofile("<full-path>/lua/as/plugins/nvim-bufferline.lua"),
-        -- get's round the caching of require issue
-        config = require("as.plugins.nvim-bufferline"),
-        disable = is_work
-      }
-    end
+    -----------------------------------------------------------------------------//
+    -- Work plugins
+    -----------------------------------------------------------------------------//
+    use {
+      "akinsho/dependency-assist.nvim",
+      config = dep_assist,
+      disable = not is_work
+    }
+    use {
+      "akinsho/nvim-toggleterm.lua",
+      config = require("as.plugins.toggleterm"),
+      disable = not is_work
+    }
+    use {
+      "akinsho/nvim-bufferline.lua",
+      config = require("as.plugins.nvim-bufferline"),
+      disable = not is_work
+    }
+    -----------------------------------------------------------------------------//
+    -- Personal plugins
+    -----------------------------------------------------------------------------//
+    use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
+    local_use {
+      "personal/dependency-assist.nvim",
+      config = dep_assist,
+      disable = is_work,
+      as = "local-dep-assist"
+    }
+    local_use {
+      "personal/nvim-toggleterm.lua",
+      config = require("as.plugins.toggleterm"),
+      as = "local-toggleterm",
+      disable = is_work
+    }
+    local_use {
+      "personal/nvim-bufferline.lua",
+      -- dofile("<full-path>/lua/as/plugins/nvim-bufferline.lua"),
+      -- get's round the caching of require issue
+      as = "local-bufferline",
+      config = require("as.plugins.nvim-bufferline"),
+      disable = is_work
+    }
     -- }}}
     ---------------------------------------------------------------------------------
   end,
