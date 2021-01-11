@@ -56,6 +56,10 @@ local function is_work_machine()
 end
 
 local is_work = is_work_machine()
+
+local function config(path)
+  return dofile(fn.stdpath("config") .. "/lua/as/plugins/" .. path .. ".lua")
+end
 --[[
     NOTE "use" functions cannot call *upvalues* i.e. the functions
     passed to setup or config etc. cannot reference aliased function
@@ -71,7 +75,7 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     use "airblade/vim-rooter"
     use {"junegunn/fzf", run = "./install --all"}
-    use {"junegunn/fzf.vim", config = require("as.plugins.fzf")}
+    use {"junegunn/fzf.vim", config = config("fzf")}
     use {
       "dhruvasagar/vim-prosession",
       requires = {"tpope/vim-obsession"},
@@ -86,9 +90,9 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
-    use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
-    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns"), branch = "issue44"}
-    use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = not is_work}
+    use {"mfussenegger/nvim-dap", config = config("dap")}
+    use {"lewis6991/gitsigns.nvim", config = config("gitsigns"), branch = "issue44"}
+    use {"neoclide/coc.nvim", config = config("coc"), disable = not is_work}
     use {"honza/vim-snippets", disable = not is_work}
     use {
       "neovim/nvim-lspconfig",
@@ -99,13 +103,13 @@ return require("packer").startup {
         {
           "RishabhRD/nvim-lsputils",
           requires = {"RishabhRD/popfix"},
-          config = require("as.plugins.lsputils")
+          config = config("lsputils")
         }
       }
     }
     use {
       "nvim-lua/completion-nvim",
-      config = require("as.plugins.completion"),
+      config = config("completion"),
       disable = is_work,
       requires = {
         {"nvim-treesitter/completion-treesitter"},
@@ -115,7 +119,7 @@ return require("packer").startup {
     use {
       "hrsh7th/vim-vsnip",
       disable = is_work,
-      config = require("as.plugins.vim-vsnip"),
+      config = config("vim-vsnip"),
       requires = {"hrsh7th/vim-vsnip-integ"}
     }
     -- }}}
@@ -134,7 +138,7 @@ return require("packer").startup {
     use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
-    use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
+    use {"liuchengxu/vim-which-key", config = config("whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
     use {
@@ -176,10 +180,10 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
-    use {"Yggdroot/indentLine", config = require("as.plugins.indentline")}
+    use {"Yggdroot/indentLine", config = config("indentline")}
     use {
       "sheerun/vim-polyglot",
-      config = require("as.plugins.polyglot"),
+      config = config("polyglot"),
       setup = [[vim.g.polyglot_disabled = {"sensible"}]]
     }
     ---}}}
@@ -224,13 +228,13 @@ return require("packer").startup {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
       keys = {"<c-n>"},
-      config = require("as.plugins.nvim-tree"),
+      config = config("nvim-tree"),
       disable = vim.env.DEVELOPING
     }
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      config = require("as.plugins.treesitter"),
+      config = config("treesitter"),
       disable = vim.env.DEVELOPING,
       requires = {
         {"p00f/nvim-ts-rainbow"},
@@ -268,12 +272,12 @@ return require("packer").startup {
     }
     use {
       "akinsho/nvim-toggleterm.lua",
-      config = require("as.plugins.toggleterm"),
+      config = config("toggleterm"),
       disable = not is_work
     }
     use {
       "akinsho/nvim-bufferline.lua",
-      config = require("as.plugins.nvim-bufferline"),
+      config = config("nvim-bufferline"),
       disable = not is_work
     }
     -----------------------------------------------------------------------------//
@@ -288,16 +292,14 @@ return require("packer").startup {
     }
     local_use {
       "personal/nvim-toggleterm.lua",
-      config = require("as.plugins.toggleterm"),
+      config = config("toggleterm"),
       as = "local-toggleterm",
       disable = is_work
     }
     local_use {
       "personal/nvim-bufferline.lua",
-      -- dofile("<full-path>/lua/as/plugins/nvim-bufferline.lua"),
-      -- get's round the caching of require issue
       as = "local-bufferline",
-      config = require("as.plugins.nvim-bufferline"),
+      config = config("nvim-bufferline"),
       disable = is_work
     }
     -- }}}

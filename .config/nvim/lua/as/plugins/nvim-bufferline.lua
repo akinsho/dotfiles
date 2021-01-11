@@ -1,4 +1,5 @@
 return function()
+  local map = as_utils.map
   require("bufferline").setup {
     options = {
       mappings = true,
@@ -7,9 +8,9 @@ return function()
     }
   }
 
-  as_utils.map("n", "gb", [[<cmd>BufferLinePick<CR>]])
-  as_utils.map("n", "<leader><tab>", [[<cmd>BufferLineCycleNext<CR>]])
-  as_utils.map("n", "<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
-  as_utils.map("n", "[b", [[<cmd>BufferLineMoveNext<CR>]])
-  as_utils.map("n", "]b", [[<cmd>BufferLineMovePrev<CR>]])
+  map("n", "gb", [[<cmd>BufferLinePick<CR>]])
+  map("n", "<leader><tab>", [[<cmd>BufferLineCycleNext<CR>]])
+  map("n", "<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
+  map("n", "[b", [[<cmd>BufferLineMoveNext<CR>]])
+  map("n", "]b", [[<cmd>BufferLineMovePrev<CR>]])
 end
