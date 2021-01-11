@@ -33,7 +33,7 @@
   // Diagnostics
   "diagnostic.separateRelatedInformationAsDiagnostics": true,
   "diagnostic.virtualTextPrefix": "",
-  "diagnostic.errorSign": "", // ✗
+  "diagnostic.errorSign": "✗", // 
   "diagnostic.warningSign": "", // 
   "diagnostic.infoSign": "", //   
   "diagnostic.hintSign": "", // ﯦ
