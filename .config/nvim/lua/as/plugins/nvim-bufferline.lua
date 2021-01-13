@@ -1,10 +1,12 @@
 return function()
   local map = as_utils.map
+  local has = as_utils.has
   require("bufferline").setup {
     options = {
       mappings = true,
       sort_by = "extension",
-      separator_style = "slant"
+      separator_style = "slant",
+      diagnostics = not has("mac") and "nvim_lsp" or false
     }
   }
 
