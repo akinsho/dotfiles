@@ -230,8 +230,8 @@ map("c", "/", [[getcmdtype() == "/" ? "\/" : "/"]], {expr = true})
 -----------------------------------------------------------------------------//
 -- Save
 map("n", "<c-s>", "<cmd>w<cr>")
--- Write and quit all files
-map("n", "qa", [[<cmd>call utils#message('Use ZZ instead')<CR>]])
+-- Write and quit all files, ZZ is NOT equivalent to this
+map("n", "qa", "<cmd>qa<CR>")
 ------------------------------------------------------------------------------
 -- Quickfix
 ------------------------------------------------------------------------------

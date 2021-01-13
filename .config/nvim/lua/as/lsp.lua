@@ -42,9 +42,10 @@ function _G.open_lsp_log()
   vim.cmd("edit " .. path)
 end
 
-cmd("ReloadLSP", [[lua reload_lsp()]])
-cmd("DebugLSP", [[lua print(vim.inspect(vim.lsp.get_active_clients()))]])
-cmd("LogLSP", [[lua open_lsp_log()]])
+cmd("Format", "lua vim.lsp.buf.formatting_sync(nil, 1000)")
+cmd("ReloadLSP", "lua reload_lsp()")
+cmd("DebugLSP", "lua print(vim.inspect(vim.lsp.get_active_clients()))")
+cmd("LogLSP", "lua open_lsp_log()")
 
 function M.tagfunc(pattern, flags)
   if flags ~= "c" then
