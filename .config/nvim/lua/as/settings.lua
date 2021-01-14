@@ -193,6 +193,7 @@ opt.bo.shiftwidth = 2
 opt.bo.expandtab = true
 opt.bo.autoindent = true
 opt.bo.autoindent = true
+vim.o.shiftround = true
 -----------------------------------------------------------------------------//
 vim.o.joinspaces = false
 vim.o.gdefault = true
