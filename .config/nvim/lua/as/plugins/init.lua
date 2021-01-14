@@ -71,8 +71,14 @@ return require("packer").startup {
     -- Core {{{
     ---------------------------------------------------------------------------------
     use "airblade/vim-rooter"
-    use {"junegunn/fzf", run = "./install --all"}
-    use {"junegunn/fzf.vim", config = require("as.plugins.fzf")}
+    -- TODO FZF vs Telescope
+    use {"junegunn/fzf", run = "./install --all", disable = false}
+    use {"junegunn/fzf.vim", config = require("as.plugins.fzf"), disable = true}
+    use {
+      "nvim-telescope/telescope.nvim",
+      requires = {"nvim-lua/popup.nvim"},
+      config = require("as.plugins.telescope")
+    }
     use {
       "dhruvasagar/vim-prosession",
       requires = {"tpope/vim-obsession"},
