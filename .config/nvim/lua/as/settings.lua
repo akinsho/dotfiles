@@ -287,9 +287,9 @@ vim.o.mousefocus = true
 -- FIXME - these don't work in lua
 -- vim.o.mousehide = true -- Raise issue on Neovim as this errors
 -----------------------------------------------------------------------------//
--- FIXME - these don't work in lua
--- vim.o.secure  -- Disable autocmd etc for project local vimrc files.
--- vim.o.exrc -- Allow project local vimrc files example .nvimrc see :h exrc
+-- these only read ".vim" files
+vim.o.secure = true  -- Disable autocmd etc for project local vimrc files.
+vim.o.exrc = true -- Allow project local vimrc files example .nvimrc see :h exrc
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
