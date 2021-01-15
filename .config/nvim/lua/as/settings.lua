@@ -4,25 +4,23 @@ local executable = function(e)
   return fn.executable(e) > 0
 end
 
-local function opt_mt(_, scope)
-  if scope ~= "bo" and scope ~= "wo" then
-    return require("as.utils").echomsg(
-      "You should use this for 'window' or 'buffer' options",
-      "Error"
-    )
-  end
-  return setmetatable(
-    {},
-    {
-      __newindex = function(_, option, value)
-        vim.o[option] = value
-        vim[scope][option] = value
-      end
-    }
-  )
-end
+local opts_info = vim.api.nvim_get_all_options_info()
 
-local opt = setmetatable({}, {__index = setmetatable({}, {__index = opt_mt})})
+local opt =
+  setmetatable(
+  {},
+  {
+    __newindex = function(_, key, value)
+      vim.o[key] = value
+      local scope = opts_info[key].scope
+      if scope == "win" then
+        vim.wo[key] = value
+      elseif scope == "buf" then
+        vim.bo[key] = value
+      end
+    end
+  }
+)
 
 local function add(value, str, sep)
   sep = sep or ","
@@ -120,7 +118,7 @@ vim.o.formatoptions =
 vim.o.foldtext = "folds#render()"
 vim.o.foldopen = add(vim.o.foldopen, "search")
 vim.o.foldlevelstart = 10
-opt.wo.foldmethod = "syntax"
+opt.foldmethod = "syntax"
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
@@ -161,12 +159,12 @@ vim.o.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
-opt.wo.conceallevel = 2
-opt.wo.breakindentopt = "sbr"
-opt.wo.linebreak = true -- lines wrap at words rather than random characters
-opt.bo.synmaxcol = 1024 -- don't syntax highlight long lines
-opt.wo.signcolumn = "yes:2"
-opt.wo.colorcolumn = "+1" -- Set the colour column to highlight one column after the 'textwidth'
+opt.conceallevel = 2
+opt.breakindentopt = "sbr"
+opt.linebreak = true -- lines wrap at words rather than random characters
+opt.synmaxcol = 1024 -- don't syntax highlight long lines
+opt.signcolumn = "yes:2"
+opt.colorcolumn = "+1" -- Set the colour column to highlight one column after the 'textwidth'
 vim.o.cmdheight = 2 -- Set command line height to two lines
 vim.o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
@@ -185,14 +183,14 @@ vim.o.listchars =
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-opt.wo.wrap = true
-opt.bo.wrapmargin = 2
-opt.bo.softtabstop = 2
-opt.bo.textwidth = 80
-opt.bo.shiftwidth = 2
-opt.bo.expandtab = true
-opt.bo.autoindent = true
-opt.bo.autoindent = true
+opt.wrap = true
+opt.wrapmargin = 2
+opt.softtabstop = 2
+opt.textwidth = 80
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.autoindent = true
+opt.autoindent = true
 vim.o.shiftround = true
 -----------------------------------------------------------------------------//
 vim.o.joinspaces = false
@@ -259,7 +257,7 @@ vim.o.writebackup = false
 if fn.isdirectory(vim.o.undodir) == 0 then
   fn.mkdir(vim.o.undodir, "p")
 end
-opt.bo.undofile = true
+opt.undofile = true
 --}}}
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
@@ -288,7 +286,7 @@ vim.o.mousefocus = true
 -- vim.o.mousehide = true -- Raise issue on Neovim as this errors
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
-vim.o.secure = true  -- Disable autocmd etc for project local vimrc files.
+vim.o.secure = true -- Disable autocmd etc for project local vimrc files.
 vim.o.exrc = true -- Allow project local vimrc files example .nvimrc see :h exrc
 -----------------------------------------------------------------------------//
 -- Git editor
