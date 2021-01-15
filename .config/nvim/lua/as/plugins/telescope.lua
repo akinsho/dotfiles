@@ -13,7 +13,7 @@ return function()
           ["<ESC>"] = actions.close
         }
       },
-      file_ignore_patterns = vim.split(vim.o.wildignore, ","),
+      file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png"},
       file_sorter = sorters.get_fzy_sorter,
       generic_sorter = sorters.get_fzy_sorter,
       -- throw treesitter and file not found errors
