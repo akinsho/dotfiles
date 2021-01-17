@@ -41,6 +41,7 @@ return function()
   -- Find files using Telescope command-line sugar.
   map("n", "<C-P>", "<cmd>lua __telescope_files()<CR>")
   map("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
+  map("n", "<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
   map("n", "<leader>fh", "<cmd>Telescope oldfiles<cr>")
   map("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
   map("n", "<leader>fc", "<cmd>Telescope git_commits<cr>")
