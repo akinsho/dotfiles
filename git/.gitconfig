@@ -23,8 +23,6 @@
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [alias]
   pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; } ; f"
-  bam     = "!source ~/.dotfiles/git/githelpers.sh && delete_local_merged_branches"
-  bamr    = "!source ~/.dotfiles/git/githelpers.sh && delete_remote_merged_branches"
   fix='$EDITOR `git diff --name-only | uniq`'
   # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
   aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
