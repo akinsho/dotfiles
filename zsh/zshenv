@@ -86,10 +86,6 @@ if ! type "$bat" > /dev/null; then
   export BAT_THEME="TwoDark"
 fi
 
-# By specifying a path this means ripgrep will check this
-# config file and use the arguments within it when it begins a search
-export RIPGREP_CONFIG_PATH="$DOTFILES/.config/.rgconfig"
-
 # Setting ag as the default source for fzf
 
 # --files: List files that would be searched but do not search
