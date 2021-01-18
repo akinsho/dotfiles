@@ -83,7 +83,7 @@ return require("packer").startup {
       requires = {
         "nvim-lua/popup.nvim",
         {"nvim-telescope/telescope-frecency.nvim", requires = {"tami5/sql.nvim"}}
-      },
+      }
     }
     use {
       "dhruvasagar/vim-prosession",
