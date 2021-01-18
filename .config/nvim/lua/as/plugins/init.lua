@@ -1,26 +1,34 @@
-local execute = vim.cmd
 local fn = vim.fn
 local has = as_utils.has
+local is_work = has("mac")
 
-local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  local output =
-    fn.system(
-    string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
-  )
-  print(output)
-  print("Downloading packer.nvim...")
-  execute "packadd packer.nvim"
-  execute "PackerSync"
-else
-  execute "packadd packer.nvim"
+local function setup_packer()
+  --- use a wildcard to match on local and upstream versions of packer
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/*packer*"
+  if fn.empty(fn.glob(install_path)) > 0 then
+    print("Downloading packer.nvim...")
+    local output =
+      fn.system(
+      string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
+    )
+    print(output)
+    vim.cmd "packadd packer.nvim"
+    vim.cmd "PackerInstall"
+  elseif is_work then
+    vim.cmd "packadd packer.nvim"
+  else
+    vim.cmd "packadd local-packer"
+  end
 end
 
--- cfilter plugin allows filter down an existing quickfix list
-execute "packadd! cfilter"
+-- Make sure packer is installed on the current machine and load
+-- the dev or upstream version depending on if we are at work or not
+setup_packer()
 
-execute "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
+-- cfilter plugin allows filter down an existing quickfix list
+vim.cmd "packadd! cfilter"
+
+vim.cmd "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
 
 as_utils.map("n", "<leader>ps", [[<Cmd>PackerSync<CR>]])
 as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
@@ -51,12 +59,6 @@ local function create_local(use)
   end
 end
 
-local function is_work_machine()
-  return has("mac")
-end
-
-local is_work = is_work_machine()
-
 --[[
     NOTE "use" functions cannot call *upvalues* i.e. the functions
     passed to setup or config etc. cannot reference aliased function
@@ -66,7 +68,8 @@ return require("packer").startup {
   function(use)
     local local_use = create_local(use)
     -- Packer can manage itself as an optional plugin
-    use {"wbthomason/packer.nvim", opt = true}
+    use {"wbthomason/packer.nvim", opt = true, disable = not is_work}
+    local_use {"contributing/packer.nvim", opt = true, as = "local-packer", disable = is_work}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
