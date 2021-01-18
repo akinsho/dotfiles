@@ -1,11 +1,12 @@
 return function()
   local map = as_utils.map
+  local telescope = require("telescope")
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
   local builtins = require("telescope.builtin")
   -- local previewers = require("telescope.previewers")
 
-  require("telescope").setup {
+  telescope.setup {
     defaults = {
       prompt_prefix = " ❯",
       mappings = {
@@ -25,6 +26,8 @@ return function()
     }
   }
 
+  telescope.load_extension("frecency")
+
   function _G.__telescope_files()
     -- Launch file search using Telescope
     if vim.fn.isdirectory(".git") then
@@ -42,7 +45,7 @@ return function()
   map("n", "<C-P>", "<cmd>lua __telescope_files()<CR>")
   map("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
   map("n", "<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
-  map("n", "<leader>fh", "<cmd>Telescope oldfiles<cr>")
+  map("n", "<leader>fh", "<cmd>Telescope frecency<cr>")
   map("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
   map("n", "<leader>fc", "<cmd>Telescope git_commits<cr>")
   map("n", "<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr>")

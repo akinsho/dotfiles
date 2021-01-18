@@ -76,8 +76,11 @@ return require("packer").startup {
     use {"junegunn/fzf.vim", config = require("as.plugins.fzf"), disable = true}
     use {
       "nvim-telescope/telescope.nvim",
-      requires = {"nvim-lua/popup.nvim"},
-      config = require("as.plugins.telescope")
+      config = require("as.plugins.telescope"),
+      requires = {
+        "nvim-lua/popup.nvim",
+        {"nvim-telescope/telescope-frecency.nvim", requires = {"tami5/sql.nvim"}}
+      },
     }
     use {
       "dhruvasagar/vim-prosession",
