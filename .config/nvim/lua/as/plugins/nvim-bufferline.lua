@@ -6,7 +6,11 @@ return function()
       mappings = true,
       sort_by = "extension",
       separator_style = "slant",
-      diagnostics = not has("mac") and "nvim_lsp" or false
+      diagnostics = not has("mac") and "nvim_lsp" or false,
+      diagnostics_indicator = function(count, level)
+        local icon = level:match("error") and " " or " "
+        return " " .. icon .. count
+      end
     }
   }
 
