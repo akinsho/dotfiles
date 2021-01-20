@@ -12,7 +12,6 @@ if &buftype == 'help' || expand('%') =~# '^'.$VIMRUNTIME
   " vertical resize 80
 
   nnoremap <buffer> q :<c-u>q<cr>
-  nnoremap <silent><buffer> <c-p> :Helptags<cr>
   nnoremap <buffer> <CR> <C-]>
   nnoremap <buffer> <BS> <C-T>
   nnoremap <silent><buffer> o /'\l\{2,\}'<CR>
