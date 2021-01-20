@@ -294,9 +294,13 @@ function M.setup()
 
   local status_capabilities = lsp_status.capabilities
 
-  flutter.setup_lsp {
-    on_attach = on_attach,
-    capabilities = status_capabilities
+  flutter.setup {
+    dev_log = {
+      open_cmd = "tabedit"
+    },
+    outline = {
+      size = 40
+    }
   }
 
   for server, config in pairs(servers) do
