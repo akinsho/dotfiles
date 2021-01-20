@@ -12,6 +12,23 @@ local function get_parent(str)
   return table.concat(parts, sep)
 end
 
+local function setup_localrc(path)
+  require("as.autocommands").create(
+    {
+      LocalRC = {
+        {"BufWritePost", path, string.format([[lua require('as.localrc').reload('%s')]], path)}
+      }
+    }
+  )
+end
+
+function M.reload(path)
+  vim.cmd("luafile " .. path)
+  echo("Reloaded " .. path)
+end
+
+---@param path string|nil
+---@param target string|nil
 function M.load(path, target)
   path = path and #path > 0 and path or vim.fn.getcwd()
   target = target or default_target
@@ -51,7 +68,10 @@ function M.load(path, target)
           function()
             local rc_path = path .. sep .. found.name
             local success, msg = pcall(dofile, rc_path)
-            echo("Found " .. target .. "at " .. rc_path)
+            echo("Found " .. target .. " at " .. rc_path)
+            if success then
+              setup_localrc(rc_path)
+            end
             local message = success and "Successfully loaded." or "Failed to load because: " .. msg
             echo(message)
           end,
