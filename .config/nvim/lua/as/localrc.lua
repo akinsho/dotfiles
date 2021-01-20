@@ -2,7 +2,7 @@ local luv = vim.loop
 local echo = require("as.utils").echomsg
 
 local sep = "/"
-local default_target = "nvimrc.lua"
+local default_target = "localrc.lua"
 
 local M = {}
 
@@ -27,10 +27,11 @@ function M.load(path, target)
     function(err, entries)
       if err then
         print(err)
-        vim.schedule_wrap(
+        vim.defer_fn(
           function()
             echo("[Local init @ " .. path .. " failed]: " .. err, "ErrorMsg")
-          end
+          end,
+          100
         )
         return
       end
@@ -46,14 +47,15 @@ function M.load(path, target)
         end
       end
       if found then
-        local rc_path = path .. sep .. found.name
-        local success, msg = pcall(dofile, rc_path)
-        vim.schedule_wrap(
+        vim.defer_fn(
           function()
+            local rc_path = path .. sep .. found.name
+            local success, msg = pcall(dofile, rc_path)
             echo("Found " .. target .. "at " .. rc_path)
             local message = success and "Successfully loaded." or "Failed to load because: " .. msg
             echo(message)
-          end
+          end,
+          100
         )
         return
       elseif not is_home then
