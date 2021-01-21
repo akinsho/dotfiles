@@ -86,16 +86,19 @@ function M.load(path, target)
   )
 end
 
-require("as.autocommands").create(
-  {
-    LoadLocalInit = {
-      {
-        "SessionLoadPost",
-        "*",
-        [[lua require("as.localrc").load()]]
+function M.setup(event)
+  event = event or "VimEnter"
+  require("as.autocommands").create(
+    {
+      LoadLocalInit = {
+        {
+          event,
+          "*",
+          [[lua require("as.localrc").load()]]
+        }
       }
     }
-  }
-)
+    )
+end
 
 return M
