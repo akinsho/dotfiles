@@ -140,8 +140,8 @@ return require("packer").startup {
     use "cohama/lexima.vim"
     use "psliwka/vim-smoothie"
     use "mg979/vim-visual-multi"
-    use "itchyny/vim-highlighturl"
     use "luochen1990/rainbow"
+    use {"itchyny/vim-highlighturl", config = [[vim.g.highlighturl_guifg = "NONE"]]}
     -- NOTE: marks are currently broken in neovim i.e.
     -- deleted marks are resurrected on restarting nvim
     -- use {"kshenoy/vim-signature"}
