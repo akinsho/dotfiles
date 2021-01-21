@@ -35,6 +35,7 @@ function M.colors()
   local title_fg = H.hl_value("Title", "fg")
   local title_gui = H.hl_value("Title", "gui")
   local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
+  local number_fg = H.hl_value("Number", "fg")
   local warning_fg = vim.g.colors_name == "one" and P.light_yellow or H.hl_value("WarningMsg", "fg")
 
   H.all {
@@ -43,6 +44,7 @@ function M.colors()
     {"StIndicator", {guibg = bg_color, guifg = tabline_sel_bg}},
     {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
+    {"StNumber", {guifg = number_fg, guibg = bg_color}},
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
@@ -296,16 +298,16 @@ function _G.statusline()
       behind,
       behind > 0,
       "StTitle",
-      {prefix = "⇣", prefix_color = "Number", after = " "}
+      {prefix = "⇣", prefix_color = "StNumber", after = " "}
     )
   )
 
   -- LSP Diagnostics
   local info = utils.diagnostic_info()
   if info and not vim.tbl_isempty(info) then
-    append(statusline, utils.item(info.error, "Error"), 1)
-    append(statusline, utils.item(info.warning, "PreProc"), 2)
-    append(statusline, utils.item(info.information, "String"), 3)
+    append(statusline, utils.item(info.error, "StError"), 1)
+    append(statusline, utils.item(info.warning, "StWarning"), 2)
+    append(statusline, utils.item(info.information, "StGreen"), 3)
   end
 
   -- LSP Status
