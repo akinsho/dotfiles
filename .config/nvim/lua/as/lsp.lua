@@ -300,6 +300,10 @@ function M.setup()
     },
     outline = {
       size = 40
+    },
+    lsp = {
+      on_attach = on_attach,
+      capabilities = status_capabilities
     }
   }
 
