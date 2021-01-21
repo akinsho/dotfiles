@@ -1,4 +1,3 @@
-local icons_loaded, devicons = pcall(require, "nvim-web-devicons")
 local palette = require("as.statusline.palette")
 local H = require("as.highlights")
 
@@ -267,11 +266,9 @@ function M.filetype(ctx, opts)
     return bt_exception, opts.default
   end
   local icon, hl
-  if icons_loaded then
-    local extension = fnamemodify(ctx.bufname, ":e")
-    icon, hl = devicons.get_icon(ctx.bufname, extension, {default = true})
-    hl = set_ft_icon_highlight(hl, opts.icon_bg)
-  end
+  local extension = fnamemodify(ctx.bufname, ":e")
+  icon, hl = require("nvim-web-devicons").get_icon(ctx.bufname, extension, {default = true})
+  hl = set_ft_icon_highlight(hl, opts.icon_bg)
   return icon, hl
 end
 
