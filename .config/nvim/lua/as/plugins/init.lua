@@ -118,11 +118,12 @@ return require("packer").startup {
     }
     use {
       "nvim-lua/completion-nvim",
-      config = require("as.plugins.completion"),
+      event = "InsertEnter *",
       disable = is_work,
+      config = require("as.plugins.completion"),
       requires = {
-        {"nvim-treesitter/completion-treesitter"},
-        {"aca/completion-tabnine", run = "./install.sh"}
+        {"nvim-treesitter/completion-treesitter", after = "completion-nvim"},
+        {"aca/completion-tabnine", run = "./install.sh", after = "completion-nvim"}
       }
     }
     use {
