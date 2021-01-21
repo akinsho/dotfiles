@@ -22,6 +22,17 @@ local function setup_localrc(path)
   )
 end
 
+local function load_rc(found, target, path)
+  local rc_path = path .. sep .. found.name
+  local success, msg = pcall(dofile, rc_path)
+  echo("Found " .. target .. " at " .. rc_path)
+  if success then
+    setup_localrc(rc_path)
+  end
+  local message = success and "Successfully loaded." or "Failed to load because: " .. msg
+  echo(message)
+end
+
 function M.reload(path)
   vim.cmd("luafile " .. path)
   echo("Reloaded " .. path)
@@ -41,39 +52,29 @@ function M.load(path, target)
 
   luv.fs_opendir(
     path,
-    function(err, entries)
+    function(err, dir)
       if err then
-        print(err)
-        vim.defer_fn(
+        return vim.defer_fn(
           function()
             echo("[Local init @ " .. path .. " failed]: " .. err, "ErrorMsg")
           end,
           100
         )
-        return
       end
-      while true do
-        local entry = luv.fs_readdir(entries)
-        if not entry or found then
-          break
-        end
-        for _, item in ipairs(entry) do
-          if item and item.name == target then
-            found = item
+      repeat
+        local entry = luv.fs_readdir(dir)
+        if entry then
+          for _, item in ipairs(entry) do
+            if item and item.name == target then
+              found = item
+            end
           end
         end
-      end
+      until not entry or found
       if found then
         vim.defer_fn(
           function()
-            local rc_path = path .. sep .. found.name
-            local success, msg = pcall(dofile, rc_path)
-            echo("Found " .. target .. " at " .. rc_path)
-            if success then
-              setup_localrc(rc_path)
-            end
-            local message = success and "Successfully loaded." or "Failed to load because: " .. msg
-            echo(message)
+            load_rc(found, target, path)
           end,
           100
         )
