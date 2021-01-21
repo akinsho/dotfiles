@@ -29,6 +29,7 @@ setup_packer()
 vim.cmd "packadd! cfilter"
 
 vim.cmd "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
+vim.cmd [[autocmd! BufWritePost */as/plugins/init.lua execute "luafile ".expand("%")]]
 
 as_utils.map("n", "<leader>ps", [[<Cmd>PackerSync<CR>]])
 as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
