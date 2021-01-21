@@ -226,7 +226,7 @@ function M.filename(ctx, modifier)
 
   local directory
   if ctx.buftype == "" and not ctx.preview then
-    directory = buf_expand(ctx.bufnum, ":h") .. "/"
+    directory = buf_expand(ctx.bufnum, ":~:.:h") .. "/"
   end
 
   fname = fname .. readonly_indicator
