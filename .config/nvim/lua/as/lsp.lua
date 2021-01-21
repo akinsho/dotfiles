@@ -298,9 +298,6 @@ function M.setup()
     dev_log = {
       open_cmd = "tabedit"
     },
-    outline = {
-      size = 40
-    },
     lsp = {
       on_attach = on_attach,
       capabilities = status_capabilities
