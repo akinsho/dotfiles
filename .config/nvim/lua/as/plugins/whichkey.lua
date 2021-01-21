@@ -38,13 +38,15 @@ return function()
       q = "sayonara: delete buffer"
     },
     f = {
-      name = "+fzf",
+      name = "+telescope",
+      b = "branches",
       c = "commits",
       f = "files",
       ["?"] = "help",
       d = "dotfiles",
       o = "buffers",
       h = "history",
+      r = "module reloader",
       s = "rg",
       w = "rg: <cursor word>"
     },
