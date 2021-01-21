@@ -1,15 +1,16 @@
-setl spell spelllang=en_gb
-setl nonumber norelativenumber nolist
-setl colorcolumn=
+setlocal spell spelllang=en_gb
+setlocal nonumber norelativenumber nolist
+setlocal colorcolumn=
+setlocal concealcursor=nc
 
 ""---------------------------------------------------------------------------//
 " Credit: Tweekmonster!
 ""---------------------------------------------------------------------------//
 " if this a vim help file rather than one I'm creating
 " add mappings otherwise do not
-if &buftype == 'help' || expand('%') =~# '^'.$VIMRUNTIME
+if &buftype == 'help' && expand('%') =~# '^'.$VIMRUNTIME
   wincmd L " automatically move window to the left
-  " vertical resize 80
+  vertical resize 80
 
   nnoremap <buffer> q :<c-u>q<cr>
   nnoremap <buffer> <CR> <C-]>
