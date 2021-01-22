@@ -169,7 +169,6 @@ return require("packer").startup {
       branch = "dev",
       keys = {",ww", ",wt", ",wi"},
       event = {"BufEnter *.wiki"},
-      requires = {"tools-life/taskwiki"}
     }
     -- }}}
     --------------------------------------------------------------------------------
