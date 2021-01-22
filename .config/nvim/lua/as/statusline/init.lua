@@ -60,7 +60,7 @@ function M.colors()
     {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
     {"StWarning", {guifg = warning_fg, guibg = bg_color}},
     {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
-    {"StError", {guifg = error_fg, guibg = pmenu_bg}},
+    {"StError", {guifg = error_fg, guibg = bg_color}},
     {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
     {
       "StFilename",
@@ -356,6 +356,10 @@ local function setup_autocommands()
         {
           "User FugitiveChanged",
           "lua require'as.statusline'.git_updates_refresh()"
+        },
+        {
+          "User FugitiveChanged",
+          "redrawstatus!"
         }
       }
     }
