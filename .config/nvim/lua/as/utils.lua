@@ -33,7 +33,7 @@ function M.profile(filename)
   fn.mkdir(base, "p")
   local success, profile = pcall(require, "plenary.profile.lua_profiler")
   if not success then
-    return vim.cmd [[echomsg "Plenary is not installed."]]
+    vim.api.nvim_echo({"Plenary is not installed.", "Title"}, true, {})
   end
   profile.start()
   return function()
@@ -65,13 +65,6 @@ end
 function M.buf_map(bufnr, mode, lhs, rhs, opts)
   opts = opts or get_defaults(mode)
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-end
-
-function M.echomsg(message, hl)
-  hl = hl or "Title"
-  vim.cmd("echohl " .. hl)
-  vim.cmd(string.format([[echoms "%s"]], message))
-  vim.cmd("echohl clear")
 end
 
 function M.cmd(name, rhs, types)

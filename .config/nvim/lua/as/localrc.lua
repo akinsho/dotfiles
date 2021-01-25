@@ -1,5 +1,4 @@
 local luv = vim.loop
-local echo = require("as.utils").echomsg
 
 local sep = "/"
 local default_target = "localrc.lua"
@@ -20,6 +19,11 @@ local function setup_localrc(path)
       }
     }
   )
+end
+
+local echo = function(msg, hl)
+  hl = hl or "Title"
+  vim.api.nvim_echo({{msg, hl}}, true, {})
 end
 
 local function load_rc(found, target, path)
@@ -98,7 +102,7 @@ function M.setup(event)
         }
       }
     }
-    )
+  )
 end
 
 return M
