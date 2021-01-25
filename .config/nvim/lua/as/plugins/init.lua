@@ -24,7 +24,6 @@ end
 -- Make sure packer is installed on the current machine and load
 -- the dev or upstream version depending on if we are at work or not
 setup_packer()
-local packer = require("packer")
 
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd "packadd! cfilter"
@@ -66,10 +65,9 @@ end
     passed to setup or config etc. cannot reference aliased function
     or local variables
 --]]
-return packer.startup {
-  function(use)
+return require("packer").startup {
+  function(use, use_rocks)
     local local_use = create_local(use)
-    local use_rocks = packer.use_rocks
 
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true, disable = not is_work}
@@ -78,6 +76,8 @@ return packer.startup {
     -- Core {{{
     ---------------------------------------------------------------------------------
     use_rocks "penlight" -- lua utility library
+    use_rocks "luaformatter"
+
     use "airblade/vim-rooter"
     -- TODO FZF vs Telescope
     use {"junegunn/fzf", run = "./install --all", disable = false}
@@ -109,6 +109,8 @@ return packer.startup {
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = not is_work}
     use {"honza/vim-snippets", disable = not is_work}
+
+    use {"anott03/nvim-lspinstall", cmd = "InstallLS", disable = is_work}
     use {
       "neovim/nvim-lspconfig",
       disable = is_work,
