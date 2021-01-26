@@ -176,14 +176,14 @@ vim.o.listchars =
   add {
   "eol: ",
   "tab:│ ",
-  "extends:…",
-  "precedes:…",
+  "extends:»", -- Alternatives: …
+  "precedes:«",
   "trail:•" -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-opt.wrap = true
+opt.wrap = false
 opt.wrapmargin = 2
 opt.softtabstop = 2
 opt.textwidth = 80
