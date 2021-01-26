@@ -1,9 +1,24 @@
 local luv = vim.loop
 
 local sep = "/"
-local default_target = "localrc.lua"
+local default_target = ".localrc.lua"
 
-local M = {}
+local M = {
+  found_rc = nil
+}
+
+local echo = function(msg, hl)
+  hl = hl or "Title"
+  vim.api.nvim_echo({{msg, hl}}, true, {})
+end
+
+function M.open()
+  if M.found_rc then
+    vim.cmd("vsplit "..M.found_rc)
+  else
+    echo("No LocalRC found")
+  end
+end
 
 local function get_parent(str)
   local parts = vim.split(str, "[/\\]")
@@ -21,17 +36,11 @@ local function setup_localrc(path)
   )
 end
 
-local echo = function(msg, hl)
-  hl = hl or "Title"
-  vim.api.nvim_echo({{msg, hl}}, true, {})
-end
-
-local function load_rc(found, target, path)
-  local rc_path = path .. sep .. found.name
-  local success, msg = pcall(dofile, rc_path)
-  echo("Found " .. target .. " at " .. rc_path)
+local function load_rc(target, path)
+  local success, msg = pcall(dofile, path)
+  echo("Found " .. target .. " at " .. path)
   if success then
-    setup_localrc(rc_path)
+    setup_localrc(path)
   end
   local message = success and "Successfully loaded." or "Failed to load because: " .. msg
   echo(message)
@@ -78,7 +87,9 @@ function M.load(path, target)
       if found then
         vim.defer_fn(
           function()
-            load_rc(found, target, path)
+            local rc_path = path .. sep .. found.name
+            M.found_rc = rc_path
+            load_rc(target, rc_path)
           end,
           100
         )
@@ -103,6 +114,7 @@ function M.setup(event)
       }
     }
   )
+  as_utils.cmd('LocalrcEdit', [[lua require("as.localrc").open()]])
 end
 
 return M
