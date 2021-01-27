@@ -2,7 +2,7 @@ return function()
   require("compe").setup {
     enabled = true,
     min_length = 1,
-    -- preselect = "enable",
+    preselect = "always",
     allow_prefix_unmatch = false,
     source = {
       path = true,
