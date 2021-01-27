@@ -126,7 +126,7 @@ return require("packer").startup {
     }
     use {
       "hrsh7th/nvim-compe",
-      -- event = "InsertEnter *",
+      -- event = "InsertEnter *", -- TODO this plugin can't be lazy loaded
       disable = is_work,
       config = require("as.plugins.compe")
     }

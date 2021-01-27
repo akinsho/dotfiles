@@ -1,4 +1,6 @@
 return function()
+  vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
+
   local map = as_utils.map
   map("i", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", {expr = true})
   map("s", "<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", {expr = true})
