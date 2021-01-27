@@ -125,14 +125,10 @@ return require("packer").startup {
       }
     }
     use {
-      "nvim-lua/completion-nvim",
-      event = "InsertEnter *",
+      "hrsh7th/nvim-compe",
+      -- event = "InsertEnter *",
       disable = is_work,
-      config = require("as.plugins.completion"),
-      requires = {
-        {"nvim-treesitter/completion-treesitter", after = "completion-nvim"},
-        {"aca/completion-tabnine", run = "./install.sh", after = "completion-nvim"}
-      }
+      config = require("as.plugins.compe")
     }
     use {
       "hrsh7th/vim-vsnip",
