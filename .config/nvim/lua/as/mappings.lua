@@ -151,6 +151,22 @@ map("v", "*", [[y/<C-R>"<CR>]])
 map("v", ".", ":norm.<CR>")
 -- Switch from visual to visual block.
 map("x", "r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], {silent = false})
+cmd(
+  "BK",
+  [[lua _mappings.buf_kill(<q-args>, <count>)]],
+  {"-bar", "-bang", "-nargs=?", "-count", "-addr=loaded_buffers", "-complete=buffer"}
+)
+-- https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
+function _mappings.buf_kill(qargs, count, _)
+  local bk_win_nr = count > 0 and fn.bufwinnr(count) or fn.bufwinnr(qargs)
+  local bk_save_win = fn.winnr()
+  vim.cmd(bk_win_nr .. "wincmd w")
+  vim.cmd("b" .. (fn.buflisted(fn.bufnr("#")) > 0 and " #" or "p"))
+  vim.cmd("bd! #")
+  vim.cmd(bk_save_win .. "wincmd w")
+end
+map("n", "<leader>qq",  "<cmd>BK<CR>")
+map("n", "<leader>qw",  "<cmd>bd<CR>")
 ----------------------------------------------------------------------------------
 -- Operators
 ----------------------------------------------------------------------------------

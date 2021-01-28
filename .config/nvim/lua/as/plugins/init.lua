@@ -154,7 +154,6 @@ return require("packer").startup {
     -- NOTE: marks are currently broken in neovim i.e.
     -- deleted marks are resurrected on restarting nvim
     -- use {"kshenoy/vim-signature"}
-    use {"mhinz/vim-sayonara", cmd = "Sayonara"}
     use {"mbbill/undotree", cmd = "UndotreeToggle"}
     use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
