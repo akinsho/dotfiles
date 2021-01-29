@@ -78,26 +78,14 @@ end
 
 local function setup_autocommands(client)
   local commands = {
-    LspCursorCommands = {
-      {"CursorHold", "<buffer>", "lua vim.lsp.diagnostic.show_line_diagnostics()"}
-    },
     LspHighlights = {{"VimEnter,ColorScheme", "*", "lua require('as.lsp').highlight()"}}
   }
-  if client and client.resolved_capabilities.signature_help then
-    extend(
-      commands.LspCursorCommands,
-      {{"CursorHoldI", "<buffer>", "lua vim.lsp.buf.signature_help()"}}
-    )
-  end
   if client and client.resolved_capabilities.document_highlight then
-    extend(
-      commands.LspCursorCommands,
-      {
-        {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-        {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-        {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
-      }
-    )
+    commands.LspCursorCommands = {
+      {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+      {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+      {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
+    }
   end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
@@ -115,9 +103,6 @@ end
 
 local function setup_mappings(client)
   local opts = {nowait = true, noremap = true, silent = true}
-  map("n", "[c", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-  map("n", "]c", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-  map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   map("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.hover then
     map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -125,16 +110,12 @@ local function setup_mappings(client)
   if client.resolved_capabilities.implementation then
     map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   end
-  map("i", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
   map("n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>", opts)
   map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   map("n", "<leader>cs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
   map("n", "<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
   map("n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  map("x", "<leader>a", "<cmd>'<'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 end
 -----------------------------------------------------------------------------//
 -- Signs
