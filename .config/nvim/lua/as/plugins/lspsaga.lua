@@ -17,12 +17,13 @@ return function()
   map("n", "<leader>rn", "<cmd>lua require('lspsaga.rename').rename()<CR>")
   map("n", "<leader>ca", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>")
   map("x", "<leader>a", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
+  map("n", "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 
   require("as.autocommands").create(
     {
-      LspCursorCommands = {
-        {"CursorHold", "<buffer>", "lua require('lspsaga.diagnostic').show_line_diagnostics()"},
-        {"CursorHoldI", "<buffer>", "lua require('lspsaga.signaturehelp').signature_help()"}
+      LspSagaCursorCommands = {
+        {"CursorHold", "*", "lua require('lspsaga.diagnostic').show_line_diagnostics()"},
+        {"CursorHoldI", "*", "lua require('lspsaga.signaturehelp').signature_help()"}
       }
     }
   )

@@ -4,7 +4,6 @@
 local M = {}
 
 local fn = vim.fn
-local extend = vim.list_extend
 local api = vim.api
 local cmd = as_utils.cmd
 
@@ -104,9 +103,6 @@ end
 local function setup_mappings(client)
   local opts = {nowait = true, noremap = true, silent = true}
   map("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  if client.resolved_capabilities.hover then
-    map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  end
   if client.resolved_capabilities.implementation then
     map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   end
