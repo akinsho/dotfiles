@@ -120,14 +120,8 @@ return require("packer").startup {
         {
           -- retry this plugin when it is more stable
           "glepnir/lspsaga.nvim",
-          disable = true,
           config = require("as.plugins.lspsaga")
         },
-        {
-          "RishabhRD/nvim-lsputils",
-          requires = {"RishabhRD/popfix"},
-          config = require("as.plugins.lsputils")
-        }
       }
     }
     use {
