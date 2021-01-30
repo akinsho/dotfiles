@@ -121,7 +121,7 @@ return require("packer").startup {
           -- retry this plugin when it is more stable
           "glepnir/lspsaga.nvim",
           config = require("as.plugins.lspsaga")
-        },
+        }
       }
     }
     use {
@@ -132,8 +132,7 @@ return require("packer").startup {
     use {
       "hrsh7th/vim-vsnip",
       disable = is_work,
-      config = require("as.plugins.vim-vsnip"),
-      requires = {"hrsh7th/vim-vsnip-integ"}
+      config = require("as.plugins.vim-vsnip")
     }
     -- }}}
     --------------------------------------------------------------------------------
