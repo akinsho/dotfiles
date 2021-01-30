@@ -76,7 +76,6 @@ return require("packer").startup {
     -- Core {{{
     ---------------------------------------------------------------------------------
     use_rocks "penlight" -- lua utility library
-    use_rocks "luaformatter"
 
     use "airblade/vim-rooter"
     -- TODO FZF vs Telescope
