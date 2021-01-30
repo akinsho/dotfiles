@@ -1,12 +1,10 @@
 return function()
   require("compe").setup {
-    enabled = true,
-    min_length = 1,
-    preselect = "enable",
     source = {
       path = true,
       buffer = true,
-      vsnip = {priority = 1500},
+      vsnip = true,
+      spell = true,
       nvim_lsp = true,
       nvim_lua = true
     }
