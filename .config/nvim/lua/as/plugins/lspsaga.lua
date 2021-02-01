@@ -3,6 +3,7 @@ return function()
   local map = as_utils.map
 
   saga.init_lsp_saga {
+    use_saga_diagnostic_sign = false,
     finder_action_keys = {
       open = "o",
       vsplit = "v",

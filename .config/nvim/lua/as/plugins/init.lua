@@ -247,11 +247,12 @@ return require("packer").startup {
       disable = vim.env.DEVELOPING,
       requires = {
         {"p00f/nvim-ts-rainbow"},
+        {"nvim-treesitter/nvim-treesitter-textobjects"},
         {
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
           cond = function()
-            return vim.fn.has("mac") == 0
+            return not is_work
           end
         }
       }

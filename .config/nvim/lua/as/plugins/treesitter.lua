@@ -30,7 +30,18 @@ return function()
     rainbow = {
       enable = false,
       disable = {"lua"}
-    }
+    },
+    textobjects = {
+      select = {
+        enable = true,
+        keymaps = {
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+        },
+      },
+    },
   }
 
   -- Only apply folding to supported files, inspired by:
