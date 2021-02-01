@@ -1,3 +1,6 @@
+require("as.globals")
+require("as.settings")
+require("as.plugins")
 require("as.highlights")
 require("as.statusline")
 require("as.numbers")
