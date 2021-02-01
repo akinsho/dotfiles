@@ -165,6 +165,14 @@ local function plugin_highlights()
   end
 
   if plugin_loaded("conflict-marker.vim") then
+    M.all {
+      {"ConflictMarkerBegin",  {guibg = "#2f7366"}},
+      {"ConflictMarkerOurs",  {guibg = "#2e5049"}},
+      {"ConflictMarkerTheirs",  {guibg = "#344f69"}},
+      {"ConflictMarkerEnd",  {guibg = "#2f628e"}},
+      {"ConflictMarkerCommonAncestorsHunk",  {guibg = "#754a81"}}
+    }
+  else
     -- Highlight VCS conflict markers
     vim.cmd [[match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$']]
   end

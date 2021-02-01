@@ -38,11 +38,6 @@ vim.g.maplocalleader = " " -- Local leader is <Space>
 -- Plugin Configurations
 ------------------------------------------------------------------------
 require("as")
-
--- :h runtime - this fuzzy matches files within vim's runtime path
-vim.cmd [[runtime configs/autocommands.vim]] -- TODO: eventually refactor to lua
-
-vim.cmd [[runtime! configs/plugins/*.vim]]
 -------------------------------------------------------------------------
 -- Local vimrc
 -------------------------------------------------------------------------

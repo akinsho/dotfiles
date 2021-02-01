@@ -1,18 +1,15 @@
-if !v:lua.plugin_loaded('switch.vim')
-  finish
-endif
+return function()
+  vim.g.switch_custom_definitions = {
+    {
+      [[\<\(\l\)\(\l\+\(\u\l\+\)\+\)\>]]= [[\=toupper(submatch(1)) . submatch(2)]],
+      [[\<\(\u\l\+\)\(\u\l\+\)\+\>]]= [[\\=tolower(substitute(submatch(0), '\\(\\l\\)\\(\\u\\)', '\\1_\\2', 'g'))]],
+      [[\<\(\l\+\)\(_\l\+\)\+\>]]= [[\U\0]],
+      [[\<\(\u\+\)\(_\u\+\)\+\>]]= [[\\=tolower(substitute(submatch(0), '_', '-', 'g'))]],
+      [[\<\(\l\+\)\(-\l\+\)\+\>]]= [[\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')]],
+    }
+  }
 
-let g:switch_custom_definitions =
-    \ [
-    \   {
-    \     '\<\(\l\)\(\l\+\(\u\l\+\)\+\)\>': '\=toupper(submatch(1)) . submatch(2)',
-    \     '\<\(\u\l\+\)\(\u\l\+\)\+\>': "\\=tolower(substitute(submatch(0), '\\(\\l\\)\\(\\u\\)', '\\1_\\2', 'g'))",
-    \     '\<\(\l\+\)\(_\l\+\)\+\>': '\U\0',
-    \     '\<\(\u\+\)\(_\u\+\)\+\>': "\\=tolower(substitute(submatch(0), '_', '-', 'g'))",
-    \     '\<\(\l\+\)\(-\l\+\)\+\>': "\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')",
-    \   }
-    \ ]
-
+vim.api.nvim_exec [[
 augroup SwitchFiletypes
   autocmd!
   " - [ ] → - [x] → - [-] → loops back to - [ ]
@@ -31,3 +28,5 @@ augroup SwitchFiletypes
     \   },
     \ ]
 augroup END
+]]
+end

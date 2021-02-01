@@ -77,7 +77,13 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     use_rocks "penlight" -- lua utility library
 
-    use "airblade/vim-rooter"
+    use {
+      "airblade/vim-rooter",
+      config = function()
+        vim.g.rooter_silent_chdir = 1
+        vim.g.rooter_resolve_links = 1
+      end
+    }
     -- TODO FZF vs Telescope
     use {"junegunn/fzf", run = "./install --all", disable = false}
     use {"junegunn/fzf.vim", config = require("as.plugins.fzf"), disable = true}
@@ -98,7 +104,7 @@ return require("packer").startup {
         vim.g.prosession_per_branch = 1
       end
     }
-    use "christoomey/vim-tmux-navigator"
+    use {"christoomey/vim-tmux-navigator", config = require("as.plugins.tmux-navigator")}
     use "nvim-lua/plenary.nvim"
     -- }}}
     -----------------------------------------------------------------------------//
@@ -136,20 +142,69 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
-    use "arecarn/vim-fold-cycle"
-    use "cohama/lexima.vim"
+    use {
+      "arecarn/vim-fold-cycle",
+      config = function()
+        vim.g.fold_cycle_default_mapping = 0
+        as_utils.map("n", "<BS>", "<Plug>(fold-cycle-close)", {silent = true})
+      end
+    }
+    use {
+      "cohama/lexima.vim",
+      config = function()
+        vim.g.lexima_accept_pum_with_enter = as_utils.has("mac")
+        vim.g.lexima_enable_space_rules = 0
+      end
+    }
     use "psliwka/vim-smoothie"
-    use "mg979/vim-visual-multi"
-    use "luochen1990/rainbow"
+    use {
+      "luochen1990/rainbow",
+      config = function()
+        vim.g.rainbow_active = 1
+        -- enable only for dart
+        vim.g.rainbow_conf = {
+          separately = {
+            ["*"] = 0,
+            dart = {
+              operators = "",
+              parentheses = {[[start=/(/ end=/)/ fold]], [[start=/\[/ end=/\]/ fold]]}
+            }
+          }
+        }
+      end
+    }
+    use {"mg979/vim-visual-multi", config = require("as.plugins.vim-visual-multi")}
     use {"itchyny/vim-highlighturl", config = [[vim.g.highlighturl_guifg = "NONE"]]}
     -- NOTE: marks are currently broken in neovim i.e.
     -- deleted marks are resurrected on restarting nvim
     -- use {"kshenoy/vim-signature"}
-    use {"mbbill/undotree", cmd = "UndotreeToggle"}
-    use {"vim-test/vim-test", cmd = {"TestFile", "TestNearest", "TestSuite"}}
+    use {
+      "mbbill/undotree",
+      cmd = "UndotreeToggle",
+      keys = ",u",
+      config = function()
+        vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
+        vim.g.undotree_SplitWidth = 35
+        vim.g.undotree_SetFocusWhenToggle = 1
+        as_utils.map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+      end
+    }
+    use {
+      "vim-test/vim-test",
+      cmd = {"TestFile", "TestNearest", "TestSuite"},
+      config = require("as.plugins.vim-test")
+    }
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
-    use {"iamcco/markdown-preview.nvim", run = ":call mkdp#util#install()", ft = {"markdown"}}
+    use {
+      "iamcco/markdown-preview.nvim",
+      run = ":call mkdp#util#install()",
+      ft = {"markdown"},
+      config = function()
+        vim.g.mkdp_auto_start = 0
+        vim.g.mkdp_auto_close = 1
+      end
+    }
     use {
       "rrethy/vim-hexokinase",
       run = "make hexokinase",
@@ -165,7 +220,8 @@ return require("packer").startup {
       "vimwiki/vimwiki",
       branch = "dev",
       keys = {",ww", ",wt", ",wi"},
-      event = {"BufEnter *.wiki"}
+      event = {"BufEnter *.wiki"},
+      config = require("as.plugins.vimwiki")
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -177,13 +233,19 @@ return require("packer").startup {
     -- TPOPE {{{
     --------------------------------------------------------------------------------
     use "tpope/vim-commentary"
-    use "tpope/vim-surround"
     use "tpope/vim-eunuch"
     use "tpope/vim-repeat"
-    use "tpope/vim-abolish"
+    use {"tpope/vim-abolish", config = require("as.plugins.abolish")}
     -- sets searchable path for filetypes like go so 'gf' works
     use "tpope/vim-apathy"
-    use "tpope/vim-projectionist"
+    use {"tpope/vim-projectionist", config = require("as.plugins.vim-projectionist")}
+    use {
+      "tpope/vim-surround",
+      config = function()
+        as_utils.map("v", "s", "<Plug>VSurround", {silent = true})
+        as_utils.map("v", "s", "<Plug>VSurround", {silent = true})
+      end
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{
@@ -198,29 +260,59 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Git {{{
     --------------------------------------------------------------------------------
-    use "tpope/vim-fugitive"
-    use "rhysd/conflict-marker.vim"
+    use {"tpope/vim-fugitive", config = require("as.plugins.fugitive")}
+    use {"rhysd/conflict-marker.vim", config = require("as.plugins.conflict-marker")}
     use {"TimUntersberger/neogit", cmd = "Neogit"}
-    use {"kdheepak/lazygit.nvim", cmd = "LazyGit"}
+    use {
+      "kdheepak/lazygit.nvim",
+      cmd = "LazyGit",
+      config = function()
+        as_utils.map("n", "<leader>lg", "<cmd>LazyGit<CR>")
+        vim.g.lazygit_floating_window_winblend = 2
+      end
+    }
     ---}}}
     --------------------------------------------------------------------------------
     -- Text Objects {{{
     --------------------------------------------------------------------------------
     use "AndrewRadev/splitjoin.vim"
-    use "svermeulen/vim-subversive"
-    use "AndrewRadev/dsf.vim"
-    use "AndrewRadev/sideways.vim"
-    use "chaoren/vim-wordmotion"
-    use "tommcdo/vim-exchange"
+    use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
+    use {"AndrewRadev/dsf.vim", config = require("as.plugins.dsf")}
+    use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
+    use {"chaoren/vim-wordmotion", config = require("as.plugins.vim-wordmotion")}
+    use {
+      "tommcdo/vim-exchange",
+      config = function()
+        vim.g.exchange_no_mappings = 1
+        as_utils.map("x", "X", "<Plug>(Exchange)", {silent = true})
+        as_utils.map("n", "X", "<Plug>(Exchange)", {silent = true})
+        as_utils.map("n", "Xc", "<Plug>(ExchangeClear)", {silent = true})
+      end
+    }
     use "wellle/targets.vim"
-    use {"kana/vim-textobj-user", requires = {"kana/vim-operator-user", "glts/vim-textobj-comment"}}
+    use {
+      "kana/vim-textobj-user",
+      requires = {
+        "kana/vim-operator-user",
+        {
+          "glts/vim-textobj-comment",
+          config = function()
+            vim.g.textobj_comment_no_default_key_mappings = 1
+            as_utils.map("x", "ax", "<Plug>(textobj-comment-a)")
+            as_utils.map("o", "ax", "<Plug>(textobj-comment-a)")
+            as_utils.map("x", "ix", "<Plug>(textobj-comment-i)")
+            as_utils.map("o", "ix", "<Plug>(textobj-comment-i)")
+          end
+        }
+      }
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Search Tools {{{
     --------------------------------------------------------------------------------
-    use "justinmk/vim-sneak"
+    use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak")}
     use "junegunn/vim-peekaboo"
-    use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}}
+    use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
@@ -278,7 +370,8 @@ return require("packer").startup {
     use {
       "akinsho/dependency-assist.nvim",
       config = dep_assist,
-      disable = not is_work
+      disable = not is_work,
+      cmd = {"AddDependency", "AddDevDependency"}
     }
     use {
       "akinsho/nvim-toggleterm.lua",
@@ -298,7 +391,8 @@ return require("packer").startup {
       "personal/dependency-assist.nvim",
       config = dep_assist,
       disable = is_work,
-      as = "local-dep-assist"
+      as = "local-dep-assist",
+      cmd = {"AddDependency", "AddDevDependency"}
     }
     local_use {
       "personal/nvim-toggleterm.lua",

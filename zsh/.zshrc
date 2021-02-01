@@ -35,6 +35,7 @@ source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
 source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               Completion
 #-------------------------------------------------------------------------------
