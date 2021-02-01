@@ -76,21 +76,51 @@ end
 -----------------------------------------------------------------------------//
 
 local function setup_autocommands(client)
-  local commands = {
-    LspHighlights = {{"VimEnter,ColorScheme", "*", "lua require('as.lsp').highlight()"}}
-  }
-  if client and client.resolved_capabilities.document_highlight then
-    commands.LspCursorCommands = {
-      {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-      {"CursorHoldI", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
-      {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"}
+  autocommands.augroup(
+    "LspHighlights",
+    {
+      {
+        events = {"VimEnter", "ColorScheme"},
+        targets = {"*"},
+        command = [[lua require('as.lsp').highlight()]]
+      }
     }
+  )
+  if client and client.resolved_capabilities.document_highlight then
+    autocommands.augroup(
+      "LspCursorCommands",
+      {
+        {
+          events = {"CursorHold"},
+          targets = {"<buffer>"},
+          command = "lua vim.lsp.buf.document_highlight()"
+        },
+        {
+          events = {"CursorHoldI"},
+          targets = {"<buffer>"},
+          command = "lua vim.lsp.buf.document_highlight()"
+        },
+        {
+          events = {"CursorMoved"},
+          targets = {"<buffer>"},
+          command = "lua vim.lsp.buf.clear_references()"
+        }
+      }
+    )
   end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    commands.LspFormat = {{"BufWritePre", "<buffer>", "lua vim.lsp.buf.formatting_sync(nil, 1000)"}}
+    autocommands.augroup(
+      "LspFormat",
+      {
+        {
+          events = {"BufWritePre"},
+          targets = {"<buffer>"},
+          command = "lua vim.lsp.buf.formatting_sync(nil, 1000)"
+        }
+      }
+    )
   end
-  autocommands.create(commands)
 end
 -----------------------------------------------------------------------------//
 -- Mappings
@@ -227,10 +257,7 @@ function M.setup()
       cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
       settings = {
         Lua = {
-          diagnostics = {
-            globals = {"vim"},
-            workspaceDelay = -1
-          },
+          diagnostics = {globals = {"vim"}, workspaceDelay = -1},
           completion = {keywordSnippet = "Both"},
           runtime = {
             version = "LuaJIT",
@@ -258,7 +285,7 @@ function M.setup()
           markdown = {prettier},
           -- yaml = {prettier},
           -- npm i -g lua-fmt
-          -- 'lua-format -i -c ./.lua-format'
+          -- 'lua-format -i -c {config_dir}'
           lua = {
             {
               formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
@@ -273,13 +300,8 @@ function M.setup()
   local status_capabilities = lsp_status.capabilities
 
   flutter.setup {
-    dev_log = {
-      open_cmd = "tabedit"
-    },
-    lsp = {
-      on_attach = on_attach,
-      capabilities = status_capabilities
-    }
+    dev_log = {open_cmd = "tabedit"},
+    lsp = {on_attach = on_attach, capabilities = status_capabilities}
   }
 
   for server, config in pairs(servers) do

@@ -13,6 +13,23 @@ function M.create(definitions)
   end
 end
 
+function M.augroup(name, commands)
+  vim.cmd("augroup " .. name)
+  vim.cmd("autocmd!")
+  for _, c in ipairs(commands) do
+    vim.cmd(
+      string.format(
+        "autocmd %s %s %s %s",
+        table.concat(c.events, ","),
+        table.concat(c.targets or {}, ","),
+        table.concat(c.modifiers or {}, " "),
+        c.command
+      )
+    )
+  end
+  vim.cmd("augroup END")
+end
+
 --- automatically clear commandline messages after a few seconds delay
 --- source: https://unix.stackexchange.com/a/613645
 local function clear_messages()
@@ -35,10 +52,13 @@ end
 
 M.clear_messages = clear_messages()
 
-M.create(
+M.augroup(
+  "ClearCommandMessages",
   {
-    ClearCommandMessages = {
-      {"CmdlineLeave", ":", "lua require('as.autocommands').clear_messages()"}
+    {
+      events = {"CmdlineLeave"},
+      targets = {":"},
+      command = "lua require('as.autocommands').clear_messages()"
     }
   }
 )

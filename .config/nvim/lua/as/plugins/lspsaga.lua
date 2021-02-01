@@ -24,11 +24,18 @@ return function()
   map("x", "<leader>a", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
   map("n", "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 
-  require("as.autocommands").create(
+  require("as.autocommands").augroup(
+    "LspSagaCursorCommands",
     {
-      LspSagaCursorCommands = {
-        {"CursorHold", "*", "lua require('lspsaga.diagnostic').show_line_diagnostics()"},
-        {"CursorHoldI", "*", "lua require('lspsaga.signaturehelp').signature_help()"}
+      {
+        events = {"CursorHold"},
+        targets = {"*"},
+        command = "lua require('lspsaga.diagnostic').show_line_diagnostics()"
+      },
+      {
+        events = {"CursorHoldI"},
+        targets = {"*"},
+        command = "lua require('lspsaga.signaturehelp').signature_help()"
       }
     }
   )
