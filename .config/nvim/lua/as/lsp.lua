@@ -103,6 +103,7 @@ end
 local function setup_mappings(client)
   local opts = {nowait = true, noremap = true, silent = true}
   map("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  map("n", "<gd>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.implementation then
     map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   end

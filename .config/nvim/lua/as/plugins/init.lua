@@ -117,7 +117,6 @@ return require("packer").startup {
         "nvim-lua/lsp-status.nvim",
         dev "personal/flutter-tools.nvim",
         {
-          -- retry this plugin when it is more stable
           "glepnir/lspsaga.nvim",
           config = require("as.plugins.lspsaga")
         }
