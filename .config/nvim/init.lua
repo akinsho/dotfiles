@@ -21,8 +21,8 @@ elseif uname.sysname == "Linux" then
 end
 
 function _G.plugin_loaded(plugin_name)
-  local path = vim.fn.globpath(vim.o.rtp, "pack/packer/*/" .. plugin_name)
-  return path ~= nil and path ~= ""
+  local plugins = _G.packer_plugins
+  return plugins and plugins[plugin_name] ~= nil and plugins[plugin_name].loaded
 end
 
 vim.g.dotfiles = vim.env.DOTFILES ~= nil and vim.env.DOTFILES or "~/.dotfiles"
