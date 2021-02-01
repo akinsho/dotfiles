@@ -117,6 +117,22 @@ return require("packer").startup {
 
     use {"anott03/nvim-lspinstall", cmd = "InstallLS", disable = is_work}
     use {
+      "kosayoda/nvim-lightbulb",
+      disable = is_work,
+      config = function()
+        require("as.autocommands").augroup(
+          "LspLightbulb",
+          {
+            {
+              events = {"CursorHold", "CursorHoldI"},
+              targets = {"*"},
+              command = "lua require'nvim-lightbulb'.update_lightbulb()"
+            }
+          }
+        )
+      end
+    }
+    use {
       "neovim/nvim-lspconfig",
       disable = is_work,
       requires = {
@@ -175,8 +191,7 @@ return require("packer").startup {
     }
     use {"mg979/vim-visual-multi", config = require("as.plugins.vim-visual-multi")}
     use {"itchyny/vim-highlighturl", config = [[vim.g.highlighturl_guifg = "NONE"]]}
-    -- NOTE: marks are currently broken in neovim i.e.
-    -- deleted marks are resurrected on restarting nvim
+    -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     -- use {"kshenoy/vim-signature"}
     use {
       "mbbill/undotree",
@@ -184,7 +199,6 @@ return require("packer").startup {
       keys = ",u",
       config = function()
         vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
-        vim.g.undotree_SplitWidth = 35
         vim.g.undotree_SetFocusWhenToggle = 1
         as_utils.map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
       end
