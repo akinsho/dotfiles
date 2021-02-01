@@ -233,7 +233,7 @@ return require("packer").startup {
     use {
       "vimwiki/vimwiki",
       branch = "dev",
-      keys = {",ww", ",wt", ",wi"},
+      keys = {"<leader>ww", "<leader>wt", "<leader>wi"},
       event = {"BufEnter *.wiki"},
       config = require("as.plugins.vimwiki")
     }
@@ -280,6 +280,7 @@ return require("packer").startup {
     use {
       "kdheepak/lazygit.nvim",
       cmd = "LazyGit",
+      keys = "<leader>lg",
       config = function()
         as_utils.map("n", "<leader>lg", "<cmd>LazyGit<CR>")
         vim.g.lazygit_floating_window_winblend = 2

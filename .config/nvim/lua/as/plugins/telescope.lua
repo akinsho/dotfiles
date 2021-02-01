@@ -26,7 +26,8 @@ return function()
     }
   }
 
-  telescope.load_extension("frecency")
+  -- TODO disable whilst sql.nvim is erroring
+  -- telescope.load_extension("frecency")
 
   function _G.__telescope_files()
     -- Launch file search using Telescope
