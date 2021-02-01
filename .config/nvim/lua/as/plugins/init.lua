@@ -235,7 +235,8 @@ return require("packer").startup {
       branch = "dev",
       keys = {"<leader>ww", "<leader>wt", "<leader>wi"},
       event = {"BufEnter *.wiki"},
-      config = require("as.plugins.vimwiki")
+      setup = require("as.plugins.vimwiki").setup,
+      config = require("as.plugins.vimwiki").config
     }
     -- }}}
     --------------------------------------------------------------------------------
