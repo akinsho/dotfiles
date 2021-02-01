@@ -5,7 +5,7 @@
 " implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
 function s:is_applicable_buf() abort
-  return empty(&buftype)
+  return empty(&buftype) && &modifiable
 endfunction
 
 function whitespace#setup() abort

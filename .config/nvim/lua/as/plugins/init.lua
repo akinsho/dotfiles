@@ -200,6 +200,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use "tpope/vim-fugitive"
     use "rhysd/conflict-marker.vim"
+    use {"TimUntersberger/neogit", cmd = "Neogit"}
     use {"kdheepak/lazygit.nvim", cmd = "LazyGit"}
     ---}}}
     --------------------------------------------------------------------------------
