@@ -276,9 +276,9 @@ return require("packer").startup {
     -- Text Objects {{{
     --------------------------------------------------------------------------------
     use "AndrewRadev/splitjoin.vim"
-    use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
     use {"AndrewRadev/dsf.vim", config = require("as.plugins.dsf")}
     use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
+    use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
     use {"chaoren/vim-wordmotion", config = require("as.plugins.vim-wordmotion")}
     use {
       "tommcdo/vim-exchange",
@@ -312,8 +312,8 @@ return require("packer").startup {
     -- Search Tools {{{
     --------------------------------------------------------------------------------
     use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak")}
-    use "junegunn/vim-peekaboo"
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
+    use "junegunn/vim-peekaboo"
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
