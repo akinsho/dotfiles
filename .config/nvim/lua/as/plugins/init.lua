@@ -298,10 +298,11 @@ return require("packer").startup {
           "glts/vim-textobj-comment",
           config = function()
             vim.g.textobj_comment_no_default_key_mappings = 1
-            as_utils.map("x", "ax", "<Plug>(textobj-comment-a)")
-            as_utils.map("o", "ax", "<Plug>(textobj-comment-a)")
-            as_utils.map("x", "ix", "<Plug>(textobj-comment-i)")
-            as_utils.map("o", "ix", "<Plug>(textobj-comment-i)")
+            local opts = {noremap = false, silent = true}
+            as_utils.map("x", "ax", "<Plug>(textobj-comment-a)", opts)
+            as_utils.map("o", "ax", "<Plug>(textobj-comment-a)", opts)
+            as_utils.map("x", "ix", "<Plug>(textobj-comment-i)", opts)
+            as_utils.map("o", "ix", "<Plug>(textobj-comment-i)", opts)
           end
         }
       }

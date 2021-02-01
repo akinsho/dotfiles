@@ -1,5 +1,4 @@
 local fn = vim.fn
-local buf_map = as_utils.buf_map
 
 function _G.__fugitive_create_new_branch()
   -- TODO add a new line at the end of the input
@@ -11,29 +10,6 @@ function _G.__fugitive_create_new_branch()
   end
 end
 
-function _G.__fugitive_setup_commit_buffer()
-  local expr = {expr = true, silent = true}
-  buf_map(
-    "n",
-    "}",
-    [[filter([search('\%(\_^#\?\s*\_$\)\\|\%$', 'W'), line('$')], 'v:val')[0].'G']],
-    expr
-  )
-  buf_map("n", "{", [[max([1, search('\%(\_^#\?\s*\_$\)\\|\%^', 'bW')]).'G']], expr)
-
-  if fn.expand("%"):match("COMMIT_EDITMSG") then
-    vim.cmd [[setlocal spell]]
-    -- delete the commit message storing it in "g, and go back to Gstatus
-    buf_map(
-      "n",
-      "Q",
-      [[gg0"gd/#<cr>:let @/=''<cr>:<c-u>wq<cr>:Gstatus<cr>:call histdel('search', -1)<cr>]],
-      {silent = true}
-    )
-    -- Restore register "g
-    buf_map("n", "<leader>u", [[gg"gP]], {silent = true})
-  end
-end
 return function()
   local map = as_utils.map
   local cmd = as_utils.cmd
@@ -67,14 +43,4 @@ return function()
   -- command is not silent as this obscures the preceding command
   -- also not the use of <c-z> the wildcharm character to trigger completion
   map("n", "<localleader>go", ":Git checkout<space><C-Z>")
-
-  require("as.autocommands").create {
-    vimrc_fugitive = {
-      {
-        "FileType",
-        "gitcommit",
-        "lua __fugitive_setup_commit_buffer()"
-      }
-    }
-  }
 end
