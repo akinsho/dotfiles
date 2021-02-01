@@ -3,7 +3,12 @@ return function()
   local map = as_utils.map
 
   saga.init_lsp_saga {
-    use_saga_diagnostic_sign = false
+    finder_action_keys = {
+      open = "o",
+      vsplit = "v",
+      split = "s",
+      quit = "q"
+    }
   }
   map("n", "gp", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
   map("n", "<leader>ca", [[<cmd>lua require('lspsaga.codeaction').code_action()<CR>]])
