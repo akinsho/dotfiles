@@ -3,7 +3,7 @@ return function()
     source = {
       path = true,
       buffer = true,
-      vsnip = true,
+      vsnip = {priority = 1500},
       spell = true,
       nvim_lsp = true,
       nvim_lua = true
