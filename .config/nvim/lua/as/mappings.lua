@@ -151,22 +151,25 @@ map("v", "*", [[y/<C-R>"<CR>]])
 map("v", ".", ":norm.<CR>")
 -- Switch from visual to visual block.
 map("x", "r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], {silent = false})
-cmd(
-  "BK",
-  [[lua _mappings.buf_kill(<q-args>, <count>)]],
-  {"-bar", "-bang", "-nargs=?", "-count", "-addr=loaded_buffers", "-complete=buffer"}
-)
--- https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
-function _mappings.buf_kill(qargs, count, _)
-  local bk_win_nr = count > 0 and fn.bufwinnr(count) or fn.bufwinnr(qargs)
-  local bk_save_win = fn.winnr()
-  vim.cmd(bk_win_nr .. "wincmd w")
-  vim.cmd("b" .. (fn.buflisted(fn.bufnr("#")) > 0 and " #" or "p"))
-  vim.cmd("bd! #")
-  vim.cmd(bk_save_win .. "wincmd w")
+-- https://www.reddit.com/r/neovim/comments/l8vyl8/a_plugin_to_improve_the_deletion_of_buffers/
+-- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
+function _mappings.buf_kill()
+  local buflisted = fn.getbufinfo({buflisted = 1})
+  local cur_winnr, cur_bufnr = fn.winnr(), fn.bufnr()
+  if #buflisted < 2 then
+    vim.cmd "confirm qall"
+    return
+  end
+  for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
+    vim.cmd(string.format("%d wincmd w", fn.win_id2win(winid)))
+    vim.cmd(cur_bufnr == buflisted[#buflisted].bufnr and "bp" or "bn")
+  end
+  vim.cmd(string.format("%d wincmd w", cur_winnr))
+  local is_terminal = vim.bo[cur_bufnr].buftype == "terminal"
+  vim.cmd(is_terminal and "bd! #" or "silent! confirm bd #")
 end
-map("n", "<leader>qq",  "<cmd>BK<CR>")
-map("n", "<leader>qw",  "<cmd>bd<CR>")
+map("n", "<leader>qq", "<cmd>lua _mappings.buf_kill()<CR>")
+map("n", "<leader>qw", "<cmd>bd<CR>")
 ----------------------------------------------------------------------------------
 -- Operators
 ----------------------------------------------------------------------------------
