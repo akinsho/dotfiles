@@ -51,12 +51,14 @@ return function()
   -- Find files using Telescope command-line sugar.
   map("n", "<C-P>", "<cmd>lua __telescope_files()<CR>")
   map("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
-  map("n", "<leader>fb", "<cmd>Telescope git_branches<cr>")
+  map("n", "<leader>fh", "<cmd>Telescope frecency theme=get_dropdown<cr>")
+
+  map("n", "<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
   map("n", "<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
-  map("n", "<leader>fh", "<cmd>Telescope frecency<cr>")
-  map("n", "<leader>fr", "<cmd>Telescope reloader<cr>")
-  map("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
-  map("n", "<leader>fc", "<cmd>Telescope git_commits<cr>")
-  map("n", "<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr>")
+  map("n", "<leader>fc", "<cmd>Telescope git_commits <cr>")
+
+  map("n", "<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
+  map("n", "<leader>fs", "<cmd>Telescope live_grep theme=get_dropdown<cr>")
+  map("n", "<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr> ")
   map("n", "<leader>f?", "<cmd>Telescope help_tags<cr>")
 end

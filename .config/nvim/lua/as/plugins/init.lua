@@ -173,7 +173,7 @@ return require("packer").startup {
     use {
       "cohama/lexima.vim",
       config = function()
-        vim.g.lexima_accept_pum_with_enter = as_utils.has("mac")
+        vim.g.lexima_accept_pum_with_enter = vim.fn.has("mac")
         vim.g.lexima_enable_space_rules = 0
       end
     }
