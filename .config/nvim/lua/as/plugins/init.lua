@@ -393,7 +393,7 @@ return require("packer").startup {
       "akinsho/dependency-assist.nvim",
       config = dep_assist,
       disable = not is_work,
-      cmd = {"AddDependency", "AddDevDependency"}
+      ft = {"dart", "rust"}
     }
     use {
       "akinsho/nvim-toggleterm.lua",
@@ -414,7 +414,7 @@ return require("packer").startup {
       config = dep_assist,
       disable = is_work,
       as = "local-dep-assist",
-      cmd = {"AddDependency", "AddDevDependency"}
+      ft = {"dart", "rust"}
     }
     local_use {
       "personal/nvim-toggleterm.lua",
