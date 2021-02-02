@@ -114,7 +114,6 @@ return require("packer").startup {
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = not is_work}
     use {"honza/vim-snippets", disable = not is_work}
-
     use {"anott03/nvim-lspinstall", cmd = "InstallLS", disable = is_work}
     use {
       "kosayoda/nvim-lightbulb",

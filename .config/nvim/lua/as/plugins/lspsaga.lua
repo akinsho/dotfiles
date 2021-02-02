@@ -12,7 +12,6 @@ return function()
     }
   }
   map("n", "gp", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
-  map("n", "<leader>ca", [[<cmd>lua require('lspsaga.codeaction').code_action()<CR>]])
   map("n", "gh", [[<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>]])
 
   -- jump diagnostic
@@ -23,6 +22,11 @@ return function()
   map("n", "<leader>ca", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>")
   map("x", "<leader>a", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
   map("n", "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
+
+  -- scroll down hover doc
+  map("n", "<C-f>", [[<cmd>lua require('lspsaga.hover').smart_scroll_hover(1)<CR>]])
+  -- scroll up hover doc
+  map("n", "<C-b>", [[<cmd>lua require('lspsaga.hover').smart_scroll_hover(-1)<CR>]])
 
   require("as.autocommands").augroup(
     "LspSagaCursorCommands",
