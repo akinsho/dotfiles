@@ -23,11 +23,17 @@ return function()
       layout_strategy = "flex",
       winblend = 7,
       set_env = {COLORTERM = "truecolor"}
+    },
+    extensions = {
+      frecency = {
+        workspaces = {
+          ["conf"] = vim.env.DOTFILES,
+          ["project"] = vim.env.PROJECTS_DIR,
+          ["wiki"] = vim.g.wiki_path
+        }
+      }
     }
   }
-
-  -- TODO disable whilst sql.nvim is erroring
-  -- telescope.load_extension("frecency")
 
   function _G.__telescope_files()
     -- Launch file search using Telescope
