@@ -67,11 +67,11 @@ end
 --]]
 return require("packer").startup {
   function(use, use_rocks)
-    local local_use = create_local(use)
+    local use_local = create_local(use)
 
     -- Packer can manage itself as an optional plugin
     use {"wbthomason/packer.nvim", opt = true, disable = not is_work}
-    local_use {"contributing/packer.nvim", opt = true, as = "local-packer", disable = is_work}
+    use_local {"contributing/packer.nvim", opt = true, as = "local-packer", disable = is_work}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -371,12 +371,12 @@ return require("packer").startup {
         }
       }
     }
-    local_use {
+    use_local {
       "contributing/nvim-tree.lua",
       as = "local-nvim-tree",
       disable = not vim.env.DEVELOPING
     }
-    local_use {
+    use_local {
       "contributing/nvim-treesitter",
       as = "local-treesitter",
       disable = not vim.env.DEVELOPING
@@ -409,20 +409,20 @@ return require("packer").startup {
     -- Personal plugins
     -----------------------------------------------------------------------------//
     use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
-    local_use {
+    use_local {
       "personal/dependency-assist.nvim",
       config = dep_assist,
       disable = is_work,
       as = "local-dep-assist",
       ft = {"dart", "rust"}
     }
-    local_use {
+    use_local {
       "personal/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
       as = "local-toggleterm",
       disable = is_work
     }
-    local_use {
+    use_local {
       "personal/nvim-bufferline.lua",
       as = "local-bufferline",
       config = require("as.plugins.nvim-bufferline"),
