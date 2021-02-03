@@ -12,7 +12,9 @@ return function()
 
   local map = as_utils.map
   local opts = {noremap = true, silent = true, expr = true}
+  vim.g.lexima_no_default_rules = true
+  vim.fn["lexima#set_default_rules"]()
   map("i", "<C-Space>", "compe#complete()", opts)
-  map("i", "<CR>", "compe#confirm(lexima#expand('<LT>CR>', 'i'))", opts)
+  map("i", "<CR>", [[compe#confirm(lexima#expand('<LT>CR>', 'i'))]], opts)
   map("i", "<C-e>", "compe#close('<C-e>')", opts)
 end
