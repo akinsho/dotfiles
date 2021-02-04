@@ -252,7 +252,6 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- TPOPE {{{
     --------------------------------------------------------------------------------
-    use "tpope/vim-commentary"
     use "tpope/vim-eunuch"
     use "tpope/vim-repeat"
     use {"tpope/vim-abolish", config = require("as.plugins.abolish")}
@@ -296,6 +295,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Text Objects {{{
     --------------------------------------------------------------------------------
+    use "b3nj5m1n/kommentary"
     use "AndrewRadev/splitjoin.vim"
     use {"AndrewRadev/dsf.vim", config = require("as.plugins.dsf")}
     use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
