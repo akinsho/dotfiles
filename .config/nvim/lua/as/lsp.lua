@@ -158,6 +158,34 @@ local function on_attach(client, bufnr)
   setup_autocommands(client)
   setup_mappings(client)
 
+  require("vim.lsp.protocol").CompletionItemKind = {
+    "", -- Text
+    "", -- Method
+    "ƒ", -- Function
+    "", -- Constructor
+    "識", -- Field
+    "", -- Variable
+    "\u{f0e8}", -- Class
+    "ﰮ", -- Interface
+    "", -- Module
+    "", -- Property
+    "", -- Unit
+    "", -- Value
+    "了", -- Enum
+    "", -- Keyword
+    "﬌", -- Snippet
+    "", -- Color
+    "", -- File
+    "渚", -- Reference
+    "", -- Folder
+    "", -- Enum
+    "", -- Constant
+    "", -- Struct
+    "鬒", -- Event
+    "\u{03a8}", -- Operator
+    "" -- TypeParameter
+  }
+
   if client.resolved_capabilities.goto_definition then
     api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.require('as.lsp').tagfunc")
   end
@@ -257,7 +285,7 @@ function M.setup()
       cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
       settings = {
         Lua = {
-          diagnostics = {globals = {"vim"}, workspaceDelay = -1},
+          diagnostics = {globals = {"vim"}},
           completion = {keywordSnippet = "Both"},
           runtime = {
             version = "LuaJIT",
