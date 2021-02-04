@@ -94,14 +94,13 @@ vim.o.diffopt =
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
-vim.o.formatoptions =
+opt.formatoptions =
   table.concat(
   {
     "1",
     "q", -- continue comments with gq"
     "c", -- Auto-wrap comments using textwidth
     "r", -- Continue comments when pressing Enter
-    "o", -- do not continue comment using o or O
     "n", -- Recognize numbered lists
     "2", -- Use indent from 2nd line of a paragraph
     "t", -- autowrap lines using text width value
