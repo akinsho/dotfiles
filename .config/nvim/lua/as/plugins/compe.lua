@@ -6,7 +6,8 @@ return function()
       vsnip = {priority = 1500},
       spell = true,
       nvim_lsp = true,
-      nvim_lua = true
+      nvim_lua = true,
+      treesitter = true
     }
   }
 

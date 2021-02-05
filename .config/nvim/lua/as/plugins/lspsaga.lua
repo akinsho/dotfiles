@@ -8,7 +8,7 @@ return function()
       open = "o",
       vsplit = "v",
       split = "s",
-      quit = "q"
+      quit = {"q", [[\<ESC>]]}
     }
   }
   map("n", "gp", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
