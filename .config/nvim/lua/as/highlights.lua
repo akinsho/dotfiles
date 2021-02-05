@@ -1,4 +1,3 @@
-local autocommands = require("as.autocommands")
 local synIDattr = vim.fn.synIDattr
 local hlID = vim.fn.hlID
 
@@ -166,11 +165,11 @@ local function plugin_highlights()
 
   if plugin_loaded("conflict-marker.vim") then
     M.all {
-      {"ConflictMarkerBegin",  {guibg = "#2f7366"}},
-      {"ConflictMarkerOurs",  {guibg = "#2e5049"}},
-      {"ConflictMarkerTheirs",  {guibg = "#344f69"}},
-      {"ConflictMarkerEnd",  {guibg = "#2f628e"}},
-      {"ConflictMarkerCommonAncestorsHunk",  {guibg = "#754a81"}}
+      {"ConflictMarkerBegin", {guibg = "#2f7366"}},
+      {"ConflictMarkerOurs", {guibg = "#2e5049"}},
+      {"ConflictMarkerTheirs", {guibg = "#344f69"}},
+      {"ConflictMarkerEnd", {guibg = "#2f628e"}},
+      {"ConflictMarkerCommonAncestorsHunk", {guibg = "#754a81"}}
     }
   else
     -- Highlight VCS conflict markers
@@ -286,19 +285,18 @@ function M.apply_user_highlights()
   end
 end
 
-autocommands.create(
+require("as.autocommands").augroup(
+  "ExplorerHighlights",
   {
-    ExplorerHighlights = {
-      {
-        "VimEnter,ColorScheme",
-        "*",
-        "lua require('as.highlights').apply_user_highlights()"
-      },
-      {
-        "FileType",
-        table.concat(explorer_fts, ","),
-        "lua require('as.highlights').on_explorer_enter()"
-      }
+    {
+      events = {"VimEnter", "ColorScheme"},
+      targets = {"*"},
+      command = "lua require('as.highlights').apply_user_highlights()"
+    },
+    {
+      events = {"FileType"},
+      targets = explorer_fts,
+      command = "lua require('as.highlights').on_explorer_enter()"
     }
   }
 )
