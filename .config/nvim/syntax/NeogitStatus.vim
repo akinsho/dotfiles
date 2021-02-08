@@ -1,0 +1,5 @@
+highlight link NeogitDiffAddHighlight None
+highlight link NeogitDiffDeleteHighlight None
+highlight link NeogitDiffContextHighlight Pmenu
+highlight link NeogitHunkHeader DiffText
+highlight link NeogitHunkHeaderHighlight TabLineSel
