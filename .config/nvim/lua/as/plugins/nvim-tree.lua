@@ -13,6 +13,8 @@ return function()
 
   vim.g.nvim_tree_bindings = {
     cd = {"cd"},
+    edit = {"<CR>", "o", "l"},
+    close_node = {"<BS>", "h"}
   }
 
   as_utils.map("n", "<c-n>", [[<cmd>NvimTreeToggle<CR>]])
@@ -29,9 +31,11 @@ return function()
   vim.cmd [[highlight link NvimTreeIndentMarker Comment]]
   vim.cmd [[highlight NvimTreeRootFolder gui=bold,italic guifg=LightMagenta]]
 
-  require('as.autocommands').create({
-    NvimTreeOverrides = {
-      {"ColorScheme", "*", "highlight NvimTreeRootFolder gui=bold,italic guifg=LightMagenta"}
+  require('as.autocommands').augroup("NvimTreeOverrides", {
+    {
+      events = {"ColorScheme"},
+      targets = {"*"},
+      command = "highlight NvimTreeRootFolder gui=bold,italic guifg=LightMagenta",
     }
   })
 end
