@@ -365,9 +365,7 @@ return require("packer").startup {
         {
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
-          cond = function()
-            return not is_work
-          end
+          disable = is_work
         }
       }
     }
@@ -398,6 +396,7 @@ return require("packer").startup {
     use {
       "akinsho/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
+      keys = {[[<c-\>]]},
       disable = not is_work
     }
     use {
@@ -420,6 +419,7 @@ return require("packer").startup {
       "personal/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
       as = "local-toggleterm",
+      keys = {[[<c-\>]]},
       disable = is_work
     }
     use_local {
