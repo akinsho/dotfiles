@@ -281,7 +281,18 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use {"tpope/vim-fugitive", config = require("as.plugins.fugitive")}
     use {"rhysd/conflict-marker.vim", config = require("as.plugins.conflict-marker")}
-    use {"TimUntersberger/neogit", cmd = "Neogit"}
+    use {
+      "TimUntersberger/neogit",
+      cmd = "Neogit",
+      keys = "<localleader>gS",
+      config = function()
+        as_utils.map(
+          "n",
+          "<localleader>gS",
+          [[<cmd>lua require("neogit").status.create("split")<CR>]]
+        )
+      end
+    }
     use {
       "kdheepak/lazygit.nvim",
       cmd = "LazyGit",
