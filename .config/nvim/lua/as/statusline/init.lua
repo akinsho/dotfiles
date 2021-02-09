@@ -6,10 +6,10 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
-local utils = require "as.statusline.utils"
-local P = require "as.statusline.palette"
-local H = require "as.highlights"
-local autocommands = require "as.autocommands"
+local utils = require("as.statusline.utils")
+local P = require("as.statusline.palette")
+local H = require("as.highlights")
+local autocommands = require("as.autocommands")
 
 local M = {}
 
