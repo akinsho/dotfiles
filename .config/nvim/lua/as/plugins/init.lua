@@ -14,7 +14,7 @@ local function setup_packer()
     print(output)
     vim.cmd "packadd packer.nvim"
     vim.cmd "PackerInstall"
-  elseif is_work then
+  elseif not vim.env.DEVELOPING then
     vim.cmd "packadd packer.nvim"
   else
     vim.cmd "packadd local-packer"
@@ -70,8 +70,13 @@ return require("packer").startup {
     local use_local = create_local(use)
 
     -- Packer can manage itself as an optional plugin
-    use {"wbthomason/packer.nvim", opt = true, disable = not is_work}
-    use_local {"contributing/packer.nvim", opt = true, as = "local-packer", disable = is_work}
+    use {"wbthomason/packer.nvim", opt = true, disable = vim.env.DEVELOPING}
+    use_local {
+      "contributing/packer.nvim",
+      opt = true,
+      as = "local-packer",
+      disable = not vim.env.DEVELOPING or is_work
+    }
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
