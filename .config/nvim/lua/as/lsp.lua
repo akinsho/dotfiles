@@ -1,15 +1,8 @@
------------------------------------------------------------------------------//
--- Native LSP config
------------------------------------------------------------------------------//
 local M = {}
 
 local fn = vim.fn
 local api = vim.api
 local cmd = as_utils.cmd
-
-local autocommands = require "as.autocommands"
-local utils = require "as.utils"
-
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
@@ -74,8 +67,8 @@ end
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
-
 local function setup_autocommands(client)
+  local autocommands = require "as.autocommands"
   autocommands.augroup(
     "LspHighlights",
     {
@@ -125,24 +118,20 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
-
-local function map(...)
-  api.nvim_buf_set_keymap(0, ...)
-end
+local buf_map = as_utils.buf_map
 
 local function setup_mappings(client)
-  local opts = {nowait = true, noremap = true, silent = true}
-  map("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  map("n", "<gd>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_map(0, "n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
+  buf_map(0, "n", "<gd>", "<cmd>lua vim.lsp.buf.definition()<CR>")
   if client.resolved_capabilities.implementation then
-    map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+    buf_map(0, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
   end
-  map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  map("n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>", opts)
-  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  map("n", "<leader>cs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-  map("n", "<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-  map("n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_map(0, "n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+  buf_map(0, "n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>")
+  buf_map(0, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+  buf_map(0, "n", "<leader>cs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
+  buf_map(0, "n", "<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
+  buf_map(0, "n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 -----------------------------------------------------------------------------//
 -- Signs
@@ -335,7 +324,8 @@ function M.setup()
 
   for server, config in pairs(servers) do
     config.on_attach = on_attach
-    config.capabilities = utils.deep_merge(config.capabilities or {}, status_capabilities)
+    config.capabilities =
+      require("as.utils").deep_merge(config.capabilities or {}, status_capabilities)
     lspconfig[server].setup(config)
   end
 end
