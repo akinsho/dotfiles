@@ -28,6 +28,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     "$LUA_CPATH"
     "$HOME/flutter/bin"
     "$JAVA_HOME/bin"
+    # Dart ============================================================
+    "/usr/lib/dart/bin"
+    "$HOME/.pub-cache/bin"
     # GO ============================================================
     "/usr/local/go/bin"
     "$(go env GOPATH)/bin"
