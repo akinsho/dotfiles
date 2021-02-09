@@ -5,10 +5,9 @@ return function()
   saga.init_lsp_saga {
     use_saga_diagnostic_sign = false,
     finder_action_keys = {
-      open = "o",
       vsplit = "v",
       split = "s",
-      quit = {"q", [[\<ESC>]]}
+      quit = {"q", "<ESC>"}
     }
   }
   map("n", "gp", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
