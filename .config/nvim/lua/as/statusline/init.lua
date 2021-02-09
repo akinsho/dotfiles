@@ -48,6 +48,7 @@ function M.colors()
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
+    {"StDim", {guibg = bg_color, guifg = comment_fg}},
     {"StTitle", {guibg = bg_color, guifg = title_fg, gui = title_gui}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
     {"StItem", {guibg = normal_fg, guifg = bg_color, gui = "italic"}},
@@ -215,6 +216,13 @@ function _G.statusline()
 
   append(statusline, dir_item, 1)
   append(statusline, file_item, 0)
+  -- show the alternate buffer name
+  local alternate_buf = vim.fn.expand("#:t")
+  append(
+    statusline,
+    utils.item_if("(#:" .. alternate_buf .. ")", #alternate_buf > 0, "StDim", {before = " "}),
+    3
+  )
 
   append(
     statusline,
