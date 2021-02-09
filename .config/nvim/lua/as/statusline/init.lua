@@ -221,7 +221,7 @@ function _G.statusline()
   local alternate_buf = vim.fn.expand("#:t")
   append(
     statusline,
-    utils.item_if("(#->" .. alternate_buf .. ")", #alternate_buf > 0, "StDim", {before = " "}),
+    utils.item_if("(<-" .. alternate_buf .. ")", #alternate_buf > 0, "StDim", {before = " "}),
     3
   )
 
