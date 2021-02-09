@@ -341,34 +341,33 @@ function _G.statusline()
 end
 
 local function setup_autocommands()
-  autocommands.create(
+  autocommands.augroup(
+    "CustomStatusline",
     {
-      CustomStatusline = {
-        {"FocusGained", "*", "let g:vim_in_focus = v:true"},
-        {"FocusLost", "*", "let g:vim_in_focus = v:false"},
-        {
-          "VimEnter,ColorScheme",
-          "*",
-          "lua require'as.statusline'.colors()"
-        },
-        {"VimEnter", "*", "lua require'as.statusline'.git_updates()"},
-        {
-          "DirChanged",
-          "*",
-          "lua require'as.statusline'.git_toggle_updates()"
-        },
-        {
-          "User AsyncGitJobComplete",
-          "lua require'as.statusline'.git_updates_refresh()"
-        },
-        {
-          "User FugitiveChanged",
-          "lua require'as.statusline'.git_updates_refresh()"
-        },
-        {
-          "User FugitiveChanged",
-          "redrawstatus!"
-        }
+      {events = {"FocusGained"}, targets = {"*"}, command = "let g:vim_in_focus = v:true"},
+      {events = {"FocusLost"}, targets = {"*"}, command = "let g:vim_in_focus = v:false"},
+      {
+        events = {"VimEnter", "ColorScheme"},
+        targets = {"*"},
+        command = "lua require'as.statusline'.colors()"
+      },
+      {events = {"VimEnter"}, targets = {"*"}, command = "lua require'as.statusline'.git_updates()"},
+      {
+        events = {"DirChanged"},
+        targets = {"*"},
+        command = "lua require'as.statusline'.git_toggle_updates()"
+      },
+      {
+        events = {"User AsyncGitJobComplete"},
+        command = "lua require'as.statusline'.git_updates_refresh()"
+      },
+      {
+        events = {"User FugitiveChanged"},
+        command = "lua require'as.statusline'.git_updates_refresh()"
+      },
+      {
+        events = {"User FugitiveChanged"},
+        command = "redrawstatus!"
       }
     }
   )
