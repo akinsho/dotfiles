@@ -570,8 +570,10 @@ local function fetch_github_notifications()
         if data then
           vim.defer_fn(
             function()
-              local notifications = vim.fn.json_decode(data)
-              vim.g.github_notifications = #notifications
+              if data and #data > 0 then
+                local notifications = vim.fn.json_decode(data)
+                vim.g.github_notifications = #notifications
+              end
             end,
             1
           )
@@ -583,7 +585,7 @@ end
 
 function M.github_notifications()
   if fn.executable("gh") > 0 then
-    job(60000, fetch_github_notifications)
+    job(300000, fetch_github_notifications)
   end
 end
 
