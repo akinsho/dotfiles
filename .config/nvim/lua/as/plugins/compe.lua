@@ -7,7 +7,8 @@ return function()
       spell = true,
       nvim_lsp = true,
       nvim_lua = true,
-      treesitter = true
+      treesitter = true,
+      tabnine = true
     }
   }
 

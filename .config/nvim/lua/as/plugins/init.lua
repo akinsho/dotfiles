@@ -152,7 +152,8 @@ return require("packer").startup {
     use {
       "hrsh7th/nvim-compe",
       disable = is_work,
-      config = require("as.plugins.compe")
+      config = require("as.plugins.compe"),
+      requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
     }
     use {
       "hrsh7th/vim-vsnip",
