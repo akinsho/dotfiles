@@ -56,7 +56,7 @@ M.augroup(
   "ClearCommandMessages",
   {
     {
-      events = {"CmdlineLeave"},
+      events = {"CmdlineLeave", "CmdlineChanged"},
       targets = {":"},
       command = "lua require('as.autocommands').clear_messages()"
     }
