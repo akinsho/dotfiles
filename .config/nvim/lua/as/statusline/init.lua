@@ -16,6 +16,7 @@ local M = {}
 M.git_updates = utils.git_updates
 M.git_toggle_updates = utils.git_update_toggle
 M.git_updates_refresh = utils.git_updates_refresh
+M.github_notifications = utils.github_notifications
 
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
@@ -279,6 +280,17 @@ function _G.statusline()
     4
   )
 
+  -- Github notifications
+  append(
+    statusline,
+    utils.item_if(
+      " " .. (vim.g.github_notifications or ""),
+      vim.g.github_notifications ~= nil and vim.g.github_notifications > 0,
+      "StTitle"
+    ),
+    3
+  )
+
   -- Git Status
   local prefix, git_status = utils.git_status()
   append(statusline, utils.item(git_status, "StInfo", {prefix = prefix}), 1)
@@ -352,6 +364,11 @@ local function setup_autocommands()
         command = "lua require'as.statusline'.colors()"
       },
       {events = {"VimEnter"}, targets = {"*"}, command = "lua require'as.statusline'.git_updates()"},
+      {
+        events = {"VimEnter"},
+        targets = {"*"},
+        command = "lua require'as.statusline'.github_notifications()"
+      },
       {
         events = {"DirChanged"},
         targets = {"*"},

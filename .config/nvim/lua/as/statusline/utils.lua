@@ -350,79 +350,6 @@ function M.current_fn()
   return fn.trim(sanitized)
 end
 
---- @param result table
-local function git_read(result)
-  return function(_, data, _)
-    for _, v in ipairs(data) do
-      if v and v ~= "" then
-        table.insert(result, v)
-      end
-    end
-  end
-end
-
---- @param result table
-local function git_update_status(result)
-  return function(_, code, _)
-    if code == 0 and result and #result > 0 then
-      local parts = vim.split(result[1], "\t")
-      if parts and #parts > 1 then
-        local formatted = {behind = parts[1], ahead = parts[2]}
-        vim.g.git_statusline_updates = formatted
-      end
-    end
-  end
-end
-
-local function git_update_job()
-  local cmd = "git rev-list --count --left-right @{upstream}...HEAD"
-  local result = {}
-  return fn.jobstart(
-    cmd,
-    {
-      on_stdout = git_read(result),
-      on_exit = git_update_status(result)
-    }
-  )
-end
-
-local function is_git_repo()
-  return fn.isdirectory(fn.getcwd() .. "/" .. ".git")
-end
-
-function M.git_updates_refresh()
-  git_update_job()
-end
-
-function M.git_update_toggle()
-  local on = is_git_repo()
-  if on then
-    M.git_updates()
-  end
-  local status = on and 0 or 1
-  fn.timer_pause(vim.g.git_statusline_updates_timer, status)
-end
-
---- starts a timer to check for the whether
---- we are currently ahead or behind upstream
-function M.git_updates()
-  local pending_job
-  git_update_job()
-  local timer =
-    vim.fn.timer_start(
-    30000,
-    function()
-      -- clear previous job
-      if pending_job then
-        vim.fn.jobstop(pending_job)
-      end
-      pending_job = git_update_job()
-    end,
-    {["repeat"] = -1}
-  )
-  vim.g.git_statusline_updates_timer = timer
-end
-
 function M.git_status()
   -- symbol opts -  , "\uf408"
   if vim.g.coc_git_status then
@@ -609,6 +536,114 @@ function M.item_if(item, condition, hl, opts)
     return M.spacer()
   end
   return M.item(item, hl, opts)
+end
+
+-----------------------------------------------------------------------------//
+-- Git/Github helper functions
+-----------------------------------------------------------------------------//
+local function job(interval, task, on_complete)
+  task()
+  local pending_job
+  local timer =
+    fn.timer_start(
+    interval,
+    function()
+      -- clear previous job
+      if pending_job then
+        fn.jobstop(pending_job)
+      end
+      pending_job = task()
+    end,
+    {["repeat"] = -1}
+  )
+  if on_complete then
+    on_complete(timer)
+  end
+end
+
+local function fetch_github_notifications()
+  fn.jobstart(
+    "gh api notifications",
+    {
+      stdout_buffered = true,
+      on_stdout = function(_, data, _)
+        if data then
+          vim.defer_fn(
+            function()
+              local notifications = vim.fn.json_decode(data)
+              vim.g.github_notifications = #notifications
+            end,
+            1
+          )
+        end
+      end
+    }
+  )
+end
+
+function M.github_notifications()
+  if fn.executable("gh") > 0 then
+    job(60000, fetch_github_notifications)
+  end
+end
+
+local function is_git_repo()
+  return fn.isdirectory(fn.getcwd() .. "/" .. ".git")
+end
+
+--- @param result table
+local function git_read(result)
+  return function(_, data, _)
+    for _, v in ipairs(data) do
+      if v and v ~= "" then
+        table.insert(result, v)
+      end
+    end
+  end
+end
+
+--- @param result table
+local function git_update_status(result)
+  return function(_, code, _)
+    if code == 0 and result and #result > 0 then
+      local parts = vim.split(result[1], "\t")
+      if parts and #parts > 1 then
+        local formatted = {behind = parts[1], ahead = parts[2]}
+        vim.g.git_statusline_updates = formatted
+      end
+    end
+  end
+end
+
+local function git_update_job()
+  local cmd = "git rev-list --count --left-right @{upstream}...HEAD"
+  local result = {}
+  return fn.jobstart(cmd, {on_stdout = git_read(result), on_exit = git_update_status(result)})
+end
+
+function M.git_updates_refresh()
+  git_update_job()
+end
+
+function M.git_update_toggle()
+  local on = is_git_repo()
+  if on then
+    M.git_updates()
+  end
+  local status = on and 0 or 1
+  fn.timer_pause(vim.g.git_statusline_updates_timer, status)
+end
+
+--- starts a timer to check for the whether
+--- we are currently ahead or behind upstream
+function M.git_updates()
+  job(
+    30000,
+    git_update_job,
+    function(timer)
+      vim.g.git_statusline_updates_timer = timer
+    end
+  )
 end
 
 return M
