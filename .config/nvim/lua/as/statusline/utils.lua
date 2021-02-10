@@ -202,13 +202,12 @@ end
 --- @param ctx table
 --- @param modifier string
 function M.filename(ctx, modifier)
+  modifier = modifier or ":t"
   local special_buf = special_buffers(ctx)
   if special_buf then
     return "", special_buf
   end
 
-  local readonly_indicator = readonly(ctx)
-  modifier = modifier or ":t"
   local fname = buf_expand(ctx.bufnum, modifier)
 
   local name = exceptions.names[ctx.filetype]
@@ -224,10 +223,12 @@ function M.filename(ctx, modifier)
     return "", "No Name"
   end
 
-  fname = (fname .. readonly_indicator) or ""
+  fname = fname .. readonly(ctx)
 
   local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil
-  local directory = (path and path ~= ".") and fn.pathshorten(fnamemodify(path, ":h:h")) .. "/" or ""
+  local directory =
+    (path and path ~= ".") and fn.pathshorten(fnamemodify(path, ":h:h")) .. "/" or ""
+
   local parent = fnamemodify(path, ":t")
   parent = parent ~= "" and parent .. "/" or ""
   return directory, parent, fname
@@ -390,7 +391,7 @@ local function mode_highlight(mode)
   elseif command_regex:match_str(mode) then
     H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
   else
-    H.highlight("StModeText", {guibg = bg, guifg = palette.green, gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = "grey", gui = "bold"})
   end
 end
 
