@@ -234,12 +234,11 @@ function M.filename(ctx, modifier)
   fname = fname .. readonly(ctx)
 
   local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil
-  local directory =
-    (path and path ~= ".") and fn.pathshorten(fnamemodify(path, ":h:h")) .. "/" or ""
-
-  local parent = fnamemodify(path, ":t")
+  local dir = (path and path ~= ".") and fn.pathshorten(fnamemodify(path, ":h:h")) .. "/" or ""
+  local parent = (dir and dir ~= "") and fnamemodify(path, ":t") or ""
   parent = parent ~= "" and parent .. "/" or ""
-  return directory, parent, fname
+
+  return dir, parent, fname
 end
 
 --- @param hl string
@@ -389,7 +388,6 @@ local function mode_highlight(mode)
   local bg = H.hl_value("StatusLine", "bg")
   local visual_regex = vim.regex([[\(v\|V\|\)]])
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
-  local inc_search_bg = H.hl_value("Search", "bg")
   if mode == "i" then
     H.highlight("StModeText", {guibg = bg, guifg = M.palette.dark_blue, gui = "bold"})
   elseif visual_regex:match_str(mode) then
@@ -397,6 +395,7 @@ local function mode_highlight(mode)
   elseif mode == "R" then
     H.highlight("StModeText", {guibg = bg, guifg = M.palette.dark_red, gui = "bold"})
   elseif command_regex:match_str(mode) then
+    local inc_search_bg = H.hl_value("Search", "bg")
     H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
   else
     H.highlight("StModeText", {guibg = bg, guifg = "grey", gui = "bold"})
