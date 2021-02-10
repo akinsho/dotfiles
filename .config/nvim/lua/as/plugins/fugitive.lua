@@ -4,9 +4,9 @@ function _G.__fugitive_create_new_branch()
   -- TODO add a new line at the end of the input
   -- consider highlighting for bonus point
   local branch = fn.input("Enter new branch name: ")
-  if #branch > 0 then
+  if branch and #branch > 0 then
     vim.cmd "redraw" -- clear the input message we just added
-    vim.cmd([[execute 'Git checkout -b ']] .. branch)
+    vim.cmd(string.format([[execute 'Git checkout -b %s']], branch))
   end
 end
 
