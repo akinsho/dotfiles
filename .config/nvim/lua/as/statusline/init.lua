@@ -7,10 +7,10 @@
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
 local utils = require("as.statusline.utils")
-local P = require("as.statusline.palette")
 local H = require("as.highlights")
 local autocommands = require("as.autocommands")
 
+local P = utils.palette
 local M = {}
 
 M.git_updates = utils.git_updates
@@ -49,8 +49,8 @@ function M.colors()
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
+    {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "italic,bold"}},
     {"StDim", {guibg = bg_color, guifg = comment_fg}},
-    {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "bold"}},
     {"StTitle", {guibg = bg_color, guifg = title_fg, gui = title_gui}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
     {"StItem", {guibg = normal_fg, guifg = bg_color, gui = "italic"}},

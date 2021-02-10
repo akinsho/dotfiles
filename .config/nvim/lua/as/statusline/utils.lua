@@ -1,4 +1,3 @@
-local palette = require("as.statusline.palette")
 local H = require("as.highlights")
 
 local fn = vim.fn
@@ -15,6 +14,15 @@ local function get_toggleterm_name(_, bufnum)
   local terminal_prefix = "Terminal(" .. shell .. ")["
   return terminal_prefix .. fn.getbufvar(bufnum, "toggle_number") .. "]"
 end
+
+M.palette = {
+  dark_red = "#be5046",
+  green = "#98c379",
+  light_yellow = "#e5c07b",
+  dark_blue = "#4e88ff",
+  magenta = "#c678dd",
+  comment_grey = "#5c6370",
+}
 
 local plain_filetypes = {
   "help",
@@ -383,11 +391,11 @@ local function mode_highlight(mode)
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
   local inc_search_bg = H.hl_value("Search", "bg")
   if mode == "i" then
-    H.highlight("StModeText", {guibg = bg, guifg = palette.dark_blue, gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = M.palette.dark_blue, gui = "bold"})
   elseif visual_regex:match_str(mode) then
-    H.highlight("StModeText", {guibg = bg, guifg = palette.magenta, gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = M.palette.magenta, gui = "bold"})
   elseif mode == "R" then
-    H.highlight("StModeText", {guibg = bg, guifg = palette.dark_red, gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = M.palette.dark_red, gui = "bold"})
   elseif command_regex:match_str(mode) then
     H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
   else
