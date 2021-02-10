@@ -50,6 +50,7 @@ function M.colors()
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
     {"StDim", {guibg = bg_color, guifg = comment_fg}},
+    {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "bold"}},
     {"StTitle", {guibg = bg_color, guifg = title_fg, gui = title_gui}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
     {"StItem", {guibg = normal_fg, guifg = bg_color, gui = "italic"}},
@@ -175,32 +176,37 @@ function _G.statusline()
   -- highlight the filename component separately
   local filename_hl = minimal and "StFilenameInactive" or "StFilename"
   local directory_hl = minimal and "StInactiveSep" or "StDirectory"
+  local parent_hl = minimal and directory_hl or "StParentDirectory"
 
   if H.has_win_highlight(curwin) then
     directory_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
     filename_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
+    parent_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomParentDir", "StTitle")
   end
 
-  local directory, filename = utils.filename(ctx)
   local ft_icon, icon_highlight =
     utils.filetype(ctx, {icon_bg = "StatusLine", default = "StComment"})
 
   local opts = {prefix = ft_icon, before = "", after = ""}
   local file_opts = {before = "", after = ""}
+  local parent_opts = {before = "", after = ""}
 
   if not minimal then
     opts.prefix_color = icon_highlight
   end
 
-  if not directory or directory == "" then
-    file_opts.prefix = ft_icon
+  local directory, parent, filename = utils.filename(ctx)
+
+  if not directory or directory == "" or not parent or parent == "" then
+    parent_opts.prefix = ft_icon
     if not minimal then
-      file_opts.prefix_color = icon_highlight
+      parent_opts.prefix_color = icon_highlight
     end
   end
 
   directory = add_min_width(directory, minwid, trunc_amount)
   local dir_item = utils.item(directory, directory_hl, opts)
+  local parent_item = utils.item(parent, parent_hl, parent_opts)
   local file_item = utils.item(filename, filename_hl, file_opts)
 
   ----------------------------------------------------------------------------//
@@ -209,6 +215,7 @@ function _G.statusline()
   -- show a minimal statusline with only the mode and file component
   if minimal then
     append(statusline, dir_item, 1)
+    append(statusline, parent_item, 1)
     append(statusline, file_item, 0)
     return display(statusline, available_space)
   end
@@ -216,6 +223,7 @@ function _G.statusline()
   append(statusline, utils.item(current_mode, "StModeText"), 0)
 
   append(statusline, dir_item, 1)
+  append(statusline, parent_item, 1)
   append(statusline, file_item, 0)
   -- show the alternate buffer name
   local alternate_buf = vim.fn.expand("#:t")

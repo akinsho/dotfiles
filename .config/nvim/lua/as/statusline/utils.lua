@@ -224,12 +224,13 @@ function M.filename(ctx, modifier)
     return "", "No Name"
   end
 
-  local directory =
-    (ctx.buftype == "" and not ctx.preview) and
-    fn.pathshorten(buf_expand(ctx.bufnum, ":~:.:h")) .. "/" or
-    ""
+  fname = (fname .. readonly_indicator) or ""
 
-  return directory, (fname .. readonly_indicator)
+  local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil
+  local directory = (path and path ~= ".") and fn.pathshorten(fnamemodify(path, ":h:h")) .. "/" or ""
+  local parent = fnamemodify(path, ":t")
+  parent = parent ~= "" and parent .. "/" or ""
+  return directory, parent, fname
 end
 
 --- @param hl string
