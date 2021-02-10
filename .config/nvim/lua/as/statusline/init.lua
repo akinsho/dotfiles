@@ -87,13 +87,6 @@ local function append(tbl, next, priority)
   end
 end
 
-local function add_min_width(item, minwid, trunc_amount)
-  if not item or item == "" then
-    return item
-  end
-  return "%" .. minwid .. "." .. trunc_amount .. "(" .. item .. "%)"
-end
-
 --- @param statusline table
 --- @param available_space number
 local function display(statusline, available_space)
@@ -163,17 +156,7 @@ function _G.statusline()
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
-  -- The filename component should be 20% of the screen width but has a minimum
-  -- width of 10 since smaller than that is likely to be unintelligible
-  -- although if the window is plain i.e. terminal or tree buffer allow the file
-  -- name to take up more space
-  local percentage = plain and 0.4 or 0.5
-  local minwid = 5
-
-  -- Don't set a minimum width for plain status line filenames
-  local trunc_amount = math.ceil(available_space * percentage)
-
-  -- highlight the filename component separately
+  -- highlight the filename components separately
   local filename_hl = minimal and "StFilenameInactive" or "StFilename"
   local directory_hl = minimal and "StInactiveSep" or "StDirectory"
   local parent_hl = minimal and directory_hl or "StParentDirectory"
@@ -187,13 +170,10 @@ function _G.statusline()
   local ft_icon, icon_highlight =
     utils.filetype(ctx, {icon_bg = "StatusLine", default = "StComment"})
 
-  local opts = {prefix = ft_icon, before = "", after = ""}
   local file_opts = {before = "", after = ""}
   local parent_opts = {before = "", after = ""}
-
-  if not minimal then
-    opts.prefix_color = icon_highlight
-  end
+  local prefix_color = not minimal and icon_highlight or nil
+  local opts = {prefix = ft_icon, prefix_color = prefix_color, before = "", after = ""}
 
   local directory, parent, filename = utils.filename(ctx)
 
@@ -204,7 +184,6 @@ function _G.statusline()
     end
   end
 
-  directory = add_min_width(directory, minwid, trunc_amount)
   local dir_item = utils.item(directory, directory_hl, opts)
   local parent_item = utils.item(parent, parent_hl, parent_opts)
   local file_item = utils.item(filename, filename_hl, file_opts)
