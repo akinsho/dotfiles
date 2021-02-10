@@ -204,13 +204,6 @@ function _G.statusline()
   append(statusline, dir_item, 1)
   append(statusline, parent_item, 1)
   append(statusline, file_item, 0)
-  -- show the alternate buffer name
-  local alternate_buf = vim.fn.expand("#:t")
-  append(
-    statusline,
-    utils.item_if("(<-" .. alternate_buf .. ")", #alternate_buf > 0, "StDim", {before = " "}),
-    3
-  )
 
   append(
     statusline,

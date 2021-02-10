@@ -22,6 +22,7 @@ M.palette = {
   dark_blue = "#4e88ff",
   magenta = "#c678dd",
   comment_grey = "#5c6370",
+  whitesmoke = "#ababab"
 }
 
 local plain_filetypes = {
@@ -398,7 +399,7 @@ local function mode_highlight(mode)
     local inc_search_bg = H.hl_value("Search", "bg")
     H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
   else
-    H.highlight("StModeText", {guibg = bg, guifg = "grey", gui = "bold"})
+    H.highlight("StModeText", {guibg = bg, guifg = M.palette.whitesmoke, gui = "bold"})
   end
 end
 
