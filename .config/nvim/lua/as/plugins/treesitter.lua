@@ -6,16 +6,12 @@ return function()
 
   -- This plugin is an experimental application of tree sitter usage in Neovim
   -- be careful when applying any functionality to a filetype as it might not work
-  local disabled = {"json"}
-  if has("mac") then
-    table.insert(disabled, "dart")
-  end
 
   require "nvim-treesitter.configs".setup {
     ensure_installed = "maintained",
     highlight = {
       enable = true,
-      disable = disabled
+      disable = {"json"}
     },
     incremental_selection = {
       enable = true,
