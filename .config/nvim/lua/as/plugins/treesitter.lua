@@ -1,6 +1,4 @@
 return function()
-  local has = as_utils.has
-
   vim.cmd [[highlight link TSKeyword Statement]]
   vim.cmd [[highlight TSParameter gui=italic,bold]]
 

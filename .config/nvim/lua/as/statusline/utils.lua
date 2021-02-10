@@ -552,7 +552,7 @@ end
 -- Git/Github helper functions
 -----------------------------------------------------------------------------//
 local function job(interval, task, on_complete)
-  task()
+  vim.defer_fn(task, 2000)
   local pending_job
   local timer =
     fn.timer_start(
