@@ -373,7 +373,7 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
-    use "kyazdani42/nvim-web-devicons"
+    use {"kyazdani42/nvim-web-devicons", commit = "aaffb87"}
     use {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
