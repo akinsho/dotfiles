@@ -263,6 +263,8 @@ local function set_ft_icon_highlight(hl, bg_hl)
   return name
 end
 
+local devicons
+
 --- @param ctx table
 --- @param opts table
 function M.filetype(ctx, opts)
@@ -276,8 +278,12 @@ function M.filetype(ctx, opts)
   end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ":e")
-  icon, hl = require("nvim-web-devicons").get_icon(ctx.bufname, extension, {default = true})
-  hl = set_ft_icon_highlight(hl, opts.icon_bg)
+  local success, module = pcall(require, "nvim-web-devicons")
+  devicons = module
+  if success then
+    icon, hl = devicons.get_icon(ctx.bufname, extension, {default = true})
+    hl = set_ft_icon_highlight(hl, opts.icon_bg)
+  end
   return icon, hl
 end
 
