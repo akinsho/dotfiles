@@ -239,10 +239,6 @@ augroup Utilities "{{{1
   " close FZF in neovim with <ESC>
   autocmd FileType fzf tnoremap <nowait><buffer> <esc> <c-g>
 
-  autocmd TermOpen * startinsert!
-  autocmd BufLeave * if &buftype ==# 'terminal' | stopinsert! | endif
-  autocmd BufEnter * if &buftype ==# 'terminal' | startinsert! | endif
-
   " source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
   autocmd BufReadCmd file:///* exe "bd!|edit ".substitute(expand("<afile>"),"file:/*","","")
   " Surprisingly enough vim has added this to defaults.vim in vim8 but this
