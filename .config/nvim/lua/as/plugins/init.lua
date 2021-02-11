@@ -1,6 +1,7 @@
 local fn = vim.fn
 local has = as_utils.has
 local is_work = has("mac")
+local is_home = not is_work
 
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
@@ -39,10 +40,10 @@ local function dev(path)
   return os.getenv("HOME") .. "/Desktop/projects/" .. path
 end
 
--- helper function to allow deriving the base path
--- for local plugins. If this is hard coded
--- moving things around (which I've done previously) becomes painful
----@param use function
+--- Helper function to allow deriving the base path for local plugins.
+--- If this is hard coded moving things around becomes painful.
+--- This helper also automatically disables any local plugins on work machines
+--- @param use function
 local function create_local(use)
   ---@param spec string | table
   return function(spec)
@@ -50,9 +51,10 @@ local function create_local(use)
     if type(spec) == "table" then
       path = dev(spec[1])
       spec[1] = path
+      spec.disable = spec.disable or is_work
     elseif type(spec) == "string" then
       path = dev(spec)
-      spec = path
+      spec = {path, disable = is_work}
     end
     if fn.isdirectory(fn.expand(path)) == 1 then
       use(spec)
@@ -60,6 +62,19 @@ local function create_local(use)
   end
 end
 
+--- Helper function factory to return a packer condition function
+--- each helper is used to determine whether or not a plugin should be
+--- loaded or not
+---@param is_dev boolean
+---@return function
+local function developing_condition(is_dev)
+  return function()
+    return is_dev and vim.env.DEVELOPING ~= nil or not vim.env.DEVELOPING
+  end
+end
+
+local developing = developing_condition(true)
+local not_developing = developing_condition(false)
 --[[
     NOTE "use" functions cannot call *upvalues* i.e. the functions
     passed to setup or config etc. cannot reference aliased function
@@ -70,13 +85,8 @@ return require("packer").startup {
     local use_local = create_local(use)
 
     -- Packer can manage itself as an optional plugin
-    use {"wbthomason/packer.nvim", opt = true, disable = vim.env.DEVELOPING}
-    use_local {
-      "contributing/packer.nvim",
-      opt = true,
-      as = "local-packer",
-      disable = not vim.env.DEVELOPING or is_work
-    }
+    use {"wbthomason/packer.nvim", opt = true, cond = not_developing}
+    use_local {"contributing/packer.nvim", opt = true, as = "local-packer", cond = developing}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -123,8 +133,8 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
-    use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = not is_work}
-    use {"honza/vim-snippets", disable = not is_work}
+    use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
+    use {"honza/vim-snippets", disable = is_home}
     use {"anott03/nvim-lspinstall", cmd = "InstallLS", disable = is_work}
     use {
       "kosayoda/nvim-lightbulb",
@@ -369,13 +379,18 @@ return require("packer").startup {
       cmd = "NvimTreeOpen",
       keys = {"<c-n>"},
       config = require("as.plugins.nvim-tree"),
-      disable = vim.env.DEVELOPING
+      cond = not_developing
     }
+    use_local {
+      "contributing/nvim-tree.lua",
+      as = "local-nvim-tree",
+      cond = developing
+    }
+    -- Treesitter cannot be run as an optional plugin and most be available on start
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = require("as.plugins.treesitter"),
-      disable = vim.env.DEVELOPING,
       requires = {
         {"p00f/nvim-ts-rainbow"},
         {"nvim-treesitter/nvim-treesitter-textobjects"},
@@ -387,14 +402,9 @@ return require("packer").startup {
       }
     }
     use_local {
-      "contributing/nvim-tree.lua",
-      as = "local-nvim-tree",
-      disable = not vim.env.DEVELOPING
-    }
-    use_local {
       "contributing/nvim-treesitter",
       as = "local-treesitter",
-      disable = not vim.env.DEVELOPING
+      disable = true
     }
 
     local dep_assist = function()
@@ -407,19 +417,19 @@ return require("packer").startup {
     use {
       "akinsho/dependency-assist.nvim",
       config = dep_assist,
-      disable = not is_work,
+      disable = is_home,
       ft = {"dart", "rust"}
     }
     use {
       "akinsho/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
       keys = {[[<c-\>]]},
-      disable = not is_work
+      disable = is_home
     }
     use {
       "akinsho/nvim-bufferline.lua",
       config = require("as.plugins.nvim-bufferline"),
-      disable = not is_work
+      disable = is_home
     }
     -----------------------------------------------------------------------------//
     -- Personal plugins
@@ -428,7 +438,6 @@ return require("packer").startup {
     use_local {
       "personal/dependency-assist.nvim",
       config = dep_assist,
-      disable = is_work,
       as = "local-dep-assist",
       ft = {"dart", "rust"}
     }
@@ -436,14 +445,12 @@ return require("packer").startup {
       "personal/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
       as = "local-toggleterm",
-      keys = {[[<c-\>]]},
-      disable = is_work
+      keys = {[[<c-\>]]}
     }
     use_local {
       "personal/nvim-bufferline.lua",
       as = "local-bufferline",
-      config = require("as.plugins.nvim-bufferline"),
-      disable = is_work
+      config = require("as.plugins.nvim-bufferline")
     }
     -- }}}
     ---------------------------------------------------------------------------------
