@@ -261,13 +261,10 @@ function _G.statusline()
   )
 
   -- Github notifications
+  local notifications = vim.g.notifications
   append(
     statusline,
-    utils.item_if(
-      " " .. (vim.g.github_notifications or ""),
-      vim.g.github_notifications ~= nil and vim.g.github_notifications > 0,
-      "StTitle"
-    ),
+    utils.item_if(" " .. (notifications or ""), notifications and notifications > 0, "StTitle"),
     3
   )
 
