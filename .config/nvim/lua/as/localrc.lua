@@ -27,10 +27,11 @@ local function get_parent(str)
 end
 
 local function setup_localrc(path)
-  require("as.autocommands").create(
-    {
-      LocalRC = {
-        {"BufWritePost", path, string.format([[lua require('as.localrc').reload('%s')]], path)}
+  require("as.autocommands").augroup("LocalRC", {
+      {
+        events = {"BufWritePost"},
+        target = {path},
+        command = string.format([[lua require('as.localrc').reload('%s')]], path),
       }
     }
   )
@@ -103,14 +104,11 @@ end
 
 function M.setup(event)
   event = event or "VimEnter"
-  require("as.autocommands").create(
-    {
-      LoadLocalInit = {
-        {
-          event,
-          "*",
-          [[lua require("as.localrc").load()]]
-        }
+  require("as.autocommands").augroup("LoadLocalInit", {
+      {
+        events = {event},
+        targets = {"*"},
+        command = [[lua require("as.localrc").load()]]
       }
     }
   )
