@@ -40,7 +40,7 @@ function M.colors()
   local warning_fg = vim.g.colors_name == "one" and P.light_yellow or H.hl_value("WarningMsg", "fg")
 
   H.all {
-    {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic,bold"}},
+    {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic"}},
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
     {"StIndicator", {guibg = bg_color, guifg = tabline_sel_bg}},
     {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
@@ -49,7 +49,7 @@ function M.colors()
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
-    {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "italic,bold"}},
+    {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "bold"}},
     {"StDim", {guibg = bg_color, guifg = comment_fg}},
     {"StTitle", {guibg = bg_color, guifg = title_fg, gui = title_gui}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
@@ -67,7 +67,7 @@ function M.colors()
     {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
     {
       "StFilename",
-      {guibg = bg_color, guifg = "LightGray", gui = "italic,bold"}
+      {guibg = bg_color, guifg = "LightGray", gui = "bold"}
     },
     {
       "StFilenameInactive",
