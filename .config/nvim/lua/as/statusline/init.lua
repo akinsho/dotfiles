@@ -78,7 +78,7 @@ function M.colors()
     {"StModeInsert", {guibg = bg_color, guifg = P.dark_blue, gui = "bold"}},
     {"StModeVisual", {guibg = bg_color, guifg = P.magenta, gui = "bold"}},
     {"StModeReplace", {guibg = bg_color, guifg = P.dark_red, gui = "bold"}},
-    {"StModeCommand", {guibg = bg_color, guifg = inc_search_bg, gui = "bold"}},
+    {"StModeCommand", {guibg = bg_color, guifg = inc_search_bg, gui = "bold"}}
   }
 end
 
@@ -182,7 +182,6 @@ function _G.statusline()
 
   local directory, parent, filename = utils.filename(ctx)
 
-  -- TODO this doesn't not allow all ft highlights to be shown
   if not directory or directory == "" or not parent or parent == "" then
     parent_opts.prefix = ft_icon
     if not minimal then
