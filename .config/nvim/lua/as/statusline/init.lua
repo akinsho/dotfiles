@@ -38,6 +38,7 @@ function M.colors()
   local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
   local number_fg = H.hl_value("Number", "fg")
   local warning_fg = vim.g.colors_name == "one" and P.light_yellow or H.hl_value("WarningMsg", "fg")
+  local inc_search_bg = H.hl_value("Search", "bg")
 
   H.all {
     {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic"}},
@@ -72,7 +73,12 @@ function M.colors()
     {
       "StFilenameInactive",
       {guifg = P.comment_grey, guibg = bg_color, gui = "italic,bold"}
-    }
+    },
+    {"StModeNormal", {guibg = bg_color, guifg = P.whitesmoke, gui = "bold"}},
+    {"StModeInsert", {guibg = bg_color, guifg = P.dark_blue, gui = "bold"}},
+    {"StModeVisual", {guibg = bg_color, guifg = P.magenta, gui = "bold"}},
+    {"StModeReplace", {guibg = bg_color, guifg = P.dark_red, gui = "bold"}},
+    {"StModeCommand", {guibg = bg_color, guifg = inc_search_bg, gui = "bold"}},
   }
 end
 
@@ -128,7 +134,6 @@ function _G.statusline()
   ----------------------------------------------------------------------------//
   local plain = utils.is_plain(ctx)
 
-  local current_mode = utils.mode()
   local file_modified = utils.modified(ctx, "●")
   local inactive = vim.api.nvim_get_current_win() ~= curwin
   local focused = vim.g.vim_in_focus or true
@@ -177,6 +182,7 @@ function _G.statusline()
 
   local directory, parent, filename = utils.filename(ctx)
 
+  -- TODO this doesn't not allow all ft highlights to be shown
   if not directory or directory == "" or not parent or parent == "" then
     parent_opts.prefix = ft_icon
     if not minimal then
@@ -199,7 +205,7 @@ function _G.statusline()
     return display(statusline, available_space)
   end
 
-  append(statusline, utils.item(current_mode, "StModeText"), 0)
+  append(statusline, utils.item(utils.mode()), 0)
 
   append(statusline, dir_item, 1)
   append(statusline, parent_item, 1)

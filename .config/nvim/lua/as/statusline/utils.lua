@@ -392,26 +392,25 @@ function M.git_status()
 end
 
 local function mode_highlight(mode)
-  local bg = H.hl_value("StatusLine", "bg")
-  local visual_regex = vim.regex([[\(v\|V\|\)]])
-  local command_regex = vim.regex([[\(c\|cv\|ce\)]])
+  local visual_regex = vim.regex [[\(v\|V\|\)]]
+  local command_regex = vim.regex [[\(c\|cv\|ce\)]]
+  local replace_regex = vim.regex [[\(Rc\|R\|Rv\|Rx\)]]
   if mode == "i" then
-    H.highlight("StModeText", {guibg = bg, guifg = M.palette.dark_blue, gui = "bold"})
+    return "StModeInsert"
   elseif visual_regex:match_str(mode) then
-    H.highlight("StModeText", {guibg = bg, guifg = M.palette.magenta, gui = "bold"})
-  elseif mode == "R" then
-    H.highlight("StModeText", {guibg = bg, guifg = M.palette.dark_red, gui = "bold"})
+    return "StModeVisual"
+  elseif replace_regex:match_str(mode) then
+    return "StModeReplace"
   elseif command_regex:match_str(mode) then
-    local inc_search_bg = H.hl_value("Search", "bg")
-    H.highlight("StModeText", {guibg = bg, guifg = inc_search_bg, gui = "bold"})
+    return "StModeCommand"
   else
-    H.highlight("StModeText", {guibg = bg, guifg = M.palette.whitesmoke, gui = "bold"})
+    return "StModeNormal"
   end
 end
 
 function M.mode()
   local current_mode = vim.fn.mode()
-  mode_highlight(current_mode)
+  local hl = mode_highlight(current_mode)
 
   local mode_map = {
     ["n"] = "NORMAL",
@@ -425,6 +424,8 @@ function M.mode()
     ["i"] = "INSERT",
     ["R"] = "REPLACE",
     ["Rv"] = "V·REPLACE",
+    ["Rx"] = "C·REPLACE",
+    ["Rc"] = "C·REPLACE",
     ["c"] = "COMMAND",
     ["cv"] = "VIM EX",
     ["ce"] = "EX",
@@ -434,7 +435,7 @@ function M.mode()
     ["!"] = "SHELL",
     ["t"] = "TERMINAL"
   }
-  return mode_map[current_mode] or "UNKNOWN"
+  return (mode_map[current_mode] or "UNKNOWN"), hl
 end
 
 --- @param hl string
