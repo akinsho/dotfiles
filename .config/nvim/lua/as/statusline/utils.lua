@@ -23,7 +23,7 @@ M.palette = {
   dark_blue = "#4e88ff",
   magenta = "#c678dd",
   comment_grey = "#5c6370",
-  whitesmoke = "#ababab"
+  whitesmoke = "#626262"
 }
 
 local plain_filetypes = {
