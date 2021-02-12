@@ -198,19 +198,17 @@ return function()
     ["/"] = "find matching word in buffer"
   }
 
+  vim.g.which_key_centered = 0
   vim.g.which_key_use_floating_win = 0
   vim.g.which_key_disable_default_offset = 1
   vim.g.which_key_display_names = {[" "] = "Space", ["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
   if vim.g.which_key_use_floating_win == 0 then
-    require("as.autocommands").create(
-      {
-        which_key = {
-          {
-            "FileType",
-            "which_key",
-            [[setlocal laststatus=0 | autocmd BufLeave <buffer> set laststatus=2]]
-          }
+    require("as.autocommands").augroup("which_key", {
+        {
+          events = {"FileType"},
+          targets = {"which_key"},
+          command = [[setlocal laststatus=0 | autocmd BufLeave <buffer> set laststatus=2]]
         }
       }
     )
