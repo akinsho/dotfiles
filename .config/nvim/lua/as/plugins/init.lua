@@ -85,7 +85,8 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
-    use_rocks "penlight" -- lua utility library
+    use_rocks {"penlight", "lua-resty-http", "lua-cjson"}
+    use_rocks {"luaformatter", server = "https://luarocks.org/dev"}
 
     use {
       "airblade/vim-rooter",
