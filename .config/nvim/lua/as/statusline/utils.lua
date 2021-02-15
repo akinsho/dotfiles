@@ -236,7 +236,7 @@ function M.filename(ctx, modifier)
   fname = fname .. readonly(ctx)
 
   local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil
-  local is_root = path == "."
+  local is_root = path and #path == 1 -- "~" or "."
   local dir = path and not is_root and fn.pathshorten(fnamemodify(path, ":h:h")) .. "/" or ""
   local parent = path and (is_root and path or fnamemodify(path, ":t")) or ""
   parent = parent ~= "" and parent .. "/" or ""
