@@ -62,19 +62,14 @@ local function create_local(use)
   end
 end
 
---- Helper function factory to return a packer condition function
---- each helper is used to determine whether or not a plugin should be
---- loaded or not
----@param is_dev boolean
----@return function
-local function developing_condition(is_dev)
-  return function()
-    return is_dev and vim.env.DEVELOPING ~= nil or not vim.env.DEVELOPING
-  end
+local function developing()
+  return vim.env.DEVELOPING ~= nil
 end
 
-local developing = developing_condition(true)
-local not_developing = developing_condition(false)
+local function not_developing()
+  return not vim.env.DEVELOPING
+end
+
 --[[
     NOTE "use" functions cannot call *upvalues* i.e. the functions
     passed to setup or config etc. cannot reference aliased function
@@ -166,7 +161,7 @@ return require("packer").startup {
     }
     use {
       "hrsh7th/nvim-compe",
-      event = 'InsertEnter *',
+      event = "InsertEnter *",
       disable = is_work,
       config = require("as.plugins.compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
@@ -382,7 +377,6 @@ return require("packer").startup {
     use_local {
       "contributing/nvim-tree.lua",
       as = "local-nvim-tree",
-      disable = developing(),
       cond = developing
     }
     -- Treesitter cannot be run as an optional plugin and most be available on start
