@@ -23,7 +23,6 @@
   "list.selectedSignText": " ",
   "list.source.symbols.defaultOptions": ["--interactive"],
   "list.source.outline.defaultOptions": ["--auto-preview"],
-  "list.source.branches.defaultArgs": ["--sort", "-committerdate"],
   "codeLens.enable": true,
   "codeLens.separator": "‣",
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
@@ -38,7 +37,6 @@
   "diagnostic.infoSign": "", //   
   "diagnostic.hintSign": "", // ﯦ
   "coc.preferences.formatOnSaveFiletypes": ["*"],
-  "coc.preferences.formatOnInsertLeave": true,
   "coc.preferences.colorSupport": false,
   // emoji
   "coc.source.emoji.filetypes": ["markdown", "gitcommit"],
@@ -55,20 +53,20 @@
   // '', '•' - changed
   // '', '-' removed
   // '', '±' - changed/removed
-  "git.branchCharacter": "", // "\uf408" // github icon
-  "git.showCommitInFloating": true,
-  "git.changedSign.text": "▌",
-  "git.addedSign.text": "▌",
-  "git.removedSign.text": "▌",
-  "git.changeRemovedSign.text": "▌",
-  "git.untrackedDecorator": " ",
+  // "git.branchCharacter": "", // "\uf408" // github icon
+  // "git.showCommitInFloating": true,
+  // "git.changedSign.text": "▌",
+  // "git.addedSign.text": "▌",
+  // "git.removedSign.text": "▌",
+  // "git.changeRemovedSign.text": "▌",
+  // "git.untrackedDecorator": " ",
   // Git statusline decorators
-  "git.addedSign.hlGroup": "GitGutterAdd",
-  "git.changedSign.hlGroup": "GitGutterChange",
-  "git.removedSign.hlGroup": "GitGutterDelete",
-  "git.topRemovedSign.hlGroup": "GitGutterDelete",
-  "git.changeRemovedSign.hlGroup": "Number",
-  "git.addGBlameToVirtualText": false,
+  // "git.addedSign.hlGroup": "GitGutterAdd",
+  // "git.changedSign.hlGroup": "GitGutterChange",
+  // "git.removedSign.hlGroup": "GitGutterDelete",
+  // "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  // "git.changeRemovedSign.hlGroup": "Number",
+  // "git.addGBlameToVirtualText": false,
   // Suggest
   "suggest.enablePreselect": true,
   "suggest.completionItemKindLabels": {
