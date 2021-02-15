@@ -227,6 +227,7 @@ return require("packer").startup {
     use {
       "vim-test/vim-test",
       cmd = {"TestFile", "TestNearest", "TestSuite"},
+      keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn"},
       config = require("as.plugins.vim-test")
     }
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
