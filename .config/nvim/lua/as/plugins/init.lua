@@ -171,11 +171,7 @@ return require("packer").startup {
       config = require("as.plugins.compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
     }
-    use {
-      "hrsh7th/vim-vsnip",
-      disable = is_work,
-      config = require("as.plugins.vim-vsnip")
-    }
+    use {"hrsh7th/vim-vsnip", disable = is_work, config = require("as.plugins.vim-vsnip")}
     -- }}}
     --------------------------------------------------------------------------------
     -- Utilities {{{
@@ -370,7 +366,7 @@ return require("packer").startup {
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
     use "rakr/vim-one"
-    -- use "bluz71/vim-nightfly-guicolors"
+    use {"bluz71/vim-nightfly-guicolors", disable = true}
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
@@ -386,6 +382,7 @@ return require("packer").startup {
     use_local {
       "contributing/nvim-tree.lua",
       as = "local-nvim-tree",
+      disable = developing(),
       cond = developing
     }
     -- Treesitter cannot be run as an optional plugin and most be available on start
