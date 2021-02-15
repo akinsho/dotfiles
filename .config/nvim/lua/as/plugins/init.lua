@@ -166,6 +166,7 @@ return require("packer").startup {
     }
     use {
       "hrsh7th/nvim-compe",
+      event = 'InsertEnter *',
       disable = is_work,
       config = require("as.plugins.compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
@@ -402,11 +403,7 @@ return require("packer").startup {
         }
       }
     }
-    use_local {
-      "contributing/nvim-treesitter",
-      as = "local-treesitter",
-      disable = true
-    }
+    use_local {"contributing/nvim-treesitter", as = "local-treesitter", disable = true}
 
     local dep_assist = function()
       return require("dependency_assist").setup()
