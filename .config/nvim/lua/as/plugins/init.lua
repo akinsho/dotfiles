@@ -353,7 +353,13 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Search Tools {{{
     --------------------------------------------------------------------------------
-    use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak")}
+    use {
+      "phaazon/hop.nvim",
+      config = function()
+        as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1{winblend = 100}<CR>]])
+      end
+    }
+    use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak"), disable = true}
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
     use "junegunn/vim-peekaboo"
     -- }}}
