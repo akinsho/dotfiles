@@ -5,8 +5,8 @@ local t = function(str)
 end
 
 local check_back_space = function()
-  local col = vim.fn.col('.') - 1
-  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+  local col = vim.fn.col(".") - 1
+  if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
     return true
   else
     return false
@@ -19,18 +19,18 @@ end
 _G.__tab_complete = function()
   if fn.pumvisible() == 1 then
     return t "<C-n>"
-  elseif fn.call("vsnip#available", {1}) == 1 then
+  elseif fn["vsnip#available"](1) == 1 then
     return t "<Plug>(vsnip-expand-or-jump)"
   elseif check_back_space() then
     return t "<Tab>"
   else
-    return fn['compe#complete']()
+    return fn["compe#complete"]()
   end
 end
 _G.__s_tab_complete = function()
   if fn.pumvisible() == 1 then
     return t "<C-p>"
-  elseif fn.call("vsnip#jumpable", {-1}) == 1 then
+  elseif fn["vsnip#jumpable"](-1) == 1 then
     return t "<Plug>(vsnip-jump-prev)"
   else
     return t "<S-Tab>"
@@ -58,8 +58,10 @@ return function()
   map("i", "<C-Space>", "compe#complete()", opts)
   map("i", "<CR>", [[compe#confirm(lexima#expand('<LT>CR>', 'i'))]], opts)
   map("i", "<C-e>", "compe#close('<C-e>')", opts)
-  map("i", "<Tab>", "v:lua.__tab_complete()", opts)
-  map("s", "<Tab>", "v:lua.__tab_complete()", opts)
-  map("i", "<S-Tab>", "v:lua.__s_tab_complete()", opts)
-  map("s", "<S-Tab>", "v:lua.__s_tab_complete()", opts)
+  map("i", "<Tab>", "v:lua.__tab_complete()", {expr = true})
+  map("s", "<Tab>", "v:lua.__tab_complete()", {expr = true})
+  map("i", "<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
+  map("s", "<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
+  map("i", "<C-f>", "compe#scroll({ 'delta': +4 }", opts)
+  map("i", "<C-d>", "compe#scroll({ 'delta': -4 }", opts)
 end
