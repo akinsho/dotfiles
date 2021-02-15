@@ -17,7 +17,14 @@ return function()
       ["test/view_models/*_view_model_test.dart"] = {
         alternate = "lib/view_models/{}_view_model.dart",
         ["type"] = "test",
-        template = {"void main() async {", "  group('TODO', () {", "// TODO:", "})", "}"}
+        template = {
+          "import 'package:test/test.dart';",
+          "",
+          "void main() async {",
+          "  group('TODO', () {",
+          "    // TODO:",
+          "  })",
+          "}"}
       }
     }
   }
