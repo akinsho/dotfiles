@@ -14,7 +14,7 @@ end
 
 function M.open()
   if M.found_rc then
-    vim.cmd("vsplit "..M.found_rc)
+    vim.cmd("vsplit " .. M.found_rc)
   else
     echo("No LocalRC found")
   end
@@ -27,11 +27,13 @@ local function get_parent(str)
 end
 
 local function setup_localrc(path)
-  require("as.autocommands").augroup("LocalRC", {
+  require("as.autocommands").augroup(
+    "LocalRC",
+    {
       {
         events = {"BufWritePost"},
         target = {path},
-        command = string.format([[lua require('as.localrc').reload('%s')]], path),
+        command = string.format([[lua require('as.localrc').reload('%s')]], path)
       }
     }
   )
@@ -102,17 +104,27 @@ function M.load(path, target)
   )
 end
 
-function M.setup(event)
-  event = event or "VimEnter"
-  require("as.autocommands").augroup("LoadLocalInit", {
+--- trigger loading of localrc
+---@param event string
+---@param immediate boolean
+function M.setup(event, immediate)
+  immediate = immediate ~= nil and immediate or true
+  if immediate then
+    vim.defer_fn(M.load, 1)
+  else
+    event = event or "VimEnter"
+    require("as.autocommands").augroup(
+      "LoadLocalInit",
       {
-        events = {event},
-        targets = {"*"},
-        command = [[lua require("as.localrc").load()]]
+        {
+          events = {event},
+          targets = {"*"},
+          command = [[lua require("as.localrc").load()]]
+        }
       }
-    }
-  )
-  as_utils.cmd('LocalrcEdit', [[lua require("as.localrc").open()]])
+    )
+  end
+  as_utils.cmd("LocalrcEdit", [[lua require("as.localrc").open()]])
 end
 
 return M
