@@ -142,7 +142,19 @@ return require("packer").startup {
             {
               events = {"CursorHold", "CursorHoldI"},
               targets = {"*"},
-              command = "lua require'nvim-lightbulb'.update_lightbulb()"
+              command = [[lua require'nvim-lightbulb'.update_lightbulb {
+                sign = {
+                  enabled = false
+                },
+                float = {
+                  enabled = true,
+                  text = "💡",
+                  win_opts = {
+                    anchor = "SE",
+                    winblend = 100,
+                  }
+                }
+              }]]
             }
           }
         )
