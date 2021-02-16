@@ -324,6 +324,10 @@ function M.setup()
 
   for server, config in pairs(servers) do
     config.on_attach = on_attach
+    if not config.capabilities then
+      config.capabilities = vim.lsp.protocol.make_client_capabilities()
+    end
+    config.capabilities.textDocument.completion.completionItem.snippetSupport = true
     config.capabilities =
       require("as.utils").deep_merge(config.capabilities or {}, status_capabilities)
     lspconfig[server].setup(config)
