@@ -167,7 +167,12 @@ return require("packer").startup {
       config = require("as.plugins.compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
     }
-    use {"hrsh7th/vim-vsnip", disable = is_work, config = require("as.plugins.vim-vsnip")}
+    use {
+      "hrsh7th/vim-vsnip",
+      disable = is_work,
+      config = require("as.plugins.vim-vsnip"),
+      event = "InsertEnter *"
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Utilities {{{
@@ -237,6 +242,15 @@ return require("packer").startup {
     use {
       "rrethy/vim-hexokinase",
       run = "make hexokinase",
+      ft = {
+        "dart",
+        "css",
+        "html",
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+      },
       setup = function()
         vim.g.Hexokinase_ftDisabled = {"vimwiki"}
       end
