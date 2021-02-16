@@ -215,7 +215,7 @@ return require("packer").startup {
     use {
       "mbbill/undotree",
       cmd = "UndotreeToggle",
-      keys = ",u",
+      keys = "<leader>u",
       config = function()
         vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
@@ -369,7 +369,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use {
       "phaazon/hop.nvim",
-      keys = {"s"},
+      event = "CursorHold *",
       config = function()
         as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1{winblend = 100}<CR>]])
       end

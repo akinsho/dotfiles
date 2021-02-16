@@ -225,38 +225,9 @@ function M.setup()
       update_in_insert = false
     }
   )
-
-  vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-    if err ~= nil or result == nil then
-      return
-    end
-    if not vim.bo[bufnr].modified then
-      local view = vim.fn.winsaveview()
-      vim.lsp.util.apply_text_edits(result, bufnr)
-      vim.fn.winrestview(view)
-      if bufnr == vim.api.nvim_get_current_buf() then
-        vim.cmd("noautocmd :update")
-      end
-    end
-  end
   -----------------------------------------------------------------------------//
   -- Language servers
   -----------------------------------------------------------------------------//
-  local function get_lua_runtime()
-    local result = {
-      -- This loads the `lua` files from nvim into the runtime.
-      [fn.expand("$VIMRUNTIME/lua")] = true,
-      [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-    }
-    for _, path in pairs(api.nvim_list_runtime_paths()) do
-      local lua_path = path .. "/lua"
-      if fn.isdirectory(lua_path) > 0 then
-        result[lua_path] = true
-      end
-    end
-    return result
-  end
-
   local prettier = {formatCommand = "prettier"}
 
   local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
@@ -285,7 +256,10 @@ function M.setup()
           workspace = {
             maxPreload = 1000,
             preloadFileSize = 1000,
-            library = get_lua_runtime()
+            library = {
+              [fn.expand("$VIMRUNTIME/lua")] = true,
+              [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+            }
           }
         }
       }
@@ -300,8 +274,8 @@ function M.setup()
           json = {prettier},
           html = {prettier},
           css = {prettier},
+          yaml = {prettier},
           markdown = {prettier},
-          -- yaml = {prettier},
           -- npm i -g lua-fmt
           -- 'lua-format -i -c {config_dir}'
           lua = {
