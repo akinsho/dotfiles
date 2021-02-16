@@ -11,7 +11,8 @@ return function()
       prompt_prefix = " ❯",
       mappings = {
         i = {
-          ["<ESC>"] = actions.close
+          ["<ESC>"] = actions.close,
+          ["<c-s>"] = actions.goto_file_selection_split,
         }
       },
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
