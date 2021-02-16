@@ -206,7 +206,7 @@ return require("packer").startup {
     use {"mg979/vim-visual-multi", config = require("as.plugins.vim-visual-multi")}
     use {"itchyny/vim-highlighturl", config = [[vim.g.highlighturl_guifg = "NONE"]]}
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    -- use {"kshenoy/vim-signature"}
+    use {"kshenoy/vim-signature", disable = true}
     use {
       "mbbill/undotree",
       cmd = "UndotreeToggle",
@@ -361,7 +361,7 @@ return require("packer").startup {
     }
     use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak"), disable = true}
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
-    use "junegunn/vim-peekaboo"
+    use {"junegunn/vim-peekaboo", keys = '"'}
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
@@ -373,7 +373,7 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
-    use {"kyazdani42/nvim-web-devicons", commit = "aaffb87"}
+    use "kyazdani42/nvim-web-devicons"
     use {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
