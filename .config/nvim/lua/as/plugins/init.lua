@@ -355,19 +355,21 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use {
       "phaazon/hop.nvim",
+      keys = {"s"},
       config = function()
         as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1{winblend = 100}<CR>]])
       end
     }
     use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak"), disable = true}
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
-    use {"junegunn/vim-peekaboo", keys = '"'}
+    use "junegunn/vim-peekaboo"
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
-    use "rakr/vim-one"
+    use {"rakr/vim-one", disable = false}
+    use {"joshdick/onedark.vim", disable = true}
     use {"bluz71/vim-nightfly-guicolors", disable = true}
     -- }}}
     ---------------------------------------------------------------------------------
