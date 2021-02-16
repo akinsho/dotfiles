@@ -316,12 +316,12 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Text Objects {{{
     --------------------------------------------------------------------------------
-    use "b3nj5m1n/kommentary"
     use "AndrewRadev/splitjoin.vim"
     use {"AndrewRadev/dsf.vim", config = require("as.plugins.dsf")}
     use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
     use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
     use {"chaoren/vim-wordmotion", config = require("as.plugins.vim-wordmotion")}
+    use {"b3nj5m1n/kommentary", event = "CursorHold *"}
     use {
       "tommcdo/vim-exchange",
       config = function()
@@ -384,6 +384,7 @@ return require("packer").startup {
     use_local {
       "contributing/nvim-tree.lua",
       as = "local-nvim-tree",
+      config = require("as.plugins.nvim-tree"),
       cond = developing
     }
     -- Treesitter cannot be run as an optional plugin and most be available on start
