@@ -194,7 +194,7 @@ end
 
 --- @param ctx table
 --- @param icon string | nil
-local function readonly(ctx, icon)
+function M.readonly(ctx, icon)
   icon = icon or ""
   if ctx.filetype == "help" or ctx.preview or ctx.readonly then
     return " " .. icon
@@ -232,8 +232,6 @@ function M.filename(ctx, modifier)
   if not fname then
     return "", "No Name"
   end
-
-  fname = fname .. readonly(ctx)
 
   local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil
   local is_root = path and #path == 1 -- "~" or "."

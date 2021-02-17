@@ -192,7 +192,7 @@ function _G.statusline()
   local dir_item = utils.item(directory, directory_hl, opts)
   local parent_item = utils.item(parent, parent_hl, parent_opts)
   local file_item = utils.item(filename, filename_hl, file_opts)
-
+  local readonly_item = utils.item(utils.readonly(ctx), "StMetadata")
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
@@ -201,6 +201,7 @@ function _G.statusline()
     append(statusline, dir_item, 1)
     append(statusline, parent_item, 1)
     append(statusline, file_item, 0)
+    append(statusline, readonly_item, 2)
     return display(statusline, available_space)
   end
 
@@ -209,6 +210,7 @@ function _G.statusline()
   append(statusline, dir_item, 1)
   append(statusline, parent_item, 1)
   append(statusline, file_item, 0)
+  append(statusline, readonly_item, 2)
 
   append(
     statusline,
