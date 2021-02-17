@@ -381,7 +381,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use {
       "phaazon/hop.nvim",
-      event = "CursorHold *",
+      keys = {{"n", "s"}},
       config = function()
         as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1{winblend = 100}<CR>]])
       end
