@@ -405,7 +405,7 @@ return require("packer").startup {
     use {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
-      keys = {"<c-n>"},
+      keys = "<c-n>",
       config = require("as.plugins.nvim-tree"),
       cond = not_developing
     }
@@ -443,7 +443,7 @@ return require("packer").startup {
     use {
       "akinsho/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
-      keys = {[[<c-\>]]},
+      keys = [[<c-\>]],
       disable = is_home
     }
     use {
@@ -465,7 +465,7 @@ return require("packer").startup {
       "personal/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
       as = "local-toggleterm",
-      keys = {[[<c-\>]]}
+      keys = [[<c-\>]]
     }
     use_local {
       "personal/nvim-bufferline.lua",
