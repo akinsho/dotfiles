@@ -21,7 +21,10 @@ return function()
   }
 
   vim.fn.sign_define("DapBreakpoint", {text = "🛑", texthl = "", linehl = "", numhl = ""})
+  vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
 
+  map("v", "<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
+  map("n", "<localleader>d?", [[<cmd>lua require'dap.ui.variables'.scopes()<CR>]])
   map("n", "<localleader>dc", [[<cmd>lua require'dap'.continue()<CR>]])
   map("n", "<localleader>do", [[<cmd>lua require'dap'.step_over()<CR>]])
   map("n", "<localleader>di", [[<cmd>lua require'dap'.step_into()<CR>]])
