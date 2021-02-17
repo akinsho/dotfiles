@@ -421,13 +421,8 @@ return require("packer").startup {
       run = ":TSUpdate",
       config = require("as.plugins.treesitter"),
       requires = {
-        {"p00f/nvim-ts-rainbow"},
-        {"nvim-treesitter/nvim-treesitter-textobjects"},
-        {
-          "nvim-treesitter/playground",
-          cmd = "TSPlaygroundToggle",
-          disable = is_work
-        }
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        {"nvim-treesitter/playground", cmd = "TSPlaygroundToggle", disable = is_work}
       }
     }
     use_local {"contributing/nvim-treesitter", as = "local-treesitter", disable = true}

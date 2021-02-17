@@ -21,10 +21,6 @@ return function()
         node_decremental = "grm" -- decrement to the previous node
       }
     },
-    rainbow = {
-      enable = false,
-      disable = {"lua"}
-    },
     textobjects = {
       select = {
         enable = true,
