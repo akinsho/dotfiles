@@ -7,6 +7,9 @@ part of my config I can call select helper methods.
 --]]
 local utils = require("as.utils")
 
+-- TODO once commands can take functions as arguments natively remove this global
+_G.CommandCallbacks = {}
+
 _G.as_utils = {
   map = utils.map,
   command = utils.command,
