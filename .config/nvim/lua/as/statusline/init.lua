@@ -198,8 +198,8 @@ function _G.statusline()
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   if minimal then
-    append(statusline, dir_item, 1)
-    append(statusline, parent_item, 1)
+    append(statusline, dir_item, 3)
+    append(statusline, parent_item, 2)
     append(statusline, file_item, 0)
     append(statusline, readonly_item, 2)
     return display(statusline, available_space)
@@ -207,8 +207,8 @@ function _G.statusline()
 
   append(statusline, utils.item(utils.mode()), 0)
 
-  append(statusline, dir_item, 1)
-  append(statusline, parent_item, 1)
+  append(statusline, dir_item, 3)
+  append(statusline, parent_item, 2)
   append(statusline, file_item, 0)
   append(statusline, readonly_item, 2)
 
@@ -234,13 +234,7 @@ function _G.statusline()
       develop_text,
       vim.env.DEVELOPING ~= nil,
       "StComment",
-      {
-        prefix = "",
-        padding = "none",
-        before = "  ",
-        prefix_color = "StWarning",
-        small = 1
-      }
+      {prefix = "", padding = "none", before = "  ", prefix_color = "StWarning", small = 1}
     ),
     2
   )
@@ -264,7 +258,7 @@ function _G.statusline()
         sep_hl = "StComment"
       }
     ),
-    4
+    7
   )
 
   -- Github notifications
@@ -282,17 +276,17 @@ function _G.statusline()
     append(
       statusline,
       utils.item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}),
-      1
+      3
     )
     append(
       statusline,
       utils.item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}),
-      1
+      3
     )
     append(
       statusline,
       utils.item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}),
-      1
+      3
     )
   end
 
@@ -305,24 +299,26 @@ function _G.statusline()
       ahead,
       "StTitle",
       {prefix = "⇡", prefix_color = "StGreen", after = behind > 0 and "" or " ", before = ""}
-    )
+    ),
+    5
   )
   append(
     statusline,
-    utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "})
+    utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}),
+    5
   )
 
   -- LSP Diagnostics
   local info = utils.diagnostic_info()
   if info and not vim.tbl_isempty(info) then
     append(statusline, utils.item(info.error, "StError"), 1)
-    append(statusline, utils.item(info.warning, "StWarning"), 2)
-    append(statusline, utils.item(info.information, "StGreen"), 3)
+    append(statusline, utils.item(info.warning, "StWarning"), 3)
+    append(statusline, utils.item(info.information, "StGreen"), 4)
   end
 
   -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 3)
-  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 4)
+  append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 4)
+  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 6)
 
   -- Indentation
   local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab
@@ -334,7 +330,7 @@ function _G.statusline()
       "StTitle",
       {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
     ),
-    4
+    6
   )
 
   append(statusline, {"%<"})

@@ -500,6 +500,7 @@ function M.item(component, hl, opts)
   local before = opts.before or ""
   local after = opts.after or " "
   local prefix = opts.prefix or ""
+  local prefix_size = strwidth(prefix)
 
   local prefix_color = opts.prefix_color or hl
   prefix = prefix ~= "" and M.wrap(prefix_color) .. prefix .. " " or ""
@@ -517,7 +518,7 @@ function M.item(component, hl, opts)
     after,
     "%*"
   }
-  return {table.concat(parts), #component}
+  return {table.concat(parts), #component + #before + #after + prefix_size}
 end
 
 --- @param item string
