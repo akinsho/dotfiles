@@ -252,10 +252,7 @@ function M.setup()
             version = "LuaJIT",
             path = vim.split(package.path, ";")
           },
-          awakened = {cat = true},
           workspace = {
-            maxPreload = 1000,
-            preloadFileSize = 1000,
             library = {
               [fn.expand("$VIMRUNTIME/lua")] = true,
               [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
