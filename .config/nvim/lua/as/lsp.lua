@@ -8,8 +8,8 @@ local command = as_utils.command
 -----------------------------------------------------------------------------//
 function M.highlight()
   require("as.highlights").all {
-    {"LspReferenceText", {gui = "underline"}},
-    {"LspReferenceRead", {gui = "underline"}},
+    {"LspReferenceText", {link = "CursorLine"}},
+    {"LspReferenceRead", {link = "CursorLine"}},
     {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
     {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
