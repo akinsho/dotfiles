@@ -67,14 +67,38 @@ function M.buf_map(bufnr, mode, lhs, rhs, opts)
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
-function M.cmd(name, rhs, types)
-  vim.validate {
-    name = {name, "string"},
-    rhs = {rhs, "string"},
-    types = {types, "table", true}
-  }
-  types = (types and type(types) == "table") and types or {}
-  vim.cmd(string.format("command! %s %s %s", table.concat(types, " "), name, rhs))
+-- TODO once commands can take functions as arguments natively remove this global
+CommandCallbacks = {}
+
+function M.command(args)
+  local nargs = args.nargs or 0
+  local name = args[1]
+  local rhs = args[2]
+  local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
+
+  if type(rhs) == "function" then
+    table.insert(CommandCallbacks, rhs)
+    rhs =
+      string.format(
+      "lua CommandCallbacks[%d](%s)",
+      #CommandCallbacks,
+      nargs == 0 and "" or "<f-args>"
+    )
+  end
+
+  vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
+end
+
+function M.invalidate(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+      end
+    end
+  else
+    package.loaded[path] = nil
+  end
 end
 
 return M

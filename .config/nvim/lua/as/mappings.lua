@@ -4,7 +4,7 @@ local buf_map = as_utils.buf_map
 local has = as_utils.has
 local fn = vim.fn
 local api = vim.api
-local cmd = as_utils.cmd
+local command = as_utils.command
 --- work around to place functions in the global scope but
 --- namespaced within a table.
 --- TODO refactor this once nvim allows passing lua functions to mappings
@@ -518,11 +518,12 @@ map("i", "<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-function _G._mappings.toggle_bg()
-  vim.o.background = vim.o.background == "dark" and "light" or "dark"
-end
-
-cmd("ToggleBackground", [[lua _mappings.toggle_bg()]])
+command {
+  "ToggleBackground",
+  function()
+    vim.o.background = vim.o.background == "dark" and "light" or "dark"
+  end
+}
 ------------------------------------------------------------------------------
 -- Profile
 ------------------------------------------------------------------------------
@@ -536,27 +537,52 @@ function _G._mappings.vim_profile(bang)
     vim.cmd [[profile file *]]
   end
 end
-cmd("Profile", "call s:profile(<bang>0)", {"-bang"})
+command {"Profile", "call s:profile(<bang>0)", types = {"-bang"}}
 ------------------------------------------------------------------------------
-cmd("Token", [[call utils#token_inspect()]], {"-nargs=0"}) -- FIXME this doesn't work with tree sitter
-cmd("Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]])
-cmd("ReloadModule", [[lua require('plenary.reload').reload_module(<q-args>)]], {"-nargs=1"})
-cmd("TabMessage", [[call utils#tab_message(<q-args>)]], {"-nargs=+", "-complete=command"})
+command {
+  "Token",
+  function()
+    vim.fn["utils#token_inspect"]()
+  end
+} -- FIXME this doesn't work with tree sitter
+command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]]}
+command {
+  "ReloadModule",
+  function(args)
+    require("plenary.reload").reload_module(args)
+  end,
+  nargs = 1
+}
+command {
+  "TabMessage",
+  [[call utils#tab_message(<q-args>)]],
+  nargs = "+",
+  types = {"-complete=command"}
+}
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
 -- selection placing into the black hole register
-cmd(
+command {
   "MoveWrite",
   [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]],
-  {"-bang", "-range", "-nargs=1", "-complete=file"}
-)
-cmd(
+  types = {"-bang", "-range", "-complete=file"},
+  nargs = 1
+}
+command {
   "MoveAppend",
   [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]],
-  {"-bang", "-range", "-nargs=1", "-complete=file"}
-)
-cmd("AutoResize", [[call utils#auto_resize(<args>)]], {"-nargs=?"})
+  types = {"-bang", "-range", "-complete=file"},
+  nargs = 1
+}
+command {"AutoResize", [[call utils#auto_resize(<args>)]], {"-nargs=?"}}
 
+command {
+  "LuaInvalidate",
+  function(pattern)
+    require("as.utils").invalidate(pattern, true)
+  end,
+  nargs = 1
+}
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//

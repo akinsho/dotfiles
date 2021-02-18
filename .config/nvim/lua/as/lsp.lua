@@ -2,7 +2,7 @@ local M = {}
 
 local fn = vim.fn
 local api = vim.api
-local cmd = as_utils.cmd
+local command = as_utils.command
 -----------------------------------------------------------------------------//
 -- Highlights
 -----------------------------------------------------------------------------//
@@ -34,10 +34,30 @@ function _G.open_lsp_log()
   vim.cmd("edit " .. path)
 end
 
-cmd("Format", "lua vim.lsp.buf.formatting_sync(nil, 1000)")
-cmd("ReloadLSP", "lua reload_lsp()")
-cmd("DebugLSP", "lua print(vim.inspect(vim.lsp.get_active_clients()))")
-cmd("LogLSP", "lua open_lsp_log()")
+command {
+  "Format",
+  function()
+    vim.lsp.buf.formatting_sync(nil, 1000)
+  end
+}
+command {
+  "ReloadLSP",
+  function()
+    reload_lsp()
+  end
+}
+command {
+  "DebugLSP",
+  function()
+    print(vim.inspect(vim.lsp.get_active_clients()))
+  end
+}
+command {
+  "LogLSP",
+  function()
+    open_lsp_log()
+  end
+}
 
 function M.tagfunc(pattern, flags)
   if flags ~= "c" then

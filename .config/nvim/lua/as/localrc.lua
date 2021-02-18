@@ -124,7 +124,9 @@ function M.setup(event, immediate)
       }
     )
   end
-  as_utils.cmd("LocalrcEdit", [[lua require("as.localrc").open()]])
+  as_utils.command {"LocalrcEdit", function()
+      require("as.localrc").open()
+    end}
 end
 
 return M

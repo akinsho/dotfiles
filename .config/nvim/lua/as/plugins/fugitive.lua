@@ -12,10 +12,10 @@ end
 
 return function()
   local map = as_utils.map
-  local cmd = as_utils.cmd
+  local command = as_utils.command
 
-  cmd("Gcm", [[<cmd>G checkout master]], {"-nargs=0"})
-  cmd("Gcb", [[<cmd>G checkout -b <q-args>]], {"-nargs=1"})
+  command {"Gcm", [[<cmd>G checkout master]], nargs = 0}
+  command {"Gcb", [[<cmd>G checkout -b <q-args>]], nargs = 1}
 
   -- Fugitive bindings
   map("n", "<localleader>gs", "<cmd>Git<CR>")
