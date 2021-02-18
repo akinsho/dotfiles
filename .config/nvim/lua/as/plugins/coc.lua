@@ -85,7 +85,7 @@ end
 
 return function()
   local map = as_utils.map
-  local cmd = as_utils.cmd
+  local command = as_utils.command
   -----------------------------------------------------------------------------//
   -- Extensions
   -----------------------------------------------------------------------------//
@@ -310,10 +310,10 @@ return function()
   -- Formatting
   -----------------------------------------------------------------------------//
   -- Use `:Format` for format current buffer
-  cmd("CocFormat", [[:call CocActionAsync('format')]], {"-nargs=0"})
+  command {"CocFormat", [[:call CocActionAsync('format')]], nargs = 0}
 
   -- Add `:OR` command for organize imports of the current buffer.
-  cmd("OR", [[:call CocAction('runCommand', 'editor.action.organizeImport')]], {"-nargs=0"})
+  command {"OR", [[:call CocAction('runCommand', 'editor.action.organizeImport')]], nargs = 0}
   -----------------------------------------------------------------------------//
   -- Tags
   -----------------------------------------------------------------------------//

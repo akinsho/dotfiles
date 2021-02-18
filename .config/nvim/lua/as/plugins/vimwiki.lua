@@ -1,15 +1,5 @@
 local M = {}
 
-function _G.__vimwiki_close_wikis()
-  local fn = vim.fn
-  local bufs = fn.getbufinfo {buflisted = true}
-  for _, buf in ipairs(bufs) do
-    if vim.bo[buf.bufnr].filetype == "vimwiki" then
-      vim.api.nvim_buf_delete(buf.bufnr, {force = true})
-    end
-  end
-end
-
 function M.setup()
   local fn = vim.fn
   local has_dropbox = fn.isdirectory(fn.expand("$HOME/Dropbox")) > 0
@@ -47,7 +37,18 @@ function M.setup()
 end
 
 function M.config()
-  as_utils.cmd("CloseVimWikis", "lua __vimwiki_close_wikis()")
+  as_utils.command {
+    "CloseVimWikis",
+    function()
+      local fn = vim.fn
+      local bufs = fn.getbufinfo {buflisted = true}
+      for _, buf in ipairs(bufs) do
+        if vim.bo[buf.bufnr].filetype == "vimwiki" then
+          vim.api.nvim_buf_delete(buf.bufnr, {force = true})
+        end
+      end
+    end
+  }
   as_utils.map("n", "<leader>wq", "<Cmd>CloseVimWikis<CR>")
 end
 
