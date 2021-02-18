@@ -182,7 +182,7 @@ vim.o.listchars =
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-opt.wrap = false
+opt.wrap = true
 opt.wrapmargin = 2
 opt.softtabstop = 2
 opt.textwidth = 80

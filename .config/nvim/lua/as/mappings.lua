@@ -529,12 +529,12 @@ command {
 ------------------------------------------------------------------------------
 function _G._mappings.vim_profile(bang)
   if bang then
-    vim.cmd [[profile pause]]
-    vim.cmd [[noautocmd qall]]
+    vim.cmd "profile pause"
+    vim.cmd "noautocmd qall"
   else
-    vim.cmd [[profile start /tmp/profile.log]]
-    vim.cmd [[profile func *]]
-    vim.cmd [[profile file *]]
+    vim.cmd "profile start /tmp/profile.log"
+    vim.cmd "profile func *"
+    vim.cmd "profile file *"
   end
 end
 command {"Profile", "call s:profile(<bang>0)", types = {"-bang"}}
