@@ -301,26 +301,15 @@ function _G.statusline()
   local behind = updates.behind and tonumber(updates.behind) or 0
   append(
     statusline,
-    utils.item_if(
+    utils.item(
       ahead,
-      ahead > 0,
       "StTitle",
-      {
-        prefix = "⇡",
-        prefix_color = "StGreen",
-        after = behind > 0 and "" or " ",
-        before = ""
-      }
+      {prefix = "⇡", prefix_color = "StGreen", after = behind > 0 and "" or " ", before = ""}
     )
   )
   append(
     statusline,
-    utils.item_if(
-      behind,
-      behind > 0,
-      "StTitle",
-      {prefix = "⇣", prefix_color = "StNumber", after = " "}
-    )
+    utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "})
   )
 
   -- LSP Diagnostics
