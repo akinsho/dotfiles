@@ -365,31 +365,6 @@ function M.current_fn()
   return fn.trim(sanitized)
 end
 
-function M.git_status()
-  -- symbol opts -  , "\uf408"
-  if vim.g.coc_git_status then
-    local prefix = ""
-    local repo_status = vim.g.coc_git_status or ""
-    local buffer_status = vim.fn.trim(vim.b.coc_git_status or "") -- remove excess whitespace
-
-    local parts = vim.split(repo_status, " ")
-    if #parts > 0 then
-      prefix = parts[1]
-      table.remove(parts, 1)
-      repo_status = table.concat(parts, " ")
-    end
-
-    local component = repo_status .. " " .. buffer_status
-    -- if there is no branch info show nothing
-    if not repo_status then
-      return "", ""
-    end
-    return prefix, component
-  elseif vim.b.gitsigns_status then
-    return "", vim.b.gitsigns_status
-  end
-end
-
 local function mode_highlight(mode)
   local visual_regex = vim.regex [[\(v\|V\|\)]]
   local command_regex = vim.regex [[\(c\|cv\|ce\)]]
@@ -516,7 +491,9 @@ end
 --- @param hl string
 --- @param opts table
 function M.item(component, hl, opts)
-  if not component or component == "" then
+  -- do not allow empty values to be shown note 0 is considered empty
+  -- since if there is nothing of something I don't need to see it
+  if not component or component == "" or component == 0 then
     return M.spacer()
   end
   opts = opts or {}

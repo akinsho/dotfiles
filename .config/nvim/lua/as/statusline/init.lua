@@ -276,8 +276,25 @@ function _G.statusline()
   )
 
   -- Git Status
-  local prefix, git_status = utils.git_status()
-  append(statusline, utils.item(git_status, "StInfo", {prefix = prefix}), 1)
+  local status = vim.b.gitsigns_status_dict
+  if status then
+    append(statusline, utils.item(status.head, "StInfo", {prefix = ""}), 1)
+    append(
+      statusline,
+      utils.item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}),
+      1
+    )
+    append(
+      statusline,
+      utils.item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}),
+      1
+    )
+    append(
+      statusline,
+      utils.item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}),
+      1
+    )
+  end
 
   local updates = vim.g.git_statusline_updates or {}
   local ahead = updates.ahead and tonumber(updates.ahead) or 0

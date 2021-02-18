@@ -20,19 +20,13 @@ return function()
         expr = true,
         '&diff ? \'[h\' : \'<cmd>lua require"gitsigns".prev_hunk()<CR>\''
       },
-      ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-      ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+      ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+      ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
       ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
       ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
       ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
       ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>'
-    },
-    status_formatter = function(status)
-      local added = status.added and status.added > 0 and "  " .. status.added or ""
-      local changed = status.changed and status.changed > 0 and "  " .. status.changed or ""
-      local removed = status.removed and status.removed > 0 and "  " .. status.removed or ""
-      return status.head .. added .. changed .. removed .. " "
-    end
+    }
   }
 end
