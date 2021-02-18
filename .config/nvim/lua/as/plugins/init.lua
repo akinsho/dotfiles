@@ -152,13 +152,9 @@ return require("packer").startup {
                 sign = {
                   enabled = false
                 },
-                float = {
+                virtual_text = {
                   enabled = true,
                   text = "💡",
-                  win_opts = {
-                    anchor = "SE",
-                    winblend = 100,
-                  }
                 }
               }]]
             }

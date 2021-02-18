@@ -34,12 +34,12 @@ return function()
         events = {"CursorHold"},
         targets = {"*"},
         command = "lua require('lspsaga.diagnostic').show_line_diagnostics()"
-      },
-      {
-        events = {"CursorHoldI"},
+      }
+      --[[ {
+        events = {"CompleteDone"},
         targets = {"*"},
         command = "lua require('lspsaga.signaturehelp').signature_help()"
-      }
+      } ]]
     }
   )
 end
