@@ -104,6 +104,12 @@ return require("packer").startup {
       requires = {
         "nvim-lua/popup.nvim",
         {
+          "nvim-telescope/telescope-github.nvim",
+          config = function()
+            require("telescope").load_extension("gh")
+          end
+        },
+        {
           "nvim-telescope/telescope-frecency.nvim",
           requires = {"tami5/sql.nvim"},
           config = function()
