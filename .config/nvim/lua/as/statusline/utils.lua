@@ -196,7 +196,7 @@ end
 --- @param icon string | nil
 function M.readonly(ctx, icon)
   icon = icon or ""
-  if ctx.filetype == "help" or ctx.preview or ctx.readonly then
+  if ctx.readonly then
     return " " .. icon
   else
     return ""
