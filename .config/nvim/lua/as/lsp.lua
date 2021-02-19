@@ -142,7 +142,7 @@ local buf_map = as_utils.buf_map
 
 local function setup_mappings(client)
   buf_map(0, "n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
-  buf_map(0, "n", "<gd>", "<cmd>lua vim.lsp.buf.definition()<CR>")
+  buf_map(0, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
   if client.resolved_capabilities.implementation then
     buf_map(0, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
   end
