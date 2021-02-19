@@ -450,6 +450,7 @@ return require("packer").startup {
     }
     use {
       "akinsho/nvim-bufferline.lua",
+      branch = "feature/highlight-group-names",
       config = require("as.plugins.nvim-bufferline"),
       disable = is_home
     }
