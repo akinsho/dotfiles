@@ -110,7 +110,7 @@ end
 function M.setup(event, immediate)
   immediate = immediate ~= nil and immediate or true
   if immediate then
-    vim.defer_fn(M.load, 1)
+    M.load()
   else
     event = event or "VimEnter"
     require("as.autocommands").augroup(
@@ -124,9 +124,12 @@ function M.setup(event, immediate)
       }
     )
   end
-  as_utils.command {"LocalrcEdit", function()
+  as_utils.command {
+    "LocalrcEdit",
+    function()
       require("as.localrc").open()
-    end}
+    end
+  }
 end
 
 return M
