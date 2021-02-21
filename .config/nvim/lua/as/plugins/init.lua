@@ -169,13 +169,11 @@ return require("packer").startup {
     use {
       "neovim/nvim-lspconfig",
       disable = is_work,
+      config = require("as.plugins.lspconfig"),
       requires = {
         "nvim-lua/lsp-status.nvim",
         dev "personal/flutter-tools.nvim",
-        {
-          "glepnir/lspsaga.nvim",
-          config = require("as.plugins.lspsaga")
-        }
+        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga")}
       }
     }
     use {

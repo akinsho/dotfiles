@@ -1,11 +1,9 @@
 local M = {}
 
-local fn = vim.fn
-local api = vim.api
 local command = as_utils.command
------------------------------------------------------------------------------//
--- Highlights
------------------------------------------------------------------------------//
+-- -----------------------------------------------------------------------------//
+-- -- Highlights
+-- -----------------------------------------------------------------------------//
 function M.highlight()
   require("as.highlights").all {
     {"LspReferenceText", {link = "CursorLine"}},
@@ -40,18 +38,21 @@ command {
     vim.lsp.buf.formatting_sync(nil, 1000)
   end
 }
+
 command {
   "ReloadLSP",
   function()
     reload_lsp()
   end
 }
+
 command {
   "DebugLSP",
   function()
     print(vim.inspect(vim.lsp.get_active_clients()))
   end
 }
+
 command {
   "LogLSP",
   function()
@@ -87,7 +88,7 @@ end
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
-local function setup_autocommands(client)
+function M.setup_autocommands(client)
   local autocommands = require "as.autocommands"
   autocommands.augroup(
     "LspHighlights",
@@ -138,9 +139,8 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
-local buf_map = as_utils.buf_map
-
-local function setup_mappings(client)
+function M.setup_mappings(client)
+  local buf_map = as_utils.buf_map
   buf_map(0, "n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
   buf_map(0, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
   if client.resolved_capabilities.implementation then
@@ -156,16 +156,19 @@ end
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
-local signs = {
+M.signs = {
   {"LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsSignError"}},
   {"LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsSignWarning"}},
   {"LspDiagnosticsSignInformation", {text = "", texthl = "LspDiagnosticsSignInformation"}},
   {"LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsSignHint"}}
 }
 
-local function on_attach(client, bufnr)
-  setup_autocommands(client)
-  setup_mappings(client)
+-----------------------------------------------------------------------------//
+-- Buffer attach
+-----------------------------------------------------------------------------//
+function M.on_attach(client, bufnr)
+  M.setup_autocommands(client)
+  M.setup_mappings(client)
 
   require("vim.lsp.protocol").CompletionItemKind = {
     " [Text]", -- Text
@@ -196,133 +199,9 @@ local function on_attach(client, bufnr)
   }
 
   if client.resolved_capabilities.goto_definition then
-    api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.require('as.lsp').tagfunc")
+    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.require('as.lsp').tagfunc")
   end
   require("lsp-status").on_attach(client)
-end
-
-function M.setup()
-  local has = as_utils.has
-  -- Deactivate for work machines
-  if has("mac") then
-    return
-  end
-  local lspconfig = require "lspconfig"
-  local lsp_status = require "lsp-status"
-  local flutter = require "flutter-tools"
-
-  M.highlight()
-
-  for _, sign in pairs(signs) do
-    fn.sign_define(unpack(sign))
-  end
-
-  -----------------------------------------------------------------------------//
-  -- Setup plugins
-  -----------------------------------------------------------------------------//
-  flutter.setup {}
-
-  lsp_status.config {
-    kind_labels = vim.g.completion_customize_lsp_label,
-    indicator_hint = "",
-    indicator_info = "",
-    indicator_errors = "✗",
-    indicator_warnings = "",
-    status_symbol = ""
-  }
-  lsp_status.register_progress()
-
-  -----------------------------------------------------------------------------//
-  -- Handler overrides
-  -----------------------------------------------------------------------------//
-  vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {
-      underline = true,
-      virtual_text = false,
-      signs = true,
-      update_in_insert = false
-    }
-  )
-  -----------------------------------------------------------------------------//
-  -- Language servers
-  -----------------------------------------------------------------------------//
-  local prettier = {formatCommand = "prettier"}
-
-  local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
-  local sumneko_path = string.format("%s/lua-language-server", local_path)
-  local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
-
-  local servers = {
-    rust_analyzer = {},
-    vimls = {},
-    gopls = {},
-    flow = {},
-    jsonls = {},
-    html = {},
-    tsserver = {},
-    sumneko_lua = {
-      cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
-      settings = {
-        Lua = {
-          diagnostics = {globals = {"vim"}},
-          completion = {keywordSnippet = "Both"},
-          runtime = {
-            version = "LuaJIT",
-            path = vim.split(package.path, ";")
-          },
-          workspace = {
-            library = {
-              [fn.expand("$VIMRUNTIME/lua")] = true,
-              [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-            }
-          }
-        }
-      }
-    },
-    efm = {
-      init_options = {documentFormatting = true},
-      filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
-      settings = {
-        -- add ".lua-format" to root if using lua-format
-        rootMarkers = {".git/"},
-        languages = {
-          json = {prettier},
-          html = {prettier},
-          css = {prettier},
-          yaml = {prettier},
-          markdown = {prettier},
-          -- npm i -g lua-fmt
-          -- 'lua-format -i -c {config_dir}'
-          lua = {
-            {
-              formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
-              formatStdin = true
-            }
-          }
-        }
-      }
-    }
-  }
-
-  local status_capabilities = lsp_status.capabilities
-
-  flutter.setup {
-    dev_log = {open_cmd = "tabedit"},
-    lsp = {on_attach = on_attach, capabilities = status_capabilities}
-  }
-
-  for server, config in pairs(servers) do
-    config.on_attach = on_attach
-    if not config.capabilities then
-      config.capabilities = vim.lsp.protocol.make_client_capabilities()
-    end
-    config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    config.capabilities =
-      require("as.utils").deep_merge(config.capabilities or {}, status_capabilities)
-    lspconfig[server].setup(config)
-  end
 end
 
 return M
