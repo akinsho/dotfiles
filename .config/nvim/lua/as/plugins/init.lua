@@ -153,13 +153,8 @@ return require("packer").startup {
               events = {"CursorHold", "CursorHoldI"},
               targets = {"*"},
               command = [[lua require'nvim-lightbulb'.update_lightbulb {
-                sign = {
-                  enabled = false
-                },
-                virtual_text = {
-                  enabled = true,
-                  text = "💡",
-                }
+                sign = {enabled = false},
+                virtual_text = {enabled = true, text = "💡"}
               }]]
             }
           }
@@ -388,7 +383,8 @@ return require("packer").startup {
       "phaazon/hop.nvim",
       keys = {{"n", "s"}},
       config = function()
-        as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1{winblend = 100}<CR>]])
+        require("hop").setup {winblend = 100}
+        as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1()<CR>]])
       end
     }
     use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak"), disable = true}
