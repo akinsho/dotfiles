@@ -44,7 +44,7 @@ return function()
   -----------------------------------------------------------------------------//
   -- Language servers
   -----------------------------------------------------------------------------//
-  local prettier = {formatCommand = "prettier"}
+  local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
 
   local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
   local sumneko_path = string.format("%s/lua-language-server", local_path)
