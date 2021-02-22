@@ -236,7 +236,7 @@ return require("packer").startup {
     use {
       "vim-test/vim-test",
       cmd = {"TestFile", "TestNearest", "TestSuite"},
-      keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn"},
+      keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn", "<localleader>ts"},
       config = require("as.plugins.vim-test")
     }
     use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
@@ -305,7 +305,28 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
-    use {"Yggdroot/indentLine", config = require("as.plugins.indentline")}
+    use {
+      "lukas-reineke/indent-blankline.nvim",
+      branch = "lua",
+      event = "BufRead *",
+      config = function()
+        vim.g.indent_blankline_char = "│" -- 
+        vim.g.indent_blankline_filetype_exclude = {
+          "fugitive",
+          "gitcommit",
+          "packer",
+          "vimwiki",
+          "markdown",
+          "json",
+          "txt",
+          "vista",
+          "help",
+          "todoist",
+          "NvimTree"
+        }
+        vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "peekaboo"}
+      end
+    }
     use {
       "sheerun/vim-polyglot",
       config = require("as.plugins.polyglot"),
