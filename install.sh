@@ -16,7 +16,7 @@ if [ "$(uname)" == "Darwin" ]; then
     echo "Homebrew is not installed, installing now"
     echo "This may take a while"
     echo "Homebrew requires osx command lines tools, please download xcode first"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   fi
 fi
 
