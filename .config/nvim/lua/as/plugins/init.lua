@@ -337,7 +337,16 @@ return require("packer").startup {
     -- Git {{{
     --------------------------------------------------------------------------------
     use {"tpope/vim-fugitive", config = require("as.plugins.fugitive")}
-    use {"rhysd/conflict-marker.vim", config = require("as.plugins.conflict-marker")}
+    use {
+      "rhysd/conflict-marker.vim",
+      config = function()
+        -- disable the default highlight group
+        vim.g.conflict_marker_highlight_group = ""
+        -- Include text after begin and end markers
+        vim.g.conflict_marker_begin = "^<<<<<<< .*$"
+        vim.g.conflict_marker_end = "^>>>>>>> .*$"
+      end
+    }
     use {
       "TimUntersberger/neogit",
       cmd = "Neogit",
@@ -408,7 +417,6 @@ return require("packer").startup {
         as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1()<CR>]])
       end
     }
-    use {"justinmk/vim-sneak", config = require("as.plugins.vim-sneak"), disable = true}
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
     use "junegunn/vim-peekaboo"
     -- }}}
