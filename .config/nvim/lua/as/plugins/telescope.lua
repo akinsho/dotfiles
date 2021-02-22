@@ -12,7 +12,7 @@ return function()
       mappings = {
         i = {
           ["<ESC>"] = actions.close,
-          ["<c-s>"] = actions.goto_file_selection_split,
+          ["<c-s>"] = actions.select_horizontal,
         }
       },
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
