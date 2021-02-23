@@ -71,9 +71,9 @@ local function not_developing()
 end
 
 --[[
-    NOTE "use" functions cannot call *upvalues* i.e. the functions
-    passed to setup or config etc. cannot reference aliased function
-    or local variables
+  NOTE "use" functions cannot call *upvalues* i.e. the functions
+  passed to setup or config etc. cannot reference aliased function
+  or local variables
 --]]
 return require("packer").startup {
   function(use, use_rocks)
@@ -311,6 +311,7 @@ return require("packer").startup {
       event = "BufRead *",
       config = function()
         vim.g.indent_blankline_char = "│" -- 
+        vim.g.indent_blankline_show_first_indent_level = true
         vim.g.indent_blankline_filetype_exclude = {
           "fugitive",
           "gitcommit",
@@ -322,9 +323,11 @@ return require("packer").startup {
           "vista",
           "help",
           "todoist",
-          "NvimTree"
+          "NvimTree",
+          "peekaboo",
+          "git"
         }
-        vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "peekaboo"}
+        vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
       end
     }
     use {
