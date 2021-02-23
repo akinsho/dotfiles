@@ -139,36 +139,21 @@ return require("packer").startup {
       event = {"BufReadPre *", "BufNewFile *"},
       config = require("as.plugins.gitsigns")
     }
+
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
-    use {"anott03/nvim-lspinstall", cmd = "InstallLS", disable = is_work}
-    use {
-      "kosayoda/nvim-lightbulb",
-      disable = is_work,
-      config = function()
-        require("as.autocommands").augroup(
-          "LspLightbulb",
-          {
-            {
-              events = {"CursorHold", "CursorHoldI"},
-              targets = {"*"},
-              command = [[lua require'nvim-lightbulb'.update_lightbulb {
-                sign = {enabled = false},
-                virtual_text = {enabled = true, text = "💡"}
-              }]]
-            }
-          }
-        )
-      end
-    }
+
+    use_local "personal/flutter-tools.nvim"
     use {
       "neovim/nvim-lspconfig",
-      disable = is_work,
+      event = "BufRead *",
       config = require("as.plugins.lspconfig"),
+      disable = is_work,
       requires = {
-        "nvim-lua/lsp-status.nvim",
-        dev "personal/flutter-tools.nvim",
-        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga")}
+        {"anott03/nvim-lspinstall", cmd = "InstallLS"},
+        {"nvim-lua/lsp-status.nvim", event = "VimEnter *"},
+        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter *"},
+        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "VimEnter *"}
       }
     }
     use {
