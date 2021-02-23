@@ -310,7 +310,8 @@ return require("packer").startup {
           "todoist",
           "NvimTree",
           "peekaboo",
-          "git"
+          "git",
+          "TelescopePrompt"
         }
         vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
       end
