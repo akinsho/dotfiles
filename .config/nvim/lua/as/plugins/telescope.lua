@@ -4,7 +4,6 @@ return function()
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
   local builtins = require("telescope.builtin")
-  local previewers = require("telescope.previewers")
 
   telescope.setup {
     defaults = {
@@ -12,15 +11,12 @@ return function()
       mappings = {
         i = {
           ["<ESC>"] = actions.close,
-          ["<c-s>"] = actions.select_horizontal,
+          ["<c-s>"] = actions.select_horizontal
         }
       },
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
       file_sorter = sorters.get_fzy_sorter,
       generic_sorter = sorters.get_fzy_sorter,
-      -- experimental and occasionally buggy, BEWARE
-      file_previewer = previewers.vim_buffer_cat.new,
-      grep_previewer = previewers.vim_buffer_vimgrep.new,
       layout_strategy = "flex",
       winblend = 7,
       set_env = {COLORTERM = "truecolor"}
