@@ -301,8 +301,14 @@ return function()
   local status_capabilities = lsp_status.capabilities
 
   flutter.setup {
+    flutter_outline = {
+      enabled = true
+    },
     dev_log = {open_cmd = "tabedit"},
-    lsp = {on_attach = on_attach, capabilities = status_capabilities}
+    lsp = {
+      on_attach = on_attach,
+      capabilities = status_capabilities
+    }
   }
 
   for server, config in pairs(servers) do

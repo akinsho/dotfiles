@@ -143,13 +143,13 @@ return require("packer").startup {
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
 
-    use_local "personal/flutter-tools.nvim"
     use {
       "neovim/nvim-lspconfig",
       event = "BufRead *",
       config = require("as.plugins.lspconfig"),
       disable = is_work,
       requires = {
+        {dev "personal/flutter-tools.nvim"},
         {"anott03/nvim-lspinstall", cmd = "InstallLS"},
         {"nvim-lua/lsp-status.nvim", event = "VimEnter *"},
         {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter *"},
