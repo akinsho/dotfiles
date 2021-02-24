@@ -70,6 +70,16 @@ local function not_developing()
   return not vim.env.DEVELOPING
 end
 
+local function hunspell_install_if_needed()
+  if vim.fn.executable("hunspell") == 0 then
+    if vim.fn.has("mac") > 1 then
+      vim.fn.system("brew install hunspell")
+    else
+      vim.fn.system("apt install hunspell hunspell_en_gb")
+    end
+  end
+end
+
 --[[
   NOTE "use" functions cannot call *upvalues* i.e. the functions
   passed to setup or config etc. cannot reference aliased function
@@ -441,6 +451,15 @@ return require("packer").startup {
       event = {"BufRead *"},
       config = require("as.plugins.treesitter"),
       requires = {
+        {
+          "lewis6991/spellsitter.nvim",
+          run = hunspell_install_if_needed,
+          config = function()
+            require("spellsitter").setup {
+              captures = {"comment"}
+            }
+          end
+        },
         {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
         {"nvim-treesitter/playground", cmd = "TSPlaygroundToggle", disable = is_work}
       }
