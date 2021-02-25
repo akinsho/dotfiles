@@ -163,7 +163,7 @@ return require("packer").startup {
         {"anott03/nvim-lspinstall", cmd = "InstallLS"},
         {"nvim-lua/lsp-status.nvim", event = "VimEnter *"},
         {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter *"},
-        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "VimEnter *"}
+        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "BufRead *"}
       }
     }
     use {
@@ -453,11 +453,10 @@ return require("packer").startup {
       requires = {
         {
           "lewis6991/spellsitter.nvim",
+          opt = true,
           run = hunspell_install_if_needed,
           config = function()
-            require("spellsitter").setup {
-              captures = {"comment"}
-            }
+            require("spellsitter").setup {captures = {"comment"}}
           end
         },
         {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
