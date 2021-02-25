@@ -45,7 +45,7 @@ end
 --- This helper also automatically disables any local plugins on work machines
 --- @param use function
 local function create_local(use)
-  ---@param spec string | table
+  ---@param spec any
   return function(spec)
     local path = ""
     if type(spec) == "table" then
