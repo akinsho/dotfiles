@@ -160,7 +160,7 @@ return require("packer").startup {
       disable = is_work,
       requires = {
         {dev "personal/flutter-tools.nvim"},
-        {"anott03/nvim-lspinstall", cmd = "InstallLS"},
+        {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"},
         {"nvim-lua/lsp-status.nvim", event = "VimEnter *"},
         {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter *"},
         {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "BufRead *"}
@@ -304,7 +304,7 @@ return require("packer").startup {
       "lukas-reineke/indent-blankline.nvim",
       branch = "lua",
       event = "BufRead *",
-      config = require('as.plugins.indentline')
+      config = require("as.plugins.indentline")
     }
     use {
       "sheerun/vim-polyglot",
