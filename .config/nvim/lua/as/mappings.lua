@@ -308,6 +308,9 @@ map("n", "<leader>`", [[ciw`<c-r>"`<esc>]])
 map("n", "<leader>'", [[ciw'<c-r>"'<esc>]])
 map("n", "<leader>)", [[ciw(<c-r>")<esc>]])
 map("n", "<leader>}", [[ciw{<c-r>"}<esc>]])
+map("i", "<c-v>o", [[<c-k>'6]], {silent = true, noremap = true})
+map("i", "<c-v>c", [[<c-k>'9]], {silent = true, noremap = true})
+
 
 -- Map Q to replay q register
 map("n", "Q", "@q")
