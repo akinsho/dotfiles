@@ -90,8 +90,8 @@ return require("packer").startup {
     local use_local = create_local(use)
 
     -- Packer can manage itself as an optional plugin
-    use {"wbthomason/packer.nvim", opt = true, cond = not_developing}
-    use_local {"contributing/packer.nvim", opt = true, as = "local-packer", cond = developing}
+    use {"wbthomason/packer.nvim", cond = not_developing}
+    use_local {"contributing/packer.nvim", as = "local-packer", cond = developing}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
