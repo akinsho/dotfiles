@@ -23,9 +23,9 @@ return function()
   map("n", "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 
   -- scroll down hover doc
-  map("n", "<C-f>", [[<cmd>lua require('lspsaga.hover').smart_scroll_with_saga(1)<CR>]])
+  map("n", "<C-f>", [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>]])
   -- scroll up hover doc
-  map("n", "<C-b>", [[<cmd>lua require('lspsaga.hover').smart_scroll_with_saga(-1)<CR>]])
+  map("n", "<C-b>", [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>]])
 
   require("as.autocommands").augroup(
     "LspSagaCursorCommands",
