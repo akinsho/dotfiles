@@ -125,6 +125,12 @@ return require("packer").startup {
           config = function()
             require("telescope").load_extension("frecency")
           end
+        },
+        {
+          "nvim-telescope/telescope-fzy-native.nvim",
+          config = function()
+            require("telescope").load_extension("fzy_native")
+          end
         }
       }
     }
