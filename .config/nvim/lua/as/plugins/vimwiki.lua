@@ -24,13 +24,19 @@ function M.setup()
     auto_tags = 1,
     auto_export = 1
   }
+
+  vim.g.system_wiki = {
+    name = "Local Wiki",
+    path = home .. "/wiki"
+  }
+
   vim.g.vimwiki_auto_chdir = 1
   vim.g.vimwiki_tags_header = "Wiki tags"
   vim.g.vimwiki_auto_header = 1
   vim.g.vimwiki_hl_headers = 1 --too colourful
   vim.g.vimwiki_conceal_pre = 1
   vim.g.vimwiki_hl_cb_checked = 1
-  vim.g.vimwiki_list = {vim.g.wiki, vim.g.learnings_wiki}
+  vim.g.vimwiki_list = {vim.g.wiki, vim.g.learnings_wiki, vim.g.system_wiki}
 
   vim.g.vimwiki_global_ext = 0
   vim.g.vimwiki_folding = "expr"
