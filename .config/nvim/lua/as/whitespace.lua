@@ -8,7 +8,7 @@ local M = {}
 local fn = vim.fn
 
 local function is_applicable_buf()
-  return vim.bo.buftype == "" and vim.bo.modifiable
+  return vim.bo.buftype == "" and vim.bo.modifiable and vim.bo.filetype ~= ""
 end
 
 function M.setup()
@@ -17,12 +17,12 @@ function M.setup()
     "WhitespaceMatch",
     {
       {
-        events = {"VimEnter", "ColorScheme"},
+        events = {"ColorScheme"},
         targets = {"*"},
-        command = [[lua require('as.whitespace').setup()]]
+        command = [[lua require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})]]
       },
       {
-        events = {"BufWinEnter", "InsertLeave"},
+        events = {"BufEnter", "FileType", "InsertLeave"},
         targets = {"*"},
         command = [[lua require('as.whitespace').toggle_trailing('n')]]
       },
