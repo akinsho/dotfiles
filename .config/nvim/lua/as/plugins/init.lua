@@ -197,12 +197,9 @@ return require("packer").startup {
       end
     }
     use {
-      "cohama/lexima.vim",
+      "windwp/nvim-autopairs",
       config = function()
-        vim.g.lexima_accept_pum_with_enter = vim.fn.has("mac")
-        vim.g.lexima_enable_space_rules = 0
-        -- NOTE this interferes with telescope
-        vim.g.lexima_map_escape = ""
+        require("nvim-autopairs").setup()
       end
     }
     use "psliwka/vim-smoothie"

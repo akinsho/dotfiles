@@ -53,10 +53,7 @@ return function()
 
   local map = as_utils.map
   local opts = {noremap = true, silent = true, expr = true}
-  vim.g.lexima_no_default_rules = true
-  vim.fn["lexima#set_default_rules"]()
   map("i", "<C-Space>", "compe#complete()", opts)
-  map("i", "<CR>", [[compe#confirm(lexima#expand('<LT>CR>', 'i'))]], opts)
   map("i", "<C-e>", "compe#close('<C-e>')", opts)
   map("i", "<Tab>", "v:lua.__tab_complete()", {expr = true})
   map("s", "<Tab>", "v:lua.__tab_complete()", {expr = true})
@@ -64,4 +61,20 @@ return function()
   map("s", "<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
   map("i", "<C-f>", "compe#scroll({ 'delta': +4 }", opts)
   map("i", "<C-d>", "compe#scroll({ 'delta': -4 }", opts)
+
+  local npairs = require("nvim-autopairs")
+
+  as_utils.completion_confirm = function()
+    if vim.fn.pumvisible() ~= 0 then
+      if vim.fn.complete_info()["selected"] ~= -1 then
+        return vim.fn["compe#confirm"]()
+      end
+      vim.fn.nvim_select_popupmenu_item(0, false, false, {})
+      vim.fn["compe#confirm"]()
+      return vim.fn["compe#confirm"]()
+    end
+
+    return npairs.check_break_line_char()
+  end
+  as_utils.map("i", "<CR>", "v:lua.as_utils.completion_confirm()", {expr = true, noremap = true})
 end
