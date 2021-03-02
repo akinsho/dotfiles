@@ -1,51 +1,5 @@
 LspConfig = {}
 
-local command = as_utils.command
-
-function LspConfig.highlight()
-  -----------------------------------------------------------------------------//
-  -- Highlights
-  -----------------------------------------------------------------------------//
-  require("as.highlights").all {
-    {"LspReferenceText", {link = "CursorLine"}},
-    {"LspReferenceRead", {link = "CursorLine"}},
-    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
-    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
-    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
-    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
-    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
-    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
-    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf"}}
-  }
-end
-
-function LspConfig.tagfunc(pattern, flags)
-  if flags ~= "c" then
-    return vim.NIL
-  end
-  local params = vim.lsp.util.make_position_params()
-  local client_id_to_results, err =
-    vim.lsp.buf_request_sync(0, "textDocument/definition", params, 500)
-  assert(not err, vim.inspect(err))
-
-  local results = {}
-  for _, lsp_results in ipairs(client_id_to_results) do
-    for _, location in ipairs(lsp_results.result or {}) do
-      local start = location.range.start
-      table.insert(
-        results,
-        {
-          name = pattern,
-          filename = vim.uri_to_fname(location.uri),
-          cmd = string.format("call cursor(%d, %d)", start.line + 1, start.character + 1)
-        }
-      )
-    end
-  end
-  return results
-end
-
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -115,6 +69,50 @@ local function setup_mappings(client)
   buf_map(0, "n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 
+function LspConfig.highlight()
+  -----------------------------------------------------------------------------//
+  -- Highlights
+  -----------------------------------------------------------------------------//
+  require("as.highlights").all {
+    {"LspReferenceText", {link = "CursorLine"}},
+    {"LspReferenceRead", {link = "CursorLine"}},
+    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
+    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
+    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
+    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
+    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
+    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf"}}
+  }
+end
+
+function LspConfig.tagfunc(pattern, flags)
+  if flags ~= "c" then
+    return vim.NIL
+  end
+  local params = vim.lsp.util.make_position_params()
+  local client_id_to_results, err =
+    vim.lsp.buf_request_sync(0, "textDocument/definition", params, 500)
+  assert(not err, vim.inspect(err))
+
+  local results = {}
+  for _, lsp_results in ipairs(client_id_to_results) do
+    for _, location in ipairs(lsp_results.result or {}) do
+      local start = location.range.start
+      table.insert(
+        results,
+        {
+          name = pattern,
+          filename = vim.uri_to_fname(location.uri),
+          cmd = string.format("call cursor(%d, %d)", start.line + 1, start.character + 1)
+        }
+      )
+    end
+  end
+  return results
+end
+
 function LspConfig.on_attach(client, bufnr)
   setup_autocommands(client)
   setup_mappings(client)
@@ -156,6 +154,8 @@ end
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
+local command = as_utils.command
+
 command {
   "ReloadLSP",
   function()
