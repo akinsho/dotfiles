@@ -10,7 +10,7 @@ return function()
       prompt_prefix = "❯ ",
       mappings = {
         i = {
-          ["<ESC>"] = actions.close,
+          ["<esc>"] = actions.close,
           ["<c-s>"] = actions.select_horizontal
         }
       },
