@@ -68,17 +68,19 @@ function M.buf_map(bufnr, mode, lhs, rhs, opts)
 end
 
 function M.command(args)
+  local commands_table_name = "as_utils.command_callbacks"
   local nargs = args.nargs or 0
   local name = args[1]
   local rhs = args[2]
   local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
 
   if type(rhs) == "function" then
-    table.insert(CommandCallbacks, rhs)
+    table.insert(as_utils.command_callbacks, rhs)
     rhs =
       string.format(
-      "lua CommandCallbacks[%d](%s)",
-      #CommandCallbacks,
+      "lua %s[%d](%s)",
+      commands_table_name,
+      #as_utils.command_callbacks,
       nargs == 0 and "" or "<f-args>"
     )
   end

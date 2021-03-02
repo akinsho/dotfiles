@@ -1,5 +1,3 @@
-LspConfig = {}
-
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -11,7 +9,7 @@ local function setup_autocommands(client)
       {
         events = {"VimEnter", "ColorScheme"},
         targets = {"*"},
-        command = [[lua LspFunctions.highlight()]]
+        command = [[lua as_utils.lsp.highlight()]]
       }
     }
   )
@@ -69,7 +67,7 @@ local function setup_mappings(client)
   buf_map(0, "n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 
-function LspConfig.highlight()
+function as_utils.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Highlights
   -----------------------------------------------------------------------------//
@@ -87,7 +85,7 @@ function LspConfig.highlight()
   }
 end
 
-function LspConfig.tagfunc(pattern, flags)
+function as_utils.lsp.tagfunc(pattern, flags)
   if flags ~= "c" then
     return vim.NIL
   end
@@ -113,7 +111,7 @@ function LspConfig.tagfunc(pattern, flags)
   return results
 end
 
-function LspConfig.on_attach(client, bufnr)
+function as_utils.lsp.on_attach(client, bufnr)
   setup_autocommands(client)
   setup_mappings(client)
 
@@ -146,7 +144,7 @@ function LspConfig.on_attach(client, bufnr)
   }
 
   if client.resolved_capabilities.goto_definition then
-    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.LspFunctions.tagfunc")
+    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.as_utils.lsp.tagfunc")
   end
   require("lsp-status").on_attach(client)
 end
@@ -191,7 +189,7 @@ return function()
   local lsp_status = require "lsp-status"
   local flutter = require "flutter-tools"
 
-  LspConfig.highlight()
+  as_utils.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//
@@ -297,13 +295,13 @@ return function()
     },
     dev_log = {open_cmd = "tabedit"},
     lsp = {
-      on_attach = LspConfig.on_attach,
+      on_attach = as_utils.lsp.on_attach,
       capabilities = status_capabilities
     }
   }
 
   for server, config in pairs(servers) do
-    config.on_attach = LspConfig.on_attach
+    config.on_attach = as_utils.lsp.on_attach
     if not config.capabilities then
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
     end
