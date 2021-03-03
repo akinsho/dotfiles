@@ -153,7 +153,7 @@ return require("packer").startup {
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap"), ft = {"dart"}}
     use {
       "lewis6991/gitsigns.nvim",
-      event = {"BufReadPre *", "BufNewFile *"},
+      event = {"BufReadPre", "BufNewFile"},
       config = require("as.plugins.gitsigns")
     }
 
@@ -162,20 +162,20 @@ return require("packer").startup {
 
     use {
       "neovim/nvim-lspconfig",
-      event = "BufRead *",
+      event = "BufRead",
       config = require("as.plugins.lspconfig"),
       disable = is_work,
       requires = {
         {dev "personal/flutter-tools.nvim"},
         {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"},
-        {"nvim-lua/lsp-status.nvim", event = "VimEnter *"},
-        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter *"},
-        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "BufRead *"}
+        {"nvim-lua/lsp-status.nvim", event = "VimEnter"},
+        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter"},
+        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "BufRead"}
       }
     }
     use {
       "hrsh7th/nvim-compe",
-      event = "InsertEnter *",
+      event = "InsertEnter",
       disable = is_work,
       config = require("as.plugins.compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
@@ -184,7 +184,7 @@ return require("packer").startup {
       "hrsh7th/vim-vsnip",
       disable = is_work,
       config = require("as.plugins.vim-vsnip"),
-      event = "InsertEnter *"
+      event = "InsertEnter"
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -309,7 +309,7 @@ return require("packer").startup {
     use {
       "lukas-reineke/indent-blankline.nvim",
       branch = "lua",
-      event = "BufRead *",
+      event = "BufRead",
       config = require("as.plugins.indentline")
     }
     use {
@@ -362,7 +362,7 @@ return require("packer").startup {
     use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
     use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
     use {"chaoren/vim-wordmotion", config = require("as.plugins.vim-wordmotion")}
-    use {"b3nj5m1n/kommentary", event = "CursorHold *"}
+    use {"b3nj5m1n/kommentary", event = "CursorHold"}
     use {
       "tommcdo/vim-exchange",
       config = function()
@@ -434,7 +434,7 @@ return require("packer").startup {
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      event = {"BufRead *"},
+      event = {"BufRead"},
       config = require("as.plugins.treesitter"),
       requires = {
         {
