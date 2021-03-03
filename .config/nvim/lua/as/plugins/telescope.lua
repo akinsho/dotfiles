@@ -28,6 +28,11 @@ return function()
           ["project"] = vim.env.PROJECTS_DIR,
           ["wiki"] = vim.g.wiki_path
         }
+      },
+      fzf_writer = {
+        minimum_grep_characters = 2,
+        minimum_files_characters = 2,
+        use_highlighter = true
       }
     }
   }
@@ -55,7 +60,7 @@ return function()
   map("n", "<leader>fc", "<cmd>Telescope git_commits <cr>")
 
   map("n", "<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
-  map("n", "<leader>fs", "<cmd>Telescope live_grep theme=get_dropdown<cr>")
+  map("n", "<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
   map("n", "<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr> ")
   map("n", "<leader>f?", "<cmd>Telescope help_tags<cr>")
 end

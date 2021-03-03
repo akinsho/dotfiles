@@ -131,7 +131,8 @@ return require("packer").startup {
           config = function()
             require("telescope").load_extension("fzy_native")
           end
-        }
+        },
+        {"nvim-telescope/telescope-fzf-writer.nvim"}
       }
     }
     use {
