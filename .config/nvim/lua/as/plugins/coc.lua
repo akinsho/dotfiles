@@ -171,7 +171,7 @@ return function()
     "i",
     "<cr>",
     [[pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]],
-    expr
+    {expr = true, silent = true, noremap = true}
   )
 
   -- Use `[c` and `]c` for navigate diagnostics
