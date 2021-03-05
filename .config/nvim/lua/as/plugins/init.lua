@@ -158,17 +158,39 @@ return require("packer").startup {
 
     use {
       "neovim/nvim-lspconfig",
-      event = "BufRead",
       config = require("as.plugins.lspconfig"),
+      event = "VimEnter",
       disable = is_work,
       requires = {
-        {dev "personal/flutter-tools.nvim"},
+        {
+          "nvim-lua/lsp-status.nvim",
+          config = function()
+            local status = require("lsp-status")
+            status.config {
+              indicator_hint = "",
+              indicator_info = "",
+              indicator_errors = "✗",
+              indicator_warnings = "",
+              status_symbol = ""
+            }
+            status.register_progress()
+          end
+        },
+        {
+          dev "personal/flutter-tools.nvim",
+          config = require("as.plugins.flutter"),
+          after = "nvim-lspconfig"
+        },
+        {
+          "glepnir/lspsaga.nvim",
+          config = require("as.plugins.lspsaga"),
+          after = "nvim-lspconfig"
+        },
         {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"},
-        {"nvim-lua/lsp-status.nvim", event = "VimEnter"},
-        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb")},
-        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter"}
+        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb")}
       }
     }
+
     use {
       "hrsh7th/nvim-compe",
       event = "InsertEnter",
@@ -427,10 +449,10 @@ return require("packer").startup {
       cond = developing
     }
     -- Treesitter cannot be run as an optional plugin and most be available on start
+    -- if not it obscurely breaks nvim-lspconfig...
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      event = {"BufRead"},
       config = require("as.plugins.treesitter"),
       requires = {
         {

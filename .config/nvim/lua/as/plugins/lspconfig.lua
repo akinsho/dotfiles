@@ -111,37 +111,37 @@ function as_utils.lsp.tagfunc(pattern, flags)
   return results
 end
 
+require("vim.lsp.protocol").CompletionItemKind = {
+  " [Text]", -- Text
+  " [Method]", -- Method
+  "ƒ [Function]", -- Function
+  " [Constructor]", -- Constructor
+  "識 [Field]", -- Field
+  " [Variable]", -- Variable
+  "\u{f0e8} [Class]", -- Class
+  "ﰮ [Interface]", -- Interface
+  " [Module]", -- Module
+  " [Property]", -- Property
+  " [Unit]", -- Unit
+  " [Value]", -- Value
+  "了 [Enum]", -- Enum
+  " [Keyword]", -- Keyword
+  " [Snippet]", -- Snippet
+  " [Color]", -- Color
+  " [File]", -- File
+  "渚 [Reference]", -- Reference
+  " [Folder]", -- Folder
+  " [Enum]", -- Enum
+  " [Constant]", -- Constant
+  " [Struct]", -- Struct
+  "鬒 [Event]", -- Event
+  "\u{03a8} [Operator]", -- Operator
+  " [Type Parameter]" -- TypeParameter
+}
+
 function as_utils.lsp.on_attach(client, bufnr)
   setup_autocommands(client)
   setup_mappings(client)
-
-  require("vim.lsp.protocol").CompletionItemKind = {
-    " [Text]", -- Text
-    " [Method]", -- Method
-    "ƒ [Function]", -- Function
-    " [Constructor]", -- Constructor
-    "識 [Field]", -- Field
-    " [Variable]", -- Variable
-    "\u{f0e8} [Class]", -- Class
-    "ﰮ [Interface]", -- Interface
-    " [Module]", -- Module
-    " [Property]", -- Property
-    " [Unit]", -- Unit
-    " [Value]", -- Value
-    "了 [Enum]", -- Enum
-    " [Keyword]", -- Keyword
-    " [Snippet]", -- Snippet
-    " [Color]", -- Color
-    " [File]", -- File
-    "渚 [Reference]", -- Reference
-    " [Folder]", -- Folder
-    " [Enum]", -- Enum
-    " [Constant]", -- Constant
-    " [Struct]", -- Struct
-    "鬒 [Event]", -- Event
-    "\u{03a8} [Operator]", -- Operator
-    " [Type Parameter]" -- TypeParameter
-  }
 
   if client.resolved_capabilities.goto_definition then
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.as_utils.lsp.tagfunc")
@@ -185,10 +185,6 @@ return function()
   local has = as_utils.has
   local fn = vim.fn
 
-  local lspconfig = require "lspconfig"
-  local lsp_status = require "lsp-status"
-  local flutter = require "flutter-tools"
-
   as_utils.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Signs
@@ -200,18 +196,6 @@ return function()
     "LspDiagnosticsSignInformation",
     {text = "", texthl = "LspDiagnosticsSignInformation"}
   )
-
-  -----------------------------------------------------------------------------//
-  -- Setup plugins
-  -----------------------------------------------------------------------------//
-  lsp_status.config {
-    indicator_hint = "",
-    indicator_info = "",
-    indicator_errors = "✗",
-    indicator_warnings = "",
-    status_symbol = ""
-  }
-  lsp_status.register_progress()
 
   -----------------------------------------------------------------------------//
   -- Handler overrides
@@ -287,18 +271,8 @@ return function()
     }
   }
 
-  local status_capabilities = lsp_status.capabilities
-
-  flutter.setup {
-    flutter_outline = {
-      enabled = true
-    },
-    dev_log = {open_cmd = "tabedit"},
-    lsp = {
-      on_attach = as_utils.lsp.on_attach,
-      capabilities = status_capabilities
-    }
-  }
+  local lspconfig = require("lspconfig")
+  local status_capabilities = require("lsp-status").capabilities
 
   for server, config in pairs(servers) do
     config.on_attach = as_utils.lsp.on_attach
@@ -306,8 +280,7 @@ return function()
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
     end
     config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    config.capabilities =
-      require("as.utils").deep_merge(config.capabilities or {}, status_capabilities)
+    config.capabilities = vim.tbl_deep_extend("force", config.capabilities, status_capabilities)
     lspconfig[server].setup(config)
   end
 end

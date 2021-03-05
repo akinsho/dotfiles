@@ -28,10 +28,10 @@ return function()
           ["af"] = "@function.outer",
           ["if"] = "@function.inner",
           ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-        },
-      },
-    },
+          ["ic"] = "@class.inner"
+        }
+      }
+    }
   }
 
   -- Only apply folding to supported files, inspired by:
