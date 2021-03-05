@@ -165,8 +165,8 @@ return require("packer").startup {
         {dev "personal/flutter-tools.nvim"},
         {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"},
         {"nvim-lua/lsp-status.nvim", event = "VimEnter"},
-        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter"},
-        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb"), event = "BufRead"}
+        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb")},
+        {"glepnir/lspsaga.nvim", config = require("as.plugins.lspsaga"), event = "VimEnter"}
       }
     }
     use {
