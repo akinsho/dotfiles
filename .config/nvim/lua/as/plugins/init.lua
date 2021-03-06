@@ -107,7 +107,6 @@ return require("packer").startup {
     }
     -- TODO FZF vs Telescope
     use {"junegunn/fzf", run = "./install --all", disable = false}
-    use {"junegunn/fzf.vim", config = require("as.plugins.fzf"), disable = true}
     use {
       "nvim-telescope/telescope.nvim",
       config = require("as.plugins.telescope"),
@@ -171,7 +170,7 @@ return require("packer").startup {
               indicator_info = "",
               indicator_errors = "✗",
               indicator_warnings = "",
-              status_symbol = ""
+              status_symbol = " "
             }
             status.register_progress()
           end
@@ -380,7 +379,15 @@ return require("packer").startup {
     use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
     use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
     use {"chaoren/vim-wordmotion", config = require("as.plugins.vim-wordmotion")}
-    use {"b3nj5m1n/kommentary", event = "CursorHold"}
+    use {
+      "b3nj5m1n/kommentary",
+      config = function()
+        require("kommentary.config").configure_language(
+          "default",
+          {prefer_single_line_comments = true}
+        )
+      end
+    }
     use {
       "tommcdo/vim-exchange",
       config = function()
