@@ -240,12 +240,21 @@ local function colorscheme_overrides()
   end
 end
 
+function M.darken_color(color, amount)
+  local success, module = pcall(require, "bufferline")
+  if not success then
+    vim.notify("Failed to load bufferline", 2, {})
+    return color
+  else
+    return module.shade_color(color, amount)
+  end
+end
+
 local function set_explorer_highlight()
   local normal_bg = M.hl_value("Normal", "bg")
   local split_color = M.hl_value("VertSplit", "fg")
-  local shade_color = require("bufferline").shade_color
-  local bg_color = shade_color(normal_bg, -8)
-  local st_color = shade_color(M.hl_value("Visual", "bg"), -20)
+  local bg_color = M.darken_color(normal_bg, -8)
+  local st_color = M.darken_color(M.hl_value("Visual", "bg"), -20)
   local hls = {
     {"ExplorerBackground", {guibg = bg_color}},
     {"ExplorerVertSplit", {guifg = split_color, guibg = bg_color}},

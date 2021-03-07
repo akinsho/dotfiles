@@ -24,9 +24,7 @@ M.github_notifications = utils.github_notifications
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 function M.colors()
-  local normal_bg = H.hl_value("Normal", "bg")
-  local bg_color = require("bufferline").shade_color(normal_bg, -5)
-
+  local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -5)
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
   local string_fg = H.hl_value("String", "fg")
