@@ -383,8 +383,8 @@ return require("packer").startup {
       "b3nj5m1n/kommentary",
       config = function()
         require("kommentary.config").configure_language(
-          "default",
-          {prefer_single_line_comments = true}
+          "lua",
+          {prefer_single_line_comments = true, single_line_comment_string = "--"}
         )
       end
     }
@@ -424,7 +424,7 @@ return require("packer").startup {
       keys = {{"n", "s"}},
       config = function()
         require("hop").setup {winblend = 100}
-        as_utils.map("n", "s", [[<cmd>lua require('hop').hint_char1()<CR>]])
+        as_utils.map("n", "s", [[<cmd>HopChar1<CR>]])
       end
     }
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
