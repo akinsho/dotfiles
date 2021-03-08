@@ -66,42 +66,28 @@ function M.load(path, target)
     return
   end
 
-  luv.fs_opendir(
-    path,
-    function(err, dir)
-      if err then
-        return vim.defer_fn(
-          function()
-            echo("[Local init @ " .. path .. " failed]: " .. err, "ErrorMsg")
-          end,
-          100
-        )
-      end
-      repeat
-        local entry = luv.fs_readdir(dir)
-        if entry then
-          for _, item in ipairs(entry) do
-            if item and item.name == target then
-              found = item
-            end
-          end
+  local dir, err = luv.fs_opendir(path)
+  if not dir and err then
+    echo("[Local init @ " .. path .. " failed]: " .. err, "ErrorMsg")
+  end
+  repeat
+    local entry = luv.fs_readdir(dir)
+    if entry then
+      for _, item in ipairs(entry) do
+        if item and item.name == target then
+          found = item
+          assert(luv.fs_closedir(dir), "unable to close directory " .. path)
         end
-      until not entry or found
-      if found then
-        vim.defer_fn(
-          function()
-            local rc_path = path .. sep .. found.name
-            M.found_rc = rc_path
-            load_rc(target, rc_path)
-          end,
-          100
-        )
-        return
-      elseif not is_home then
-        M.load(get_parent(path), target)
       end
     end
-  )
+  until not entry or found
+  if found then
+    local rc_path = path .. sep .. found.name
+    M.found_rc = rc_path
+    load_rc(target, rc_path)
+  elseif not is_home then
+    M.load(get_parent(path), target)
+  end
 end
 
 --- trigger loading of localrc
