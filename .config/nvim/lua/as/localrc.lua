@@ -7,9 +7,18 @@ local M = {
   found_rc = nil
 }
 
-local echo = function(msg, hl)
-  hl = hl or "Title"
-  vim.api.nvim_echo({{msg, hl}}, true, {})
+local echo = function(msg, opts)
+  local hl = opts.hl or "Title"
+  if not opts.delay then
+    vim.api.nvim_echo({{msg, hl}}, true, {})
+  else
+    vim.defer_fn(
+      function()
+        vim.api.nvim_echo({{msg, hl}}, true, {})
+      end,
+      opts.delay
+    )
+  end
 end
 
 function M.open()
@@ -39,14 +48,13 @@ local function setup_localrc(path)
   )
 end
 
-local function load_rc(target, path)
+local function load_rc(path)
   local success, msg = pcall(dofile, path)
-  echo("Found " .. target .. " at " .. path)
   if success then
     setup_localrc(path)
   end
-  local message = success and "Successfully loaded." or "Failed to load because: " .. msg
-  echo(message)
+  local message = success and "Successfully loaded " .. path or "Failed to load because: " .. msg
+  echo(message, {delay = 120})
 end
 
 function M.reload(path)
@@ -84,7 +92,7 @@ function M.load(path, target)
   if found then
     local rc_path = path .. sep .. found.name
     M.found_rc = rc_path
-    load_rc(target, rc_path)
+    load_rc(rc_path)
   elseif not is_home then
     M.load(get_parent(path), target)
   end
