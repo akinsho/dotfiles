@@ -464,7 +464,6 @@ return require("packer").startup {
       requires = {
         {
           "lewis6991/spellsitter.nvim",
-          opt = true,
           run = hunspell_install_if_needed,
           config = function()
             require("spellsitter").setup {captures = {"comment"}}
