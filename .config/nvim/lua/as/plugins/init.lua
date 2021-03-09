@@ -140,7 +140,7 @@ return require("packer").startup {
     }
     use {
       "dhruvasagar/vim-prosession",
-      requires = {"tpope/vim-obsession"},
+      requires = "tpope/vim-obsession",
       config = function()
         vim.g.prosession_dir = vim.fn.stdpath("data") .. "/session"
         vim.g.prosession_on_startup = 1
@@ -154,7 +154,7 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap"), ft = {"dart"}}
-    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns"), commit = "63ba88f"}
+    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
 
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
