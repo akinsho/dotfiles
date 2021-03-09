@@ -8,6 +8,11 @@ return function()
       vsplit = "v",
       split = "s",
       quit = {"q", "<ESC>"}
+    },
+    code_action_prompt = {
+      enable = false,
+      sign = true,
+      virtual_text = true
     }
   }
   map("n", "gp", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
