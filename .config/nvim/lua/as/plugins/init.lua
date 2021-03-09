@@ -438,9 +438,9 @@ return require("packer").startup {
     -- Themes  {{{
     ----------------------------------------------------------------------------------
     -- vim-one has a MUCH better startup time than onedark and has a light theme
-    use {"rakr/vim-one", disable = false}
-    use {"joshdick/onedark.vim", disable = true}
-    use {"bluz71/vim-nightfly-guicolors", disable = true}
+    use "rakr/vim-one"
+    use {"joshdick/onedark.vim", opt = true}
+    use {"bluz71/vim-nightfly-guicolors", opt = true}
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
