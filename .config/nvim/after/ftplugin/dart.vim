@@ -34,3 +34,11 @@ if exists('g:which_leader_key_map')
         \  },
         \ }
 endif
+
+lua << EOF
+-- Remove treesitter highlighting for brackets in dart files
+-- so rainbow parens can work instead
+vim.cmd [[highlight link TSPunctBracket Normal]]
+require("nvim-treesitter.highlight")
+vim.treesitter.highlighter.hl_map["punctuation.bracket"] = nil
+EOF

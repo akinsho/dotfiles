@@ -2,10 +2,7 @@ return function()
   vim.cmd [[highlight link TSKeyword Statement]]
   vim.cmd [[highlight TSParameter gui=italic,bold]]
 
-  -- This plugin is an experimental application of tree sitter usage in Neovim
-  -- be careful when applying any functionality to a filetype as it might not work
-
-  require "nvim-treesitter.configs".setup {
+  require("nvim-treesitter.configs").setup {
     ensure_installed = "maintained",
     highlight = {
       enable = true,
