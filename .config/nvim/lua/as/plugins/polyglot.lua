@@ -1,4 +1,10 @@
-return function()
+local M = {}
+
+function M.setup()
+  vim.g.polyglot_disabled = {"sensible"}
+end
+
+function M.config()
   -----------------------------------------------------------------------------//
   -- Polyglot
   -----------------------------------------------------------------------------//
@@ -57,3 +63,5 @@ return function()
   vim.g.javascript_plugin_flow = 1
   vim.g.javascript_plugin_jsdoc = 1
 end
+
+return M

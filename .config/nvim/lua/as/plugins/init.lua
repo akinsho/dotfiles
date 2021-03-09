@@ -335,8 +335,8 @@ return require("packer").startup {
     }
     use {
       "sheerun/vim-polyglot",
-      config = require("as.plugins.polyglot"),
-      setup = [[vim.g.polyglot_disabled = {"sensible"}]]
+      config = require("as.plugins.polyglot").config,
+      setup = require("as.plugins.polyglot").setup
     }
     ---}}}
     --------------------------------------------------------------------------------
