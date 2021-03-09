@@ -144,20 +144,6 @@ end
 -- Plugin highlights
 ---------------------------------------------------------------------------------
 local function plugin_highlights()
-  -- Highlighting sneak and it's label is a little complicated
-  -- The plugin creates a colorscheme autocommand that
-  -- checks for the existence of these highlight groups
-  -- it is best to leave this as is as they are picked up on colorscheme loading
-  -- N.B: we explicitly set the background even though it overrides the colorscheme
-  -- because without it the plugin bizarrely resets the background
-  if plugin_loaded("vim-sneak") then
-    M.all {
-      {"Sneak", {guifg = "red", guibg = "background"}},
-      {"SneakLabel", {gui = "italic,bold,underline", guifg = "red", guibg = "background"}},
-      {"SneakLabelMask", {guifg = "red", guibg = "background"}}
-    }
-  end
-
   if plugin_loaded("vim-which-key") then
     M.highlight("WhichKeySeperator", {guifg = "LightGreen"})
     M.highlight("WhichKeyFloating", {link = "Normal", force = true})
