@@ -25,9 +25,36 @@ return function()
           "    // TODO:",
           "  })",
           "}"}
+      },
+      ["test/services/*_test.dart"] = {
+        alternate = "lib/services/{}.dart",
+        ["type"] = "test",
+        template = {
+          "import 'package:test/test.dart';",
+          "",
+          "void main() async {",
+            "  group('TODO', () {",
+                "    // TODO:",
+              "  })",
+        "}",
+      },
+      },
+      ["test/widget/*_test.dart"] = {
+        alternate = "lib/screens/{}.dart",
+        ["type"] = "test",
+        template = {
+          "import 'package:test/test.dart';",
+          "",
+          "void main() async {",
+            "  group('TODO', () {",
+                "    // TODO:",
+              "  })",
+          "}",
+        },
       }
     }
   }
+
   local map = as_utils.map
   map("n", "<leader>av", "<cmd>AV<CR>")
   map("n", "<leader>at", "<cmd>Vtest<CR>")
