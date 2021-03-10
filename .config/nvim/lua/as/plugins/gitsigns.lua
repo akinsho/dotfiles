@@ -1,5 +1,8 @@
 return function()
+  as_utils.map('n', '<leader>Mc', ':lua require"gitsigns".dump_cache()<cr>')
+  as_utils.map('n', '<leader>Mm', ':lua require"gitsigns".debug_messages()<cr>')
   require("gitsigns").setup {
+    debug_mode = true,
     signs = {
       add = {hl = "GitGutterAdd", text = "▌"},
       change = {hl = "GitGutterChange", text = "▌"},
