@@ -144,7 +144,6 @@ return require("packer").startup {
       config = function()
         vim.g.prosession_dir = vim.fn.stdpath("data") .. "/session"
         vim.g.prosession_on_startup = 1
-        vim.g.prosession_per_branch = 1
       end
     }
     use {"christoomey/vim-tmux-navigator", config = require("as.plugins.tmux-navigator")}
