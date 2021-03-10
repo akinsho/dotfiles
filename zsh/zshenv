@@ -26,7 +26,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   path+=(
     "$LUA_PATH"
     "$LUA_CPATH"
-    "$HOME/flutter/bin"
     "$JAVA_HOME/bin"
     # Dart ============================================================
     "/usr/lib/dart/bin"
