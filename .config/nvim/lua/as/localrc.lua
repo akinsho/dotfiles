@@ -8,6 +8,7 @@ local M = {
 }
 
 local echo = function(msg, opts)
+  opts = opts or {}
   local hl = opts.hl or "Title"
   if not opts.delay then
     vim.api.nvim_echo({{msg, hl}}, true, {})
