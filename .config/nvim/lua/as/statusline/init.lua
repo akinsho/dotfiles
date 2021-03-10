@@ -24,6 +24,7 @@ M.github_notifications = utils.github_notifications
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 function M.colors()
+  local is_one = vim.g.colors_name == "one"
   local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -5)
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
@@ -33,9 +34,9 @@ function M.colors()
   local comment_gui = H.hl_value("Comment", "gui")
   local title_fg = H.hl_value("Title", "fg")
   local title_gui = H.hl_value("Title", "gui")
-  local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
+  local tabline_sel_bg = H.hl_value("TabLineSel", "fg")
   local number_fg = H.hl_value("Number", "fg")
-  local warning_fg = vim.g.colors_name == "one" and P.light_yellow or H.hl_value("WarningMsg", "fg")
+  local warning_fg = is_one and P.light_yellow or H.hl_value("WarningMsg", "fg")
   local inc_search_bg = H.hl_value("Search", "bg")
 
   H.all {
