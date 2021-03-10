@@ -1,32 +1,24 @@
 -----------------------------------------------------------------------------//
 -- Fold Text
 -----------------------------------------------------------------------------//
--- Previous profile:
--- using profile func utils#fold_text
--- viml
---0.022417s i.e. 22ms
------------------------------------------------------------------------------//
 local fn = vim.fn
 local api = vim.api
 
 -- List of file types to use default fold text for
 local fold_exclusions = {"vim"}
 
-local function replace_tabs(value)
-  return fn.substitute(value, "\t", string.rep(" ", vim.bo.tabstop), "g")
-end
-
---[[
-  CREDIT:
-  getline returns the line leading whitespace so we remove it
-  https://stackoverflow.com/questions/5992336/indenting-fold-text
---]]
-local function strip_whitespace(value)
-  return fn.substitute(value, [[^\s*]], "", "g")
+local function contains(str, pattern)
+  assert(str)
+  assert(pattern)
+  return fn.match(str, pattern) >= 0
 end
 
 local function prepare_fold_section(value)
-  return strip_whitespace(replace_tabs(value))
+  -- 1. Replace tabs
+  local str = fn.substitute(value, "\t", string.rep(" ", vim.bo.tabstop), "g")
+  -- 2. getline returns the line leading white space so we remove it
+  -- CREDIT: https://stackoverflow.com/questions/5992336/indenting-fold-text
+  return fn.substitute(str, [[^\s*]], "", "g")
 end
 
 local function is_ignored()
@@ -41,21 +33,14 @@ local function is_ignored()
 end
 
 local function is_import(item)
-  return #fn.matchstr(item, "^import") > 0
-end
-
---- This regex matches anything after an import followed by a space
---- this might not hold true for all languages but think it does
---- for all the ones I use
-local function transform_import(item, foldsymbol)
-  return fn.substitute(item, [[^import .\+]], "import " .. foldsymbol, "")
+  return contains(item, "^import")
 end
 
 --[[
   Naive regex to match closing delimiters (undoubtedly there are edge cases)
   if the fold text doesn't include delimiter characters just append an
-  empty string. This avoids folds that look like func…end or
-  import 'pkg'…import 'second-pkg'
+  empty string. This avoids folds that look like function … end or
+  import 'package'…import 'second-package'
   this fold text should handle cases like
 
   value.Member{
@@ -66,7 +51,7 @@ end
   value.Member{…}.Method()
 --]]
 local function contains_delimiter(value)
-  return #fn.matchstr(value, [[}\|)\|]\|`\|>\]], "g") > 0
+  return contains(value, [[}\|)\|]\|`\|>\|<]])
 end
 
 --[[
@@ -83,7 +68,10 @@ end
 --]]
 local function handle_fold_start(start_text, end_text, foldsymbol)
   if is_import(start_text) and not contains_delimiter(end_text) then
-    return transform_import(start_text, foldsymbol)
+    --- This regex matches anything after an import followed by a space
+    --- this might not hold true for all languages but think it does
+    --- for all the ones I use
+    return fn.substitute(start_text, [[^import .\+]], "import " .. foldsymbol, "")
   end
   return prepare_fold_section(start_text) .. foldsymbol
 end
@@ -95,10 +83,6 @@ local function handle_fold_end(item)
   return prepare_fold_section(item)
 end
 
---[[
-  CREDIT:
-  1. https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
---]]
 function _G.folds()
   if is_ignored() then
     return fn.foldtext()
@@ -120,3 +104,5 @@ function _G.folds()
   local text_length = #fn.substitute(fold_start .. fold_end, ".", "x", "g") + column_size
   return fold_start .. string.rep(" ", api.nvim_win_get_width(0) - text_length - 7) .. fold_end
 end
+
+-- CREDIT: https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
