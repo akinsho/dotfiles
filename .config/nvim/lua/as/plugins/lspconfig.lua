@@ -272,9 +272,16 @@ return function()
   }
 
   local lspconfig = require("lspconfig")
-  local status_capabilities = require("lsp-status").capabilities
 
+  local status_capabilities = require("lsp-status").capabilities
   for server, config in pairs(servers) do
+    -- Add incremental sync
+    config.on_init = function(client)
+      client.config.flags = {}
+      if client.config.flags then
+        client.config.flags.allow_incremental_sync = true
+      end
+    end
     config.on_attach = as_utils.lsp.on_attach
     if not config.capabilities then
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
