@@ -5,6 +5,7 @@ require("as.highlights")
 require("as.statusline")
 require("as.numbers")
 require("as.mappings")
+require("as.folds")
 require("as.localrc").setup()
 
 function _G.__as_setup_configs()

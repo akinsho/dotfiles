@@ -114,7 +114,7 @@ opt.formatoptions =
 ---------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
-vim.o.foldtext = "folds#render()"
+vim.o.foldtext = "v:lua.folds()"
 vim.o.foldopen = add(vim.o.foldopen, "search")
 vim.o.foldlevelstart = 10
 opt.foldmethod = "syntax"
