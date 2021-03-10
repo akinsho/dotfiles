@@ -189,8 +189,7 @@ return require("packer").startup {
           config = require("as.plugins.lspsaga"),
           after = "nvim-lspconfig"
         },
-        {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"},
-        {"kosayoda/nvim-lightbulb", config = require("as.plugins.lightbulb")}
+        {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"}
       }
     }
 

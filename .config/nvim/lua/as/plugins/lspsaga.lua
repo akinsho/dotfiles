@@ -9,9 +9,10 @@ return function()
       split = "s",
       quit = {"q", "<ESC>"}
     },
+    code_action_icon = "💡",
     code_action_prompt = {
-      enable = false,
-      sign = true,
+      enable = true,
+      sign = false,
       virtual_text = true
     }
   }
