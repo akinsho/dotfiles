@@ -1,6 +1,9 @@
 return function()
   local status = require("lsp-status")
   require("flutter-tools").setup {
+    experimental = {
+      lsp_derive_paths = true
+    },
     flutter_outline = {
       enabled = true
     },
