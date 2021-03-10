@@ -153,7 +153,7 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap"), ft = {"dart"}}
-    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
+    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns"), branch = "develop"}
 
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
