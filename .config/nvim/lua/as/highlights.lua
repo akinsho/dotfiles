@@ -259,6 +259,7 @@ function M.on_explorer_enter()
     table.concat(
     {
       "Normal:ExplorerBackground",
+      "EndOfBuffer:ExplorerBackground",
       "StatusLine:ExplorerSt",
       "StatusLineNC:ExplorerStNC",
       "SignColumn:ExplorerBackground",

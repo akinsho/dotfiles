@@ -18,6 +18,16 @@ M.git_toggle_updates = utils.git_update_toggle
 M.git_updates_refresh = utils.git_updates_refresh
 M.github_notifications = utils.github_notifications
 
+local function get_indicator_color()
+  if vim.g.colors_name == "doom-one" then
+    return H.hl_value("TabLineSel", "fg")
+  elseif vim.tbl_contains({"one", "one-nvim"}, vim.g.colors_name) then
+    return H.hl_value("TabLineSel", "bg")
+  else
+    local default = H.hl_value("TabLineSel", "bg")
+    return (default ~= "" or default ~= "none") and default or P.bright_blue
+  end
+end
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
 --- patched with the nerd font characters
@@ -25,6 +35,7 @@ M.github_notifications = utils.github_notifications
 --- but this is not universal across terminals so should be avoided
 function M.colors()
   local is_one = vim.g.colors_name == "one"
+  local indicator_color = get_indicator_color()
   local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -5)
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
@@ -34,7 +45,6 @@ function M.colors()
   local comment_gui = H.hl_value("Comment", "gui")
   local title_fg = H.hl_value("Title", "fg")
   local title_gui = H.hl_value("Title", "gui")
-  local tabline_sel_bg = H.hl_value("TabLineSel", "bg")
   local number_fg = H.hl_value("Number", "fg")
   local warning_fg = is_one and P.light_yellow or H.hl_value("WarningMsg", "fg")
   local inc_search_bg = H.hl_value("Search", "bg")
@@ -42,7 +52,7 @@ function M.colors()
   H.all {
     {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic"}},
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
-    {"StIndicator", {guibg = bg_color, guifg = tabline_sel_bg}},
+    {"StIndicator", {guibg = bg_color, guifg = indicator_color}},
     {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
     {"StNumber", {guifg = number_fg, guibg = bg_color}},

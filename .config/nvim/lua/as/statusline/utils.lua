@@ -23,7 +23,8 @@ M.palette = {
   dark_blue = "#4e88ff",
   magenta = "#c678dd",
   comment_grey = "#5c6370",
-  whitesmoke = "#626262"
+  whitesmoke = "#626262",
+  bright_blue = "#51afef"
 }
 
 local plain_filetypes = {
@@ -352,7 +353,7 @@ function M.diagnostic_info()
 end
 
 function M.lsp_status()
-  if plugin_loaded("lsp-status.nvim") then
+  if _G.plugin_loaded("lsp-status.nvim") then
     return require("lsp-status").status()
   end
   local coc_status = vim.g.coc_status or ""
