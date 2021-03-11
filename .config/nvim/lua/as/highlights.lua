@@ -113,7 +113,7 @@ end
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
 vim.g.one_allow_italics = 1
-vim.cmd [[colorscheme doom-one]]
+vim.cmd [[colorscheme one-nvim]]
 
 -----------------------------------------------------------------------------//
 -- One dark
