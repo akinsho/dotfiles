@@ -41,8 +41,8 @@ return function()
   require("compe").setup {
     source = {
       path = true,
-      buffer = {priority = 1000, kind = " [Buffer]"},
-      vsnip = {kind = " [Vsnip]"},
+      buffer = {kind = " [Buffer]"},
+      vsnip = {priority = 1500, kind = " [Vsnip]"},
       spell = true,
       nvim_lsp = true,
       nvim_lua = true,
