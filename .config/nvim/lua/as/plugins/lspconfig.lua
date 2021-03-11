@@ -80,10 +80,10 @@ function as_utils.lsp.highlight()
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
     {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
     {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
-    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005"}},
-    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange"}},
-    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf"}}
+    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75", guifg = "none"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005", guifg = "none"}},
+    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange", guifg = "none"}},
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf", guifg = "none"}}
   }
 end
 
