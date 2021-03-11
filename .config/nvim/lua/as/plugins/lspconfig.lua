@@ -71,9 +71,11 @@ function as_utils.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Highlights
   -----------------------------------------------------------------------------//
-  require("as.highlights").all {
-    {"LspReferenceText", {link = "CursorLine"}},
-    {"LspReferenceRead", {link = "CursorLine"}},
+  local highlight = require("as.highlights")
+  local cursor_line_bg = highlight.hl_value('CursorLine', 'bg')
+  highlight.all {
+    {"LspReferenceText", {guibg = cursor_line_bg, gui = "none"}},
+    {"LspReferenceRead", {guibg = cursor_line_bg, gui = "none"}},
     {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
     {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
@@ -276,12 +278,8 @@ return function()
   local status_capabilities = require("lsp-status").capabilities
   for server, config in pairs(servers) do
     -- Add incremental sync
-    config.on_init = function(client)
-      client.config.flags = {}
-      if client.config.flags then
-        client.config.flags.allow_incremental_sync = true
-      end
-    end
+    config.flags = config.flags or {}
+    config.flags.allow_incremental_sync = true
     config.on_attach = as_utils.lsp.on_attach
     if not config.capabilities then
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
