@@ -59,6 +59,11 @@ return function()
   map("n", "<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
   map("n", "<leader>fc", "<cmd>Telescope git_commits <cr>")
 
+  -- LSP mappings, currently only bound on linux since we use coc on mac
+  if vim.g.is_linux then
+    map("n", "<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics <cr>")
+  end
+
   map("n", "<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   map("n", "<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
   map("n", "<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr> ")
