@@ -5,10 +5,15 @@
 --  _/    _/  _/  _/
 -- _/    _/  _/    _/
 ---------------------------------------------------------------------------------
-vim.cmd [[augroup vimrc]] -- Ensure all autocommands are cleared
-vim.cmd [[autocmd!]]
-vim.cmd [[augroup END]]
 
+vim.api.nvim_exec(
+  [[
+   augroup vimrc -- Ensure all autocommands are cleared
+   autocmd!
+   augroup END
+  ]],
+  ""
+)
 -- The operating system is assigned to a global variable that
 -- that can be used elsewhere for conditional system based logic
 local uname = vim.loop.os_uname()
