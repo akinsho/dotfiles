@@ -174,6 +174,7 @@ local function general_overrides()
     {"MsgSeparator", {link = "Comment"}},
     {"MatchParen", {gui = "bold", guifg = "LightGreen", guibg = "NONE"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
+    {"Error", {link = "WarningMsg", force = true}},
     -- Floating window overrides
     {"mkdLineBreak", {link = "None", force = true}},
     {"typescriptParens", {link = "None", force = true}},
