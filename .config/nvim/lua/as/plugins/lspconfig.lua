@@ -72,10 +72,11 @@ function as_utils.lsp.highlight()
   -- Highlights
   -----------------------------------------------------------------------------//
   local highlight = require("as.highlights")
-  local cursor_line_bg = highlight.hl_value('CursorLine', 'bg')
+  local cursor_line_bg = highlight.hl_value("CursorLine", "bg")
   highlight.all {
     {"LspReferenceText", {guibg = cursor_line_bg, gui = "none"}},
     {"LspReferenceRead", {guibg = cursor_line_bg, gui = "none"}},
+    {"LspDiagnosticsSignHint", {guifg = "#fab005"}},
     {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
     {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
