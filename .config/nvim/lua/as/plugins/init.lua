@@ -317,8 +317,8 @@ return require("packer").startup {
     use {
       "tpope/vim-surround",
       config = function()
-        as_utils.vnoremap("s", "<Plug>VSurround", {silent = true})
-        as_utils.vnoremap("s", "<Plug>VSurround", {silent = true})
+        as_utils.vmap("s", "<Plug>VSurround")
+        as_utils.vmap("s", "<Plug>VSurround")
       end
     }
     -- }}}
@@ -423,7 +423,7 @@ return require("packer").startup {
       "phaazon/hop.nvim",
       keys = {{"n", "s"}},
       config = function()
-        require("hop").setup{}
+        require("hop").setup {}
         as_utils.nnoremap("s", [[<cmd>HopChar1<CR>]])
       end
     }
