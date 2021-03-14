@@ -57,6 +57,31 @@ local function get_defaults(mode)
   return {noremap = true, silent = not mode == "c"}
 end
 
+local function make_mapper(mode, opts)
+  -- copy the opts table as extends will mutate the opts table passed in otherwise
+  local mapper_opts = vim.deepcopy(opts)
+  return function(lhs, rhs, map_opts)
+    local o = vim.tbl_extend("keep", map_opts or {}, mapper_opts)
+    vim.api.nvim_set_keymap(mode, lhs, rhs, o)
+  end
+end
+
+local map_opts = {noremap = false, silent = true}
+M.nmap = make_mapper("n", map_opts)
+M.xmap = make_mapper("x", map_opts)
+M.imap = make_mapper("i", map_opts)
+M.vmap = make_mapper("v", map_opts)
+M.omap = make_mapper("o", map_opts)
+M.cmap = make_mapper("c", {noremap = false, silent = false})
+
+local noremap_opts = {noremap = true, silent = true}
+M.nnoremap = make_mapper("n", noremap_opts)
+M.xnoremap = make_mapper("x", noremap_opts)
+M.vnoremap = make_mapper("v", noremap_opts)
+M.inoremap = make_mapper("i", noremap_opts)
+M.onoremap = make_mapper("o", noremap_opts)
+M.cnoremap = make_mapper("c", {noremap = true, silent = false})
+
 function M.map(mode, lhs, rhs, opts)
   opts = opts or get_defaults(mode)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)

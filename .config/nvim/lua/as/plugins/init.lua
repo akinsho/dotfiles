@@ -32,8 +32,8 @@ vim.cmd "packadd! cfilter"
 vim.cmd "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
 vim.cmd [[autocmd! BufWritePost */as/plugins/init.lua execute "luafile ".expand("%")]]
 
-as_utils.map("n", "<leader>ps", [[<Cmd>PackerSync<CR>]])
-as_utils.map("n", "<leader>pc", [[<Cmd>PackerClean<CR>]])
+as_utils.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
+as_utils.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
 ---@param path string
 local function dev(path)
@@ -213,7 +213,7 @@ return require("packer").startup {
       "arecarn/vim-fold-cycle",
       config = function()
         vim.g.fold_cycle_default_mapping = 0
-        as_utils.map("n", "<BS>", "<Plug>(fold-cycle-close)", {silent = true})
+        as_utils.nnoremap("<BS>", "<Plug>(fold-cycle-close)")
       end
     }
     use {
@@ -250,7 +250,7 @@ return require("packer").startup {
       config = function()
         vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
-        as_utils.map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+        as_utils.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>")
       end
     }
     use {
@@ -317,8 +317,8 @@ return require("packer").startup {
     use {
       "tpope/vim-surround",
       config = function()
-        as_utils.map("v", "s", "<Plug>VSurround", {silent = true})
-        as_utils.map("v", "s", "<Plug>VSurround", {silent = true})
+        as_utils.vnoremap("s", "<Plug>VSurround", {silent = true})
+        as_utils.vnoremap("s", "<Plug>VSurround", {silent = true})
       end
     }
     -- }}}
@@ -356,8 +356,7 @@ return require("packer").startup {
       cmd = "Neogit",
       keys = "<localleader>gS",
       config = function()
-        as_utils.map(
-          "n",
+        as_utils.nnoremap(
           "<localleader>gS",
           [[<cmd>lua require("neogit").status.create("split")<CR>]]
         )
@@ -368,7 +367,7 @@ return require("packer").startup {
       cmd = "LazyGit",
       keys = "<leader>lg",
       config = function()
-        as_utils.map("n", "<leader>lg", "<cmd>LazyGit<CR>")
+        as_utils.nnoremap("<leader>lg", "<cmd>LazyGit<CR>")
         vim.g.lazygit_floating_window_winblend = 2
       end
     }
@@ -394,9 +393,9 @@ return require("packer").startup {
       "tommcdo/vim-exchange",
       config = function()
         vim.g.exchange_no_mappings = 1
-        as_utils.map("x", "X", "<Plug>(Exchange)", {silent = true})
-        as_utils.map("n", "X", "<Plug>(Exchange)", {silent = true})
-        as_utils.map("n", "Xc", "<Plug>(ExchangeClear)", {silent = true})
+        as_utils.xnoremap("X", "<Plug>(Exchange)")
+        as_utils.nnoremap("X", "<Plug>(Exchange)")
+        as_utils.nnoremap("Xc", "<Plug>(ExchangeClear)")
       end
     }
     use "wellle/targets.vim"
@@ -408,11 +407,10 @@ return require("packer").startup {
           "glts/vim-textobj-comment",
           config = function()
             vim.g.textobj_comment_no_default_key_mappings = 1
-            local opts = {noremap = false, silent = true}
-            as_utils.map("x", "ax", "<Plug>(textobj-comment-a)", opts)
-            as_utils.map("o", "ax", "<Plug>(textobj-comment-a)", opts)
-            as_utils.map("x", "ix", "<Plug>(textobj-comment-i)", opts)
-            as_utils.map("o", "ix", "<Plug>(textobj-comment-i)", opts)
+            as_utils.xmap("ax", "<Plug>(textobj-comment-a)")
+            as_utils.omap("ax", "<Plug>(textobj-comment-a)")
+            as_utils.xmap("ix", "<Plug>(textobj-comment-i)")
+            as_utils.omap("ix", "<Plug>(textobj-comment-i)")
           end
         }
       }
@@ -425,8 +423,8 @@ return require("packer").startup {
       "phaazon/hop.nvim",
       keys = {{"n", "s"}},
       config = function()
-        require("hop").setup {winblend = 100}
-        as_utils.map("n", "s", [[<cmd>HopChar1<CR>]])
+        require("hop").setup{}
+        as_utils.nnoremap("s", [[<cmd>HopChar1<CR>]])
       end
     }
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
