@@ -430,7 +430,7 @@ return require("packer").startup {
       end
     }
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
-    use "junegunn/vim-peekaboo"
+    use "tversteeg/registers.nvim"
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
