@@ -1,5 +1,5 @@
 return function()
-  local map = as_utils.map
+  local nnoremap = as_utils.nnoremap
   local telescope = require("telescope")
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
@@ -51,21 +51,22 @@ return function()
   vim.cmd [[autocmd! FileType TelescopePrompt let b:lexima_disabled = 1]]
 
   -- Find files using Telescope command-line sugar.
-  map("n", "<C-P>", "<cmd>lua __telescope_files()<CR>")
-  map("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
-  map("n", "<leader>fh", "<cmd>Telescope frecency theme=get_dropdown<cr>")
+  nnoremap("<C-P>", "<cmd>lua __telescope_files()<CR>")
+  nnoremap("<leader>fa", "<cmd>Telescope<cr>")
+  nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
+  nnoremap("<leader>fh", "<cmd>Telescope frecency theme=get_dropdown<cr>")
 
-  map("n", "<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
-  map("n", "<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
-  map("n", "<leader>fc", "<cmd>Telescope git_commits <cr>")
+  nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
+  nnoremap("<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
+  nnoremap("<leader>fc", "<cmd>Telescope git_commits <cr>")
 
   -- LSP mappings, currently only bound on linux since we use coc on mac
   if vim.g.is_linux then
-    map("n", "<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics <cr>")
+    nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics <cr>")
   end
 
-  map("n", "<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
-  map("n", "<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
-  map("n", "<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr> ")
-  map("n", "<leader>f?", "<cmd>Telescope help_tags<cr>")
+  nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
+  nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
+  nnoremap("<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr> ")
+  nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
 end
