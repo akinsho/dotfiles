@@ -198,9 +198,9 @@ vnoremap(">", ">gv")
 nnoremap("'", "`")
 -----------------------------------------------------------------------------//
 --open a new file in the same directory
-nnoremap("<Leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
+nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 --open a new file in the same directory
-nnoremap("<Leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
+nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 --Open command line window - :<c-f>
 nnoremap(
   "<localleader>l",
