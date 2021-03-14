@@ -61,8 +61,8 @@ local function make_mapper(mode, opts)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
   local mapper_opts = vim.deepcopy(opts)
   return function(lhs, rhs, map_opts)
-    local o = vim.tbl_extend("keep", map_opts or {}, mapper_opts)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, o)
+    map_opts = map_opts or {}
+    vim.api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", map_opts, mapper_opts))
   end
 end
 

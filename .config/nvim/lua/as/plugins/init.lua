@@ -146,6 +146,7 @@ return require("packer").startup {
         vim.g.prosession_on_startup = 1
       end
     }
+    use "dhruvasagar/vim-dotoo"
     use {"christoomey/vim-tmux-navigator", config = require("as.plugins.tmux-navigator")}
     use "nvim-lua/plenary.nvim"
     -- }}}

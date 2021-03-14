@@ -139,7 +139,7 @@ local function plugin_highlights()
 end
 
 local function general_overrides()
-  local statement_fg = M.hl_value('Statement', 'fg')
+  local statement_fg = M.hl_value("Statement", "fg")
   M.all {
     {"Credit", {gui = "bold"}},
     {"Todo", {guifg = statement_fg, guibg = "NONE", gui = "bold,underline"}},
