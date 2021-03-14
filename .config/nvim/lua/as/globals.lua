@@ -25,7 +25,7 @@ _G.as_utils = {
   buf_map = utils.buf_map,
   profile = utils.profile,
   has = utils.has,
-  -- TODO once commands can take functions as arguments natively remove this global
+  -- TODO: once commands can take functions as arguments natively remove this global
   command_callbacks = {},
   lsp = {}
 }

@@ -153,7 +153,7 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap"), ft = {"dart"}}
-    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns"), branch = "develop"}
+    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
 
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
@@ -517,7 +517,7 @@ return require("packer").startup {
       as = "local-toggleterm",
       keys = [[<c-\>]]
     }
-    -- TODO could be lazy loaded if the color library was separate functionality
+    -- TODO: could be lazy loaded if the color library was separate functionality
     use_local {
       "personal/nvim-bufferline.lua",
       as = "local-bufferline",
