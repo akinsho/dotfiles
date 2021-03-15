@@ -394,9 +394,9 @@ return require("packer").startup {
       "tommcdo/vim-exchange",
       config = function()
         vim.g.exchange_no_mappings = 1
-        as_utils.xnoremap("X", "<Plug>(Exchange)")
-        as_utils.nnoremap("X", "<Plug>(Exchange)")
-        as_utils.nnoremap("Xc", "<Plug>(ExchangeClear)")
+        as_utils.xmap("X", "<Plug>(Exchange)")
+        as_utils.nmap("X", "<Plug>(Exchange)")
+        as_utils.nmap("Xc", "<Plug>(ExchangeClear)")
       end
     }
     use "wellle/targets.vim"
