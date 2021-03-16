@@ -1,7 +1,7 @@
 local fn = vim.fn
 
 function _G.__fugitive_create_new_branch()
-  -- TODO add a new line at the end of the input
+  -- TODO: add a new line at the end of the input
   -- consider highlighting for bonus point
   local branch = fn.input("Enter new branch name: ")
   if branch and #branch > 0 then
@@ -11,36 +11,37 @@ function _G.__fugitive_create_new_branch()
 end
 
 return function()
-  local map = as_utils.map
+  local nnoremap = as_utils.nnoremap
+  local vnoremap = as_utils.vnoremap
   local command = as_utils.command
 
   command {"Gcm", [[<cmd>G checkout master]], nargs = 0}
   command {"Gcb", [[<cmd>G checkout -b <q-args>]], nargs = 1}
 
   -- Fugitive bindings
-  map("n", "<localleader>gs", "<cmd>Git<CR>")
+  nnoremap("<localleader>gS", "<cmd>Git<CR>")
   -- Stages the current file
-  map("n", "<localleader>gw", "<cmd>Gwrite<CR>")
+  nnoremap("<localleader>gw", "<cmd>Gwrite<CR>")
   -- Revert current file to last checked in version
-  map("n", "<localleader>gre", "<cmd>Gread<CR>")
+  nnoremap("<localleader>gre", "<cmd>Gread<CR>")
   -- Remove the current file and the corresponding buffer
-  map("n", "<localleader>grm", "<cmd>GRemove<CR>")
+  nnoremap("<localleader>grm", "<cmd>GRemove<CR>")
   -- See in a side window who is responsible for lines of code
   -- can also set the date=relative but this breaks rendering
   -- and shortcuts
-  map("n", "<localleader>gbl", "<cmd>Git blame --date=short<CR>")
+  nnoremap("<localleader>gbl", "<cmd>Git blame --date=short<CR>")
   -- Blame specific visual range
-  map("v", "<localleader>gbl", ":Gblame --date=short<CR>")
-  map("n", "<localleader>gd", "<cmd>Gdiffsplit<CR>")
-  map("n", "<localleader>gdc", "<cmd>call fugitive#DiffClose()<CR>")
-  map("n", "<localleader>gdt", "<cmd>G difftool<CR>")
-  map("n", "<localleader>gda", "<cmd>G difftool -y<CR>")
-  map("n", "<localleader>gc", "<cmd>Git commit<CR>")
-  map("n", "<localleader>gcl", "<cmd>Gclog!<CR>")
-  map("n", "<localleader>gcm", "<cmd>Gcm<CR>")
-  map("n", "<localleader>gn", "<cmd>lua __fugitive_create_new_branch()<CR>")
-  map("n", "<localleader>gm", "<cmd>Git mergetool<CR>")
+  vnoremap("<localleader>gbl", ":Gblame --date=short<CR>")
+  nnoremap("<localleader>gd", "<cmd>Gdiffsplit<CR>")
+  nnoremap("<localleader>gdc", "<cmd>call fugitive#DiffClose()<CR>")
+  nnoremap("<localleader>gdt", "<cmd>G difftool<CR>")
+  nnoremap("<localleader>gda", "<cmd>G difftool -y<CR>")
+  nnoremap("<localleader>gc", "<cmd>Git commit<CR>")
+  nnoremap("<localleader>gcl", "<cmd>Gclog!<CR>")
+  nnoremap("<localleader>gcm", "<cmd>Gcm<CR>")
+  nnoremap("<localleader>gn", "<cmd>lua __fugitive_create_new_branch()<CR>")
+  nnoremap("<localleader>gm", "<cmd>Git mergetool<CR>")
   -- command is not silent as this obscures the preceding command
   -- also not the use of <c-z> the wildcharm character to trigger completion
-  map("n", "<localleader>go", ":Git checkout<space><C-Z>")
+  nnoremap("<localleader>go", ":Git checkout<space><C-Z>")
 end

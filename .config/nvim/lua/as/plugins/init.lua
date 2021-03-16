@@ -355,10 +355,10 @@ return require("packer").startup {
     use {
       "TimUntersberger/neogit",
       cmd = "Neogit",
-      keys = "<localleader>gS",
+      keys = "<localleader>gs",
       config = function()
         as_utils.nnoremap(
-          "<localleader>gS",
+          "<localleader>gs",
           [[<cmd>lua require("neogit").status.create("split")<CR>]]
         )
       end
