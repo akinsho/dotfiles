@@ -2,7 +2,7 @@ return function()
   local saga = require("lspsaga")
   local nnoremap = as_utils.nnoremap
   local inoremap = as_utils.inoremap
-  local xnoremap = as_utils.inoremap
+  local vnoremap = as_utils.vnoremap
 
   saga.init_lsp_saga {
     use_saga_diagnostic_sign = false,
@@ -30,7 +30,7 @@ return function()
   inoremap("<c-k>", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
   nnoremap("<leader>rn", "<cmd>lua require('lspsaga.rename').rename()<CR>")
   nnoremap("<leader>ca", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>")
-  xnoremap("<leader>a", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
+  vnoremap("<leader>a", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
   nnoremap("K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 
   -- scroll down hover doc
@@ -45,12 +45,12 @@ return function()
         events = {"CursorHold"},
         targets = {"*"},
         command = "lua require('lspsaga.diagnostic').show_line_diagnostics()"
-      },
-      {
-        events = {"CompleteDone"},
-        targets = {"*"},
-        command = "lua require('lspsaga.signaturehelp').signature_help()"
       }
+      -- {
+      --   events = {"CompleteDone"},
+      --   targets = {"*"},
+      --   command = "lua require('lspsaga.signaturehelp').signature_help()"
+      -- }
     }
   )
 end
