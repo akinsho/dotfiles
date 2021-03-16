@@ -210,6 +210,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
+    use {"edluffy/specs.nvim", disable = true}
     use {
       "arecarn/vim-fold-cycle",
       config = function()
