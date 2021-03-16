@@ -53,18 +53,18 @@ end
 -- Mappings
 -----------------------------------------------------------------------------//
 local function setup_mappings(client)
-  local buf_map = as_utils.buf_map
-  buf_map(0, "n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
-  buf_map(0, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+  local nnoremap, opts = as_utils.nnoremap, {buffer = 0}
+  nnoremap("<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.implementation then
-    buf_map(0, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+    nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   end
-  buf_map(0, "n", "<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-  buf_map(0, "n", "gI", "<cmd>vim.lsp.buf.incoming_calls()<CR>")
-  buf_map(0, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-  buf_map(0, "n", "<leader>cs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-  buf_map(0, "n", "<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
-  buf_map(0, "n", "<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  nnoremap("<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+  nnoremap("gI", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
+  nnoremap("gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  nnoremap("<leader>cs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
+  nnoremap("<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
+  nnoremap("<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end
 
 function as_utils.lsp.highlight()

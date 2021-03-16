@@ -70,23 +70,24 @@ local function validate_opts(opts)
   return true
 end
 
-local function make_mapper(mode, o)
+local function make_mapper(mode, _opts)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
-  local m_opts = vim.deepcopy(o)
-  return function(lhs, rhs, opts)
+  local parent_opts = vim.deepcopy(_opts)
+  return function(lhs, rhs, __opts)
+    local opts = __opts and vim.deepcopy(__opts) or {}
     vim.validate {
       lhs = {lhs, "string"},
       rhs = {rhs, "string"},
       opts = {opts, validate_opts, "mapping options are incorrect"}
     }
-    opts = opts or {}
     if opts.buffer then
       -- Remove the buffer from the args sent to the key map function
       local bufnr = opts.buffer
       opts.buffer = nil
-      api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, vim.tbl_extend("keep", opts, m_opts))
+      opts = vim.tbl_extend("keep", opts, parent_opts)
+      api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     else
-      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", opts, m_opts))
+      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
     end
   end
 end
