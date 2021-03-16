@@ -214,7 +214,7 @@ return require("packer").startup {
       "arecarn/vim-fold-cycle",
       config = function()
         vim.g.fold_cycle_default_mapping = 0
-        as_utils.nnoremap("<BS>", "<Plug>(fold-cycle-close)")
+        as_utils.nmap("<BS>", "<Plug>(fold-cycle-close)")
       end
     }
     use {
