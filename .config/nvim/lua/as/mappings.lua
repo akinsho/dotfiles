@@ -13,7 +13,7 @@ local vnoremap = as_utils.vnoremap
 local inoremap = as_utils.inoremap
 local onoremap = as_utils.onoremap
 local cnoremap = as_utils.cnoremap
-local buf_map = as_utils.buf_map
+local tnoremap = as_utils.tnoremap
 
 --- work around to place functions in the global scope but
 --- namespaced within a table.
@@ -24,17 +24,17 @@ _G._mappings = {}
 ------------------------------------------------------------------------------//
 function _G._mappings.add_terminal_mappings()
   if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-    local opts = {silent = false, noremap = true}
-    buf_map(0, "t", "<esc>", [[<C-\><C-n>]], opts)
-    buf_map(0, "t", "jk", [[<C-\><C-n>]], opts)
-    buf_map(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-    buf_map(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-    buf_map(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-    buf_map(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
-    buf_map(0, "t", "]t", [[<C-\><C-n>:tablast<CR>]])
-    buf_map(0, "t", "[t", [[<C-\><C-n>:tabnext<CR>]])
-    buf_map(0, "t", "<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
-    buf_map(0, "t", "<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
+    local opts = {silent = false, buffer = 0}
+    tnoremap("<esc>", [[<C-\><C-n>]], opts)
+    tnoremap("jk", [[<C-\><C-n>]], opts)
+    tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
+    tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
+    tnoremap("<C-k>", [[<C-\><C-n><C-W>k]], opts)
+    tnoremap("<C-l>", [[<C-\><C-n><C-W>l]], opts)
+    tnoremap("]t", [[<C-\><C-n>:tablast<CR>]])
+    tnoremap("[t", [[<C-\><C-n>:tabnext<CR>]])
+    tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
+    tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
   end
 end
 

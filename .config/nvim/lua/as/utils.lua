@@ -1,5 +1,6 @@
 local M = {}
 local fn = vim.fn
+local api = vim.api
 
 function M.total_plugins()
   local base_path = fn.stdpath("data") .. "/site/pack/packer/"
@@ -57,12 +58,36 @@ local function get_defaults(mode)
   return {noremap = true, silent = not mode == "c"}
 end
 
-local function make_mapper(mode, opts)
+local function validate_opts(opts)
+  if not opts then
+    return true
+  end
+
+  if opts.buffer and type(opts.buffer) ~= "number" then
+    return false, "The buffer key should be a number"
+  end
+
+  return true
+end
+
+local function make_mapper(mode, o)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
-  local mapper_opts = vim.deepcopy(opts)
-  return function(lhs, rhs, map_opts)
-    map_opts = map_opts or {}
-    vim.api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", map_opts, mapper_opts))
+  local m_opts = vim.deepcopy(o)
+  return function(lhs, rhs, opts)
+    vim.validate {
+      lhs = {lhs, "string"},
+      rhs = {rhs, "string"},
+      opts = {opts, validate_opts, "mapping options are incorrect"}
+    }
+    opts = opts or {}
+    if opts.buffer then
+      -- Remove the buffer from the args sent to the key map function
+      local bufnr = opts.buffer
+      opts.buffer = nil
+      api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, vim.tbl_extend("keep", opts, m_opts))
+    else
+      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", opts, m_opts))
+    end
   end
 end
 
@@ -72,6 +97,7 @@ M.xmap = make_mapper("x", map_opts)
 M.imap = make_mapper("i", map_opts)
 M.vmap = make_mapper("v", map_opts)
 M.omap = make_mapper("o", map_opts)
+M.tmap = make_mapper("t", map_opts)
 M.cmap = make_mapper("c", {noremap = false, silent = false})
 
 local noremap_opts = {noremap = true, silent = true}
@@ -80,6 +106,7 @@ M.xnoremap = make_mapper("x", noremap_opts)
 M.vnoremap = make_mapper("v", noremap_opts)
 M.inoremap = make_mapper("i", noremap_opts)
 M.onoremap = make_mapper("o", noremap_opts)
+M.tnoremap = make_mapper("t", noremap_opts)
 M.cnoremap = make_mapper("c", {noremap = true, silent = false})
 
 function M.map(mode, lhs, rhs, opts)
