@@ -40,7 +40,8 @@ local plain_filetypes = {
   "fugitive",
   "startify",
   "vimwiki",
-  "markdown"
+  "markdown",
+  "NeogitStatus"
 }
 
 local plain_buftypes = {
@@ -66,6 +67,7 @@ local exceptions = {
     startify = "",
     defx = "⌨",
     ctrlsf = "🔍",
+    NeogitStatus = "",
     ["vim-plug"] = "⚉",
     vimwiki = "ﴬ",
     help = "",
@@ -82,6 +84,7 @@ local exceptions = {
     vista = "Vista",
     fugitive = "Fugitive",
     fugitiveblame = "Git blame",
+    NeogitStatus = "Neogit Status",
     gitcommit = "Git commit",
     startify = "Startify",
     defx = "Defx",
