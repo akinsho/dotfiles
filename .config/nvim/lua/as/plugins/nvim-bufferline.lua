@@ -5,6 +5,7 @@ return function()
     options = {
       mappings = true,
       sort_by = "extension",
+      show_close_icon = false,
       separator_style = "slant",
       diagnostics = not has("mac") and "nvim_lsp" or false,
       diagnostics_indicator = function(count, level)
