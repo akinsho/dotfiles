@@ -19,7 +19,8 @@ return function()
     "git",
     "TelescopePrompt",
     "undotree",
-    "flutterToolsOutline"
+    "flutterToolsOutline",
+    "" -- for all buffers without a file type
   }
   vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
 end
