@@ -425,7 +425,8 @@ return require("packer").startup {
       "phaazon/hop.nvim",
       keys = {{"n", "s"}},
       config = function()
-        require("hop").setup {}
+        -- remove h,j,k,l from hops list of keys
+        require("hop").setup {keys = "etovxqpdygfbzcisuran"}
         as_utils.nnoremap("s", [[<cmd>HopChar1<CR>]])
       end
     }
