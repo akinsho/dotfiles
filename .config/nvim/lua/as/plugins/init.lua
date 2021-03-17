@@ -117,12 +117,6 @@ return require("packer").startup {
       requires = {
         "nvim-lua/popup.nvim",
         {
-          "nvim-telescope/telescope-github.nvim",
-          config = function()
-            require("telescope").load_extension("gh")
-          end
-        },
-        {
           "nvim-telescope/telescope-frecency.nvim",
           requires = {"tami5/sql.nvim"},
           config = function()
@@ -154,7 +148,6 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = require("as.plugins.dap"), ft = {"dart"}}
-    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
 
     use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
@@ -343,6 +336,7 @@ return require("packer").startup {
     -- Git {{{
     --------------------------------------------------------------------------------
     use {"tpope/vim-fugitive", config = require("as.plugins.fugitive")}
+    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
     use {
       "rhysd/conflict-marker.vim",
       config = function()
@@ -371,6 +365,13 @@ return require("packer").startup {
       config = function()
         as_utils.nnoremap("<leader>lg", "<cmd>LazyGit<CR>")
         vim.g.lazygit_floating_window_winblend = 2
+      end
+    }
+    use {
+      "pwntester/octo.nvim",
+      cmd = "Octo",
+      config = function()
+        require("telescope").load_extension("octo")
       end
     }
     ---}}}
