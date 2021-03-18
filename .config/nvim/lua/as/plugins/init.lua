@@ -505,7 +505,6 @@ return require("packer").startup {
       "akinsho/nvim-bufferline.lua",
       config = require("as.plugins.nvim-bufferline"),
       disable = is_home,
-      branch = "feature/custom-filtering"
     }
     -----------------------------------------------------------------------------//
     -- Personal plugins

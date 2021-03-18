@@ -3,7 +3,7 @@ return function()
   local has = as_utils.has
   require("bufferline").setup {
     options = {
-      mappings = true,
+      mappings = false,
       sort_by = "extension",
       show_close_icon = false,
       separator_style = "slant",
