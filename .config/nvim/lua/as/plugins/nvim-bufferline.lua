@@ -1,5 +1,5 @@
 return function()
-  local map = as_utils.map
+  local nnoremap = as_utils.nnoremap
   local has = as_utils.has
 
   local function is_ft(b, ft)
@@ -36,9 +36,9 @@ return function()
     }
   }
 
-  map("n", "gb", [[<cmd>BufferLinePick<CR>]])
-  map("n", "<leader><tab>", [[<cmd>BufferLineCycleNext<CR>]])
-  map("n", "<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
-  map("n", "[b", [[<cmd>BufferLineMoveNext<CR>]])
-  map("n", "]b", [[<cmd>BufferLineMovePrev<CR>]])
+  nnoremap("gb", [[<cmd>BufferLinePick<CR>]])
+  nnoremap("<leader><tab>", [[<cmd>BufferLineCycleNext<CR>]])
+  nnoremap("<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
+  nnoremap("[b", [[<cmd>BufferLineMoveNext<CR>]])
+  nnoremap("]b", [[<cmd>BufferLineMovePrev<CR>]])
 end
