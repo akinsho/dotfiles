@@ -173,18 +173,19 @@ return require("packer").startup {
           end
         },
         {
-          dev "personal/flutter-tools.nvim",
-          config = require("as.plugins.flutter"),
-          after = "nvim-lspconfig",
-          requires = {"nvim-dap"}
-        },
-        {
           "glepnir/lspsaga.nvim",
           config = require("as.plugins.lspsaga"),
           after = "nvim-lspconfig"
         },
         {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"}
       }
+    }
+
+    use_local {
+      "personal/flutter-tools.nvim",
+      config = require("as.plugins.flutter"),
+      after = "nvim-lspconfig",
+      requires = {"nvim-dap", "nvim-lspconfig"}
     }
 
     use {
