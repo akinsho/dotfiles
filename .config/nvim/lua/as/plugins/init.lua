@@ -175,7 +175,8 @@ return require("packer").startup {
         {
           dev "personal/flutter-tools.nvim",
           config = require("as.plugins.flutter"),
-          after = "nvim-lspconfig"
+          after = "nvim-lspconfig",
+          requires = {"nvim-dap"}
         },
         {
           "glepnir/lspsaga.nvim",
@@ -504,7 +505,7 @@ return require("packer").startup {
     use {
       "akinsho/nvim-bufferline.lua",
       config = require("as.plugins.nvim-bufferline"),
-      disable = is_home,
+      disable = is_home
     }
     -----------------------------------------------------------------------------//
     -- Personal plugins
