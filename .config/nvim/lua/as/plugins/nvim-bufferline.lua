@@ -7,6 +7,10 @@ return function()
       sort_by = "extension",
       show_close_icon = false,
       separator_style = "slant",
+      custom_filter = function(buf)
+        local tab_num = vim.fn.tabpagenr()
+        return tab_num == 1 or (tab_num > 1 and vim.bo[buf].filetype == "log")
+      end,
       diagnostics = not has("mac") and "nvim_lsp" or false,
       diagnostics_indicator = function(count, level)
         local icon = level:match("error") and " " or " "
