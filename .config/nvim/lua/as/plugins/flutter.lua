@@ -4,6 +4,9 @@ return function()
     experimental = {
       lsp_derive_paths = true
     },
+    debugger = {
+      enabled = true
+    },
     flutter_outline = {
       enabled = true
     },

@@ -1,45 +1,25 @@
 return function()
-  local home = os.getenv("HOME")
-  local map = as_utils.map
-  local dap = require("dap")
-
-  dap.adapters.dart = {
-    type = "executable",
-    command = "node",
-    args = {home .. "/dart-code/out/dist/debug.js", "flutter"}
-  }
-  dap.configurations.dart = {
-    {
-      type = "dart",
-      request = "launch",
-      name = "Launch flutter",
-      dartSdkPath = home .. "/flutter/bin/cache/dart-sdk/",
-      flutterSdkPath = home .. "/flutter",
-      program = "${workspaceFolder}/lib/main.dart",
-      cwd = "${workspaceFolder}"
-    }
-  }
+  local nnoremap = as_utils.nnoremap
+  local vnoremap = as_utils.vnoremap
 
   vim.fn.sign_define("DapBreakpoint", {text = "🛑", texthl = "", linehl = "", numhl = ""})
-  vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
+  vim.fn.sign_define("DapStopped", {text = "🟢", texthl = "", linehl = "", numhl = ""})
 
-  map("v", "<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
-  map("n", "<localleader>d?", [[<cmd>lua require'dap.ui.variables'.scopes()<CR>]])
-  map("n", "<localleader>dc", [[<cmd>lua require'dap'.continue()<CR>]])
-  map("n", "<localleader>do", [[<cmd>lua require'dap'.step_over()<CR>]])
-  map("n", "<localleader>di", [[<cmd>lua require'dap'.step_into()<CR>]])
-  map("n", "<localleader>de", [[<cmd>lua require'dap'.step_out()<CR>]])
-  map("n", "<localleader>db", [[<cmd>lua require'dap'.toggle_breakpoint()<CR>]])
-  map(
-    "n",
+  vnoremap("<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
+  nnoremap("<localleader>d?", [[<cmd>lua require'dap.ui.variables'.scopes()<CR>]])
+  nnoremap("<localleader>dc", [[<cmd>lua require'dap'.continue()<CR>]])
+  nnoremap("<localleader>do", [[<cmd>lua require'dap'.step_over()<CR>]])
+  nnoremap("<localleader>di", [[<cmd>lua require'dap'.step_into()<CR>]])
+  nnoremap("<localleader>de", [[<cmd>lua require'dap'.step_out()<CR>]])
+  nnoremap("<localleader>db", [[<cmd>lua require'dap'.toggle_breakpoint()<CR>]])
+  nnoremap(
     "<localleader>dB",
     [[<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]]
   )
-  map(
-    "n",
+  nnoremap(
     "<localleader>dl",
     [[<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>]]
   )
-  map("n", "<localleader>dr", [[<cmd>lua require'dap'.repl.open()<CR>]])
-  map("n", "<localleader>dl", [[<cmd>lua require'dap'.repl.run_last()<CR>]])
+  nnoremap("<localleader>dr", [[<cmd>lua require'dap'.repl.open()<CR>]])
+  nnoremap("<localleader>dl", [[<cmd>lua require'dap'.repl.run_last()<CR>]])
 end
