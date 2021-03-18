@@ -3,6 +3,7 @@ local has = as_utils.has
 local fn = vim.fn
 local api = vim.api
 local command = as_utils.command
+local fmt = string.format
 
 local map = as_utils.map
 local nmap = as_utils.nmap
@@ -176,7 +177,7 @@ function _mappings.buf_kill()
   end
   vim.cmd(string.format("%d wincmd w", cur_winnr))
   local is_terminal = vim.bo[cur_bufnr].buftype == "terminal"
-  vim.cmd(is_terminal and "bd! #" or "silent! confirm bd! #")
+  vim.cmd(is_terminal and fmt("bd! %d", cur_bufnr) or fmt("silent! confirm bd! %d", cur_bufnr))
 end
 nnoremap("<leader>qq", "<cmd>lua _mappings.buf_kill()<CR>")
 nnoremap("<leader>qw", "<cmd>bd!<CR>")
