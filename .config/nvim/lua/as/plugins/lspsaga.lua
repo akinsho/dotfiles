@@ -30,7 +30,7 @@ return function()
   inoremap("<c-k>", "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
   nnoremap("<leader>rn", "<cmd>lua require('lspsaga.rename').rename()<CR>")
   nnoremap("<leader>ca", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>")
-  vnoremap("<leader>a", "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
+  vnoremap("<leader>ca", ":<c-u>lua require('lspsaga.codeaction').range_code_action()<CR>")
   nnoremap("K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
 
   -- scroll down hover doc
