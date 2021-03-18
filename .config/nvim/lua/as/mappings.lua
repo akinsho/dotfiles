@@ -176,10 +176,10 @@ function _mappings.buf_kill()
   end
   vim.cmd(string.format("%d wincmd w", cur_winnr))
   local is_terminal = vim.bo[cur_bufnr].buftype == "terminal"
-  vim.cmd(is_terminal and "bd! #" or "silent! confirm bd #")
+  vim.cmd(is_terminal and "bd! #" or "silent! confirm bd! #")
 end
 nnoremap("<leader>qq", "<cmd>lua _mappings.buf_kill()<CR>")
-nnoremap("<leader>qw", "<cmd>bd<CR>")
+nnoremap("<leader>qw", "<cmd>bd!<CR>")
 ----------------------------------------------------------------------------------
 -- Operators
 ----------------------------------------------------------------------------------
