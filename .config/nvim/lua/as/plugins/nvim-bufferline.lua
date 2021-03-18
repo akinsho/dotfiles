@@ -9,7 +9,9 @@ return function()
       separator_style = "slant",
       custom_filter = function(buf)
         local tab_num = vim.fn.tabpagenr()
-        return tab_num == 1 or (tab_num > 1 and vim.bo[buf].filetype == "log")
+        local is_log = vim.bo[buf].filetype == "log"
+        -- only show log buffers in secondary tabs
+        return (tab_num == 1 and not is_log) or (tab_num > 1 and is_log)
       end,
       diagnostics = not has("mac") and "nvim_lsp" or false,
       diagnostics_indicator = function(count, level)
