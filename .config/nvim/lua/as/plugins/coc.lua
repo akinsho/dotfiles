@@ -107,7 +107,7 @@ return function()
     "coc-go",
     "coc-word",
     "coc-tabnine",
-    "coc-flutter-tools",
+    "coc-flutter",
     "coc-xml",
     "coc-tsserver",
     "coc-graphql",
