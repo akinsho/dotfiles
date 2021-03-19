@@ -7,7 +7,7 @@ return function()
     debugger = {
       enabled = true
     },
-    flutter_outline = {
+    widget_guides = {
       enabled = true
     },
     dev_log = {open_cmd = "tabedit"},
