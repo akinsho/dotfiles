@@ -20,6 +20,7 @@ _G.as_utils = {
   vmap = utils.vmap,
   imap = utils.imap,
   xmap = utils.xmap,
+  smap = utils.smap,
   omap = utils.omap,
   cmap = utils.cmap,
   tmap = utils.tmap,

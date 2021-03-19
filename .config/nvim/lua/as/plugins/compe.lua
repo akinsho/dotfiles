@@ -47,20 +47,24 @@ return function()
       nvim_lsp = true,
       nvim_lua = true,
       treesitter = true,
+      emoji = false,
       tabnine = {priority = 1200}
     }
   }
 
-  local map = as_utils.map
-  local opts = {noremap = true, silent = true, expr = true}
-  map("i", "<C-Space>", "compe#complete()", opts)
-  map("i", "<C-e>", "compe#close('<C-e>')", opts)
-  map("i", "<Tab>", "v:lua.__tab_complete()", {expr = true})
-  map("s", "<Tab>", "v:lua.__tab_complete()", {expr = true})
-  map("i", "<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
-  map("s", "<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
-  map("i", "<C-f>", "compe#scroll({ 'delta': +4 }", opts)
-  map("i", "<C-d>", "compe#scroll({ 'delta': -4 }", opts)
+  local imap = as_utils.imap
+  local smap = as_utils.smap
+  local inoremap = as_utils.inoremap
+  local opts = {expr = true}
+
+  inoremap("<C-Space>", "compe#complete()", opts)
+  inoremap("<C-e>", "compe#close('<C-e>')", opts)
+  imap("<Tab>", "v:lua.__tab_complete()", {expr = true})
+  smap("<Tab>", "v:lua.__tab_complete()", {expr = true})
+  imap("<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
+  smap("<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
+  inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
+  inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
   local npairs = require("nvim-autopairs")
 

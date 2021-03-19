@@ -11,8 +11,6 @@ function M.total_plugins()
   return {total = start_count + opt_count, start = start_count, lazy = opt_count}
 end
 
-M.plugins_count = M.total_plugins()
-
 -- https://stackoverflow.com/questions/1283388/lua-merge-tables
 function M.deep_merge(t1, t2)
   for k, v in pairs(t2) do
@@ -99,6 +97,7 @@ M.imap = make_mapper("i", map_opts)
 M.vmap = make_mapper("v", map_opts)
 M.omap = make_mapper("o", map_opts)
 M.tmap = make_mapper("t", map_opts)
+M.smap = make_mapper("s", map_opts)
 M.cmap = make_mapper("c", {noremap = false, silent = false})
 
 local noremap_opts = {noremap = true, silent = true}
