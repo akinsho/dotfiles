@@ -2,7 +2,18 @@
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client)
-  local autocommands = require "as.autocommands"
+  local autocommands = require("as.autocommands")
+
+  autocommands.augroup(
+    "LspLocationList",
+    {
+      {
+        events = {"InsertLeave", "TextChanged", "BufWrite", "BufEnter"},
+        targets = {"<buffer>"},
+        command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]]
+      }
+    }
+  )
   autocommands.augroup(
     "LspHighlights",
     {
@@ -88,7 +99,7 @@ function as_utils.lsp.highlight()
     {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
     {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
     {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}},
+    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}}
   }
 end
 
