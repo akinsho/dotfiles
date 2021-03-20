@@ -44,7 +44,7 @@ return function()
       {
         events = {"CursorHold"},
         targets = {"*"},
-        command = "lua require('lspsaga.diagnostic').show_line_diagnostics()"
+        command = "lua require('lspsaga.diagnostic').show_cursor_diagnostics()"
       }
       -- {
       --   events = {"CompleteDone"},

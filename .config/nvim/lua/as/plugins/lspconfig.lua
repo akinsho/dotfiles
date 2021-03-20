@@ -8,7 +8,7 @@ local function setup_autocommands(client)
     "LspLocationList",
     {
       {
-        events = {"InsertLeave", "TextChanged", "BufWrite", "BufEnter"},
+        events = {"InsertLeave", "BufWrite", "BufEnter"},
         targets = {"<buffer>"},
         command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]]
       }

@@ -8,7 +8,8 @@ return function()
       enabled = true
     },
     widget_guides = {
-      enabled = true
+      enabled = true,
+      debug = true
     },
     dev_log = {open_cmd = "tabedit"},
     lsp = {
