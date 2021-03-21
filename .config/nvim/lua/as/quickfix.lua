@@ -33,6 +33,20 @@ local function open_preview_window(entry)
   vim.o.previewheight = original_height
 end
 
+---Match the quickfix entry and the containing line differently
+---@param lnum number
+local function highlight_match(lnum)
+  if vim.w.qf_preview_line_id then
+    fn.matchdelete(vim.w.qf_preview_line_id)
+  end
+  if vim.w.qf_preview_match_id then
+    fn.matchdelete(vim.w.qf_preview_match_id)
+  end
+  vim.w.qf_preview_match_id, vim.w.qf_preview_line_id =
+    fn.matchadd("Search", [[\%]] .. lnum .. [[l^\s*\zs.\{-}\ze\s*$]], 12),
+    fn.matchadd("Visual", [[\%]] .. lnum .. "l", 10)
+end
+
 local function preview_matches(opts)
   local entry = opts.entry
   local is_listed = opts.buf_listed
@@ -62,8 +76,10 @@ local function preview_matches(opts)
   -- Open any folds we may be in
   vim.cmd "silent! foldopen!"
   vim.wo.number = true
+
   -- highlight the line
-  vim.cmd([[silent! match Search /\%]] .. entry.lnum .. [[l^\s*\zs.\{-}\ze\s*$/]])
+  highlight_match(entry.lnum)
+
   -- go back to the quickfix
   vim.cmd "keepjumps wincmd p"
   vim.cmd "keepjumps wincmd J"
