@@ -324,7 +324,7 @@ return require("packer").startup {
     use {
       "lukas-reineke/indent-blankline.nvim",
       branch = "lua",
-      event = "BufRead",
+      -- event = "BufRead",
       config = require("as.plugins.indentline")
     }
     use {
