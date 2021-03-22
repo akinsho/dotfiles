@@ -184,9 +184,10 @@ nnoremap("Y", "y$")
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
-nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]])
-nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]])
-vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]])
+local noisy = {silent = false}
+nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
+nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
+vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
 -- Visual shifting (does not exit Visual mode)
 vnoremap("<", "<gv")
 vnoremap(">", ">gv")
