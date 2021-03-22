@@ -280,7 +280,8 @@ return function()
   -- Resume latest coc list
   map("n", "<leader>cr", [[<cmd>CocListResume<CR>]])
 
-  local mappings = vim.g.which_leader_key_map or {}
+  local mappings = vim.g.which_leader_key_map or vim.empty_dict()
+  local local_mappings = vim.g.which_localleader_key_map or vim.empty_dict()
   mappings.a = "coc codeaction (for text object)"
   mappings.c = {
     name = "+coc-command",
@@ -304,6 +305,15 @@ return function()
     n = "rename cursor word"
   }
 
+  local_mappings.f = {
+    name = "+fold",
+    a = "all",
+    i = "imports",
+    c = "comments",
+    r = "region"
+  }
+
+  vim.g.which_localleader_key_map = local_mappings
   vim.g.which_leader_key_map = mappings
 
   -----------------------------------------------------------------------------//

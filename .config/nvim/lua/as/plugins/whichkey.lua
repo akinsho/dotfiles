@@ -118,20 +118,22 @@ return function()
   vim.g.which_localleader_key_map = {
     name = "local leader",
     d = {
-      name = "+debug",
+      name = "+debugger",
+      ["?"] = "hover: variables scopes",
+      b = "toggle breakpoint",
+      B = "set breakpoint",
+      c = "continue or start debugging",
+      e = "step out",
+      i = "step into",
+      o = "step over",
+      l = "REPL: run last",
+      r = "REPL: open",
       t = {
         name = "+treesitter",
         e = "treesitter: enable highlight (buffer)",
         d = "treesitter: disable highlight (buffer)",
         p = "treesitter: toggle playground"
       }
-    },
-    f = {
-      name = "+fold",
-      a = "all",
-      i = "imports",
-      c = "comments",
-      r = "region"
     },
     g = {
       name = "+git-commands",
@@ -195,7 +197,8 @@ return function()
     ["<Tab>"] = {"bnext", "open vim bufferlist"},
     ["["] = "abolish = subsitute cursor word in file",
     ["]"] = "abolish = substitute cursor word on line",
-    ["/"] = "find matching word in buffer"
+    ["/"] = "find matching word in buffer",
+    ["<space>"] = "Toggle current fold"
   }
 
   vim.g.which_key_centered = 0
@@ -204,7 +207,9 @@ return function()
   vim.g.which_key_display_names = {[" "] = "Space", ["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
   if vim.g.which_key_use_floating_win == 0 then
-    require("as.autocommands").augroup("which_key", {
+    require("as.autocommands").augroup(
+      "which_key",
+      {
         {
           events = {"FileType"},
           targets = {"which_key"},
