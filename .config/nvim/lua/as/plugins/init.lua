@@ -438,7 +438,6 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
-    -- vim-one has a MUCH better startup time than onedark and has a light theme
     use "Th3Whit3Wolf/one-nvim"
     use {"romgrk/doom-one.vim", opt = true}
     use {"joshdick/onedark.vim", opt = true}
