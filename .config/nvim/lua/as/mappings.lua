@@ -39,11 +39,6 @@ function _G._mappings.add_terminal_mappings()
   end
 end
 
-nnoremap("<localleader>gl", [[<cmd>GitPull<CR>]])
-nnoremap("<localleader>gp", [[<cmd>GitPush<CR>]])
-nnoremap("<localleader>gpf", [[<cmd>GitPushF<CR>]])
-nnoremap("<localleader>gpt", [[<cmd>TermGitPush<CR>]])
-
 autocommands.create(
   {
     AddTerminalMappings = {

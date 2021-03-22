@@ -351,12 +351,12 @@ return require("packer").startup {
     use {
       "TimUntersberger/neogit",
       cmd = "Neogit",
-      keys = "<localleader>gs",
+      keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       config = function()
-        as_utils.nnoremap(
-          "<localleader>gs",
-          [[<cmd>lua require("neogit").status.create("split")<CR>]]
-        )
+        local nnoremap = as_utils.nnoremap
+        nnoremap("<localleader>gs", "<cmd>lua require('neogit').status.create('split')<CR>")
+        nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
+        nnoremap("<localleader>gp", "<cmd>lua require('neogit.popups.push').create()<CR>")
       end
     }
     use {
