@@ -24,6 +24,7 @@ return function()
   }
   vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
   vim.g.indent_blankline_show_current_context = true
+  vim.g.indent_blankline_context_highlight = 'MoreMsg'
   vim.g.indent_blankline_context_patterns = {
     "class",
     "function",
