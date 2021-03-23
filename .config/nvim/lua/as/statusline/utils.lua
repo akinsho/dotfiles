@@ -219,22 +219,22 @@ function M.filename(ctx, modifier)
   modifier = modifier or ":t"
   local special_buf = special_buffers(ctx)
   if special_buf then
-    return "", special_buf
+    return "", "", special_buf
   end
 
   local fname = buf_expand(ctx.bufnum, modifier)
 
   local name = exceptions.names[ctx.filetype]
   if type(name) == "function" then
-    return "", name(fname, ctx.bufnum)
+    return "", "", name(fname, ctx.bufnum)
   end
 
   if name then
-    return "", name
+    return "", "", name
   end
 
   if not fname then
-    return "", "No Name"
+    return "", "", "No Name"
   end
 
   local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil

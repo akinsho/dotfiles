@@ -3,10 +3,20 @@ local hlID = vim.fn.hlID
 
 local M = {}
 
+--- Check if the current window has a winhighlight
+--- which includes the specific target highlight
 --- @param win_id integer
-function M.has_win_highlight(win_id)
+--- @vararg string
+function M.has_win_highlight(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
-  return win_hl ~= nil and win_hl ~= "", win_hl
+  local has_match = false
+  for _, target in ipairs({...}) do
+    if win_hl:match(target) ~= nil then
+      has_match = true
+      break
+    end
+  end
+  return (win_hl ~= nil and has_match), win_hl
 end
 
 local function find(haystack, matcher)
@@ -20,13 +30,15 @@ local function find(haystack, matcher)
   return found
 end
 
+---A mechanism to allow inheritance of the winhighlight of a specific
+---group in a window
 ---@param win_id number
 ---@param target string
 ---@param name string
 ---@param default string
 function M.adopt_winhighlight(win_id, target, name, default)
   name = name .. win_id
-  local _, win_hl = M.has_win_highlight(win_id)
+  local _, win_hl = M.has_win_highlight(win_id, target)
   local hl_exists = vim.fn.hlexists(name) > 0
   if not hl_exists then
     local parts = vim.split(win_hl, ",")

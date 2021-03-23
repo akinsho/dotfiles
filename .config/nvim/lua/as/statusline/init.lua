@@ -175,7 +175,7 @@ function _G.statusline()
   local directory_hl = minimal and "StInactiveSep" or "StDirectory"
   local parent_hl = minimal and directory_hl or "StParentDirectory"
 
-  if H.has_win_highlight(curwin) then
+  if H.has_win_highlight(curwin, "Normal", "StatusLine") then
     directory_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
     filename_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
     parent_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomParentDir", "StTitle")
@@ -192,9 +192,9 @@ function _G.statusline()
   local directory, parent, filename = utils.filename(ctx)
 
   if not directory or directory == "" or not parent or parent == "" then
-    parent_opts.prefix = ft_icon
+    file_opts.prefix = ft_icon
     if not minimal then
-      parent_opts.prefix_color = icon_highlight
+      file_opts.prefix_color = icon_highlight
     end
   end
 
