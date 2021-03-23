@@ -497,7 +497,6 @@ return require("packer").startup {
     use {
       "akinsho/nvim-toggleterm.lua",
       config = require("as.plugins.toggleterm"),
-      branch = "feature/allow-specifying-directory",
       keys = [[<c-\>]],
       disable = is_home
     }
