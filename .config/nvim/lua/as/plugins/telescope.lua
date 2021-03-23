@@ -6,6 +6,7 @@ return function()
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
   local builtins = require("telescope.builtin")
+  local themes = require("telescope.themes")
 
   telescope.setup {
     defaults = {
@@ -51,7 +52,7 @@ return function()
   end
 
   function as_utils.telescope.dotfiles()
-    require("telescope.builtin").find_files {
+    builtins.find_files {
       prompt_title = "~ dotfiles ~",
       shorten_path = false,
       cwd = vim.g.dotfiles,
@@ -62,14 +63,38 @@ return function()
     }
   end
 
+  function as_utils.telescope.nvim_config()
+    builtins.find_files {
+      prompt_title = "~ nvim config ~",
+      shorten_path = false,
+      cwd = vim.g.vim_dir,
+      layout_strategy = "horizontal",
+      layout_config = {
+        preview_width = 0.65
+      }
+    }
+  end
+
+  function as_utils.telescope.frecency()
+    telescope.extensions.frecency.frecency(
+      themes.get_dropdown {
+        winblend = 10,
+        border = true,
+        previewer = false,
+        shorten_path = false
+      }
+    )
+  end
+
   -- Find files using Telescope command-line sugar.
   nnoremap("<C-P>", "<cmd>lua as_utils.telescope.files()<CR>")
   nnoremap("<leader>fa", "<cmd>Telescope<cr>")
   nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
-  nnoremap("<leader>fh", "<cmd>Telescope frecency theme=get_dropdown<cr>")
+  nnoremap("<leader>fh", "<cmd>lua as_utils.telescope.frecency()<cr>")
 
   nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
   nnoremap("<leader>fd", "<cmd>lua as_utils.telescope.dotfiles()<cr>")
+  nnoremap("<leader>fn", "<cmd>lua as_utils.telescope.nvim_config()<cr>")
   nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
 
   -- LSP mappings, currently only bound on linux since we use coc on mac
