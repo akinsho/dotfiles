@@ -1,3 +1,5 @@
+as_utils.telescope = {}
+
 return function()
   local nnoremap = as_utils.nnoremap
   local telescope = require("telescope")
@@ -37,7 +39,7 @@ return function()
     }
   }
 
-  function _G.__telescope_files()
+  function as_utils.telescope.files()
     -- Launch file search using Telescope
     if vim.fn.isdirectory(".git") > 0 then
       -- if in a git project, use :Telescope git_files
@@ -48,17 +50,27 @@ return function()
     end
   end
 
-  vim.cmd [[autocmd! FileType TelescopePrompt let b:lexima_disabled = 1]]
+  function as_utils.telescope.dotfiles()
+    require("telescope.builtin").find_files {
+      prompt_title = "~ dotfiles ~",
+      shorten_path = false,
+      cwd = vim.g.dotfiles,
+      layout_strategy = "horizontal",
+      layout_config = {
+        preview_width = 0.65
+      }
+    }
+  end
 
   -- Find files using Telescope command-line sugar.
-  nnoremap("<C-P>", "<cmd>lua __telescope_files()<CR>")
+  nnoremap("<C-P>", "<cmd>lua as_utils.telescope.files()<CR>")
   nnoremap("<leader>fa", "<cmd>Telescope<cr>")
   nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
   nnoremap("<leader>fh", "<cmd>Telescope frecency theme=get_dropdown<cr>")
 
   nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
-  nnoremap("<leader>fd", "<cmd>Telescope git_files cwd=~/.dotfiles<cr>")
-  nnoremap("<leader>fc", "<cmd>Telescope git_commits <cr>")
+  nnoremap("<leader>fd", "<cmd>lua as_utils.telescope.dotfiles()<cr>")
+  nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
 
   -- LSP mappings, currently only bound on linux since we use coc on mac
   if vim.g.is_linux then
