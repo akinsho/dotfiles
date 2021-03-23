@@ -369,8 +369,13 @@ local function setup_autocommands()
         targets = {"*"},
         command = "lua require'as.statusline'.git_toggle_updates()"
       },
+      -- NOTE: user autocommands can't be joined into one autocommand
       {
         events = {"User AsyncGitJobComplete"},
+        command = "lua require'as.statusline'.git_updates_refresh()"
+      },
+      {
+        events = {"User NeogitStatusRefresh"},
         command = "lua require'as.statusline'.git_updates_refresh()"
       },
       {
