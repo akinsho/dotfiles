@@ -7,6 +7,7 @@ return function()
   local sorters = require("telescope.sorters")
   local builtins = require("telescope.builtin")
   local themes = require("telescope.themes")
+  local action_state = require("telescope.actions.state")
 
   telescope.setup {
     defaults = {
@@ -20,7 +21,7 @@ return function()
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
       file_sorter = sorters.get_fzy_sorter,
       generic_sorter = sorters.get_fzy_sorter,
-      layout_strategy = "flex",
+      -- layout_strategy = "flex",
       winblend = 7,
       set_env = {COLORTERM = "truecolor"}
     },
@@ -86,6 +87,21 @@ return function()
     )
   end
 
+  function as_utils.telescope.buffers()
+    builtins.buffers {
+      show_all_buffers = true,
+      attach_mappings = function(prompt_bufnr, map)
+        local delete_buf = function()
+          local selection = action_state.get_selected_entry()
+          actions.close(prompt_bufnr)
+          vim.api.nvim_buf_delete(selection.bufnr, {force = true})
+        end
+        map("i", "<c-x>", delete_buf)
+        return true
+      end
+    }
+  end
+
   -- Find files using Telescope command-line sugar.
   nnoremap("<C-P>", "<cmd>lua as_utils.telescope.files()<CR>")
   nnoremap("<leader>fa", "<cmd>Telescope<cr>")
@@ -104,6 +120,6 @@ return function()
 
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
-  nnoremap("<leader>fo", "<cmd>Telescope buffers show_all_buffers=true<cr> ")
+  nnoremap("<leader>fo", "<cmd>lua as_utils.telescope.buffers()<CR>")
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
 end
