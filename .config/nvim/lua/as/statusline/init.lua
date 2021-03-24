@@ -6,6 +6,7 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
+local is_empty = as_utils.is_empty
 local utils = require("as.statusline.utils")
 local H = require("as.highlights")
 local autocommands = require("as.autocommands")
@@ -191,10 +192,14 @@ function _G.statusline()
 
   local directory, parent, filename = utils.filename(ctx)
 
-  if not directory or directory == "" or not parent or parent == "" then
-    file_opts.prefix = ft_icon
+  local dir_empty = is_empty(directory)
+  local parent_empty = is_empty(parent)
+  local to_update = dir_empty and parent_empty and file_opts or dir_empty and parent_opts or nil
+
+  if to_update then
+    to_update.prefix = ft_icon
     if not minimal then
-      file_opts.prefix_color = icon_highlight
+      to_update.prefix_color = icon_highlight
     end
   end
 
