@@ -187,23 +187,18 @@ function _G.statusline()
 
   local file_opts = {before = "", after = ""}
   local parent_opts = {before = "", after = ""}
-  local prefix_color = not minimal and icon_highlight or nil
-  local opts = {prefix = ft_icon, prefix_color = prefix_color, before = "", after = ""}
+  local dir_opts = {before = "", after = ""}
 
   local directory, parent, filename = utils.filename(ctx)
 
-  local dir_empty = is_empty(directory)
-  local parent_empty = is_empty(parent)
-  local to_update = dir_empty and parent_empty and file_opts or dir_empty and parent_opts or nil
+  -- Depending on which filename segments are empty we select a section to add the file icon to
+  local dir_empty, parent_empty = is_empty(directory), is_empty(parent)
+  local to_update = dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
 
-  if to_update then
-    to_update.prefix = ft_icon
-    if not minimal then
-      to_update.prefix_color = icon_highlight
-    end
-  end
+  to_update.prefix = ft_icon
+  to_update.prefix_color = not minimal and icon_highlight or nil
 
-  local dir_item = utils.item(directory, directory_hl, opts)
+  local dir_item = utils.item(directory, directory_hl, dir_opts)
   local parent_item = utils.item(parent, parent_hl, parent_opts)
   local file_item = utils.item(filename, filename_hl, file_opts)
   local readonly_item = utils.item(utils.readonly(ctx), "StMetadata")
