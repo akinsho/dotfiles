@@ -72,7 +72,7 @@ function M.colors()
     {"StInactiveSep", {guibg = bg_color, guifg = P.comment_grey}},
     {"StatusLine", {guibg = bg_color}},
     {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
-    {"StWarning", {guifg = warning_fg, guibg = bg_color}},
+    {"StWarning", {guifg = "Orange", guibg = bg_color}},
     {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
     {"StError", {guifg = error_fg, guibg = bg_color}},
     {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
