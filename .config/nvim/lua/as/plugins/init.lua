@@ -352,6 +352,15 @@ return require("packer").startup {
       cmd = "Neogit",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       config = function()
+        require("neogit").setup {
+          disable_signs = false,
+          signs = {
+              -- { CLOSED, OPENED }
+              section = {"▸", "▾"},
+              item = {"", ""},
+              hunk = {"─", "└"},
+          },
+        }
         local nnoremap = as_utils.nnoremap
         nnoremap("<localleader>gs", "<cmd>lua require('neogit').status.create()<CR>")
         nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
