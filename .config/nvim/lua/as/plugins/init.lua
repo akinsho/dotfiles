@@ -335,7 +335,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Git {{{
     --------------------------------------------------------------------------------
-    use {"tpope/vim-fugitive", config = require("as.plugins.fugitive")}
+    use {"tpope/vim-fugitive", keys = {"<localleader>gS"}, config = require("as.plugins.fugitive")}
     use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
     use {
       "rhysd/conflict-marker.vim",
@@ -356,13 +356,14 @@ return require("packer").startup {
           disable_signs = false,
           signs = {
               -- { CLOSED, OPENED }
-              section = {"▸", "▾"},
-              item = {"", ""},
+              section = {"", ""},
+              item = {"▸", "▾"},
               hunk = {"─", "└"},
           },
         }
         local nnoremap = as_utils.nnoremap
-        nnoremap("<localleader>gs", "<cmd>lua require('neogit').status.create()<CR>")
+        nnoremap("<localleader>gs", "<cmd>Neogit<CR>")
+        nnoremap("<localleader>gc", "<cmd>Neogit commitCR>")
         nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
         nnoremap("<localleader>gp", "<cmd>lua require('neogit.popups.push').create()<CR>")
       end
