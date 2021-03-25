@@ -361,7 +361,7 @@ return require("packer").startup {
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       config = function()
         require("neogit").setup {
-          disable_signs = true, -- BUG: currently show signs in incorrect places
+          disable_signs = false, -- BUG: currently show signs in incorrect places
           signs = {
             section = {"", ""},
             item = {"▸", "▾"},
