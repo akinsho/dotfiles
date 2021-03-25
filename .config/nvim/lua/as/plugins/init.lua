@@ -2,6 +2,7 @@ local fn = vim.fn
 local has = as_utils.has
 local is_work = has("mac")
 local is_home = not is_work
+local fmt = string.format
 
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
@@ -70,6 +71,13 @@ local function not_developing()
   return not vim.env.DEVELOPING
 end
 
+---Require a plugin config
+---@param name string
+---@return function
+local function conf(name)
+  return require(fmt("as.plugins.%s", name))
+end
+
 local function hunspell_install_if_needed()
   if vim.fn.executable("hunspell") == 0 then
     if vim.fn.has("mac") > 0 then
@@ -112,7 +120,7 @@ return require("packer").startup {
     use {"junegunn/fzf", run = "./install --all", disable = false}
     use {
       "nvim-telescope/telescope.nvim",
-      config = require("as.plugins.telescope"),
+      config = conf("telescope"),
       requires = {
         "nvim-lua/popup.nvim",
         {
@@ -140,20 +148,20 @@ return require("packer").startup {
       end
     }
     use "dhruvasagar/vim-dotoo"
-    use {"christoomey/vim-tmux-navigator", config = require("as.plugins.tmux-navigator")}
+    use {"christoomey/vim-tmux-navigator", config = conf("tmux-navigator")}
     use "nvim-lua/plenary.nvim"
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
-    use {"mfussenegger/nvim-dap", config = require("as.plugins.dap")}
+    use {"mfussenegger/nvim-dap", config = conf("dap")}
 
-    use {"neoclide/coc.nvim", config = require("as.plugins.coc"), disable = is_home}
+    use {"neoclide/coc.nvim", config = conf("coc"), disable = is_home}
     use {"honza/vim-snippets", disable = is_home}
 
     use {
       "neovim/nvim-lspconfig",
-      config = require("as.plugins.lspconfig"),
+      config = conf("lspconfig"),
       event = "VimEnter",
       disable = is_work,
       requires = {
@@ -173,7 +181,7 @@ return require("packer").startup {
         },
         {
           "glepnir/lspsaga.nvim",
-          config = require("as.plugins.lspsaga"),
+          config = conf("lspsaga"),
           after = "nvim-lspconfig"
         },
         {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"}
@@ -182,7 +190,7 @@ return require("packer").startup {
 
     use_local {
       "personal/flutter-tools.nvim",
-      config = require("as.plugins.flutter"),
+      config = conf("flutter"),
       after = "nvim-lspconfig",
       requires = {"nvim-dap", "nvim-lspconfig"}
     }
@@ -191,13 +199,13 @@ return require("packer").startup {
       "hrsh7th/nvim-compe",
       event = "InsertEnter",
       disable = is_work,
-      config = require("as.plugins.compe"),
+      config = conf("compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
     }
     use {
       "hrsh7th/vim-vsnip",
       disable = is_work,
-      config = require("as.plugins.vim-vsnip"),
+      config = conf("vim-vsnip"),
       event = "InsertEnter"
     }
     -- }}}
@@ -235,7 +243,7 @@ return require("packer").startup {
         }
       end
     }
-    use {"mg979/vim-visual-multi", config = require("as.plugins.vim-visual-multi")}
+    use {"mg979/vim-visual-multi", config = conf("vim-visual-multi")}
     use {"itchyny/vim-highlighturl", config = [[vim.g.highlighturl_guifg = "NONE"]]}
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     use {"kshenoy/vim-signature", disable = true}
@@ -253,9 +261,9 @@ return require("packer").startup {
       "vim-test/vim-test",
       cmd = {"TestFile", "TestNearest", "TestSuite"},
       keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn", "<localleader>ts"},
-      config = require("as.plugins.vim-test")
+      config = conf("vim-test")
     }
-    use {"liuchengxu/vim-which-key", config = require("as.plugins.whichkey")}
+    use {"liuchengxu/vim-which-key", config = conf("whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     use {
       "iamcco/markdown-preview.nvim",
@@ -292,8 +300,8 @@ return require("packer").startup {
       branch = "dev",
       keys = {"<leader>ww", "<leader>wt", "<leader>wi"},
       event = {"BufEnter *.wiki"},
-      setup = require("as.plugins.vimwiki").setup,
-      config = require("as.plugins.vimwiki").config
+      setup = conf("vimwiki").setup,
+      config = conf("vimwiki").config
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -306,10 +314,10 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use "tpope/vim-eunuch"
     use "tpope/vim-repeat"
-    use {"tpope/vim-abolish", config = require("as.plugins.abolish")}
+    use {"tpope/vim-abolish", config = conf("abolish")}
     -- sets searchable path for filetypes like go so 'gf' works
     use "tpope/vim-apathy"
-    use {"tpope/vim-projectionist", config = require("as.plugins.vim-projectionist")}
+    use {"tpope/vim-projectionist", config = conf("vim-projectionist")}
     use {
       "tpope/vim-surround",
       config = function()
@@ -324,19 +332,19 @@ return require("packer").startup {
     use {
       "lukas-reineke/indent-blankline.nvim",
       branch = "lua",
-      config = require("as.plugins.indentline")
+      config = conf("indentline")
     }
     use {
       "sheerun/vim-polyglot",
-      config = require("as.plugins.polyglot").config,
-      setup = require("as.plugins.polyglot").setup
+      config = conf("polyglot").config,
+      setup = conf("polyglot").setup
     }
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{
     --------------------------------------------------------------------------------
-    use {"tpope/vim-fugitive", keys = {"<localleader>gS"}, config = require("as.plugins.fugitive")}
-    use {"lewis6991/gitsigns.nvim", config = require("as.plugins.gitsigns")}
+    use {"tpope/vim-fugitive", keys = {"<localleader>gS"}, config = conf("fugitive")}
+    use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}
     use {
       "rhysd/conflict-marker.vim",
       config = function()
@@ -355,11 +363,10 @@ return require("packer").startup {
         require("neogit").setup {
           disable_signs = false,
           signs = {
-              -- { CLOSED, OPENED }
-              section = {"", ""},
-              item = {"▸", "▾"},
-              hunk = {"─", "└"},
-          },
+            section = {"", ""},
+            item = {"▸", "▾"},
+            hunk = {"─", "└"}
+          }
         }
         local nnoremap = as_utils.nnoremap
         nnoremap("<localleader>gs", "<cmd>Neogit<CR>")
@@ -389,10 +396,10 @@ return require("packer").startup {
     -- Text Objects {{{
     --------------------------------------------------------------------------------
     use "AndrewRadev/splitjoin.vim"
-    use {"AndrewRadev/dsf.vim", config = require("as.plugins.dsf")}
-    use {"AndrewRadev/sideways.vim", config = require("as.plugins.sideways")}
-    use {"svermeulen/vim-subversive", config = require("as.plugins.subversive")}
-    use {"chaoren/vim-wordmotion", config = require("as.plugins.vim-wordmotion")}
+    use {"AndrewRadev/dsf.vim", config = conf("dsf")}
+    use {"AndrewRadev/sideways.vim", config = conf("sideways")}
+    use {"svermeulen/vim-subversive", config = conf("subversive")}
+    use {"chaoren/vim-wordmotion", config = conf("vim-wordmotion")}
     use {
       "b3nj5m1n/kommentary",
       config = function()
@@ -441,7 +448,7 @@ return require("packer").startup {
         as_utils.nnoremap("s", [[<cmd>HopChar1<CR>]])
       end
     }
-    use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = require("as.plugins.goyo")}
+    use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = conf("goyo")}
     use "tversteeg/registers.nvim"
     -- }}}
     ---------------------------------------------------------------------------------
@@ -460,13 +467,13 @@ return require("packer").startup {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
       keys = "<c-n>",
-      config = require("as.plugins.nvim-tree"),
+      config = conf("nvim-tree"),
       cond = not_developing
     }
     use_local {
       "contributing/nvim-tree.lua",
       as = "local-nvim-tree",
-      config = require("as.plugins.nvim-tree"),
+      config = conf("nvim-tree"),
       cond = developing
     }
     -- Treesitter cannot be run as an optional plugin and most be available on start
@@ -474,7 +481,7 @@ return require("packer").startup {
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      config = require("as.plugins.treesitter"),
+      config = conf("treesitter"),
       requires = {
         {
           "lewis6991/spellsitter.nvim",
@@ -505,13 +512,13 @@ return require("packer").startup {
     }
     use {
       "akinsho/nvim-toggleterm.lua",
-      config = require("as.plugins.toggleterm"),
+      config = conf("toggleterm"),
       keys = [[<c-\>]],
       disable = is_home
     }
     use {
       "akinsho/nvim-bufferline.lua",
-      config = require("as.plugins.nvim-bufferline"),
+      config = conf("nvim-bufferline"),
       disable = is_home
     }
     -----------------------------------------------------------------------------//
@@ -526,7 +533,7 @@ return require("packer").startup {
     }
     use_local {
       "personal/nvim-toggleterm.lua",
-      config = require("as.plugins.toggleterm"),
+      config = conf("toggleterm"),
       as = "local-toggleterm",
       keys = [[<c-\>]]
     }
@@ -534,7 +541,7 @@ return require("packer").startup {
     use_local {
       "personal/nvim-bufferline.lua",
       as = "local-bufferline",
-      config = require("as.plugins.nvim-bufferline")
+      config = conf("nvim-bufferline")
     }
     -- }}}
     ---------------------------------------------------------------------------------
