@@ -1,3 +1,5 @@
+local has = as_utils.has
+local fn = vim.fn
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -168,6 +170,85 @@ function as_utils.lsp.on_attach(client, bufnr)
 end
 
 -----------------------------------------------------------------------------//
+-- Language servers
+-----------------------------------------------------------------------------//
+local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
+
+local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
+local sumneko_path = string.format("%s/lua-language-server", local_path)
+local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
+
+local servers = {
+  rust_analyzer = {},
+  vimls = {},
+  gopls = {},
+  jsonls = {},
+  tsserver = {},
+  lua = {
+    cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
+    settings = {
+      Lua = {
+        diagnostics = {globals = {"vim"}},
+        completion = {keywordSnippet = "Both"},
+        runtime = {
+          version = "LuaJIT",
+          path = vim.split(package.path, ";")
+        },
+        workspace = {
+          library = {
+            [fn.expand("$VIMRUNTIME/lua")] = true,
+            [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+          }
+        }
+      }
+    }
+  },
+  efm = {
+    init_options = {documentFormatting = true},
+    filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
+    settings = {
+      -- add ".lua-format" to root if using lua-format
+      rootMarkers = {".git/"},
+      languages = {
+        json = {prettier},
+        html = {prettier},
+        css = {prettier},
+        yaml = {prettier},
+        markdown = {prettier},
+        -- npm i -g lua-fmt
+        -- 'lua-format -i -c {config_dir}'
+        lua = {
+          {
+            formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
+            formatStdin = true
+          }
+        }
+      }
+    }
+  }
+}
+
+function as_utils.lsp.setup_servers()
+  vim.cmd "packadd nvim-lspinstall" -- <-- Important!
+  local lspinstall = require("lspinstall")
+  local lspconfig = require("lspconfig")
+
+  lspinstall.setup()
+  local installed = lspinstall.installed_servers()
+  local status_capabilities = require("lsp-status").capabilities
+  for _, server in pairs(installed) do
+    local config = servers[server] or {}
+    config.on_attach = as_utils.lsp.on_attach
+    if not config.capabilities then
+      config.capabilities = vim.lsp.protocol.make_client_capabilities()
+    end
+    config.capabilities.textDocument.completion.completionItem.snippetSupport = true
+    config.capabilities = vim.tbl_deep_extend("force", config.capabilities, status_capabilities)
+    lspconfig[server].setup(config)
+  end
+end
+
+-----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
 local command = as_utils.command
@@ -200,17 +281,17 @@ command {
 }
 
 return function()
-  local has = as_utils.has
-  local fn = vim.fn
-
   as_utils.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//
-  fn.sign_define("LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsSignError"})
-  fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsSignHint"})
-  fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsSignWarning"})
-  fn.sign_define(
+  vim.fn.sign_define("LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsSignError"})
+  vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsSignHint"})
+  vim.fn.sign_define(
+    "LspDiagnosticsSignWarning",
+    {text = "", texthl = "LspDiagnosticsSignWarning"}
+  )
+  vim.fn.sign_define(
     "LspDiagnosticsSignInformation",
     {text = "", texthl = "LspDiagnosticsSignInformation"}
   )
@@ -228,80 +309,6 @@ return function()
       update_in_insert = false
     }
   )
-  -----------------------------------------------------------------------------//
-  -- Language servers
-  -----------------------------------------------------------------------------//
-  local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
 
-  local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
-  local sumneko_path = string.format("%s/lua-language-server", local_path)
-  local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
-
-  local servers = {
-    rust_analyzer = {},
-    vimls = {},
-    gopls = {},
-    flow = {},
-    jsonls = {},
-    html = {},
-    tsserver = {},
-    sumneko_lua = {
-      cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
-      settings = {
-        Lua = {
-          diagnostics = {globals = {"vim"}},
-          completion = {keywordSnippet = "Both"},
-          runtime = {
-            version = "LuaJIT",
-            path = vim.split(package.path, ";")
-          },
-          workspace = {
-            library = {
-              [fn.expand("$VIMRUNTIME/lua")] = true,
-              [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-            }
-          }
-        }
-      }
-    },
-    efm = {
-      init_options = {documentFormatting = true},
-      filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
-      settings = {
-        -- add ".lua-format" to root if using lua-format
-        rootMarkers = {".git/"},
-        languages = {
-          json = {prettier},
-          html = {prettier},
-          css = {prettier},
-          yaml = {prettier},
-          markdown = {prettier},
-          -- npm i -g lua-fmt
-          -- 'lua-format -i -c {config_dir}'
-          lua = {
-            {
-              formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
-              formatStdin = true
-            }
-          }
-        }
-      }
-    }
-  }
-
-  local lspconfig = require("lspconfig")
-
-  local status_capabilities = require("lsp-status").capabilities
-  for server, config in pairs(servers) do
-    -- Add incremental sync
-    config.flags = config.flags or {}
-    config.flags.allow_incremental_sync = true
-    config.on_attach = as_utils.lsp.on_attach
-    if not config.capabilities then
-      config.capabilities = vim.lsp.protocol.make_client_capabilities()
-    end
-    config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    config.capabilities = vim.tbl_deep_extend("force", config.capabilities, status_capabilities)
-    lspconfig[server].setup(config)
-  end
+  as_utils.lsp.setup_servers()
 end

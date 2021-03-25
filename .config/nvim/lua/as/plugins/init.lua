@@ -184,7 +184,16 @@ return require("packer").startup {
           config = conf("lspsaga"),
           after = "nvim-lspconfig"
         },
-        {"alexaandru/nvim-lspupdate", cmd = "LspUpdate"}
+        {
+          "kabouzeid/nvim-lspinstall",
+          opt = true,
+          config = function()
+            require("lspinstall").post_install_hook = function()
+              as_utils.lsp.setup_servers()
+              vim.cmd("bufdo e")
+            end
+          end
+        }
       }
     }
 
