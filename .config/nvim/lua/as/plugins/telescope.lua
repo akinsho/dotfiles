@@ -41,9 +41,25 @@ return function()
     }
   }
 
+  ---find if passed in directory contains the target
+  ---which is the current buffer's path by default
+  ---@param path string
+  ---@param target string
+  ---@return boolean
+  local function is_within(path, target)
+    target = vim.fn.expand("%")
+    return vim.fn.globpath(path, target) ~= ""
+  end
+
+  ---General finds files function which changes the picker depending
+  ---on the current buffers path.
   function as_utils.telescope.files()
     -- Launch file search using Telescope
-    if vim.fn.isdirectory(".git") > 0 then
+    if is_within(vim.g.vim_dir) then
+      as_utils.telescope.nvim_config()
+    elseif is_within(vim.g.dotfiles) then
+      as_utils.telescope.dotfiles()
+    elseif vim.fn.isdirectory(".git") > 0 then
       -- if in a git project, use :Telescope git_files
       builtins.git_files()
     else
@@ -89,6 +105,7 @@ return function()
 
   function as_utils.telescope.buffers()
     builtins.buffers {
+      sort_lastused = true,
       show_all_buffers = true,
       attach_mappings = function(prompt_bufnr, map)
         local delete_buf = function()

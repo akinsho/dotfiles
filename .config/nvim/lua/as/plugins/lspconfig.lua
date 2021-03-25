@@ -267,12 +267,7 @@ command {
     vim.cmd("edit " .. path)
   end
 }
-command {
-  "DebugLSP",
-  function()
-    print(vim.inspect(vim.lsp.get_active_clients()))
-  end
-}
+
 command {
   "Format",
   function()
