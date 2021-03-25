@@ -178,7 +178,7 @@ local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/l
 local sumneko_path = string.format("%s/lua-language-server", local_path)
 local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
 
-local servers = {
+as_utils.lsp.servers = {
   rust_analyzer = {},
   vimls = {},
   gopls = {},
@@ -237,7 +237,7 @@ function as_utils.lsp.setup_servers()
   local installed = lspinstall.installed_servers()
   local status_capabilities = require("lsp-status").capabilities
   for _, server in pairs(installed) do
-    local config = servers[server] or {}
+    local config = as_utils.lsp.servers[server] or {}
     config.on_attach = as_utils.lsp.on_attach
     if not config.capabilities then
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
