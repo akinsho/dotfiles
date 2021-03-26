@@ -73,7 +73,9 @@ return function()
       prompt_title = "~ dotfiles ~",
       shorten_path = false,
       cwd = vim.g.dotfiles,
+      hidden = true,
       layout_strategy = "horizontal",
+      file_ignore_patterns = {".git/.*"},
       layout_config = {
         preview_width = 0.65
       }
@@ -85,7 +87,9 @@ return function()
       prompt_title = "~ nvim config ~",
       shorten_path = false,
       cwd = vim.g.vim_dir,
+      hidden = true,
       layout_strategy = "horizontal",
+      file_ignore_patterns = {".git/.*"},
       layout_config = {
         preview_width = 0.65
       }
@@ -116,6 +120,12 @@ return function()
         map("i", "<c-x>", delete_buf)
         return true
       end
+    }
+  end
+
+  function as_utils.telescope.workspace_symbols()
+    builtins.lsp_workspace_symbols {
+      query = vim.fn.input("Query > ")
     }
   end
 
