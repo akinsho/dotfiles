@@ -141,9 +141,10 @@ return function()
   nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
 
   -- LSP mappings, currently only bound on linux since we use coc on mac
-  if vim.g.is_linux then
-    nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics <cr>")
-  end
+  -- if vim.g.is_linux then
+  nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
+  nnoremap("<leader>ws", [[<cmd>lua as_utils.telescope.workspace_symbols()<cr>]], {silent = false})
+  -- end
 
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")

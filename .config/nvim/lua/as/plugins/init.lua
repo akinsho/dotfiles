@@ -63,6 +63,14 @@ local function create_local(use)
   end
 end
 
+local function is_bleeding_edge()
+  return not vim.env.STABLE
+end
+
+local function is_stable()
+  return vim.env.STABLE ~= nil
+end
+
 local function developing()
   return vim.env.DEVELOPING ~= nil
 end
@@ -156,14 +164,14 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = conf("dap")}
 
-    use {"neoclide/coc.nvim", config = conf("coc"), disable = is_home}
-    use {"honza/vim-snippets", disable = is_home}
+    use {"neoclide/coc.nvim", config = conf("coc"), cond = is_stable}
+    use {"honza/vim-snippets", cond = is_stable}
 
     use {
       "neovim/nvim-lspconfig",
       config = conf("lspconfig"),
       event = "VimEnter",
-      disable = is_work,
+      cond = is_bleeding_edge,
       requires = {
         {
           "nvim-lua/lsp-status.nvim",
@@ -197,6 +205,12 @@ return require("packer").startup {
       }
     }
 
+    use {
+      "akinsho/flutter-tools.nvim",
+      config = conf("flutter"),
+      after = "nvim-lspconfig",
+      requires = {"nvim-dap", "nvim-lspconfig"}
+    }
     use_local {
       "personal/flutter-tools.nvim",
       config = conf("flutter"),
@@ -207,13 +221,13 @@ return require("packer").startup {
     use {
       "hrsh7th/nvim-compe",
       event = "InsertEnter",
-      disable = is_work,
+      cond = is_bleeding_edge,
       config = conf("compe"),
       requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
     }
     use {
       "hrsh7th/vim-vsnip",
-      disable = is_work,
+      cond = is_bleeding_edge,
       config = conf("vim-vsnip"),
       event = "InsertEnter"
     }
@@ -221,7 +235,6 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
-    use {"edluffy/specs.nvim", disable = true}
     use {
       "arecarn/vim-fold-cycle",
       config = function()
