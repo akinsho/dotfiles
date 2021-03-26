@@ -54,7 +54,6 @@ return function()
   ---General finds files function which changes the picker depending
   ---on the current buffers path.
   function as_utils.telescope.files()
-    -- Launch file search using Telescope
     if is_within(vim.g.vim_dir) then
       as_utils.telescope.nvim_config()
     elseif is_within(vim.g.dotfiles) then
@@ -107,6 +106,17 @@ return function()
     )
   end
 
+  function as_utils.telescope.websearch()
+    telescope.extensions.arecibo.websearch(
+      themes.get_dropdown {
+        winblend = 10,
+        border = true,
+        previewer = false,
+        shorten_path = false
+      }
+    )
+  end
+
   function as_utils.telescope.buffers()
     builtins.buffers {
       sort_lastused = true,
@@ -140,12 +150,10 @@ return function()
   nnoremap("<leader>fn", "<cmd>lua as_utils.telescope.nvim_config()<cr>")
   nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
 
-  -- LSP mappings, currently only bound on linux since we use coc on mac
-  -- if vim.g.is_linux then
   nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
-  nnoremap("<leader>ws", [[<cmd>lua as_utils.telescope.workspace_symbols()<cr>]], {silent = false})
-  -- end
+  nnoremap("<leader>ws", "<cmd>lua as_utils.telescope.workspace_symbols()<cr>", {silent = false})
 
+  nnoremap("<leader>fw", "<cmd>lua as_utils.telescope.websearch()<CR>")
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
   nnoremap("<leader>fo", "<cmd>lua as_utils.telescope.buffers()<CR>")

@@ -144,6 +144,13 @@ return require("packer").startup {
             require("telescope").load_extension("fzy_native")
           end
         },
+        {
+          "sunjon/telescope-arecibo.nvim",
+          rocks = {{"openssl", env = {OPENSSL_DIR = "/usr/"}}, "lua-http-parser"},
+          config = function()
+            require("telescope").load_extension("arecibo")
+          end
+        },
         {"nvim-telescope/telescope-fzf-writer.nvim"}
       }
     }
@@ -208,12 +215,14 @@ return require("packer").startup {
     use {
       "akinsho/flutter-tools.nvim",
       config = conf("flutter"),
+      disable = is_home,
       after = "nvim-lspconfig",
       requires = {"nvim-dap", "nvim-lspconfig"}
     }
     use_local {
       "personal/flutter-tools.nvim",
       config = conf("flutter"),
+      as = "local-flutter-tools",
       after = "nvim-lspconfig",
       requires = {"nvim-dap", "nvim-lspconfig"}
     }
