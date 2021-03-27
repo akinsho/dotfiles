@@ -11,9 +11,10 @@ return function()
     }
   }
 
-  as_utils.map("n", "<c-n>", [[<cmd>NvimTreeToggle<CR>]])
+  as_utils.nnoremap("<c-n>", [[<cmd>NvimTreeToggle<CR>]])
 
   vim.g.nvim_tree_indent_markers = 1
+  vim.g.nvim_tree_group_empty = 1
   vim.g.nvim_tree_git_hl = 1
   vim.g.nvim_tree_auto_close = 0 -- closes the tree when it's the last window
   vim.g.nvim_tree_follow = 1 -- show selected file on open
