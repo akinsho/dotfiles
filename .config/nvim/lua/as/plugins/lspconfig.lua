@@ -234,10 +234,10 @@ function as_utils.lsp.add_custom_installer()
     "error",
     config,
     {
-      install_script = [[
-      ! -f package.json && npm init -y --scope=lspinstall || true
+      install_script = [=[
+      [[ ! -f package.json ]] && npm init -y --scope=lspinstall || true
       npm install graphql-language-service-cli@latest
-      ]],
+      ]=],
       uninstall_script = nil
     }
   )
