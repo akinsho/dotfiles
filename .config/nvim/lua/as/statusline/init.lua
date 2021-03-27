@@ -35,7 +35,6 @@ end
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 function M.colors()
-  local is_one = vim.g.colors_name == "one"
   local indicator_color = get_indicator_color()
   local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -5)
   local normal_fg = H.hl_value("Normal", "fg")
@@ -47,7 +46,7 @@ function M.colors()
   local title_fg = H.hl_value("Title", "fg")
   local title_gui = H.hl_value("Title", "gui")
   local number_fg = H.hl_value("Number", "fg")
-  local warning_fg = is_one and P.light_yellow or H.hl_value("WarningMsg", "fg")
+  local warning_fg = P.light_yellow
   local inc_search_bg = H.hl_value("Search", "bg")
 
   H.all {
@@ -72,7 +71,7 @@ function M.colors()
     {"StInactiveSep", {guibg = bg_color, guifg = P.comment_grey}},
     {"StatusLine", {guibg = bg_color}},
     {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
-    {"StWarning", {guifg = "Orange", guibg = bg_color}},
+    {"StWarning", {guifg = warning_fg, guibg = bg_color}},
     {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
     {"StError", {guifg = error_fg, guibg = bg_color}},
     {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
@@ -193,7 +192,8 @@ function _G.statusline()
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
   local dir_empty, parent_empty = is_empty(directory), is_empty(parent)
-  local to_update = dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
+  local to_update =
+    dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
 
   to_update.prefix = ft_icon
   to_update.prefix_color = not minimal and icon_highlight or nil
