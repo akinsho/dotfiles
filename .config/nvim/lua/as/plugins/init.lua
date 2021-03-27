@@ -145,7 +145,7 @@ return require("packer").startup {
           end
         },
         {
-          "sunjon/telescope-arecibo.nvim",
+          "nvim-telescope/telescope-arecibo.nvim",
           rocks = {{"openssl", env = {OPENSSL_DIR = "/usr/"}}, "lua-http-parser"},
           config = function()
             require("telescope").load_extension("arecibo")
