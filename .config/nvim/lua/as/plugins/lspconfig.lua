@@ -223,27 +223,8 @@ as_utils.lsp.servers = {
   }
 }
 
-function as_utils.lsp.add_custom_installer()
-  -- npm install -g graphql-language-service-cli
-  local config = require("lspconfig").graphql.document_config
-  require("lspconfig/configs").graphql = nil -- important, unset the loaded config again
-  config.default_config.cmd[1] = "./node_modules/.bin/graphql-language-service-cli"
-
-  require("lspinstall/servers").graphql =
-    vim.tbl_extend(
-    "error",
-    config,
-    {
-      install_script = [=[
-      [[ ! -f package.json ]] && npm init -y --scope=lspinstall || true
-      npm install graphql-language-service-cli@latest
-      ]=],
-      uninstall_script = nil
-    }
-  )
-end
-
 function as_utils.lsp.setup_servers()
+  vim.cmd "packadd nvim-lspinstall" -- Important!
   local lspinstall = require("lspinstall")
   local lspconfig = require("lspconfig")
 
@@ -324,7 +305,5 @@ return function()
     }
   )
 
-  vim.cmd "packadd nvim-lspinstall" -- Important!
-  as_utils.lsp.add_custom_installer()
   as_utils.lsp.setup_servers()
 end
