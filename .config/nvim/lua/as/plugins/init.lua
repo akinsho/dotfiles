@@ -162,7 +162,13 @@ return require("packer").startup {
         vim.g.prosession_on_startup = 1
       end
     }
-    use "dhruvasagar/vim-dotoo"
+    use {
+      "dhruvasagar/vim-dotoo",
+      config = function()
+        vim.g["dotoo#agenda#files"] = {"~/Dropbox/todos/*.dotoo", "~/Documents/dotoo-files/*.dotoo"}
+        vim.g["dotoo#capture#refile"] = vim.fn.expand('~/Documents/dotoo-files/refile.dotoo')
+      end
+    }
     use {"christoomey/vim-tmux-navigator", config = conf("tmux-navigator")}
     use "nvim-lua/plenary.nvim"
     -- }}}
