@@ -53,12 +53,12 @@ autocommands.create(
 -- Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 -- repeat macros across a visual range
 ------------------------------------------------------------------------------
-function _G._mappings.execute_macro_over_visual_range()
+local function execute_macro_over_visual_range()
   vim.cmd [[echo "@".getcmdline()]]
   vim.cmd [[":'<,'>normal @".nr2char(getchar())]]
 end
 
-xnoremap("@", "<cmd>lua _mappings.execute_macro_over_visual_range()<CR>")
+xnoremap("@", execute_macro_over_visual_range)
 --}}}
 ------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
@@ -159,7 +159,7 @@ vnoremap(".", ":norm.<CR>")
 xnoremap("r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], {silent = false})
 -- https://www.reddit.com/r/neovim/comments/l8vyl8/a_plugin_to_improve_the_deletion_of_buffers/
 -- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
-function _mappings.buf_kill()
+local function buf_kill()
   local buflisted = fn.getbufinfo({buflisted = 1})
   local cur_winnr, cur_bufnr = fn.winnr(), fn.bufnr()
   if #buflisted < 2 then
@@ -174,7 +174,7 @@ function _mappings.buf_kill()
   local is_terminal = vim.bo[cur_bufnr].buftype == "terminal"
   vim.cmd(is_terminal and fmt("bd! %d", cur_bufnr) or fmt("silent! confirm bd! %d", cur_bufnr))
 end
-nnoremap("<leader>qq", "<cmd>lua _mappings.buf_kill()<CR>")
+nnoremap("<leader>qq", buf_kill)
 nnoremap("<leader>qw", "<cmd>bd!<CR>")
 ----------------------------------------------------------------------------------
 -- Operators
@@ -362,13 +362,12 @@ vnoremap(
   {expr = true}
 )
 
-nnoremap("gf", "<cmd>lua _mappings.open_file_or_create_new()<CR>")
 -- if the file under the cursor doesn't exist create it
 -- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
-function _G._mappings.open_file_or_create_new()
+local function open_file_or_create_new()
   local path = fn.expand("<cfile>")
   if not path or path == "" then
     return false
@@ -402,6 +401,8 @@ function _G._mappings.open_file_or_create_new()
 
   return vim.cmd("edit " .. new_path .. suffixes[1])
 end
+
+nnoremap("gf", open_file_or_create_new)
 -----------------------------------------------------------------------------//
 -- Command mode related
 -----------------------------------------------------------------------------//
@@ -471,7 +472,7 @@ nnoremap("<localleader>g*", [[:Ggrep --untracked <cword><CR>]])
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
-function _G._mappings.open_link()
+local function open_link()
   local file = fn.expand("<cfile>")
   if fn.isdirectory(file) > 0 then
     vim.cmd("edit " .. file)
@@ -479,11 +480,11 @@ function _G._mappings.open_link()
     fn.jobstart({vim.g.open_command, file}, {detach = true})
   end
 end
-nnoremap("gx", [[<cmd>lua _mappings.open_link()<CR>]])
+nnoremap("gx", open_link)
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
-function _mappings.toggle_list(prefix)
+local function toggle_list(prefix)
   for _, win in ipairs(api.nvim_list_wins()) do
     local buf = api.nvim_win_get_buf(win)
     local location_list = fn.getloclist(0, {filewinid = 0})
@@ -505,8 +506,18 @@ function _mappings.toggle_list(prefix)
   end
 end
 
-nnoremap("<leader>ls", [[<cmd>lua _mappings.toggle_list('c')<CR>]])
-nnoremap("<leader>li", [[<cmd>lua _mappings.toggle_list('l')<CR>]])
+nnoremap(
+  "<leader>ls",
+  function()
+    toggle_list("c")
+  end
+)
+nnoremap(
+  "<leader>li",
+  function()
+    toggle_list("l")
+  end
+)
 
 -----------------------------------------------------------------------------//
 -- Completion
@@ -538,12 +549,13 @@ function _G._mappings.vim_profile(bang)
 end
 command {"Profile", "call s:profile(<bang>0)", types = {"-bang"}}
 ------------------------------------------------------------------------------
+-- FIXME: this doesn't work with tree sitter
 command {
   "Token",
   function()
     vim.fn["utils#token_inspect"]()
   end
-} -- FIXME this doesn't work with tree sitter
+}
 command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]]}
 command {
   "ReloadModule",
