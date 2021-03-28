@@ -68,16 +68,36 @@ local function validate_opts(opts)
   return true
 end
 
+local function validate_mappings(lhs, rhs, opts)
+  vim.validate {
+    lhs = {lhs, "string"},
+    rhs = {
+      rhs,
+      function(a)
+        local arg_type = type(a)
+        return arg_type == "string" or arg_type == "function"
+      end,
+      "right hand side"
+    },
+    opts = {opts, validate_opts, "mapping options are incorrect"}
+  }
+end
+
+local mappings_table_name = "as_utils.mapping_callbacks"
 local function make_mapper(mode, _opts)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
   local parent_opts = vim.deepcopy(_opts)
   return function(lhs, rhs, __opts)
     local opts = __opts and vim.deepcopy(__opts) or {}
-    vim.validate {
-      lhs = {lhs, "string"},
-      rhs = {rhs, "string"},
-      opts = {opts, validate_opts, "mapping options are incorrect"}
-    }
+
+    validate_mappings(lhs, rhs, opts)
+
+    -- add functions to a global table keyed by their index
+    if type(rhs) == "function" then
+      table.insert(as_utils.mapping_callbacks, rhs)
+      rhs = string.format("<cmd>lua %s[%d]()<CR>", mappings_table_name, #as_utils.mapping_callbacks)
+    end
+
     if opts.buffer then
       -- Remove the buffer from the args sent to the key map function
       local bufnr = opts.buffer

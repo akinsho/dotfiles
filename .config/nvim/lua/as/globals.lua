@@ -46,8 +46,9 @@ _G.as_utils = {
   has = utils.has,
   --- @type fun(item: string | any[]): boolean
   is_empty = utils.is_empty,
-  -- TODO: once commands can take functions as arguments natively remove this global
+  -- TODO: once commands and mappings can take functions as arguments natively remove these globals
   command_callbacks = {},
+  mapping_callbacks = {},
   lsp = {}
 }
 

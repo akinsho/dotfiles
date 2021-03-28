@@ -41,33 +41,7 @@ return function()
     }
   }
 
-  ---find if passed in directory contains the target
-  ---which is the current buffer's path by default
-  ---@param path string
-  ---@param target string
-  ---@return boolean
-  local function is_within(path, target)
-    target = vim.fn.expand("%")
-    return vim.fn.globpath(path, target) ~= ""
-  end
-
-  ---General finds files function which changes the picker depending
-  ---on the current buffers path.
-  function as_utils.telescope.files()
-    if is_within(vim.g.vim_dir) then
-      as_utils.telescope.nvim_config()
-    elseif is_within(vim.g.dotfiles) then
-      as_utils.telescope.dotfiles()
-    elseif vim.fn.isdirectory(".git") > 0 then
-      -- if in a git project, use :Telescope git_files
-      builtins.git_files()
-    else
-      -- otherwise, use :Telescope find_files
-      builtins.find_files()
-    end
-  end
-
-  function as_utils.telescope.dotfiles()
+  local function dotfiles()
     builtins.find_files {
       prompt_title = "~ dotfiles ~",
       shorten_path = false,
@@ -81,7 +55,7 @@ return function()
     }
   end
 
-  function as_utils.telescope.nvim_config()
+  local function nvim_config()
     builtins.find_files {
       prompt_title = "~ nvim config ~",
       shorten_path = false,
@@ -95,7 +69,33 @@ return function()
     }
   end
 
-  function as_utils.telescope.frecency()
+  ---find if passed in directory contains the target
+  ---which is the current buffer's path by default
+  ---@param path string
+  ---@param target string
+  ---@return boolean
+  local function is_within(path, target)
+    target = vim.fn.expand("%")
+    return vim.fn.globpath(path, target) ~= ""
+  end
+
+  ---General finds files function which changes the picker depending
+  ---on the current buffers path.
+  local function files()
+    if is_within(vim.g.vim_dir) then
+      nvim_config()
+    elseif is_within(vim.g.dotfiles) then
+      dotfiles()
+    elseif vim.fn.isdirectory(".git") > 0 then
+      -- if in a git project, use :Telescope git_files
+      builtins.git_files()
+    else
+      -- otherwise, use :Telescope find_files
+      builtins.find_files()
+    end
+  end
+
+  local function frecency()
     telescope.extensions.frecency.frecency(
       themes.get_dropdown {
         winblend = 10,
@@ -106,7 +106,7 @@ return function()
     )
   end
 
-  function as_utils.telescope.websearch()
+  local function websearch()
     telescope.extensions.arecibo.websearch(
       themes.get_dropdown {
         winblend = 10,
@@ -117,7 +117,7 @@ return function()
     )
   end
 
-  function as_utils.telescope.buffers()
+  local function buffers()
     builtins.buffers {
       sort_lastused = true,
       show_all_buffers = true,
@@ -133,29 +133,29 @@ return function()
     }
   end
 
-  function as_utils.telescope.workspace_symbols()
+  local function workspace_symbols()
     builtins.lsp_workspace_symbols {
       query = vim.fn.input("Query > ")
     }
   end
 
   -- Find files using Telescope command-line sugar.
-  nnoremap("<C-P>", "<cmd>lua as_utils.telescope.files()<CR>")
+  nnoremap("<C-P>", files)
   nnoremap("<leader>fa", "<cmd>Telescope<cr>")
   nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
-  nnoremap("<leader>fh", "<cmd>lua as_utils.telescope.frecency()<cr>")
+  nnoremap("<leader>fh", frecency)
 
   nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
-  nnoremap("<leader>fd", "<cmd>lua as_utils.telescope.dotfiles()<cr>")
-  nnoremap("<leader>fn", "<cmd>lua as_utils.telescope.nvim_config()<cr>")
+  nnoremap("<leader>fd", dotfiles)
+  nnoremap("<leader>fn", nvim_config)
   nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
 
   nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
-  nnoremap("<leader>ws", "<cmd>lua as_utils.telescope.workspace_symbols()<cr>", {silent = false})
+  nnoremap("<leader>ws", workspace_symbols, {silent = false})
 
-  nnoremap("<leader>fw", "<cmd>lua as_utils.telescope.websearch()<CR>")
+  nnoremap("<leader>fw", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
-  nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
-  nnoremap("<leader>fo", "<cmd>lua as_utils.telescope.buffers()<CR>")
+  nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep")
+  nnoremap("<leader>fo", buffers)
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
 end
