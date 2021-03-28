@@ -1,4 +1,6 @@
 " Open flutter only commands in dart files
+let tools_path = has('mac') ? 'flutter-tools.nvim' : 'local-flutter-tools'
+
 if v:lua.plugin_loaded('coc.nvim')
   nnoremap <silent> <leader>dc  :CocList --input=flutter commands<CR>
   nnoremap <silent> <leader>de  :CocCommand flutter.emulators<CR>
@@ -8,7 +10,7 @@ if v:lua.plugin_loaded('coc.nvim')
   nnoremap <silent> <leader>drn :CocCommand flutter.run<CR>
   nnoremap <silent> <leader>drs :CocCommand flutter.dev.hotRestart<CR>
   nnoremap <silent> <leader>dd  :CocCommand flutter.devices<CR>
-elseif v:lua.plugin_loaded('flutter-tools.nvim')
+elseif v:lua.plugin_loaded(tools_path)
   nnoremap <silent> <leader>de  :FlutterEmulators<CR>
   nnoremap <silent> <leader>dq  :FlutterQuit<CR>
   nnoremap <silent> <leader>drn :FlutterRun<CR>
