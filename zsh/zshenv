@@ -26,6 +26,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   path+=(
     "$LUA_PATH"
     "$LUA_CPATH"
+    # TODO: Add local build of neovim to path,
+    # remove this once stable nvim is released
+    "$HOME/neovim/bin"
     "$JAVA_HOME/bin"
     # Dart ============================================================
     "/usr/lib/dart/bin"
