@@ -230,7 +230,7 @@ return require("packer").startup {
       event = "InsertEnter",
       cond = is_bleeding_edge,
       config = conf("compe"),
-      requires = {{"tzachar/compe-tabnine", run = "./install.sh"}}
+      requires = {{"tzachar/compe-tabnine", run = "./install.sh", after = "nvim-compe"}}
     }
     use {
       "hrsh7th/vim-vsnip",
