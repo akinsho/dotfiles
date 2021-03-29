@@ -31,6 +31,9 @@ return function()
         local tab_num = vim.fn.tabpagenr()
         local last_tab = vim.fn.tabpagenr("$")
         local is_log = is_ft(buf, "log")
+        if last_tab == 1 then
+          return true
+        end
         -- only show log buffers in secondary tabs
         return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
       end
