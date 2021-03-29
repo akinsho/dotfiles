@@ -533,6 +533,8 @@ return require("packer").startup {
     use_local {
       "contributing/nvim-tree.lua",
       as = "local-nvim-tree",
+      cmd = "NvimTreeOpen",
+      keys = "<c-n>",
       config = conf("nvim-tree"),
       cond = developing
     }

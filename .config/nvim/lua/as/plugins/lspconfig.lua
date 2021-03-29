@@ -67,7 +67,6 @@ end
 -----------------------------------------------------------------------------//
 local function setup_mappings(client)
   local nnoremap, opts = as_utils.nnoremap, {buffer = 0}
-  nnoremap("<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.implementation then
     nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)

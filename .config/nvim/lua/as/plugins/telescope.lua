@@ -49,7 +49,7 @@ return function()
       cwd = vim.g.dotfiles,
       hidden = true,
       layout_strategy = "horizontal",
-      file_ignore_patterns = {".git/.*"},
+      file_ignore_patterns = {".git/.*", "dotbot/.*"},
       layout_config = {
         preview_width = 0.65
       }
@@ -63,7 +63,7 @@ return function()
       cwd = vim.g.vim_dir,
       hidden = true,
       layout_strategy = "horizontal",
-      file_ignore_patterns = {".git/.*"},
+      file_ignore_patterns = {".git/.*", "dotbot/.*"},
       layout_config = {
         preview_width = 0.65
       }
@@ -76,8 +76,11 @@ return function()
   ---@param target string
   ---@return boolean
   local function is_within(path, target)
-    target = vim.fn.expand("%")
-    return vim.fn.globpath(path, target) ~= ""
+    target = target or vim.fn.expand("%:p")
+    if not target then
+      return false
+    end
+    return target:match(vim.fn.fnamemodify(path, ":p"))
   end
 
   ---General finds files function which changes the picker depending
