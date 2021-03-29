@@ -19,7 +19,7 @@ local function setup_packer()
   elseif not vim.env.DEVELOPING then
     vim.cmd "packadd packer.nvim"
   else
-    vim.cmd "packadd local-packer"
+    vim.cmd "packadd local-packer.nvim"
   end
 end
 
@@ -41,30 +41,6 @@ local function dev(path)
   return os.getenv("HOME") .. "/Desktop/projects/" .. path
 end
 
-local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/usr/"
-
---- Helper function to allow deriving the base path for local plugins.
---- If this is hard coded moving things around becomes painful.
---- This helper also automatically disables any local plugins on work machines
---- @param use function
-local function create_local(use)
-  ---@param spec any
-  return function(spec)
-    local path = ""
-    if type(spec) == "table" then
-      path = dev(spec[1])
-      spec[1] = path
-      spec.disable = spec.disable or is_work
-    elseif type(spec) == "string" then
-      path = dev(spec)
-      spec = {path, disable = is_work}
-    end
-    if fn.isdirectory(fn.expand(path)) == 1 then
-      use(spec)
-    end
-  end
-end
-
 local function is_bleeding_edge()
   return not vim.env.STABLE
 end
@@ -79,6 +55,50 @@ end
 
 local function not_developing()
   return not vim.env.DEVELOPING
+end
+
+local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/usr/"
+
+--- Automagically register local and report plugins as well as when they are enabled or disabled
+--- 1. Local plugins that I created should be used but specified with their git urls so they are
+--- installed from git on other machines
+--- 2. If DEVELOPING is set to true then local plugins I contribute to should be loaded vs their
+--- remote counterparts
+---@param spec table
+local function use_local(spec)
+  local use = require("packer").use
+  local path = ""
+  if type(spec) ~= "table" then
+    return vim.cmd(fmt('echomsg "spec must be a table"', spec[1]))
+  end
+  local local_spec = vim.deepcopy(spec)
+  if not local_spec.local_path then
+    return vim.cmd(fmt('echomsg "%s has no specified local path"', spec[1]))
+  end
+
+  local name = vim.split(spec[1], "/")[2]
+  local is_contributing = local_spec.local_path:match("contributing") ~= nil
+  path = dev(local_spec.local_path .. "/" .. name)
+  local_spec[1] = path
+  local_spec.as = fmt("local-%s", name)
+  local_spec.cond = is_contributing and developing or local_spec.local_cond
+  local_spec.disable = is_work or local_spec.local_disable
+
+  spec.disable = not is_contributing and is_home or false
+  spec.cond = is_contributing and not_developing or nil
+
+  spec.local_path = nil
+  spec.local_cond = nil
+  spec.local_disable = nil
+
+  local_spec.branch = nil
+  local_spec.commit = nil
+  local_spec.tag = nil
+
+  if fn.isdirectory(fn.expand(path)) == 1 then
+    use(local_spec)
+  end
+  use(spec)
 end
 
 ---Require a plugin config
@@ -109,11 +129,7 @@ end
 --]]
 return require("packer").startup {
   function(use, use_rocks)
-    local use_local = create_local(use)
-
-    -- Packer can manage itself as an optional plugin
-    use {"wbthomason/packer.nvim", cond = not_developing}
-    use_local {"contributing/packer.nvim", as = "local-packer", cond = developing}
+    use_local {"wbthomason/packer.nvim", local_path = "contributing"}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -240,20 +256,14 @@ return require("packer").startup {
       }
     }
 
-    use {
+    use_local {
       "akinsho/flutter-tools.nvim",
+      ft = "dart",
       config = conf("flutter"),
       disable = is_home,
-      after = "nvim-lspconfig",
       branch = "feat/format-stdout-output",
-      requires = {"nvim-dap", "nvim-lspconfig"}
-    }
-    use_local {
-      "personal/flutter-tools.nvim",
-      config = conf("flutter"),
-      as = "local-flutter-tools",
-      after = "nvim-lspconfig",
-      requires = {"nvim-dap", "nvim-lspconfig"}
+      requires = {"nvim-dap", "nvim-lspconfig"},
+      local_path = "personal"
     }
 
     use {
@@ -415,10 +425,12 @@ return require("packer").startup {
         vim.g.conflict_marker_end = "^>>>>>>> .*$"
       end
     }
-    use {
+    use_local {
       "TimUntersberger/neogit",
       cmd = "Neogit",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
+      local_path = "contributing",
+      local_disable = true,
       config = function()
         require("neogit").setup {
           disable_signs = true, -- BUG: currently show signs in incorrect places
@@ -435,6 +447,7 @@ return require("packer").startup {
         nnoremap("<localleader>gp", "<cmd>lua require('neogit.popups.push').create()<CR>")
       end
     }
+
     use {
       "kdheepak/lazygit.nvim",
       cmd = "LazyGit",
@@ -523,21 +536,15 @@ return require("packer").startup {
     -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
     use "kyazdani42/nvim-web-devicons"
-    use {
+
+    use_local {
       "kyazdani42/nvim-tree.lua",
       cmd = "NvimTreeOpen",
       keys = "<c-n>",
       config = conf("nvim-tree"),
-      cond = not_developing
+      local_path = "contributing"
     }
-    use_local {
-      "contributing/nvim-tree.lua",
-      as = "local-nvim-tree",
-      cmd = "NvimTreeOpen",
-      keys = "<c-n>",
-      config = conf("nvim-tree"),
-      cond = developing
-    }
+
     -- Treesitter cannot be run as an optional plugin and most be available on start
     -- if not it obscurely breaks nvim-lspconfig...
     use {
@@ -555,55 +562,33 @@ return require("packer").startup {
         },
         {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
         {"nvim-treesitter/playground", cmd = "TSPlaygroundToggle", disable = is_work}
-      }
+      },
+      local_path = "contributing"
     }
-    use_local {"contributing/nvim-treesitter", as = "local-treesitter", disable = true}
 
-    local dep_assist = function()
-      return require("dependency_assist").setup()
-    end
-
-    -----------------------------------------------------------------------------//
-    -- Work plugins
-    -----------------------------------------------------------------------------//
-    use {
-      "akinsho/dependency-assist.nvim",
-      config = dep_assist,
-      disable = is_home,
-      ft = {"dart", "rust"}
-    }
-    use {
-      "akinsho/nvim-toggleterm.lua",
-      config = conf("toggleterm"),
-      keys = [[<c-\>]],
-      disable = is_home
-    }
-    use {
-      "akinsho/nvim-bufferline.lua",
-      config = conf("nvim-bufferline"),
-      disable = is_home
-    }
+    use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
     -----------------------------------------------------------------------------//
     -- Personal plugins
     -----------------------------------------------------------------------------//
-    use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
     use_local {
-      "personal/dependency-assist.nvim",
-      config = dep_assist,
-      as = "local-dep-assist",
-      ft = {"dart", "rust"}
+      "akinsho/dependency-assist.nvim",
+      config = function()
+        return require("dependency_assist").setup()
+      end,
+      ft = {"dart", "rust"},
+      local_path = "personal"
     }
     use_local {
-      "personal/nvim-toggleterm.lua",
+      "akinsho/nvim-toggleterm.lua",
       config = conf("toggleterm"),
-      as = "local-toggleterm",
-      keys = [[<c-\>]]
+      keys = [[<c-\>]],
+      local_path = "personal"
     }
     -- TODO: could be lazy loaded if the color library was separate functionality
     use_local {
-      "personal/nvim-bufferline.lua",
-      as = "local-bufferline",
-      config = conf("nvim-bufferline")
+      "akinsho/nvim-bufferline.lua",
+      config = conf("nvim-bufferline"),
+      local_path = "personal"
     }
     -- }}}
     ---------------------------------------------------------------------------------
