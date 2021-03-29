@@ -215,6 +215,7 @@ return require("packer").startup {
       config = conf("flutter"),
       disable = is_home,
       after = "nvim-lspconfig",
+      branch = "feat/format-stdout-output",
       requires = {"nvim-dap", "nvim-lspconfig"}
     }
     use_local {
