@@ -341,7 +341,7 @@ return require("packer").startup {
     use "tpope/vim-repeat"
     use {"tpope/vim-abolish", config = conf("abolish")}
     -- sets searchable path for filetypes like go so 'gf' works
-    use "tpope/vim-apathy"
+    use {"tpope/vim-apathy", ft = {"go", "python", "javascript", "typescript"}}
     use {"tpope/vim-projectionist", config = conf("vim-projectionist")}
     use {
       "tpope/vim-surround",
