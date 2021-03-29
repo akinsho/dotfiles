@@ -238,7 +238,7 @@ function as_utils.lsp.setup_servers()
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
     end
     config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    config.capabilities = vim.tbl_deep_extend("force", config.capabilities, status_capabilities)
+    config.capabilities = require('as.utils').deep_merge(config.capabilities, status_capabilities)
     lspconfig[server].setup(config)
   end
 end
