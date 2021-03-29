@@ -155,7 +155,7 @@ return function()
 
   nnoremap("<leader>fw", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
-  nnoremap("<leader>fs", "<cmd>lua require('telescope').extensions.fzf_writer.staged_grep")
+  nnoremap("<leader>fs", telescope.extensions.fzf_writer.staged_grep)
   nnoremap("<leader>fo", buffers)
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
 end

@@ -41,6 +41,8 @@ local function dev(path)
   return os.getenv("HOME") .. "/Desktop/projects/" .. path
 end
 
+local openssl_dir = has('mac') and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/usr/"
+
 --- Helper function to allow deriving the base path for local plugins.
 --- If this is hard coded moving things around becomes painful.
 --- This helper also automatically disables any local plugins on work machines
@@ -134,22 +136,12 @@ return require("packer").startup {
         {
           "nvim-telescope/telescope-frecency.nvim",
           requires = {"tami5/sql.nvim"},
-          config = function()
-            require("telescope").load_extension("frecency")
-          end
+          after = "telescope.nvim",
         },
-        {
-          "nvim-telescope/telescope-fzy-native.nvim",
-          config = function()
-            require("telescope").load_extension("fzy_native")
-          end
-        },
+        { "nvim-telescope/telescope-fzy-native.nvim", after = "telescope.nvim"},
         {
           "nvim-telescope/telescope-arecibo.nvim",
-          rocks = {{"openssl", env = {OPENSSL_DIR = "/usr/"}}, "lua-http-parser"},
-          config = function()
-            require("telescope").load_extension("arecibo")
-          end
+          rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"},
         },
         {"nvim-telescope/telescope-fzf-writer.nvim"}
       }
