@@ -41,7 +41,7 @@ local function dev(path)
   return os.getenv("HOME") .. "/Desktop/projects/" .. path
 end
 
-local openssl_dir = has('mac') and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/usr/"
+local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/usr/"
 
 --- Helper function to allow deriving the base path for local plugins.
 --- If this is hard coded moving things around becomes painful.
@@ -136,12 +136,12 @@ return require("packer").startup {
         {
           "nvim-telescope/telescope-frecency.nvim",
           requires = {"tami5/sql.nvim"},
-          after = "telescope.nvim",
+          after = "telescope.nvim"
         },
-        { "nvim-telescope/telescope-fzy-native.nvim", after = "telescope.nvim"},
+        {"nvim-telescope/telescope-fzy-native.nvim", after = "telescope.nvim"},
         {
           "nvim-telescope/telescope-arecibo.nvim",
-          rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"},
+          rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"}
         },
         {"nvim-telescope/telescope-fzf-writer.nvim"}
       }
@@ -158,7 +158,7 @@ return require("packer").startup {
       "dhruvasagar/vim-dotoo",
       config = function()
         vim.g["dotoo#agenda#files"] = {"~/Dropbox/todos/*.dotoo", "~/Documents/dotoo-files/*.dotoo"}
-        vim.g["dotoo#capture#refile"] = vim.fn.expand('~/Documents/dotoo-files/refile.dotoo')
+        vim.g["dotoo#capture#refile"] = vim.fn.expand("~/Documents/dotoo-files/refile.dotoo")
       end
     }
     use {"christoomey/vim-tmux-navigator", config = conf("tmux-navigator")}
@@ -175,7 +175,6 @@ return require("packer").startup {
     use {
       "neovim/nvim-lspconfig",
       config = conf("lspconfig"),
-      event = "VimEnter",
       cond = is_bleeding_edge,
       requires = {
         {
@@ -192,11 +191,7 @@ return require("packer").startup {
             status.register_progress()
           end
         },
-        {
-          "glepnir/lspsaga.nvim",
-          config = conf("lspsaga"),
-          after = "nvim-lspconfig"
-        },
+        {"glepnir/lspsaga.nvim", config = conf("lspsaga")},
         {
           "kabouzeid/nvim-lspinstall",
           opt = true,
@@ -337,7 +332,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Profiling {{{
     --------------------------------------------------------------------------------
-    use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
+    use {"dstein64/vim-startuptime", cmd = "StartupTime"}
     -- }}}
     --------------------------------------------------------------------------------
     -- TPOPE {{{
