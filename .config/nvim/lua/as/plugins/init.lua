@@ -126,7 +126,50 @@ return require("packer").startup {
         vim.g.rooter_resolve_links = 1
       end
     }
-    -- TODO FZF vs Telescope
+    use {
+      "glepnir/dashboard-nvim",
+      config = function()
+        local join = function(k, v)
+          return {k .. string.rep(" ", 16) .. v}
+        end
+        vim.g.dashboard_custom_header = {
+          " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
+          " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
+          " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
+          " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
+          " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
+          " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝"
+        }
+        vim.g.dashboard_default_executive = "telescope"
+        vim.g.dashboard_disable_statusline = 1
+        vim.g.dashboard_session_directory = vim.fn.stdpath("data") .. "/session"
+        vim.g.dashboard_custom_section = {
+          buffer_list = {
+            description = join(" Last session", "SPC s l"),
+            command = "SessionLoad"
+          },
+          frecent = {
+            description = join("ﭯ Recently opened", "SPC s o"),
+            command = "TelescopeFrecent"
+          },
+          files = {
+            description = join(" Project Files", "SPC s f"),
+            command = "TelescopeFindFiles"
+          }
+        }
+        require("as.autocommands").augroup(
+          "DashboardSession",
+          {
+            {
+              events = {"BufEnter", "VimLeavePre"},
+              targets = {"*"},
+              command = [[if &ft != '' | silent! execute 'SessionSave' | endif]]
+            }
+          }
+        )
+      end
+    }
+    -- TODO: FZF vs Telescope
     use {"junegunn/fzf", run = "./install --all", disable = false}
     use {
       "nvim-telescope/telescope.nvim",
@@ -145,14 +188,6 @@ return require("packer").startup {
         },
         {"nvim-telescope/telescope-fzf-writer.nvim"}
       }
-    }
-    use {
-      "dhruvasagar/vim-prosession",
-      requires = "tpope/vim-obsession",
-      config = function()
-        vim.g.prosession_dir = vim.fn.stdpath("data") .. "/session"
-        vim.g.prosession_on_startup = 1
-      end
     }
     use {
       "dhruvasagar/vim-dotoo",

@@ -2,6 +2,7 @@ as_utils.telescope = {}
 
 return function()
   local nnoremap = as_utils.nnoremap
+  local command = as_utils.command
   local telescope = require("telescope")
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
@@ -141,9 +142,12 @@ return function()
 
   -- Find files using Telescope command-line sugar.
   nnoremap("<C-P>", files)
+  command {"TelescopeFindFiles", files}
+
   nnoremap("<leader>fa", "<cmd>Telescope<cr>")
   nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
   nnoremap("<leader>fh", frecency)
+  command {"TelescopeFrecent", frecency}
 
   nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
   nnoremap("<leader>fd", dotfiles)
