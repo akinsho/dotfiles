@@ -8,6 +8,19 @@ part of my config I can call select helper methods.
 local utils = require("as.utils")
 
 _G.as_utils = {
+  lsp = {},
+  -- TODO: once commands and mappings can take functions
+  -- as arguments natively remove these globals
+  command_callbacks = {},
+  mapping_callbacks = {},
+  command = utils.command,
+  profile = utils.profile,
+  --- @type fun(feature: string): boolean
+  has = utils.has,
+  --- @type fun(item: string | any[]): boolean
+  is_empty = utils.is_empty,
+  --- @type fun(t1: table, t2: table): table @comment merge two table giving t2 preference
+  deep_merge = utils.deep_merge,
   map = utils.map,
   --- @type fun(lhs: string, rhs: string, opts: table)
   nnoremap = utils.nnoremap,
@@ -39,17 +52,7 @@ _G.as_utils = {
   cmap = utils.cmap,
   --- @type fun(lhs: string, rhs: string, opts: table)
   tmap = utils.tmap,
-  command = utils.command,
   buf_map = utils.buf_map,
-  profile = utils.profile,
-  --- @type fun(feature: string): boolean
-  has = utils.has,
-  --- @type fun(item: string | any[]): boolean
-  is_empty = utils.is_empty,
-  -- TODO: once commands and mappings can take functions as arguments natively remove these globals
-  command_callbacks = {},
-  mapping_callbacks = {},
-  lsp = {}
 }
 
 -- inspect the contents of an object very quickly in your code or from the command-line:
