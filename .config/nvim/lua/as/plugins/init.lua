@@ -289,7 +289,8 @@ return require("packer").startup {
       "hrsh7th/vim-vsnip",
       cond = is_bleeding_edge,
       config = conf("vim-vsnip"),
-      event = "InsertEnter"
+      event = "InsertEnter",
+      requires = {"rafamadriz/friendly-snippets"}
     }
     -- }}}
     --------------------------------------------------------------------------------
