@@ -6,16 +6,14 @@ local fmt = string.format
 
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
-  local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/*packer*"
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/*/packer.nvim"
   if fn.empty(fn.glob(install_path)) > 0 then
     print("Downloading packer.nvim...")
     local output =
-      fn.system(
-      string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path)
-    )
+      fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
     print(output)
     vim.cmd "packadd packer.nvim"
-    vim.cmd "PackerInstall"
+    require("packer").sync()
   elseif not vim.env.DEVELOPING then
     vim.cmd "packadd packer.nvim"
   else
