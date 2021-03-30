@@ -4,7 +4,7 @@ local fn = vim.fn
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
-local function setup_autocommands(client)
+local function setup_autocommands(client, bufnr)
   local autocommands = require("as.autocommands")
 
   autocommands.augroup(
@@ -14,16 +14,6 @@ local function setup_autocommands(client)
         events = {"InsertLeave", "BufWrite", "BufEnter"},
         targets = {"<buffer>"},
         command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]]
-      }
-    }
-  )
-  autocommands.augroup(
-    "LspHighlights",
-    {
-      {
-        events = {"VimEnter", "ColorScheme"},
-        targets = {"*"},
-        command = [[lua as_utils.lsp.highlight()]]
       }
     }
   )
@@ -66,8 +56,8 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
-local function setup_mappings(client)
-  local nnoremap, opts = as_utils.nnoremap, {buffer = 0}
+local function setup_mappings(client, bufnr)
+  local nnoremap, opts = as_utils.nnoremap, {buffer = bufnr}
   nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.implementation then
     nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
@@ -160,8 +150,8 @@ require("vim.lsp.protocol").CompletionItemKind = {
 }
 
 function as_utils.lsp.on_attach(client, bufnr)
-  setup_autocommands(client)
-  setup_mappings(client)
+  setup_autocommands(client, bufnr)
+  setup_mappings(client, bufnr)
 
   if client.resolved_capabilities.goto_definition then
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.as_utils.lsp.tagfunc")
@@ -279,6 +269,17 @@ return function()
     return
   end
   as_utils.lsp.has_setup = true
+
+  require("as.autocommands").augroup(
+    "LspHighlights",
+    {
+      {
+        events = {"VimEnter", "ColorScheme"},
+        targets = {"*"},
+        command = [[lua as_utils.lsp.highlight()]]
+      }
+    }
+  )
 
   as_utils.lsp.highlight()
   -----------------------------------------------------------------------------//
