@@ -224,8 +224,8 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = conf("dap")}
 
-    use {"neoclide/coc.nvim", config = conf("coc"), cond = is_stable}
-    use {"honza/vim-snippets", cond = is_stable}
+    use {"neoclide/coc.nvim", config = conf("coc"), cond = is_stable, disable = is_home}
+    use {"honza/vim-snippets", cond = is_stable, disable = is_home}
 
     use {
       "neovim/nvim-lspconfig",
