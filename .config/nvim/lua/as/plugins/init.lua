@@ -391,11 +391,12 @@ return require("packer").startup {
       end
     }
     use_local {
-      "TimUntersberger/neogit",
+      "RianFuro/neogit",
       cmd = "Neogit",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       local_path = "contributing",
       local_disable = true,
+      branch = "sane-folds",
       config = function()
         require("neogit").setup {
           disable_signs = true, -- BUG: currently show signs in incorrect places
