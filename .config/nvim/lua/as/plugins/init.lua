@@ -66,11 +66,11 @@ local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/u
 local function with_local(spec)
   local path = ""
   if type(spec) ~= "table" then
-    return vim.cmd(fmt('echomsg "spec must be a table"', spec[1]))
+    return as_utils.echomsg(fmt("spec must be a table", spec[1]))
   end
   local local_spec = vim.deepcopy(spec)
   if not local_spec.local_path then
-    return vim.cmd(fmt('echomsg "%s has no specified local path"', spec[1]))
+    return as_utils.echomsg(fmt("%s has no specified local path", spec[1]))
   end
 
   local name = vim.split(spec[1], "/")[2]
@@ -80,7 +80,7 @@ local function with_local(spec)
   end
   local is_contributing = local_spec.local_path:match("contributing") ~= nil
   local_spec[1] = path
-  local_spec.as = fmt("local-%s", name)
+  local_spec.as = local_spec.local_name or fmt("local-%s", name)
   local_spec.cond = is_contributing and developing or local_spec.local_cond
   local_spec.disable = is_work or local_spec.local_disable
 
@@ -97,6 +97,7 @@ local function with_local(spec)
   local_spec.local_path = nil
   local_spec.local_cond = nil
   local_spec.local_disable = nil
+  local_spec.local_name = nil
 
   return spec, local_spec
 end
@@ -224,9 +225,14 @@ return require("packer").startup {
     use_local {
       "akinsho/flutter-tools.nvim",
       ft = "dart",
+      after = "nvim-lspconfig",
       config = conf("flutter"),
-      disable = is_home,
+      cond = is_bleeding_edge,
       requires = {"nvim-dap", "nvim-lspconfig"},
+      -- BUG: using the name 'local-flutter-tools.nvim' causes a strange bug
+      -- where the plugin isn't loaded. Likely because of some name matching
+      -- isue in packer
+      local_name = "local-flutter",
       local_path = "personal"
     }
 
