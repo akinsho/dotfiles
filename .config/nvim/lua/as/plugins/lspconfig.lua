@@ -172,8 +172,6 @@ end
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
-
 local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
 local sumneko_path = string.format("%s/lua-language-server", local_path)
 local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
@@ -198,26 +196,32 @@ as_utils.lsp.servers = {
       }
     }
   },
-  efm = {
-    init_options = {documentFormatting = true},
+  diagnosticls = {
+    rootMarkers = {".git/"},
     filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
-    settings = {
-      -- add ".lua-format" to root if using lua-format
-      rootMarkers = {".git/"},
-      languages = {
-        json = {prettier},
-        html = {prettier},
-        css = {prettier},
-        yaml = {prettier},
-        markdown = {prettier},
-        -- npm i -g lua-fmt
-        -- 'lua-format -i -c {config_dir}'
-        lua = {
-          {
-            formatCommand = "luafmt --indent-count 2 --line-width 100 --stdin",
-            formatStdin = true
-          }
+    init_options = {
+      formatters = {
+        prettier = {
+          rootPatterns = {".git"},
+          command = "prettier",
+          args = {"--stdin-filepath", "%filename"}
+        },
+        luafmt = {
+          -- npm i -g lua-fmt
+          -- 'lua-format -i -c {config_dir}'
+          -- add ".lua-format" to root if using lua-format
+          rootPatterns = {".git"},
+          command = "luafmt",
+          args = {"--indent-count", vim.o.shiftwidth, "--line-width", "100", "--stdin"}
         }
+      },
+      formatFiletypes = {
+        json = "prettier",
+        html = "prettier",
+        css = "prettier",
+        yaml = "prettier",
+        markdown = "prettier",
+        lua = "luafmt"
       }
     }
   }
