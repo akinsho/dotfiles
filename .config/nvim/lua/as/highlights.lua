@@ -136,6 +136,11 @@ local function plugin_highlights()
     M.highlight("WhichKeyFloating", {link = "Normal", force = true})
   end
 
+  if plugin_loaded("telescope.nvim") then
+    M.highlight("TelescopePathSeparator", {link = "Directory"})
+    M.highlight("TelescopeQueryFilter", {link = "IncSearch"})
+  end
+
   if plugin_loaded("conflict-marker.vim") then
     M.all {
       {"ConflictMarkerBegin", {guibg = "#2f7366"}},
