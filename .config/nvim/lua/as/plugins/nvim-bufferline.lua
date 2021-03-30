@@ -13,9 +13,15 @@ return function()
       show_close_icon = false,
       separator_style = "slant",
       diagnostics = not has("mac") and "nvim_lsp" or false,
-      diagnostics_indicator = function(count, level)
-        local icon = level:match("error") and " " or " "
-        return " " .. icon .. count
+      diagnostics_indicator = function(_, _, diagnostics)
+        local result = {}
+        local symbols = {error = " ", warning = " ", other = ""}
+        for name, count in pairs(diagnostics) do
+          if symbols[name] and count then
+            table.insert(result, symbols[name] .. count)
+          end
+        end
+        return " " .. table.concat(result, " ")
       end,
       custom_filter = function(buf, buf_nums)
         local logs =
