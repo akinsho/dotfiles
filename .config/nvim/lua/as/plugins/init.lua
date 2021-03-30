@@ -65,8 +65,7 @@ local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/u
 --- 2. If DEVELOPING is set to true then local plugins I contribute to should be loaded vs their
 --- remote counterparts
 ---@param spec table
-local function use_local(spec)
-  local use = require("packer").use
+local function with_local(spec)
   local path = ""
   if type(spec) ~= "table" then
     return vim.cmd(fmt('echomsg "spec must be a table"', spec[1]))
@@ -77,8 +76,11 @@ local function use_local(spec)
   end
 
   local name = vim.split(spec[1], "/")[2]
-  local is_contributing = local_spec.local_path:match("contributing") ~= nil
   path = dev(local_spec.local_path .. "/" .. name)
+  if not fn.isdirectory(fn.expand(path)) == -1 then
+    return spec, nil
+  end
+  local is_contributing = local_spec.local_path:match("contributing") ~= nil
   local_spec[1] = path
   local_spec.as = fmt("local-%s", name)
   local_spec.cond = is_contributing and developing or local_spec.local_cond
@@ -91,11 +93,20 @@ local function use_local(spec)
   spec.local_cond = nil
   spec.local_disable = nil
 
+  local_spec.tag = nil
   local_spec.branch = nil
   local_spec.commit = nil
-  local_spec.tag = nil
+  local_spec.local_path = nil
+  local_spec.local_cond = nil
+  local_spec.local_disable = nil
 
-  if fn.isdirectory(fn.expand(path)) == 1 then
+  return spec, local_spec
+end
+
+local function use_local(original)
+  local use = require("packer").use
+  local spec, local_spec = with_local(original)
+  if local_spec then
     use(local_spec)
   end
   use(spec)
