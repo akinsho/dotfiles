@@ -34,7 +34,6 @@ source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
 source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               Completion
@@ -410,6 +409,12 @@ fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+if [ ! -f ~/.fzf.zsh ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(hub alias -s)" # Aliases 'hub' to git
 eval $(thefuck --alias)
