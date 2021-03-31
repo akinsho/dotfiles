@@ -15,9 +15,9 @@ return function()
       diagnostics = not has("mac") and "nvim_lsp" or false,
       diagnostics_indicator = function(_, _, diagnostics)
         local result = {}
-        local symbols = {error = " ", warning = " ", other = ""}
+        local symbols = {error = " ", warning = " ", info = ""}
         for name, count in pairs(diagnostics) do
-          if symbols[name] and count then
+          if symbols[name] and count > 0 then
             table.insert(result, symbols[name] .. count)
           end
         end
