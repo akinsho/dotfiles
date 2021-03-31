@@ -232,18 +232,20 @@ return require("packer").startup {
       local_path = "personal"
     }
 
+    use {"hrsh7th/nvim-compe", cond = is_bleeding_edge, config = conf("compe")}
     use {
-      "hrsh7th/nvim-compe",
-      cond = is_bleeding_edge,
-      config = conf("compe"),
-      requires = {{"tzachar/compe-tabnine", run = "./install.sh", after = "nvim-compe"}}
+      "tzachar/compe-tabnine",
+      run = "./install.sh",
+      after = "nvim-compe",
+      requires = "hrsh7th/nvim-compe"
     }
+
     use {
       "hrsh7th/vim-vsnip",
       cond = is_bleeding_edge,
       config = conf("vim-vsnip"),
       event = "InsertEnter",
-      requires = {"rafamadriz/friendly-snippets"}
+      requires = {"rafamadriz/friendly-snippets", "hrsh7th/nvim-compe"}
     }
     -- }}}
     --------------------------------------------------------------------------------
