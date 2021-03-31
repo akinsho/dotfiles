@@ -4,6 +4,7 @@ _G.as_utils = {
   command_callbacks = {},
   mapping_callbacks = {}
 }
+
 local fn = vim.fn
 local api = vim.api
 
@@ -211,4 +212,9 @@ end
 function _G.dump(...)
   local objects = vim.tbl_map(vim.inspect, {...})
   print(unpack(objects))
+end
+
+function _G.plugin_loaded(plugin_name)
+  local plugins = _G.packer_plugins or {}
+  return plugins[plugin_name] and plugins[plugin_name].loaded
 end

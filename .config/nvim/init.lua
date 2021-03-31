@@ -27,11 +27,6 @@ elseif uname.sysname == "Linux" then
   vim.g.is_linux = true
 end
 
-function _G.plugin_loaded(plugin_name)
-  local plugins = _G.packer_plugins
-  return plugins and plugins[plugin_name] ~= nil and plugins[plugin_name].loaded
-end
-
 vim.g.dotfiles = vim.env.DOTFILES ~= nil and vim.env.DOTFILES or "~/.dotfiles"
 vim.g.vim_dir = vim.g.dotfiles .. "/.config/nvim"
 
