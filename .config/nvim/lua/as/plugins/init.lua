@@ -224,15 +224,10 @@ return require("packer").startup {
 
     use_local {
       "akinsho/flutter-tools.nvim",
-      ft = "dart",
       after = "nvim-lspconfig",
       config = conf("flutter"),
       cond = is_bleeding_edge,
       requires = {"nvim-dap", "nvim-lspconfig"},
-      -- BUG: using the name 'local-flutter-tools.nvim' causes a strange bug
-      -- where the plugin isn't loaded. Likely because of some name matching
-      -- isue in packer
-      local_name = "local-flutter",
       local_path = "personal"
     }
 
