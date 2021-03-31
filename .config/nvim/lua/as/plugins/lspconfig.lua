@@ -4,7 +4,7 @@ local fn = vim.fn
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
-local function setup_autocommands(client, bufnr)
+local function setup_autocommands(client, _)
   local autocommands = require("as.autocommands")
 
   autocommands.augroup(
@@ -47,7 +47,7 @@ local function setup_autocommands(client, bufnr)
         {
           events = {"BufWritePre"},
           targets = {"<buffer>"},
-          command = "lua vim.lsp.buf.formatting_sync(nil, 1000)"
+          command = "lua vim.lsp.buf.formatting_sync(nil, 5000)"
         }
       }
     )
