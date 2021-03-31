@@ -192,6 +192,7 @@ return require("packer").startup {
     use {
       "neovim/nvim-lspconfig",
       config = conf("lspconfig"),
+      event = "VimEnter",
       cond = is_bleeding_edge,
       requires = {
         {
