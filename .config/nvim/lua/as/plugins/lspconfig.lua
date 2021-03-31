@@ -265,10 +265,10 @@ command {
 }
 
 return function()
-  if as_utils.lsp.has_setup then
+  if vim.g.lspconfig_has_setup then
     return
   end
-  as_utils.lsp.has_setup = true
+  vim.g.lspconfig_has_setup = true
 
   require("as.autocommands").augroup(
     "LspHighlights",
