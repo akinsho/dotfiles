@@ -257,6 +257,11 @@ if fn.isdirectory(vim.o.undodir) == 0 then
   fn.mkdir(vim.o.undodir, "p")
 end
 opt.undofile = true
+opt.swapfile = true
+vim.o.directory = fn.stdpath("data") .. "/swap/"
+if fn.isdirectory(vim.o.directory) == 0 then
+  fn.mkdir(vim.o.directory, "p")
+end
 --}}}
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
