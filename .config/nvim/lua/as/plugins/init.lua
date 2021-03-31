@@ -9,9 +9,7 @@ local function setup_packer()
   local install_path = fn.stdpath("data") .. "/site/pack/packer/*/packer.nvim"
   if fn.empty(fn.glob(install_path)) > 0 then
     print("Downloading packer.nvim...")
-    local output =
-      fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
-    print(output)
+    print(fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path}))
     vim.cmd "packadd packer.nvim"
     require("packer").sync()
   elseif not vim.env.DEVELOPING then
