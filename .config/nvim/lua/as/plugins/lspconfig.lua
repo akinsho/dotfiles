@@ -162,13 +162,8 @@ end
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local local_path = has("mac") and os.getenv("HOME") or fn.stdpath("data") .. "/lspinstall"
-local sumneko_path = string.format("%s/lua-language-server", local_path)
-local sumneko_binary = sumneko_path .. "/bin/" .. vim.g.system_name .. "/lua-language-server"
-
 as_utils.lsp.servers = {
   lua = {
-    cmd = {sumneko_binary, "-E", sumneko_path .. "/main.lua"},
     settings = {
       Lua = {
         diagnostics = {globals = {"vim"}},
@@ -188,7 +183,7 @@ as_utils.lsp.servers = {
   },
   diagnosticls = {
     rootMarkers = {".git/"},
-    filetypes = {"yaml", "json", "html", "css", "markdown", "lua"},
+    filetypes = {"yaml", "json", "html", "css", "markdown", "lua", "graphql"},
     init_options = {
       formatters = {
         prettier = {
@@ -211,6 +206,7 @@ as_utils.lsp.servers = {
         css = "prettier",
         yaml = "prettier",
         markdown = "prettier",
+        graphql = "prettier",
         lua = "luafmt"
       }
     }
