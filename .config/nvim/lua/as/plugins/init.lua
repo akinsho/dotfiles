@@ -223,10 +223,10 @@ return require("packer").startup {
 
     use_local {
       "akinsho/flutter-tools.nvim",
-      after = "nvim-lspconfig",
       config = conf("flutter"),
+      branch = "feature/remove-lspconfig",
       cond = is_bleeding_edge,
-      requires = {"nvim-dap", "nvim-lspconfig"},
+      requires = {"nvim-dap"},
       local_path = "personal"
     }
 
@@ -398,8 +398,9 @@ return require("packer").startup {
       end
     }
     use_local {
-      "TimUntersberger/neogit",
+      "RianFuro/neogit",
       cmd = "Neogit",
+      branch = "sane-folds",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       local_path = "contributing",
       local_disable = true,
