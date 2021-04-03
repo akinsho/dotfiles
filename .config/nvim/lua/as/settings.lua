@@ -40,7 +40,7 @@ vim.o.shortmess =
     "O", -- file-read message overwrites previous
     "T", -- truncate non-file messages in middle
     "f", -- (file x of x) instead of just (x of x
-    "F", -- Don't give file info when editing a file
+    "F", -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
     "s",
     "c",
     "W" -- Dont show [w] or written when writing
