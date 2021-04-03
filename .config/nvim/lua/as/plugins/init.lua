@@ -266,7 +266,8 @@ return require("packer").startup {
     use {
       "karb94/neoscroll.nvim",
       config = function()
-        vim.g.neoscroll_cursor_scrolls_alone = 1
+        vim.g.neoscroll_cursor_scrolls_alone = true
+        vim.g.neoscroll_respect_scrolloff = true
       end
     }
     use {
