@@ -190,7 +190,6 @@ return require("packer").startup {
     use {
       "neovim/nvim-lspconfig",
       config = conf("lspconfig"),
-      event = "VimEnter",
       cond = is_bleeding_edge,
       requires = {
         {
@@ -224,7 +223,6 @@ return require("packer").startup {
     use_local {
       "akinsho/flutter-tools.nvim",
       config = conf("flutter"),
-      branch = "feature/remove-lspconfig",
       cond = is_bleeding_edge,
       requires = {"nvim-dap"},
       local_path = "personal"
