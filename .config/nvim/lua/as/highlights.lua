@@ -1,7 +1,42 @@
-local synIDattr = vim.fn.synIDattr
-local hlID = vim.fn.hlID
+local fn = vim.fn
+local synIDattr = fn.synIDattr
+local hlID = fn.hlID
 
 local M = {}
+
+local ts_playground_loaded, ts_hl_info
+local parsers_loaded, parsers
+
+-----------------------------------------------------------------------------//
+-- CREDIT: @Cocophon
+-- This function allows you to see the syntax highlight token of the cursor word and that token's links
+---> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
+-----------------------------------------------------------------------------//
+local function hi_chain(syn_id)
+  local name = fn.synIDattr(syn_id, "name")
+  local names = {}
+  table.insert(names, name)
+  local original = fn.synIDtrans(syn_id)
+  if syn_id ~= original then
+    table.insert(names, fn.synIDattr(original, "name"))
+  end
+
+  return names
+end
+
+function M.token_inspect()
+  if not ts_playground_loaded or not parsers_loaded then
+    parsers_loaded, parsers = pcall(require, "nvim-treesitter.parsers")
+    ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
+  end
+  if vim.tbl_contains(parsers.available_parsers(), vim.bo.filetype) then
+    ts_hl_info.show_hl_captures()
+  else
+    local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
+    local names = hi_chain(syn_id)
+    as_utils.echomsg(fn.join(names, " -> "))
+  end
+end
 
 --- Check if the current window has a winhighlight
 --- which includes the specific target highlight

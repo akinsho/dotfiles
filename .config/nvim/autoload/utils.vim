@@ -135,39 +135,7 @@ function! utils#modify_line_end_delimiter(character)
 
   call setline('.', newline)
 endfunction
-
-" custom text-object for numerical values
-function! utils#Numbers()
-  call search('\d\([^0-9\.]\|$\)', 'cW')
-  normal v
-  call search('\(^\|[^0-9\.]\d\)', 'becW')
-endfunction
 "}}}
-""---------------------------------------------------------------------------//
-" Credit: Cocophon
-" This function allows you to see the syntax highlight token of the cursor word and that token's links
-" -> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
-""---------------------------------------------------------------------------//
-function! utils#token_inspect() abort
-  let syn_id = synID(line('.'), col('.'), 1)
-  let names = s:hi_chain(syn_id)
-  echo join(names, ' -> ')
-endfunction
-
-
-function! s:hi_chain(syn_id) abort
-  let name = synIDattr(a:syn_id, 'name')
-  let names = []
-
-  call add(names, name)
-
-  let original = synIDtrans(a:syn_id)
-  if a:syn_id != original
-    call add(names, synIDattr(original, 'name'))
-  endif
-
-  return names
-endfunction
 ""---------------------------------------------------------------------------//
 " Takes a base - highlight group to extend,
 " group - the new group name

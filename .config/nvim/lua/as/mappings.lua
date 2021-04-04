@@ -103,7 +103,7 @@ nnoremap("zO", [[zCzO]])
 nnoremap("<localleader>,", "<cmd>call utils#modify_line_end_delimiter(',')<cr>")
 nnoremap("<localleader>;", "<cmd>call utils#modify_line_end_delimiter(';')<cr>")
 
-nnoremap("<leader>E", "<cmd>Token<cr>", {silent = false})
+nnoremap("<leader>E", require("as.highlights").token_inspect, {silent = false})
 
 nmap("<ScrollWheelDown>", "<c-d>")
 nmap("<ScrollWheelUp>", "<c-u>")
@@ -550,12 +550,7 @@ end
 command {"Profile", "call s:profile(<bang>0)", types = {"-bang"}}
 ------------------------------------------------------------------------------
 -- FIXME: this doesn't work with tree sitter
-command {
-  "Token",
-  function()
-    vim.fn["utils#token_inspect"]()
-  end
-}
+command {"Token", require('as.highlights').token_inspect}
 command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]]}
 command {
   "ReloadModule",
