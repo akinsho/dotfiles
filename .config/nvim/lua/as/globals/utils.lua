@@ -17,7 +17,7 @@ function as_utils.echomsg(msg, hl)
   if msg_type == "string" then
     msg = {{msg, hl}}
   end
-  api.nvim_echo(msg, true, {})
+  vim.api.nvim_echo(msg, true, {})
 end
 
 function as_utils.total_plugins()
@@ -202,19 +202,4 @@ function as_utils.is_empty(item)
   elseif item_type == "table" then
     return vim.tbl_isempty(item)
   end
-end
-
--- inspect the contents of an object very quickly in your code or from the command-line:
--- usage:
--- in lua: dump({1, 2, 3})
--- in commandline: :lua dump(vim.loop)
----@vararg any
-function _G.dump(...)
-  local objects = vim.tbl_map(vim.inspect, {...})
-  print(unpack(objects))
-end
-
-function _G.plugin_loaded(plugin_name)
-  local plugins = _G.packer_plugins or {}
-  return plugins[plugin_name] and plugins[plugin_name].loaded
 end

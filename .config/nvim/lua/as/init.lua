@@ -1,4 +1,4 @@
-require("as.utils")
+require("as.globals")
 require("as.settings")
 require("as.plugins")
 require("as.highlights")
