@@ -140,12 +140,10 @@ endfunction
 if exists('$TMUX')
   augroup TmuxConfig
     au!
-    if has('nvim')
-      autocmd FocusGained,BufReadPost,FileReadPost,BufNewFile,BufEnter *
-            \ call tmux#on_enter()
-      autocmd VimLeave * tmux#on_leave()
-      autocmd ColorScheme,FocusGained * call tmux#statusline_colors()
-    endif
+    autocmd FocusGained,BufReadPost,FileReadPost,BufNewFile,BufEnter *
+          \ call v:lua.require('as.tmux').on_enter()
+    autocmd VimLeave * call v:lua.require('as.tmux').on_leave()
+    autocmd ColorScheme,FocusGained * call v:lua.require('as.tmux').statusline_colors()
   augroup END
 endif
 
