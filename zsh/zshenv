@@ -19,19 +19,16 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # JAVA ==========================================================
   # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
   # Use Java 8 because -> https://stackoverflow.com/a/49759126
-  # add locally built nvim to path, remove this once snaps are working
+
+  # Add local build of neovim to path, remove this once stable nvim is released
   # "$HOME/neovim/bin"
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   export GOPATH=$(go env GOPATH)
   path+=(
     "$LUA_PATH"
     "$LUA_CPATH"
-    # TODO: Add local build of neovim to path,
-    # remove this once stable nvim is released
-    "$HOME/neovim/bin"
     "$JAVA_HOME/bin"
     # Dart ============================================================
-    "/usr/lib/dart/bin"
     "$HOME/.pub-cache/bin"
     # GO ============================================================
     "/usr/local/go/bin"
