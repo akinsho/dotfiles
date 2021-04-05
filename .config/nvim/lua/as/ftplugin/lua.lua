@@ -2,7 +2,7 @@
 --- vim help docs if an api or vim.fn function otherwise it
 --- shows the lsp hover doc
 ---@param word string
-local function keyword(word)
+local function keyword(word, callback)
   local original_iskeyword = vim.bo.iskeyword
 
   vim.bo.iskeyword = vim.bo.iskeyword .. ",."
@@ -23,9 +23,19 @@ local function keyword(word)
 
     vim.cmd(string.format("help %s", api_function))
     return
+  elseif callback then
+    callback()
   else
     vim.lsp.buf.hover()
   end
 end
 
-as_utils.nnoremap("K", keyword, {buffer = 0})
+local loaded, hover
+
+local function hover_doc()
+  loaded, hover = pcall(require, "lspsaga.hover")
+  local cb = loaded and hover.render_hover_doc or nil
+  keyword(nil, cb)
+end
+
+as_utils.nnoremap("K", hover_doc, {buffer = 0})
