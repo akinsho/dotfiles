@@ -260,12 +260,10 @@ return require("packer").startup {
         require("nvim-autopairs").setup()
       end
     }
-    use {"psliwka/vim-smoothie", disable = true}
     use {
       "karb94/neoscroll.nvim",
       config = function()
-        vim.g.neoscroll_cursor_scrolls_alone = true
-        vim.g.neoscroll_respect_scrolloff = true
+        require("neoscroll").setup {}
       end
     }
     use {
