@@ -403,9 +403,9 @@ return require("packer").startup {
       local_disable = true,
       config = function()
         require("neogit").setup {
-          disable_signs = true, -- BUG: currently show signs in incorrect places
+          disable_signs = false,
           signs = {
-            section = {"", ""},
+            section = {"", ""}, -- "", ""
             item = {"▸", "▾"},
             hunk = {"樂", ""}
           }
