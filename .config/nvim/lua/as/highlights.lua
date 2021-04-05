@@ -5,7 +5,6 @@ local hlID = fn.hlID
 local M = {}
 
 local ts_playground_loaded, ts_hl_info
-local parsers_loaded, parsers
 
 -----------------------------------------------------------------------------//
 -- CREDIT: @Cocophon
@@ -25,11 +24,10 @@ local function hi_chain(syn_id)
 end
 
 function M.token_inspect()
-  if not ts_playground_loaded or not parsers_loaded then
-    parsers_loaded, parsers = pcall(require, "nvim-treesitter.parsers")
+  if not ts_playground_loaded then
     ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
   end
-  if vim.tbl_contains(parsers.available_parsers(), vim.bo.filetype) then
+  if vim.tbl_contains(as_utils.ts.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
   else
     local syn_id = fn.synID(fn.line("."), fn.col("."), 1)

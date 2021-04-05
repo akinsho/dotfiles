@@ -549,8 +549,7 @@ function _G._mappings.vim_profile(bang)
 end
 command {"Profile", "call s:profile(<bang>0)", types = {"-bang"}}
 ------------------------------------------------------------------------------
--- FIXME: this doesn't work with tree sitter
-command {"Token", require('as.highlights').token_inspect}
+command {"Token", require("as.highlights").token_inspect}
 command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]]}
 command {
   "ReloadModule",
