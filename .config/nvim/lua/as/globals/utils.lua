@@ -105,6 +105,10 @@ local mappings_table_name = "as_utils.mapping_callbacks"
 local function make_mapper(mode, _opts)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
   local parent_opts = vim.deepcopy(_opts)
+  ---Create a mapping
+  ---@param lhs string
+  ---@param rhs string|function
+  ---@param __opts table
   return function(lhs, rhs, __opts)
     local opts = __opts and vim.deepcopy(__opts) or {}
 
@@ -147,6 +151,11 @@ as_utils.onoremap = make_mapper("o", noremap_opts)
 as_utils.tnoremap = make_mapper("t", noremap_opts)
 as_utils.cnoremap = make_mapper("c", {noremap = true, silent = false})
 
+---map a key to an action
+---@param mode string
+---@param lhs string
+---@param rhs string
+---@param opts table
 function as_utils.map(mode, lhs, rhs, opts)
   opts = opts or get_defaults(mode)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)

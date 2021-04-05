@@ -5,7 +5,6 @@ local api = vim.api
 local command = as_utils.command
 local fmt = string.format
 
-local map = as_utils.map
 local nmap = as_utils.nmap
 local imap = as_utils.imap
 local nnoremap = as_utils.nnoremap
@@ -294,8 +293,7 @@ vnoremap("$", "g_")
 imap("jk", [[col('.') == 1 ? '<esc>' : '<esc>l']], {expr = true})
 xnoremap("jk", [[<ESC>]])
 -- Toggle top/center/bottom
-map(
-  "n",
+nmap(
   "zz",
   [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
   {expr = true}
@@ -322,9 +320,9 @@ nnoremap("Q", "@q")
 
 if not plugin_loaded("conflict-marker.vim") then
   -- Shortcut to jump to next conflict marker"
-  map("n", "]x", [[/^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>]])
+  nnoremap("]x", [[/^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>]])
   -- Shortcut to jump to last conflict marker"
-  map("n", "[x", [[?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>]])
+  nnoremap("[x", [[?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>]])
 end
 
 -- Zoom / Restore window. - Zooms by increasing window width squashing the other window
@@ -342,11 +340,7 @@ nnoremap("cN", "*``cgN")
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
 function _G._mappings.setup_CR()
-  map(
-    "n",
-    "<Enter>",
-    [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]
-  )
+  nmap("<Enter>", [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
 end
 
 -- NOTE: this line is done as a vim command as handling the string in lua breaks
