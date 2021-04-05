@@ -566,12 +566,12 @@ return require("packer").startup {
   config = {
     display = {
       open_cmd = "topleft 65vnew [packer]"
-    },
-    git = {
-      subcommands = {
-        update = "-C %s pull --ff-only --progress --rebase" -- set rebase to true
-      }
     }
+    -- git = {
+    --   subcommands = {
+    --     update = "-C %s pull --ff-only --progress --rebase" -- set rebase to true
+    --   }
+    -- }
   }
 }
 -- }}}
