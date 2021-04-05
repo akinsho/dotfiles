@@ -19,23 +19,18 @@ return function()
   vim.g.dashboard_disable_statusline = 1
   vim.g.dashboard_session_directory = vim.fn.stdpath("data") .. "/session/dashboard"
   vim.g.dashboard_custom_section = {
-    sessions = {
-      description = join(" Last session", "SPC s l"),
+    all_sessions = {
+      description = {" Last session"},
       command = "SessionLoad"
     },
     frecent = {
-      description = join("ﭯ Recently opened", "SPC s o"),
+      description = join("ﭯ Recently opened", "<leader>fh"),
       command = "TelescopeFrecent"
     },
-    files = {
-      description = join(" Project Files", "SPC s f"),
+    project_files = {
+      description = join(" Project Files", "<c-p>"),
       command = "TelescopeFindFiles"
     }
-  }
-  vim.g.dashboard_custom_shortcut = {
-    files = "SPC s f",
-    sessions = "SPC s l",
-    frecent = "SPC s o"
   }
 
   function as_utils.dashboard.save_session()
