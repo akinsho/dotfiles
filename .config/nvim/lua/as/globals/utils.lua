@@ -101,7 +101,6 @@ local function validate_mappings(lhs, rhs, opts)
   }
 end
 
-local mappings_table_name = "as_utils.mapping_callbacks"
 local function make_mapper(mode, _opts)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
   local parent_opts = vim.deepcopy(_opts)
@@ -117,7 +116,12 @@ local function make_mapper(mode, _opts)
     -- add functions to a global table keyed by their index
     if type(rhs) == "function" then
       table.insert(as_utils.mapping_callbacks, rhs)
-      rhs = string.format("<cmd>lua %s[%d]()<CR>", mappings_table_name, #as_utils.mapping_callbacks)
+      rhs =
+        string.format(
+        "<cmd>lua %s[%d]()<CR>",
+        "as_utils.mapping_callbacks",
+        #as_utils.mapping_callbacks
+      )
     end
 
     if opts.buffer then
