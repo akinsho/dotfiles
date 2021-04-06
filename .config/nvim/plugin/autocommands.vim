@@ -28,7 +28,8 @@ function s:setup_smart_close() abort
         \ "LuaTree",
         \ "log",
         \ "tsplayground",
-        \ "qf"
+        \ "qf",
+        \ "dotoocapture"
         \]
   let buftypes = ['nofile']
   let is_readonly = (&readonly || !&modifiable) && !hasmapto('q', 'n')
