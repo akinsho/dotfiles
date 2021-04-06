@@ -183,6 +183,7 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = conf("dap")}
+    use {"jbyuki/lua-debug.nvim", requires = "nvim-dap", ft = "lua", disable = is_work}
 
     use {"neoclide/coc.nvim", config = conf("coc"), cond = is_stable, disable = is_home}
     use {"honza/vim-snippets", cond = is_stable, disable = is_home}
