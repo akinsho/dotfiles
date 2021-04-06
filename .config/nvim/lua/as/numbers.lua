@@ -39,7 +39,7 @@ local function is_blocked()
   end
 
   for _, ft in ipairs(vim.g.number_filetype_exclusions) do
-    if vim.bo.ft == ft then
+    if vim.bo.ft == ft or string.match(vim.bo.ft, ft) then
       return true
     end
   end
@@ -100,7 +100,8 @@ vim.g.number_filetype_exclusions = {
   "help",
   "todoist",
   "lsputil_locations_list",
-  "lsputil_symbols_list"
+  "lsputil_symbols_list",
+  "himalaya"
 }
 
 vim.g.number_buftype_exclusions = {
