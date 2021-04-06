@@ -74,6 +74,15 @@ local function get_defaults(mode)
   return {noremap = true, silent = not mode == "c"}
 end
 
+---check if a mapping already exists
+---@param lhs string
+---@param mode string
+---@return boolean
+function as_utils.has_map(lhs, mode)
+  mode = mode or "n"
+  return vim.fn.maparg(lhs, mode) ~= ""
+end
+
 local function validate_opts(opts)
   if not opts then
     return true
@@ -101,17 +110,28 @@ local function validate_mappings(lhs, rhs, opts)
   }
 end
 
-local function make_mapper(mode, _opts)
+---create a mapping function factory
+---@param mode string
+---@param o table
+---@return function
+local function make_mapper(mode, o)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
-  local parent_opts = vim.deepcopy(_opts)
+  local parent_opts = vim.deepcopy(o)
   ---Create a mapping
   ---@param lhs string
   ---@param rhs string|function
-  ---@param __opts table
-  return function(lhs, rhs, __opts)
-    local opts = __opts and vim.deepcopy(__opts) or {}
+  ---@param opts table
+  return function(lhs, rhs, opts)
+    local _opts = opts and vim.deepcopy(opts) or {}
 
-    validate_mappings(lhs, rhs, opts)
+    validate_mappings(lhs, rhs, _opts)
+
+    if _opts.check_existing and as_utils.has_map(lhs) then
+      return
+    else
+      -- don't pass this invalid key to set keymap
+      _opts.check_existing = nil
+    end
 
     -- add functions to a global table keyed by their index
     if type(rhs) == "function" then
@@ -124,14 +144,14 @@ local function make_mapper(mode, _opts)
       )
     end
 
-    if opts.buffer then
+    if _opts.buffer then
       -- Remove the buffer from the args sent to the key map function
-      local bufnr = opts.buffer
-      opts.buffer = nil
-      opts = vim.tbl_extend("keep", opts, parent_opts)
-      api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+      local bufnr = _opts.buffer
+      _opts.buffer = nil
+      _opts = vim.tbl_extend("keep", _opts, parent_opts)
+      api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, _opts)
     else
-      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
+      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", _opts, parent_opts))
     end
   end
 end

@@ -55,18 +55,26 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
+
 local function setup_mappings(client, bufnr)
-  local nnoremap, opts = as_utils.nnoremap, {buffer = bufnr}
+  -- check that there are no existing mappings before assigning these
+  local nnoremap, opts = as_utils.nnoremap, {buffer = bufnr, check_existing = true}
+
   nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.implementation then
     nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   end
-  nnoremap("<leader>gd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  nnoremap("gI", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
-  nnoremap("gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  nnoremap("<leader>cs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-  nnoremap("<leader>cw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-  nnoremap("<leader>rf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+  if client.resolved_capabilities.type_definition then
+    nnoremap("<leader>gd", vim.lsp.buf.type_definition, opts)
+  end
+
+  nnoremap("K", vim.lsp.buf.hover, opts)
+  nnoremap("gI", vim.lsp.buf.incoming_calls, opts)
+  nnoremap("gr", vim.lsp.buf.references, opts)
+  nnoremap("<leader>cs", vim.lsp.buf.document_symbol, opts)
+  nnoremap("<leader>cw", vim.lsp.buf.workspace_symbol, opts)
+  nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
 end
 
 function as_utils.lsp.highlight()
