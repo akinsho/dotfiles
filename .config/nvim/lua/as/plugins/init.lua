@@ -534,7 +534,12 @@ return require("packer").startup {
           end
         },
         {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
-        {"nvim-treesitter/playground", cmd = "TSPlaygroundToggle", disable = is_work}
+        {
+          "nvim-treesitter/playground",
+          cmd = "TSPlaygroundToggle",
+          module = "nvim-treesitter-playground",
+          disable = is_work
+        }
       },
       local_path = "contributing"
     }
