@@ -45,7 +45,7 @@ return function()
       sort_by = "extension",
       show_close_icon = false,
       separator_style = "slant",
-      diagnostics = not has("mac") and "nvim_lsp" or false,
+      diagnostics = "nvim_lsp",
       diagnostics_indicator = diagnostics_indicator,
       custom_filter = custom_filter
     }

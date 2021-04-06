@@ -158,7 +158,7 @@ return require("packer").startup {
         "nvim-lua/popup.nvim",
         {
           "nvim-telescope/telescope-frecency.nvim",
-          requires = {"tami5/sql.nvim"},
+          requires = "tami5/sql.nvim",
           after = "telescope.nvim"
         },
         {"nvim-telescope/telescope-fzy-native.nvim", after = "telescope.nvim"},
