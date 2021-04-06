@@ -160,21 +160,21 @@ xnoremap("r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], {silent = fal
 -- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
 local function buf_kill()
   local buflisted = fn.getbufinfo({buflisted = 1})
-  local cur_winnr, cur_bufnr = fn.winnr(), fn.bufnr()
+  local cur_winid, cur_bufnr = api.nvim_get_current_win(), api.nvim_get_current_buf()
   if #buflisted < 2 then
     vim.cmd "confirm qall"
     return
   end
+  for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
+    api.nvim_set_current_win(winid)
+    vim.cmd(cur_bufnr == buflisted[#buflisted].bufnr and "bp" or "bn")
+  end
+  api.nvim_set_current_win(cur_winid)
   if not api.nvim_buf_is_valid(cur_bufnr) then
     return
   end
-  for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
-    vim.cmd(string.format("%d wincmd w", fn.win_id2win(winid)))
-    vim.cmd(cur_bufnr == buflisted[#buflisted].bufnr and "bp" or "bn")
-  end
-  vim.cmd(string.format("%d wincmd w", cur_winnr))
   local is_terminal = vim.bo[cur_bufnr].buftype == "terminal"
-  vim.cmd(is_terminal and fmt("bd! %d", cur_bufnr) or fmt("silent! confirm bd! %d", cur_bufnr))
+  api.nvim_buf_delete(cur_bufnr, {force = is_terminal})
 end
 nnoremap("<leader>qq", buf_kill)
 nnoremap("<leader>qw", "<cmd>bd!<CR>")
