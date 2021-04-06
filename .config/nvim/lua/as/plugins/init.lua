@@ -398,9 +398,8 @@ return require("packer").startup {
       end
     }
     use_local {
-      "RianFuro/neogit",
+      "TimUntersberger/neogit",
       cmd = "Neogit",
-      branch = "sane-folds",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       local_path = "contributing",
       local_disable = true,
