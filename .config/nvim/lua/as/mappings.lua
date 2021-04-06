@@ -165,6 +165,9 @@ local function buf_kill()
     vim.cmd "confirm qall"
     return
   end
+  if not api.nvim_buf_is_valid(cur_bufnr) then
+    return
+  end
   for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
     vim.cmd(string.format("%d wincmd w", fn.win_id2win(winid)))
     vim.cmd(cur_bufnr == buflisted[#buflisted].bufnr and "bp" or "bn")
