@@ -513,7 +513,8 @@ return require("packer").startup {
       cmd = "NvimTreeOpen",
       keys = "<c-n>",
       config = conf("nvim-tree"),
-      local_path = "contributing"
+      local_path = "contributing",
+      requires = "nvim-web-devicons"
     }
 
     -- Treesitter cannot be run as an optional plugin and most be available on start
@@ -559,7 +560,8 @@ return require("packer").startup {
     use_local {
       "akinsho/nvim-bufferline.lua",
       config = conf("nvim-bufferline"),
-      local_path = "personal"
+      local_path = "personal",
+      requires = "nvim-web-devicons"
     }
     -- }}}
     ---------------------------------------------------------------------------------
