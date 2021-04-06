@@ -7,8 +7,8 @@
 local M = {}
 local fn = vim.fn
 
-local function is_applicable_buf()
-  return vim.bo.buftype == "" and vim.bo.modifiable and vim.bo.filetype ~= ""
+local function is_invalid_buf()
+  return vim.bo.filetype == "" or vim.bo.buftype ~= "" or not vim.bo.modifiable
 end
 
 function M.setup()
@@ -36,8 +36,12 @@ function M.setup()
 end
 
 function M.toggle_trailing(mode)
-  if not is_applicable_buf() then
+  if is_invalid_buf() then
+    vim.wo.list = false
     return
+  end
+  if not vim.wo.list then
+    vim.wo.list = true
   end
   local pattern = mode == "i" and [[\s\+\%#\@<!$]] or [[\s\+$]]
   if vim.w.whitespace_match_number then
