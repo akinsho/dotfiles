@@ -1,5 +1,4 @@
 as_utils.lsp = {}
-local has = as_utils.has
 local fn = vim.fn
 -----------------------------------------------------------------------------//
 -- Autocommands
@@ -239,14 +238,7 @@ end
 local command = as_utils.command
 
 command {
-  "ReloadLSP",
-  function()
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
-    vim.cmd [[edit]]
-  end
-}
-command {
-  "LogLSP",
+  "LspLog",
   function()
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
@@ -281,15 +273,13 @@ return function()
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//
-  vim.fn.sign_define("LspDiagnosticsSignError", {text = "✗", texthl = "LspDiagnosticsSignError"})
-  vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsSignHint"})
   vim.fn.sign_define(
-    "LspDiagnosticsSignWarning",
-    {text = "", texthl = "LspDiagnosticsSignWarning"}
-  )
-  vim.fn.sign_define(
-    "LspDiagnosticsSignInformation",
-    {text = "", texthl = "LspDiagnosticsSignInformation"}
+    {
+      {name = "LspDiagnosticsSignError", text = "✗", texthl = "LspDiagnosticsSignError"},
+      {name = "LspDiagnosticsSignHint", text = "", texthl = "LspDiagnosticsSignHint"},
+      {name = "LspDiagnosticsSignWarning", text = "", texthl = "LspDiagnosticsSignWarning"},
+      {name = "LspDiagnosticsSignInformation", text = "", texthl = "LspDiagnosticsSignInformation"}
+    }
   )
 
   -----------------------------------------------------------------------------//
