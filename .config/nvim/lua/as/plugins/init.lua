@@ -155,6 +155,7 @@ return require("packer").startup {
       config = conf("telescope"),
       requires = {
         "nvim-lua/popup.nvim",
+        "nvim-telescope/telescope-fzf-writer.nvim",
         {
           "nvim-telescope/telescope-frecency.nvim",
           requires = "tami5/sql.nvim",
@@ -165,7 +166,7 @@ return require("packer").startup {
           "nvim-telescope/telescope-arecibo.nvim",
           rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"}
         },
-        {"nvim-telescope/telescope-fzf-writer.nvim"}
+        {"nvim-telescope/telescope-cheat.nvim", requires = "sql.nvim", after = "telescope.nvim"}
       }
     }
     use {

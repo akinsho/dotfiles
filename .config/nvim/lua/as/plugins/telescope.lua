@@ -24,7 +24,6 @@ return function()
       generic_sorter = sorters.get_fzy_sorter,
       -- layout_strategy = "flex",
       winblend = 7,
-      set_env = {COLORTERM = "truecolor"}
     },
     extensions = {
       frecency = {
@@ -68,6 +67,10 @@ return function()
         preview_width = 0.65
       }
     }
+  end
+
+  local function cheat()
+    telescope.extensions.cheat.fd {layout_strategy = "vertical"}
   end
 
   ---find if passed in directory contains the target
@@ -165,6 +168,7 @@ return function()
   --- Extensions
   nnoremap("<leader>fh", frecency)
   command {"TelescopeFrecent", frecency}
+  nnoremap("<leader>fk", cheat)
   nnoremap("<leader>fw", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", telescope.extensions.fzf_writer.staged_grep)
