@@ -1,9 +1,20 @@
+--- Inspired by @tjdevries' astraunauta.nvim/ @TimUntersberger's config
+--- store all callbacks in one global table so they are able to survive re-requiring this file
+
+_AsGlobalCallbacks = _AsGlobalCallbacks or {}
+
 _G.as = {
-  -- TODO: once commands and mappings can take functions
-  -- as arguments natively remove these globals
-  command_callbacks = {},
-  mapping_callbacks = {}
+  _store = _AsGlobalCallbacks
 }
+
+function as._create(f)
+  table.insert(as._store, f)
+  return #as._store
+end
+
+function as._execute(id, args)
+  as._store[id](args)
+end
 
 local fn = vim.fn
 local api = vim.api
@@ -141,8 +152,8 @@ local function make_mapper(mode, o)
 
     -- add functions to a global table keyed by their index
     if type(rhs) == "function" then
-      table.insert(as.mapping_callbacks, rhs)
-      rhs = string.format("<cmd>lua %s[%d]()<CR>", "as.mapping_callbacks", #as.mapping_callbacks)
+      local fn_id = as._create(rhs)
+      rhs = string.format("<cmd>lua as._execute(%s)<CR>", fn_id)
     end
 
     if _opts.buffer then
@@ -193,21 +204,14 @@ function as.buf_map(bufnr, mode, lhs, rhs, opts)
 end
 
 function as.command(args)
-  local commands_table_name = "as.command_callbacks"
   local nargs = args.nargs or 0
   local name = args[1]
   local rhs = args[2]
   local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
 
   if type(rhs) == "function" then
-    table.insert(as.command_callbacks, rhs)
-    rhs =
-      string.format(
-      "lua %s[%d](%s)",
-      commands_table_name,
-      #as.command_callbacks,
-      nargs == 0 and "" or "<f-args>"
-    )
+    local fn_id = as._create(rhs)
+    rhs = string.format("lua as._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
   end
 
   vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
