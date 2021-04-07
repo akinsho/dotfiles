@@ -1,4 +1,6 @@
 local fn = vim.fn
+local api = vim.api
+local fmt = string.format
 local synIDattr = fn.synIDattr
 local hlID = fn.hlID
 
@@ -125,28 +127,24 @@ function M.highlight(name, opts)
   end
 end
 
-function M.hl_value(grp, attr)
-  if attr == "gui" then
-    return M.gui_attr(grp)
-  end
-  return synIDattr(hlID(grp), attr)
-end
+local gui_attr = {"underline", "bold", "undercurl", "italic"}
+local attrs = {fg = "foreground", bg = "background"}
 
-function M.gui_attr(hl_group)
-  local bold = M.hl_value(hl_group, "bold")
-  local italic = M.hl_value(hl_group, "italic")
-  local underline = M.hl_value(hl_group, "underline")
-  local gui = {}
-  if bold ~= "" and tonumber(bold) > 0 then
-    table.insert(gui, "bold")
+function M.hl_value(grp, attr)
+  attr = attrs[attr] or attr
+  local hl = api.nvim_get_hl_by_name(grp, true)
+  if attr == "gui" then
+    local gui = {}
+    for name, value in pairs(hl) do
+      if value and vim.tbl_contains(gui_attr, name) then
+        table.insert(gui, name)
+      end
+    end
+    return table.concat(gui, ",")
   end
-  if italic ~= "" and tonumber(italic) > 0 then
-    table.insert(gui, "italic")
-  end
-  if underline ~= "" and tonumber(underline) > 0 then
-    table.insert(gui, "underline")
-  end
-  return table.concat(gui, ",")
+  local color = hl[attr]
+  -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
+  return fmt("#%06x", color)
 end
 
 function M.all(hls)
