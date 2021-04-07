@@ -7,6 +7,7 @@ _G.as = {
 
 local fn = vim.fn
 local api = vim.api
+local fmt = string.format
 
 function as.echomsg(msg, hl)
   hl = hl or "Title"
@@ -88,6 +89,10 @@ local function validate_opts(opts)
     return true
   end
 
+  if type(opts) ~= "table" then
+    return false, "opts should be a table"
+  end
+
   if opts.buffer and type(opts.buffer) ~= "number" then
     return false, "The buffer key should be a number"
   end
@@ -122,6 +127,7 @@ local function make_mapper(mode, o)
   ---@param rhs string|function
   ---@param opts table
   return function(lhs, rhs, opts)
+    assert(lhs ~= mode, fmt("The lhs should not be the same as mode for %s", lhs))
     local _opts = opts and vim.deepcopy(opts) or {}
 
     validate_mappings(lhs, rhs, _opts)
@@ -136,8 +142,7 @@ local function make_mapper(mode, o)
     -- add functions to a global table keyed by their index
     if type(rhs) == "function" then
       table.insert(as.mapping_callbacks, rhs)
-      rhs =
-        string.format("<cmd>lua %s[%d]()<CR>", "as.mapping_callbacks", #as.mapping_callbacks)
+      rhs = string.format("<cmd>lua %s[%d]()<CR>", "as.mapping_callbacks", #as.mapping_callbacks)
     end
 
     if _opts.buffer then
