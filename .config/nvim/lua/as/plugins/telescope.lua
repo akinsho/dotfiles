@@ -149,20 +149,24 @@ return function()
 
   nnoremap("<leader>fa", "<cmd>Telescope<cr>")
   nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
-  nnoremap("<leader>fh", frecency)
-  command {"TelescopeFrecent", frecency}
 
-  nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
   nnoremap("<leader>fd", dotfiles)
   nnoremap("<leader>fn", nvim_config)
+  nnoremap("<leader>fo", buffers)
+
+  --- Git
+  nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
   nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
 
+  --- LSP
   nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
   nnoremap("<leader>ws", workspace_symbols, {silent = false})
 
+  --- Extensions
+  nnoremap("<leader>fh", frecency)
+  command {"TelescopeFrecent", frecency}
   nnoremap("<leader>fw", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", telescope.extensions.fzf_writer.staged_grep)
-  nnoremap("<leader>fo", buffers)
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
 end
