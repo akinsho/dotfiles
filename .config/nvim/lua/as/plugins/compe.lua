@@ -71,14 +71,15 @@ return function()
   as_utils.completion_confirm = function()
     if vim.fn.pumvisible() ~= 0 then
       if vim.fn.complete_info()["selected"] ~= -1 then
-        return vim.fn["compe#confirm"]()
+        vim.fn["compe#confirm"]()
+        return npairs.esc("")
       end
       vim.api.nvim_select_popupmenu_item(0, false, false, {})
       vim.fn["compe#confirm"]()
-      return vim.fn["compe#confirm"]()
+      return npairs.esc("<c-n>")
     end
 
     return npairs.check_break_line_char()
   end
-  as_utils.map("i", "<CR>", "v:lua.as_utils.completion_confirm()", {expr = true, noremap = true})
+  inoremap("<CR>", "v:lua.as_utils.completion_confirm()", {expr = true})
 end
