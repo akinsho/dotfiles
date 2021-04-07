@@ -1,5 +1,5 @@
 return function()
-  as_utils.dashboard = {}
+  as.dashboard = {}
   local join = function(k, v)
     return {k .. string.rep(" ", 16) .. v}
   end
@@ -33,7 +33,7 @@ return function()
     }
   }
 
-  function as_utils.dashboard.save_session()
+  function as.dashboard.save_session()
     vim.cmd "SessionSave"
   end
 
@@ -42,7 +42,7 @@ return function()
     {
       events = {"VimLeavePre"},
       targets = "*",
-      command = "lua as_utils.dashboard.save_session()"
+      command = "lua as.dashboard.save_session()"
     }
   )
 end

@@ -119,7 +119,7 @@ function M.setup(event, immediate)
       }
     )
   end
-  as_utils.command {
+  as.command {
     "LocalrcEdit",
     function()
       require("as.localrc").open()

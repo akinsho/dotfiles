@@ -1,5 +1,5 @@
 local fn = vim.fn
-local has = as_utils.has
+local has = as.has
 local is_work = has("mac")
 local is_home = not is_work
 local fmt = string.format
@@ -28,9 +28,8 @@ vim.cmd "packadd! cfilter"
 
 vim.cmd "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
 vim.cmd [[autocmd! BufWritePost */as/plugins/init.lua execute "luafile ".expand("%")]]
-
-as_utils.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
-as_utils.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
+as.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
+as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
 ---@param path string
 local function dev(path)
@@ -64,11 +63,11 @@ local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/u
 local function with_local(spec)
   local path = ""
   if type(spec) ~= "table" then
-    return as_utils.echomsg(fmt("spec must be a table", spec[1]))
+    return as.echomsg(fmt("spec must be a table", spec[1]))
   end
   local local_spec = vim.deepcopy(spec)
   if not local_spec.local_path then
-    return as_utils.echomsg(fmt("%s has no specified local path", spec[1]))
+    return as.echomsg(fmt("%s has no specified local path", spec[1]))
   end
 
   local name = vim.split(spec[1], "/")[2]
@@ -176,7 +175,20 @@ return require("packer").startup {
         vim.g["dotoo#capture#refile"] = vim.fn.expand("~/Documents/dotoo-files/refile.dotoo")
       end
     }
-    use {"christoomey/vim-tmux-navigator", config = conf("tmux-navigator")}
+    use {
+      "christoomey/vim-tmux-navigator",
+      config = function()
+        vim.g.tmux_navigator_no_mappings = 1
+        local nnoremap = as.nnoremap
+        nnoremap("<C-H>", "<cmd>TmuxNavigateLeft<cr>")
+        nnoremap("<C-J>", "<cmd>TmuxNavigateDown<cr>")
+        nnoremap("<C-K>", "<cmd>TmuxNavigateUp<cr>")
+        nnoremap("<C-L>", "<cmd>TmuxNavigateRight<cr>")
+        -- Disable tmux navigator when zooming the Vim pane
+        vim.g.tmux_navigator_disable_when_zoomed = 1
+        vim.g.tmux_navigator_save_on_switch = 2
+      end
+    }
     use "nvim-lua/plenary.nvim"
     -- }}}
     -----------------------------------------------------------------------------//
@@ -213,7 +225,7 @@ return require("packer").startup {
           opt = true,
           config = function()
             require("lspinstall").post_install_hook = function()
-              as_utils.lsp.setup_servers()
+              as.lsp.setup_servers()
               vim.cmd("bufdo e")
             end
           end
@@ -240,9 +252,20 @@ return require("packer").startup {
     use {
       "hrsh7th/vim-vsnip",
       cond = is_bleeding_edge,
-      config = conf("vim-vsnip"),
       event = "InsertEnter",
-      requires = {"rafamadriz/friendly-snippets", "hrsh7th/nvim-compe"}
+      requires = {"rafamadriz/friendly-snippets", "hrsh7th/nvim-compe"},
+      config = function()
+        vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
+        local imap, smap, xmap = as.imap, as.smap, as.xmap
+        local opts = {expr = true}
+        imap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
+        smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
+        imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
+        smap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
+        xmap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+        imap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+        smap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+      end
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -252,7 +275,7 @@ return require("packer").startup {
       "arecarn/vim-fold-cycle",
       config = function()
         vim.g.fold_cycle_default_mapping = 0
-        as_utils.nmap("<BS>", "<Plug>(fold-cycle-close)")
+        as.nmap("<BS>", "<Plug>(fold-cycle-close)")
       end
     }
     use {
@@ -296,14 +319,21 @@ return require("packer").startup {
       config = function()
         vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
-        as_utils.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>")
+        as.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>")
       end
     }
     use {
       "vim-test/vim-test",
       cmd = {"TestFile", "TestNearest", "TestSuite"},
       keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn", "<localleader>ts"},
-      config = conf("vim-test")
+      config = function()
+        local nnoremap = as.nnoremap
+        vim.cmd [[let test#strategy = "neovim"]]
+        vim.cmd [[let test#neovim#term_position = "vert botright"]]
+        nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
+        nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
+        nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
+      end
     }
     use {"liuchengxu/vim-which-key", config = conf("whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
@@ -356,15 +386,22 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     use "tpope/vim-eunuch"
     use "tpope/vim-repeat"
-    use {"tpope/vim-abolish", config = conf("abolish")}
+    use {
+      "tpope/vim-abolish",
+      config = function()
+        as.nnoremap("<localleader>[", ":S/<C-R><C-W>//<LEFT>")
+        as.nnoremap("<localleader>]", ":%S/<C-r><C-w>//c<left><left>")
+        as.vnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]])
+      end
+    }
     -- sets searchable path for filetypes like go so 'gf' works
     use {"tpope/vim-apathy", ft = {"go", "python", "javascript", "typescript"}}
     use {"tpope/vim-projectionist", config = conf("vim-projectionist")}
     use {
       "tpope/vim-surround",
       config = function()
-        as_utils.vmap("s", "<Plug>VSurround")
-        as_utils.vmap("s", "<Plug>VSurround")
+        as.vmap("s", "<Plug>VSurround")
+        as.vmap("s", "<Plug>VSurround")
       end
     }
     -- }}}
@@ -412,7 +449,7 @@ return require("packer").startup {
             hunk = {"樂", ""}
           }
         }
-        local nnoremap = as_utils.nnoremap
+        local nnoremap = as.nnoremap
         nnoremap("<localleader>gs", "<cmd>Neogit kind=vsplit<CR>")
         nnoremap("<localleader>gc", "<cmd>Neogit commitCR>")
         nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
@@ -425,7 +462,7 @@ return require("packer").startup {
       cmd = "LazyGit",
       keys = "<leader>lg",
       config = function()
-        as_utils.nnoremap("<leader>lg", "<cmd>LazyGit<CR>")
+        as.nnoremap("<leader>lg", "<cmd>LazyGit<CR>")
         vim.g.lazygit_floating_window_winblend = 2
       end
     }
@@ -441,10 +478,53 @@ return require("packer").startup {
     -- Text Objects {{{
     --------------------------------------------------------------------------------
     use "AndrewRadev/splitjoin.vim"
-    use {"AndrewRadev/dsf.vim", config = conf("dsf")}
-    use {"AndrewRadev/sideways.vim", config = conf("sideways")}
-    use {"svermeulen/vim-subversive", config = conf("subversive")}
-    use {"chaoren/vim-wordmotion", config = conf("vim-wordmotion")}
+    use {
+      "AndrewRadev/dsf.vim",
+      config = function()
+        vim.g.dsf_no_mappings = 1
+        as.nmap("dsf", "<Plug>DsfDelete")
+        as.nmap("csf", "<Plug>DsfChange")
+        as.nmap("dsnf", "<Plug>DsfNextDelete")
+        as.nmap("csnf", "<Plug>DsfNextChange")
+      end
+    }
+    use {
+      "AndrewRadev/sideways.vim",
+      config = function()
+        local nmap, nnoremap = as.nmap, as.nnoremap
+        nnoremap("]w", "<cmd>SidewaysLeft<cr>")
+        nnoremap("[w", "<cmd>SidewaysRight<cr>")
+        nmap("<localleader>si", "<Plug>SidewaysArgumentInsertBefore")
+        nmap("<localleader>sa", "<Plug>SidewaysArgumentAppendAfter")
+        nmap("<localleader>sI", "<Plug>SidewaysArgumentInsertFirst")
+        nmap("<localleader>sA", "<Plug>SidewaysArgumentAppendLast")
+        vim.g.sideways_add_item_cursor_restore = 1
+      end
+    }
+    use {
+      "svermeulen/vim-subversive",
+      config = function()
+        -- s for substitute
+        local nmap = as.nmap
+        nmap("<leader>s", "<plug>(SubversiveSubstitute)")
+        nmap("<leader>ss", "<plug>(SubversiveSubstituteLine)")
+        nmap("<leader>S", "<plug>(SubversiveSubstituteToEndOfLine)")
+        nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
+        nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
+      end
+    }
+    use {
+      "chaoren/vim-wordmotion",
+      config = function()
+        vim.g.wordmotion_spaces = "_-."
+        -- Restore Vim's special case behavior with dw and cw:
+        local nnoremap = as.nnoremap
+        nnoremap("dw", "de")
+        nnoremap("cw", "ce")
+        nnoremap("dW", "dE")
+        nnoremap("cW", "cE")
+      end
+    }
     use {
       "b3nj5m1n/kommentary",
       config = function()
@@ -458,9 +538,9 @@ return require("packer").startup {
       "tommcdo/vim-exchange",
       config = function()
         vim.g.exchange_no_mappings = 1
-        as_utils.xmap("X", "<Plug>(Exchange)")
-        as_utils.nmap("X", "<Plug>(Exchange)")
-        as_utils.nmap("Xc", "<Plug>(ExchangeClear)")
+        as.xmap("X", "<Plug>(Exchange)")
+        as.nmap("X", "<Plug>(Exchange)")
+        as.nmap("Xc", "<Plug>(ExchangeClear)")
       end
     }
     use "wellle/targets.vim"
@@ -472,10 +552,10 @@ return require("packer").startup {
           "glts/vim-textobj-comment",
           config = function()
             vim.g.textobj_comment_no_default_key_mappings = 1
-            as_utils.xmap("ax", "<Plug>(textobj-comment-a)")
-            as_utils.omap("ax", "<Plug>(textobj-comment-a)")
-            as_utils.xmap("ix", "<Plug>(textobj-comment-i)")
-            as_utils.omap("ix", "<Plug>(textobj-comment-i)")
+            as.xmap("ax", "<Plug>(textobj-comment-a)")
+            as.omap("ax", "<Plug>(textobj-comment-a)")
+            as.xmap("ix", "<Plug>(textobj-comment-i)")
+            as.omap("ix", "<Plug>(textobj-comment-i)")
           end
         }
       }
@@ -490,7 +570,7 @@ return require("packer").startup {
       config = function()
         -- remove h,j,k,l from hops list of keys
         require("hop").setup {keys = "etovxqpdygfbzcisuran"}
-        as_utils.nnoremap("s", [[<cmd>HopChar1<CR>]])
+        as.nnoremap("s", [[<cmd>HopChar1<CR>]])
       end
     }
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = conf("goyo")}

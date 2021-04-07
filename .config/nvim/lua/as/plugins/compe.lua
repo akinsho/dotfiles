@@ -52,23 +52,23 @@ return function()
     }
   }
 
-  local imap = as_utils.imap
-  local smap = as_utils.smap
-  local inoremap = as_utils.inoremap
+  local imap = as.imap
+  local smap = as.smap
+  local inoremap = as.inoremap
   local opts = {expr = true}
 
   inoremap("<C-Space>", "compe#complete()", opts)
   inoremap("<C-e>", "compe#close('<C-e>')", opts)
-  imap("<Tab>", "v:lua.__tab_complete()", {expr = true})
-  smap("<Tab>", "v:lua.__tab_complete()", {expr = true})
-  imap("<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
-  smap("<S-Tab>", "v:lua.__s_tab_complete()", {expr = true})
+  imap("<Tab>", "v:lua.__tab_complete()", opts)
+  smap("<Tab>", "v:lua.__tab_complete()", opts)
+  imap("<S-Tab>", "v:lua.__s_tab_complete()", opts)
+  smap("<S-Tab>", "v:lua.__s_tab_complete()", opts)
   inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
   inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
   local npairs = require("nvim-autopairs")
 
-  as_utils.completion_confirm = function()
+  as.completion_confirm = function()
     if vim.fn.pumvisible() ~= 0 then
       if vim.fn.complete_info()["selected"] ~= -1 then
         vim.fn["compe#confirm"]()
@@ -81,5 +81,5 @@ return function()
 
     return npairs.check_break_line_char()
   end
-  inoremap("<CR>", "v:lua.as_utils.completion_confirm()", {expr = true})
+  inoremap("<CR>", "v:lua.as.completion_confirm()", opts)
 end

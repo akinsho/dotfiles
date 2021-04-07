@@ -221,6 +221,6 @@ return function()
 
   vim.fn["which_key#register"](",", "g:which_leader_key_map")
   vim.fn["which_key#register"]("<Space>", "g:which_localleader_key_map")
-  as_utils.map("n", "<localleader>", [[<cmd>WhichKey '<Space>'<CR>]])
-  as_utils.map("n", "<leader>", [[<cmd>WhichKey  ','<CR>]])
+  as.nnoremap("<localleader>", [[<cmd>WhichKey '<Space>'<CR>]])
+  as.nnoremap("<leader>", [[<cmd>WhichKey  ','<CR>]])
 end

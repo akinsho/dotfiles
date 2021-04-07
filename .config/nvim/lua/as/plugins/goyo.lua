@@ -54,7 +54,7 @@ return function()
   vim.g.goyo_margin_bottom = 2
   vim.g.goyo_width = "60%"
 
-  as_utils.map("n", "<leader>zg", "<cmd>Goyo<CR>")
+  as.nnoremap("<leader>zg", "<cmd>Goyo<CR>")
 
   vim.cmd "autocmd! User GoyoLeave nested lua __goyo_leave()"
   vim.cmd "autocmd! User GoyoEnter nested lua __goyo_enter()"

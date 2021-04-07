@@ -1,6 +1,6 @@
 return function()
-  local nnoremap = as_utils.nnoremap
-  local vnoremap = as_utils.vnoremap
+  local nnoremap = as.nnoremap
+  local vnoremap = as.vnoremap
 
   vim.fn.sign_define("DapBreakpoint", {text = "🛑", texthl = "", linehl = "", numhl = ""})
   vim.fn.sign_define("DapStopped", {text = "🟢", texthl = "", linehl = "", numhl = ""})

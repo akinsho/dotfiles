@@ -29,7 +29,7 @@ return function()
     ""
   }
 
-  local plugins_count = as_utils.total_plugins()
+  local plugins_count = as.total_plugins()
   vim.g.header_suffix = {"", " Plugins loaded: " .. plugins_count.total .. " "}
 
   vim.g.startify_custom_header =

@@ -164,7 +164,7 @@ function M.setup(opts)
   vim.b.previous_lnum = 0
   vim.b.previous_bufnr = 0
 
-  as_utils.nnoremap("<CR>", [[:lua require('as.quickfix').enter()<CR>]], {buffer = 0})
+  as.nnoremap("<CR>", [[:lua require('as.quickfix').enter()<CR>]], {buffer = 0})
   api.nvim_exec(
     [[
       augroup QFMove

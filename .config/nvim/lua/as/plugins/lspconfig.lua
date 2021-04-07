@@ -1,4 +1,4 @@
-as_utils.lsp = {}
+as.lsp = {}
 local fn = vim.fn
 -----------------------------------------------------------------------------//
 -- Autocommands
@@ -58,8 +58,8 @@ end
 local function setup_mappings(client, bufnr)
   -- check that there are no existing mappings before assigning these
   local nnoremap, vnoremap, opts =
-    as_utils.nnoremap,
-    as_utils.vnoremap,
+    as.nnoremap,
+    as.vnoremap,
     {buffer = bufnr, check_existing = true}
 
   nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
@@ -99,7 +99,7 @@ local function setup_mappings(client, bufnr)
   nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
 end
 
-function as_utils.lsp.highlight()
+function as.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Highlights
   -----------------------------------------------------------------------------//
@@ -124,7 +124,7 @@ function as_utils.lsp.highlight()
   }
 end
 
-function as_utils.lsp.tagfunc(pattern, flags)
+function as.lsp.tagfunc(pattern, flags)
   if flags ~= "c" then
     return vim.NIL
   end
@@ -178,12 +178,12 @@ require("vim.lsp.protocol").CompletionItemKind = {
   " [Type Parameter]" -- TypeParameter
 }
 
-function as_utils.lsp.on_attach(client, bufnr)
+function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
 
   if client.resolved_capabilities.goto_definition then
-    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.as_utils.lsp.tagfunc")
+    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.as.lsp.tagfunc")
   end
   require("lsp-status").on_attach(client)
 end
@@ -191,7 +191,7 @@ end
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-as_utils.lsp.servers = {
+as.lsp.servers = {
   lua = {
     settings = {
       Lua = {
@@ -242,7 +242,7 @@ as_utils.lsp.servers = {
   }
 }
 
-function as_utils.lsp.setup_servers()
+function as.lsp.setup_servers()
   vim.cmd "packadd nvim-lspinstall" -- Important!
   local lspinstall = require("lspinstall")
   local lspconfig = require("lspconfig")
@@ -251,13 +251,13 @@ function as_utils.lsp.setup_servers()
   local installed = lspinstall.installed_servers()
   local status_capabilities = require("lsp-status").capabilities
   for _, server in pairs(installed) do
-    local config = as_utils.lsp.servers[server] or {}
-    config.on_attach = as_utils.lsp.on_attach
+    local config = as.lsp.servers[server] or {}
+    config.on_attach = as.lsp.on_attach
     if not config.capabilities then
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
     end
     config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    config.capabilities = as_utils.deep_merge(config.capabilities, status_capabilities)
+    config.capabilities = as.deep_merge(config.capabilities, status_capabilities)
     lspconfig[server].setup(config)
   end
 end
@@ -265,7 +265,7 @@ end
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-local command = as_utils.command
+local command = as.command
 
 command {
   "LspLog",
@@ -294,12 +294,12 @@ return function()
       {
         events = {"VimEnter", "ColorScheme"},
         targets = {"*"},
-        command = [[lua as_utils.lsp.highlight()]]
+        command = [[lua as.lsp.highlight()]]
       }
     }
   )
 
-  as_utils.lsp.highlight()
+  as.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//

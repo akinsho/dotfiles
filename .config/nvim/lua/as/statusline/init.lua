@@ -6,7 +6,7 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
-local is_empty = as_utils.is_empty
+local is_empty = as.is_empty
 local utils = require("as.statusline.utils")
 local H = require("as.highlights")
 local autocommands = require("as.autocommands")

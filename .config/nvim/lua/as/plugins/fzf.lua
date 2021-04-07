@@ -74,15 +74,14 @@ return function()
   vim.cmd [[command! -bang Dots call fzf#vim#files(g:dotfiles, fzf#vim#with_preview(), <bang>0)]]
   vim.cmd [[command! -bang WikiSearch call fzf#vim#files(g:wiki_path, fzf#vim#with_preview(), <bang>0)]]
 
-  local map = as_utils.map
-
-  map("n", "<C-P>", [[<cmd> lua __fzf_files()<CR>]])
-  map("n", "<leader>gS", "<cmd>GFiles?<cr>")
-  map("n", "<leader>ff", "<cmd>Files<cr>")
-  map("n", "<leader>fd", "<cmd>Dots<CR>")
-  map("n", "<leader>fo", "<cmd>Buffers<CR>")
-  map("n", "<leader>fh", "<cmd>History<CR>")
-  map("n", "<leader>fc", "<cmd>Commits<CR>")
-  map("n", "<leader>f?", "<cmd>Helptags<CR>")
-  map("n", "<leader>fs", "<cmd>Rg<CR>")
+  local nnoremap = as.nnoremap
+  nnoremap("<C-P>", [[<cmd> lua __fzf_files()<CR>]])
+  nnoremap("<leader>gS", "<cmd>GFiles?<cr>")
+  nnoremap("<leader>ff", "<cmd>Files<cr>")
+  nnoremap("<leader>fd", "<cmd>Dots<CR>")
+  nnoremap("<leader>fo", "<cmd>Buffers<CR>")
+  nnoremap("<leader>fh", "<cmd>History<CR>")
+  nnoremap("<leader>fc", "<cmd>Commits<CR>")
+  nnoremap("<leader>f?", "<cmd>Helptags<CR>")
+  nnoremap("<leader>fs", "<cmd>Rg<CR>")
 end

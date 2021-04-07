@@ -12,7 +12,7 @@ return function()
     },
     dev_log = {open_cmd = "tabedit"},
     lsp = {
-      on_attach = as_utils.lsp.on_attach,
+      on_attach = as.lsp.on_attach,
       capabilities = require("lsp-status").capabilities or {},
       settings = {
         showTodos = true

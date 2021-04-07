@@ -84,8 +84,8 @@ function _G.__coc_init()
 end
 
 return function()
-  local map = as_utils.map
-  local command = as_utils.command
+  local map = as.map
+  local command = as.command
   -----------------------------------------------------------------------------//
   -- Extensions
   -----------------------------------------------------------------------------//

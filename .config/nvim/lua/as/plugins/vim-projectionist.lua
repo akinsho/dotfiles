@@ -24,7 +24,8 @@ return function()
           "  group('TODO', () {",
           "    // TODO:",
           "  })",
-          "}"}
+          "}"
+        }
       },
       ["test/services/*_test.dart"] = {
         alternate = "lib/services/{}.dart",
@@ -33,11 +34,11 @@ return function()
           "import 'package:test/test.dart';",
           "",
           "void main() async {",
-            "  group('TODO', () {",
-                "    // TODO:",
-              "  })",
-        "}",
-      },
+          "  group('TODO', () {",
+          "    // TODO:",
+          "  })",
+          "}"
+        }
       },
       ["test/widget/*_test.dart"] = {
         alternate = "lib/screens/{}.dart",
@@ -46,17 +47,17 @@ return function()
           "import 'package:test/test.dart';",
           "",
           "void main() async {",
-            "  group('TODO', () {",
-                "    // TODO:",
-              "  })",
-          "}",
-        },
+          "  group('TODO', () {",
+          "    // TODO:",
+          "  })",
+          "}"
+        }
       }
     }
   }
 
-  local map = as_utils.map
-  map("n", "<leader>av", "<cmd>AV<CR>")
-  map("n", "<leader>at", "<cmd>Vtest<CR>")
-  map("n", "<leader>A", "<cmd>A<CR>")
+  local nnoremap = as.nnoremap
+  nnoremap("<leader>av", "<cmd>AV<CR>")
+  nnoremap("<leader>at", "<cmd>Vtest<CR>")
+  nnoremap("<leader>A", "<cmd>A<CR>")
 end

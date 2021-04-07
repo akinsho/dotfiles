@@ -1,6 +1,6 @@
 return function()
-  local nnoremap = as_utils.nnoremap
-  local has = as_utils.has
+  local nnoremap = as.nnoremap
+  local has = as.has
 
   local function is_ft(b, ft)
     return vim.bo[b].filetype == ft

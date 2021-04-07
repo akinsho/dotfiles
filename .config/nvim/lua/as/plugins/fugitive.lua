@@ -11,9 +11,9 @@ function _G.__fugitive_create_new_branch()
 end
 
 return function()
-  local nnoremap = as_utils.nnoremap
-  local vnoremap = as_utils.vnoremap
-  local command = as_utils.command
+  local nnoremap = as.nnoremap
+  local vnoremap = as.vnoremap
+  local command = as.command
 
   command {"Gcm", [[<cmd>G checkout master]], nargs = 0}
   command {"Gcb", [[<cmd>G checkout -b <q-args>]], nargs = 1}

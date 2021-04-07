@@ -1,8 +1,8 @@
 return function()
   local saga = require("lspsaga")
-  local nnoremap = as_utils.nnoremap
-  local inoremap = as_utils.inoremap
-  local vnoremap = as_utils.vnoremap
+  local nnoremap = as.nnoremap
+  local inoremap = as.inoremap
+  local vnoremap = as.vnoremap
 
   saga.init_lsp_saga {
     use_saga_diagnostic_sign = false,

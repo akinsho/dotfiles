@@ -1,19 +1,18 @@
 local autocommands = require("as.autocommands")
-local has = as_utils.has
+local has = as.has
 local fn = vim.fn
 local api = vim.api
-local command = as_utils.command
-local fmt = string.format
+local command = as.command
 
-local nmap = as_utils.nmap
-local imap = as_utils.imap
-local nnoremap = as_utils.nnoremap
-local xnoremap = as_utils.xnoremap
-local vnoremap = as_utils.vnoremap
-local inoremap = as_utils.inoremap
-local onoremap = as_utils.onoremap
-local cnoremap = as_utils.cnoremap
-local tnoremap = as_utils.tnoremap
+local nmap = as.nmap
+local imap = as.imap
+local nnoremap = as.nnoremap
+local xnoremap = as.xnoremap
+local vnoremap = as.vnoremap
+local inoremap = as.inoremap
+local onoremap = as.onoremap
+local cnoremap = as.cnoremap
+local tnoremap = as.tnoremap
 
 --- work around to place functions in the global scope but
 --- namespaced within a table.

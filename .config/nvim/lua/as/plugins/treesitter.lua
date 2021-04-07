@@ -1,9 +1,9 @@
 --- Global treesitter object containing treesitter related utilities
-as_utils.ts = {}
+as.ts = {}
 
 ---Get all filetypes for which we have a treesitter parser installed
 ---@return string[]
-function as_utils.ts.get_filetypes()
+function as.ts.get_filetypes()
   local parsers = require("nvim-treesitter.parsers")
   local configs = parsers.get_parser_configs()
   return vim.tbl_map(
@@ -58,7 +58,7 @@ return function()
     {
       {
         events = {"FileType"},
-        targets = as_utils.ts.get_filetypes(),
+        targets = as.ts.get_filetypes(),
         command = "setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
       }
     }

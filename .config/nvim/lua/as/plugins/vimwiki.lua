@@ -43,7 +43,7 @@ function M.setup()
 end
 
 function M.config()
-  as_utils.command {
+  as.command {
     "CloseVimWikis",
     function()
       local fn = vim.fn
@@ -55,7 +55,7 @@ function M.config()
       end
     end
   }
-  as_utils.map("n", "<leader>wq", "<Cmd>CloseVimWikis<CR>")
+  as.nnoremap("<leader>wq", "<Cmd>CloseVimWikis<CR>")
 end
 
 return M

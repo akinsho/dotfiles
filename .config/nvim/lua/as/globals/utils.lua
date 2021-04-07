@@ -1,4 +1,4 @@
-_G.as_utils = {
+_G.as = {
   -- TODO: once commands and mappings can take functions
   -- as arguments natively remove these globals
   command_callbacks = {},
@@ -8,7 +8,7 @@ _G.as_utils = {
 local fn = vim.fn
 local api = vim.api
 
-function as_utils.echomsg(msg, hl)
+function as.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)
   if msg_type ~= "string" or "table" then
@@ -20,7 +20,7 @@ function as_utils.echomsg(msg, hl)
   vim.api.nvim_echo(msg, true, {})
 end
 
-function as_utils.total_plugins()
+function as.total_plugins()
   local base_path = fn.stdpath("data") .. "/site/pack/packer/"
   local start = vim.split(fn.globpath(base_path .. "start", "*"), "\n")
   local opt = vim.split(fn.globpath(base_path .. "opt", "*"), "\n")
@@ -30,10 +30,10 @@ function as_utils.total_plugins()
 end
 
 -- https://stackoverflow.com/questions/1283388/lua-merge-tables
-function as_utils.deep_merge(t1, t2)
+function as.deep_merge(t1, t2)
   for k, v in pairs(t2) do
     if (type(v) == "table") and (type(t1[k] or false) == "table") then
-      as_utils.deep_merge(t1[k], t2[k])
+      as.deep_merge(t1[k], t2[k])
     else
       t1[k] = v
     end
@@ -45,7 +45,7 @@ end
 --- 1. Call `local stop = utils.profile('my-log')` at the top of the file
 --- 2. At the bottom of the file call `stop()`
 --- 3. Restart neovim, the newly created log file should open
-function as_utils.profile(filename)
+function as.profile(filename)
   local base = "/tmp/config/profile/"
   fn.mkdir(base, "p")
   local success, profile = pcall(require, "plenary.profile.lua_profiler")
@@ -66,7 +66,7 @@ function as_utils.profile(filename)
   end
 end
 
-function as_utils.has(feature)
+function as.has(feature)
   return vim.fn.has(feature) > 0
 end
 
@@ -78,7 +78,7 @@ end
 ---@param lhs string
 ---@param mode string
 ---@return boolean
-function as_utils.has_map(lhs, mode)
+function as.has_map(lhs, mode)
   mode = mode or "n"
   return vim.fn.maparg(lhs, mode) ~= ""
 end
@@ -126,7 +126,7 @@ local function make_mapper(mode, o)
 
     validate_mappings(lhs, rhs, _opts)
 
-    if _opts.check_existing and as_utils.has_map(lhs) then
+    if _opts.check_existing and as.has_map(lhs) then
       return
     else
       -- don't pass this invalid key to set keymap
@@ -135,13 +135,9 @@ local function make_mapper(mode, o)
 
     -- add functions to a global table keyed by their index
     if type(rhs) == "function" then
-      table.insert(as_utils.mapping_callbacks, rhs)
+      table.insert(as.mapping_callbacks, rhs)
       rhs =
-        string.format(
-        "<cmd>lua %s[%d]()<CR>",
-        "as_utils.mapping_callbacks",
-        #as_utils.mapping_callbacks
-      )
+        string.format("<cmd>lua %s[%d]()<CR>", "as.mapping_callbacks", #as.mapping_callbacks)
     end
 
     if _opts.buffer then
@@ -157,53 +153,54 @@ local function make_mapper(mode, o)
 end
 
 local map_opts = {noremap = false, silent = true}
-as_utils.nmap = make_mapper("n", map_opts)
-as_utils.xmap = make_mapper("x", map_opts)
-as_utils.imap = make_mapper("i", map_opts)
-as_utils.vmap = make_mapper("v", map_opts)
-as_utils.omap = make_mapper("o", map_opts)
-as_utils.tmap = make_mapper("t", map_opts)
-as_utils.smap = make_mapper("s", map_opts)
-as_utils.cmap = make_mapper("c", {noremap = false, silent = false})
+as.nmap = make_mapper("n", map_opts)
+as.xmap = make_mapper("x", map_opts)
+as.imap = make_mapper("i", map_opts)
+as.vmap = make_mapper("v", map_opts)
+as.omap = make_mapper("o", map_opts)
+as.tmap = make_mapper("t", map_opts)
+as.smap = make_mapper("s", map_opts)
+as.cmap = make_mapper("c", {noremap = false, silent = false})
 
 local noremap_opts = {noremap = true, silent = true}
-as_utils.nnoremap = make_mapper("n", noremap_opts)
-as_utils.xnoremap = make_mapper("x", noremap_opts)
-as_utils.vnoremap = make_mapper("v", noremap_opts)
-as_utils.inoremap = make_mapper("i", noremap_opts)
-as_utils.onoremap = make_mapper("o", noremap_opts)
-as_utils.tnoremap = make_mapper("t", noremap_opts)
-as_utils.cnoremap = make_mapper("c", {noremap = true, silent = false})
+as.nnoremap = make_mapper("n", noremap_opts)
+as.xnoremap = make_mapper("x", noremap_opts)
+as.vnoremap = make_mapper("v", noremap_opts)
+as.inoremap = make_mapper("i", noremap_opts)
+as.onoremap = make_mapper("o", noremap_opts)
+as.tnoremap = make_mapper("t", noremap_opts)
+as.snoremap = make_mapper("s", noremap_opts)
+as.cnoremap = make_mapper("c", {noremap = true, silent = false})
 
 ---map a key to an action
 ---@param mode string
 ---@param lhs string
 ---@param rhs string
 ---@param opts table
-function as_utils.map(mode, lhs, rhs, opts)
+function as.map(mode, lhs, rhs, opts)
   opts = opts or get_defaults(mode)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
-function as_utils.buf_map(bufnr, mode, lhs, rhs, opts)
+function as.buf_map(bufnr, mode, lhs, rhs, opts)
   opts = opts or get_defaults(mode)
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
-function as_utils.command(args)
-  local commands_table_name = "as_utils.command_callbacks"
+function as.command(args)
+  local commands_table_name = "as.command_callbacks"
   local nargs = args.nargs or 0
   local name = args[1]
   local rhs = args[2]
   local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
 
   if type(rhs) == "function" then
-    table.insert(as_utils.command_callbacks, rhs)
+    table.insert(as.command_callbacks, rhs)
     rhs =
       string.format(
       "lua %s[%d](%s)",
       commands_table_name,
-      #as_utils.command_callbacks,
+      #as.command_callbacks,
       nargs == 0 and "" or "<f-args>"
     )
   end
@@ -211,7 +208,7 @@ function as_utils.command(args)
   vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
 end
 
-function as_utils.invalidate(path, recursive)
+function as.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
       if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
@@ -225,7 +222,7 @@ function as_utils.invalidate(path, recursive)
   end
 end
 
-function as_utils.is_empty(item)
+function as.is_empty(item)
   if not item then
     return true
   end

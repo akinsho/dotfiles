@@ -1,8 +1,8 @@
-as_utils.telescope = {}
+as.telescope = {}
 
 return function()
-  local nnoremap = as_utils.nnoremap
-  local command = as_utils.command
+  local nnoremap = as.nnoremap
+  local command = as.command
   local telescope = require("telescope")
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
