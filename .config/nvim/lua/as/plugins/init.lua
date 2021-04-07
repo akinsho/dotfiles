@@ -180,11 +180,10 @@ return require("packer").startup {
       "christoomey/vim-tmux-navigator",
       config = function()
         vim.g.tmux_navigator_no_mappings = 1
-        local nnoremap = as.nnoremap
-        nnoremap("<C-H>", "<cmd>TmuxNavigateLeft<cr>")
-        nnoremap("<C-J>", "<cmd>TmuxNavigateDown<cr>")
-        nnoremap("<C-K>", "<cmd>TmuxNavigateUp<cr>")
-        nnoremap("<C-L>", "<cmd>TmuxNavigateRight<cr>")
+        as.nnoremap("<C-H>", "<cmd>TmuxNavigateLeft<cr>")
+        as.nnoremap("<C-J>", "<cmd>TmuxNavigateDown<cr>")
+        as.nnoremap("<C-K>", "<cmd>TmuxNavigateUp<cr>")
+        as.nnoremap("<C-L>", "<cmd>TmuxNavigateRight<cr>")
         -- Disable tmux navigator when zooming the Vim pane
         vim.g.tmux_navigator_disable_when_zoomed = 1
         vim.g.tmux_navigator_save_on_switch = 2
@@ -257,15 +256,14 @@ return require("packer").startup {
       requires = {"rafamadriz/friendly-snippets", "hrsh7th/nvim-compe"},
       config = function()
         vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
-        local imap, smap, xmap = as.imap, as.smap, as.xmap
         local opts = {expr = true}
-        imap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
-        smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
-        imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        smap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        xmap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
-        imap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
-        smap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+        as.imap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
+        as.smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
+        as.imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
+        as.smap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
+        as.xmap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+        as.imap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+        as.smap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
       end
     }
     -- }}}
@@ -328,12 +326,11 @@ return require("packer").startup {
       cmd = {"TestFile", "TestNearest", "TestSuite"},
       keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn", "<localleader>ts"},
       config = function()
-        local nnoremap = as.nnoremap
         vim.cmd [[let test#strategy = "neovim"]]
         vim.cmd [[let test#neovim#term_position = "vert botright"]]
-        nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
-        nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
-        nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
+        as.nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
+        as.nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
+        as.nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
       end
     }
     use {"liuchengxu/vim-which-key", config = conf("whichkey")}
@@ -450,11 +447,10 @@ return require("packer").startup {
             hunk = {"樂", ""}
           }
         }
-        local nnoremap = as.nnoremap
-        nnoremap("<localleader>gs", "<cmd>Neogit kind=vsplit<CR>")
-        nnoremap("<localleader>gc", "<cmd>Neogit commitCR>")
-        nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
-        nnoremap("<localleader>gp", "<cmd>lua require('neogit.popups.push').create()<CR>")
+        as.nnoremap("<localleader>gs", "<cmd>Neogit kind=vsplit<CR>")
+        as.nnoremap("<localleader>gc", "<cmd>Neogit commitCR>")
+        as.nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
+        as.nnoremap("<localleader>gp", "<cmd>lua require('neogit.popups.push').create()<CR>")
       end
     }
 
@@ -492,13 +488,12 @@ return require("packer").startup {
     use {
       "AndrewRadev/sideways.vim",
       config = function()
-        local nmap, nnoremap = as.nmap, as.nnoremap
-        nnoremap("]w", "<cmd>SidewaysLeft<cr>")
-        nnoremap("[w", "<cmd>SidewaysRight<cr>")
-        nmap("<localleader>si", "<Plug>SidewaysArgumentInsertBefore")
-        nmap("<localleader>sa", "<Plug>SidewaysArgumentAppendAfter")
-        nmap("<localleader>sI", "<Plug>SidewaysArgumentInsertFirst")
-        nmap("<localleader>sA", "<Plug>SidewaysArgumentAppendLast")
+        as.nnoremap("]w", "<cmd>SidewaysLeft<cr>")
+        as.nnoremap("[w", "<cmd>SidewaysRight<cr>")
+        as.nmap("<localleader>si", "<Plug>SidewaysArgumentInsertBefore")
+        as.nmap("<localleader>sa", "<Plug>SidewaysArgumentAppendAfter")
+        as.nmap("<localleader>sI", "<Plug>SidewaysArgumentInsertFirst")
+        as.nmap("<localleader>sA", "<Plug>SidewaysArgumentAppendLast")
         vim.g.sideways_add_item_cursor_restore = 1
       end
     }
@@ -506,12 +501,11 @@ return require("packer").startup {
       "svermeulen/vim-subversive",
       config = function()
         -- s for substitute
-        local nmap = as.nmap
-        nmap("<leader>s", "<plug>(SubversiveSubstitute)")
-        nmap("<leader>ss", "<plug>(SubversiveSubstituteLine)")
-        nmap("<leader>S", "<plug>(SubversiveSubstituteToEndOfLine)")
-        nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
-        nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
+        as.nmap("<leader>s", "<plug>(SubversiveSubstitute)")
+        as.nmap("<leader>ss", "<plug>(SubversiveSubstituteLine)")
+        as.nmap("<leader>S", "<plug>(SubversiveSubstituteToEndOfLine)")
+        as.nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
+        as.nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
       end
     }
     use {
@@ -519,11 +513,10 @@ return require("packer").startup {
       config = function()
         vim.g.wordmotion_spaces = "_-."
         -- Restore Vim's special case behavior with dw and cw:
-        local nnoremap = as.nnoremap
-        nnoremap("dw", "de")
-        nnoremap("cw", "ce")
-        nnoremap("dW", "dE")
-        nnoremap("cW", "cE")
+        as.nnoremap("dw", "de")
+        as.nnoremap("cw", "ce")
+        as.nnoremap("dW", "dE")
+        as.nnoremap("cW", "cE")
       end
     }
     use {
@@ -569,9 +562,10 @@ return require("packer").startup {
       "phaazon/hop.nvim",
       keys = {{"n", "s"}},
       config = function()
+        local hop = require("hop")
         -- remove h,j,k,l from hops list of keys
-        require("hop").setup {keys = "etovxqpdygfbzcisuran"}
-        as.nnoremap("s", [[<cmd>HopChar1<CR>]])
+        hop.setup {keys = "etovxqpdygfbzcisuran"}
+        as.nnoremap("s", hop.hint_char1)
       end
     }
     use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = conf("goyo")}
