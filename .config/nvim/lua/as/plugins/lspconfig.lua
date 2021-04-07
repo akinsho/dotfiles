@@ -57,10 +57,7 @@ end
 -----------------------------------------------------------------------------//
 local function setup_mappings(client, bufnr)
   -- check that there are no existing mappings before assigning these
-  local nnoremap, vnoremap, opts =
-    as.nnoremap,
-    as.vnoremap,
-    {buffer = bufnr, check_existing = true}
+  local nnoremap, vnoremap, opts = as.nnoremap, as.vnoremap, {buffer = bufnr, check_existing = true}
 
   nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   if client.resolved_capabilities.implementation then
@@ -77,7 +74,7 @@ local function setup_mappings(client, bufnr)
   nnoremap(
     "]c",
     function()
-      vim.lsp.diagnostic.goto_prev {border = "single"}
+      vim.lsp.diagnostic.goto_prev {popup_opts = {border = "single"}}
     end,
     opts
   )
@@ -85,7 +82,7 @@ local function setup_mappings(client, bufnr)
   nnoremap(
     "[c",
     function()
-      vim.lsp.diagnostic.goto_next {border = "single"}
+      vim.lsp.diagnostic.goto_next {popup_opts = {border = "single"}}
     end,
     opts
   )
@@ -326,5 +323,8 @@ return function()
     }
   )
 
-  as_utils.lsp.setup_servers()
+  -- NOTE: the hover handler returns the bufnr,winnr so can be use for mappings
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
+
+  as.lsp.setup_servers()
 end
