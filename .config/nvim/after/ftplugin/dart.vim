@@ -9,6 +9,7 @@ if v:lua.plugin_loaded('coc.nvim')
   nnoremap <silent> <leader>drs :CocCommand flutter.dev.hotRestart<CR>
   nnoremap <silent> <leader>dd  :CocCommand flutter.devices<CR>
 else
+  nnoremap <silent> <leader>cc  :Telescope flutter commands<CR>
   nnoremap <silent> <leader>de  :FlutterEmulators<CR>
   nnoremap <silent> <leader>dq  :FlutterQuit<CR>
   nnoremap <silent> <leader>drn :FlutterRun<CR>

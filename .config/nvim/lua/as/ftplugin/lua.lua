@@ -1,3 +1,5 @@
+local nnoremap = as.nnoremap
+
 local function find(word, ...)
   for _, str in ipairs({...}) do
     local match_start, match_end = string.find(word, str)
@@ -25,13 +27,13 @@ local function keyword(word, callback)
   local api_match = find(word, "api", "vim.api")
   local fn_match = find(word, "fn", "vim.fn")
   if api_match then
-    local _, finish = string.find(word, api_match..".")
+    local _, finish = string.find(word, api_match .. ".")
     local api_function = string.sub(word, finish + 1)
 
     vim.cmd(string.format("help %s", api_function))
     return
   elseif fn_match then
-    local _, finish = string.find(word, fn_match..".")
+    local _, finish = string.find(word, fn_match .. ".")
     local api_function = string.sub(word, finish + 1) .. "()"
 
     vim.cmd(string.format("help %s", api_function))
@@ -50,4 +52,4 @@ local function hover_doc()
   local cb = loaded and hover.render_hover_doc or nil
   keyword(nil, cb)
 end
-as.nnoremap("K", hover_doc, {buffer = 0})
+nnoremap("K", hover_doc, {buffer = 0})
