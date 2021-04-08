@@ -1,8 +1,6 @@
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local synIDattr = fn.synIDattr
-local hlID = fn.hlID
 
 local M = {}
 
