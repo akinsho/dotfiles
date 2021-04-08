@@ -153,6 +153,7 @@ return require("packer").startup {
     use {
       "nvim-telescope/telescope.nvim",
       config = conf("telescope"),
+      branch = "use_plenary_async",
       requires = {
         "nvim-lua/popup.nvim",
         "nvim-telescope/telescope-fzf-writer.nvim",
@@ -219,7 +220,12 @@ return require("packer").startup {
             status.register_progress()
           end
         },
-        {"glepnir/lspsaga.nvim", config = conf("lspsaga")},
+        {
+          --- TODO: use glepnir's project once #165 is merged
+          "ckipp01/lspsaga.nvim",
+          branch = "trimUpdate",
+          config = conf("lspsaga")
+        },
         {
           "kabouzeid/nvim-lspinstall",
           opt = true,
