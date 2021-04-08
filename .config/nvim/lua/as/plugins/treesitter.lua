@@ -35,7 +35,7 @@ return function()
       }
     },
     indent = {
-      enable = true
+      enable = false
     },
     textobjects = {
       select = {

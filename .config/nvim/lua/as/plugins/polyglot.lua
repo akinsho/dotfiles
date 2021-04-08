@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  vim.g.polyglot_disabled = {"sensible", "autoindent"}
+  vim.g.polyglot_disabled = {"sensible"} -- , "autoindent"
 end
 
 function M.config()
