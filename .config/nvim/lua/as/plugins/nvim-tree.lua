@@ -13,6 +13,7 @@ return function()
 
   as.nnoremap("<c-n>", [[<cmd>NvimTreeToggle<CR>]])
 
+  vim.g.nvim_tree_lsp_diagnostics = 1
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_group_empty = 1
   vim.g.nvim_tree_git_hl = 1
