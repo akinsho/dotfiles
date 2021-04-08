@@ -367,6 +367,11 @@ return require("packer").startup {
         vim.g.Hexokinase_ftDisabled = {"vimwiki"}
       end
     }
+    use {
+      "lukas-reineke/indent-blankline.nvim",
+      branch = "lua",
+      config = conf("indentline")
+    }
     --}}}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management {{{
@@ -412,10 +417,30 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
+    -- Treesitter cannot be run as an optional plugin and most be available on start
+    -- if not it obscurely breaks nvim-lspconfig...
     use {
-      "lukas-reineke/indent-blankline.nvim",
-      branch = "lua",
-      config = conf("indentline")
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+      config = conf("treesitter"),
+      requires = {
+        {
+          "lewis6991/spellsitter.nvim",
+          cond = "false",
+          run = hunspell_install_if_needed,
+          config = function()
+            require("spellsitter").setup {captures = {"comment"}}
+          end
+        },
+        {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
+        {
+          "nvim-treesitter/playground",
+          cmd = "TSPlaygroundToggle",
+          module = "nvim-treesitter-playground",
+          disable = is_work
+        }
+      },
+      local_path = "contributing"
     }
     ---}}}
     --------------------------------------------------------------------------------
@@ -592,32 +617,6 @@ return require("packer").startup {
       config = conf("nvim-tree"),
       local_path = "contributing",
       requires = "nvim-web-devicons"
-    }
-
-    -- Treesitter cannot be run as an optional plugin and most be available on start
-    -- if not it obscurely breaks nvim-lspconfig...
-    use {
-      "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
-      config = conf("treesitter"),
-      requires = {
-        {
-          "lewis6991/spellsitter.nvim",
-          cond = "false",
-          run = hunspell_install_if_needed,
-          config = function()
-            require("spellsitter").setup {captures = {"comment"}}
-          end
-        },
-        {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
-        {
-          "nvim-treesitter/playground",
-          cmd = "TSPlaygroundToggle",
-          module = "nvim-treesitter-playground",
-          disable = is_work
-        }
-      },
-      local_path = "contributing"
     }
 
     use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
