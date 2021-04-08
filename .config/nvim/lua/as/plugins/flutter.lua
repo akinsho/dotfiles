@@ -4,7 +4,7 @@ return function()
       lsp_derive_paths = true
     },
     debugger = {
-      enabled = true
+      enabled = false
     },
     widget_guides = {
       enabled = true,
