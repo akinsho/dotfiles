@@ -417,11 +417,6 @@ return require("packer").startup {
       branch = "lua",
       config = conf("indentline")
     }
-    use {
-      "sheerun/vim-polyglot",
-      config = conf("polyglot").config,
-      setup = conf("polyglot").setup
-    }
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{

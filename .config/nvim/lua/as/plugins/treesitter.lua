@@ -34,6 +34,9 @@ return function()
         node_decremental = "grm" -- decrement to the previous node
       }
     },
+    indent = {
+      enable = true
+    },
     textobjects = {
       select = {
         enable = true,
