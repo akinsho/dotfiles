@@ -153,7 +153,6 @@ return require("packer").startup {
     use {
       "nvim-telescope/telescope.nvim",
       config = conf("telescope"),
-      branch = "use_plenary_async",
       requires = {
         "nvim-lua/popup.nvim",
         "nvim-telescope/telescope-fzf-writer.nvim",
