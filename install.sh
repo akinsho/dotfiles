@@ -1,5 +1,37 @@
 #!/bin/sh
 
+check_pkg_exists() {
+  for p in "${packages[@]}"; do
+    if hash "$p" 2>/dev/null
+    then
+      echo "$p is installed"
+    else
+      echo "$p is not installed"
+      if [ "$(uname)" == "Darwin" ]; then
+        # uses home brew to install packages
+        brew install "$p"
+      else
+        # uses apt but maybe switch to snap or flatpack
+        apt install "$p"
+      fi
+      echo "---------------------------------------------------------"
+    fi
+  done
+}
+
+setup_fzf () {
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+}
+
+npm_install() {
+  if hash npm 2>/dev/null;then
+    npm i -g "$@"
+  else
+    echo "npm command does not exist"
+  fi
+}
+
 # Might as well ask for password up-front, right?
 echo "Starting install script, please grant me sudo access..."
 sudo -v
@@ -22,28 +54,7 @@ fi
 
 packages=("git" "node")
 
-check_pkg_exists() {
-  for p in "${packages[@]}"; do
-    if hash "$p" 2>/dev/null
-    then
-      echo "$p is installed"
-    else
-      echo "$p is not installed"
-      brew install "$p"
-      echo "---------------------------------------------------------"
-    fi
-  done
-}
-
 check_pkg_exists
-
-npm_install() {
-  if hash npm 2>/dev/null;then
-    npm i -g "$@"
-  else
-    echo "npm command does not exist"
-  fi
-}
 
 # Clone my dotfiles repo into ~/.dotfiles/ if needed
 echo "dotfiles -------------------------------------------------"
@@ -87,6 +98,8 @@ fi
 curl -L https://git.io/n-install | bash
 # Install rust
 curl https://sh.rustup.rs -sSf | sh
+
+setup_fzf
 
 echo "---------------------------------------------------------"
 echo "Changing to zsh"

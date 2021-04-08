@@ -403,9 +403,14 @@ for script in $DOTFILES/zsh/scripts/*; do
 done
 
 # reference - https://unix.stackexchange.com/questions/252166/how-to-configure-zshrc-for-specfic-os
-if [[ `uname` == 'Linux' ]]; then
-  source "$DOTFILES/linux/functions.sh"
-fi
+case `uname` in
+  Darwin)
+    source "$DOTFILES/macos/init.sh"
+    ;;
+  Linux)
+    source "$DOTFILES/linux/functions.sh"
+    ;;
+esac
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
