@@ -23,7 +23,7 @@ return function()
       file_sorter = sorters.get_fzy_sorter,
       generic_sorter = sorters.get_fzy_sorter,
       -- layout_strategy = "flex",
-      winblend = 7,
+      winblend = 7
     },
     extensions = {
       frecency = {
