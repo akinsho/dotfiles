@@ -219,12 +219,7 @@ return require("packer").startup {
             status.register_progress()
           end
         },
-        {
-          --- TODO: use glepnir's project once #165 is merged
-          "ckipp01/lspsaga.nvim",
-          branch = "trimUpdate",
-          config = conf("lspsaga")
-        },
+        {"glepnir/lspsaga.nvim", config = conf("lspsaga")},
         {
           "kabouzeid/nvim-lspinstall",
           opt = true,
@@ -425,7 +420,7 @@ return require("packer").startup {
       requires = {
         {
           "lewis6991/spellsitter.nvim",
-          cond = "false",
+          opt = true,
           run = hunspell_install_if_needed,
           config = function()
             require("spellsitter").setup {captures = {"comment"}}
@@ -655,11 +650,6 @@ return require("packer").startup {
     display = {
       open_cmd = "topleft 65vnew [packer]"
     }
-    -- git = {
-    --   subcommands = {
-    --     update = "-C %s pull --ff-only --progress --rebase" -- set rebase to true
-    --   }
-    -- }
   }
 }
 -- }}}
