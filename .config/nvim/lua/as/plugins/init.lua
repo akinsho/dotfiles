@@ -538,10 +538,10 @@ return require("packer").startup {
       config = function()
         vim.g.wordmotion_spaces = "_-."
         -- Restore Vim's special case behavior with dw and cw:
-        as.nnoremap("dw", "de")
-        as.nnoremap("cw", "ce")
-        as.nnoremap("dW", "dE")
-        as.nnoremap("cW", "cE")
+        as.nmap("dw", "de")
+        as.nmap("cw", "ce")
+        as.nmap("dW", "dE")
+        as.nmap("cW", "cE")
       end
     }
     use {
