@@ -99,6 +99,9 @@ local function with_local(spec)
   return spec, local_spec
 end
 
+---local variant of packer's use function that specifies both a local and
+---upstream version of a plugin
+---@param original table|string
 local function use_local(original)
   local use = require("packer").use
   local spec, local_spec = with_local(original)
@@ -195,7 +198,7 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = conf("dap")}
-    use {"jbyuki/lua-debug.nvim", requires = "nvim-dap", ft = "lua", disable = is_work}
+    use {"jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work}
 
     use {"neoclide/coc.nvim", config = conf("coc"), cond = is_stable, disable = is_home}
     use {"honza/vim-snippets", cond = is_stable, disable = is_home}
@@ -649,6 +652,10 @@ return require("packer").startup {
   config = {
     display = {
       open_cmd = "topleft 65vnew [packer]"
+    },
+    profile = {
+      enabled = true,
+      threshold = 1
     }
   }
 }

@@ -5,6 +5,32 @@ return function()
   vim.fn.sign_define("DapBreakpoint", {text = "🛑", texthl = "", linehl = "", numhl = ""})
   vim.fn.sign_define("DapStopped", {text = "🟢", texthl = "", linehl = "", numhl = ""})
 
+  local dap = require("dap")
+
+  dap.configurations.lua = {
+    {
+      type = "nlua",
+      request = "attach",
+      name = "Attach to running Neovim instance",
+      host = function()
+        local value = vim.fn.input("Host [127.0.0.1]: ")
+        if value ~= "" then
+          return value
+        end
+        return "127.0.0.1"
+      end,
+      port = function()
+        local val = tonumber(vim.fn.input("Port: "))
+        assert(val, "Please provide a port number")
+        return val
+      end
+    }
+  }
+
+  dap.adapters.nlua = function(callback, config)
+    callback({type = "server", host = config.host, port = config.port})
+  end
+
   vnoremap("<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
   nnoremap("<localleader>d?", [[<cmd>lua require'dap.ui.variables'.scopes()<CR>]])
   nnoremap("<localleader>dc", [[<cmd>lua require'dap'.continue()<CR>]])
