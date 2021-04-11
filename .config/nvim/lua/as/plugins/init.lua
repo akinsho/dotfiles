@@ -462,11 +462,7 @@ return require("packer").startup {
       },
       local_path = "contributing"
     }
-    use {
-      "sheerun/vim-polyglot",
-      config = conf("polyglot").config,
-      setup = conf("polyglot").setup
-    }
+    use {"sheerun/vim-polyglot", config = conf("polyglot").config, setup = conf("polyglot").setup}
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{
