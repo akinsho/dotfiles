@@ -9,7 +9,7 @@ local api = vim.api
 local fmt = string.format
 
 local state = {
-  enabled = true,
+  enabled = false,
   preview_height = nil
 }
 
@@ -39,8 +39,7 @@ local function highlight_match(lnum)
   if vim.w.qf_preview_match_id then
     fn.matchdelete(vim.w.qf_preview_match_id)
   end
-  vim.w.qf_preview_match_id=
-    fn.matchadd("Search", [[\%]] .. lnum .. [[l^\s*\zs.\{-}\ze\s*$]], 12)
+  vim.w.qf_preview_match_id = fn.matchadd("Search", [[\%]] .. lnum .. [[l^\s*\zs.\{-}\ze\s*$]], 12)
 
   -- TODO: figure out how to highlight an entire line including virtual columns
   -- if vim.w.qf_preview_line_id then
