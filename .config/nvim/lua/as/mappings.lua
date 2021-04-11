@@ -320,13 +320,6 @@ inoremap("<c-v>c", [[<c-k>'9]])
 -- Map Q to replay q register
 nnoremap("Q", "@q")
 
-if not plugin_loaded("conflict-marker.vim") then
-  -- Shortcut to jump to next conflict marker"
-  nnoremap("]x", [[/^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>]])
-  -- Shortcut to jump to last conflict marker"
-  nnoremap("[x", [[?^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>]])
-end
-
 -- Zoom / Restore window. - Zooms by increasing window width squashing the other window
 -- z is the zoom/zen prefix
 nnoremap("<leader>zt", [[:call utils#tab_zoom()<CR>]])
