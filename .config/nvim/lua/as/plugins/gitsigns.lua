@@ -1,8 +1,10 @@
 return function()
-  -- as.nnoremap('<leader>Mc', ':lua require"gitsigns".dump_cache()<cr>')
-  -- as.nnoremap('<leader>Mm', ':lua require"gitsigns".debug_messages()<cr>')
-  require("gitsigns").setup {
-    debug_mode = true,
+  local gitsigns = require("gitsigns")
+
+  as.nnoremap("<localleader>gbl", gitsigns.blame_line)
+
+  gitsigns.setup {
+    debug_mode = false,
     signs = {
       add = {hl = "GitGutterAdd", text = "▌"},
       change = {hl = "GitGutterChange", text = "▌"},
