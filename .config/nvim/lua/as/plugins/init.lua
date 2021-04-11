@@ -654,9 +654,15 @@ return require("packer").startup {
     }
     use_local {
       "akinsho/nvim-toggleterm.lua",
-      config = conf("toggleterm"),
       keys = [[<c-\>]],
-      local_path = "personal"
+      local_path = "personal",
+      config = function()
+        require "toggleterm".setup {
+          size = 15,
+          open_mapping = [[<c-\>]],
+          direction = "window"
+        }
+      end
     }
     -- TODO: could be lazy loaded if the color library was separate functionality
     use_local {
