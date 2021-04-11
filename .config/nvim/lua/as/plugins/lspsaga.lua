@@ -13,9 +13,9 @@ return function()
     },
     code_action_icon = "💡",
     code_action_prompt = {
-      enable = true,
+      enable = false,
       sign = false,
-      virtual_text = true
+      virtual_text = false
     }
   }
 

@@ -222,6 +222,29 @@ return require("packer").startup {
             status.register_progress()
           end
         },
+        -- TODO re-add lspsaga's lightbulb once lspsaga #161 is resolved
+        {
+          "kosayoda/nvim-lightbulb",
+          config = function()
+            require("as.autocommands").augroup(
+              "NvimLightbulb",
+              {
+                {
+                  events = {"CursorHold", "CursorHoldI"},
+                  targets = {"*"},
+                  command = [[lua require'nvim-lightbulb'.update_lightbulb {
+                    sign = {
+                      enabled = false,
+                    },
+                    virtual_text = {
+                      enabled = true,
+                    }
+                  }]]
+                }
+              }
+            )
+          end
+        },
         {"glepnir/lspsaga.nvim", config = conf("lspsaga")},
         {
           "kabouzeid/nvim-lspinstall",
