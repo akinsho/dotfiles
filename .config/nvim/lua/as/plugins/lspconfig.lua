@@ -96,31 +96,6 @@ local function setup_mappings(client, bufnr)
   nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
 end
 
-function as.lsp.highlight()
-  -----------------------------------------------------------------------------//
-  -- Highlights
-  -----------------------------------------------------------------------------//
-  local highlight = require("as.highlights")
-  local cursor_line_bg = highlight.hl_value("CursorLine", "bg")
-  highlight.all {
-    {"LspReferenceText", {guibg = cursor_line_bg, gui = "underline"}},
-    {"LspReferenceRead", {guibg = cursor_line_bg, gui = "underline"}},
-    {"LspDiagnosticsSignHint", {guifg = "#fab005"}},
-    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
-    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
-    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
-    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
-    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75", guifg = "none"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005", guifg = "none"}},
-    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange", guifg = "none"}},
-    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf", guifg = "none"}},
-    {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}}
-  }
-end
-
 function as.lsp.tagfunc(pattern, flags)
   if flags ~= "c" then
     return vim.NIL
@@ -285,18 +260,6 @@ return function()
   end
   vim.g.lspconfig_has_setup = true
 
-  require("as.autocommands").augroup(
-    "LspHighlights",
-    {
-      {
-        events = {"VimEnter", "ColorScheme"},
-        targets = {"*"},
-        command = [[lua as.lsp.highlight()]]
-      }
-    }
-  )
-
-  as.lsp.highlight()
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//

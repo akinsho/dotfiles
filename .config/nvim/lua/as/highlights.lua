@@ -185,6 +185,7 @@ local function plugin_highlights()
 end
 
 local function general_overrides()
+  local cursor_line_bg = M.hl_value("CursorLine", "bg")
   M.all {
     {"Credit", {gui = "bold"}},
     {"Todo", {guifg = "Red", guibg = "NONE", gui = "bold"}},
@@ -196,32 +197,36 @@ local function general_overrides()
     {"MatchParen", {gui = "bold", guifg = "LightGreen", guibg = "NONE"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
     {"Error", {link = "WarningMsg", force = true}},
-    -- Floating window overrides
-    {"mkdLineBreak", {link = "None", force = true}},
-    {"typescriptParens", {link = "None", force = true}},
     -- Add undercurl to existing spellbad highlight
     {"SpellBad", {gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green"}},
-    {"dartStorageClass", {link = "Statement", force = true}},
     -- Customize Diff highlighting
     {"DiffAdd", {guibg = "green", guifg = "NONE"}},
     {"DiffDelete", {guibg = "red", guifg = "#5c6370", gui = "NONE"}},
     {"DiffChange", {guibg = "#344f69", guifg = "NONE"}},
     {"DiffText", {guibg = "#2f628e", guifg = "NONE"}},
     -- colorscheme overrides
-    {"jsFuncCall", {gui = "italic"}},
     {"Comment", {gui = "italic", cterm = "italic"}},
-    {"xmlAttrib", {gui = "italic,bold", cterm = "italic,bold", ctermfg = 121}},
-    {"jsxAttrib", {cterm = "italic,bold", ctermfg = 121}},
     {"Type", {gui = "italic,bold", cterm = "italic,bold"}},
-    {"jsThis", {ctermfg = 224, gui = "italic"}},
     {"Include", {gui = "italic", cterm = "italic"}},
-    {"jsFuncArgs", {gui = "italic", cterm = "italic", ctermfg = 217}},
-    {"jsClassProperty", {ctermfg = 14, cterm = "bold,italic", term = "bold,italic"}},
-    {"jsExportDefault", {gui = "italic,bold", cterm = "italic", ctermfg = 179}},
-    {"htmlArg", {gui = "italic,bold", cterm = "italic,bold", ctermfg = "yellow"}},
     {"Folded", {gui = "bold,italic", cterm = "bold"}},
-    {"typescriptExport", {link = "jsImport"}},
-    {"typescriptImport", {link = "jsImport"}}
+    -----------------------------------------------------------------------------//
+    -- LSP
+    -----------------------------------------------------------------------------//
+    {"LspReferenceText", {guibg = cursor_line_bg, gui = "underline"}},
+    {"LspReferenceRead", {guibg = cursor_line_bg, gui = "underline"}},
+    {"LspDiagnosticsSignHint", {guifg = "#fab005"}},
+    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
+    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
+    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
+    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
+    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75", guifg = "none"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005", guifg = "none"}},
+    {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange", guifg = "none"}},
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf", guifg = "none"}},
+    {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
+    {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
+    {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
+    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}}
   }
 end
 
