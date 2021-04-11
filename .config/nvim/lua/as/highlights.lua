@@ -142,7 +142,7 @@ function M.hl_value(grp, attr)
   end
   local color = hl[attr]
   -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
-  return fmt("#%06x", color)
+  return "#" .. bit.tohex(color, 6)
 end
 
 function M.all(hls)
