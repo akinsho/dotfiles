@@ -646,11 +646,12 @@ return require("packer").startup {
       "akinsho/nvim-toggleterm.lua",
       keys = [[<c-\>]],
       local_path = "personal",
+      branch = "refactor/terminal-classes",
       config = function()
         require "toggleterm".setup {
           size = 15,
           open_mapping = [[<c-\>]],
-          direction = "horizontal"
+          direction = "window"
         }
       end
     }
