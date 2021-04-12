@@ -15,7 +15,7 @@ end
 local function is_blocked()
   local win_type = vim.fn.win_gettype()
 
-  if not api.nvim_buf_is_valid() then
+  if fn.buflisted(api.nvim_buf_get_name(0)) == 0 then
     return true
   end
 
