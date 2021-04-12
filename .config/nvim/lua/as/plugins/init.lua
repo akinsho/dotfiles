@@ -650,7 +650,7 @@ return require("packer").startup {
         require "toggleterm".setup {
           size = 15,
           open_mapping = [[<c-\>]],
-          direction = "window"
+          direction = "horizontal"
         }
       end
     }
