@@ -139,7 +139,11 @@ end
 --]]
 return require("packer").startup {
   function(use, use_rocks)
-    use_local {"wbthomason/packer.nvim", local_path = "contributing"}
+    use_local {
+      "wbthomason/packer.nvim",
+      branch = "feat-profile-compiled-code",
+      local_path = "contributing"
+    }
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -679,7 +683,7 @@ return require("packer").startup {
       open_cmd = "topleft 65vnew [packer]"
     },
     profile = {
-      enabled = true,
+      enable = true,
       threshold = 1
     }
   }
