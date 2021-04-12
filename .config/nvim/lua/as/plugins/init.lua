@@ -468,7 +468,7 @@ return require("packer").startup {
     -- Git {{{
     --------------------------------------------------------------------------------
     use {"tpope/vim-fugitive", keys = {"<localleader>gS"}, config = conf("fugitive")}
-    use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}
+    use {"lewis6991/gitsigns.nvim", branch = "attach", config = conf("gitsigns")}
     use {
       "rhysd/conflict-marker.vim",
       config = function()
