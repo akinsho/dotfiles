@@ -4,6 +4,7 @@
 
 local autocommands = require("as.autocommands")
 local fn = vim.fn
+local api = vim.api
 local M = {}
 
 local function is_floating_win()
@@ -14,11 +15,7 @@ end
 local function is_blocked()
   local win_type = vim.fn.win_gettype()
 
-  if win_type == "popup" then
-    return false
-  end
-
-  if fn.buflisted(fn.bufnr("")) == 0 then
+  if not api.nvim_buf_is_valid() then
     return true
   end
 
