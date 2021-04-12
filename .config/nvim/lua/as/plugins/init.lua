@@ -36,14 +36,6 @@ local function dev(path)
   return os.getenv("HOME") .. "/Desktop/projects/" .. path
 end
 
-local function is_bleeding_edge()
-  return not vim.env.STABLE
-end
-
-local function is_stable()
-  return vim.env.STABLE ~= nil
-end
-
 local function developing()
   return vim.env.DEVELOPING ~= nil
 end
@@ -204,13 +196,9 @@ return require("packer").startup {
     use {"mfussenegger/nvim-dap", config = conf("dap")}
     use {"jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work}
 
-    use {"neoclide/coc.nvim", config = conf("coc"), cond = is_stable, disable = is_home}
-    use {"honza/vim-snippets", cond = is_stable, disable = is_home}
-
     use {
       "neovim/nvim-lspconfig",
       config = conf("lspconfig"),
-      cond = is_bleeding_edge,
       requires = {
         {
           "nvim-lua/lsp-status.nvim",
@@ -266,12 +254,11 @@ return require("packer").startup {
     use_local {
       "akinsho/flutter-tools.nvim",
       config = conf("flutter"),
-      cond = is_bleeding_edge,
       requires = {"nvim-dap"},
       local_path = "personal"
     }
 
-    use {"hrsh7th/nvim-compe", cond = is_bleeding_edge, config = conf("compe")}
+    use {"hrsh7th/nvim-compe", config = conf("compe")}
     use {
       "tzachar/compe-tabnine",
       run = "./install.sh",
@@ -281,7 +268,6 @@ return require("packer").startup {
 
     use {
       "hrsh7th/vim-vsnip",
-      cond = is_bleeding_edge,
       event = "InsertEnter",
       requires = {"rafamadriz/friendly-snippets", "hrsh7th/nvim-compe"},
       config = function()
