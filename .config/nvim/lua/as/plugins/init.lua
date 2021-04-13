@@ -458,6 +458,13 @@ return require("packer").startup {
     -- Git {{{
     --------------------------------------------------------------------------------
     use {"tpope/vim-fugitive", keys = {"<localleader>gS"}, config = conf("fugitive")}
+    use {
+      "ruifm/gitlinker.nvim",
+      requires = "plenary.nvim",
+      config = function()
+        require("gitlinker").setup()
+      end
+    }
     use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}
     use {
       "rhysd/conflict-marker.vim",
