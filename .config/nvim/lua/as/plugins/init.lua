@@ -500,8 +500,8 @@ return require("packer").startup {
         }
         as.nnoremap("<localleader>gs", "<cmd>Neogit kind=vsplit<CR>")
         as.nnoremap("<localleader>gc", "<cmd>Neogit commitCR>")
-        as.nnoremap("<localleader>gl", "<cmd>lua require('neogit.popups.pull').create()<CR>")
-        as.nnoremap("<localleader>gp", "<cmd>lua require('neogit.popups.push').create()<CR>")
+        as.nnoremap("<localleader>gl", require("neogit.popups.pull").create)
+        as.nnoremap("<localleader>gp", require("neogit.popups.push").create)
       end
     }
 
