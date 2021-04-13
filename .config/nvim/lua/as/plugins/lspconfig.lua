@@ -167,7 +167,7 @@ as.lsp.servers = {
   lua = {
     settings = {
       Lua = {
-        diagnostics = {globals = {"vim"}},
+        diagnostics = {globals = {"vim", "describe", "it"}},
         completion = {keywordSnippet = "Both"},
         runtime = {
           version = "LuaJIT",
