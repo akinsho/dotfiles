@@ -194,6 +194,13 @@ return require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {"mfussenegger/nvim-dap", config = conf("dap")}
+    use {
+      "rcarriga/nvim-dap-ui",
+      requires = "nvim-dap",
+      config = function()
+        require("dapui").setup()
+      end
+    }
     use {"jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work}
 
     use {
