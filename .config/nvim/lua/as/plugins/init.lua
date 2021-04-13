@@ -188,7 +188,31 @@ return require("packer").startup {
         vim.g.tmux_navigator_save_on_switch = 2
       end
     }
-    use "nvim-lua/plenary.nvim"
+    use {
+      "nvim-lua/plenary.nvim",
+      config = function()
+        as.plenary = {}
+        function as.plenary.test_maps()
+          local opts = {buffer = 0}
+          as.nnoremap(
+            "<leader>td",
+            [[<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>]],
+            opts
+          )
+          as.nmap("<leader>tf", "<Plug>PlenaryTestFile", opts)
+        end
+        require("as.autocommands").augroup(
+          "PlenaryTests",
+          {
+            {
+              events = {"BufEnter"},
+              targets = {"*_spec.lua"},
+              command = "lua as.plenary.test_maps()"
+            }
+          }
+        )
+      end
+    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
