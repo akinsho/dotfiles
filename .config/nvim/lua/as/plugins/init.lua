@@ -573,10 +573,7 @@ return require("packer").startup {
     use {
       "b3nj5m1n/kommentary",
       config = function()
-        require("kommentary.config").configure_language(
-          "lua",
-          {prefer_single_line_comments = true, single_line_comment_string = "--"}
-        )
+        require("kommentary.config").configure_language("lua", {prefer_single_line_comments = true})
       end
     }
     use {
