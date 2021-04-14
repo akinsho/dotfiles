@@ -680,7 +680,6 @@ return require("packer").startup {
     use_local {
       "akinsho/nvim-toggleterm.lua",
       local_path = "personal",
-      branch = "refactor/terminal-classes",
       config = function()
         local large_screen = vim.o.columns > 200
         require("toggleterm").setup {
