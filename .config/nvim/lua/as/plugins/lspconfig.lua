@@ -225,6 +225,8 @@ function as.lsp.setup_servers()
   local status_capabilities = require("lsp-status").capabilities
   for _, server in pairs(installed) do
     local config = as.lsp.servers[server] or {}
+    config.flags = config.flags or {}
+    config.flags.debounce_text_changes = 150
     config.on_attach = as.lsp.on_attach
     if not config.capabilities then
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
