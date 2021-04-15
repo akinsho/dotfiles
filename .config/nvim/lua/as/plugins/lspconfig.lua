@@ -163,70 +163,93 @@ end
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+
+--- This function if called immediately on startup might not have all the correct
+--- paths added to the runtime if the the package manager e.g. packer loads things too late
+local function get_lua_runtime()
+  local result = {}
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua/"
+    if fn.isdirectory(lua_path) > 0 then
+      result[lua_path] = true
+    end
+  end
+
+  -- This loads the `lua` files from nvim into the runtime.
+  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  return result
+end
+
+--- LSP server configs are setup dynamically as they need to be generated during
+--- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
-  lua = {
-    settings = {
-      Lua = {
-        diagnostics = {globals = {"vim", "describe", "it", "before_each", "after_each", "pending"}},
-        completion = {keywordSnippet = "Both"},
-        runtime = {
-          version = "LuaJIT",
-          path = vim.split(package.path, ";")
-        },
-        workspace = {
-          library = {
-            [fn.expand("$VIMRUNTIME/lua")] = true,
-            [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-            [fn.stdpath("data") .. "/site/pack/packer/start/plenary.nvim/lua"] = true
+  lua = function()
+    return {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {"vim", "describe", "it", "before_each", "after_each", "pending"}
+          },
+          completion = {keywordSnippet = "Both"},
+          runtime = {
+            version = "LuaJIT",
+            path = vim.split(package.path, ";")
+          },
+          workspace = {
+            maxPreload = 2000,
+            preloadFileSize = 1000,
+            library = get_lua_runtime()
           }
         }
       }
     }
-  },
-  diagnosticls = {
-    rootMarkers = {".git/"},
-    filetypes = {"yaml", "json", "html", "css", "markdown", "lua", "graphql"},
-    init_options = {
-      formatters = {
-        prettier = {
-          rootPatterns = {".git"},
-          command = "prettier",
-          args = {"--stdin-filepath", "%filename"}
+  end,
+  diagnosticls = function()
+    return {
+      rootMarkers = {".git/"},
+      filetypes = {"yaml", "json", "html", "css", "markdown", "lua", "graphql"},
+      init_options = {
+        formatters = {
+          prettier = {
+            rootPatterns = {".git"},
+            command = "prettier",
+            args = {"--stdin-filepath", "%filename"}
+          },
+          luaformatter = {
+            -- 'lua-format -i -c {config_dir}'
+            -- add ".lua-format" to root if using lua-format
+            rootPatterns = {".git"},
+            command = "lua-format",
+            args = {"-i", "-c", "./.lua-format"}
+          },
+          luafmt = {
+            -- npm i -g lua-fmt
+            rootPatterns = {".git"},
+            command = "luafmt",
+            args = {"--indent-count", vim.o.shiftwidth, "--line-width", "100", "--stdin"}
+          },
+          stylua = {
+            rootPatterns = {".git"},
+            command = "stylua",
+            args = {"--config-path", vim.g.vim_dir .. "/stylua.toml", "-"}
+          }
         },
-        luaformatter = {
-          -- 'lua-format -i -c {config_dir}'
-          -- add ".lua-format" to root if using lua-format
-          rootPatterns = {".git"},
-          command = "lua-format",
-          args = {"-i", "-c", "./.lua-format"}
-        },
-        luafmt = {
-          -- npm i -g lua-fmt
-          rootPatterns = {".git"},
-          command = "luafmt",
-          args = {"--indent-count", vim.o.shiftwidth, "--line-width", "100", "--stdin"}
-        },
-        stylua = {
-          rootPatterns = {".git"},
-          command = "stylua",
-          args = {"--config-path", vim.g.vim_dir .. "/stylua.toml", "-"}
+        formatFiletypes = {
+          json = "prettier",
+          html = "prettier",
+          css = "prettier",
+          yaml = "prettier",
+          markdown = "prettier",
+          graphql = "prettier",
+          lua = "luafmt"
         }
-      },
-      formatFiletypes = {
-        json = "prettier",
-        html = "prettier",
-        css = "prettier",
-        yaml = "prettier",
-        markdown = "prettier",
-        graphql = "prettier",
-        lua = "luafmt"
       }
     }
-  }
+  end
 }
 
 function as.lsp.setup_servers()
-  vim.cmd "packadd nvim-lspinstall" -- Important!
+  vim.cmd("packadd nvim-lspinstall") -- Important!
   local lspinstall = require("lspinstall")
   local lspconfig = require("lspconfig")
 
@@ -235,7 +258,8 @@ function as.lsp.setup_servers()
   local installed = lspinstall.installed_servers()
   local status_capabilities = require("lsp-status").capabilities
   for _, server in pairs(installed) do
-    local config = as.lsp.servers[server] or {}
+    local mk_config = as.lsp.servers[server]
+    local config = mk_config and mk_config() or {}
     config.flags = config.flags or {}
     config.flags.debounce_text_changes = 150
     config.on_attach = as.lsp.on_attach
