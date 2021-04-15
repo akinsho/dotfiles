@@ -101,13 +101,10 @@ end
 
 --- trigger loading of localrc
 ---@param event string
----@param immediate boolean
-function M.setup(event, immediate)
-  immediate = immediate ~= nil and immediate or true
-  if immediate then
+function M.setup(event)
+  if not event then
     M.load()
   else
-    event = event or "VimEnter"
     require("as.autocommands").augroup(
       "LoadLocalInit",
       {
