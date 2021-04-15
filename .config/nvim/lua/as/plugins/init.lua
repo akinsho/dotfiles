@@ -284,6 +284,7 @@ return require("packer").startup {
 
     use_local {
       "akinsho/flutter-tools.nvim",
+      branch = "feat/add-plenary",
       config = conf("flutter"),
       requires = {"nvim-dap"},
       local_path = "personal"
