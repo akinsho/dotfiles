@@ -510,12 +510,8 @@ return require("packer").startup {
         vim.g.conflict_marker_end = "^>>>>>>> .*$"
       end
     }
-    use_local {
+    use {
       "TimUntersberger/neogit",
-      cmd = "Neogit",
-      keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
-      local_path = "contributing",
-      local_disable = true,
       config = function()
         require("neogit").setup {
           disable_signs = false,
@@ -680,15 +676,17 @@ return require("packer").startup {
       ft = {"dart", "rust"},
       local_path = "personal"
     }
+
     use_local {
       "akinsho/nvim-toggleterm.lua",
+      branch = "feat/add-floating-win",
       local_path = "personal",
       config = function()
         local large_screen = vim.o.columns > 200
         require("toggleterm").setup {
           size = large_screen and vim.o.columns * 0.5 or 15,
           open_mapping = [[<c-\>]],
-          direction = large_screen and "vertical" or "horizontal"
+          direction = "float" -- large_screen and "vertical" or "horizontal"
         }
       end
     }
