@@ -57,9 +57,10 @@ local function preview_matches(opts)
     open_preview_window(entry)
   end
 
-  vim.cmd "set eventignore+=all"
+  local winheight = fn.winheight(0)
+  vim.cmd("set eventignore+=all")
   -- Go to preview window
-  vim.cmd "keepjumps wincmd P"
+  vim.cmd("keepjumps wincmd P")
 
   -- If the window was already opened and we have jumped to it
   -- we should find the line in question
@@ -75,16 +76,17 @@ local function preview_matches(opts)
     vim.bo.bufhidden = "delete" -- clear out settings when buffer is hidden
   end
   -- Open any folds we may be in
-  vim.cmd "silent! foldopen!"
+  vim.cmd("silent! foldopen!")
   vim.wo.number = true
 
   -- highlight the line
   highlight_match(entry.lnum)
 
   -- go back to the quickfix
-  vim.cmd "keepjumps wincmd p"
-  vim.cmd "keepjumps wincmd J"
-  vim.cmd "set eventignore-=all"
+  vim.cmd("keepjumps wincmd p")
+  vim.cmd("keepjumps wincmd J")
+  vim.cmd(fmt("resize %d", winheight))
+  vim.cmd("set eventignore-=all")
 end
 
 function M.view_file(lnum)
