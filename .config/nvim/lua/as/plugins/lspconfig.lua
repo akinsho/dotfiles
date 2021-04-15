@@ -176,7 +176,8 @@ as.lsp.servers = {
         workspace = {
           library = {
             [fn.expand("$VIMRUNTIME/lua")] = true,
-            [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+            [fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            [fn.stdpath("data") .. "/site/pack/packer/start/plenary.nvim/lua"] = true
           }
         }
       }
@@ -199,6 +200,11 @@ as.lsp.servers = {
           rootPatterns = {".git"},
           command = "luafmt",
           args = {"--indent-count", vim.o.shiftwidth, "--line-width", "100", "--stdin"}
+        },
+        stylua = {
+          rootPatterns = {".git"},
+          command = "stylua",
+          args = {"-"}
         }
       },
       formatFiletypes = {
