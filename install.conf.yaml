@@ -19,12 +19,12 @@
     ~/.config/alacritty/alacritty.yml:
       force: true
       path: .config/alacritty/alacritty.yml
-    ~/.config/jesseduffield/lazygit/config.yml:
+    ~/.config/lazygit/config.yml:
       force: true
-      path: .config/jesseduffield/lazygit/config.yml
-    ~/.config/jesseduffield/lazygit/config.yml:
-      if: "[`uname` = Darwin ]"
-      path: "~/Library/Application Support/jesseduffield/lazygit/config.yml"
+      path: .config/lazygit/config.yml
+    ~/Library/Application Support/lazygit/config.yml:
+      if: '[ `uname` = Darwin ]'
+      path: .config/lazygit/config.yml
     ~/.config/karabiner:
       force: true
       path: .config/karabiner
