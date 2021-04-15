@@ -193,10 +193,15 @@ as.lsp.servers = {
           command = "prettier",
           args = {"--stdin-filepath", "%filename"}
         },
-        luafmt = {
-          -- npm i -g lua-fmt
+        luaformatter = {
           -- 'lua-format -i -c {config_dir}'
           -- add ".lua-format" to root if using lua-format
+          rootPatterns = {".git"},
+          command = "lua-format",
+          args = {"-i", "-c", "./.lua-format"}
+        },
+        luafmt = {
+          -- npm i -g lua-fmt
           rootPatterns = {".git"},
           command = "luafmt",
           args = {"--indent-count", vim.o.shiftwidth, "--line-width", "100", "--stdin"}
@@ -204,7 +209,7 @@ as.lsp.servers = {
         stylua = {
           rootPatterns = {".git"},
           command = "stylua",
-          args = {"-"}
+          args = {"--config-path", vim.g.vim_dir .. "/stylua.toml", "-"}
         }
       },
       formatFiletypes = {
