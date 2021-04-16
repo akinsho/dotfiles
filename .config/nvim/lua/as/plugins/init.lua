@@ -685,6 +685,14 @@ return require("packer").startup {
           open_mapping = [[<c-\>]],
           direction = "float" -- large_screen and "vertical" or "horizontal"
         }
+        local Terminal = require("toggleterm.terminal").Terminal
+        local lazygit = Terminal:new {cmd = "lazygit", direction = "float"}
+        as.nnoremap(
+          "<leader>Lg",
+          function()
+            lazygit:toggle()
+          end
+        )
       end
     }
     -- TODO: could be lazy loaded if the color library was separate functionality
