@@ -164,8 +164,7 @@ return require("packer").startup {
         {
           "nvim-telescope/telescope-arecibo.nvim",
           rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"}
-        },
-        {"nvim-telescope/telescope-cheat.nvim", requires = "sql.nvim", after = "telescope.nvim"}
+        }
       }
     }
     use {
@@ -358,7 +357,7 @@ return require("packer").startup {
       end
     }
     use {"mg979/vim-visual-multi", config = conf("vim-visual-multi")}
-    use {"itchyny/vim-highlighturl", config = [[vim.g.highlighturl_guifg = "NONE"]]}
+    use "itchyny/vim-highlighturl"
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     use {"kshenoy/vim-signature", disable = true}
     use {
@@ -483,8 +482,7 @@ return require("packer").startup {
           module = "nvim-treesitter-playground",
           disable = is_work
         }
-      },
-      local_path = "contributing"
+      }
     }
     use {"sheerun/vim-polyglot", config = conf("polyglot").config, setup = conf("polyglot").setup}
     ---}}}
@@ -647,7 +645,6 @@ return require("packer").startup {
     ----------------------------------------------------------------------------------
     use "Th3Whit3Wolf/one-nvim"
     use {"romgrk/doom-one.vim", opt = true}
-    use {"joshdick/onedark.vim", opt = true}
     use {"bluz71/vim-nightfly-guicolors", opt = true}
     -- }}}
     ---------------------------------------------------------------------------------

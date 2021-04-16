@@ -69,10 +69,6 @@ return function()
     }
   end
 
-  local function cheat()
-    telescope.extensions.cheat.fd {layout_strategy = "vertical"}
-  end
-
   ---find if passed in directory contains the target
   ---which is the current buffer's path by default
   ---@param path string
@@ -168,7 +164,6 @@ return function()
   --- Extensions
   nnoremap("<leader>fh", frecency)
   command {"TelescopeFrecent", frecency}
-  nnoremap("<leader>fk", cheat)
   nnoremap("<leader>fw", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", telescope.extensions.fzf_writer.staged_grep)
