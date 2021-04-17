@@ -239,7 +239,7 @@ function M.darken_color(color, amount)
   end
 end
 
-local function set_explorer_highlight()
+local function set_sidebar_highlight()
   local normal_bg = M.hl_value("Normal", "bg")
   local split_color = M.hl_value("VertSplit", "fg")
   local bg_color = M.darken_color(normal_bg, -8)
@@ -255,9 +255,9 @@ local function set_explorer_highlight()
   end
 end
 
-local explorer_fts = {"NvimTree"}
+local sidebar_fts = {"NvimTree"}
 
-function M.on_explorer_enter()
+function M.on_sidebar_enter()
   local highlights =
     table.concat(
     {
@@ -276,7 +276,7 @@ end
 function M.apply_user_highlights()
   plugin_highlights()
   general_overrides()
-  set_explorer_highlight()
+  set_sidebar_highlight()
 end
 
 require("as.autocommands").augroup(
@@ -289,8 +289,8 @@ require("as.autocommands").augroup(
     },
     {
       events = {"FileType"},
-      targets = explorer_fts,
-      command = "lua require('as.highlights').on_explorer_enter()"
+      targets = sidebar_fts,
+      command = "lua require('as.highlights').on_sidebar_enter()"
     }
   }
 )

@@ -1,3 +1,5 @@
+as.tree = {}
+
 return function()
   vim.g.nvim_tree_icons = {
     default = "",
@@ -13,6 +15,7 @@ return function()
 
   as.nnoremap("<c-n>", [[<cmd>NvimTreeToggle<CR>]])
 
+  vim.g.nvim_tree_special_files = {}
   vim.g.nvim_tree_lsp_diagnostics = 1
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_group_empty = 1
@@ -26,8 +29,15 @@ return function()
   vim.g.nvim_tree_root_folder_modifier = ":t"
   vim.g.nvim_tree_ignore = {".DS_Store", "fugitive:", ".git"}
 
-  vim.cmd [[highlight link NvimTreeIndentMarker Comment]]
-  vim.cmd [[highlight NvimTreeRootFolder gui=bold,italic guifg=LightMagenta]]
+  function as.tree.set_highlights()
+    require("as.highlights").all {
+      {"NvimTreeIndentMarker", {link = "Comment"}},
+      {"NvimTreeNormal", {link = "ExplorerBackground"}},
+      {"NvimTreeVertSplit", {link = "ExplorerVertSplit"}},
+      {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}},
+      {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}}
+    }
+  end
 
   require("as.autocommands").augroup(
     "NvimTreeOverrides",
@@ -35,7 +45,12 @@ return function()
       {
         events = {"ColorScheme"},
         targets = {"*"},
-        command = "highlight NvimTreeRootFolder gui=bold,italic guifg=LightMagenta"
+        command = "lua as.tree.set_highlights()"
+      },
+      {
+        events = {"FileType"},
+        targets = {"NvimTree"},
+        command = "lua as.tree.set_highlights()"
       }
     }
   )
