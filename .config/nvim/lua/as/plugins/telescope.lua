@@ -37,9 +37,15 @@ return function()
         minimum_grep_characters = 2,
         minimum_files_characters = 2,
         use_highlighter = true
+      },
+      fzf = {
+        override_generic_sorter = true, -- override the generic sorter
+        override_file_sorter = true -- override the file sorter
       }
     }
   }
+
+  require("telescope").load_extension("fzf")
 
   local function dotfiles()
     builtins.find_files {
@@ -142,6 +148,10 @@ return function()
     }
   end
 
+  local function grep()
+    telescope.extensions.fzf_writer.staged_grep()
+  end
+
   -- Find files using Telescope command-line sugar.
   nnoremap("<C-P>", files)
   command {"TelescopeFindFiles", files}
@@ -166,6 +176,6 @@ return function()
   command {"TelescopeFrecent", frecency}
   nnoremap("<leader>fw", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
-  nnoremap("<leader>fs", telescope.extensions.fzf_writer.staged_grep)
+  nnoremap("<leader>fs", grep)
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
 end
