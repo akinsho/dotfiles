@@ -684,10 +684,22 @@ return require("packer").startup {
         require("toggleterm").setup {
           size = large_screen and vim.o.columns * 0.5 or 15,
           open_mapping = [[<c-\>]],
-          direction = "float" -- large_screen and "vertical" or "horizontal"
+          shade_filetypes = {"none"},
+          direction = "float", -- large_screen and "vertical" or "horizontal"
+          float_opts = {
+            border = "curved"
+          }
         }
         local Terminal = require("toggleterm.terminal").Terminal
-        local lazygit = Terminal:new {cmd = "lazygit", direction = "float"}
+        local lazygit =
+          Terminal:new {
+          cmd = "lazygit",
+          direction = "float",
+          on_open = function()
+            vim.api.nvim_buf_del_keymap(0, "x", "jk")
+            vim.api.nvim_buf_del_keymap(0, "i", "jk")
+          end
+        }
         as.nnoremap(
           "<leader>Lg",
           function()
