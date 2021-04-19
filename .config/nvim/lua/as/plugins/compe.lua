@@ -46,7 +46,7 @@ return function()
       spell = true,
       nvim_lsp = true,
       nvim_lua = true,
-      treesitter = true,
+      treesitter = false, -- quite slow
       emoji = false,
       tabnine = {priority = 1200}
     }
@@ -66,20 +66,18 @@ return function()
   inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
   inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
-  local npairs = require("nvim-autopairs")
-
   as.completion_confirm = function()
+    local npairs = require("nvim-autopairs")
+
     if vim.fn.pumvisible() ~= 0 then
       if vim.fn.complete_info()["selected"] ~= -1 then
-        vim.fn["compe#confirm"]()
-        return npairs.esc("")
+        return vim.fn["compe#confirm"](npairs.esc("<c-r>"))
+      else
+        return npairs.esc("<cr>")
       end
-      vim.api.nvim_select_popupmenu_item(0, false, false, {})
-      vim.fn["compe#confirm"]()
-      return npairs.esc("<c-n>")
+    else
+      return npairs.autopairs_cr()
     end
-
-    return npairs.check_break_line_char()
   end
   inoremap("<CR>", "v:lua.as.completion_confirm()", opts)
 end
