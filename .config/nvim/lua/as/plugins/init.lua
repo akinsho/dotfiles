@@ -4,6 +4,8 @@ local is_work = has("mac")
 local is_home = not is_work
 local fmt = string.format
 
+as.packer = {}
+
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
   local install_path = fn.stdpath("data") .. "/site/pack/packer/*/packer.nvim"
@@ -26,8 +28,12 @@ setup_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd("packadd! cfilter")
 
-vim.cmd [[autocmd! BufWritePost */as/plugins/init.lua execute "luafile ".expand("%")]]
-vim.cmd("autocmd! BufWritePost */as/plugins/*.lua PackerCompile")
+function as.packer.reload()
+  as.invalidate("as.plugins", true)
+  require("packer").compile()
+end
+
+vim.cmd([[autocmd! BufWritePost */as/plugins/*.lua lua as.packer.reload()]])
 as.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
 as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
