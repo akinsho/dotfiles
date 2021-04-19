@@ -694,7 +694,7 @@ return require("packer").startup {
           size = large_screen and vim.o.columns * 0.5 or 15,
           open_mapping = [[<c-\>]],
           shade_filetypes = {"none"},
-          direction = "float", -- large_screen and "vertical" or "horizontal"
+          direction = large_screen and "vertical" or "horizontal",
           float_opts = {
             border = "curved"
           }
