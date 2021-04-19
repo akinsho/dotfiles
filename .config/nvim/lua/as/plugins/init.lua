@@ -424,6 +424,16 @@ return require("packer").startup {
       branch = "lua",
       config = conf("indentline")
     }
+    use "kyazdani42/nvim-web-devicons"
+
+    use_local {
+      "kyazdani42/nvim-tree.lua",
+      cmd = "NvimTreeOpen",
+      keys = "<c-n>",
+      config = conf("nvim-tree"),
+      local_path = "contributing",
+      requires = "nvim-web-devicons"
+    }
     --}}}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management {{{
@@ -659,17 +669,14 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
-    use "kyazdani42/nvim-web-devicons"
-
-    use_local {
-      "kyazdani42/nvim-tree.lua",
-      cmd = "NvimTreeOpen",
-      keys = "<c-n>",
-      config = conf("nvim-tree"),
-      local_path = "contributing",
-      requires = "nvim-web-devicons"
+    use {
+      "norcalli/nvim-terminal.lua",
+      event = "BufEnter *_spec.lua",
+      disable = is_work,
+      config = function()
+        require "terminal".setup()
+      end
     }
-
     use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
     -----------------------------------------------------------------------------//
     -- Personal plugins
