@@ -148,7 +148,14 @@ return require("packer").startup {
         vim.g.rooter_resolve_links = 1
       end
     }
-    use {"glepnir/dashboard-nvim", config = conf("dashboard")}
+    use {
+      "rmagatti/auto-session",
+      config = function()
+        require("auto-session").setup {
+          auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/auto/"
+        }
+      end
+    }
     use {
       "nvim-telescope/telescope.nvim",
       config = conf("telescope"),
