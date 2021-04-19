@@ -253,7 +253,6 @@ function as.lsp.setup_servers()
   local lspinstall = require("lspinstall")
   local lspconfig = require("lspconfig")
 
-  --- TODO this slows down startup time??
   lspinstall.setup()
   local installed = lspinstall.installed_servers()
   local status_capabilities = require("lsp-status").capabilities
@@ -267,6 +266,13 @@ function as.lsp.setup_servers()
       config.capabilities = vim.lsp.protocol.make_client_capabilities()
     end
     config.capabilities.textDocument.completion.completionItem.snippetSupport = true
+    config.capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        "documentation",
+        "detail",
+        "additionalTextEdits"
+      }
+    }
     config.capabilities = as.deep_merge(config.capabilities, status_capabilities)
     lspconfig[server].setup(config)
   end
