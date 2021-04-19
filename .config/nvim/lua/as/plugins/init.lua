@@ -24,10 +24,10 @@ end
 setup_packer()
 
 -- cfilter plugin allows filter down an existing quickfix list
-vim.cmd "packadd! cfilter"
+vim.cmd("packadd! cfilter")
 
-vim.cmd "autocmd! BufWritePost */as/plugins/*.lua PackerCompile"
 vim.cmd [[autocmd! BufWritePost */as/plugins/init.lua execute "luafile ".expand("%")]]
+vim.cmd("autocmd! BufWritePost */as/plugins/*.lua PackerCompile")
 as.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
 as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
@@ -131,11 +131,7 @@ end
 --]]
 return require("packer").startup {
   function(use, use_rocks)
-    use_local {
-      "wbthomason/packer.nvim",
-      branch = "feat-profile-compiled-code",
-      local_path = "contributing"
-    }
+    use_local {"wbthomason/packer.nvim", local_path = "contributing"}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
