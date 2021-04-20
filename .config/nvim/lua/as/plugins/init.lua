@@ -613,7 +613,6 @@ return require("packer").startup {
     use {
       "chaoren/vim-wordmotion",
       config = function()
-        vim.g.wordmotion_spaces = "_-."
         -- Restore Vim's special case behavior with dw and cw:
         as.nmap("dw", "de")
         as.nmap("cw", "ce")
