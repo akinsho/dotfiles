@@ -512,6 +512,7 @@ return require("packer").startup {
       }
     }
     use {"dart-lang/dart-vim-plugin", ft = "dart"}
+    use "plasticboy/vim-markdown"
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{
