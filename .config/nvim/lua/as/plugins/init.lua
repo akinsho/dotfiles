@@ -435,6 +435,7 @@ return require("packer").startup {
     }
     use "kyazdani42/nvim-web-devicons"
 
+    --- TODO use_local does not work for this plugin, find out why
     use {
       "kyazdani42/nvim-tree.lua",
       keys = {"<c-n>"},
@@ -761,7 +762,7 @@ return require("packer").startup {
   end,
   config = {
     display = {
-      open_cmd = "topleft 65vnew [packer]"
+      open_cmd = "silent topleft 65vnew [packer]"
     },
     profile = {
       enable = true,
