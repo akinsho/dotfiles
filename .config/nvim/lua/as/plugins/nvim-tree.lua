@@ -34,7 +34,8 @@ return function()
       {"NvimTreeIndentMarker", {link = "Comment"}},
       {"NvimTreeNormal", {link = "ExplorerBackground"}},
       {"NvimTreeVertSplit", {link = "ExplorerVertSplit"}},
-      {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}},
+      {"NvimTreeStatusLine", {link = "ExplorerSt"}},
+      {"NvimTreeStatusLineNC", {link = "ExplorerStNC"}},
       {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}}
     }
   end
