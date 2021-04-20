@@ -358,22 +358,6 @@ return require("packer").startup {
         }
       end
     }
-    use {
-      "luochen1990/rainbow",
-      config = function()
-        vim.g.rainbow_active = 1
-        -- enable only for dart
-        vim.g.rainbow_conf = {
-          separately = {
-            ["*"] = 0,
-            dart = {
-              operators = "",
-              parentheses = {[[start=/(/ end=/)/ fold]], [[start=/\[/ end=/\]/ fold]]}
-            }
-          }
-        }
-      end
-    }
     use {"mg979/vim-visual-multi", config = conf("vim-visual-multi")}
     use "itchyny/vim-highlighturl"
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
@@ -506,6 +490,7 @@ return require("packer").startup {
         }
       }
     }
+    use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter"}
     use {
       "lewis6991/spellsitter.nvim",
       config = function()
