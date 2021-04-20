@@ -285,7 +285,7 @@ return require("packer").startup {
             )
           end
         },
-        {"glepnir/lspsaga.nvim", config = conf("lspsaga")},
+        {"glepnir/lspsaga.nvim", config = conf("lspsaga"), event = "VimEnter"},
         {
           "kabouzeid/nvim-lspinstall",
           opt = true,
@@ -307,7 +307,7 @@ return require("packer").startup {
       local_path = "personal"
     }
 
-    use {"hrsh7th/nvim-compe", config = conf("compe")}
+    use {"hrsh7th/nvim-compe", config = conf("compe"), event = "InsertEnter"}
     use {
       "tzachar/compe-tabnine",
       run = "./install.sh",
@@ -670,6 +670,7 @@ return require("packer").startup {
     -- Themes  {{{
     ----------------------------------------------------------------------------------
     use "Th3Whit3Wolf/one-nvim"
+    use "folke/tokyonight.nvim"
     use {"romgrk/doom-one.vim", opt = true}
     use {"bluz71/vim-nightfly-guicolors", opt = true}
     -- }}}
