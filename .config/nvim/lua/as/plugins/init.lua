@@ -211,7 +211,7 @@ return require("packer").startup {
           )
           as.nmap("<leader>tf", "<Plug>PlenaryTestFile", opts)
         end
-        require("as.autocommands").augroup(
+        as.augroup(
           "PlenaryTests",
           {
             {
@@ -266,7 +266,7 @@ return require("packer").startup {
         {
           "kosayoda/nvim-lightbulb",
           config = function()
-            require("as.autocommands").augroup(
+            as.augroup(
               "NvimLightbulb",
               {
                 {

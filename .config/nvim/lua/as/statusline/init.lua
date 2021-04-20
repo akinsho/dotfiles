@@ -9,7 +9,6 @@
 local is_empty = as.is_empty
 local utils = require("as.statusline.utils")
 local H = require("as.highlights")
-local autocommands = require("as.autocommands")
 
 local P = utils.palette
 local M = {}
@@ -348,7 +347,7 @@ function _G.statusline()
 end
 
 local function setup_autocommands()
-  autocommands.augroup(
+  as.augroup(
     "CustomStatusline",
     {
       {events = {"FocusGained"}, targets = {"*"}, command = "let g:vim_in_focus = v:true"},

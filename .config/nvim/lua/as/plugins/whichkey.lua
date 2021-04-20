@@ -208,7 +208,7 @@ return function()
   vim.g.which_key_display_names = {[" "] = "Space", ["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
   if vim.g.which_key_use_floating_win == 0 then
-    require("as.autocommands").augroup(
+    as.augroup(
       "which_key",
       {
         {

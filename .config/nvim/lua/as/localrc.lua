@@ -37,7 +37,7 @@ local function get_parent(str)
 end
 
 local function setup_localrc(path)
-  require("as.autocommands").augroup(
+  as.augroup(
     "LocalRC",
     {
       {
@@ -105,7 +105,7 @@ function M.setup(event)
   if not event then
     M.load()
   else
-    require("as.autocommands").augroup(
+    as.augroup(
       "LoadLocalInit",
       {
         {

@@ -1,4 +1,3 @@
-local autocommands = require("as.autocommands")
 local has = as.has
 local fn = vim.fn
 local api = vim.api
@@ -37,10 +36,13 @@ function _G._mappings.add_terminal_mappings()
   end
 end
 
-autocommands.create(
+as.augroup(
+  "AddTerminalMappings",
   {
-    AddTerminalMappings = {
-      {"TermEnter,BufEnter", "term://*", "lua _mappings.add_terminal_mappings()"}
+    {
+      events = {"TermEnter", "BufEnter"},
+      targets = {"term://*"},
+      command = "lua _mappings.add_terminal_mappings()"
     }
   }
 )

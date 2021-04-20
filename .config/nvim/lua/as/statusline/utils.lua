@@ -259,7 +259,7 @@ local function set_ft_icon_highlight(hl, bg_hl)
   if bg_color and fg_color then
     local cmd = {"highlight ", name, " guibg=", bg_color, " guifg=", fg_color}
     local str = table.concat(cmd)
-    require("as.autocommands").create({[name] = {{"ColorScheme", "*", str}}})
+    as.augroup(name, {{events = {"ColorScheme"}, targets = {"*"}, command = str}})
     vim.cmd(string.format("silent execute '%s'", str))
   end
   return name

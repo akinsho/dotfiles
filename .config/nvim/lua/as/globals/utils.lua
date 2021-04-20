@@ -20,6 +20,23 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
+function as.augroup(name, commands)
+  vim.cmd("augroup " .. name)
+  vim.cmd("autocmd!")
+  for _, c in ipairs(commands) do
+    vim.cmd(
+      string.format(
+        "autocmd %s %s %s %s",
+        table.concat(c.events, ","),
+        table.concat(c.targets or {}, ","),
+        table.concat(c.modifiers or {}, " "),
+        c.command
+      )
+    )
+  end
+  vim.cmd("augroup END")
+end
+
 function as.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)

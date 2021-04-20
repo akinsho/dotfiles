@@ -56,7 +56,7 @@ return function()
   }
 
   -- Only apply folding to supported files:
-  require("as.autocommands").augroup(
+  as.augroup(
     "TreesitterFolds",
     {
       {

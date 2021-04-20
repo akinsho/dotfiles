@@ -40,7 +40,7 @@ return function()
     }
   end
 
-  require("as.autocommands").augroup(
+  as.augroup(
     "NvimTreeOverrides",
     {
       {

@@ -4,9 +4,7 @@ local fn = vim.fn
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
-  local autocommands = require("as.autocommands")
-
-  autocommands.augroup(
+  as.augroup(
     "LspLocationList",
     {
       {
@@ -17,7 +15,7 @@ local function setup_autocommands(client, _)
     }
   )
   if client and client.resolved_capabilities.document_highlight then
-    autocommands.augroup(
+    as.augroup(
       "LspCursorCommands",
       {
         {
@@ -40,7 +38,7 @@ local function setup_autocommands(client, _)
   end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    autocommands.augroup(
+    as.augroup(
       "LspFormat",
       {
         {

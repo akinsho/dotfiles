@@ -2,7 +2,6 @@
 -- 1. vim-relativity
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
 
-local autocommands = require("as.autocommands")
 local fn = vim.fn
 local api = vim.api
 local M = {}
@@ -109,16 +108,43 @@ vim.g.number_buftype_exclusions = {
   "acwrite"
 }
 
-autocommands.create(
+as.augroup(
+  "ToggleRelativeLineNumbers",
   {
-    ToggleRelativeLineNumbers = {
-      {"BufEnter", "*", [[lua require("as.numbers").enable_relative_number()]]},
-      {"BufLeave", "*", [[lua require("as.numbers").disable_relative_number()]]},
-      {"FileType", "*", [[lua require("as.numbers").enable_relative_number()]]},
-      {"FocusGained", "*", [[lua require("as.numbers").enable_relative_number()]]},
-      {"FocusLost", "*", [[lua require("as.numbers").disable_relative_number()]]},
-      {"InsertEnter", "*", [[lua require("as.numbers").disable_relative_number()]]},
-      {"InsertLeave", "*", [[lua require("as.numbers").enable_relative_number()]]}
+    {
+      events = {"BufEnter"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").enable_relative_number()]]
+    },
+    {
+      events = {"BufLeave"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").disable_relative_number()]]
+    },
+    {
+      events = {"FileType"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").enable_relative_number()]]
+    },
+    {
+      events = {"FocusGained"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").enable_relative_number()]]
+    },
+    {
+      events = {"FocusLost"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").disable_relative_number()]]
+    },
+    {
+      events = {"InsertEnter"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").disable_relative_number()]]
+    },
+    {
+      events = {"InsertLeave"},
+      targets = {"*"},
+      command = [[lua require("as.numbers").enable_relative_number()]]
     }
   }
 )

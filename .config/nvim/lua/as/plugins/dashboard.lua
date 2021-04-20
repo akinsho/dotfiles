@@ -37,7 +37,7 @@ return function()
     vim.cmd "SessionSave"
   end
 
-  require("as.autocommands").augroup(
+  as.augroup(
     "TelescopeSession",
     {
       events = {"VimLeavePre"},

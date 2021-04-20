@@ -13,7 +13,7 @@ end
 
 function M.setup()
   require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})
-  require("as.autocommands").augroup(
+  as.augroup(
     "WhitespaceMatch",
     {
       {

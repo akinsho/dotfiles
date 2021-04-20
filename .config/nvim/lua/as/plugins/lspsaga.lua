@@ -38,7 +38,7 @@ return function()
   -- scroll up hover doc
   nnoremap("<C-b>", [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>]])
 
-  require("as.autocommands").augroup(
+  as.augroup(
     "LspSagaCursorCommands",
     {
       {

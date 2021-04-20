@@ -284,7 +284,7 @@ function M.apply_user_highlights()
   set_sidebar_highlight()
 end
 
-require("as.autocommands").augroup(
+as.augroup(
   "ExplorerHighlights",
   {
     {
