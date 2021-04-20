@@ -511,7 +511,7 @@ return require("packer").startup {
         }
       }
     }
-    use {"sheerun/vim-polyglot", config = conf("polyglot").config, setup = conf("polyglot").setup}
+    use {"dart-lang/dart-vim-plugin", ft = "dart"}
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{
