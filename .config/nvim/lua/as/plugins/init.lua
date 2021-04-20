@@ -668,14 +668,26 @@ return require("packer").startup {
         as.nnoremap("s", hop.hint_char1)
       end
     }
-    use {"junegunn/goyo.vim", ft = {"vimwiki", "markdown"}, config = conf("goyo")}
+    use {
+      "kdav5758/TrueZen.nvim",
+      config = function()
+        require("true-zen").setup {
+          left = {
+            shown_number = false,
+            shown_relativenumber = false,
+            shown_signcolumn = "yes:2"
+          }
+        }
+        as.nnoremap("<leader>zm", "<cmd>TZMinimalist<CR>")
+        as.nnoremap("<leader>za", "<cmd>TZAtaraxis<CR>")
+      end
+    }
     use "tversteeg/registers.nvim"
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
     use "Th3Whit3Wolf/one-nvim"
-    use "folke/tokyonight.nvim"
     use {"romgrk/doom-one.vim", opt = true}
     use {"bluz71/vim-nightfly-guicolors", opt = true}
     -- }}}

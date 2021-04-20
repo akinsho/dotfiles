@@ -51,6 +51,7 @@ return function()
       w = "rg: <cursor word>"
     },
     g = "grep word under the cursor",
+    gy = "git: get permalink for current line",
     l = {
       name = "+list",
       i = "toggle location list",
@@ -95,8 +96,8 @@ return function()
     },
     z = {
       name = "+zoom/zen",
-      t = "zoom in current buffer",
-      g = "goyo: toggle"
+      m = "Zen mode: Toggle Minimal",
+      a = "Zen mode: Toggle Ataraxis"
     },
     sw = "swap buffers horizontally",
     so = "source current buffer",

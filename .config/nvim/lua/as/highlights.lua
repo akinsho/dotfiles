@@ -143,7 +143,7 @@ function M.hl_value(grp, attr)
   local color = hl[attr]
   -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
   if not color then
-    vim.notify(fmt("%s %s does not exists", grp, attr))
+    vim.notify(fmt("%s %s does not exist", grp, attr))
     return "NONE"
   end
   return "#" .. bit.tohex(color, 6)
