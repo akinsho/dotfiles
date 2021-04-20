@@ -497,14 +497,6 @@ return require("packer").startup {
       run = ":TSUpdate",
       config = conf("treesitter"),
       requires = {
-        {
-          "lewis6991/spellsitter.nvim",
-          opt = true,
-          run = hunspell_install_if_needed,
-          config = function()
-            require("spellsitter").setup {captures = {"comment"}}
-          end
-        },
         {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
         {
           "nvim-treesitter/playground",
@@ -513,6 +505,12 @@ return require("packer").startup {
           disable = is_work
         }
       }
+    }
+    use {
+      "lewis6991/spellsitter.nvim",
+      config = function()
+        require("spellsitter").setup {hl = "SpellBad", captures = {"comment"}}
+      end
     }
     use {"dart-lang/dart-vim-plugin", ft = "dart"}
     use "plasticboy/vim-markdown"
