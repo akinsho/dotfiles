@@ -2,6 +2,8 @@ return function()
   local gitsigns = require("gitsigns")
 
   as.nnoremap("<localleader>gbl", gitsigns.blame_line)
+  as.nnoremap("<localleader>gre", "<cmd>Gitsigns reset_buffer<CR>")
+  as.nnoremap("<localleader>gw", "<cmd>Gitsigns stage_buffer<CR>")
 
   gitsigns.setup {
     debug_mode = false,

@@ -509,7 +509,11 @@ return require("packer").startup {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
       config = function()
-        require("gitlinker").setup()
+        require("gitlinker").setup {
+          opts = {
+            mappings = "<localleader>gu"
+          }
+        }
       end
     }
     use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}

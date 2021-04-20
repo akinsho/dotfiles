@@ -51,7 +51,6 @@ return function()
       w = "rg: <cursor word>"
     },
     g = "grep word under the cursor",
-    gy = "git: get permalink for current line",
     l = {
       name = "+list",
       i = "toggle location list",
@@ -143,29 +142,16 @@ return function()
         o = "coc: git open in browser",
         l = "git blame"
       },
-      c = "git commit",
-      cm = "checkout master",
-      cl = "commit log",
-      d = "git diff (split)",
-      dt = "git difftool (against HEAD)",
-      da = "git difftool -y (against HEAD)",
-      dc = "git diff close all",
-      l = "git pull (non-async)",
-      o = "git checkout <branchname>",
-      v = "coc: view commit",
-      m = "git list merge conflicts",
-      n = "git checkout new branch",
       r = {
-        name = "+git-remove",
-        e = "git read (remove changes)",
-        m = "git remove"
+        name = "+git-reset",
+        e = "git reset buffer"
       },
+      c = "git commit",
+      l = "git pull",
       s = "git status",
-      S = "fzf: git status",
-      u = "coc: copy git url",
-      p = "git push (async)",
-      pf = "git push --force (async)",
-      pt = "git push (terminal)",
+      u = "gitlinker: copy git url",
+      p = "git push",
+      w = "git stage entire buffer",
       ["*"] = "git grep current word"
     },
     w = {
