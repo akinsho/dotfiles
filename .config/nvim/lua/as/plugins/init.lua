@@ -223,6 +223,13 @@ return require("packer").startup {
         )
       end
     }
+    use {
+      "sunjon/shade.nvim",
+      opt = true,
+      config = function()
+        require("shade").setup()
+      end
+    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
