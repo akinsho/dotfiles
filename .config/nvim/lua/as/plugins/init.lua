@@ -457,7 +457,8 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Profiling {{{
     --------------------------------------------------------------------------------
-    use {"dstein64/vim-startuptime", cmd = "StartupTime"}
+    use {"dstein64/vim-startuptime", opt = true}
+    use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
     -- }}}
     --------------------------------------------------------------------------------
     -- TPOPE {{{
