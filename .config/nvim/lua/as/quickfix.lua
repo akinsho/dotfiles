@@ -9,7 +9,7 @@ local api = vim.api
 local fmt = string.format
 
 local state = {
-  enabled = false,
+  enabled = true,
   preview_height = nil
 }
 
