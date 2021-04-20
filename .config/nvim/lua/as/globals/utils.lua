@@ -231,6 +231,49 @@ function as.invalidate(path, recursive)
   end
 end
 
+---Utility function to create a notification message
+---@param lines string[]
+---@param opts table
+---@param timeout number
+function as.notify(lines, opts, timeout)
+  opts = opts or {}
+  local width
+  for _, line in ipairs(lines) do
+    local length = #line
+    if not width or width < length then
+      width = length
+    end
+  end
+  local buf = api.nvim_create_buf(false, true)
+  api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  local height = 3
+  local min_width = 30
+  local win =
+    api.nvim_open_win(
+    buf,
+    false,
+    {
+      relative = "editor",
+      width = (width > min_width and width or min_width) + 2,
+      height = height,
+      col = vim.o.columns - 2,
+      row = vim.o.lines - height - vim.o.cmdheight,
+      anchor = "SE",
+      style = "minimal",
+      focusable = false,
+      border = "single"
+    }
+  )
+  if opts.timeout then
+    fn.timer_start(
+      opts.timeout,
+      function()
+        api.nvim_win_close(win, true)
+      end
+    )
+  end
+end
+
 function as.is_empty(item)
   if not item then
     return true

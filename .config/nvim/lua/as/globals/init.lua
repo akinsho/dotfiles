@@ -1,5 +1,9 @@
 require("as.globals.utils")
 
+vim.notify = function(message)
+  as.notify({message}, {timeout = 5000})
+end
+
 -- inspired/copied from @tjdevries
 P = function(v)
   print(vim.inspect(v))
