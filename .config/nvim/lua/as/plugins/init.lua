@@ -711,19 +711,21 @@ return require("packer").startup {
             border = "curved"
           }
         }
-        local Terminal = require("toggleterm.terminal").Terminal
-        local lazygit =
-          Terminal:new {
-          id = 20, -- start far down the priority order
-          cmd = "lazygit",
-          direction = "float",
-          on_open = function()
-            vim.cmd("mapclear! <buffer>")
-          end
-        }
+        local lazygit
         as.nnoremap(
           "<leader>Lg",
           function()
+            --- BUG: toggling does not close the window
+            lazygit =
+              lazygit or
+              require("toggleterm.terminal").Terminal:new {
+                id = 100,
+                cmd = "lazygit",
+                direction = "float",
+                on_open = function()
+                  vim.cmd("mapclear! <buffer>")
+                end
+              }
             lazygit:toggle()
           end
         )
