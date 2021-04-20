@@ -214,6 +214,11 @@ local function general_overrides()
     {"Include", {gui = "italic", cterm = "italic"}},
     {"Folded", {gui = "bold,italic", cterm = "bold"}},
     -----------------------------------------------------------------------------//
+    -- Treesitter
+    -----------------------------------------------------------------------------//
+    {"TSKeyword", {link = "Statement"}},
+    {"TSParameter", {gui = "italic,bold"}},
+    -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
     {"LspReferenceText", {guibg = cursor_line_bg, gui = "underline"}},

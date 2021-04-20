@@ -15,9 +15,6 @@ function as.ts.get_filetypes()
 end
 
 return function()
-  vim.cmd [[highlight link TSKeyword Statement]]
-  vim.cmd [[highlight TSParameter gui=italic,bold]]
-
   require("nvim-treesitter.configs").setup {
     ensure_installed = "maintained",
     highlight = {
