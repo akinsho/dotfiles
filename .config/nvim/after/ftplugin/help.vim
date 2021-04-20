@@ -1,4 +1,3 @@
-setlocal spell spelllang=en_gb
 setlocal nonumber norelativenumber nolist
 setlocal colorcolumn=
 setlocal concealcursor=nc
@@ -20,6 +19,8 @@ if &buftype == 'help' && expand('%') =~# '^'.$VIMRUNTIME
   nnoremap <silent><buffer> s /\|\zs\S\+\ze\|<CR>
   nnoremap <silent><buffer> S ?\|\zs\S\+\ze\|<CR>
   finish
+else
+  setlocal spell spelllang=en_gb
 endif
 
 setlocal formatexpr=HelpFormatExpr()
