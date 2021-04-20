@@ -714,6 +714,7 @@ return require("packer").startup {
         local Terminal = require("toggleterm.terminal").Terminal
         local lazygit =
           Terminal:new {
+          id = 20, -- start far down the priority order
           cmd = "lazygit",
           direction = "float",
           on_open = function()
