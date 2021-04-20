@@ -124,7 +124,7 @@ function! s:check_color_column(...)
   if index(s:column_clear, &ft) >= 0
         \ || !&modifiable
         \ || !&buflisted
-        \ || strlen(&buftype)
+        \ || !empty(&buftype)
     setlocal colorcolumn=
     return
   endif
