@@ -692,7 +692,6 @@ return require("packer").startup {
 
     use_local {
       "akinsho/nvim-toggleterm.lua",
-      branch = "feat/add-floating-win",
       local_path = "personal",
       config = function()
         local large_screen = vim.o.columns > 200
@@ -711,8 +710,7 @@ return require("packer").startup {
           cmd = "lazygit",
           direction = "float",
           on_open = function()
-            vim.api.nvim_buf_del_keymap(0, "x", "jk")
-            vim.api.nvim_buf_del_keymap(0, "i", "jk")
+            vim.cmd("mapclear! <buffer>")
           end
         }
         as.nnoremap(
