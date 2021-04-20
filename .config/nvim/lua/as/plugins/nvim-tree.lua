@@ -54,4 +54,6 @@ return function()
       }
     }
   )
+  -- This is required to allow lazy loading to work correctly.
+  require("nvim-tree").on_enter()
 end

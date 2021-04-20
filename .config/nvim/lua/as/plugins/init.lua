@@ -437,6 +437,8 @@ return require("packer").startup {
 
     use {
       "kyazdani42/nvim-tree.lua",
+      keys = {"<c-n>"},
+      cmd = {"NvimTreeToggle", "NvimTreeOpen"},
       config = conf("nvim-tree"),
       local_path = "contributing",
       requires = "nvim-web-devicons"
