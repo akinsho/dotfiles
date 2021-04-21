@@ -286,6 +286,7 @@ function as.notify(lines, opts, timeout)
       border = "single"
     }
   )
+  vim.wo[win].winhighlight = "NormalFloat:Normal"
   if opts.timeout then
     fn.timer_start(
       opts.timeout,
