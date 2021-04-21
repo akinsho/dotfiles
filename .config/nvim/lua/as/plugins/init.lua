@@ -344,7 +344,12 @@ return require("packer").startup {
       end
     }
     use {"mg979/vim-visual-multi", config = conf("vim-visual-multi")}
-    use "itchyny/vim-highlighturl"
+    use {
+      "itchyny/vim-highlighturl",
+      config = function()
+        vim.g.highlighturl_guifg = require("as.highlights").hl_value('Directory', 'fg')
+      end
+    }
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     use {"kshenoy/vim-signature", disable = true}
     use {
