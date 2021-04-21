@@ -21,7 +21,8 @@ return function()
       enable = true
     },
     rainbow = {
-      enable = true
+      enable = true,
+      disable = {"lua", "json"}
     },
     incremental_selection = {
       enable = true,
