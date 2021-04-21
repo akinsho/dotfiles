@@ -29,10 +29,10 @@ return function()
       enable = true,
       keymaps = {
         -- mappings for incremental selection (visual mappings)
-        init_selection = ",v", -- maps in normal mode to init the node/scope selection
-        node_incremental = ",v", -- increment to the upper named parent
-        scope_incremental = "grc", -- increment to the upper scope (as defined in locals.scm)
-        node_decremental = "grm" -- decrement to the previous node
+        init_selection = "<leader>v", -- maps in normal mode to init the node/scope selection
+        node_incremental = "<leader>v", -- increment to the upper named parent
+        node_decremental = "<leader>V", -- decrement to the previous node
+        scope_incremental = "grc" -- increment to the upper scope (as defined in locals.scm)
       }
     },
     indent = {
