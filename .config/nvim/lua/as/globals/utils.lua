@@ -294,7 +294,7 @@ function as.notify(lines, opts, timeout)
       anchor = "SE",
       style = "minimal",
       focusable = false,
-      border = "single"
+      border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
     }
   )
   vim.wo[win].wrap = true
