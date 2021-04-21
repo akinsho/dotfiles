@@ -18,12 +18,12 @@ return function()
   require("nvim-treesitter.configs").setup {
     ensure_installed = "maintained",
     highlight = {
-      enable = true
+      enable = true,
+      ignore_install = {"verilog"}
     },
     rainbow = {
       enable = true,
-      disable = {"lua", "json"},
-      ignore_install = {"verilog"}
+      disable = {"lua", "json"}
     },
     incremental_selection = {
       enable = true,
