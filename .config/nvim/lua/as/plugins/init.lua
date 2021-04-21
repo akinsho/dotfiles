@@ -116,20 +116,6 @@ local function conf(name)
   return require(fmt("as.plugins.%s", name))
 end
 
-local function hunspell_install_if_needed()
-  if vim.fn.executable("hunspell") == 0 then
-    if vim.fn.has("mac") > 0 then
-      -- on mac os need to download GB dictionary
-      -- and place in ~/Library/Spelling
-      -- these are available
-      -- https://wiki.openoffice.org/wiki/Dictionaries
-      vim.fn.system("brew install hunspell")
-    else
-      vim.fn.system("apt install hunspell hunspell_en_gb")
-    end
-  end
-end
-
 --[[
   NOTE "use" functions cannot call *upvalues* i.e. the functions
   passed to setup or config etc. cannot reference aliased function

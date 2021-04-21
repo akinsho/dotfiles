@@ -22,7 +22,8 @@ return function()
     },
     rainbow = {
       enable = true,
-      disable = {"lua", "json"}
+      disable = {"lua", "json"},
+      ignore_install = {"verilog"}
     },
     incremental_selection = {
       enable = true,
