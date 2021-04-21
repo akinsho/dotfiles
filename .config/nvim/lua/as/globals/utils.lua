@@ -253,15 +253,25 @@ function as.invalidate(path, recursive)
   end
 end
 
+local function find_and_close_notification()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == "vim-notify" and api.nvim_win_is_valid(win) then
+      api.nvim_win_close(win, true)
+    end
+  end
+end
+
 ---Utility function to create a notification message
 ---@param lines string[]
 ---@param opts table
 ---@param timeout number
 function as.notify(lines, opts, timeout)
+  find_and_close_notification()
   opts = opts or {}
   local width
   for _, line in ipairs(lines) do
-    line = " " .. line .. " "
+    line = "  " .. line .. "  "
     local length = #line
     if not width or width < length then
       width = length
@@ -287,12 +297,16 @@ function as.notify(lines, opts, timeout)
       border = "single"
     }
   )
+  vim.wo[win].wrap = true
   vim.wo[win].winhighlight = "NormalFloat:Normal"
+  vim.bo[buf].filetype = "vim-notify"
   if opts.timeout then
     fn.timer_start(
       opts.timeout,
       function()
-        api.nvim_win_close(win, true)
+        if api.nvim_win_is_valid(win) then
+          api.nvim_win_close(win, true)
+        end
       end
     )
   end

@@ -1,10 +1,10 @@
 require("as.globals.utils")
 
----Override of vim.notify to open floating window
----@param message string
----@param level number
----@param opts table
 if vim.notify then
+  ---Override of vim.notify to open floating window
+  ---@param message string
+  ---@param level number
+  ---@param opts table
   vim.notify = function(message, level, opts)
     as.notify({message}, {timeout = 5000})
   end
