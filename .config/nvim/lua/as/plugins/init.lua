@@ -188,23 +188,21 @@ return require("packer").startup {
     use {
       "nvim-lua/plenary.nvim",
       config = function()
-        as.plenary = {}
-        function as.plenary.test_maps()
-          local opts = {buffer = 0}
-          as.nnoremap(
-            "<leader>td",
-            [[<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>]],
-            opts
-          )
-          as.nmap("<leader>tf", "<Plug>PlenaryTestFile", opts)
-        end
         as.augroup(
           "PlenaryTests",
           {
             {
               events = {"BufEnter"},
               targets = {"*_spec.lua"},
-              command = "lua as.plenary.test_maps()"
+              command = function()
+                local opts = {buffer = 0}
+                as.nnoremap(
+                  "<leader>td",
+                  [[<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>]],
+                  opts
+                )
+                as.nmap("<leader>tf", "<Plug>PlenaryTestFile", opts)
+              end
             }
           }
         )
