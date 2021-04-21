@@ -4,8 +4,10 @@ require("as.globals.utils")
 ---@param message string
 ---@param level number
 ---@param opts table
-vim.notify = function(message, level, opts)
-  as.notify({message}, {timeout = 5000})
+if vim.notify then
+  vim.notify = function(message, level, opts)
+    as.notify({message}, {timeout = 5000})
+  end
 end
 
 -- inspired/copied from @tjdevries

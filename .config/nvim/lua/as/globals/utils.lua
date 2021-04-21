@@ -261,6 +261,7 @@ function as.notify(lines, opts, timeout)
   opts = opts or {}
   local width
   for _, line in ipairs(lines) do
+    line = " " .. line .. " "
     local length = #line
     if not width or width < length then
       width = length
@@ -268,7 +269,7 @@ function as.notify(lines, opts, timeout)
   end
   local buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  local height = 3
+  local height = #lines
   local min_width = 30
   local win =
     api.nvim_open_win(
@@ -279,7 +280,7 @@ function as.notify(lines, opts, timeout)
       width = (width > min_width and width or min_width) + 2,
       height = height,
       col = vim.o.columns - 2,
-      row = vim.o.lines - height - vim.o.cmdheight,
+      row = vim.o.lines - vim.o.cmdheight - 3,
       anchor = "SE",
       style = "minimal",
       focusable = false,

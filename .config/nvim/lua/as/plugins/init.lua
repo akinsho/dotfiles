@@ -4,8 +4,6 @@ local is_work = has("mac")
 local is_home = not is_work
 local fmt = string.format
 
-as.packer = {}
-
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
   local install_path = fn.stdpath("data") .. "/site/pack/packer/*/packer.nvim"
@@ -28,12 +26,20 @@ setup_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd("packadd! cfilter")
 
-function as.packer.reload()
-  as.invalidate("as.plugins", true)
-  require("packer").compile()
-end
-
-vim.cmd([[autocmd! BufWritePost */as/plugins/*.lua lua as.packer.reload()]])
+as.augroup(
+  "PackerSetupInit",
+  {
+    {
+      events = {"BufWritePost"},
+      targets = {"*/as/plugins/*.lua"},
+      command = function()
+        as.invalidate("as.plugins", true)
+        require("packer").compile()
+        vim.notify("Packer compiled...")
+      end
+    }
+  }
+)
 as.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
 as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
@@ -347,7 +353,7 @@ return require("packer").startup {
     use {
       "itchyny/vim-highlighturl",
       config = function()
-        vim.g.highlighturl_guifg = require("as.highlights").hl_value('Directory', 'fg')
+        vim.g.highlighturl_guifg = require("as.highlights").hl_value("Directory", "fg")
       end
     }
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
