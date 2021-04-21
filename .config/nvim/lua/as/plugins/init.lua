@@ -146,7 +146,8 @@ return require("packer").startup {
     }
     use {
       "nvim-telescope/telescope.nvim",
-      keys = {"<c-p>", "<leader>fa", "<leader>fh", "<leader>f?", "<leader>fs"},
+      keys = {"<c-p>", "<leader>fa", "<leader>fh", "<leader>f?", "<leader>fs", "<leader>fo"},
+      cmd = "Telescope",
       config = conf("telescope"),
       requires = {
         "nvim-lua/popup.nvim",
