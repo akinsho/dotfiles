@@ -97,7 +97,8 @@ vim.g.number_filetype_exclusions = {
   "todoist",
   "lsputil_locations_list",
   "lsputil_symbols_list",
-  "himalaya"
+  "himalaya",
+  "LspTrouble"
 }
 
 vim.g.number_buftype_exclusions = {

@@ -428,6 +428,15 @@ return require("packer").startup {
       local_path = "contributing",
       requires = "nvim-web-devicons"
     }
+
+    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
+    use {
+      "folke/lsp-trouble.nvim",
+      requires = "nvim-web-devicons",
+      config = function()
+        require("trouble").setup {}
+      end
+    }
     --}}}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management {{{
