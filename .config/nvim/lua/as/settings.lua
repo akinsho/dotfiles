@@ -275,7 +275,6 @@ vim.o.sidescroll = 1
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
-vim.o.spellfile = vim.env.DOTFILES .. "/.config/nvim/.vim-spell-en.utf-8.add"
 vim.o.spellsuggest = add(12, vim.o.spellsuggest)
 vim.o.spelloptions = "camel"
 vim.o.spellcapcheck = "" -- don't check for capital letters at start of sentence
