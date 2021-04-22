@@ -255,7 +255,13 @@ cnoremap("<Esc>f", [[<S-Right>]])
 cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], {expr = true})
 -----------------------------------------------------------------------------//
 -- Save
-nnoremap("<c-s>", "<cmd>silent w | lua vim.notify('Saved '..vim.fn.expand('%:t'))<cr>")
+nnoremap(
+  "<c-s>",
+  function()
+    vim.cmd("silent write")
+    as.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
+  end
+)
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap("qa", "<cmd>qa<CR>")
 ------------------------------------------------------------------------------

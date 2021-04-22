@@ -262,15 +262,30 @@ local function find_and_close_notification()
   end
 end
 
+local notification_hl =
+  setmetatable(
+  {
+    [2] = {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"},
+    [1] = {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"}
+  },
+  {
+    __index = function(t, _)
+      return t[1]
+    end
+  }
+)
+
 ---Utility function to create a notification message
----@param lines string[]
+---@param lines string[] | string
 ---@param opts table
----@param timeout number
-function as.notify(lines, opts, timeout)
+function as.notify(lines, opts)
   find_and_close_notification()
+  lines = type(lines) == "string" and {lines} or lines
   opts = opts or {}
   local highlights = {"NormalFloat:Normal"}
   local level = opts.log_level or 1
+  local timeout = opts.timeout or 5000
+
   local width
   for i, line in ipairs(lines) do
     line = "  " .. line .. "  "
@@ -300,18 +315,16 @@ function as.notify(lines, opts, timeout)
     }
   )
 
-  local level_hl =
-    level == 1 and {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"} or
-    level == 2 and {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"} or
-    {}
+  local level_hl = notification_hl[level]
+
   vim.list_extend(highlights, level_hl)
   vim.wo[win].winhighlight = table.concat(highlights, ",")
 
   vim.bo[buf].filetype = "vim-notify"
   vim.wo[win].wrap = true
-  if opts.timeout then
+  if timeout then
     fn.timer_start(
-      opts.timeout,
+      timeout,
       function()
         if api.nvim_win_is_valid(win) then
           api.nvim_win_close(win, true)
