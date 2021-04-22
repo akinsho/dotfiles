@@ -240,9 +240,9 @@ vim.o.sessionoptions =
   "globals",
   "buffers",
   "curdir",
-  "tabpages",
   "help",
-  "winpos"
+  "winpos",
+  -- "tabpages",
 }
 vim.o.viewoptions = add {"cursor", "folds"} -- save/restore just these (with `:{mk,load}view`)
 vim.o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
