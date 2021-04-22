@@ -99,26 +99,17 @@ end
 ---@param name string
 ---@param opts table
 function M.highlight(name, opts)
+  local keys = {guifg = true, guibg = true, guisp = true, gui = true, cterm = true}
   local force = opts.force or false
   if name and vim.tbl_count(opts) > 0 then
     if opts.link and opts.link ~= "" then
       vim.cmd("highlight" .. (force and "!" or "") .. " link " .. name .. " " .. opts.link)
     else
       local cmd = {"highlight", name}
-      if opts.guifg and opts.guifg ~= "" then
-        table.insert(cmd, "guifg=" .. opts.guifg)
-      end
-      if opts.guibg and opts.guibg ~= "" then
-        table.insert(cmd, "guibg=" .. opts.guibg)
-      end
-      if opts.gui and opts.gui ~= "" then
-        table.insert(cmd, "gui=" .. opts.gui)
-      end
-      if opts.guisp and opts.guisp ~= "" then
-        table.insert(cmd, "guisp=" .. opts.guisp)
-      end
-      if opts.cterm and opts.cterm ~= "" then
-        table.insert(cmd, "cterm=" .. opts.cterm)
+      for k, v in pairs(opts) do
+        if keys[k] and keys[k] ~= "" then
+          table.insert(cmd, fmt("%s=", k) .. v)
+        end
       end
       vim.cmd(table.concat(cmd, " "))
     end
