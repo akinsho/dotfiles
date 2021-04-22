@@ -33,6 +33,7 @@ return function()
     require("as.highlights").all {
       {"NvimTreeIndentMarker", {link = "Comment"}},
       {"NvimTreeNormal", {link = "ExplorerBackground"}},
+      {"NvimTreeEndOfBuffer", {link = "ExplorerBackground"}},
       {"NvimTreeVertSplit", {link = "ExplorerVertSplit"}},
       {"NvimTreeStatusLine", {link = "ExplorerSt"}},
       {"NvimTreeStatusLineNC", {link = "ExplorerStNC"}},
