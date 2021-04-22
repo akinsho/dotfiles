@@ -678,9 +678,14 @@ return require("packer").startup {
       "kdav5758/TrueZen.nvim",
       config = function()
         require("true-zen").setup {
+          unknown_bkg_color_fix = true,
           left = {
             shown_relativenumber = true,
             shown_signcolumn = "yes:2"
+          },
+          ataraxis = {
+            left_padding = math.floor(vim.o.columns * 0.1),
+            right_padding = math.floor(vim.o.columns * 0.1)
           },
           integrations = {
             integration_tmux = true
