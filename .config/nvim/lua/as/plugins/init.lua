@@ -535,6 +535,9 @@ return require("packer").startup {
     }
     use {
       "TimUntersberger/neogit",
+      cmd = "Neogit",
+      keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
+      requires = "plenary.nvim",
       config = function()
         require("neogit").setup {
           disable_signs = false,
