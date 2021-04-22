@@ -5,7 +5,7 @@ if vim.notify then
   --@param message of the notification to show to the user
   --@param log_level Optional log level
   --@param opts Dictionary with optional options (timeout, etc)
-  vim.notify = function(message, log_level, opts)
+  vim.notify = function(message, log_level, _)
     as.notify({message}, {timeout = 5000, log_level = log_level})
   end
 end

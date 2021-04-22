@@ -435,6 +435,7 @@ return require("packer").startup {
       requires = "nvim-web-devicons",
       config = function()
         require("trouble").setup {}
+        as.nnoremap("<leader>ld", "<cmd>LspTroubleToggle<CR>")
       end
     }
     --}}}
