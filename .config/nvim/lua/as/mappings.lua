@@ -314,8 +314,6 @@ nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]])
 nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]])
 nnoremap("<leader>)", [[ciw(<c-r>")<esc>]])
 nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]])
-inoremap("<c-v>o", [[<c-k>'6]])
-inoremap("<c-v>c", [[<c-k>'9]])
 
 -- Map Q to replay q register
 nnoremap("Q", "@q")

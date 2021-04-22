@@ -35,7 +35,7 @@ end
 --- but this is not universal across terminals so should be avoided
 function M.colors()
   local indicator_color = get_indicator_color()
-  local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -5)
+  local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -10)
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
   local string_fg = H.hl_value("String", "fg")
