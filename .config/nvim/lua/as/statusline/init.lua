@@ -209,7 +209,6 @@ function _G.statusline()
     append(statusline, dir_item, 3)
     append(statusline, parent_item, 2)
     append(statusline, file_item, 0)
-    append(statusline, readonly_item, 2)
     return display(statusline, available_space)
   end
 
