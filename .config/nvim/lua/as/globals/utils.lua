@@ -269,6 +269,8 @@ end
 function as.notify(lines, opts, timeout)
   find_and_close_notification()
   opts = opts or {}
+  local highlights = {"NormalFloat:Normal"}
+  local level = opts.log_level or 1
   local width
   for _, line in ipairs(lines) do
     line = "  " .. line .. "  "
@@ -297,9 +299,16 @@ function as.notify(lines, opts, timeout)
       border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
     }
   )
-  vim.wo[win].wrap = true
-  vim.wo[win].winhighlight = "NormalFloat:Normal"
+
+  local level_hl =
+    level == 1 and {"FloatBorder:NvimNotificationInfo", "Normal:NvimNotificationInfo"} or
+    level == 2 and {"FloatBorder:NvimNotificationError", "Normal:NvimNotificationError"} or
+    {}
+  vim.list_extend(highlights, level_hl)
+  vim.wo[win].winhighlight = table.concat(highlights, ",")
+
   vim.bo[buf].filetype = "vim-notify"
+  vim.wo[win].wrap = true
   if opts.timeout then
     fn.timer_start(
       opts.timeout,

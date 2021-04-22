@@ -203,7 +203,9 @@ local function general_overrides()
     {"Error", {link = "WarningMsg", force = true}},
     -- Add undercurl to existing spellbad highlight
     {"SpellBad", {gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green"}},
-    -- Customize Diff highlighting
+    -----------------------------------------------------------------------------//
+    -- Diff
+    -----------------------------------------------------------------------------//
     {"DiffAdd", {guibg = "green", guifg = "NONE"}},
     {"DiffDelete", {guibg = "red", guifg = "#5c6370", gui = "NONE"}},
     {"DiffChange", {guibg = "#344f69", guifg = "NONE"}},
@@ -235,7 +237,14 @@ local function general_overrides()
     {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
     {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
     {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}}
+    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}},
+    -----------------------------------------------------------------------------//
+    -- Notifications
+    -----------------------------------------------------------------------------//
+    {"NvimNotificationError", {link = "ErrorMsg"}},
+    {"NvimNotificationError", {link = "ErrorMsg"}},
+    {"NvimNotificationInfo", {link = "Directory"}},
+    {"NvimNotificationInfo", {link = "Directory"}}
   }
 end
 
