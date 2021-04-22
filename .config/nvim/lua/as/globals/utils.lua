@@ -283,14 +283,13 @@ function as.notify(lines, opts, timeout)
   local buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   local height = #lines
-  local min_width = 30
   local win =
     api.nvim_open_win(
     buf,
     false,
     {
       relative = "editor",
-      width = (width > min_width and width or min_width) + 2,
+      width = width + 2,
       height = height,
       col = vim.o.columns - 2,
       row = vim.o.lines - vim.o.cmdheight - 3,
@@ -302,8 +301,8 @@ function as.notify(lines, opts, timeout)
   )
 
   local level_hl =
-    level == 1 and {"FloatBorder:NvimNotificationInfo", "Normal:NvimNotificationInfo"} or
-    level == 2 and {"FloatBorder:NvimNotificationError", "Normal:NvimNotificationError"} or
+    level == 1 and {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"} or
+    level == 2 and {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"} or
     {}
   vim.list_extend(highlights, level_hl)
   vim.wo[win].winhighlight = table.concat(highlights, ",")

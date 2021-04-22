@@ -233,8 +233,6 @@ local function general_overrides()
     -- Notifications
     -----------------------------------------------------------------------------//
     {"NvimNotificationError", {link = "ErrorMsg"}},
-    {"NvimNotificationError", {link = "ErrorMsg"}},
-    {"NvimNotificationInfo", {link = "Directory"}},
     {"NvimNotificationInfo", {link = "Directory"}}
   }
 end
