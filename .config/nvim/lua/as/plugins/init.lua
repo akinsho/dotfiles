@@ -662,9 +662,11 @@ return require("packer").startup {
       config = function()
         require("true-zen").setup {
           left = {
-            shown_number = false,
-            shown_relativenumber = false,
+            shown_relativenumber = true,
             shown_signcolumn = "yes:2"
+          },
+          integrations = {
+            integration_tmux = true
           }
         }
         as.nnoremap("<leader>zm", "<cmd>TZMinimalist<CR>")
