@@ -548,7 +548,8 @@ return require("packer").startup {
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       requires = "plenary.nvim",
       config = function()
-        require("neogit").setup {
+        local neogit = require("neogit")
+        neogit.setup {
           disable_signs = false,
           signs = {
             section = {"", ""}, -- "", ""
@@ -556,10 +557,20 @@ return require("packer").startup {
             hunk = {"樂", ""}
           }
         }
-        as.nnoremap("<localleader>gs", "<cmd>Neogit kind=vsplit<CR>")
-        as.nnoremap("<localleader>gc", "<cmd>Neogit commitCR>")
-        as.nnoremap("<localleader>gl", require("neogit.popups.pull").create)
-        as.nnoremap("<localleader>gp", require("neogit.popups.push").create)
+        as.nnoremap(
+          "<localleader>gs",
+          function()
+            neogit.open({kind = "vsplit"})
+          end
+        )
+        as.nnoremap(
+          "<localleader>gc",
+          function()
+            neogit.open({"commit"})
+          end
+        )
+        as.nnoremap("<localleader>gl", neogit.popups.pull.create)
+        as.nnoremap("<localleader>gp", neogit.popups.push.create)
       end
     }
 
