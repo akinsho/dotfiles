@@ -272,8 +272,9 @@ function as.notify(lines, opts, timeout)
   local highlights = {"NormalFloat:Normal"}
   local level = opts.log_level or 1
   local width
-  for _, line in ipairs(lines) do
+  for i, line in ipairs(lines) do
     line = "  " .. line .. "  "
+    lines[i] = line
     local length = #line
     if not width or width < length then
       width = length
