@@ -174,8 +174,12 @@ return require("packer").startup {
     use {
       "dhruvasagar/vim-dotoo",
       config = function()
+        vim.g["dotoo#agenda#warning_days"] = "30d"
         vim.g["dotoo#agenda#files"] = {"~/Dropbox/todos/*.dotoo", "~/Documents/dotoo-files/*.dotoo"}
         vim.g["dotoo#capture#refile"] = vim.fn.expand("~/Documents/dotoo-files/refile.dotoo")
+        vim.g["dotoo#capture#templates"] = {
+          t = {target = "todo"}
+        }
       end
     }
     use {
