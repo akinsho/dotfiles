@@ -440,7 +440,13 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Profiling {{{
     --------------------------------------------------------------------------------
-    use {"dstein64/vim-startuptime", opt = true}
+    use {
+      "dstein64/vim-startuptime",
+      opt = true,
+      config = function()
+        vim.g.startuptime_exe_args = {"+let g:loaded_auto_session = 1"}
+      end
+    }
     use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
     -- }}}
     --------------------------------------------------------------------------------
