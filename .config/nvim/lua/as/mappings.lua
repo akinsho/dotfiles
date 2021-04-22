@@ -20,29 +20,27 @@ _G._mappings = {}
 -----------------------------------------------------------------------------//
 -- Terminal {{{
 ------------------------------------------------------------------------------//
-function _G._mappings.add_terminal_mappings()
-  if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-    local opts = {silent = false, buffer = 0}
-    tnoremap("<esc>", [[<C-\><C-n>]], opts)
-    tnoremap("jk", [[<C-\><C-n>]], opts)
-    tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
-    tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
-    tnoremap("<C-k>", [[<C-\><C-n><C-W>k]], opts)
-    tnoremap("<C-l>", [[<C-\><C-n><C-W>l]], opts)
-    tnoremap("]t", [[<C-\><C-n>:tablast<CR>]])
-    tnoremap("[t", [[<C-\><C-n>:tabnext<CR>]])
-    tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
-    tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
-  end
-end
-
 as.augroup(
   "AddTerminalMappings",
   {
     {
       events = {"TermEnter", "BufEnter"},
       targets = {"term://*"},
-      command = "lua _mappings.add_terminal_mappings()"
+      command = function()
+        if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+          local opts = {silent = false, buffer = 0}
+          tnoremap("<esc>", [[<C-\><C-n>]], opts)
+          tnoremap("jk", [[<C-\><C-n>]], opts)
+          tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
+          tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
+          tnoremap("<C-k>", [[<C-\><C-n><C-W>k]], opts)
+          tnoremap("<C-l>", [[<C-\><C-n><C-W>l]], opts)
+          tnoremap("]t", [[<C-\><C-n>:tablast<CR>]])
+          tnoremap("[t", [[<C-\><C-n>:tabnext<CR>]])
+          tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
+          tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
+        end
+      end
     }
   }
 )
@@ -525,20 +523,6 @@ command {
     vim.o.background = vim.o.background == "dark" and "light" or "dark"
   end
 }
-------------------------------------------------------------------------------
--- Profile
-------------------------------------------------------------------------------
-function _G._mappings.vim_profile(bang)
-  if bang then
-    vim.cmd "profile pause"
-    vim.cmd "noautocmd qall"
-  else
-    vim.cmd "profile start /tmp/profile.log"
-    vim.cmd "profile func *"
-    vim.cmd "profile file *"
-  end
-end
-command {"Profile", "call s:profile(<bang>0)", types = {"-bang"}}
 ------------------------------------------------------------------------------
 command {"Token", require("as.highlights").token_inspect}
 command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]]}
