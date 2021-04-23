@@ -34,13 +34,12 @@ return function()
           local remote_url = a.await(neogit.cli.config.get("remote.origin.url").call())
           local repo_name = remote_url:sub(16, -5)
           local branch = neogit.repo.head.branch
-
           local services = {
             github = {
-              pr_url = "https://github.com/%s/pull/new/%s"
+              pr_url = [["https://github.com/%s/pull/new/%s"]]
             },
             gitlab = {
-              pr_url = "https://gitlab.com/%s/merge_requests/new?merge_request[source_branch]=%s"
+              pr_url = [["https://gitlab.com/%s/merge_requests/new?merge_request[source_branch]=%s"]]
             }
           }
 
