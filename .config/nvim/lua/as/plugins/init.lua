@@ -435,7 +435,11 @@ return require("packer").startup {
       "folke/lsp-trouble.nvim",
       requires = "nvim-web-devicons",
       config = function()
-        require("trouble").setup {}
+        require("trouble").setup()
+        require("as.highlights").all {
+          {"LspTroubleNormal", {link = "ExplorerBackground"}},
+          {"LspTroubleText", {link = "ExplorerBackground"}}
+        }
         as.nnoremap("<leader>ld", "<cmd>LspTroubleToggle<CR>")
       end
     }

@@ -179,7 +179,7 @@ if has('nvim-0.5')
 endif
 
 function s:should_show_cursorline() abort
-  return &buftype !=? 'terminal' && &ft != ''
+  return &buftype !=? 'terminal' && empty(&winhighlight) && &ft != ''
 endfunction
 
 augroup Cursorline
