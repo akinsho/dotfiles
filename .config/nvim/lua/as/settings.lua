@@ -163,6 +163,7 @@ opt.breakindentopt = "sbr"
 opt.linebreak = true -- lines wrap at words rather than random characters
 opt.synmaxcol = 1024 -- don't syntax highlight long lines
 opt.signcolumn = "yes:2"
+vim.o.ruler = false
 opt.colorcolumn = "+1" -- Set the colour column to highlight one column after the 'textwidth'
 vim.o.cmdheight = 2 -- Set command line height to two lines
 vim.o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
@@ -241,7 +242,7 @@ vim.o.sessionoptions =
   "buffers",
   "curdir",
   "help",
-  "winpos",
+  "winpos"
   -- "tabpages",
 }
 vim.o.viewoptions = add {"cursor", "folds"} -- save/restore just these (with `:{mk,load}view`)
