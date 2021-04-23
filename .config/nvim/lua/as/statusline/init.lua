@@ -35,7 +35,7 @@ end
 --- but this is not universal across terminals so should be avoided
 function M.colors()
   local indicator_color = get_indicator_color()
-  local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -15)
+  local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -10)
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
   local string_fg = H.hl_value("String", "fg")
@@ -151,19 +151,7 @@ function _G.statusline()
   -- Setup
   ----------------------------------------------------------------------------//
   local statusline = {}
-  append(
-    statusline,
-    utils.item_if(
-      "▌",
-      not minimal,
-      "StIndicator",
-      {
-        before = "",
-        after = ""
-      }
-    ),
-    0
-  )
+  append(statusline, utils.item_if("▌", not minimal, "StIndicator", {before = "", after = ""}), 0)
   append(statusline, utils.spacer(1))
 
   ----------------------------------------------------------------------------//

@@ -345,7 +345,7 @@ return require("packer").startup {
           close_triple_quotes = true,
           check_ts = true,
           ts_config = {
-            lua = {'string'},
+            lua = {"string"}
           }
         }
       end
@@ -738,21 +738,18 @@ return require("packer").startup {
             border = "curved"
           }
         }
-        local lazygit
+        local lazygit =
+          require("toggleterm.terminal").Terminal:new {
+          cmd = "lazygit",
+          direction = "float",
+          on_open = function()
+            vim.cmd("mapclear")
+          end
+        }
         as.nnoremap(
           "<leader>Lg",
           function()
             --- BUG: toggling does not close the window
-            lazygit =
-              lazygit or
-              require("toggleterm.terminal").Terminal:new {
-                id = 100,
-                cmd = "lazygit",
-                direction = "float",
-                on_open = function()
-                  vim.cmd("mapclear! <buffer>")
-                end
-              }
             lazygit:toggle()
           end
         )
