@@ -57,9 +57,9 @@ return function()
 
           a.await(a.scheduler())
           if as.has("mac") then
-            vim.cmd("!open " .. open_pr_url)
+            vim.cmd("silent !open " .. open_pr_url)
           elseif as.has("unix") then
-            vim.cmd("!xdg-open " .. open_pr_url)
+            vim.cmd("silent !xdg-open " .. open_pr_url)
           end
         end
       )
