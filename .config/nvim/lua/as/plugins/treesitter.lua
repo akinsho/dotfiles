@@ -21,10 +21,6 @@ return function()
       enable = true,
       ignore_install = {"verilog"}
     },
-    rainbow = {
-      enable = true,
-      disable = {"lua", "json"}
-    },
     incremental_selection = {
       enable = true,
       keymaps = {
@@ -70,6 +66,11 @@ return function()
         }
       }
     },
+    rainbow = {
+      enable = true,
+      disable = {"lua", "json"}
+    },
+    autopairs = {enable = true},
     query_linter = {
       enable = true,
       use_virtual_text = true,

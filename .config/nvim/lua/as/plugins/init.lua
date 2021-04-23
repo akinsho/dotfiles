@@ -342,7 +342,11 @@ return require("packer").startup {
       "windwp/nvim-autopairs",
       config = function()
         require("nvim-autopairs").setup {
-          close_triple_quotes = true
+          close_triple_quotes = true,
+          check_ts = true,
+          ts_config = {
+            lua = {'string'},
+          }
         }
       end
     }
