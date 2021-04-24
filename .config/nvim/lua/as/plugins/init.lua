@@ -442,7 +442,8 @@ return require("packer").startup {
         require("trouble").setup {auto_close = true}
         require("as.highlights").all {
           {"LspTroubleNormal", {link = "ExplorerBackground"}},
-          {"LspTroubleText", {link = "ExplorerBackground"}}
+          {"LspTroubleText", {link = "ExplorerBackground"}},
+          {"LspTroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
         }
         as.nnoremap("<leader>ld", "<cmd>LspTroubleToggle<CR>")
       end
