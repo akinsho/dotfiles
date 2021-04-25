@@ -54,15 +54,6 @@ function as.echomsg(msg, hl)
   vim.api.nvim_echo(msg, true, {})
 end
 
-function as.total_plugins()
-  local base_path = fn.stdpath("data") .. "/site/pack/packer/"
-  local start = vim.split(fn.globpath(base_path .. "start", "*"), "\n")
-  local opt = vim.split(fn.globpath(base_path .. "opt", "*"), "\n")
-  local start_count = vim.tbl_count(start)
-  local opt_count = vim.tbl_count(opt)
-  return {total = start_count + opt_count, start = start_count, lazy = opt_count}
-end
-
 -- https://stackoverflow.com/questions/1283388/lua-merge-tables
 function as.deep_merge(t1, t2)
   for k, v in pairs(t2) do
@@ -209,21 +200,6 @@ as.onoremap = make_mapper("o", noremap_opts)
 as.tnoremap = make_mapper("t", noremap_opts)
 as.snoremap = make_mapper("s", noremap_opts)
 as.cnoremap = make_mapper("c", {noremap = true, silent = false})
-
----map a key to an action
----@param mode string
----@param lhs string
----@param rhs string
----@param opts table
-function as.map(mode, lhs, rhs, opts)
-  opts = opts or get_defaults(mode)
-  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
-
-function as.buf_map(bufnr, mode, lhs, rhs, opts)
-  opts = opts or get_defaults(mode)
-  vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-end
 
 function as.command(args)
   local nargs = args.nargs or 0
