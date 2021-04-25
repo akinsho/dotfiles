@@ -556,6 +556,7 @@ return require("packer").startup {
     use {
       "TimUntersberger/neogit",
       cmd = "Neogit",
+      branch = "split-diff",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       requires = "plenary.nvim",
       config = conf("neogit")
@@ -740,13 +741,16 @@ return require("packer").startup {
           }
         }
         local lazygit =
-          require("toggleterm.terminal").Terminal:new {
-          cmd = "lazygit",
-          direction = "float",
-          on_open = function()
-            vim.cmd("mapclear")
-          end
-        }
+          require("toggleterm.terminal").Terminal:new(
+          {
+            id = 100,
+            cmd = "lazygit",
+            direction = "float",
+            on_open = function()
+              vim.cmd("inoremap jk <Nop>")
+            end
+          }
+        )
         as.nnoremap(
           "<leader>Lg",
           function()
