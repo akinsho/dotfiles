@@ -1,8 +1,17 @@
 {
+  "fori": {
+    "prefix": "fori",
+    "body": ["for (final ${1:item} in ${2:items}) {", "\t${3:print($1)}", "}"]
+  },
   "if": {
     "prefix": "if",
     "body": ["if (${1:condition}) {", "\t$2", "}"],
     "description": "If statement"
+  },
+  "print message": {
+    "prefix": "prm",
+    "body": ["print('${1:message}');"],
+    "description": "Print message"
   },
   "print formatted snippet": {
     "prefix": "pr",
