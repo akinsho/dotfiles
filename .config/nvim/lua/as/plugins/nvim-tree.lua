@@ -57,5 +57,9 @@ return function()
     }
   )
   -- This is required to allow lazy loading to work correctly.
-  require("nvim-tree").on_enter()
+  require("nvim-tree.events").on_nvim_tree_ready(
+    function()
+      vim.cmd("NvimTreeRefresh")
+    end
+  )
 end
