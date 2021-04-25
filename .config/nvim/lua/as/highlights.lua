@@ -181,16 +181,20 @@ end
 
 local function general_overrides()
   local cursor_line_bg = M.hl_value("CursorLine", "bg")
+  local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
-    {"Credit", {gui = "bold"}},
     {"Todo", {guifg = "Red", guibg = "NONE", gui = "bold"}},
+    -----------------------------------------------------------------------------//
+    -- Commandline
+    -----------------------------------------------------------------------------//
     {"MsgArea", {guibg = msg_area_bg}},
+    {"MsgSeparator", {guifg = comment_fg, guibg = msg_area_bg}},
+    -----------------------------------------------------------------------------//
     {"CursorLineNr", {guifg = "yellow", gui = "bold"}},
     {"FoldColumn", {guibg = "background"}},
     {"Folded", {link = "Comment", force = true}},
     {"TermCursor", {ctermfg = "green", guifg = "royalblue"}},
-    {"MsgSeparator", {link = "Comment"}},
     {"MatchParen", {gui = "bold", guifg = "LightGreen", guibg = "NONE"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
     {"Error", {link = "WarningMsg", force = true}},
