@@ -229,11 +229,11 @@ function as.invalidate(path, recursive)
   end
 end
 
-local function find_and_close_notification()
+local function get_last_notification()
   for _, win in ipairs(api.nvim_list_wins()) do
     local buf = api.nvim_win_get_buf(win)
     if vim.bo[buf].filetype == "vim-notify" and api.nvim_win_is_valid(win) then
-      api.nvim_win_close(win, true)
+      return api.nvim_win_get_config(win)
     end
   end
 end
@@ -255,7 +255,6 @@ local notification_hl =
 ---@param lines string[] | string
 ---@param opts table
 function as.notify(lines, opts)
-  find_and_close_notification()
   lines = type(lines) == "string" and {lines} or lines
   opts = opts or {}
   local highlights = {"NormalFloat:Normal"}
@@ -274,6 +273,8 @@ function as.notify(lines, opts)
   local buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   local height = #lines
+  local prev = get_last_notification()
+  local row = prev and prev.row[false] - prev.height - 2 or vim.o.lines - vim.o.cmdheight - 3
   local win =
     api.nvim_open_win(
     buf,
@@ -283,7 +284,7 @@ function as.notify(lines, opts)
       width = width + 2,
       height = height,
       col = vim.o.columns - 2,
-      row = vim.o.lines - vim.o.cmdheight - 3,
+      row = row,
       anchor = "SE",
       style = "minimal",
       focusable = false,
