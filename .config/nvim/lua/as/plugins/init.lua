@@ -468,7 +468,7 @@ return require("packer").startup {
       "dstein64/vim-startuptime",
       opt = true,
       config = function()
-        vim.g.startuptime_exe_args = {"+let g:loaded_auto_session = 1"}
+        vim.g.startuptime_exe_args = {"+let g:auto_session_enabled = 0"}
       end
     }
     use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
