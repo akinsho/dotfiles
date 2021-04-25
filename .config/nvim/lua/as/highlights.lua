@@ -181,7 +181,7 @@ end
 
 local function general_overrides()
   local cursor_line_bg = M.hl_value("CursorLine", "bg")
-  local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -16)
+  local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
     {"Credit", {gui = "bold"}},
     {"Todo", {guifg = "Red", guibg = "NONE", gui = "bold"}},
