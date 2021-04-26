@@ -711,7 +711,7 @@ return require("packer").startup {
       event = "BufEnter *_spec.lua",
       disable = is_work,
       config = function()
-        require "terminal".setup()
+        require("terminal").setup()
       end
     }
     use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
