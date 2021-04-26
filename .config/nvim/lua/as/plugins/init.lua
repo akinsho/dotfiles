@@ -344,10 +344,7 @@ return require("packer").startup {
       config = function()
         require("nvim-autopairs").setup {
           close_triple_quotes = true,
-          check_ts = true,
-          ts_config = {
-            lua = {"string"}
-          }
+          check_ts = true
         }
       end
     }
@@ -729,6 +726,7 @@ return require("packer").startup {
 
     use_local {
       "akinsho/nvim-toggleterm.lua",
+      branch = "feature/custom-terms",
       local_path = "personal",
       config = function()
         local large_screen = vim.o.columns > 200
@@ -744,18 +742,18 @@ return require("packer").startup {
         local lazygit =
           require("toggleterm.terminal").Terminal:new(
           {
-            id = 100,
+            count = 10,
             cmd = "lazygit",
+            hidden = true,
             direction = "float",
             on_open = function()
-              vim.cmd("inoremap jk <Nop>")
+              -- vim.cmd("inoremap jk <Nop>")
             end
           }
         )
         as.nnoremap(
-          "<leader>Lg",
+          "<localleader>lg",
           function()
-            --- BUG: toggling does not close the window
             lazygit:toggle()
           end
         )
