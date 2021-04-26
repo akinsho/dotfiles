@@ -198,7 +198,7 @@ local function general_overrides()
     {"MatchParen", {gui = "bold", guifg = "LightGreen", guibg = "NONE"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
     {"Error", {link = "WarningMsg", force = true}},
-    {"ErrorMsg", {guibg = msg_area_bg}}, -- set the error message background to match the msg area
+    {"ErrorMsg", {guibg = "NONE"}}, -- set the error message background to match the msg area
     -- Add undercurl to existing spellbad highlight
     {"SpellBad", {gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green"}},
     -----------------------------------------------------------------------------//
