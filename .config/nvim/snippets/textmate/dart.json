@@ -1,7 +1,7 @@
 {
   "fori": {
     "prefix": "fori",
-    "body": ["for (final ${1:item} in ${2:items}) {", "\t${3:print($1)}", "}"]
+    "body": ["for (final ${1:item} in ${2:items}) {", "\t${3:print($1)};", "}"]
   },
   "if": {
     "prefix": "if",
