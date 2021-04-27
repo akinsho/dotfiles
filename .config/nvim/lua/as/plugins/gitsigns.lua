@@ -27,8 +27,9 @@ return function()
         expr = true,
         '&diff ? \'[h\' : \'<cmd>lua require"gitsigns".prev_hunk()<CR>\''
       },
-      ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-      ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+      -- Text objects
+      ["o ih"] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
+      ["x ih"] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
       ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
       ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
       ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
