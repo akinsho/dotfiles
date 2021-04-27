@@ -741,8 +741,8 @@ return require("packer").startup {
               local opts = {buffer = term.bufnr, silent = false}
               as.tnoremap("q", "<cmd>close<CR>", opts)
               as.tnoremap("<esc>", "<Nop>", opts)
-              if vim.fn.mapcheck("jk", "t") then
-                vim.api.nvim_buf_del_keymap(0, "t", "jk")
+              if vim.fn.mapcheck("jk", "t") ~= "" then
+                vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
               end
             end
           }

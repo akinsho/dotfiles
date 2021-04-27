@@ -1,4 +1,20 @@
 {
+  "it": {
+    "prefix": "it",
+    "body": [
+      "it('should ${1:do something}', function()",
+      "\t${2}",
+      "end)"
+    ]
+  },
+  "describe": {
+    "prefix": "describe",
+    "body": [
+      "decribe('${1:Title}', function()",
+        "\t${2}",
+        "end)"
+    ]
+  },
   "doc": {
     "prefix": "doc",
     "body": [
