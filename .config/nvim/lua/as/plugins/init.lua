@@ -746,8 +746,11 @@ return require("packer").startup {
             cmd = "lazygit",
             hidden = true,
             direction = "float",
-            on_open = function()
-              -- vim.cmd("inoremap jk <Nop>")
+            on_open = function(term)
+              local opts = {buffer = term.bufnr, silent = false}
+              as.tnoremap("q", "<cmd>close<CR>", opts)
+              as.tnoremap("<esc>", "<Nop>", opts)
+              vim.api.nvim_buf_del_keymap(0, "t", "jk")
             end
           }
         )

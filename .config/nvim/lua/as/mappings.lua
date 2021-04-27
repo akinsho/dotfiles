@@ -24,7 +24,7 @@ as.augroup(
   "AddTerminalMappings",
   {
     {
-      events = {"TermEnter", "BufEnter"},
+      events = {"TermOpen"},
       targets = {"term://*"},
       command = function()
         if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
