@@ -561,15 +561,6 @@ return require("packer").startup {
     }
 
     use {
-      "kdheepak/lazygit.nvim",
-      cmd = "LazyGit",
-      keys = "<leader>lg",
-      config = function()
-        as.nnoremap("<leader>lg", "<cmd>LazyGit<CR>")
-        vim.g.lazygit_floating_window_winblend = 2
-      end
-    }
-    use {
       "pwntester/octo.nvim",
       cmd = "Octo",
       config = function()
@@ -750,16 +741,16 @@ return require("packer").startup {
               local opts = {buffer = term.bufnr, silent = false}
               as.tnoremap("q", "<cmd>close<CR>", opts)
               as.tnoremap("<esc>", "<Nop>", opts)
-              vim.api.nvim_buf_del_keymap(0, "t", "jk")
+              if vim.fn.mapcheck("jk", "t") then
+                vim.api.nvim_buf_del_keymap(0, "t", "jk")
+              end
             end
           }
         )
-        as.nnoremap(
-          "<localleader>lg",
-          function()
-            lazygit:toggle()
-          end
-        )
+        local function toggle()
+          lazygit:toggle()
+        end
+        as.nnoremap("<leader>lg", toggle)
       end
     }
     -- TODO: could be lazy loaded if the color library was separate functionality
