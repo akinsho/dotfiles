@@ -298,7 +298,6 @@ return require("packer").startup {
     use_local {
       "akinsho/flutter-tools.nvim",
       ft = "dart",
-      branch = "bugfix/invalid-end-index",
       config = conf("flutter"),
       requires = {"nvim-dap"},
       local_path = "personal"
