@@ -44,11 +44,15 @@ return function()
           }
 
           local cmd = neogit.cli["show-ref"].verify.show_popup(false).args(remote_url)
-          local exists = a.await(cmd.call()) ~= ""
-          if not exists then
-            return vim.schedule(function()
-              vim.notify(fmt("%s doesn't exist in the remote, please push the branch first", branch))
-            end)
+          local output = a.await(cmd.call())
+          if output == "" then
+            return vim.schedule(
+              function()
+                vim.notify(
+                  fmt("%s doesn't exist in the remote, please push the branch first", branch)
+                )
+              end
+            )
           end
 
           local current
