@@ -206,11 +206,11 @@ return require("packer").startup {
               command = function()
                 local opts = {buffer = 0}
                 as.nnoremap(
-                  "<leader>td",
+                  "<localleader>td",
                   [[<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>]],
                   opts
                 )
-                as.nmap("<leader>tf", "<Plug>PlenaryTestFile", opts)
+                as.nmap("<localleader>tf", "<Plug>PlenaryTestFile", opts)
               end
             }
           }
