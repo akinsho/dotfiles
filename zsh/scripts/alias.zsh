@@ -129,6 +129,8 @@ alias groh='git reset origin/$(git_current_branch) --hard'
 alias grbi='git rebase -i'
 alias grbm='git rebase $(git_main_branch)'
 alias gcm='git checkout $(git_main_branch)'
+alias gcd="git checkout development"
+alias gcb="git checkout -b"
 alias gstp="git stash pop"
 alias gsts="git stash show -p"
 
