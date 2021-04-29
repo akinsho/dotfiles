@@ -29,7 +29,7 @@ return function()
         p = {
           name = "+packer",
           c = "clean",
-          s = "sync",
+          s = "sync"
         },
         q = {
           name = "+quit",
@@ -77,8 +77,7 @@ return function()
         ["'"] = "wrap with single quotes",
         ["`"] = "wrap with back ticks",
         ["["] = "replace cursor word in file",
-        ["]"] = "replace cursor word in line",
-        ["<Tab>"] = {"bnext", "Go to next buffer"}
+        ["]"] = "replace cursor word in line"
       },
       ["<localleader>"] = {
         name = "local leader",
@@ -120,7 +119,6 @@ return function()
         [";"] = "add semicolon to end of line",
         ["?"] = "search for word under cursor in google",
         ["!"] = "search for word under cursor in google",
-        ["<Tab>"] = {"bnext", "open vim bufferlist"},
         ["["] = "abolish = subsitute cursor word in file",
         ["]"] = "abolish = substitute cursor word on line",
         ["/"] = "find matching word in buffer",

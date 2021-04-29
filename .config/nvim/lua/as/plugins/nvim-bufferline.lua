@@ -50,9 +50,13 @@ return function()
     }
   }
 
-  nnoremap("gb", [[<cmd>BufferLinePick<CR>]])
-  nnoremap("<leader><tab>", [[<cmd>BufferLineCycleNext<CR>]])
-  nnoremap("<S-tab>", [[<cmd>BufferLineCyclePrev<CR>]])
-  nnoremap("[b", [[<cmd>BufferLineMoveNext<CR>]])
-  nnoremap("]b", [[<cmd>BufferLineMovePrev<CR>]])
+  require("which-key").register(
+    {
+      ["gb"] = {"<cmd>BufferLinePick<CR>", "bufferline: pick buffer"},
+      ["<leader><tab>"] = {"<cmd>BufferLineCycleNext<CR>", "bufferline: next"},
+      ["<S-tab>"] = {"<cmd>BufferLineCyclePrev<CR>", "bufferline: prev"},
+      ["[b"] = {"<cmd>BufferLineMoveNext<CR>", "bufferline: move next"},
+      ["]b"] = {"<cmd>BufferLineMovePrev<CR>", "bufferline: move prev"}
+    }
+  )
 end
