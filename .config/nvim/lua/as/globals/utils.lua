@@ -300,13 +300,13 @@ function as.notify(lines, opts)
   vim.bo[buf].filetype = "vim-notify"
   vim.wo[win].wrap = true
   if timeout then
-    fn.timer_start(
-      timeout,
+    vim.defer_fn(
       function()
         if api.nvim_win_is_valid(win) then
           api.nvim_win_close(win, true)
         end
-      end
+      end,
+      timeout
     )
   end
 end
