@@ -584,13 +584,26 @@ return require("packer").startup {
     use {
       "AndrewRadev/sideways.vim",
       config = function()
-        as.nnoremap("]w", "<cmd>SidewaysLeft<cr>")
-        as.nnoremap("[w", "<cmd>SidewaysRight<cr>")
-        as.nmap("<localleader>si", "<Plug>SidewaysArgumentInsertBefore")
-        as.nmap("<localleader>sa", "<Plug>SidewaysArgumentAppendAfter")
-        as.nmap("<localleader>sI", "<Plug>SidewaysArgumentInsertFirst")
-        as.nmap("<localleader>sA", "<Plug>SidewaysArgumentAppendLast")
         vim.g.sideways_add_item_cursor_restore = 1
+        local wk = require("which-key")
+        wk.register(
+          {
+            ["]w"] = {"<cmd>SidewaysLeft<cr>", "move argument left"},
+            ["[w"] = {"<cmd>SidewaysRight<cr>", "move argument right"}
+          }
+        )
+        wk.register(
+          {
+            s = {
+              name = "+sideways",
+              i = {"<Plug>SidewaysArgumentInsertBefore", "insert argument before"},
+              a = {"<Plug>SidewaysArgumentAppendAfter", "insert argument after"},
+              I = {"<Plug>SidewaysArgumentInsertFirst", "insert argument first"},
+              A = {"<Plug>SidewaysArgumentAppendLast", "insert argument last"}
+            }
+          },
+          {prefix = "<localleader>", noremap = false}
+        )
       end
     }
     use {
@@ -601,7 +614,17 @@ return require("packer").startup {
         as.nmap("<leader>ss", "<plug>(SubversiveSubstituteLine)")
         as.nmap("<leader>S", "<plug>(SubversiveSubstituteToEndOfLine)")
         as.nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
-        as.nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
+        as.vmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
+
+        require("which-key").register(
+          {
+            [",s"] = "subversive: range",
+            s = "subversive: current word",
+            ss = "subversive: entire line",
+            S = "subversive: till end of line"
+          },
+          {prefix = "<leader>"}
+        )
       end
     }
     use {

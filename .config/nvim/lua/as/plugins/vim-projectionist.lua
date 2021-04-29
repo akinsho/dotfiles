@@ -1,5 +1,5 @@
 return function()
-  vim.g.projectionist_heuristics = {
+  vim.g.projectionist_heuristic = {
     ["*.go"] = {
       ["*.go"] = {alternate = "{}_test.go", ["type"] = "source"},
       ["*_test.go"] = {alternate = "{}.go", ["type"] = "test"}
@@ -56,8 +56,15 @@ return function()
     }
   }
 
-  local nnoremap = as.nnoremap
-  nnoremap("<leader>av", "<cmd>AV<CR>")
-  nnoremap("<leader>at", "<cmd>Vtest<CR>")
-  nnoremap("<leader>A", "<cmd>A<CR>")
+  require("which-key").register(
+    {
+      A = {"<cmd>A<CR>", "projectionist: edit alternate"},
+      a = {
+        name = "+projectionist",
+        v = {"<cmd>AV<CR>", "projectionist: vsplit alternate"},
+        t = {"<cmd>Vtest<CR>", "projectionist: vsplit test"}
+      }
+    },
+    {prefix = "<leader>"}
+  )
 end

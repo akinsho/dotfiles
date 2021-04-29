@@ -15,9 +15,6 @@ return function()
         ["7"] = "which_key_ignore",
         ["8"] = "which_key_ignore",
         ["9"] = "which_key_ignore",
-        A = "projectionist: edit alternate",
-        av = "projectionist: vsplit alternate",
-        at = "projectionist: vsplit test",
         h = {
           name = "+git-hunk",
           s = "stage",
@@ -30,11 +27,9 @@ return function()
         },
         E = "show token under the cursor",
         p = {
-          name = "+vim-plug",
-          u = "update",
+          name = "+packer",
           c = "clean",
-          s = "status",
-          i = "install"
+          s = "sync",
         },
         q = {
           name = "+quit",
@@ -63,27 +58,7 @@ return function()
           n = "tab edit current buffer"
         },
         u = "toggle undo tree",
-        [",s"] = "subversive: range",
-        s = "subversive: current word",
-        ss = "subversive: entire line",
-        S = "subversive: till end of line",
         v = "vista: toggle",
-        w = {
-          name = "+wiki",
-          [","] = {
-            name = "+diary",
-            i = "generate diary links",
-            m = "edit tomorrow's diary entry",
-            t = "edit diary entry (tab)",
-            y = "edit yesterday's diary entry",
-            w = "edit today's diary entry"
-          },
-          q = "close all wikis",
-          w = "open vimwiki index",
-          s = "vimwiki UI select",
-          t = "open vimwiki index in a tab",
-          i = "open vimwiki diary"
-        },
         z = {
           name = "+zoom/zen",
           m = "Zen mode: Toggle Minimal",
@@ -107,29 +82,10 @@ return function()
       },
       ["<localleader>"] = {
         name = "local leader",
-        d = {
-          name = "+debugger",
-          ["?"] = "hover: variables scopes",
-          b = "toggle breakpoint",
-          B = "set breakpoint",
-          c = "continue or start debugging",
-          e = "step out",
-          i = "step into",
-          o = "step over",
-          l = "REPL: run last",
-          r = "REPL: open",
-          t = {
-            name = "+treesitter",
-            e = "treesitter: enable highlight (buffer)",
-            d = "treesitter: disable highlight (buffer)",
-            p = "treesitter: toggle playground"
-          }
-        },
         g = {
           name = "+git-commands",
           b = {
             name = "+git-information",
-            o = "coc: git open in browser",
             l = "git blame"
           },
           r = {
@@ -159,13 +115,6 @@ return function()
           n = "test nearest",
           f = "test file",
           s = "test suite"
-        },
-        s = {
-          name = "+sideways",
-          i = "insert argument before",
-          a = "insert argument after",
-          I = "insert argument first",
-          A = "insert argument last"
         },
         [","] = "add comma to end of line",
         [";"] = "add semicolon to end of line",

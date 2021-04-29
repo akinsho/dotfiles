@@ -55,7 +55,28 @@ function M.config()
       end
     end
   }
-  as.nnoremap("<leader>wq", "<Cmd>CloseVimWikis<CR>")
+
+  require("which-key").register(
+    {
+      w = {
+        name = "+wiki",
+        [","] = {
+          name = "+diary",
+          i = "generate diary links",
+          m = "edit tomorrow's diary entry",
+          t = "edit diary entry (tab)",
+          y = "edit yesterday's diary entry",
+          w = "edit today's diary entry"
+        },
+        q = {"<Cmd>CloseVimWikis<CR>", "close all wikis"},
+        w = "open vimwiki index",
+        s = "vimwiki UI select",
+        t = "open vimwiki index in a tab",
+        i = "open vimwiki diary"
+      }
+    },
+    {prefix = "<localleader>"}
+  )
 end
 
 return M

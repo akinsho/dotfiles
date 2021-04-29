@@ -48,4 +48,21 @@ return function()
   )
   nnoremap("<localleader>dr", [[<cmd>lua require'dap'.repl.open()<CR>]])
   nnoremap("<localleader>dl", [[<cmd>lua require'dap'.repl.run_last()<CR>]])
+  require("which-key").register(
+    {
+      d = {
+        name = "+debugger",
+        ["?"] = "hover: variables scopes",
+        b = "toggle breakpoint",
+        B = "set breakpoint",
+        c = "continue or start debugging",
+        e = "step out",
+        i = "step into",
+        o = "step over",
+        l = "REPL: run last",
+        r = "REPL: open"
+      }
+    },
+    {prefix = "<localleader>"}
+  )
 end
