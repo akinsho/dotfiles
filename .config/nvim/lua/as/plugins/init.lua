@@ -716,7 +716,6 @@ return require("packer").startup {
 
     use_local {
       "akinsho/nvim-toggleterm.lua",
-      branch = "feature/custom-terms",
       local_path = "personal",
       config = function()
         local large_screen = vim.o.columns > 200
