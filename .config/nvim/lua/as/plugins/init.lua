@@ -229,10 +229,11 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
-    use {"mfussenegger/nvim-dap", config = conf("dap")}
+    use {"mfussenegger/nvim-dap", keys = {"<localleader>dc"}, config = conf("dap")}
     use {
       "rcarriga/nvim-dap-ui",
       requires = "nvim-dap",
+      after = "nvim-dap",
       config = function()
         require("dapui").setup()
       end
@@ -744,7 +745,6 @@ return require("packer").startup {
         local lazygit =
           require("toggleterm.terminal").Terminal:new(
           {
-            count = 10,
             cmd = "lazygit",
             hidden = true,
             direction = "float",
