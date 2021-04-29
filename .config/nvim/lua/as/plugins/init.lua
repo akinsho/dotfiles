@@ -133,7 +133,7 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
-    use_rocks {"penlight", "lua-resty-http", "lua-cjson"}
+    use_rocks "penlight"
 
     use {
       "airblade/vim-rooter",
@@ -217,6 +217,7 @@ return require("packer").startup {
         )
       end
     }
+    -- TODO: this breaks when used with sessions but keep an eye on it
     use {
       "sunjon/shade.nvim",
       opt = true,
@@ -379,8 +380,10 @@ return require("packer").startup {
       cmd = {"TestFile", "TestNearest", "TestSuite"},
       keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn", "<localleader>ts"},
       config = function()
-        vim.cmd [[let test#strategy = "neovim"]]
-        vim.cmd [[let test#neovim#term_position = "vert botright"]]
+        vim.cmd [[
+          let test#strategy = "neovim"
+          let test#neovim#term_position = "vert botright"
+        ]]
         as.nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
         as.nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
         as.nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
@@ -607,27 +610,6 @@ return require("packer").startup {
       end
     }
     use {
-      "svermeulen/vim-subversive",
-      config = function()
-        -- s for substitute
-        as.nmap("<leader>s", "<plug>(SubversiveSubstitute)")
-        as.nmap("<leader>ss", "<plug>(SubversiveSubstituteLine)")
-        as.nmap("<leader>S", "<plug>(SubversiveSubstituteToEndOfLine)")
-        as.nmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
-        as.vmap("<leader><leader>s", "<plug>(SubversiveSubstituteRange)")
-
-        require("which-key").register(
-          {
-            [",s"] = "subversive: range",
-            s = "subversive: current word",
-            ss = "subversive: entire line",
-            S = "subversive: till end of line"
-          },
-          {prefix = "<leader>"}
-        )
-      end
-    }
-    use {
       "chaoren/vim-wordmotion",
       config = function()
         -- Restore Vim's special case behavior with dw and cw:
@@ -714,7 +696,6 @@ return require("packer").startup {
         )
       end
     }
-    use "tversteeg/registers.nvim"
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
