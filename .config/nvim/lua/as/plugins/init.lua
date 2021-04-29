@@ -386,7 +386,7 @@ return require("packer").startup {
         as.nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
       end
     }
-    use {"liuchengxu/vim-which-key", config = conf("whichkey")}
+    use {"folke/which-key.nvim", config = conf("whichkey")}
     use {"AndrewRadev/tagalong.vim", ft = {"typescriptreact", "javascriptreact", "html"}}
     use {
       "iamcco/markdown-preview.nvim",

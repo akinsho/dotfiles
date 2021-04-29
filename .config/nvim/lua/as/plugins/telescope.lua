@@ -178,4 +178,24 @@ return function()
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", grep)
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
+
+  require("which-key").register(
+    {
+      f = {
+        name = "+telescope",
+        b = "branches",
+        c = "commits",
+        f = "files",
+        ["?"] = "help",
+        d = "dotfiles",
+        o = "buffers",
+        h = "history",
+        n = "nvim config",
+        r = "module reloader",
+        s = "rg",
+        w = "rg: <cursor word>"
+      }
+    },
+    {prefix = "<leader>"}
+  )
 end
