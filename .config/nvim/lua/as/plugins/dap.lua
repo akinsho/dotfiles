@@ -32,35 +32,22 @@ return function()
   end
 
   vnoremap("<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
-  nnoremap("<localleader>d?", [[<cmd>lua require'dap.ui.variables'.scopes()<CR>]])
-  nnoremap("<localleader>dc", [[<cmd>lua require'dap'.continue()<CR>]])
-  nnoremap("<localleader>do", [[<cmd>lua require'dap'.step_over()<CR>]])
-  nnoremap("<localleader>di", [[<cmd>lua require'dap'.step_into()<CR>]])
-  nnoremap("<localleader>de", [[<cmd>lua require'dap'.step_out()<CR>]])
-  nnoremap("<localleader>db", [[<cmd>lua require'dap'.toggle_breakpoint()<CR>]])
-  nnoremap(
-    "<localleader>dB",
-    [[<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]]
-  )
-  nnoremap(
-    "<localleader>dl",
-    [[<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>]]
-  )
-  nnoremap("<localleader>dr", [[<cmd>lua require'dap'.repl.open()<CR>]])
-  nnoremap("<localleader>dl", [[<cmd>lua require'dap'.repl.run_last()<CR>]])
   require("which-key").register(
     {
       d = {
         name = "+debugger",
-        ["?"] = "hover: variables scopes",
-        b = "toggle breakpoint",
-        B = "set breakpoint",
-        c = "continue or start debugging",
-        e = "step out",
-        i = "step into",
-        o = "step over",
-        l = "REPL: run last",
-        r = "REPL: open"
+        ["?"] = {[[<cmd>lua require'dap.ui.variables'.scopes()<CR>]], "hover: variables scopes"},
+        b = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "toggle breakpoint"},
+        B = {
+          [[<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]],
+          "set breakpoint"
+        },
+        c = {[[<cmd>lua require'dap'.continue()<CR>]], "continue or start debugging"},
+        e = {[[<cmd>lua require'dap'.step_out()<CR>]], "step out"},
+        i = {[[<cmd>lua require'dap'.step_into()<CR>]], "step into"},
+        o = {[[<cmd>lua require'dap'.step_over()<CR>]], "step over"},
+        l = {[[<cmd>lua require'dap'.repl.run_last()<CR>]], "REPL: run last"},
+        r = {[[<cmd>lua require'dap'.repl.open()<CR>]], "REPL: open"}
       }
     },
     {prefix = "<localleader>"}
