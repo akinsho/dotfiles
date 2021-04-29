@@ -323,10 +323,6 @@ nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]])
 
 -- Map Q to replay q register
 nnoremap("Q", "@q")
-
--- Zoom / Restore window. - Zooms by increasing window width squashing the other window
--- z is the zoom/zen prefix
-nnoremap("<leader>zt", [[:call utils#tab_zoom()<CR>]])
 -----------------------------------------------------------------------------//
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
