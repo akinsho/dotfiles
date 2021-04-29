@@ -700,8 +700,16 @@ return require("packer").startup {
             integration_tmux = true
           }
         }
-        as.nnoremap("<leader>zm", "<cmd>TZMinimalist<CR>")
-        as.nnoremap("<leader>za", "<cmd>TZAtaraxis<CR>")
+        require("which-key").register(
+          {
+            z = {
+              name = "+zen mode",
+              m = {"<cmd>TZMinimalist<CR>", "toggle minimalist"},
+              a = {"<cmd>TZAtaraxis<CR>", "toggle ataraxis"}
+            }
+          },
+          {prefix = "<leader>"}
+        )
       end
     }
     use "tversteeg/registers.nvim"

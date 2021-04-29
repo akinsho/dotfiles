@@ -59,11 +59,6 @@ return function()
         },
         u = "toggle undo tree",
         v = "vista: toggle",
-        z = {
-          name = "+zoom/zen",
-          m = "Zen mode: Toggle Minimal",
-          a = "Zen mode: Toggle Ataraxis"
-        },
         sw = "swap buffers horizontally",
         so = "source current buffer",
         sv = "source init.vim",

@@ -92,6 +92,12 @@ local function setup_mappings(client, bufnr)
   nnoremap("<leader>cs", vim.lsp.buf.document_symbol, opts)
   nnoremap("<leader>cw", vim.lsp.buf.workspace_symbol, opts)
   nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
+  require("which-key").register(
+    {
+      ["<leader>rf"] = "lsp: format buffer",
+      ["gr"] = "lsp: references"
+    }
+  )
 end
 
 function as.lsp.tagfunc(pattern, flags)
