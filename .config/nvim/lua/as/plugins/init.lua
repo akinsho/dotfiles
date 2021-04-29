@@ -544,11 +544,8 @@ return require("packer").startup {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
       config = function()
-        require("gitlinker").setup {
-          opts = {
-            mappings = "<localleader>gu"
-          }
-        }
+        require("gitlinker").setup {opts = {mappings = "<localleader>gu"}}
+        require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
       end
     }
     use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}
@@ -770,6 +767,7 @@ return require("packer").startup {
           lazygit:toggle()
         end
         as.nnoremap("<leader>lg", toggle)
+        require("which-key").register({["<leader>lg"] = "toggleterm: toggle lazygit"})
       end
     }
     -- TODO: could be lazy loaded if the color library was separate functionality

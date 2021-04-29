@@ -1,9 +1,30 @@
 return function()
   local gitsigns = require("gitsigns")
 
-  as.nnoremap("<localleader>gbl", gitsigns.blame_line)
-  as.nnoremap("<localleader>gre", "<cmd>Gitsigns reset_buffer<CR>")
-  as.nnoremap("<localleader>gw", "<cmd>Gitsigns stage_buffer<CR>")
+  require("which-key").register(
+    {
+      ["<leader>h"] = {
+        name = "+gitsigns hunk",
+        s = "stage",
+        u = "undo stage",
+        r = "reset hunk",
+        p = "preview current hunk",
+        b = "blame current line"
+      },
+      ["<localleader>g"] = {
+        name = "+gitsigns",
+        w = {"<cmd>Gitsigns stage_buffer<CR>", "stage entire buffer"},
+        r = {
+          name = "+reset",
+          e = {"<cmd>Gitsigns reset_buffer<CR>", "reset entire buffer"}
+        },
+        b = {
+          name = "+blame",
+          l = "gitsigns: blame current line"
+        }
+      }
+    }
+  )
 
   gitsigns.setup {
     debug_mode = false,

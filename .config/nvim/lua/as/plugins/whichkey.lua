@@ -15,11 +15,6 @@ return function()
         ["7"] = "which_key_ignore",
         ["8"] = "which_key_ignore",
         ["9"] = "which_key_ignore",
-        h = {
-          name = "+git-hunk",
-          s = "stage",
-          u = "undo"
-        },
         n = {
           name = "+new",
           f = "create a new file",
@@ -58,7 +53,6 @@ return function()
           n = "tab edit current buffer"
         },
         u = "toggle undo tree",
-        v = "vista: toggle",
         sw = "swap buffers horizontally",
         so = "source current buffer",
         sv = "source init.vim",
@@ -76,24 +70,6 @@ return function()
       },
       ["<localleader>"] = {
         name = "local leader",
-        g = {
-          name = "+git-commands",
-          b = {
-            name = "+git-information",
-            l = "git blame"
-          },
-          r = {
-            name = "+git-reset",
-            e = "git reset buffer"
-          },
-          c = "git commit",
-          l = "git pull",
-          s = "git status",
-          u = "gitlinker: copy git url",
-          p = "git push",
-          w = "git stage entire buffer",
-          ["*"] = "git grep current word"
-        },
         w = {
           name = "+window",
           h = "change two vertically split windows to horizontal splits",

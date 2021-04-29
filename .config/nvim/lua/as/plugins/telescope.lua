@@ -169,12 +169,12 @@ return function()
 
   --- LSP
   nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
-  nnoremap("<leader>ws", workspace_symbols, {silent = false})
+  nnoremap("<leader>fw", workspace_symbols, {silent = false})
 
   --- Extensions
   nnoremap("<leader>fh", frecency)
   command {"TelescopeFrecent", frecency}
-  nnoremap("<leader>fw", websearch)
+  nnoremap("<leader>fg", websearch)
   nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
   nnoremap("<leader>fs", grep)
   nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
@@ -192,8 +192,11 @@ return function()
         h = "history",
         n = "nvim config",
         r = "module reloader",
-        s = "rg",
-        w = "rg: <cursor word>"
+        s = "grep",
+        w = "workspace symbols"
+      },
+      c = {
+        d = "telescope: workspace diagnostics"
       }
     },
     {prefix = "<leader>"}
