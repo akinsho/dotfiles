@@ -46,7 +46,6 @@ return function()
       spell = true,
       nvim_lsp = true,
       nvim_lua = true,
-      treesitter = false, -- quite slow
       emoji = false,
       tabnine = as.has("mac") and {priority = 1200} or false
     }

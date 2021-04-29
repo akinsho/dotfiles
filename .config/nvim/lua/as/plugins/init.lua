@@ -757,6 +757,7 @@ return require("packer").startup {
             hidden = true,
             direction = "float",
             on_open = function(term)
+              vim.cmd("startinsert!")
               as.tnoremap("q", "<cmd>close<CR>", {buffer = term.bufnr, silent = false})
               if vim.fn.mapcheck("jk", "t") ~= "" then
                 vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
