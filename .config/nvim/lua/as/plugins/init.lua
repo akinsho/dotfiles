@@ -270,12 +270,8 @@ return require("packer").startup {
                   targets = {"*"},
                   command = function()
                     require("nvim-lightbulb").update_lightbulb {
-                      sign = {
-                        enabled = false
-                      },
-                      virtual_text = {
-                        enabled = true
-                      }
+                      sign = {enabled = false},
+                      virtual_text = {enabled = true}
                     }
                   end
                 }
@@ -296,6 +292,8 @@ return require("packer").startup {
         }
       }
     }
+
+    use "simrat39/symbols-outline.nvim"
 
     use_local {
       "akinsho/flutter-tools.nvim",
@@ -594,24 +592,18 @@ return require("packer").startup {
       "AndrewRadev/sideways.vim",
       config = function()
         vim.g.sideways_add_item_cursor_restore = 1
-        local wk = require("which-key")
-        wk.register(
+        require("which-key").register(
           {
             ["]w"] = {"<cmd>SidewaysLeft<cr>", "move argument left"},
-            ["[w"] = {"<cmd>SidewaysRight<cr>", "move argument right"}
-          }
-        )
-        wk.register(
-          {
-            s = {
+            ["[w"] = {"<cmd>SidewaysRight<cr>", "move argument right"},
+            ["<localleader>s"] = {
               name = "+sideways",
               i = {"<Plug>SidewaysArgumentInsertBefore", "insert argument before"},
               a = {"<Plug>SidewaysArgumentAppendAfter", "insert argument after"},
               I = {"<Plug>SidewaysArgumentInsertFirst", "insert argument first"},
               A = {"<Plug>SidewaysArgumentAppendLast", "insert argument last"}
             }
-          },
-          {prefix = "<localleader>", noremap = false}
+          }
         )
       end
     }
@@ -673,22 +665,10 @@ return require("packer").startup {
     }
     use {
       "kdav5758/TrueZen.nvim",
-      keys = {"<leader>za", "<leader>zm"},
-      cmd = {"TZMinimalist", "TZAtaraxis"},
       config = function()
         require("true-zen").setup {
-          unknown_bkg_color_fix = true,
-          left = {
-            shown_relativenumber = true,
-            shown_signcolumn = "yes:2"
-          },
-          ataraxis = {
-            left_padding = math.floor(vim.o.columns * 0.1),
-            right_padding = math.floor(vim.o.columns * 0.1)
-          },
-          integrations = {
-            integration_tmux = true
-          }
+          left = {shown_relativenumber = true, shown_signcolumn = "yes:2"},
+          integrations = {integration_tmux = true}
         }
         require("which-key").register(
           {
@@ -748,21 +728,20 @@ return require("packer").startup {
           }
         }
         local lazygit =
-          require("toggleterm.terminal").Terminal:new(
-          {
-            cmd = "lazygit",
-            hidden = true,
-            direction = "float",
-            on_open = function(term)
-              vim.cmd("startinsert!")
-              as.tnoremap("q", "<cmd>close<CR>", {buffer = term.bufnr, silent = false})
-              if vim.fn.mapcheck("jk", "t") ~= "" then
-                vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
-                vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
-              end
+          require("toggleterm.terminal").Terminal:new {
+          cmd = "lazygit",
+          hidden = true,
+          direction = "float",
+          on_open = function(term)
+            vim.cmd("startinsert!")
+            as.tnoremap("q", "<cmd>close<CR>", {buffer = term.bufnr, silent = false})
+            if vim.fn.mapcheck("jk", "t") ~= "" then
+              vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
+              vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
             end
-          }
-        )
+          end
+        }
+
         local function toggle()
           lazygit:toggle()
         end
