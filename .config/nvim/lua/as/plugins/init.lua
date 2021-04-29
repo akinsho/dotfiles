@@ -685,6 +685,8 @@ return require("packer").startup {
     }
     use {
       "kdav5758/TrueZen.nvim",
+      keys = {"<leader>za", "<leader>zm"},
+      cmd = {"TZMinimalist", "TZAtaraxis"},
       config = function()
         require("true-zen").setup {
           unknown_bkg_color_fix = true,
@@ -738,11 +740,10 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     use_local {
       "akinsho/dependency-assist.nvim",
+      local_path = "personal",
       config = function()
         return require("dependency_assist").setup()
-      end,
-      ft = {"dart", "rust"},
-      local_path = "personal"
+      end
     }
 
     use_local {
