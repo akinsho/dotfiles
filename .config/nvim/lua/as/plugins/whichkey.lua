@@ -104,12 +104,6 @@ return function()
         },
         l = "redraw window",
         z = "center view port",
-        t = {
-          name = "+vim-test",
-          n = "test nearest",
-          f = "test file",
-          s = "test suite"
-        },
         [","] = "add comma to end of line",
         [";"] = "add semicolon to end of line",
         ["?"] = "search for word under cursor in google",

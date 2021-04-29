@@ -379,15 +379,23 @@ return require("packer").startup {
     use {
       "vim-test/vim-test",
       cmd = {"TestFile", "TestNearest", "TestSuite"},
-      keys = {"<localleader>tt", "<localleader>tf", "<localleader>tn", "<localleader>ts"},
+      keys = {"<localleader>tf", "<localleader>tn", "<localleader>ts"},
       config = function()
         vim.cmd [[
           let test#strategy = "neovim"
           let test#neovim#term_position = "vert botright"
         ]]
-        as.nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
-        as.nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
-        as.nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
+        require("whick-key").register(
+          {
+            t = {
+              name = "+vim-test",
+              f = {"<cmd>TestFile<CR>", "test: file"},
+              n = {"<cmd>TestNearest<CR>", "test: nearest"},
+              s = {"<cmd>TestSuite<CR>", "test: suite"}
+            }
+          },
+          {prefix = "<localleader>"}
+        )
       end
     }
     use {"folke/which-key.nvim", config = conf("whichkey")}
