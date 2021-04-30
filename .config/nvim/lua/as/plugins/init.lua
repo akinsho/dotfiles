@@ -204,13 +204,19 @@ return require("packer").startup {
               events = {"BufEnter"},
               targets = {"*_spec.lua"},
               command = function()
-                local opts = {buffer = 0}
-                as.nnoremap(
-                  "<localleader>td",
-                  [[<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>]],
-                  opts
+                require("which-key").register(
+                  {
+                    t = {
+                      name = "+plenary",
+                      f = {"<Plug>PlenaryTestFile", "test file"},
+                      d = {
+                        "<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>",
+                        "test directory"
+                      }
+                    }
+                  },
+                  {prefix = "<localleader>", buffer = 0}
                 )
-                as.nmap("<localleader>tf", "<Plug>PlenaryTestFile", opts)
               end
             }
           }
