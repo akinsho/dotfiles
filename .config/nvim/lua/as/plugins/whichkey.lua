@@ -60,7 +60,6 @@ return function()
           c = "tab close",
           n = "tab edit current buffer"
         },
-        u = "toggle undo tree",
         sw = "swap buffers horizontally",
         so = "source current buffer",
         sv = "source init.vim",
