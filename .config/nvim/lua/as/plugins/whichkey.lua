@@ -95,7 +95,8 @@ return function()
         ["["] = "abolish = subsitute cursor word in file",
         ["]"] = "abolish = substitute cursor word on line",
         ["/"] = "find matching word in buffer",
-        ["<space>"] = "Toggle current fold"
+        ["<space>"] = "Toggle current fold",
+        ["<tab>"] = "open commandline bufferlist"
       }
     }
   )
