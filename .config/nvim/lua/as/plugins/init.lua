@@ -663,6 +663,10 @@ return require("packer").startup {
         as.nnoremap("s", hop.hint_char1)
       end
     }
+    -- }}}
+    -----------------------------------------------------------------------------//
+    -- UI
+    -----------------------------------------------------------------------------//
     use {
       "kdav5758/TrueZen.nvim",
       config = function()
@@ -680,6 +684,23 @@ return require("packer").startup {
           },
           {prefix = "<leader>"}
         )
+      end
+    }
+    use {
+      "edluffy/specs.nvim",
+      config = function()
+        require("specs").setup {
+          popup = {
+            delay_ms = 0, -- delay before popup displays
+            inc_ms = 15, -- time increments used for fade/resize effects
+            width = 40,
+            fader = require("specs").linear_fader,
+            resizer = require("specs").shrink_resizer
+          },
+          ignore_buftypes = {
+            nofile = true
+          }
+        }
       end
     }
     -- }}}
