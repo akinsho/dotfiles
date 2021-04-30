@@ -4,6 +4,14 @@ return function()
 
   wk.register(
     {
+      ["]"] = {
+        name = "+next",
+        ["<space>"] = "add space below"
+      },
+      ["["] = {
+        name = "+prev",
+        ["<space>"] = "add space above"
+      },
       ["<leader>"] = {
         ["0"] = "which_key_ignore",
         ["1"] = "which_key_ignore",

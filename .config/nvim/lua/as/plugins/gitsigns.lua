@@ -22,7 +22,9 @@ return function()
           name = "+blame",
           l = "gitsigns: blame current line"
         }
-      }
+      },
+      ["[h"] = "go to next git hunk",
+      ["]h"] = "go to previous git hunk"
     }
   )
 
