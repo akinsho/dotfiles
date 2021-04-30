@@ -1,8 +1,6 @@
 as.telescope = {}
 
 return function()
-  local nnoremap = as.nnoremap
-  local command = as.command
   local telescope = require("telescope")
   local actions = require("telescope.actions")
   local sorters = require("telescope.sorters")
@@ -152,53 +150,28 @@ return function()
     telescope.extensions.fzf_writer.staged_grep()
   end
 
-  -- Find files using Telescope command-line sugar.
-  nnoremap("<C-P>", files)
-  command {"TelescopeFindFiles", files}
-
-  nnoremap("<leader>fa", "<cmd>Telescope<cr>")
-  nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>")
-
-  nnoremap("<leader>fd", dotfiles)
-  nnoremap("<leader>fn", nvim_config)
-  nnoremap("<leader>fo", buffers)
-
-  --- Git
-  nnoremap("<leader>fb", "<cmd>Telescope git_branches theme=get_dropdown<cr>")
-  nnoremap("<leader>fc", "<cmd>Telescope git_commits<cr>")
-
-  --- LSP
-  nnoremap("<leader>cd", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
-  nnoremap("<leader>fw", workspace_symbols, {silent = false})
-
-  --- Extensions
-  nnoremap("<leader>fh", frecency)
-  command {"TelescopeFrecent", frecency}
-  nnoremap("<leader>fg", websearch)
-  nnoremap("<leader>fr", "<cmd>Telescope reloader theme=get_dropdown<cr>")
-  nnoremap("<leader>fs", grep)
-  nnoremap("<leader>f?", "<cmd>Telescope help_tags<cr>")
-
   require("which-key").register(
     {
-      f = {
+      ["<C-P>"] = {files, "open project files"},
+      ["<leader>f"] = {
         name = "+telescope",
-        b = "branches",
-        c = "commits",
-        f = "files",
-        ["?"] = "help",
-        d = "dotfiles",
-        o = "buffers",
-        h = "history",
-        n = "nvim config",
-        r = "module reloader",
-        s = "grep",
-        w = "workspace symbols"
+        a = {"<cmd>Telescope<cr>", "builtins"},
+        b = {"<cmd>Telescope git_branches theme=get_dropdown<cr>", "branches"},
+        c = {"<cmd>Telescope git_commits<cr>", "commits"},
+        d = {dotfiles, "dotfiles"},
+        f = {"<cmd>Telescope find_files<cr>", "files"},
+        g = {websearch, "websearch"},
+        o = {buffers, "buffers"},
+        h = {frecency, "history"},
+        n = {nvim_config, "nvim config"},
+        r = {"<cmd>Telescope reloader theme=get_dropdown<cr>", "module reloader"},
+        s = {grep, "grep"},
+        w = {workspace_symbols, "workspace symbols", silent = false},
+        ["?"] = {"<cmd>Telescope help_tags<cr>", "help"}
       },
-      c = {
-        d = "telescope: workspace diagnostics"
+      ["<leader>c"] = {
+        d = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "telescope: workspace diagnostics"}
       }
-    },
-    {prefix = "<leader>"}
+    }
   )
 end

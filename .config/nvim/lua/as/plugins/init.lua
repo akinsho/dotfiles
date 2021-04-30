@@ -671,7 +671,10 @@ return require("packer").startup {
       "kdav5758/TrueZen.nvim",
       config = function()
         require("true-zen").setup {
-          left = {shown_relativenumber = true, shown_signcolumn = "yes:2"},
+          left = {
+            shown_relativenumber = true,
+            shown_signcolumn = "yes:2"
+          },
           integrations = {integration_tmux = true}
         }
         require("which-key").register(
@@ -684,23 +687,6 @@ return require("packer").startup {
           },
           {prefix = "<leader>"}
         )
-      end
-    }
-    use {
-      "edluffy/specs.nvim",
-      config = function()
-        require("specs").setup {
-          popup = {
-            delay_ms = 0, -- delay before popup displays
-            inc_ms = 15, -- time increments used for fade/resize effects
-            width = 40,
-            fader = require("specs").linear_fader,
-            resizer = require("specs").shrink_resizer
-          },
-          ignore_buftypes = {
-            nofile = true
-          }
-        }
       end
     }
     -- }}}
@@ -766,8 +752,7 @@ return require("packer").startup {
         local function toggle()
           lazygit:toggle()
         end
-        as.nnoremap("<leader>lg", toggle)
-        require("which-key").register({["<leader>lg"] = "toggleterm: toggle lazygit"})
+        require("which-key").register({["<leader>lg"] = {toggle, "toggleterm: toggle lazygit"}})
       end
     }
     -- TODO: could be lazy loaded if the color library was separate functionality
