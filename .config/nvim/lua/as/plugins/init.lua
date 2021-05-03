@@ -463,7 +463,12 @@ return require("packer").startup {
           {"LspTroubleText", {link = "ExplorerBackground"}},
           {"LspTroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
         }
-        as.nnoremap("<leader>ld", "<cmd>LspTroubleToggle<CR>")
+        require("which-key").register(
+          {
+            ["<leader>ld"] = {"<cmd>LspTroubleToggle<CR>", "lsp trouble: toggle"},
+            ["<leader>lr"] = {"<cmd>LspTroubleToggle lsp_references<cr>", "lsp trouble: references"}
+          }
+        )
       end
     }
     --}}}
@@ -537,6 +542,7 @@ return require("packer").startup {
     use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter"}
     use {
       "lewis6991/spellsitter.nvim",
+      opt = true,
       config = function()
         require("spellsitter").setup {hl = "SpellBad", captures = {"comment"}}
       end
