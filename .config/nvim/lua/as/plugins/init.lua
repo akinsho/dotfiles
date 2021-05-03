@@ -129,7 +129,11 @@ end
 --]]
 return require("packer").startup {
   function(use, use_rocks)
-    use_local {"wbthomason/packer.nvim", local_path = "contributing"}
+    use_local {
+      "wbthomason/packer.nvim",
+      branch = "refactor/decrease-main-require-cost",
+      local_path = "contributing"
+    }
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -544,7 +548,6 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Git {{{
     --------------------------------------------------------------------------------
-    use {"tpope/vim-fugitive", keys = {"<localleader>gS"}, config = conf("fugitive")}
     use {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
@@ -572,6 +575,7 @@ return require("packer").startup {
       requires = "plenary.nvim",
       config = conf("neogit")
     }
+    use {"sindrets/diffview.nvim", cmd = "DiffviewOpen"}
 
     use {
       "pwntester/octo.nvim",
