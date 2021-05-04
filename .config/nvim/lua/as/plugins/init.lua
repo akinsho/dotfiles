@@ -303,8 +303,6 @@ return require("packer").startup {
       }
     }
 
-    use "simrat39/symbols-outline.nvim"
-
     use_local {
       "akinsho/flutter-tools.nvim",
       ft = "dart",
