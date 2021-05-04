@@ -708,8 +708,8 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
-    use "Th3Whit3Wolf/one-nvim"
-    use {"romgrk/doom-one.vim", opt = true}
+    use "romgrk/doom-one.vim"
+    use {"Th3Whit3Wolf/one-nvim", opt = true}
     use {"bluz71/vim-nightfly-guicolors", opt = true}
     -- }}}
     ---------------------------------------------------------------------------------

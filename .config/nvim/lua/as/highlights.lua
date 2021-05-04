@@ -149,7 +149,7 @@ end
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
 vim.g.one_allow_italics = 1
-vim.cmd [[colorscheme one-nvim]]
+vim.cmd [[colorscheme doom-one]]
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights
@@ -283,9 +283,23 @@ function M.on_sidebar_enter()
   vim.cmd("setlocal winhighlight=" .. highlights)
 end
 
+function M.clear_hl(name)
+  if not name then
+    return
+  end
+  vim.cmd(fmt("highlight clear %s", name))
+end
+
+local function colorscheme_overrides()
+  if vim.g.colors_name == "doom-one" then
+    M.clear_hl("TSVariable")
+  end
+end
+
 function M.apply_user_highlights()
   plugin_highlights()
   general_overrides()
+  colorscheme_overrides()
   set_sidebar_highlight()
 end
 
