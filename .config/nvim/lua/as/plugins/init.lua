@@ -239,11 +239,10 @@ return require("packer").startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
-    use {"mfussenegger/nvim-dap", keys = {"<localleader>dc"}, config = conf("dap"), module = "dap"}
+    use {"mfussenegger/nvim-dap", config = conf("dap")}
     use {
       "rcarriga/nvim-dap-ui",
       requires = "nvim-dap",
-      after = "nvim-dap",
       config = function()
         require("dapui").setup()
       end
