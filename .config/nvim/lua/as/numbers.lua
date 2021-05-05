@@ -2,7 +2,6 @@
 -- 1. vim-relativity
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
 
-local fn = vim.fn
 local api = vim.api
 local M = {}
 
@@ -14,7 +13,7 @@ end
 local function is_blocked()
   local win_type = vim.fn.win_gettype()
 
-  if fn.buflisted(api.nvim_buf_get_name(0)) == 0 then
+  if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then
     return true
   end
 
@@ -23,10 +22,6 @@ local function is_blocked()
   end
 
   if win_type == "command" then
-    return true
-  end
-
-  if fn.exists("#goyo") > 0 then
     return true
   end
 
