@@ -453,6 +453,8 @@ return require("packer").startup {
     -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
     use {
       "folke/lsp-trouble.nvim",
+      keys = {"<leader>ld"},
+      cmd = {"LspTroubleToggle"},
       requires = "nvim-web-devicons",
       config = function()
         require("trouble").setup {auto_close = true, auto_preview = false}
