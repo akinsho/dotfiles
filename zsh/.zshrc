@@ -413,7 +413,9 @@ esac
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-exists() { [[ ! -z `which "$1"` ]]; }
+# ZSH only and most performant way to check existence of an executable
+# https://www.topbug.net/blog/2016/10/11/speed-test-check-the-existence-of-a-command-in-bash-and-zsh/
+exists() { (( $+commands[$1] )); }
 
 # TODO also need to check for the existence of ~/.fzf/
 if [ ! -f ~/.fzf.zsh ]; then
