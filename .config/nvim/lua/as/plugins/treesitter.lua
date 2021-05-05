@@ -68,7 +68,14 @@ return function()
     },
     rainbow = {
       enable = true,
-      disable = {"lua", "json"}
+      disable = {"lua", "json"},
+      colors = {
+        "royalblue3",
+        "darkorange3",
+        "seagreen3",
+        "firebrick",
+        "darkorchid3"
+      }
     },
     autopairs = {enable = true},
     query_linter = {

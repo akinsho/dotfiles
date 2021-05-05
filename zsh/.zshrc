@@ -28,7 +28,6 @@ compinit
 #           Plugins
 #-------------------------------------------------------------------------------
 # These should be source *BEFORE* setting up hooks
-
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
