@@ -413,7 +413,7 @@ esac
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-exists() { [ ! -z `which "$1"` ]; }
+exists() { [[ ! -z `which "$1"` ]]; }
 
 # TODO also need to check for the existence of ~/.fzf/
 if [ ! -f ~/.fzf.zsh ]; then
