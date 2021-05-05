@@ -130,8 +130,8 @@ end
 return require("packer").startup {
   function(use, use_rocks)
     use_local {
-      "wbthomason/packer.nvim",
-      branch = "refactor/decrease-main-require-cost",
+      "shadmansaleh/packer.nvim",
+      branch = "Fix/highlight_missing",
       local_path = "contributing"
     }
     --------------------------------------------------------------------------------
