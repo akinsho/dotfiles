@@ -14,6 +14,3 @@
 [submodule "zsh-completions"]
 	path = zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
-[submodule "zsh/plugins/enhancd"]
-	path = zsh/plugins/enhancd
-	url = git@github.com:b4b4r07/enhancd.git

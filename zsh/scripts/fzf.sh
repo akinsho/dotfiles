@@ -2,15 +2,6 @@
 #=============================================================================================================
 #                           FUNCTIONS
 #=============================================================================================================
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
-}
-
-pword(){
-  lpass show -c --password $(lpass ls  | fzf | awk '{print $(NF)}' | sed 's/\]//g')
-}
 # tm with no sessions open it will create a session called "new".
 # tm irc it will attach to the irc session (if it exists), else it will create it.
 # tm with one session open, it will attach to that session.

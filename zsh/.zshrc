@@ -29,7 +29,6 @@ compinit
 #-------------------------------------------------------------------------------
 # These should be source *BEFORE* setting up hooks
 
-source $PLUGIN_DIR/enhancd/init.sh
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
@@ -415,6 +414,8 @@ esac
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
+exists() { [ ! -z `which "$1"` ]; }
+
 # TODO also need to check for the existence of ~/.fzf/
 if [ ! -f ~/.fzf.zsh ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -422,8 +423,17 @@ if [ ! -f ~/.fzf.zsh ]; then
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-eval "$(hub alias -s)" # Aliases 'hub' to git
-eval $(thefuck --alias)
+if exists hub; then
+  eval "$(hub alias -s)" # Aliases 'hub' to git
+fi
+
+if exists thefuck; then
+  eval $(thefuck --alias)
+fi
+
+if exists zoxide; then
+  eval "$(zoxide init zsh)"
+fi
 
 #-------------------------------------------------------------------------------
 #               Mappings
