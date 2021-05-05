@@ -7,16 +7,16 @@ return function()
     ["lib/*.dart"] = {
       ["lib/screens/*.dart"] = {
         alternate = "lib/view_models/{}_view_model.dart",
-        ["type"] = "view"
+        type = "view"
       },
       ["lib/view_models/*_view_model.dart"] = {
         alternate = {"lib/screens/{}.dart", "lib/widgets/{}.dart"},
-        ["type"] = "model",
+        type = "model",
         template = {"class {camelcase|capitalize}ViewModel extends BaseViewModel {", "}"}
       },
       ["test/view_models/*_view_model_test.dart"] = {
         alternate = "lib/view_models/{}_view_model.dart",
-        ["type"] = "test",
+        type = "test",
         template = {
           "import 'package:test/test.dart';",
           "",
@@ -29,7 +29,7 @@ return function()
       },
       ["test/services/*_test.dart"] = {
         alternate = "lib/services/{}.dart",
-        ["type"] = "test",
+        type = "test",
         template = {
           "import 'package:test/test.dart';",
           "",
@@ -42,7 +42,7 @@ return function()
       },
       ["test/widget/*_test.dart"] = {
         alternate = "lib/screens/{}.dart",
-        ["type"] = "test",
+        type = "test",
         template = {
           "import 'package:test/test.dart';",
           "",
