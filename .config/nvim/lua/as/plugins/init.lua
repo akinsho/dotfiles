@@ -130,8 +130,7 @@ end
 return require("packer").startup {
   function(use, use_rocks)
     use_local {
-      "shadmansaleh/packer.nvim",
-      branch = "Fix/highlight_missing",
+      "wbthomason/packer.nvim",
       local_path = "contributing"
     }
     --------------------------------------------------------------------------------
@@ -350,7 +349,7 @@ return require("packer").startup {
       config = function()
         require("nvim-autopairs").setup {
           close_triple_quotes = true,
-          check_ts = true
+          check_ts = false
         }
       end
     }
@@ -776,6 +775,7 @@ return require("packer").startup {
     use_local {
       "akinsho/nvim-bufferline.lua",
       config = conf("nvim-bufferline"),
+      branch = "feature/sidebar-offset",
       local_path = "personal",
       requires = "nvim-web-devicons"
     }

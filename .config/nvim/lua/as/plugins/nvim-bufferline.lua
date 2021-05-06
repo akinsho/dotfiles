@@ -44,7 +44,11 @@ return function()
       separator_style = "slant",
       diagnostics = "nvim_lsp",
       diagnostics_indicator = diagnostics_indicator,
-      custom_filter = custom_filter
+      custom_filter = custom_filter,
+      panels = {
+        {filetype = "NvimTree", text = "File Explorer", highlight = "Directory"},
+        {filetype = "flutterToolsOutline", text = "Flutter Outline", highlight = "Directory"}
+      }
     }
   }
 
