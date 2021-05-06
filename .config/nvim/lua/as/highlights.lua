@@ -256,6 +256,7 @@ local function set_sidebar_highlight()
   local st_color = M.darken_color(M.hl_value("Visual", "bg"), -20)
   local hls = {
     {"PanelBackground", {guibg = bg_color}},
+    {"PanelHeading", {guibg = bg_color, gui = "bold"}},
     {"PanelVertSplit", {guifg = split_color, guibg = bg_color}},
     {"PanelStNC", {guibg = st_color, cterm = "italic"}},
     {"PanelSt", {guibg = st_color}}
