@@ -28,25 +28,13 @@ return function()
 
   require("which-key").register(
     {
-      ["<leader>rn"] = {"<cmd>lua require('lspsaga.rename').rename()<CR>", "lsp: rename"},
-      ["<leader>ca"] = {
-        "<cmd>lua require('lspsaga.codeaction').code_action()<CR>",
-        "lsp: code action"
-      },
-      ["gp"] = {
-        "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>",
-        "lsp: preview definition"
-      },
-      ["gh"] = {"<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", "lsp: finder"},
+      ["<leader>rn"] = {require("lspsaga.rename").rename, "lsp: rename"},
+      ["<leader>ca"] = {require("lspsaga.codeaction").code_action, "lsp: code action"},
+      ["gp"] = {require("lspsaga.provider").preview_definition, "lsp: preview definition"},
+      ["gh"] = {require("lspsaga.provider").lsp_finder, "lsp: finder"},
       -- jump diagnostic
-      ["]c"] = {
-        "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>",
-        "lsp: previous diagnostic"
-      },
-      ["[c"] = {
-        "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>",
-        "lsp: next diagnostic"
-      }
+      ["]c"] = {require("lspsaga.diagnostic").lsp_jump_diagnostic_prev, "lsp: previous diagnostic"},
+      ["[c"] = {require("lspsaga.diagnostic").lsp_jump_diagnostic_next, "lsp: next diagnostic"}
     }
   )
 

@@ -57,9 +57,9 @@ local function setup_mappings(client, bufnr)
   -- check that there are no existing mappings before assigning these
   local nnoremap, vnoremap, opts = as.nnoremap, as.vnoremap, {buffer = bufnr, check_existing = true}
 
-  nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  nnoremap("gd", vim.lsp.buf.definition, opts)
   if client.resolved_capabilities.implementation then
-    nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+    nnoremap("gi", vim.lsp.buf.implementation, opts)
   end
 
   if client.resolved_capabilities.type_definition then
