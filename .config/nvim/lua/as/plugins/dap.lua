@@ -1,10 +1,9 @@
 return function()
   local vnoremap = as.vnoremap
+  local dap = require("dap")
 
   vim.fn.sign_define("DapBreakpoint", {text = "🛑", texthl = "", linehl = "", numhl = ""})
   vim.fn.sign_define("DapStopped", {text = "🟢", texthl = "", linehl = "", numhl = ""})
-
-  local dap = require("dap")
 
   dap.configurations.lua = {
     {
@@ -30,23 +29,25 @@ return function()
     callback({type = "server", host = config.host, port = config.port})
   end
 
+  local function set_breakpoint()
+    dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+  end
+
   vnoremap("<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
   require("which-key").register(
     {
       d = {
         name = "+debugger",
-        ["?"] = {[[<cmd>lua require'dap.ui.variables'.scopes()<CR>]], "hover: variables scopes"},
-        b = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "toggle breakpoint"},
-        B = {
-          [[<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]],
-          "set breakpoint"
-        },
-        c = {[[<cmd>lua require'dap'.continue()<CR>]], "continue or start debugging"},
-        e = {[[<cmd>lua require'dap'.step_out()<CR>]], "step out"},
-        i = {[[<cmd>lua require'dap'.step_into()<CR>]], "step into"},
-        o = {[[<cmd>lua require'dap'.step_over()<CR>]], "step over"},
-        l = {[[<cmd>lua require'dap'.repl.run_last()<CR>]], "REPL: run last"},
-        r = {[[<cmd>lua require'dap'.repl.open()<CR>]], "REPL: open"}
+        ["?"] = {require("dap.ui.variables").scopes, "hover: variables scopes"},
+        b = {dap.toggle_breakpoint, "toggle breakpoint"},
+        B = {set_breakpoint, "set breakpoint"},
+        c = {dap.continue, "continue or start debugging"},
+        e = {dap.step_out, "step out"},
+        i = {dap.step_into, "step into"},
+        o = {dap.step_over, "step over"},
+        l = {dap.repl.run_last, "REPL: run last"},
+        -- NOTE: the window options can be set directly in this function
+        r = {dap.repl.toggle, "REPL: toggle"}
       }
     },
     {prefix = "<localleader>"}
