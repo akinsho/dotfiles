@@ -77,7 +77,8 @@ local exceptions = {
     ["coc-explorer"] = "",
     NvimTree = "פּ",
     toggleterm = " ",
-    calendar = ""
+    calendar = "",
+    ["dap-repl"] = ""
   },
   names = {
     minimap = "minimap",
@@ -98,7 +99,8 @@ local exceptions = {
     undotree = "UndoTree",
     ["coc-explorer"] = "Coc Explorer",
     NvimTree = "Nvim Tree",
-    toggleterm = get_toggleterm_name
+    toggleterm = get_toggleterm_name,
+    ["dap-repl"] = "Debugger REPL"
   }
 }
 
