@@ -6,6 +6,5 @@ wincmd J
 resize 12
 setlocal winfixheight
 setlocal nobuflisted
-setlocal winhighlight=Normal:ExplorerBackground,EndOfBuffer:ExplorerBackground,SignColumn:ExplorerBackground
 " Add autocompletion
 lua require('dap.ext.autocompl').attach()

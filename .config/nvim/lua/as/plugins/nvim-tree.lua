@@ -32,11 +32,11 @@ return function()
   function as.tree.set_highlights()
     require("as.highlights").all {
       {"NvimTreeIndentMarker", {link = "Comment"}},
-      {"NvimTreeNormal", {link = "ExplorerBackground"}},
-      {"NvimTreeEndOfBuffer", {link = "ExplorerBackground"}},
-      {"NvimTreeVertSplit", {link = "ExplorerVertSplit"}},
-      {"NvimTreeStatusLine", {link = "ExplorerSt"}},
-      {"NvimTreeStatusLineNC", {link = "ExplorerStNC"}},
+      {"NvimTreeNormal", {link = "PanelBackground"}},
+      {"NvimTreeEndOfBuffer", {link = "PanelBackground"}},
+      {"NvimTreeVertSplit", {link = "PanelVertSplit"}},
+      {"NvimTreeStatusLine", {link = "PanelSt"}},
+      {"NvimTreeStatusLineNC", {link = "PanelStNC"}},
       {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}}
     }
   end

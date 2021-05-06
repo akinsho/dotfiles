@@ -255,28 +255,28 @@ local function set_sidebar_highlight()
   local bg_color = M.darken_color(normal_bg, -8)
   local st_color = M.darken_color(M.hl_value("Visual", "bg"), -20)
   local hls = {
-    {"ExplorerBackground", {guibg = bg_color}},
-    {"ExplorerVertSplit", {guifg = split_color, guibg = bg_color}},
-    {"ExplorerStNC", {guibg = st_color, cterm = "italic"}},
-    {"ExplorerSt", {guibg = st_color}}
+    {"PanelBackground", {guibg = bg_color}},
+    {"PanelVertSplit", {guifg = split_color, guibg = bg_color}},
+    {"PanelStNC", {guibg = st_color, cterm = "italic"}},
+    {"PanelSt", {guibg = st_color}}
   }
   for _, grp in ipairs(hls) do
     M.highlight(unpack(grp))
   end
 end
 
-local sidebar_fts = {"NvimTree"}
+local sidebar_fts = {"NvimTree", "dap-repl"}
 
 function M.on_sidebar_enter()
   local highlights =
     table.concat(
     {
-      "Normal:ExplorerBackground",
-      "EndOfBuffer:ExplorerBackground",
-      "StatusLine:ExplorerSt",
-      "StatusLineNC:ExplorerStNC",
-      "SignColumn:ExplorerBackground",
-      "VertSplit:ExplorerVertSplit"
+      "Normal:PanelBackground",
+      "EndOfBuffer:PanelBackground",
+      "StatusLine:PanelSt",
+      "StatusLineNC:PanelStNC",
+      "SignColumn:PanelBackground",
+      "VertSplit:PanelVertSplit"
     },
     ","
   )
@@ -294,7 +294,7 @@ local function colorscheme_overrides()
   if vim.g.colors_name == "doom-one" then
     M.all {
       {"TSVariable", {guifg = "NONE"}},
-      {"WhichKeyFloat", {link = "ExplorerBackground"}}
+      {"WhichKeyFloat", {link = "PanelBackground"}}
     }
   end
 end
@@ -307,7 +307,7 @@ function M.apply_user_highlights()
 end
 
 as.augroup(
-  "ExplorerHighlights",
+  "PanelHighlights",
   {
     {
       events = {"VimEnter", "ColorScheme"},

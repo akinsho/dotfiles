@@ -458,8 +458,8 @@ return require("packer").startup {
       config = function()
         require("trouble").setup {auto_close = true, auto_preview = false}
         require("as.highlights").all {
-          {"LspTroubleNormal", {link = "ExplorerBackground"}},
-          {"LspTroubleText", {link = "ExplorerBackground"}},
+          {"LspTroubleNormal", {link = "PanelBackground"}},
+          {"LspTroubleText", {link = "PanelBackground"}},
           {"LspTroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
         }
         require("which-key").register(
