@@ -15,7 +15,8 @@ return function()
       on_attach = as.lsp and as.lsp.on_attach,
       capabilities = require("lsp-status").capabilities or {},
       settings = {
-        showTodos = true
+        showTodos = true,
+        completeFunctionCalls = true,
       }
     }
   }
