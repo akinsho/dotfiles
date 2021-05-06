@@ -392,7 +392,7 @@ return require("packer").startup {
           let test#strategy = "neovim"
           let test#neovim#term_position = "vert botright"
         ]]
-        require("whick-key").register(
+        require("which-key").register(
           {
             t = {
               name = "+vim-test",
