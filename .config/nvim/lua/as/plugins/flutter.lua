@@ -16,7 +16,7 @@ return function()
       capabilities = require("lsp-status").capabilities or {},
       settings = {
         showTodos = true,
-        completeFunctionCalls = true,
+        completeFunctionCalls = true
       }
     }
   }
