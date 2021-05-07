@@ -441,8 +441,6 @@ return require("packer").startup {
     --- TODO use_local does not work for this plugin, find out why
     use {
       "kyazdani42/nvim-tree.lua",
-      keys = {"<c-n>"},
-      cmd = {"NvimTreeToggle", "NvimTreeOpen"},
       config = conf("nvim-tree"),
       local_path = "contributing",
       requires = "nvim-web-devicons"

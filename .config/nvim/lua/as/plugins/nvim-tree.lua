@@ -47,19 +47,13 @@ return function()
       {
         events = {"ColorScheme"},
         targets = {"*"},
-        command = "lua as.tree.set_highlights()"
+        command = as.tree.set_highlights
       },
       {
         events = {"FileType"},
         targets = {"NvimTree"},
-        command = "lua as.tree.set_highlights()"
+        command = as.tree.set_highlights
       }
     }
-  )
-  -- This is required to allow lazy loading to work correctly.
-  require("nvim-tree.events").on_nvim_tree_ready(
-    function()
-      vim.cmd("NvimTreeRefresh")
-    end
   )
 end
