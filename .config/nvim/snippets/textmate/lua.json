@@ -10,7 +10,7 @@
   "describe": {
     "prefix": "describe",
     "body": [
-      "decribe('${1:Title}', function()",
+      "describe('${1:Title}', function()",
         "\t${2}",
         "end)"
     ]

@@ -45,7 +45,7 @@ return function()
       diagnostics = "nvim_lsp",
       diagnostics_indicator = diagnostics_indicator,
       custom_filter = custom_filter,
-      panels = {
+      offsets = {
         {filetype = "NvimTree", text = " File Explorer", highlight = "PanelHeading"},
         {filetype = "flutterToolsOutline", text = "Flutter Outline"}
       }
