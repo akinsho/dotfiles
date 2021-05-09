@@ -180,6 +180,7 @@ local function general_overrides()
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
     {"Todo", {guifg = "Red", guibg = "NONE", gui = "bold"}},
+    {"mkdLineBreak", {link = "NONE", force = true}},
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
@@ -295,7 +296,7 @@ local function colorscheme_overrides()
   if vim.g.colors_name == "doom-one" then
     M.all {
       {"TSVariable", {guifg = "NONE"}},
-      {"WhichKeyFloat", {link = "PanelBackground"}}
+      {"WhichKeyFloat", {link = "PanelBackground"}},
     }
   end
 end
