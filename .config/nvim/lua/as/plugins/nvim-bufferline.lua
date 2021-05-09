@@ -46,8 +46,8 @@ return function()
       diagnostics_indicator = diagnostics_indicator,
       custom_filter = custom_filter,
       offsets = {
-        {filetype = "NvimTree", text = " File Explorer", highlight = "PanelHeading"},
-        {filetype = "flutterToolsOutline", text = "Flutter Outline"}
+        {filetype = "NvimTree", text = " File Explorer", highlight = "PanelHeading", padding = 1},
+        {filetype = "flutterToolsOutline"}
       }
     }
   }
