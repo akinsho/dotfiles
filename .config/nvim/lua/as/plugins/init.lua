@@ -769,11 +769,9 @@ return require("packer").startup {
         require("which-key").register({["<leader>lg"] = {toggle, "toggleterm: toggle lazygit"}})
       end
     }
-    -- TODO: could be lazy loaded if the color library was separate functionality
     use_local {
       "akinsho/nvim-bufferline.lua",
       config = conf("nvim-bufferline"),
-      branch = "feature/sidebar-offset",
       local_path = "personal",
       requires = "nvim-web-devicons"
     }
