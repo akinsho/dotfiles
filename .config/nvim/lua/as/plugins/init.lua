@@ -404,7 +404,7 @@ return require("packer").startup {
         )
       end
     }
-    use {"folke/which-key.nvim", config = conf("whichkey"), commit = "167661"}
+    use {"folke/which-key.nvim", config = conf("whichkey")}
     use {
       "iamcco/markdown-preview.nvim",
       run = ":call mkdp#util#install()",
