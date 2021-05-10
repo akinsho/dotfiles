@@ -449,15 +449,13 @@ return require("packer").startup {
       keys = {"<leader>ld"},
       cmd = {"LspTroubleToggle"},
       requires = "nvim-web-devicons",
-      setup = function()
+      config = function()
         require("which-key").register(
           {
             ["<leader>ld"] = {"<cmd>LspTroubleToggle<CR>", "lsp trouble: toggle"},
             ["<leader>lr"] = {"<cmd>LspTroubleToggle lsp_references<cr>", "lsp trouble: references"}
           }
         )
-      end,
-      config = function()
         local hl = require("as.highlights")
         hl.all {
           {"LspTroubleNormal", {link = "PanelBackground"}},
@@ -554,7 +552,7 @@ return require("packer").startup {
     use {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
-      setup = function ()
+      setup = function()
         require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
       end,
       config = function()
