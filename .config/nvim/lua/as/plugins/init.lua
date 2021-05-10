@@ -129,10 +129,7 @@ end
 --]]
 return require("packer").startup {
   function(use, use_rocks)
-    use_local {
-      "wbthomason/packer.nvim",
-      local_path = "contributing"
-    }
+    use_local {"wbthomason/packer.nvim", local_path = "contributing"}
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -452,19 +449,23 @@ return require("packer").startup {
       keys = {"<leader>ld"},
       cmd = {"LspTroubleToggle"},
       requires = "nvim-web-devicons",
-      config = function()
-        require("trouble").setup {auto_close = true, auto_preview = false}
-        require("as.highlights").all {
-          {"LspTroubleNormal", {link = "PanelBackground"}},
-          {"LspTroubleText", {link = "PanelBackground"}},
-          {"LspTroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
-        }
+      setup = function()
         require("which-key").register(
           {
             ["<leader>ld"] = {"<cmd>LspTroubleToggle<CR>", "lsp trouble: toggle"},
             ["<leader>lr"] = {"<cmd>LspTroubleToggle lsp_references<cr>", "lsp trouble: references"}
           }
         )
+      end,
+      config = function()
+        local hl = require("as.highlights")
+        hl.all {
+          {"LspTroubleNormal", {link = "PanelBackground"}},
+          {"LspTroubleText", {link = "PanelBackground"}},
+          {"LspTroubleIndent", {link = "PanelVertSplit"}},
+          {"LspTroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
+        }
+        require("trouble").setup {auto_close = true, auto_preview = false}
       end
     }
     --}}}
@@ -553,9 +554,11 @@ return require("packer").startup {
     use {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
+      setup = function ()
+        require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
+      end,
       config = function()
         require("gitlinker").setup {opts = {mappings = "<localleader>gu"}}
-        require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
       end
     }
     use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}
