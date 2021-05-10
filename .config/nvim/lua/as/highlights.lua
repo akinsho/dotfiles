@@ -296,7 +296,7 @@ local function colorscheme_overrides()
   if vim.g.colors_name == "doom-one" then
     M.all {
       {"TSVariable", {guifg = "NONE"}},
-      {"WhichKeyFloat", {link = "PanelBackground"}},
+      {"WhichKeyFloat", {link = "PanelBackground"}}
     }
   end
 end
