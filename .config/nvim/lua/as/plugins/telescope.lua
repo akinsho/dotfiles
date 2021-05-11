@@ -17,7 +17,7 @@ return function()
         }
       },
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
-      -- layout_strategy = "flex",
+      layout_strategy = "flex",
       winblend = 7
     },
     extensions = {
@@ -49,7 +49,7 @@ return function()
       shorten_path = false,
       cwd = vim.g.dotfiles,
       hidden = true,
-      layout_strategy = "horizontal",
+      layout_strategy = "flex",
       file_ignore_patterns = {".git/.*", "dotbot/.*"},
       layout_config = {
         preview_width = 0.65
@@ -63,7 +63,7 @@ return function()
       shorten_path = false,
       cwd = vim.g.vim_dir,
       hidden = true,
-      layout_strategy = "horizontal",
+      layout_strategy = "flex",
       file_ignore_patterns = {".git/.*", "dotbot/.*"},
       layout_config = {
         preview_width = 0.65
