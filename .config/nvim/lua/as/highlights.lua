@@ -191,7 +191,6 @@ local function general_overrides()
     {"FoldColumn", {guibg = "background"}},
     {"Folded", {link = "Comment", force = true}},
     {"TermCursor", {ctermfg = "green", guifg = "royalblue"}},
-    {"MatchParen", {gui = "bold", guifg = "LightGreen", guibg = "NONE"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
     {"Error", {link = "WarningMsg", force = true}},
     {"ErrorMsg", {guibg = "NONE"}}, -- set the error message background to match the msg area
