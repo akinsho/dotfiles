@@ -6,5 +6,6 @@ require("as.statusline")
 require("as.numbers")
 require("as.mappings")
 require("as.folds")
-require("as.localrc").setup("VimEnter")
+require("as.dev").setup(false) -- Disabled
 require("as.whitespace").setup()
+require("as.localrc").setup("VimEnter")
