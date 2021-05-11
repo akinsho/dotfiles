@@ -443,25 +443,26 @@ return require("packer").startup {
       requires = "nvim-web-devicons"
     }
 
-    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
+    -- FIXME: If nvim-web-devicons is specified before
+    -- it is used this errors that it is used twice
     use {
-      "folke/lsp-trouble.nvim",
+      "folke/trouble.nvim",
       keys = {"<leader>ld"},
-      cmd = {"LspTroubleToggle"},
+      cmd = {"TroubleToggle"},
       requires = "nvim-web-devicons",
       config = function()
         require("which-key").register(
           {
-            ["<leader>ld"] = {"<cmd>LspTroubleToggle<CR>", "lsp trouble: toggle"},
-            ["<leader>lr"] = {"<cmd>LspTroubleToggle lsp_references<cr>", "lsp trouble: references"}
+            ["<leader>ld"] = {"<cmd>TroubleToggle<CR>", "trouble: toggle"},
+            ["<leader>lr"] = {"<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references"}
           }
         )
         local hl = require("as.highlights")
         hl.all {
-          {"LspTroubleNormal", {link = "PanelBackground"}},
-          {"LspTroubleText", {link = "PanelBackground"}},
-          {"LspTroubleIndent", {link = "PanelVertSplit"}},
-          {"LspTroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
+          {"TroubleNormal", {link = "PanelBackground"}},
+          {"TroubleText", {link = "PanelBackground"}},
+          {"TroubleIndent", {link = "PanelVertSplit"}},
+          {"TroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
         }
         require("trouble").setup {auto_close = true, auto_preview = false}
       end

@@ -93,7 +93,7 @@ vim.g.number_filetype_exclusions = {
   "lsputil_locations_list",
   "lsputil_symbols_list",
   "himalaya",
-  "LspTrouble"
+  "Trouble"
 }
 
 vim.g.number_buftype_exclusions = {
