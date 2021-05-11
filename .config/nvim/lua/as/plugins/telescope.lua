@@ -3,7 +3,6 @@ as.telescope = {}
 return function()
   local telescope = require("telescope")
   local actions = require("telescope.actions")
-  local sorters = require("telescope.sorters")
   local builtins = require("telescope.builtin")
   local themes = require("telescope.themes")
   local action_state = require("telescope.actions.state")
@@ -18,8 +17,6 @@ return function()
         }
       },
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
-      file_sorter = sorters.get_fzy_sorter,
-      generic_sorter = sorters.get_fzy_sorter,
       -- layout_strategy = "flex",
       winblend = 7
     },
@@ -43,7 +40,8 @@ return function()
     }
   }
 
-  require("telescope").load_extension("fzf")
+  telescope.load_extension("fzf")
+  telescope.load_extension("arecibo")
 
   local function dotfiles()
     builtins.find_files {

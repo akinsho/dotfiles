@@ -163,7 +163,6 @@ return require("packer").startup {
           requires = "tami5/sql.nvim",
           after = "telescope.nvim"
         },
-        {"nvim-telescope/telescope-fzy-native.nvim", after = "telescope.nvim"},
         {
           "nvim-telescope/telescope-arecibo.nvim",
           rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"}
@@ -500,9 +499,10 @@ return require("packer").startup {
     use {
       "tpope/vim-abolish",
       config = function()
-        as.nnoremap("<localleader>[", ":S/<C-R><C-W>//<LEFT>")
-        as.nnoremap("<localleader>]", ":%S/<C-r><C-w>//c<left><left>")
-        as.vnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]])
+        local opts = {silent = false}
+        as.nnoremap("<localleader>[", ":S/<C-R><C-W>//<LEFT>", opts)
+        as.nnoremap("<localleader>]", ":%S/<C-r><C-w>//c<left><left>", opts)
+        as.vnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
       end
     }
     -- sets searchable path for filetypes like go so 'gf' works
@@ -574,7 +574,6 @@ return require("packer").startup {
     use {
       "TimUntersberger/neogit",
       cmd = "Neogit",
-      branch = "split-diff",
       keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
       requires = "plenary.nvim",
       config = conf("neogit")
@@ -597,10 +596,24 @@ return require("packer").startup {
       "AndrewRadev/dsf.vim",
       config = function()
         vim.g.dsf_no_mappings = 1
-        as.nmap("dsf", "<Plug>DsfDelete")
-        as.nmap("csf", "<Plug>DsfChange")
-        as.nmap("dsnf", "<Plug>DsfNextDelete")
-        as.nmap("csnf", "<Plug>DsfNextChange")
+        require("which-key").register(
+          {
+            d = {
+              name = "+dsf: function text object",
+              s = {
+                f = {"<Plug>DsfDelete", "delete surrounding function"},
+                nf = {"<Plug>DsfNextDelete", "delete next surrounding function"}
+              }
+            },
+            c = {
+              name = "+dsf: function text object",
+              s = {
+                f = {"<Plug>DsfChange", "change surrounding function"},
+                nf = {"<Plug>DsfNextChange", "change next surrounding function"}
+              }
+            }
+          }
+        )
       end
     }
     use {
@@ -676,32 +689,6 @@ return require("packer").startup {
         -- remove h,j,k,l from hops list of keys
         hop.setup {keys = "etovxqpdygfbzcisuran"}
         as.nnoremap("s", hop.hint_char1)
-      end
-    }
-    -- }}}
-    -----------------------------------------------------------------------------//
-    -- UI
-    -----------------------------------------------------------------------------//
-    use {
-      "kdav5758/TrueZen.nvim",
-      config = function()
-        require("true-zen").setup {
-          left = {
-            shown_relativenumber = true,
-            shown_signcolumn = "yes:2"
-          },
-          integrations = {integration_tmux = true}
-        }
-        require("which-key").register(
-          {
-            z = {
-              name = "+zen mode",
-              m = {"<cmd>TZMinimalist<CR>", "toggle minimalist"},
-              a = {"<cmd>TZAtaraxis<CR>", "toggle ataraxis"}
-            }
-          },
-          {prefix = "<leader>"}
-        )
       end
     }
     -- }}}
@@ -782,7 +769,7 @@ return require("packer").startup {
   end,
   config = {
     display = {
-      open_cmd = "silent topleft 65vnew [packer]"
+      open_cmd = "silent topleft 65vnew \\[packer\\]"
     },
     profile = {
       enable = true,
