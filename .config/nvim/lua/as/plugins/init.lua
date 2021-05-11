@@ -453,7 +453,7 @@ return require("packer").startup {
       config = function()
         require("which-key").register(
           {
-            ["<leader>ld"] = {"<cmd>TroubleToggle<CR>", "trouble: toggle"},
+            ["<leader>ld"] = {"<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle"},
             ["<leader>lr"] = {"<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references"}
           }
         )
