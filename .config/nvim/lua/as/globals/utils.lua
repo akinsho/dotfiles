@@ -91,12 +91,30 @@ function as.profile(filename)
   end
 end
 
+---check if a certain feature/version/commit exists in nvim
+---@param feature string
+---@return boolean
 function as.has(feature)
   return vim.fn.has(feature) > 0
 end
 
-local function get_defaults(mode)
-  return {noremap = true, silent = not mode == "c"}
+---Check if directory exists using vim's isdirectory function
+---@param path string
+---@return boolean
+function as.is_dir(path)
+  return fn.isdirectory(path) > 0
+end
+
+function as.is_empty(item)
+  if not item then
+    return true
+  end
+  local item_type = type(item)
+  if item_type == "string" then
+    return item == ""
+  elseif item_type == "table" then
+    return vim.tbl_isempty(item)
+  end
 end
 
 ---check if a mapping already exists
@@ -308,17 +326,5 @@ function as.notify(lines, opts)
       end,
       timeout
     )
-  end
-end
-
-function as.is_empty(item)
-  if not item then
-    return true
-  end
-  local item_type = type(item)
-  if item_type == "string" then
-    return item == ""
-  elseif item_type == "table" then
-    return vim.tbl_isempty(item)
   end
 end

@@ -1,5 +1,6 @@
 as.lsp = {}
 local fn = vim.fn
+local fmt = string.format
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -173,14 +174,14 @@ end
 local function get_lua_runtime()
   local result = {}
   for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-    local lua_path = path .. "/lua/"
-    if fn.isdirectory(lua_path) > 0 then
+    local lua_path = fmt('%s/lua', path)
+    if as.is_dir(lua_path) then
       result[lua_path] = true
     end
   end
 
   -- This loads the `lua` files from nvim into the runtime.
-  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  result[fn.expand("$VIMRUNTIME/lua")] = true
   return result
 end
 
