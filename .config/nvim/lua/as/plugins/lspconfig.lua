@@ -188,6 +188,11 @@ end
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
   lua = function()
+    --- NOTE: This is the secret sauce that allows reading requires and variables
+    --- between different modules in the nvim lua context
+    local path = vim.split(package.path, ";")
+    table.insert(path, "lua/?.lua")
+    table.insert(path, "lua/?/init.lua")
     return {
       settings = {
         Lua = {
@@ -197,7 +202,7 @@ as.lsp.servers = {
           completion = {keywordSnippet = "Both"},
           runtime = {
             version = "LuaJIT",
-            path = vim.split(package.path, ";")
+            path = path
           },
           workspace = {
             maxPreload = 2000,
