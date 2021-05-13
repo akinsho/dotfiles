@@ -383,10 +383,7 @@ return require("packer").startup {
       cmd = {"TestFile", "TestNearest", "TestSuite"},
       keys = {"<localleader>tf", "<localleader>tn", "<localleader>ts"},
       config = function()
-        vim.cmd [[
-          let test#strategy = "neovim"
-          let test#neovim#term_position = "vert botright"
-        ]]
+        vim.cmd [[let test#neovim#term_position = "vert botright"]]
         require("which-key").register(
           {
             t = {
