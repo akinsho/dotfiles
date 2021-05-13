@@ -192,6 +192,7 @@ local function general_overrides()
     {"Folded", {link = "Comment", force = true}},
     {"TermCursor", {ctermfg = "green", guifg = "royalblue"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
+    {"Substitute", {guifg = comment_fg, guibg = "NONE", gui = "strikethrough,bold"}},
     {"Error", {link = "WarningMsg", force = true}},
     {"ErrorMsg", {guibg = "NONE"}}, -- set the error message background to match the msg area
     -- Add undercurl to existing spellbad highlight
