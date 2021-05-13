@@ -52,6 +52,12 @@ return function()
           highlight = "PanelHeading",
           padding = 1
         },
+        {
+          filetype = "DiffviewFiles",
+          text = "Diff View",
+          highlight = "PanelHeading",
+          padding = 1
+        },
         {filetype = "flutterToolsOutline"}
       }
     }

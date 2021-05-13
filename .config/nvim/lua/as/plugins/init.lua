@@ -575,7 +575,25 @@ return require("packer").startup {
       requires = "plenary.nvim",
       config = conf("neogit")
     }
-    use {"sindrets/diffview.nvim", cmd = "DiffviewOpen"}
+    use {
+      "sindrets/diffview.nvim",
+      cmd = "DiffviewOpen",
+      keys = "<localleader>gd",
+      config = function()
+        require("which-key").register(
+          {gd = {"<Cmd>DiffviewOpen<CR>", "diff ref"}},
+          {prefix = "<localleader>"}
+        )
+        require("diffview").setup(
+          {
+            key_bindings = {
+              file_panel = {q = "<Cmd>DiffviewClose<CR>"},
+              view = {q = "<Cmd>DiffviewClose<CR>"}
+            }
+          }
+        )
+      end
+    }
 
     use {
       "pwntester/octo.nvim",

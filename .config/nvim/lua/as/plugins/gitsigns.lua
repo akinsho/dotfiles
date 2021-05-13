@@ -12,11 +12,11 @@ return function()
         b = "blame current line"
       },
       ["<localleader>g"] = {
-        name = "+gitsigns",
-        w = {"<cmd>Gitsigns stage_buffer<CR>", "stage entire buffer"},
+        name = "+git",
+        w = {"<cmd>Gitsigns stage_buffer<CR>", "gitsigns: stage entire buffer"},
         r = {
           name = "+reset",
-          e = {"<cmd>Gitsigns reset_buffer<CR>", "reset entire buffer"}
+          e = {"<cmd>Gitsigns reset_buffer<CR>", "gitsigns: reset entire buffer"}
         },
         b = {
           name = "+blame",
