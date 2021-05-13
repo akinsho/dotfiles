@@ -191,25 +191,36 @@ as.lsp.servers = {
   lua = function()
     --- NOTE: This is the secret sauce that allows reading requires and variables
     --- between different modules in the nvim lua context
+    --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     local path = vim.split(package.path, ";")
     table.insert(path, "lua/?.lua")
     table.insert(path, "lua/?/init.lua")
+    local library = get_lua_runtime()
     return {
+      -- delete root from workspace to make sure we don't trigger duplicate warnings
+      on_new_config = function(config, root)
+        local libs = vim.deepcopy(library)
+        libs[root] = nil
+        config.settings.Lua.workspace.library = libs
+        return config
+      end,
       settings = {
         Lua = {
           diagnostics = {
             globals = {"vim", "describe", "it", "before_each", "after_each", "pending"}
           },
-          completion = {keywordSnippet = "Both"},
+          completion = {keywordSnippet = "Both", callSnippet = "Both"},
           runtime = {
             version = "LuaJIT",
             path = path
           },
           workspace = {
             maxPreload = 2000,
-            preloadFileSize = 1000,
-            library = get_lua_runtime()
-          }
+            preloadFileSize = 50000,
+            library = library
+          },
+          -- Do not send telemetry data containing a randomized but unique identifier
+          telemetry = {enable = false}
         }
       }
     }
