@@ -7,6 +7,10 @@ wk.register({
   d = {
     name = "+flutter",
     d = {"<Cmd>FlutterDevices<CR>", "flutter: devices"},
+    b = {
+        "<cmd>TermExec cmd='flutter pub run build_runner build --delete-conflicting-outputs'<CR>",
+        "flutter: run code generation"
+    },
     e = {"<Cmd>FlutterEmulators<CR>", "flutter: emulators"},
     o = {"<Cmd>FlutterOutline<CR>", "flutter: outline"},
     q = {"<Cmd>FlutterQuit<CR>", "flutter: quit"},
