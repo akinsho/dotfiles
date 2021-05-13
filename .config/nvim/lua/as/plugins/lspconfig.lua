@@ -160,7 +160,7 @@ function as.lsp.on_attach(client, bufnr)
   setup_mappings(client, bufnr)
 
   if client.resolved_capabilities.goto_definition then
-    vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.as.lsp.tagfunc")
+    vim.bo[bufnr].tagfunc = "v:lua.as.lsp.tagfunc"
   end
   require("lsp-status").on_attach(client)
 end
@@ -174,7 +174,7 @@ end
 local function get_lua_runtime()
   local result = {}
   for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-    local lua_path = fmt('%s/lua', path)
+    local lua_path = fmt("%s/lua", path)
     if as.is_dir(lua_path) then
       result[lua_path] = true
     end
