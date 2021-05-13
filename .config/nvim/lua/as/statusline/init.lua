@@ -50,7 +50,7 @@ function M.colors()
     {"StMetadata", {guifg = comment_fg, guibg = bg_color, gui = "italic"}},
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
     {"StIndicator", {guibg = bg_color, guifg = indicator_color}},
-    {"StModified", {guifg = string_fg, guibg = pmenu_bg}},
+    {"StModified", {guifg = string_fg, guibg = bg_color}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
     {"StNumber", {guifg = number_fg, guibg = bg_color}},
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
@@ -198,26 +198,14 @@ function _G.statusline()
     return display(statusline, available_space)
   end
 
+  append(statusline, utils.item_if(file_modified, ctx.modified, "StModified"), 1)
+
   append(statusline, utils.item(utils.mode()), 0)
 
   append(statusline, dir_item, 3)
   append(statusline, parent_item, 2)
   append(statusline, file_item, 0)
   append(statusline, readonly_item, 2)
-
-  append(
-    statusline,
-    utils.sep_if(
-      file_modified,
-      ctx.modified,
-      {
-        small = 1,
-        color = "StModified",
-        sep_color = "StPrefixSep"
-      }
-    ),
-    1
-  )
 
   -- If local plugins are loaded and I'm developing locally show an indicator
   local develop_text = available_space > 100 and "local dev" or ""
