@@ -769,9 +769,11 @@ return require("packer").startup {
             border = "curved"
           }
         }
+
         local lazygit =
           require("toggleterm.terminal").Terminal:new {
           cmd = "lazygit",
+          dir = "git_dir",
           hidden = true,
           direction = "float",
           on_open = function(term)
