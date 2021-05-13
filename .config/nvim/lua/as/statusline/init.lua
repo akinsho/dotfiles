@@ -42,8 +42,6 @@ function M.colors()
   local error_fg = H.hl_value("ErrorMsg", "fg")
   local comment_fg = H.hl_value("Comment", "fg")
   local comment_gui = H.hl_value("Comment", "gui")
-  local title_fg = H.hl_value("Title", "fg")
-  local title_gui = H.hl_value("Title", "gui")
   local number_fg = H.hl_value("Number", "fg")
   local warning_fg = P.light_yellow
   local inc_search_bg = H.hl_value("Search", "bg")
@@ -60,7 +58,7 @@ function M.colors()
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
     {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "bold"}},
     {"StDim", {guibg = bg_color, guifg = comment_fg}},
-    {"StTitle", {guibg = bg_color, guifg = title_fg, gui = title_gui}},
+    {"StTitle", {guibg = bg_color, guifg = "LightGray", gui = "bold"}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
     {"StItem", {guibg = normal_fg, guifg = bg_color, gui = "italic"}},
     {"StSep", {guifg = normal_fg}},
