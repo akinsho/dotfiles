@@ -17,7 +17,8 @@ return function()
         }
       },
       file_ignore_patterns = {"%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf"},
-      layout_strategy = "flex",
+      -- set this value to 'flex' once telescope/#823 is merged
+      layout_strategy = "horizontal",
       winblend = 7
     },
     extensions = {
@@ -49,7 +50,8 @@ return function()
       shorten_path = false,
       cwd = vim.g.dotfiles,
       hidden = true,
-      layout_strategy = "flex",
+      -- set this value to 'flex' once telescope/#823 is merged
+      layout_strategy = "horizontal",
       file_ignore_patterns = {".git/.*", "dotbot/.*"},
       layout_config = {
         preview_width = 0.65
@@ -63,7 +65,8 @@ return function()
       shorten_path = false,
       cwd = vim.g.vim_dir,
       hidden = true,
-      layout_strategy = "flex",
+      -- set this value to 'flex' once telescope/#823 is merged
+      layout_strategy = "horizontal",
       file_ignore_patterns = {".git/.*", "dotbot/.*"},
       layout_config = {
         preview_width = 0.65
