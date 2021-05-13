@@ -39,7 +39,7 @@ return function()
   require("bufferline").setup {
     options = {
       mappings = false,
-      sort_by = "extension",
+      sort_by = "recent",
       show_close_icon = false,
       separator_style = "slant",
       diagnostics = "nvim_lsp",

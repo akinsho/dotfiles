@@ -775,6 +775,7 @@ return require("packer").startup {
     }
     use_local {
       "akinsho/nvim-bufferline.lua",
+      branch = "feature/sort-by-recent-use",
       config = conf("nvim-bufferline"),
       local_path = "personal",
       requires = "nvim-web-devicons"
