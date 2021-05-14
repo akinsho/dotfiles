@@ -227,6 +227,26 @@ function _G.statusline()
   -- Start of the right side layout
   append(statusline, {"%="})
 
+  -----------------------------------------------------------------------------//
+  -- Middle section
+  -----------------------------------------------------------------------------//
+  -- LSP Diagnostics
+  local info = utils.diagnostic_info()
+  if info and not vim.tbl_isempty(info) then
+    append(statusline, utils.item(info.error, "StError"), 1)
+    append(statusline, utils.item(info.warning, "StWarning"), 3)
+    append(statusline, utils.item(info.information, "StGreen"), 4)
+  end
+
+  -- LSP Status
+  append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 4)
+  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 6)
+
+  append(statusline, {"%="})
+  -----------------------------------------------------------------------------//
+  -- Right section
+  -----------------------------------------------------------------------------//
+
   -- Current line number/total line number,  alternatives 
   append(
     statusline,
@@ -288,18 +308,6 @@ function _G.statusline()
     utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}),
     5
   )
-
-  -- LSP Diagnostics
-  local info = utils.diagnostic_info()
-  if info and not vim.tbl_isempty(info) then
-    append(statusline, utils.item(info.error, "StError"), 1)
-    append(statusline, utils.item(info.warning, "StWarning"), 3)
-    append(statusline, utils.item(info.information, "StGreen"), 4)
-  end
-
-  -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 4)
-  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 6)
 
   -- Indentation
   local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab
