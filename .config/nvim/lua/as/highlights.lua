@@ -119,7 +119,12 @@ end
 local gui_attr = {"underline", "bold", "undercurl", "italic"}
 local attrs = {fg = "foreground", bg = "background"}
 
-function M.hl_value(grp, attr)
+---get the color value of part of a highlight group
+---@param grp string
+---@param attr string
+---@param fallback string
+---@return string
+function M.hl_value(grp, attr, fallback)
   attr = attrs[attr] or attr
   local hl = api.nvim_get_hl_by_name(grp, true)
   if attr == "gui" then
@@ -131,7 +136,7 @@ function M.hl_value(grp, attr)
     end
     return table.concat(gui, ",")
   end
-  local color = hl[attr]
+  local color = hl[attr] or fallback
   -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
   if not color then
     vim.notify(fmt("%s %s does not exist", grp, attr))

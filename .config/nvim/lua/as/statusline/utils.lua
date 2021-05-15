@@ -336,26 +336,18 @@ local function sanitize_string(item)
   return fn.substitute(item, "\n", "", "g")
 end
 
-function M.diagnostic_info()
-  local msgs = {error = nil, warning = nil, information = nil}
-  local info = vim.b.coc_diagnostic_info
-  if not info then
-    return msgs
+function M.diagnostic_info(context)
+  local buf = context.bufnum
+  if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
+    return {error = {}, warning = {}, info = {}}
   end
-  local warning_sign = vim.g.coc_status_warning_sign or "W"
-  local error_sign = vim.g.coc_status_error_sign or "E"
-  local information_sign = vim.g.coc_status_information_sign or ""
+  local get_count = vim.lsp.diagnostic.get_count
 
-  if info.error > 0 then
-    msgs.error = error_sign .. info.error
-  end
-  if info.warning > 0 then
-    msgs.warning = warning_sign .. info.warning
-  end
-  if info.information > 0 then
-    msgs.information = information_sign .. info.information
-  end
-  return msgs
+  return {
+    error = {count = get_count(buf, "Error"), sign = "✗"},
+    warning = {count = get_count(buf, "Warning"), sign = ""},
+    info = {count = get_count(buf, "Information"), sign = ""}
+  }
 end
 
 function M.lsp_status()

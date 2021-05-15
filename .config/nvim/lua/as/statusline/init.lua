@@ -18,28 +18,18 @@ M.git_toggle_updates = utils.git_update_toggle
 M.git_updates_refresh = utils.git_updates_refresh
 M.github_notifications = utils.github_notifications
 
-local function get_indicator_color()
-  if vim.g.colors_name == "doom-one" then
-    return H.hl_value("TabLineSel", "fg")
-  elseif vim.tbl_contains({"one", "one-nvim"}, vim.g.colors_name) then
-    return H.hl_value("TabLineSel", "bg")
-  else
-    local default = H.hl_value("TabLineSel", "bg")
-    return (default ~= "" or default ~= "none") and default or P.bright_blue
-  end
-end
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
 --- patched with the nerd font characters
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 function M.colors()
-  local indicator_color = get_indicator_color()
+  local error_color = H.hl_value("LspDiagnosticsDefaultError", "fg")
+  local indicator_color = P.bright_blue
   local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -16)
   local normal_fg = H.hl_value("Normal", "fg")
   local pmenu_bg = H.hl_value("Pmenu", "bg")
   local string_fg = H.hl_value("String", "fg")
-  local error_fg = H.hl_value("ErrorMsg", "fg")
   local comment_fg = H.hl_value("Comment", "fg")
   local comment_gui = H.hl_value("Comment", "gui")
   local number_fg = H.hl_value("Number", "fg")
@@ -70,7 +60,7 @@ function M.colors()
     {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
     {"StWarning", {guifg = warning_fg, guibg = bg_color}},
     {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
-    {"StError", {guifg = error_fg, guibg = bg_color}},
+    {"StError", {guifg = error_color, guibg = bg_color}},
     {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
     {
       "StFilename",
@@ -120,7 +110,7 @@ function _G.statusline()
 
   -- TODO reduce the available space whenever we add
   -- a component so we can use it to determine what to add
-  local available_space = vim.fn.winwidth(curwin)
+  local available_space = vim.api.nvim_win_get_width(curwin)
 
   local ctx = {
     bufnum = curbuf,
@@ -220,32 +210,42 @@ function _G.statusline()
     2
   )
 
-  -- Neovim allows unlimited alignment sections so we can put things in the
-  -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-  -- local statusline .= '%='
-
-  -- Start of the right side layout
   append(statusline, {"%="})
 
   -----------------------------------------------------------------------------//
   -- Middle section
   -----------------------------------------------------------------------------//
-  -- LSP Diagnostics
-  local info = utils.diagnostic_info()
-  if info and not vim.tbl_isempty(info) then
-    append(statusline, utils.item(info.error, "StError"), 1)
-    append(statusline, utils.item(info.warning, "StWarning"), 3)
-    append(statusline, utils.item(info.information, "StGreen"), 4)
-  end
+  -- Neovim allows unlimited alignment sections so we can put things in the
+  -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
 
   -- LSP Status
   append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 4)
   append(statusline, utils.item(utils.current_fn(), "StMetadata"), 6)
 
+  -- Start of the right side layout
   append(statusline, {"%="})
   -----------------------------------------------------------------------------//
   -- Right section
   -----------------------------------------------------------------------------//
+  -- LSP Diagnostics
+  local diagnostics = utils.diagnostic_info(ctx)
+  if diagnostics then
+    append(
+      statusline,
+      utils.item(diagnostics.error.count, "StError", {prefix = diagnostics.error.sign}),
+      1
+    )
+    append(
+      statusline,
+      utils.item(diagnostics.warning.count, "StWarning", {prefix = diagnostics.warning.sign}),
+      3
+    )
+    append(
+      statusline,
+      utils.item(diagnostics.info.count, "StGreen", {prefix = diagnostics.info.sign}),
+      4
+    )
+  end
 
   -- Current line number/total line number,  alternatives 
   append(
