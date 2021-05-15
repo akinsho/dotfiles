@@ -220,7 +220,6 @@ function _G.statusline()
 
   -- LSP Status
   append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 4)
-  append(statusline, utils.item(utils.current_fn(), "StMetadata"), 6)
 
   -- Start of the right side layout
   append(statusline, {"%="})

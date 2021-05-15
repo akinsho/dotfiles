@@ -329,13 +329,6 @@ function M.line_info(opts)
   }
 end
 
--- Sometimes special characters are passed into statusline components
--- this sanitizes theses strings to prevent them mangling the statusline
--- See: https://vi.stackexchange.com/questions/17704/how-to-remove-character-returned-by-system
-local function sanitize_string(item)
-  return fn.substitute(item, "\n", "", "g")
-end
-
 function M.diagnostic_info(context)
   local buf = context.bufnum
   if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
@@ -356,12 +349,6 @@ function M.lsp_status()
   end
   local coc_status = vim.g.coc_status or ""
   return vim.fn.trim(coc_status)
-end
-
-function M.current_fn()
-  local current = vim.b.coc_current_function or ""
-  local sanitized = sanitize_string(current)
-  return fn.trim(sanitized)
 end
 
 local function mode_highlight(mode)
@@ -413,53 +400,8 @@ end
 
 --- @param hl string
 function M.wrap(hl)
+  assert(hl, "A highlight name must be specified")
   return "%#" .. hl .. "#"
-end
-
---- @param item string
---- @param opts table
-function M.sep(item, opts)
-  opts = opts or {}
-  opts.before = opts.before or " "
-  opts.prefix = opts.prefix or ""
-  opts.small = opts.small or false
-  opts.padding = opts.padding or "prefix"
-  opts.color = M.wrap(opts.color or "StItem")
-  opts.prefix_color = M.wrap(opts.prefix_color or "StPrefix")
-  opts.prefix_sep_color = M.wrap(opts.prefix_sep_color or "StPrefixSep")
-  opts.sep_color = M.wrap(opts.sep_color or "StSep")
-  opts.sep_color_left = opts.prefix and opts.prefix_sep_color or opts.sep_color
-  opts.prefix_item = opts.prefix_color .. opts.prefix
-
-  -- depending on how padding is specified extra space
-  -- will be injected at specific points
-  if opts.padding == "prefix" or opts.padding == "full" then
-    opts.prefix_item = opts.prefix_item .. " "
-  end
-
-  if opts.padding == "full" then
-    item = " " .. item
-  end
-
-  -- %* resets the highlighting at the end of the separator so it
-  -- doesn't interfere with the next component
-  local sep_icon_right = opts.small and "%*" or "█%*"
-  local sep_icon_left = opts.prefix ~= "" and "" .. opts.prefix_item or opts.small and "" or "█"
-
-  local parts = {
-    opts.before,
-    opts.sep_color_left,
-    sep_icon_left,
-    opts.color,
-    item,
-    opts.sep_color,
-    sep_icon_right
-  }
-
-  return {
-    table.concat(parts),
-    #item + strwidth(sep_icon_left) + strwidth(sep_icon_right)
-  }
 end
 
 --- Creates a spacer statusline component i.e. for padding
@@ -474,16 +416,6 @@ function M.spacer(size, filler)
   else
     return {"", 0}
   end
-end
-
---- @param item string
---- @param condition boolean
---- @param opts table
-function M.sep_if(item, condition, opts)
-  if not condition then
-    return M.spacer()
-  end
-  return M.sep(item, opts)
 end
 
 --- @param component string
