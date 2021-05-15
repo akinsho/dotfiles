@@ -147,8 +147,16 @@ return function()
     }
   end
 
+  local function git_branches()
+    builtins.git_branches(themes.get_dropdown())
+  end
+
   local function grep()
     telescope.extensions.fzf_writer.staged_grep()
+  end
+
+  local function reloader()
+    builtins.reloader(themes.get_dropdown())
   end
 
   require("which-key").register(
@@ -157,21 +165,22 @@ return function()
       ["<leader>f"] = {
         name = "+telescope",
         a = {"<cmd>Telescope<cr>", "builtins"},
-        b = {"<cmd>Telescope git_branches theme=get_dropdown<cr>", "branches"},
-        c = {"<cmd>Telescope git_commits<cr>", "commits"},
+        b = {git_branches, "branches"},
+        c = {builtins.git_commits, "commits"},
         d = {dotfiles, "dotfiles"},
-        f = {"<cmd>Telescope find_files<cr>", "files"},
+        f = {builtins.find_files, "files"},
         g = {websearch, "websearch"},
         o = {buffers, "buffers"},
+        m = {builtins.man_pages, "man pages"},
         h = {frecency, "history"},
         n = {nvim_config, "nvim config"},
-        r = {"<cmd>Telescope reloader theme=get_dropdown<cr>", "module reloader"},
+        r = {reloader, "module reloader"},
         s = {grep, "grep"},
         w = {workspace_symbols, "workspace symbols", silent = false},
-        ["?"] = {"<cmd>Telescope help_tags<cr>", "help"}
+        ["?"] = {builtins.help_tags, "help"}
       },
       ["<leader>c"] = {
-        d = {"<cmd>Telescope lsp_workspace_diagnostics<cr>", "telescope: workspace diagnostics"}
+        d = {builtins.lsp_workspace_diagnostics, "telescope: workspace diagnostics"}
       }
     }
   )
