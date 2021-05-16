@@ -463,8 +463,7 @@ return require("packer").startup {
             ["<leader>lr"] = {"<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references"}
           }
         )
-        local hl = require("as.highlights")
-        hl.all {
+        require("as.highlights").all {
           {"TroubleNormal", {link = "PanelBackground"}},
           {"TroubleText", {link = "PanelBackground"}},
           {"TroubleIndent", {link = "PanelVertSplit"}},
@@ -622,8 +621,20 @@ return require("packer").startup {
     use {
       "pwntester/octo.nvim",
       cmd = "Octo",
+      keys = {"<localleader>opl"},
       config = function()
-        require("telescope").load_extension("octo")
+        require("octo").setup()
+        require("which-key").register(
+          {
+            o = {
+              name = "+octo",
+              p = {
+                l = {"<cmd>Octo pr list<CR>", "PR List"}
+              }
+            }
+          },
+          {prefix = "<localleader>"}
+        )
       end
     }
     ---}}}
