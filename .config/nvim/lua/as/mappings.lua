@@ -525,7 +525,7 @@ command {
 }
 ------------------------------------------------------------------------------
 command {"Token", require("as.highlights").token_inspect}
-command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME' | copen]]}
+command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
 command {
   "ReloadModule",
   function(args)

@@ -184,7 +184,7 @@ local function general_overrides()
   local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
-    {"Todo", {guibg = "Red", guifg = "fg", gui = "bold"}},
+    {"Todo", {guibg = "Red", guifg = "bg", gui = "bold"}},
     {"mkdLineBreak", {link = "NONE", force = true}},
     -----------------------------------------------------------------------------//
     -- Commandline
@@ -219,20 +219,22 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     {"TSKeyword", {link = "Statement"}},
     {"TSParameter", {gui = "italic,bold"}},
+    -- highlight FIXME comments
+    {"TSDanger", {guibg = "#FBBF24", guifg = "bg", gui = "bold"}},
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
     {"LspReferenceText", {guibg = cursor_line_bg, gui = "underline"}},
     {"LspReferenceRead", {guibg = cursor_line_bg, gui = "underline"}},
-    {"LspDiagnosticsSignHint", {guifg = "#fab005"}},
-    {"LspDiagnosticsDefaultHint", {guifg = "#fab005"}},
+    {"LspDiagnosticsSignHint", {guifg = "#FAB005"}},
+    {"LspDiagnosticsDefaultHint", {guifg = "#FAB005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
-    {"LspDiagnosticsDefaultWarning", {guifg = "#ff922b"}},
-    {"LspDiagnosticsDefaultInformation", {guifg = "#15aabf"}},
+    {"LspDiagnosticsDefaultWarning", {guifg = "#FF922B"}},
+    {"LspDiagnosticsDefaultInformation", {guifg = "#15AABF"}},
     {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75", guifg = "none"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#fab005", guifg = "none"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#FAB005", guifg = "none"}},
     {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange", guifg = "none"}},
-    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15aabf", guifg = "none"}},
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15AABF", guifg = "none"}},
     {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
     {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
     {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
