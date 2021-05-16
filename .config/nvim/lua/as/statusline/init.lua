@@ -6,7 +6,6 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
-local is_empty = as.is_empty
 local utils = require("as.statusline.utils")
 local H = require("as.highlights")
 
@@ -102,6 +101,23 @@ local function display(statusline, available_space)
   return str
 end
 
+---Aggregate pieces of the statusline
+---@param tbl table
+---@return function
+local function make_status(tbl)
+  return function(...)
+    for i = 1, select("#", ...) do
+      local item = select(i, ...)
+      append(tbl, unpack(item))
+    end
+  end
+end
+
+local separator = {"%="}
+local end_marker = {"%<"}
+
+---A very over-engineered statusline, heavily inspired by doom-modeline
+---@return string
 function _G.statusline()
   -- use the statusline global variable which is set inside of statusline
   -- functions to the window for *that* statusline
@@ -129,199 +145,159 @@ function _G.statusline()
   -- Modifiers
   ----------------------------------------------------------------------------//
   local plain = utils.is_plain(ctx)
-
   local file_modified = utils.modified(ctx, "●")
   local inactive = vim.api.nvim_get_current_win() ~= curwin
   local focused = vim.g.vim_in_focus or true
   local minimal = plain or inactive or not focused
-
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
   local statusline = {}
-  append(statusline, utils.item_if("▌", not minimal, "StIndicator", {before = "", after = ""}), 0)
-  append(statusline, utils.spacer(1))
+  local add = make_status(statusline)
 
+  add(
+    {utils.item_if("▌", not minimal, "StIndicator", {before = "", after = ""}), 0},
+    {utils.spacer(1), 0}
+  )
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
-  -- highlight the filename components separately
-  local filename_hl = minimal and "StFilenameInactive" or "StFilename"
-  local directory_hl = minimal and "StInactiveSep" or "StDirectory"
-  local parent_hl = minimal and directory_hl or "StParentDirectory"
-
-  if H.has_win_highlight(curwin, "Normal", "StatusLine") then
-    directory_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
-    filename_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
-    parent_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomParentDir", "StTitle")
-  end
-
-  local ft_icon, icon_highlight =
-    utils.filetype(ctx, {icon_bg = "StatusLine", default = "StComment"})
-
-  local file_opts = {before = "", after = ""}
-  local parent_opts = {before = "", after = ""}
-  local dir_opts = {before = "", after = ""}
-
-  local directory, parent, filename = utils.filename(ctx)
-
-  -- Depending on which filename segments are empty we select a section to add the file icon to
-  local dir_empty, parent_empty = is_empty(directory), is_empty(parent)
-  local to_update =
-    dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
-
-  to_update.prefix = ft_icon
-  to_update.prefix_color = not minimal and icon_highlight or nil
-
-  local dir_item = utils.item(directory, directory_hl, dir_opts)
-  local parent_item = utils.item(parent, parent_hl, parent_opts)
-  local file_item = utils.item(filename, filename_hl, file_opts)
+  local segments = utils.file(ctx, minimal)
+  local dir, parent, file = segments.dir, segments.parent, segments.file
+  local dir_item = utils.item(dir.item, dir.hl, dir.opts)
+  local parent_item = utils.item(parent.item, parent.hl, parent.opts)
+  local file_item = utils.item(file.item, file.hl, file.opts)
   local readonly_item = utils.item(utils.readonly(ctx), "StMetadata")
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
+  ----------------------------------------------------------------------------//
   if minimal then
-    append(statusline, dir_item, 3)
-    append(statusline, parent_item, 2)
-    append(statusline, file_item, 0)
+    add({dir_item, 3}, {parent_item, 2}, {file_item, 0})
     return display(statusline, available_space)
   end
-
-  append(statusline, utils.item_if(file_modified, ctx.modified, "StModified"), 1)
-
-  append(statusline, utils.item(utils.mode()), 0)
-
-  append(statusline, dir_item, 3)
-  append(statusline, parent_item, 2)
-  append(statusline, file_item, 0)
-  append(statusline, readonly_item, 2)
-
-  -- If local plugins are loaded and I'm developing locally show an indicator
-  local develop_text = available_space > 100 and "local dev" or ""
-  append(
-    statusline,
-    utils.item_if(
-      develop_text,
-      vim.env.DEVELOPING ~= nil,
-      "StComment",
-      {prefix = "", padding = "none", before = "  ", prefix_color = "StWarning", small = 1}
-    ),
-    2
+  -----------------------------------------------------------------------------//
+  -- Left section
+  -----------------------------------------------------------------------------//
+  add(
+    {utils.item_if(file_modified, ctx.modified, "StModified"), 1},
+    {utils.item(utils.mode()), 0},
+    {dir_item, 3},
+    {parent_item, 2},
+    {file_item, 0},
+    {readonly_item, 2},
+    -- If local plugins are loaded and I'm developing locally show an indicator
+    {
+      utils.item_if(
+        available_space > 100 and "local dev" or "",
+        vim.env.DEVELOPING ~= nil,
+        "StComment",
+        {prefix = "", padding = "none", before = "  ", prefix_color = "StWarning", small = 1}
+      ),
+      2
+    },
+    {separator}
   )
-
-  append(statusline, {"%="})
-
   -----------------------------------------------------------------------------//
   -- Middle section
   -----------------------------------------------------------------------------//
   -- Neovim allows unlimited alignment sections so we can put things in the
   -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-
+  -----------------------------------------------------------------------------//
   -- LSP Status
-  append(statusline, utils.item(utils.lsp_status(), "StMetadata"), 4)
-
-  -- Start of the right side layout
-  append(statusline, {"%="})
+  add(
+    {utils.item(utils.lsp_status(), "StMetadata"), 4},
+    -- Start of the right side layout
+    {separator}
+  )
   -----------------------------------------------------------------------------//
   -- Right section
   -----------------------------------------------------------------------------//
-  -- LSP Diagnostics
-  local diagnostics = utils.diagnostic_info(ctx)
-  if diagnostics then
-    append(
-      statusline,
-      utils.item(diagnostics.error.count, "StError", {prefix = diagnostics.error.sign}),
-      1
-    )
-    append(
-      statusline,
-      utils.item(diagnostics.warning.count, "StWarning", {prefix = diagnostics.warning.sign}),
-      3
-    )
-    append(
-      statusline,
-      utils.item(diagnostics.info.count, "StGreen", {prefix = diagnostics.info.sign}),
-      4
-    )
-  end
-
-  -- Current line number/total line number,  alternatives 
-  append(
-    statusline,
-    utils.line_info(
-      {
-        prefix = "ℓ",
-        prefix_color = "StMetadataPrefix",
-        current_hl = "StTitle",
-        total_hl = "StComment",
-        sep_hl = "StComment"
-      }
-    ),
-    7
-  )
-
   -- Github notifications
   local notifications = vim.g.github_notifications
-  append(
-    statusline,
-    utils.item_if(" " .. (notifications or ""), notifications and notifications > 0, "StTitle"),
-    3
+
+  -- LSP Diagnostics
+  local diagnostics = utils.diagnostic_info(ctx)
+  add(
+    {
+      utils.item_if(
+        diagnostics.error.count,
+        diagnostics.error,
+        "StError",
+        {prefix = diagnostics.error.sign}
+      ),
+      1
+    },
+    {
+      utils.item_if(
+        diagnostics.warning.count,
+        diagnostics.warning,
+        "StWarning",
+        {prefix = diagnostics.warning.sign}
+      ),
+      3
+    },
+    {
+      utils.item_if(
+        diagnostics.info.count,
+        diagnostics.info,
+        "StGreen",
+        {prefix = diagnostics.info.sign}
+      ),
+      4
+    },
+    -- Current line number/total line number,  alternatives 
+    {
+      utils.line_info(
+        {
+          prefix = "ℓ",
+          prefix_color = "StMetadataPrefix",
+          current_hl = "StTitle",
+          total_hl = "StComment",
+          sep_hl = "StComment"
+        }
+      ),
+      7
+    },
+    {
+      utils.item(notifications, "StTitle", {prefix = " "}),
+      3
+    }
   )
 
-  -- Git Status
-  local status = vim.b.gitsigns_status_dict
-  if status then
-    append(statusline, utils.item(status.head, "StInfo", {prefix = ""}), 1)
-    append(
-      statusline,
-      utils.item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}),
-      3
-    )
-    append(
-      statusline,
-      utils.item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}),
-      3
-    )
-    append(
-      statusline,
-      utils.item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}),
-      3
-    )
-  end
-
+  local status = vim.b.gitsigns_status_dict or {}
   local updates = vim.g.git_statusline_updates or {}
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
   local behind = updates.behind and tonumber(updates.behind) or 0
-  append(
-    statusline,
-    utils.item(
-      ahead,
-      "StTitle",
-      {prefix = "⇡", prefix_color = "StGreen", after = behind > 0 and "" or " ", before = ""}
-    ),
-    5
-  )
-  append(
-    statusline,
-    utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}),
-    5
+  add(
+    -- Git Status
+    {utils.item(status.head, "StInfo", {prefix = ""}), 1},
+    {utils.item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
+    {utils.item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}), 3},
+    {utils.item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}), 3},
+    {
+      utils.item(
+        ahead,
+        "StTitle",
+        {prefix = "⇡", prefix_color = "StGreen", after = behind > 0 and "" or " ", before = ""}
+      ),
+      5
+    },
+    {utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}), 5},
+    -- (Unexpected) Indentation
+    {
+      utils.item_if(
+        ctx.shiftwidth,
+        ctx.shiftwidth > 2 or not ctx.expandtab,
+        "StTitle",
+        {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
+      ),
+      6
+    }
   )
 
-  -- Indentation
-  local unexpected_indentation = ctx.shiftwidth > 2 or not ctx.expandtab
-  append(
-    statusline,
-    utils.item_if(
-      ctx.shiftwidth,
-      unexpected_indentation,
-      "StTitle",
-      {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
-    ),
-    6
-  )
-
-  append(statusline, {"%<"})
+  add({end_marker})
   -- removes 5 columns to add some padding
   return display(statusline, available_space - 5)
 end

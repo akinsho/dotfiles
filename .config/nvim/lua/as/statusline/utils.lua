@@ -220,7 +220,7 @@ end
 
 --- @param ctx table
 --- @param modifier string
-function M.filename(ctx, modifier)
+local function filename(ctx, modifier)
   modifier = modifier or ":t"
   local special_buf = special_buffers(ctx)
   if special_buf then
@@ -272,7 +272,7 @@ end
 
 --- @param ctx table
 --- @param opts table
-function M.filetype(ctx, opts)
+local function filetype(ctx, opts)
   local ft_exception = exceptions.filetypes[ctx.filetype]
   if ft_exception then
     return ft_exception, opts.default
@@ -326,6 +326,46 @@ function M.line_info(opts)
       }
     ),
     length
+  }
+end
+
+local function empty_opts()
+  return {before = "", after = ""}
+end
+
+---Create the various segments of the current filename
+---@param ctx table
+---@param minimal boolean
+---@return table
+function M.file(ctx, minimal)
+  local curwin = ctx.winid
+  -- highlight the filename components separately
+  local filename_hl = minimal and "StFilenameInactive" or "StFilename"
+  local directory_hl = minimal and "StInactiveSep" or "StDirectory"
+  local parent_hl = minimal and directory_hl or "StParentDirectory"
+
+  if H.has_win_highlight(curwin, "Normal", "StatusLine") then
+    directory_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
+    filename_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
+    parent_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomParentDir", "StTitle")
+  end
+
+  local ft_icon, icon_highlight = filetype(ctx, {icon_bg = "StatusLine", default = "StComment"})
+
+  local file_opts, parent_opts, dir_opts = empty_opts(), empty_opts(), empty_opts()
+  local directory, parent, file = filename(ctx)
+
+  -- Depending on which filename segments are empty we select a section to add the file icon to
+  local dir_empty, parent_empty = as.is_empty(directory), as.is_empty(parent)
+  local to_update =
+    dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
+
+  to_update.prefix = ft_icon
+  to_update.prefix_color = not minimal and icon_highlight or nil
+  return {
+    file = {item = file, hl = filename_hl, opts = file_opts},
+    dir = {item = directory, hl = directory_hl, opts = dir_opts},
+    parent = {item = parent, hl = parent_hl, opts = parent_opts}
   }
 end
 
