@@ -220,7 +220,7 @@ local function general_overrides()
     {"TSKeyword", {link = "Statement"}},
     {"TSParameter", {gui = "italic,bold"}},
     -- highlight FIXME comments
-    {"TSDanger", {guibg = "#FBBF24", guifg = "bg", gui = "bold"}},
+    {"commentTSDanger", {guibg = "#FBBF24", guifg = "bg", gui = "bold"}},
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//

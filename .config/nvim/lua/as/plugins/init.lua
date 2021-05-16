@@ -626,12 +626,7 @@ return require("packer").startup {
         require("octo").setup()
         require("which-key").register(
           {
-            o = {
-              name = "+octo",
-              p = {
-                l = {"<cmd>Octo pr list<CR>", "PR List"}
-              }
-            }
+            o = {name = "+octo", p = {l = {"<cmd>Octo pr list<CR>", "PR List"}}}
           },
           {prefix = "<localleader>"}
         )
