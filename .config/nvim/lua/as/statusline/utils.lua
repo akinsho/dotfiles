@@ -78,6 +78,7 @@ local exceptions = {
     NvimTree = "פּ",
     toggleterm = " ",
     calendar = "",
+    octo = "",
     ["dap-repl"] = ""
   },
   names = {
@@ -97,6 +98,7 @@ local exceptions = {
     vimwiki = "vim wiki",
     help = "help",
     undotree = "UndoTree",
+    octo = "Octo",
     ["coc-explorer"] = "Coc Explorer",
     NvimTree = "Nvim Tree",
     toggleterm = get_toggleterm_name,

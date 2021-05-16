@@ -184,7 +184,7 @@ local function general_overrides()
   local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
-    {"Todo", {guifg = "Red", guibg = "NONE", gui = "bold"}},
+    {"Todo", {guibg = "Red", guifg = "fg", gui = "bold"}},
     {"mkdLineBreak", {link = "NONE", force = true}},
     -----------------------------------------------------------------------------//
     -- Commandline
