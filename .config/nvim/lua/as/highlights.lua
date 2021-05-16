@@ -300,10 +300,12 @@ function M.clear_hl(name)
 end
 
 local function colorscheme_overrides()
+  local keyword_fg = M.hl_value("Keyword", "fg")
   if vim.g.colors_name == "doom-one" then
     M.all {
       {"TSVariable", {guifg = "NONE"}},
-      {"WhichKeyFloat", {link = "PanelBackground"}}
+      {"WhichKeyFloat", {link = "PanelBackground"}},
+      {"Cursor", {guibg = keyword_fg, gui = "NONE"}}
     }
   end
 end
