@@ -167,7 +167,7 @@ function _G.statusline()
   local dir_item = utils.item(dir.item, dir.hl, dir.opts)
   local parent_item = utils.item(parent.item, parent.hl, parent.opts)
   local file_item = utils.item(file.item, file.hl, file.opts)
-  local readonly_item = utils.item(utils.readonly(ctx), "StMetadata")
+  local readonly_item = utils.item(utils.readonly(ctx), "StError")
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
