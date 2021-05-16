@@ -174,7 +174,7 @@ function _G.statusline()
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
   if minimal then
-    add({dir_item, 3}, {parent_item, 2}, {file_item, 0})
+    add({readonly_item, 1}, {dir_item, 3}, {parent_item, 2}, {file_item, 0})
     return display(statusline, available_space)
   end
   -----------------------------------------------------------------------------//
@@ -182,11 +182,11 @@ function _G.statusline()
   -----------------------------------------------------------------------------//
   add(
     {utils.item_if(file_modified, ctx.modified, "StModified"), 1},
+    {readonly_item, 2},
     {utils.item(utils.mode()), 0},
     {dir_item, 3},
     {parent_item, 2},
     {file_item, 0},
-    {readonly_item, 2},
     -- If local plugins are loaded and I'm developing locally show an indicator
     {
       utils.item_if(
