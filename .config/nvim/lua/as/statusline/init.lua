@@ -261,7 +261,7 @@ function _G.statusline()
       7
     },
     {
-      utils.item(notifications, "StTitle", {prefix = " "}),
+      utils.item(notifications, "StTitle", {prefix = ""}),
       3
     }
   )
