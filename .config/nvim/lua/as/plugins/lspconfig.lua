@@ -1,6 +1,4 @@
 as.lsp = {}
-local fn = vim.fn
-local fmt = string.format
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -172,17 +170,20 @@ end
 --- This function if called immediately on startup might not have all the correct
 --- paths added to the runtime if the the package manager e.g. packer loads things too late
 local function get_lua_runtime()
-  local result = {}
-  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-    local lua_path = fmt("%s/lua", path)
-    if as.is_dir(lua_path) then
-      result[lua_path] = true
+  local library = {}
+  local items = {
+    "$VIMRUNTIME",
+    "~/.config/nvim",
+    "~/.local/share/nvim/site/pack/packer/opt/*",
+    "~/.local/share/nvim/site/pack/packer/start/*"
+  }
+  for _, item in ipairs(items) do
+    for _, p in pairs(vim.fn.expand(item, false, true)) do
+      p = vim.loop.fs_realpath(p)
+      library[p] = true
     end
   end
-
-  -- This loads the `lua` files from nvim into the runtime.
-  result[fn.expand("$VIMRUNTIME/lua")] = true
-  return result
+  return library
 end
 
 --- LSP server configs are setup dynamically as they need to be generated during
