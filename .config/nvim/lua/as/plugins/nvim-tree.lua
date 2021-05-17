@@ -1,5 +1,3 @@
-as.tree = {}
-
 return function()
   vim.g.nvim_tree_icons = {
     default = "",
@@ -29,7 +27,7 @@ return function()
   vim.g.nvim_tree_root_folder_modifier = ":t"
   vim.g.nvim_tree_ignore = {".DS_Store", "fugitive:", ".git"}
 
-  function as.tree.set_highlights()
+  local function set_highlights()
     require("as.highlights").all {
       {"NvimTreeIndentMarker", {link = "Comment"}},
       {"NvimTreeNormal", {link = "PanelBackground"}},
@@ -47,12 +45,12 @@ return function()
       {
         events = {"ColorScheme"},
         targets = {"*"},
-        command = as.tree.set_highlights
+        command = set_highlights
       },
       {
         events = {"FileType"},
         targets = {"NvimTree"},
-        command = as.tree.set_highlights
+        command = set_highlights
       }
     }
   )
