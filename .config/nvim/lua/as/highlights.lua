@@ -184,7 +184,7 @@ local function general_overrides()
   local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
-    {"Todo", {guibg = "Red", guifg = "bg", gui = "bold"}},
+    {"Todo", {guibg = "NONE", guifg = "red", gui = "bold"}},
     {"mkdLineBreak", {link = "NONE", force = true}},
     -----------------------------------------------------------------------------//
     -- Commandline
@@ -220,6 +220,7 @@ local function general_overrides()
     {"TSKeyword", {link = "Statement"}},
     {"TSParameter", {gui = "italic,bold"}},
     -- highlight FIXME comments
+    {"commentTSWarning", {guibg = "Red", guifg = "bg", gui = "bold"}},
     {"commentTSDanger", {guibg = "#FBBF24", guifg = "bg", gui = "bold"}},
     -----------------------------------------------------------------------------//
     -- LSP
