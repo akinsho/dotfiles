@@ -536,10 +536,11 @@ return require("packer").startup {
     --------------------------------------------------------------------------------
     -- Treesitter cannot be run as an optional plugin and most be available on start
     -- if not it obscurely breaks nvim-lspconfig...
-    use {
+    use_local {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = conf("treesitter"),
+      local_path = "contributing",
       requires = {
         {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
         {
