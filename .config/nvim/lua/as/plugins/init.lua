@@ -645,12 +645,12 @@ return require("packer").startup {
           window = {
             backdrop = 1,
             options = {
-              signcolumn = "no",
               number = false,
               relativenumber = false
             }
           },
           plugins = {
+            gitsigns = true,
             tmux = true
           }
         }
