@@ -10,12 +10,12 @@ local function setup_packer()
   if fn.empty(fn.glob(install_path)) > 0 then
     print("Downloading packer.nvim...")
     print(fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path}))
-    vim.cmd "packadd packer.nvim"
+    vim.cmd "packadd! packer.nvim"
     require("packer").sync()
   elseif not vim.env.DEVELOPING then
-    vim.cmd "packadd packer.nvim"
+    vim.cmd "packadd! packer.nvim"
   else
-    vim.cmd "packadd local-packer.nvim"
+    vim.cmd "packadd! local-packer.nvim"
   end
 end
 
@@ -178,6 +178,14 @@ return require("packer").startup {
         vim.g["dotoo#capture#templates"] = {
           t = {target = "todo"}
         }
+        require("which-key").register(
+          {
+            g = {
+              A = "dotoo agenda",
+              C = "dotoo capture"
+            }
+          }
+        )
       end
     }
     use {

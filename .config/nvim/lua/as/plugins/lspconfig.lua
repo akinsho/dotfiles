@@ -271,7 +271,7 @@ as.lsp.servers = {
 }
 
 function as.lsp.setup_servers()
-  vim.cmd("packadd nvim-lspinstall") -- Important!
+  vim.cmd("packadd! nvim-lspinstall") -- Important!
   local lspinstall = require("lspinstall")
   local lspconfig = require("lspconfig")
 
