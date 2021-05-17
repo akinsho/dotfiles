@@ -1,14 +1,12 @@
 "====================================================================================
 " AUTOCOMMANDS
 "===================================================================================
-if exists('+CmdlineEnter')
-  augroup VimrcIncSearchHighlight
-    autocmd!
-    " automatically clear search highlight once leaving the commandline
-    autocmd CmdlineEnter [/\?] :set hlsearch
-    autocmd CmdlineLeave [/\?] :set nohlsearch
-  augroup END
-endif
+augroup VimrcIncSearchHighlight
+  autocmd!
+  " automatically clear search highlight once leaving the commandline
+  autocmd CmdlineEnter [/\?] :set hlsearch  | redrawstatus
+  autocmd CmdlineLeave [/\?] :set nohlsearch | redrawstatus
+augroup END
 
 function! s:smart_close()
   if winnr('$') != 1

@@ -184,9 +184,8 @@ function _G.statusline()
   add(
     {utils.item_if(file_modified, ctx.modified, "StModified"), 1},
     {readonly_item, 2},
-    -- FIXME this does not appear at the correct time and contains content that breaks the statusline
-    -- {utils.item_if(utils.search_count(), vim.v.hlsearch == 1, "StIndicator", {after = " "}), 1},
     {utils.item(utils.mode()), 0},
+    {utils.item(utils.search_count(), "StCount"), 1},
     {dir_item, 3},
     {parent_item, 2},
     {file_item, 0},
@@ -327,6 +326,12 @@ local function setup_autocommands()
         targets = {"*"},
         command = "lua require'as.statusline'.git_toggle_updates()"
       },
+      --- NOTE: enable to update search count on cursor move
+      -- {
+      --   events = {"CursorMoved", "CursorMovedI"},
+      --   targets = {"*"},
+      --   command = utils.update_search_count
+      -- },
       -- NOTE: user autocommands can't be joined into one autocommand
       {
         events = {"User AsyncGitJobComplete"},
@@ -344,11 +349,6 @@ local function setup_autocommands()
         events = {"User FugitiveChanged"},
         command = "redrawstatus!"
       }
-      -- FIXME: determine if this is necessary and fix it since it currently doesn nothing
-      -- {
-      --   events = {"CursorMoved", "CursorMovedI"},
-      --   command = utils.update_search_count
-      -- }
     }
   )
 end

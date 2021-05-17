@@ -393,39 +393,56 @@ function M.lsp_status()
   return vim.fn.trim(coc_status)
 end
 
+local function printf(format, current, total)
+  if current == 0 and total == 0 then
+    return ""
+  end
+  return fn.printf(format, current, total)
+end
+
+-----------------------------------------------------------------------------//
+-- Last search count
+-----------------------------------------------------------------------------//
 function M.search_count()
   local result = fn.searchcount({recompute = 0})
   if vim.tbl_isempty(result) then
     return ""
   end
-  local search_reg = fn.getreg("@/")
+  ---NOTE: the search term can be included in the output
+  --- using [%s] but this value seems flaky
+  -- local search_reg = fn.getreg("@/")
   if result.incomplete == 1 then -- timed out
-    return fn.printf("%s [?/??]", search_reg)
+    return printf(" ?/?? ")
   elseif result.incomplete == 2 then -- max count exceeded
     if result.total > result.maxcount and result.current > result.maxcount then
-      return fn.printf("%s [>%d/>%d]", search_reg, result.current, result.total)
+      return printf(" >%d/>%d ", result.current, result.total)
     elseif result.total > result.maxcount then
-      return fn.printf("%s [%d/>%d]", search_reg, result.current, result.total)
+      return printf(" %d/>%d ", result.current, result.total)
     end
   end
-  return fn.printf("%s [%d/%d]", search_reg, result.current, result.total)
+  return printf(" %d/%d ", result.current, result.total)
 end
 
+---@type number
+local search_count_timer
+--- Timer to update the search count as the file is travelled
+---@return function
 function M.update_search_count()
-  local searchcount_timer
-  return function()
-    searchcount_timer =
-      fn.timer_start(
-      200,
-      function(timer)
-        if timer == searchcount_timer then
-          fn.searchcount({recompute = 1, maxcount = 0, timeout = 100})
-          vim.cmd("redrawstatus")
-        end
-      end
-    )
+  if search_count_timer then
+    fn.timer_stop(search_count_timer)
   end
+  search_count_timer =
+    fn.timer_start(
+    200,
+    function(timer)
+      if timer == search_count_timer then
+        fn.searchcount({recompute = 1, maxcount = 0, timeout = 100})
+        vim.cmd("redrawstatus")
+      end
+    end
+  )
 end
+-----------------------------------------------------------------------------//
 
 local function mode_highlight(mode)
   local visual_regex = vim.regex [[\(v\|V\|\)]]
