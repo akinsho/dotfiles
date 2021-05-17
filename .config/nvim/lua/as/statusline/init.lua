@@ -42,6 +42,7 @@ function M.colors()
     {"StModified", {guifg = string_fg, guibg = bg_color}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
     {"StNumber", {guifg = number_fg, guibg = bg_color}},
+    {"StCount", {guifg = "bg", guibg = indicator_color, gui = "bold"}},
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
@@ -183,6 +184,8 @@ function _G.statusline()
   add(
     {utils.item_if(file_modified, ctx.modified, "StModified"), 1},
     {readonly_item, 2},
+    -- FIXME this does not appear at the correct time and contains content that breaks the statusline
+    -- {utils.item_if(utils.search_count(), vim.v.hlsearch == 1, "StIndicator", {after = " "}), 1},
     {utils.item(utils.mode()), 0},
     {dir_item, 3},
     {parent_item, 2},
@@ -341,6 +344,11 @@ local function setup_autocommands()
         events = {"User FugitiveChanged"},
         command = "redrawstatus!"
       }
+      -- FIXME: determine if this is necessary and fix it since it currently doesn nothing
+      -- {
+      --   events = {"CursorMoved", "CursorMovedI"},
+      --   command = utils.update_search_count
+      -- }
     }
   )
 end

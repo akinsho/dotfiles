@@ -393,6 +393,40 @@ function M.lsp_status()
   return vim.fn.trim(coc_status)
 end
 
+function M.search_count()
+  local result = fn.searchcount({recompute = 0})
+  if vim.tbl_isempty(result) then
+    return ""
+  end
+  local search_reg = fn.getreg("@/")
+  if result.incomplete == 1 then -- timed out
+    return fn.printf("%s [?/??]", search_reg)
+  elseif result.incomplete == 2 then -- max count exceeded
+    if result.total > result.maxcount and result.current > result.maxcount then
+      return fn.printf("%s [>%d/>%d]", search_reg, result.current, result.total)
+    elseif result.total > result.maxcount then
+      return fn.printf("%s [%d/>%d]", search_reg, result.current, result.total)
+    end
+  end
+  return fn.printf("%s [%d/%d]", search_reg, result.current, result.total)
+end
+
+function M.update_search_count()
+  local searchcount_timer
+  return function()
+    searchcount_timer =
+      fn.timer_start(
+      200,
+      function(timer)
+        if timer == searchcount_timer then
+          fn.searchcount({recompute = 1, maxcount = 0, timeout = 100})
+          vim.cmd("redrawstatus")
+        end
+      end
+    )
+  end
+end
+
 local function mode_highlight(mode)
   local visual_regex = vim.regex [[\(v\|V\|\)]]
   local command_regex = vim.regex [[\(c\|cv\|ce\)]]
@@ -488,8 +522,8 @@ function M.item(component, hl, opts)
     prefix,
     M.wrap(hl),
     component,
-    after,
-    "%*"
+    "%*",
+    after
   }
   return {table.concat(parts), #component + #before + #after + prefix_size}
 end
