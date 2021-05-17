@@ -587,6 +587,7 @@ return require("packer").startup {
     use {
       "sindrets/diffview.nvim",
       cmd = "DiffviewOpen",
+      module = "diffview",
       keys = "<localleader>gd",
       config = function()
         local cb = require("diffview.config").diffview_callback

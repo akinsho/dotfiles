@@ -6,6 +6,9 @@ return function()
       section = {"", ""}, -- "", ""
       item = {"▸", "▾"},
       hunk = {"樂", ""}
+    },
+    integrations = {
+      diffview = true
     }
   }
   as.nnoremap(
