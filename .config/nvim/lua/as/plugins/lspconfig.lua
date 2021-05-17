@@ -173,7 +173,7 @@ local function get_lua_runtime()
   local library = {}
   local items = {
     "$VIMRUNTIME",
-    "~/.config/nvim",
+    "$DOTFILES",
     "~/.local/share/nvim/site/pack/packer/opt/*",
     "~/.local/share/nvim/site/pack/packer/start/*"
   }
