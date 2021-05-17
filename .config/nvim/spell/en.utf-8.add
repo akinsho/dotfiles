@@ -198,3 +198,5 @@ yaml
 regex
 alright
 lsp
+lua
+bufferline
