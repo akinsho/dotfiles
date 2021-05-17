@@ -105,6 +105,13 @@ function as.is_dir(path)
   return fn.isdirectory(path) > 0
 end
 
+---Check if a vim variable usually a number is truthy or not
+---@param value integer
+function as.truthy(value)
+  assert(type(value) == "number", fmt("Value should be a number but you passed %s", value))
+  return value > 0
+end
+
 function as.is_empty(item)
   if not item then
     return true
