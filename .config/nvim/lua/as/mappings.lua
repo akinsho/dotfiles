@@ -299,7 +299,6 @@ vnoremap("$", "g_")
 -- at the first column.  <esc> will continue to work the default way.
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
 imap("jk", [[col('.') == 1 ? '<esc>' : '<esc>l']], {expr = true})
-xnoremap("jk", [[<ESC>]])
 -- Toggle top/center/bottom
 nmap(
   "zz",
