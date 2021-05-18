@@ -14,6 +14,11 @@ function! s:smart_close()
   endif
 endfunction
 
+augroup DotooOverrides
+  autocmd!
+  autocmd Filetype dotoocapture nnoremap <buffer><nowait><silent> q :wq<CR>
+augroup END
+
 function s:setup_smart_close() abort
   let filetypes = [
         \ "help",
@@ -27,7 +32,6 @@ function s:setup_smart_close() abort
         \ "log",
         \ "tsplayground",
         \ "qf",
-        \ "dotoocapture"
         \]
   let buftypes = ['nofile']
   let is_readonly = (&readonly || !&modifiable) && !hasmapto('q', 'n')
