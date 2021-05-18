@@ -1,5 +1,5 @@
 name = "Akin Sowemimo"
-downloads-dir = "/home/akin/Downloads/himalaya"
+downloads-dir = "/home/akin/Downloads/email"
 signature = "Regards,"
 
 [gmail]
@@ -14,4 +14,4 @@ imap-passwd-cmd = "pass show gmail/$EMAIL"
 smtp-host = "smtp.gmail.com"
 smtp-port = 465
 smtp-login = "akin.sowemimo@gmail.com"
-smtp-passwd-cmd = "pass show gmail"
+smtp-passwd-cmd = "pass show gmail/$EMAIL"

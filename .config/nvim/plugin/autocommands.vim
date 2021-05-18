@@ -103,7 +103,7 @@ augroup UpdateVim
   endif
   autocmd FocusLost * silent! wall
   " Update the cursor column to match current window size
-  autocmd VimEnter,BufWinEnter,VimResized,FocusGained,WinEnter * call s:check_color_column()
+  autocmd BufEnter,VimResized,FocusGained,WinEnter * call s:check_color_column()
   autocmd WinLeave * call s:check_color_column(1)
   " Make windows equal size when vim resizes
   autocmd VimResized * wincmd =
@@ -116,7 +116,8 @@ let s:column_clear = [
       \ 'vimwiki',
       \ 'vim-plug',
       \ 'help',
-      \ 'fugitive'
+      \ 'fugitive',
+      \ 'mail'
       \]
 " Don't set the colour column when there isn't enough space
 function! s:check_color_column(...)

@@ -487,29 +487,21 @@ require("packer").startup {
     -- Knowledge and task management {{{
     ---------------------------------------------------------------------------------
     use {
-      "soywod/himalaya",
+      "soywod/himalaya", --- Email in nvim
       rtp = "vim",
-      cmd = "Himalaya",
       run = "curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh",
       config = function()
-        as.augroup(
-          "HimalayaOverrides",
+        require("which-key").register(
           {
-            {
-              events = {"Filetype"},
-              targets = {"mail"},
-              command = function()
-                require("which-key").register(
-                  {
-                    gp = {"<Plug>(himalaya-mbox-prev-page)", "himalaya: previous page"}
-                  }
-                )
-              end
+            e = {
+              name = "+email",
+              l = {"<Cmd>Himalaya<CR>", "list"}
             }
-          }
+          },
+          {prefix = "<localleader>"}
         )
       end
-    } --- Email in nvim
+    }
     use {
       "vimwiki/vimwiki",
       branch = "dev",
