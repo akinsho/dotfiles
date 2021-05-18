@@ -895,11 +895,6 @@ require("packer").startup {
 }
 
 if not vim.g.packer_compiled_loaded then
-  vim.schedule(
-    function()
-      vim.notify("Sourcing packer compiled")
-    end
-  )
   vim.cmd(fmt("source %s", PACKER_COMPILED_PATH))
   vim.g.packer_compiled_loaded = true
 end
