@@ -75,9 +75,6 @@ nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 -----------------------------------------------------------------------------//
 -- Paste in visual mode multiple times
 xnoremap("p", "pgvy")
--- It pastes, visually selects pasted text and then re-indents it.
--- In most cases it works quite well.
-nnoremap("p", [[p`[v`]=]])
 -- search visual selection
 vnoremap("//", [[y/<C-R>"<CR>]])
 
