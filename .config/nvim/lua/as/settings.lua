@@ -193,6 +193,7 @@ opt.autoindent = true
 opt.autoindent = true
 vim.o.shiftround = true
 -----------------------------------------------------------------------------//
+-- vim.o.debug = "msg"
 vim.o.joinspaces = false
 vim.o.gdefault = true
 vim.o.pumheight = 15
