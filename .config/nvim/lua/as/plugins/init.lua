@@ -541,7 +541,6 @@ return require("packer").startup {
       config = conf("treesitter"),
       local_path = "contributing",
       requires = {
-        {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"},
         {
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
@@ -550,7 +549,16 @@ return require("packer").startup {
         }
       }
     }
-    use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter"}
+    use {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      after = "nvim-treesitter",
+      requires = "nvim-treesitter"
+    }
+    use {
+      "p00f/nvim-ts-rainbow",
+      requires = "nvim-treesitter/nvim-treesitter",
+      after = "nvim-treesitter"
+    }
     use {
       "lewis6991/spellsitter.nvim",
       opt = true,
