@@ -486,7 +486,29 @@ require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Knowledge and task management {{{
     ---------------------------------------------------------------------------------
-    use {"soywod/himalaya", rtp = "vim"} --- Email in nvim
+    use {
+      "soywod/himalaya",
+      rtp = "vim",
+      cmd = "Himalaya",
+      config = function()
+        as.augroup(
+          "HimalayaOverrides",
+          {
+            {
+              events = {"Filetype"},
+              targets = {"mail"},
+              command = function()
+                require("which-key").register(
+                  {
+                    gp = {"<Plug>(himalaya-mbox-prev-page)", "himalaya: previous page"}
+                  }
+                )
+              end
+            }
+          }
+        )
+      end
+    } --- Email in nvim
     use {
       "vimwiki/vimwiki",
       branch = "dev",

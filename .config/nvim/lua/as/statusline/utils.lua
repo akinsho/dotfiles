@@ -59,6 +59,8 @@ local exceptions = {
     quickfix = ""
   },
   filetypes = {
+    ["himalaya-msg-list"] = "",
+    mail = "",
     dbui = "",
     vista = "פּ",
     tsplayground = "侮",
@@ -82,6 +84,8 @@ local exceptions = {
     ["dap-repl"] = ""
   },
   names = {
+    ["himalaya-msg-list"] = "Inbox",
+    mail = "Mail",
     minimap = "minimap",
     dbui = "Dadbod UI",
     tsplayground = "Treesitter",
