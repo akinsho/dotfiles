@@ -4,6 +4,8 @@ local is_work = has("mac")
 local is_home = not is_work
 local fmt = string.format
 
+local PACKER_COMPILED_PATH = fn.stdpath("cache") .. "/packer/packer_compiled.vim"
+
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
   local install_path = fn.stdpath("data") .. "/site/pack/packer/*/packer.nvim"
@@ -35,7 +37,7 @@ as.augroup(
       command = function()
         as.invalidate("as.plugins", true)
         require("packer").compile()
-        vim.notify("Packer compiled...")
+        vim.notify("Ran packer compile...")
       end
     }
   }
@@ -127,7 +129,7 @@ end
   passed to setup or config etc. cannot reference aliased function
   or local variables
 --]]
-return require("packer").startup {
+require("packer").startup {
   function(use, use_rocks)
     use_local {"wbthomason/packer.nvim", local_path = "contributing"}
     --------------------------------------------------------------------------------
@@ -857,6 +859,7 @@ return require("packer").startup {
     ---------------------------------------------------------------------------------
   end,
   config = {
+    compile_path = PACKER_COMPILED_PATH,
     display = {
       open_cmd = "silent topleft 65vnew \\[packer\\]"
     },
@@ -866,6 +869,16 @@ return require("packer").startup {
     }
   }
 }
+
+if not vim.g.packer_compiled_loaded then
+  vim.schedule(
+    function()
+      vim.notify("Sourcing packer compiled")
+    end
+  )
+  vim.cmd(fmt("source %s", PACKER_COMPILED_PATH))
+  vim.g.packer_compiled_loaded = true
+end
 -- }}}
 
 -- vim:foldmethod=marker
