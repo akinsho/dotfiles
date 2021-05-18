@@ -1,0 +1,17 @@
+name = "Akin Sowemimo"
+downloads-dir = "/home/akin/Downloads/himalaya"
+signature = "Regards,"
+
+[gmail]
+default = true
+email = "$EMAIL"
+
+imap-host = "imap.gmail.com"
+imap-port = 993
+imap-login = "akin.sowemimo@gmail.com"
+imap-passwd-cmd = "pass show gmail/$EMAIL"
+
+smtp-host = "smtp.gmail.com"
+smtp-port = 465
+smtp-login = "akin.sowemimo@gmail.com"
+smtp-passwd-cmd = "pass show gmail"

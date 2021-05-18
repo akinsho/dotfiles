@@ -232,14 +232,6 @@ require("packer").startup {
         )
       end
     }
-    -- TODO: this breaks when used with sessions but keep an eye on it
-    use {
-      "sunjon/shade.nvim",
-      opt = true,
-      config = function()
-        require("shade").setup()
-      end
-    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
@@ -482,10 +474,19 @@ require("packer").startup {
         require("trouble").setup {auto_close = true, auto_preview = false}
       end
     }
+    -- TODO: this breaks when used with sessions but keep an eye on it
+    use {
+      "sunjon/shade.nvim",
+      opt = true,
+      config = function()
+        require("shade").setup()
+      end
+    }
     --}}}
     ---------------------------------------------------------------------------------
     -- Knowledge and task management {{{
     ---------------------------------------------------------------------------------
+    use {"soywod/himalaya", rtp = "vim"} --- Email in nvim
     use {
       "vimwiki/vimwiki",
       branch = "dev",
