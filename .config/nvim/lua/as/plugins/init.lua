@@ -490,6 +490,7 @@ require("packer").startup {
       "soywod/himalaya",
       rtp = "vim",
       cmd = "Himalaya",
+      run = "curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh",
       config = function()
         as.augroup(
           "HimalayaOverrides",

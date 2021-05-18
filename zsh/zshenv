@@ -13,6 +13,9 @@ fi
 path+=(
   "/usr/local/bin"
   "$HOME/.npm/bin"
+  "$HOME/.local/bin"
+  # Dart ============================================================
+  "$HOME/flutter/.pub-cache/bin"
 )
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -28,27 +31,19 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     "$LUA_PATH"
     "$LUA_CPATH"
     "$JAVA_HOME/bin"
-    # Dart ============================================================
-    "$HOME/.pub-cache/bin"
     # GO ============================================================
     "/usr/local/go/bin"
     "$(go env GOPATH)/bin"
-    "$HOME/.local/bin"
     # RUST ==========================================================
     "$HOME/.cargo/bin"
   )
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  # FLUTTER =======================================================
-  path+=(
-    "$HOME/flutter/bin"
-    "$HOME/flutter/.pub-cache/bin"
-  )
-  # Don't try to control go variables on systems we don't have total control over
   if [[ $MINIMAL != true ]]; then
     # Mac OSX
-    export GOPATH=$HOME/Desktop/Coding/Go
     export GOROOT=/usr/local/opt/go/libexec
     path+=(
+    # FLUTTER =======================================================
+    "$HOME/flutter/bin"
       "/usr/local/opt/go/libexec/bin"
       "$(go env GOPATH)/bin"
     )
