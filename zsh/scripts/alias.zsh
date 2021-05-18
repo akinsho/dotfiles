@@ -12,6 +12,7 @@ else
   # plugins (mac == work)
   alias dv='DEVELOPING=1 nvim'
   alias dvim='DEVELOPING=1 nvim'
+  alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
 fi
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias grep='grep --color'
