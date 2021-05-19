@@ -363,6 +363,7 @@ require("packer").startup {
     --- Highlight commandline ranges e.g. :10,20m.
     use {
       "winston0410/range-highlight.nvim",
+      opt = true,
       config = function()
         require("range-highlight").setup()
       end
