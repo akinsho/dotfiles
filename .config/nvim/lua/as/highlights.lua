@@ -160,10 +160,10 @@ vim.cmd [[colorscheme doom-one]]
 -- Plugin highlights
 ---------------------------------------------------------------------------------
 local function plugin_highlights()
-  if plugin_loaded("telescope.nvim") then
-    M.highlight("TelescopePathSeparator", {link = "Directory"})
-    M.highlight("TelescopeQueryFilter", {link = "IncSearch"})
-  end
+  M.highlight("TelescopePathSeparator", {link = "Directory"})
+  M.highlight("TelescopeQueryFilter", {link = "IncSearch"})
+
+  M.highlight("CompeDocumentation", {link = "Pmenu"})
 
   if plugin_loaded("conflict-marker.vim") then
     M.all {
@@ -191,6 +191,10 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     {"MsgArea", {guibg = msg_area_bg}},
     {"MsgSeparator", {guifg = comment_fg, guibg = msg_area_bg}},
+    -----------------------------------------------------------------------------//
+    -- Floats
+    -----------------------------------------------------------------------------//
+    {"NormalFloat", {link = "Normal"}},
     -----------------------------------------------------------------------------//
     {"CursorLineNr", {guifg = "yellow", gui = "bold"}},
     {"FoldColumn", {guibg = "background"}},
@@ -324,12 +328,12 @@ as.augroup(
     {
       events = {"VimEnter", "ColorScheme"},
       targets = {"*"},
-      command = "lua require('as.highlights').apply_user_highlights()"
+      command = M.apply_user_highlights
     },
     {
       events = {"FileType"},
       targets = sidebar_fts,
-      command = "lua require('as.highlights').on_sidebar_enter()"
+      command = M.on_sidebar_enter
     }
   }
 )

@@ -36,6 +36,12 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
+---NOTE: this plugin returns the currently loaded state of a plugin given
+---given certain assumptions i.e. it will only be true if the plugin has been
+---loaded e.g. lazy loading will return false
+---TODO: add a function to determine if a plugin is installed
+---@param plugin_name string
+---@return boolean?
 function _G.plugin_loaded(plugin_name)
   local plugins = _G.packer_plugins or {}
   return plugins[plugin_name] and plugins[plugin_name].loaded
