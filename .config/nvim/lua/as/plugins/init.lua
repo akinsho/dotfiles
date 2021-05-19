@@ -37,7 +37,7 @@ as.augroup(
       command = function()
         as.invalidate("as.plugins", true)
         require("packer").compile()
-        vim.notify("Ran packer compile...")
+        vim.notify("packer compiled...")
       end
     }
   }
