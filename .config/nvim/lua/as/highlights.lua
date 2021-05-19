@@ -99,9 +99,16 @@ end
 ---@param name string
 ---@param opts table
 function M.highlight(name, opts)
-  local keys = {guifg = true, guibg = true, guisp = true, gui = true, cterm = true}
+  local keys = {
+    gui = true,
+    guifg = true,
+    guibg = true,
+    guisp = true,
+    cterm = true,
+    blend = true
+  }
   local force = opts.force or false
-  if name and vim.tbl_count(opts) > 0 then
+  if name and not vim.tbl_isempty(opts) then
     if opts.link and opts.link ~= "" then
       vim.cmd("highlight" .. (force and "!" or "") .. " link " .. name .. " " .. opts.link)
     else
