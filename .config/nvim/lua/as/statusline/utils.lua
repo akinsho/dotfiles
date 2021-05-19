@@ -391,10 +391,12 @@ end
 
 function M.lsp_status()
   if _G.plugin_loaded("lsp-status.nvim") then
-    return require("lsp-status").status()
+    -- TODO: use when nvim-lua/lsp-status #58 is merged
+    -- return require("lsp-status").status_progress()
+    local status = require("lsp-status").status()
+    --- NOTE: escape percentage symbol in statusline
+    return status:gsub("%)", [[%%)]])
   end
-  local coc_status = vim.g.coc_status or ""
-  return vim.fn.trim(coc_status)
 end
 
 local function printf(format, current, total)
