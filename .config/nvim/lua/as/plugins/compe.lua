@@ -41,13 +41,13 @@ return function()
   require("compe").setup {
     source = {
       path = true,
-      buffer = {kind = " [Buffer]"},
-      vsnip = {priority = 1500, kind = " [Vsnip]"},
-      spell = true,
+      buffer = true,
+      vsnip = true,
+      spell = false,
+      emoji = false,
       nvim_lsp = true,
       nvim_lua = true,
-      emoji = false,
-      tabnine = as.has("mac") and {priority = 1200} or false
+      tabnine = false -- {priority = 1200}
     }
   }
 
