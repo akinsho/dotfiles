@@ -208,7 +208,7 @@ as.lsp.servers = {
       settings = {
         Lua = {
           diagnostics = {
-            globals = {"vim", "describe", "it", "before_each", "after_each", "pending"}
+            globals = {"vim", "describe", "it", "before_each", "after_each", "pending", "teardown"}
           },
           completion = {keywordSnippet = "Both", callSnippet = "Both"},
           runtime = {
