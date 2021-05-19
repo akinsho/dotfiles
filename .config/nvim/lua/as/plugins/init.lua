@@ -834,7 +834,14 @@ require("packer").startup {
       config = function()
         local large_screen = vim.o.columns > 200
         require("toggleterm").setup {
-          size = large_screen and vim.o.columns * 0.4 or 15,
+          size = function(term)
+            if term.direction == "horizontal" then
+              return 15
+            elseif term.direction == "vertical" then
+              return vim.o.columns * 0.4
+            end
+          end,
+          persist_size = false,
           open_mapping = [[<c-\>]],
           shade_filetypes = {"none"},
           direction = large_screen and "vertical" or "horizontal",
