@@ -319,7 +319,7 @@ local function colorscheme_overrides()
       {"TSVariable", {guifg = "NONE"}},
       {"WhichKeyFloat", {link = "PanelBackground"}},
       {"Cursor", {guibg = keyword_fg, gui = "NONE"}},
-      {"Pmenu", {guibg = pmenu_bg, blend = 6}}
+      {"Pmenu", {guibg = pmenu_bg, guifg = "lightgray", blend = 6}}
     }
   end
 end
