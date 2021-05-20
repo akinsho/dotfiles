@@ -401,7 +401,7 @@ function M.lsp_status()
     -- TODO: use when nvim-lua/lsp-status #58 is merged
     -- return require("lsp-status").status_progress()
     --- NOTE: escape percentage symbol in statusline
-    return lsp_status.status():gsub("%)", [[%%)]])
+    return lsp_status.status():gsub("%%", "%%%%")
   end
 end
 
