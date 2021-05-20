@@ -389,13 +389,19 @@ function M.diagnostic_info(context)
   }
 end
 
+local lsp_status
+---@type boolean
+local ok
+
 function M.lsp_status()
-  if _G.plugin_loaded("lsp-status.nvim") then
+  if not lsp_status then
+    ok, lsp_status = pcall(require, "lsp-status")
+  end
+  if ok and lsp_status then
     -- TODO: use when nvim-lua/lsp-status #58 is merged
     -- return require("lsp-status").status_progress()
-    local status = require("lsp-status").status()
     --- NOTE: escape percentage symbol in statusline
-    return status:gsub("%)", [[%%)]])
+    return lsp_status.status():gsub("%)", [[%%)]])
   end
 end
 
