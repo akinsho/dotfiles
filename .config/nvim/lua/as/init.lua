@@ -5,9 +5,8 @@ require("as.statusline")
 require("as.numbers")
 require("as.mappings")
 require("as.folds")
-require("as.dev").setup(false) -- Disabled
+require("as.dev").setup(false) -- disabled
 require("as.whitespace").setup()
 require("as.localrc").setup("VimEnter")
--- Source plugins after config but during startup
-require("as.plugins")
+require("as.plugins") -- source plugins after config but during startup
 require("as.autocommands")
