@@ -10,3 +10,4 @@ require("as.whitespace").setup()
 require("as.localrc").setup("VimEnter")
 -- Source plugins after config but during startup
 require("as.plugins")
+require("as.autocommands")
