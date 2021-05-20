@@ -302,7 +302,28 @@ require("packer").startup {
     use_local {
       "akinsho/flutter-tools.nvim",
       ft = "dart",
-      config = conf("flutter"),
+      config = function()
+        local ok, lsp_status = pcall(require, "lsp-status")
+        local capabilities = ok and lsp_status.capabilities or nil
+
+        require("flutter-tools").setup {
+          experimental = {
+            lsp_derive_paths = true
+          },
+          debugger = {
+            enabled = true
+          },
+          widget_guides = {
+            enabled = true,
+            debug = true
+          },
+          dev_log = {open_cmd = "tabedit"},
+          lsp = {
+            on_attach = as.lsp and as.lsp.on_attach or nil,
+            capabilities = capabilities
+          }
+        }
+      end,
       requires = {"nvim-dap", "plenary.nvim"},
       local_path = "personal"
     }
@@ -368,7 +389,18 @@ require("packer").startup {
         require("range-highlight").setup()
       end
     }
-    use {"mg979/vim-visual-multi", config = conf("vim-visual-multi")}
+    use {
+      "mg979/vim-visual-multi",
+      config = function()
+        vim.g.VM_highlight_matches = "underline"
+        vim.g.VM_maps = {
+          ["Find Under"] = "<C-e>",
+          ["Find Subword Under"] = "<C-e>",
+          ["Select Cursor Down"] = [[\j]],
+          ["Select Cursor Up"] = [[\k]]
+        }
+      end
+    }
     use {
       "itchyny/vim-highlighturl",
       config = function()
