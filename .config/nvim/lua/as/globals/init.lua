@@ -1,5 +1,7 @@
 require("as.globals.utils")
 
+local fn = vim.fn
+
 if vim.notify then
   ---Override of vim.notify to open floating window
   --@param message of the notification to show to the user
@@ -36,10 +38,26 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
+local installed
+function as.plugin_installed(plugin_name)
+  if not installed then
+    local dirs = fn.expand(fn.stdpath("data") .. "/site/pack/packer/start/*", true, true)
+    local opt = fn.expand(fn.stdpath("data") .. "/site/pack/packer/opt/*", true, true)
+    vim.list_extend(dirs, opt)
+    installed =
+      vim.tbl_map(
+      function(path)
+        return fn.fnamemodify(path, ":t")
+      end,
+      dirs
+    )
+  end
+  return vim.tbl_contains(installed, plugin_name)
+end
+
 ---NOTE: this plugin returns the currently loaded state of a plugin given
 ---given certain assumptions i.e. it will only be true if the plugin has been
 ---loaded e.g. lazy loading will return false
----TODO: add a function to determine if a plugin is installed
 ---@param plugin_name string
 ---@return boolean?
 function _G.plugin_loaded(plugin_name)
