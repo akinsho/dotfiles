@@ -864,8 +864,12 @@ require("packer").startup {
       "akinsho/nvim-toggleterm.lua",
       local_path = "personal",
       config = function()
-        local large_screen = vim.o.columns > 200
         require("toggleterm").setup {
+          persist_size = false,
+          open_mapping = [[<c-\>]],
+          shade_filetypes = {"none"},
+          direction = "vertical",
+          float_opts = {border = "curved"},
           size = function(term)
             if term.direction == "horizontal" then
               return 15
@@ -873,13 +877,6 @@ require("packer").startup {
               return vim.o.columns * 0.4
             end
           end,
-          persist_size = false,
-          open_mapping = [[<c-\>]],
-          shade_filetypes = {"none"},
-          direction = large_screen and "vertical" or "horizontal",
-          float_opts = {
-            border = "curved"
-          }
         }
 
         local lazygit =
