@@ -393,16 +393,21 @@ local lsp_status
 ---@type boolean
 local ok
 
+---The lsp servers current status
+---@return string
 function M.lsp_status()
   if not lsp_status then
     ok, lsp_status = pcall(require, "lsp-status")
   end
   if ok and lsp_status then
-    -- TODO: use when nvim-lua/lsp-status #58 is merged
-    -- return require("lsp-status").status_progress()
-    --- NOTE: escape percentage symbol in statusline
-    return lsp_status.status():gsub("%%", "%%%%")
+    return lsp_status.status_progress()
   end
+end
+
+---The currently focused function
+---@return string?
+function M.current_function()
+  return vim.b.lsp_current_function
 end
 
 local function printf(format, current, total)

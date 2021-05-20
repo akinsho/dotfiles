@@ -209,7 +209,7 @@ function _G.statusline()
   -----------------------------------------------------------------------------//
   -- LSP Status
   add(
-    {utils.item(utils.lsp_status(), "StMetadata"), 4},
+    {utils.item(utils.current_function(), "StMetadata", {prefix = ""}), 4},
     -- Start of the right side layout
     {separator}
   )
@@ -262,10 +262,7 @@ function _G.statusline()
       ),
       7
     },
-    {
-      utils.item(notifications, "StTitle", {prefix = ""}),
-      3
-    }
+    {utils.item(notifications, "StTitle", {prefix = ""}), 3}
   )
 
   local status = vim.b.gitsigns_status_dict or {}
@@ -296,7 +293,8 @@ function _G.statusline()
         {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
       ),
       6
-    }
+    },
+    {utils.item(utils.lsp_status(), "StMetadata"), 4}
   )
 
   add({end_marker})
