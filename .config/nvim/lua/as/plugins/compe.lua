@@ -41,9 +41,9 @@ return function()
   require("compe").setup {
     source = {
       path = true,
-      buffer = true,
-      vsnip = true,
-      spell = false,
+      buffer = {kind = " (Buffer)"},
+      vsnip = {kind = " (Snippet)"},
+      spell = true,
       emoji = false,
       nvim_lsp = true,
       nvim_lua = true,
