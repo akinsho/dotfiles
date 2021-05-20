@@ -551,6 +551,10 @@ function M.item(component, hl, opts)
     component = tostring(component)
   end
 
+  if opts.max_size and component and #component >= opts.max_size then
+    component = component:sub(1, opts.max_size - 1) .. "…"
+  end
+
   local parts = {
     before,
     prefix,

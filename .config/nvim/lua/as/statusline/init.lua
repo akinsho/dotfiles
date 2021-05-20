@@ -294,7 +294,7 @@ function _G.statusline()
       ),
       6
     },
-    {utils.item(utils.lsp_status(), "StMetadata"), 4}
+    {utils.item(utils.lsp_status(), "StMetadata", {max_size = 30}), 4}
   )
 
   add({end_marker})
