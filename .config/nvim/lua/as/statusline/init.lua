@@ -189,7 +189,9 @@ function _G.statusline()
     {dir_item, 3},
     {parent_item, 2},
     {file_item, 0},
-    -- If local plugins are loaded and I'm developing locally show an indicator
+    -- LSP Status
+    {utils.item(utils.current_function(), "StMetadata", {before = "  ", prefix = ""}), 4},
+    -- Local plugin dev indicator
     {
       utils.item_if(
         available_space > 100 and "local dev" or "",
@@ -207,9 +209,7 @@ function _G.statusline()
   -- Neovim allows unlimited alignment sections so we can put things in the
   -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   -----------------------------------------------------------------------------//
-  -- LSP Status
   add(
-    {utils.item(utils.current_function(), "StMetadata", {prefix = ""}), 4},
     -- Start of the right side layout
     {separator}
   )
@@ -222,6 +222,7 @@ function _G.statusline()
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   add(
+    {utils.item(utils.lsp_status(), "StMetadata", {max_size = 30}), 4},
     {
       utils.item_if(
         diagnostics.error.count,
@@ -249,19 +250,6 @@ function _G.statusline()
       ),
       4
     },
-    -- Current line number/total line number,  alternatives 
-    {
-      utils.line_info(
-        {
-          prefix = "ℓ",
-          prefix_color = "StMetadataPrefix",
-          current_hl = "StTitle",
-          total_hl = "StComment",
-          sep_hl = "StComment"
-        }
-      ),
-      7
-    },
     {utils.item(notifications, "StTitle", {prefix = ""}), 3}
   )
 
@@ -284,6 +272,19 @@ function _G.statusline()
       5
     },
     {utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}), 5},
+    -- Current line number/total line number,  alternatives 
+    {
+      utils.line_info(
+        {
+          prefix = "ℓ",
+          prefix_color = "StMetadataPrefix",
+          current_hl = "StTitle",
+          total_hl = "StComment",
+          sep_hl = "StComment"
+        }
+      ),
+      7
+    },
     -- (Unexpected) Indentation
     {
       utils.item_if(
@@ -293,8 +294,7 @@ function _G.statusline()
         {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
       ),
       6
-    },
-    {utils.item(utils.lsp_status(), "StMetadata", {max_size = 30}), 4}
+    }
   )
 
   add({end_marker})
