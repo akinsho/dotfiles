@@ -211,7 +211,7 @@ require("packer").startup {
           {
             {
               events = {"BufEnter"},
-              targets = {"*_spec.lua"},
+              targets = {"*/personal/*/tests/*_spec.lua"},
               command = function()
                 require("which-key").register(
                   {
