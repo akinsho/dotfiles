@@ -39,6 +39,9 @@ function _G.dump(...)
 end
 
 local installed
+---Check if a plugin is on the system not whether or not it is loaded
+---@param plugin_name string
+---@return boolean
 function as.plugin_installed(plugin_name)
   if not installed then
     local dirs = fn.expand(fn.stdpath("data") .. "/site/pack/packer/start/*", true, true)

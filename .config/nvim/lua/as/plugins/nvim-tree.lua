@@ -26,6 +26,7 @@ return function()
   vim.g.nvim_tree_hijack_netrw = 0
   vim.g.nvim_tree_root_folder_modifier = ":t"
   vim.g.nvim_tree_ignore = {".DS_Store", "fugitive:", ".git"}
+  vim.g.nvim_tree_highlight_opened_files = 1
 
   local function set_highlights()
     require("as.highlights").all {
@@ -38,7 +39,6 @@ return function()
       {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}}
     }
   end
-
   as.augroup(
     "NvimTreeOverrides",
     {

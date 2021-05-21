@@ -305,7 +305,6 @@ require("packer").startup {
       config = function()
         local ok, lsp_status = pcall(require, "lsp-status")
         local capabilities = ok and lsp_status.capabilities or nil
-
         require("flutter-tools").setup {
           experimental = {
             lsp_derive_paths = true
@@ -876,7 +875,7 @@ require("packer").startup {
             elseif term.direction == "vertical" then
               return vim.o.columns * 0.4
             end
-          end,
+          end
         }
 
         local lazygit =
