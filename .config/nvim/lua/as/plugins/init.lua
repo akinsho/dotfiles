@@ -285,7 +285,7 @@ require("packer").startup {
             )
           end
         },
-        {"glepnir/lspsaga.nvim", config = conf("lspsaga")},
+        {"glepnir/lspsaga.nvim", opt = true, config = conf("lspsaga")},
         {
           "kabouzeid/nvim-lspinstall",
           opt = true,
