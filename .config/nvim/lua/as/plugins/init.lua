@@ -617,6 +617,7 @@ require("packer").startup {
         require("spellsitter").setup {hl = "SpellBad", captures = {"comment"}}
       end
     }
+    use {"dart-lang/dart-vim-plugin", ft = "dart"}
     use "plasticboy/vim-markdown"
     use "mtdl9/vim-log-highlighting"
     ---}}}
