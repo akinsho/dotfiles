@@ -41,11 +41,11 @@ return function()
   require("compe").setup {
     source = {
       path = true,
-      buffer = {kind = " (Buffer)"},
-      vsnip = {kind = " (Snippet)"},
+      buffer = {kind = " "},
+      vsnip = {kind = " "},
       spell = true,
       emoji = false,
-      nvim_lsp = true,
+      nvim_lsp = {priority = 101},
       nvim_lua = true,
       tabnine = false -- {priority = 1200}
     }
