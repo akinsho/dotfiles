@@ -41,7 +41,7 @@ return function()
   require("compe").setup {
     source = {
       path = true,
-      buffer = {kind = " (Buffer)"},
+      buffer = {kind = " (Buffer)"},
       vsnip = {kind = " (Snippet)"},
       spell = true,
       emoji = false,
