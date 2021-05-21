@@ -33,6 +33,7 @@ function M.colors()
   local comment_gui = H.hl_value("Comment", "gui")
   local number_fg = H.hl_value("Number", "fg")
   local warning_fg = P.light_yellow
+  local identifier_fg = H.hl_value("Identifier", "fg")
   local inc_search_bg = H.hl_value("Search", "bg")
 
   H.all {
@@ -47,6 +48,7 @@ function M.colors()
     {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
     {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "bold"}},
+    {"StIdentifier", {guifg = identifier_fg, guibg = bg_color}},
     {"StDim", {guibg = bg_color, guifg = comment_fg}},
     {"StTitle", {guibg = bg_color, guifg = "LightGray", gui = "bold"}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
@@ -190,7 +192,14 @@ function _G.statusline()
     {parent_item, 2},
     {file_item, 0},
     -- LSP Status
-    {utils.item(utils.current_function(), "StMetadata", {before = "  ", prefix = ""}), 4},
+    {
+      utils.item(
+        utils.current_function(),
+        "StMetadata",
+        {before = "  ", prefix = "", prefix_color = "StIdentifier"}
+      ),
+      4
+    },
     -- Local plugin dev indicator
     {
       utils.item_if(
