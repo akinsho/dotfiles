@@ -7,36 +7,16 @@
 local M = {}
 local fn = vim.fn
 
+local function is_floating_win()
+  return vim.fn.win_gettype() == "popup"
+end
+
 local function is_invalid_buf()
   return vim.bo.filetype == "" or vim.bo.buftype ~= "" or not vim.bo.modifiable
 end
 
-function M.setup()
-  require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})
-  as.augroup(
-    "WhitespaceMatch",
-    {
-      {
-        events = {"ColorScheme"},
-        targets = {"*"},
-        command = [[lua require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})]]
-      },
-      {
-        events = {"BufEnter", "FileType", "InsertLeave"},
-        targets = {"*"},
-        command = [[lua require('as.whitespace').toggle_trailing('n')]]
-      },
-      {
-        events = {"InsertEnter"},
-        targets = {"*"},
-        command = [[lua require('as.whitespace').toggle_trailing('i')]]
-      }
-    }
-  )
-end
-
-function M.toggle_trailing(mode)
-  if is_invalid_buf() then
+local function toggle_trailing(mode)
+  if is_invalid_buf() or is_floating_win() then
     vim.wo.list = false
     return
   end
@@ -50,6 +30,36 @@ function M.toggle_trailing(mode)
   else
     vim.w.whitespace_match_number = fn.matchadd("ExtraWhitespace", pattern)
   end
+end
+
+function M.setup()
+  require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})
+  as.augroup(
+    "WhitespaceMatch",
+    {
+      {
+        events = {"ColorScheme"},
+        targets = {"*"},
+        command = function()
+          require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})
+        end
+      },
+      {
+        events = {"BufEnter", "FileType", "InsertLeave"},
+        targets = {"*"},
+        command = function()
+          toggle_trailing("n")
+        end
+      },
+      {
+        events = {"InsertEnter"},
+        targets = {"*"},
+        command = function()
+          toggle_trailing("i")
+        end
+      }
+    }
+  )
 end
 
 return M

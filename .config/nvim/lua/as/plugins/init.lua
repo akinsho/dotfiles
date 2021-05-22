@@ -355,6 +355,7 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
+    use "kevinhwang91/nvim-bqf"
     use "nanotee/luv-vimdocs"
     use {
       "arecarn/vim-fold-cycle",

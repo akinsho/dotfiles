@@ -21,9 +21,6 @@ highlight! link QuickFixLine CursorLine
 "--------------------------------------------------------------------------------
 nnoremap <silent><buffer>dd :call utils#qf_delete(bufnr())<CR>
 vnoremap <silent><buffer>d  :call utils#qf_delete(bufnr())<CR>
-
-" Setup plugin for auto previewing quickfix content
-lua require('as.quickfix').setup({ preview_height = 8 })
 "--------------------------------------------------------------------------------
 " Mappings
 "--------------------------------------------------------------------------------
