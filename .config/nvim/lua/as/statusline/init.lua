@@ -12,17 +12,12 @@ local H = require("as.highlights")
 local P = utils.palette
 local M = {}
 
-M.git_updates = utils.git_updates
-M.git_toggle_updates = utils.git_update_toggle
-M.git_updates_refresh = utils.git_updates_refresh
-M.github_notifications = utils.github_notifications
-
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
 --- as italic or bold, this is because the underlying bold font is not necessarily
 --- patched with the nerd font characters
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
-function M.colors()
+local function colors()
   local error_color = H.hl_value("LspDiagnosticsDefaultError", "fg")
   local indicator_color = P.bright_blue
   local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -16)
@@ -320,18 +315,18 @@ local function setup_autocommands()
       {
         events = {"VimEnter", "ColorScheme"},
         targets = {"*"},
-        command = "lua require'as.statusline'.colors()"
+        command = colors
       },
-      {events = {"VimEnter"}, targets = {"*"}, command = "lua require'as.statusline'.git_updates()"},
+      {events = {"VimEnter"}, targets = {"*"}, command = utils.git_updates},
       {
         events = {"VimEnter"},
         targets = {"*"},
-        command = "lua require'as.statusline'.github_notifications()"
+        command = utils.github_notifications
       },
       {
         events = {"DirChanged"},
         targets = {"*"},
-        command = "lua require'as.statusline'.git_toggle_updates()"
+        command = utils.git_update_toggle
       },
       --- NOTE: enable to update search count on cursor move
       -- {
@@ -342,15 +337,15 @@ local function setup_autocommands()
       -- NOTE: user autocommands can't be joined into one autocommand
       {
         events = {"User AsyncGitJobComplete"},
-        command = "lua require'as.statusline'.git_updates_refresh()"
+        command = utils.git_updates_refresh
       },
       {
         events = {"User NeogitStatusRefresh"},
-        command = "lua require'as.statusline'.git_updates_refresh()"
+        command = utils.git_updates_refresh
       },
       {
         events = {"User FugitiveChanged"},
-        command = "lua require'as.statusline'.git_updates_refresh()"
+        command = utils.git_updates_refresh
       },
       {
         events = {"User FugitiveChanged"},
