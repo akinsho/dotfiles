@@ -130,7 +130,6 @@ end
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
 vim.o.wildcharm = fn.char2nr("<C-Z>")
-vim.o.wildmenu = true
 vim.o.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
 vim.o.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
@@ -187,7 +186,6 @@ opt.textwidth = 80
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
-opt.autoindent = true
 vim.o.shiftround = true
 -----------------------------------------------------------------------------//
 -- vim.o.debug = "msg"
@@ -199,10 +197,7 @@ vim.o.completeopt = add {"menuone", "noselect"}
 vim.o.hlsearch = false
 vim.o.autowriteall = true -- automatically :write before running commands and changing files
 vim.o.clipboard = "unnamedplus"
-vim.o.lazyredraw = true
 vim.o.laststatus = 2
-vim.o.ttyfast = true
-vim.o.belloff = "all"
 vim.o.termguicolors = true
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
@@ -245,11 +240,9 @@ vim.o.sessionoptions =
 }
 vim.o.viewoptions = add {"cursor", "folds"} -- save/restore just these (with `:{mk,load}view`)
 vim.o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
-vim.o.dictionary = "/usr/share/dict/words"
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
-vim.o.swapfile = false
 vim.o.backup = false
 vim.o.writebackup = false
 if fn.isdirectory(vim.o.undodir) == 0 then
