@@ -160,8 +160,10 @@ end
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-vim.g.one_allow_italics = 1
-vim.cmd [[colorscheme doom-one]]
+local ok, msg = pcall(vim.cmd, "colorscheme doom-one")
+if not ok then
+  as.echomsg(msg)
+end
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights
