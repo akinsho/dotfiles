@@ -42,6 +42,13 @@ function as.augroup(name, commands)
   vim.cmd("augroup END")
 end
 
+---Check if a cmd is executable
+---@param e string
+---@return boolean
+function as.executable(e)
+  return fn.executable(e) > 0
+end
+
 function as.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)

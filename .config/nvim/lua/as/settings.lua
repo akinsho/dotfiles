@@ -1,8 +1,5 @@
 local fn = vim.fn
 local api = vim.api
-local executable = function(e)
-  return fn.executable(e) > 0
-end
 
 local opts_info = vim.api.nvim_get_all_options_info()
 
@@ -117,22 +114,22 @@ opt.formatoptions =
 vim.o.foldtext = "v:lua.folds()"
 vim.o.foldopen = add(vim.o.foldopen, "search")
 vim.o.foldlevelstart = 10
-opt.foldmethod = "syntax"
+opt.foldmethod = "indent"
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
-if executable("rg") then
+if as.executable("rg") then
   vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   vim.o.grepformat = add("%f:%l:%c:%m", vim.o.grepformat)
-elseif executable("ag") then
+elseif as.executable("ag") then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   vim.o.grepformat = add("%f:%l:%c:%m", vim.o.grepformat)
 end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.o.wildcharm = api.nvim_eval([[char2nr("\<C-Z>")]]) -- FIXME: what's the correct way to do this?
+vim.o.wildcharm = fn.char2nr("<C-Z>")
 vim.o.wildmenu = true
 vim.o.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
 vim.o.wildignorecase = true -- Ignore case when completing file names and directories
@@ -287,8 +284,6 @@ vim.o.complete = add("kspell", vim.o.complete)
 -----------------------------------------------------------------------------//
 vim.o.mouse = "a"
 vim.o.mousefocus = true
--- FIXME - these don't work in lua
--- vim.o.mousehide = true -- Raise issue on Neovim as this errors
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
 vim.o.secure = true -- Disable autocmd etc for project local vimrc files.
@@ -296,7 +291,7 @@ vim.o.exrc = true -- Allow project local vimrc files example .nvimrc see :h exrc
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
-if executable("nvr") then
+if as.executable("nvr") then
   vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
   vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
