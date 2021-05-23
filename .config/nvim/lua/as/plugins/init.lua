@@ -454,20 +454,9 @@ require("packer").startup {
       end
     }
     use {
-      "rrethy/vim-hexokinase",
-      run = "make hexokinase",
-      ft = {
-        "lua",
-        "dart",
-        "css",
-        "html",
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact"
-      },
-      setup = function()
-        vim.g.Hexokinase_ftDisabled = {"vimwiki"}
+      "norcalli/nvim-colorizer.lua",
+      config = function()
+        require("colorizer").setup()
       end
     }
     use {
