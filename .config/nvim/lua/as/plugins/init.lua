@@ -835,7 +835,6 @@ require("packer").startup {
     ----------------------------------------------------------------------------------
     use "romgrk/doom-one.vim"
     use {"Th3Whit3Wolf/one-nvim", opt = true}
-    use {"bluz71/vim-nightfly-guicolors", opt = true}
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
@@ -915,7 +914,7 @@ require("packer").startup {
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
-      open_cmd = "silent topleft 65vnew \\[packer\\]"
+      open_cmd = "silent topleft 65vnew Packer"
     },
     profile = {
       enable = true,
