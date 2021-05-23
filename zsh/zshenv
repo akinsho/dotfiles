@@ -32,8 +32,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     "$LUA_CPATH"
     "$JAVA_HOME/bin"
     # GO ============================================================
-    "/usr/local/go/bin"
-    "$(go env GOPATH)/bin"
+    "$GOPATH/bin"
     # RUST ==========================================================
     "$HOME/.cargo/bin"
   )
