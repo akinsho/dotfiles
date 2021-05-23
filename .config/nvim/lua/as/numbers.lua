@@ -5,8 +5,49 @@
 local api = vim.api
 local M = {}
 
+vim.g.number_filetype_exclusions = {
+  "undotree",
+  "log",
+  "man",
+  "dap-repl",
+  "markdown",
+  "vimwiki",
+  "vim-plug",
+  "gitcommit",
+  "toggleterm",
+  "fugitive",
+  "coc-explorer",
+  "coc-list",
+  "list",
+  "NvimTree",
+  "startify",
+  "help",
+  "todoist",
+  "lsputil_locations_list",
+  "lsputil_symbols_list",
+  "himalaya",
+  "Trouble"
+}
+
+vim.g.number_buftype_exclusions = {
+  "terminal",
+  "help",
+  "nofile",
+  "acwrite"
+}
+
+vim.g.number_buftype_ignored = {
+  "quickfix"
+}
+
 local function is_floating_win()
   return vim.fn.win_gettype() == "popup"
+end
+
+---Determines whether or not a window should be ignored by this plugin
+---@return boolean
+local function is_ignored()
+  return vim.tbl_contains(vim.g.number_buftype_ignored, vim.bo.buftype) or is_floating_win()
 end
 
 -- block list certain plugins and buffer types
@@ -44,7 +85,7 @@ local function is_blocked()
 end
 
 local function enable_relative_number()
-  if is_floating_win() then
+  if is_ignored() then
     return
   end
   if is_blocked() then
@@ -59,7 +100,7 @@ local function enable_relative_number()
 end
 
 local function disable_relative_number()
-  if is_floating_win() then
+  if is_ignored() then
     return
   end
   if is_blocked() then
