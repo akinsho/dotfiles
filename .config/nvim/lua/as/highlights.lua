@@ -205,7 +205,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     {"NormalFloat", {link = "Normal"}},
     -----------------------------------------------------------------------------//
-    {"CursorLineNr", {guifg = "yellow", gui = "bold"}},
+    {"CursorLineNr", {gui = "bold"}},
     {"FoldColumn", {guibg = "background"}},
     {"Folded", {link = "Comment", force = true}},
     {"TermCursor", {ctermfg = "green", guifg = "royalblue"}},
@@ -223,10 +223,10 @@ local function general_overrides()
     {"DiffChange", {guibg = "#344f69", guifg = "NONE"}},
     {"DiffText", {guibg = "#2f628e", guifg = "NONE"}},
     -- colorscheme overrides
-    {"Comment", {gui = "italic", cterm = "italic"}},
-    {"Type", {gui = "italic,bold", cterm = "italic,bold"}},
-    {"Include", {gui = "italic", cterm = "italic"}},
-    {"Folded", {gui = "bold,italic", cterm = "bold"}},
+    {"Comment", {gui = "italic"}},
+    {"Type", {gui = "italic,bold"}},
+    {"Include", {gui = "italic"}},
+    {"Folded", {gui = "bold,italic"}},
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
@@ -315,13 +315,15 @@ end
 
 local function colorscheme_overrides()
   local keyword_fg = M.hl_value("Keyword", "fg")
-  local pmenu_bg = M.darken_color(M.hl_value("Normal", "bg"), -6)
+  local dark_bg = M.darken_color(M.hl_value("Normal", "bg"), -6)
   if vim.g.colors_name == "doom-one" then
     M.all {
       {"TSVariable", {guifg = "NONE"}},
       {"WhichKeyFloat", {link = "PanelBackground"}},
       {"Cursor", {guibg = keyword_fg, gui = "NONE"}},
-      {"Pmenu", {guibg = pmenu_bg, guifg = "lightgray", blend = 6}}
+      {"CursorLine", {guibg = dark_bg}},
+      {"CursorLineNr", {guibg = dark_bg}},
+      {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}}
     }
   end
 end
