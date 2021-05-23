@@ -43,7 +43,7 @@ local function is_blocked()
   return false
 end
 
-function M.enable_relative_number()
+local function enable_relative_number()
   if is_floating_win() then
     return
   end
@@ -58,7 +58,7 @@ function M.enable_relative_number()
   end
 end
 
-function M.disable_relative_number()
+local function disable_relative_number()
   if is_floating_win() then
     return
   end
@@ -73,75 +73,18 @@ function M.disable_relative_number()
   end
 end
 
-vim.g.number_filetype_exclusions = {
-  "undotree",
-  "log",
-  "man",
-  "dap-repl",
-  "markdown",
-  "vimwiki",
-  "vim-plug",
-  "gitcommit",
-  "toggleterm",
-  "fugitive",
-  "coc-explorer",
-  "coc-list",
-  "list",
-  "NvimTree",
-  "startify",
-  "help",
-  "todoist",
-  "lsputil_locations_list",
-  "lsputil_symbols_list",
-  "himalaya",
-  "Trouble"
-}
-
-vim.g.number_buftype_exclusions = {
-  "terminal",
-  "quickfix",
-  "help",
-  "nofile",
-  "acwrite"
-}
-
 as.augroup(
   "ToggleRelativeLineNumbers",
   {
     {
-      events = {"BufEnter"},
+      events = {"BufEnter", "FileType", "FocusGained", "InsertLeave"},
       targets = {"*"},
-      command = [[lua require("as.numbers").enable_relative_number()]]
+      command = enable_relative_number
     },
     {
-      events = {"BufLeave"},
+      events = {"FocusLost", "BufLeave", "InsertEnter"},
       targets = {"*"},
-      command = [[lua require("as.numbers").disable_relative_number()]]
-    },
-    {
-      events = {"FileType"},
-      targets = {"*"},
-      command = [[lua require("as.numbers").enable_relative_number()]]
-    },
-    {
-      events = {"FocusGained"},
-      targets = {"*"},
-      command = [[lua require("as.numbers").enable_relative_number()]]
-    },
-    {
-      events = {"FocusLost"},
-      targets = {"*"},
-      command = [[lua require("as.numbers").disable_relative_number()]]
-    },
-    {
-      events = {"InsertEnter"},
-      targets = {"*"},
-      command = [[lua require("as.numbers").disable_relative_number()]]
-    },
-    {
-      events = {"InsertLeave"},
-      targets = {"*"},
-      command = [[lua require("as.numbers").enable_relative_number()]]
+      command = disable_relative_number
     }
   }
 )
