@@ -95,7 +95,7 @@ as.augroup(
   {
     {
       events = {"Filetype"},
-      targets = {"dotoocapture"},
+      targets = {"dotoocapture", "dotoo"},
       command = "nnoremap <buffer><nowait><silent> q :wq<CR>"
     }
   }
