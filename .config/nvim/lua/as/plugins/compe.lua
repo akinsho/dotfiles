@@ -44,7 +44,7 @@ return function()
       buffer = {kind = " "},
       vsnip = {kind = " "},
       spell = true,
-      emoji = false,
+      emoji = {kind = "ﲃ", filetypes = {"markdown"}},
       nvim_lsp = {priority = 101},
       nvim_lua = true,
       tabnine = false -- {priority = 1200}
@@ -54,7 +54,7 @@ return function()
   local imap = as.imap
   local smap = as.smap
   local inoremap = as.inoremap
-  local opts = {expr = true}
+  local opts = {expr = true, silent = true}
 
   inoremap("<C-Space>", "compe#complete()", opts)
   inoremap("<C-e>", "compe#close('<C-e>')", opts)
