@@ -174,6 +174,8 @@ local function plugin_highlights()
 
   M.highlight("CompeDocumentation", {link = "Pmenu"})
 
+  M.highlight("BqfPreviewBorder", {guifg = "Gray"})
+
   if plugin_loaded("conflict-marker.vim") then
     M.all {
       {"ConflictMarkerBegin", {guibg = "#2f7366"}},
