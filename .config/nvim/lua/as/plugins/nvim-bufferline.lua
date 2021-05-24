@@ -64,7 +64,11 @@ return function()
     }
   }
 
-  require("which-key").register(
+  local ok, wk = pcall(require, "which-key")
+  if not ok then
+    return vim.notify("Unable to add Bufferline key bindings")
+  end
+  wk.register(
     {
       ["gb"] = {"<cmd>BufferLinePick<CR>", "bufferline: pick buffer"},
       ["<leader><tab>"] = {"<cmd>BufferLineCycleNext<CR>", "bufferline: next"},
