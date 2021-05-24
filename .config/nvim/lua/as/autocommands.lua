@@ -146,7 +146,6 @@ as.augroup(
 
 --- automatically clear commandline messages after a few seconds delay
 --- source: http//unix.stackexchange.com/a/613645
-local id
 as.augroup(
   "ClearCommandMessages",
   {
@@ -154,17 +153,13 @@ as.augroup(
       events = {"CmdlineLeave", "CmdlineChanged"},
       targets = {":"},
       command = function()
-        if id then
-          fn.timer_stop(id)
-        end
-        id =
-          fn.timer_start(
-          2000,
+        vim.defer_fn(
           function()
             if fn.mode() == "n" then
-              vim.cmd [[echon '']]
+              vim.cmd([[echon '']])
             end
-          end
+          end,
+          2000
         )
       end
     }
