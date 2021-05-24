@@ -823,6 +823,7 @@ require("packer").startup {
     -- Themes  {{{
     ----------------------------------------------------------------------------------
     use "romgrk/doom-one.vim"
+    use {"monsonjeremy/onedark.nvim", opt = true}
     use {"Th3Whit3Wolf/one-nvim", opt = true}
     -- }}}
     ---------------------------------------------------------------------------------
