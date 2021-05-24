@@ -176,7 +176,7 @@ local function plugin_highlights()
 
   M.highlight("BqfPreviewBorder", {guifg = "Gray"})
 
-  if plugin_loaded("conflict-marker.vim") then
+  if as.plugin_installed("conflict-marker.vim") then
     M.all {
       {"ConflictMarkerBegin", {guibg = "#2f7366"}},
       {"ConflictMarkerOurs", {guibg = "#2e5049"}},
