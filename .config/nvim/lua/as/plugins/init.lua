@@ -299,6 +299,8 @@ require("packer").startup {
       }
     }
 
+    use "ray-x/lsp_signature.nvim"
+
     use_local {
       "akinsho/flutter-tools.nvim",
       ft = "dart",
