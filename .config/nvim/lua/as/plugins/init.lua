@@ -391,7 +391,7 @@ require("packer").startup {
       requires = {"winston0410/cmd-parser.nvim"},
       config = function()
         require("range-highlight").setup()
-      end,
+      end
     }
     use {
       "mg979/vim-visual-multi",
