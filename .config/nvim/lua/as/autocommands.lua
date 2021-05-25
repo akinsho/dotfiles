@@ -96,7 +96,10 @@ as.augroup(
     {
       events = {"Filetype"},
       targets = {"dotoocapture", "dotoo"},
-      command = "nnoremap <buffer><nowait><silent> q :wq<CR>"
+      command = function()
+        vim.bo.bufhidden = "wipe"
+        as.nnoremap("q", "<Cmd>wq<CR>", {buffer = 0, nowait = true})
+      end
     }
   }
 )
