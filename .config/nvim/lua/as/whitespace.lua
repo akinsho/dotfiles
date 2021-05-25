@@ -1,10 +1,11 @@
 ----------------------------------------------------------------------------------
 --  Whitespace highlighting
 ----------------------------------------------------------------------------------
--- source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
--- implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
+--@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
+--@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local M = {}
+local H = require("as.highlights")
+
 local fn = vim.fn
 
 local function is_floating_win()
@@ -32,34 +33,31 @@ local function toggle_trailing(mode)
   end
 end
 
-function M.setup()
-  require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})
-  as.augroup(
-    "WhitespaceMatch",
-    {
-      {
-        events = {"ColorScheme"},
-        targets = {"*"},
-        command = function()
-          require("as.highlights").highlight("ExtraWhitespace", {guifg = "red"})
-        end
-      },
-      {
-        events = {"BufEnter", "FileType", "InsertLeave"},
-        targets = {"*"},
-        command = function()
-          toggle_trailing("n")
-        end
-      },
-      {
-        events = {"InsertEnter"},
-        targets = {"*"},
-        command = function()
-          toggle_trailing("i")
-        end
-      }
-    }
-  )
-end
+H.highlight("ExtraWhitespace", {guifg = "red"})
 
-return M
+as.augroup(
+  "WhitespaceMatch",
+  {
+    {
+      events = {"ColorScheme"},
+      targets = {"*"},
+      command = function()
+        H.highlight("ExtraWhitespace", {guifg = "red"})
+      end
+    },
+    {
+      events = {"BufEnter", "FileType", "InsertLeave"},
+      targets = {"*"},
+      command = function()
+        toggle_trailing("n")
+      end
+    },
+    {
+      events = {"InsertEnter"},
+      targets = {"*"},
+      command = function()
+        toggle_trailing("i")
+      end
+    }
+  }
+)
