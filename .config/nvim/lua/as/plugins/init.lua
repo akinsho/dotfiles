@@ -384,12 +384,14 @@ require("packer").startup {
       end
     }
     --- Highlight commandline ranges e.g. :10,20m.
+    --- awaiting resolution of range-highlight.nvim #4
     use {
       "winston0410/range-highlight.nvim",
       opt = true,
+      requires = {"winston0410/cmd-parser.nvim"},
       config = function()
         require("range-highlight").setup()
-      end
+      end,
     }
     use {
       "mg979/vim-visual-multi",
