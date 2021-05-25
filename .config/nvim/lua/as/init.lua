@@ -9,4 +9,5 @@ require("as.dev").setup(false) -- disabled
 require("as.whitespace").setup()
 require("as.localrc").setup("VimEnter")
 require("as.plugins") -- source plugins after config but during startup
+require("as.quickfix")
 require("as.autocommands")
