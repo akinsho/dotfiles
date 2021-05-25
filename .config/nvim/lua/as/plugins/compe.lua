@@ -78,5 +78,5 @@ return function()
       return npairs.autopairs_cr()
     end
   end
-  inoremap("<CR>", "v:lua.as.completion_confirm()", opts)
+  inoremap("<CR>", "v:lua.as.completion_confirm()", {expr = true, silent = false})
 end
