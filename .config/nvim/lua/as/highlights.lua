@@ -33,8 +33,7 @@ function M.darken_color(color, percent)
   end
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
   r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
-  r, g, b = string.format("%0x", r), string.format("%0x", g), string.format("%0x", b)
-  return "#" .. r .. g .. b
+  return string.format("#%02x%02x%02x", r, g, b)
 end
 
 -----------------------------------------------------------------------------//
