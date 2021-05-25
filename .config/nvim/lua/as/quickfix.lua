@@ -11,7 +11,7 @@ function as.qftf(info)
   end
   local limit = 25
   local fname_fmt1, fname_fmt2 = "%-" .. limit .. "s", "…%." .. (limit - 1) .. "s"
-  local valid_fmt, unvalid_fmt = "%s |%5d:%-3d|%s %s", "%s"
+  local valid_fmt, invalid_fmt = "%s |%5d:%-3d|%s %s", "%s"
   for i = info.start_idx, info.end_idx do
     local e = items[i]
     local fname = ""
@@ -35,7 +35,7 @@ function as.qftf(info)
       local qtype = e.type == "" and "" or " " .. e.type:sub(1, 1):upper()
       str = valid_fmt:format(fname, lnum, col, qtype, e.text)
     else
-      str = unvalid_fmt:format(e.text)
+      str = invalid_fmt:format(e.text)
     end
     table.insert(ret, str)
   end
