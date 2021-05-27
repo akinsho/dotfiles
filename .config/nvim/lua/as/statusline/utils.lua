@@ -362,7 +362,7 @@ function M.file(ctx, minimal)
   local directory, parent, file = filename(ctx)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
-  local dir_empty, parent_empty = as.is_empty(directory), as.is_empty(parent)
+  local dir_empty, parent_empty = as.empty(directory), as.empty(parent)
   local to_update =
     dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
 

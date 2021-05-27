@@ -16,7 +16,7 @@ function M.on_enter()
   local window_title = session
 
   local fname = fn.expand("%:t")
-  if not loaded or as.is_empty(fname) then
+  if not loaded or as.empty(fname) then
     return
   end
   local name = fn.bufname()

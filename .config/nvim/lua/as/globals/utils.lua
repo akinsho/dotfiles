@@ -119,7 +119,10 @@ function as.truthy(value)
   return value > 0
 end
 
-function as.is_empty(item)
+---Determine if a value of any type is empty
+---@param item any
+---@return boolean
+function as.empty(item)
   if not item then
     return true
   end
