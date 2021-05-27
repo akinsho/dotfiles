@@ -226,7 +226,8 @@ local function check_color_column(leaving)
     return
   end
 
-  local not_eligible = not vim.bo.modifiable or not vim.bo.buflisted or vim.bo.buftype ~= ""
+  local not_eligible =
+    not vim.bo.modifiable or vim.wo.previewwindow or not vim.bo.buflisted or vim.bo.buftype ~= ""
   if contains(column_clear, vim.bo.filetype) or not_eligible then
     vim.wo.colorcolumn = ""
     return
@@ -256,6 +257,178 @@ as.augroup(
       command = function()
         check_color_column(true)
       end
+    }
+  }
+)
+as.augroup(
+  "UpdateVim",
+  {
+    -- NOTE: This takes ${VIM_STARTUP_TIME} duration to run
+    -- autocmd BufWritePost $DOTFILES/**/nvim/configs/*.vim,$MYVIMRC ++nested
+    --       \  luafile $MYVIMRC | redraw | silent doautocmd ColorScheme |
+    --       \  call utils#message("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
+    {
+      events = {"FocusLost"},
+      targets = {"*"},
+      command = "silent! wall"
+    },
+    -- Make windows equal size when vim resizes
+    {
+      events = {"VimResized"},
+      targets = {"*"},
+      command = "wincmd ="
+    }
+  }
+)
+
+as.augroup(
+  "WindowBehaviours",
+  {
+    {
+      -- map q to close command window on quit
+      events = {"CmdwinEnter"},
+      targets = {"*"},
+      command = "nnoremap <silent><buffer><nowait> q <C-W>c"
+    },
+    -- Automatically jump into the quickfix window on open
+    {
+      events = {"QuickFixCmdPost"},
+      targets = {"[^l]*"},
+      modifiers = {"nested"},
+      command = "cwindow"
+    },
+    {
+      events = {"QuickFixCmdPost"},
+      targets = {"l*"},
+      modifiers = {"nested"},
+      command = "lwindow"
+    }
+  }
+)
+
+-- augroup config_filetype_settings "{{{1
+--   autocmd!
+--   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
+--   " set filetype all variants of .env files
+--   autocmd BufRead,BufNewFile .env.* set filetype=sh
+-- augroup END
+
+local function should_show_cursorline()
+  return vim.bo.buftype ~= "terminal" and not vim.wo.previewwindow and vim.wo.winhighlight == "" and
+    vim.bo.filetype ~= ""
+end
+
+as.augroup(
+  "Cursorline",
+  {
+    {
+      events = {"BufEnter"},
+      targets = {"*"},
+      command = function()
+        if should_show_cursorline() then
+          vim.wo.cursorline = true
+        end
+      end
+    },
+    {
+      events = {"BufLeave"},
+      targets = {"*"},
+      command = function()
+        vim.wo.cursorline = false
+      end
+    }
+  }
+)
+------------------------------------------------------------------------------
+-- Open FILENAME:LINE:COL
+------------------------------------------------------------------------------
+local function goto_line()
+  local tokens = vim.split(fn.expand("%"), ":")
+  if #tokens <= 1 and fn.filereadable(tokens[1]) > 0 then
+    return
+  end
+  local file = tokens[1]
+  local rest = vim.tbl_map(tonumber, vim.list_slice(tokens, 2))
+  local line = rest[1] or 1
+  local col = rest[2] or 1
+  vim.cmd("bd!")
+  vim.cmd("silent! edit " .. file)
+  vim.cmd(fmt("normal! %dG%d|", line, col))
+end
+
+as.augroup(
+  "GoToLine",
+  {
+    {
+      events = {"BufRead"},
+      targets = {"*"},
+      modifiers = {"nested"},
+      command = goto_line
+    }
+  }
+)
+
+local save_excluded = {"lua.luapad"}
+local function can_save()
+  return as.empty(vim.bo.buftype) and not as.empty(vim.bo.filetype) and vim.bo.modifiable and
+    vim.tbl_contains(save_excluded, vim.bo.filetype)
+end
+
+as.augroup(
+  "Utilities",
+  {
+    {
+      -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
+      events = {"BufReadCmd"},
+      targets = {"file:///*"},
+      command = fmt([[exe "bd!|edit %s"]], fn.substitute(fn.expand("<afile>"), "file:/*", "", ""))
+    },
+    {
+      -- When editing a file, always jump to the last known cursor position.
+      -- Don't do it for commit messages, when the position is invalid, or when
+      -- inside an event handler (happens when dropping a file on gvim).
+      events = {"BufReadPost"},
+      targets = {"*"},
+      command = function()
+        local pos = fn.line('\'"')
+        if vim.bo.ft ~= "gitcommit" and pos > 0 and pos <= fn.line("$") then
+          vim.cmd('keepjumps normal g`"')
+        end
+      end
+    },
+    {events = {"FileType"}, targets = {"gitcommit", "gitrebase"}, command = "set bufhidden=delete"},
+    {
+      events = {"BufWritePre", "FileWritePre"},
+      targets = {"*"},
+      command = "silent! call mkdir(expand('<afile>:p:h'), 'p')"
+    },
+    {
+      events = {"BufLeave"},
+      targets = {"*"},
+      command = function()
+        if can_save() then
+          vim.cmd("silent! update")
+        end
+      end
+    },
+    {
+      events = {"BufWritePost"},
+      targets = {"*"},
+      modifiers = {"nested"},
+      command = function()
+        if as.empty(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+          vim.cmd [[
+            unlet! b:ftdetect
+            filetype detect
+            echom 'Filetype set to ' . &ft
+          ]]
+        end
+      end
+    },
+    {
+      events = {"Syntax"},
+      targets = {"*"},
+      command = "if 5000 < line('$') | syntax sync minlines=200 | endif"
     }
   }
 )
