@@ -226,7 +226,7 @@ function _G.statusline()
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   add(
-    {utils.item(utils.lsp_status(), "StMetadata", {max_size = 30}), 4},
+    {utils.item(utils.lsp_status(), "StMetadata"), 4},
     {
       utils.item_if(
         diagnostics.error.count,
