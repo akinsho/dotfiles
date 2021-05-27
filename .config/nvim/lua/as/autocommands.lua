@@ -341,7 +341,7 @@ as.augroup(
 local save_excluded = {"lua.luapad"}
 local function can_save()
   return as.empty(vim.bo.buftype) and not as.empty(vim.bo.filetype) and vim.bo.modifiable and
-    vim.tbl_contains(save_excluded, vim.bo.filetype)
+    not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
 as.augroup(
