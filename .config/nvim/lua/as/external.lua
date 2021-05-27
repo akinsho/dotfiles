@@ -1,6 +1,6 @@
 local M = {
   tmux = {},
-  kitty = {},
+  kitty = {}
 }
 
 local fn = vim.fn
@@ -8,27 +8,28 @@ local fmt = string.format
 local loaded, devicons = pcall(require, "nvim-web-devicons")
 
 -- Get the color of the current vim background and update tmux accordingly
-function M.tmux.colors()
+function M.tmux.set_statusline()
   local bg = require("as.highlights").hl_value("MsgArea", "bg")
   fn.jobstart(fmt("tmux set-option -g status-style bg=%s", bg))
   -- TODO: on vim leave we should set this back to what it was
 end
 
-function M.kitty.enter()
+function M.kitty.set_background()
   if vim.env.KITTY_LISTEN_ON then
     local bg = require("as.highlights").hl_value("MsgArea", "bg")
     fn.jobstart(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
   end
 end
 
-function M.kitty.leave()
+---Reset the kitty terminal colors
+function M.kitty.clear_background()
   if vim.env.KITTY_LISTEN_ON then
     local bg = require("as.highlights").hl_value("Normal", "bg")
     fn.jobstart(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
   end
 end
 
-function M.tmux.enter()
+function M.tmux.set_pane_title()
   local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
   local window_title = session
 
@@ -45,7 +46,7 @@ function M.tmux.enter()
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
 end
 
-function M.on_leave()
+function M.tmux.clear_pane_title()
   fn.jobstart("tmux set-window-option automatic-rename on")
 end
 

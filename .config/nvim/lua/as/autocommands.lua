@@ -177,23 +177,23 @@ if vim.env.TMUX ~= nil then
         events = {"FocusGained", "BufReadPost", "BufReadPost", "BufReadPost", "BufEnter"},
         targets = {"*"},
         command = function()
-          require("as.external").tmux.enter()
+          require("as.external").tmux.set_pane_title()
         end
       },
       {
-        events = {"VimLeavePre"},
+        events = {"VimLeavePre", "FocusLost"},
         targets = {"*"},
         command = function()
-          require("as.external").tmux.leave()
-          require("as.external").kitty.leave()
+          require("as.external").tmux.clear_pane_title()
+          require("as.external").kitty.clear_background()
         end
       },
       {
-        events = {"ColorScheme"},
+        events = {"ColorScheme", "FocusGained"},
         targets = {"*"},
         command = function()
-          require("as.external").tmux.colors()
-          require("as.external").kitty.enter()
+          require("as.external").tmux.set_statusline()
+          require("as.external").kitty.set_background()
         end
       }
     }
