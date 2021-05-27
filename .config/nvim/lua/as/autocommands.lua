@@ -189,10 +189,8 @@ if vim.env.TMUX ~= nil then
       },
       {
         events = {"ColorScheme", "FocusGained"},
-        evens = {"*"},
-        command = function()
-          require("as.tmux").statusline_colors()
-        end
+        targets = {"*"},
+        command = require("as.tmux").statusline_colors
       }
     }
   )

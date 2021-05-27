@@ -4,9 +4,9 @@ local fn = vim.fn
 local fmt = string.format
 local loaded, devicons = pcall(require, "nvim-web-devicons")
 
+-- Get the color of the current vim background and update tmux accordingly
 function M.statusline_colors()
-  -- Get the color of the current vim background and update tmux accordingly
-  local bg_color = fn.synIDattr(fn.hlID("Normal"), "bg")
+  local bg_color = fn.synIDattr(fn.hlID("MsgArea"), "bg")
   fn.jobstart(fmt("tmux set-option -g status-style bg=%s", bg_color))
   -- TODO: on vim leave we should set this back to what it was
 end
