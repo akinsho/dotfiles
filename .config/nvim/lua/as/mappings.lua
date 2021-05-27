@@ -289,7 +289,9 @@ onoremap("ie", [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
 nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], {expr = true, silent = true})
 nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], {expr = true, silent = true})
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
-nnoremap("0", "^")
+-- but if already at the first character then jump to the beginning
+--@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
+nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", {expr = true})
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap("$", "g_")
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
