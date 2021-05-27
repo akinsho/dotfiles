@@ -1,17 +1,34 @@
-local M = {}
+local M = {
+  tmux = {},
+  kitty = {},
+}
 
 local fn = vim.fn
 local fmt = string.format
 local loaded, devicons = pcall(require, "nvim-web-devicons")
 
 -- Get the color of the current vim background and update tmux accordingly
-function M.statusline_colors()
-  local bg_color = fn.synIDattr(fn.hlID("MsgArea"), "bg")
-  fn.jobstart(fmt("tmux set-option -g status-style bg=%s", bg_color))
+function M.tmux.colors()
+  local bg = require("as.highlights").hl_value("MsgArea", "bg")
+  fn.jobstart(fmt("tmux set-option -g status-style bg=%s", bg))
   -- TODO: on vim leave we should set this back to what it was
 end
 
-function M.on_enter()
+function M.kitty.enter()
+  if vim.env.KITTY_LISTEN_ON then
+    local bg = require("as.highlights").hl_value("MsgArea", "bg")
+    fn.jobstart(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
+  end
+end
+
+function M.kitty.leave()
+  if vim.env.KITTY_LISTEN_ON then
+    local bg = require("as.highlights").hl_value("Normal", "bg")
+    fn.jobstart(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
+  end
+end
+
+function M.tmux.enter()
   local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
   local window_title = session
 

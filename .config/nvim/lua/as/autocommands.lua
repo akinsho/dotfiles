@@ -171,26 +171,30 @@ as.augroup(
 
 if vim.env.TMUX ~= nil then
   as.augroup(
-    "TmuxConfig",
+    "External",
     {
       {
         events = {"FocusGained", "BufReadPost", "BufReadPost", "BufReadPost", "BufEnter"},
         targets = {"*"},
         command = function()
-          require("as.tmux").on_enter()
+          require("as.external").tmux.enter()
         end
       },
       {
-        events = {"VimLeave"},
+        events = {"VimLeavePre"},
         targets = {"*"},
         command = function()
-          require("as.tmux").on_leave()
+          require("as.external").tmux.leave()
+          require("as.external").kitty.leave()
         end
       },
       {
-        events = {"ColorScheme", "FocusGained"},
+        events = {"ColorScheme"},
         targets = {"*"},
-        command = require("as.tmux").statusline_colors
+        command = function()
+          require("as.external").tmux.colors()
+          require("as.external").kitty.enter()
+        end
       }
     }
   )
