@@ -308,9 +308,6 @@ require("packer").startup {
         local ok, lsp_status = pcall(require, "lsp-status")
         local capabilities = ok and lsp_status.capabilities or nil
         require("flutter-tools").setup {
-          experimental = {
-            lsp_derive_paths = true
-          },
           debugger = {
             enabled = true
           },
