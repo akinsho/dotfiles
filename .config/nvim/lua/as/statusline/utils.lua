@@ -168,8 +168,7 @@ end
 --- @param ctx table
 function M.is_plain(ctx)
   return contains(plain_filetypes, ctx.filetype) or contains(plain_buftypes, ctx.buftype) or
-    ctx.preview or
-    exists("#goyo") > 0
+    ctx.preview
 end
 
 --- This function allow me to specify titles for special case buffers
@@ -278,6 +277,7 @@ end
 
 --- @param ctx table
 --- @param opts table
+--- @return string, string
 local function filetype(ctx, opts)
   local ft_exception = exceptions.filetypes[ctx.filetype]
   if ft_exception then
@@ -580,6 +580,11 @@ end
 -----------------------------------------------------------------------------//
 -- Git/Github helper functions
 -----------------------------------------------------------------------------//
+
+---A thin wrapper around nvim's job api
+---@param interval number
+---@param task function
+---@param on_complete function?
 local function job(interval, task, on_complete)
   vim.defer_fn(task, 2000)
   local pending_job
@@ -637,8 +642,10 @@ function M.github_notifications()
   end
 end
 
+---check if in a git repository
+---@return boolean
 local function is_git_repo()
-  return fn.isdirectory(fn.getcwd() .. "/" .. ".git")
+  return fn.isdirectory(fn.getcwd() .. "/" .. ".git") > 0
 end
 
 --- @param result table
@@ -680,8 +687,10 @@ function M.git_update_toggle()
   if on then
     M.git_updates()
   end
-  local status = on and 0 or 1
-  fn.timer_pause(vim.g.git_statusline_updates_timer, status)
+  if vim.g.git_statusline_updates_timer then
+    local status = on and 0 or 1
+    fn.timer_pause(vim.g.git_statusline_updates_timer, status)
+  end
 end
 
 --- starts a timer to check for the whether
