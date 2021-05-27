@@ -306,13 +306,6 @@ as.augroup(
   }
 )
 
--- augroup config_filetype_settings "{{{1
---   autocmd!
---   autocmd BufRead,BufNewFile .eslintrc,.stylelintrc,.babelrc set filetype=json
---   " set filetype all variants of .env files
---   autocmd BufRead,BufNewFile .env.* set filetype=sh
--- augroup END
-
 local function should_show_cursorline()
   return vim.bo.buftype ~= "terminal" and not vim.wo.previewwindow and vim.wo.winhighlight == "" and
     vim.bo.filetype ~= ""
@@ -336,34 +329,6 @@ as.augroup(
       command = function()
         vim.wo.cursorline = false
       end
-    }
-  }
-)
-------------------------------------------------------------------------------
--- Open FILENAME:LINE:COL
-------------------------------------------------------------------------------
-local function goto_line()
-  local tokens = vim.split(fn.expand("%"), ":")
-  if #tokens <= 1 and fn.filereadable(tokens[1]) > 0 then
-    return
-  end
-  local file = tokens[1]
-  local rest = vim.tbl_map(tonumber, vim.list_slice(tokens, 2))
-  local line = rest[1] or 1
-  local col = rest[2] or 1
-  vim.cmd("bd!")
-  vim.cmd("silent! edit " .. file)
-  vim.cmd(fmt("normal! %dG%d|", line, col))
-end
-
-as.augroup(
-  "GoToLine",
-  {
-    {
-      events = {"BufRead"},
-      targets = {"*"},
-      modifiers = {"nested"},
-      command = goto_line
     }
   }
 )
