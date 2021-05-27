@@ -227,7 +227,8 @@ local function check_color_column(leaving)
   end
 
   local not_eligible =
-    not vim.bo.modifiable or vim.wo.previewwindow or not vim.bo.buflisted or vim.bo.buftype ~= ""
+    not vim.bo.modifiable or vim.wo.pvw or not vim.bo.buflisted or vim.bo.bt ~= ""
+
   if contains(column_clear, vim.bo.filetype) or not_eligible then
     vim.wo.colorcolumn = ""
     return
@@ -346,7 +347,9 @@ as.augroup(
       -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
       events = {"BufReadCmd"},
       targets = {"file:///*"},
-      command = fmt([[exe "bd!|edit %s"]], fn.substitute(fn.expand("<afile>"), "file:/*", "", ""))
+      command = function()
+        vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname("<afile>")))
+      end
     },
     {
       -- When editing a file, always jump to the last known cursor position.
