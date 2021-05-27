@@ -75,10 +75,8 @@ local function is_blocked()
     end
   end
 
-  for _, buftype in ipairs(vim.g.number_buftype_exclusions) do
-    if vim.bo.buftype == buftype then
-      return true
-    end
+  if vim.tbl_contains(vim.g.number_buftype_exclusions, vim.bo.buftype) then
+    return true
   end
   return false
 end
@@ -122,7 +120,7 @@ as.augroup(
       command = enable_relative_number
     },
     {
-      events = {"FocusLost", "BufLeave", "InsertEnter"},
+      events = {"FocusLost", "BufLeave", "InsertEnter", "TermOpen"},
       targets = {"*"},
       command = disable_relative_number
     }
