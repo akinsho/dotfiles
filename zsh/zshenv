@@ -43,8 +43,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     path+=(
     # FLUTTER =======================================================
     "$HOME/flutter/bin"
-      "/usr/local/opt/go/libexec/bin"
-      "$(go env GOPATH)/bin"
+    "/usr/local/opt/go/libexec/bin"
+    "$(go env GOPATH)/bin"
     )
   fi
 fi
