@@ -600,6 +600,14 @@ local function job(interval, task, on_complete)
   end
 end
 
+---Validate the response from the github CLI is JSON
+---@param data table
+---@return boolean
+local function validate_github_response(data)
+  return vim.tbl_islist(data) and not as.empty(data[1]) and type(data[1]) == "string" and
+    not data[1]:match("<!DOCTYPE html>")
+end
+
 local function fetch_github_notifications()
   fn.jobstart(
     "gh api notifications",
@@ -610,7 +618,7 @@ local function fetch_github_notifications()
           vim.defer_fn(
             function()
               -- data is a table, so check that the first value isn't an empty string
-              if data and data[1] ~= "" then
+              if validate_github_response(data) then
                 local notifications = vim.fn.json_decode(data)
                 vim.g.github_notifications = #notifications
               end
