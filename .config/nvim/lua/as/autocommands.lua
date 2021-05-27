@@ -192,7 +192,6 @@ if vim.env.TMUX ~= nil then
         events = {"ColorScheme", "FocusGained"},
         targets = {"*"},
         command = function()
-          require("as.external").tmux.set_statusline()
           require("as.external").kitty.set_background()
         end
       }
