@@ -39,7 +39,13 @@ return function()
   require("bufferline").setup {
     options = {
       mappings = false,
-      sort_by = "recent",
+      sort_by = function(a, b)
+        local astat = vim.loop.fs_stat(a.path)
+        local bstat = vim.loop.fs_stat(b.path)
+        local mod_a = astat and astat.mtime.sec or 0
+        local mod_b = bstat and bstat.mtime.sec or 0
+        return mod_a > mod_b
+      end,
       show_close_icon = false,
       separator_style = "slant",
       diagnostics = "nvim_lsp",
