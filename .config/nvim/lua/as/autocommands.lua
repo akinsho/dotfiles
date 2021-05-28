@@ -193,6 +193,7 @@ if vim.env.TMUX ~= nil then
         targets = {"*"},
         command = function()
           require("as.external").kitty.set_background()
+          require("as.external").tmux.set_statusline()
         end
       }
     }
