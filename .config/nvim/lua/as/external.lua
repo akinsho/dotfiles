@@ -7,11 +7,13 @@ local fn = vim.fn
 local fmt = string.format
 local loaded, devicons = pcall(require, "nvim-web-devicons")
 
--- Get the color of the current vim background and update tmux accordingly
-function M.tmux.set_statusline()
-  local bg = require("as.highlights").hl_value("MsgArea", "bg")
+--- Get the color of the current vim background and update tmux accordingly
+---@param reset boolean?
+function M.tmux.set_statusline(reset)
+  local hl = reset and "Normal" or "MsgArea"
+  local bg = require("as.highlights").hl_value(hl, "bg")
+  -- TODO: we should correctly derive the previous bg value
   fn.jobstart(fmt("tmux set-option -g status-style bg=%s", bg))
-  -- TODO: on vim leave we should set this back to what it was
 end
 
 function M.kitty.set_background()
