@@ -174,17 +174,16 @@ if vim.env.TMUX ~= nil then
     "External",
     {
       {
-        events = {"FocusGained", "BufReadPost", "FileReadPost", "BufNewFile", "BufEnter"},
+        events = {"BufEnter"},
         targets = {"*"},
         command = function()
-          require("as.external").tmux.set_pane_title()
+          vim.o.titlestring = require("as.external").title_string()
         end
       },
       {
         events = {"VimLeavePre", "FocusLost"},
         targets = {"*"},
         command = function()
-          require("as.external").tmux.clear_pane_title()
           require("as.external").kitty.clear_background()
         end
       },

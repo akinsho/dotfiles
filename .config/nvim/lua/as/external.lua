@@ -25,25 +25,24 @@ end
 function M.kitty.clear_background()
   if vim.env.KITTY_LISTEN_ON then
     local bg = require("as.highlights").hl_value("Normal", "bg")
-    fn.jobstart(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
+    -- this is intentially synchronous so it has time to execute fully
+    fn.system(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
   end
 end
 
-function M.tmux.set_pane_title()
-  local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
-  local window_title = session
-
-  local fname = fn.expand("%:t")
-  if not loaded or as.empty(fname) then
-    return
-  end
+local function fileicon()
   local name = fn.bufname()
-  local icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ":e"), {default = true})
-  if icon and hl then
-    local hl_value = require("as.highlights").hl_value
-    window_title = fmt("%s • #[fg=%s]%s", session, hl_value(hl, "fg"), icon)
+  local icon, hl
+  if loaded then
+    icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ":e"), {default = true})
   end
-  fn.jobstart(fmt("tmux rename-window '%s'", window_title))
+  return icon, hl
+end
+
+function M.title_string()
+  local dir = fn.fnamemodify(fn.getcwd(), ":t")
+  local icon, hl = fileicon()
+  return fmt("%s #[fg=%s]%s ", dir, require("as.highlights").hl_value(hl, "fg"), icon)
 end
 
 function M.tmux.clear_pane_title()
