@@ -1,82 +1,52 @@
 local fn = vim.fn
-local api = vim.api
-
-local opts_info = vim.api.nvim_get_all_options_info()
-
-local opt =
-  setmetatable(
-  {},
-  {
-    __newindex = function(_, key, value)
-      vim.o[key] = value
-      local scope = opts_info[key].scope
-      if scope == "win" then
-        vim.wo[key] = value
-      elseif scope == "buf" then
-        vim.bo[key] = value
-      end
-    end
-  }
-)
-
-local function add(value, str, sep)
-  sep = sep or ","
-  str = str or ""
-  value = type(value) == "table" and table.concat(value, sep) or value
-  return str ~= "" and table.concat({value, str}, sep) or value
-end
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
-vim.o.shortmess =
-  table.concat(
-  {
-    "t", -- truncate file messages at start
-    "A", -- ignore annoying swap file messages
-    "o", -- file-read message overwrites previous
-    "O", -- file-read message overwrites previous
-    "T", -- truncate non-file messages in middle
-    "f", -- (file x of x) instead of just (x of x
-    "F", -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
-    "s",
-    "c",
-    "W" -- Dont show [w] or written when writing
-  }
-)
+vim.opt.shortmess = {
+  t = true, -- truncate file messages at start
+  A = true, -- ignore annoying swap file messages
+  o = true, -- file-read message overwrites previous
+  O = true, -- file-read message overwrites previous
+  T = true, -- truncate non-file messages in middle
+  f = true, -- (file x of x) instead of just (x of x
+  F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
+  s = true,
+  c = true,
+  W = true -- Dont show [w] or written when writing
+}
 -----------------------------------------------------------------------------//
 -- Timings {{{1
 -----------------------------------------------------------------------------//
-vim.o.updatetime = 300
-vim.o.timeout = true
-vim.o.timeoutlen = 500
-vim.o.ttimeoutlen = 10
+vim.opt.updatetime = 300
+vim.opt.timeout = true
+vim.opt.timeoutlen = 500
+vim.opt.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-vim.o.hidden = true
-vim.o.splitbelow = true
-vim.o.splitright = true
-vim.o.eadirection = "hor"
+vim.opt.hidden = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.eadirection = "hor"
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 vim.o.switchbuf = "useopen,uselast"
-vim.o.fillchars =
-  add {
-  "vert:▕", -- alternatives │
-  "fold: ",
-  "eob: ", -- suppress ~ at EndOfBuffer
-  "diff:─", -- alternatives: ⣿ ░
-  "msgsep:‾",
-  "foldopen:▾",
-  "foldsep:│",
-  "foldclose:▸"
+vim.opt.fillchars = {
+  vert = "▕", -- alternatives │
+  fold = " ",
+  eob = " ", -- suppress ~ at EndOfBuffer
+  diff = "─", -- alternatives = ⣿ ░
+  msgsep = "‾",
+  foldopen = "▾",
+  foldsep = "│",
+  foldclose = "▸"
 }
 -----------------------------------------------------------------------------//
 -- Diff {{{1
 -----------------------------------------------------------------------------//
 -- Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
-vim.o.diffopt =
-  add(
+vim.opt.diffopt =
+  vim.opt.diffopt +
   {
     "vertical",
     "iwhite",
@@ -85,36 +55,32 @@ vim.o.diffopt =
     "context:4",
     "algorithm:histogram",
     "indent-heuristic"
-  },
-  vim.o.diffopt
-)
+  }
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
-opt.formatoptions =
-  table.concat(
-  {
-    "1",
-    "q", -- continue comments with gq"
-    "c", -- Auto-wrap comments using textwidth
-    "r", -- Continue comments when pressing Enter
-    "n", -- Recognize numbered lists
-    "2", -- Use indent from 2nd line of a paragraph
-    "t", -- autowrap lines using text width value
-    "j", -- remove a comment leader when joining lines.
-    -- Only break if the line was not longer than 'textwidth' when the insert
-    -- started and only at a white character that has been entered during the
-    -- current insert command.
-    "lv"
-  }
-)
+vim.opt.formatoptions = {
+  ["1"] = true,
+  ["2"] = true, -- Use indent from 2nd line of a paragraph
+  q = true, -- continue comments with gq"
+  c = true, -- Auto-wrap comments using textwidth
+  r = true, -- Continue comments when pressing Enter
+  n = true, -- Recognize numbered lists
+  t = true, -- autowrap lines using text width value
+  j = true, -- remove a comment leader when joining lines.
+  -- Only break if the line was not longer than 'textwidth' when the insert
+  -- started and only at a white character that has been entered during the
+  -- current insert command.
+  l = true,
+  v = true
+}
 ---------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
-vim.o.foldtext = "v:lua.folds()"
-vim.o.foldopen = add(vim.o.foldopen, "search")
-vim.o.foldlevelstart = 10
-opt.foldmethod = "indent"
+vim.opt.foldtext = "v:lua.folds()"
+vim.opt.foldopen = vim.opt.foldopen + "search"
+vim.opt.foldlevelstart = 10
+vim.opt.foldmethod = "indent"
 -----------------------------------------------------------------------------//
 -- Quickfix {{{1
 -----------------------------------------------------------------------------//
@@ -125,117 +91,140 @@ vim.o.quickfixtextfunc = "v:lua.as.qftf"
 -- Use faster grep alternatives if possible
 if as.executable("rg") then
   vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
-  vim.o.grepformat = add("%f:%l:%c:%m", vim.o.grepformat)
+  vim.opt.grepformat = vim.opt.grepformat ^ {"%f:%l:%c:%m"}
 elseif as.executable("ag") then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
-  vim.o.grepformat = add("%f:%l:%c:%m", vim.o.grepformat)
+  vim.opt.grepformat = vim.opt.grepformat ^ {"%f:%l:%c:%m"}
 end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.o.wildcharm = fn.char2nr("<C-Z>")
-vim.o.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
-vim.o.wildignorecase = true -- Ignore case when completing file names and directories
+vim.opt.wildcharm = fn.char2nr("<C-Z>")
+vim.opt.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
+vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
-vim.o.wildignore =
-  add {
-  "*.aux,*.out,*.toc",
-  "*.o,*.obj,*.dll,*.jar,*.pyc,*.rbc,*.class",
-  "*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp",
-  "*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm",
-  "*.eot,*.otf,*.ttf,*.woff",
-  "*.doc,*.pdf",
-  "*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz",
+vim.opt.wildignore = {
+  "*.aux",
+  "*.out",
+  "*.toc",
+  "*.o",
+  "*.obj",
+  "*.dll",
+  "*.jar",
+  "*.pyc",
+  "*.rbc",
+  "*.class",
+  "*.gif",
+  "*.ico",
+  "*.jpg",
+  "*.jpeg",
+  "*.png",
+  "*.avi",
+  "*.wav",
+  "*.webm",
+  "*.eot",
+  "*.otf",
+  "*.ttf",
+  "*.woff",
+  "*.doc",
+  "*.pdf",
+  "*.zip",
+  "*.tar.gz",
+  "*.tar.bz2",
+  "*.rar",
+  "*.tar.xz",
   -- Cache
   ".sass-cache",
-  "*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*.gem",
+  "*/vendor/gems/*",
+  "*/vendor/cache/*",
+  "*/.bundle/*",
+  "*.gem",
   -- Temp/System
-  "*.*~,*~ ",
-  "*.swp,.lock,.DS_Store,._*,tags.lock"
+  "*.*~",
+  "*~ ",
+  "*.swp",
+  ".lock",
+  ".DS_Store",
+  "._*",
+  "tags.lock"
 }
-vim.o.wildoptions = "pum"
-vim.o.pumblend = 3 -- Make popup window translucent
+vim.opt.wildoptions = "pum"
+vim.opt.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
-opt.conceallevel = 2
-opt.breakindentopt = "sbr"
-opt.linebreak = true -- lines wrap at words rather than random characters
-opt.synmaxcol = 1024 -- don't syntax highlight long lines
-opt.signcolumn = "yes:2"
-vim.o.ruler = false
-opt.colorcolumn = "+1" -- Set the colour column to highlight one column after the 'textwidth'
-vim.o.cmdheight = 2 -- Set command line height to two lines
-vim.o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
+vim.opt.conceallevel = 2
+vim.opt.breakindentopt = "sbr"
+vim.opt.linebreak = true -- lines wrap at words rather than random characters
+vim.opt.synmaxcol = 1024 -- don't syntax highlight long lines
+vim.opt.signcolumn = "yes:2"
+vim.opt.ruler = false
+vim.opt.colorcolumn = {"+1"} -- Set the colour column to highlight one column after the 'textwidth'
+vim.opt.cmdheight = 2 -- Set command line height to two lines
+vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 -----------------------------------------------------------------------------//
 -- List chars {{{1
 -----------------------------------------------------------------------------//
-vim.o.list = true -- invisible chars
-vim.o.listchars =
-  add {
-  "eol: ",
-  "tab:│ ",
-  "extends:›", -- Alternatives: … »
-  "precedes:‹", -- Alternatives: … «
-  "trail:•" -- BULLET (U+2022, UTF-8: E2 80 A2)
+vim.opt.list = true -- invisible chars
+vim.opt.listchars = {
+  eol = " ",
+  tab = "│ ",
+  extends = "›", -- Alternatives: … »
+  precedes = "‹", -- Alternatives: … «
+  trail = "•" -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-opt.wrap = true
-opt.wrapmargin = 2
-opt.softtabstop = 2
-opt.textwidth = 80
-opt.shiftwidth = 2
-opt.expandtab = true
-opt.autoindent = true
-vim.o.shiftround = true
+vim.opt.wrap = true
+vim.opt.wrapmargin = 2
+vim.opt.softtabstop = 2
+vim.opt.textwidth = 80
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.shiftround = true
 -----------------------------------------------------------------------------//
 -- vim.o.debug = "msg"
-vim.o.joinspaces = false
-vim.o.gdefault = true
-vim.o.pumheight = 15
-vim.o.confirm = true -- make vim prompt me to save before doing destructive things
-vim.o.completeopt = add {"menuone", "noselect"}
-vim.o.hlsearch = false
-vim.o.autowriteall = true -- automatically :write before running commands and changing files
-vim.o.clipboard = "unnamedplus"
-vim.o.laststatus = 2
-vim.o.termguicolors = true
+vim.opt.joinspaces = false
+vim.opt.gdefault = true
+vim.opt.pumheight = 15
+vim.opt.confirm = true -- make vim prompt me to save before doing destructive things
+vim.opt.completeopt = {"menuone", "noselect"}
+vim.opt.hlsearch = false
+vim.opt.autowriteall = true -- automatically :write before running commands and changing files
+vim.opt.clipboard = {"unnamedplus"}
+vim.opt.laststatus = 2
+vim.opt.termguicolors = true
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
 -----------------------------------------------------------------------------//
 -- emoji is true by default but makes (n)vim treat all emoji as double width
 -- which breaks rendering so we turn this off.
 -- CREDIT: https://www.youtube.com/watch?v=F91VWOelFNE
-vim.o.emoji = false
+vim.opt.emoji = false
 -----------------------------------------------------------------------------//
-vim.o.inccommand = "nosplit"
+vim.opt.inccommand = "nosplit"
 -- This is from the help docs, it enables mode shapes, "Cursor" highlight, and blinking
-vim.o.guicursor =
-  table.concat(
-  {
-    [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
-    [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
-    [[sm:block-blinkwait175-blinkoff150-blinkon175]]
-  },
-  ","
-)
+vim.opt.guicursor = {
+  [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
+  [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
+  [[sm:block-blinkwait175-blinkoff150-blinkon175]]
+}
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
 -- " ❐ %t %r %m"
-vim.o.titlestring = require("as.external").title_string()
-vim.o.titleold = fn.fnamemodify(vim.loop.os_getenv("SHELL"), ":t")
-vim.o.title = true
-vim.o.titlelen = 70
+vim.opt.titlestring = require("as.external").title_string()
+vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv("SHELL"), ":t")
+vim.opt.title = true
+vim.opt.titlelen = 70
 -----------------------------------------------------------------------------//
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
-vim.o.showmode = false
-vim.o.sessionoptions =
-  add {
+vim.opt.showmode = false
+vim.opt.sessionoptions = {
   "globals",
   "buffers",
   "curdir",
@@ -243,19 +232,19 @@ vim.o.sessionoptions =
   "winpos"
   -- "tabpages",
 }
-vim.o.viewoptions = add {"cursor", "folds"} -- save/restore just these (with `:{mk,load}view`)
-vim.o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
+vim.opt.viewoptions = {"cursor", "folds"} -- save/restore just these (with `:{mk,load}view`)
+vim.opt.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
-vim.o.backup = false
-vim.o.writebackup = false
+vim.opt.backup = false
+vim.opt.writebackup = false
 if fn.isdirectory(vim.o.undodir) == 0 then
   fn.mkdir(vim.o.undodir, "p")
 end
-opt.undofile = true
-opt.swapfile = true
-vim.o.directory = fn.stdpath("data") .. "/swap/"
+vim.opt.undofile = true
+vim.opt.swapfile = true
+vim.opt.directory = fn.stdpath("data") .. "/swap/"
 if fn.isdirectory(vim.o.directory) == 0 then
   fn.mkdir(vim.o.directory, "p")
 end
@@ -263,29 +252,29 @@ end
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
 -----------------------------------------------------------------------------//
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.wrapscan = true -- Searches wrap around the end of the file
-vim.o.scrolloff = 9
-vim.o.sidescrolloff = 10
-vim.o.sidescroll = 1
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.wrapscan = true -- Searches wrap around the end of the file
+vim.opt.scrolloff = 9
+vim.opt.sidescrolloff = 10
+vim.opt.sidescroll = 1
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
-vim.o.spellsuggest = add(12, vim.o.spellsuggest)
-vim.o.spelloptions = "camel"
-vim.o.spellcapcheck = "" -- don't check for capital letters at start of sentence
-vim.o.fileformats = "unix,mac,dos"
-vim.o.complete = add("kspell", vim.o.complete)
+vim.opt.spellsuggest:prepend {12}
+vim.opt.spelloptions = "camel"
+vim.opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
+vim.opt.fileformats = {"unix", "mac", "dos"}
+vim.opt.complete:prepend {"kspell"}
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
-vim.o.mouse = "a"
-vim.o.mousefocus = true
+vim.opt.mouse = "a"
+vim.opt.mousefocus = true
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
-vim.o.secure = true -- Disable autocmd etc for project local vimrc files.
-vim.o.exrc = true -- Allow project local vimrc files example .nvimrc see :h exrc
+vim.opt.secure = true -- Disable autocmd etc for project local vimrc files.
+vim.opt.exrc = true -- Allow project local vimrc files example .nvimrc see :h exrc
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
