@@ -341,6 +341,9 @@ local function colorscheme_overrides()
   if vim.g.colors_name == "doom-one" then
     M.all {
       {"TSVariable", {guifg = "NONE"}},
+      -- TODO the default bold makes ... not use ligatures
+      -- a better fix would be to add ligatures to my font
+      {"Constant", {gui = "NONE"}},
       {"WhichKeyFloat", {link = "PanelBackground"}},
       {"Cursor", {guibg = keyword_fg, gui = "NONE"}},
       {"CursorLine", {guibg = dark_bg}},
