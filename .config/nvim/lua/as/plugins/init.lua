@@ -619,7 +619,7 @@ require("packer").startup {
         require("gitlinker").setup {opts = {mappings = "<localleader>gu"}}
       end
     }
-    use {"lewis6991/gitsigns.nvim", config = conf("gitsigns")}
+    use {"lewis6991/gitsigns.nvim", config = conf("gitsigns"), event = "BufRead"}
     use {
       "rhysd/conflict-marker.vim",
       config = function()

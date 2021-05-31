@@ -57,7 +57,7 @@ return function()
       ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
       ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-      ["n <leader>gbl"] = '<cmd>lua require"gitsigns".blame_line()<CR>'
+      ["n <localleader>gbl"] = '<cmd>lua require"gitsigns".blame_line()<CR>'
     }
   }
 end
