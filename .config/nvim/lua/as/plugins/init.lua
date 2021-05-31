@@ -383,6 +383,7 @@ require("packer").startup {
     --- Highlight commandline ranges e.g. :10,20m.
     use {
       "winston0410/range-highlight.nvim",
+      opt = true,
       requires = {"winston0410/cmd-parser.nvim"},
       config = function()
         require("range-highlight").setup()
@@ -612,10 +613,9 @@ require("packer").startup {
     use {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
-      setup = function()
-        require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
-      end,
+      keys = {"<localleader>gu"},
       config = function()
+        require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
         require("gitlinker").setup {opts = {mappings = "<localleader>gu"}}
       end
     }
@@ -872,7 +872,6 @@ require("packer").startup {
           direction = "float",
           on_open = function(term)
             vim.cmd("startinsert!")
-            as.tnoremap("q", "<cmd>close<CR>", {buffer = term.bufnr, silent = false})
             if vim.fn.mapcheck("jk", "t") ~= "" then
               vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
               vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
