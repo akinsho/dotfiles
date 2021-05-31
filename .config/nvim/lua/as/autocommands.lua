@@ -162,7 +162,7 @@ as.augroup(
               vim.cmd([[echon '']])
             end
           end,
-          2000
+          10000
         )
       end
     }
@@ -181,7 +181,7 @@ if vim.env.TMUX ~= nil then
         end
       },
       {
-        events = {"VimLeavePre", "FocusLost"},
+        events = {"VimLeavePre"},
         targets = {"*"},
         command = function()
           require("as.external").tmux.set_statusline(true)
