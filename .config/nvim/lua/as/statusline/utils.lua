@@ -2,7 +2,6 @@ local H = require("as.highlights")
 local icons_loaded, devicons
 
 local fn = vim.fn
-local exists = fn.exists
 local expand = fn.expand
 local strwidth = fn.strwidth
 local fnamemodify = fn.fnamemodify
