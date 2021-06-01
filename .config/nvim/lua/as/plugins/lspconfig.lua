@@ -161,15 +161,15 @@ function as.lsp.on_attach(client, bufnr)
     vim.bo[bufnr].tagfunc = "v:lua.as.lsp.tagfunc"
   end
 
-  require("lsp_signature").on_attach(
-    {
-      bind = true,
-      hint_enable = false,
-      handler_opts = {
-        border = "single"
-      }
-    }
-  )
+  -- require("lsp_signature").on_attach(
+  --   {
+  --     bind = true,
+  --     hint_enable = false,
+  --     handler_opts = {
+  --       border = "single"
+  --     }
+  --   }
+  -- )
   require("lsp-status").on_attach(client)
 end
 

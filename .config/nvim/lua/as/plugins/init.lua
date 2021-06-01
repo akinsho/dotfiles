@@ -300,7 +300,7 @@ require("packer").startup {
       }
     }
 
-    use "ray-x/lsp_signature.nvim"
+    use {"ray-x/lsp_signature.nvim", opt = true}
 
     use_local {
       "akinsho/flutter-tools.nvim",
