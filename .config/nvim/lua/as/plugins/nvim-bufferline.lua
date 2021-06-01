@@ -3,9 +3,10 @@ return function()
     return vim.bo[b].filetype == ft
   end
 
+  local symbols = {error = " ", warning = " ", info = " "}
+
   local function diagnostics_indicator(_, _, diagnostics)
     local result = {}
-    local symbols = {error = " ", warning = " ", info = " "}
     for name, count in pairs(diagnostics) do
       if symbols[name] and count > 0 then
         table.insert(result, symbols[name] .. count)
@@ -56,7 +57,6 @@ return function()
           filetype = "NvimTree",
           text = "File Explorer",
           highlight = "PanelHeading",
-          text_align = "left",
           padding = 1
         },
         {
