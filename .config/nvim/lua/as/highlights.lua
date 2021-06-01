@@ -162,6 +162,9 @@ local attrs = {fg = "foreground", bg = "background"}
 ---@param fallback string
 ---@return string
 function M.hl_value(grp, attr, fallback)
+  if not grp then
+    return vim.notify("Cannot get a highlight without specifying a group")
+  end
   attr = attrs[attr] or attr
   local hl = api.nvim_get_hl_by_name(grp, true)
   if attr == "gui" then
