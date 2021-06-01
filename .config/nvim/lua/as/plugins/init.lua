@@ -354,8 +354,10 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
-    use "kevinhwang91/nvim-bqf"
     use "nanotee/luv-vimdocs"
+    use "milisims/nvim-luaref"
+
+    use "kevinhwang91/nvim-bqf"
     use {
       "arecarn/vim-fold-cycle",
       config = function()
