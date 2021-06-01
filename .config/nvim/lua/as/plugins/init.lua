@@ -599,6 +599,14 @@ require("packer").startup {
       requires = "nvim-treesitter"
     }
     use {
+      "mizlan/iswap.nvim",
+      cmd = "ISwap",
+      requires = "nvim-treesitter",
+      config = function()
+        require("iswap").setup {}
+      end
+    }
+    use {
       "lewis6991/spellsitter.nvim",
       opt = true,
       config = function()
