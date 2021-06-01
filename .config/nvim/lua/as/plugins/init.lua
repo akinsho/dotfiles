@@ -236,10 +236,11 @@ require("packer").startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
-    use {"mfussenegger/nvim-dap", config = conf("dap")}
+    use {"mfussenegger/nvim-dap", config = conf("dap"), module = "dap", keys = {"<localleader>dtc"}}
     use {
       "rcarriga/nvim-dap-ui",
       requires = "nvim-dap",
+      after = "nvim-dap",
       config = function()
         require("dapui").setup()
       end
@@ -916,7 +917,7 @@ require("packer").startup {
   }
 }
 
-if not vim.g.packer_compiled_loaded then
+if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then
   vim.cmd(fmt("source %s", PACKER_COMPILED_PATH))
   vim.g.packer_compiled_loaded = true
 end
