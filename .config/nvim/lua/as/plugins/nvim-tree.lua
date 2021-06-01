@@ -13,6 +13,14 @@ return function()
 
   as.nnoremap("<c-n>", [[<cmd>NvimTreeToggle<CR>]])
 
+  function as.nvim_tree_os_open()
+    local lib = require "nvim-tree.lib"
+    local node = lib.get_node_at_cursor()
+    if node then
+      vim.fn.jobstart("open '" .. node.absolute_path .. "' &", {detach = true})
+    end
+  end
+
   vim.g.nvim_tree_special_files = {}
   vim.g.nvim_tree_lsp_diagnostics = 1
   vim.g.nvim_tree_indent_markers = 1
@@ -27,6 +35,9 @@ return function()
   vim.g.nvim_tree_root_folder_modifier = ":t"
   vim.g.nvim_tree_ignore = {".DS_Store", "fugitive:", ".git"}
   vim.g.nvim_tree_highlight_opened_files = 1
+  vim.g.nvim_tree_bindings = {
+    ["<c-o>"] = "<Cmd>lua as.nvim_tree_os_open()<CR>"
+  }
 
   local function set_highlights()
     require("as.highlights").all {
