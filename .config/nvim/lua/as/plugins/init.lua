@@ -319,7 +319,11 @@ require("packer").startup {
           dev_log = {open_cmd = "tabedit"},
           lsp = {
             on_attach = as.lsp and as.lsp.on_attach or nil,
-            capabilities = capabilities
+            --- This is necessary to prevent lsp-status' capabilities being
+            --- given priority over that of the default config
+            capabilities = function(defaults)
+              return vim.tbl_deep_extend("keep", defaults, capabilities)
+            end
           }
         }
       end,
@@ -328,12 +332,6 @@ require("packer").startup {
     }
 
     use {"hrsh7th/nvim-compe", config = conf("compe"), event = "InsertEnter"}
-    use {
-      "tzachar/compe-tabnine",
-      run = "./install.sh",
-      after = "nvim-compe",
-      requires = "hrsh7th/nvim-compe"
-    }
 
     use {
       "hrsh7th/vim-vsnip",
