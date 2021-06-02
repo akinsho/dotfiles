@@ -248,6 +248,7 @@ require("packer").startup {
     }
     use {"jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work}
 
+    use "folke/lua-dev.nvim"
     use {
       "neovim/nvim-lspconfig",
       config = conf("lspconfig"),

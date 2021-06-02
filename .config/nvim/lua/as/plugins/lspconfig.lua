@@ -166,26 +166,6 @@ end
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-
---- This function if called immediately on startup might not have all the correct
---- paths added to the runtime if the the package manager e.g. packer loads things too late
-local function get_lua_runtime()
-  local library = {}
-  local items = {
-    "$VIMRUNTIME",
-    "$DOTFILES",
-    "~/.local/share/nvim/site/pack/packer/opt/*",
-    "~/.local/share/nvim/site/pack/packer/start/*"
-  }
-  for _, item in ipairs(items) do
-    for _, p in pairs(vim.fn.expand(item, false, true)) do
-      p = vim.loop.fs_realpath(p)
-      library[p] = true
-    end
-  end
-  return library
-end
-
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
@@ -193,35 +173,27 @@ as.lsp.servers = {
     --- NOTE: This is the secret sauce that allows reading requires and variables
     --- between different modules in the nvim lua context
     --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
-    local path = vim.split(package.path, ";")
-    table.insert(path, "lua/?.lua")
-    table.insert(path, "lua/?/init.lua")
-    local library = get_lua_runtime()
-    return {
-      -- delete root from workspace to make sure we don't trigger duplicate warnings
-      on_new_config = function(config, root)
-        local libs = vim.deepcopy(library)
-        libs[root] = nil
-        config.settings.Lua.workspace.library = libs
-        return config
-      end,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = {"vim", "describe", "it", "before_each", "after_each", "pending", "teardown"}
-          },
-          completion = {keywordSnippet = "Both", callSnippet = "Both"},
-          runtime = {
-            version = "LuaJIT",
-            path = path
-          },
-          workspace = {
-            maxPreload = 2000,
-            preloadFileSize = 50000,
-            library = library
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {enable = false}
+    --- if I ever decide to move away from lua dev then use the above
+    return require("lua-dev").setup {
+      library = {
+        vimruntime = false
+      },
+      lspconfig = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = {
+                "vim",
+                "describe",
+                "it",
+                "before_each",
+                "after_each",
+                "pending",
+                "teardown"
+              }
+            },
+            completion = {keywordSnippet = "Both", callSnippet = "Both"}
+          }
         }
       }
     }
@@ -295,7 +267,7 @@ function as.lsp.setup_servers()
         "additionalTextEdits"
       }
     }
-    config.capabilities = as.deep_merge(config.capabilities, status_capabilities)
+    config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
     lspconfig[server].setup(config)
   end
 end
