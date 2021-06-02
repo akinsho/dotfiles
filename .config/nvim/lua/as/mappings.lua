@@ -255,7 +255,7 @@ cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], {expr = true})
 nnoremap(
   "<c-s>",
   function()
-    vim.cmd("silent write")
+    vim.cmd("silent update")
     as.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
   end
 )
