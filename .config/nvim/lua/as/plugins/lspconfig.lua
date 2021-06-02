@@ -3,16 +3,6 @@ as.lsp = {}
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
-  as.augroup(
-    "LspLocationList",
-    {
-      {
-        events = {"InsertLeave", "BufWrite", "BufEnter"},
-        targets = {"<buffer>"},
-        command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]]
-      }
-    }
-  )
   if client and client.resolved_capabilities.document_highlight then
     as.augroup(
       "LspCursorCommands",
@@ -71,7 +61,7 @@ local function setup_mappings(client, bufnr)
   nnoremap(
     "]c",
     function()
-      vim.lsp.diagnostic.goto_prev {popup_opts = {border = "single"}}
+      vim.lsp.diagnostic.goto_prev {popup_opts = {border = "single", focusable = false}}
     end,
     opts
   )
@@ -79,7 +69,7 @@ local function setup_mappings(client, bufnr)
   nnoremap(
     "[c",
     function()
-      vim.lsp.diagnostic.goto_next {popup_opts = {border = "single"}}
+      vim.lsp.diagnostic.goto_next {popup_opts = {border = "single", focusable = false}}
     end,
     opts
   )
@@ -364,8 +354,15 @@ return function()
     }
   )
 
-  -- NOTE: the hover handler returns the bufnr,winnr so can be use for mappings
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
+  local max_width = math.floor(vim.o.columns * 0.4) or 100
+  local max_height = math.floor(vim.o.lines * 0.3) or 30
+
+  -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
+  vim.lsp.handlers["textDocument/hover"] =
+    vim.lsp.with(
+    vim.lsp.handlers.hover,
+    {border = "single", max_width = max_width, max_height = max_height}
+  )
 
   as.lsp.setup_servers()
 end
