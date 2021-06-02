@@ -10,6 +10,9 @@ return function()
       prompt_prefix = "❯ ",
       mappings = {
         i = {
+          ["<c-c>"] = function()
+            vim.cmd("stopinsert!")
+          end,
           ["<esc>"] = actions.close,
           ["<c-s>"] = actions.select_horizontal
         }
@@ -41,6 +44,7 @@ return function()
 
   telescope.load_extension("fzf")
   telescope.load_extension("arecibo")
+  telescope.load_extension("project")
 
   local function dotfiles()
     builtins.find_files {
@@ -99,6 +103,10 @@ return function()
       -- otherwise, use :Telescope find_files
       builtins.find_files()
     end
+  end
+
+  local function projects()
+    telescope.extensions.project.project {}
   end
 
   local function frecency()
@@ -169,6 +177,7 @@ return function()
         f = {builtins.find_files, "files"},
         g = {websearch, "websearch"},
         o = {buffers, "buffers"},
+        p = {projects, "projects"},
         m = {builtins.man_pages, "man pages"},
         h = {frecency, "history"},
         n = {nvim_config, "nvim config"},
