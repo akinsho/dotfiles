@@ -144,14 +144,7 @@ require("packer").startup {
         vim.g.rooter_resolve_links = 1
       end
     }
-    use {
-      "rmagatti/auto-session",
-      config = function()
-        require("auto-session").setup {
-          auto_session_root_dir = vim.fn.stdpath("data") .. "/session/auto/"
-        }
-      end
-    }
+
     use {
       "nvim-telescope/telescope.nvim",
       event = "CursorHold",
@@ -171,6 +164,23 @@ require("packer").startup {
         }
       }
     }
+
+    use {
+      "rmagatti/session-lens",
+      after = "telescope.nvim",
+      requires = {
+        "nvim-telescope/telescope.nvim",
+        {
+          "rmagatti/auto-session",
+          config = function()
+            require("auto-session").setup {
+              auto_session_root_dir = vim.fn.stdpath("data") .. "/session/auto/"
+            }
+          end
+        }
+      }
+    }
+
     use {
       "dhruvasagar/vim-dotoo",
       config = function()
