@@ -682,7 +682,13 @@ require("packer").startup {
                 ["<leader>e"] = cb("focus_files"),
                 ["<leader>b"] = cb("toggle_files")
               },
-              view = {q = "<Cmd>DiffviewClose<CR>"}
+              view = {
+                ["q"] = "<Cmd>DiffviewClose<CR>",
+                ["<tab>"] = cb("select_next_entry"), -- Open the diff for the next file
+                ["<s-tab>"] = cb("select_prev_entry"), -- Open the diff for the previous file
+                ["<leader>e"] = cb("focus_files"), -- Bring focus to the files panel
+                ["<leader>b"] = cb("toggle_files") -- Toggle the files panel.
+              }
             }
           }
         )

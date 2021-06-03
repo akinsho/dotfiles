@@ -16,7 +16,6 @@ else
 fi
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias grep='grep --color'
-alias top="vtop"
 alias x="exit" # Exit Terminal
 alias t=_t
 alias del="rm -rf"
