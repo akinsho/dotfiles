@@ -115,6 +115,9 @@ end
 local separator = {"%="}
 local end_marker = {"%<"}
 
+local item = utils.item
+local item_if = utils.item_if
+
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
 function _G.statusline()
@@ -155,7 +158,7 @@ function _G.statusline()
   local add = make_status(statusline)
 
   add(
-    {utils.item_if("▌", not minimal, "StIndicator", {before = "", after = ""}), 0},
+    {item_if("▌", not minimal, "StIndicator", {before = "", after = ""}), 0},
     {utils.spacer(1), 0}
   )
   ----------------------------------------------------------------------------//
@@ -180,16 +183,16 @@ function _G.statusline()
   -- Left section
   -----------------------------------------------------------------------------//
   add(
-    {utils.item_if(file_modified, ctx.modified, "StModified"), 1},
+    {item_if(file_modified, ctx.modified, "StModified"), 1},
     {readonly_item, 2},
-    {utils.item(utils.mode()), 0},
-    {utils.item(utils.search_count(), "StCount"), 1},
+    {item(utils.mode()), 0},
+    {item(utils.search_count(), "StCount"), 1},
     {dir_item, 3},
     {parent_item, 2},
     {file_item, 0},
     -- LSP Status
     {
-      utils.item(
+      item(
         utils.current_function(),
         "StMetadata",
         {before = "  ", prefix = "", prefix_color = "StIdentifier"}
@@ -198,7 +201,7 @@ function _G.statusline()
     },
     -- Local plugin dev indicator
     {
-      utils.item_if(
+      item_if(
         available_space > 100 and "local dev" or "",
         vim.env.DEVELOPING ~= nil,
         "StComment",
@@ -214,10 +217,8 @@ function _G.statusline()
   -- Neovim allows unlimited alignment sections so we can put things in the
   -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   -----------------------------------------------------------------------------//
-  add(
-    -- Start of the right side layout
-    {separator}
-  )
+  -- Start of the right side layout
+  add({separator})
   -----------------------------------------------------------------------------//
   -- Right section
   -----------------------------------------------------------------------------//
@@ -227,9 +228,9 @@ function _G.statusline()
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   add(
-    {utils.item(utils.lsp_status(), "StMetadata"), 4},
+    {item(utils.lsp_status(), "StMetadata"), 4},
     {
-      utils.item_if(
+      item_if(
         diagnostics.error.count,
         diagnostics.error,
         "StError",
@@ -238,7 +239,7 @@ function _G.statusline()
       1
     },
     {
-      utils.item_if(
+      item_if(
         diagnostics.warning.count,
         diagnostics.warning,
         "StWarning",
@@ -247,15 +248,10 @@ function _G.statusline()
       3
     },
     {
-      utils.item_if(
-        diagnostics.info.count,
-        diagnostics.info,
-        "StGreen",
-        {prefix = diagnostics.info.sign}
-      ),
+      item_if(diagnostics.info.count, diagnostics.info, "StGreen", {prefix = diagnostics.info.sign}),
       4
     },
-    {utils.item(notifications, "StTitle", {prefix = ""}), 3}
+    {item(notifications, "StTitle", {prefix = ""}), 3}
   )
 
   local status = vim.b.gitsigns_status_dict or {}
@@ -264,19 +260,19 @@ function _G.statusline()
   local behind = updates.behind and tonumber(updates.behind) or 0
   add(
     -- Git Status
-    {utils.item(status.head, "StInfo", {prefix = "", prefix_color = "StOrange"}), 1},
-    {utils.item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
-    {utils.item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}), 3},
-    {utils.item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}), 3},
+    {item(status.head, "StInfo", {prefix = "", prefix_color = "StOrange"}), 1},
+    {item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
+    {item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}), 3},
+    {item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}), 3},
     {
-      utils.item(
+      item(
         ahead,
         "StTitle",
         {prefix = "⇡", prefix_color = "StGreen", after = behind > 0 and "" or " ", before = ""}
       ),
       5
     },
-    {utils.item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}), 5},
+    {item(behind, "StTitle", {prefix = "⇣", prefix_color = "StNumber", after = " "}), 5},
     -- Current line number/total line number,  alternatives 
     {
       utils.line_info(
@@ -292,7 +288,7 @@ function _G.statusline()
     },
     -- (Unexpected) Indentation
     {
-      utils.item_if(
+      item_if(
         ctx.shiftwidth,
         ctx.shiftwidth > 2 or not ctx.expandtab,
         "StTitle",
