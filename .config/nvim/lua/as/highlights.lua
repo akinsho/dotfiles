@@ -253,10 +253,23 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    {"DiffAdd", {guibg = "green", guifg = "NONE"}},
-    {"DiffDelete", {guibg = "red", guifg = "#5c6370", gui = "NONE"}},
-    {"DiffChange", {guibg = "#344f69", guifg = "NONE"}},
-    {"DiffText", {guibg = "#2f628e", guifg = "NONE"}},
+    {"DiffAdd", {guibg = "#26332c", guifg = "NONE"}},
+    {"DiffDelete", {guibg = "#572E33", guifg = "#5c6370", gui = "NONE"}},
+    {"DiffChange", {guibg = "#273842", guifg = "NONE"}},
+    {"DiffText", {guibg = "#314753", guifg = "NONE"}},
+    {"diffAdded", {link = "DiffAdd", force = true}},
+    {"diffChanged", {link = "DiffChange", force = true}},
+    {"diffRemoved", {link = "DiffDelete", force = true}},
+    {"diffBDiffer", {link = "WarningMsg", force = true}},
+    {"diffCommon", {link = "WarningMsg", force = true}},
+    {"diffDiffer", {link = "WarningMsg", force = true}},
+    {"diffFile", {link = "Directory", force = true}},
+    {"diffIdentical", {link = "WarningMsg", force = true}},
+    {"diffIndexLine", {link = "Number", force = true}},
+    {"diffIsA", {link = "WarningMsg", force = true}},
+    {"diffNoEOL", {link = "WarningMsg", force = true}},
+    {"diffOnly", {link = "WarningMsg", force = true}},
+    -----------------------------------------------------------------------------//
     -- colorscheme overrides
     {"Comment", {gui = "italic"}},
     {"Type", {gui = "italic,bold"}},
