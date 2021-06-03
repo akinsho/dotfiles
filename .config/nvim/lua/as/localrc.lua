@@ -7,26 +7,20 @@ local M = {
   found_rc = nil
 }
 
-local echo = function(msg, opts)
-  opts = opts or {}
-  local hl = opts.hl or "Title"
-  if not opts.delay then
-    vim.api.nvim_echo({{msg, hl}}, true, {})
-  else
-    vim.defer_fn(
-      function()
-        vim.api.nvim_echo({{msg, hl}}, true, {})
-      end,
-      opts.delay
-    )
-  end
+local function notify(msg, level, delay)
+  vim.defer_fn(
+    function()
+      vim.notify(msg, level, delay)
+    end,
+    delay or 200
+  )
 end
 
 function M.open()
   if M.found_rc then
     vim.cmd("vsplit " .. M.found_rc)
   else
-    echo("No LocalRC found")
+    notify("No LocalRC found")
   end
 end
 
@@ -43,7 +37,9 @@ local function setup_localrc(path)
       {
         events = {"BufWritePost"},
         target = {path},
-        command = string.format([[lua require('as.localrc').reload('%s')]], path)
+        command = function()
+          M.reload(path)
+        end
       }
     }
   )
@@ -55,12 +51,12 @@ local function load_rc(path)
     setup_localrc(path)
   end
   local message = success and "Successfully loaded " .. path or "Failed to load because: " .. msg
-  echo(message, {delay = 120})
+  notify(message)
 end
 
 function M.reload(path)
   vim.cmd("luafile " .. path)
-  echo("Reloaded " .. path)
+  notify("Reloaded " .. path)
 end
 
 ---@param path string|nil
@@ -77,7 +73,7 @@ function M.load(path, target)
 
   local dir, err = luv.fs_opendir(path)
   if not dir and err then
-    echo("[Local init @ " .. path .. " failed]: " .. err, "ErrorMsg")
+    notify("[Local init @ " .. path .. " failed]: " .. err, vim.log.levels.Error)
   end
   repeat
     local entry = luv.fs_readdir(dir)
@@ -100,22 +96,17 @@ function M.load(path, target)
 end
 
 --- trigger loading of localrc
----@param event string
-function M.setup(event)
-  if not event then
-    M.load()
-  else
-    as.augroup(
-      "LoadLocalInit",
+function M.setup()
+  as.augroup(
+    "LoadLocalInit",
+    {
       {
-        {
-          events = {event},
-          targets = {"*"},
-          command = [[lua require("as.localrc").load()]]
-        }
+        events = {"VimEnter"},
+        targets = {"*"},
+        command = [[lua require("as.localrc").load()]]
       }
-    )
-  end
+    }
+  )
   as.command {
     "LocalrcEdit",
     function()
