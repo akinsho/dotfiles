@@ -300,7 +300,6 @@ require("packer").startup {
         {"glepnir/lspsaga.nvim", opt = true, config = conf("lspsaga")},
         {
           "kabouzeid/nvim-lspinstall",
-          opt = true,
           config = function()
             require("lspinstall").post_install_hook = function()
               as.lsp.setup_servers()
