@@ -138,7 +138,7 @@ function M.highlight(name, opts)
     blend = true
   }
   local force = opts.force or false
-  if name and not vim.tbl_isempty(opts) then
+  if name and opts and not vim.tbl_isempty(opts) then
     if opts.link and opts.link ~= "" then
       vim.cmd("highlight" .. (force and "!" or "") .. " link " .. name .. " " .. opts.link)
     else

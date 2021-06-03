@@ -36,6 +36,7 @@ local function colors()
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
     {"StIndicator", {guibg = bg_color, guifg = indicator_color}},
     {"StModified", {guifg = string_fg, guibg = bg_color}},
+    {"StOrange", {guifg = P.orange, guibg = bg_color}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
     {"StNumber", {guifg = number_fg, guibg = bg_color}},
     {"StCount", {guifg = "bg", guibg = indicator_color, gui = "bold"}},
@@ -263,7 +264,7 @@ function _G.statusline()
   local behind = updates.behind and tonumber(updates.behind) or 0
   add(
     -- Git Status
-    {utils.item(status.head, "StInfo", {prefix = ""}), 1},
+    {utils.item(status.head, "StInfo", {prefix = "", prefix_color = "StOrange"}), 1},
     {utils.item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
     {utils.item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}), 3},
     {utils.item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}), 3},
