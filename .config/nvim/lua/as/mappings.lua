@@ -255,7 +255,9 @@ cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], {expr = true})
 nnoremap(
   "<c-s>",
   function()
-    vim.cmd("silent update")
+    -- NOTE: this uses write specifically because we need to trigger a filesystem event
+    -- even if the file isn't change so that things like hot reload work
+    vim.cmd("silent! write")
     as.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
   end
 )
