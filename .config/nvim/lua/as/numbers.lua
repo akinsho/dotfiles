@@ -37,7 +37,7 @@ vim.g.number_buftype_exclusions = {
   "quickfix"
 }
 
-vim.g.number_buftype_ignored = {}
+vim.g.number_buftype_ignored = {"quickfix"}
 
 local function is_floating_win()
   return vim.fn.win_gettype() == "popup"
