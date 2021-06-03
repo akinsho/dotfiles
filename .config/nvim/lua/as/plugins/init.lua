@@ -676,6 +676,9 @@ require("packer").startup {
                 ["<up>"] = cb("prev_entry"),
                 ["<cr>"] = cb("select_entry"), -- Open the diff for the selected entry.
                 ["o"] = cb("select_entry"),
+                ["-"] = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
+                ["S"] = cb("stage_all"), -- Stage all entries.
+                ["U"] = cb("unstage_all"), -- Unstage all entries.
                 ["R"] = cb("refresh_files"), -- Update stats and entries in the file list.
                 ["<tab>"] = cb("select_next_entry"),
                 ["<s-tab>"] = cb("select_prev_entry"),
