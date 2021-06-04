@@ -873,7 +873,6 @@ require("packer").startup {
     use_local {
       "akinsho/dependency-assist.nvim",
       local_path = "personal",
-      branch = "feature/delay-loading-modules",
       config = function()
         return require("dependency_assist").setup()
       end
