@@ -615,10 +615,10 @@ require("packer").startup {
       "p00f/nvim-ts-rainbow",
       requires = "nvim-treesitter"
     }
-    use {
+    use_local {
       "mizlan/iswap.nvim",
-      cmd = "ISwap",
-      requires = "nvim-treesitter",
+      after = {"nvim-treesitter", "nvim-treesitter-textobjects"},
+      local_path = "contributing",
       config = function()
         require("iswap").setup {}
       end
