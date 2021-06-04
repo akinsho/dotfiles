@@ -17,7 +17,7 @@ curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | b
 
 - [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
 - [Nvim (nightly)](https://github.com/neovim/neovim)
-- Language server support using [`coc.nvim`](https://github.com/neoclide/coc.nvim)/[`neovim's lsp`](https://neovim.io/doc/user/lsp.html)
+- Language server support using [`neovim's lsp`](https://neovim.io/doc/user/lsp.html)
 
 - Minimal Zsh config without `oh-my-zsh`, async prompt for really large monorepos.
 
