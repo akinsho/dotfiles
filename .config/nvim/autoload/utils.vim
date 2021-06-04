@@ -1,19 +1,3 @@
-function! utils#message(msg, ...) abort
-  let hl = 'WarningMsg'
-  if a:0 " a:0 is the number of optional args provided
-    let hl = a:1
-  endif
-  execute 'echohl '. hl
-  echom a:msg
-  echohl none
-endfunction
-
-function! utils#info_message(msg) abort
-  echohl String
-  echom a:msg
-  echohl none
-endfunction
-
 function! utils#tab_zoom()
   if winnr('$') > 1
     tab split
@@ -21,31 +5,6 @@ function! utils#tab_zoom()
         \ 'index(v:val, '.bufnr('').') >= 0')) > 1
     tabclose
   endif
-endfunction
-
-
-function! utils#buf_zoom() abort
-  if exists('t:zoomed') && t:zoomed
-    exec t:zoom_winrestcmd
-    let t:zoomed = 0
-  else
-    let t:zoom_winrestcmd = winrestcmd()
-    resize
-    vertical resize
-    let t:zoomed = 1
-  endif
-endfunction
-
-
-" Peekabo Like functionality
-function! utils#reg()
-  reg
-  echo "Register: "
-  let char = nr2char(getchar())
-  if char != "\<Esc>"
-    execute "normal! \"".char."p"
-  endif
-  redraw
 endfunction
 
 "
@@ -136,19 +95,6 @@ function! utils#modify_line_end_delimiter(character)
   call setline('.', newline)
 endfunction
 "}}}
-""---------------------------------------------------------------------------//
-" Takes a base - highlight group to extend,
-" group - the new group name
-" add - the settings to add  to the highlight
-""---------------------------------------------------------------------------//"
-function! utils#extend_highlight(base, group, add)
-  redir => base_hi
-  sil! exe 'highlight' a:base
-  redir END
-  let grp_hi = split(base_hi, '\n')[0]
-  let grp_hi = substitute(grp_hi, '^'.a:base.'\s\+xxx', '', '')
-  sil exe 'highlight' a:group grp_hi a:add
-endfunction
 
 function! utils#tab_message(cmd)
   redir => message
@@ -162,86 +108,6 @@ function! utils#tab_message(cmd)
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
     silent put=message
   endif
-endfunction
-
-
-" regular expressions that match numbers (order matters .. keep '\d' last!)
-" note: \+ will be appended to the end of each
-let s:reg_nums = [ '0b[01]', '0x\x', '\d' ]
-
-" https://vimways.org/2018/transactions-pending/
-function! utils#in_number()
-  " select the next number on the line
-  " this can handle the following three formats (so long as s:regNums is
-  " defined as it should be above this function):
-  "   1. binary  (eg: "0b1010", "0b0000", etc)
-  "   2. hex     (eg: "0xffff", "0x0000", "0x10af", etc)
-  "   3. decimal (eg: "0", "0000", "10", "01", etc)
-  " NOTE: if there is no number on the rest of the line starting at the
-  "       current cursor position, then visual selection mode is ended (if
-  "       called via an omap) or nothing is selected (if called via xmap)
-
-  " need magic for this to work properly
-  let l:magic = &magic
-  set magic
-
-  let l:line_nr = line('.')
-
-  " create regex pattern matching any binary, hex, decimal number
-  let l:pat = join(s:reg_nums, '\+\|') . '\+'
-
-  " move cursor to end of number
-  if (!search(l:pat, 'ce', l:line_nr))
-    " if it fails, there was not match on the line, so return prematurely
-    return
-  endif
-
-  " start visually selecting from end of number
-  normal! v
-
-  " move cursor to beginning of number
-  call search(l:pat, 'cb', l:line_nr)
-
-  " restore magic
-  let &magic = l:magic
-endfunction
-
-function! utils#around_number()
-  " select the next number on the line and any surrounding white-space;
-  " this can handle the following three formats (so long as s:regNums is
-  " defined as it should be above these functions):
-  "   1. binary  (eg: "0b1010", "0b0000", etc)
-  "   2. hex     (eg: "0xffff", "0x0000", "0x10af", etc)
-  "   3. decimal (eg: "0", "0000", "10", "01", etc)
-  " NOTE: if there is no number on the rest of the line starting at the
-  "       current cursor position, then visual selection mode is ended (if
-  "       called via an omap) or nothing is selected (if called via xmap);
-  "       this is true even if on the space following a number
-
-  " need magic for this to work properly
-  let l:magic = &magic
-  set magic
-
-  let l:line_nr = line('.')
-  " create regex pattern matching any binary, hex, decimal number
-  let l:pat = join(s:reg_nums, '\+\|') . '\+'
-  " move cursor to end of number
-  if (!search(l:pat, 'ce', l:line_nr))
-    " if it fails, there was not match on the line, so return prematurely
-    return
-  endif
-  " move cursor to end of any trailing white-space (if there is any)
-  call search('\%'.(virtcol('.')+1).'v\s*', 'ce', l:line_nr)
-  " start visually selecting from end of number + potential trailing whitspace
-  normal! v
-  " move cursor to beginning of number
-  call search(l:pat, 'cb', l:line_nr)
-
-  " move cursor to beginning of any white-space preceding number (if any)
-  call search('\s*\%'.virtcol('.').'v', 'b', l:line_nr)
-
-  " restore magic
-  let &magic = l:magic
 endfunction
 
 " NOTE: we define this outside of our ftplugin/qf.vim

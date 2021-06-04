@@ -1,2 +1,0 @@
-setlocal foldlevelstart=99
-setlocal nofoldenable

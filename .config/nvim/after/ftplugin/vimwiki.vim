@@ -11,10 +11,24 @@ highlight VimwikiDelText gui=strikethrough guifg=#5c6370 guibg=background
 highlight VimwikiLink gui=underline guifg=#61AFEF
 highlight link VimwikiCheckBoxDone VimwikiDelText
 
-if v:lua.plugin_loaded('vim-which-key')
-  let g:which_leader_key_map.w.d  = 'delete current wiki file'
-  let g:which_leader_key_map.w.h  = 'convert wiki to html'
-  let g:which_leader_key_map.w.hh = 'convert wiki to html & open browser'
-  let g:which_leader_key_map.w.r  = 'rename wiki file'
-  let g:which_leader_key_map.w.n  = 'go to vim wiki page specified'
+if v:lua.plugin_loaded('which-key.nvim')
+lua << EOF
+  local ok, wk = pcall(require, "which-key")
+  if ok then
+    wk.register({
+      w = {
+        name = "+wiki",
+        d  = 'delete current wiki file',
+        h  = 'convert wiki to html',
+        hh = 'convert wiki to html & open browser',
+        r  = 'rename wiki file',
+        n  = 'go to vim wiki page specified',
+        s = 'select wiki',
+        i = 'go to diary index',
+        w = 'go to wiki index',
+        t = 'go to wiki index in a tab',
+      }
+    }, {prefix = "<leader>"})
+  end
+EOF
 endif
