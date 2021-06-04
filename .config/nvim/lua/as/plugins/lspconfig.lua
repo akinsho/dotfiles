@@ -122,7 +122,7 @@ require("vim.lsp.protocol").CompletionItemKind = {
   " Constructor", -- Constructor
   "識 Field", -- Field
   " Variable", -- Variable
-  "\u{f0e8} Class", -- Class
+  " Class", -- Class
   "ﰮ Interface", -- Interface
   " Module", -- Module
   " Property", -- Property
@@ -140,7 +140,7 @@ require("vim.lsp.protocol").CompletionItemKind = {
   " Struct", -- Struct
   "鬒 Event", -- Event
   "\u{03a8} Operator", -- Operator
-  " Type Parameter" -- TypeParameter
+  " Type Parameter" -- TypeParameter
 }
 
 function as.lsp.on_attach(client, bufnr)
