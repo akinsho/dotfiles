@@ -552,6 +552,19 @@ require("packer").startup {
       setup = conf("vimwiki").setup,
       config = conf("vimwiki").config
     }
+    use {
+      "vhyrro/neorg",
+      opt = true,
+      requires = {"nvim-lua/plenary.nvim"},
+      config = function()
+        require("neorg").setup {
+          load = {
+            ["core.defaults"] = {}, -- Load all the default modules
+            ["core.norg.concealer"] = {} -- Enhances the text editing experience by using icons
+          }
+        }
+      end
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Profiling {{{
