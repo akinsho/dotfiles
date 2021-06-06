@@ -77,14 +77,22 @@ local function setup_mappings(client, bufnr)
   nnoremap("K", vim.lsp.buf.hover, opts)
   nnoremap("gI", vim.lsp.buf.incoming_calls, opts)
   nnoremap("gr", vim.lsp.buf.references, opts)
-  nnoremap("<leader>rn", vim.lsp.buf.rename, opts)
+
+  if client.supports_method("textDocument/rename") then
+    nnoremap("<leader>rn", vim.lsp.buf.rename, opts)
+  end
+
   nnoremap("<leader>cs", vim.lsp.buf.document_symbol, opts)
   nnoremap("<leader>cw", vim.lsp.buf.workspace_symbol, opts)
   nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
   require("which-key").register(
     {
       ["<leader>rf"] = "lsp: format buffer",
-      ["gr"] = "lsp: references"
+      ["<leader>ca"] = "lsp: code action",
+      ["<leader>gd"] = "lsp: go to type definition",
+      ["gr"] = "lsp: references",
+      ["gi"] = "lsp: implementation",
+      ["gI"] = "lsp: incoming calls"
     }
   )
 end
