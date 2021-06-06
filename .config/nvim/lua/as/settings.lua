@@ -99,7 +99,7 @@ end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.opt.wildcharm = fn.char2nr("<C-Z>")
+vim.opt.wildcharm = fn.char2nr([[\<C-Z>]])
 vim.opt.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
 vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
