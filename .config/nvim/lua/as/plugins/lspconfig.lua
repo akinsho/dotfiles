@@ -199,8 +199,9 @@ as.lsp.servers = {
                 "pending",
                 "teardown"
               }
-            },
-            completion = {keywordSnippet = "Both", callSnippet = "Both"}
+            }
+            -- Await resolution of https://github.com/sumneko/lua-language-server/issues/543
+            -- completion = {keywordSnippet = "Both", callSnippet = "Both"}
           }
         }
       }
