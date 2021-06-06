@@ -428,6 +428,10 @@ if exists hub; then
   eval "$(hub alias -s)" # Aliases 'hub' to git
 fi
 
+if [[ ! "$(exists nvr)" && "$(exists pip3)" ]]; then
+  pip3 install neovim-remote
+fi
+
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
