@@ -620,14 +620,10 @@ require("packer").startup {
         }
       }
     }
+    use {"nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter"}
+    use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter"}
+    use "RRethy/nvim-treesitter-textsubjects"
     use {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      requires = "nvim-treesitter"
-    }
-    use {
-      "p00f/nvim-ts-rainbow",
-      requires = "nvim-treesitter"
-    }
     use_local {
       "mizlan/iswap.nvim",
       after = {"nvim-treesitter", "nvim-treesitter-textobjects"},

@@ -56,7 +56,13 @@ return function()
         goto_previous_start = {
           ["[m"] = "@function.outer",
           ["[["] = "@class.outer"
-        },
+        }
+      }
+    },
+    textsubjects = {
+      enable = true,
+      keymaps = {
+        ["<CR>"] = "textsubjects-smart"
       }
     },
     rainbow = {
