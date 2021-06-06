@@ -623,11 +623,11 @@ require("packer").startup {
     use {"nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter"}
     use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter"}
     use "RRethy/nvim-treesitter-textsubjects"
+    -- This needs to load after nvim-treesitter but the "after" key in packer is broken
+    -- till #272 is fixed
     use {
-    use_local {
       "mizlan/iswap.nvim",
-      after = {"nvim-treesitter", "nvim-treesitter-textobjects"},
-      local_path = "contributing",
+      cmd = "ISwap",
       config = function()
         require("iswap").setup {}
       end
