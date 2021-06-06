@@ -1,3 +1,5 @@
+os:
+  editCommand: "nvr -d"
 gui:
   ## stuff relating to the UI
   scrollHeight: 2
