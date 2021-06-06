@@ -143,9 +143,7 @@ return function()
   end
 
   local function workspace_symbols()
-    builtins.lsp_workspace_symbols {
-      query = vim.fn.input("Query > ")
-    }
+    builtins.lsp_dynamic_workspace_symbols {}
   end
 
   local function git_branches()
