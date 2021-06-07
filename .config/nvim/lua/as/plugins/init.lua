@@ -628,8 +628,14 @@ require("packer").startup {
     use {
       "mizlan/iswap.nvim",
       cmd = "ISwap",
+      keys = "<localleader>sw",
       config = function()
         require("iswap").setup {}
+        require("which-key").register(
+          {
+            ["<localleader>sw"] = {"<Cmd>ISwap<CR>", "swap arguments,parameters etc."}
+          }
+        )
       end
     }
     use {
@@ -778,25 +784,6 @@ require("packer").startup {
                 f = {"<Plug>DsfChange", "change surrounding function"},
                 nf = {"<Plug>DsfNextChange", "change next surrounding function"}
               }
-            }
-          }
-        )
-      end
-    }
-    use {
-      "AndrewRadev/sideways.vim",
-      config = function()
-        vim.g.sideways_add_item_cursor_restore = 1
-        require("which-key").register(
-          {
-            ["]w"] = {"<cmd>SidewaysLeft<cr>", "move argument left"},
-            ["[w"] = {"<cmd>SidewaysRight<cr>", "move argument right"},
-            ["<localleader>s"] = {
-              name = "+sideways",
-              i = {"<Plug>SidewaysArgumentInsertBefore", "insert argument before"},
-              a = {"<Plug>SidewaysArgumentAppendAfter", "insert argument after"},
-              I = {"<Plug>SidewaysArgumentInsertFirst", "insert argument first"},
-              A = {"<Plug>SidewaysArgumentAppendLast", "insert argument last"}
             }
           }
         )
