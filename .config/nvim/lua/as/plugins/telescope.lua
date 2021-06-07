@@ -43,7 +43,6 @@ return function()
   }
 
   telescope.load_extension("fzf")
-  telescope.load_extension("arecibo")
 
   local function dotfiles()
     builtins.find_files {
@@ -115,17 +114,6 @@ return function()
     )
   end
 
-  local function websearch()
-    telescope.extensions.arecibo.websearch(
-      themes.get_dropdown {
-        winblend = 10,
-        border = true,
-        previewer = false,
-        shorten_path = false
-      }
-    )
-  end
-
   local function buffers()
     builtins.buffers {
       sort_lastused = true,
@@ -168,7 +156,6 @@ return function()
         c = {builtins.git_commits, "commits"},
         d = {dotfiles, "dotfiles"},
         f = {builtins.find_files, "files"},
-        g = {websearch, "websearch"},
         o = {buffers, "buffers"},
         m = {builtins.man_pages, "man pages"},
         h = {frecency, "history"},

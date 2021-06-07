@@ -58,8 +58,6 @@ local function not_developing()
   return not vim.env.DEVELOPING
 end
 
-local openssl_dir = has("mac") and "/usr/local/Cellar/openssl@1.1/1.1.1j" or "/usr/"
-
 --- Automagically register local and report plugins as well as when they are enabled or disabled
 --- 1. Local plugins that I created should be used but specified with their git urls so they are
 --- installed from git on other machines
@@ -157,10 +155,6 @@ require("packer").startup {
           "nvim-telescope/telescope-frecency.nvim",
           requires = "tami5/sql.nvim",
           after = "telescope.nvim"
-        },
-        {
-          "nvim-telescope/telescope-arecibo.nvim",
-          rocks = {{"openssl", env = {OPENSSL_DIR = openssl_dir}}, "lua-http-parser"}
         }
       }
     }
@@ -278,7 +272,6 @@ require("packer").startup {
             status.register_progress()
           end
         },
-        -- TODO re-add lspsaga's lightbulb once lspsaga #161 is resolved
         {
           "kosayoda/nvim-lightbulb",
           config = function()
@@ -919,7 +912,7 @@ require("packer").startup {
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
-      prompt_border = "single",
+      prompt_border = as.style.border.curved,
       open_cmd = "silent topleft 65vnew Packer"
     },
     profile = {
@@ -927,6 +920,14 @@ require("packer").startup {
       threshold = 1
     }
   }
+}
+
+as.command {
+  "PackerCompileDelete",
+  function()
+    vim.fn.delete(PACKER_COMPILED_PATH)
+    vim.notify(fmt("Deleted %s"))
+  end
 }
 
 if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then
