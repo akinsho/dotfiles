@@ -2,6 +2,7 @@ return function()
   local neogit = require("neogit")
   neogit.setup {
     disable_signs = false,
+    disable_commit_confirmation = true,
     signs = {
       section = {"", ""}, -- "", ""
       item = {"▸", "▾"},
