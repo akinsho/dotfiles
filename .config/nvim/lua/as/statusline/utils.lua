@@ -382,10 +382,11 @@ function M.diagnostic_info(context)
   end
   local get_count = vim.lsp.diagnostic.get_count
 
+  local icons = as.style.icons
   return {
-    error = {count = get_count(buf, "Error"), sign = "✗"},
-    warning = {count = get_count(buf, "Warning"), sign = ""},
-    info = {count = get_count(buf, "Information"), sign = ""}
+    error = {count = get_count(buf, "Error"), sign = icons.error},
+    warning = {count = get_count(buf, "Warning"), sign = icons.warning},
+    info = {count = get_count(buf, "Information"), sign = icons.info}
   }
 end
 

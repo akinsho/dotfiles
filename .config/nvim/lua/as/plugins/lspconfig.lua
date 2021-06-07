@@ -73,7 +73,9 @@ local function setup_mappings(client, bufnr)
   nnoremap(
     "]c",
     function()
-      vim.lsp.diagnostic.goto_prev {popup_opts = {border = "single", focusable = false}}
+      vim.lsp.diagnostic.goto_prev {
+        popup_opts = {border = as.style.border.curved, focusable = false}
+      }
     end,
     opts
   )
@@ -81,7 +83,9 @@ local function setup_mappings(client, bufnr)
   nnoremap(
     "[c",
     function()
-      vim.lsp.diagnostic.goto_next {popup_opts = {border = "single", focusable = false}}
+      vim.lsp.diagnostic.goto_next {
+        popup_opts = {border = as.style.border.curved, focusable = false}
+      }
     end,
     opts
   )
@@ -176,7 +180,7 @@ function as.lsp.on_attach(client, bufnr)
       bind = true,
       hint_enable = false,
       handler_opts = {
-        border = "single"
+        border = as.style.border.curved
       }
     }
   )
@@ -318,17 +322,28 @@ return function()
   end
   vim.g.lspconfig_has_setup = true
 
-  vim.lsp.set_log_level(vim.lsp.log_levels.DEBUG)
+  if vim.env.DEVELOPING then
+    vim.lsp.set_log_level(vim.lsp.log_levels.DEBUG)
+  end
 
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//
+  local icons = as.style.icons
   vim.fn.sign_define(
     {
-      {name = "LspDiagnosticsSignError", text = "✗", texthl = "LspDiagnosticsSignError"},
-      {name = "LspDiagnosticsSignHint", text = "", texthl = "LspDiagnosticsSignHint"},
-      {name = "LspDiagnosticsSignWarning", text = "", texthl = "LspDiagnosticsSignWarning"},
-      {name = "LspDiagnosticsSignInformation", text = "", texthl = "LspDiagnosticsSignInformation"}
+      {name = "LspDiagnosticsSignError", text = icons.error, texthl = "LspDiagnosticsSignError"},
+      {name = "LspDiagnosticsSignHint", text = icons.hint, texthl = "LspDiagnosticsSignHint"},
+      {
+        name = "LspDiagnosticsSignWarning",
+        text = icons.warning,
+        texthl = "LspDiagnosticsSignWarning"
+      },
+      {
+        name = "LspDiagnosticsSignInformation",
+        text = icons.info,
+        texthl = "LspDiagnosticsSignInformation"
+      }
     }
   )
 
@@ -353,7 +368,7 @@ return function()
   vim.lsp.handlers["textDocument/hover"] =
     vim.lsp.with(
     vim.lsp.handlers.hover,
-    {border = "single", max_width = max_width, max_height = max_height}
+    {border = as.style.border.curved, max_width = max_width, max_height = max_height}
   )
 
   as.lsp.setup_servers()
