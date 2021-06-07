@@ -3,6 +3,18 @@ as.lsp = {}
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
+  -- FIXME this opens even when there is no content
+  -- as.augroup(
+  --   "LspLocationList",
+  --   {
+  --     {
+  --       events = {"User LspDiagnosticsChanged"},
+  --       command = function()
+  --         vim.lsp.diagnostic.set_loclist({workspace = true, severity_limit = "Warning"})
+  --       end
+  --     }
+  --   }
+  -- )
   if client and client.resolved_capabilities.document_highlight then
     as.augroup(
       "LspCursorCommands",
