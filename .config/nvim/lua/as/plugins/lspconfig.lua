@@ -361,7 +361,7 @@ return function()
     }
   )
 
-  local max_width = math.max(math.floor(vim.o.columns * 0.4), 100)
+  local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
   local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 
   -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
