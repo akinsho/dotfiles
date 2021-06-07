@@ -50,7 +50,9 @@ local function load_rc(path)
   if success then
     setup_localrc(path)
   end
-  local message = success and "Successfully loaded " .. path or "Failed to load because: " .. msg
+  local message =
+    success and "Successfully loaded " .. vim.fn.fnamemodify(path, ":~:.") or
+    "Failed to load because: " .. msg
   notify(message)
 end
 
