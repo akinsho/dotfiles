@@ -202,7 +202,7 @@ end
 -- Plugin highlights
 ---------------------------------------------------------------------------------
 local function plugin_highlights()
-  M.highlight("TelescopePathSeparator", {link = "Directory"})
+  M.highlight("TelescopePathSeparator", {guifg = as.style.palette.dark_blue})
   M.highlight("TelescopeQueryFilter", {link = "IncSearch"})
 
   M.highlight("CompeDocumentation", {link = "Pmenu"})

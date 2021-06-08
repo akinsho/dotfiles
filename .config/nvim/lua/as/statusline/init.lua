@@ -9,7 +9,7 @@
 local utils = require("as.statusline.utils")
 local H = require("as.highlights")
 
-local P = utils.palette
+local P = as.style.palette
 local M = {}
 
 --- NOTE: Unicode characters including vim devicons should NOT be highlighted
