@@ -145,6 +145,7 @@ require("packer").startup {
 
     use {
       "rmagatti/goto-preview",
+      ft = "lua",
       config = function()
         require("goto-preview").setup {
           default_mappings = true
