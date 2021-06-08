@@ -195,7 +195,7 @@ end
 -----------------------------------------------------------------------------//
 local ok, msg = pcall(vim.cmd, "colorscheme doom-one")
 if not ok then
-  as.echomsg(msg)
+  vim.notify(msg, vim.log.levels.ERROR)
 end
 
 ---------------------------------------------------------------------------------
