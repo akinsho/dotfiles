@@ -292,7 +292,7 @@ local function filetype(ctx, opts)
   if not icons_loaded then
     icons_loaded, devicons = pcall(require, "nvim-web-devicons")
   end
-  if devicons then
+  if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, {default = true})
     hl = set_ft_icon_highlight(hl, opts.icon_bg)
   end
