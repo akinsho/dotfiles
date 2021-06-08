@@ -913,7 +913,14 @@ require("packer").startup {
 }
 
 as.command {
-  "PackerCompileDelete",
+  "PackerCompiledEdit",
+  function()
+    vim.cmd(fmt("edit %s", PACKER_COMPILED_PATH))
+  end
+}
+
+as.command {
+  "PackerCompiledDelete",
   function()
     vim.fn.delete(PACKER_COMPILED_PATH)
     vim.notify(fmt("Deleted %s"))
