@@ -35,12 +35,6 @@ end
 -----------------------------------------------------------------------------//
 -- Debugging
 -----------------------------------------------------------------------------//
--- inspired/copied from @tjdevries
-P = function(v)
-  print(vim.inspect(v))
-  return v
-end
-
 if pcall(require, "plenary") then
   RELOAD = require("plenary.reload").reload_module
 
@@ -56,7 +50,7 @@ end
 -- in lua: dump({1, 2, 3})
 -- in commandline: :lua dump(vim.loop)
 ---@vararg any
-function _G.dump(...)
+function P(...)
   local objects = vim.tbl_map(vim.inspect, {...})
   print(unpack(objects))
 end
