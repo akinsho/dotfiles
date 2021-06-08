@@ -267,7 +267,6 @@ vim.opt.spellsuggest:prepend {12}
 vim.opt.spelloptions = "camel"
 vim.opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
 vim.opt.fileformats = {"unix", "mac", "dos"}
-vim.opt.complete:prepend {"kspell"}
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
