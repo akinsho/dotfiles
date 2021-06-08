@@ -47,6 +47,7 @@ return function()
         local mod_b = bstat and bstat.mtime.sec or 0
         return mod_a > mod_b
       end,
+      right_mouse_command = "vert sbuffer %d",
       show_close_icon = false,
       separator_style = "slant",
       diagnostics = "nvim_lsp",
