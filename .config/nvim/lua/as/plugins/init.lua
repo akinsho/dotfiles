@@ -144,6 +144,15 @@ require("packer").startup {
     }
 
     use {
+      "rmagatti/goto-preview",
+      config = function()
+        require("goto-preview").setup {
+          default_mappings = true
+        }
+      end
+    }
+
+    use {
       "nvim-telescope/telescope.nvim",
       event = "CursorHold",
       config = conf("telescope"),
