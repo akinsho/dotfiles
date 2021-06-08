@@ -162,7 +162,6 @@ vim.opt.ruler = false
 vim.opt.colorcolumn = {"+1"} -- Set the colour column to highlight one column after the 'textwidth'
 vim.opt.cmdheight = 2 -- Set command line height to two lines
 vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
-vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 -----------------------------------------------------------------------------//
 -- List chars {{{1
 -----------------------------------------------------------------------------//
