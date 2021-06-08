@@ -148,7 +148,10 @@ function M.highlight(name, opts)
           table.insert(cmd, fmt("%s=", k) .. v)
         end
       end
-      vim.cmd(table.concat(cmd, " "))
+      local ok, msg = pcall(vim.cmd, table.concat(cmd, " "))
+      if not ok then
+        vim.notify(fmt("Failed to set %s because: %s", name, msg))
+      end
     end
   end
 end
@@ -328,7 +331,7 @@ end
 
 local sidebar_fts = {"NvimTree", "dap-repl"}
 
-function M.on_sidebar_enter()
+local function on_sidebar_enter()
   local highlights =
     table.concat(
     {
@@ -369,25 +372,27 @@ local function colorscheme_overrides()
   end
 end
 
-function M.apply_user_highlights()
+local function user_highlights()
   plugin_highlights()
   general_overrides()
   colorscheme_overrides()
   set_sidebar_highlight()
 end
 
+user_highlights()
+
 as.augroup(
-  "PanelHighlights",
+  "UserHighlights",
   {
     {
-      events = {"VimEnter", "ColorScheme"},
+      events = {"ColorScheme"},
       targets = {"*"},
-      command = M.apply_user_highlights
+      command = user_highlights
     },
     {
       events = {"FileType"},
       targets = sidebar_fts,
-      command = M.on_sidebar_enter
+      command = on_sidebar_enter
     }
   }
 )
