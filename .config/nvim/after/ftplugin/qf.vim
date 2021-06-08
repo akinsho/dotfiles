@@ -7,8 +7,6 @@ endfunction
 " force quickfix to open beneath all other splits
 wincmd J
 
-setlocal number
-setlocal norelativenumber
 setlocal nowrap
 setlocal signcolumn=yes
 setlocal colorcolumn=
