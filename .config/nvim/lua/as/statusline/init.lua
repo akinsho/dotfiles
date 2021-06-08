@@ -180,6 +180,19 @@ function _G.statusline()
     return display(statusline, available_space)
   end
   -----------------------------------------------------------------------------//
+  -- Variables
+  -----------------------------------------------------------------------------//
+  local status = vim.b.gitsigns_status_dict or {}
+  local updates = vim.g.git_statusline_updates or {}
+  local ahead = updates.ahead and tonumber(updates.ahead) or 0
+  local behind = updates.behind and tonumber(updates.behind) or 0
+
+  -- Github notifications
+  local notifications = vim.g.github_notifications
+
+  -- LSP Diagnostics
+  local diagnostics = utils.diagnostic_info(ctx)
+  -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
   add(
@@ -209,25 +222,18 @@ function _G.statusline()
       ),
       2
     },
-    {separator}
-  )
-  -----------------------------------------------------------------------------//
-  -- Middle section
-  -----------------------------------------------------------------------------//
-  -- Neovim allows unlimited alignment sections so we can put things in the
-  -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-  -----------------------------------------------------------------------------//
-  -- Start of the right side layout
-  add({separator})
-  -----------------------------------------------------------------------------//
-  -- Right section
-  -----------------------------------------------------------------------------//
-  -- Github notifications
-  local notifications = vim.g.github_notifications
-
-  -- LSP Diagnostics
-  local diagnostics = utils.diagnostic_info(ctx)
-  add(
+    {separator},
+    -----------------------------------------------------------------------------//
+    -- Middle section
+    -----------------------------------------------------------------------------//
+    -- Neovim allows unlimited alignment sections so we can put things in the
+    -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
+    -----------------------------------------------------------------------------//
+    -- Start of the right side layout
+    {separator},
+    -----------------------------------------------------------------------------//
+    -- Right section
+    -----------------------------------------------------------------------------//
     {item(utils.lsp_status(), "StMetadata"), 4},
     {
       item_if(
@@ -251,14 +257,7 @@ function _G.statusline()
       item_if(diagnostics.info.count, diagnostics.info, "StGreen", {prefix = diagnostics.info.sign}),
       4
     },
-    {item(notifications, "StTitle", {prefix = ""}), 3}
-  )
-
-  local status = vim.b.gitsigns_status_dict or {}
-  local updates = vim.g.git_statusline_updates or {}
-  local ahead = updates.ahead and tonumber(updates.ahead) or 0
-  local behind = updates.behind and tonumber(updates.behind) or 0
-  add(
+    {item(notifications, "StTitle", {prefix = ""}), 3},
     -- Git Status
     {item(status.head, "StInfo", {prefix = "", prefix_color = "StOrange"}), 1},
     {item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
@@ -295,10 +294,9 @@ function _G.statusline()
         {prefix = ctx.expandtab and "Ξ" or "⇥", prefix_color = "PmenuSbar"}
       ),
       6
-    }
+    },
+    {end_marker}
   )
-
-  add({end_marker})
   -- removes 5 columns to add some padding
   return display(statusline, available_space - 5)
 end
