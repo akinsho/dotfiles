@@ -290,9 +290,16 @@ local notification_hl =
 ---@param lines string[] | string
 ---@param opts table
 function as.notify(lines, opts)
-  if type(lines) == "string" then
-    lines = lines:find("\r\n") and vim.split(lines, "\r\n") or {lines}
-  end
+  lines = type(lines) == "string" and {lines} or lines
+  lines =
+    vim.tbl_flatten(
+    vim.tbl_map(
+      function(line)
+        return vim.split(line, "\n")
+      end,
+      lines
+    )
+  )
   opts = opts or {}
   local highlights = {"NormalFloat:Normal"}
   local level = opts.log_level or 1
