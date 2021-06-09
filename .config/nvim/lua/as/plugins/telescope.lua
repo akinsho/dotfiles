@@ -138,9 +138,9 @@ return function()
     builtins.git_branches(themes.get_dropdown())
   end
 
-  local function grep()
-    telescope.extensions.fzf_writer.staged_grep()
-  end
+  -- local function grep()
+  --   telescope.extensions.fzf_writer.staged_grep()
+  -- end
 
   local function reloader()
     builtins.reloader(themes.get_dropdown())
@@ -161,7 +161,7 @@ return function()
         h = {frecency, "history"},
         n = {nvim_config, "nvim config"},
         r = {reloader, "module reloader"},
-        s = {grep, "grep"},
+        -- s = {grep, "grep"},
         w = {workspace_symbols, "workspace symbols", silent = false},
         ["?"] = {builtins.help_tags, "help"}
       },

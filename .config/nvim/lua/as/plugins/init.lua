@@ -153,6 +153,26 @@ require("packer").startup {
     }
 
     use {
+      "camspiers/snap",
+      rocks = {"fzy"},
+      config = function()
+        local snap = require("snap")
+        snap.register.map(
+          {"n"},
+          {"<leader>fs"},
+          function()
+            snap.run {
+              producer = snap.get("producer.ripgrep.vimgrep"),
+              select = snap.get("select.vimgrep").select,
+              multiselect = snap.get("select.vimgrep").multiselect,
+              views = {snap.get("preview.vimgrep")}
+            }
+          end
+        )
+      end
+    }
+
+    use {
       "nvim-telescope/telescope.nvim",
       event = "CursorHold",
       config = conf("telescope"),
