@@ -379,6 +379,8 @@ local function user_highlights()
   set_sidebar_highlight()
 end
 
+---NOTE: apply user highlights when nvim first starts
+--- then whenever the colorscheme changes
 user_highlights()
 
 as.augroup(
