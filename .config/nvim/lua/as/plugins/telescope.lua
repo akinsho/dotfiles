@@ -48,7 +48,10 @@ return function()
         }
       },
       find_files = {
-        hidden = true
+        hidden = true,
+        layout_config = {
+          preview_width = 0.65
+        }
       },
       git_branches = {
         theme = "dropdown"
