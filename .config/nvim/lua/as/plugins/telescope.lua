@@ -1,9 +1,7 @@
 return function()
   local telescope = require("telescope")
   local actions = require("telescope.actions")
-  local builtins = require("telescope.builtin")
   local themes = require("telescope.themes")
-  local action_state = require("telescope.actions.state")
 
   telescope.setup {
     defaults = {
@@ -39,38 +37,48 @@ return function()
         override_generic_sorter = true, -- override the generic sorter
         override_file_sorter = true -- override the file sorter
       }
+    },
+    pickers = {
+      buffers = {
+        sort_lastused = true,
+        show_all_buffers = true,
+        mappings = {
+          i = {["<c-x>"] = "delete_buffer"},
+          n = {["<c-x>"] = "delete_buffer"}
+        }
+      },
+      find_files = {
+        hidden = true
+      },
+      git_branches = {
+        theme = "dropdown"
+      },
+      reloader = {
+        theme = "dropdown"
+      }
     }
   }
 
   telescope.load_extension("fzf")
 
+  --- NOTE: this must be required after setting up telescope
+  --- otherwise the result will be cached without the updates
+  --- from the setup call
+  local builtins = require("telescope.builtin")
+
   local function dotfiles()
     builtins.find_files {
       prompt_title = "~ dotfiles ~",
-      shorten_path = false,
       cwd = vim.g.dotfiles,
-      hidden = true,
-      -- set this value to 'flex' once telescope/#823 is merged
-      layout_strategy = "horizontal",
-      file_ignore_patterns = {".git/.*", "dotbot/.*"},
-      layout_config = {
-        preview_width = 0.65
-      }
+      file_ignore_patterns = {".git/.*", "dotbot/.*"}
     }
   end
 
   local function nvim_config()
     builtins.find_files {
       prompt_title = "~ nvim config ~",
-      shorten_path = false,
       cwd = vim.g.vim_dir,
-      hidden = true,
-      -- set this value to 'flex' once telescope/#823 is merged
-      layout_strategy = "horizontal",
-      file_ignore_patterns = {".git/.*", "dotbot/.*"},
-      layout_config = {
-        preview_width = 0.65
-      }
+      file_ignore_patterns = {".git/.*", "dotbot/.*"}
     }
   end
 
@@ -114,55 +122,22 @@ return function()
     )
   end
 
-  local function buffers()
-    builtins.buffers {
-      sort_lastused = true,
-      show_all_buffers = true,
-      attach_mappings = function(prompt_bufnr, map)
-        local delete_buf = function()
-          local selection = action_state.get_selected_entry()
-          actions.close(prompt_bufnr)
-          vim.api.nvim_buf_delete(selection.bufnr, {force = true})
-        end
-        map("i", "<c-x>", delete_buf)
-        return true
-      end
-    }
-  end
-
-  local function workspace_symbols()
-    builtins.lsp_dynamic_workspace_symbols {}
-  end
-
-  local function git_branches()
-    builtins.git_branches(themes.get_dropdown())
-  end
-
-  -- local function grep()
-  --   telescope.extensions.fzf_writer.staged_grep()
-  -- end
-
-  local function reloader()
-    builtins.reloader(themes.get_dropdown())
-  end
-
   require("which-key").register(
     {
       ["<C-P>"] = {files, "open project files"},
       ["<leader>f"] = {
         name = "+telescope",
-        a = {"<cmd>Telescope<cr>", "builtins"},
-        b = {git_branches, "branches"},
+        a = {builtins.builtin, "builtins"},
+        b = {builtins.git_branches, "branches"},
         c = {builtins.git_commits, "commits"},
         d = {dotfiles, "dotfiles"},
         f = {builtins.find_files, "files"},
-        o = {buffers, "buffers"},
+        o = {builtins.buffers, "buffers"},
         m = {builtins.man_pages, "man pages"},
         h = {frecency, "history"},
         n = {nvim_config, "nvim config"},
-        r = {reloader, "module reloader"},
-        -- s = {grep, "grep"},
-        w = {workspace_symbols, "workspace symbols", silent = false},
+        r = {builtins.reloader, "module reloader"},
+        w = {builtins.lsp_dynamic_workspace_symbols, "workspace symbols", silent = false},
         ["?"] = {builtins.help_tags, "help"}
       },
       ["<leader>c"] = {
