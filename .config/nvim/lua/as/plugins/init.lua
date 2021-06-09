@@ -157,17 +157,17 @@ require("packer").startup {
       rocks = {"fzy"},
       config = function()
         local snap = require("snap")
-        -- local limit = snap.get("consumer.limit")
-        -- local fzf = snap.get("consumer.fzf")
+        local limit = snap.get("consumer.limit")
+        local vimgrep = snap.get("select.vimgrep")
         snap.register.map(
           {"n"},
           {"<leader>fs"},
           function()
             snap.run {
               prompt = "Grep",
-              producer = snap.get("producer.ripgrep.vimgrep"),
-              select = snap.get("select.vimgrep").select,
-              multiselect = snap.get("select.vimgrep").multiselect,
+              producer = limit(10000, snap.get "producer.ripgrep.vimgrep"),
+              select = vimgrep.select,
+              multiselect = vimgrep.multiselect,
               views = {snap.get("preview.vimgrep")}
             }
           end
