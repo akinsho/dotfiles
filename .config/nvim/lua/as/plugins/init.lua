@@ -433,7 +433,7 @@ require("packer").startup {
     use {
       "itchyny/vim-highlighturl",
       config = function()
-        vim.g.highlighturl_guifg = require("as.highlights").hl_value("Directory", "fg")
+        vim.g.highlighturl_guifg = require("as.highlights").hl_value("Keyword", "fg")
       end
     }
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
