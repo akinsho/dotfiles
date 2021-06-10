@@ -165,7 +165,7 @@ require("packer").startup {
           function()
             snap.run {
               prompt = "Grep",
-              producer = limit(10000, snap.get "producer.ripgrep.vimgrep"),
+              producer = limit(10000, snap.get("producer.ripgrep.vimgrep")),
               select = vimgrep.select,
               multiselect = vimgrep.multiselect,
               views = {snap.get("preview.vimgrep")}
