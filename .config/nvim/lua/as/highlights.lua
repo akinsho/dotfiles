@@ -198,7 +198,7 @@ end
 -----------------------------------------------------------------------------//
 local ok, msg = pcall(vim.cmd, "colorscheme doom-one")
 if not ok then
-  vim.notify(msg, vim.log.levels.ERROR)
+  return vim.notify(msg, vim.log.levels.ERROR)
 end
 
 ---------------------------------------------------------------------------------
@@ -227,7 +227,6 @@ local function plugin_highlights()
 end
 
 local function general_overrides()
-  local cursor_line_bg = M.hl_value("CursorLine", "bg")
   local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
@@ -289,8 +288,8 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
-    {"LspReferenceText", {guibg = cursor_line_bg, gui = "underline"}},
-    {"LspReferenceRead", {guibg = cursor_line_bg, gui = "underline"}},
+    {"LspReferenceText", {gui = "underline"}},
+    {"LspReferenceRead", {gui = "underline"}},
     {"LspDiagnosticsSignHint", {guifg = "#FAB005"}},
     {"LspDiagnosticsDefaultHint", {guifg = "#FAB005"}},
     {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
