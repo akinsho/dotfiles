@@ -19,6 +19,7 @@ local M = {}
 --- but this is not universal across terminals so should be avoided
 local function colors()
   local error_color = H.hl_value("LspDiagnosticsDefaultError", "fg")
+  local info_color = H.hl_value("LspDiagnosticsDefaultInformation", "fg")
   local indicator_color = P.bright_blue
   local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -16)
   local normal_fg = H.hl_value("Normal", "fg")
@@ -38,28 +39,21 @@ local function colors()
     {"StModified", {guifg = string_fg, guibg = bg_color}},
     {"StOrange", {guifg = P.orange, guibg = bg_color}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
+    {"StBlue", {guifg = P.dark_blue, guibg = bg_color, gui = "bold"}},
     {"StNumber", {guifg = number_fg, guibg = bg_color}},
     {"StCount", {guifg = "bg", guibg = indicator_color, gui = "bold"}},
     {"StPrefix", {guibg = pmenu_bg, guifg = normal_fg}},
-    {"StPrefixSep", {guibg = bg_color, guifg = pmenu_bg}},
     {"StDirectory", {guibg = bg_color, guifg = "Gray", gui = "italic"}},
     {"StParentDirectory", {guibg = bg_color, guifg = string_fg, gui = "bold"}},
     {"StIdentifier", {guifg = identifier_fg, guibg = bg_color}},
-    {"StDim", {guibg = bg_color, guifg = comment_fg}},
     {"StTitle", {guibg = bg_color, guifg = "LightGray", gui = "bold"}},
     {"StComment", {guibg = bg_color, guifg = comment_fg, gui = comment_gui}},
-    {"StItem", {guibg = normal_fg, guifg = bg_color, gui = "italic"}},
-    {"StSep", {guifg = normal_fg}},
-    {"StInfo", {guifg = P.dark_blue, guibg = bg_color, gui = "bold"}},
-    {"StInfoSep", {guifg = pmenu_bg}},
     {"StInactive", {guifg = bg_color, guibg = P.comment_grey}},
-    {"StInactiveSep", {guibg = bg_color, guifg = P.comment_grey}},
     {"StatusLine", {guibg = bg_color}},
     {"StatusLineNC", {guibg = bg_color, gui = "NONE"}},
+    {"StInfo", {guifg = info_color, guibg = bg_color, gui = "bold"}},
     {"StWarning", {guifg = warning_fg, guibg = bg_color}},
-    {"StWarningSep", {guifg = pmenu_bg, guibg = bg_color}},
     {"StError", {guifg = error_color, guibg = bg_color}},
-    {"StErrorSep", {guifg = pmenu_bg, guibg = bg_color}},
     {
       "StFilename",
       {guibg = bg_color, guifg = "LightGray", gui = "bold"}
@@ -254,12 +248,12 @@ function _G.statusline()
       3
     },
     {
-      item_if(diagnostics.info.count, diagnostics.info, "StGreen", {prefix = diagnostics.info.sign}),
+      item_if(diagnostics.info.count, diagnostics.info, "StInfo", {prefix = diagnostics.info.sign}),
       4
     },
     {item(notifications, "StTitle", {prefix = ""}), 3},
     -- Git Status
-    {item(status.head, "StInfo", {prefix = "", prefix_color = "StOrange"}), 1},
+    {item(status.head, "StBlue", {prefix = "", prefix_color = "StOrange"}), 1},
     {item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
     {item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}), 3},
     {item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}), 3},
