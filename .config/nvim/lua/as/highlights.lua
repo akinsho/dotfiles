@@ -1,4 +1,3 @@
-local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
