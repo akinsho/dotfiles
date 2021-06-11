@@ -155,6 +155,7 @@ require("packer").startup {
     use {
       "camspiers/snap",
       rocks = {"fzy"},
+      branch = "fixes/lsp-preview",
       config = function()
         local snap = require("snap")
         local limit = snap.get("consumer.limit")
@@ -657,7 +658,7 @@ require("packer").startup {
     use {
       "lewis6991/spellsitter.nvim",
       config = function()
-        require("spellsitter").setup {hl = "SpellBad", captures = {"comment"}}
+        require("spellsitter").setup {}
       end
     }
     use "dart-lang/dart-vim-plugin"
@@ -845,7 +846,7 @@ require("packer").startup {
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
-    use "romgrk/doom-one.vim"
+    use "NTBBloodbath/doom-one.nvim"
     use "monsonjeremy/onedark.nvim"
     use {"Th3Whit3Wolf/one-nvim", opt = true}
     -- }}}

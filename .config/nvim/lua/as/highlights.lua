@@ -354,19 +354,17 @@ function M.clear_hl(name)
 end
 
 local function colorscheme_overrides()
-  local keyword_fg = M.hl_value("Keyword", "fg")
+  -- local keyword_fg = M.hl_value("Keyword", "fg")
   local dark_bg = M.darken_color(M.hl_value("Normal", "bg"), -6)
   if vim.g.colors_name == "doom-one" then
     M.all {
-      {"TSVariable", {guifg = "NONE"}},
       -- TODO the default bold makes ... not use ligatures
       -- a better fix would be to add ligatures to my font
       {"Constant", {gui = "NONE"}},
       {"WhichKeyFloat", {link = "PanelBackground"}},
-      {"Cursor", {guibg = keyword_fg, gui = "NONE"}},
-      {"CursorLine", {guibg = dark_bg}},
-      {"CursorLineNr", {guibg = dark_bg}},
-      {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}}
+      {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}},
+      {"CursorLineNr", {guifg = keyword_fg}}
+      -- {"TSVariable", {guifg = "NONE"}}
     }
   end
 end
