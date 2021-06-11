@@ -743,29 +743,6 @@ require("packer").startup {
       end
     }
     ---}}}
-    -----------------------------------------------------------------------------//
-    -- UI {{{
-    -----------------------------------------------------------------------------//
-    use {
-      "folke/zen-mode.nvim",
-      cmd = {"ZenMode"},
-      config = function()
-        require("zen-mode").setup {
-          window = {
-            backdrop = 1,
-            options = {
-              number = false,
-              relativenumber = false
-            }
-          },
-          plugins = {
-            gitsigns = {enabled = true},
-            tmux = {enabled = true}
-          }
-        }
-      end
-    }
-    ---}}}
     --------------------------------------------------------------------------------
     -- Text Objects {{{
     --------------------------------------------------------------------------------
