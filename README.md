@@ -23,8 +23,7 @@ curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | b
 
   ![Zsh Prompt](./prompt.png)
 
-Feel free to copy and paste as needed, but I _strongly_ advise against cloning this repo.
-It wasn't designed to be used in that way 🤷.
+I _strongly_ advise against forking or cloning this repo. It isn't a distro it's only intended for my personal usage.
 
 ### Setup
 
