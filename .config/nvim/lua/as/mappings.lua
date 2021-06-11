@@ -98,8 +98,6 @@ nnoremap("zO", [[zCzO]])
 nnoremap("<localleader>,", "<cmd>call utils#modify_line_end_delimiter(',')<cr>")
 nnoremap("<localleader>;", "<cmd>call utils#modify_line_end_delimiter(';')<cr>")
 
-nnoremap("<leader>E", require("as.highlights").token_inspect, {silent = false})
-
 nmap("<ScrollWheelDown>", "<c-d>")
 nmap("<ScrollWheelUp>", "<c-u>")
 ------------------------------------------------------------------------------
@@ -524,7 +522,6 @@ command {
   end
 }
 ------------------------------------------------------------------------------
-command {"Token", require("as.highlights").token_inspect}
 command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
 command {
   "ReloadModule",

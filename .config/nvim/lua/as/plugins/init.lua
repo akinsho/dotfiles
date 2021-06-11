@@ -623,19 +623,27 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
+    -- TODO: converting a plugin from disabled to enabled inside a require doesn't work
     use_local {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = conf("treesitter"),
-      local_path = "contributing",
-      requires = {
-        {
-          "nvim-treesitter/playground",
-          cmd = "TSPlaygroundToggle",
-          module = "nvim-treesitter-playground",
-          disable = is_work
-        }
-      }
+      local_path = "contributing"
+    }
+    use {
+      "nvim-treesitter/playground",
+      keys = "<leader>E",
+      cmd = {"TSPlaygroundToggle", "TSHighlightCapturesUnderCursor"},
+      config = function()
+        require("which-key").register(
+          {
+            ["<leader>E"] = {
+              "<Cmd>TSHighlightCapturesUnderCursor<CR>",
+              "treesitter: highlight cursor group"
+            }
+          }
+        )
+      end
     }
     use {"nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter"}
     use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter"}

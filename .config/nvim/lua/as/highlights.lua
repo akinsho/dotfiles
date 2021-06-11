@@ -4,8 +4,6 @@ local fmt = string.format
 
 local M = {}
 
-local ts_playground_loaded, ts_hl_info
-
 ---Convert a hex color to rgb
 ---@param color string
 ---@return number
@@ -34,36 +32,6 @@ function M.darken_color(color, percent)
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
   r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
   return string.format("#%02x%02x%02x", r, g, b)
-end
-
------------------------------------------------------------------------------//
--- CREDIT: @Cocophon
--- This function allows you to see the syntax highlight token of the cursor word and that token's links
----> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
------------------------------------------------------------------------------//
-local function hi_chain(syn_id)
-  local name = fn.synIDattr(syn_id, "name")
-  local names = {}
-  table.insert(names, name)
-  local original = fn.synIDtrans(syn_id)
-  if syn_id ~= original then
-    table.insert(names, fn.synIDattr(original, "name"))
-  end
-
-  return names
-end
-
-function M.token_inspect()
-  if not ts_playground_loaded then
-    ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
-  end
-  if vim.tbl_contains(as.ts.get_filetypes(), vim.bo.filetype) then
-    ts_hl_info.show_hl_captures()
-  else
-    local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
-    local names = hi_chain(syn_id)
-    as.echomsg(fn.join(names, " -> "))
-  end
 end
 
 --- Check if the current window has a winhighlight
@@ -354,7 +322,7 @@ function M.clear_hl(name)
 end
 
 local function colorscheme_overrides()
-  -- local keyword_fg = M.hl_value("Keyword", "fg")
+  local keyword_fg = M.hl_value("Keyword", "fg")
   local dark_bg = M.darken_color(M.hl_value("Normal", "bg"), -6)
   if vim.g.colors_name == "doom-one" then
     M.all {
@@ -363,8 +331,8 @@ local function colorscheme_overrides()
       {"Constant", {gui = "NONE"}},
       {"WhichKeyFloat", {link = "PanelBackground"}},
       {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}},
-      {"CursorLineNr", {guifg = keyword_fg}}
-      -- {"TSVariable", {guifg = "NONE"}}
+      {"CursorLineNr", {guifg = keyword_fg}},
+      {"TSVariable", {guifg = "NONE"}}
     }
   end
 end
