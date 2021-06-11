@@ -37,7 +37,7 @@ local function colors()
     {"StMetadataPrefix", {guibg = bg_color, guifg = comment_fg}},
     {"StIndicator", {guibg = bg_color, guifg = indicator_color}},
     {"StModified", {guifg = string_fg, guibg = bg_color}},
-    {"StOrange", {guifg = P.orange, guibg = bg_color}},
+    {"StGit", {guifg = P.light_red, guibg = bg_color}},
     {"StGreen", {guifg = string_fg, guibg = bg_color}},
     {"StBlue", {guifg = P.dark_blue, guibg = bg_color, gui = "bold"}},
     {"StNumber", {guifg = number_fg, guibg = bg_color}},
@@ -253,7 +253,7 @@ function _G.statusline()
     },
     {item(notifications, "StTitle", {prefix = ""}), 3},
     -- Git Status
-    {item(status.head, "StBlue", {prefix = "", prefix_color = "StOrange"}), 1},
+    {item(status.head, "StBlue", {prefix = "", prefix_color = "StGit"}), 1},
     {item(status.changed, "StTitle", {prefix = "", prefix_color = "StWarning"}), 3},
     {item(status.removed, "StTitle", {prefix = "", prefix_color = "StError"}), 3},
     {item(status.added, "StTitle", {prefix = "", prefix_color = "StGreen"}), 3},

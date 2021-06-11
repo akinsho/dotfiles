@@ -1,5 +1,6 @@
 local api = vim.api
 local fmt = string.format
+local P = as.style.palette
 
 local M = {}
 
@@ -197,7 +198,7 @@ local function general_overrides()
   local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
-    {"Todo", {guibg = "NONE", guifg = "red", gui = "bold"}},
+    {"Todo", {guifg = "red", gui = "bold"}},
     {"mkdLineBreak", {link = "NONE", force = true}},
     -----------------------------------------------------------------------------//
     -- Commandline
@@ -215,8 +216,6 @@ local function general_overrides()
     {"TermCursor", {ctermfg = "green", guifg = "royalblue"}},
     {"IncSearch", {guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline"}},
     {"Substitute", {guifg = comment_fg, guibg = "NONE", gui = "strikethrough,bold"}},
-    {"Error", {link = "WarningMsg", force = true}},
-    {"ErrorMsg", {guibg = "NONE"}}, -- set the error message background to match the msg area
     -- Add undercurl to existing spellbad highlight
     {"SpellBad", {gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green"}},
     -----------------------------------------------------------------------------//
@@ -250,31 +249,27 @@ local function general_overrides()
     {"TSKeyword", {link = "Statement"}},
     {"TSParameter", {gui = "italic,bold"}},
     -- highlight FIXME comments
-    {"commentTSWarning", {guibg = "Red", guifg = "bg", gui = "bold"}},
-    {"commentTSDanger", {guibg = "#FBBF24", guifg = "bg", gui = "bold"}},
+    {"commentTSWarning", {guifg = "Red", guibg = "bg", gui = "bold"}},
+    {"commentTSDanger", {guifg = "#FBBF24", guibg = "bg", gui = "bold"}},
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
     {"LspReferenceText", {gui = "underline"}},
     {"LspReferenceRead", {gui = "underline"}},
-    {"LspDiagnosticsSignHint", {guifg = "#FAB005"}},
-    {"LspDiagnosticsDefaultHint", {guifg = "#FAB005"}},
-    {"LspDiagnosticsDefaultError", {guifg = "#E06C75"}},
-    {"LspDiagnosticsDefaultWarning", {guifg = "#FF922B"}},
-    {"LspDiagnosticsDefaultInformation", {guifg = "#15AABF"}},
-    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = "#E06C75", guifg = "none"}},
-    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = "#FAB005", guifg = "none"}},
+    {"LspDiagnosticsSignHint", {guifg = P.bright_yellow}},
+    {"LspDiagnosticsDefaultHint", {guifg = P.bright_yellow}},
+    {"LspDiagnosticsDefaultError", {guifg = P.pale_red}},
+    {"LspDiagnosticsDefaultWarning", {guifg = P.dark_orange}},
+    {"LspDiagnosticsDefaultInformation", {guifg = P.teal}},
+    {"LspDiagnosticsUnderlineError", {gui = "undercurl", guisp = P.pale_red, guifg = "none"}},
+    {"LspDiagnosticsUnderlineHint", {gui = "undercurl", guisp = P.bright_yellow, guifg = "none"}},
     {"LspDiagnosticsUnderlineWarning", {gui = "undercurl", guisp = "orange", guifg = "none"}},
-    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = "#15AABF", guifg = "none"}},
-    {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
-    {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}},
+    {"LspDiagnosticsUnderlineInformation", {gui = "undercurl", guisp = P.teal, guifg = "none"}},
     -----------------------------------------------------------------------------//
     -- Notifications
     -----------------------------------------------------------------------------//
     {"NvimNotificationError", {link = "ErrorMsg"}},
-    {"NvimNotificationInfo", {guifg = "#51afef"}}
+    {"NvimNotificationInfo", {guifg = P.bright_blue}}
   }
 end
 
@@ -332,6 +327,13 @@ local function colorscheme_overrides()
       {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}},
       {"CursorLineNr", {guifg = keyword_fg}},
       {"TSVariable", {guifg = "NONE"}}
+    }
+  elseif vim.g.colors_name == "onedark" then
+    M.all {
+      {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
+      {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
+      {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
+      {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}}
     }
   end
 end

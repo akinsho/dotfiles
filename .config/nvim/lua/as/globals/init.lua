@@ -15,15 +15,19 @@ as.style = {
     curved = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
   },
   palette = {
+    pale_red = "#E06C75",
     dark_red = "#be5046",
-    orange = "#c43e1f",
+    light_red = "#c43e1f",
+    dark_orange = "#FF922B",
     green = "#98c379",
+    bright_yellow = "#FAB005",
     light_yellow = "#e5c07b",
     dark_blue = "#4e88ff",
     magenta = "#c678dd",
     comment_grey = "#5c6370",
     whitesmoke = "#626262",
-    bright_blue = "#51afef"
+    bright_blue = "#51afef",
+    teal = "#15AABF"
   }
 }
 
