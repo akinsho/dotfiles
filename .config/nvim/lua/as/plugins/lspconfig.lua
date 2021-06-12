@@ -54,6 +54,10 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
+
+---Setup mapping when an lsp attaches to a buffer
+---@param client table lsp client
+---@param bufnr integer?
 local function setup_mappings(client, bufnr)
   -- check that there are no existing mappings before assigning these
   local nnoremap, vnoremap, opts = as.nnoremap, as.vnoremap, {buffer = bufnr, check_existing = true}

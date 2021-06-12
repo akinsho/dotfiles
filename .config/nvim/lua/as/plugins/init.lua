@@ -155,11 +155,11 @@ require("packer").startup {
     use {
       "camspiers/snap",
       rocks = {"fzy"},
-      branch = "fixes/lsp-preview",
       config = function()
         local snap = require("snap")
         local limit = snap.get("consumer.limit")
         local vimgrep = snap.get("select.vimgrep")
+        local fzf = snap.get("consumer.fzf")
         snap.register.map(
           {"n"},
           {"<leader>fs"},
@@ -167,6 +167,7 @@ require("packer").startup {
             snap.run {
               prompt = "Grep",
               producer = limit(10000, snap.get("producer.ripgrep.vimgrep")),
+              ["next"] = {consumer = fzf, config = {prompt = "FZF>"}},
               select = vimgrep.select,
               multiselect = vimgrep.multiselect,
               views = {snap.get("preview.vimgrep")}
