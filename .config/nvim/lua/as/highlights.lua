@@ -322,10 +322,10 @@ local function colorscheme_overrides()
     M.all {
       -- TODO the default bold makes ... not use ligatures
       -- a better fix would be to add ligatures to my font
-      {"Constant", {gui = "NONE"}},
-      {"WhichKeyFloat", {link = "PanelBackground"}},
+      -- {"Constant", {gui = "NONE"}},
       {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}},
       {"CursorLineNr", {guifg = keyword_fg}},
+      {"TSProperty", {link = "TSFunction"}},
       {"TSVariable", {guifg = "NONE"}}
     }
   elseif vim.g.colors_name == "onedark" then
