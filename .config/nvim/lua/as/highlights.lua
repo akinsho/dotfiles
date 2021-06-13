@@ -145,6 +145,8 @@ function M.hl_value(grp, attr, fallback)
   return "#" .. bit.tohex(color, 6)
 end
 
+---Apply a list of highlights
+---@param hls table[]
 function M.all(hls)
   for _, hl in ipairs(hls) do
     M.highlight(unpack(hl))
