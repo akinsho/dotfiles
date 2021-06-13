@@ -174,6 +174,18 @@ require("packer").startup {
             }
           end
         )
+        snap.register.map(
+          {"n"},
+          {"<leader>fp"},
+          function()
+            snap.run {
+              producer = fzf(snap.get("producer.ripgrep.file").hidden),
+              select = snap.get("select.file").select,
+              multiselect = snap.get("select.file").multiselect,
+              views = {snap.get("preview.file")}
+            }
+          end
+        )
       end
     }
 
@@ -902,6 +914,7 @@ require("packer").startup {
     }
     use_local {
       "akinsho/nvim-bufferline.lua",
+      branch = "feature/add-direction-close-commands",
       config = conf("nvim-bufferline"),
       local_path = "personal",
       requires = "nvim-web-devicons"
