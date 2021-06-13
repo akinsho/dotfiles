@@ -170,6 +170,7 @@ local function plugin_highlights()
   M.highlight("CompeDocumentation", {link = "Pmenu"})
 
   M.highlight("BqfPreviewBorder", {guifg = "Gray"})
+  M.highlight("ExchangeRegion", {link = "Search"})
 
   if as.plugin_installed("conflict-marker.vim") then
     M.all {
