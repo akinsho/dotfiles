@@ -119,6 +119,22 @@ function as.truthy(value)
   return value > 0
 end
 
+---Find an item in a list
+---@generic T
+---@param haystack T[]
+---@param matcher fun(arg: T):boolean
+---@return T
+function as.find(haystack, matcher)
+  local found
+  for _, needle in ipairs(haystack) do
+    if matcher(needle) then
+      found = needle
+      break
+    end
+  end
+  return found
+end
+
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean

@@ -50,17 +50,6 @@ function M.has_win_highlight(win_id, ...)
   return (win_hl ~= nil and has_match), win_hl
 end
 
-local function find(haystack, matcher)
-  local found
-  for _, needle in ipairs(haystack) do
-    if matcher(needle) then
-      found = needle
-      break
-    end
-  end
-  return found
-end
-
 ---A mechanism to allow inheritance of the winhighlight of a specific
 ---group in a window
 ---@param win_id number
@@ -74,7 +63,7 @@ function M.adopt_winhighlight(win_id, target, name, default)
   if not hl_exists then
     local parts = vim.split(win_hl, ",")
     local found =
-      find(
+      as.find(
       parts,
       function(part)
         return part:match(target)
