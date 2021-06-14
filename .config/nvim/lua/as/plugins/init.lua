@@ -395,9 +395,9 @@ require("packer").startup {
         as.smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
         as.imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
         as.smap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        as.xmap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
-        as.imap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
-        as.smap("<c-j>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>']], opts)
+        as.xmap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
+        as.imap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
+        as.smap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
       end
     }
     -- }}}
@@ -582,19 +582,6 @@ require("packer").startup {
       event = {"BufEnter *.wiki"},
       setup = conf("vimwiki").setup,
       config = conf("vimwiki").config
-    }
-    use {
-      "vhyrro/neorg",
-      opt = true,
-      requires = {"nvim-lua/plenary.nvim"},
-      config = function()
-        require("neorg").setup {
-          load = {
-            ["core.defaults"] = {}, -- Load all the default modules
-            ["core.norg.concealer"] = {} -- Enhances the text editing experience by using icons
-          }
-        }
-      end
     }
     -- }}}
     --------------------------------------------------------------------------------
