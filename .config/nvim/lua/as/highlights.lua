@@ -190,7 +190,6 @@ local function general_overrides()
   local comment_fg = M.hl_value("Comment", "fg")
   local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   M.all {
-    {"Todo", {guifg = "red", gui = "bold"}},
     {"mkdLineBreak", {link = "NONE", force = true}},
     -----------------------------------------------------------------------------//
     -- Commandline
@@ -325,7 +324,8 @@ local function colorscheme_overrides()
       {"LspDiagnosticsFloatingWarning", {guibg = "NONE"}},
       {"LspDiagnosticsFloatingError", {guibg = "NONE"}},
       {"LspDiagnosticsFloatingHint", {guibg = "NONE"}},
-      {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}}
+      {"LspDiagnosticsFloatingInformation", {guibg = "NONE"}},
+      {"Todo", {guifg = "red", gui = "bold"}}
     }
   end
 end
