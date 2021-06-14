@@ -55,4 +55,5 @@ local function hover_doc()
   local cb = loaded and hover.render_hover_doc or nil
   keyword(nil, cb)
 end
+
 nnoremap("gK", hover_doc, {buffer = 0})
