@@ -25,10 +25,8 @@ path+=(
   "$HOME/flutter/.pub-cache/bin"
 )
 
-# Only add $GOPATH if go is installed
+# GO ============================================================
 if which go >/dev/null; then
-  export GOPATH=$(go env GOPATH)
-  # GO ============================================================
   path+=("$GOPATH/bin")
 fi
 
@@ -44,18 +42,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     "$LUA_PATH"
     "$LUA_CPATH"
     "$JAVA_HOME/bin"
-    # RUST ==========================================================
-    "$HOME/.cargo/bin"
   )
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  if [[ $MINIMAL != true ]]; then
-    # Mac OSX
-    export GOROOT=/usr/local/opt/go/libexec
-    path+=(
-    # FLUTTER =======================================================
+  path+=(
     "$HOME/flutter/bin"
-    )
-  fi
+  )
 fi
 
 if [ -d "$HOME/bin" ] ; then
