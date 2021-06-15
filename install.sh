@@ -6,7 +6,6 @@
 # * delta
 # * bat
 # * thefuck
-# * pip3 install neovim --upgrade
 
 packages=(
   "curl",
@@ -124,7 +123,11 @@ if exists cargo; then
 fi
 
 # TODO install
-# * lazygit
+# * lazygit for linux
+
+# TODO pip3 dependencies
+# * pip3 install neovim --upgrade
+# * pip3 install --user neovim-remote
 
 # Install fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
