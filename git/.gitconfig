@@ -1,9 +1,7 @@
 [user]
   name = "Akin Sowemimo"
-[includeIf "gitdir:work/"]
-  path = .gitconfig-work
-[includeIf "gitdir:projects/"]
-  path = .gitconfig-projects
+[include]
+  path = ~/.gitconfig.local
 [status]
   submoduleSummary = true
 [commit]

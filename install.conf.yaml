@@ -39,5 +39,5 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - [cp ./git/config.template ~/projects/gitconfig-projects]
+    - [cp ./git/config.template ~/.gitconfig.local]
     - [cp ./.config/nvim/minimal.vim ~/]
