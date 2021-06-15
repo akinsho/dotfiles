@@ -319,8 +319,13 @@ local function colorscheme_overrides()
       -- {"Constant", {gui = "NONE"}},
       {"Pmenu", {guibg = dark_bg, guifg = "lightgray", blend = 6}},
       {"CursorLineNr", {guifg = keyword_fg}},
+      --- remove the unsightly orange
       {"TSProperty", {link = "TSFunction"}},
-      {"TSVariable", {guifg = "NONE"}}
+      --- too much purple
+      {"TSVariable", {guifg = "NONE"}},
+      --- Remove the unpleasant yellow highlight
+      {"TelescopeSelection", {guifg = "NONE", gui = "bold,italic"}},
+      {"TelescopeMatching", {link = "Search", force = true}}
     }
   elseif vim.g.colors_name == "onedark" then
     M.all {
