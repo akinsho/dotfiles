@@ -18,6 +18,13 @@ path+=(
   "$HOME/flutter/.pub-cache/bin"
 )
 
+# Only add $GOPATH if go is installed
+if which go >/dev/null; then
+  export GOPATH=$(go env GOPATH)
+  # GO ============================================================
+  path+=("$GOPATH/bin")
+fi
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # JAVA ==========================================================
   # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
@@ -26,13 +33,10 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # Add local build of neovim to path, remove this once stable nvim is released
   # "$HOME/neovim/bin"
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-  export GOPATH=$(go env GOPATH)
   path+=(
     "$LUA_PATH"
     "$LUA_CPATH"
     "$JAVA_HOME/bin"
-    # GO ============================================================
-    "$GOPATH/bin"
     # RUST ==========================================================
     "$HOME/.cargo/bin"
   )
@@ -43,8 +47,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     path+=(
     # FLUTTER =======================================================
     "$HOME/flutter/bin"
-    "/usr/local/opt/go/libexec/bin"
-    "$(go env GOPATH)/bin"
     )
   fi
 fi
