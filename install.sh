@@ -1,34 +1,56 @@
 #!/bin/sh
 
-check_pkg_exists() {
+# add required dependencies
+# * GCC
+# * python
+# * delta
+# * bat
+# * thefuck
+# * pip3 install neovim --upgrade
+
+packages=(
+  "curl",
+  "git",
+  "gcc",
+  "delta",
+  "bat",
+  "thefuck",
+  "python"
+  "zoxide"
+  "lazygit"
+)
+
+exists() {
+  type "$1" &> /dev/null;
+}
+
+install_missing_packages() {
   for p in "${packages[@]}"; do
-    if hash "$p" 2>/dev/null
-    then
+    if hash "$p" 2>/dev/null; then
       echo "$p is installed"
     else
       echo "$p is not installed"
-      if [ "$(uname)" == "Darwin" ]; then
-        # uses home brew to install packages
-        brew install "$p"
-      else
-        # uses apt but maybe switch to snap or flatpack
-        apt install "$p"
-      fi
+      # Detect the platform (similar to $OSTYPE)
+      OS="`uname`"
+      case $OS in
+        'Linux')
+          apt install "$1"
+          ;;
+        'Darwin')
+          brew install "$1"
+          ;;
+        *) ;;
+      esac
       echo "---------------------------------------------------------"
     fi
   done
 }
 
-setup_fzf () {
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
-}
 
-npm_install() {
-  if hash npm 2>/dev/null;then
-    npm i -g "$@"
-  else
-    echo "npm command does not exist"
+create_dir() {
+  if [ ! -d "$1" ]; then
+    echo "Creating $1"
+    mkdir -p $1
   fi
 }
 
@@ -52,9 +74,7 @@ if [ "$(uname)" == "Darwin" ]; then
   fi
 fi
 
-packages=("git" "node")
-
-check_pkg_exists
+install_missing_packages
 
 # Clone my dotfiles repo into ~/.dotfiles/ if needed
 echo "dotfiles -------------------------------------------------"
@@ -92,35 +112,29 @@ if [ "$(uname)" == "Darwin" ]; then
   echo "Installing Homebrew apps from brew file"
 fi
 
-# TODO: add required dependencies
-# * gcc
-# * python
-# * delta
-# * bat
-
-# pip3 install neovim --upgrade
-
 # Install n node version manager program
 curl -L https://git.io/n-install | bash
+
 # Install rust
 curl https://sh.rustup.rs -sSf | sh
 
-setup_fzf
+if exists cargo; then
+  cargo install stylua
+fi
+
+# TODO install
+# * lazygit
+
+# Install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 echo "---------------------------------------------------------"
 echo "Changing to zsh"
 echo "---------------------------------------------------------"
 chsh -s "$(which zsh)"
 
-echo "Creating .config dir if necessary -----------------------"
-if [ ! -d "$HOME/.config" ]; then
-  echo "Creating ~/.config"
-  mkdir -p "$HOME/.config"
-fi
-
 $DOTFILES/install
-
-mkdir -p ~/Desktop/projects/
 
 echo 'done'
 echo "---------------------------------------------------------"

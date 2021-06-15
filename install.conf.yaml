@@ -5,6 +5,7 @@
 
 - create:
   - ~/.ssh
+  - ~/.config
   - ~/projects
 
 - clean: ["~"]
