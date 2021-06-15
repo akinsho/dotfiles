@@ -286,8 +286,9 @@ require("packer").startup {
       end,
     }
 
-    use { "Pocco81/DAPInstall.nvim", opt = true } -- NOTE: I don't actively need this plugin yet...
-    use { "jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work }
+    -- NOTE: curiosity rather than necessity
+    use { "Pocco81/DAPInstall.nvim", opt = true }
+    use { "jbyuki/step-for-vimkind", opt = true }
 
     use "folke/lua-dev.nvim"
     use {
