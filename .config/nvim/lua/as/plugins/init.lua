@@ -836,6 +836,18 @@ require("packer").startup {
     use "NTBBloodbath/doom-one.nvim"
     use "monsonjeremy/onedark.nvim"
     use {"Th3Whit3Wolf/one-nvim", opt = true}
+    use {
+      "ngscheurich/iris.nvim",
+      config = function()
+        require("iris").setup {
+          callbacks = {
+            function(palette)
+              P(palette)
+            end
+          }
+        }
+      end
+    }
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
