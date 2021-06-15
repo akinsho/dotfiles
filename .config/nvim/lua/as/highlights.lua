@@ -113,6 +113,13 @@ function M.highlight(name, opts)
   end
 end
 
+function M.clear_hl(name)
+  if not name then
+    return
+  end
+  vim.cmd(fmt("highlight clear %s", name))
+end
+
 local gui_attr = {"underline", "bold", "undercurl", "italic"}
 local attrs = {fg = "foreground", bg = "background"}
 
@@ -157,7 +164,8 @@ end
 -----------------------------------------------------------------------------//
 local ok, msg = pcall(vim.cmd, "colorscheme doom-one")
 if not ok then
-  return vim.notify(msg, vim.log.levels.ERROR)
+  vim.notify(msg, vim.log.levels.ERROR)
+  return M
 end
 
 ---------------------------------------------------------------------------------
@@ -300,13 +308,6 @@ local function on_sidebar_enter()
     ","
   )
   vim.cmd("setlocal winhighlight=" .. highlights)
-end
-
-function M.clear_hl(name)
-  if not name then
-    return
-  end
-  vim.cmd(fmt("highlight clear %s", name))
 end
 
 local function colorscheme_overrides()
