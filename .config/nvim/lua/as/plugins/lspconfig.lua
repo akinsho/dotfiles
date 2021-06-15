@@ -15,6 +15,18 @@ local function setup_autocommands(client, _)
   --     }
   --   }
   -- )
+  if client and client.resolved_capabilities.code_lens then
+    as.augroup(
+      "LspCodeLens",
+      {
+        {
+          events = {"BufEnter", "CursorHold", "InsertLeave"},
+          targets = {"<buffer>"},
+          command = vim.lsp.codelens.refresh
+        }
+      }
+    )
+  end
   if client and client.resolved_capabilities.document_highlight then
     as.augroup(
       "LspCursorCommands",

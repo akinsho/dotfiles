@@ -166,7 +166,7 @@ require("packer").startup {
           {"<leader>fs"},
           function()
             snap.run {
-              prompt = "Grep",
+              prompt = "Grep >",
               producer = limit(10000, snap.get("producer.ripgrep.vimgrep")),
               next = {consumer = fzf, config = {prompt = "FZF>"}},
               select = vimgrep.select,
