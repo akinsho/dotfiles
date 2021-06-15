@@ -3,6 +3,10 @@
       create: true
       relink: true
 
+- create:
+  - ~/.ssh
+  - ~/projects
+
 - clean: ["~"]
 
 - link:

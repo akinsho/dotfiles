@@ -92,6 +92,12 @@ if [ "$(uname)" == "Darwin" ]; then
   echo "Installing Homebrew apps from brew file"
 fi
 
+# TODO: add required dependencies
+# * gcc
+# * python
+# * delta
+# * bat
+
 # pip3 install neovim --upgrade
 
 # Install n node version manager program
@@ -103,7 +109,8 @@ setup_fzf
 
 echo "---------------------------------------------------------"
 echo "Changing to zsh"
-chsh "$(which zsh)"
+echo "---------------------------------------------------------"
+chsh -s "$(which zsh)"
 
 echo "Creating .config dir if necessary -----------------------"
 if [ ! -d "$HOME/.config" ]; then
