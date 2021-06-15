@@ -3,17 +3,6 @@ return function()
     return vim.bo[b].filetype == ft
   end
 
-  ---Determine what terminal a user is on as this can impact how
-  ---special characters are rendered
-  local function get_terminal_type()
-    ---based on https://github.com/kovidgoyal/kitty/issues/957
-    if os.getenv "KITTY_WINDOW_ID" then
-      return "kitty"
-    end
-  end
-
-  local is_kitty = get_terminal_type() == "kitty"
-
   local symbols = { error = " ", warning = " ", info = " " }
 
   local function diagnostics_indicator(_, _, diagnostics)
@@ -56,7 +45,8 @@ return function()
       end,
       right_mouse_command = "vert sbuffer %d",
       show_close_icon = false,
-      separator_style = is_kitty and "slant" or "padded_slant",
+      ---based on https://github.com/kovidgoyal/kitty/issues/957
+      separator_style = os.getenv "KITTY_WINDOW_ID" and "slant" or "padded_slant",
       diagnostics = "nvim_lsp",
       diagnostics_indicator = diagnostics_indicator,
       custom_filter = custom_filter,
