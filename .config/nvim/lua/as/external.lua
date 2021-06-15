@@ -27,7 +27,7 @@ end
 function M.kitty.clear_background()
   if vim.env.KITTY_LISTEN_ON then
     local bg = require("as.highlights").hl_value("Normal", "bg")
-    -- this is intentially synchronous so it has time to execute fully
+    -- this is intentionally synchronous so it has time to execute fully
     fn.system(fmt("kitty @ --to %s set-colors background=%s", vim.env.KITTY_LISTEN_ON, bg))
   end
 end
@@ -44,6 +44,7 @@ end
 function M.title_string()
   local dir = fn.fnamemodify(fn.getcwd(), ":t")
   local icon, hl = fileicon()
+  -- TODO make sure this doesn't block new systems
   return fmt("%s #[fg=%s]%s ", dir, require("as.highlights").hl_value(hl, "fg"), icon)
 end
 
