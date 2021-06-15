@@ -10,6 +10,8 @@ if which yarn >/dev/null; then
   path+=("$(yarn global bin)")
 fi
 
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
 path+=(
   "/usr/local/bin"
   "$HOME/.npm/bin"
