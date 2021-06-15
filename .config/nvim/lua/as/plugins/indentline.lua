@@ -22,9 +22,9 @@ return function()
     "TelescopePrompt",
     "undotree",
     "flutterToolsOutline",
-    "" -- for all buffers without a file type
+    "", -- for all buffers without a file type
   }
-  vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
+  vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
   vim.g.indent_blankline_show_current_context = true
   vim.g.indent_blankline_context_patterns = {
     "class",
@@ -37,6 +37,6 @@ return function()
     "^table",
     "if_statement",
     "while",
-    "for"
+    "for",
   }
 end

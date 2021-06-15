@@ -5,8 +5,8 @@ local t = function(str)
 end
 
 local check_back_space = function()
-  local col = vim.fn.col(".") - 1
-  if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+  local col = vim.fn.col "." - 1
+  if col == 0 or vim.fn.getline("."):sub(col, col):match "%s" then
     return true
   else
     return false
@@ -41,20 +41,20 @@ return function()
   require("compe").setup {
     source = {
       path = true,
-      buffer = {kind = " "},
-      vsnip = {kind = " "},
+      buffer = { kind = " " },
+      vsnip = { kind = " " },
       spell = true,
-      emoji = {kind = "ﲃ", filetypes = {"markdown"}},
-      nvim_lsp = {priority = 101},
+      emoji = { kind = "ﲃ", filetypes = { "markdown" } },
+      nvim_lsp = { priority = 101 },
       nvim_lua = true,
-      tabnine = false -- {priority = 1200}
-    }
+      tabnine = false, -- {priority = 1200}
+    },
   }
 
   local imap = as.imap
   local smap = as.smap
   local inoremap = as.inoremap
-  local opts = {expr = true, silent = true}
+  local opts = { expr = true, silent = true }
 
   inoremap("<C-Space>", "compe#complete()", opts)
   inoremap("<C-e>", "compe#close('<C-e>')", opts)
@@ -66,17 +66,17 @@ return function()
   inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
   as.completion_confirm = function()
-    local npairs = require("nvim-autopairs")
+    local npairs = require "nvim-autopairs"
 
     if vim.fn.pumvisible() ~= 0 then
       if vim.fn.complete_info()["selected"] ~= -1 then
-        return vim.fn["compe#confirm"](npairs.esc("<cr>"))
+        return vim.fn["compe#confirm"](npairs.esc "<cr>")
       else
-        return npairs.esc("<cr>")
+        return npairs.esc "<cr>"
       end
     else
       return npairs.autopairs_cr()
     end
   end
-  inoremap("<CR>", "v:lua.as.completion_confirm()", {expr = true, silent = false})
+  inoremap("<CR>", "v:lua.as.completion_confirm()", { expr = true, silent = false })
 end

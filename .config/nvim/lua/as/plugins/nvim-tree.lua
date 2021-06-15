@@ -7,8 +7,8 @@ return function()
       unmerged = "",
       renamed = "",
       untracked = "",
-      deleted = ""
-    }
+      deleted = "",
+    },
   }
 
   as.nnoremap("<c-n>", [[<cmd>NvimTreeToggle<CR>]])
@@ -17,7 +17,7 @@ return function()
     local lib = require "nvim-tree.lib"
     local node = lib.get_node_at_cursor()
     if node then
-      vim.fn.jobstart("open '" .. node.absolute_path .. "' &", {detach = true})
+      vim.fn.jobstart("open '" .. node.absolute_path .. "' &", { detach = true })
     end
   end
 
@@ -33,36 +33,33 @@ return function()
   vim.g.nvim_tree_disable_netrw = 0
   vim.g.nvim_tree_hijack_netrw = 0
   vim.g.nvim_tree_root_folder_modifier = ":t"
-  vim.g.nvim_tree_ignore = {".DS_Store", "fugitive:", ".git"}
+  vim.g.nvim_tree_ignore = { ".DS_Store", "fugitive:", ".git" }
   vim.g.nvim_tree_highlight_opened_files = 1
   vim.g.nvim_tree_bindings = {
-    ["<c-o>"] = "<Cmd>lua as.nvim_tree_os_open()<CR>"
+    ["<c-o>"] = "<Cmd>lua as.nvim_tree_os_open()<CR>",
   }
 
   local function set_highlights()
     require("as.highlights").all {
-      {"NvimTreeIndentMarker", {link = "Comment"}},
-      {"NvimTreeNormal", {link = "PanelBackground"}},
-      {"NvimTreeEndOfBuffer", {link = "PanelBackground"}},
-      {"NvimTreeVertSplit", {link = "PanelVertSplit"}},
-      {"NvimTreeStatusLine", {link = "PanelSt"}},
-      {"NvimTreeStatusLineNC", {link = "PanelStNC"}},
-      {"NvimTreeRootFolder", {gui = "bold,italic", guifg = "LightMagenta"}}
+      { "NvimTreeIndentMarker", { link = "Comment" } },
+      { "NvimTreeNormal", { link = "PanelBackground" } },
+      { "NvimTreeEndOfBuffer", { link = "PanelBackground" } },
+      { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
+      { "NvimTreeStatusLine", { link = "PanelSt" } },
+      { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
+      { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } },
     }
   end
-  as.augroup(
-    "NvimTreeOverrides",
+  as.augroup("NvimTreeOverrides", {
     {
-      {
-        events = {"ColorScheme"},
-        targets = {"*"},
-        command = set_highlights
-      },
-      {
-        events = {"FileType"},
-        targets = {"NvimTree"},
-        command = set_highlights
-      }
-    }
-  )
+      events = { "ColorScheme" },
+      targets = { "*" },
+      command = set_highlights,
+    },
+    {
+      events = { "FileType" },
+      targets = { "NvimTree" },
+      command = set_highlights,
+    },
+  })
 end

@@ -16,51 +16,42 @@ local function setup_autocommands(client, _)
   --   }
   -- )
   if client and client.resolved_capabilities.code_lens then
-    as.augroup(
-      "LspCodeLens",
+    as.augroup("LspCodeLens", {
       {
-        {
-          events = {"BufEnter", "CursorHold", "InsertLeave"},
-          targets = {"<buffer>"},
-          command = vim.lsp.codelens.refresh
-        }
-      }
-    )
+        events = { "BufEnter", "CursorHold", "InsertLeave" },
+        targets = { "<buffer>" },
+        command = vim.lsp.codelens.refresh,
+      },
+    })
   end
   if client and client.resolved_capabilities.document_highlight then
-    as.augroup(
-      "LspCursorCommands",
+    as.augroup("LspCursorCommands", {
       {
-        {
-          events = {"CursorHold"},
-          targets = {"<buffer>"},
-          command = vim.lsp.buf.document_highlight
-        },
-        {
-          events = {"CursorHoldI"},
-          targets = {"<buffer>"},
-          command = vim.lsp.buf.document_highlight
-        },
-        {
-          events = {"CursorMoved"},
-          targets = {"<buffer>"},
-          command = vim.lsp.buf.clear_references
-        }
-      }
-    )
+        events = { "CursorHold" },
+        targets = { "<buffer>" },
+        command = vim.lsp.buf.document_highlight,
+      },
+      {
+        events = { "CursorHoldI" },
+        targets = { "<buffer>" },
+        command = vim.lsp.buf.document_highlight,
+      },
+      {
+        events = { "CursorMoved" },
+        targets = { "<buffer>" },
+        command = vim.lsp.buf.clear_references,
+      },
+    })
   end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    as.augroup(
-      "LspFormat",
+    as.augroup("LspFormat", {
       {
-        {
-          events = {"BufWritePre"},
-          targets = {"<buffer>"},
-          command = "lua vim.lsp.buf.formatting_sync(nil, 5000)"
-        }
-      }
-    )
+        events = { "BufWritePre" },
+        targets = { "<buffer>" },
+        command = "lua vim.lsp.buf.formatting_sync(nil, 5000)",
+      },
+    })
   end
 end
 -----------------------------------------------------------------------------//
@@ -72,7 +63,8 @@ end
 ---@param bufnr integer?
 local function setup_mappings(client, bufnr)
   -- check that there are no existing mappings before assigning these
-  local nnoremap, vnoremap, opts = as.nnoremap, as.vnoremap, {buffer = bufnr, check_existing = true}
+  local nnoremap, vnoremap, opts =
+    as.nnoremap, as.vnoremap, { buffer = bufnr, check_existing = true }
 
   nnoremap("gd", vim.lsp.buf.definition, opts)
   if client.resolved_capabilities.implementation then
@@ -86,47 +78,37 @@ local function setup_mappings(client, bufnr)
   nnoremap("<leader>ca", vim.lsp.buf.code_action, opts)
   vnoremap("<leader>ca", vim.lsp.buf.range_code_action, opts)
 
-  nnoremap(
-    "]c",
-    function()
-      vim.lsp.diagnostic.goto_prev {
-        popup_opts = {border = "rounded", focusable = false}
-      }
-    end,
-    opts
-  )
+  nnoremap("]c", function()
+    vim.lsp.diagnostic.goto_prev {
+      popup_opts = { border = "rounded", focusable = false },
+    }
+  end, opts)
 
-  nnoremap(
-    "[c",
-    function()
-      vim.lsp.diagnostic.goto_next {
-        popup_opts = {border = "rounded", focusable = false}
-      }
-    end,
-    opts
-  )
+  nnoremap("[c", function()
+    vim.lsp.diagnostic.goto_next {
+      popup_opts = { border = "rounded", focusable = false },
+    }
+  end, opts)
 
   nnoremap("K", vim.lsp.buf.hover, opts)
   nnoremap("gI", vim.lsp.buf.incoming_calls, opts)
   nnoremap("gr", vim.lsp.buf.references, opts)
 
-  if client.supports_method("textDocument/rename") then
+  if client.supports_method "textDocument/rename" then
     nnoremap("<leader>rn", vim.lsp.buf.rename, opts)
   end
 
   nnoremap("<leader>cs", vim.lsp.buf.document_symbol, opts)
   nnoremap("<leader>cw", vim.lsp.buf.workspace_symbol, opts)
   nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
-  require("which-key").register(
-    {
-      ["<leader>rf"] = "lsp: format buffer",
-      ["<leader>ca"] = "lsp: code action",
-      ["<leader>gd"] = "lsp: go to type definition",
-      ["gr"] = "lsp: references",
-      ["gi"] = "lsp: implementation",
-      ["gI"] = "lsp: incoming calls"
-    }
-  )
+  require("which-key").register {
+    ["<leader>rf"] = "lsp: format buffer",
+    ["<leader>ca"] = "lsp: code action",
+    ["<leader>gd"] = "lsp: go to type definition",
+    ["gr"] = "lsp: references",
+    ["gi"] = "lsp: implementation",
+    ["gI"] = "lsp: incoming calls",
+  }
 end
 
 function as.lsp.tagfunc(pattern, flags)
@@ -134,22 +116,23 @@ function as.lsp.tagfunc(pattern, flags)
     return vim.NIL
   end
   local params = vim.lsp.util.make_position_params()
-  local client_id_to_results, err =
-    vim.lsp.buf_request_sync(0, "textDocument/definition", params, 500)
+  local client_id_to_results, err = vim.lsp.buf_request_sync(
+    0,
+    "textDocument/definition",
+    params,
+    500
+  )
   assert(not err, vim.inspect(err))
 
   local results = {}
   for _, lsp_results in ipairs(client_id_to_results) do
     for _, location in ipairs(lsp_results.result or {}) do
       local start = location.range.start
-      table.insert(
-        results,
-        {
-          name = pattern,
-          filename = vim.uri_to_fname(location.uri),
-          cmd = string.format("call cursor(%d, %d)", start.line + 1, start.character + 1)
-        }
-      )
+      table.insert(results, {
+        name = pattern,
+        filename = vim.uri_to_fname(location.uri),
+        cmd = string.format("call cursor(%d, %d)", start.line + 1, start.character + 1),
+      })
     end
   end
   return results
@@ -180,7 +163,7 @@ require("vim.lsp.protocol").CompletionItemKind = {
   " Struct", -- Struct
   "鬒 Event", -- Event
   "\u{03a8} Operator", -- Operator
-  " Type Parameter" -- TypeParameter
+  " Type Parameter", -- TypeParameter
 }
 
 function as.lsp.on_attach(client, bufnr)
@@ -191,15 +174,13 @@ function as.lsp.on_attach(client, bufnr)
     vim.bo[bufnr].tagfunc = "v:lua.as.lsp.tagfunc"
   end
 
-  require("lsp_signature").on_attach(
-    {
-      bind = true,
-      hint_enable = false,
-      handler_opts = {
-        border = "rounded"
-      }
-    }
-  )
+  require("lsp_signature").on_attach {
+    bind = true,
+    hint_enable = false,
+    handler_opts = {
+      border = "rounded",
+    },
+  }
   require("lsp-status").on_attach(client)
 end
 
@@ -217,7 +198,7 @@ as.lsp.servers = {
     return require("lua-dev").setup {
       library = {
         vimruntime = false,
-        plugins = false
+        plugins = false,
       },
       lspconfig = {
         settings = {
@@ -230,45 +211,39 @@ as.lsp.servers = {
                 "before_each",
                 "after_each",
                 "pending",
-                "teardown"
-              }
-            }
+                "teardown",
+              },
+            },
             -- Await resolution of https://github.com/sumneko/lua-language-server/issues/543
             -- completion = {keywordSnippet = "Both", callSnippet = "Both"}
-          }
-        }
-      }
+          },
+        },
+      },
     }
   end,
   diagnosticls = function()
     return {
-      rootMarkers = {".git/"},
-      filetypes = {"yaml", "json", "html", "css", "markdown", "lua", "graphql"},
+      rootMarkers = { ".git/" },
+      filetypes = { "yaml", "json", "html", "css", "markdown", "lua", "graphql" },
       init_options = {
         formatters = {
           prettier = {
-            rootPatterns = {".git"},
+            rootPatterns = { ".git" },
             command = "prettier",
-            args = {"--stdin-filepath", "%filename"}
+            args = { "--stdin-filepath", "%filename" },
           },
           luaformatter = {
             -- 'lua-format -i -c {config_dir}'
             -- add ".lua-format" to root if using lua-format
-            rootPatterns = {".git"},
+            rootPatterns = { ".git" },
             command = "lua-format",
-            args = {"-i", "-c", "./.lua-format"}
-          },
-          luafmt = {
-            -- npm i -g lua-fmt
-            rootPatterns = {".git"},
-            command = "luafmt",
-            args = {"--indent-count", vim.o.shiftwidth, "--line-width", "100", "--stdin"}
+            args = { "-i", "-c", "./.lua-format" },
           },
           stylua = {
-            rootPatterns = {".git"},
+            rootPatterns = { ".git" },
             command = "stylua",
-            args = {"--config-path", vim.g.vim_dir .. "/stylua.toml", "-"}
-          }
+            args = { "-" },
+          },
         },
         formatFiletypes = {
           json = "prettier",
@@ -277,16 +252,16 @@ as.lsp.servers = {
           yaml = "prettier",
           markdown = "prettier",
           graphql = "prettier",
-          lua = "luafmt"
-        }
-      }
+          lua = "stylua",
+        },
+      },
     }
-  end
+  end,
 }
 
 function as.lsp.setup_servers()
-  local lspinstall = require("lspinstall")
-  local lspconfig = require("lspconfig")
+  local lspinstall = require "lspinstall"
+  local lspconfig = require "lspconfig"
 
   lspinstall.setup()
   local installed = lspinstall.installed_servers()
@@ -305,8 +280,8 @@ function as.lsp.setup_servers()
       properties = {
         "documentation",
         "detail",
-        "additionalTextEdits"
-      }
+        "additionalTextEdits",
+      },
     }
     config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
     lspconfig[server].setup(config)
@@ -323,14 +298,14 @@ command {
   function()
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
-  end
+  end,
 }
 
 command {
   "Format",
   function()
     vim.lsp.buf.formatting_sync(nil, 1000)
-  end
+  end,
 }
 
 return function()
@@ -347,34 +322,31 @@ return function()
   -- Signs
   -----------------------------------------------------------------------------//
   local icons = as.style.icons
-  vim.fn.sign_define(
+  vim.fn.sign_define {
+    { name = "LspDiagnosticsSignError", text = icons.error, texthl = "LspDiagnosticsSignError" },
+    { name = "LspDiagnosticsSignHint", text = icons.hint, texthl = "LspDiagnosticsSignHint" },
     {
-      {name = "LspDiagnosticsSignError", text = icons.error, texthl = "LspDiagnosticsSignError"},
-      {name = "LspDiagnosticsSignHint", text = icons.hint, texthl = "LspDiagnosticsSignHint"},
-      {
-        name = "LspDiagnosticsSignWarning",
-        text = icons.warning,
-        texthl = "LspDiagnosticsSignWarning"
-      },
-      {
-        name = "LspDiagnosticsSignInformation",
-        text = icons.info,
-        texthl = "LspDiagnosticsSignInformation"
-      }
-    }
-  )
+      name = "LspDiagnosticsSignWarning",
+      text = icons.warning,
+      texthl = "LspDiagnosticsSignWarning",
+    },
+    {
+      name = "LspDiagnosticsSignInformation",
+      text = icons.info,
+      texthl = "LspDiagnosticsSignInformation",
+    },
+  }
 
   -----------------------------------------------------------------------------//
   -- Handler overrides
   -----------------------------------------------------------------------------//
-  vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {
       underline = true,
       virtual_text = false,
       signs = true,
-      update_in_insert = false
+      update_in_insert = false,
     }
   )
 
@@ -382,10 +354,9 @@ return function()
   local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 
   -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
-  vim.lsp.handlers["textDocument/hover"] =
-    vim.lsp.with(
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    {border = "rounded", max_width = max_width, max_height = max_height}
+    { border = "rounded", max_width = max_width, max_height = max_height }
   )
 
   as.lsp.setup_servers()

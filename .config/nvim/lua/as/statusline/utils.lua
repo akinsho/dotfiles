@@ -1,4 +1,4 @@
-local H = require("as.highlights")
+local H = require "as.highlights"
 local icons_loaded, devicons
 
 local fn = vim.fn
@@ -30,7 +30,7 @@ local plain_filetypes = {
   "startify",
   "vimwiki",
   "markdown",
-  "NeogitStatus"
+  "NeogitStatus",
 }
 
 local plain_buftypes = {
@@ -38,13 +38,13 @@ local plain_buftypes = {
   "quickfix",
   "nofile",
   "nowrite",
-  "acwrite"
+  "acwrite",
 }
 
 local exceptions = {
   buftypes = {
     terminal = " ",
-    quickfix = ""
+    quickfix = "",
   },
   filetypes = {
     ["himalaya-msg-list"] = "",
@@ -69,7 +69,7 @@ local exceptions = {
     toggleterm = " ",
     calendar = "",
     octo = "",
-    ["dap-repl"] = ""
+    ["dap-repl"] = "",
   },
   names = {
     ["himalaya-msg-list"] = "Inbox",
@@ -94,8 +94,8 @@ local exceptions = {
     ["coc-explorer"] = "Coc Explorer",
     NvimTree = "Nvim Tree",
     toggleterm = get_toggleterm_name,
-    ["dap-repl"] = "Debugger REPL"
-  }
+    ["dap-repl"] = "Debugger REPL",
+  },
 }
 
 local function sum_lengths(tbl)
@@ -155,8 +155,9 @@ end
 
 --- @param ctx table
 function M.is_plain(ctx)
-  return contains(plain_filetypes, ctx.filetype) or contains(plain_buftypes, ctx.buftype) or
-    ctx.preview
+  return contains(plain_filetypes, ctx.filetype)
+    or contains(plain_buftypes, ctx.buftype)
+    or ctx.preview
 end
 
 --- This function allow me to specify titles for special case buffers
@@ -164,7 +165,7 @@ end
 --- CREDIT: https://vi.stackexchange.com/a/18090
 --- @param ctx table
 local function special_buffers(ctx)
-  local location_list = fn.getloclist(0, {filewinid = 0})
+  local location_list = fn.getloclist(0, { filewinid = 0 })
   local is_loc_list = location_list.filewinid > 0
   local normal_term = ctx.buftype == "terminal" and ctx.filetype == ""
 
@@ -255,9 +256,9 @@ local function set_ft_icon_highlight(hl, bg_hl)
   local fg_color = H.hl_value(hl, "fg")
   local bg_color = H.hl_value(bg_hl, "bg")
   if bg_color and fg_color then
-    local cmd = {"highlight ", name, " guibg=", bg_color, " guifg=", fg_color}
+    local cmd = { "highlight ", name, " guibg=", bg_color, " guifg=", fg_color }
     local str = table.concat(cmd)
-    as.augroup(name, {{events = {"ColorScheme"}, targets = {"*"}, command = str}})
+    as.augroup(name, { { events = { "ColorScheme" }, targets = { "*" }, command = str } })
     vim.cmd(string.format("silent execute '%s'", str))
   end
   return name
@@ -281,7 +282,7 @@ local function filetype(ctx, opts)
     icons_loaded, devicons = pcall(require, "nvim-web-devicons")
   end
   if icons_loaded then
-    icon, hl = devicons.get_icon(ctx.bufname, extension, {default = true})
+    icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
     hl = set_ft_icon_highlight(hl, opts.icon_bg)
   end
   return icon, hl
@@ -299,32 +300,30 @@ function M.line_info(opts)
   local total_hl = opts.total_hl
   local sep_hl = opts.total_hl
 
-  local current = fn.line(".")
-  local last = fn.line("$")
+  local current = fn.line "."
+  local last = fn.line "$"
 
   local length = strwidth(prefix .. current .. sep .. last)
   return {
-    table.concat(
-      {
-        " ",
-        M.wrap(prefix_color),
-        prefix,
-        " ",
-        M.wrap(current_hl),
-        current,
-        M.wrap(sep_hl),
-        sep,
-        M.wrap(total_hl),
-        last,
-        " "
-      }
-    ),
-    length
+    table.concat {
+      " ",
+      M.wrap(prefix_color),
+      prefix,
+      " ",
+      M.wrap(current_hl),
+      current,
+      M.wrap(sep_hl),
+      sep,
+      M.wrap(total_hl),
+      last,
+      " ",
+    },
+    length,
   }
 end
 
 local function empty_opts()
-  return {before = "", after = ""}
+  return { before = "", after = "" }
 end
 
 ---Create the various segments of the current filename
@@ -344,37 +343,38 @@ function M.file(ctx, minimal)
     parent_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomParentDir", "StTitle")
   end
 
-  local ft_icon, icon_highlight = filetype(ctx, {icon_bg = "StatusLine", default = "StComment"})
+  local ft_icon, icon_highlight = filetype(ctx, { icon_bg = "StatusLine", default = "StComment" })
 
   local file_opts, parent_opts, dir_opts = empty_opts(), empty_opts(), empty_opts()
   local directory, parent, file = filename(ctx)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
   local dir_empty, parent_empty = as.empty(directory), as.empty(parent)
-  local to_update =
-    dir_empty and parent_empty and file_opts or dir_empty and parent_opts or dir_opts
+  local to_update = dir_empty and parent_empty and file_opts
+    or dir_empty and parent_opts
+    or dir_opts
 
   to_update.prefix = ft_icon
   to_update.prefix_color = not minimal and icon_highlight or nil
   return {
-    file = {item = file, hl = filename_hl, opts = file_opts},
-    dir = {item = directory, hl = directory_hl, opts = dir_opts},
-    parent = {item = parent, hl = parent_hl, opts = parent_opts}
+    file = { item = file, hl = filename_hl, opts = file_opts },
+    dir = { item = directory, hl = directory_hl, opts = dir_opts },
+    parent = { item = parent, hl = parent_hl, opts = parent_opts },
   }
 end
 
 function M.diagnostic_info(context)
   local buf = context.bufnum
   if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
-    return {error = {}, warning = {}, info = {}}
+    return { error = {}, warning = {}, info = {} }
   end
   local get_count = vim.lsp.diagnostic.get_count
 
   local icons = as.style.icons
   return {
-    error = {count = get_count(buf, "Error"), sign = icons.error},
-    warning = {count = get_count(buf, "Warning"), sign = icons.warning},
-    info = {count = get_count(buf, "Information"), sign = icons.info}
+    error = { count = get_count(buf, "Error"), sign = icons.error },
+    warning = { count = get_count(buf, "Warning"), sign = icons.warning },
+    info = { count = get_count(buf, "Information"), sign = icons.info },
   }
 end
 
@@ -410,7 +410,7 @@ end
 -- Last search count
 -----------------------------------------------------------------------------//
 function M.search_count()
-  local result = fn.searchcount({recompute = 0})
+  local result = fn.searchcount { recompute = 0 }
   if vim.tbl_isempty(result) then
     return ""
   end
@@ -418,7 +418,7 @@ function M.search_count()
   --- using [%s] but this value seems flaky
   -- local search_reg = fn.getreg("@/")
   if result.incomplete == 1 then -- timed out
-    return printf(" ?/?? ")
+    return printf " ?/?? "
   elseif result.incomplete == 2 then -- max count exceeded
     if result.total > result.maxcount and result.current > result.maxcount then
       return printf(" >%d/>%d ", result.current, result.total)
@@ -437,16 +437,12 @@ function M.update_search_count()
   if search_count_timer then
     fn.timer_stop(search_count_timer)
   end
-  search_count_timer =
-    fn.timer_start(
-    200,
-    function(timer)
-      if timer == search_count_timer then
-        fn.searchcount({recompute = 1, maxcount = 0, timeout = 100})
-        vim.cmd("redrawstatus")
-      end
+  search_count_timer = fn.timer_start(200, function(timer)
+    if timer == search_count_timer then
+      fn.searchcount { recompute = 1, maxcount = 0, timeout = 100 }
+      vim.cmd "redrawstatus"
     end
-  )
+  end)
 end
 -----------------------------------------------------------------------------//
 
@@ -492,7 +488,7 @@ function M.mode()
     ["rm"] = "MORE",
     ["r?"] = "CONFIRM",
     ["!"] = "SHELL",
-    ["t"] = "TERMINAL"
+    ["t"] = "TERMINAL",
   }
   return (mode_map[current_mode] or "UNKNOWN"), hl
 end
@@ -511,9 +507,9 @@ function M.spacer(size, filler)
   filler = filler or " "
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
-    return {spacer, #spacer}
+    return { spacer, #spacer }
   else
-    return {"", 0}
+    return { "", 0 }
   end
 end
 
@@ -550,9 +546,9 @@ function M.item(component, hl, opts)
     M.wrap(hl),
     component,
     "%*",
-    after
+    after,
   }
-  return {table.concat(parts), #component + #before + #after + prefix_size}
+  return { table.concat(parts), #component + #before + #after + prefix_size }
 end
 
 --- @param item string
@@ -577,18 +573,15 @@ end
 local function job(interval, task, on_complete)
   vim.defer_fn(task, 2000)
   local pending_job
-  local timer =
-    fn.timer_start(
-    interval,
-    function()
-      -- clear previous job
-      if pending_job then
-        fn.jobstop(pending_job)
-      end
-      pending_job = task()
-    end,
-    {["repeat"] = -1}
-  )
+  local timer = fn.timer_start(interval, function()
+    -- clear previous job
+    if pending_job then
+      fn.jobstop(pending_job)
+    end
+    pending_job = task()
+  end, {
+    ["repeat"] = -1,
+  })
   if on_complete then
     on_complete(timer)
   end
@@ -598,35 +591,31 @@ end
 ---@param data table
 ---@return boolean
 local function validate_github_response(data)
-  return vim.tbl_islist(data) and not as.empty(data[1]) and type(data[1]) == "string" and
-    not data[1]:match("<!DOCTYPE html>")
+  return vim.tbl_islist(data)
+    and not as.empty(data[1])
+    and type(data[1]) == "string"
+    and not data[1]:match "<!DOCTYPE html>"
 end
 
 local function fetch_github_notifications()
-  fn.jobstart(
-    "gh api notifications",
-    {
-      stdout_buffered = true,
-      on_stdout = function(_, data, _)
-        if data then
-          vim.defer_fn(
-            function()
-              -- data is a table, so check that the first value isn't an empty string
-              if validate_github_response(data) then
-                local notifications = vim.fn.json_decode(data)
-                vim.g.github_notifications = #notifications
-              end
-            end,
-            1
-          )
-        end
+  fn.jobstart("gh api notifications", {
+    stdout_buffered = true,
+    on_stdout = function(_, data, _)
+      if data then
+        vim.defer_fn(function()
+          -- data is a table, so check that the first value isn't an empty string
+          if validate_github_response(data) then
+            local notifications = vim.fn.json_decode(data)
+            vim.g.github_notifications = #notifications
+          end
+        end, 1)
       end
-    }
-  )
+    end,
+  })
 end
 
 function M.github_notifications()
-  if fn.executable("gh") > 0 then
+  if fn.executable "gh" > 0 then
     job(300000, fetch_github_notifications)
   end
 end
@@ -654,7 +643,7 @@ local function git_update_status(result)
     if code == 0 and result and #result > 0 then
       local parts = vim.split(result[1], "\t")
       if parts and #parts > 1 then
-        local formatted = {behind = parts[1], ahead = parts[2]}
+        local formatted = { behind = parts[1], ahead = parts[2] }
         vim.g.git_statusline_updates = formatted
       end
     end
@@ -664,7 +653,7 @@ end
 local function git_update_job()
   local cmd = "git rev-list --count --left-right @{upstream}...HEAD"
   local result = {}
-  return fn.jobstart(cmd, {on_stdout = git_read(result), on_exit = git_update_status(result)})
+  return fn.jobstart(cmd, { on_stdout = git_read(result), on_exit = git_update_status(result) })
 end
 
 function M.git_updates_refresh()
@@ -685,13 +674,9 @@ end
 --- starts a timer to check for the whether
 --- we are currently ahead or behind upstream
 function M.git_updates()
-  job(
-    30000,
-    git_update_job,
-    function(timer)
-      vim.g.git_statusline_updates_timer = timer
-    end
-  )
+  job(30000, git_update_job, function(timer)
+    vim.g.git_statusline_updates_timer = timer
+  end)
 end
 
 return M

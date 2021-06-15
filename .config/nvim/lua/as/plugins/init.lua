@@ -1,17 +1,17 @@
 local fn = vim.fn
 local has = as.has
-local is_work = has("mac")
+local is_work = has "mac"
 local is_home = not is_work
 local fmt = string.format
 
-local PACKER_COMPILED_PATH = fn.stdpath("cache") .. "/packer/packer_compiled.vim"
+local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.vim"
 
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
-  local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+  local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
   if fn.empty(fn.glob(install_path)) > 0 then
-    print("Downloading packer.nvim...")
-    print(fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path}))
+    print "Downloading packer.nvim..."
+    print(fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
     vim.cmd "packadd! packer.nvim"
     require("packer").sync()
   elseif not vim.env.DEVELOPING then
@@ -26,28 +26,25 @@ end
 setup_packer()
 
 -- cfilter plugin allows filter down an existing quickfix list
-vim.cmd("packadd! cfilter")
+vim.cmd "packadd! cfilter"
 
-as.augroup(
-  "PackerSetupInit",
+as.augroup("PackerSetupInit", {
   {
-    {
-      events = {"BufWritePost"},
-      targets = {"*/as/plugins/*.lua"},
-      command = function()
-        as.invalidate("as.plugins", true)
-        require("packer").compile()
-        vim.notify("packer compiled...")
-      end
-    }
-  }
-)
+    events = { "BufWritePost" },
+    targets = { "*/as/plugins/*.lua" },
+    command = function()
+      as.invalidate("as.plugins", true)
+      require("packer").compile()
+      vim.notify "packer compiled..."
+    end,
+  },
+})
 as.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
 as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
 ---@param path string
 local function dev(path)
-  return os.getenv("HOME") .. "/projects/" .. path
+  return os.getenv "HOME" .. "/projects/" .. path
 end
 
 local function developing()
@@ -80,7 +77,7 @@ local function with_local(spec)
   if not fn.isdirectory(fn.expand(path)) == -1 then
     return spec, nil
   end
-  local is_contributing = local_spec.local_path:match("contributing") ~= nil
+  local is_contributing = local_spec.local_path:match "contributing" ~= nil
   local_spec[1] = path
   local_spec.as = local_spec.local_name or fmt("local-%s", name)
   local_spec.cond = is_contributing and developing or local_spec.local_cond
@@ -130,7 +127,7 @@ end
 --]]
 require("packer").startup {
   function(use, use_rocks)
-    use_local {"wbthomason/packer.nvim", local_path = "contributing"}
+    use_local { "wbthomason/packer.nvim", local_path = "contributing" }
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
@@ -141,105 +138,95 @@ require("packer").startup {
       config = function()
         vim.g.rooter_silent_chdir = 1
         vim.g.rooter_resolve_links = 1
-      end
+      end,
     }
 
     use {
       "rmagatti/goto-preview",
       config = function()
         require("goto-preview").setup {
-          default_mappings = true
+          default_mappings = true,
         }
-      end
+      end,
     }
 
     use {
       "camspiers/snap",
-      rocks = {"fzy"},
+      rocks = { "fzy" },
       config = function()
-        local snap = require("snap")
-        local limit = snap.get("consumer.limit")
-        local vimgrep = snap.get("select.vimgrep")
-        local fzf = snap.get("consumer.fzf")
-        snap.register.map(
-          {"n"},
-          {"<leader>fs"},
-          function()
-            snap.run {
-              prompt = "Grep >",
-              producer = limit(10000, snap.get("producer.ripgrep.vimgrep")),
-              next = {consumer = fzf, config = {prompt = "FZF>"}},
-              select = vimgrep.select,
-              multiselect = vimgrep.multiselect,
-              views = {snap.get("preview.vimgrep")}
-            }
-          end
-        )
-        snap.register.map(
-          {"n"},
-          {"<leader>fp"},
-          function()
-            snap.run {
-              producer = fzf(snap.get("producer.ripgrep.file").hidden),
-              select = snap.get("select.file").select,
-              multiselect = snap.get("select.file").multiselect,
-              views = {snap.get("preview.file")}
-            }
-          end
-        )
-      end
+        local snap = require "snap"
+        local limit = snap.get "consumer.limit"
+        local vimgrep = snap.get "select.vimgrep"
+        local fzf = snap.get "consumer.fzf"
+        snap.register.map({ "n" }, { "<leader>fs" }, function()
+          snap.run {
+            prompt = "Grep >",
+            producer = limit(10000, snap.get "producer.ripgrep.vimgrep"),
+            next = { consumer = fzf, config = { prompt = "FZF>" } },
+            select = vimgrep.select,
+            multiselect = vimgrep.multiselect,
+            views = { snap.get "preview.vimgrep" },
+          }
+        end)
+        snap.register.map({ "n" }, { "<leader>fp" }, function()
+          snap.run {
+            producer = fzf(snap.get("producer.ripgrep.file").hidden),
+            select = snap.get("select.file").select,
+            multiselect = snap.get("select.file").multiselect,
+            views = { snap.get "preview.file" },
+          }
+        end)
+      end,
     }
 
     use {
       "nvim-telescope/telescope.nvim",
       event = "CursorHold",
-      config = conf("telescope"),
+      config = conf "telescope",
       requires = {
         "nvim-lua/popup.nvim",
         "nvim-telescope/telescope-fzf-writer.nvim",
-        {"nvim-telescope/telescope-fzf-native.nvim", run = "make"},
-        {
-          "nvim-telescope/telescope-frecency.nvim",
-          requires = "tami5/sql.nvim",
-          after = "telescope.nvim"
-        }
-      }
+        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+      },
     }
 
     use {
-      "rmagatti/session-lens",
+      "nvim-telescope/telescope-frecency.nvim",
+      requires = { "tami5/sql.nvim" },
       after = "telescope.nvim",
-      requires = {
-        "nvim-telescope/telescope.nvim",
-        {
-          "rmagatti/auto-session",
-          config = function()
-            require("auto-session").setup {
-              auto_session_root_dir = vim.fn.stdpath("data") .. "/session/auto/"
-            }
-          end
-        }
-      }
     }
+
+    use { "rmagatti/session-lens", after = "telescope.nvim", requires = {
+      "nvim-telescope/telescope.nvim",
+      {
+        "rmagatti/auto-session",
+        config = function()
+          require("auto-session").setup {
+            auto_session_root_dir = vim.fn.stdpath "data" .. "/session/auto/",
+          }
+        end,
+      },
+    } }
 
     use {
       "dhruvasagar/vim-dotoo",
       config = function()
         vim.g["dotoo#agenda#warning_days"] = "30d"
-        vim.g["dotoo#agenda#files"] = {"~/Dropbox/todos/*.dotoo", "~/Documents/dotoo-files/*.dotoo"}
-        vim.g["dotoo#capture#refile"] = vim.fn.expand("~/Documents/dotoo-files/refile.dotoo")
-        vim.g["dotoo#capture#templates"] = {
-          t = {target = "todo"}
+        vim.g["dotoo#agenda#files"] = {
+          "~/Dropbox/todos/*.dotoo",
+          "~/Documents/dotoo-files/*.dotoo",
         }
-        require("which-key").register(
-          {
-            g = {
-              A = "dotoo agenda",
-              C = "dotoo capture"
-            }
-          }
-        )
-      end
+        vim.g["dotoo#capture#refile"] = vim.fn.expand "~/Documents/dotoo-files/refile.dotoo"
+        vim.g["dotoo#capture#templates"] = {
+          t = { target = "todo" },
+        }
+        require("which-key").register {
+          g = {
+            A = "dotoo agenda",
+            C = "dotoo capture",
+          },
+        }
+      end,
     }
     use {
       "christoomey/vim-tmux-navigator",
@@ -252,104 +239,103 @@ require("packer").startup {
         -- Disable tmux navigator when zooming the Vim pane
         vim.g.tmux_navigator_disable_when_zoomed = 1
         vim.g.tmux_navigator_save_on_switch = 2
-      end
+      end,
     }
     use {
       "nvim-lua/plenary.nvim",
       config = function()
-        as.augroup(
-          "PlenaryTests",
+        as.augroup("PlenaryTests", {
           {
-            {
-              events = {"BufEnter"},
-              targets = {"*/personal/*/tests/*_spec.lua"},
-              command = function()
-                require("which-key").register(
-                  {
-                    t = {
-                      name = "+plenary",
-                      f = {"<Plug>PlenaryTestFile", "test file"},
-                      d = {
-                        "<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>",
-                        "test directory"
-                      }
-                    }
+            events = { "BufEnter" },
+            targets = { "*/personal/*/tests/*_spec.lua" },
+            command = function()
+              require("which-key").register({
+                t = {
+                  name = "+plenary",
+                  f = { "<Plug>PlenaryTestFile", "test file" },
+                  d = {
+                    "<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>",
+                    "test directory",
                   },
-                  {prefix = "<localleader>", buffer = 0}
-                )
-              end
-            }
-          }
-        )
-      end
+                },
+              }, {
+                prefix = "<localleader>",
+                buffer = 0,
+              })
+            end,
+          },
+        })
+      end,
     }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
-    use {"mfussenegger/nvim-dap", config = conf("dap"), module = "dap", keys = {"<localleader>dtc"}}
+    use {
+      "mfussenegger/nvim-dap",
+      config = conf "dap",
+      module = "dap",
+      keys = { "<localleader>dtc" },
+    }
     use {
       "rcarriga/nvim-dap-ui",
       requires = "nvim-dap",
       after = "nvim-dap",
       config = function()
         require("dapui").setup()
-      end
+      end,
     }
 
-    use {"Pocco81/DAPInstall.nvim", opt = true} -- NOTE: I don't actively need this plugin yet...
-    use {"jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work}
+    use { "Pocco81/DAPInstall.nvim", opt = true } -- NOTE: I don't actively need this plugin yet...
+    use { "jbyuki/step-for-vimkind", requires = "nvim-dap", ft = "lua", disable = is_work }
 
     use "folke/lua-dev.nvim"
     use {
       "neovim/nvim-lspconfig",
-      config = conf("lspconfig"),
+      config = conf "lspconfig",
       requires = {
         {
           "nvim-lua/lsp-status.nvim",
           config = function()
-            local status = require("lsp-status")
+            local status = require "lsp-status"
             status.config {
               indicator_hint = "",
               indicator_info = "",
               indicator_errors = "✗",
               indicator_warnings = "",
-              status_symbol = " "
+              status_symbol = " ",
             }
             status.register_progress()
-          end
+          end,
         },
         {
           "kosayoda/nvim-lightbulb",
           config = function()
-            as.augroup(
-              "NvimLightbulb",
+            as.augroup("NvimLightbulb", {
               {
-                {
-                  events = {"CursorHold", "CursorHoldI"},
-                  targets = {"*"},
-                  command = function()
-                    require("nvim-lightbulb").update_lightbulb {
-                      sign = {enabled = false},
-                      virtual_text = {enabled = true}
-                    }
-                  end
-                }
-              }
-            )
-          end
+                events = { "CursorHold", "CursorHoldI" },
+                targets = { "*" },
+                command = function()
+                  require("nvim-lightbulb").update_lightbulb {
+                    sign = { enabled = false },
+                    virtual_text = { enabled = true },
+                  }
+                end,
+              },
+            })
+          end,
         },
-        {"glepnir/lspsaga.nvim", opt = true, config = conf("lspsaga")},
+        { "glepnir/lspsaga.nvim", opt = true, config = conf "lspsaga" },
         {
           "kabouzeid/nvim-lspinstall",
           config = function()
             require("lspinstall").post_install_hook = function()
               as.lsp.setup_servers()
-              vim.cmd("bufdo e")
+              vim.cmd "bufdo e"
             end
-          end
-        }
-      }
+          end,
+        },
+      },
     }
 
     use "ray-x/lsp_signature.nvim"
@@ -362,36 +348,36 @@ require("packer").startup {
         local capabilities = ok and lsp_status.capabilities or nil
         require("flutter-tools").setup {
           debugger = {
-            enabled = true
+            enabled = true,
           },
           widget_guides = {
             enabled = true,
-            debug = true
+            debug = true,
           },
-          dev_log = {open_cmd = "tabedit"},
+          dev_log = { open_cmd = "tabedit" },
           lsp = {
             on_attach = as.lsp and as.lsp.on_attach or nil,
             --- This is necessary to prevent lsp-status' capabilities being
             --- given priority over that of the default config
             capabilities = function(defaults)
               return vim.tbl_deep_extend("keep", defaults, capabilities)
-            end
-          }
+            end,
+          },
         }
       end,
-      requires = {"nvim-dap", "plenary.nvim"},
-      local_path = "personal"
+      requires = { "nvim-dap", "plenary.nvim" },
+      local_path = "personal",
     }
 
-    use {"hrsh7th/nvim-compe", config = conf("compe"), event = "InsertEnter"}
+    use { "hrsh7th/nvim-compe", config = conf "compe", event = "InsertEnter" }
 
     use {
       "hrsh7th/vim-vsnip",
       event = "InsertEnter",
-      requires = {"rafamadriz/friendly-snippets", "hrsh7th/nvim-compe"},
+      requires = { "rafamadriz/friendly-snippets", "hrsh7th/nvim-compe" },
       config = function()
         vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
-        local opts = {expr = true}
+        local opts = { expr = true }
         as.imap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
         as.smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
         as.imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
@@ -399,7 +385,7 @@ require("packer").startup {
         as.xmap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
         as.imap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
         as.smap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
-      end
+      end,
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -407,32 +393,31 @@ require("packer").startup {
     ---------------------------------------------------------------------------------
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
-
     use "kevinhwang91/nvim-bqf"
     use {
       "arecarn/vim-fold-cycle",
       config = function()
         vim.g.fold_cycle_default_mapping = 0
         as.nmap("<BS>", "<Plug>(fold-cycle-close)")
-      end
+      end,
     }
     use {
       "windwp/nvim-autopairs",
       config = function()
         require("nvim-autopairs").setup {
           close_triple_quotes = true,
-          check_ts = false
+          check_ts = false,
         }
-      end
+      end,
     }
     use {
       "karb94/neoscroll.nvim",
       config = function()
         require("neoscroll").setup {
-          mappings = {"<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "zt", "zz", "zb"},
-          stop_eof = false
+          mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "zt", "zz", "zb" },
+          stop_eof = false,
         }
-      end
+      end,
     }
     use {
       "mg979/vim-visual-multi",
@@ -442,18 +427,18 @@ require("packer").startup {
           ["Find Under"] = "<C-e>",
           ["Find Subword Under"] = "<C-e>",
           ["Select Cursor Down"] = [[\j]],
-          ["Select Cursor Up"] = [[\k]]
+          ["Select Cursor Up"] = [[\k]],
         }
-      end
+      end,
     }
     use {
       "itchyny/vim-highlighturl",
       config = function()
         vim.g.highlighturl_guifg = require("as.highlights").hl_value("Keyword", "fg")
-      end
+      end,
     }
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    use {"kshenoy/vim-signature", disable = true}
+    use { "kshenoy/vim-signature", disable = true }
     use {
       "mbbill/undotree",
       cmd = "UndotreeToggle",
@@ -461,92 +446,86 @@ require("packer").startup {
       config = function()
         vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
-        require("which-key").register(
-          {["<leader>u"] = {"<cmd>UndotreeToggle<CR>", "toggle undotree"}}
-        )
-      end
+        require("which-key").register {
+          ["<leader>u"] = { "<cmd>UndotreeToggle<CR>", "toggle undotree" },
+        }
+      end,
     }
     use {
       "vim-test/vim-test",
-      cmd = {"TestFile", "TestNearest", "TestSuite"},
-      keys = {"<localleader>tf", "<localleader>tn", "<localleader>ts"},
+      cmd = { "TestFile", "TestNearest", "TestSuite" },
+      keys = { "<localleader>tf", "<localleader>tn", "<localleader>ts" },
       config = function()
         vim.cmd [[
           let test#strategy = "neovim"
           let test#neovim#term_position = "vert botright"
         ]]
-        require("which-key").register(
-          {
-            t = {
-              name = "+vim-test",
-              f = {"<cmd>TestFile<CR>", "test: file"},
-              n = {"<cmd>TestNearest<CR>", "test: nearest"},
-              s = {"<cmd>TestSuite<CR>", "test: suite"}
-            }
+        require("which-key").register({
+          t = {
+            name = "+vim-test",
+            f = { "<cmd>TestFile<CR>", "test: file" },
+            n = { "<cmd>TestNearest<CR>", "test: nearest" },
+            s = { "<cmd>TestSuite<CR>", "test: suite" },
           },
-          {prefix = "<localleader>"}
-        )
-      end
+        }, {
+          prefix = "<localleader>",
+        })
+      end,
     }
-    use {"folke/which-key.nvim", config = conf("whichkey")}
+    use { "folke/which-key.nvim", config = conf "whichkey" }
     use {
       "iamcco/markdown-preview.nvim",
       run = ":call mkdp#util#install()",
-      ft = {"markdown"},
+      ft = { "markdown" },
       config = function()
         vim.g.mkdp_auto_start = 0
         vim.g.mkdp_auto_close = 1
-      end
+      end,
     }
     use {
       "norcalli/nvim-colorizer.lua",
       config = function()
-        require("colorizer").setup(
-          {"*"},
-          {
-            RGB = false,
-            mode = "background"
-          }
-        )
-      end
+        require("colorizer").setup({ "*" }, {
+          RGB = false,
+          mode = "background",
+        })
+      end,
     }
     use {
       "lukas-reineke/indent-blankline.nvim",
       branch = "lua",
-      config = conf("indentline")
+      config = conf "indentline",
     }
     use "kyazdani42/nvim-web-devicons"
 
     --- TODO use_local does not work for this plugin, find out why
     use {
       "kyazdani42/nvim-tree.lua",
-      config = conf("nvim-tree"),
+      config = conf "nvim-tree",
       local_path = "contributing",
-      requires = "nvim-web-devicons"
+      requires = "nvim-web-devicons",
     }
 
     -- FIXME: If nvim-web-devicons is specified before
     -- it is used this errors that it is used twice
     use {
       "folke/trouble.nvim",
-      keys = {"<leader>ld"},
-      cmd = {"TroubleToggle"},
+      keys = { "<leader>ld" },
+      cmd = { "TroubleToggle" },
       requires = "nvim-web-devicons",
       config = function()
-        require("which-key").register(
-          {
-            ["<leader>ld"] = {"<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle"},
-            ["<leader>lr"] = {"<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references"}
-          }
-        )
-        require("as.highlights").all {
-          {"TroubleNormal", {link = "PanelBackground"}},
-          {"TroubleText", {link = "PanelBackground"}},
-          {"TroubleIndent", {link = "PanelVertSplit"}},
-          {"TroubleFoldIcon", {guifg = "yellow", gui = "bold"}}
+        require("which-key").register {
+          ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
+          ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
         }
-        require("trouble").setup {auto_close = true, auto_preview = false}
-      end
+        require("as.highlights").all {
+          { "TroubleNormal", { link = "PanelBackground" } },
+          { "TroubleText", { link = "PanelBackground" } },
+          { "TroubleIndent", { link = "PanelVertSplit" } },
+          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } },
+        }
+        require("trouble").setup { auto_close = true, auto_preview = false }
+      end,
     }
     -- TODO: this breaks when used with sessions but keep an eye on it
     use {
@@ -554,7 +533,7 @@ require("packer").startup {
       opt = true,
       config = function()
         require("shade").setup()
-      end
+      end,
     }
     --}}}
     ---------------------------------------------------------------------------------
@@ -565,24 +544,23 @@ require("packer").startup {
       rtp = "vim",
       run = "curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh",
       config = function()
-        require("which-key").register(
-          {
-            e = {
-              name = "+email",
-              l = {"<Cmd>Himalaya<CR>", "list"}
-            }
+        require("which-key").register({
+          e = {
+            name = "+email",
+            l = { "<Cmd>Himalaya<CR>", "list" },
           },
-          {prefix = "<localleader>"}
-        )
-      end
+        }, {
+          prefix = "<localleader>",
+        })
+      end,
     }
     use {
       "vimwiki/vimwiki",
       branch = "dev",
-      keys = {"<leader>ww", "<leader>wt", "<leader>wi"},
-      event = {"BufEnter *.wiki"},
+      keys = { "<leader>ww", "<leader>wt", "<leader>wi" },
+      event = { "BufEnter *.wiki" },
       setup = conf("vimwiki").setup,
-      config = conf("vimwiki").config
+      config = conf("vimwiki").config,
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -592,10 +570,10 @@ require("packer").startup {
       "dstein64/vim-startuptime",
       opt = true,
       config = function()
-        vim.g.startuptime_exe_args = {"+let g:auto_session_enabled = 0"}
-      end
+        vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
+      end,
     }
-    use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
+    use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
     -- }}}
     --------------------------------------------------------------------------------
     -- TPOPE {{{
@@ -605,50 +583,48 @@ require("packer").startup {
     use {
       "tpope/vim-abolish",
       config = function()
-        local opts = {silent = false}
+        local opts = { silent = false }
         as.nnoremap("<localleader>[", ":S/<C-R><C-W>//<LEFT>", opts)
         as.nnoremap("<localleader>]", ":%S/<C-r><C-w>//c<left><left>", opts)
         as.vnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
-      end
+      end,
     }
     -- sets searchable path for filetypes like go so 'gf' works
-    use {"tpope/vim-apathy", ft = {"go", "python", "javascript", "typescript"}}
-    use {"tpope/vim-projectionist", config = conf("vim-projectionist")}
+    use { "tpope/vim-apathy", ft = { "go", "python", "javascript", "typescript" } }
+    use { "tpope/vim-projectionist", config = conf "vim-projectionist" }
     use {
       "tpope/vim-surround",
       config = function()
         as.vmap("s", "<Plug>VSurround")
         as.vmap("s", "<Plug>VSurround")
-      end
+      end,
     }
     -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{
     --------------------------------------------------------------------------------
     -- TODO: converting a plugin from disabled to enabled inside a require doesn't work
-    use_local {
+    use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      config = conf("treesitter"),
-      local_path = "contributing"
+      config = conf "treesitter",
+      local_path = "contributing",
     }
     use {
       "nvim-treesitter/playground",
       keys = "<leader>E",
-      cmd = {"TSPlaygroundToggle", "TSHighlightCapturesUnderCursor"},
+      cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
       config = function()
-        require("which-key").register(
-          {
-            ["<leader>E"] = {
-              "<Cmd>TSHighlightCapturesUnderCursor<CR>",
-              "treesitter: highlight cursor group"
-            }
-          }
-        )
-      end
+        require("which-key").register {
+          ["<leader>E"] = {
+            "<Cmd>TSHighlightCapturesUnderCursor<CR>",
+            "treesitter: highlight cursor group",
+          },
+        }
+      end,
     }
-    use {"nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter"}
-    use {"p00f/nvim-ts-rainbow", requires = "nvim-treesitter"}
+    use { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter" }
+    use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
     use "RRethy/nvim-treesitter-textsubjects"
     -- This needs to load after nvim-treesitter but the "after" key in packer is broken
     -- till #272 is fixed
@@ -658,18 +634,16 @@ require("packer").startup {
       keys = "<localleader>sw",
       config = function()
         require("iswap").setup {}
-        require("which-key").register(
-          {
-            ["<localleader>sw"] = {"<Cmd>ISwap<CR>", "swap arguments,parameters etc."}
-          }
-        )
-      end
+        require("which-key").register {
+          ["<localleader>sw"] = { "<Cmd>ISwap<CR>", "swap arguments,parameters etc." },
+        }
+      end,
     }
     use {
       "lewis6991/spellsitter.nvim",
       config = function()
         require("spellsitter").setup {}
-      end
+      end,
     }
     use "dart-lang/dart-vim-plugin"
     use "plasticboy/vim-markdown"
@@ -681,13 +655,13 @@ require("packer").startup {
     use {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
-      keys = {"<localleader>gu"},
+      keys = { "<localleader>gu" },
       config = function()
-        require("which-key").register({["<localleader>gu"] = "gitlinker: get line url"})
-        require("gitlinker").setup {opts = {mappings = "<localleader>gu"}}
-      end
+        require("which-key").register { ["<localleader>gu"] = "gitlinker: get line url" }
+        require("gitlinker").setup { opts = { mappings = "<localleader>gu" } }
+      end,
     }
-    use {"lewis6991/gitsigns.nvim", config = conf("gitsigns"), event = "BufRead"}
+    use { "lewis6991/gitsigns.nvim", config = conf "gitsigns", event = "BufRead" }
     use {
       "rhysd/conflict-marker.vim",
       config = function()
@@ -696,14 +670,14 @@ require("packer").startup {
         -- Include text after begin and end markers
         vim.g.conflict_marker_begin = "^<<<<<<< .*$"
         vim.g.conflict_marker_end = "^>>>>>>> .*$"
-      end
+      end,
     }
     use {
       "TimUntersberger/neogit",
       cmd = "Neogit",
-      keys = {"<localleader>gs", "<localleader>gl", "<localleader>gp"},
+      keys = { "<localleader>gs", "<localleader>gl", "<localleader>gp" },
       requires = "plenary.nvim",
-      config = conf("neogit")
+      config = conf "neogit",
     }
     use {
       "sindrets/diffview.nvim",
@@ -712,37 +686,34 @@ require("packer").startup {
       keys = "<localleader>gd",
       config = function()
         require("which-key").register(
-          {gd = {"<Cmd>DiffviewOpen<CR>", "diff ref"}},
-          {prefix = "<localleader>"}
+          { gd = { "<Cmd>DiffviewOpen<CR>", "diff ref" } },
+          { prefix = "<localleader>" }
         )
-        require("diffview").setup(
-          {
-            key_bindings = {
-              file_panel = {
-                ["q"] = "<Cmd>DiffviewClose<CR>"
-              },
-              view = {
-                ["q"] = "<Cmd>DiffviewClose<CR>"
-              }
-            }
-          }
-        )
-      end
+        require("diffview").setup {
+          key_bindings = {
+            file_panel = {
+              ["q"] = "<Cmd>DiffviewClose<CR>",
+            },
+            view = {
+              ["q"] = "<Cmd>DiffviewClose<CR>",
+            },
+          },
+        }
+      end,
     }
 
     use {
       "pwntester/octo.nvim",
       cmd = "Octo",
-      keys = {"<localleader>opl"},
+      keys = { "<localleader>opl" },
       config = function()
         require("octo").setup()
-        require("which-key").register(
-          {
-            o = {name = "+octo", p = {l = {"<cmd>Octo pr list<CR>", "PR List"}}}
-          },
-          {prefix = "<localleader>"}
-        )
-      end
+        require("which-key").register({
+          o = { name = "+octo", p = { l = { "<cmd>Octo pr list<CR>", "PR List" } } },
+        }, {
+          prefix = "<localleader>",
+        })
+      end,
     }
     ---}}}
     --------------------------------------------------------------------------------
@@ -753,25 +724,23 @@ require("packer").startup {
       "AndrewRadev/dsf.vim",
       config = function()
         vim.g.dsf_no_mappings = 1
-        require("which-key").register(
-          {
-            d = {
-              name = "+dsf: function text object",
-              s = {
-                f = {"<Plug>DsfDelete", "delete surrounding function"},
-                nf = {"<Plug>DsfNextDelete", "delete next surrounding function"}
-              }
+        require("which-key").register {
+          d = {
+            name = "+dsf: function text object",
+            s = {
+              f = { "<Plug>DsfDelete", "delete surrounding function" },
+              nf = { "<Plug>DsfNextDelete", "delete next surrounding function" },
             },
-            c = {
-              name = "+dsf: function text object",
-              s = {
-                f = {"<Plug>DsfChange", "change surrounding function"},
-                nf = {"<Plug>DsfNextChange", "change next surrounding function"}
-              }
-            }
-          }
-        )
-      end
+          },
+          c = {
+            name = "+dsf: function text object",
+            s = {
+              f = { "<Plug>DsfChange", "change surrounding function" },
+              nf = { "<Plug>DsfNextChange", "change next surrounding function" },
+            },
+          },
+        }
+      end,
     }
     use {
       "chaoren/vim-wordmotion",
@@ -781,13 +750,16 @@ require("packer").startup {
         as.nmap("cw", "ce")
         as.nmap("dW", "dE")
         as.nmap("cW", "cE")
-      end
+      end,
     }
     use {
       "b3nj5m1n/kommentary",
       config = function()
-        require("kommentary.config").configure_language("lua", {prefer_single_line_comments = true})
-      end
+        require("kommentary.config").configure_language(
+          "lua",
+          { prefer_single_line_comments = true }
+        )
+      end,
     }
     use {
       "tommcdo/vim-exchange",
@@ -796,7 +768,7 @@ require("packer").startup {
         as.xmap("X", "<Plug>(Exchange)")
         as.nmap("X", "<Plug>(Exchange)")
         as.nmap("Xc", "<Plug>(ExchangeClear)")
-      end
+      end,
     }
     use "wellle/targets.vim"
     use {
@@ -811,9 +783,9 @@ require("packer").startup {
             as.omap("ax", "<Plug>(textobj-comment-a)")
             as.xmap("ix", "<Plug>(textobj-comment-i)")
             as.omap("ix", "<Plug>(textobj-comment-i)")
-          end
-        }
-      }
+          end,
+        },
+      },
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -821,13 +793,13 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     use {
       "phaazon/hop.nvim",
-      keys = {{"n", "s"}},
+      keys = { { "n", "s" } },
       config = function()
-        local hop = require("hop")
+        local hop = require "hop"
         -- remove h,j,k,l from hops list of keys
-        hop.setup {keys = "etovxqpdygfbzcisuran"}
+        hop.setup { keys = "etovxqpdygfbzcisuran" }
         as.nnoremap("s", hop.hint_char1)
-      end
+      end,
     }
     -- }}}
     ---------------------------------------------------------------------------------
@@ -835,7 +807,7 @@ require("packer").startup {
     ----------------------------------------------------------------------------------
     use "NTBBloodbath/doom-one.nvim"
     use "monsonjeremy/onedark.nvim"
-    use {"Th3Whit3Wolf/one-nvim", opt = true}
+    use { "Th3Whit3Wolf/one-nvim", opt = true }
     use {
       "ngscheurich/iris.nvim",
       config = function()
@@ -843,10 +815,10 @@ require("packer").startup {
           callbacks = {
             function(palette)
               P(palette)
-            end
-          }
+            end,
+          },
         }
-      end
+      end,
     }
     -- }}}
     ---------------------------------------------------------------------------------
@@ -858,9 +830,9 @@ require("packer").startup {
       disable = is_work,
       config = function()
         require("terminal").setup()
-      end
+      end,
     }
-    use {"rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work}
+    use { "rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work }
     -----------------------------------------------------------------------------//
     -- Personal plugins
     -----------------------------------------------------------------------------//
@@ -869,7 +841,7 @@ require("packer").startup {
       local_path = "personal",
       config = function()
         return require("dependency_assist").setup()
-      end
+      end,
     }
 
     use_local {
@@ -879,45 +851,44 @@ require("packer").startup {
         require("toggleterm").setup {
           persist_size = false,
           open_mapping = [[<c-\>]],
-          shade_filetypes = {"none"},
+          shade_filetypes = { "none" },
           direction = "vertical",
-          float_opts = {border = "curved"},
+          float_opts = { border = "curved" },
           size = function(term)
             if term.direction == "horizontal" then
               return 15
             elseif term.direction == "vertical" then
               return vim.o.columns * 0.4
             end
-          end
+          end,
         }
 
-        local lazygit =
-          require("toggleterm.terminal").Terminal:new {
+        local lazygit = require("toggleterm.terminal").Terminal:new {
           cmd = "lazygit",
           dir = "git_dir",
           hidden = true,
           direction = "float",
           on_open = function(term)
-            vim.cmd("startinsert!")
+            vim.cmd "startinsert!"
             if vim.fn.mapcheck("jk", "t") ~= "" then
               vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
               vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
             end
-          end
+          end,
         }
 
         local function toggle()
           lazygit:toggle()
         end
-        require("which-key").register({["<leader>lg"] = {toggle, "toggleterm: toggle lazygit"}})
-      end
+        require("which-key").register { ["<leader>lg"] = { toggle, "toggleterm: toggle lazygit" } }
+      end,
     }
     use_local {
       "akinsho/nvim-bufferline.lua",
       branch = "feature/add-direction-close-commands",
-      config = conf("nvim-bufferline"),
+      config = conf "nvim-bufferline",
       local_path = "personal",
-      requires = "nvim-web-devicons"
+      requires = "nvim-web-devicons",
     }
     -- }}}
     ---------------------------------------------------------------------------------
@@ -926,28 +897,28 @@ require("packer").startup {
     compile_path = PACKER_COMPILED_PATH,
     display = {
       prompt_border = "rounded",
-      open_cmd = "silent topleft 65vnew Packer"
+      open_cmd = "silent topleft 65vnew Packer",
     },
     profile = {
       enable = true,
-      threshold = 1
-    }
-  }
+      threshold = 1,
+    },
+  },
 }
 
 as.command {
   "PackerCompiledEdit",
   function()
     vim.cmd(fmt("edit %s", PACKER_COMPILED_PATH))
-  end
+  end,
 }
 
 as.command {
   "PackerCompiledDelete",
   function()
     vim.fn.delete(PACKER_COMPILED_PATH)
-    vim.notify(fmt("Deleted %s"))
-  end
+    vim.notify(fmt "Deleted %s")
+  end,
 }
 
 if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then

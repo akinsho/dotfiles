@@ -7,14 +7,14 @@ return function()
   ---special characters are rendered
   local function get_terminal_type()
     ---based on https://github.com/kovidgoyal/kitty/issues/957
-    if os.getenv("KITTY_WINDOW_ID") then
+    if os.getenv "KITTY_WINDOW_ID" then
       return "kitty"
     end
   end
 
   local is_kitty = get_terminal_type() == "kitty"
 
-  local symbols = {error = " ", warning = " ", info = " "}
+  local symbols = { error = " ", warning = " ", info = " " }
 
   local function diagnostics_indicator(_, _, diagnostics)
     local result = {}
@@ -28,18 +28,14 @@ return function()
   end
 
   local function custom_filter(buf, buf_nums)
-    local logs =
-      vim.tbl_filter(
-      function(b)
-        return is_ft(b, "log")
-      end,
-      buf_nums
-    )
+    local logs = vim.tbl_filter(function(b)
+      return is_ft(b, "log")
+    end, buf_nums)
     if vim.tbl_isempty(logs) then
       return true
     end
     local tab_num = vim.fn.tabpagenr()
-    local last_tab = vim.fn.tabpagenr("$")
+    local last_tab = vim.fn.tabpagenr "$"
     local is_log = is_ft(buf, "log")
     if last_tab == 1 then
       return true
@@ -69,26 +65,24 @@ return function()
           filetype = "NvimTree",
           text = "File Explorer",
           highlight = "PanelHeading",
-          padding = 1
+          padding = 1,
         },
         {
           filetype = "DiffviewFiles",
           text = "Diff View",
           highlight = "PanelHeading",
-          padding = 1
+          padding = 1,
         },
-        {filetype = "flutterToolsOutline"}
-      }
-    }
+        { filetype = "flutterToolsOutline" },
+      },
+    },
   }
 
-  require("which-key").register(
-    {
-      ["gb"] = {"<cmd>BufferLinePick<CR>", "bufferline: pick buffer"},
-      ["<leader><tab>"] = {"<cmd>BufferLineCycleNext<CR>", "bufferline: next"},
-      ["<S-tab>"] = {"<cmd>BufferLineCyclePrev<CR>", "bufferline: prev"},
-      ["[b"] = {"<cmd>BufferLineMoveNext<CR>", "bufferline: move next"},
-      ["]b"] = {"<cmd>BufferLineMovePrev<CR>", "bufferline: move prev"}
-    }
-  )
+  require("which-key").register {
+    ["gb"] = { "<cmd>BufferLinePick<CR>", "bufferline: pick buffer" },
+    ["<leader><tab>"] = { "<cmd>BufferLineCycleNext<CR>", "bufferline: next" },
+    ["<S-tab>"] = { "<cmd>BufferLineCyclePrev<CR>", "bufferline: prev" },
+    ["[b"] = { "<cmd>BufferLineMoveNext<CR>", "bufferline: move next" },
+    ["]b"] = { "<cmd>BufferLineMovePrev<CR>", "bufferline: move prev" },
+  }
 end

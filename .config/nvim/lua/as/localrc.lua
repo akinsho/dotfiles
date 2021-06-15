@@ -4,23 +4,20 @@ local sep = "/"
 local default_target = ".localrc.lua"
 
 local M = {
-  found_rc = nil
+  found_rc = nil,
 }
 
 local function notify(msg, level, delay)
-  vim.defer_fn(
-    function()
-      vim.notify(msg, level, delay)
-    end,
-    delay or 200
-  )
+  vim.defer_fn(function()
+    vim.notify(msg, level, delay)
+  end, delay or 200)
 end
 
 function M.open()
   if M.found_rc then
     vim.cmd("vsplit " .. M.found_rc)
   else
-    notify("No LocalRC found")
+    notify "No LocalRC found"
   end
 end
 
@@ -31,18 +28,15 @@ local function get_parent(str)
 end
 
 local function setup_localrc(path)
-  as.augroup(
-    "LocalRC",
+  as.augroup("LocalRC", {
     {
-      {
-        events = {"BufWritePost"},
-        target = {path},
-        command = function()
-          M.reload(path)
-        end
-      }
-    }
-  )
+      events = { "BufWritePost" },
+      target = { path },
+      command = function()
+        M.reload(path)
+      end,
+    },
+  })
 end
 
 local function load_rc(path)
@@ -50,9 +44,8 @@ local function load_rc(path)
   if success then
     setup_localrc(path)
   end
-  local message =
-    success and "Successfully loaded " .. vim.fn.fnamemodify(path, ":~:.") or
-    "Failed to load because: " .. msg
+  local message = success and "Successfully loaded " .. vim.fn.fnamemodify(path, ":~:.")
+    or "Failed to load because: " .. msg
   notify(message)
 end
 
@@ -68,7 +61,7 @@ function M.load(path, target)
   target = target or default_target
 
   local found
-  local is_home = path == os.getenv("HOME")
+  local is_home = path == os.getenv "HOME"
   if is_home then
     return
   end
@@ -99,21 +92,18 @@ end
 
 --- trigger loading of localrc
 function M.setup()
-  as.augroup(
-    "LoadLocalInit",
+  as.augroup("LoadLocalInit", {
     {
-      {
-        events = {"VimEnter"},
-        targets = {"*"},
-        command = [[lua require("as.localrc").load()]]
-      }
-    }
-  )
+      events = { "VimEnter" },
+      targets = { "*" },
+      command = [[lua require("as.localrc").load()]],
+    },
+  })
   as.command {
     "LocalrcEdit",
     function()
       require("as.localrc").open()
-    end
+    end,
   }
 end
 

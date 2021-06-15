@@ -12,7 +12,7 @@ vim.opt.shortmess = {
   F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
   s = true,
   c = true,
-  W = true -- Dont show [w] or written when writing
+  W = true, -- Dont show [w] or written when writing
 }
 -----------------------------------------------------------------------------//
 -- Timings {{{1
@@ -39,22 +39,21 @@ vim.opt.fillchars = {
   msgsep = "‾",
   foldopen = "▾",
   foldsep = "│",
-  foldclose = "▸"
+  foldclose = "▸",
 }
 -----------------------------------------------------------------------------//
 -- Diff {{{1
 -----------------------------------------------------------------------------//
 -- Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
-vim.opt.diffopt =
-  vim.opt.diffopt +
-  {
+vim.opt.diffopt = vim.opt.diffopt
+  + {
     "vertical",
     "iwhite",
     "hiddenoff",
     "foldcolumn:0",
     "context:4",
     "algorithm:histogram",
-    "indent-heuristic"
+    "indent-heuristic",
   }
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
@@ -72,7 +71,7 @@ vim.opt.formatoptions = {
   -- started and only at a white character that has been entered during the
   -- current insert command.
   l = true,
-  v = true
+  v = true,
 }
 ---------------------------------------------------------------------------//
 -- Folds {{{1
@@ -89,17 +88,17 @@ vim.o.quickfixtextfunc = "v:lua.as.qftf"
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
-if as.executable("rg") then
+if as.executable "rg" then
   vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
-  vim.opt.grepformat = vim.opt.grepformat ^ {"%f:%l:%c:%m"}
-elseif as.executable("ag") then
+  vim.opt.grepformat = vim.opt.grepformat ^ { "%f:%l:%c:%m" }
+elseif as.executable "ag" then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
-  vim.opt.grepformat = vim.opt.grepformat ^ {"%f:%l:%c:%m"}
+  vim.opt.grepformat = vim.opt.grepformat ^ { "%f:%l:%c:%m" }
 end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.opt.wildcharm = fn.char2nr([[\<C-Z>]])
+vim.opt.wildcharm = fn.char2nr [[\<C-Z>]]
 vim.opt.wildmode = "full" -- Shows a menu bar as opposed to an enormous list
 vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
@@ -146,7 +145,7 @@ vim.opt.wildignore = {
   ".lock",
   ".DS_Store",
   "._*",
-  "tags.lock"
+  "tags.lock",
 }
 vim.opt.wildoptions = "pum"
 vim.opt.pumblend = 3 -- Make popup window translucent
@@ -159,7 +158,7 @@ vim.opt.linebreak = true -- lines wrap at words rather than random characters
 vim.opt.synmaxcol = 1024 -- don't syntax highlight long lines
 vim.opt.signcolumn = "yes:2"
 vim.opt.ruler = false
-vim.opt.colorcolumn = {"+1"} -- Set the colour column to highlight one column after the 'textwidth'
+vim.opt.colorcolumn = { "+1" } -- Set the colour column to highlight one column after the 'textwidth'
 vim.opt.cmdheight = 2 -- Set command line height to two lines
 vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
@@ -171,7 +170,7 @@ vim.opt.listchars = {
   tab = "│ ",
   extends = "›", -- Alternatives: … »
   precedes = "‹", -- Alternatives: … «
-  trail = "•" -- BULLET (U+2022, UTF-8: E2 80 A2)
+  trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
@@ -190,10 +189,10 @@ vim.opt.joinspaces = false
 vim.opt.gdefault = true
 vim.opt.pumheight = 15
 vim.opt.confirm = true -- make vim prompt me to save before doing destructive things
-vim.opt.completeopt = {"menuone", "noselect"}
+vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.hlsearch = false
 vim.opt.autowriteall = true -- automatically :write before running commands and changing files
-vim.opt.clipboard = {"unnamedplus"}
+vim.opt.clipboard = { "unnamedplus" }
 vim.opt.laststatus = 2
 vim.opt.termguicolors = true
 -----------------------------------------------------------------------------//
@@ -209,14 +208,14 @@ vim.opt.inccommand = "nosplit"
 vim.opt.guicursor = {
   [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
   [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
-  [[sm:block-blinkwait175-blinkoff150-blinkon175]]
+  [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
 -- " ❐ %t %r %m"
 vim.opt.titlestring = require("as.external").title_string()
-vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv("SHELL"), ":t")
+vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv "SHELL", ":t")
 vim.opt.title = true
 vim.opt.titlelen = 70
 -----------------------------------------------------------------------------//
@@ -228,10 +227,10 @@ vim.opt.sessionoptions = {
   "buffers",
   "curdir",
   "help",
-  "winpos"
+  "winpos",
   -- "tabpages",
 }
-vim.opt.viewoptions = {"cursor", "folds"} -- save/restore just these (with `:{mk,load}view`)
+vim.opt.viewoptions = { "cursor", "folds" } -- save/restore just these (with `:{mk,load}view`)
 vim.opt.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
@@ -246,7 +245,7 @@ vim.opt.swapfile = true
 -- The // at the end tells Vim to use the absolute path to the file to create the swap file.
 -- This will ensure that swap file name is unique, so there are no collisions between files
 -- with the same name from different directories.
-vim.opt.directory = fn.stdpath("data") .. "/swap//"
+vim.opt.directory = fn.stdpath "data" .. "/swap//"
 if fn.isdirectory(vim.o.directory) == 0 then
   fn.mkdir(vim.o.directory, "p")
 end
@@ -263,10 +262,10 @@ vim.opt.sidescroll = 1
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
-vim.opt.spellsuggest:prepend {12}
+vim.opt.spellsuggest:prepend { 12 }
 vim.opt.spelloptions = "camel"
 vim.opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
-vim.opt.fileformats = {"unix", "mac", "dos"}
+vim.opt.fileformats = { "unix", "mac", "dos" }
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
@@ -279,7 +278,7 @@ vim.opt.exrc = true -- Allow project local vimrc files example .nvimrc see :h ex
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
-if as.executable("nvr") then
+if as.executable "nvr" then
   vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
   vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end

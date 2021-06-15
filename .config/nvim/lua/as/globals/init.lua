@@ -1,4 +1,4 @@
-require("as.globals.utils")
+require "as.globals.utils"
 
 -----------------------------------------------------------------------------//
 -- UI
@@ -9,7 +9,7 @@ as.style = {
     error = "✗",
     warning = "",
     info = "",
-    hint = ""
+    hint = "",
   },
   palette = {
     pale_red = "#E06C75",
@@ -25,8 +25,8 @@ as.style = {
     grey = "#3E4556",
     whitesmoke = "#626262",
     bright_blue = "#51afef",
-    teal = "#15AABF"
-  }
+    teal = "#15AABF",
+  },
 }
 
 -----------------------------------------------------------------------------//
@@ -41,7 +41,7 @@ if vim.notify then
   --@param opts Dictionary with optional options (timeout, etc)
   vim.notify = function(message, log_level, _)
     assert(message, "The message key of vim.notify should be a string")
-    as.notify(message, {timeout = 5000, log_level = log_level})
+    as.notify(message, { timeout = 5000, log_level = log_level })
   end
 end
 
@@ -64,7 +64,7 @@ end
 -- in commandline: :lua dump(vim.loop)
 ---@vararg any
 function P(...)
-  local objects = vim.tbl_map(vim.inspect, {...})
+  local objects = vim.tbl_map(vim.inspect, { ... })
   print(unpack(objects))
 end
 
@@ -74,16 +74,12 @@ local installed
 ---@return boolean
 function as.plugin_installed(plugin_name)
   if not installed then
-    local dirs = fn.expand(fn.stdpath("data") .. "/site/pack/packer/start/*", true, true)
-    local opt = fn.expand(fn.stdpath("data") .. "/site/pack/packer/opt/*", true, true)
+    local dirs = fn.expand(fn.stdpath "data" .. "/site/pack/packer/start/*", true, true)
+    local opt = fn.expand(fn.stdpath "data" .. "/site/pack/packer/opt/*", true, true)
     vim.list_extend(dirs, opt)
-    installed =
-      vim.tbl_map(
-      function(path)
-        return fn.fnamemodify(path, ":t")
-      end,
-      dirs
-    )
+    installed = vim.tbl_map(function(path)
+      return fn.fnamemodify(path, ":t")
+    end, dirs)
   end
   return vim.tbl_contains(installed, plugin_name)
 end

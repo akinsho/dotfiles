@@ -4,7 +4,7 @@
 _AsGlobalCallbacks = _AsGlobalCallbacks or {}
 
 _G.as = {
-  _store = _AsGlobalCallbacks
+  _store = _AsGlobalCallbacks,
 }
 
 function as._create(f)
@@ -22,7 +22,7 @@ local fmt = string.format
 
 function as.augroup(name, commands)
   vim.cmd("augroup " .. name)
-  vim.cmd("autocmd!")
+  vim.cmd "autocmd!"
   for _, c in ipairs(commands) do
     local command = c.command
     if type(command) == "function" then
@@ -39,7 +39,7 @@ function as.augroup(name, commands)
       )
     )
   end
-  vim.cmd("augroup END")
+  vim.cmd "augroup END"
 end
 
 ---Check if a cmd is executable
@@ -56,7 +56,7 @@ function as.echomsg(msg, hl)
     return
   end
   if msg_type == "string" then
-    msg = {{msg, hl}}
+    msg = { { msg, hl } }
   end
   vim.api.nvim_echo(msg, true, {})
 end
@@ -82,19 +82,16 @@ function as.profile(filename)
   fn.mkdir(base, "p")
   local success, profile = pcall(require, "plenary.profile.lua_profiler")
   if not success then
-    vim.api.nvim_echo({"Plenary is not installed.", "Title"}, true, {})
+    vim.api.nvim_echo({ "Plenary is not installed.", "Title" }, true, {})
   end
   profile.start()
   return function()
     profile.stop()
     local logfile = base .. filename .. ".log"
     profile.report(logfile)
-    vim.defer_fn(
-      function()
-        vim.cmd("tabedit " .. logfile)
-      end,
-      1000
-    )
+    vim.defer_fn(function()
+      vim.cmd("tabedit " .. logfile)
+    end, 1000)
   end
 end
 
@@ -177,16 +174,16 @@ end
 
 local function validate_mappings(lhs, rhs, opts)
   vim.validate {
-    lhs = {lhs, "string"},
+    lhs = { lhs, "string" },
     rhs = {
       rhs,
       function(a)
         local arg_type = type(a)
         return arg_type == "string" or arg_type == "function"
       end,
-      "right hand side"
+      "right hand side",
     },
-    opts = {opts, validate_opts, "mapping options are incorrect"}
+    opts = { opts, validate_opts, "mapping options are incorrect" },
   }
 end
 
@@ -232,7 +229,7 @@ local function make_mapper(mode, o)
   end
 end
 
-local map_opts = {noremap = false, silent = true}
+local map_opts = { noremap = false, silent = true }
 as.nmap = make_mapper("n", map_opts)
 as.xmap = make_mapper("x", map_opts)
 as.imap = make_mapper("i", map_opts)
@@ -240,9 +237,9 @@ as.vmap = make_mapper("v", map_opts)
 as.omap = make_mapper("o", map_opts)
 as.tmap = make_mapper("t", map_opts)
 as.smap = make_mapper("s", map_opts)
-as.cmap = make_mapper("c", {noremap = false, silent = false})
+as.cmap = make_mapper("c", { noremap = false, silent = false })
 
-local noremap_opts = {noremap = true, silent = true}
+local noremap_opts = { noremap = true, silent = true }
 as.nnoremap = make_mapper("n", noremap_opts)
 as.xnoremap = make_mapper("x", noremap_opts)
 as.vnoremap = make_mapper("v", noremap_opts)
@@ -250,7 +247,7 @@ as.inoremap = make_mapper("i", noremap_opts)
 as.onoremap = make_mapper("o", noremap_opts)
 as.tnoremap = make_mapper("t", noremap_opts)
 as.snoremap = make_mapper("s", noremap_opts)
-as.cnoremap = make_mapper("c", {noremap = true, silent = false})
+as.cnoremap = make_mapper("c", { noremap = true, silent = false })
 
 function as.command(args)
   local nargs = args.nargs or 0
@@ -289,35 +286,25 @@ local function get_last_notification()
   end
 end
 
-local notification_hl =
-  setmetatable(
-  {
-    [2] = {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"},
-    [1] = {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"}
-  },
-  {
-    __index = function(t, _)
-      return t[1]
-    end
-  }
-)
+local notification_hl = setmetatable({
+  [2] = { "FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError" },
+  [1] = { "FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo" },
+}, {
+  __index = function(t, _)
+    return t[1]
+  end,
+})
 
 ---Utility function to create a notification message
 ---@param lines string[] | string
 ---@param opts table
 function as.notify(lines, opts)
-  lines = type(lines) == "string" and {lines} or lines
-  lines =
-    vim.tbl_flatten(
-    vim.tbl_map(
-      function(line)
-        return vim.split(line, "\n")
-      end,
-      lines
-    )
-  )
+  lines = type(lines) == "string" and { lines } or lines
+  lines = vim.tbl_flatten(vim.tbl_map(function(line)
+    return vim.split(line, "\n")
+  end, lines))
   opts = opts or {}
-  local highlights = {"NormalFloat:Normal"}
+  local highlights = { "NormalFloat:Normal" }
   local level = opts.log_level or 1
   local timeout = opts.timeout or 5000
 
@@ -335,22 +322,17 @@ function as.notify(lines, opts)
   local height = #lines
   local prev = get_last_notification()
   local row = prev and prev.row[false] - prev.height - 2 or vim.o.lines - vim.o.cmdheight - 3
-  local win =
-    api.nvim_open_win(
-    buf,
-    false,
-    {
-      relative = "editor",
-      width = width + 2,
-      height = height,
-      col = vim.o.columns - 2,
-      row = row,
-      anchor = "SE",
-      style = "minimal",
-      focusable = false,
-      border = "rounded"
-    }
-  )
+  local win = api.nvim_open_win(buf, false, {
+    relative = "editor",
+    width = width + 2,
+    height = height,
+    col = vim.o.columns - 2,
+    row = row,
+    anchor = "SE",
+    style = "minimal",
+    focusable = false,
+    border = "rounded",
+  })
 
   local level_hl = notification_hl[level]
 
@@ -360,13 +342,10 @@ function as.notify(lines, opts)
   vim.bo[buf].filetype = "vim-notify"
   vim.wo[win].wrap = true
   if timeout then
-    vim.defer_fn(
-      function()
-        if api.nvim_win_is_valid(win) then
-          api.nvim_win_close(win, true)
-        end
-      end,
-      timeout
-    )
+    vim.defer_fn(function()
+      if api.nvim_win_is_valid(win) then
+        api.nvim_win_close(win, true)
+      end
+    end, timeout)
   end
 end

@@ -1,6 +1,6 @@
 local M = {
   tmux = {},
-  kitty = {}
+  kitty = {},
 }
 
 local fn = vim.fn
@@ -36,7 +36,7 @@ local function fileicon()
   local name = fn.bufname()
   local icon, hl
   if loaded then
-    icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ":e"), {default = true})
+    icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ":e"), { default = true })
   end
   return icon, hl
 end
@@ -49,7 +49,7 @@ function M.title_string()
 end
 
 function M.tmux.clear_pane_title()
-  fn.jobstart("tmux set-window-option automatic-rename on")
+  fn.jobstart "tmux set-window-option automatic-rename on"
 end
 
 return M
