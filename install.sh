@@ -120,6 +120,7 @@ curl https://sh.rustup.rs -sSf | sh
 
 if exists cargo; then
   cargo install stylua
+  cargo install git-delta
 fi
 
 # TODO install
