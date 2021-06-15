@@ -8,7 +8,7 @@ local PACKER_COMPILED_PATH = fn.stdpath("cache") .. "/packer/packer_compiled.vim
 
 local function setup_packer()
   --- use a wildcard to match on local and upstream versions of packer
-  local install_path = fn.stdpath("data") .. "/site/pack/packer/*/packer.nvim"
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
   if fn.empty(fn.glob(install_path)) > 0 then
     print("Downloading packer.nvim...")
     print(fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path}))
@@ -47,7 +47,7 @@ as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
 
 ---@param path string
 local function dev(path)
-  return os.getenv("HOME") .. "/Desktop/projects/" .. path
+  return os.getenv("HOME") .. "/projects/" .. path
 end
 
 local function developing()
