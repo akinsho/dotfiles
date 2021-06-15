@@ -22,6 +22,7 @@ as.style = {
     dark_blue = "#4e88ff",
     magenta = "#c678dd",
     comment_grey = "#5c6370",
+    grey = "#3E4556",
     whitesmoke = "#626262",
     bright_blue = "#51afef",
     teal = "#15AABF"

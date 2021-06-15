@@ -200,6 +200,9 @@ local function general_overrides()
     -- Floats
     -----------------------------------------------------------------------------//
     {"NormalFloat", {link = "Normal"}},
+    --- Highlight group for light coloured floats
+    {"GreyFloat", {guibg = P.grey}},
+    {"GreyFloatBorder", {guifg = P.grey}},
     -----------------------------------------------------------------------------//
     {"CursorLineNr", {gui = "bold"}},
     {"FoldColumn", {guibg = "background"}},
