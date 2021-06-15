@@ -310,7 +310,7 @@ end
 
 local function colorscheme_overrides()
   local keyword_fg = M.hl_value("Keyword", "fg")
-  local dark_bg = M.darken_color(M.hl_value("Normal", "bg"), -6)
+  local dark_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   if vim.g.colors_name == "doom-one" then
     M.all {
       -- TODO the default bold makes ... not use ligatures
