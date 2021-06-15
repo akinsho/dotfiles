@@ -11,9 +11,6 @@ as.style = {
     info = "",
     hint = ""
   },
-  border = {
-    curved = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
-  },
   palette = {
     pale_red = "#E06C75",
     dark_red = "#be5046",

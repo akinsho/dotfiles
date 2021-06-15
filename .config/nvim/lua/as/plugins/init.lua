@@ -912,7 +912,7 @@ require("packer").startup {
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
-      prompt_border = as.style.border.curved,
+      prompt_border = "curved",
       open_cmd = "silent topleft 65vnew Packer"
     },
     profile = {

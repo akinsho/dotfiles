@@ -78,7 +78,7 @@ local function setup_mappings(client, bufnr)
     "]c",
     function()
       vim.lsp.diagnostic.goto_prev {
-        popup_opts = {border = as.style.border.curved, focusable = false}
+        popup_opts = {border = "rounded", focusable = false}
       }
     end,
     opts
@@ -88,7 +88,7 @@ local function setup_mappings(client, bufnr)
     "[c",
     function()
       vim.lsp.diagnostic.goto_next {
-        popup_opts = {border = as.style.border.curved, focusable = false}
+        popup_opts = {border = "rounded", focusable = false}
       }
     end,
     opts
@@ -184,7 +184,7 @@ function as.lsp.on_attach(client, bufnr)
       bind = true,
       hint_enable = false,
       handler_opts = {
-        border = as.style.border.curved
+        border = "rounded"
       }
     }
   )
@@ -373,7 +373,7 @@ return function()
   vim.lsp.handlers["textDocument/hover"] =
     vim.lsp.with(
     vim.lsp.handlers.hover,
-    {border = as.style.border.curved, max_width = max_width, max_height = max_height}
+    {border = "rounded", max_width = max_width, max_height = max_height}
   )
 
   as.lsp.setup_servers()

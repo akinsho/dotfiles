@@ -348,7 +348,7 @@ function as.notify(lines, opts)
       anchor = "SE",
       style = "minimal",
       focusable = false,
-      border = as.style.border.curved
+      border = "rounded"
     }
   )
 
