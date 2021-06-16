@@ -33,10 +33,10 @@ install_missing_packages() {
       OS="`uname`"
       case $OS in
         'Linux')
-          apt install "$1"
+          apt install "$1" || echo "$p failed to install"
           ;;
         'Darwin')
-          brew install "$1"
+          brew install "$1" || echo "$p failed to install"
           ;;
         *) ;;
       esac
@@ -73,7 +73,7 @@ if [ "$(uname)" == "Darwin" ]; then
   fi
 fi
 
-install_missing_packages
+install_missing_packages || echo "failed to install missing packages"
 
 # Clone my dotfiles repo into ~/.dotfiles/ if needed
 echo "dotfiles -------------------------------------------------"
