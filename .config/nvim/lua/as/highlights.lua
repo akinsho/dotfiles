@@ -158,6 +158,7 @@ end
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
+vim.g.doom_one_telescope_highlights = false
 local ok, msg = pcall(vim.cmd, "colorscheme doom-one")
 if not ok then
   vim.notify(msg, vim.log.levels.ERROR)
@@ -213,7 +214,6 @@ local function general_overrides()
     { "Folded", { link = "Comment", force = true } },
     { "TermCursor", { ctermfg = "green", guifg = "royalblue" } },
     { "IncSearch", { guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline" } },
-    { "Substitute", { guifg = comment_fg, guibg = "NONE", gui = "strikethrough,bold" } },
     -- Add undercurl to existing spellbad highlight
     {
       "SpellBad",
@@ -309,30 +309,25 @@ local function on_sidebar_enter()
 end
 
 local function colorscheme_overrides()
-  local keyword_fg = M.hl_value("Keyword", "fg")
-  local dark_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
   if vim.g.colors_name == "doom-one" then
+    local keyword_fg = M.hl_value("Keyword", "fg")
     M.all {
+      { "CursorLineNr", { guifg = keyword_fg } },
       -- TODO the default bold makes ... not use ligatures
       -- a better fix would be to add ligatures to my font
       -- {"Constant", {gui = "NONE"}},
-      { "Pmenu", { guibg = dark_bg, guifg = "lightgray", blend = 6 } },
-      { "CursorLineNr", { guifg = keyword_fg } },
       --- remove the unsightly orange
-      { "TSProperty", { link = "TSFunction" } },
-      --- too much purple
-      { "TSVariable", { guifg = "NONE" } },
-      --- Remove the unpleasant yellow highlight
-      { "TelescopeSelection", { guifg = "NONE", gui = "bold,italic" } },
-      { "TelescopeMatching", { link = "Search", force = true } },
+      -- { "TSProperty", { link = "TSFunction" } },
     }
   elseif vim.g.colors_name == "onedark" then
+    local comment_fg = M.hl_value("Comment", "fg")
     M.all {
+      { "Todo", { guifg = "red", gui = "bold" } },
+      { "Substitute", { guifg = comment_fg, guibg = "NONE", gui = "strikethrough,bold" } },
       { "LspDiagnosticsFloatingWarning", { guibg = "NONE" } },
       { "LspDiagnosticsFloatingError", { guibg = "NONE" } },
       { "LspDiagnosticsFloatingHint", { guibg = "NONE" } },
       { "LspDiagnosticsFloatingInformation", { guibg = "NONE" } },
-      { "Todo", { guifg = "red", gui = "bold" } },
     }
   end
 end
