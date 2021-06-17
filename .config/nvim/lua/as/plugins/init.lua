@@ -580,6 +580,7 @@ require("packer").startup {
     -- TPOPE {{{
     --------------------------------------------------------------------------------
     use "tpope/vim-eunuch"
+    use "tpope/vim-sleuth"
     use "tpope/vim-repeat"
     use {
       "tpope/vim-abolish",

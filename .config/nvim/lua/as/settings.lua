@@ -177,10 +177,7 @@ vim.opt.listchars = {
 -----------------------------------------------------------------------------//
 vim.opt.wrap = true
 vim.opt.wrapmargin = 2
-vim.opt.softtabstop = 2
 vim.opt.textwidth = 80
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.shiftround = true
 -----------------------------------------------------------------------------//
