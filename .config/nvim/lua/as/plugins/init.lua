@@ -188,13 +188,12 @@ require("packer").startup {
         "nvim-lua/popup.nvim",
         "nvim-telescope/telescope-fzf-writer.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+        {
+          "nvim-telescope/telescope-frecency.nvim",
+          requires = "tami5/sql.nvim",
+          after = "telescope.nvim",
+        },
       },
-    }
-
-    use {
-      "nvim-telescope/telescope-frecency.nvim",
-      requires = { "tami5/sql.nvim" },
-      after = "telescope.nvim",
     }
 
     use {
