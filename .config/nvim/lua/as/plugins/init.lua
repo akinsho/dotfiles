@@ -153,6 +153,7 @@ require("packer").startup {
     use {
       "camspiers/snap",
       rocks = { "fzy" },
+      keys = {"<leader>fp", "<leader>fs"},
       config = function()
         local snap = require "snap"
         local limit = snap.get "consumer.limit"
