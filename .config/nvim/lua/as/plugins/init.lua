@@ -196,17 +196,21 @@ require("packer").startup {
       after = "telescope.nvim",
     }
 
-    use { "rmagatti/session-lens", after = "telescope.nvim", requires = {
-      "nvim-telescope/telescope.nvim",
-      {
-        "rmagatti/auto-session",
-        config = function()
-          require("auto-session").setup {
-            auto_session_root_dir = vim.fn.stdpath "data" .. "/session/auto/",
-          }
-        end,
+    use {
+      "rmagatti/session-lens",
+      after = "telescope.nvim",
+      requires = {
+        "nvim-telescope/telescope.nvim",
+        {
+          "rmagatti/auto-session",
+          config = function()
+            require("auto-session").setup {
+              auto_session_root_dir = vim.fn.stdpath "data" .. "/session/auto/",
+            }
+          end,
+        },
       },
-    } }
+    }
 
     use {
       "dhruvasagar/vim-dotoo",
