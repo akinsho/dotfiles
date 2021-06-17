@@ -12,9 +12,6 @@ local loaded, devicons = pcall(require, "nvim-web-devicons")
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 function M.tmux.set_statusline(reset)
-  if not highlights_loaded then
-    return
-  end
   local hl = reset and "Normal" or "MsgArea"
   local bg = H.hl_value(hl, "bg")
   -- TODO: we should correctly derive the previous bg value
@@ -30,9 +27,6 @@ end
 
 ---Reset the kitty terminal colors
 function M.kitty.clear_background()
-  if not highlights_loaded then
-    return
-  end
   if vim.env.KITTY_LISTEN_ON then
     local bg = H.hl_value("Normal", "bg")
     -- this is intentionally synchronous so it has time to execute fully
@@ -50,9 +44,6 @@ local function fileicon()
 end
 
 function M.title_string()
-  if not highlights_loaded then
-    return
-  end
   local dir = fn.fnamemodify(fn.getcwd(), ":t")
   local icon, hl = fileicon()
   return fmt("%s #[fg=%s]%s ", dir, H.hl_value(hl, "fg"), icon)
@@ -62,4 +53,13 @@ function M.tmux.clear_pane_title()
   fn.jobstart "tmux set-window-option automatic-rename on"
 end
 
-return M
+return setmetatable(M, {
+  __index = function(t, k)
+    local func = t[k]
+    if type(func) == "function" then
+      if highlights_loaded then
+        func()
+      end
+    end
+  end,
+})
