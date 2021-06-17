@@ -17,6 +17,7 @@ packages=(
   "python"
   "zoxide"
   "lazygit"
+  "ripgrep"
 )
 
 exists() {
@@ -40,6 +41,8 @@ install_missing_packages() {
           ;;
         *) ;;
       esac
+      echo "---------------------------------------------------------"
+      echo "Done "
       echo "---------------------------------------------------------"
     fi
   done
@@ -120,6 +123,10 @@ curl https://sh.rustup.rs -sSf | sh
 if exists cargo; then
   cargo install stylua
   cargo install git-delta
+  # install ripgrep via cargo in case it failed via apt or brew
+  if ! exists rg; then
+    cargo install ripgrep
+  fi
 fi
 
 # TODO install
