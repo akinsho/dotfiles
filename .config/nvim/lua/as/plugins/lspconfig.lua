@@ -196,10 +196,6 @@ as.lsp.servers = {
     --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     --- if I ever decide to move away from lua dev then use the above
     return require("lua-dev").setup {
-      library = {
-        vimruntime = false,
-        plugins = false,
-      },
       lspconfig = {
         settings = {
           Lua = {
