@@ -251,7 +251,7 @@ local function general_overrides()
     { "TSParameter", { gui = "italic,bold" } },
     -- highlight FIXME comments
     { "commentTSWarning", { guifg = "Red", gui = "bold" } },
-    { "commentTSDanger", { guifg = "#FBBF24", guibg = "bg", gui = "bold" } },
+    { "commentTSDanger", { guifg = "#FBBF24", gui = "bold" } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
@@ -316,8 +316,6 @@ local function colorscheme_overrides()
       -- TODO the default bold makes ... not use ligatures
       -- a better fix would be to add ligatures to my font
       -- {"Constant", {gui = "NONE"}},
-      --- remove the unsightly orange
-      -- { "TSProperty", { link = "TSFunction" } },
     }
   elseif vim.g.colors_name == "onedark" then
     local comment_fg = M.hl_value("Comment", "fg")
