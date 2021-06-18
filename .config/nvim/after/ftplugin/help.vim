@@ -9,7 +9,7 @@ setlocal concealcursor=nc
 " add mappings otherwise do not
 if expand('%') =~# '^'.$VIMRUNTIME || &readonly
   " automatically move window to the left
-  autocmd! BufWinEnter <buffer> wincmd L | vertical resize 80
+  wincmd L | vertical resize 80
 
   nnoremap <buffer> q :<c-u>q<cr>
   nnoremap <buffer> <CR> <C-]>
