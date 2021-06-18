@@ -210,8 +210,7 @@ vim.opt.guicursor = {
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
--- " ❐ %t %r %m"
-vim.opt.titlestring = require("as.external").title_string()
+vim.opt.titlestring = require("as.external").title_string() or " ❐ %t %r %m"
 vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv "SHELL", ":t")
 vim.opt.title = true
 vim.opt.titlelen = 70
