@@ -20,6 +20,15 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
+---@class autocmd
+---@field events string[] list of autocommand events
+---@field targets string[] list of autocommand patterns
+---@field modifiers string[] e.g. nested, once
+---@field command string | function
+
+---Create an autocommand
+---@param name string
+---@param commands autocmd[]
 function as.augroup(name, commands)
   vim.cmd("augroup " .. name)
   vim.cmd "autocmd!"
