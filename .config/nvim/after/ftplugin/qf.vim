@@ -28,9 +28,5 @@ vnoremap <silent><buffer>d  :call utils#qf_delete(bufnr())<CR>
 nnoremap <buffer> H :colder<CR>
 nnoremap <buffer> L :cnewer<CR>
 
-nnoremap <silent><buffer><nowait> P :pclose!<CR>
-nnoremap <silent><buffer><nowait> p :lua require('as.quickfix').toggle()<CR>
-
 " Resources and inspiration
-" 1. https://github.com/ronakg/quickr-preview.vim/blob/357229d656c0340b096a16920e82cff703f1fe93/after/ftplugin/qf.vim#L215
 " 2. https://github.com/romainl/vim-qf/blob/2e385e6d157314cb7d0385f8da0e1594a06873c5/autoload/qf.vim#L22
