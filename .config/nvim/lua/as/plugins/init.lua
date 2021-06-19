@@ -141,8 +141,9 @@ require("packer").startup {
       end,
     }
 
-    use {
+    use { -- NOTE: this is currently broken due to a neovim bug
       "rmagatti/goto-preview",
+      opt = true,
       config = function()
         require("goto-preview").setup {
           default_mappings = true,
@@ -206,19 +207,12 @@ require("packer").startup {
     }
 
     use {
-      "rmagatti/session-lens",
-      after = "telescope.nvim",
-      requires = {
-        "nvim-telescope/telescope.nvim",
-        {
-          "rmagatti/auto-session",
-          config = function()
-            require("auto-session").setup {
-              auto_session_root_dir = vim.fn.stdpath "data" .. "/session/auto/",
-            }
-          end,
-        },
-      },
+      "rmagatti/auto-session",
+      config = function()
+        require("auto-session").setup {
+          auto_session_root_dir = vim.fn.stdpath "data" .. "/session/auto/",
+        }
+      end,
     }
 
     use {
@@ -452,14 +446,16 @@ require("packer").startup {
         vim.g.highlighturl_guifg = require("as.highlights").hl_value("Keyword", "fg")
       end,
     }
-    -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    use { "kshenoy/vim-signature", disable = true }
+    -- NOTE: marks are currently broken in neovim i.e.
+    -- deleted marks are resurrected on restarting nvim
+    use { "kshenoy/vim-signature" }
+
     use {
       "mbbill/undotree",
       cmd = "UndotreeToggle",
       keys = "<leader>u",
       config = function()
-        vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
+        vim.g.undotree_TreeNodeShape = "◉" -- Alternative: '◦'
         vim.g.undotree_SetFocusWhenToggle = 1
         require("which-key").register {
           ["<leader>u"] = { "<cmd>UndotreeToggle<CR>", "toggle undotree" },
@@ -506,11 +502,7 @@ require("packer").startup {
         })
       end,
     }
-    use {
-      "lukas-reineke/indent-blankline.nvim",
-      branch = "lua",
-      config = conf "indentline",
-    }
+    use { "lukas-reineke/indent-blankline.nvim", branch = "lua", config = conf "indentline" }
     use "kyazdani42/nvim-web-devicons"
 
     --- TODO use_local does not work for this plugin, find out why
@@ -521,8 +513,7 @@ require("packer").startup {
       requires = "nvim-web-devicons",
     }
 
-    -- FIXME: If nvim-web-devicons is specified before
-    -- it is used this errors that it is used twice
+    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
     use {
       "folke/trouble.nvim",
       keys = { "<leader>ld" },
