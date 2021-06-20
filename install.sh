@@ -65,8 +65,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 if [ "$(uname)" == "Darwin" ]; then
   brew="/usr/local/bin/brew"
-  if [ -f "$brew" ]
-  then
+  if [ -f "$brew" ]; then
     echo "Homebrew is installed, nothing to do here"
   else
     echo "Homebrew is not installed, installing now"
@@ -123,6 +122,9 @@ curl https://sh.rustup.rs -sSf | sh
 if exists cargo; then
   cargo install stylua
   cargo install git-delta
+  cargo install topgrade
+  # cargo install cargo-update # requires libopenssl-dev on ubuntu
+
   # install ripgrep via cargo in case it failed via apt or brew
   if ! exists rg; then
     cargo install ripgrep
