@@ -46,8 +46,7 @@ function M.config()
   as.command {
     "CloseVimWikis",
     function()
-      local fn = vim.fn
-      local bufs = fn.getbufinfo { buflisted = true }
+      local bufs = vim.fn.getbufinfo { buflisted = true }
       for _, buf in ipairs(bufs) do
         if vim.bo[buf.bufnr].filetype == "vimwiki" then
           vim.api.nvim_buf_delete(buf.bufnr, { force = true })
@@ -74,7 +73,7 @@ function M.config()
       i = "open vimwiki diary",
     },
   }, {
-    prefix = "<localleader>",
+    prefix = "<leader>",
   })
 end
 
