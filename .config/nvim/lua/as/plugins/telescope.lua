@@ -131,7 +131,6 @@ return function()
       b = { builtins.git_branches, "branches" },
       c = { builtins.git_commits, "commits" },
       d = { dotfiles, "dotfiles" },
-      f = { builtins.find_files, "files" },
       o = { builtins.buffers, "buffers" },
       m = { builtins.man_pages, "man pages" },
       h = { frecency, "history" },

@@ -154,7 +154,7 @@ require("packer").startup {
     use {
       "camspiers/snap",
       rocks = { "fzy" },
-      keys = { "<leader>fp", "<leader>fs" },
+      keys = { "<leader>ff", "<leader>fs" },
       config = function()
         local snap = require "snap"
         local limit = snap.get "consumer.limit"
@@ -170,9 +170,15 @@ require("packer").startup {
             views = { snap.get "preview.vimgrep" },
           }
         end)
-        snap.register.map({ "n" }, { "<leader>fp" }, function()
+        snap.register.map({ "n" }, { "<leader>ff" }, function()
           snap.run {
-            producer = fzf(snap.get("producer.ripgrep.file").hidden),
+            reverse = true,
+            producer = fzf(
+              snap.get "consumer.try"(
+                snap.get "producer.git.file",
+                snap.get("producer.ripgrep.file").hidden
+              )
+            ),
             select = snap.get("select.file").select,
             multiselect = snap.get("select.file").multiselect,
             views = { snap.get "preview.file" },
