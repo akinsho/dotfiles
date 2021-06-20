@@ -350,7 +350,6 @@ require("packer").startup {
 
     use_local {
       "akinsho/flutter-tools.nvim",
-      ft = "dart",
       branch = "feature/add-commandline-run-args",
       config = function()
         local ok, lsp_status = pcall(require, "lsp-status")
