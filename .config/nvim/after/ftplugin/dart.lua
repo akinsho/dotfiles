@@ -1,4 +1,8 @@
--- Open flutter only commands in dart files
+-- remove the "t" option added by dart-vim-plugin which forces lines to autowrap at text
+-- width which is very annoying
+vim.opt_local.formatoptions:remove "t"
+
+-- Map flutter only commands in dart files
 local success, wk = pcall(require, "which-key")
 if not success then
   return
