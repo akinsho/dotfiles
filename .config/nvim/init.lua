@@ -6,7 +6,7 @@
 -- _/    _/  _/    _/
 ---------------------------------------------------------------------------------
 -- NOTE: this is set by nvim by default but maybe too late
-vim.cmd("syntax enable")
+vim.cmd "syntax enable"
 
 vim.api.nvim_exec(
   [[
@@ -16,20 +16,8 @@ vim.api.nvim_exec(
   ]],
   ""
 )
--- The operating system is assigned to a global variable that
--- that can be used elsewhere for conditional system based logic
-local uname = vim.loop.os_uname()
-if uname.sysname == "Darwin" then
-  vim.g.open_command = "open"
-  vim.g.system_name = "macOS"
-  vim.g.is_mac = true
-elseif uname.sysname == "Linux" then
-  vim.g.open_command = "xdg-open"
-  vim.g.system_name = "Linux"
-  vim.g.is_linux = true
-end
-
-vim.g.dotfiles = vim.env.DOTFILES ~= nil and vim.env.DOTFILES or "~/.dotfiles"
+vim.g.open_command = vim.loop.os_uname() == "Darwin" and "open" or "xdg-open"
+vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand("~/.dotfiles")
 vim.g.vim_dir = vim.g.dotfiles .. "/.config/nvim"
 
 ------------------------------------------------------------------------
@@ -41,7 +29,7 @@ vim.g.maplocalleader = " " -- Local leader is <Space>
 ------------------------------------------------------------------------
 -- Plugin Configurations
 ------------------------------------------------------------------------
-require("as")
+require "as"
 -------------------------------------------------------------------------
 -- Local vimrc
 -------------------------------------------------------------------------
