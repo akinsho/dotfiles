@@ -17,7 +17,7 @@ vim.api.nvim_exec(
   ""
 )
 vim.g.open_command = vim.loop.os_uname() == "Darwin" and "open" or "xdg-open"
-vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand("~/.dotfiles")
+vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand "~/.dotfiles"
 vim.g.vim_dir = vim.g.dotfiles .. "/.config/nvim"
 
 ------------------------------------------------------------------------

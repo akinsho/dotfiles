@@ -20,30 +20,27 @@ _G._mappings = {}
 -----------------------------------------------------------------------------//
 -- Terminal {{{
 ------------------------------------------------------------------------------//
-as.augroup(
-  "AddTerminalMappings",
+as.augroup("AddTerminalMappings", {
   {
-    {
-      events = {"TermOpen"},
-      targets = {"term://*"},
-      command = function()
-        if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-          local opts = {silent = false, buffer = 0}
-          tnoremap("<esc>", [[<C-\><C-n>]], opts)
-          tnoremap("jk", [[<C-\><C-n>]], opts)
-          tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
-          tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
-          tnoremap("<C-k>", [[<C-\><C-n><C-W>k]], opts)
-          tnoremap("<C-l>", [[<C-\><C-n><C-W>l]], opts)
-          tnoremap("]t", [[<C-\><C-n>:tablast<CR>]])
-          tnoremap("[t", [[<C-\><C-n>:tabnext<CR>]])
-          tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
-          tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
-        end
+    events = { "TermOpen" },
+    targets = { "term://*" },
+    command = function()
+      if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+        local opts = { silent = false, buffer = 0 }
+        tnoremap("<esc>", [[<C-\><C-n>]], opts)
+        tnoremap("jk", [[<C-\><C-n>]], opts)
+        tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
+        tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
+        tnoremap("<C-k>", [[<C-\><C-n><C-W>k]], opts)
+        tnoremap("<C-l>", [[<C-\><C-n><C-W>l]], opts)
+        tnoremap("]t", [[<C-\><C-n>:tablast<CR>]])
+        tnoremap("[t", [[<C-\><C-n>:tabnext<CR>]])
+        tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
+        tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
       end
-    }
-  }
-)
+    end,
+  },
+})
 --}}}
 -----------------------------------------------------------------------------//
 -- MACROS {{{
@@ -82,7 +79,7 @@ vnoremap("//", [[y/<C-R>"<CR>]])
 nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
 
 -- Enter key should repeat the last macro recorded or just act as enter
-nnoremap("<leader><CR>", [[empty(&buftype) ? '@@' : '<CR>']], {expr = true})
+nnoremap("<leader><CR>", [[empty(&buftype) ? '@@' : '<CR>']], { expr = true })
 
 -- Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 nnoremap("<space><space>", [[@=(foldlevel('.')?'za':"\<Space>")<CR>]])
@@ -105,7 +102,7 @@ nmap("<ScrollWheelUp>", "<c-u>")
 ------------------------------------------------------------------------------
 nnoremap("<leader>on", [[<cmd>w <bar> %bd <bar> e#<CR>]])
 -- Use wildmenu to cycle tabs
-nnoremap("<localleader><tab>", [[:b <C-Z>]], {silent = false})
+nnoremap("<localleader><tab>", [[:b <C-Z>]], { silent = false })
 -- Switch between the last two files
 nnoremap("<leader><leader>", [[<c-^>]])
 -----------------------------------------------------------------------------//
@@ -117,7 +114,7 @@ inoremap("<C-u>", "<cmd>norm!gUiw`]a<CR>")
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
 -- source: https://www.reddit.com/r/vim/comments/i8b5z1/is_there_a_more_elegant_way_to_move_lines_than_eg/
-if has("mac") then
+if has "mac" then
   -- Allow using alt in macOS without enabling “Use Option as Meta key”
   nmap("¬", "<a-l>")
   nmap("˙", "<a-h>")
@@ -149,11 +146,11 @@ vnoremap("*", [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap(".", ":norm.<CR>")
 -- Switch from visual to visual block.
-xnoremap("r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], {silent = false})
+xnoremap("r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], { silent = false })
 -- https://www.reddit.com/r/neovim/comments/l8vyl8/a_plugin_to_improve_the_deletion_of_buffers/
 -- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
 local function buf_kill()
-  local buflisted = fn.getbufinfo({buflisted = 1})
+  local buflisted = fn.getbufinfo { buflisted = 1 }
   local cur_winid, cur_bufnr = api.nvim_get_current_win(), api.nvim_get_current_buf()
   if #buflisted < 2 then
     vim.cmd "confirm qall"
@@ -168,7 +165,7 @@ local function buf_kill()
     return
   end
   local is_terminal = vim.bo[cur_bufnr].buftype == "terminal"
-  api.nvim_buf_delete(cur_bufnr, {force = is_terminal})
+  api.nvim_buf_delete(cur_bufnr, { force = is_terminal })
 end
 nnoremap("<leader>qq", buf_kill)
 nnoremap("<leader>qw", "<cmd>bd!<CR>")
@@ -180,7 +177,7 @@ nnoremap("Y", "y$")
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
-local noisy = {silent = false}
+local noisy = { silent = false }
 nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
 nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
 vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
@@ -191,9 +188,9 @@ vnoremap(">", ">gv")
 nnoremap("'", "`")
 -----------------------------------------------------------------------------//
 --open a new file in the same directory
-nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
+nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { silent = false })
 --open a new file in the same directory
-nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
+nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], { silent = false })
 --Open command line window - :<c-f>
 nnoremap(
   "<localleader>l",
@@ -242,23 +239,20 @@ cnoremap("<C-b>", "<Left>")
 cnoremap("<C-d>", "<Del>")
 cnoremap("<C-k>", [[<C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>]])
 -- move cursor one character backwards unless at the end of the command line
-cnoremap("<C-f>", [[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]], {expr = true})
+cnoremap("<C-f>", [[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]], { expr = true })
 -- see :h cmdline-editing
 cnoremap("<Esc>b", [[<S-Left>]])
 cnoremap("<Esc>f", [[<S-Right>]])
 -- Insert escaped '/' while inputting a search pattern
-cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], {expr = true})
+cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Save
-nnoremap(
-  "<c-s>",
-  function()
-    -- NOTE: this uses write specifically because we need to trigger a filesystem event
-    -- even if the file isn't change so that things like hot reload work
-    vim.cmd("silent! write")
-    as.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
-  end
-)
+nnoremap("<c-s>", function()
+  -- NOTE: this uses write specifically because we need to trigger a filesystem event
+  -- even if the file isn't change so that things like hot reload work
+  vim.cmd "silent! write"
+  as.notify("Saved " .. vim.fn.expand "%:t", { timeout = 1000 })
+end)
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap("qa", "<cmd>qa<CR>")
 ------------------------------------------------------------------------------
@@ -286,23 +280,23 @@ onoremap("ie", [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
 -- Core navigation
 ----------------------------------------------------------------------------//
 -- Store relative line number jumps in the jumplist.
-nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], {expr = true, silent = true})
-nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], {expr = true, silent = true})
+nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
+nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- but if already at the first character then jump to the beginning
 --@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
-nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", {expr = true})
+nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap("$", "g_")
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
 -- at the first column.  <esc> will continue to work the default way.
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
-imap("jk", [[col('.') == 1 ? '<esc>' : '<esc>l']], {expr = true})
+imap("jk", [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 -- Toggle top/center/bottom
 nmap(
   "zz",
   [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
-  {expr = true}
+  { expr = true }
 )
 
 -- This line opens the vimrc in a vertical split
@@ -338,15 +332,15 @@ end
 
 -- NOTE: this line is done as a vim command as handling the string in lua breaks
 vim.cmd [[let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>""]]
-vnoremap("cn", [[g:mc . "``cgn"]], {expr = true, silent = true})
-vnoremap("cN", [[g:mc . "``cgN"]], {expr = true, silent = true})
+vnoremap("cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
+vnoremap("cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap("cq", [[:lua _mappings.setup_CR()<CR>*``qz]])
 nnoremap("cQ", [[:lua _mappings.setup_CR()<CR>#``qz]])
-vnoremap("cq", [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], {expr = true})
+vnoremap("cq", [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], { expr = true })
 vnoremap(
   "cQ",
   [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-  {expr = true}
+  { expr = true }
 )
 
 -- if the file under the cursor doesn't exist create it
@@ -355,7 +349,7 @@ vnoremap(
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
 local function open_file_or_create_new()
-  local path = fn.expand("<cfile>")
+  local path = fn.expand "<cfile>"
   if not path or path == "" then
     return false
   end
@@ -366,12 +360,12 @@ local function open_file_or_create_new()
     return true
   end
 
-  local answer = fn.input("Create a new file, (Y)es or (N)o? ")
+  local answer = fn.input "Create a new file, (Y)es or (N)o? "
   if not answer or string.lower(answer) ~= "y" then
     return vim.cmd "redraw"
   end
   vim.cmd "redraw"
-  local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
+  local new_path = fn.fnamemodify(fn.expand "%:p:h" .. "/" .. path, ":p")
   local ext = fn.fnamemodify(new_path, ":e")
 
   if ext and ext ~= "" then
@@ -399,12 +393,12 @@ nnoremap("gf", open_file_or_create_new)
 cnoremap(
   "<Tab>",
   [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
-  {expr = true}
+  { expr = true }
 )
 cnoremap(
   "<S-Tab>",
   [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-  {expr = true}
+  { expr = true }
 )
 -- Smart mappings on the command line
 cnoremap("w!!", [[w !sudo tee % >/dev/null]])
@@ -434,10 +428,10 @@ xnoremap("<localleader>!", [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), f
 -- Grep Operator
 ----------------------------------------------------------------------------------
 function _mappings.grep_operator(type)
-  local saved_unnamed_register = fn.getreg("@@")
-  if type:match("v") then
+  local saved_unnamed_register = fn.getreg "@@"
+  if type:match "v" then
     vim.cmd [[normal! `<v`>y]]
-  elseif type:match("char") then
+  elseif type:match "char" then
     vim.cmd [[normal! `[v`]y']]
   else
     return
@@ -460,11 +454,11 @@ nnoremap("<localleader>g*", [[:Ggrep --untracked <cword><CR>]])
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
 local function open_link()
-  local file = fn.expand("<cfile>")
+  local file = fn.expand "<cfile>"
   if fn.isdirectory(file) > 0 then
     vim.cmd("edit " .. file)
   else
-    fn.jobstart({vim.g.open_command, file}, {detach = true})
+    fn.jobstart({ vim.g.open_command, file }, { detach = true })
   end
 end
 nnoremap("gx", open_link)
@@ -474,7 +468,7 @@ nnoremap("gx", open_link)
 local function toggle_list(prefix)
   for _, win in ipairs(api.nvim_list_wins()) do
     local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, {filewinid = 0})
+    local location_list = fn.getloclist(0, { filewinid = 0 })
     local is_loc_list = location_list.filewinid > 0
     if vim.bo[buf].filetype == "qf" or is_loc_list then
       fn.execute(prefix .. "close")
@@ -493,25 +487,19 @@ local function toggle_list(prefix)
   end
 end
 
-nnoremap(
-  "<leader>ls",
-  function()
-    toggle_list("c")
-  end
-)
-nnoremap(
-  "<leader>li",
-  function()
-    toggle_list("l")
-  end
-)
+nnoremap("<leader>ls", function()
+  toggle_list "c"
+end)
+nnoremap("<leader>li", function()
+  toggle_list "l"
+end)
 
 -----------------------------------------------------------------------------//
 -- Completion
 -----------------------------------------------------------------------------//
 -- cycle the completion menu with <TAB>
-inoremap("<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], {expr = true})
-inoremap("<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], {expr = true})
+inoremap("<tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+inoremap("<s-tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
@@ -519,22 +507,22 @@ command {
   "ToggleBackground",
   function()
     vim.o.background = vim.o.background == "dark" and "light" or "dark"
-  end
+  end,
 }
 ------------------------------------------------------------------------------
-command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
+command { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
 command {
   "ReloadModule",
   function(args)
     require("plenary.reload").reload_module(args)
   end,
-  nargs = 1
+  nargs = 1,
 }
 command {
   "TabMessage",
   [[call utils#tab_message(<q-args>)]],
   nargs = "+",
-  types = {"-complete=command"}
+  types = { "-complete=command" },
 }
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
@@ -542,23 +530,23 @@ command {
 command {
   "MoveWrite",
   [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]],
-  types = {"-bang", "-range", "-complete=file"},
-  nargs = 1
+  types = { "-bang", "-range", "-complete=file" },
+  nargs = 1,
 }
 command {
   "MoveAppend",
   [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]],
-  types = {"-bang", "-range", "-complete=file"},
-  nargs = 1
+  types = { "-bang", "-range", "-complete=file" },
+  nargs = 1,
 }
-command {"AutoResize", [[call utils#auto_resize(<args>)]], {"-nargs=?"}}
+command { "AutoResize", [[call utils#auto_resize(<args>)]], { "-nargs=?" } }
 
 command {
   "LuaInvalidate",
   function(pattern)
     require("as.utils").invalidate(pattern, true)
   end,
-  nargs = 1
+  nargs = 1,
 }
 -----------------------------------------------------------------------------//
 -- References

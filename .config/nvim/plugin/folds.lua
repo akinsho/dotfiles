@@ -5,7 +5,7 @@ local fn = vim.fn
 local api = vim.api
 
 -- List of file types to use default fold text for
-local fold_exclusions = {"vim"}
+local fold_exclusions = { "vim" }
 
 local function contains(str, pattern)
   assert(str)

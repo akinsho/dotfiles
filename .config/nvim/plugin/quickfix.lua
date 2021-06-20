@@ -5,9 +5,9 @@ function as.qftf(info)
   local items
   local ret = {}
   if info.quickfix == 1 then
-    items = fn.getqflist({id = info.id, items = 0}).items
+    items = fn.getqflist({ id = info.id, items = 0 }).items
   else
-    items = fn.getloclist(info.winid, {id = info.id, items = 0}).items
+    items = fn.getloclist(info.winid, { id = info.id, items = 0 }).items
   end
   local limit = 25
   local fname_fmt1, fname_fmt2 = "%-" .. limit .. "s", "…%." .. (limit - 1) .. "s"

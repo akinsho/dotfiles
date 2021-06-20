@@ -26,7 +26,7 @@ vim.g.number_filetype_exclusions = {
   "lsputil_locations_list",
   "lsputil_symbols_list",
   "himalaya",
-  "Trouble"
+  "Trouble",
 }
 
 vim.g.number_buftype_exclusions = {
@@ -34,10 +34,10 @@ vim.g.number_buftype_exclusions = {
   "help",
   "nofile",
   "acwrite",
-  "quickfix"
+  "quickfix",
 }
 
-vim.g.number_buftype_ignored = {"quickfix"}
+vim.g.number_buftype_ignored = { "quickfix" }
 
 local function is_floating_win()
   return vim.fn.win_gettype() == "popup"
@@ -111,20 +111,17 @@ local function disable_relative_number()
   end
 end
 
-as.augroup(
-  "ToggleRelativeLineNumbers",
+as.augroup("ToggleRelativeLineNumbers", {
   {
-    {
-      events = {"BufEnter", "FileType", "FocusGained", "InsertLeave"},
-      targets = {"*"},
-      command = enable_relative_number
-    },
-    {
-      events = {"FocusLost", "BufLeave", "InsertEnter", "TermOpen"},
-      targets = {"*"},
-      command = disable_relative_number
-    }
-  }
-)
+    events = { "BufEnter", "FileType", "FocusGained", "InsertLeave" },
+    targets = { "*" },
+    command = enable_relative_number,
+  },
+  {
+    events = { "FocusLost", "BufLeave", "InsertEnter", "TermOpen" },
+    targets = { "*" },
+    command = disable_relative_number,
+  },
+})
 
 return M

@@ -21,36 +21,31 @@ function M.setup(enabled)
   if not enabled then
     return
   end
-  as.augroup(
-    "DevReload",
+  as.augroup("DevReload", {
     {
-      {
-        events = {"VimEnter"},
-        targets = {"*"},
-        command = function()
-          local cwd = vim.loop.cwd()
-          if not cwd:match(vim.env.PROJECTS_DIR) then
-            return
-          end
-          local lua_dir = cwd .. "/lua/"
-          if fn.isdirectory(lua_dir) == 0 then
-            return
-          end
-          local names = require("pl.dir").getdirectories(lua_dir)
-          if not names[1] then
-            return
-          end
-          local name = fn.fnamemodify(names[1], ":t")
-          M.auto_reload(name)
-          vim.schedule(
-            function()
-              vim.notify(fmt("autoreloading %s", name))
-            end
-          )
+      events = { "VimEnter" },
+      targets = { "*" },
+      command = function()
+        local cwd = vim.loop.cwd()
+        if not cwd:match(vim.env.PROJECTS_DIR) then
+          return
         end
-      }
-    }
-  )
+        local lua_dir = cwd .. "/lua/"
+        if fn.isdirectory(lua_dir) == 0 then
+          return
+        end
+        local names = require("pl.dir").getdirectories(lua_dir)
+        if not names[1] then
+          return
+        end
+        local name = fn.fnamemodify(names[1], ":t")
+        M.auto_reload(name)
+        vim.schedule(function()
+          vim.notify(fmt("autoreloading %s", name))
+        end)
+      end,
+    },
+  })
 end
 
 return M

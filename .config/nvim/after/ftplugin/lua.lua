@@ -1,7 +1,7 @@
 local nnoremap = as.nnoremap
 
 local function find(word, ...)
-  for _, str in ipairs({...}) do
+  for _, str in ipairs { ... } do
     local match_start, match_end = string.find(word, str)
     if match_start then
       return str, match_start, match_end
@@ -18,7 +18,7 @@ local function keyword(word, callback)
   local original_iskeyword = vim.bo.iskeyword
 
   vim.bo.iskeyword = vim.bo.iskeyword .. ",."
-  word = word or vim.fn.expand("<cword>")
+  word = word or vim.fn.expand "<cword>"
 
   vim.bo.iskeyword = original_iskeyword
 
@@ -56,4 +56,4 @@ local function hover_doc()
   keyword(nil, cb)
 end
 
-nnoremap("gK", hover_doc, {buffer = 0})
+nnoremap("gK", hover_doc, { buffer = 0 })
