@@ -3,22 +3,28 @@ local api = vim.api
 local fmt = string.format
 local contains = vim.tbl_contains
 
-as.augroup(
-  "VimrcIncSearchHighlight",
-  {
-    {
-      -- automatically clear search highlight once leaving the commandline
-      events = {"CmdlineEnter"},
-      targets = {"[/\\?]"},
-      command = ":set hlsearch  | redrawstatus"
-    },
-    {
-      events = {"CmdlineLeave"},
-      targets = {"[/\\?]"},
-      command = ":set nohlsearch | redrawstatus"
-    }
-  }
+vim.api.nvim_exec(
+  [[
+   augroup vimrc -- Ensure all autocommands are cleared
+   autocmd!
+   augroup END
+  ]],
+  ""
 )
+
+as.augroup("VimrcIncSearchHighlight", {
+  {
+    -- automatically clear search highlight once leaving the commandline
+    events = { "CmdlineEnter" },
+    targets = { "[/\\?]" },
+    command = ":set hlsearch  | redrawstatus",
+  },
+  {
+    events = { "CmdlineLeave" },
+    targets = { "[/\\?]" },
+    command = ":set nohlsearch | redrawstatus",
+  },
+})
 
 local smart_close_filetypes = {
   "help",
