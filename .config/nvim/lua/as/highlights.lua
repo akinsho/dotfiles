@@ -159,11 +159,7 @@ end
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
 vim.g.doom_one_telescope_highlights = false
-local ok, msg = pcall(vim.cmd, "colorscheme doom-one")
-if not ok then
-  vim.notify(msg, vim.log.levels.ERROR)
-  return M
-end
+vim.cmd "colorscheme doom-one"
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights
