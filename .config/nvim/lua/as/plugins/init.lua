@@ -173,7 +173,7 @@ require("packer").startup {
         end)
         snap.register.map({ "n" }, { "<leader>ff" }, function()
           snap.run {
-            reverse = true,
+            -- reverse = true,
             producer = fzf(
               snap.get "consumer.try"(
                 snap.get "producer.git.file",
@@ -232,9 +232,6 @@ require("packer").startup {
           "~/Documents/dotoo-files/*.dotoo",
         }
         vim.g["dotoo#capture#refile"] = vim.fn.expand "~/Documents/dotoo-files/refile.dotoo"
-        vim.g["dotoo#capture#templates"] = {
-          t = { target = "todo" },
-        }
         require("which-key").register {
           g = {
             A = "dotoo agenda",

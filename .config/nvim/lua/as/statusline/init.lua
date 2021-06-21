@@ -18,19 +18,21 @@ local M = {}
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 local function colors()
+  local warning_fg = P.light_yellow
+  local indicator_color = P.bright_blue
+
   local error_color = H.get_hl("LspDiagnosticsDefaultError", "fg")
   local info_color = H.get_hl("LspDiagnosticsDefaultInformation", "fg")
-  local indicator_color = P.bright_blue
-  local bg_color = H.darken_color(H.get_hl("Normal", "bg"), -16)
   local normal_fg = H.get_hl("Normal", "fg")
   local pmenu_bg = H.get_hl("Pmenu", "bg")
   local string_fg = H.get_hl("String", "fg")
   local comment_fg = H.get_hl("Comment", "fg")
   local comment_gui = H.get_hl("Comment", "gui")
   local number_fg = H.get_hl("Number", "fg")
-  local warning_fg = P.light_yellow
   local identifier_fg = H.get_hl("Identifier", "fg")
   local inc_search_bg = H.get_hl("Search", "bg")
+
+  local bg_color = H.darken_color(H.get_hl("Normal", "bg"), -16)
 
   H.all {
     { "StMetadata", { guifg = comment_fg, guibg = bg_color, gui = "italic" } },
