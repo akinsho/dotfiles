@@ -110,9 +110,7 @@ local attrs = { fg = "foreground", bg = "background" }
 ---@param fallback string
 ---@return string
 function M.hl_value(grp, attr, fallback)
-  if not grp then
-    return vim.notify "Cannot get a highlight without specifying a group"
-  end
+  assert(grp, "Cannot get a highlight without specifying a group")
   attr = attrs[attr] or attr
   local hl = api.nvim_get_hl_by_name(grp, true)
   if attr == "gui" then
@@ -130,6 +128,7 @@ function M.hl_value(grp, attr, fallback)
     vim.notify(fmt("%s %s does not exist", grp, attr))
     return "NONE"
   end
+  -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
   return "#" .. bit.tohex(color, 6)
 end
 
