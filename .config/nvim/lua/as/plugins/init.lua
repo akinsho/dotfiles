@@ -362,6 +362,9 @@ require("packer").startup {
         local ok, lsp_status = pcall(require, "lsp-status")
         local capabilities = ok and lsp_status.capabilities or nil
         require("flutter-tools").setup {
+          ui = {
+            border = "rounded",
+          },
           debugger = {
             enabled = true,
           },

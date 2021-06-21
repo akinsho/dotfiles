@@ -335,6 +335,8 @@ local function make_mapper(mode, o)
 end
 
 local map_opts = { noremap = false, silent = true }
+local noremap_opts = { noremap = true, silent = true }
+
 as.nmap = make_mapper("n", map_opts)
 as.xmap = make_mapper("x", map_opts)
 as.imap = make_mapper("i", map_opts)
@@ -344,7 +346,6 @@ as.tmap = make_mapper("t", map_opts)
 as.smap = make_mapper("s", map_opts)
 as.cmap = make_mapper("c", { noremap = false, silent = false })
 
-local noremap_opts = { noremap = true, silent = true }
 as.nnoremap = make_mapper("n", noremap_opts)
 as.xnoremap = make_mapper("x", noremap_opts)
 as.vnoremap = make_mapper("v", noremap_opts)
