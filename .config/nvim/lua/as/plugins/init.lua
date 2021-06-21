@@ -115,7 +115,7 @@ end
 
 ---Require a plugin config
 ---@param name string
----@return function
+---@return any
 local function conf(name)
   return require(fmt("as.plugins.%s", name))
 end
@@ -143,10 +143,12 @@ require("packer").startup {
 
     use { -- NOTE: this is currently broken due to a neovim bug
       "rmagatti/goto-preview",
-      opt = true,
       config = function()
         require("goto-preview").setup {
           default_mappings = true,
+          post_open_hook = function(buffer, _)
+            as.nnoremap("q", "<Cmd>q<CR>", { buffer = buffer, nowait = true })
+          end,
         }
       end,
     }
