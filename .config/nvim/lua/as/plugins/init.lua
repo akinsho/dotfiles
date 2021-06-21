@@ -73,8 +73,7 @@ local function with_local(spec)
 
   local name = vim.split(spec[1], "/")[2]
   path = dev(local_spec.local_path .. "/" .. name)
-  --- TODO path detection not working correctly
-  if not fn.isdirectory(fn.expand(path)) == -1 then
+  if fn.isdirectory(fn.expand(path)) < 1 then
     return spec, nil
   end
   local is_contributing = local_spec.local_path:match "contributing" ~= nil
