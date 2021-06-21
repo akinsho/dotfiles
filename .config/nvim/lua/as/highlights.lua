@@ -207,7 +207,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { "CursorLineNr", { gui = "bold" } },
     { "FoldColumn", { guibg = "background" } },
-    { "Folded", { link = "Comment", force = true } },
+    { "Folded", { guifg = comment_fg, guibg = "NONE", gui = "italic" } },
     { "TermCursor", { ctermfg = "green", guifg = "royalblue" } },
     { "IncSearch", { guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline" } },
     -- Add undercurl to existing spellbad highlight
