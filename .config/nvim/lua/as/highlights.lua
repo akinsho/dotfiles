@@ -76,32 +76,17 @@ function M.adopt_winhighlight(win_id, target, name, default)
   return name
 end
 
---- TODO eventually move to using `nvim_set_hl`
---- however for the time being that expects colors
---- to be specified as rgb not hex
+--- NOTE: vim.highlight's link and create are private, so
+--- eventually move to using `nvim_set_hl`
 ---@param name string
 ---@param opts table
 function M.highlight(name, opts)
-  local keys = {
-    gui = true,
-    guifg = true,
-    guibg = true,
-    guisp = true,
-    cterm = true,
-    blend = true,
-  }
-  local force = opts.force or false
-  if name and opts and not vim.tbl_isempty(opts) then
-    if opts.link and opts.link ~= "" then
-      vim.cmd("highlight" .. (force and "!" or "") .. " link " .. name .. " " .. opts.link)
+  assert(name and opts, "Both 'name' and 'opts' must be specified")
+  if not vim.tbl_isempty(opts) then
+    if opts.link then
+      vim.highlight.link(name, opts.link, opts.force)
     else
-      local cmd = { "highlight", name }
-      for k, v in pairs(opts) do
-        if keys[k] and keys[k] ~= "" then
-          table.insert(cmd, fmt("%s=", k) .. v)
-        end
-      end
-      local ok, msg = pcall(vim.cmd, table.concat(cmd, " "))
+      local ok, msg = pcall(vim.highlight.create, name, opts)
       if not ok then
         vim.notify(fmt("Failed to set %s because: %s", name, msg))
       end
