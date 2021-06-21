@@ -600,7 +600,7 @@ require("packer").startup {
         local opts = { silent = false }
         as.nnoremap("<localleader>[", ":S/<C-R><C-W>//<LEFT>", opts)
         as.nnoremap("<localleader>]", ":%S/<C-r><C-w>//c<left><left>", opts)
-        as.vnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
+        as.xnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
       end,
     }
     -- sets searchable path for filetypes like go so 'gf' works
@@ -609,8 +609,8 @@ require("packer").startup {
     use {
       "tpope/vim-surround",
       config = function()
-        as.vmap("s", "<Plug>VSurround")
-        as.vmap("s", "<Plug>VSurround")
+        as.xmap("s", "<Plug>VSurround")
+        as.xmap("s", "<Plug>VSurround")
       end,
     }
     -- }}}
