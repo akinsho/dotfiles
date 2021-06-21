@@ -4,9 +4,9 @@
       relink: true
 
 - create:
-  - ~/.ssh
-  - ~/.config
-  - ~/projects
+    - ~/.ssh
+    - ~/.config
+    - ~/projects
 
 - clean: ["~"]
 
@@ -40,4 +40,3 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - [cp ./git/config.template ~/.gitconfig.local]
-    - [cp ./.config/nvim/minimal.vim ~/]
