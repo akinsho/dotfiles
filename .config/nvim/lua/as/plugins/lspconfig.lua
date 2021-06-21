@@ -254,35 +254,6 @@ as.lsp.servers = {
   end,
 }
 
-function as.lsp.setup_servers()
-  local lspinstall = require "lspinstall"
-  local lspconfig = require "lspconfig"
-
-  lspinstall.setup()
-  local installed = lspinstall.installed_servers()
-  local status_capabilities = require("lsp-status").capabilities
-  for _, server in pairs(installed) do
-    local mk_config = as.lsp.servers[server]
-    local config = mk_config and mk_config() or {}
-    config.flags = config.flags or {}
-    config.flags.debounce_text_changes = 150
-    config.on_attach = as.lsp.on_attach
-    if not config.capabilities then
-      config.capabilities = vim.lsp.protocol.make_client_capabilities()
-    end
-    config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    config.capabilities.textDocument.completion.completionItem.resolveSupport = {
-      properties = {
-        "documentation",
-        "detail",
-        "additionalTextEdits",
-      },
-    }
-    config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
-    lspconfig[server].setup(config)
-  end
-end
-
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
@@ -354,5 +325,30 @@ return function()
     { border = "rounded", max_width = max_width, max_height = max_height }
   )
 
-  as.lsp.setup_servers()
+  local lspinstall = require "lspinstall"
+  local lspconfig = require "lspconfig"
+
+  lspinstall.setup()
+  local installed = lspinstall.installed_servers()
+  local status_capabilities = require("lsp-status").capabilities
+  for _, server in pairs(installed) do
+    local mk_config = as.lsp.servers[server]
+    local config = mk_config and mk_config() or {}
+    config.flags = config.flags or {}
+    config.flags.debounce_text_changes = 150
+    config.on_attach = as.lsp.on_attach
+    if not config.capabilities then
+      config.capabilities = vim.lsp.protocol.make_client_capabilities()
+    end
+    config.capabilities.textDocument.completion.completionItem.snippetSupport = true
+    config.capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        "documentation",
+        "detail",
+        "additionalTextEdits",
+      },
+    }
+    config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
+    lspconfig[server].setup(config)
+  end
 end
