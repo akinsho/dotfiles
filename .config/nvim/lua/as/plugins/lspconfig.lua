@@ -210,8 +210,7 @@ as.lsp.servers = {
                 "teardown",
               },
             },
-            -- Await resolution of https://github.com/sumneko/lua-language-server/issues/543
-            -- completion = {keywordSnippet = "Both", callSnippet = "Both"}
+            completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
           },
         },
       },
