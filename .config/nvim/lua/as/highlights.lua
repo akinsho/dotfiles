@@ -94,7 +94,21 @@ function M.set_hl(name, opts)
   end
 end
 
----get the value a highlight group
+---convert a table of gui values into a string
+---@param hl table<string, string>
+---@return string
+local function flatten_gui(hl)
+  local gui_attr = { "underline", "bold", "undercurl", "italic" }
+  local gui = {}
+  for name, value in pairs(hl) do
+    if value and vim.tbl_contains(gui_attr, name) then
+      table.insert(gui, name)
+    end
+  end
+  return table.concat(gui, ",")
+end
+
+---Get the value a highlight group
 ---this function is a small wrapper around `nvim_get_hl_by_name`
 ---which handles errors, fallbacks as well as returning a gui value
 ---in the right format
@@ -104,18 +118,11 @@ end
 ---@return string
 function M.get_hl(grp, attr, fallback)
   assert(grp, "Cannot get a highlight without specifying a group")
-  local gui_attr = { "underline", "bold", "undercurl", "italic" }
   local attrs = { fg = "foreground", bg = "background" }
   attr = attrs[attr] or attr
   local hl = api.nvim_get_hl_by_name(grp, true)
   if attr == "gui" then
-    local gui = {}
-    for name, value in pairs(hl) do
-      if value and vim.tbl_contains(gui_attr, name) then
-        table.insert(gui, name)
-      end
-    end
-    return table.concat(gui, ",")
+    return flatten_gui(hl)
   end
   local color = hl[attr] or fallback
   -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
