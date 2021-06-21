@@ -332,12 +332,12 @@ end
 
 -- NOTE: this line is done as a vim command as handling the string in lua breaks
 vim.cmd [[let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>""]]
-vnoremap("cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
-vnoremap("cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
+xnoremap("cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
+xnoremap("cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap("cq", [[:lua _mappings.setup_CR()<CR>*``qz]])
 nnoremap("cQ", [[:lua _mappings.setup_CR()<CR>#``qz]])
-vnoremap("cq", [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], { expr = true })
-vnoremap(
+xnoremap("cq", [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], { expr = true })
+xnoremap(
   "cQ",
   [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
