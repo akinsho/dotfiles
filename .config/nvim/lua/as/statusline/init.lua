@@ -18,19 +18,19 @@ local M = {}
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 local function colors()
-  local error_color = H.hl_value("LspDiagnosticsDefaultError", "fg")
-  local info_color = H.hl_value("LspDiagnosticsDefaultInformation", "fg")
+  local error_color = H.get_hl("LspDiagnosticsDefaultError", "fg")
+  local info_color = H.get_hl("LspDiagnosticsDefaultInformation", "fg")
   local indicator_color = P.bright_blue
-  local bg_color = H.darken_color(H.hl_value("Normal", "bg"), -16)
-  local normal_fg = H.hl_value("Normal", "fg")
-  local pmenu_bg = H.hl_value("Pmenu", "bg")
-  local string_fg = H.hl_value("String", "fg")
-  local comment_fg = H.hl_value("Comment", "fg")
-  local comment_gui = H.hl_value("Comment", "gui")
-  local number_fg = H.hl_value("Number", "fg")
+  local bg_color = H.darken_color(H.get_hl("Normal", "bg"), -16)
+  local normal_fg = H.get_hl("Normal", "fg")
+  local pmenu_bg = H.get_hl("Pmenu", "bg")
+  local string_fg = H.get_hl("String", "fg")
+  local comment_fg = H.get_hl("Comment", "fg")
+  local comment_gui = H.get_hl("Comment", "gui")
+  local number_fg = H.get_hl("Number", "fg")
   local warning_fg = P.light_yellow
-  local identifier_fg = H.hl_value("Identifier", "fg")
-  local inc_search_bg = H.hl_value("Search", "bg")
+  local identifier_fg = H.get_hl("Identifier", "fg")
+  local inc_search_bg = H.get_hl("Search", "bg")
 
   H.all {
     { "StMetadata", { guifg = comment_fg, guibg = bg_color, gui = "italic" } },

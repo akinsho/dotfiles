@@ -452,7 +452,7 @@ require("packer").startup {
     use {
       "itchyny/vim-highlighturl",
       config = function()
-        vim.g.highlighturl_guifg = require("as.highlights").hl_value("Keyword", "fg")
+        vim.g.highlighturl_guifg = require("as.highlights").get_hl("Keyword", "fg")
       end,
     }
     -- NOTE: marks are currently broken in neovim i.e.

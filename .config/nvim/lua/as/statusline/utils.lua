@@ -254,8 +254,8 @@ local function set_ft_icon_highlight(hl, bg_hl)
   end
   local name = hl .. "Statusline"
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
-  local fg_color = H.hl_value(hl, "fg")
-  local bg_color = H.hl_value(bg_hl, "bg")
+  local fg_color = H.get_hl(hl, "fg")
+  local bg_color = H.get_hl(bg_hl, "bg")
   if bg_color and fg_color then
     local cmd = { "highlight ", name, " guibg=", bg_color, " guifg=", fg_color }
     local str = table.concat(cmd)

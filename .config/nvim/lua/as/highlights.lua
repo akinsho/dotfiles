@@ -67,10 +67,10 @@ function M.adopt_winhighlight(win_id, target, name, default)
     end)
     if found then
       local hl_group = vim.split(found, ":")[2]
-      local bg = M.hl_value(hl_group, "bg")
-      local fg = M.hl_value(default, "fg")
-      local gui = M.hl_value(default, "gui")
-      M.highlight(name, { guibg = bg, guifg = fg, gui = gui })
+      local bg = M.get_hl(hl_group, "bg")
+      local fg = M.get_hl(default, "fg")
+      local gui = M.get_hl(default, "gui")
+      M.set_hl(name, { guibg = bg, guifg = fg, gui = gui })
     end
   end
   return name
@@ -80,7 +80,7 @@ end
 --- eventually move to using `nvim_set_hl`
 ---@param name string
 ---@param opts table
-function M.highlight(name, opts)
+function M.set_hl(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
   if not vim.tbl_isempty(opts) then
     if opts.link then
@@ -94,23 +94,18 @@ function M.highlight(name, opts)
   end
 end
 
-function M.clear_hl(name)
-  if not name then
-    return
-  end
-  vim.cmd(fmt("highlight clear %s", name))
-end
-
-local gui_attr = { "underline", "bold", "undercurl", "italic" }
-local attrs = { fg = "foreground", bg = "background" }
-
----get the color value of part of a highlight group
+---get the value a highlight group
+---this function is a small wrapper around `nvim_get_hl_by_name`
+---which handles errors, fallbacks as well as returning a gui value
+---in the right format
 ---@param grp string
 ---@param attr string
 ---@param fallback string
 ---@return string
-function M.hl_value(grp, attr, fallback)
+function M.get_hl(grp, attr, fallback)
   assert(grp, "Cannot get a highlight without specifying a group")
+  local gui_attr = { "underline", "bold", "undercurl", "italic" }
+  local attrs = { fg = "foreground", bg = "background" }
   attr = attrs[attr] or attr
   local hl = api.nvim_get_hl_by_name(grp, true)
   if attr == "gui" then
@@ -132,11 +127,18 @@ function M.hl_value(grp, attr, fallback)
   return "#" .. bit.tohex(color, 6)
 end
 
+function M.clear_hl(name)
+  if not name then
+    return
+  end
+  vim.cmd(fmt("highlight clear %s", name))
+end
+
 ---Apply a list of highlights
 ---@param hls table[]
 function M.all(hls)
   for _, hl in ipairs(hls) do
-    M.highlight(unpack(hl))
+    M.set_hl(unpack(hl))
   end
 end
 -----------------------------------------------------------------------------//
@@ -149,13 +151,13 @@ vim.cmd "colorscheme doom-one"
 -- Plugin highlights
 ---------------------------------------------------------------------------------
 local function plugin_highlights()
-  M.highlight("TelescopePathSeparator", { guifg = as.style.palette.dark_blue })
-  M.highlight("TelescopeQueryFilter", { link = "IncSearch" })
+  M.set_hl("TelescopePathSeparator", { guifg = as.style.palette.dark_blue })
+  M.set_hl("TelescopeQueryFilter", { link = "IncSearch" })
 
-  M.highlight("CompeDocumentation", { link = "Pmenu" })
+  M.set_hl("CompeDocumentation", { link = "Pmenu" })
 
-  M.highlight("BqfPreviewBorder", { guifg = "Gray" })
-  M.highlight("ExchangeRegion", { link = "Search" })
+  M.set_hl("BqfPreviewBorder", { guifg = "Gray" })
+  M.set_hl("ExchangeRegion", { link = "Search" })
 
   if as.plugin_installed "conflict-marker.vim" then
     M.all {
@@ -172,8 +174,8 @@ local function plugin_highlights()
 end
 
 local function general_overrides()
-  local comment_fg = M.hl_value("Comment", "fg")
-  local msg_area_bg = M.darken_color(M.hl_value("Normal", "bg"), -10)
+  local comment_fg = M.get_hl("Comment", "fg")
+  local msg_area_bg = M.darken_color(M.get_hl("Normal", "bg"), -10)
   M.all {
     { "mkdLineBreak", { link = "NONE", force = true } },
     -----------------------------------------------------------------------------//
@@ -258,10 +260,10 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  local normal_bg = M.hl_value("Normal", "bg")
-  local split_color = M.hl_value("VertSplit", "fg")
+  local normal_bg = M.get_hl("Normal", "bg")
+  local split_color = M.get_hl("VertSplit", "fg")
   local bg_color = M.darken_color(normal_bg, -8)
-  local st_color = M.darken_color(M.hl_value("Visual", "bg"), -20)
+  local st_color = M.darken_color(M.get_hl("Visual", "bg"), -20)
   local hls = {
     { "PanelBackground", { guibg = bg_color } },
     { "PanelHeading", { guibg = bg_color, gui = "bold" } },
@@ -270,7 +272,7 @@ local function set_sidebar_highlight()
     { "PanelSt", { guibg = st_color } },
   }
   for _, grp in ipairs(hls) do
-    M.highlight(unpack(grp))
+    M.set_hl(unpack(grp))
   end
 end
 
@@ -290,7 +292,7 @@ end
 
 local function colorscheme_overrides()
   if vim.g.colors_name == "doom-one" then
-    local keyword_fg = M.hl_value("Keyword", "fg")
+    local keyword_fg = M.get_hl("Keyword", "fg")
     M.all {
       { "CursorLineNr", { guifg = keyword_fg } },
       -- TODO the default bold makes ... not use ligatures
@@ -298,7 +300,7 @@ local function colorscheme_overrides()
       -- {"Constant", {gui = "NONE"}},
     }
   elseif vim.g.colors_name == "onedark" then
-    local comment_fg = M.hl_value("Comment", "fg")
+    local comment_fg = M.get_hl("Comment", "fg")
     M.all {
       { "Todo", { guifg = "red", gui = "bold" } },
       { "Substitute", { guifg = comment_fg, guibg = "NONE", gui = "strikethrough,bold" } },
