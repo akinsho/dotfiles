@@ -7,7 +7,7 @@ export PROJECTS_DIR=$HOME/Desktop/projects
 export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal
 
 # Added by n-install (see http://git.io/n-install-repo).
-if [ -f "$HOME/n" ]; then
+if [ -d "$HOME/n" ]; then
   export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi
 
@@ -27,6 +27,7 @@ path+=(
 
 # GO ============================================================
 if which go >/dev/null; then
+  export GOPATH=$HOME/go
   path+=("$GOPATH/bin")
 fi
 
