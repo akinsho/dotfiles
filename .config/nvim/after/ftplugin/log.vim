@@ -1,5 +1,5 @@
 " wrapping is expensive don't do it for huge log files
-if line2byte(line("$") + 1) > 300000
+if line('$') > 100000
   setlocal nowrap
   syntax clear
 else
