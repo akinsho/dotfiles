@@ -28,11 +28,6 @@ return function()
           ["wiki"] = vim.g.wiki_path,
         },
       },
-      fzf_writer = {
-        minimum_grep_characters = 2,
-        minimum_files_characters = 2,
-        use_highlighter = true,
-      },
       fzf = {
         override_generic_sorter = true, -- override the generic sorter
         override_file_sorter = true, -- override the file sorter

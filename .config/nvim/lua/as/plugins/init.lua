@@ -202,7 +202,6 @@ require("packer").startup {
       config = conf "telescope",
       requires = {
         "nvim-lua/popup.nvim",
-        "nvim-telescope/telescope-fzf-writer.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         {
           "nvim-telescope/telescope-frecency.nvim",
@@ -829,8 +828,9 @@ require("packer").startup {
       end,
     }
     use { "rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work }
+    -- }}}
     -----------------------------------------------------------------------------//
-    -- Personal plugins
+    -- Personal plugins {{{
     -----------------------------------------------------------------------------//
     use_local {
       "akinsho/dependency-assist.nvim",
