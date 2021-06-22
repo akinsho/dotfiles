@@ -224,7 +224,6 @@ require("packer").startup {
       "dhruvasagar/vim-dotoo",
       config = function()
         vim.g["dotoo#agenda#files"] = { "~/Dropbox/todos/*.dotoo" }
-        vim.g["dotoo#capture#refile"] = vim.fn.expand "~/Documents/dotoo/refile.dotoo"
         require("which-key").register {
           g = {
             A = "dotoo agenda",
