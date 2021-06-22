@@ -79,7 +79,8 @@ vim.opt.formatoptions = {
 vim.opt.foldtext = "v:lua.folds()"
 vim.opt.foldopen = vim.opt.foldopen + "search"
 vim.opt.foldlevelstart = 10
-vim.opt.foldmethod = "indent"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
 -----------------------------------------------------------------------------//
 -- Quickfix {{{1
 -----------------------------------------------------------------------------//
