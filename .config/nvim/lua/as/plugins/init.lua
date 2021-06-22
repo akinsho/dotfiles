@@ -6,6 +6,9 @@ local fmt = string.format
 
 local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.vim"
 
+-----------------------------------------------------------------------------//
+-- Bootstrap Packer {{{
+-----------------------------------------------------------------------------//
 -- Make sure packer is installed on the current machine and load
 -- the dev or upstream version depending on if we are at work or not
 -- NOTE: install packer as an opt plugin since it's loaded conditionally on my local machine
@@ -20,6 +23,8 @@ else
   local name = vim.env.DEVELOPING and "local-packer.nvim" or "packer.nvim"
   vim.cmd(fmt("packadd! %s", name))
 end
+-- }}}
+-----------------------------------------------------------------------------//
 
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd "packadd! cfilter"
