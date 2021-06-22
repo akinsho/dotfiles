@@ -6,24 +6,20 @@ local fmt = string.format
 
 local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.vim"
 
-local function setup_packer()
-  --- use a wildcard to match on local and upstream versions of packer
-  local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
-  if fn.empty(fn.glob(install_path)) > 0 then
-    print "Downloading packer.nvim..."
-    print(fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
-    vim.cmd "packadd! packer.nvim"
-    require("packer").sync()
-  elseif not vim.env.DEVELOPING then
-    vim.cmd "packadd! packer.nvim"
-  else
-    vim.cmd "packadd! local-packer.nvim"
-  end
-end
-
 -- Make sure packer is installed on the current machine and load
 -- the dev or upstream version depending on if we are at work or not
-setup_packer()
+-- NOTE: install packer as an opt plugin since it's loaded conditionally on my local machine
+-- it needs to be installed as optional so the install dir is consistent across machines
+local install_path = fmt("%s/site/pack/packer/opt/packer.nvim", fn.stdpath "data")
+if fn.empty(fn.glob(install_path)) > 0 then
+  print "Downloading packer.nvim..."
+  print(fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
+  vim.cmd "packadd! packer.nvim"
+  require("packer").sync()
+else
+  local name = vim.env.DEVELOPING and "local-packer.nvim" or "packer.nvim"
+  vim.cmd(fmt("packadd! %s", name))
+end
 
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd "packadd! cfilter"
@@ -126,7 +122,7 @@ end
 --]]
 require("packer").startup {
   function(use, use_rocks)
-    use_local { "wbthomason/packer.nvim", local_path = "contributing" }
+    use_local { "wbthomason/packer.nvim", local_path = "contributing", opt = true }
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
