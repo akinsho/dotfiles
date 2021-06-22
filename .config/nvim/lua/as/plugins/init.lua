@@ -121,7 +121,7 @@ end
 
 --[[
   NOTE "use" functions cannot call *upvalues* i.e. the functions
-  passed to setup or config etc. cannot reference aliased function
+  passed to setup or config etc. cannot reference aliased functions
   or local variables
 --]]
 require("packer").startup {
@@ -354,7 +354,6 @@ require("packer").startup {
 
     use_local {
       "akinsho/flutter-tools.nvim",
-      branch = "feature/add-commandline-run-args",
       config = function()
         local ok, lsp_status = pcall(require, "lsp-status")
         local capabilities = ok and lsp_status.capabilities or nil
