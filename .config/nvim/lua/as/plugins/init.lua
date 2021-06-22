@@ -273,6 +273,38 @@ require("packer").startup {
         })
       end,
     }
+    use "kyazdani42/nvim-web-devicons"
+
+    use { "lukas-reineke/indent-blankline.nvim", branch = "lua", config = conf "indentline" }
+
+    --- TODO use_local does not work for this plugin, find out why
+    use {
+      "kyazdani42/nvim-tree.lua",
+      config = conf "nvim-tree",
+      local_path = "contributing",
+      requires = "nvim-web-devicons",
+    }
+
+    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
+    use {
+      "folke/trouble.nvim",
+      keys = { "<leader>ld" },
+      cmd = { "TroubleToggle" },
+      requires = "nvim-web-devicons",
+      config = function()
+        require("which-key").register {
+          ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
+          ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
+        }
+        require("as.highlights").all {
+          { "TroubleNormal", { link = "PanelBackground" } },
+          { "TroubleText", { link = "PanelBackground" } },
+          { "TroubleIndent", { link = "PanelVertSplit" } },
+          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } },
+        }
+        require("trouble").setup { auto_close = true, auto_preview = false }
+      end,
+    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
@@ -500,37 +532,6 @@ require("packer").startup {
           RGB = false,
           mode = "background",
         })
-      end,
-    }
-    use { "lukas-reineke/indent-blankline.nvim", branch = "lua", config = conf "indentline" }
-    use "kyazdani42/nvim-web-devicons"
-
-    --- TODO use_local does not work for this plugin, find out why
-    use {
-      "kyazdani42/nvim-tree.lua",
-      config = conf "nvim-tree",
-      local_path = "contributing",
-      requires = "nvim-web-devicons",
-    }
-
-    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
-    use {
-      "folke/trouble.nvim",
-      keys = { "<leader>ld" },
-      cmd = { "TroubleToggle" },
-      requires = "nvim-web-devicons",
-      config = function()
-        require("which-key").register {
-          ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
-          ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
-        }
-        require("as.highlights").all {
-          { "TroubleNormal", { link = "PanelBackground" } },
-          { "TroubleText", { link = "PanelBackground" } },
-          { "TroubleIndent", { link = "PanelVertSplit" } },
-          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } },
-        }
-        require("trouble").setup { auto_close = true, auto_preview = false }
       end,
     }
     -- TODO: this breaks when used with sessions but keep an eye on it
