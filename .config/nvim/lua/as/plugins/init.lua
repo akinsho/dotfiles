@@ -158,14 +158,13 @@ require("packer").startup {
       keys = { "<leader>ff", "<leader>fs" },
       config = function()
         local snap = require "snap"
-        local limit = snap.get "consumer.limit"
         local vimgrep = snap.get "select.vimgrep"
         local fzf = snap.get "consumer.fzf"
         snap.register.map({ "n" }, { "<leader>fs" }, function()
           snap.run {
             prompt = "Grep >",
-            producer = limit(10000, snap.get "producer.ripgrep.vimgrep"),
-            next = { consumer = fzf, config = { prompt = "FZF>" } },
+            producer = snap.get("producer.ripgrep.vimgrep").args { "--hidden" },
+            next = { consumer = fzf, config = { prompt = "FZF >" } },
             select = vimgrep.select,
             multiselect = vimgrep.multiselect,
             views = { snap.get "preview.vimgrep" },
