@@ -55,8 +55,8 @@ local function not_developing()
   return not vim.env.DEVELOPING
 end
 
---- Automagically register local and report plugins as well as when they are enabled or disabled
---- 1. Local plugins that I created should be used but specified with their git urls so they are
+--- Automagically register local and remote plugins as well as managing when they are enabled or disabled
+--- 1. Local plugins that I created should be used but specified with their git URLs so they are
 --- installed from git on other machines
 --- 2. If DEVELOPING is set to true then local plugins I contribute to should be loaded vs their
 --- remote counterparts
