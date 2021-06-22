@@ -15,8 +15,10 @@ local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.vim"
 -- it needs to be installed as optional so the install dir is consistent across machines
 local install_path = fmt("%s/site/pack/packer/opt/packer.nvim", fn.stdpath "data")
 if fn.empty(fn.glob(install_path)) > 0 then
-  print "Downloading packer.nvim..."
-  print(fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
+  vim.notify "Downloading packer.nvim..."
+  vim.notify(
+    fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path }
+  )
   vim.cmd "packadd! packer.nvim"
   require("packer").sync()
 else
@@ -64,13 +66,9 @@ end
 ---@param spec table
 local function with_local(spec)
   local path = ""
-  if type(spec) ~= "table" then
-    return as.echomsg(fmt("spec must be a table", spec[1]))
-  end
+  assert(type(spec) == "table", fmt("spec must be a table", spec[1]))
   local local_spec = vim.deepcopy(spec)
-  if not local_spec.local_path then
-    return as.echomsg(fmt("%s has no specified local path", spec[1]))
-  end
+  assert(local_spec.local_path, fmt("%s has no specified local path", spec[1]))
 
   local name = vim.split(spec[1], "/")[2]
   path = dev(local_spec.local_path .. "/" .. name)
@@ -103,7 +101,7 @@ end
 
 ---local variant of packer's use function that specifies both a local and
 ---upstream version of a plugin
----@param original table|string
+---@param original table
 local function use_local(original)
   local use = require("packer").use
   local spec, local_spec = with_local(original)
