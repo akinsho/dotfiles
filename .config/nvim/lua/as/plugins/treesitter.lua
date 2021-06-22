@@ -43,6 +43,15 @@ return function()
           ["iC"] = "@conditional.inner",
         },
       },
+      swap = {
+        enable = true,
+        swap_next = {
+          ["[w"] = "@parameter.inner",
+        },
+        swap_previous = {
+          ["]w"] = "@parameter.inner",
+        },
+      },
       move = {
         enable = true,
         set_jumps = true, -- whether to set jumps in the jumplist
