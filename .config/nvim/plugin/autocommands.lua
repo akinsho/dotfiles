@@ -240,10 +240,17 @@ as.augroup("CustomColorColumn", {
   },
 })
 as.augroup("UpdateVim", {
-  -- NOTE: This takes ${VIM_STARTUP_TIME} duration to run
-  -- autocmd BufWritePost $DOTFILES/**/nvim/configs/*.vim,$MYVIMRC ++nested
-  --       \  luafile $MYVIMRC | redraw | silent doautocmd ColorScheme |
-  --       \  call utils#message("sourced ".fnamemodify($MYVIMRC, ":t"), "Title")
+  {
+    -- NOTE: This takes ${VIM_STARTUP_TIME} duration to run
+    events = { "BufWritePost" },
+    targets = { "$DOTFILES/**/nvim/plugin/*.{lua,vim}", "$MYVIMRC" },
+    modifiers = { "++nested" },
+    command = function()
+      local ok, msg = pcall(vim.cmd, "source $MYVIMRC | redraw | silent doautocmd ColorScheme")
+      msg = ok and "sourced " .. vim.fn.fnamemodify(vim.env.MYVIMRC, ":t") or msg
+      vim.notify(msg)
+    end,
+  },
   {
     events = { "FocusLost" },
     targets = { "*" },
