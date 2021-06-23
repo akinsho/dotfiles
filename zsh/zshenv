@@ -45,6 +45,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     "$JAVA_HOME/bin"
   )
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export ANDROID_SDK_ROOT=~/Library/Android/sdk/
   path+=(
     "$HOME/flutter/bin"
   )
