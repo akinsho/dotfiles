@@ -241,7 +241,9 @@ as.augroup("CustomColorColumn", {
 })
 as.augroup("UpdateVim", {
   {
-    -- NOTE: This takes ${VIM_STARTUP_TIME} duration to run
+    -- TODO: not clear what effect this has in the post vimscript world
+    -- it correctly sources $MYVIMRC but all the other files that it
+    -- requires will need to be resourced or reloaded themselves
     events = { "BufWritePost" },
     targets = { "$DOTFILES/**/nvim/plugin/*.{lua,vim}", "$MYVIMRC" },
     modifiers = { "++nested" },
