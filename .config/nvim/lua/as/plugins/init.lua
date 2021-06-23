@@ -124,6 +124,8 @@ end
   or local variables
 --]]
 require("packer").startup {
+  --- TODO: add fold levels so some sections are closed by default
+  --- depending on foldlevel and foldlevelstart
   function(use, use_rocks)
     use_local { "wbthomason/packer.nvim", local_path = "contributing", opt = true }
     --------------------------------------------------------------------------------
