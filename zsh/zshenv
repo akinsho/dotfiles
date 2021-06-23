@@ -40,8 +40,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # "$HOME/neovim/bin"
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   path+=(
-    "$LUA_PATH"
-    "$LUA_CPATH"
     "$JAVA_HOME/bin"
   )
 elif [[ "$OSTYPE" == "darwin"* ]]; then
