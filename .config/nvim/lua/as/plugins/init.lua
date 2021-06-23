@@ -155,34 +155,54 @@ require("packer").startup {
       "camspiers/snap",
       rocks = { "fzy" },
       keys = { "<leader>ff", "<leader>fs" },
+      branch = "feature/map-and-command-with-defaults",
       config = function()
         local snap = require "snap"
-        local vimgrep = snap.get "select.vimgrep"
-        local fzf = snap.get "consumer.fzf"
-        snap.register.map({ "n" }, { "<leader>fs" }, function()
-          snap.run {
-            prompt = "Grep >",
-            producer = snap.get("producer.ripgrep.vimgrep").args { "--hidden" },
-            next = { consumer = fzf, config = { prompt = "FZF >" } },
-            select = vimgrep.select,
-            multiselect = vimgrep.multiselect,
-            views = { snap.get "preview.vimgrep" },
-          }
-        end)
-        snap.register.map({ "n" }, { "<leader>ff" }, function()
-          snap.run {
-            -- reverse = true,
-            producer = fzf(
-              snap.get "consumer.try"(
-                snap.get "producer.git.file",
-                snap.get("producer.ripgrep.file").hidden
-              )
-            ),
-            select = snap.get("select.file").select,
-            multiselect = snap.get("select.file").multiselect,
-            views = { snap.get "preview.file" },
-          }
-        end)
+        local defaults = require "snap.defaults"
+        snap.map(
+          "<Leader>ff",
+          defaults.file {
+            producer = "ripgrep.file",
+            consumer = "fzy",
+            -- hidden = true,
+            args = { "--hidden", "--iglob", "!.git/*" },
+          },
+          "files"
+        )
+        snap.map(
+          "<Leader>fs",
+          defaults.vimgrep {
+            limit = 50000,
+            -- hidden = true,
+            args = { "--hidden", "--iglob", "!.git/*" },
+          },
+          "grep"
+        )
+        -- local fzf = snap.get "consumer.fzf"
+        -- snap.register.map({ "n" }, { "<leader>fs" }, function()
+        --   snap.run {
+        --     prompt = "Grep >",
+        --     producer = snap.get("producer.ripgrep.vimgrep").args { "--hidden" },
+        --     next = { consumer = fzf, config = { prompt = "FZF >" } },
+        --     select = vimgrep.select,
+        --     multiselect = vimgrep.multiselect,
+        --     views = { snap.get "preview.vimgrep" },
+        --   }
+        -- end)
+        -- snap.register.map({ "n" }, { "<leader>ff" }, function()
+        --   snap.run {
+        --     -- reverse = true,
+        --     producer = fzf(
+        --       snap.get "consumer.try"(
+        --         snap.get "producer.git.file",
+        --         snap.get("producer.ripgrep.file").hidden
+        --       )
+        --     ),
+        --     select = snap.get("select.file").select,
+        --     multiselect = snap.get("select.file").multiselect,
+        --     views = { snap.get "preview.file" },
+        --   }
+        -- end)
         -- snap.register.map({ "n" }, { "<Leader>f?" }, function()
         --   snap.run {
         --     prompt = "Help>",
