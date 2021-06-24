@@ -88,13 +88,24 @@ local function with_local(spec)
   spec.local_cond = nil
   spec.local_disable = nil
 
-  local_spec.tag = nil
-  local_spec.branch = nil
-  local_spec.commit = nil
-  local_spec.local_path = nil
-  local_spec.local_cond = nil
-  local_spec.local_disable = nil
-  local_spec.local_name = nil
+  local keys = {
+    "tag",
+    "branch",
+    "commit",
+    "local_path",
+    "local_cond",
+    "local_disable",
+    "local_name",
+  }
+
+  --- The local spec should not be triggered by events,commands or keys only by it's condition.
+  if is_contributing then
+    vim.list_extend(keys, { "event", "cmd", "keys" })
+  end
+
+  for _, k in ipairs(keys) do
+    local_spec[k] = nil
+  end
 
   return spec, local_spec
 end
@@ -153,12 +164,13 @@ require("packer").startup {
       end,
     }
 
-    use {
+    use_local {
       "camspiers/snap",
       rocks = { "fzy" },
       event = "CursorHold",
       keys = { "<c-p>" },
       branch = "feature/map-and-command-with-defaults",
+      local_path = "contributing",
       config = function()
         --- FIXME: remove this when/if snap changes default highlights
         require("as.highlights").all {
