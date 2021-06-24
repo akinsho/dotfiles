@@ -454,11 +454,7 @@ require("packer").startup {
         require("neoscroll").setup {
           mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "zt", "zz", "zb" },
           stop_eof = false,
-          use_local_scrolloff = true,
         }
-        -- BUG: this is due to an issue with scroll off using this plugin
-        -- see neoscroll #32 and neovim #13964
-        vim.cmd [[autocmd BufEnter * setlocal so=0]]
       end,
     }
     use {
