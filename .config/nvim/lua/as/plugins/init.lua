@@ -175,7 +175,7 @@ require("packer").startup {
           {
             "<c-p>",
             file { args = args, try = { "git.file", "ripgrep.file" }, prompt = "Project files" },
-            "git-with-fallback",
+            -- "git-with-fallback",
           },
           {
             "<leader>fd",
@@ -184,11 +184,11 @@ require("packer").startup {
               args = { vim.env.DOTFILES, unpack(args) },
               prompt = "Dotfiles",
             },
-            "dots",
+            -- "dots",
           },
-          { "<leader>fs", vimgrep { limit = 50000, args = args }, "grep" },
+          { "<leader>fs", vimgrep { limit = 50000, args = args } }, -- "grep"
           --- TODO: switch this command to a combine with combine = {"vim.buffer", "vim.oldfiles"}
-          { "<leader>fo", file { producer = "vim.buffer" }, "recent-files" },
+          { "<leader>fo", file { producer = "vim.buffer" } }, -- "recent-files"
           --- TODO: this producer hasn't been added yet
           -- { "<leader>fl", file { producer = "vim.help" }, "Help docs" },
         }
