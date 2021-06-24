@@ -64,14 +64,6 @@ return function()
   --- from the setup call
   local builtins = require "telescope.builtin"
 
-  local function dotfiles()
-    builtins.find_files {
-      prompt_title = "~ dotfiles ~",
-      cwd = vim.g.dotfiles,
-      file_ignore_patterns = { ".git/.*", "dotbot/.*" },
-    }
-  end
-
   local function nvim_config()
     builtins.find_files {
       prompt_title = "~ nvim config ~",
@@ -80,34 +72,42 @@ return function()
     }
   end
 
-  ---find if passed in directory contains the target
-  ---which is the current buffer's path by default
-  ---@param path string
-  ---@param target string
-  ---@return boolean
-  local function is_within(path, target)
-    target = target or vim.fn.expand "%:p"
-    if not target then
-      return false
-    end
-    return target:match(vim.fn.fnamemodify(path, ":p"))
-  end
+  -- local function dotfiles()
+  --   builtins.find_files {
+  --     prompt_title = "~ dotfiles ~",
+  --     cwd = vim.g.dotfiles,
+  --     file_ignore_patterns = { ".git/.*", "dotbot/.*" },
+  --   }
+  -- end
+
+  -- ---find if passed in directory contains the target
+  -- ---which is the current buffer's path by default
+  -- ---@param path string
+  -- ---@param target string
+  -- ---@return boolean
+  -- local function is_within(path, target)
+  --   target = target or vim.fn.expand "%:p"
+  --   if not target then
+  --     return false
+  --   end
+  --   return target:match(vim.fn.fnamemodify(path, ":p"))
+  -- end
 
   ---General finds files function which changes the picker depending
   ---on the current buffers path.
-  local function files()
-    if is_within(vim.g.vim_dir) then
-      nvim_config()
-    elseif is_within(vim.g.dotfiles) then
-      dotfiles()
-    elseif vim.fn.isdirectory ".git" > 0 then
-      -- if in a git project, use :Telescope git_files
-      builtins.git_files()
-    else
-      -- otherwise, use :Telescope find_files
-      builtins.find_files()
-    end
-  end
+  -- local function files()
+  --   if is_within(vim.g.vim_dir) then
+  --     nvim_config()
+  --   elseif is_within(vim.g.dotfiles) then
+  --     dotfiles()
+  --   elseif vim.fn.isdirectory ".git" > 0 then
+  --     -- if in a git project, use :Telescope git_files
+  --     builtins.git_files()
+  --   else
+  --     -- otherwise, use :Telescope find_files
+  --     builtins.find_files()
+  --   end
+  -- end
 
   local function frecency()
     telescope.extensions.frecency.frecency(themes.get_dropdown {
@@ -119,14 +119,11 @@ return function()
   end
 
   require("which-key").register {
-    ["<C-P>"] = { files, "open project files" },
     ["<leader>f"] = {
       name = "+telescope",
       a = { builtins.builtin, "builtins" },
       b = { builtins.git_branches, "branches" },
       c = { builtins.git_commits, "commits" },
-      d = { dotfiles, "dotfiles" },
-      o = { builtins.buffers, "buffers" },
       m = { builtins.man_pages, "man pages" },
       h = { frecency, "history" },
       n = { nvim_config, "nvim config" },

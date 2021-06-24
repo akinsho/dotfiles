@@ -156,7 +156,7 @@ require("packer").startup {
     use {
       "camspiers/snap",
       rocks = { "fzy" },
-      keys = { "<leader>ff", "<leader>fs" },
+      keys = { "<c-p>", "<leader>fd", "<leader>fo", "<leader>fs" },
       branch = "feature/map-and-command-with-defaults",
       config = function()
         local snap = require "snap"
@@ -165,14 +165,24 @@ require("packer").startup {
         local vimgrep = config.vimgrep:with { limit = 50000 }
         local args = { "--hidden", "--iglob", "!.git/*" }
         snap.maps {
-          { "<Leader>fs", vimgrep { limit = 50000, args = args }, "grep" },
           {
-            "<Leader>ff",
-            file { args = args, try = { "git.file", "ripgrep.file" } },
+            "<c-p>",
+            file { args = args, try = { "git.file", "ripgrep.file" }, prompt = "Project files" },
             "git-with-fallback",
           },
+          {
+            "<leader>fd",
+            file {
+              producer = "ripgrep.file",
+              args = { vim.env.DOTFILES, unpack(args) },
+              prompt = "Dotfiles",
+            },
+            "dots",
+          },
+          { "<leader>fs", vimgrep { limit = 50000, args = args }, "grep" },
+          -- { "<leader>fo", file { combine = { "vim.buffer", "vim.oldfiles" } }, "recent-files" },
         }
-        -- snap.register.map({ "n" }, { "<Leader>f?" }, function()
+        -- snap.register.map({ "<Leader>f?" }, function()
         --   snap.run {
         --     prompt = "Help>",
         --     producer = fzf(snap.get "producer.vim.help"),
