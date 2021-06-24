@@ -160,6 +160,12 @@ require("packer").startup {
       keys = { "<c-p>" },
       branch = "feature/map-and-command-with-defaults",
       config = function()
+        --- FIXME: remove this when/if snap changes default highlights
+        require("as.highlights").all {
+          { "SnapSelect", { link = "TextInfoBold", force = true } },
+          { "SnapPosition", { link = "Keyword", force = true } },
+          { "SnapBorder", { guifg = "Gray" } },
+        }
         local snap = require "snap"
         local config = require "snap.config"
         local file = config.file:with { suffix = "»" }
