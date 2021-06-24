@@ -192,7 +192,6 @@ require("packer").startup {
     use {
       "nvim-telescope/telescope.nvim",
       event = "CursorHold",
-      keys = { "<c-p>" },
       config = conf "telescope",
       requires = {
         "nvim-lua/popup.nvim",
