@@ -65,21 +65,26 @@ end
 --- remote counterparts
 ---@param spec table
 local function with_local(spec)
-  local path = ""
   assert(type(spec) == "table", fmt("spec must be a table", spec[1]))
-  local local_spec = vim.deepcopy(spec)
-  assert(local_spec.local_path, fmt("%s has no specified local path", spec[1]))
+  assert(spec.local_path, fmt("%s has no specified local path", spec[1]))
 
   local name = vim.split(spec[1], "/")[2]
-  path = dev(local_spec.local_path .. "/" .. name)
+  local path = dev(fmt("%s/%s", spec.local_path, name))
   if fn.isdirectory(fn.expand(path)) < 1 then
     return spec, nil
   end
-  local is_contributing = local_spec.local_path:match "contributing" ~= nil
-  local_spec[1] = path
-  local_spec.as = local_spec.local_name or fmt("local-%s", name)
-  local_spec.cond = is_contributing and developing or local_spec.local_cond
-  local_spec.disable = is_work or local_spec.local_disable
+  local is_contributing = spec.local_path:match "contributing" ~= nil
+
+  --- The local spec should not be triggered by events,commands or keys only by it's condition.
+  local local_spec = {
+    path,
+    config = spec.config,
+    setup = spec.setup,
+    rocks = spec.rocks,
+    as = fmt("local-%s", name),
+    cond = is_contributing and developing or spec.local_cond,
+    disable = is_work or spec.local_disable,
+  }
 
   spec.disable = not is_contributing and is_home or false
   spec.cond = is_contributing and not_developing or nil
@@ -87,25 +92,6 @@ local function with_local(spec)
   spec.local_path = nil
   spec.local_cond = nil
   spec.local_disable = nil
-
-  local keys = {
-    "tag",
-    "branch",
-    "commit",
-    "local_path",
-    "local_cond",
-    "local_disable",
-    "local_name",
-  }
-
-  --- The local spec should not be triggered by events,commands or keys only by it's condition.
-  if is_contributing then
-    vim.list_extend(keys, { "event", "cmd", "keys" })
-  end
-
-  for _, k in ipairs(keys) do
-    local_spec[k] = nil
-  end
 
   return spec, local_spec
 end
