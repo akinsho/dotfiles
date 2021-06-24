@@ -172,7 +172,6 @@ require("packer").startup {
             "git-with-fallback",
           },
         }
-        -- end)
         -- snap.register.map({ "n" }, { "<Leader>f?" }, function()
         --   snap.run {
         --     prompt = "Help>",
@@ -441,7 +440,6 @@ require("packer").startup {
     }
     use {
       "karb94/neoscroll.nvim",
-      commit = "f65ce50",
       config = function()
         require("neoscroll").setup {
           mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "zt", "zz", "zb" },
