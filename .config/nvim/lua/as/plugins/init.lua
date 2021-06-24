@@ -156,7 +156,8 @@ require("packer").startup {
     use {
       "camspiers/snap",
       rocks = { "fzy" },
-      keys = { "<c-p>", "<leader>fd", "<leader>fo", "<leader>fs" },
+      event = "CursorHold",
+      keys = { "<c-p>" },
       branch = "feature/map-and-command-with-defaults",
       config = function()
         local snap = require "snap"
