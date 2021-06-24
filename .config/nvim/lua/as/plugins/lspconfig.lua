@@ -176,6 +176,7 @@ function as.lsp.on_attach(client, bufnr)
 
   require("lsp_signature").on_attach {
     bind = true,
+    fix_pos = false,
     hint_enable = false,
     handler_opts = {
       border = "rounded",
