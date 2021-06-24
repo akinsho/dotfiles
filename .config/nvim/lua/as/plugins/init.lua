@@ -181,17 +181,11 @@ require("packer").startup {
             "dots",
           },
           { "<leader>fs", vimgrep { limit = 50000, args = args }, "grep" },
-          -- { "<leader>fo", file { combine = { "vim.buffer", "vim.oldfiles" } }, "recent-files" },
+          --- TODO: switch this command to a combine with combine = {"vim.buffer", "vim.oldfiles"}
+          { "<leader>fo", file { producer = "vim.buffer" }, "recent-files" },
+          --- TODO: this producer hasn't been added yet
+          -- { "<leader>fl", file { producer = "vim.help" }, "Help docs" },
         }
-        -- snap.register.map({ "<Leader>f?" }, function()
-        --   snap.run {
-        --     prompt = "Help>",
-        --     producer = fzf(snap.get "producer.vim.help"),
-        --     reverse = true,
-        --     select = snap.get("select.help").select,
-        --     views = { snap.get "preview.help" },
-        --   }
-        -- end)
       end,
     }
 
