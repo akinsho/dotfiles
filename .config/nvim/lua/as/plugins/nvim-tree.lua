@@ -35,8 +35,11 @@ return function()
   vim.g.nvim_tree_root_folder_modifier = ":t"
   vim.g.nvim_tree_ignore = { ".DS_Store", "fugitive:", ".git" }
   vim.g.nvim_tree_highlight_opened_files = 1
+
+  local action = require("nvim-tree.config").nvim_tree_callback
   vim.g.nvim_tree_bindings = {
     ["<c-o>"] = "<Cmd>lua as.nvim_tree_os_open()<CR>",
+    ["cd"] = action "cd",
   }
 
   local function set_highlights()
