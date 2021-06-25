@@ -513,7 +513,9 @@ require("packer").startup {
     use { "folke/which-key.nvim", config = conf "whichkey" }
     use {
       "iamcco/markdown-preview.nvim",
-      run = ":call mkdp#util#install()",
+      run = function()
+        vim.fn["mkdp#util#install"]()
+      end,
       ft = { "markdown" },
       config = function()
         vim.g.mkdp_auto_start = 0
