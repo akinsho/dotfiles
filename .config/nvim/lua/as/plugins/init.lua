@@ -633,12 +633,12 @@ require("packer").startup {
     -- till #272 is fixed
     use {
       "mizlan/iswap.nvim",
-      cmd = "ISwap",
+      cmd = { "ISwap", "ISwapWith" },
       keys = "<localleader>sw",
       config = function()
         require("iswap").setup {}
         require("which-key").register {
-          ["<localleader>sw"] = { "<Cmd>ISwap<CR>", "swap arguments,parameters etc." },
+          ["<localleader>sw"] = { "<Cmd>ISwapWith<CR>", "swap arguments,parameters etc." },
         }
       end,
     }
