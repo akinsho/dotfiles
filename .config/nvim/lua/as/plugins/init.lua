@@ -324,8 +324,21 @@ require("packer").startup {
     use { "jbyuki/step-for-vimkind", opt = true }
 
     use "folke/lua-dev.nvim"
+
+    use {
+      "kabouzeid/nvim-lspinstall",
+      module = "lspinstall",
+      config = function()
+        require("lspinstall").post_install_hook = function()
+          as.lsp.setup_servers()
+          vim.cmd "bufdo e"
+        end
+      end,
+    }
+
     use {
       "neovim/nvim-lspconfig",
+      event = "BufReadPre",
       config = conf "lspconfig",
       requires = {
         {
@@ -360,15 +373,6 @@ require("packer").startup {
           end,
         },
         { "glepnir/lspsaga.nvim", opt = true, config = conf "lspsaga" },
-        {
-          "kabouzeid/nvim-lspinstall",
-          config = function()
-            require("lspinstall").post_install_hook = function()
-              as.lsp.setup_servers()
-              vim.cmd "bufdo e"
-            end
-          end,
-        },
       },
     }
 
