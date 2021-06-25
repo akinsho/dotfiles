@@ -63,8 +63,8 @@ end
 ---@param bufnr integer?
 local function setup_mappings(client, bufnr)
   -- check that there are no existing mappings before assigning these
-  local nnoremap, vnoremap, opts =
-    as.nnoremap, as.vnoremap, { buffer = bufnr, check_existing = true }
+  local nnoremap, xnoremap, opts =
+    as.nnoremap, as.xnoremap, { buffer = bufnr, check_existing = true }
 
   nnoremap("gd", vim.lsp.buf.definition, opts)
   if client.resolved_capabilities.implementation then
@@ -76,7 +76,7 @@ local function setup_mappings(client, bufnr)
   end
 
   nnoremap("<leader>ca", vim.lsp.buf.code_action, opts)
-  vnoremap("<leader>ca", vim.lsp.buf.range_code_action, opts)
+  xnoremap("<leader>ca", vim.lsp.buf.range_code_action, opts)
 
   nnoremap("]c", function()
     vim.lsp.diagnostic.goto_prev {

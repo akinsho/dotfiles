@@ -135,12 +135,6 @@ vim.opt.wildignore = {
   "*.tar.bz2",
   "*.rar",
   "*.tar.xz",
-  -- Cache
-  ".sass-cache",
-  "*/vendor/gems/*",
-  "*/vendor/cache/*",
-  "*/.bundle/*",
-  "*.gem",
   -- Temp/System
   "*.*~",
   "*~ ",
