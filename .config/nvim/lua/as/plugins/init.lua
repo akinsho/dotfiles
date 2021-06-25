@@ -813,6 +813,7 @@ require("packer").startup {
     ----------------------------------------------------------------------------------
     use "NTBBloodbath/doom-one.nvim"
     use "monsonjeremy/onedark.nvim"
+    use "marko-cerovac/material.nvim"
     use { "Th3Whit3Wolf/one-nvim", opt = true }
     -- }}}
     ---------------------------------------------------------------------------------
