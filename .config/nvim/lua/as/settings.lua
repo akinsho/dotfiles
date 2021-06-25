@@ -84,7 +84,9 @@ vim.opt.foldmethod = "expr"
 -----------------------------------------------------------------------------//
 -- Quickfix {{{1
 -----------------------------------------------------------------------------//
-vim.o.quickfixtextfunc = "v:lua.as.qftf"
+--- FIXME: Need to use a lambda rather than a lua function directly
+--- @see https://github.com/neovim/neovim/pull/14886
+vim.o.quickfixtextfunc = "{i -> v:lua.as.qftf(i)}"
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
