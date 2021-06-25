@@ -268,11 +268,10 @@ require("packer").startup {
         })
       end,
     }
-    use "kyazdani42/nvim-web-devicons"
 
     use { "lukas-reineke/indent-blankline.nvim", branch = "lua", config = conf "indentline" }
 
-    --- TODO use_local does not work for this plugin, find out why
+    use "kyazdani42/nvim-web-devicons"
     use {
       "kyazdani42/nvim-tree.lua",
       config = conf "nvim-tree",
@@ -479,7 +478,7 @@ require("packer").startup {
     }
     -- NOTE: marks are currently broken in neovim i.e.
     -- deleted marks are resurrected on restarting nvim
-    use { "kshenoy/vim-signature" }
+    use { "kshenoy/vim-signature", opt = true }
 
     use {
       "mbbill/undotree",
@@ -533,14 +532,6 @@ require("packer").startup {
           RGB = false,
           mode = "background",
         })
-      end,
-    }
-    -- TODO: this breaks when used with sessions but keep an eye on it
-    use {
-      "sunjon/shade.nvim",
-      opt = true,
-      config = function()
-        require("shade").setup()
       end,
     }
     --}}}
