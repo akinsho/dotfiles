@@ -3,7 +3,7 @@
 #       ENV VARIABLES
 #=======================================================================
 export DOTFILES=$HOME/.dotfiles
-export PROJECTS_DIR=$HOME/Desktop/projects
+export PROJECTS_DIR=$HOME/projects
 export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal
 
 # Added by n-install (see http://git.io/n-install-repo).
@@ -41,10 +41,13 @@ case `uname` in
   # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
   # Use Java 8 because -> https://stackoverflow.com/a/49759126
 
-  # Add local build of neovim to path, remove this once stable nvim is released
-  # "$HOME/neovim/bin"
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-  path+=("$JAVA_HOME/bin")
+  path+=(
+    "$JAVA_HOME/bin"
+    # Add local build of neovim to path, remove this once stable nvim is released
+    "$HOME/neovim/bin"
+  )
+
   ;;
 esac
 
