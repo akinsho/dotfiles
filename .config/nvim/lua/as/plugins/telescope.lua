@@ -123,7 +123,7 @@ return function()
       name = "+telescope",
       a = { builtins.builtin, "builtins" },
       b = { builtins.git_branches, "branches" },
-      c = { builtins.git_commits, "commits" },
+      -- c = { builtins.git_commits, "commits" },
       m = { builtins.man_pages, "man pages" },
       h = { frecency, "history" },
       n = { nvim_config, "nvim config" },

@@ -155,7 +155,6 @@ require("packer").startup {
       rocks = { "fzy" },
       event = "CursorHold",
       keys = { "<c-p>" },
-      branch = "feature/map-and-command-with-defaults",
       local_path = "contributing",
       config = function()
         --- FIXME: remove this when/if snap changes default highlights
@@ -166,27 +165,28 @@ require("packer").startup {
         }
         local snap = require "snap"
         local config = require "snap.config"
-        local file = config.file:with { suffix = "»" }
+        local file = config.file:with { suffix = "»", consumer = "fzy" }
         local vimgrep = config.vimgrep:with { limit = 50000 }
         local args = { "--hidden", "--iglob", "!.git/*" }
         snap.maps {
           {
             "<c-p>",
-            file { args = args, try = { "git.file", "ripgrep.file" }, prompt = "Project files" },
-            -- "git-with-fallback",
+            file { prompt = "Project files", args = args, try = { "git.file", "ripgrep.file" } },
+            { command = "project-files" },
           },
           {
             "<leader>fd",
             file {
-              producer = "ripgrep.file",
-              args = { vim.env.DOTFILES, unpack(args) },
               prompt = "Dotfiles",
+              producer = "ripgrep.file",
+              args = { vim.env.DOTFILES, "--hidden", "--iglob", "!{.git/*,zsh/plugins/*}" },
             },
-            -- "dots",
+            { command = "dots" },
           },
-          { "<leader>fs", vimgrep { limit = 50000, args = args } }, -- "grep"
-          --- TODO: switch this command to a combine with combine = {"vim.buffer", "vim.oldfiles"}
-          { "<leader>fo", file { producer = "vim.buffer" } }, -- "recent-files"
+          { "<leader>fs", vimgrep { limit = 50000, args = args }, { command = "grep" } },
+          { "<leader>fc", vimgrep { prompt = "Find word", args = args, filter_with = "cword" } },
+          { "<leader>fo", file { producer = "vim.buffer" }, { command = "buffers" } },
+
           --- TODO: this producer hasn't been added yet
           -- { "<leader>fl", file { producer = "vim.help" }, "Help docs" },
         }
