@@ -170,7 +170,7 @@ require("packer").startup {
         }
         local snap = require "snap"
         local config = require "snap.config"
-        local file = config.file:with { suffix = "»", consumer = "fzy" }
+        local file = config.file:with { suffix = " »", consumer = "fzy" }
         local vimgrep = config.vimgrep:with { limit = 50000 }
         local args = { "--hidden", "--iglob", "!.git/*" }
         snap.maps {
