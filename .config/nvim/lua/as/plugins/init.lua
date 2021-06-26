@@ -75,7 +75,6 @@ local function with_local(spec)
   end
   local is_contributing = spec.local_path:match "contributing" ~= nil
 
-  --- The local spec should not be triggered by events,commands or keys only by it's condition.
   local local_spec = {
     path,
     config = spec.config,
@@ -89,6 +88,12 @@ local function with_local(spec)
   spec.disable = not is_contributing and is_home or false
   spec.cond = is_contributing and not_developing or nil
 
+  --- swap the keys and event if we are currently developing
+  if is_contributing and developing() and spec.keys or spec.event then
+    local_spec.keys, local_spec.event, spec.keys, spec.event = spec.keys, spec.event, nil, nil
+  end
+
+  spec.event = not developing() and spec.event or nil
   spec.local_path = nil
   spec.local_cond = nil
   spec.local_disable = nil
