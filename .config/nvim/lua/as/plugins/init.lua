@@ -328,6 +328,13 @@ require("packer").startup {
     use { "jbyuki/step-for-vimkind", opt = true }
 
     use "folke/lua-dev.nvim"
+    use {
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup {}
+      end,
+    }
 
     use {
       "kabouzeid/nvim-lspinstall",
@@ -400,6 +407,9 @@ require("packer").startup {
           },
           dev_log = { open_cmd = "tabedit" },
           lsp = {
+            settings = {
+              showTodos = false,
+            },
             on_attach = as.lsp and as.lsp.on_attach or nil,
             --- This is necessary to prevent lsp-status' capabilities being
             --- given priority over that of the default config
