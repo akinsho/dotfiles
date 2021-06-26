@@ -396,8 +396,8 @@ local notification_hl = setmetatable({
   [2] = { "FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError" },
   [1] = { "FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo" },
 }, {
-  __index = function(t, _)
-    return t[1]
+  __index = function(t, k)
+    return k > 1 and t[2] or t[1]
   end,
 })
 
