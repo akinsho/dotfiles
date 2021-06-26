@@ -172,7 +172,7 @@ require("packer").startup {
         local config = require "snap.config"
         local file = config.file:with { suffix = " »", consumer = "fzy" }
         local vimgrep = config.vimgrep:with { limit = 50000 }
-        local args = { "--hidden", "--iglob", "!.git/*" }
+        local args = { "--hidden", "--iglob", "!{.git/*,zsh/plugins/*}" }
         snap.maps {
           {
             "<c-p>",
@@ -184,7 +184,7 @@ require("packer").startup {
             file {
               prompt = "Dotfiles",
               producer = "ripgrep.file",
-              args = { vim.env.DOTFILES, "--hidden", "--iglob", "!{.git/*,zsh/plugins/*}" },
+              args = { vim.env.DOTFILES, unpack(args) },
             },
             { command = "dots" },
           },
