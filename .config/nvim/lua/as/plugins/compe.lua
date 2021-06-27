@@ -47,6 +47,7 @@ return function()
       emoji = { kind = "ﲃ", filetypes = { "markdown" } },
       nvim_lsp = { priority = 101 },
       nvim_lua = true,
+      orgmode = true,
     },
   }
 

@@ -571,14 +571,12 @@ require("packer").startup {
     }
 
     use {
-      "dhruvasagar/vim-dotoo",
+      "kristijanhusak/orgmode.nvim",
+      after = "nvim-compe",
       config = function()
-        vim.g["dotoo#agenda#files"] = { "~/Dropbox/todos/*.dotoo" }
-        require("which-key").register {
-          g = {
-            A = "dotoo agenda",
-            C = "dotoo capture",
-          },
+        require("orgmode").setup {
+          org_agenda_files = { "~/Dropbox/org/*", "~/local-org/**/*" },
+          org_default_notes_file = "~/Dropbox/org/refile.org",
         }
       end,
     }
