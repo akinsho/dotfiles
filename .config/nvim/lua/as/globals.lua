@@ -154,12 +154,16 @@ function as.executable(e)
   return fn.executable(e) > 0
 end
 
+---Echo a msg to the commandline
+---@param msg string | table
+---@param hl string
 function as.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)
-  if msg_type ~= "string" or "table" then
-    return
-  end
+  assert(
+    msg_type ~= "string" or msg_type ~= "table",
+    fmt("message should be a string or list of strings not a %s", msg_type)
+  )
   if msg_type == "string" then
     msg = { { msg, hl } }
   end
@@ -397,6 +401,8 @@ local notification_hl = setmetatable({
   [1] = { "FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo" },
 }, {
   __index = function(t, k)
+    k = type(k) == "number" and k or 2 -- handle incorrect level keys as errors
+    as.echomsg(fmt("%s is not a valid vim.notify error level", k), "ErrorMsg")
     return k > 1 and t[2] or t[1]
   end,
 })
