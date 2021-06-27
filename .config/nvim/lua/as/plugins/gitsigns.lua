@@ -35,6 +35,7 @@ return function()
       topdelete = { hl = "GitGutterDelete", text = "▌" },
       changedelete = { hl = "GitGutterChange", text = "▌" },
     },
+    word_diff = false,
     numhl = false,
     keymaps = {
       -- Default keymap options
