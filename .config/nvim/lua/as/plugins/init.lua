@@ -143,18 +143,6 @@ require("packer").startup {
       end,
     }
 
-    use { -- NOTE: this is currently broken due to a neovim bug
-      "rmagatti/goto-preview",
-      config = function()
-        require("goto-preview").setup {
-          default_mappings = true,
-          post_open_hook = function(buffer, _)
-            as.nnoremap("q", "<Cmd>q<CR>", { buffer = buffer, nowait = true })
-          end,
-        }
-      end,
-    }
-
     use_local {
       "camspiers/snap",
       rocks = { "fzy" },
@@ -213,6 +201,31 @@ require("packer").startup {
       },
     }
 
+    use "kyazdani42/nvim-web-devicons"
+
+    use { "folke/which-key.nvim", config = conf "whichkey" }
+
+    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
+    use {
+      "folke/trouble.nvim",
+      keys = { "<leader>ld" },
+      cmd = { "TroubleToggle" },
+      requires = "nvim-web-devicons",
+      config = function()
+        require("which-key").register {
+          ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
+          ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
+        }
+        require("as.highlights").all {
+          { "TroubleNormal", { link = "PanelBackground" } },
+          { "TroubleText", { link = "PanelBackground" } },
+          { "TroubleIndent", { link = "PanelVertSplit" } },
+          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } },
+        }
+        require("trouble").setup { auto_close = true, auto_preview = false }
+      end,
+    }
+
     use {
       "rmagatti/auto-session",
       config = function()
@@ -222,18 +235,6 @@ require("packer").startup {
       end,
     }
 
-    use {
-      "dhruvasagar/vim-dotoo",
-      config = function()
-        vim.g["dotoo#agenda#files"] = { "~/Dropbox/todos/*.dotoo" }
-        require("which-key").register {
-          g = {
-            A = "dotoo agenda",
-            C = "dotoo capture",
-          },
-        }
-      end,
-    }
     use {
       "christoomey/vim-tmux-navigator",
       config = function()
@@ -247,6 +248,7 @@ require("packer").startup {
         vim.g.tmux_navigator_save_on_switch = 2
       end,
     }
+
     use {
       "nvim-lua/plenary.nvim",
       config = function()
@@ -276,7 +278,6 @@ require("packer").startup {
 
     use { "lukas-reineke/indent-blankline.nvim", branch = "lua", config = conf "indentline" }
 
-    use "kyazdani42/nvim-web-devicons"
     use {
       "kyazdani42/nvim-tree.lua",
       config = conf "nvim-tree",
@@ -284,26 +285,6 @@ require("packer").startup {
       requires = "nvim-web-devicons",
     }
 
-    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
-    use {
-      "folke/trouble.nvim",
-      keys = { "<leader>ld" },
-      cmd = { "TroubleToggle" },
-      requires = "nvim-web-devicons",
-      config = function()
-        require("which-key").register {
-          ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
-          ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
-        }
-        require("as.highlights").all {
-          { "TroubleNormal", { link = "PanelBackground" } },
-          { "TroubleText", { link = "PanelBackground" } },
-          { "TroubleIndent", { link = "PanelVertSplit" } },
-          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } },
-        }
-        require("trouble").setup { auto_close = true, auto_preview = false }
-      end,
-    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{
@@ -423,6 +404,18 @@ require("packer").startup {
       local_path = "personal",
     }
 
+    use { -- NOTE: this is currently broken due to a neovim bug
+      "rmagatti/goto-preview",
+      config = function()
+        require("goto-preview").setup {
+          default_mappings = true,
+          post_open_hook = function(buffer, _)
+            as.nnoremap("q", "<Cmd>q<CR>", { buffer = buffer, nowait = true })
+          end,
+        }
+      end,
+    }
+
     use { "hrsh7th/nvim-compe", config = conf "compe", event = "InsertEnter" }
 
     use {
@@ -448,6 +441,7 @@ require("packer").startup {
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
     use "kevinhwang91/nvim-bqf"
+
     use {
       "arecarn/vim-fold-cycle",
       config = function()
@@ -491,8 +485,7 @@ require("packer").startup {
         vim.g.highlighturl_guifg = require("as.highlights").get_hl("Keyword", "fg")
       end,
     }
-    -- NOTE: marks are currently broken in neovim i.e.
-    -- deleted marks are resurrected on restarting nvim
+    -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
     use { "kshenoy/vim-signature", opt = true }
 
     use {
@@ -528,7 +521,6 @@ require("packer").startup {
         })
       end,
     }
-    use { "folke/which-key.nvim", config = conf "whichkey" }
     use {
       "iamcco/markdown-preview.nvim",
       run = function()
@@ -568,6 +560,7 @@ require("packer").startup {
         })
       end,
     }
+
     use {
       "vimwiki/vimwiki",
       branch = "dev",
@@ -575,6 +568,19 @@ require("packer").startup {
       event = { "BufEnter *.wiki" },
       setup = conf("vimwiki").setup,
       config = conf("vimwiki").config,
+    }
+
+    use {
+      "dhruvasagar/vim-dotoo",
+      config = function()
+        vim.g["dotoo#agenda#files"] = { "~/Dropbox/todos/*.dotoo" }
+        require("which-key").register {
+          g = {
+            A = "dotoo agenda",
+            C = "dotoo capture",
+          },
+        }
+      end,
     }
     -- }}}
     --------------------------------------------------------------------------------
@@ -641,7 +647,7 @@ require("packer").startup {
     use { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter" }
     use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
     use "RRethy/nvim-treesitter-textsubjects"
-    -- This needs to load after nvim-treesitter but the "after" key in packer is broken
+    --BUG: This needs to load after nvim-treesitter but the "after" key in packer is broken
     -- till #272 is fixed
     use {
       "mizlan/iswap.nvim",
