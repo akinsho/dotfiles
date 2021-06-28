@@ -420,7 +420,7 @@ require("packer").startup {
       end,
     }
 
-    use { "hrsh7th/nvim-compe", config = conf "compe", event = "InsertEnter" }
+    use { "hrsh7th/nvim-compe", module = "compe", config = conf "compe", event = "InsertEnter" }
 
     use {
       "hrsh7th/vim-vsnip",
@@ -576,8 +576,6 @@ require("packer").startup {
 
     use {
       "kristijanhusak/orgmode.nvim",
-      keys = { "<leader>oa", "<leader>oc" },
-      wants = "nvim-compe",
       config = function()
         require("orgmode").setup {
           org_agenda_files = { "~/Dropbox/org/*", "~/local-org/**/*" },
