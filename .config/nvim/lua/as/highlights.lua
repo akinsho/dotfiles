@@ -302,6 +302,11 @@ local function colorscheme_overrides()
     local keyword_fg = M.get_hl("Keyword", "fg")
     M.all {
       { "CursorLineNr", { guifg = keyword_fg } },
+      { "markdownCode", { link = "CursorLine", force = true } },
+      { "markdownCodeBlock", { link = "CursorLine", force = true } },
+      { "markdownH1", { gui = "bold" } },
+      { "markdownH2", { gui = "bold" } },
+      { "markdownLinkText", { gui = "underline" } },
       -- TODO the default bold makes ... not use ligatures
       -- a better fix would be to add ligatures to my font
       -- {"Constant", {gui = "NONE"}},
