@@ -209,7 +209,7 @@ local column_clear = {
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
----@param leaving boolean?
+---@param leaving boolean indicates if the function was called on window leave
 local function check_color_column(leaving)
   if contains(column_exclude, vim.bo.filetype) then
     return
