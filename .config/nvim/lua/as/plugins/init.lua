@@ -459,6 +459,7 @@ require("packer").startup {
         require("nvim-autopairs").setup {
           close_triple_quotes = true,
           check_ts = false,
+          fastwrap = {},
         }
       end,
     }

@@ -22,6 +22,7 @@ return function()
       enable = true,
     },
     textobjects = {
+      lookahead = true,
       select = {
         enable = true,
         keymaps = {
