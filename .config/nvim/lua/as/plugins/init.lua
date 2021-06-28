@@ -315,8 +315,8 @@ require("packer").startup {
       config = function()
         require("todo-comments").setup {
           highlight = {
-            exclude = {"org", "orgagenda"}
-          }
+            exclude = { "org", "orgagenda" },
+          },
         }
       end,
     }

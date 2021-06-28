@@ -17,15 +17,14 @@ fi
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias grep='grep --color'
 alias x="exit" # Exit Terminal
-alias t=_t
 alias del="rm -rf"
 alias dots="cd $DOTFILES"
 alias coding="cd $PROJECTS_DIR"
 alias lp="lsp"
-alias v='nvim'
 alias minimalvim="nvim -u ~/minimal.vim"
+alias v='nvim'
 alias vi='nvim'
-alias nv='nvim'
+alias vim='nvim'
 # This allow using neovim remote when nvim is called from inside a running vim instance
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
@@ -44,7 +43,6 @@ alias ys="clear && yarn start"
 
 alias md="mkdir -p"
 
-alias esy="nocorrect esy"
 alias ta="tmux attach -t"
 alias td="tmux detach"
 alias tls="tmux ls"
