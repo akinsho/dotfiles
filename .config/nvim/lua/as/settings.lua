@@ -156,7 +156,6 @@ vim.opt.linebreak = true -- lines wrap at words rather than random characters
 vim.opt.synmaxcol = 1024 -- don't syntax highlight long lines
 vim.opt.signcolumn = "yes:2"
 vim.opt.ruler = false
-vim.opt.colorcolumn = { "+1" } -- Set the colour column to highlight one column after the 'textwidth'
 vim.opt.cmdheight = 2 -- Set command line height to two lines
 vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 --- This is used to handle markdown code blocks where the language might

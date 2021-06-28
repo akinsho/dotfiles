@@ -205,6 +205,7 @@ local column_clear = {
   "mail",
   "org",
   "orgagenda",
+  "NeogitStatus",
 }
 
 ---TODO: Color column is not respecting column clear
@@ -220,22 +221,21 @@ local function check_color_column(leaving)
     or not vim.bo.buflisted
     or vim.bo.bt ~= ""
 
-  if contains(column_clear, vim.bo.filetype) or not_eligible then
+  local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
+
+  if contains(column_clear, vim.bo.filetype) or not_eligible or leaving or small_window then
     vim.wo.colorcolumn = ""
     return
   end
-  if api.nvim_win_get_width(0) <= 120 or leaving then
-    -- only reset this value when it doesn't already exist
-    vim.wo.colorcolumn = ""
-  elseif vim.wo.colorcolumn == "" then
-    vim.cmd "setlocal colorcolumn=+1"
+  if vim.wo.colorcolumn == "" then
+    vim.wo.colorcolumn = "+1"
   end
 end
 
 as.augroup("CustomColorColumn", {
   {
     -- Update the cursor column to match current window size
-    events = { "BufWinEnter", "VimResized", "FocusGained" },
+    events = { "WinEnter", "BufEnter", "VimResized", "FileType" },
     targets = { "*" },
     command = function()
       check_color_column()
