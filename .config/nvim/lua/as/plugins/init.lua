@@ -911,7 +911,7 @@ require("packer").startup {
     compile_path = PACKER_COMPILED_PATH,
     display = {
       prompt_border = "rounded",
-      open_cmd = "silent topleft 65vnew Packer",
+      open_cmd = "silent topleft 65vnew",
     },
     profile = {
       enable = true,
