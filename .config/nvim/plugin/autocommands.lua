@@ -221,8 +221,14 @@ local function check_color_column(leaving)
     or not vim.bo.buflisted
 
   local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
+  local is_last_win = #api.nvim_list_wins() == 1
 
-  if contains(column_clear, vim.bo.filetype) or not_eligible or leaving or small_window then
+  if
+    contains(column_clear, vim.bo.filetype)
+    or not_eligible
+    or (leaving and not is_last_win)
+    or small_window
+  then
     vim.wo.colorcolumn = ""
     return
   end
