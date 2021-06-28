@@ -67,6 +67,7 @@ return function()
 
   require("nvim-autopairs.completion.compe").setup {
     map_cr = true, --  map <CR> on insert mode
-    map_complete = true, -- it will auto insert `(` after select function or method item
+    -- BUG: disable this feature till https://github.com/windwp/nvim-autopairs/issues/71 is resolved
+    map_complete = false, -- it will auto insert `(` after select function or method item
   }
 end
