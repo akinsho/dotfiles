@@ -56,8 +56,7 @@ return function()
   local inoremap = as.inoremap
   local opts = { expr = true, silent = true }
 
-  inoremap("<C-Space>", "compe#complete()", opts)
-  inoremap("<C-e>", "compe#close('<C-e>')", opts)
+  inoremap("<C-e>", "compe#complete()", opts)
   imap("<Tab>", "v:lua.__tab_complete()", opts)
   smap("<Tab>", "v:lua.__tab_complete()", opts)
   imap("<S-Tab>", "v:lua.__s_tab_complete()", opts)
