@@ -186,7 +186,7 @@ as.augroup("TextYankHighlight", {
     events = { "TextYankPost" },
     targets = { "*" },
     command = function()
-      require("vim.highlight").on_yank {
+      vim.highlight.on_yank {
         timeout = 500,
         on_visual = false,
         higroup = "Visual",
@@ -196,8 +196,18 @@ as.augroup("TextYankHighlight", {
 })
 
 local column_exclude = { "gitcommit" }
-local column_clear = { "startify", "vimwiki", "vim-plug", "help", "fugitive", "mail" }
+local column_clear = {
+  "startify",
+  "vimwiki",
+  "vim-plug",
+  "help",
+  "fugitive",
+  "mail",
+  "org",
+  "orgagenda",
+}
 
+---TODO: Color column is not respecting column clear
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean?
 local function check_color_column(leaving)
@@ -225,7 +235,7 @@ end
 as.augroup("CustomColorColumn", {
   {
     -- Update the cursor column to match current window size
-    events = { "BufEnter", "VimResized", "FocusGained", "WinEnter" },
+    events = { "BufWinEnter", "VimResized", "FocusGained" },
     targets = { "*" },
     command = function()
       check_color_column()
