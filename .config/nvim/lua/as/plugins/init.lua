@@ -576,7 +576,8 @@ require("packer").startup {
 
     use {
       "kristijanhusak/orgmode.nvim",
-      after = "nvim-compe",
+      keys = { "<leader>oa", "<leader>oc" },
+      wants = "nvim-compe",
       config = function()
         require("orgmode").setup {
           org_agenda_files = { "~/Dropbox/org/*", "~/local-org/**/*" },
