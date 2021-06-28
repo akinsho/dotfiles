@@ -313,7 +313,11 @@ require("packer").startup {
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup {}
+        require("todo-comments").setup {
+          highlight = {
+            exclude = {"org", "orgagenda"}
+          }
+        }
       end,
     }
 
