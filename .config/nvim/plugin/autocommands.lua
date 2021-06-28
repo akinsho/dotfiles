@@ -208,7 +208,6 @@ local column_clear = {
   "NeogitStatus",
 }
 
----TODO: Color column is not respecting column clear
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean?
 local function check_color_column(leaving)
@@ -217,9 +216,9 @@ local function check_color_column(leaving)
   end
 
   local not_eligible = not vim.bo.modifiable
-    or vim.wo.pvw
+    or vim.wo.previewwindow
+    or vim.bo.buftype ~= ""
     or not vim.bo.buflisted
-    or vim.bo.bt ~= ""
 
   local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
 
