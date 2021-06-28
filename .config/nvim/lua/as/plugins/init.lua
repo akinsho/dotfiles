@@ -580,6 +580,7 @@ require("packer").startup {
         require("orgmode").setup {
           org_agenda_files = { "~/Dropbox/org/*", "~/local-org/**/*" },
           org_default_notes_file = "~/Dropbox/org/refile.org",
+          org_todo_keywords = { "TODO", "NEXT", "|", "DONE" },
         }
       end,
     }
