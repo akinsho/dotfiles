@@ -198,6 +198,7 @@ require("packer").startup {
           requires = "tami5/sql.nvim",
           after = "telescope.nvim",
         },
+        { "camgraff/telescope-tmux.nvim" },
       },
     }
 
@@ -840,8 +841,6 @@ require("packer").startup {
     ---------------------------------------------------------------------------------
     use {
       "norcalli/nvim-terminal.lua",
-      event = "BufEnter *_spec.lua",
-      disable = is_work,
       config = function()
         require("terminal").setup()
       end,
