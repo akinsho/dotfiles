@@ -5,7 +5,6 @@ return function()
   vim.g.indent_blankline_filetype_exclude = {
     "startify",
     "dashboard",
-    "dotooagenda",
     "log",
     "fugitive",
     "gitcommit",
@@ -16,13 +15,13 @@ return function()
     "txt",
     "vista",
     "help",
-    "todoist",
     "NvimTree",
-    "peekaboo",
     "git",
     "TelescopePrompt",
     "undotree",
     "flutterToolsOutline",
+    "org",
+    "orgagenda",
     "", -- for all buffers without a file type
   }
   vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
