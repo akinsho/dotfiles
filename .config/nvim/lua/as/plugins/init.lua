@@ -592,7 +592,7 @@ require("packer").startup {
         require("orgmode").setup {
           org_agenda_files = { org_dir .. "/**/*", "~/local-org/**/*" },
           org_default_notes_file = org_dir .. "/refile.org",
-          org_todo_keywords = { "TODO", "NEXT", "|", "DONE", "CANCELLED" },
+          org_todo_keywords = { "TODO", "IN PROGRESS", "|", "DONE", "CANCELLED" },
           org_agenda_templates = {
             l = { description = "Link", template = "* %?\n%a" },
             p = {
