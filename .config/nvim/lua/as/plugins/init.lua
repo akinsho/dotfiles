@@ -594,9 +594,10 @@ require("packer").startup {
           org_default_notes_file = org_dir .. "/refile.org",
           org_todo_keywords = { "TODO", "NEXT", "|", "DONE", "CANCELLED" },
           org_agenda_templates = {
+            l = { description = "Link", template = "* %?\n%a" },
             p = {
               description = "Project Todo",
-              template = "* TODO %? :PROJECTS:\n %T",
+              template = "* TODO %? \nDEADLINE: %T",
               target = org_dir .. "/projects.org",
             },
           },
