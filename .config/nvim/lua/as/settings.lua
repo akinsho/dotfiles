@@ -93,7 +93,7 @@ vim.o.quickfixtextfunc = "{i -> v:lua.as.qftf(i)}"
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
 if as.executable "rg" then
-  vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
+  vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.opt.grepformat = vim.opt.grepformat ^ { "%f:%l:%c:%m" }
 elseif as.executable "ag" then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
