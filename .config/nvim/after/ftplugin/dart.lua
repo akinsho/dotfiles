@@ -2,6 +2,11 @@
 -- width which is very annoying
 vim.opt_local.formatoptions:remove "t"
 
+-- TODO: ask treesitter team what the correct way to do this is
+-- disable syntax based highlighting for dart and use only treesitter
+-- this still lets the syntax file be loaded for things like the LSP.
+vim.opt_local.syntax = ""
+
 -- Map flutter only commands in dart files
 local success, wk = pcall(require, "which-key")
 if not success then
