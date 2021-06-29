@@ -147,7 +147,7 @@ require("packer").startup {
       "camspiers/snap",
       rocks = { "fzy" },
       event = "CursorHold",
-      keys = { "<c-p>" },
+      keys = { "<c-p>", "<leader>fo", "<leader>ff" },
       local_path = "contributing",
       config = function()
         --- FIXME: remove this when/if snap changes default highlights
@@ -160,7 +160,7 @@ require("packer").startup {
         local config = require "snap.config"
         local file = config.file:with { suffix = " »", consumer = "fzy" }
         local vimgrep = config.vimgrep:with { limit = 50000 }
-        local args = { "--hidden", "--iglob", "!{.git/*,zsh/plugins/*}" }
+        local args = { "--hidden", "--iglob", "!{.git/*,zsh/plugins/*,dotbot/*}" }
         snap.maps {
           {
             "<c-p>",
@@ -175,6 +175,15 @@ require("packer").startup {
               args = { vim.env.DOTFILES, unpack(args) },
             },
             { command = "dots" },
+          },
+          {
+            "<leader>fO",
+            file {
+              prompt = "Org",
+              producer = "ripgrep.file",
+              args = { vim.fn.expand "~/Dropbox/org/" },
+            },
+            { command = "org" },
           },
           { "<leader>fs", vimgrep { limit = 50000, args = args }, { command = "grep" } },
           { "<leader>fc", vimgrep { prompt = "Find word", args = args, filter_with = "cword" } },
