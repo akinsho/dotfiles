@@ -588,10 +588,18 @@ require("packer").startup {
     use {
       "kristijanhusak/orgmode.nvim",
       config = function()
+        local org_dir = "~/Dropbox/org"
         require("orgmode").setup {
-          org_agenda_files = { "~/Dropbox/org/*", "~/local-org/**/*" },
-          org_default_notes_file = "~/Dropbox/org/refile.org",
-          org_todo_keywords = { "TODO", "NEXT", "|", "DONE" },
+          org_agenda_files = { org_dir .. "/**/*", "~/local-org/**/*" },
+          org_default_notes_file = org_dir .. "/refile.org",
+          org_todo_keywords = { "TODO", "NEXT", "|", "DONE", "CANCELLED" },
+          org_agenda_templates = {
+            p = {
+              description = "Project Todo",
+              template = "* TODO %? :PROJECTS:\n %T",
+              target = org_dir .. "/projects.org",
+            },
+          },
         }
       end,
     }
