@@ -146,7 +146,9 @@ vnoremap("*", [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap(".", ":norm.<CR>")
 -- Switch from visual to visual block.
-xnoremap("r", [[:call utils#message('Use <Ctrl-V> instead')<CR>]], { silent = false })
+xnoremap("r", function()
+  vim.notify "Use <Ctrl-V> instead"
+end)
 -- https://www.reddit.com/r/neovim/comments/l8vyl8/a_plugin_to_improve_the_deletion_of_buffers/
 -- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
 local function buf_kill()
@@ -303,7 +305,7 @@ nmap(
 nnoremap("<leader>ev", [[:vsplit $MYVIMRC<cr>]])
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap("<leader>sv", [[:luafile $MYVIMRC<cr> <bar> :call utils#message('Sourced init.vim')<cr>]])
+nnoremap("<leader>sv", [[:luafile $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
@@ -436,7 +438,7 @@ local function toggle_list(prefix)
     end
   end
   if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
-    fn["utils#message"]("Location List is Empty.", "Title")
+    vim.notify("Location List is Empty.", 2)
     return
   end
 
