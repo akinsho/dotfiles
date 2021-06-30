@@ -589,6 +589,15 @@ require("packer").startup {
       "kristijanhusak/orgmode.nvim",
       config = function()
         local org_dir = "~/Dropbox/org"
+        require("which-key").register({
+          o = {
+            name = "+org-mode",
+            a = "agenda",
+            c = "capture",
+          },
+        }, {
+          prefix = "<leader>",
+        })
         require("orgmode").setup {
           org_agenda_files = { org_dir .. "/**/*", "~/local-org/**/*" },
           org_default_notes_file = org_dir .. "/refile.org",
@@ -668,9 +677,11 @@ require("packer").startup {
     }
     use { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter" }
     use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
+
+    -- TODO: currently this plugin does not support dart, which I need to make PR for
     use "RRethy/nvim-treesitter-textsubjects"
-    --BUG: This needs to load after nvim-treesitter but the "after" key in packer is broken
-    -- till #272 is fixed
+
+    -- BUG: This needs to load after nvim-treesitter but the "after" key in packer is broken till #272 is fixed
     use {
       "mizlan/iswap.nvim",
       cmd = { "ISwap", "ISwapWith" },
