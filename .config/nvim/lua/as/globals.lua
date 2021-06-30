@@ -401,8 +401,11 @@ local notification_hl = setmetatable({
   [1] = { "FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo" },
 }, {
   __index = function(t, k)
-    k = type(k) == "number" and k or 2 -- handle incorrect level keys as errors
-    as.echomsg(fmt("%s is not a valid vim.notify error level", k), "ErrorMsg")
+    local is_number = type(k) == "number"
+    k = is_number and k or 2 -- handle incorrect level keys as errors
+    if not is_number then
+      as.echomsg(fmt("%s is not a valid vim.notify error level", k), "ErrorMsg")
+    end
     return k > 1 and t[2] or t[1]
   end,
 })
