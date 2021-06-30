@@ -3,18 +3,19 @@ as.lsp = {}
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
-  -- FIXME this opens even when there is no content
-  -- as.augroup(
-  --   "LspLocationList",
-  --   {
-  --     {
-  --       events = {"User LspDiagnosticsChanged"},
-  --       command = function()
-  --         vim.lsp.diagnostic.set_loclist({workspace = true, severity_limit = "Warning"})
-  --       end
-  --     }
-  --   }
-  -- )
+  -- FIXME: this opens even when there is no content so this is closed by default
+  as.augroup("LspLocationList", {
+    {
+      events = { "User LspDiagnosticsChanged" },
+      command = function()
+        vim.lsp.diagnostic.set_loclist {
+          workspace = true,
+          severity_limit = "Warning",
+          open_loclist = false,
+        }
+      end,
+    },
+  })
   if client and client.resolved_capabilities.code_lens then
     as.augroup("LspCodeLens", {
       {
