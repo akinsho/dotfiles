@@ -614,6 +614,11 @@ require("packer").startup {
               target = org_dir .. "/projects.org",
             },
           },
+          mappings = {
+            org = {
+              org_toggle_checkbox = "<leader>t",
+            },
+          },
         }
       end,
     }
