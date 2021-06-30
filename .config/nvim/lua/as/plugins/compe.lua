@@ -65,7 +65,9 @@ return function()
   inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
   require("nvim-autopairs.completion.compe").setup {
-    map_cr = true, --  map <CR> on insert mode
-    map_complete = true, -- it will auto insert `(` after select function or method item
+    --  map <CR> on insert mode
+    map_cr = true,
+    -- it will auto insert `(` after select function or method item
+    map_complete = true,
   }
 end
