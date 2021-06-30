@@ -343,47 +343,7 @@ xnoremap(
   { expr = true }
 )
 
--- if the file under the cursor doesn't exist create it
--- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
--- If you select require('buffers/file') in lua for example
--- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- Credit: 1,2
-local function open_file_or_create_new()
-  local path = fn.expand "<cfile>"
-  if not path or path == "" then
-    return false
-  end
-
-  -- TODO handle terminal buffers
-
-  if pcall(vim.cmd, "norm!gf") then
-    return true
-  end
-
-  local answer = fn.input "Create a new file, (Y)es or (N)o? "
-  if not answer or string.lower(answer) ~= "y" then
-    return vim.cmd "redraw"
-  end
-  vim.cmd "redraw"
-  local new_path = fn.fnamemodify(fn.expand "%:p:h" .. "/" .. path, ":p")
-  local ext = fn.fnamemodify(new_path, ":e")
-
-  if ext and ext ~= "" then
-    return vim.cmd("edit " .. new_path)
-  end
-
-  local suffixes = fn.split(vim.bo.suffixesadd, ",")
-
-  for _, suffix in ipairs(suffixes) do
-    if fn.filereadable(new_path .. suffix) then
-      return vim.cmd("edit " .. new_path .. suffix)
-    end
-  end
-
-  return vim.cmd("edit " .. new_path .. suffixes[1])
-end
-
-nnoremap("gf", open_file_or_create_new)
+nnoremap("gf", "<Cmd>e <cfile><CR>")
 -----------------------------------------------------------------------------//
 -- Command mode related
 -----------------------------------------------------------------------------//
