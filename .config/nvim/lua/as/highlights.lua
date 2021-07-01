@@ -157,38 +157,22 @@ vim.cmd "colorscheme doom-one"
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
-local function plugin_highlights()
-  if as.plugin_installed "telescope.nvim" then
-    M.all {
-      { "TelescopePathSeparator", { guifg = as.style.palette.dark_blue } },
-      { "TelescopeQueryFilter", { link = "IncSearch" } },
-    }
-  end
-
-  -- M.set_hl("CompeDocumentation", { link = "Pmenu" })
-
-  if as.plugin_installed "orgmode.nvim" then
-    M.all {
-      { "OrgDone", { guifg = "Green", gui = "bold" } },
-      { "OrgAgendaScheduled", { guifg = "DarkGreen" } },
-    }
-  end
-
-  M.set_hl("BqfPreviewBorder", { guifg = "Gray" })
-  M.set_hl("ExchangeRegion", { link = "Search" })
-
-  if as.plugin_installed "conflict-marker.vim" then
-    M.all {
-      { "ConflictMarkerBegin", { guibg = "#2f7366" } },
-      { "ConflictMarkerOurs", { guibg = "#2e5049" } },
-      { "ConflictMarkerTheirs", { guibg = "#344f69" } },
-      { "ConflictMarkerEnd", { guibg = "#2f628e" } },
-      { "ConflictMarkerCommonAncestorsHunk", { guibg = "#754a81" } },
-    }
-  else
-    -- Highlight VCS conflict markers
-    vim.cmd [[match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$']]
-  end
+---Apply highlights for a plugin and refresh on colorscheme change
+---@param name string plugin name
+---@vararg table list of highlights
+function M.plugin(name, ...)
+  name = name:gsub("^%l", string.upper) -- capitalise the name for autocommand convention sake
+  local hls = { ... }
+  M.all(hls)
+  as.augroup(fmt("%sHighlightOverrides", name), {
+    {
+      events = { "Colorscheme" },
+      targets = { "*" },
+      command = function()
+        M.all(hls)
+      end,
+    },
+  })
 end
 
 local function general_overrides()
@@ -332,7 +316,6 @@ local function colorscheme_overrides()
 end
 
 local function user_highlights()
-  plugin_highlights()
   general_overrides()
   colorscheme_overrides()
   set_sidebar_highlight()

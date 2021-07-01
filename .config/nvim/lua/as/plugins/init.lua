@@ -151,11 +151,12 @@ require("packer").startup {
       local_path = "contributing",
       config = function()
         --- FIXME: remove this when/if snap changes default highlights
-        require("as.highlights").all {
+        require("as.highlights").plugin(
+          "snap",
           { "SnapSelect", { link = "TextInfoBold", force = true } },
           { "SnapPosition", { link = "Keyword", force = true } },
-          { "SnapBorder", { guifg = "Gray" } },
-        }
+          { "SnapBorder", { guifg = "Gray" } }
+        )
         local snap = require "snap"
         local config = require "snap.config"
         local file = config.file:with { suffix = " »", consumer = "fzy" }
@@ -226,12 +227,13 @@ require("packer").startup {
           ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
           ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
         }
-        require("as.highlights").all {
+        require("as.highlights").plugin(
+          "trouble",
           { "TroubleNormal", { link = "PanelBackground" } },
           { "TroubleText", { link = "PanelBackground" } },
           { "TroubleIndent", { link = "PanelVertSplit" } },
-          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } },
-        }
+          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } }
+        )
         require("trouble").setup { auto_close = true, auto_preview = false }
       end,
     }
@@ -454,7 +456,12 @@ require("packer").startup {
     ---------------------------------------------------------------------------------
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
-    use "kevinhwang91/nvim-bqf"
+    use {
+      "kevinhwang91/nvim-bqf",
+      config = function()
+        require("as.highlights").plugin("bqf", { "BqfPreviewBorder", { guifg = "Gray" } })
+      end,
+    }
 
     use {
       "arecarn/vim-fold-cycle",
@@ -589,6 +596,11 @@ require("packer").startup {
       "kristijanhusak/orgmode.nvim",
       config = function()
         local org_dir = "~/Dropbox/org"
+        require("as.highlights").plugin(
+          "org",
+          { "OrgDone", { guifg = "Green", gui = "bold" } },
+          { "OrgAgendaScheduled", { guifg = "DarkGreen" } }
+        )
         require("which-key").register({
           o = {
             name = "+org-mode",
@@ -725,6 +737,14 @@ require("packer").startup {
     use {
       "rhysd/conflict-marker.vim",
       config = function()
+        require("as.highlights").plugin(
+          "conflictMarker",
+          { "ConflictMarkerBegin", { guibg = "#2f7366" } },
+          { "ConflictMarkerOurs", { guibg = "#2e5049" } },
+          { "ConflictMarkerTheirs", { guibg = "#344f69" } },
+          { "ConflictMarkerEnd", { guibg = "#2f628e" } },
+          { "ConflictMarkerCommonAncestorsHunk", { guibg = "#754a81" } }
+        )
         -- disable the default highlight group
         vim.g.conflict_marker_highlight_group = ""
         -- Include text after begin and end markers
@@ -824,6 +844,7 @@ require("packer").startup {
     use {
       "tommcdo/vim-exchange",
       config = function()
+        require("as.highlights").plugin("exchange", { "ExchangeRegion", { link = "Search" } })
         vim.g.exchange_no_mappings = 1
         as.xmap("X", "<Plug>(Exchange)")
         as.nmap("X", "<Plug>(Exchange)")

@@ -60,6 +60,12 @@ return function()
   telescope.load_extension "fzf"
   telescope.load_extension "tmux"
 
+  require("as.highlights").plugin(
+    "telescope",
+    { "TelescopePathSeparator", { guifg = as.style.palette.dark_blue } },
+    { "TelescopeQueryFilter", { link = "IncSearch" } }
+  )
+
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
