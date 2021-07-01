@@ -160,8 +160,8 @@ vim.cmd "colorscheme doom-one"
 local function plugin_highlights()
   M.set_hl("TelescopePathSeparator", { guifg = as.style.palette.dark_blue })
   M.set_hl("TelescopeQueryFilter", { link = "IncSearch" })
+  -- M.set_hl("CompeDocumentation", { link = "Pmenu" })
 
-  M.set_hl("CompeDocumentation", { link = "Pmenu" })
 
   M.set_hl("BqfPreviewBorder", { guifg = "Gray" })
   M.set_hl("ExchangeRegion", { link = "Search" })

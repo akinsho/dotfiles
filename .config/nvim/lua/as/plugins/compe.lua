@@ -49,6 +49,14 @@ return function()
       nvim_lua = true,
       orgmode = true,
     },
+    documentation = {
+      border = "rounded",
+      winhighlight = table.concat({
+        "NormalFloat:CompeDocumentation",
+        "Normal:CompeDocumentation",
+        "FloatBorder:CompeDocumentationBorder",
+      }, ","),
+    },
   }
 
   local imap = as.imap
