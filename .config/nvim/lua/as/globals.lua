@@ -313,7 +313,7 @@ local function make_mapper(mode, o)
 
     validate_mappings(lhs, rhs, _opts)
 
-    if _opts.check_existing and as.has_map(lhs) then
+    if _opts.check_existing and as.has_map(lhs, mode) then
       return
     else
       -- don't pass this invalid key to set keymap
