@@ -28,18 +28,19 @@ return function()
   vim.g.nvim_tree_git_hl = 1
   vim.g.nvim_tree_auto_close = 0 -- closes the tree when it's the last window
   vim.g.nvim_tree_follow = 1 -- show selected file on open
-  vim.g.nvim_tree_width = 30
+  vim.g.nvim_tree_width = "20%"
   vim.g.nvim_tree_width_allow_resize = 1
   vim.g.nvim_tree_disable_netrw = 0
   vim.g.nvim_tree_hijack_netrw = 0
   vim.g.nvim_tree_root_folder_modifier = ":t"
   vim.g.nvim_tree_ignore = { ".DS_Store", "fugitive:", ".git" }
   vim.g.nvim_tree_highlight_opened_files = 1
+  vim.g.nvim_tree_auto_resize = 1
 
   local action = require("nvim-tree.config").nvim_tree_callback
   vim.g.nvim_tree_bindings = {
-    ["<c-o>"] = "<Cmd>lua as.nvim_tree_os_open()<CR>",
-    ["cd"] = action "cd",
+    { key = "<c-o>", cb = "<Cmd>lua as.nvim_tree_os_open()<CR>" },
+    { key = "cd", cb = action "cd" },
   }
 
   local function set_highlights()
