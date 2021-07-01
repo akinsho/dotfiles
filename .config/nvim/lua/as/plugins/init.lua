@@ -673,7 +673,7 @@ require("packer").startup {
     -- Syntax {{{
     --------------------------------------------------------------------------------
     -- TODO: converting a plugin from disabled to enabled inside a require doesn't work
-    use {
+    use_local {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = conf "treesitter",
