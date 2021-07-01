@@ -47,6 +47,8 @@ local exceptions = {
     quickfix = "",
   },
   filetypes = {
+    org = "",
+    orgagenda = "",
     ["himalaya-msg-list"] = "",
     mail = "",
     dbui = "",
@@ -73,6 +75,7 @@ local exceptions = {
     ["dap-repl"] = "",
   },
   names = {
+    orgagenda = "Org",
     ["himalaya-msg-list"] = "Inbox",
     mail = "Mail",
     minimap = "",
