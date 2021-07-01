@@ -158,10 +158,21 @@ vim.cmd "colorscheme doom-one"
 -- Plugin highlights
 ---------------------------------------------------------------------------------
 local function plugin_highlights()
-  M.set_hl("TelescopePathSeparator", { guifg = as.style.palette.dark_blue })
-  M.set_hl("TelescopeQueryFilter", { link = "IncSearch" })
+  if as.plugin_installed "telescope.nvim" then
+    M.all {
+      { "TelescopePathSeparator", { guifg = as.style.palette.dark_blue } },
+      { "TelescopeQueryFilter", { link = "IncSearch" } },
+    }
+  end
+
   -- M.set_hl("CompeDocumentation", { link = "Pmenu" })
 
+  if as.plugin_installed "orgmode.nvim" then
+    M.all {
+      { "OrgDone", { guifg = "Green", gui = "bold" } },
+      { "OrgAgendaScheduled", { guifg = "DarkGreen" } },
+    }
+  end
 
   M.set_hl("BqfPreviewBorder", { guifg = "Gray" })
   M.set_hl("ExchangeRegion", { link = "Search" })

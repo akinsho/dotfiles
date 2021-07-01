@@ -588,10 +588,6 @@ require("packer").startup {
     use {
       "kristijanhusak/orgmode.nvim",
       config = function()
-        require("as.highlights").all {
-          { "OrgDone", { guifg = "Green", gui = "bold" } },
-          { "OrgAgendaScheduled", { guifg = "DarkGreen" } },
-        }
         local org_dir = "~/Dropbox/org"
         require("which-key").register({
           o = {
