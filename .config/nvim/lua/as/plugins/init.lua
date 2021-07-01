@@ -599,7 +599,7 @@ require("packer").startup {
         require("as.highlights").plugin(
           "org",
           { "OrgDone", { guifg = "Green", gui = "bold" } },
-          { "OrgAgendaScheduled", { guifg = "DarkGreen" } }
+          { "OrgAgendaScheduled", { guifg = "Teal" } }
         )
         require("which-key").register({
           o = {
