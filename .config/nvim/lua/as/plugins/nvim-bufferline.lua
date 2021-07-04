@@ -33,16 +33,19 @@ return function()
     return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
   end
 
+  ---@diagnostic disable-next-line: unused-function
+  local function sort_by_mtime(a, b)
+    local astat = vim.loop.fs_stat(a.path)
+    local bstat = vim.loop.fs_stat(b.path)
+    local mod_a = astat and astat.mtime.sec or 0
+    local mod_b = bstat and bstat.mtime.sec or 0
+    return mod_a > mod_b
+  end
+
   require("bufferline").setup {
     options = {
       mappings = false,
-      sort_by = function(a, b)
-        local astat = vim.loop.fs_stat(a.path)
-        local bstat = vim.loop.fs_stat(b.path)
-        local mod_a = astat and astat.mtime.sec or 0
-        local mod_b = bstat and bstat.mtime.sec or 0
-        return mod_a > mod_b
-      end,
+      -- sort_by = "tabs",
       right_mouse_command = "vert sbuffer %d",
       show_close_icon = false,
       ---based on https://github.com/kovidgoyal/kitty/issues/957
