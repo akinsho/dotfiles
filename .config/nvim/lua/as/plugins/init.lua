@@ -384,31 +384,32 @@ require("packer").startup {
       },
     }
 
-    use {
+    use_local {
       "windwp/lsp-fastaction.nvim",
+      local_path = "contributing",
       config = function()
         local fastaction = require "lsp-fastaction"
         fastaction.setup {
-          ["dart"] = {
-            -- pattern is a lua regex with lower case
-            { pattern = "import library", key = "i", order = 1 },
-            { pattern = "wrap with widget", key = "w", order = 2 },
-            { pattern = "wrap with column", key = "c", order = 3 },
-            { pattern = "wrap with row", key = "r", order = 3 },
-            { pattern = "wrap with sizedbox", key = "s", order = 3 },
-            { pattern = "wrap with container", key = "C", order = 4 },
-            { pattern = "wrap with center", key = "E", order = 4 },
-            { pattern = "padding", key = "P", order = 4 },
-            { pattern = "remove", key = "R", order = 5 },
+          action_data = {
+            ["dart"] = {
+              { pattern = "import library", key = "i", order = 1 },
+              { pattern = "widget", key = "w", order = 2 },
+              { pattern = "column", key = "c", order = 3 },
+              { pattern = "row", key = "r", order = 3 },
+              { pattern = "container", key = "C", order = 4 },
+              { pattern = "center", key = "E", order = 4 },
+              { pattern = "padding", key = "p", order = 4 },
+              { pattern = "remove", key = "r", order = 5 },
 
-            --range code action
-            { pattern = "surround with %'if'", key = "i", order = 2 },
-            { pattern = "try%-catch", key = "t", order = 2 },
-            { pattern = "for%-in", key = "f", order = 2 },
-            { pattern = "setstate", key = "s", order = 2 },
+              -- range code action
+              { pattern = "surround with %'if'", key = "i", order = 2 },
+              { pattern = "try%-catch", key = "t", order = 2 },
+              { pattern = "for%-in", key = "f", order = 2 },
+              { pattern = "setstate", key = "s", order = 2 },
+            },
           },
         }
-        as.xnoremap("<leader>ca", fastaction.range_code_action)
+        as.xnoremap("<leader>ca", "<esc><Cmd>lua require('lsp-fastaction').range_code_action()<CR>")
         require("which-key").register {
           ["<leader>ca"] = { fastaction.code_action, "lsp: code action" },
         }
