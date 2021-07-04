@@ -4,6 +4,18 @@ function M.setup()
   local fn = vim.fn
   local has_dropbox = fn.isdirectory(fn.expand "$HOME/Dropbox") > 0
   local home = vim.env.HOME
+
+  require("which-key").register({
+    ["w"] = {
+      name = "+wiki",
+      i = "wiki: index",
+      t = "wiki: open index in tab",
+      w = "wiki: open diary",
+    },
+  }, {
+    prefix = "<leader>",
+  })
+
   vim.g.wiki_path = has_dropbox and home .. "/Dropbox/wiki" or home .. "/wiki"
 
   vim.g.wiki = {

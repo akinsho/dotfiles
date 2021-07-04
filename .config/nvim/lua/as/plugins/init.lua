@@ -149,6 +149,19 @@ require("packer").startup {
       event = "CursorHold",
       keys = { "<c-p>", "<leader>fo", "<leader>ff" },
       local_path = "contributing",
+      setup = function()
+        require("which-key").register({
+          ["f"] = {
+            o = "snap: buffers",
+            s = "snap: grep",
+            c = "snap: cursor word",
+            d = "snap: dotfiles",
+            O = "snap: org files",
+          },
+        }, {
+          prefix = "<leader>",
+        })
+      end,
       config = function()
         --- FIXME: remove this when/if snap changes default highlights
         require("as.highlights").plugin(
@@ -533,6 +546,11 @@ require("packer").startup {
       "mbbill/undotree",
       cmd = "UndotreeToggle",
       keys = "<leader>u",
+      setup = function()
+        require("which-key").register {
+          ["<leader>u"] = "undotree: toggle",
+        }
+      end,
       config = function()
         vim.g.undotree_TreeNodeShape = "◉" -- Alternative: '◦'
         vim.g.undotree_SetFocusWhenToggle = 1
@@ -711,13 +729,13 @@ require("packer").startup {
       "nvim-treesitter/playground",
       keys = "<leader>E",
       cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
-      config = function()
+      setup = function()
         require("which-key").register {
-          ["<leader>E"] = {
-            "<Cmd>TSHighlightCapturesUnderCursor<CR>",
-            "treesitter: highlight cursor group",
-          },
+          ["<leader>E"] = "treesitter: highlight cursor group",
         }
+      end,
+      config = function()
+        as.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
       end,
     }
     use { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter" }
