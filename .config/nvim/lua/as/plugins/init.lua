@@ -650,10 +650,11 @@ require("packer").startup {
         require("orgmode").setup {
           org_agenda_files = { org_dir .. "/**/*", "~/local-org/**/*" },
           org_default_notes_file = org_dir .. "/refile.org",
-          org_todo_keywords = { "TODO", "NEXT", "|", "DONE", "CANCELLED" },
+          org_todo_keywords = { "TODO", "NEXT", "HOLD", "|", "DONE", "CANCELLED" },
           org_todo_keyword_faces = {
             NEXT = ":foreground royalblue :weight bold :slant italic",
             CANCELLED = ":foreground darkred",
+            HOLD = ":foreground orange :weight bold",
           },
           org_agenda_templates = {
             l = { description = "Link", template = "* %?\n%a" },
