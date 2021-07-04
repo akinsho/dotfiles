@@ -63,53 +63,53 @@ end
 ---@param client table lsp client
 ---@param bufnr integer?
 local function setup_mappings(client, bufnr)
-  -- check that there are no existing mappings before assigning these
-  local nnoremap, xnoremap, opts =
-    as.nnoremap, as.xnoremap, { buffer = bufnr, check_existing = true }
+  local maps = {
+    ["<leader>rf"] = { vim.lsp.buf.formatting, "lsp: format buffer" },
+    ["<leader>cw"] = { vim.lsp.buf.workspace_symbol, "lsp: workspace symbol" },
+    ["<leader>cs"] = { vim.lsp.buf.document_symbol, "lsp: document symbol" },
+    ["gi"] = "lsp: implementation",
+    ["gd"] = { vim.lsp.buf.definition, "lsp: definition" },
+    ["gr"] = { vim.lsp.buf.references, "lsp: references" },
+    ["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" },
+    ["K"] = { vim.lsp.buf.hover, "lsp: hover" },
+  }
 
-  nnoremap("gd", vim.lsp.buf.definition, opts)
+  maps["]c"] = {
+    function()
+      vim.lsp.diagnostic.goto_prev {
+        popup_opts = { border = "rounded", focusable = false },
+      }
+    end,
+    "lsp: go to prev diagnostic",
+  }
+  maps["[c"] = {
+    function()
+      vim.lsp.diagnostic.goto_next {
+        popup_opts = { border = "rounded", focusable = false },
+      }
+    end,
+    "lsp: go to next diagnostic",
+  }
+
   if client.resolved_capabilities.implementation then
-    nnoremap("gi", vim.lsp.buf.implementation, opts)
+    maps["gi"] = { vim.lsp.buf.implementation, "lsp: impementation" }
   end
 
   if client.resolved_capabilities.type_definition then
-    nnoremap("<leader>gd", vim.lsp.buf.type_definition, opts)
+    maps["<leader>gd"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
   end
 
-  nnoremap("<leader>ca", vim.lsp.buf.code_action, opts)
-  xnoremap("<leader>ca", vim.lsp.buf.range_code_action, opts)
-
-  nnoremap("]c", function()
-    vim.lsp.diagnostic.goto_prev {
-      popup_opts = { border = "rounded", focusable = false },
-    }
-  end, opts)
-
-  nnoremap("[c", function()
-    vim.lsp.diagnostic.goto_next {
-      popup_opts = { border = "rounded", focusable = false },
-    }
-  end, opts)
-
-  nnoremap("K", vim.lsp.buf.hover, opts)
-  nnoremap("gI", vim.lsp.buf.incoming_calls, opts)
-  nnoremap("gr", vim.lsp.buf.references, opts)
+  if not as.has_map("<leader>ca", "n") then
+    maps["<leader>ca"] = { vim.lsp.buf.code_action, "lsp: code action" }
+    -- TODO: not sure that this works, since these keys likely override each other in which key
+    maps["<leader>ca"] = { vim.lsp.buf.range_code_action, "lsp: code action", mode = "x" }
+  end
 
   if client.supports_method "textDocument/rename" then
-    nnoremap("<leader>rn", vim.lsp.buf.rename, opts)
+    maps["<leader>rn"] = { vim.lsp.buf.rename, "lsp: rename" }
   end
 
-  nnoremap("<leader>cs", vim.lsp.buf.document_symbol, opts)
-  nnoremap("<leader>cw", vim.lsp.buf.workspace_symbol, opts)
-  nnoremap("<leader>rf", vim.lsp.buf.formatting, opts)
-  require("which-key").register {
-    ["<leader>rf"] = "lsp: format buffer",
-    ["<leader>ca"] = "lsp: code action",
-    ["<leader>gd"] = "lsp: go to type definition",
-    ["gr"] = "lsp: references",
-    ["gi"] = "lsp: implementation",
-    ["gI"] = "lsp: incoming calls",
-  }
+  require("which-key").register(maps, { buffer = 0 })
 end
 
 function as.lsp.tagfunc(pattern, flags)
