@@ -359,6 +359,8 @@ as.tnoremap = make_mapper("t", noremap_opts)
 as.snoremap = make_mapper("s", noremap_opts)
 as.cnoremap = make_mapper("c", { noremap = true, silent = false })
 
+---Create an nvim command
+---@param args table
 function as.command(args)
   local nargs = args.nargs or 0
   local name = args[1]

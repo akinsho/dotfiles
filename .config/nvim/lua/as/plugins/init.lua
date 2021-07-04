@@ -818,12 +818,8 @@ require("packer").startup {
         )
         require("diffview").setup {
           key_bindings = {
-            file_panel = {
-              ["q"] = "<Cmd>DiffviewClose<CR>",
-            },
-            view = {
-              ["q"] = "<Cmd>DiffviewClose<CR>",
-            },
+            file_panel = { q = "<Cmd>DiffviewClose<CR>" },
+            view = { q = "<Cmd>DiffviewClose<CR>" },
           },
         }
       end,
@@ -979,24 +975,46 @@ require("packer").startup {
           end,
         }
 
-        local lazygit = require("toggleterm.terminal").Terminal:new {
+        local float_handler = function(term)
+          vim.cmd "startinsert!"
+          if vim.fn.mapcheck("jk", "t") ~= "" then
+            vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
+            vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
+          end
+        end
+
+        local Terminal = require("toggleterm.terminal").Terminal
+
+        local lazygit = Terminal:new {
           cmd = "lazygit",
           dir = "git_dir",
           hidden = true,
           direction = "float",
-          on_open = function(term)
-            vim.cmd "startinsert!"
-            if vim.fn.mapcheck("jk", "t") ~= "" then
-              vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
-              vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
-            end
+          on_open = float_handler,
+        }
+
+        local htop = Terminal:new {
+          cmd = "htop",
+          hidden = "true",
+          direction = "float",
+          on_open = float_handler,
+        }
+
+        as.command {
+          "Htop",
+          function()
+            htop:toggle()
           end,
         }
 
-        local function toggle()
-          lazygit:toggle()
-        end
-        require("which-key").register { ["<leader>lg"] = { toggle, "toggleterm: toggle lazygit" } }
+        require("which-key").register {
+          ["<leader>lg"] = {
+            function()
+              lazygit:toggle()
+            end,
+            "toggleterm: toggle lazygit",
+          },
+        }
       end,
     }
     use_local {
