@@ -4,7 +4,7 @@ local is_work = has "mac"
 local is_home = not is_work
 local fmt = string.format
 
-local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.vim"
+local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.lua"
 
 -----------------------------------------------------------------------------//
 -- Bootstrap Packer {{{
@@ -288,7 +288,7 @@ require("packer").startup {
       end,
     }
 
-    use { "lukas-reineke/indent-blankline.nvim", branch = "lua", config = conf "indentline" }
+    use { "lukas-reineke/indent-blankline.nvim", config = conf "indentline" }
 
     use {
       "kyazdani42/nvim-tree.lua",
@@ -476,7 +476,6 @@ require("packer").startup {
         require("nvim-autopairs").setup {
           close_triple_quotes = true,
           check_ts = false,
-          fastwrap = {},
         }
       end,
     }
@@ -985,7 +984,7 @@ as.command {
   "PackerCompiledDelete",
   function()
     vim.fn.delete(PACKER_COMPILED_PATH)
-    vim.notify(fmt "Deleted %s")
+    vim.notify(fmt("Deleted %s", PACKER_COMPILED_PATH))
   end,
 }
 
