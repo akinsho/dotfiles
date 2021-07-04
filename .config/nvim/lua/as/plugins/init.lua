@@ -451,18 +451,6 @@ require("packer").startup {
       local_path = "personal",
     }
 
-    use { -- NOTE: this is currently broken due to a neovim bug
-      "rmagatti/goto-preview",
-      config = function()
-        require("goto-preview").setup {
-          default_mappings = true,
-          post_open_hook = function(buffer, _)
-            as.nnoremap("q", "<Cmd>q<CR>", { buffer = buffer, nowait = true })
-          end,
-        }
-      end,
-    }
-
     use { "hrsh7th/nvim-compe", module = "compe", config = conf "compe", event = "InsertEnter" }
 
     use {
