@@ -406,7 +406,7 @@ require("packer").startup {
           action_data = {
             ["dart"] = {
               { pattern = "import library", key = "i", order = 1 },
-              { pattern = "widget", key = "w", order = 2 },
+              { pattern = "wrap with widget", key = "w", order = 2 },
               { pattern = "column", key = "c", order = 3 },
               { pattern = "row", key = "r", order = 3 },
               { pattern = "container", key = "C", order = 4 },
