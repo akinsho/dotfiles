@@ -282,7 +282,7 @@ end
 local sidebar_fts = { "NvimTree", "dap-repl" }
 
 local function on_sidebar_enter()
-  local highlights = table.concat({
+  vim.wo.winhighlight = table.concat({
     "Normal:PanelBackground",
     "EndOfBuffer:PanelBackground",
     "StatusLine:PanelSt",
@@ -290,7 +290,6 @@ local function on_sidebar_enter()
     "SignColumn:PanelBackground",
     "VertSplit:PanelVertSplit",
   }, ",")
-  vim.cmd("setlocal winhighlight=" .. highlights)
 end
 
 local function colorscheme_overrides()
