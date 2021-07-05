@@ -725,6 +725,7 @@ require("packer").startup {
       run = ":TSUpdate",
       config = conf "treesitter",
       local_path = "contributing",
+      requires = { "nvim-treesitter/nvim-treesitter-textobjects", "p00f/nvim-ts-rainbow" },
     }
     use {
       "nvim-treesitter/playground",
@@ -739,8 +740,6 @@ require("packer").startup {
         as.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
       end,
     }
-    use { "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter" }
-    use { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter" }
 
     -- TODO: currently this plugin does not support dart, which I need to make PR for
     use "RRethy/nvim-treesitter-textsubjects"
