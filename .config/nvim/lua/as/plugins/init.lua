@@ -554,30 +554,33 @@ require("packer").startup {
       config = function()
         vim.g.undotree_TreeNodeShape = "◉" -- Alternative: '◦'
         vim.g.undotree_SetFocusWhenToggle = 1
-        require("which-key").register {
-          ["<leader>u"] = { "<cmd>UndotreeToggle<CR>", "toggle undotree" },
-        }
+        as.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>")
       end,
     }
     use {
       "vim-test/vim-test",
       cmd = { "TestFile", "TestNearest", "TestSuite" },
       keys = { "<localleader>tf", "<localleader>tn", "<localleader>ts" },
+      setup = function()
+        require("which-key").register({
+          t = {
+            name = "+vim-test",
+            f = "test: file",
+            n = "test: nearest",
+            s = "test: suite",
+          },
+        }, {
+          prefix = "<localleader>",
+        })
+      end,
       config = function()
         vim.cmd [[
           let test#strategy = "neovim"
           let test#neovim#term_position = "vert botright"
         ]]
-        require("which-key").register({
-          t = {
-            name = "+vim-test",
-            f = { "<cmd>TestFile<CR>", "test: file" },
-            n = { "<cmd>TestNearest<CR>", "test: nearest" },
-            s = { "<cmd>TestSuite<CR>", "test: suite" },
-          },
-        }, {
-          prefix = "<localleader>",
-        })
+        as.nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
+        as.nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
+        as.nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
       end,
     }
     use {
@@ -749,11 +752,14 @@ require("packer").startup {
       "mizlan/iswap.nvim",
       cmd = { "ISwap", "ISwapWith" },
       keys = "<localleader>sw",
+      setup = function()
+        require("which-key").register {
+          ["<localleader>s"] = { name = "+swap", w = "swap arguments,parameters etc." },
+        }
+      end,
       config = function()
         require("iswap").setup {}
-        require("which-key").register {
-          ["<localleader>sw"] = { "<Cmd>ISwapWith<CR>", "swap arguments,parameters etc." },
-        }
+        as.nnoremap("<localleader>sw", "<Cmd>ISwapWith<CR>")
       end,
     }
     use {
@@ -774,9 +780,11 @@ require("packer").startup {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
       keys = { "<localleader>gu" },
-      config = function()
+      setup = function()
         require("which-key").register { ["<localleader>gu"] = "gitlinker: get line url" }
-        require("gitlinker").setup { opts = { mappings = "<localleader>gu" } }
+      end,
+      config = function()
+        require("gitlinker").setup { mappings = "<localleader>gu" }
       end,
     }
     use { "lewis6991/gitsigns.nvim", config = conf "gitsigns", event = "BufRead" }
@@ -803,18 +811,19 @@ require("packer").startup {
       cmd = "Neogit",
       keys = { "<localleader>gs", "<localleader>gl", "<localleader>gp" },
       requires = "plenary.nvim",
-      config = conf "neogit",
+      setup = conf("neogit").setup,
+      config = conf("neogit").config,
     }
     use {
       "sindrets/diffview.nvim",
       cmd = "DiffviewOpen",
       module = "diffview",
       keys = "<localleader>gd",
+      setup = function()
+        require("which-key").register { ["<localleader>gd"] = "diffview: diff HEAD" }
+      end,
       config = function()
-        require("which-key").register(
-          { gd = { "<Cmd>DiffviewOpen<CR>", "diff ref" } },
-          { prefix = "<localleader>" }
-        )
+        as.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>")
         require("diffview").setup {
           key_bindings = {
             file_panel = { q = "<Cmd>DiffviewClose<CR>" },

@@ -1,4 +1,17 @@
-return function()
+local M = {}
+
+function M.setup()
+  require("which-key").register {
+    ["<localleader>g"] = {
+      s = "neogit: open status buffer",
+      c = "neogit: open commit buffer",
+      l = "neogit: open pull popup",
+      p = "neogit: open push popup",
+    },
+  }
+end
+
+function M.config()
   local neogit = require "neogit"
   neogit.setup {
     disable_signs = false,
@@ -20,15 +33,6 @@ return function()
   end)
   as.nnoremap("<localleader>gl", neogit.popups.pull.create)
   as.nnoremap("<localleader>gp", neogit.popups.push.create)
-
-  require("which-key").register {
-    ["<localleader>g"] = {
-      s = "neogit: open status buffer",
-      c = "neogit: open commit buffer",
-      l = "neogit: open pull popup",
-      p = "neogit: open push popup",
-    },
-  }
 
   local a = require "plenary.async_lib"
 
@@ -79,3 +83,5 @@ return function()
     end,
   }
 end
+
+return M
