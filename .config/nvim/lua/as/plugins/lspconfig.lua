@@ -305,6 +305,7 @@ function as.lsp.setup_servers()
     config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
     lspconfig[server].setup(config)
   end
+  vim.cmd "doautocmd User LspServersStarted"
 end
 
 return function()
