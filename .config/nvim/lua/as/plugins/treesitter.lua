@@ -6,7 +6,6 @@ return function()
     ensure_installed = "maintained",
     highlight = {
       enable = true,
-      ignore_install = { "verilog" },
     },
     incremental_selection = {
       enable = true,
