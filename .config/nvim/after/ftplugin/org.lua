@@ -1,3 +1,5 @@
+vim.opt_local.spell = true
+
 require("which-key").register({
   ["<leader>"] = {
     o = {
