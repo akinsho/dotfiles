@@ -233,7 +233,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { "TSKeyword", { link = "Statement" } },
     { "TSParameter", { gui = "italic,bold" } },
-    { "TSError", { link = "LspDiagnosticsUnderlineError" } },
+    { "TSError", { link = "LspDiagnosticsUnderlineError", force = true } },
     -- highlight FIXME comments
     { "commentTSWarning", { guifg = "Red", gui = "bold" } },
     { "commentTSDanger", { guifg = "#FBBF24", gui = "bold" } },
