@@ -71,11 +71,4 @@ return function()
   smap("<S-Tab>", "v:lua.__s_tab_complete()", opts)
   inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
   inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
-
-  require("nvim-autopairs.completion.compe").setup {
-    --  map <CR> on insert mode
-    map_cr = true,
-    -- it will auto insert `(` after select function or method item
-    map_complete = true,
-  }
 end

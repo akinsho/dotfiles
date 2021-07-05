@@ -465,6 +465,7 @@ require("packer").startup {
       local_path = "personal",
     }
 
+    -- The module key is so plugins like orgmode which register a source are able to do so
     use { "hrsh7th/nvim-compe", module = "compe", config = conf "compe", event = "InsertEnter" }
 
     use {
@@ -505,10 +506,18 @@ require("packer").startup {
     }
     use {
       "windwp/nvim-autopairs",
+      after = "nvim-compe",
       config = function()
         require("nvim-autopairs").setup {
           close_triple_quotes = true,
           check_ts = false,
+        }
+
+        require("nvim-autopairs.completion.compe").setup {
+          --  map <CR> on insert mode
+          map_cr = true,
+          -- it will auto insert `(` after select function or method item
+          map_complete = true,
         }
       end,
     }
