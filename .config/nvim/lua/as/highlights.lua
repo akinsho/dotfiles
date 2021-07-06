@@ -177,6 +177,7 @@ end
 
 local function general_overrides()
   local comment_fg = M.get_hl("Comment", "fg")
+  local keyword_fg = M.get_hl("Keyword", "fg")
   local msg_area_bg = M.darken_color(M.get_hl("Normal", "bg"), -10)
   M.all {
     { "mkdLineBreak", { link = "NONE", force = true } },
@@ -231,7 +232,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { "TSKeyword", { link = "Statement" } },
+    { "TSKeywordReturn", { gui = "italic", guifg = keyword_fg } },
     { "TSParameter", { gui = "italic,bold" } },
     { "TSError", { link = "LspDiagnosticsUnderlineError", force = true } },
     -- highlight FIXME comments
