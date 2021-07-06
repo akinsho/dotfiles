@@ -302,10 +302,12 @@ nmap(
 )
 
 -- This line opens the vimrc in a vertical split
-nnoremap("<leader>ev", [[:vsplit $MYVIMRC<cr>]])
+nnoremap("<leader>ev", [[<Cmd>vsplit $MYVIMRC<cr>]])
+-- This line opens my plugins file in a vertical split
+nnoremap("<leader>ep", "<Cmd>vsplit $DOTFILES/.config/nvim/lua/as/plugins/init.lua<CR>")
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap("<leader>sv", [[:luafile $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
+nnoremap("<leader>sv", [[<Cmd>luafile $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//

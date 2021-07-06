@@ -52,9 +52,10 @@ return function()
       },
       e = {
         name = "+edit",
-        v = "open vimrc in a new buffer",
-        z = "open zshrc in a new buffer",
-        t = "open tmux config in a new buffer",
+        v = "open vimrc in a vertical split",
+        p = "open plugins file in a vertical split",
+        z = "open zshrc in a vertical split",
+        t = "open tmux config in a vertical split",
       },
       o = {
         name = "+only",
