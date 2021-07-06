@@ -670,6 +670,7 @@ require("packer").startup {
           },
           org_hide_leading_stars = true,
           org_agenda_templates = {
+            t = { description = "Task", template = "* TODO %?\n SCHEDULED: %t" },
             l = { description = "Link", template = "* %?\n%a" },
             j = {
               description = "Journal",
@@ -678,7 +679,7 @@ require("packer").startup {
             },
             p = {
               description = "Project Todo",
-              template = "* TODO %? \nDEADLINE: %T",
+              template = "* TODO %? \nSCHEDULED: %t",
               target = org_dir .. "/projects.org",
             },
           },
