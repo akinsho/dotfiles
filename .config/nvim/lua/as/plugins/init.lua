@@ -316,17 +316,20 @@ require("packer").startup {
     -----------------------------------------------------------------------------//
     use {
       "mfussenegger/nvim-dap",
-      config = conf "dap",
       module = "dap",
-      keys = { "<localleader>dtc" },
-    }
-    use {
-      "rcarriga/nvim-dap-ui",
-      requires = "nvim-dap",
-      after = "nvim-dap",
-      config = function()
-        require("dapui").setup()
-      end,
+      keys = { "<localleader>dc" },
+      setup = conf("dap").setup,
+      config = conf("dap").config,
+      requires = {
+        {
+          "rcarriga/nvim-dap-ui",
+          requires = "nvim-dap",
+          after = "nvim-dap",
+          config = function()
+            require("dapui").setup()
+          end,
+        },
+      },
     }
 
     -- NOTE: curiosity rather than necessity

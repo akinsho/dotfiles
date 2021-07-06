@@ -299,7 +299,7 @@ end
 ---create a mapping function factory
 ---@param mode string
 ---@param o table
----@return function
+---@return fun(lhs: string, rhs: string, opts: table|nil) 'create a mapping'
 local function make_mapper(mode, o)
   -- copy the opts table as extends will mutate the opts table passed in otherwise
   local parent_opts = vim.deepcopy(o)

@@ -1,5 +1,24 @@
-return function()
-  local vnoremap = as.vnoremap
+local M = {}
+
+function M.setup()
+  require("which-key").register({
+    d = {
+      name = "+debugger",
+      b = "dap: toggle breakpoint",
+      B = "dap: set breakpoint",
+      c = "dap: continue or start debugging",
+      e = "dap: step out",
+      i = "dap: step into",
+      o = "dap: step over",
+      l = "dap REPL: run last",
+      t = "dap REPL: toggle",
+    },
+  }, {
+    prefix = "<localleader>",
+  })
+end
+
+function M.config()
   local dap = require "dap"
 
   vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
@@ -29,26 +48,18 @@ return function()
     callback { type = "server", host = config.host, port = config.port }
   end
 
-  local function set_breakpoint()
-    dap.set_breakpoint(vim.fn.input "Breakpoint condition: ")
-  end
-
-  vnoremap("<localleader>di", [[<cmd>lua require'dap.ui.variables'.visual_hover()<CR>]])
-  require("which-key").register({
-    d = {
-      name = "+debugger",
-      ["?"] = { require("dap.ui.variables").scopes, "hover: variables scopes" },
-      b = { dap.toggle_breakpoint, "toggle breakpoint" },
-      B = { set_breakpoint, "set breakpoint" },
-      c = { dap.continue, "continue or start debugging" },
-      e = { dap.step_out, "step out" },
-      i = { dap.step_into, "step into" },
-      o = { dap.step_over, "step over" },
-      l = { dap.repl.run_last, "REPL: run last" },
-      -- NOTE: the window options can be set directly in this function
-      r = { dap.repl.toggle, "REPL: toggle" },
-    },
-  }, {
-    prefix = "<localleader>",
-  })
+  -- NOTE: the window options can be set directly in this function
+  as.nnoremap("<localleader>dt", "<Cmd>lua require'dap'.repl.toggle()<CR>")
+  as.nnoremap("<localleader>dc", "<Cmd>lua require'dap'.continue()<CR>")
+  as.nnoremap("<localleader>de", "<Cmd>lua require'dap'.step_out()<CR>")
+  as.nnoremap("<localleader>di", "<Cmd>lua require'dap'.step_into()<CR>")
+  as.nnoremap("<localleader>do", "<Cmd>lua require'dap'.step_over()<CR>")
+  as.nnoremap("<localleader>dl", "<Cmd>lua require'dap'.run_last()<CR>")
+  as.nnoremap("<localleader>db", "<Cmd>lua require'dap'.toggle_breakpoint()<CR>")
+  as.nnoremap(
+    "<localleader>dB",
+    "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input 'Breakpoint condition: ')"
+  )
 end
+
+return M
