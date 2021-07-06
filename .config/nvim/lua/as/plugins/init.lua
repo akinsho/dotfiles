@@ -668,6 +668,7 @@ require("packer").startup {
             CANCELLED = ":foreground darkred",
             HOLD = ":foreground orange :weight bold",
           },
+          org_hide_leading_stars = true,
           org_agenda_templates = {
             l = { description = "Link", template = "* %?\n%a" },
             j = {
