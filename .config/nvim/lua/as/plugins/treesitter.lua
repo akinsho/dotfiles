@@ -4,6 +4,7 @@ as.ts = {}
 return function()
   require("nvim-treesitter.configs").setup {
     ensure_installed = "maintained",
+    ignore_install = { "hcl" }, -- conflicts with packer's filetype
     highlight = {
       enable = true,
     },
