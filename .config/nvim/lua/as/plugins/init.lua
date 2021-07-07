@@ -437,6 +437,7 @@ require("packer").startup {
     use_local {
       "akinsho/flutter-tools.nvim",
       config = function()
+        --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
         local ok, lsp_status = pcall(require, "lsp-status")
         local capabilities = ok and lsp_status.capabilities or nil
         require("flutter-tools").setup {
