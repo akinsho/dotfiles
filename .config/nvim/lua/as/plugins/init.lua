@@ -794,12 +794,20 @@ require("packer").startup {
     use {
       "ruifm/gitlinker.nvim",
       requires = "plenary.nvim",
-      keys = { "<localleader>gu" },
+      keys = { "<localleader>gu", "<localleader>go" },
       setup = function()
-        require("which-key").register { ["<localleader>gu"] = "gitlinker: get line url" }
+        require("which-key").register(
+          { gu = "gitlinker: get line url", go = "gitlinker: open repo url" },
+          { prefix = "<localleader>" }
+        )
       end,
       config = function()
-        require("gitlinker").setup { mappings = "<localleader>gu" }
+        local linker = require "gitlinker"
+        linker.setup { mappings = "<localleader>gu" }
+        as.nnoremap(
+          "<localleader>go",
+          linker.get_repo_url { action_callback = require("gitlinker.actions").open_in_browser }
+        )
       end,
     }
     use { "lewis6991/gitsigns.nvim", config = conf "gitsigns", event = "BufRead" }

@@ -411,9 +411,7 @@ end
 
 -- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
 nnoremap("<leader>g", [[:silent! set operatorfunc=v:lua._mappings.grep_operator<cr>g@]])
-vnoremap("<leader>g", [[:call v:lua._mappings.grep_operator(visualmode())<cr>]])
-nnoremap("<localleader>g*", [[:Ggrep --untracked <cword><CR>]])
-
+xnoremap("<leader>g", [[:call v:lua._mappings.grep_operator(visualmode())<cr>]])
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
