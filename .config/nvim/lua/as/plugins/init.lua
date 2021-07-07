@@ -794,6 +794,7 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     use {
       "ruifm/gitlinker.nvim",
+      branch = "allow-changed-files",
       requires = "plenary.nvim",
       keys = { "<localleader>gu", "<localleader>go" },
       setup = function()
