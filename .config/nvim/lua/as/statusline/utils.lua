@@ -544,14 +544,7 @@ function M.item(component, hl, opts)
     component = component:sub(1, opts.max_size - 1) .. "…"
   end
 
-  local parts = {
-    before,
-    prefix,
-    M.wrap(hl),
-    component,
-    "%*",
-    after,
-  }
+  local parts = { before, prefix, M.wrap(hl), component, "%*", after }
   return { table.concat(parts), #component + #before + #after + prefix_size }
 end
 
