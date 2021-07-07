@@ -473,19 +473,22 @@ require("packer").startup {
     use { "hrsh7th/nvim-compe", module = "compe", config = conf "compe", event = "InsertEnter" }
 
     use {
-      "hrsh7th/vim-vsnip",
+      "L3MON4D3/LuaSnip",
       event = "InsertEnter",
-      requires = { "rafamadriz/friendly-snippets", "hrsh7th/nvim-compe" },
+      requires = "rafamadriz/friendly-snippets",
       config = function()
-        vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
+        local ls = require "luasnip"
+        ls.config.set_config {
+          history = true,
+          updateevents = "TextChanged,TextChangedI",
+        }
         local opts = { expr = true }
-        as.imap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
-        as.smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
-        as.imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        as.smap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        as.xmap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
-        as.imap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
-        as.smap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
+        as.imap("<c-j>", "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'", opts)
+        as.smap("<c-j>", "luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'", opts)
+
+        require("luasnip.loaders.from_vscode").load {
+          paths = vim.g.vim_dir .. "/snippets/textmate",
+        }
       end,
     }
     -- }}}
