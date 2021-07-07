@@ -806,10 +806,9 @@ require("packer").startup {
       config = function()
         local linker = require "gitlinker"
         linker.setup { mappings = "<localleader>gu" }
-        as.nnoremap(
-          "<localleader>go",
+        as.nnoremap("<localleader>go", function()
           linker.get_repo_url { action_callback = require("gitlinker.actions").open_in_browser }
-        )
+        end)
       end,
     }
     use { "lewis6991/gitsigns.nvim", config = conf "gitsigns", event = "BufRead" }
