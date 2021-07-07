@@ -1,4 +1,4 @@
-vim.opt_local.spell = true
+vim.cmd [[setlocal spell]]
 
 require("which-key").register({
   ["<leader>"] = {
