@@ -671,6 +671,7 @@ require("packer").startup {
             CANCELLED = ":foreground darkred",
             HOLD = ":foreground orange :weight bold",
           },
+          org_hide_emphasis_markers = true,
           org_hide_leading_stars = true,
           org_agenda_templates = {
             t = { description = "Task", template = "* TODO %?\n SCHEDULED: %t" },
