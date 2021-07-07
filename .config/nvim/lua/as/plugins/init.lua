@@ -674,6 +674,8 @@ require("packer").startup {
           },
           org_hide_emphasis_markers = true,
           org_hide_leading_stars = true,
+          org_agenda_skip_scheduled_if_done = true,
+          org_agenda_skip_deadline_if_done = true,
           org_agenda_templates = {
             t = { description = "Task", template = "* TODO %?\n SCHEDULED: %t" },
             l = { description = "Link", template = "* %?\n%a" },
