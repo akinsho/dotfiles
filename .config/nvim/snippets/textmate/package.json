@@ -1,0 +1,18 @@
+{
+  "contributes": {
+    "snippets": [
+      {
+        "language": "dart",
+        "path": "./dart.json"
+      },
+      {
+        "language": "help",
+        "path": "./help.json"
+      },
+      {
+        "language": "lua",
+        "path": "./lua.json"
+      }
+    ]
+  }
+}
