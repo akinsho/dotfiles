@@ -42,7 +42,7 @@ return function()
       buffer = { kind = " " },
       luasnip = { kind = " " },
       spell = true,
-      emoji = { kind = "ﲃ", filetypes = { "markdown" } },
+      emoji = { kind = "ﲃ", filetypes = { "markdown", "gitcommit" } },
       nvim_lsp = { priority = 101 },
       nvim_lua = true,
       orgmode = true,
