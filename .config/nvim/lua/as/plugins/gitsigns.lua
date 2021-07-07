@@ -12,14 +12,12 @@ return function()
     },
     ["<localleader>g"] = {
       name = "+git",
-      w = { "<cmd>Gitsigns stage_buffer<CR>", "gitsigns: stage entire buffer" },
-      r = {
-        name = "+reset",
-        e = { "<cmd>Gitsigns reset_buffer<CR>", "gitsigns: reset entire buffer" },
-      },
+      w = "gitsigns: stage entire buffer",
+      r = { name = "+reset", e = "gitsigns: reset entire buffer" },
       b = {
         name = "+blame",
         l = "gitsigns: blame current line",
+        d = "gitsigns: toggle word diff",
       },
     },
     ["[h"] = "go to next git hunk",
@@ -49,6 +47,10 @@ return function()
         expr = true,
         "&diff ? '[h' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
       },
+      ["n <localleader>gw"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
+      ["n <localleader>gre"] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+      ["n <localleader>gbl"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
+      ["n <localleader>gbd"] = '<cmd>lua require"gitsigns".toggle_word_diff()<CR>',
       -- Text objects
       ["o ih"] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
       ["x ih"] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
@@ -56,7 +58,6 @@ return function()
       ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
       ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-      ["n <localleader>gbl"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
     },
   }
 end
