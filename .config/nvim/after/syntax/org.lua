@@ -11,7 +11,45 @@ local symbols = {
   "✿",
 }
 
+---@type table<integer,integer>
 local marks = {}
+local in_normal_mode = true
+
+---@type table
+local last_lnum = nil
+
+---Check if the current line is the same as the last
+---@param lnum integer
+---@return table
+local line_changed = function(lnum)
+  return last_lnum and last_lnum.lnum ~= lnum
+end
+
+local function set_mark(virt_text, lnum, start_col, end_col, highlight)
+  local id = api.nvim_buf_set_extmark(0, org_ns, lnum, start_col, {
+    end_col = end_col,
+    hl_group = highlight,
+    virt_text = { virt_text },
+    virt_text_pos = "overlay",
+    hl_mode = "combine",
+  })
+  marks[lnum] = id
+end
+
+---Re-add the lnum that was revealed on the last cursor move
+---@param lnum number
+local function reapply_previous_extmark(lnum)
+  if not last_lnum or not line_changed(lnum) then
+    return
+  end
+  local mark = last_lnum.mark[3]
+  if not mark then
+    return
+  end
+  local start_col = last_lnum.mark[2]
+  local end_col = mark.end_col
+  set_mark(mark.virt_text[1], last_lnum.lnum, start_col, end_col, mark.hl_group)
+end
 
 local function add_conceal_markers()
   api.nvim_buf_clear_namespace(0, org_ns, 0, -1)
@@ -26,37 +64,42 @@ local function add_conceal_markers()
       local padding = level <= 0 and "" or string.rep(" ", level - 1)
       local symbol = padding .. (symbols[level] or symbols[1]) .. " "
       local highlight = fmt("OrgHeadlineLevel%s", level)
-      local id = api.nvim_buf_set_extmark(0, org_ns, index - 1, start_col, {
-        end_col = end_col,
-        hl_group = highlight,
-        virt_text = { { symbol, highlight } },
-        virt_text_pos = "overlay",
-        hl_mode = "combine",
-      })
-      marks[index] = id
+      set_mark({ symbol, highlight }, index - 1, start_col, end_col, highlight)
     end
   end
 end
 
-add_conceal_markers()
-
-as.augroup("OrgBullets", {
+local commands = {
   {
     events = { "InsertLeave", "TextChanged", "TextChangedI" },
     targets = { "<buffer>" },
     command = add_conceal_markers,
   },
-  -- TODO: add functionality to remove extmarks whilst on a given line, like conceal cursor
-  -- {
-  --   events = { "CursorMoved" },
-  --   targets = { "<buffer>" },
-  --   command = function()
-  --     local lnum = fn.line "."
-  --     local id = marks[lnum]
-  --     if not id then
-  --       return
-  --     end
-  --     local mark = api.nvim_buf_get_extmark_by_id(0, org_ns, id, { details = true })
-  --   end,
-  -- },
-})
+}
+
+if in_normal_mode then
+  table.insert(commands, {
+    events = { "CursorMoved" },
+    targets = { "<buffer>" },
+    command = function()
+      local pos = api.nvim_win_get_cursor(0)
+      local lnum = pos[1] - 1
+      reapply_previous_extmark(lnum)
+      local id = marks[lnum]
+      if not id then
+        return
+      end
+      local mark = api.nvim_buf_get_extmark_by_id(0, org_ns, id, { details = true })
+      api.nvim_buf_del_extmark(0, org_ns, id)
+      if not last_lnum or line_changed(lnum) then
+        last_lnum = {
+          lnum = lnum,
+          mark = mark,
+        }
+      end
+    end,
+  })
+end
+
+as.augroup("OrgBullets", commands)
+add_conceal_markers()
