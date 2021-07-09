@@ -698,6 +698,15 @@ require("packer").startup {
         }
       end,
     }
+
+    use_local {
+      "akinsho/org-bullets.nvim",
+      local_path = "personal",
+      config = function()
+        require("org-bullets").setup()
+      end,
+    }
+
     -- }}}
     --------------------------------------------------------------------------------
     -- Profiling {{{
