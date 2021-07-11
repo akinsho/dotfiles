@@ -174,11 +174,10 @@ require("packer").startup {
         local config = require "snap.config"
         local file = config.file:with { suffix = " »", consumer = "fzy" }
         local vimgrep = config.vimgrep:with { limit = 50000 }
-        local args = { "--iglob", "!{.git/*,zsh/plugins/*,dotbot/*}" }
         snap.maps {
           {
             "<c-p>",
-            file { prompt = "Project files", args = args, try = { "git.file", "ripgrep.file" } },
+            file { prompt = "Project files", try = { "git.file", "ripgrep.file" } },
             { command = "project-files" },
           },
           {
@@ -186,7 +185,7 @@ require("packer").startup {
             file {
               prompt = "Dotfiles",
               producer = "ripgrep.file",
-              args = { vim.env.DOTFILES, unpack(args) },
+              args = { vim.env.DOTFILES },
             },
             { command = "dots" },
           },
@@ -199,8 +198,8 @@ require("packer").startup {
             },
             { command = "org" },
           },
-          { "<leader>fs", vimgrep { limit = 50000, args = args }, { command = "grep" } },
-          { "<leader>fc", vimgrep { prompt = "Find word", args = args, filter_with = "cword" } },
+          { "<leader>fs", vimgrep { limit = 50000 }, { command = "grep" } },
+          { "<leader>fc", vimgrep { prompt = "Find word", filter_with = "cword" } },
           { "<leader>fo", file { producer = "vim.buffer" }, { command = "buffers" } },
 
           --- TODO: this producer hasn't been added yet
