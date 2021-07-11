@@ -645,6 +645,25 @@ require("packer").startup {
     }
 
     use {
+      "vhyrro/neorg",
+      config = function()
+        require("neorg").setup {
+          load = {
+            ["core.defaults"] = {},
+            ["core.norg.concealer"] = {},
+            ["core.norg.dirman"] = {
+              config = {
+                workspaces = {
+                  home = "~/Dropbox/neorg",
+                },
+              },
+            },
+          },
+        }
+      end,
+    }
+
+    use {
       "kristijanhusak/orgmode.nvim",
       config = function()
         local org_dir = "~/Dropbox/org"
