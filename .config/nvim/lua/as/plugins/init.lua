@@ -396,7 +396,6 @@ require("packer").startup {
             })
           end,
         },
-        { "glepnir/lspsaga.nvim", opt = true, config = conf "lspsaga" },
       },
     }
 
