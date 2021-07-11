@@ -346,6 +346,7 @@ require("packer").startup {
             exclude = { "org", "orgagenda", "vimwiki", "markdown" },
           },
         }
+        require("which-key").register { ["<leader>lt"] = { "<Cmd>TodoTrouble<CR>", "trouble: todos" } }
       end,
     }
 
