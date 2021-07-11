@@ -1,4 +1,4 @@
-local H = require "as.highlights"
+local H = require 'as.highlights'
 local icons_loaded, devicons
 
 local fn = vim.fn
@@ -10,95 +10,95 @@ local contains = vim.tbl_contains
 local M = {}
 
 local function get_toggleterm_name(_, bufnum)
-  local shell = fnamemodify(vim.env.SHELL, ":t")
-  local terminal_prefix = "Terminal(" .. shell .. ")["
-  return terminal_prefix .. fn.getbufvar(bufnum, "toggle_number") .. "]"
+  local shell = fnamemodify(vim.env.SHELL, ':t')
+  local terminal_prefix = 'Terminal(' .. shell .. ')['
+  return terminal_prefix .. fn.getbufvar(bufnum, 'toggle_number') .. ']'
 end
 
 local plain_filetypes = {
-  "help",
-  "ctrlsf",
-  "minimap",
-  "Trouble",
-  "tsplayground",
-  "coc-explorer",
-  "NvimTree",
-  "undotree",
-  "neoterm",
-  "vista",
-  "fugitive",
-  "startify",
-  "vimwiki",
-  "markdown",
-  "NeogitStatus",
+  'help',
+  'ctrlsf',
+  'minimap',
+  'Trouble',
+  'tsplayground',
+  'coc-explorer',
+  'NvimTree',
+  'undotree',
+  'neoterm',
+  'vista',
+  'fugitive',
+  'startify',
+  'vimwiki',
+  'markdown',
+  'NeogitStatus',
 }
 
 local plain_buftypes = {
-  "terminal",
-  "quickfix",
-  "nofile",
-  "nowrite",
-  "acwrite",
+  'terminal',
+  'quickfix',
+  'nofile',
+  'nowrite',
+  'acwrite',
 }
 
 local exceptions = {
   buftypes = {
-    terminal = " ",
-    quickfix = "",
+    terminal = ' ',
+    quickfix = '',
   },
   filetypes = {
-    org = "",
-    orgagenda = "",
-    ["himalaya-msg-list"] = "",
-    mail = "",
-    dbui = "",
-    vista = "פּ",
-    tsplayground = "侮",
-    fugitive = "",
-    fugitiveblame = "",
-    gitcommit = "",
-    startify = "",
-    defx = "⌨",
-    ctrlsf = "🔍",
-    Trouble = "",
-    NeogitStatus = "",
-    ["vim-plug"] = "⚉",
-    vimwiki = "ﴬ",
-    help = "",
-    undotree = "פּ",
-    ["coc-explorer"] = "",
-    NvimTree = "פּ",
-    toggleterm = " ",
-    calendar = "",
-    minimap = "",
-    octo = "",
-    ["dap-repl"] = "",
+    org = '',
+    orgagenda = '',
+    ['himalaya-msg-list'] = '',
+    mail = '',
+    dbui = '',
+    vista = 'פּ',
+    tsplayground = '侮',
+    fugitive = '',
+    fugitiveblame = '',
+    gitcommit = '',
+    startify = '',
+    defx = '⌨',
+    ctrlsf = '🔍',
+    Trouble = '',
+    NeogitStatus = '',
+    ['vim-plug'] = '⚉',
+    vimwiki = 'ﴬ',
+    help = '',
+    undotree = 'פּ',
+    ['coc-explorer'] = '',
+    NvimTree = 'פּ',
+    toggleterm = ' ',
+    calendar = '',
+    minimap = '',
+    octo = '',
+    ['dap-repl'] = '',
   },
   names = {
-    orgagenda = "Org",
-    ["himalaya-msg-list"] = "Inbox",
-    mail = "Mail",
-    minimap = "",
-    dbui = "Dadbod UI",
-    tsplayground = "Treesitter",
-    vista = "Vista",
-    fugitive = "Fugitive",
-    fugitiveblame = "Git blame",
-    NeogitStatus = "Neogit Status",
-    Trouble = "Lsp Trouble",
-    gitcommit = "Git commit",
-    startify = "Startify",
-    defx = "Defx",
-    ctrlsf = "CtrlSF",
-    ["vim-plug"] = "vim plug",
-    vimwiki = "vim wiki",
-    help = "help",
-    undotree = "UndoTree",
-    octo = "Octo",
-    ["coc-explorer"] = "Coc Explorer",
-    NvimTree = "Nvim Tree",
+    orgagenda = 'Org',
+    ['himalaya-msg-list'] = 'Inbox',
+    mail = 'Mail',
+    minimap = '',
+    dbui = 'Dadbod UI',
+    tsplayground = 'Treesitter',
+    vista = 'Vista',
+    fugitive = 'Fugitive',
+    fugitiveblame = 'Git blame',
+    NeogitStatus = 'Neogit Status',
+    Trouble = 'Lsp Trouble',
+    gitcommit = 'Git commit',
+    startify = 'Startify',
+    defx = 'Defx',
+    ctrlsf = 'CtrlSF',
+    ['vim-plug'] = 'vim plug',
+    vimwiki = 'vim wiki',
+    help = 'help',
+    undotree = 'UndoTree',
+    octo = 'Octo',
+    ['coc-explorer'] = 'Coc Explorer',
+    NvimTree = 'Nvim Tree',
     toggleterm = get_toggleterm_name,
-    ["dap-repl"] = "Debugger REPL",
+    ['dap-repl'] = 'Debugger REPL',
   },
 }
 
@@ -171,19 +171,19 @@ end
 local function special_buffers(ctx)
   local location_list = fn.getloclist(0, { filewinid = 0 })
   local is_loc_list = location_list.filewinid > 0
-  local normal_term = ctx.buftype == "terminal" and ctx.filetype == ""
+  local normal_term = ctx.buftype == 'terminal' and ctx.filetype == ''
 
   if is_loc_list then
-    return "Location List"
+    return 'Location List'
   end
-  if ctx.buftype == "quickfix" then
-    return "Quickfix"
+  if ctx.buftype == 'quickfix' then
+    return 'Quickfix'
   end
   if normal_term then
-    return "Terminal(" .. fnamemodify(vim.env.SHELL, ":t") .. ")"
+    return 'Terminal(' .. fnamemodify(vim.env.SHELL, ':t') .. ')'
   end
   if ctx.preview then
-    return "preview"
+    return 'preview'
   end
 
   return nil
@@ -192,59 +192,59 @@ end
 --- @param ctx table
 --- @param icon string | nil
 function M.modified(ctx, icon)
-  icon = icon or "✎"
-  if ctx.filetype == "help" then
-    return ""
+  icon = icon or '✎'
+  if ctx.filetype == 'help' then
+    return ''
   end
-  return ctx.modified and icon or ""
+  return ctx.modified and icon or ''
 end
 
 --- @param ctx table
 --- @param icon string | nil
 function M.readonly(ctx, icon)
-  icon = icon or ""
+  icon = icon or ''
   if ctx.readonly then
-    return " " .. icon
+    return ' ' .. icon
   else
-    return ""
+    return ''
   end
 end
 
 --- @param bufnum number
 --- @param mod string
 local function buf_expand(bufnum, mod)
-  return expand("#" .. bufnum .. mod)
+  return expand('#' .. bufnum .. mod)
 end
 
 --- @param ctx table
 --- @param modifier string
 local function filename(ctx, modifier)
-  modifier = modifier or ":t"
+  modifier = modifier or ':t'
   local special_buf = special_buffers(ctx)
   if special_buf then
-    return "", "", special_buf
+    return '', '', special_buf
   end
 
   local fname = buf_expand(ctx.bufnum, modifier)
 
   local name = exceptions.names[ctx.filetype]
-  if type(name) == "function" then
-    return "", "", name(fname, ctx.bufnum)
+  if type(name) == 'function' then
+    return '', '', name(fname, ctx.bufnum)
   end
 
   if name then
-    return "", "", name
+    return '', '', name
   end
 
   if not fname then
-    return "", "", "No Name"
+    return '', '', 'No Name'
   end
 
-  local path = (ctx.buftype == "" and not ctx.preview) and buf_expand(ctx.bufnum, ":~:.:h") or nil
+  local path = (ctx.buftype == '' and not ctx.preview) and buf_expand(ctx.bufnum, ':~:.:h') or nil
   local is_root = path and #path == 1 -- "~" or "."
-  local dir = path and not is_root and fn.pathshorten(fnamemodify(path, ":h")) .. "/" or ""
-  local parent = path and (is_root and path or fnamemodify(path, ":t")) or ""
-  parent = parent ~= "" and parent .. "/" or ""
+  local dir = path and not is_root and fn.pathshorten(fnamemodify(path, ':h')) .. '/' or ''
+  local parent = path and (is_root and path or fnamemodify(path, ':t')) or ''
+  parent = parent ~= '' and parent .. '/' or ''
 
   return dir, parent, fname
 end
@@ -253,16 +253,16 @@ end
 --- @param bg_hl string
 local function set_ft_icon_highlight(hl, bg_hl)
   if not hl then
-    return ""
+    return ''
   end
-  local name = hl .. "Statusline"
+  local name = hl .. 'Statusline'
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
-  local fg_color = H.get_hl(hl, "fg")
-  local bg_color = H.get_hl(bg_hl, "bg")
+  local fg_color = H.get_hl(hl, 'fg')
+  local bg_color = H.get_hl(bg_hl, 'bg')
   if bg_color and fg_color then
-    local cmd = { "highlight ", name, " guibg=", bg_color, " guifg=", fg_color }
+    local cmd = { 'highlight ', name, ' guibg=', bg_color, ' guifg=', fg_color }
     local str = table.concat(cmd)
-    as.augroup(name, { { events = { "ColorScheme" }, targets = { "*" }, command = str } })
+    as.augroup(name, { { events = { 'ColorScheme' }, targets = { '*' }, command = str } })
     vim.cmd(string.format("silent execute '%s'", str))
   end
   return name
@@ -281,9 +281,9 @@ local function filetype(ctx, opts)
     return bt_exception, opts.default
   end
   local icon, hl
-  local extension = fnamemodify(ctx.bufname, ":e")
+  local extension = fnamemodify(ctx.bufname, ':e')
   if not icons_loaded then
-    icons_loaded, devicons = pcall(require, "nvim-web-devicons")
+    icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
   end
   if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
@@ -297,37 +297,37 @@ end
 --- format strings because these cannot be
 -- @param opts table
 function M.line_info(opts)
-  local sep = opts.sep or "/"
-  local prefix = opts.prefix or "L"
+  local sep = opts.sep or '/'
+  local prefix = opts.prefix or 'L'
   local prefix_color = opts.prefix_color
   local current_hl = opts.current_hl
   local total_hl = opts.total_hl
   local sep_hl = opts.total_hl
 
-  local current = fn.line "."
-  local last = fn.line "$"
+  local current = fn.line '.'
+  local last = fn.line '$'
 
   local length = strwidth(prefix .. current .. sep .. last)
   return {
     table.concat {
-      " ",
+      ' ',
       M.wrap(prefix_color),
       prefix,
-      " ",
+      ' ',
       M.wrap(current_hl),
       current,
       M.wrap(sep_hl),
       sep,
       M.wrap(total_hl),
       last,
-      " ",
+      ' ',
     },
     length,
   }
 end
 
 local function empty_opts()
-  return { before = "", after = "" }
+  return { before = '', after = '' }
 end
 
 ---Create the various segments of the current filename
@@ -337,17 +337,17 @@ end
 function M.file(ctx, minimal)
   local curwin = ctx.winid
   -- highlight the filename components separately
-  local filename_hl = minimal and "StFilenameInactive" or "StFilename"
-  local directory_hl = minimal and "StInactiveSep" or "StDirectory"
-  local parent_hl = minimal and directory_hl or "StParentDirectory"
+  local filename_hl = minimal and 'StFilenameInactive' or 'StFilename'
+  local directory_hl = minimal and 'StInactiveSep' or 'StDirectory'
+  local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
-  if H.has_win_highlight(curwin, "Normal", "StatusLine") then
-    directory_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomDirectory", "StTitle")
-    filename_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomFilename", "StTitle")
-    parent_hl = H.adopt_winhighlight(curwin, "StatusLine", "StCustomParentDir", "StTitle")
+  if H.has_win_highlight(curwin, 'Normal', 'StatusLine') then
+    directory_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
+    filename_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
+    parent_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
   end
 
-  local ft_icon, icon_highlight = filetype(ctx, { icon_bg = "StatusLine", default = "StComment" })
+  local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })
 
   local file_opts, parent_opts, dir_opts = empty_opts(), empty_opts(), empty_opts()
   local directory, parent, file = filename(ctx)
@@ -376,9 +376,9 @@ function M.diagnostic_info(context)
 
   local icons = as.style.icons
   return {
-    error = { count = get_count(buf, "Error"), sign = icons.error },
-    warning = { count = get_count(buf, "Warning"), sign = icons.warning },
-    info = { count = get_count(buf, "Information"), sign = icons.info },
+    error = { count = get_count(buf, 'Error'), sign = icons.error },
+    warning = { count = get_count(buf, 'Warning'), sign = icons.warning },
+    info = { count = get_count(buf, 'Information'), sign = icons.info },
   }
 end
 
@@ -390,7 +390,7 @@ local ok
 ---@return string
 function M.lsp_status()
   if not lsp_status then
-    ok, lsp_status = pcall(require, "lsp-status")
+    ok, lsp_status = pcall(require, 'lsp-status')
   end
   if ok and lsp_status then
     return lsp_status.status_progress()
@@ -405,7 +405,7 @@ end
 
 local function printf(format, current, total)
   if current == 0 and total == 0 then
-    return ""
+    return ''
   end
   return fn.printf(format, current, total)
 end
@@ -416,21 +416,21 @@ end
 function M.search_count()
   local result = fn.searchcount { recompute = 0 }
   if vim.tbl_isempty(result) then
-    return ""
+    return ''
   end
   ---NOTE: the search term can be included in the output
   --- using [%s] but this value seems flaky
   -- local search_reg = fn.getreg("@/")
   if result.incomplete == 1 then -- timed out
-    return printf " ?/?? "
+    return printf ' ?/?? '
   elseif result.incomplete == 2 then -- max count exceeded
     if result.total > result.maxcount and result.current > result.maxcount then
-      return printf(" >%d/>%d ", result.current, result.total)
+      return printf(' >%d/>%d ', result.current, result.total)
     elseif result.total > result.maxcount then
-      return printf(" %d/>%d ", result.current, result.total)
+      return printf(' %d/>%d ', result.current, result.total)
     end
   end
-  return printf(" %d/%d ", result.current, result.total)
+  return printf(' %d/%d ', result.current, result.total)
 end
 
 ---@type number
@@ -444,7 +444,7 @@ function M.update_search_count()
   search_count_timer = fn.timer_start(200, function(timer)
     if timer == search_count_timer then
       fn.searchcount { recompute = 1, maxcount = 0, timeout = 100 }
-      vim.cmd "redrawstatus"
+      vim.cmd 'redrawstatus'
     end
   end)
 end
@@ -454,16 +454,16 @@ local function mode_highlight(mode)
   local visual_regex = vim.regex [[\(v\|V\|\)]]
   local command_regex = vim.regex [[\(c\|cv\|ce\)]]
   local replace_regex = vim.regex [[\(Rc\|R\|Rv\|Rx\)]]
-  if mode == "i" then
-    return "StModeInsert"
+  if mode == 'i' then
+    return 'StModeInsert'
   elseif visual_regex:match_str(mode) then
-    return "StModeVisual"
+    return 'StModeVisual'
   elseif replace_regex:match_str(mode) then
-    return "StModeReplace"
+    return 'StModeReplace'
   elseif command_regex:match_str(mode) then
-    return "StModeCommand"
+    return 'StModeCommand'
   else
-    return "StModeNormal"
+    return 'StModeNormal'
   end
 end
 
@@ -472,35 +472,35 @@ function M.mode()
   local hl = mode_highlight(current_mode)
 
   local mode_map = {
-    ["n"] = "NORMAL",
-    ["no"] = "N·OPERATOR PENDING ",
-    ["v"] = "VISUAL",
-    ["V"] = "V·LINE",
-    [""] = "V·BLOCK",
-    ["s"] = "SELECT",
-    ["S"] = "S·LINE",
-    ["^S"] = "S·BLOCK",
-    ["i"] = "INSERT",
-    ["R"] = "REPLACE",
-    ["Rv"] = "V·REPLACE",
-    ["Rx"] = "C·REPLACE",
-    ["Rc"] = "C·REPLACE",
-    ["c"] = "COMMAND",
-    ["cv"] = "VIM EX",
-    ["ce"] = "EX",
-    ["r"] = "PROMPT",
-    ["rm"] = "MORE",
-    ["r?"] = "CONFIRM",
-    ["!"] = "SHELL",
-    ["t"] = "TERMINAL",
+    ['n'] = 'NORMAL',
+    ['no'] = 'N·OPERATOR PENDING ',
+    ['v'] = 'VISUAL',
+    ['V'] = 'V·LINE',
+    [''] = 'V·BLOCK',
+    ['s'] = 'SELECT',
+    ['S'] = 'S·LINE',
+    ['^S'] = 'S·BLOCK',
+    ['i'] = 'INSERT',
+    ['R'] = 'REPLACE',
+    ['Rv'] = 'V·REPLACE',
+    ['Rx'] = 'C·REPLACE',
+    ['Rc'] = 'C·REPLACE',
+    ['c'] = 'COMMAND',
+    ['cv'] = 'VIM EX',
+    ['ce'] = 'EX',
+    ['r'] = 'PROMPT',
+    ['rm'] = 'MORE',
+    ['r?'] = 'CONFIRM',
+    ['!'] = 'SHELL',
+    ['t'] = 'TERMINAL',
   }
-  return (mode_map[current_mode] or "UNKNOWN"), hl
+  return (mode_map[current_mode] or 'UNKNOWN'), hl
 end
 
 --- @param hl string
 function M.wrap(hl)
-  assert(hl, "A highlight name must be specified")
-  return "%#" .. hl .. "#"
+  assert(hl, 'A highlight name must be specified')
+  return '%#' .. hl .. '#'
 end
 
 --- Creates a spacer statusline component i.e. for padding
@@ -508,12 +508,12 @@ end
 --- @param size number
 --- @param filler string | nil
 function M.spacer(size, filler)
-  filler = filler or " "
+  filler = filler or ' '
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
     return { spacer, #spacer }
   else
-    return { "", 0 }
+    return { '', 0 }
   end
 end
 
@@ -523,28 +523,28 @@ end
 function M.item(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
-  if not component or component == "" or component == 0 then
+  if not component or component == '' or component == 0 then
     return M.spacer()
   end
   opts = opts or {}
-  local before = opts.before or ""
-  local after = opts.after or " "
-  local prefix = opts.prefix or ""
+  local before = opts.before or ''
+  local after = opts.after or ' '
+  local prefix = opts.prefix or ''
   local prefix_size = strwidth(prefix)
 
   local prefix_color = opts.prefix_color or hl
-  prefix = prefix ~= "" and M.wrap(prefix_color) .. prefix .. " " or ""
+  prefix = prefix ~= '' and M.wrap(prefix_color) .. prefix .. ' ' or ''
 
   --- handle numeric inputs etc.
-  if type(component) ~= "string" then
+  if type(component) ~= 'string' then
     component = tostring(component)
   end
 
   if opts.max_size and component and #component >= opts.max_size then
-    component = component:sub(1, opts.max_size - 1) .. "…"
+    component = component:sub(1, opts.max_size - 1) .. '…'
   end
 
-  local parts = { before, prefix, M.wrap(hl), component, "%*", after }
+  local parts = { before, prefix, M.wrap(hl), component, '%*', after }
   return { table.concat(parts), #component + #before + #after + prefix_size }
 end
 
@@ -577,7 +577,7 @@ local function job(interval, task, on_complete)
     end
     pending_job = task()
   end, {
-    ["repeat"] = -1,
+    ['repeat'] = -1,
   })
   if on_complete then
     on_complete(timer)
@@ -590,12 +590,12 @@ end
 local function validate_github_response(data)
   return vim.tbl_islist(data)
     and not as.empty(data[1])
-    and type(data[1]) == "string"
-    and not data[1]:match "<!DOCTYPE html>"
+    and type(data[1]) == 'string'
+    and not data[1]:match '<!DOCTYPE html>'
 end
 
 local function fetch_github_notifications()
-  fn.jobstart("gh api notifications", {
+  fn.jobstart('gh api notifications', {
     stdout_buffered = true,
     on_stdout = function(_, data, _)
       if data then
@@ -612,7 +612,7 @@ local function fetch_github_notifications()
 end
 
 function M.github_notifications()
-  if fn.executable "gh" > 0 then
+  if fn.executable 'gh' > 0 then
     job(300000, fetch_github_notifications)
   end
 end
@@ -620,14 +620,14 @@ end
 ---check if in a git repository
 ---@return boolean
 local function is_git_repo()
-  return fn.isdirectory(fn.getcwd() .. "/" .. ".git") > 0
+  return fn.isdirectory(fn.getcwd() .. '/' .. '.git') > 0
 end
 
 --- @param result table
 local function git_read(result)
   return function(_, data, _)
     for _, v in ipairs(data) do
-      if v and v ~= "" then
+      if v and v ~= '' then
         table.insert(result, v)
       end
     end
@@ -638,7 +638,7 @@ end
 local function git_update_status(result)
   return function(_, code, _)
     if code == 0 and result and #result > 0 then
-      local parts = vim.split(result[1], "\t")
+      local parts = vim.split(result[1], '\t')
       if parts and #parts > 1 then
         local formatted = { behind = parts[1], ahead = parts[2] }
         vim.g.git_statusline_updates = formatted
@@ -648,7 +648,7 @@ local function git_update_status(result)
 end
 
 local function git_update_job()
-  local cmd = "git rev-list --count --left-right @{upstream}...HEAD"
+  local cmd = 'git rev-list --count --left-right @{upstream}...HEAD'
   local result = {}
   return fn.jobstart(cmd, { on_stdout = git_read(result), on_exit = git_update_status(result) })
 end

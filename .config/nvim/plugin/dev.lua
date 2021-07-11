@@ -8,9 +8,9 @@ function M.auto_reload(plugin)
   if _G._require == nil then
     _G._require = require
     _G.require = function(path)
-      local module = fmt("^%s[^_]*$", vim.pesc(plugin))
+      local module = fmt('^%s[^_]*$', vim.pesc(plugin))
       if string.find(path, module) ~= nil then
-        require("plenary.reload").reload_module(path)
+        require('plenary.reload').reload_module(path)
       end
       return _G._require(path)
     end
@@ -21,27 +21,27 @@ function M.setup(enabled)
   if not enabled then
     return
   end
-  as.augroup("DevReload", {
+  as.augroup('DevReload', {
     {
-      events = { "VimEnter" },
-      targets = { "*" },
+      events = { 'VimEnter' },
+      targets = { '*' },
       command = function()
         local cwd = vim.loop.cwd()
         if not cwd:match(vim.env.PROJECTS_DIR) then
           return
         end
-        local lua_dir = cwd .. "/lua/"
+        local lua_dir = cwd .. '/lua/'
         if fn.isdirectory(lua_dir) == 0 then
           return
         end
-        local names = require("pl.dir").getdirectories(lua_dir)
+        local names = require('pl.dir').getdirectories(lua_dir)
         if not names[1] then
           return
         end
-        local name = fn.fnamemodify(names[1], ":t")
+        local name = fn.fnamemodify(names[1], ':t')
         M.auto_reload(name)
         vim.schedule(function()
-          vim.notify(fmt("autoreloading %s", name))
+          vim.notify(fmt('autoreloading %s', name))
         end)
       end,
     },

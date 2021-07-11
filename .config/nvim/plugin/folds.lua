@@ -5,7 +5,7 @@ local fn = vim.fn
 local api = vim.api
 
 -- List of file types to use default fold text for
-local fold_exclusions = { "vim" }
+local fold_exclusions = { 'vim' }
 
 local function contains(str, pattern)
   assert(str)
@@ -15,10 +15,10 @@ end
 
 local function prepare_fold_section(value)
   -- 1. Replace tabs
-  local str = fn.substitute(value, "\t", string.rep(" ", vim.bo.tabstop), "g")
+  local str = fn.substitute(value, '\t', string.rep(' ', vim.bo.tabstop), 'g')
   -- 2. getline returns the line leading white space so we remove it
   -- CREDIT: https://stackoverflow.com/questions/5992336/indenting-fold-text
-  return fn.substitute(str, [[^\s*]], "", "g")
+  return fn.substitute(str, [[^\s*]], '', 'g')
 end
 
 local function is_ignored()
@@ -33,7 +33,7 @@ local function is_ignored()
 end
 
 local function is_import(item)
-  return contains(item, "^import")
+  return contains(item, '^import')
 end
 
 --[[
@@ -71,14 +71,14 @@ local function handle_fold_start(start_text, end_text, foldsymbol)
     --- This regex matches anything after an import followed by a space
     --- this might not hold true for all languages but think it does
     --- for all the ones I use
-    return fn.substitute(start_text, [[^import .\+]], "import " .. foldsymbol, "")
+    return fn.substitute(start_text, [[^import .\+]], 'import ' .. foldsymbol, '')
   end
   return prepare_fold_section(start_text) .. foldsymbol
 end
 
 local function handle_fold_end(item)
   if not contains_delimiter(item) or is_import(item) then
-    return ""
+    return ''
   end
   return prepare_fold_section(item)
 end
@@ -90,19 +90,19 @@ function _G.folds()
   local end_text = fn.getline(vim.v.foldend)
   local start_text = fn.getline(vim.v.foldstart)
   local line_end = handle_fold_end(end_text)
-  local line_start = handle_fold_start(start_text, end_text, "…")
+  local line_start = handle_fold_start(start_text, end_text, '…')
   local line = line_start .. line_end
   local lines_count = vim.v.foldend - vim.v.foldstart + 1
-  local count_text = "(" .. lines_count .. " lines)"
+  local count_text = '(' .. lines_count .. ' lines)'
   local indentation = fn.indent(vim.v.foldstart)
-  local fold_start = string.rep(" ", indentation) .. line
-  local fold_end = count_text .. string.rep(" ", 2)
+  local fold_start = string.rep(' ', indentation) .. line
+  local fold_end = count_text .. string.rep(' ', 2)
   --NOTE: foldcolumn can now be set to a value of auto:Count e.g auto:5
   --so we split off the auto portion so we can still get the line count
-  local parts = vim.split(vim.wo.foldcolumn, ":")
+  local parts = vim.split(vim.wo.foldcolumn, ':')
   local column_size = parts[#parts]
-  local text_length = #fn.substitute(fold_start .. fold_end, ".", "x", "g") + column_size
-  return fold_start .. string.rep(" ", api.nvim_win_get_width(0) - text_length - 7) .. fold_end
+  local text_length = #fn.substitute(fold_start .. fold_end, '.', 'x', 'g') + column_size
+  return fold_start .. string.rep(' ', api.nvim_win_get_width(0) - text_length - 7) .. fold_end
 end
 
 -- CREDIT: https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function

@@ -4,53 +4,53 @@ as.lsp = {}
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
   -- FIXME: this opens even when there is no content so this is closed by default
-  as.augroup("LspLocationList", {
+  as.augroup('LspLocationList', {
     {
-      events = { "User LspDiagnosticsChanged" },
+      events = { 'User LspDiagnosticsChanged' },
       command = function()
         vim.lsp.diagnostic.set_loclist {
           workspace = true,
-          severity_limit = "Warning",
+          severity_limit = 'Warning',
           open_loclist = false,
         }
       end,
     },
   })
   if client and client.resolved_capabilities.code_lens then
-    as.augroup("LspCodeLens", {
+    as.augroup('LspCodeLens', {
       {
-        events = { "BufEnter", "CursorHold", "InsertLeave" },
-        targets = { "<buffer>" },
+        events = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+        targets = { '<buffer>' },
         command = vim.lsp.codelens.refresh,
       },
     })
   end
   if client and client.resolved_capabilities.document_highlight then
-    as.augroup("LspCursorCommands", {
+    as.augroup('LspCursorCommands', {
       {
-        events = { "CursorHold" },
-        targets = { "<buffer>" },
+        events = { 'CursorHold' },
+        targets = { '<buffer>' },
         command = vim.lsp.buf.document_highlight,
       },
       {
-        events = { "CursorHoldI" },
-        targets = { "<buffer>" },
+        events = { 'CursorHoldI' },
+        targets = { '<buffer>' },
         command = vim.lsp.buf.document_highlight,
       },
       {
-        events = { "CursorMoved" },
-        targets = { "<buffer>" },
+        events = { 'CursorMoved' },
+        targets = { '<buffer>' },
         command = vim.lsp.buf.clear_references,
       },
     })
   end
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    as.augroup("LspFormat", {
+    as.augroup('LspFormat', {
       {
-        events = { "BufWritePre" },
-        targets = { "<buffer>" },
-        command = "lua vim.lsp.buf.formatting_sync(nil, 5000)",
+        events = { 'BufWritePre' },
+        targets = { '<buffer>' },
+        command = 'lua vim.lsp.buf.formatting_sync(nil, 5000)',
       },
     })
   end
@@ -64,62 +64,62 @@ end
 ---@param bufnr integer?
 local function setup_mappings(client, bufnr)
   local maps = {
-    ["<leader>rf"] = { vim.lsp.buf.formatting, "lsp: format buffer" },
-    ["<leader>cw"] = { vim.lsp.buf.workspace_symbol, "lsp: workspace symbol" },
-    ["<leader>cs"] = { vim.lsp.buf.document_symbol, "lsp: document symbol" },
-    ["gi"] = "lsp: implementation",
-    ["gd"] = { vim.lsp.buf.definition, "lsp: definition" },
-    ["gr"] = { vim.lsp.buf.references, "lsp: references" },
-    ["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" },
-    ["K"] = { vim.lsp.buf.hover, "lsp: hover" },
+    ['<leader>rf'] = { vim.lsp.buf.formatting, 'lsp: format buffer' },
+    ['<leader>cw'] = { vim.lsp.buf.workspace_symbol, 'lsp: workspace symbol' },
+    ['<leader>cs'] = { vim.lsp.buf.document_symbol, 'lsp: document symbol' },
+    ['gi'] = 'lsp: implementation',
+    ['gd'] = { vim.lsp.buf.definition, 'lsp: definition' },
+    ['gr'] = { vim.lsp.buf.references, 'lsp: references' },
+    ['gI'] = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
+    ['K'] = { vim.lsp.buf.hover, 'lsp: hover' },
   }
 
-  maps["]c"] = {
+  maps[']c'] = {
     function()
       vim.lsp.diagnostic.goto_prev {
-        popup_opts = { border = "rounded", focusable = false },
+        popup_opts = { border = 'rounded', focusable = false },
       }
     end,
-    "lsp: go to prev diagnostic",
+    'lsp: go to prev diagnostic',
   }
-  maps["[c"] = {
+  maps['[c'] = {
     function()
       vim.lsp.diagnostic.goto_next {
-        popup_opts = { border = "rounded", focusable = false },
+        popup_opts = { border = 'rounded', focusable = false },
       }
     end,
-    "lsp: go to next diagnostic",
+    'lsp: go to next diagnostic',
   }
 
   if client.resolved_capabilities.implementation then
-    maps["gi"] = { vim.lsp.buf.implementation, "lsp: impementation" }
+    maps['gi'] = { vim.lsp.buf.implementation, 'lsp: impementation' }
   end
 
   if client.resolved_capabilities.type_definition then
-    maps["<leader>gd"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
+    maps['<leader>gd'] = { vim.lsp.buf.type_definition, 'lsp: go to type definition' }
   end
 
-  if not as.has_map("<leader>ca", "n") then
-    maps["<leader>ca"] = { vim.lsp.buf.code_action, "lsp: code action" }
+  if not as.has_map('<leader>ca', 'n') then
+    maps['<leader>ca'] = { vim.lsp.buf.code_action, 'lsp: code action' }
     -- TODO: not sure that this works, since these keys likely override each other in which key
-    maps["<leader>ca"] = { vim.lsp.buf.range_code_action, "lsp: code action", mode = "x" }
+    maps['<leader>ca'] = { vim.lsp.buf.range_code_action, 'lsp: code action', mode = 'x' }
   end
 
-  if client.supports_method "textDocument/rename" then
-    maps["<leader>rn"] = { vim.lsp.buf.rename, "lsp: rename" }
+  if client.supports_method 'textDocument/rename' then
+    maps['<leader>rn'] = { vim.lsp.buf.rename, 'lsp: rename' }
   end
 
-  require("which-key").register(maps, { buffer = 0 })
+  require('which-key').register(maps, { buffer = 0 })
 end
 
 function as.lsp.tagfunc(pattern, flags)
-  if flags ~= "c" then
+  if flags ~= 'c' then
     return vim.NIL
   end
   local params = vim.lsp.util.make_position_params()
   local client_id_to_results, err = vim.lsp.buf_request_sync(
     0,
-    "textDocument/definition",
+    'textDocument/definition',
     params,
     500
   )
@@ -132,39 +132,39 @@ function as.lsp.tagfunc(pattern, flags)
       table.insert(results, {
         name = pattern,
         filename = vim.uri_to_fname(location.uri),
-        cmd = string.format("call cursor(%d, %d)", start.line + 1, start.character + 1),
+        cmd = string.format('call cursor(%d, %d)', start.line + 1, start.character + 1),
       })
     end
   end
   return results
 end
 
-require("vim.lsp.protocol").CompletionItemKind = {
-  " Text", -- Text
-  " Method", -- Method
-  "ƒ Function", -- Function
-  " Constructor", -- Constructor
-  "識 Field", -- Field
-  " Variable", -- Variable
-  " Class", -- Class
-  "ﰮ Interface", -- Interface
-  " Module", -- Module
-  " Property", -- Property
-  " Unit", -- Unit
-  " Value", -- Value
-  "了 Enum", -- Enum
-  " Keyword", -- Keyword
-  " Snippet", -- Snippet
-  " Color", -- Color
-  " File", -- File
-  "渚 Reference", -- Reference
-  " Folder", -- Folder
-  " Enum", -- Enum
-  " Constant", -- Constant
-  " Struct", -- Struct
-  "鬒 Event", -- Event
-  "\u{03a8} Operator", -- Operator
-  " Type Parameter", -- TypeParameter
+require('vim.lsp.protocol').CompletionItemKind = {
+  ' Text', -- Text
+  ' Method', -- Method
+  'ƒ Function', -- Function
+  ' Constructor', -- Constructor
+  '識 Field', -- Field
+  ' Variable', -- Variable
+  ' Class', -- Class
+  'ﰮ Interface', -- Interface
+  ' Module', -- Module
+  ' Property', -- Property
+  ' Unit', -- Unit
+  ' Value', -- Value
+  '了 Enum', -- Enum
+  ' Keyword', -- Keyword
+  ' Snippet', -- Snippet
+  ' Color', -- Color
+  ' File', -- File
+  '渚 Reference', -- Reference
+  ' Folder', -- Folder
+  ' Enum', -- Enum
+  ' Constant', -- Constant
+  ' Struct', -- Struct
+  '鬒 Event', -- Event
+  '\u{03a8} Operator', -- Operator
+  ' Type Parameter', -- TypeParameter
 }
 
 function as.lsp.on_attach(client, bufnr)
@@ -172,18 +172,18 @@ function as.lsp.on_attach(client, bufnr)
   setup_mappings(client, bufnr)
 
   if client.resolved_capabilities.goto_definition then
-    vim.bo[bufnr].tagfunc = "v:lua.as.lsp.tagfunc"
+    vim.bo[bufnr].tagfunc = 'v:lua.as.lsp.tagfunc'
   end
 
-  require("lsp_signature").on_attach {
+  require('lsp_signature').on_attach {
     bind = true,
     fix_pos = false,
     hint_enable = false,
     handler_opts = {
-      border = "rounded",
+      border = 'rounded',
     },
   }
-  require("lsp-status").on_attach(client)
+  require('lsp-status').on_attach(client)
 end
 
 -----------------------------------------------------------------------------//
@@ -197,22 +197,22 @@ as.lsp.servers = {
     --- between different modules in the nvim lua context
     --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
     --- if I ever decide to move away from lua dev then use the above
-    return require("lua-dev").setup {
+    return require('lua-dev').setup {
       lspconfig = {
         settings = {
           Lua = {
             diagnostics = {
               globals = {
-                "vim",
-                "describe",
-                "it",
-                "before_each",
-                "after_each",
-                "pending",
-                "teardown",
+                'vim',
+                'describe',
+                'it',
+                'before_each',
+                'after_each',
+                'pending',
+                'teardown',
               },
             },
-            completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
+            completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
           },
         },
       },
@@ -220,36 +220,36 @@ as.lsp.servers = {
   end,
   diagnosticls = function()
     return {
-      rootMarkers = { ".git/" },
-      filetypes = { "yaml", "json", "html", "css", "markdown", "lua", "graphql" },
+      rootMarkers = { '.git/' },
+      filetypes = { 'yaml', 'json', 'html', 'css', 'markdown', 'lua', 'graphql' },
       init_options = {
         formatters = {
           prettier = {
-            rootPatterns = { ".git" },
-            command = "prettier",
-            args = { "--stdin-filepath", "%filename" },
+            rootPatterns = { '.git' },
+            command = 'prettier',
+            args = { '--stdin-filepath', '%filename' },
           },
           luaformatter = {
             -- 'lua-format -i -c {config_dir}'
             -- add ".lua-format" to root if using lua-format
-            rootPatterns = { ".git" },
-            command = "lua-format",
-            args = { "-i", "-c", "./.lua-format" },
+            rootPatterns = { '.git' },
+            command = 'lua-format',
+            args = { '-i', '-c', './.lua-format' },
           },
           stylua = {
-            rootPatterns = { ".git" },
-            command = "stylua",
-            args = { "-" },
+            rootPatterns = { '.git' },
+            command = 'stylua',
+            args = { '-' },
           },
         },
         formatFiletypes = {
-          json = "prettier",
-          html = "prettier",
-          css = "prettier",
-          yaml = "prettier",
-          markdown = "prettier",
-          graphql = "prettier",
-          lua = "stylua",
+          json = 'prettier',
+          html = 'prettier',
+          css = 'prettier',
+          yaml = 'prettier',
+          markdown = 'prettier',
+          graphql = 'prettier',
+          lua = 'stylua',
         },
       },
     }
@@ -262,15 +262,15 @@ as.lsp.servers = {
 local command = as.command
 
 command {
-  "LspLog",
+  'LspLog',
   function()
     local path = vim.lsp.get_log_path()
-    vim.cmd("edit " .. path)
+    vim.cmd('edit ' .. path)
   end,
 }
 
 command {
-  "Format",
+  'Format',
   function()
     vim.lsp.buf.formatting_sync(nil, 1000)
   end,
@@ -279,12 +279,12 @@ command {
 ---Logic to (re)start installed language servers for use initialising lsps
 ---and restarting them on installing new ones
 function as.lsp.setup_servers()
-  local lspinstall = require "lspinstall"
-  local lspconfig = require "lspconfig"
+  local lspinstall = require 'lspinstall'
+  local lspconfig = require 'lspconfig'
 
   lspinstall.setup()
   local installed = lspinstall.installed_servers()
-  local status_capabilities = require("lsp-status").capabilities
+  local status_capabilities = require('lsp-status').capabilities
   for _, server in pairs(installed) do
     local mk_config = as.lsp.servers[server]
     local config = mk_config and mk_config() or {}
@@ -297,15 +297,15 @@ function as.lsp.setup_servers()
     config.capabilities.textDocument.completion.completionItem.snippetSupport = true
     config.capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
-        "documentation",
-        "detail",
-        "additionalTextEdits",
+        'documentation',
+        'detail',
+        'additionalTextEdits',
       },
     }
     config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
     lspconfig[server].setup(config)
   end
-  vim.cmd "doautocmd User LspServersStarted"
+  vim.cmd 'doautocmd User LspServersStarted'
 end
 
 return function()
@@ -323,24 +323,24 @@ return function()
   -----------------------------------------------------------------------------//
   local icons = as.style.icons
   vim.fn.sign_define {
-    { name = "LspDiagnosticsSignError", text = icons.error, texthl = "LspDiagnosticsSignError" },
-    { name = "LspDiagnosticsSignHint", text = icons.hint, texthl = "LspDiagnosticsSignHint" },
+    { name = 'LspDiagnosticsSignError', text = icons.error, texthl = 'LspDiagnosticsSignError' },
+    { name = 'LspDiagnosticsSignHint', text = icons.hint, texthl = 'LspDiagnosticsSignHint' },
     {
-      name = "LspDiagnosticsSignWarning",
+      name = 'LspDiagnosticsSignWarning',
       text = icons.warning,
-      texthl = "LspDiagnosticsSignWarning",
+      texthl = 'LspDiagnosticsSignWarning',
     },
     {
-      name = "LspDiagnosticsSignInformation",
+      name = 'LspDiagnosticsSignInformation',
       text = icons.info,
-      texthl = "LspDiagnosticsSignInformation",
+      texthl = 'LspDiagnosticsSignInformation',
     },
   }
 
   -----------------------------------------------------------------------------//
   -- Handler overrides
   -----------------------------------------------------------------------------//
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {
       underline = true,
@@ -354,9 +354,9 @@ return function()
   local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 
   -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    { border = "rounded", max_width = max_width, max_height = max_height }
+    { border = 'rounded', max_width = max_width, max_height = max_height }
   )
   as.lsp.setup_servers()
 end

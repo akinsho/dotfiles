@@ -10,19 +10,19 @@ function as.qftf(info)
     items = fn.getloclist(info.winid, { id = info.id, items = 0 }).items
   end
   local limit = 25
-  local fname_fmt1, fname_fmt2 = "%-" .. limit .. "s", "…%." .. (limit - 1) .. "s"
-  local valid_fmt, invalid_fmt = "%s |%5d:%-3d|%s %s", "%s"
+  local fname_fmt1, fname_fmt2 = '%-' .. limit .. 's', '…%.' .. (limit - 1) .. 's'
+  local valid_fmt, invalid_fmt = '%s |%5d:%-3d|%s %s', '%s'
   for i = info.start_idx, info.end_idx do
     local e = items[i]
-    local fname = ""
+    local fname = ''
     local str
     if e.valid == 1 then
       if e.bufnr > 0 then
         fname = api.nvim_buf_get_name(e.bufnr)
-        if fname == "" then
-          fname = "[No Name]"
+        if fname == '' then
+          fname = '[No Name]'
         else
-          fname = fname:gsub("^" .. vim.env.HOME, "~")
+          fname = fname:gsub('^' .. vim.env.HOME, '~')
         end
         if fn.strwidth(fname) <= limit then
           fname = fname_fmt1:format(fname)
@@ -30,9 +30,9 @@ function as.qftf(info)
           fname = fname_fmt2:format(fname:sub(1 - limit, -1))
         end
       end
-      local lnum = e.lnum > 99999 and "inf" or e.lnum
-      local col = e.col > 999 and "inf" or e.col
-      local qtype = e.type == "" and "" or " " .. e.type:sub(1, 1):upper()
+      local lnum = e.lnum > 99999 and 'inf' or e.lnum
+      local col = e.col > 999 and 'inf' or e.col
+      local qtype = e.type == '' and '' or ' ' .. e.type:sub(1, 1):upper()
       str = valid_fmt:format(fname, lnum, col, qtype, e.text)
     else
       str = invalid_fmt:format(e.text)

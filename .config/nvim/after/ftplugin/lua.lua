@@ -17,29 +17,29 @@ end
 local function keyword(word, callback)
   local original_iskeyword = vim.bo.iskeyword
 
-  vim.bo.iskeyword = vim.bo.iskeyword .. ",."
-  word = word or vim.fn.expand "<cword>"
+  vim.bo.iskeyword = vim.bo.iskeyword .. ',.'
+  word = word or vim.fn.expand '<cword>'
 
   vim.bo.iskeyword = original_iskeyword
 
   -- TODO: This is a sub par work around, since I usually rename `vim.api` -> `api` or similar
   -- consider maybe using treesitter in the future
-  local api_match = find(word, "api", "vim.api")
-  local fn_match = find(word, "fn", "vim.fn")
+  local api_match = find(word, 'api', 'vim.api')
+  local fn_match = find(word, 'fn', 'vim.fn')
   if api_match then
-    local _, finish = string.find(word, api_match .. ".")
+    local _, finish = string.find(word, api_match .. '.')
     local api_function = string.sub(word, finish + 1)
 
-    vim.cmd(string.format("help %s", api_function))
+    vim.cmd(string.format('help %s', api_function))
     return
   elseif fn_match then
-    local _, finish = string.find(word, fn_match .. ".")
+    local _, finish = string.find(word, fn_match .. '.')
     if not finish then
       return
     end
-    local api_function = string.sub(word, finish + 1) .. "()"
+    local api_function = string.sub(word, finish + 1) .. '()'
 
-    vim.cmd(string.format("help %s", api_function))
+    vim.cmd(string.format('help %s', api_function))
     return
   elseif callback then
     callback()
@@ -51,9 +51,9 @@ end
 local loaded, hover
 
 local function hover_doc()
-  loaded, hover = pcall(require, "lspsaga.hover")
+  loaded, hover = pcall(require, 'lspsaga.hover')
   local cb = loaded and hover.render_hover_doc or nil
   keyword(nil, cb)
 end
 
-nnoremap("gK", hover_doc, { buffer = 0 })
+nnoremap('gK', hover_doc, { buffer = 0 })

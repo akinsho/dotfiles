@@ -1,31 +1,31 @@
 return function()
-  local telescope = require "telescope"
-  local actions = require "telescope.actions"
-  local themes = require "telescope.themes"
+  local telescope = require 'telescope'
+  local actions = require 'telescope.actions'
+  local themes = require 'telescope.themes'
 
   telescope.setup {
     defaults = {
-      prompt_prefix = "❯ ",
+      prompt_prefix = '❯ ',
       mappings = {
         i = {
-          ["<c-c>"] = function()
-            vim.cmd "stopinsert!"
+          ['<c-c>'] = function()
+            vim.cmd 'stopinsert!'
           end,
-          ["<esc>"] = actions.close,
-          ["<c-s>"] = actions.select_horizontal,
+          ['<esc>'] = actions.close,
+          ['<c-s>'] = actions.select_horizontal,
         },
       },
-      file_ignore_patterns = { "%.jpg", "%.jpeg", "%.png", "%.otf", "%.ttf" },
+      file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf' },
       -- set this value to 'flex' once telescope/#823 is merged
-      layout_strategy = "horizontal",
+      layout_strategy = 'horizontal',
       winblend = 7,
     },
     extensions = {
       frecency = {
         workspaces = {
-          ["conf"] = vim.env.DOTFILES,
-          ["project"] = vim.env.PROJECTS_DIR,
-          ["wiki"] = vim.g.wiki_path,
+          ['conf'] = vim.env.DOTFILES,
+          ['project'] = vim.env.PROJECTS_DIR,
+          ['wiki'] = vim.g.wiki_path,
         },
       },
       fzf = {
@@ -38,8 +38,8 @@ return function()
         sort_lastused = true,
         show_all_buffers = true,
         mappings = {
-          i = { ["<c-x>"] = "delete_buffer" },
-          n = { ["<c-x>"] = "delete_buffer" },
+          i = { ['<c-x>'] = 'delete_buffer' },
+          n = { ['<c-x>'] = 'delete_buffer' },
         },
       },
       find_files = {
@@ -49,33 +49,33 @@ return function()
         },
       },
       git_branches = {
-        theme = "dropdown",
+        theme = 'dropdown',
       },
       reloader = {
-        theme = "dropdown",
+        theme = 'dropdown',
       },
     },
   }
 
-  telescope.load_extension "fzf"
-  telescope.load_extension "tmux"
+  telescope.load_extension 'fzf'
+  telescope.load_extension 'tmux'
 
-  require("as.highlights").plugin(
-    "telescope",
-    { "TelescopePathSeparator", { guifg = as.style.palette.dark_blue } },
-    { "TelescopeQueryFilter", { link = "IncSearch" } }
+  require('as.highlights').plugin(
+    'telescope',
+    { 'TelescopePathSeparator', { guifg = as.style.palette.dark_blue } },
+    { 'TelescopeQueryFilter', { link = 'IncSearch' } }
   )
 
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
-  local builtins = require "telescope.builtin"
+  local builtins = require 'telescope.builtin'
 
   local function nvim_config()
     builtins.find_files {
-      prompt_title = "~ nvim config ~",
+      prompt_title = '~ nvim config ~',
       cwd = vim.g.vim_dir,
-      file_ignore_patterns = { ".git/.*", "dotbot/.*" },
+      file_ignore_patterns = { '.git/.*', 'dotbot/.*' },
     }
   end
 
@@ -88,21 +88,21 @@ return function()
     })
   end
 
-  require("which-key").register {
-    ["<leader>f"] = {
-      name = "+telescope",
-      a = { builtins.builtin, "builtins" },
-      b = { builtins.git_branches, "branches" },
+  require('which-key').register {
+    ['<leader>f'] = {
+      name = '+telescope',
+      a = { builtins.builtin, 'builtins' },
+      b = { builtins.git_branches, 'branches' },
       -- c = { builtins.git_commits, "commits" },
-      m = { builtins.man_pages, "man pages" },
-      h = { frecency, "history" },
-      n = { nvim_config, "nvim config" },
-      r = { builtins.reloader, "module reloader" },
-      w = { builtins.lsp_dynamic_workspace_symbols, "workspace symbols", silent = false },
-      ["?"] = { builtins.help_tags, "help" },
+      m = { builtins.man_pages, 'man pages' },
+      h = { frecency, 'history' },
+      n = { nvim_config, 'nvim config' },
+      r = { builtins.reloader, 'module reloader' },
+      w = { builtins.lsp_dynamic_workspace_symbols, 'workspace symbols', silent = false },
+      ['?'] = { builtins.help_tags, 'help' },
     },
-    ["<leader>c"] = {
-      d = { builtins.lsp_workspace_diagnostics, "telescope: workspace diagnostics" },
+    ['<leader>c'] = {
+      d = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
     },
   }
 end

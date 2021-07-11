@@ -1,20 +1,20 @@
 return function()
   vim.g.nvim_tree_icons = {
-    default = "",
+    default = '',
     git = {
-      unstaged = "",
-      staged = "",
-      unmerged = "",
-      renamed = "",
-      untracked = "",
-      deleted = "",
+      unstaged = '',
+      staged = '',
+      unmerged = '',
+      renamed = '',
+      untracked = '',
+      deleted = '',
     },
   }
 
-  as.nnoremap("<c-n>", [[<cmd>NvimTreeToggle<CR>]])
+  as.nnoremap('<c-n>', [[<cmd>NvimTreeToggle<CR>]])
 
   function as.nvim_tree_os_open()
-    local lib = require "nvim-tree.lib"
+    local lib = require 'nvim-tree.lib'
     local node = lib.get_node_at_cursor()
     if node then
       vim.fn.jobstart("open '" .. node.absolute_path .. "' &", { detach = true })
@@ -28,41 +28,41 @@ return function()
   vim.g.nvim_tree_git_hl = 1
   vim.g.nvim_tree_auto_close = 0 -- closes the tree when it's the last window
   vim.g.nvim_tree_follow = 1 -- show selected file on open
-  vim.g.nvim_tree_width = "20%"
+  vim.g.nvim_tree_width = '20%'
   vim.g.nvim_tree_width_allow_resize = 1
   vim.g.nvim_tree_disable_netrw = 0
   vim.g.nvim_tree_hijack_netrw = 0
-  vim.g.nvim_tree_root_folder_modifier = ":t"
-  vim.g.nvim_tree_ignore = { ".DS_Store", "fugitive:", ".git" }
+  vim.g.nvim_tree_root_folder_modifier = ':t'
+  vim.g.nvim_tree_ignore = { '.DS_Store', 'fugitive:', '.git' }
   vim.g.nvim_tree_highlight_opened_files = 1
   vim.g.nvim_tree_auto_resize = 1
 
-  local action = require("nvim-tree.config").nvim_tree_callback
+  local action = require('nvim-tree.config').nvim_tree_callback
   vim.g.nvim_tree_bindings = {
-    { key = "<c-o>", cb = "<Cmd>lua as.nvim_tree_os_open()<CR>" },
-    { key = "cd", cb = action "cd" },
+    { key = '<c-o>', cb = '<Cmd>lua as.nvim_tree_os_open()<CR>' },
+    { key = 'cd', cb = action 'cd' },
   }
 
   local function set_highlights()
-    require("as.highlights").all {
-      { "NvimTreeIndentMarker", { link = "Comment" } },
-      { "NvimTreeNormal", { link = "PanelBackground" } },
-      { "NvimTreeEndOfBuffer", { link = "PanelBackground" } },
-      { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
-      { "NvimTreeStatusLine", { link = "PanelSt" } },
-      { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
-      { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } },
+    require('as.highlights').all {
+      { 'NvimTreeIndentMarker', { link = 'Comment' } },
+      { 'NvimTreeNormal', { link = 'PanelBackground' } },
+      { 'NvimTreeEndOfBuffer', { link = 'PanelBackground' } },
+      { 'NvimTreeVertSplit', { link = 'PanelVertSplit' } },
+      { 'NvimTreeStatusLine', { link = 'PanelSt' } },
+      { 'NvimTreeStatusLineNC', { link = 'PanelStNC' } },
+      { 'NvimTreeRootFolder', { gui = 'bold,italic', guifg = 'LightMagenta' } },
     }
   end
-  as.augroup("NvimTreeOverrides", {
+  as.augroup('NvimTreeOverrides', {
     {
-      events = { "ColorScheme" },
-      targets = { "*" },
+      events = { 'ColorScheme' },
+      targets = { '*' },
       command = set_highlights,
     },
     {
-      events = { "FileType" },
-      targets = { "NvimTree" },
+      events = { 'FileType' },
+      targets = { 'NvimTree' },
       command = set_highlights,
     },
   })

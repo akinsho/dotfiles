@@ -1,10 +1,10 @@
 local fn = vim.fn
 local has = as.has
-local is_work = has "mac"
+local is_work = has 'mac'
 local is_home = not is_work
 local fmt = string.format
 
-local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.lua"
+local PACKER_COMPILED_PATH = fn.stdpath 'cache' .. '/packer/packer_compiled.lua'
 
 -----------------------------------------------------------------------------//
 -- Bootstrap Packer {{{
@@ -13,41 +13,41 @@ local PACKER_COMPILED_PATH = fn.stdpath "cache" .. "/packer/packer_compiled.lua"
 -- the dev or upstream version depending on if we are at work or not
 -- NOTE: install packer as an opt plugin since it's loaded conditionally on my local machine
 -- it needs to be installed as optional so the install dir is consistent across machines
-local install_path = fmt("%s/site/pack/packer/opt/packer.nvim", fn.stdpath "data")
+local install_path = fmt('%s/site/pack/packer/opt/packer.nvim', fn.stdpath 'data')
 if fn.empty(fn.glob(install_path)) > 0 then
-  vim.notify "Downloading packer.nvim..."
+  vim.notify 'Downloading packer.nvim...'
   vim.notify(
-    fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path }
+    fn.system { 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path }
   )
-  vim.cmd "packadd! packer.nvim"
-  require("packer").sync()
+  vim.cmd 'packadd! packer.nvim'
+  require('packer').sync()
 else
-  local name = vim.env.DEVELOPING and "local-packer.nvim" or "packer.nvim"
-  vim.cmd(fmt("packadd! %s", name))
+  local name = vim.env.DEVELOPING and 'local-packer.nvim' or 'packer.nvim'
+  vim.cmd(fmt('packadd! %s', name))
 end
 -- }}}
 -----------------------------------------------------------------------------//
 
 -- cfilter plugin allows filter down an existing quickfix list
-vim.cmd "packadd! cfilter"
+vim.cmd 'packadd! cfilter'
 
-as.augroup("PackerSetupInit", {
+as.augroup('PackerSetupInit', {
   {
-    events = { "BufWritePost" },
-    targets = { "*/as/plugins/*.lua" },
+    events = { 'BufWritePost' },
+    targets = { '*/as/plugins/*.lua' },
     command = function()
-      as.invalidate("as.plugins", true)
-      require("packer").compile()
-      vim.notify "packer compiled..."
+      as.invalidate('as.plugins', true)
+      require('packer').compile()
+      vim.notify 'packer compiled...'
     end,
   },
 })
-as.nnoremap("<leader>ps", [[<Cmd>PackerSync<CR>]])
-as.nnoremap("<leader>pc", [[<Cmd>PackerClean<CR>]])
+as.nnoremap('<leader>ps', [[<Cmd>PackerSync<CR>]])
+as.nnoremap('<leader>pc', [[<Cmd>PackerClean<CR>]])
 
 ---@param path string
 local function dev(path)
-  return os.getenv "HOME" .. "/projects/" .. path
+  return os.getenv 'HOME' .. '/projects/' .. path
 end
 
 local function developing()
@@ -65,22 +65,22 @@ end
 --- remote counterparts
 ---@param spec table
 local function with_local(spec)
-  assert(type(spec) == "table", fmt("spec must be a table", spec[1]))
-  assert(spec.local_path, fmt("%s has no specified local path", spec[1]))
+  assert(type(spec) == 'table', fmt('spec must be a table', spec[1]))
+  assert(spec.local_path, fmt('%s has no specified local path', spec[1]))
 
-  local name = vim.split(spec[1], "/")[2]
-  local path = dev(fmt("%s/%s", spec.local_path, name))
+  local name = vim.split(spec[1], '/')[2]
+  local path = dev(fmt('%s/%s', spec.local_path, name))
   if fn.isdirectory(fn.expand(path)) < 1 then
     return spec, nil
   end
-  local is_contributing = spec.local_path:match "contributing" ~= nil
+  local is_contributing = spec.local_path:match 'contributing' ~= nil
 
   local local_spec = {
     path,
     config = spec.config,
     setup = spec.setup,
     rocks = spec.rocks,
-    as = fmt("local-%s", name),
+    as = fmt('local-%s', name),
     cond = is_contributing and developing or spec.local_cond,
     disable = is_work or spec.local_disable,
   }
@@ -105,7 +105,7 @@ end
 ---upstream version of a plugin
 ---@param original table
 local function use_local(original)
-  local use = require("packer").use
+  local use = require('packer').use
   local spec, local_spec = with_local(original)
   if local_spec then
     use(local_spec)
@@ -117,7 +117,7 @@ end
 ---@param name string
 ---@return any
 local function conf(name)
-  return require(fmt("as.plugins.%s", name))
+  return require(fmt('as.plugins.%s', name))
 end
 
 --[[
@@ -125,18 +125,18 @@ end
   passed to setup or config etc. cannot reference aliased functions
   or local variables
 --]]
-require("packer").startup {
+require('packer').startup {
   --- TODO: add fold levels so some sections are closed by default
   --- depending on foldlevel and foldlevelstart
   function(use, use_rocks)
-    use_local { "wbthomason/packer.nvim", local_path = "contributing", opt = true }
+    use_local { 'wbthomason/packer.nvim', local_path = 'contributing', opt = true }
     --------------------------------------------------------------------------------
     -- Core {{{
     ---------------------------------------------------------------------------------
-    use_rocks "penlight"
+    use_rocks 'penlight'
 
     use {
-      "airblade/vim-rooter",
+      'airblade/vim-rooter',
       config = function()
         vim.g.rooter_silent_chdir = 1
         vim.g.rooter_resolve_links = 1
@@ -144,63 +144,63 @@ require("packer").startup {
     }
 
     use_local {
-      "camspiers/snap",
-      rocks = { "fzy" },
-      event = "CursorHold",
-      keys = { "<c-p>", "<leader>fo", "<leader>ff" },
-      local_path = "contributing",
+      'camspiers/snap',
+      rocks = { 'fzy' },
+      event = 'CursorHold',
+      keys = { '<c-p>', '<leader>fo', '<leader>ff' },
+      local_path = 'contributing',
       setup = function()
-        require("which-key").register({
-          ["f"] = {
-            o = "snap: buffers",
-            s = "snap: grep",
-            c = "snap: cursor word",
-            d = "snap: dotfiles",
-            O = "snap: org files",
+        require('which-key').register({
+          ['f'] = {
+            o = 'snap: buffers',
+            s = 'snap: grep',
+            c = 'snap: cursor word',
+            d = 'snap: dotfiles',
+            O = 'snap: org files',
           },
         }, {
-          prefix = "<leader>",
+          prefix = '<leader>',
         })
       end,
       config = function()
         --- FIXME: remove this when/if snap changes default highlights
-        require("as.highlights").plugin(
-          "snap",
-          { "SnapSelect", { link = "TextInfoBold", force = true } },
-          { "SnapPosition", { link = "Keyword", force = true } },
-          { "SnapBorder", { guifg = "Gray" } }
+        require('as.highlights').plugin(
+          'snap',
+          { 'SnapSelect', { link = 'TextInfoBold', force = true } },
+          { 'SnapPosition', { link = 'Keyword', force = true } },
+          { 'SnapBorder', { guifg = 'Gray' } }
         )
-        local snap = require "snap"
-        local config = require "snap.config"
-        local file = config.file:with { suffix = " »", consumer = "fzy" }
+        local snap = require 'snap'
+        local config = require 'snap.config'
+        local file = config.file:with { suffix = ' »', consumer = 'fzy' }
         local vimgrep = config.vimgrep:with { limit = 50000 }
         snap.maps {
           {
-            "<c-p>",
-            file { prompt = "Project files", try = { "git.file", "ripgrep.file" } },
-            { command = "project-files" },
+            '<c-p>',
+            file { prompt = 'Project files', try = { 'git.file', 'ripgrep.file' } },
+            { command = 'project-files' },
           },
           {
-            "<leader>fd",
+            '<leader>fd',
             file {
-              prompt = "Dotfiles",
-              producer = "ripgrep.file",
+              prompt = 'Dotfiles',
+              producer = 'ripgrep.file',
               args = { vim.env.DOTFILES },
             },
-            { command = "dots" },
+            { command = 'dots' },
           },
           {
-            "<leader>fO",
+            '<leader>fO',
             file {
-              prompt = "Org",
-              producer = "ripgrep.file",
-              args = { vim.fn.expand "~/Dropbox/org/" },
+              prompt = 'Org',
+              producer = 'ripgrep.file',
+              args = { vim.fn.expand '~/Dropbox/org/' },
             },
-            { command = "org" },
+            { command = 'org' },
           },
-          { "<leader>fs", vimgrep { limit = 50000 }, { command = "grep" } },
-          { "<leader>fc", vimgrep { prompt = "Find word", filter_with = "cword" } },
-          { "<leader>fo", file { producer = "vim.buffer" }, { command = "buffers" } },
+          { '<leader>fs', vimgrep { limit = 50000 }, { command = 'grep' } },
+          { '<leader>fc', vimgrep { prompt = 'Find word', filter_with = 'cword' } },
+          { '<leader>fo', file { producer = 'vim.buffer' }, { command = 'buffers' } },
 
           --- TODO: this producer hasn't been added yet
           -- { "<leader>fl", file { producer = "vim.help" }, "Help docs" },
@@ -209,64 +209,64 @@ require("packer").startup {
     }
 
     use {
-      "nvim-telescope/telescope.nvim",
-      event = "CursorHold",
-      config = conf "telescope",
+      'nvim-telescope/telescope.nvim',
+      event = 'CursorHold',
+      config = conf 'telescope',
       requires = {
-        "nvim-lua/popup.nvim",
-        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+        'nvim-lua/popup.nvim',
+        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         {
-          "nvim-telescope/telescope-frecency.nvim",
-          requires = "tami5/sql.nvim",
-          after = "telescope.nvim",
+          'nvim-telescope/telescope-frecency.nvim',
+          requires = 'tami5/sql.nvim',
+          after = 'telescope.nvim',
         },
-        { "camgraff/telescope-tmux.nvim" },
+        { 'camgraff/telescope-tmux.nvim' },
       },
     }
 
-    use "kyazdani42/nvim-web-devicons"
+    use 'kyazdani42/nvim-web-devicons'
 
-    use { "folke/which-key.nvim", config = conf "whichkey" }
+    use { 'folke/which-key.nvim', config = conf 'whichkey' }
 
     -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
     use {
-      "folke/trouble.nvim",
-      keys = { "<leader>ld" },
-      cmd = { "TroubleToggle" },
-      requires = "nvim-web-devicons",
+      'folke/trouble.nvim',
+      keys = { '<leader>ld' },
+      cmd = { 'TroubleToggle' },
+      requires = 'nvim-web-devicons',
       config = function()
-        require("which-key").register {
-          ["<leader>ld"] = { "<cmd>TroubleToggle lsp_workspace_diagnostics<CR>", "trouble: toggle" },
-          ["<leader>lr"] = { "<cmd>TroubleToggle lsp_references<cr>", "trouble: lsp references" },
+        require('which-key').register {
+          ['<leader>ld'] = { '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>', 'trouble: toggle' },
+          ['<leader>lr'] = { '<cmd>TroubleToggle lsp_references<cr>', 'trouble: lsp references' },
         }
-        require("as.highlights").plugin(
-          "trouble",
-          { "TroubleNormal", { link = "PanelBackground" } },
-          { "TroubleText", { link = "PanelBackground" } },
-          { "TroubleIndent", { link = "PanelVertSplit" } },
-          { "TroubleFoldIcon", { guifg = "yellow", gui = "bold" } }
+        require('as.highlights').plugin(
+          'trouble',
+          { 'TroubleNormal', { link = 'PanelBackground' } },
+          { 'TroubleText', { link = 'PanelBackground' } },
+          { 'TroubleIndent', { link = 'PanelVertSplit' } },
+          { 'TroubleFoldIcon', { guifg = 'yellow', gui = 'bold' } }
         )
-        require("trouble").setup { auto_close = true, auto_preview = false }
+        require('trouble').setup { auto_close = true, auto_preview = false }
       end,
     }
 
     use {
-      "rmagatti/auto-session",
+      'rmagatti/auto-session',
       config = function()
-        require("auto-session").setup {
-          auto_session_root_dir = vim.fn.stdpath "data" .. "/session/auto/",
+        require('auto-session').setup {
+          auto_session_root_dir = vim.fn.stdpath 'data' .. '/session/auto/',
         }
       end,
     }
 
     use {
-      "christoomey/vim-tmux-navigator",
+      'christoomey/vim-tmux-navigator',
       config = function()
         vim.g.tmux_navigator_no_mappings = 1
-        as.nnoremap("<C-H>", "<cmd>TmuxNavigateLeft<cr>")
-        as.nnoremap("<C-J>", "<cmd>TmuxNavigateDown<cr>")
-        as.nnoremap("<C-K>", "<cmd>TmuxNavigateUp<cr>")
-        as.nnoremap("<C-L>", "<cmd>TmuxNavigateRight<cr>")
+        as.nnoremap('<C-H>', '<cmd>TmuxNavigateLeft<cr>')
+        as.nnoremap('<C-J>', '<cmd>TmuxNavigateDown<cr>')
+        as.nnoremap('<C-K>', '<cmd>TmuxNavigateUp<cr>')
+        as.nnoremap('<C-L>', '<cmd>TmuxNavigateRight<cr>')
         -- Disable tmux navigator when zooming the Vim pane
         vim.g.tmux_navigator_disable_when_zoomed = 1
         vim.g.tmux_navigator_save_on_switch = 2
@@ -274,24 +274,24 @@ require("packer").startup {
     }
 
     use {
-      "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
       config = function()
-        as.augroup("PlenaryTests", {
+        as.augroup('PlenaryTests', {
           {
-            events = { "BufEnter" },
-            targets = { "*/personal/*/tests/*_spec.lua" },
+            events = { 'BufEnter' },
+            targets = { '*/personal/*/tests/*_spec.lua' },
             command = function()
-              require("which-key").register({
+              require('which-key').register({
                 t = {
-                  name = "+plenary",
-                  f = { "<Plug>PlenaryTestFile", "test file" },
+                  name = '+plenary',
+                  f = { '<Plug>PlenaryTestFile', 'test file' },
                   d = {
                     "<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>",
-                    "test directory",
+                    'test directory',
                   },
                 },
               }, {
-                prefix = "<localleader>",
+                prefix = '<localleader>',
                 buffer = 0,
               })
             end,
@@ -300,13 +300,12 @@ require("packer").startup {
       end,
     }
 
-    use { "lukas-reineke/indent-blankline.nvim", config = conf "indentline" }
+    use { 'lukas-reineke/indent-blankline.nvim', config = conf 'indentline' }
 
     use {
-      "kyazdani42/nvim-tree.lua",
-      config = conf "nvim-tree",
-      local_path = "contributing",
-      requires = "nvim-web-devicons",
+      'kyazdani42/nvim-tree.lua',
+      config = conf 'nvim-tree',
+      requires = 'nvim-web-devicons',
     }
 
     -- }}}
@@ -314,80 +313,80 @@ require("packer").startup {
     -- LSP,Completion & Debugger {{{
     -----------------------------------------------------------------------------//
     use {
-      "mfussenegger/nvim-dap",
-      module = "dap",
-      keys = { "<localleader>dc" },
-      setup = conf("dap").setup,
-      config = conf("dap").config,
+      'mfussenegger/nvim-dap',
+      module = 'dap',
+      keys = { '<localleader>dc' },
+      setup = conf('dap').setup,
+      config = conf('dap').config,
       requires = {
         {
-          "rcarriga/nvim-dap-ui",
-          requires = "nvim-dap",
-          after = "nvim-dap",
+          'rcarriga/nvim-dap-ui',
+          requires = 'nvim-dap',
+          after = 'nvim-dap',
           config = function()
-            require("dapui").setup()
+            require('dapui').setup()
           end,
         },
       },
     }
 
     -- NOTE: curiosity rather than necessity
-    use { "Pocco81/DAPInstall.nvim", opt = true }
-    use { "jbyuki/step-for-vimkind", opt = true }
+    use { 'Pocco81/DAPInstall.nvim', opt = true }
+    use { 'jbyuki/step-for-vimkind', opt = true }
 
-    use "folke/lua-dev.nvim"
+    use 'folke/lua-dev.nvim'
     use {
-      "folke/todo-comments.nvim",
-      requires = "nvim-lua/plenary.nvim",
+      'folke/todo-comments.nvim',
+      requires = 'nvim-lua/plenary.nvim',
       config = function()
-        require("todo-comments").setup {
+        require('todo-comments').setup {
           highlight = {
-            exclude = { "org", "orgagenda", "vimwiki", "markdown" },
+            exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
           },
         }
-        require("which-key").register { ["<leader>lt"] = { "<Cmd>TodoTrouble<CR>", "trouble: todos" } }
+        require('which-key').register { ['<leader>lt'] = { '<Cmd>TodoTrouble<CR>', 'trouble: todos' } }
       end,
     }
 
     use {
-      "kabouzeid/nvim-lspinstall",
-      module = "lspinstall",
+      'kabouzeid/nvim-lspinstall',
+      module = 'lspinstall',
       config = function()
-        require("lspinstall").post_install_hook = function()
+        require('lspinstall').post_install_hook = function()
           as.lsp.setup_servers()
-          vim.cmd "bufdo e"
+          vim.cmd 'bufdo e'
         end
       end,
     }
 
     use {
-      "neovim/nvim-lspconfig",
-      event = "BufReadPre",
-      config = conf "lspconfig",
+      'neovim/nvim-lspconfig',
+      event = 'BufReadPre',
+      config = conf 'lspconfig',
       requires = {
         {
-          "nvim-lua/lsp-status.nvim",
+          'nvim-lua/lsp-status.nvim',
           config = function()
-            local status = require "lsp-status"
+            local status = require 'lsp-status'
             status.config {
-              indicator_hint = "",
-              indicator_info = "",
-              indicator_errors = "✗",
-              indicator_warnings = "",
-              status_symbol = " ",
+              indicator_hint = '',
+              indicator_info = '',
+              indicator_errors = '✗',
+              indicator_warnings = '',
+              status_symbol = ' ',
             }
             status.register_progress()
           end,
         },
         {
-          "kosayoda/nvim-lightbulb",
+          'kosayoda/nvim-lightbulb',
           config = function()
-            as.augroup("NvimLightbulb", {
+            as.augroup('NvimLightbulb', {
               {
-                events = { "CursorHold", "CursorHoldI" },
-                targets = { "*" },
+                events = { 'CursorHold', 'CursorHoldI' },
+                targets = { '*' },
                 command = function()
-                  require("nvim-lightbulb").update_lightbulb {
+                  require('nvim-lightbulb').update_lightbulb {
                     sign = { enabled = false },
                     virtual_text = { enabled = true },
                   }
@@ -400,48 +399,48 @@ require("packer").startup {
     }
 
     use_local {
-      "windwp/lsp-fastaction.nvim",
-      local_path = "contributing",
+      'windwp/lsp-fastaction.nvim',
+      local_path = 'contributing',
       config = function()
-        local fastaction = require "lsp-fastaction"
+        local fastaction = require 'lsp-fastaction'
         fastaction.setup {
           action_data = {
-            ["dart"] = {
-              { pattern = "import library", key = "i", order = 1 },
-              { pattern = "wrap with widget", key = "w", order = 2 },
-              { pattern = "column", key = "c", order = 3 },
-              { pattern = "row", key = "r", order = 3 },
-              { pattern = "container", key = "C", order = 4 },
-              { pattern = "center", key = "E", order = 4 },
-              { pattern = "padding", key = "p", order = 4 },
-              { pattern = "remove", key = "r", order = 5 },
+            ['dart'] = {
+              { pattern = 'import library', key = 'i', order = 1 },
+              { pattern = 'wrap with widget', key = 'w', order = 2 },
+              { pattern = 'column', key = 'c', order = 3 },
+              { pattern = 'row', key = 'r', order = 3 },
+              { pattern = 'container', key = 'C', order = 4 },
+              { pattern = 'center', key = 'E', order = 4 },
+              { pattern = 'padding', key = 'p', order = 4 },
+              { pattern = 'remove', key = 'r', order = 5 },
 
               -- range code action
-              { pattern = "surround with %'if'", key = "i", order = 2 },
-              { pattern = "try%-catch", key = "t", order = 2 },
-              { pattern = "for%-in", key = "f", order = 2 },
-              { pattern = "setstate", key = "s", order = 2 },
+              { pattern = "surround with %'if'", key = 'i', order = 2 },
+              { pattern = 'try%-catch', key = 't', order = 2 },
+              { pattern = 'for%-in', key = 'f', order = 2 },
+              { pattern = 'setstate', key = 's', order = 2 },
             },
           },
         }
-        as.xnoremap("<leader>ca", "<esc><Cmd>lua require('lsp-fastaction').range_code_action()<CR>")
-        require("which-key").register {
-          ["<leader>ca"] = { fastaction.code_action, "lsp: code action" },
+        as.xnoremap('<leader>ca', "<esc><Cmd>lua require('lsp-fastaction').range_code_action()<CR>")
+        require('which-key').register {
+          ['<leader>ca'] = { fastaction.code_action, 'lsp: code action' },
         }
       end,
     }
 
-    use "ray-x/lsp_signature.nvim"
+    use 'ray-x/lsp_signature.nvim'
 
     use_local {
-      "akinsho/flutter-tools.nvim",
+      'akinsho/flutter-tools.nvim',
       config = function()
         --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
-        local ok, lsp_status = pcall(require, "lsp-status")
+        local ok, lsp_status = pcall(require, 'lsp-status')
         local capabilities = ok and lsp_status.capabilities or nil
-        require("flutter-tools").setup {
+        require('flutter-tools').setup {
           ui = {
-            border = "rounded",
+            border = 'rounded',
           },
           debugger = {
             enabled = true,
@@ -450,7 +449,7 @@ require("packer").startup {
             enabled = true,
             debug = true,
           },
-          dev_log = { open_cmd = "tabedit" },
+          dev_log = { open_cmd = 'tabedit' },
           lsp = {
             settings = {
               showTodos = false,
@@ -459,64 +458,64 @@ require("packer").startup {
             --- This is necessary to prevent lsp-status' capabilities being
             --- given priority over that of the default config
             capabilities = function(defaults)
-              return vim.tbl_deep_extend("keep", defaults, capabilities)
+              return vim.tbl_deep_extend('keep', defaults, capabilities)
             end,
           },
         }
       end,
-      requires = { "nvim-dap", "plenary.nvim" },
-      local_path = "personal",
+      requires = { 'nvim-dap', 'plenary.nvim' },
+      local_path = 'personal',
     }
 
     -- The module key is so plugins like orgmode which register a source are able to do so
-    use { "hrsh7th/nvim-compe", module = "compe", config = conf "compe", event = "InsertEnter" }
+    use { 'hrsh7th/nvim-compe', module = 'compe', config = conf 'compe', event = 'InsertEnter' }
 
     use {
-      "hrsh7th/vim-vsnip",
-      event = "InsertEnter",
-      requires = { "rafamadriz/friendly-snippets", "hrsh7th/nvim-compe" },
+      'hrsh7th/vim-vsnip',
+      event = 'InsertEnter',
+      requires = { 'rafamadriz/friendly-snippets', 'hrsh7th/nvim-compe' },
       config = function()
-        vim.g.vsnip_snippet_dir = vim.g.vim_dir .. "/snippets/textmate"
+        vim.g.vsnip_snippet_dir = vim.g.vim_dir .. '/snippets/textmate'
         local opts = { expr = true }
-        as.imap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
-        as.smap("<c-l>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
-        as.imap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        as.smap("<c-h>", "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
-        as.xmap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
-        as.imap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
-        as.smap("<c-j>", "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
+        as.imap('<c-l>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
+        as.smap('<c-l>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<c-l>'", opts)
+        as.imap('<c-h>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
+        as.smap('<c-h>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-prev)' : '<c-h>'", opts)
+        as.xmap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
+        as.imap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
+        as.smap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
       end,
     }
     -- }}}
     --------------------------------------------------------------------------------
     -- Utilities {{{
     ---------------------------------------------------------------------------------
-    use "nanotee/luv-vimdocs"
-    use "milisims/nvim-luaref"
+    use 'nanotee/luv-vimdocs'
+    use 'milisims/nvim-luaref'
     use {
-      "kevinhwang91/nvim-bqf",
+      'kevinhwang91/nvim-bqf',
       config = function()
-        require("as.highlights").plugin("bqf", { "BqfPreviewBorder", { guifg = "Gray" } })
+        require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { guifg = 'Gray' } })
       end,
     }
 
     use {
-      "arecarn/vim-fold-cycle",
+      'arecarn/vim-fold-cycle',
       config = function()
         vim.g.fold_cycle_default_mapping = 0
-        as.nmap("<BS>", "<Plug>(fold-cycle-close)")
+        as.nmap('<BS>', '<Plug>(fold-cycle-close)')
       end,
     }
     use {
-      "windwp/nvim-autopairs",
-      after = "nvim-compe",
+      'windwp/nvim-autopairs',
+      after = 'nvim-compe',
       config = function()
-        require("nvim-autopairs").setup {
+        require('nvim-autopairs').setup {
           close_triple_quotes = true,
           check_ts = false,
         }
 
-        require("nvim-autopairs.completion.compe").setup {
+        require('nvim-autopairs.completion.compe').setup {
           --  map <CR> on insert mode
           map_cr = true,
           -- it will auto insert `(` after select function or method item
@@ -525,64 +524,64 @@ require("packer").startup {
       end,
     }
     use {
-      "karb94/neoscroll.nvim",
+      'karb94/neoscroll.nvim',
       config = function()
-        require("neoscroll").setup {
-          mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "zt", "zz", "zb" },
+        require('neoscroll').setup {
+          mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', 'zt', 'zz', 'zb' },
           stop_eof = false,
         }
       end,
     }
     use {
-      "mg979/vim-visual-multi",
+      'mg979/vim-visual-multi',
       config = function()
-        vim.g.VM_highlight_matches = "underline"
+        vim.g.VM_highlight_matches = 'underline'
         vim.g.VM_maps = {
-          ["Find Under"] = "<C-e>",
-          ["Find Subword Under"] = "<C-e>",
-          ["Select Cursor Down"] = [[\j]],
-          ["Select Cursor Up"] = [[\k]],
+          ['Find Under'] = '<C-e>',
+          ['Find Subword Under'] = '<C-e>',
+          ['Select Cursor Down'] = [[\j]],
+          ['Select Cursor Up'] = [[\k]],
         }
       end,
     }
     use {
-      "itchyny/vim-highlighturl",
+      'itchyny/vim-highlighturl',
       config = function()
-        vim.g.highlighturl_guifg = require("as.highlights").get_hl("Keyword", "fg")
+        vim.g.highlighturl_guifg = require('as.highlights').get_hl('Keyword', 'fg')
       end,
     }
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    use { "kshenoy/vim-signature", opt = true }
+    use { 'kshenoy/vim-signature', opt = true }
 
     use {
-      "mbbill/undotree",
-      cmd = "UndotreeToggle",
-      keys = "<leader>u",
+      'mbbill/undotree',
+      cmd = 'UndotreeToggle',
+      keys = '<leader>u',
       setup = function()
-        require("which-key").register {
-          ["<leader>u"] = "undotree: toggle",
+        require('which-key').register {
+          ['<leader>u'] = 'undotree: toggle',
         }
       end,
       config = function()
-        vim.g.undotree_TreeNodeShape = "◉" -- Alternative: '◦'
+        vim.g.undotree_TreeNodeShape = '◉' -- Alternative: '◦'
         vim.g.undotree_SetFocusWhenToggle = 1
-        as.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>")
+        as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>')
       end,
     }
     use {
-      "vim-test/vim-test",
-      cmd = { "TestFile", "TestNearest", "TestSuite" },
-      keys = { "<localleader>tf", "<localleader>tn", "<localleader>ts" },
+      'vim-test/vim-test',
+      cmd = { 'TestFile', 'TestNearest', 'TestSuite' },
+      keys = { '<localleader>tf', '<localleader>tn', '<localleader>ts' },
       setup = function()
-        require("which-key").register({
+        require('which-key').register({
           t = {
-            name = "+vim-test",
-            f = "test: file",
-            n = "test: nearest",
-            s = "test: suite",
+            name = '+vim-test',
+            f = 'test: file',
+            n = 'test: nearest',
+            s = 'test: suite',
           },
         }, {
-          prefix = "<localleader>",
+          prefix = '<localleader>',
         })
       end,
       config = function()
@@ -590,28 +589,28 @@ require("packer").startup {
           let test#strategy = "neovim"
           let test#neovim#term_position = "vert botright"
         ]]
-        as.nnoremap("<localleader>tf", "<cmd>TestFile<CR>")
-        as.nnoremap("<localleader>tn", "<cmd>TestNearest<CR>")
-        as.nnoremap("<localleader>ts", "<cmd>TestSuite<CR>")
+        as.nnoremap('<localleader>tf', '<cmd>TestFile<CR>')
+        as.nnoremap('<localleader>tn', '<cmd>TestNearest<CR>')
+        as.nnoremap('<localleader>ts', '<cmd>TestSuite<CR>')
       end,
     }
     use {
-      "iamcco/markdown-preview.nvim",
+      'iamcco/markdown-preview.nvim',
       run = function()
-        vim.fn["mkdp#util#install"]()
+        vim.fn['mkdp#util#install']()
       end,
-      ft = { "markdown" },
+      ft = { 'markdown' },
       config = function()
         vim.g.mkdp_auto_start = 0
         vim.g.mkdp_auto_close = 1
       end,
     }
     use {
-      "norcalli/nvim-colorizer.lua",
+      'norcalli/nvim-colorizer.lua',
       config = function()
-        require("colorizer").setup({ "*" }, {
+        require('colorizer').setup({ '*' }, {
           RGB = false,
-          mode = "background",
+          mode = 'background',
         })
       end,
     }
@@ -620,41 +619,41 @@ require("packer").startup {
     -- Knowledge and task management {{{
     ---------------------------------------------------------------------------------
     use {
-      "soywod/himalaya", --- Email in nvim
-      rtp = "vim",
-      run = "curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh",
+      'soywod/himalaya', --- Email in nvim
+      rtp = 'vim',
+      run = 'curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh',
       config = function()
-        require("which-key").register({
+        require('which-key').register({
           e = {
-            name = "+email",
-            l = { "<Cmd>Himalaya<CR>", "list" },
+            name = '+email',
+            l = { '<Cmd>Himalaya<CR>', 'list' },
           },
         }, {
-          prefix = "<localleader>",
+          prefix = '<localleader>',
         })
       end,
     }
 
     use {
-      "vimwiki/vimwiki",
-      branch = "dev",
-      keys = { "<leader>ww", "<leader>wt", "<leader>wi" },
-      event = { "BufEnter *.wiki" },
-      setup = conf("vimwiki").setup,
-      config = conf("vimwiki").config,
+      'vimwiki/vimwiki',
+      branch = 'dev',
+      keys = { '<leader>ww', '<leader>wt', '<leader>wi' },
+      event = { 'BufEnter *.wiki' },
+      setup = conf('vimwiki').setup,
+      config = conf('vimwiki').config,
     }
 
     use {
-      "vhyrro/neorg",
+      'vhyrro/neorg',
       config = function()
-        require("neorg").setup {
+        require('neorg').setup {
           load = {
-            ["core.defaults"] = {},
-            ["core.norg.concealer"] = {},
-            ["core.norg.dirman"] = {
+            ['core.defaults'] = {},
+            ['core.norg.concealer'] = {},
+            ['core.norg.dirman'] = {
               config = {
                 workspaces = {
-                  home = "~/Dropbox/neorg",
+                  home = '~/Dropbox/neorg',
                 },
               },
             },
@@ -664,53 +663,53 @@ require("packer").startup {
     }
 
     use {
-      "kristijanhusak/orgmode.nvim",
+      'kristijanhusak/orgmode.nvim',
       config = function()
-        local org_dir = "~/Dropbox/org"
-        require("as.highlights").plugin(
-          "org",
-          { "OrgDone", { guifg = "Green", gui = "bold" } },
-          { "OrgAgendaScheduled", { guifg = "Teal" } }
+        local org_dir = '~/Dropbox/org'
+        require('as.highlights').plugin(
+          'org',
+          { 'OrgDone', { guifg = 'Green', gui = 'bold' } },
+          { 'OrgAgendaScheduled', { guifg = 'Teal' } }
         )
-        require("which-key").register({
+        require('which-key').register({
           o = {
-            name = "+org-mode",
-            a = "agenda",
-            c = "capture",
+            name = '+org-mode',
+            a = 'agenda',
+            c = 'capture',
           },
         }, {
-          prefix = "<leader>",
+          prefix = '<leader>',
         })
-        require("orgmode").setup {
-          org_agenda_files = { org_dir .. "/**/*", "~/local-org/**/*" },
-          org_default_notes_file = org_dir .. "/refile.org",
-          org_todo_keywords = { "TODO", "WAITING", "NEXT", "|", "DONE", "CANCELLED" },
+        require('orgmode').setup {
+          org_agenda_files = { org_dir .. '/**/*', '~/local-org/**/*' },
+          org_default_notes_file = org_dir .. '/refile.org',
+          org_todo_keywords = { 'TODO', 'WAITING', 'NEXT', '|', 'DONE', 'CANCELLED' },
           org_todo_keyword_faces = {
-            NEXT = ":foreground royalblue :weight bold :slant italic",
-            CANCELLED = ":foreground darkred",
-            HOLD = ":foreground orange :weight bold",
+            NEXT = ':foreground royalblue :weight bold :slant italic',
+            CANCELLED = ':foreground darkred',
+            HOLD = ':foreground orange :weight bold',
           },
           org_hide_emphasis_markers = true,
           org_hide_leading_stars = true,
           org_agenda_skip_scheduled_if_done = true,
           org_agenda_skip_deadline_if_done = true,
           org_agenda_templates = {
-            t = { description = "Task", template = "* TODO %?\n SCHEDULED: %t" },
-            l = { description = "Link", template = "* %?\n%a" },
+            t = { description = 'Task', template = '* TODO %?\n SCHEDULED: %t' },
+            l = { description = 'Link', template = '* %?\n%a' },
             j = {
-              description = "Journal",
-              template = "\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?",
-              target = org_dir .. "/journal.org",
+              description = 'Journal',
+              template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
+              target = org_dir .. '/journal.org',
             },
             p = {
-              description = "Project Todo",
-              template = "* TODO %? \nSCHEDULED: %t",
-              target = org_dir .. "/projects.org",
+              description = 'Project Todo',
+              template = '* TODO %? \nSCHEDULED: %t',
+              target = org_dir .. '/projects.org',
             },
           },
           mappings = {
             org = {
-              org_toggle_checkbox = "<leader>t",
+              org_toggle_checkbox = '<leader>t',
             },
           },
         }
@@ -718,10 +717,10 @@ require("packer").startup {
     }
 
     use_local {
-      "akinsho/org-bullets.nvim",
-      local_path = "personal",
+      'akinsho/org-bullets.nvim',
+      local_path = 'personal',
       config = function()
-        require("org-bullets").setup()
+        require('org-bullets').setup()
       end,
     }
 
@@ -730,37 +729,37 @@ require("packer").startup {
     -- Profiling {{{
     --------------------------------------------------------------------------------
     use {
-      "dstein64/vim-startuptime",
+      'dstein64/vim-startuptime',
       opt = true,
       config = function()
-        vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
+        vim.g.startuptime_exe_args = { '+let g:auto_session_enabled = 0' }
       end,
     }
-    use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
+    use { 'tweekmonster/startuptime.vim', cmd = 'StartupTime' }
     -- }}}
     --------------------------------------------------------------------------------
     -- TPOPE {{{
     --------------------------------------------------------------------------------
-    use "tpope/vim-eunuch"
-    use "tpope/vim-sleuth"
-    use "tpope/vim-repeat"
+    use 'tpope/vim-eunuch'
+    use 'tpope/vim-sleuth'
+    use 'tpope/vim-repeat'
     use {
-      "tpope/vim-abolish",
+      'tpope/vim-abolish',
       config = function()
         local opts = { silent = false }
-        as.nnoremap("<localleader>[", ":S/<C-R><C-W>//<LEFT>", opts)
-        as.nnoremap("<localleader>]", ":%S/<C-r><C-w>//c<left><left>", opts)
-        as.xnoremap("<localleader>[", [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
+        as.nnoremap('<localleader>[', ':S/<C-R><C-W>//<LEFT>', opts)
+        as.nnoremap('<localleader>]', ':%S/<C-r><C-w>//c<left><left>', opts)
+        as.xnoremap('<localleader>[', [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
       end,
     }
     -- sets searchable path for filetypes like go so 'gf' works
-    use { "tpope/vim-apathy", ft = { "go", "python", "javascript", "typescript" } }
-    use { "tpope/vim-projectionist", config = conf "vim-projectionist" }
+    use { 'tpope/vim-apathy', ft = { 'go', 'python', 'javascript', 'typescript' } }
+    use { 'tpope/vim-projectionist', config = conf 'vim-projectionist' }
     use {
-      "tpope/vim-surround",
+      'tpope/vim-surround',
       config = function()
-        as.xmap("s", "<Plug>VSurround")
-        as.xmap("s", "<Plug>VSurround")
+        as.xmap('s', '<Plug>VSurround')
+        as.xmap('s', '<Plug>VSurround')
       end,
     }
     -- }}}
@@ -769,132 +768,132 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     -- TODO: converting a plugin from disabled to enabled inside a require doesn't work
     use_local {
-      "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
-      config = conf "treesitter",
-      local_path = "contributing",
-      requires = { "nvim-treesitter/nvim-treesitter-textobjects", "p00f/nvim-ts-rainbow" },
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate',
+      config = conf 'treesitter',
+      local_path = 'contributing',
+      requires = { 'nvim-treesitter/nvim-treesitter-textobjects', 'p00f/nvim-ts-rainbow' },
     }
     use {
-      "nvim-treesitter/playground",
-      keys = "<leader>E",
-      cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
+      'nvim-treesitter/playground',
+      keys = '<leader>E',
+      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
       setup = function()
-        require("which-key").register {
-          ["<leader>E"] = "treesitter: highlight cursor group",
+        require('which-key').register {
+          ['<leader>E'] = 'treesitter: highlight cursor group',
         }
       end,
       config = function()
-        as.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+        as.nnoremap('<leader>E', '<Cmd>TSHighlightCapturesUnderCursor<CR>')
       end,
     }
 
     -- TODO: currently this plugin does not support dart, which I need to make PR for
-    use "RRethy/nvim-treesitter-textsubjects"
+    use 'RRethy/nvim-treesitter-textsubjects'
 
     -- BUG: This needs to load after nvim-treesitter but the "after" key in packer is broken till #272 is fixed
     use {
-      "mizlan/iswap.nvim",
-      cmd = { "ISwap", "ISwapWith" },
-      keys = "<localleader>sw",
+      'mizlan/iswap.nvim',
+      cmd = { 'ISwap', 'ISwapWith' },
+      keys = '<localleader>sw',
       setup = function()
-        require("which-key").register {
-          ["<localleader>s"] = { name = "+swap", w = "swap arguments,parameters etc." },
+        require('which-key').register {
+          ['<localleader>s'] = { name = '+swap', w = 'swap arguments,parameters etc.' },
         }
       end,
       config = function()
-        require("iswap").setup {}
-        as.nnoremap("<localleader>sw", "<Cmd>ISwapWith<CR>")
+        require('iswap').setup {}
+        as.nnoremap('<localleader>sw', '<Cmd>ISwapWith<CR>')
       end,
     }
     use {
-      "lewis6991/spellsitter.nvim",
+      'lewis6991/spellsitter.nvim',
       opt = true,
       config = function()
-        require("spellsitter").setup {}
+        require('spellsitter').setup {}
       end,
     }
-    use "dart-lang/dart-vim-plugin"
-    use "plasticboy/vim-markdown"
-    use "mtdl9/vim-log-highlighting"
+    use 'dart-lang/dart-vim-plugin'
+    use 'plasticboy/vim-markdown'
+    use 'mtdl9/vim-log-highlighting'
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{
     --------------------------------------------------------------------------------
     use {
-      "ruifm/gitlinker.nvim",
-      requires = "plenary.nvim",
-      keys = { "<localleader>gu", "<localleader>go" },
+      'ruifm/gitlinker.nvim',
+      requires = 'plenary.nvim',
+      keys = { '<localleader>gu', '<localleader>go' },
       setup = function()
-        require("which-key").register(
-          { gu = "gitlinker: get line url", go = "gitlinker: open repo url" },
-          { prefix = "<localleader>" }
+        require('which-key').register(
+          { gu = 'gitlinker: get line url', go = 'gitlinker: open repo url' },
+          { prefix = '<localleader>' }
         )
       end,
       config = function()
-        local linker = require "gitlinker"
-        linker.setup { mappings = "<localleader>gu" }
-        as.nnoremap("<localleader>go", function()
-          linker.get_repo_url { action_callback = require("gitlinker.actions").open_in_browser }
+        local linker = require 'gitlinker'
+        linker.setup { mappings = '<localleader>gu' }
+        as.nnoremap('<localleader>go', function()
+          linker.get_repo_url { action_callback = require('gitlinker.actions').open_in_browser }
         end)
       end,
     }
-    use { "lewis6991/gitsigns.nvim", config = conf "gitsigns", event = "BufRead" }
+    use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns', event = 'BufRead' }
     use {
-      "rhysd/conflict-marker.vim",
+      'rhysd/conflict-marker.vim',
       config = function()
-        require("as.highlights").plugin(
-          "conflictMarker",
-          { "ConflictMarkerBegin", { guibg = "#2f7366" } },
-          { "ConflictMarkerOurs", { guibg = "#2e5049" } },
-          { "ConflictMarkerTheirs", { guibg = "#344f69" } },
-          { "ConflictMarkerEnd", { guibg = "#2f628e" } },
-          { "ConflictMarkerCommonAncestorsHunk", { guibg = "#754a81" } }
+        require('as.highlights').plugin(
+          'conflictMarker',
+          { 'ConflictMarkerBegin', { guibg = '#2f7366' } },
+          { 'ConflictMarkerOurs', { guibg = '#2e5049' } },
+          { 'ConflictMarkerTheirs', { guibg = '#344f69' } },
+          { 'ConflictMarkerEnd', { guibg = '#2f628e' } },
+          { 'ConflictMarkerCommonAncestorsHunk', { guibg = '#754a81' } }
         )
         -- disable the default highlight group
-        vim.g.conflict_marker_highlight_group = ""
+        vim.g.conflict_marker_highlight_group = ''
         -- Include text after begin and end markers
-        vim.g.conflict_marker_begin = "^<<<<<<< .*$"
-        vim.g.conflict_marker_end = "^>>>>>>> .*$"
+        vim.g.conflict_marker_begin = '^<<<<<<< .*$'
+        vim.g.conflict_marker_end = '^>>>>>>> .*$'
       end,
     }
     use {
-      "TimUntersberger/neogit",
-      cmd = "Neogit",
-      keys = { "<localleader>gs", "<localleader>gl", "<localleader>gp" },
-      requires = "plenary.nvim",
-      setup = conf("neogit").setup,
-      config = conf("neogit").config,
+      'TimUntersberger/neogit',
+      cmd = 'Neogit',
+      keys = { '<localleader>gs', '<localleader>gl', '<localleader>gp' },
+      requires = 'plenary.nvim',
+      setup = conf('neogit').setup,
+      config = conf('neogit').config,
     }
     use {
-      "sindrets/diffview.nvim",
-      cmd = "DiffviewOpen",
-      module = "diffview",
-      keys = "<localleader>gd",
+      'sindrets/diffview.nvim',
+      cmd = 'DiffviewOpen',
+      module = 'diffview',
+      keys = '<localleader>gd',
       setup = function()
-        require("which-key").register { ["<localleader>gd"] = "diffview: diff HEAD" }
+        require('which-key').register { ['<localleader>gd'] = 'diffview: diff HEAD' }
       end,
       config = function()
-        as.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>")
-        require("diffview").setup {
+        as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>')
+        require('diffview').setup {
           key_bindings = {
-            file_panel = { q = "<Cmd>DiffviewClose<CR>" },
-            view = { q = "<Cmd>DiffviewClose<CR>" },
+            file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+            view = { q = '<Cmd>DiffviewClose<CR>' },
           },
         }
       end,
     }
 
     use {
-      "pwntester/octo.nvim",
-      cmd = "Octo",
-      keys = { "<localleader>opl" },
+      'pwntester/octo.nvim',
+      cmd = 'Octo',
+      keys = { '<localleader>opl' },
       config = function()
-        require("octo").setup()
-        require("which-key").register({
-          o = { name = "+octo", p = { l = { "<cmd>Octo pr list<CR>", "PR List" } } },
+        require('octo').setup()
+        require('which-key').register({
+          o = { name = '+octo', p = { l = { '<cmd>Octo pr list<CR>', 'PR List' } } },
         }, {
-          prefix = "<localleader>",
+          prefix = '<localleader>',
         })
       end,
     }
@@ -902,71 +901,71 @@ require("packer").startup {
     --------------------------------------------------------------------------------
     -- Text Objects {{{
     --------------------------------------------------------------------------------
-    use "AndrewRadev/splitjoin.vim"
+    use 'AndrewRadev/splitjoin.vim'
     use {
-      "AndrewRadev/dsf.vim",
+      'AndrewRadev/dsf.vim',
       config = function()
         vim.g.dsf_no_mappings = 1
-        require("which-key").register {
+        require('which-key').register {
           d = {
-            name = "+dsf: function text object",
+            name = '+dsf: function text object',
             s = {
-              f = { "<Plug>DsfDelete", "delete surrounding function" },
-              nf = { "<Plug>DsfNextDelete", "delete next surrounding function" },
+              f = { '<Plug>DsfDelete', 'delete surrounding function' },
+              nf = { '<Plug>DsfNextDelete', 'delete next surrounding function' },
             },
           },
           c = {
-            name = "+dsf: function text object",
+            name = '+dsf: function text object',
             s = {
-              f = { "<Plug>DsfChange", "change surrounding function" },
-              nf = { "<Plug>DsfNextChange", "change next surrounding function" },
+              f = { '<Plug>DsfChange', 'change surrounding function' },
+              nf = { '<Plug>DsfNextChange', 'change next surrounding function' },
             },
           },
         }
       end,
     }
     use {
-      "chaoren/vim-wordmotion",
+      'chaoren/vim-wordmotion',
       config = function()
         -- Restore Vim's special case behavior with dw and cw:
-        as.nmap("dw", "de")
-        as.nmap("cw", "ce")
-        as.nmap("dW", "dE")
-        as.nmap("cW", "cE")
+        as.nmap('dw', 'de')
+        as.nmap('cw', 'ce')
+        as.nmap('dW', 'dE')
+        as.nmap('cW', 'cE')
       end,
     }
     use {
-      "b3nj5m1n/kommentary",
+      'b3nj5m1n/kommentary',
       config = function()
-        require("kommentary.config").configure_language(
-          "lua",
+        require('kommentary.config').configure_language(
+          'lua',
           { prefer_single_line_comments = true }
         )
       end,
     }
     use {
-      "tommcdo/vim-exchange",
+      'tommcdo/vim-exchange',
       config = function()
-        require("as.highlights").plugin("exchange", { "ExchangeRegion", { link = "Search" } })
+        require('as.highlights').plugin('exchange', { 'ExchangeRegion', { link = 'Search' } })
         vim.g.exchange_no_mappings = 1
-        as.xmap("X", "<Plug>(Exchange)")
-        as.nmap("X", "<Plug>(Exchange)")
-        as.nmap("Xc", "<Plug>(ExchangeClear)")
+        as.xmap('X', '<Plug>(Exchange)')
+        as.nmap('X', '<Plug>(Exchange)')
+        as.nmap('Xc', '<Plug>(ExchangeClear)')
       end,
     }
-    use "wellle/targets.vim"
+    use 'wellle/targets.vim'
     use {
-      "kana/vim-textobj-user",
+      'kana/vim-textobj-user',
       requires = {
-        "kana/vim-operator-user",
+        'kana/vim-operator-user',
         {
-          "glts/vim-textobj-comment",
+          'glts/vim-textobj-comment',
           config = function()
             vim.g.textobj_comment_no_default_key_mappings = 1
-            as.xmap("ax", "<Plug>(textobj-comment-a)")
-            as.omap("ax", "<Plug>(textobj-comment-a)")
-            as.xmap("ix", "<Plug>(textobj-comment-i)")
-            as.omap("ix", "<Plug>(textobj-comment-i)")
+            as.xmap('ax', '<Plug>(textobj-comment-a)')
+            as.omap('ax', '<Plug>(textobj-comment-a)')
+            as.xmap('ix', '<Plug>(textobj-comment-i)')
+            as.omap('ix', '<Plug>(textobj-comment-i)')
           end,
         },
       },
@@ -976,113 +975,113 @@ require("packer").startup {
     -- Search Tools {{{
     --------------------------------------------------------------------------------
     use {
-      "phaazon/hop.nvim",
-      keys = { { "n", "s" } },
+      'phaazon/hop.nvim',
+      keys = { { 'n', 's' } },
       config = function()
-        local hop = require "hop"
+        local hop = require 'hop'
         -- remove h,j,k,l from hops list of keys
-        hop.setup { keys = "etovxqpdygfbzcisuran" }
-        as.nnoremap("s", hop.hint_char1)
+        hop.setup { keys = 'etovxqpdygfbzcisuran' }
+        as.nnoremap('s', hop.hint_char1)
       end,
     }
     -- }}}
     ---------------------------------------------------------------------------------
     -- Themes  {{{
     ----------------------------------------------------------------------------------
-    use "NTBBloodbath/doom-one.nvim"
-    use "monsonjeremy/onedark.nvim"
-    use "marko-cerovac/material.nvim"
-    use "projekt0n/github-nvim-theme"
-    use { "Th3Whit3Wolf/one-nvim", opt = true }
+    use 'NTBBloodbath/doom-one.nvim'
+    use 'monsonjeremy/onedark.nvim'
+    use 'marko-cerovac/material.nvim'
+    use 'projekt0n/github-nvim-theme'
+    use { 'Th3Whit3Wolf/one-nvim', opt = true }
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{
     ---------------------------------------------------------------------------------
     use {
-      "norcalli/nvim-terminal.lua",
+      'norcalli/nvim-terminal.lua',
       config = function()
-        require("terminal").setup()
+        require('terminal').setup()
       end,
     }
-    use { "rafcamlet/nvim-luapad", cmd = "Luapad", disable = is_work }
+    use { 'rafcamlet/nvim-luapad', cmd = 'Luapad', disable = is_work }
     -- }}}
     -----------------------------------------------------------------------------//
     -- Personal plugins {{{
     -----------------------------------------------------------------------------//
     use_local {
-      "akinsho/dependency-assist.nvim",
-      local_path = "personal",
+      'akinsho/dependency-assist.nvim',
+      local_path = 'personal',
       config = function()
-        return require("dependency_assist").setup()
+        return require('dependency_assist').setup()
       end,
     }
 
     use_local {
-      "akinsho/nvim-toggleterm.lua",
-      local_path = "personal",
+      'akinsho/nvim-toggleterm.lua',
+      local_path = 'personal',
       config = function()
-        require("toggleterm").setup {
+        require('toggleterm').setup {
           persist_size = false,
           open_mapping = [[<c-\>]],
-          shade_filetypes = { "none" },
-          direction = "vertical",
-          float_opts = { border = "curved" },
+          shade_filetypes = { 'none' },
+          direction = 'vertical',
+          float_opts = { border = 'curved' },
           size = function(term)
-            if term.direction == "horizontal" then
+            if term.direction == 'horizontal' then
               return 15
-            elseif term.direction == "vertical" then
+            elseif term.direction == 'vertical' then
               return vim.o.columns * 0.4
             end
           end,
         }
 
         local float_handler = function(term)
-          vim.cmd "startinsert!"
-          if vim.fn.mapcheck("jk", "t") ~= "" then
-            vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
-            vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
+          vim.cmd 'startinsert!'
+          if vim.fn.mapcheck('jk', 't') ~= '' then
+            vim.api.nvim_buf_del_keymap(term.bufnr, 't', 'jk')
+            vim.api.nvim_buf_del_keymap(term.bufnr, 't', '<esc>')
           end
         end
 
-        local Terminal = require("toggleterm.terminal").Terminal
+        local Terminal = require('toggleterm.terminal').Terminal
 
         local lazygit = Terminal:new {
-          cmd = "lazygit",
-          dir = "git_dir",
+          cmd = 'lazygit',
+          dir = 'git_dir',
           hidden = true,
-          direction = "float",
+          direction = 'float',
           on_open = float_handler,
         }
 
         local htop = Terminal:new {
-          cmd = "htop",
-          hidden = "true",
-          direction = "float",
+          cmd = 'htop',
+          hidden = 'true',
+          direction = 'float',
           on_open = float_handler,
         }
 
         as.command {
-          "Htop",
+          'Htop',
           function()
             htop:toggle()
           end,
         }
 
-        require("which-key").register {
-          ["<leader>lg"] = {
+        require('which-key').register {
+          ['<leader>lg'] = {
             function()
               lazygit:toggle()
             end,
-            "toggleterm: toggle lazygit",
+            'toggleterm: toggle lazygit',
           },
         }
       end,
     }
     use_local {
-      "akinsho/nvim-bufferline.lua",
-      config = conf "nvim-bufferline",
-      local_path = "personal",
-      requires = "nvim-web-devicons",
+      'akinsho/nvim-bufferline.lua',
+      config = conf 'nvim-bufferline',
+      local_path = 'personal',
+      requires = 'nvim-web-devicons',
     }
     -- }}}
     ---------------------------------------------------------------------------------
@@ -1090,8 +1089,8 @@ require("packer").startup {
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
-      prompt_border = "rounded",
-      open_cmd = "silent topleft 65vnew",
+      prompt_border = 'rounded',
+      open_cmd = 'silent topleft 65vnew',
     },
     profile = {
       enable = true,
@@ -1101,22 +1100,22 @@ require("packer").startup {
 }
 
 as.command {
-  "PackerCompiledEdit",
+  'PackerCompiledEdit',
   function()
-    vim.cmd(fmt("edit %s", PACKER_COMPILED_PATH))
+    vim.cmd(fmt('edit %s', PACKER_COMPILED_PATH))
   end,
 }
 
 as.command {
-  "PackerCompiledDelete",
+  'PackerCompiledDelete',
   function()
     vim.fn.delete(PACKER_COMPILED_PATH)
-    vim.notify(fmt("Deleted %s", PACKER_COMPILED_PATH))
+    vim.notify(fmt('Deleted %s', PACKER_COMPILED_PATH))
   end,
 }
 
 if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then
-  vim.cmd(fmt("source %s", PACKER_COMPILED_PATH))
+  vim.cmd(fmt('source %s', PACKER_COMPILED_PATH))
   vim.g.packer_compiled_loaded = true
 end
 -- }}}

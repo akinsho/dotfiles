@@ -4,16 +4,16 @@
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local H = require "as.highlights"
+local H = require 'as.highlights'
 
 local fn = vim.fn
 
 local function is_floating_win()
-  return vim.fn.win_gettype() == "popup"
+  return vim.fn.win_gettype() == 'popup'
 end
 
 local function is_invalid_buf()
-  return vim.bo.filetype == "" or vim.bo.buftype ~= "" or not vim.bo.modifiable
+  return vim.bo.filetype == '' or vim.bo.buftype ~= '' or not vim.bo.modifiable
 end
 
 local function toggle_trailing(mode)
@@ -24,37 +24,37 @@ local function toggle_trailing(mode)
   if not vim.wo.list then
     vim.wo.list = true
   end
-  local pattern = mode == "i" and [[\s\+\%#\@<!$]] or [[\s\+$]]
+  local pattern = mode == 'i' and [[\s\+\%#\@<!$]] or [[\s\+$]]
   if vim.w.whitespace_match_number then
     fn.matchdelete(vim.w.whitespace_match_number)
-    fn.matchadd("ExtraWhitespace", pattern, 10, vim.w.whitespace_match_number)
+    fn.matchadd('ExtraWhitespace', pattern, 10, vim.w.whitespace_match_number)
   else
-    vim.w.whitespace_match_number = fn.matchadd("ExtraWhitespace", pattern)
+    vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
   end
 end
 
-H.set_hl("ExtraWhitespace", { guifg = "red" })
+H.set_hl('ExtraWhitespace', { guifg = 'red' })
 
-as.augroup("WhitespaceMatch", {
+as.augroup('WhitespaceMatch', {
   {
-    events = { "ColorScheme" },
-    targets = { "*" },
+    events = { 'ColorScheme' },
+    targets = { '*' },
     command = function()
-      H.set_hl("ExtraWhitespace", { guifg = "red" })
+      H.set_hl('ExtraWhitespace', { guifg = 'red' })
     end,
   },
   {
-    events = { "BufEnter", "FileType", "InsertLeave" },
-    targets = { "*" },
+    events = { 'BufEnter', 'FileType', 'InsertLeave' },
+    targets = { '*' },
     command = function()
-      toggle_trailing "n"
+      toggle_trailing 'n'
     end,
   },
   {
-    events = { "InsertEnter" },
-    targets = { "*" },
+    events = { 'InsertEnter' },
+    targets = { '*' },
     command = function()
-      toggle_trailing "i"
+      toggle_trailing 'i'
     end,
   },
 })

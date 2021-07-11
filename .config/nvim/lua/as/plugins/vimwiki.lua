@@ -2,48 +2,48 @@ local M = {}
 
 function M.setup()
   local fn = vim.fn
-  local has_dropbox = fn.isdirectory(fn.expand "$HOME/Dropbox") > 0
+  local has_dropbox = fn.isdirectory(fn.expand '$HOME/Dropbox') > 0
   local home = vim.env.HOME
 
-  require("which-key").register({
-    ["w"] = {
-      name = "+wiki",
-      i = "wiki: index",
-      t = "wiki: open index in tab",
-      w = "wiki: open diary",
+  require('which-key').register({
+    ['w'] = {
+      name = '+wiki',
+      i = 'wiki: index',
+      t = 'wiki: open index in tab',
+      w = 'wiki: open diary',
     },
   }, {
-    prefix = "<leader>",
+    prefix = '<leader>',
   })
 
-  vim.g.wiki_path = has_dropbox and home .. "/Dropbox/wiki" or home .. "/wiki"
+  vim.g.wiki_path = has_dropbox and home .. '/Dropbox/wiki' or home .. '/wiki'
 
   vim.g.wiki = {
-    name = "knowledge base",
+    name = 'knowledge base',
     path = vim.g.wiki_path,
-    path_html = vim.g.wiki_path .. "/public/",
+    path_html = vim.g.wiki_path .. '/public/',
     auto_toc = 1,
     auto_diary_index = 1,
     auto_generate_links = 1,
     auto_tags = 1,
   }
 
-  vim.g.learnings_wiki_path = has_dropbox and home .. "/Dropbox/learnings" or home .. "/learnings"
+  vim.g.learnings_wiki_path = has_dropbox and home .. '/Dropbox/learnings' or home .. '/learnings'
   vim.g.learnings_wiki = {
-    name = "Learnings",
+    name = 'Learnings',
     path = vim.g.learnings_wiki_path,
-    path_html = vim.g.learnings_wiki_path .. "/public",
+    path_html = vim.g.learnings_wiki_path .. '/public',
     auto_tags = 1,
     auto_export = 1,
   }
 
   vim.g.system_wiki = {
-    name = "Local Wiki",
-    path = home .. "/wiki",
+    name = 'Local Wiki',
+    path = home .. '/wiki',
   }
 
   vim.g.vimwiki_auto_chdir = 1
-  vim.g.vimwiki_tags_header = "Wiki tags"
+  vim.g.vimwiki_tags_header = 'Wiki tags'
   vim.g.vimwiki_auto_header = 1
   vim.g.vimwiki_hl_headers = 1 --too colourful
   vim.g.vimwiki_conceal_pre = 1
@@ -51,41 +51,41 @@ function M.setup()
   vim.g.vimwiki_list = { vim.g.wiki, vim.g.learnings_wiki, vim.g.system_wiki }
 
   vim.g.vimwiki_global_ext = 0
-  vim.g.vimwiki_folding = "expr"
+  vim.g.vimwiki_folding = 'expr'
 end
 
 function M.config()
   as.command {
-    "CloseVimWikis",
+    'CloseVimWikis',
     function()
       local bufs = vim.fn.getbufinfo { buflisted = true }
       for _, buf in ipairs(bufs) do
-        if vim.bo[buf.bufnr].filetype == "vimwiki" then
+        if vim.bo[buf.bufnr].filetype == 'vimwiki' then
           vim.api.nvim_buf_delete(buf.bufnr, { force = true })
         end
       end
     end,
   }
 
-  require("which-key").register({
+  require('which-key').register({
     w = {
-      name = "+wiki",
-      [","] = {
-        name = "+diary",
-        i = "generate diary links",
+      name = '+wiki',
+      [','] = {
+        name = '+diary',
+        i = 'generate diary links',
         m = "edit tomorrow's diary entry",
-        t = "edit diary entry (tab)",
+        t = 'edit diary entry (tab)',
         y = "edit yesterday's diary entry",
         w = "edit today's diary entry",
       },
-      q = { "<Cmd>CloseVimWikis<CR>", "close all wikis" },
-      w = "open vimwiki index",
-      s = "vimwiki UI select",
-      t = "open vimwiki index in a tab",
-      i = "open vimwiki diary",
+      q = { '<Cmd>CloseVimWikis<CR>', 'close all wikis' },
+      w = 'open vimwiki index',
+      s = 'vimwiki UI select',
+      t = 'open vimwiki index in a tab',
+      i = 'open vimwiki diary',
     },
   }, {
-    prefix = "<leader>",
+    prefix = '<leader>',
   })
 end
 
