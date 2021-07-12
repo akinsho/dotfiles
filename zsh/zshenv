@@ -80,6 +80,11 @@ export USE_EDITOR=$EDITOR
 if [ -f "$HOME/.environment.secret.sh" ]; then
   source $HOME/.environment.secret.sh
 fi
+
+if [ -f "$HOME/.environment.local.sh" ]; then
+  source $HOME/.environment.local.sh
+fi
+
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
