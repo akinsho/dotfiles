@@ -788,9 +788,6 @@ require('packer').startup {
       end,
     }
 
-    -- TODO: currently this plugin does not support dart, which I need to make PR for
-    use 'RRethy/nvim-treesitter-textsubjects'
-
     -- BUG: This needs to load after nvim-treesitter but the "after" key in packer is broken till #272 is fixed
     use {
       'mizlan/iswap.nvim',

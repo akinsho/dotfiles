@@ -64,12 +64,6 @@ return function()
         },
       },
     },
-    textsubjects = {
-      enable = true,
-      keymaps = {
-        ['<CR>'] = 'textsubjects-smart',
-      },
-    },
     rainbow = {
       enable = true,
       disable = { 'lua', 'json' },
