@@ -48,12 +48,15 @@ as.augroup('AddTerminalMappings', {
 -- Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 -- repeat macros across a visual range
 ------------------------------------------------------------------------------
-local function execute_macro_over_visual_range()
-  vim.cmd [[echo "@".getcmdline()]]
-  vim.cmd [[":'<,'>normal @".nr2char(getchar())]]
-end
+-- TODO: converting this to lua does not work for some obscure reason.
+vim.cmd [[
+  function! ExecuteMacroOverVisualRange()
+    echo "@".getcmdline()
+    execute ":'<,'>normal @".nr2char(getchar())
+  endfunction
+]]
 
-xnoremap('@', execute_macro_over_visual_range)
+xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
 --}}}
 ------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
