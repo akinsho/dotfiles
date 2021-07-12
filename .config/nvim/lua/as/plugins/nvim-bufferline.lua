@@ -33,7 +33,7 @@ return function()
     return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
   end
 
-  ---@diagnostic disable-next-line: unused-function
+  ---@diagnostic disable-next-line: unused-function, unused-local
   local function sort_by_mtime(a, b)
     local astat = vim.loop.fs_stat(a.path)
     local bstat = vim.loop.fs_stat(b.path)
