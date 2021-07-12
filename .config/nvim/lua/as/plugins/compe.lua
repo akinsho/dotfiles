@@ -48,6 +48,7 @@ return function()
       nvim_lsp = { priority = 101 },
       nvim_lua = true,
       orgmode = true,
+      neorg = true,
     },
     documentation = {
       border = 'rounded',
