@@ -650,13 +650,6 @@ require('packer').startup {
           load = {
             ['core.defaults'] = {},
             ['core.norg.concealer'] = {},
-            ['core.norg.dirman'] = {
-              config = {
-                workspaces = {
-                  home = '~/Dropbox/neorg',
-                },
-              },
-            },
           },
         }
       end,
