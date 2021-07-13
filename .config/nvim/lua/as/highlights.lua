@@ -166,7 +166,7 @@ function M.plugin(name, ...)
   M.all(hls)
   as.augroup(fmt('%sHighlightOverrides', name), {
     {
-      events = { 'Colorscheme' },
+      events = { 'ColorScheme' },
       targets = { '*' },
       command = function()
         M.all(hls)
