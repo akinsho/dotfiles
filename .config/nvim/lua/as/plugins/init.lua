@@ -228,7 +228,6 @@ require('packer').startup {
 
     use { 'folke/which-key.nvim', config = conf 'whichkey' }
 
-    -- FIXME: If nvim-web-devicons is specified before it is used this errors that it is used twice
     use {
       'folke/trouble.nvim',
       keys = { '<leader>ld' },
