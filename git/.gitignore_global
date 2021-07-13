@@ -66,5 +66,7 @@ _deps
 
 # Vim Wiki tag files
 .vimwiki_tags
+
 .localrc.lua
 .exrc
+.ignore
