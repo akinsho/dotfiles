@@ -544,7 +544,7 @@ require('packer').startup {
       end,
     }
     -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    use { 'kshenoy/vim-signature', opt = true }
+    use 'kshenoy/vim-signature'
 
     use {
       'mbbill/undotree',
