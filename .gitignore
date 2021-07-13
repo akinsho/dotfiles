@@ -1,8 +1,6 @@
-themes
 tags
 node_modules
 node
-local
 .DS_Store
 *~
 .tern-port
