@@ -7,7 +7,7 @@ local fmt = string.format
 local PACKER_COMPILED_PATH = fn.stdpath 'cache' .. '/packer/packer_compiled.lua'
 
 -----------------------------------------------------------------------------//
--- Bootstrap Packer {{{
+-- Bootstrap Packer {{{4
 -----------------------------------------------------------------------------//
 -- Make sure packer is installed on the current machine and load
 -- the dev or upstream version depending on if we are at work or not
@@ -25,8 +25,7 @@ else
   local name = vim.env.DEVELOPING and 'local-packer.nvim' or 'packer.nvim'
   vim.cmd(fmt('packadd! %s', name))
 end
--- }}}
------------------------------------------------------------------------------//
+-----------------------------------------------------------------------------//}}}3
 
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
@@ -126,13 +125,11 @@ end
   or local variables
 --]]
 require('packer').startup {
-  --- TODO: add fold levels so some sections are closed by default
-  --- depending on foldlevel and foldlevelstart
   function(use, use_rocks)
     use_local { 'wbthomason/packer.nvim', local_path = 'contributing', opt = true }
-    --------------------------------------------------------------------------------
-    -- Core {{{
-    ---------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------//
+    -- Core {{{3
+    -----------------------------------------------------------------------------//
     use_rocks 'penlight'
 
     use {
@@ -306,10 +303,9 @@ require('packer').startup {
       config = conf 'nvim-tree',
       requires = 'nvim-web-devicons',
     }
-
     -- }}}
     -----------------------------------------------------------------------------//
-    -- LSP,Completion & Debugger {{{
+    -- LSP,Completion & Debugger {{{4
     -----------------------------------------------------------------------------//
     use {
       'mfussenegger/nvim-dap',
@@ -487,7 +483,7 @@ require('packer').startup {
     }
     -- }}}
     --------------------------------------------------------------------------------
-    -- Utilities {{{
+    -- Utilities {{{4
     ---------------------------------------------------------------------------------
     use 'nanotee/luv-vimdocs'
     use 'milisims/nvim-luaref'
@@ -515,9 +511,7 @@ require('packer').startup {
         }
 
         require('nvim-autopairs.completion.compe').setup {
-          --  map <CR> on insert mode
           map_cr = true,
-          -- it will auto insert `(` after select function or method item
           map_complete = true,
         }
       end,
@@ -615,7 +609,7 @@ require('packer').startup {
     }
     --}}}
     ---------------------------------------------------------------------------------
-    -- Knowledge and task management {{{
+    -- Knowledge and task management {{{4
     ---------------------------------------------------------------------------------
     use {
       'soywod/himalaya', --- Email in nvim
@@ -663,10 +657,9 @@ require('packer').startup {
         require('org-bullets').setup()
       end,
     }
-
     -- }}}
     --------------------------------------------------------------------------------
-    -- Profiling {{{
+    -- Profiling {{{4
     --------------------------------------------------------------------------------
     use {
       'dstein64/vim-startuptime',
@@ -678,7 +671,7 @@ require('packer').startup {
     use { 'tweekmonster/startuptime.vim', cmd = 'StartupTime' }
     -- }}}
     --------------------------------------------------------------------------------
-    -- TPOPE {{{
+    -- TPOPE {{{4
     --------------------------------------------------------------------------------
     use 'tpope/vim-eunuch'
     use 'tpope/vim-sleuth'
@@ -704,7 +697,7 @@ require('packer').startup {
     }
     -- }}}
     --------------------------------------------------------------------------------
-    -- Syntax {{{
+    -- Syntax {{{4
     --------------------------------------------------------------------------------
     -- TODO: converting a plugin from disabled to enabled inside a require doesn't work
     use_local {
@@ -755,7 +748,7 @@ require('packer').startup {
     use 'mtdl9/vim-log-highlighting'
     ---}}}
     --------------------------------------------------------------------------------
-    -- Git {{{
+    -- Git {{{4
     --------------------------------------------------------------------------------
     use {
       'ruifm/gitlinker.nvim',
@@ -836,7 +829,7 @@ require('packer').startup {
     }
     ---}}}
     --------------------------------------------------------------------------------
-    -- Text Objects {{{
+    -- Text Objects {{{4
     --------------------------------------------------------------------------------
     use 'AndrewRadev/splitjoin.vim'
     use {
@@ -909,7 +902,7 @@ require('packer').startup {
     }
     -- }}}
     --------------------------------------------------------------------------------
-    -- Search Tools {{{
+    -- Search Tools {{{4
     --------------------------------------------------------------------------------
     use {
       'phaazon/hop.nvim',
@@ -923,7 +916,7 @@ require('packer').startup {
     }
     -- }}}
     ---------------------------------------------------------------------------------
-    -- Themes  {{{
+    -- Themes  {{{4
     ----------------------------------------------------------------------------------
     use 'NTBBloodbath/doom-one.nvim'
     use 'monsonjeremy/onedark.nvim'
@@ -932,7 +925,7 @@ require('packer').startup {
     use { 'Th3Whit3Wolf/one-nvim', opt = true }
     -- }}}
     ---------------------------------------------------------------------------------
-    -- Dev plugins  {{{
+    -- Dev plugins  {{{4
     ---------------------------------------------------------------------------------
     use {
       'norcalli/nvim-terminal.lua',
@@ -943,7 +936,7 @@ require('packer').startup {
     use { 'rafcamlet/nvim-luapad', cmd = 'Luapad', disable = is_work }
     -- }}}
     -----------------------------------------------------------------------------//
-    -- Personal plugins {{{
+    -- Personal plugins {{{4
     -----------------------------------------------------------------------------//
     use_local {
       'akinsho/dependency-assist.nvim',
@@ -1021,7 +1014,7 @@ require('packer').startup {
       local_path = 'personal',
       requires = 'nvim-web-devicons',
     }
-    -- }}}
+    --}}}
     ---------------------------------------------------------------------------------
   end,
   config = {
@@ -1056,6 +1049,5 @@ if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) t
   vim.cmd(fmt('source %s', PACKER_COMPILED_PATH))
   vim.g.packer_compiled_loaded = true
 end
--- }}}
 
 -- vim:foldmethod=marker
