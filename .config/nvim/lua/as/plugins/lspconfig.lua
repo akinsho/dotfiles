@@ -229,13 +229,6 @@ as.lsp.servers = {
             command = 'prettier',
             args = { '--stdin-filepath', '%filename' },
           },
-          luaformatter = {
-            -- 'lua-format -i -c {config_dir}'
-            -- add ".lua-format" to root if using lua-format
-            rootPatterns = { '.git' },
-            command = 'lua-format',
-            args = { '-i', '-c', './.lua-format' },
-          },
           stylua = {
             rootPatterns = { '.git' },
             command = 'stylua',
