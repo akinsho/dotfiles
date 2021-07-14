@@ -50,7 +50,7 @@ local function setup_autocommands(client, _)
       {
         events = { 'BufWritePre' },
         targets = { '<buffer>' },
-        command = 'lua vim.lsp.buf.formatting_sync(nil, 5000)',
+        command = vim.lsp.buf.formatting_sync,
       },
     })
   end
