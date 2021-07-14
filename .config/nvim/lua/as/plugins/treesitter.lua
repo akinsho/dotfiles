@@ -63,6 +63,14 @@ return function()
           ['[['] = '@class.outer',
         },
       },
+      lsp_interop = {
+        enable = true,
+        border = 'rounded',
+        peek_definition_code = {
+          ['df'] = '@function.outer',
+          ['dF'] = '@class.outer',
+        },
+      },
     },
     rainbow = {
       enable = true,

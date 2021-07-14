@@ -9,6 +9,10 @@ return function()
   }
 
   wk.register {
+    d = {
+      f = 'treesitter: peek function definition',
+      F = 'treesitter: peek class definition',
+    },
     [']'] = {
       name = '+next',
       ['<space>'] = 'add space below',
