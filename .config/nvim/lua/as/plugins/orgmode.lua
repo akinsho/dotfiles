@@ -15,7 +15,7 @@ return function()
     prefix = '<leader>',
   })
   require('orgmode').setup {
-    org_agenda_files = { org_dir .. '/**/*', '~/local-org/**/*' },
+    org_agenda_files = { org_dir .. '/**/*', '~/org/**/*' },
     org_default_notes_file = org_dir .. '/refile.org',
     org_todo_keywords = { 'TODO', 'WAITING', 'NEXT', '|', 'DONE', 'CANCELLED' },
     org_todo_keyword_faces = {
