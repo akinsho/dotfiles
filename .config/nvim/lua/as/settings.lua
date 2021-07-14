@@ -77,7 +77,7 @@ vim.opt.formatoptions = {
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
-vim.opt.foldtext = 'v:lua.folds()'
+vim.opt.foldtext = 'v:lua.as.folds()'
 vim.opt.foldopen = vim.opt.foldopen + 'search'
 vim.opt.foldlevelstart = 3
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
