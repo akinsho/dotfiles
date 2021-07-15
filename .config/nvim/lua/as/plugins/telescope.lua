@@ -5,6 +5,7 @@ return function()
 
   telescope.setup {
     defaults = {
+      set_env = { ['TERM'] = vim.env.TERM },
       prompt_prefix = '❯ ',
       mappings = {
         i = {
@@ -16,8 +17,7 @@ return function()
         },
       },
       file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf' },
-      -- set this value to 'flex' once telescope/#823 is merged
-      layout_strategy = 'horizontal',
+      layout_strategy = 'flex',
       winblend = 7,
     },
     extensions = {
@@ -88,17 +88,33 @@ return function()
     })
   end
 
+  local function tmux_sessions()
+    telescope.extensions.tmux.sessions {}
+  end
+
+  local function tmux_windows()
+    telescope.extensions.tmux.windows {}
+  end
+
   require('which-key').register {
     ['<leader>f'] = {
       name = '+telescope',
       a = { builtins.builtin, 'builtins' },
-      b = { builtins.git_branches, 'branches' },
-      -- c = { builtins.git_commits, "commits" },
+      g = {
+        name = '+git',
+        c = { builtins.git_commits, 'commits' },
+        b = { builtins.git_branches, 'branches' },
+      },
       m = { builtins.man_pages, 'man pages' },
       h = { frecency, 'history' },
       n = { nvim_config, 'nvim config' },
       r = { builtins.reloader, 'module reloader' },
       w = { builtins.lsp_dynamic_workspace_symbols, 'workspace symbols', silent = false },
+      t = {
+        name = '+tmux',
+        s = { tmux_sessions, 'sessions' },
+        w = { tmux_windows, 'windows' },
+      },
       ['?'] = { builtins.help_tags, 'help' },
     },
     ['<leader>c'] = {
