@@ -13,7 +13,7 @@ return function()
   telescope.setup {
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
-      prompt_prefix = '❯ ',
+      prompt_prefix = ' ',
       mappings = {
         i = {
           ['<c-c>'] = function()
@@ -48,6 +48,12 @@ return function()
           i = { ['<c-x>'] = 'delete_buffer' },
           n = { ['<c-x>'] = 'delete_buffer' },
         },
+      },
+      lsp_code_actions = {
+        theme = 'cursor',
+      },
+      colorscheme = {
+        enable_preview = true,
       },
       find_files = {
         hidden = true,
