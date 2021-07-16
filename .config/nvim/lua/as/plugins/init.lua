@@ -148,7 +148,7 @@ require('packer').startup {
       local_path = 'contributing',
       setup = function()
         require('which-key').register({
-          ['f'] = {
+          f = {
             o = 'snap: buffers',
             s = 'snap: grep',
             c = 'snap: cursor word',
@@ -229,19 +229,27 @@ require('packer').startup {
       'folke/trouble.nvim',
       keys = { '<leader>ld' },
       cmd = { 'TroubleToggle' },
+      setup = function()
+        require('which-key').register {
+          ['<leader>l'] = {
+            d = 'trouble: toggle',
+            r = 'trouble: lsp references',
+          },
+        }
+      end,
       requires = 'nvim-web-devicons',
       config = function()
-        require('which-key').register {
-          ['<leader>ld'] = { '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>', 'trouble: toggle' },
-          ['<leader>lr'] = { '<cmd>TroubleToggle lsp_references<cr>', 'trouble: lsp references' },
-        }
-        require('as.highlights').plugin(
+        local H = require 'as.highlights'
+        H.plugin(
           'trouble',
           { 'TroubleNormal', { link = 'PanelBackground' } },
           { 'TroubleText', { link = 'PanelBackground' } },
           { 'TroubleIndent', { link = 'PanelVertSplit' } },
-          { 'TroubleFoldIcon', { guifg = 'yellow', gui = 'bold' } }
+          { 'TroubleFoldIcon', { guifg = 'yellow', gui = 'bold' } },
+          { 'TroubleLocation', { guifg = H.get_hl('Comment', 'fg') } }
         )
+        as.nnoremap('<leader>ld', '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>')
+        as.nnoremap('<leader>lr', '<cmd>TroubleToggle lsp_references<CR>')
         require('trouble').setup { auto_close = true, auto_preview = false }
       end,
     }
