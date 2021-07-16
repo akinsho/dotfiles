@@ -93,17 +93,6 @@ as.augroup('SmartClose', {
   },
 })
 
-as.augroup('DotooOverrides', {
-  {
-    events = { 'Filetype' },
-    targets = { 'dotoocapture', 'dotoo' },
-    command = function()
-      vim.bo.bufhidden = 'wipe'
-      as.nnoremap('q', '<Cmd>wq<CR>', { buffer = 0, nowait = true })
-    end,
-  },
-})
-
 as.augroup('ExternalCommands', {
   {
     -- Open images in an image viewer (probably Preview)
