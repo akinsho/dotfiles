@@ -46,5 +46,9 @@ return function()
         org_toggle_checkbox = '<leader>t',
       },
     },
+    notifications = {
+      enabled = true,
+      deadline_warning_reminder_time = true,
+    },
   }
 end
