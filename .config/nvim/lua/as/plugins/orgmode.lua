@@ -48,7 +48,6 @@ return function()
     },
     notifications = {
       enabled = true,
-      deadline_warning_reminder_time = true,
     },
   }
 end
