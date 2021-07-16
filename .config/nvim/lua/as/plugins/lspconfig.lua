@@ -64,6 +64,53 @@ local function setup_autocommands(client, _)
     })
   end
 end
+
+-- Capture real implementation of function that sets signs
+local orig_set_signs = vim.lsp.diagnostic.set_signs
+local diagnostic_cache = {}
+
+---Override diagnostics signs helper to only show the single most relevant sign
+---@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
+---@param diagnostics table
+---@param bufnr number
+---@param client_id number
+---@param sign_ns number
+---@param opts table
+local function set_highest_signs(diagnostics, bufnr, client_id, sign_ns, opts)
+  -- original func runs some checks, which I think is worth doing but maybe overkill
+  if not diagnostics then
+    diagnostics = diagnostic_cache[bufnr][client_id]
+  end
+
+  -- early escape
+  if not diagnostics then
+    return
+  end
+
+  -- Work out max severity diagnostic per line
+  local max_severity_per_line = {}
+  for _, d in pairs(diagnostics) do
+    if max_severity_per_line[d.range.start.line] then
+      local current_d = max_severity_per_line[d.range.start.line]
+      if d.severity < current_d.severity then
+        max_severity_per_line[d.range.start.line] = d
+      end
+    else
+      max_severity_per_line[d.range.start.line] = d
+    end
+  end
+
+  -- map to list
+  local filtered_diagnostics = {}
+  for _, v in pairs(max_severity_per_line) do
+    table.insert(filtered_diagnostics, v)
+  end
+
+  -- call original function
+  orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
+end
+
+vim.lsp.diagnostic.set_signs = set_highest_signs
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
