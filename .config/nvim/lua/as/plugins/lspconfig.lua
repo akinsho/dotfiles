@@ -44,6 +44,15 @@ local function setup_autocommands(client, _)
       },
     })
   end
+  as.augroup('LspDiagnosticsCursor', {
+    {
+      events = { 'CursorHold', 'CursorHoldI' },
+      targets = { '*' },
+      command = function()
+        vim.lsp.diagnostic.show_line_diagnostics { border = 'rounded', focusable = false }
+      end,
+    },
+  })
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
     as.augroup('LspFormat', {
