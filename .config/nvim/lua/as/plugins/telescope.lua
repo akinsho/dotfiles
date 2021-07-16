@@ -3,6 +3,13 @@ return function()
   local actions = require 'telescope.actions'
   local themes = require 'telescope.themes'
 
+  require('as.highlights').plugin(
+    'telescope',
+    { 'TelescopePathSeparator', { guifg = as.style.palette.dark_blue } },
+    { 'TelescopeQueryFilter', { link = 'IncSearch' } },
+    { 'TelescopeMatching', { link = 'Search', force = true } }
+  )
+
   telescope.setup {
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
@@ -56,12 +63,6 @@ return function()
 
   telescope.load_extension 'fzf'
   telescope.load_extension 'tmux'
-
-  require('as.highlights').plugin(
-    'telescope',
-    { 'TelescopePathSeparator', { guifg = as.style.palette.dark_blue } },
-    { 'TelescopeQueryFilter', { link = 'IncSearch' } }
-  )
 
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
