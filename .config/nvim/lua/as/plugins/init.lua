@@ -921,7 +921,13 @@ require('packer').startup {
     use 'NTBBloodbath/doom-one.nvim'
     use 'monsonjeremy/onedark.nvim'
     use 'marko-cerovac/material.nvim'
-    use 'projekt0n/github-nvim-theme'
+    use {
+      'projekt0n/github-nvim-theme',
+      event = 'ColorScheme github',
+      config = function()
+        require('github-theme').setup()
+      end,
+    }
     use { 'Th3Whit3Wolf/one-nvim', opt = true }
     -- }}}
     ---------------------------------------------------------------------------------
