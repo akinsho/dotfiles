@@ -512,6 +512,14 @@ require('packer').startup {
       end,
     }
 
+    -- prevent select and visual mode from overwriting the clipboard
+    use {
+      'kevinhwang91/nvim-hclipboard',
+      config = function()
+        require('hclipboard').start()
+      end,
+    }
+
     use {
       'arecarn/vim-fold-cycle',
       config = function()
