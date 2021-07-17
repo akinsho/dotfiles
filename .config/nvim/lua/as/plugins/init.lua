@@ -437,7 +437,19 @@ require('packer').startup {
       end,
     }
 
-    use 'ray-x/lsp_signature.nvim'
+    use {
+      'ray-x/lsp_signature.nvim',
+      config = function()
+        require('lsp_signature').setup {
+          bind = true,
+          fix_pos = false,
+          hint_enable = false,
+          handler_opts = {
+            border = 'rounded',
+          },
+        }
+      end,
+    }
 
     use_local {
       'akinsho/flutter-tools.nvim',
