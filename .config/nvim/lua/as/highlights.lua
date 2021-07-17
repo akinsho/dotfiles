@@ -40,14 +40,12 @@ end
 --- @vararg string
 function M.has_win_highlight(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
-  local has_match = false
   for _, target in ipairs { ... } do
     if win_hl:match(target) ~= nil then
-      has_match = true
-      break
+      return true, win_hl
     end
   end
-  return (win_hl ~= nil and has_match), win_hl
+  return false, win_hl
 end
 
 ---A mechanism to allow inheritance of the winhighlight of a specific
