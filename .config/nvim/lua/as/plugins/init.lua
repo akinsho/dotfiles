@@ -198,9 +198,6 @@ require('packer').startup {
           { '<leader>fs', vimgrep { limit = 50000 }, { command = 'grep' } },
           { '<leader>fc', vimgrep { prompt = 'Find word', filter_with = 'cword' } },
           { '<leader>fo', file { producer = 'vim.buffer' }, { command = 'buffers' } },
-
-          --- TODO: this producer hasn't been added yet
-          -- { "<leader>fl", file { producer = "vim.help" }, "Help docs" },
         }
       end,
     }
