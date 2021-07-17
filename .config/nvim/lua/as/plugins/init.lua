@@ -385,10 +385,6 @@ require('packer').startup {
         {
           'kosayoda/nvim-lightbulb',
           config = function()
-            require('as.highlights').plugin(
-              'NvimLightbulb',
-              { 'LightBulbVirtualText', { link = 'WarningMsg' } }
-            )
             as.augroup('NvimLightbulb', {
               {
                 events = { 'CursorHold', 'CursorHoldI' },
@@ -396,7 +392,7 @@ require('packer').startup {
                 command = function()
                   require('nvim-lightbulb').update_lightbulb {
                     sign = { enabled = false },
-                    virtual_text = { enabled = true, text = '' },
+                    virtual_text = { enabled = true },
                   }
                 end,
               },
@@ -413,7 +409,7 @@ require('packer').startup {
         local fastaction = require 'lsp-fastaction'
         fastaction.setup {
           action_data = {
-            dart = {
+            ['dart'] = {
               { pattern = 'import library', key = 'i', order = 1 },
               { pattern = 'wrap with widget', key = 'w', order = 2 },
               { pattern = 'column', key = 'c', order = 3 },
