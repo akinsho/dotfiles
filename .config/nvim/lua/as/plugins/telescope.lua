@@ -21,18 +21,24 @@ return function()
           end,
           ['<esc>'] = actions.close,
           ['<c-s>'] = actions.select_horizontal,
+          ['<c-j>'] = actions.cycle_history_next,
+          ['<c-k>'] = actions.cycle_history_prev,
         },
       },
       file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf' },
       layout_strategy = 'flex',
       winblend = 7,
+      history = {
+        -- TODO: automate creating this file or create an issue to do that by default
+        path = '~/.local/share/nvim/telescope_history.sqlite3',
+      },
     },
     extensions = {
       frecency = {
         workspaces = {
-          ['conf'] = vim.env.DOTFILES,
-          ['project'] = vim.env.PROJECTS_DIR,
-          ['wiki'] = vim.g.wiki_path,
+          conf = vim.env.DOTFILES,
+          project = vim.env.PROJECTS_DIR,
+          wiki = vim.g.wiki_path,
         },
       },
       fzf = {
@@ -69,6 +75,7 @@ return function()
 
   telescope.load_extension 'fzf'
   telescope.load_extension 'tmux'
+  telescope.load_extension 'smart_history'
 
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates

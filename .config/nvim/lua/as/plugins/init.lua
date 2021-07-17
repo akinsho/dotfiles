@@ -218,6 +218,7 @@ require('packer').startup {
           after = 'telescope.nvim',
         },
         { 'camgraff/telescope-tmux.nvim' },
+        { 'nvim-telescope/telescope-smart-history.nvim' },
       },
     }
 
