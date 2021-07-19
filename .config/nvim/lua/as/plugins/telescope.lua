@@ -51,6 +51,7 @@ return function()
         sort_mru = true,
         sort_lastused = true,
         show_all_buffers = true,
+        ignore_current_buffer = true,
         previewer = false,
         theme = 'dropdown',
         mappings = {
