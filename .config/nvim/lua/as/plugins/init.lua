@@ -144,7 +144,7 @@ require('packer').startup {
       'camspiers/snap',
       rocks = { 'fzy' },
       event = 'CursorHold',
-      keys = { '<c-p>', '<leader>fo' },
+      keys = { '<c-p>', '<leader>fs' },
       local_path = 'contributing',
       setup = function()
         require('which-key').register({

@@ -113,8 +113,8 @@ return function()
     }
   end
 
-  require('which-key').register {
-    ['<leader>f'] = {
+  require('which-key').register({
+    f = {
       name = '+telescope',
       a = { builtins.builtin, 'builtins' },
       g = {
@@ -135,8 +135,10 @@ return function()
       },
       ['?'] = { builtins.help_tags, 'help' },
     },
-    ['<leader>c'] = {
+    c = {
       d = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
     },
-  }
+  }, {
+    prefix = '<leader>',
+  })
 end
