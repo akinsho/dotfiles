@@ -48,9 +48,11 @@ return function()
     },
     pickers = {
       buffers = {
-        sort_lastused = true,
         sort_mru = true,
+        sort_lastused = true,
         show_all_buffers = true,
+        previewer = false,
+        theme = 'dropdown',
         mappings = {
           i = { ['<c-x>'] = 'delete_buffer' },
           n = { ['<c-x>'] = 'delete_buffer' },
@@ -123,6 +125,7 @@ return function()
       h = { frecency, 'history' },
       n = { nvim_config, 'nvim config' },
       r = { builtins.reloader, 'module reloader' },
+      o = { builtins.buffers, 'buffers' },
       w = { builtins.lsp_dynamic_workspace_symbols, 'workspace symbols', silent = false },
       t = {
         name = '+tmux',

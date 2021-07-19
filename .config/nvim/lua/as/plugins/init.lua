@@ -149,7 +149,6 @@ require('packer').startup {
       setup = function()
         require('which-key').register({
           f = {
-            o = 'snap: buffers',
             s = 'snap: grep',
             c = 'snap: cursor word',
             d = 'snap: dotfiles',
@@ -197,7 +196,6 @@ require('packer').startup {
           },
           { '<leader>fs', vimgrep { limit = 50000 }, { command = 'grep' } },
           { '<leader>fc', vimgrep { prompt = 'Find word', filter_with = 'cword' } },
-          { '<leader>fo', file { producer = 'vim.buffer' }, { command = 'buffers' } },
         }
       end,
     }
