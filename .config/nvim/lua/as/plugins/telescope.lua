@@ -49,6 +49,7 @@ return function()
     pickers = {
       buffers = {
         sort_lastused = true,
+        sort_mru = true,
         show_all_buffers = true,
         mappings = {
           i = { ['<c-x>'] = 'delete_buffer' },
