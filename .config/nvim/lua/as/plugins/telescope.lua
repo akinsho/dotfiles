@@ -104,7 +104,9 @@ return function()
   end
 
   local function tmux_windows()
-    telescope.extensions.tmux.windows {}
+    telescope.extensions.tmux.windows {
+      entry_format = '#S: #T',
+    }
   end
 
   require('which-key').register {
