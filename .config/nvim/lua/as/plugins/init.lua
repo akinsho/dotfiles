@@ -546,6 +546,7 @@ require('packer').startup {
         require('neoscroll').setup {
           mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', 'zt', 'zz', 'zb' },
           stop_eof = false,
+          hide_cursor = false,
         }
       end,
     }
