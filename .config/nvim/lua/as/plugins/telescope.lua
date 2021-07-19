@@ -29,7 +29,6 @@ return function()
       layout_strategy = 'flex',
       winblend = 7,
       history = {
-        -- TODO: automate creating this file or create an issue to do that by default
         path = '~/.local/share/nvim/telescope_history.sqlite3',
       },
     },
