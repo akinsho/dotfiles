@@ -45,7 +45,7 @@ return function()
   require('bufferline').setup {
     options = {
       mappings = false,
-      sort_by = "mru",
+      sort_by = 'mru',
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
       ---based on https://github.com/kovidgoyal/kitty/issues/957
@@ -72,6 +72,7 @@ return function()
   }
 
   require('which-key').register {
+    ['gD'] = { '<cmd>BufferLinePickClose<CR>', 'bufferline: delete buffer' },
     ['gb'] = { '<cmd>BufferLinePick<CR>', 'bufferline: pick buffer' },
     ['<leader><tab>'] = { '<cmd>BufferLineCycleNext<CR>', 'bufferline: next' },
     ['<S-tab>'] = { '<cmd>BufferLineCyclePrev<CR>', 'bufferline: prev' },
