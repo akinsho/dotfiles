@@ -943,7 +943,7 @@ require('packer').startup {
     ---------------------------------------------------------------------------------
     -- Themes  {{{4
     ----------------------------------------------------------------------------------
-    use 'NTBBloodbath/doom-one.nvim'
+    use { 'NTBBloodbath/doom-one.nvim', commit = 'cddc60' }
     use 'monsonjeremy/onedark.nvim'
     use 'marko-cerovac/material.nvim'
     use {
