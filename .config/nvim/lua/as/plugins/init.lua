@@ -510,6 +510,18 @@ require('packer').startup {
       end,
     }
 
+    use {
+      'bfredl/nvim-miniyank',
+      config = function()
+        require('which-key').register {
+          p = { '<Plug>(miniyank-autoput)', 'yank into miniyank' },
+          P = { '<Plug>(miniyank-autoPut)', 'yank into miniyank' },
+          ['<localleader>n'] = { '<Plug>(miniyank-cycle)', 'miniyank: cycle forward' },
+          ['<localleader>N'] = { '<Plug>(miniyank-cycleback)', 'miniyank: cycle backwards' },
+        }
+      end,
+    }
+
     -- prevent select and visual mode from overwriting the clipboard
     use {
       'kevinhwang91/nvim-hclipboard',
