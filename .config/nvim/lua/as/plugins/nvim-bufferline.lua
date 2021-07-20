@@ -45,7 +45,7 @@ return function()
   require('bufferline').setup {
     options = {
       mappings = false,
-      sort_by = 'mru',
+      sort_by = sort_by_mtime,
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
       ---based on https://github.com/kovidgoyal/kitty/issues/957
