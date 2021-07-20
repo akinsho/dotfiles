@@ -868,7 +868,15 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     -- Text Objects {{{4
     --------------------------------------------------------------------------------
-    use 'AndrewRadev/splitjoin.vim'
+    use {
+      'AndrewRadev/splitjoin.vim',
+      config = function()
+        require('which-key').register {
+          gS = 'splitjoin: split',
+          gJ = 'splitjoin: join',
+        }
+      end,
+    }
     use {
       'AndrewRadev/dsf.vim',
       config = function()
