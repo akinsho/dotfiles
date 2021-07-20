@@ -21,6 +21,7 @@ return function()
       name = '+prev',
       ['<space>'] = 'add space above',
     },
+    ['g>'] = 'show message history',
     ['<leader>'] = {
       ['0'] = 'which_key_ignore',
       ['1'] = 'which_key_ignore',
