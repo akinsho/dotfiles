@@ -675,11 +675,19 @@ require('packer').startup {
 
     use {
       'vhyrro/neorg',
+      branch = 'unstable',
       config = function()
         require('neorg').setup {
           load = {
             ['core.defaults'] = {},
             ['core.norg.concealer'] = {},
+            ['core.norg.dirman'] = {
+              config = {
+                workspaces = {
+                  notes = '~/Dropbox/neorg',
+                },
+              },
+            },
           },
         }
       end,
