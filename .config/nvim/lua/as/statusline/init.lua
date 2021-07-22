@@ -188,6 +188,7 @@ function _G.statusline()
 
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
+  local flutter = vim.g.flutter_tools_decorations or {}
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -230,6 +231,7 @@ function _G.statusline()
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
+    { item(flutter.app_version, 'StMetadata'), 4 },
     { item(utils.lsp_status(), 'StMetadata'), 4 },
     {
       item_if(
