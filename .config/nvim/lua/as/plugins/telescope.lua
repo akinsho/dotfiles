@@ -5,8 +5,6 @@ return function()
 
   require('as.highlights').plugin(
     'telescope',
-    { 'TelescopePathSeparator', { guifg = as.style.palette.dark_blue } },
-    { 'TelescopeQueryFilter', { link = 'IncSearch' } },
     { 'TelescopeMatching', { link = 'Search', force = true } }
   )
 
