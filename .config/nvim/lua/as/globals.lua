@@ -116,7 +116,7 @@ function as._execute(id, args)
   as._store[id](args)
 end
 
----@class Autocmd
+---@class Autocommand
 ---@field events string[] list of autocommand events
 ---@field targets string[] list of autocommand patterns
 ---@field modifiers string[] e.g. nested, once
@@ -124,7 +124,7 @@ end
 
 ---Create an autocommand
 ---@param name string
----@param commands Autocmd[]
+---@param commands Autocommand[]
 function as.augroup(name, commands)
   vim.cmd('augroup ' .. name)
   vim.cmd 'autocmd!'
