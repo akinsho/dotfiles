@@ -514,8 +514,8 @@ require('packer').startup {
       'bfredl/nvim-miniyank',
       config = function()
         require('which-key').register {
-          p = { '<Plug>(miniyank-autoput)', 'yank into miniyank' },
-          P = { '<Plug>(miniyank-autoPut)', 'yank into miniyank' },
+          p = { '<Plug>(miniyank-autoput)', 'yank into miniyank', noremap = false },
+          P = { '<Plug>(miniyank-autoPut)', 'yank into miniyank', noremap = false },
           ['<localleader>n'] = { '<Plug>(miniyank-cycle)', 'miniyank: cycle forward' },
           ['<localleader>N'] = { '<Plug>(miniyank-cycleback)', 'miniyank: cycle backwards' },
         }
