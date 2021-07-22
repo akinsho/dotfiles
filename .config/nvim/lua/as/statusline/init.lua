@@ -232,6 +232,7 @@ function _G.statusline()
     -- Right section
     -----------------------------------------------------------------------------//
     { item(flutter.app_version, 'StMetadata'), 4 },
+    { item(flutter.device and flutter.device.name or '', 'StMetadata'), 4 },
     { item(utils.lsp_status(), 'StMetadata'), 4 },
     {
       item_if(

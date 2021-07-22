@@ -459,6 +459,7 @@ require('packer').startup {
           },
           decorations = {
             statusline = {
+              device = true,
               app_version = true,
             },
           },
