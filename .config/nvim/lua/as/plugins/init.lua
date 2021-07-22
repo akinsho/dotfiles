@@ -1016,7 +1016,6 @@ require('packer').startup {
       local_path = 'personal',
       config = function()
         require('toggleterm').setup {
-          persist_size = false,
           open_mapping = [[<c-\>]],
           shade_filetypes = { 'none' },
           direction = 'vertical',
