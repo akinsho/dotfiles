@@ -258,7 +258,7 @@ as.lsp.servers = {
                 'after_each',
                 'pending',
                 'teardown',
-                'packer_plugins'
+                'packer_plugins',
               },
             },
             completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },

@@ -427,7 +427,7 @@ require('packer').startup {
         local fastaction = require 'lsp-fastaction'
         fastaction.setup {
           action_data = {
-            ['dart'] = {
+            dart = {
               { pattern = 'import library', key = 'i', order = 1 },
               { pattern = 'wrap with widget', key = 'w', order = 2 },
               { pattern = 'column', key = 'c', order = 3 },
