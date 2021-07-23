@@ -60,6 +60,9 @@ return function()
           n = { ['<c-x>'] = 'delete_buffer' },
         },
       },
+      oldfiles = {
+        theme = 'dropdown',
+      },
       lsp_code_actions = {
         theme = 'cursor',
       },
