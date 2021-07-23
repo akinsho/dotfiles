@@ -201,6 +201,29 @@ require('packer').startup {
     }
 
     use {
+      'jose-elias-alvarez/null-ls.nvim',
+      requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+      -- trigger loading after lspconfig has started the other servers
+      -- since there is otherwise a race condition and null-ls' setup would
+      -- have to be moved into lspconfig.lua otherwise
+      event = 'User LspServersStarted',
+      config = function()
+        local null_ls = require 'null-ls'
+        null_ls.config {
+          debounce = 150,
+          sources = {
+            null_ls.builtins.code_actions.gitsigns,
+            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.formatting.prettier.with {
+              filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
+            },
+          },
+        }
+        require('lspconfig')['null-ls'].setup {}
+      end,
+    }
+
+    use {
       'nvim-telescope/telescope.nvim',
       event = 'CursorHold',
       config = conf 'telescope',

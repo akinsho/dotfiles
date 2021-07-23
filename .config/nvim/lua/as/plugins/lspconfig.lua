@@ -267,35 +267,6 @@ as.lsp.servers = {
       },
     }
   end,
-  diagnosticls = function()
-    return {
-      rootMarkers = { '.git/' },
-      filetypes = { 'yaml', 'json', 'html', 'css', 'markdown', 'lua', 'graphql' },
-      init_options = {
-        formatters = {
-          prettier = {
-            rootPatterns = { '.git' },
-            command = 'prettier',
-            args = { '--stdin-filepath', '%filename' },
-          },
-          stylua = {
-            rootPatterns = { '.git' },
-            command = 'stylua',
-            args = { '-' },
-          },
-        },
-        formatFiletypes = {
-          json = 'prettier',
-          html = 'prettier',
-          css = 'prettier',
-          yaml = 'prettier',
-          markdown = 'prettier',
-          graphql = 'prettier',
-          lua = 'stylua',
-        },
-      },
-    }
-  end,
 }
 
 -----------------------------------------------------------------------------//
