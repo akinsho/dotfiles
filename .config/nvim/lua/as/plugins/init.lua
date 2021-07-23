@@ -219,7 +219,9 @@ require('packer').startup {
             },
           },
         }
-        require('lspconfig')['null-ls'].setup {}
+        require('lspconfig')['null-ls'].setup {
+          on_attach = as.lsp.on_attach,
+        }
       end,
     }
 

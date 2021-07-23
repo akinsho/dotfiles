@@ -11,6 +11,7 @@ local function setup_autocommands(client, _)
         vim.lsp.diagnostic.set_loclist {
           workspace = true,
           severity_limit = 'Warning',
+          -- TODO: this is now deprecated in neovim nightlies, use open instead
           open_loclist = false,
         }
       end,
