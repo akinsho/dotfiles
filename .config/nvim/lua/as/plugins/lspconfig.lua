@@ -8,12 +8,17 @@ local function setup_autocommands(client, _)
     {
       events = { 'User LspDiagnosticsChanged' },
       command = function()
-        vim.lsp.diagnostic.set_loclist {
+        local args = {
           workspace = true,
           severity_limit = 'Warning',
           -- TODO: this is now deprecated in neovim nightlies, use open instead
           open_loclist = false,
         }
+        -- argument has changed in nvim nightly
+        if as.has 'nvim-0.6' then
+          args.open = false
+        end
+        vim.lsp.diagnostic.set_loclist(args)
       end,
     },
   })
@@ -45,16 +50,6 @@ local function setup_autocommands(client, _)
       },
     })
   end
-  -- FIXME: when the diagnostic popup opens it overrides the hover popup
-  -- as.augroup('LspDiagnosticsCursor', {
-  --   {
-  --     events = { 'CursorHold', 'CursorHoldI' },
-  --     targets = { '*' },
-  --     command = function()
-  --       vim.lsp.diagnostic.show_line_diagnostics { border = 'rounded', focusable = false }
-  --     end,
-  --   },
-  -- })
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
     as.augroup('LspFormat', {
