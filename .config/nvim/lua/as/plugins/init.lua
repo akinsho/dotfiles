@@ -1106,6 +1106,7 @@ require('packer').startup {
     --}}}
     ---------------------------------------------------------------------------------
   end,
+  log = { level = 'error' },
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
