@@ -939,16 +939,8 @@ require('packer').startup {
         }
       end,
     }
-    use {
-      'chaoren/vim-wordmotion',
-      config = function()
-        -- Restore Vim's special case behavior with dw and cw:
-        as.nmap('dw', 'de')
-        as.nmap('cw', 'ce')
-        as.nmap('dW', 'dE')
-        as.nmap('cW', 'cE')
-      end,
-    }
+    use 'chaoren/vim-wordmotion'
+
     use {
       'b3nj5m1n/kommentary',
       config = function()
