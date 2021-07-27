@@ -140,7 +140,7 @@ require('packer').startup {
       end,
     }
 
-    use_local {
+    use {
       'camspiers/snap',
       rocks = { 'fzy' },
       event = 'CursorHold',
