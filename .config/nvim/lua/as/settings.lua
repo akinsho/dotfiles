@@ -159,7 +159,7 @@ vim.g.markdown_fenced_languages = {
 -----------------------------------------------------------------------------//
 vim.opt.list = true -- invisible chars
 vim.opt.listchars = {
-  eol = ' ',
+  eol = nil,
   tab = '│ ',
   extends = '›', -- Alternatives: … »
   precedes = '‹', -- Alternatives: … «
