@@ -740,12 +740,12 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     use {
       'dstein64/vim-startuptime',
-      opt = true,
+      cmd = 'StartupTime',
       config = function()
+        vim.g.startuptime_tries = 10
         vim.g.startuptime_exe_args = { '+let g:auto_session_enabled = 0' }
       end,
     }
-    use { 'tweekmonster/startuptime.vim', cmd = 'StartupTime' }
     -- }}}
     --------------------------------------------------------------------------------
     -- TPOPE {{{4
@@ -1098,7 +1098,7 @@ require('packer').startup {
     --}}}
     ---------------------------------------------------------------------------------
   end,
-  log = { level = 'error' },
+  log = { level = 'info' },
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
