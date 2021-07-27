@@ -529,6 +529,17 @@ require('packer').startup {
         as.smap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
       end,
     }
+    -- Use <Tab> to escape from pairs such as ""|''|() etc.
+    use {
+      'abecodes/tabout.nvim',
+      wants = { 'nvim-treesitter' },
+      after = { 'nvim-compe' },
+      config = function()
+        require('tabout').setup {
+          ignore_beginning = true,
+        }
+      end,
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Utilities {{{4
