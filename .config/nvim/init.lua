@@ -27,10 +27,3 @@ require 'as.settings'
 require 'as.highlights'
 require 'as.statusline'
 require 'as.plugins'
--------------------------------------------------------------------------
--- Local vimrc
--------------------------------------------------------------------------
-if vim.fn.filereadable(vim.fn.fnamemodify('~/.vimrc.local', ':p')) > 0 then
-  vim.cmd [[source ~/.vimrc.local]]
-end
------------------------------------------------------------------------------//
