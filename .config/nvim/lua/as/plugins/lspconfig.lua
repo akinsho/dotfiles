@@ -3,22 +3,17 @@ as.lsp = {}
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
-  -- FIXME: this opens even when there is no content so this is closed by default
   as.augroup('LspLocationList', {
     {
       events = { 'User LspDiagnosticsChanged' },
       command = function()
-        local args = {
-          workspace = true,
-          severity_limit = 'Warning',
-          -- TODO: this is now deprecated in neovim nightlies, use open instead
-          open_loclist = false,
-        }
+        -- FIXME: this opens even when there is no content so this is closed by default
         -- argument has changed in nvim nightly
         if as.has 'nvim-0.6' then
-          args.open = false
+          vim.lsp.diagnostic.set_qflist { open = false }
+        else
+          vim.lsp.diagnostic.set_loclist { open_loclist = false }
         end
-        vim.lsp.diagnostic.set_loclist(args)
       end,
     },
   })
