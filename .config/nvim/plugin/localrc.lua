@@ -1,4 +1,5 @@
 local luv = vim.loop
+local fmt = string.format
 
 local sep = '/'
 local default_target = '.localrc.lua'
@@ -66,7 +67,7 @@ local function load(path, target)
 
   local dir, err = luv.fs_opendir(path)
   if not dir and err then
-    notify('[Local init @ ' .. path .. ' failed]: ' .. err, vim.log.levels.Error)
+    notify(fmt('[Local init @ %s failed]: %s', path, err), vim.log.levels.Error)
   end
   repeat
     local entry = luv.fs_readdir(dir)
