@@ -26,7 +26,7 @@ function M.config()
     },
   }
   as.nnoremap('<localleader>gs', function()
-    neogit.open { kind = 'vsplit' }
+    neogit.open()
   end)
   as.nnoremap('<localleader>gc', function()
     neogit.open { 'commit' }
