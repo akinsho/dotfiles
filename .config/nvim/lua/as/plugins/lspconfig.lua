@@ -9,11 +9,8 @@ local function setup_autocommands(client, _)
       command = function()
         -- FIXME: this opens even when there is no content so this is closed by default
         -- argument has changed in nvim nightly
-        if as.has 'nvim-0.6' then
-          vim.lsp.diagnostic.set_qflist { open = false }
-        else
-          vim.lsp.diagnostic.set_loclist { open_loclist = false }
-        end
+        local args = as.has 'nvim-0.6' and { open = false } or { open_loclist = false }
+        vim.lsp.diagnostic.set_loclist(args)
       end,
     },
   })
