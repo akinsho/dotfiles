@@ -470,7 +470,6 @@ require('packer').startup {
 
     use_local {
       'akinsho/flutter-tools.nvim',
-      branch = 'feature/statusline-decorations',
       config = function()
         --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
         local ok, lsp_status = pcall(require, 'lsp-status')
