@@ -65,7 +65,12 @@ return function()
           highlight = 'PanelHeading',
           padding = 1,
         },
-        { filetype = 'flutterToolsOutline' },
+        {
+          filetype = 'flutterToolsOutline',
+          text = 'Flutter Outline',
+          highlight = 'PanelHeading',
+          padding = 1,
+        },
       },
     },
   }
