@@ -631,8 +631,6 @@ require('packer').startup {
         vim.g.highlighturl_guifg = require('as.highlights').get_hl('Keyword', 'fg')
       end,
     }
-    -- NOTE: marks are currently broken in neovim i.e. deleted marks are resurrected on restarting nvim
-    use 'kshenoy/vim-signature'
 
     use {
       'mbbill/undotree',
