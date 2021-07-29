@@ -21,9 +21,6 @@ local function prepare_fold_section(value)
 end
 
 local function is_ignored()
-  if vim.wo.foldmethod == 'marker' then
-    return true
-  end
   if vim.wo.diff then
     return vim.wo.diff
   end
