@@ -278,6 +278,7 @@ local function set_sidebar_highlight()
 end
 
 local sidebar_fts = {
+  'packer',
   'dap-repl',
   'flutterToolsOutline',
   'undotree',
