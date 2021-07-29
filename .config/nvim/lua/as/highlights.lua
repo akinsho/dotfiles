@@ -277,7 +277,11 @@ local function set_sidebar_highlight()
   end
 end
 
-local sidebar_fts = { 'NvimTree', 'dap-repl' }
+local sidebar_fts = {
+  'dap-repl',
+  'flutterToolsOutline',
+  'undotree',
+}
 
 local function on_sidebar_enter()
   vim.wo.winhighlight = table.concat({
