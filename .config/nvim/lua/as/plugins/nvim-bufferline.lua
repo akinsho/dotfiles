@@ -69,7 +69,6 @@ return function()
           filetype = 'flutterToolsOutline',
           text = 'Flutter Outline',
           highlight = 'PanelHeading',
-          padding = 1,
         },
         {
           filetype = 'packer',
