@@ -265,37 +265,6 @@ function as.has_map(lhs, mode)
   return vim.fn.maparg(lhs, mode) ~= ''
 end
 
-local function validate_opts(opts)
-  if not opts then
-    return true
-  end
-
-  if type(opts) ~= 'table' then
-    return false, 'opts should be a table'
-  end
-
-  if opts.buffer and type(opts.buffer) ~= 'number' then
-    return false, 'The buffer key should be a number'
-  end
-
-  return true
-end
-
-local function validate_mappings(lhs, rhs, opts)
-  vim.validate {
-    lhs = { lhs, 'string' },
-    rhs = {
-      rhs,
-      function(a)
-        local arg_type = type(a)
-        return arg_type == 'string' or arg_type == 'function'
-      end,
-      'right hand side',
-    },
-    opts = { opts, validate_opts, 'mapping options are incorrect' },
-  }
-end
-
 ---create a mapping function factory
 ---@param mode string
 ---@param o table
@@ -309,31 +278,27 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     assert(lhs ~= mode, fmt('The lhs should not be the same as mode for %s', lhs))
-    local _opts = opts and vim.deepcopy(opts) or {}
-
-    validate_mappings(lhs, rhs, _opts)
-
-    if _opts.check_existing and as.has_map(lhs, mode) then
+    assert(type(rhs) == 'string' or type(rhs) == 'function', '"rhs" should be a function or string')
+    opts = opts and vim.deepcopy(opts) or {}
+    if opts.check_existing and as.has_map(lhs, mode) then
       return
-    else
-      -- don't pass this invalid key to set keymap
-      _opts.check_existing = nil
     end
 
+    local buffer = opts.buffer
+    -- don't pass invalid keys to set keymap
+    opts.buffer = nil
+    opts.check_existing = nil
     -- add functions to a global table keyed by their index
     if type(rhs) == 'function' then
       local fn_id = as._create(rhs)
       rhs = string.format('<cmd>lua as._execute(%s)<CR>', fn_id)
     end
 
-    if _opts.buffer then
-      -- Remove the buffer from the args sent to the key map function
-      local bufnr = _opts.buffer
-      _opts.buffer = nil
-      _opts = vim.tbl_extend('keep', _opts, parent_opts)
-      api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, _opts)
-    else
-      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend('keep', _opts, parent_opts))
+    if buffer and type(buffer) == 'number' then
+      opts = vim.tbl_extend('keep', opts, parent_opts)
+      api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
+    elseif not buffer then
+      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
     end
   end
 end
