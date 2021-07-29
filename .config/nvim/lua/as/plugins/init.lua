@@ -228,6 +228,7 @@ require('packer').startup {
     use {
       'nvim-telescope/telescope.nvim',
       event = 'CursorHold',
+      module_pattern = 'telescope.*',
       config = conf 'telescope',
       requires = {
         'nvim-lua/popup.nvim',
@@ -725,10 +726,12 @@ require('packer').startup {
     use {
       'vhyrro/neorg',
       branch = 'unstable',
+      requires = { 'vhyrro/neorg-telescope' },
       config = function()
         require('neorg').setup {
           load = {
             ['core.defaults'] = {},
+            ['core.integrations.telescope'] = {},
             ['core.keybinds'] = {
               config = {
                 default_keybinds = true,
