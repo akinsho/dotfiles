@@ -8,8 +8,7 @@ local api = vim.api
 local fold_exclusions = { 'vim' }
 
 local function contains(str, pattern)
-  assert(str)
-  assert(pattern)
+  assert(str and pattern)
   return fn.match(str, pattern) >= 0
 end
 
@@ -22,14 +21,13 @@ local function prepare_fold_section(value)
 end
 
 local function is_ignored()
+  if vim.wo.foldmethod == 'marker' then
+    return true
+  end
   if vim.wo.diff then
     return vim.wo.diff
   end
-  for _, exclusion in ipairs(fold_exclusions) do
-    if exclusion == vim.bo.filetype then
-      return true
-    end
-  end
+  return vim.tbl_contains(fold_exclusions, vim.bo.filetype)
 end
 
 local function is_import(item)
