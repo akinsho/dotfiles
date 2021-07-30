@@ -287,14 +287,10 @@ function as.lsp.setup_servers()
   local installed = lspinstall.installed_servers()
   local status_capabilities = require('lsp-status').capabilities
   for _, server in pairs(installed) do
-    local mk_config = as.lsp.servers[server]
-    local config = mk_config and mk_config() or {}
-    config.flags = config.flags or {}
-    config.flags.debounce_text_changes = 150
+    local config = as.lsp.servers[server] and as.lsp.servers[server]() or {}
+    config.flags = { debounce_text_changes = 150 }
     config.on_attach = as.lsp.on_attach
-    if not config.capabilities then
-      config.capabilities = vim.lsp.protocol.make_client_capabilities()
-    end
+    config.capabilities = vim.lsp.protocol.make_client_capabilities()
     config.capabilities.textDocument.completion.completionItem.snippetSupport = true
     config.capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
