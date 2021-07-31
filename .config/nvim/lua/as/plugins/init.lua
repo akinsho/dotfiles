@@ -368,7 +368,7 @@ require('packer').startup {
     use { 'Pocco81/DAPInstall.nvim', opt = true }
     use { 'jbyuki/step-for-vimkind', opt = true }
 
-    use 'folke/lua-dev.nvim'
+    use { 'folke/lua-dev.nvim', commit = 'cf3b028' }
     use {
       'folke/todo-comments.nvim',
       requires = 'nvim-lua/plenary.nvim',
