@@ -100,7 +100,7 @@ end
 ---loaded e.g. lazy loading will return false
 ---@param plugin_name string
 ---@return boolean?
-function _G.plugin_loaded(plugin_name)
+function as.plugin_loaded(plugin_name)
   local plugins = packer_plugins or {}
   return plugins[plugin_name] and plugins[plugin_name].loaded
 end

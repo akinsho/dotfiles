@@ -11,7 +11,7 @@ highlight VimwikiDelText gui=strikethrough guifg=#5c6370 guibg=background
 highlight VimwikiLink gui=underline guifg=#61AFEF
 highlight link VimwikiCheckBoxDone VimwikiDelText
 
-if v:lua.plugin_loaded('which-key.nvim')
+if v:lua.as.plugin_loaded('which-key.nvim')
 lua << EOF
   local ok, wk = pcall(require, "which-key")
   if ok then
