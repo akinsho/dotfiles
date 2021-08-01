@@ -102,7 +102,7 @@ end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.opt.wildcharm = fn.char2nr(api.nvim_replace_termcodes([[<C-Z>]], true, true, true))
+vim.opt.wildcharm = fn.char2nr(api.nvim_replace_termcodes([[<Tab>]], true, true, true))
 vim.opt.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
 vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary

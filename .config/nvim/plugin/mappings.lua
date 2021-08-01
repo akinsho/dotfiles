@@ -105,7 +105,7 @@ nmap('<ScrollWheelUp>', '<c-u>')
 ------------------------------------------------------------------------------
 nnoremap('<leader>on', [[<cmd>w <bar> %bd <bar> e#<CR>]])
 -- Use wildmenu to cycle tabs
-nnoremap('<localleader><tab>', [[:b <C-Z>]], { silent = false })
+nnoremap('<localleader><tab>', [[:b <Tab>]], { silent = false })
 -- Switch between the last two files
 nnoremap('<leader><leader>', [[<c-^>]])
 -----------------------------------------------------------------------------//
@@ -359,7 +359,7 @@ nnoremap('gf', '<Cmd>e <cfile><CR>')
 -- to these would swallow up a tab mapping
 cnoremap(
   '<Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<Tab>"]],
   { expr = true }
 )
 cnoremap(
