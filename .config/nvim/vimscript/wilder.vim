@@ -5,6 +5,10 @@ call wilder#set_option('modes', ['/', '?', ':'])
 
 call wilder#set_option('pipeline', [
     \ wilder#branch(
+    \   wilder#python_file_finder_pipeline({
+    \     'file_command': ['rg', '--files'],
+    \     'filters': ['fuzzy_filter', 'difflib_sorter'],
+    \   }),
     \   wilder#cmdline_pipeline(#{
     \     fuzzy: 1,
     \     sorter: wilder#python_difflib_sorter(),
