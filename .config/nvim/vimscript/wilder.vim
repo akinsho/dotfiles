@@ -4,20 +4,20 @@ cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
 call wilder#set_option('modes', ['/', '?', ':'])
 
 call wilder#set_option('pipeline', [
-    \   wilder#branch(
-    \     wilder#cmdline_pipeline(#{
-    \       fuzzy: 1,
-    \       sorter: wilder#python_difflib_sorter(),
-    \     }),
-    \     wilder#python_search_pipeline(#{
-    \       pattern: 'fuzzy',
-    \     }),
-    \   ),
+    \ wilder#branch(
+    \   wilder#cmdline_pipeline(#{
+    \     fuzzy: 1,
+    \     sorter: wilder#python_difflib_sorter(),
+    \   }),
+    \   wilder#python_search_pipeline(#{
+    \     pattern: 'fuzzy',
+    \   }),
+    \ ),
     \])
 
 let s:highlighters = [
-  \ wilder#pcre2_highlighter(),
-  \ wilder#basic_highlighter(),
+  \ wilder#lua_pcre2_highlighter(),
+  \ wilder#lua_fzy_highlighter(),
   \]
 
 call wilder#set_option('renderer', wilder#renderer_mux({
@@ -33,6 +33,7 @@ call wilder#set_option('renderer', wilder#renderer_mux({
     \ }),
     \ '/': wilder#wildmenu_renderer(#{
     \   highlighter: s:highlighters,
+    \   separator: ' · ',
     \ }),
     \})
     \)
