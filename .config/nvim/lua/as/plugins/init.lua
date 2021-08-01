@@ -1009,6 +1009,14 @@ require('packer').startup {
         as.nnoremap('s', hop.hint_char1)
       end,
     }
+    -- lazyload as it is very expensive to load during startup i.e. 20ms+
+    use {
+      'gelguy/wilder.nvim',
+      event = 'CursorHold',
+      config = function()
+        vim.cmd(string.format('source %s/vimscript/wilder.vim', vim.g.vim_dir))
+      end,
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Themes  {{{1
