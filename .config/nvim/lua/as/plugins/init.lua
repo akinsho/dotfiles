@@ -491,6 +491,9 @@ require('packer').startup {
           debugger = {
             enabled = true,
           },
+          outline = {
+            auto_open = true,
+          },
           decorations = {
             statusline = {
               device = true,
