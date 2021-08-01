@@ -280,14 +280,10 @@ local function make_mapper(mode, o)
     assert(lhs ~= mode, fmt('The lhs should not be the same as mode for %s', lhs))
     assert(type(rhs) == 'string' or type(rhs) == 'function', '"rhs" should be a function or string')
     opts = opts and vim.deepcopy(opts) or {}
-    if opts.check_existing and as.has_map(lhs, mode) then
-      return
-    end
 
     local buffer = opts.buffer
     -- don't pass invalid keys to set keymap
     opts.buffer = nil
-    opts.check_existing = nil
     -- add functions to a global table keyed by their index
     if type(rhs) == 'function' then
       local fn_id = as._create(rhs)
