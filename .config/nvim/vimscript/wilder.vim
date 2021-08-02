@@ -26,14 +26,14 @@ let s:highlighters = [
 
 call wilder#set_option('renderer', wilder#renderer_mux({
     \ ':': wilder#popupmenu_renderer(#{
-    \   highlighter: s:highlighters,
-    \   left: [
-    \     wilder#popupmenu_devicons(),
-    \   ],
-    \   right: [
-    \     ' ',
-    \     wilder#popupmenu_scrollbar(),
-    \   ],
+    \  highlighter: s:highlighters,
+    \  left: [
+    \    wilder#popupmenu_devicons(),
+    \  ],
+    \  right: [
+    \   ' ',
+    \   wilder#popupmenu_scrollbar(),
+    \  ],
     \ }),
     \ '/': wilder#wildmenu_renderer(#{
     \   highlighter: s:highlighters,

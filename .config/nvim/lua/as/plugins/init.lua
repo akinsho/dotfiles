@@ -1016,7 +1016,7 @@ require('packer').startup {
       rocks = { 'luarocks-fetch-gitrec', 'pcre2' },
       requires = { 'romgrk/fzy-lua-native' },
       config = function()
-        vim.cmd(string.format('source %s/vimscript/wilder.vim', vim.g.vim_dir))
+        as.source 'vimscript/wilder.vim'
       end,
     }
     -- }}}
