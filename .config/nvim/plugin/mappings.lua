@@ -13,10 +13,9 @@ local onoremap = as.onoremap
 local cnoremap = as.cnoremap
 local tnoremap = as.tnoremap
 
---- work around to place functions in the global scope but
---- namespaced within a table.
---- TODO refactor this once nvim allows passing lua functions to mappings
-_G._mappings = {}
+--- work around to place functions in the global scope but namespaced within a table.
+--- TODO: refactor this once nvim allows passing lua functions to mappings
+as.mappings = {}
 -----------------------------------------------------------------------------//
 -- Terminal {{{
 ------------------------------------------------------------------------------//
@@ -333,7 +332,7 @@ nnoremap('cN', '*``cgN')
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-function _G._mappings.setup_CR()
+function as.mappings.setup_CR()
   nmap('<Enter>', [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
 end
 
@@ -341,12 +340,12 @@ end
 vim.cmd [[let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>""]]
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
-nnoremap('cq', [[:lua _mappings.setup_CR()<CR>*``qz]])
-nnoremap('cQ', [[:lua _mappings.setup_CR()<CR>#``qz]])
-xnoremap('cq', [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], { expr = true })
+nnoremap('cq', [[:lua as.mappings.setup_CR()<CR>*``qz]])
+nnoremap('cQ', [[:lua as.mappings.setup_CR()<CR>#``qz]])
+xnoremap('cq', [[":\<C-u>lua as.mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], { expr = true })
 xnoremap(
   'cQ',
-  [[":\<C-u>lua _mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  [[":\<C-u>lua as.mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
 )
 
@@ -375,7 +374,7 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
-function _G._mappings.google(pat, lucky)
+function as.mappings.google(pat, lucky)
   local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
   query = fn.substitute(query, '[[:punct:] ]', [[\=printf("%%%02X", char2nr(submatch(0)))]], 'g')
   fn.system(
@@ -387,14 +386,14 @@ function _G._mappings.google(pat, lucky)
   )
 end
 
-nnoremap('<localleader>?', [[:lua _mappings.google(vim.fn.expand("<cWORD>"), false)<cr>]])
-nnoremap('<localleader>!', [[:lua _mappings.google(vim.fn.expand("<cWORD>"), true)<cr>]])
-xnoremap('<localleader>?', [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
-xnoremap('<localleader>!', [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]])
+nnoremap('<localleader>?', [[:lua as.mappings.google(vim.fn.expand("<cWORD>"), false)<cr>]])
+nnoremap('<localleader>!', [[:lua as.mappings.google(vim.fn.expand("<cWORD>"), true)<cr>]])
+xnoremap('<localleader>?', [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
+xnoremap('<localleader>!', [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]])
 ----------------------------------------------------------------------------------
 -- Grep Operator
 ----------------------------------------------------------------------------------
-function _mappings.grep_operator(type)
+function as.mappings.grep_operator(type)
   local saved_unnamed_register = fn.getreg '@@'
   if type:match 'v' then
     vim.cmd [[normal! `<v`>y]]
@@ -413,8 +412,6 @@ function _mappings.grep_operator(type)
 end
 
 -- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
-nnoremap('<leader>g', [[:silent! set operatorfunc=v:lua._mappings.grep_operator<cr>g@]])
-xnoremap('<leader>g', [[:call v:lua._mappings.grep_operator(visualmode())<cr>]])
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
@@ -427,6 +424,8 @@ local function open_link()
   end
 end
 nnoremap('gx', open_link)
+nnoremap('<leader>g', [[:silent! set operatorfunc=v:lua.as.mappings.grep_operator<cr>g@]])
+xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]])
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
