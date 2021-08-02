@@ -1011,7 +1011,7 @@ require('packer').startup {
     -- lazyload as it is very expensive to load during startup i.e. 20ms+
     use {
       'gelguy/wilder.nvim',
-      event = 'CursorHold',
+      event = 'CmdlineEnter',
       rocks = { 'luarocks-fetch-gitrec', 'pcre2' },
       requires = { 'romgrk/fzy-lua-native' },
       config = function()
