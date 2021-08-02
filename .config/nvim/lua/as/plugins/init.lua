@@ -1010,6 +1010,7 @@ require('packer').startup {
     }
     -- lazy load as it is very expensive to load during startup i.e. 20ms+
     -- FIXME: UpdateRemotePlugins doesn't seem to be called for lazy loaded plugins
+    --@see: https://github.com/wbthomason/packer.nvim/issues/464
     use {
       'gelguy/wilder.nvim',
       event = 'CmdlineEnter',
