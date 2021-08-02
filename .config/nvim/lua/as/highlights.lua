@@ -4,7 +4,7 @@ local P = as.style.palette
 
 local M = {}
 
----Convert a hex color to rgb
+---Convert a hex color to RGB
 ---@param color string
 ---@return number
 ---@return number
@@ -123,12 +123,12 @@ function M.get_hl(grp, attr, fallback)
     return flatten_gui(hl)
   end
   local color = hl[attr] or fallback
-  -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
+  -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
   if not color then
     vim.notify(fmt('%s %s does not exist', grp, attr))
     return 'NONE'
   end
-  -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
+  -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
   return '#' .. bit.tohex(color, 6)
 end
 
@@ -202,6 +202,11 @@ local function general_overrides()
       { gui = 'undercurl', guibg = 'transparent', guifg = 'transparent', guisp = 'green' },
     },
     -----------------------------------------------------------------------------//
+    -- Vim syntax
+    -----------------------------------------------------------------------------//
+    { 'vimFunc', { link = 'function' } },
+    { 'vimUserFunc', { link = 'function' } },
+    -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
     { 'DiffAdd', { guibg = '#26332c', guifg = 'NONE' } },
@@ -222,6 +227,7 @@ local function general_overrides()
     { 'diffOnly', { link = 'WarningMsg', force = true } },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
+    -----------------------------------------------------------------------------//
     { 'Comment', { gui = 'italic' } },
     { 'Type', { gui = 'italic,bold' } },
     { 'Include', { gui = 'italic' } },
