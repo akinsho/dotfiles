@@ -1040,12 +1040,6 @@ require('packer').startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
-    use {
-      'norcalli/nvim-terminal.lua',
-      config = function()
-        require('terminal').setup()
-      end,
-    }
     use { 'rafcamlet/nvim-luapad', cmd = 'Luapad', disable = is_work }
     -- }}}
     ---------------------------------------------------------------------------------
