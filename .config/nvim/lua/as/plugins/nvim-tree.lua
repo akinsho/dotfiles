@@ -13,14 +13,6 @@ return function()
 
   as.nnoremap('<c-n>', [[<cmd>NvimTreeToggle<CR>]])
 
-  function as.nvim_tree_os_open()
-    local lib = require 'nvim-tree.lib'
-    local node = lib.get_node_at_cursor()
-    if node then
-      vim.fn.jobstart("open '" .. node.absolute_path .. "' &", { detach = true })
-    end
-  end
-
   vim.g.nvim_tree_special_files = {}
   vim.g.nvim_tree_lsp_diagnostics = 1
   vim.g.nvim_tree_indent_markers = 1
@@ -39,7 +31,6 @@ return function()
 
   local action = require('nvim-tree.config').nvim_tree_callback
   vim.g.nvim_tree_bindings = {
-    { key = '<c-o>', cb = '<Cmd>lua as.nvim_tree_os_open()<CR>' },
     { key = 'cd', cb = action 'cd' },
   }
 
