@@ -832,7 +832,6 @@ require('packer').startup {
     }
     use {
       'lewis6991/spellsitter.nvim',
-      opt = true,
       config = function()
         require('spellsitter').setup {}
       end,
