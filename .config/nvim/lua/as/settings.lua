@@ -1,5 +1,4 @@
 local fn = vim.fn
-local api = vim.api
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -13,7 +12,7 @@ vim.opt.shortmess = {
   F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
   s = true,
   c = true,
-  W = true, -- Dont show [w] or written when writing
+  W = true, -- Don't show [w] or written when writing
 }
 -----------------------------------------------------------------------------//
 -- Timings {{{1
@@ -102,7 +101,7 @@ end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.opt.wildcharm = fn.char2nr(api.nvim_replace_termcodes([[<Tab>]], true, true, true))
+vim.opt.wildcharm = fn.char2nr(as.replace_termcodes [[<Tab>]])
 vim.opt.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
 vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary

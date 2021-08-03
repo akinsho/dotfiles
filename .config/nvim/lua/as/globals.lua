@@ -188,6 +188,13 @@ function as.deep_merge(t1, t2)
   return t1
 end
 
+---A terser proxy for `nvim_replace_termcodes`
+---@param str string
+---@return any
+function as.replace_termcodes(str)
+  return api.nvim_replace_termcodes(str, true, true, true)
+end
+
 --- Usage:
 --- 1. Call `local stop = utils.profile('my-log')` at the top of the file
 --- 2. At the bottom of the file call `stop()`

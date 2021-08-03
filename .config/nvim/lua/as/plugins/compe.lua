@@ -1,8 +1,5 @@
 local fn = vim.fn
-
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+local t = as.replace_termcodes
 
 local check_back_space = function()
   local col = vim.fn.col '.' - 1
