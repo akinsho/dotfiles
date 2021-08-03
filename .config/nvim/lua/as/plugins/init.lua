@@ -862,7 +862,7 @@ require('packer').startup {
         end)
       end,
     }
-    use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns', event = 'BufRead' }
+    use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
     use {
       'rhysd/conflict-marker.vim',
       config = function()
