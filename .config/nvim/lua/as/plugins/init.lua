@@ -212,8 +212,7 @@ require('packer').startup {
         null_ls.config {
           debounce = 150,
           sources = {
-            -- FIXME: currently this causes an invalid buffer error
-            -- null_ls.builtins.code_actions.gitsigns,
+            null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.formatting.stylua,
             null_ls.builtins.formatting.prettier.with {
               filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
