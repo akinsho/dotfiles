@@ -54,6 +54,12 @@ return function()
       custom_filter = custom_filter,
       offsets = {
         {
+          filetype = 'undotree',
+          text = 'Undotree',
+          highlight = 'PanelHeading',
+          padding = 1,
+        },
+        {
           filetype = 'NvimTree',
           text = 'Explorer',
           highlight = 'PanelHeading',
