@@ -335,7 +335,53 @@ require('packer').startup {
       end,
     }
 
-    use { 'lukas-reineke/indent-blankline.nvim', config = conf 'indentline' }
+    use {
+      'lukas-reineke/indent-blankline.nvim',
+      config = function()
+        require('indent_blankline').setup {
+          char = '│', -- ┆ ┊ 
+          show_foldtext = false,
+          show_first_indent_level = true,
+          filetype_exclude = {
+            'startify',
+            'dashboard',
+            'log',
+            'fugitive',
+            'gitcommit',
+            'packer',
+            'vimwiki',
+            'markdown',
+            'json',
+            'txt',
+            'vista',
+            'help',
+            'NvimTree',
+            'git',
+            'TelescopePrompt',
+            'undotree',
+            'flutterToolsOutline',
+            'org',
+            'orgagenda',
+            '', -- for all buffers without a file type
+          },
+          buftype_exclude = { 'terminal', 'nofile' },
+          show_current_context = true,
+          context_patterns = {
+            'class',
+            'function',
+            'method',
+            'block',
+            'list_literal',
+            'selector',
+            '^if',
+            '^table',
+            'if_statement',
+            'while',
+            'for',
+          },
+        }
+      end,
+    }
 
     use {
       'kyazdani42/nvim-tree.lua',
