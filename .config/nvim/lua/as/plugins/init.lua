@@ -289,7 +289,7 @@ require('packer').startup {
       'rmagatti/auto-session',
       config = function()
         require('auto-session').setup {
-          auto_session_root_dir = vim.fn.stdpath 'data' .. '/session/auto/',
+          auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath 'data'),
         }
       end,
     }
