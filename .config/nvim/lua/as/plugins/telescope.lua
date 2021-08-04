@@ -32,10 +32,6 @@ return function()
     },
     extensions = {
       frecency = {
-        -- the filter is saved so passing a :CWD: tag would not work
-        -- without turning this option off
-        -- @see: https://github.com/nvim-telescope/telescope-frecency.nvim/issues/16
-        persistent_filter = false,
         workspaces = {
           conf = vim.env.DOTFILES,
           project = vim.env.PROJECTS_DIR,
