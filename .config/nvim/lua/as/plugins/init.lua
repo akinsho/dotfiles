@@ -37,7 +37,9 @@ as.augroup('PackerSetupInit', {
     command = function()
       as.invalidate('as.plugins', true)
       require('packer').compile()
-      vim.notify 'packer compiled...'
+      vim.notify('packer compiled...', 'info', {
+        title = 'Information'
+      })
     end,
   },
 })
@@ -685,6 +687,13 @@ require('packer').startup {
       'itchyny/vim-highlighturl',
       config = function()
         vim.g.highlighturl_guifg = require('as.highlights').get_hl('Keyword', 'fg')
+      end,
+    }
+
+    use {
+      'rcarriga/nvim-notify',
+      config = function()
+        vim.notify = require 'notify'
       end,
     }
 
