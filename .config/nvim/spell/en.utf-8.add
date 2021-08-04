@@ -218,3 +218,5 @@ globbing
 popup
 vsplit
 textwidth
+adhoc
+allowlist
