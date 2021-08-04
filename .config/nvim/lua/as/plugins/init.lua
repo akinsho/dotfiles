@@ -392,41 +392,6 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
-    use {
-      'mfussenegger/nvim-dap',
-      module = 'dap',
-      keys = { '<localleader>dc' },
-      setup = conf('dap').setup,
-      config = conf('dap').config,
-      requires = {
-        {
-          'rcarriga/nvim-dap-ui',
-          requires = 'nvim-dap',
-          after = 'nvim-dap',
-          config = function()
-            require('dapui').setup()
-          end,
-        },
-      },
-    }
-
-    -- NOTE: curiosity rather than necessity
-    use { 'Pocco81/DAPInstall.nvim', opt = true }
-    use { 'jbyuki/step-for-vimkind', opt = true }
-
-    use { 'folke/lua-dev.nvim', commit = 'cf3b028' }
-    use {
-      'folke/todo-comments.nvim',
-      requires = 'nvim-lua/plenary.nvim',
-      config = function()
-        require('todo-comments').setup {
-          highlight = {
-            exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
-          },
-        }
-        require('which-key').register { ['<leader>lt'] = { '<Cmd>TodoTrouble<CR>', 'trouble: todos' } }
-      end,
-    }
 
     use {
       'kabouzeid/nvim-lspinstall',
@@ -599,6 +564,59 @@ require('packer').startup {
       end,
     }
     -- }}}
+    -----------------------------------------------------------------------------//
+    -- Testing and Debugging {{{1
+    -----------------------------------------------------------------------------//
+    use {
+      'vim-test/vim-test',
+      cmd = { 'TestFile', 'TestNearest', 'TestSuite' },
+      keys = { '<localleader>tf', '<localleader>tn', '<localleader>ts' },
+      setup = function()
+        require('which-key').register({
+          t = {
+            name = '+vim-test',
+            f = 'test: file',
+            n = 'test: nearest',
+            s = 'test: suite',
+          },
+        }, {
+          prefix = '<localleader>',
+        })
+      end,
+      config = function()
+        vim.cmd [[
+          let test#strategy = "neovim"
+          let test#neovim#term_position = "vert botright"
+        ]]
+        as.nnoremap('<localleader>tf', '<cmd>TestFile<CR>')
+        as.nnoremap('<localleader>tn', '<cmd>TestNearest<CR>')
+        as.nnoremap('<localleader>ts', '<cmd>TestSuite<CR>')
+      end,
+    }
+    use {
+      'mfussenegger/nvim-dap',
+      module = 'dap',
+      keys = { '<localleader>dc' },
+      setup = conf('dap').setup,
+      config = conf('dap').config,
+      requires = {
+        {
+          'rcarriga/nvim-dap-ui',
+          requires = 'nvim-dap',
+          after = 'nvim-dap',
+          config = function()
+            require('dapui').setup()
+          end,
+        },
+      },
+    }
+    use { 'folke/lua-dev.nvim', commit = 'cf3b028' }
+
+    -- NOTE: curiosity rather than necessity
+    use { 'Pocco81/DAPInstall.nvim', opt = true }
+    use { 'jbyuki/step-for-vimkind', opt = true }
+
+    --}}}
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     --------------------------------------------------------------------------------
@@ -686,32 +704,6 @@ require('packer').startup {
       end,
     }
     use {
-      'vim-test/vim-test',
-      cmd = { 'TestFile', 'TestNearest', 'TestSuite' },
-      keys = { '<localleader>tf', '<localleader>tn', '<localleader>ts' },
-      setup = function()
-        require('which-key').register({
-          t = {
-            name = '+vim-test',
-            f = 'test: file',
-            n = 'test: nearest',
-            s = 'test: suite',
-          },
-        }, {
-          prefix = '<localleader>',
-        })
-      end,
-      config = function()
-        vim.cmd [[
-          let test#strategy = "neovim"
-          let test#neovim#term_position = "vert botright"
-        ]]
-        as.nnoremap('<localleader>tf', '<cmd>TestFile<CR>')
-        as.nnoremap('<localleader>tn', '<cmd>TestNearest<CR>')
-        as.nnoremap('<localleader>ts', '<cmd>TestSuite<CR>')
-      end,
-    }
-    use {
       'iamcco/markdown-preview.nvim',
       run = function()
         vim.fn['mkdp#util#install']()
@@ -731,7 +723,6 @@ require('packer').startup {
         })
       end,
     }
-    --}}}
     --------------------------------------------------------------------------------
     -- Knowledge and task management {{{1
     --------------------------------------------------------------------------------
@@ -1064,6 +1055,21 @@ require('packer').startup {
       requires = { 'romgrk/fzy-lua-native' },
       config = function()
         as.source 'vimscript/wilder.vim'
+      end,
+    }
+
+    use {
+      'folke/todo-comments.nvim',
+      requires = 'nvim-lua/plenary.nvim',
+      config = function()
+        require('todo-comments').setup {
+          highlight = {
+            exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
+          },
+        }
+        require('which-key').register {
+          ['<leader>lt'] = { '<Cmd>TodoTrouble<CR>', 'trouble: todos' },
+        }
       end,
     }
     -- }}}
