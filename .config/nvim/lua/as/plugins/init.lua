@@ -610,7 +610,8 @@ require('packer').startup {
         },
       },
     }
-    use { 'folke/lua-dev.nvim', commit = 'cf3b028' }
+
+    use 'folke/lua-dev.nvim'
 
     -- NOTE: curiosity rather than necessity
     use { 'Pocco81/DAPInstall.nvim', opt = true }
