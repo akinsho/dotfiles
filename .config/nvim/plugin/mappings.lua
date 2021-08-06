@@ -255,7 +255,7 @@ nnoremap('<c-s>', function()
   -- NOTE: this uses write specifically because we need to trigger a filesystem event
   -- even if the file isn't change so that things like hot reload work
   vim.cmd 'silent! write'
-  as.notify('Saved ' .. vim.fn.expand '%:t', { timeout = 1000 })
+  vim.notify('Saved ' .. vim.fn.expand '%:t', nil, { timeout = 1000 })
 end)
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap('qa', '<cmd>qa<CR>')
