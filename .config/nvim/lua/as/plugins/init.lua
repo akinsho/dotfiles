@@ -810,6 +810,7 @@ require('packer').startup {
 
     use_local {
       'akinsho/org-bullets.nvim',
+      requires = 'orgmode.nvim',
       local_path = 'personal',
       config = function()
         require('org-bullets').setup()
