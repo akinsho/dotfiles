@@ -895,6 +895,13 @@ require('packer').startup {
       end,
     }
     use {
+      'mfussenegger/nvim-ts-hint-textobject',
+      config = function()
+        as.omap('m', ":<C-U>lua require('tsht').nodes()<CR>")
+        as.vnoremap('m', ":'<'>lua require('tsht').nodes()<CR>")
+      end,
+    }
+    use {
       'lewis6991/spellsitter.nvim',
       config = function()
         require('spellsitter').setup {}
