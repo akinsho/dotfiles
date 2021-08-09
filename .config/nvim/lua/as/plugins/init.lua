@@ -201,31 +201,6 @@ require('packer').startup {
     }
 
     use {
-      'jose-elias-alvarez/null-ls.nvim',
-      requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-      -- trigger loading after lspconfig has started the other servers
-      -- since there is otherwise a race condition and null-ls' setup would
-      -- have to be moved into lspconfig.lua otherwise
-      event = 'User LspServersStarted',
-      config = function()
-        local null_ls = require 'null-ls'
-        null_ls.config {
-          debounce = 150,
-          sources = {
-            null_ls.builtins.code_actions.gitsigns,
-            null_ls.builtins.formatting.stylua,
-            null_ls.builtins.formatting.prettier.with {
-              filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
-            },
-          },
-        }
-        require('lspconfig')['null-ls'].setup {
-          on_attach = as.lsp.on_attach,
-        }
-      end,
-    }
-
-    use {
       'nvim-telescope/telescope.nvim',
       event = 'CursorHold',
       module_pattern = 'telescope.*',
@@ -392,7 +367,6 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
-
     use {
       'kabouzeid/nvim-lspinstall',
       module = 'lspinstall',
@@ -441,6 +415,31 @@ require('packer').startup {
           end,
         },
       },
+    }
+
+    use {
+      'jose-elias-alvarez/null-ls.nvim',
+      requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+      -- trigger loading after lspconfig has started the other servers
+      -- since there is otherwise a race condition and null-ls' setup would
+      -- have to be moved into lspconfig.lua otherwise
+      event = 'User LspServersStarted',
+      config = function()
+        local null_ls = require 'null-ls'
+        null_ls.config {
+          debounce = 150,
+          sources = {
+            null_ls.builtins.code_actions.gitsigns,
+            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.formatting.prettier.with {
+              filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
+            },
+          },
+        }
+        require('lspconfig')['null-ls'].setup {
+          on_attach = as.lsp.on_attach,
+        }
+      end,
     }
 
     use_local {
@@ -550,17 +549,6 @@ require('packer').startup {
         as.xmap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
         as.imap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
         as.smap('<c-j>', "vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'", opts)
-      end,
-    }
-    -- Use <Tab> to escape from pairs such as ""|''|() etc.
-    use {
-      'abecodes/tabout.nvim',
-      wants = { 'nvim-treesitter' },
-      after = { 'nvim-compe' },
-      config = function()
-        require('tabout').setup {
-          ignore_beginning = true,
-        }
       end,
     }
     -- }}}
@@ -893,6 +881,17 @@ require('packer').startup {
       config = function()
         require('iswap').setup {}
         as.nnoremap('<localleader>sw', '<Cmd>ISwapWith<CR>')
+      end,
+    }
+    -- Use <Tab> to escape from pairs such as ""|''|() etc.
+    use {
+      'abecodes/tabout.nvim',
+      wants = { 'nvim-treesitter' },
+      after = { 'nvim-compe' },
+      config = function()
+        require('tabout').setup {
+          ignore_beginning = true,
+        }
       end,
     }
     use {

@@ -389,7 +389,10 @@ end
 nnoremap('<localleader>?', [[:lua as.mappings.google(vim.fn.expand("<cWORD>"), false)<cr>]])
 nnoremap('<localleader>!', [[:lua as.mappings.google(vim.fn.expand("<cWORD>"), true)<cr>]])
 xnoremap('<localleader>?', [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
-xnoremap('<localleader>!', [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]])
+xnoremap(
+  '<localleader>!',
+  [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]]
+)
 ----------------------------------------------------------------------------------
 -- Grep Operator
 ----------------------------------------------------------------------------------
