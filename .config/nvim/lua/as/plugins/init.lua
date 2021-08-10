@@ -502,7 +502,8 @@ require('packer').startup {
             enabled = true,
           },
           outline = {
-            auto_open = true,
+            -- only auto open if there is space
+            auto_open = vim.o.columns > 220,
           },
           decorations = {
             statusline = {
