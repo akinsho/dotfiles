@@ -206,7 +206,6 @@ require('packer').startup {
       module_pattern = 'telescope.*',
       config = conf 'telescope',
       requires = {
-        'nvim-lua/popup.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         {
           'nvim-telescope/telescope-frecency.nvim',
