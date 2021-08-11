@@ -1,4 +1,5 @@
 local fn = vim.fn
+local is_dev = as.has 'nvim-0.6'
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -140,7 +141,7 @@ vim.opt.conceallevel = 2
 vim.opt.breakindentopt = 'sbr'
 vim.opt.linebreak = true -- lines wrap at words rather than random characters
 vim.opt.synmaxcol = 1024 -- don't syntax highlight long lines
-vim.opt.signcolumn = 'yes:2'
+vim.opt.signcolumn = is_dev and 'auto:2-4' or 'yes:2'
 vim.opt.ruler = false
 vim.opt.cmdheight = 2 -- Set command line height to two lines
 vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
@@ -195,12 +196,19 @@ vim.opt.termguicolors = true
 vim.opt.emoji = false
 -----------------------------------------------------------------------------//
 vim.opt.inccommand = 'nosplit'
+-----------------------------------------------------------------------------//
+-- Cursor {{{1
+-----------------------------------------------------------------------------//
 -- This is from the help docs, it enables mode shapes, "Cursor" highlight, and blinking
 vim.opt.guicursor = {
   [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
   [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
   [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
+
+if is_dev then
+  vim.opt.cursorlineopt = 'screenline,number'
+end
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
