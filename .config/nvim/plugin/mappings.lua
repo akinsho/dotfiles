@@ -162,7 +162,12 @@ local function buf_kill()
   end
   for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
     api.nvim_set_current_win(winid)
-    vim.cmd(cur_bufnr == buflisted[#buflisted].bufnr and 'bp' or 'bn')
+    local backwards = cur_bufnr == buflisted[#buflisted].bufnr
+    if pcall(require, 'bufferline') then
+      require('bufferline').cycle(backwards and -1 or 1)
+    else
+      vim.cmd(backwards and 'bp' or 'bn')
+    end
   end
   api.nvim_set_current_win(cur_winid)
   if not api.nvim_buf_is_valid(cur_bufnr) then
