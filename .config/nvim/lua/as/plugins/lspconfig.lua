@@ -184,33 +184,37 @@ function as.lsp.tagfunc(pattern, flags)
   return results
 end
 
-require('vim.lsp.protocol').CompletionItemKind = {
-  ' Text', -- Text
-  ' Method', -- Method
-  'ƒ Function', -- Function
-  ' Constructor', -- Constructor
-  '識 Field', -- Field
-  ' Variable', -- Variable
-  ' Class', -- Class
-  'ﰮ Interface', -- Interface
-  ' Module', -- Module
-  ' Property', -- Property
-  ' Unit', -- Unit
-  ' Value', -- Value
-  '了 Enum', -- Enum
-  ' Keyword', -- Keyword
-  ' Snippet', -- Snippet
-  ' Color', -- Color
-  ' File', -- File
-  '渚 Reference', -- Reference
-  ' Folder', -- Folder
-  ' Enum', -- Enum
-  ' Constant', -- Constant
-  ' Struct', -- Struct
-  '鬒 Event', -- Event
-  '\u{03a8} Operator', -- Operator
-  ' Type Parameter', -- TypeParameter
+local icons = {
+  Text = ' Text',
+  Method = ' Method',
+  Function = 'ƒ Function',
+  Constructor = ' Constructor',
+  Field = '識 Field',
+  Variable = ' Variable',
+  Class = ' Class',
+  Interface = 'ﰮ Interface',
+  Module = ' Module',
+  Property = ' Property',
+  Unit = ' Unit',
+  Value = ' Value',
+  Enum = '了 Enum',
+  Keyword = ' Keyword',
+  Snippet = ' Snippet',
+  Color = ' Color',
+  File = ' File',
+  Reference = '渚 Reference',
+  Folder = ' Folder',
+  Constant = ' Constant',
+  Struct = ' Struct',
+  Event = '鬒 Event',
+  Operator = '\u{03a8} Operator',
+  TypeParameter = ' Type Parameter',
 }
+
+local kinds = require('vim.lsp.protocol').CompletionItemKind
+for i, kind in ipairs(kinds) do
+  kinds[i] = icons[kind] or kind
+end
 
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
