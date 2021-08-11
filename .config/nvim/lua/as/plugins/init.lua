@@ -543,7 +543,7 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     use {
       'vim-test/vim-test',
-      cmd = { 'TestFile', 'TestNearest', 'TestSuite' },
+      cmd = { 'Test*' },
       keys = { '<localleader>tf', '<localleader>tn', '<localleader>ts' },
       setup = function()
         require('which-key').register({
