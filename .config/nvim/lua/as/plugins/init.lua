@@ -30,20 +30,6 @@ end
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
-as.augroup('PackerSetupInit', {
-  {
-    events = { 'BufWritePost' },
-    targets = { '*/as/plugins/*.lua' },
-    command = function()
-      as.invalidate('as.plugins', true)
-      require('packer').compile()
-      vim.notify 'packer compiled...'
-    end,
-  },
-})
-as.nnoremap('<leader>ps', [[<Cmd>PackerSync<CR>]])
-as.nnoremap('<leader>pc', [[<Cmd>PackerClean<CR>]])
-
 ---@param path string
 local function dev(path)
   return os.getenv 'HOME' .. '/projects/' .. path
@@ -1240,5 +1226,19 @@ if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) t
   vim.cmd(fmt('source %s', PACKER_COMPILED_PATH))
   vim.g.packer_compiled_loaded = true
 end
+
+as.augroup('PackerSetupInit', {
+  {
+    events = { 'BufWritePost' },
+    targets = { '*/as/plugins/*.lua' },
+    command = function()
+      as.invalidate('as.plugins', true)
+      require('packer').compile()
+      vim.notify 'packer compiled...'
+    end,
+  },
+})
+as.nnoremap('<leader>ps', [[<Cmd>PackerSync<CR>]])
+as.nnoremap('<leader>pc', [[<Cmd>PackerClean<CR>]])
 
 -- vim:foldmethod=marker
