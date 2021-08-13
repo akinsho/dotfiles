@@ -1,6 +1,3 @@
---- Global treesitter object containing treesitter related utilities
-as.ts = {}
-
 return function()
   local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
   parser_configs.norg = {
