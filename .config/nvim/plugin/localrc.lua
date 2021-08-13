@@ -49,7 +49,7 @@ local function load_rc(path)
   -- check if we own the localrc file before opening it
   if stat and stat.uid ~= uv.getuid() then
     return notify(
-      'Found localrc at %s but not opening it as it is owned by someone else',
+      fmt('Found localrc at %s but not opening it as it is owned by someone else', path),
       vim.log.levels.WARN
     )
   end
