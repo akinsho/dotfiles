@@ -1,5 +1,6 @@
-local luv = vim.loop
+local uv = vim.loop
 local fmt = string.format
+local levels = vim.log.levels
 
 local sep = '/'
 local default_target = '.localrc.lua'
@@ -44,6 +45,14 @@ local function setup_localrc(path)
 end
 
 local function load_rc(path)
+  local stat = uv.fs_stat(path)
+  -- check if we own the localrc file before opening it
+  if stat and stat.uid ~= uv.getuid() then
+    return notify(
+      'Found localrc at %s but not opening it as it is owned by someone else',
+      vim.log.levels.WARN
+    )
+  end
   local success, msg = pcall(dofile, path)
   if success then
     setup_localrc(path)
@@ -65,17 +74,17 @@ local function load(path, target)
     return
   end
 
-  local dir, err = luv.fs_opendir(path)
+  local dir, err = uv.fs_opendir(path)
   if not dir and err then
-    notify(fmt('[Local init @ %s failed]: %s', path, err), vim.log.levels.Error)
+    return notify(fmt('[Local init @ %s failed]: %s', path, err), levels.Error)
   end
   repeat
-    local entry = luv.fs_readdir(dir)
+    local entry = uv.fs_readdir(dir)
     if entry then
       for _, item in ipairs(entry) do
         if item and item.name == target then
           found = item
-          assert(luv.fs_closedir(dir), 'unable to close directory ' .. path)
+          assert(uv.fs_closedir(dir), 'unable to close directory ' .. path)
         end
       end
     end
