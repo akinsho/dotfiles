@@ -322,18 +322,25 @@ return function()
   -----------------------------------------------------------------------------//
   -- Signs
   -----------------------------------------------------------------------------//
-  local icons = as.style.icons
   vim.fn.sign_define {
-    { name = 'LspDiagnosticsSignError', text = icons.error, texthl = 'LspDiagnosticsSignError' },
-    { name = 'LspDiagnosticsSignHint', text = icons.hint, texthl = 'LspDiagnosticsSignHint' },
+    {
+      name = 'LspDiagnosticsSignError',
+      text = as.style.icons.error,
+      texthl = 'LspDiagnosticsSignError',
+    },
+    {
+      name = 'LspDiagnosticsSignHint',
+      text = as.style.icons.hint,
+      texthl = 'LspDiagnosticsSignHint',
+    },
     {
       name = 'LspDiagnosticsSignWarning',
-      text = icons.warning,
+      text = as.style.icons.warning,
       texthl = 'LspDiagnosticsSignWarning',
     },
     {
       name = 'LspDiagnosticsSignInformation',
-      text = icons.info,
+      text = as.style.icons.info,
       texthl = 'LspDiagnosticsSignInformation',
     },
   }
