@@ -526,30 +526,7 @@ require('packer').startup {
       event = 'InsertEnter',
       module = 'luasnip',
       requires = 'rafamadriz/friendly-snippets',
-      config = function()
-        local ls = require 'luasnip'
-        local types = require 'luasnip.util.types'
-        ls.config.set_config {
-          history = true,
-          updateevents = 'TextChanged,TextChangedI',
-          ext_opts = {
-            [types.choiceNode] = {
-              active = {
-                virt_text = { { 'choiceNode', 'Comment' } },
-              },
-            },
-          },
-          ext_prio_increase = 1,
-          enable_autosnippets = true,
-        }
-        local opts = { expr = true }
-        as.imap('<c-j>', "<Plug>luasnip-next-choice", opts)
-        as.smap('<c-j>', "<Plug>luasnip-next-choice", opts)
-
-        require('luasnip.loaders.from_vscode').load {
-          paths = vim.g.vim_dir .. '/snippets/textmate',
-        }
-      end,
+      config = conf 'luasnip',
     }
     -- }}}
     -----------------------------------------------------------------------------//
