@@ -2,6 +2,7 @@ local utils = require 'as.plugins.utils'
 
 local conf = utils.conf
 local use_local = utils.use_local
+local packer_notify = utils.packer_notify
 
 local fn = vim.fn
 local has = as.has
@@ -13,32 +14,14 @@ local PACKER_COMPILED_PATH = fn.stdpath 'cache' .. '/packer/packer_compiled.lua'
 -----------------------------------------------------------------------------//
 -- Bootstrap Packer {{{3
 -----------------------------------------------------------------------------//
--- Make sure packer is installed on the current machine and load
--- the dev or upstream version depending on if we are at work or not
--- NOTE: install packer as an opt plugin since it's loaded conditionally on my local machine
--- it needs to be installed as optional so the install dir is consistent across machines
-local install_path = fmt('%s/site/pack/packer/opt/packer.nvim', fn.stdpath 'data')
-if fn.empty(fn.glob(install_path)) > 0 then
-  vim.notify 'Downloading packer.nvim...'
-  vim.notify(
-    fn.system { 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path }
-  )
-  vim.cmd 'packadd! packer.nvim'
-  require('packer').sync()
-else
-  local name = vim.env.DEVELOPING and 'local-packer.nvim' or 'packer.nvim'
-  vim.cmd(fmt('packadd! %s', name))
-end
+utils.bootstrap_packer()
 ----------------------------------------------------------------------------- }}}1
-
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
---[[
-  NOTE "use" functions cannot call *upvalues* i.e. the functions
-  passed to setup or config etc. cannot reference aliased functions
-  or local variables
---]]
+--- NOTE "use" functions cannot call *upvalues* i.e. the functions
+--- passed to setup or config etc. cannot reference aliased functions
+--- or local variables
 require('packer').startup {
   function(use, use_rocks)
     use_local { 'wbthomason/packer.nvim', local_path = 'contributing', opt = true }
@@ -1139,7 +1122,7 @@ as.command {
   'PackerCompiledDelete',
   function()
     vim.fn.delete(PACKER_COMPILED_PATH)
-    vim.notify(fmt('Deleted %s', PACKER_COMPILED_PATH))
+    packer_notify(fmt('Deleted %s', PACKER_COMPILED_PATH))
   end,
 }
 
@@ -1155,7 +1138,7 @@ as.augroup('PackerSetupInit', {
     command = function()
       as.invalidate('as.plugins', true)
       require('packer').compile()
-      vim.notify 'packer compiled...'
+      packer_notify 'packer compiled...'
     end,
   },
 })
