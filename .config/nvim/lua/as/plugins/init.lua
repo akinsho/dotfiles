@@ -431,7 +431,12 @@ require('packer').startup {
     }
 
     -- The module key is so plugins like orgmode which register a source are able to do so
-    use { 'hrsh7th/nvim-compe', module = 'compe', config = conf 'compe', event = 'InsertEnter' }
+    use {
+      'hrsh7th/nvim-compe',
+      module = 'compe',
+      event = 'InsertEnter',
+      config = conf 'compe',
+    }
 
     use {
       'L3MON4D3/LuaSnip',
