@@ -1,6 +1,6 @@
 " Vimwiki mappings should all go here
 "
-" Restore overriden mappings by remapping the keys
+" Restore overridden mappings by remapping the keys
 " NOTE: this works because vimwiki checks that we haven't already created
 " a mapping for these commands before it uses it's default
 "

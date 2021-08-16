@@ -229,6 +229,7 @@ end
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
