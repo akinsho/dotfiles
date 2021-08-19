@@ -439,6 +439,21 @@ require('packer').startup {
     }
 
     use {
+      'AckslD/nvim-neoclip.lua',
+      config = function()
+        require('neoclip').setup()
+        require('which-key').register {
+          ['<localleader>p'] = {
+            function()
+              require('telescope').extensions.neoclip.default()
+            end,
+            'neoclip: open yank history',
+          },
+        }
+      end,
+    }
+
+    use {
       'L3MON4D3/LuaSnip',
       event = 'InsertEnter',
       module = 'luasnip',
