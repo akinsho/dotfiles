@@ -123,6 +123,12 @@ return function()
     })
   end
 
+  local function installed_plugins()
+    require('telescope.builtin').find_files {
+      cwd = vim.fn.stdpath 'data' .. '/site/pack/packer',
+    }
+  end
+
   local function tmux_sessions()
     telescope.extensions.tmux.sessions {}
   end
@@ -151,6 +157,7 @@ return function()
       n = { nvim_config, 'nvim config' },
       r = { builtins.reloader, 'module reloader' },
       o = { builtins.buffers, 'buffers' },
+      p = { installed_plugins, 'plugins' },
       O = { orgfiles, 'org files' },
       w = { builtins.lsp_dynamic_workspace_symbols, 'workspace symbols', silent = false },
       s = { builtins.live_grep, 'grep string' },
