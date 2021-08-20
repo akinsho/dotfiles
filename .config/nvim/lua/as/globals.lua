@@ -55,13 +55,33 @@ end
 
 -- inspect the contents of an object very quickly
 -- in your code or from the command-line:
+-- @see: https://www.reddit.com/r/neovim/comments/p84iu2/useful_functions_to_explore_lua_objects/
 -- USAGE:
--- in lua: dump({1, 2, 3})
--- in commandline: :lua dump(vim.loop)
+-- in lua: P({1, 2, 3})
+-- in commandline: :lua P(vim.loop)
 ---@vararg any
 function P(...)
-  local objects = vim.tbl_map(vim.inspect, { ... })
-  print(unpack(objects))
+  local objects, v = {}, nil
+  for i = 1, select('#', ...) do
+    v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  print(table.concat(objects, '\n'))
+  return ...
+end
+
+function _G.dump_text(...)
+  local objects, v = {}, nil
+  for i = 1, select('#', ...) do
+    v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  local lines = vim.split(table.concat(objects, '\n'), '\n')
+  local lnum = vim.api.nvim_win_get_cursor(0)[1]
+  vim.fn.append(lnum, lines)
+  return ...
 end
 
 local installed
