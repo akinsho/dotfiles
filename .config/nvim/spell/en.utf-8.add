@@ -221,3 +221,5 @@ textwidth
 adhoc
 allowlist
 multibyte
+vararg
+commandline
