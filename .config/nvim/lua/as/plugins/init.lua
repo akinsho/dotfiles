@@ -510,10 +510,6 @@ require('packer').startup {
 
     use 'folke/lua-dev.nvim'
 
-    -- NOTE: curiosity rather than necessity
-    use { 'Pocco81/DAPInstall.nvim', opt = true }
-    use { 'jbyuki/step-for-vimkind', opt = true }
-
     --}}}
     --------------------------------------------------------------------------------
     -- Utilities {{{1
