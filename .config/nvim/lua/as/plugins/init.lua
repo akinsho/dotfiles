@@ -39,68 +39,10 @@ require('packer').startup {
     }
 
     use {
-      'camspiers/snap',
-      rocks = { 'fzy' },
-      event = 'CursorHold',
-      keys = { '<c-p>', '<leader>fs', '<leader>fO', '<leader>fd' },
-      local_path = 'contributing',
-      setup = function()
-        require('which-key').register({
-          f = {
-            s = 'snap: grep',
-            c = 'snap: cursor word',
-            d = 'snap: dotfiles',
-            O = 'snap: org files',
-          },
-        }, {
-          prefix = '<leader>',
-        })
-      end,
-      config = function()
-        --- FIXME: remove this when/if snap changes default highlights
-        require('as.highlights').plugin(
-          'snap',
-          { 'SnapSelect', { link = 'TextInfoBold', force = true } },
-          { 'SnapPosition', { link = 'Keyword', force = true } },
-          { 'SnapBorder', { guifg = 'Gray' } }
-        )
-        local snap = require 'snap'
-        local config = require 'snap.config'
-        local file = config.file:with { suffix = ' »', consumer = 'fzy' }
-        local vimgrep = config.vimgrep:with { limit = 50000 }
-        snap.maps {
-          {
-            '<c-p>',
-            file { prompt = 'Project files', try = { 'git.file', 'ripgrep.file' } },
-            { command = 'project-files' },
-          },
-          {
-            '<leader>fd',
-            file {
-              prompt = 'Dotfiles',
-              producer = 'ripgrep.file',
-              args = { vim.env.DOTFILES },
-            },
-            { command = 'dots' },
-          },
-          {
-            '<leader>fO',
-            file {
-              prompt = 'Org',
-              producer = 'ripgrep.file',
-              args = { vim.fn.expand '~/Dropbox/org/' },
-            },
-            { command = 'org' },
-          },
-          { '<leader>fs', vimgrep { limit = 50000 }, { command = 'grep' } },
-          { '<leader>fc', vimgrep { prompt = 'Find word', filter_with = 'cword' } },
-        }
-      end,
-    }
-
-    use {
       'nvim-telescope/telescope.nvim',
       event = 'CursorHold',
+      cmd = 'Telescope',
+      keys = { '<c-p>', '<leader>fo', '<leader>ff', '<leader>fs' },
       module_pattern = 'telescope.*',
       config = conf 'telescope',
       requires = {

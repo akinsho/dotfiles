@@ -59,6 +59,11 @@ return function()
       oldfiles = {
         theme = 'dropdown',
       },
+      current_buffer_fuzzy_find = {
+        theme = 'dropdown',
+        previewer = false,
+        shorten_path = false,
+      },
       lsp_code_actions = {
         theme = 'cursor',
       },
@@ -94,6 +99,20 @@ return function()
     }
   end
 
+  local function dotfiles()
+    builtins.find_files {
+      prompt_title = '~ dotfiles ~',
+      cwd = vim.g.dotfiles,
+    }
+  end
+
+  local function orgfiles()
+    builtins.find_files {
+      prompt_title = 'Org',
+      cwd = vim.fn.expand '~/Dropbox/org/',
+    }
+  end
+
   local function frecency()
     telescope.extensions.frecency.frecency(themes.get_dropdown {
       default_text = ':CWD:',
@@ -114,10 +133,14 @@ return function()
     }
   end
 
-  require('which-key').register({
-    f = {
+  require('which-key').register {
+    ['<c-p>'] = { builtins.git_files, 'telescope: find files' },
+    ['<leader>f'] = {
       name = '+telescope',
       a = { builtins.builtin, 'builtins' },
+      b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
+      d = { dotfiles, 'dotfiles' },
+      f = { builtins.find_files, 'find files' },
       g = {
         name = '+git',
         c = { builtins.git_commits, 'commits' },
@@ -128,7 +151,9 @@ return function()
       n = { nvim_config, 'nvim config' },
       r = { builtins.reloader, 'module reloader' },
       o = { builtins.buffers, 'buffers' },
+      O = { orgfiles, 'org files' },
       w = { builtins.lsp_dynamic_workspace_symbols, 'workspace symbols', silent = false },
+      s = { builtins.live_grep, 'grep string' },
       t = {
         name = '+tmux',
         s = { tmux_sessions, 'sessions' },
@@ -139,7 +164,5 @@ return function()
     c = {
       d = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
     },
-  }, {
-    prefix = '<leader>',
-  })
+  }
 end
