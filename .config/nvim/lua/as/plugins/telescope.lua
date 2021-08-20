@@ -25,9 +25,14 @@ return function()
       },
       file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf' },
       layout_strategy = 'flex',
-      winblend = 7,
+      layout_config = {
+        horizontal = {
+          preview_width = 0.45,
+        },
+      },
+      winblend = 10,
       history = {
-        path = '~/.local/share/nvim/telescope_history.sqlite3',
+        path = vim.fn.stdpath 'data' .. '/telescope_history.sqlite3',
       },
     },
     extensions = {

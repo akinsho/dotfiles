@@ -297,7 +297,6 @@ require('packer').startup {
               { pattern = 'center', key = 'E', order = 4 },
               { pattern = 'padding', key = 'p', order = 4 },
               { pattern = 'remove', key = 'r', order = 5 },
-
               -- range code action
               { pattern = "surround with %'if'", key = 'i', order = 2 },
               { pattern = 'try%-catch', key = 't', order = 2 },
