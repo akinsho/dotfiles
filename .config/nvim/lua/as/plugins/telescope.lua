@@ -5,7 +5,8 @@ return function()
 
   require('as.highlights').plugin(
     'telescope',
-    { 'TelescopeMatching', { link = 'Search', force = true } }
+    { 'TelescopeMatching', { link = 'Search', force = true } },
+    { 'TelescopeBorder', { link = 'GreyFloatBorder', force = true } }
   )
 
   telescope.setup {
