@@ -1046,8 +1046,8 @@ require('packer').startup {
       end,
     }
     use_local {
-      'akinsho/nvim-bufferline.lua',
-      config = conf 'nvim-bufferline',
+      'akinsho/bufferline.nvim',
+      config = conf 'bufferline',
       local_path = 'personal',
       requires = 'nvim-web-devicons',
     }

@@ -44,7 +44,6 @@ return function()
 
   require('bufferline').setup {
     options = {
-      mappings = false,
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
       ---based on https://github.com/kovidgoyal/kitty/issues/957
@@ -87,11 +86,20 @@ return function()
   }
 
   require('which-key').register {
-    ['gD'] = { '<cmd>BufferLinePickClose<CR>', 'bufferline: delete buffer' },
-    ['gb'] = { '<cmd>BufferLinePick<CR>', 'bufferline: pick buffer' },
-    ['<leader><tab>'] = { '<cmd>BufferLineCycleNext<CR>', 'bufferline: next' },
-    ['<S-tab>'] = { '<cmd>BufferLineCyclePrev<CR>', 'bufferline: prev' },
-    ['[b'] = { '<cmd>BufferLineMoveNext<CR>', 'bufferline: move next' },
-    [']b'] = { '<cmd>BufferLineMovePrev<CR>', 'bufferline: move prev' },
+    ['gD'] = { '<Cmd>BufferLinePickClose<CR>', 'bufferline: delete buffer' },
+    ['gb'] = { '<Cmd>BufferLinePick<CR>', 'bufferline: pick buffer' },
+    ['<leader><tab>'] = { '<Cmd>BufferLineCycleNext<CR>', 'bufferline: next' },
+    ['<S-tab>'] = { '<Cmd>BufferLineCyclePrev<CR>', 'bufferline: prev' },
+    ['[b'] = { '<Cmd>BufferLineMoveNext<CR>', 'bufferline: move next' },
+    [']b'] = { '<Cmd>BufferLineMovePrev<CR>', 'bufferline: move prev' },
+    ['<leader>1'] = { '<Cmd>BufferLineGoToBuffer 1<CR>', 'bufferline: goto 1' },
+    ['<leader>2'] = { '<Cmd>BufferLineGoToBuffer 2<CR>', 'bufferline: goto 2' },
+    ['<leader>3'] = { '<Cmd>BufferLineGoToBuffer 3<CR>', 'bufferline: goto 3' },
+    ['<leader>4'] = { '<Cmd>BufferLineGoToBuffer 4<CR>', 'bufferline: goto 4' },
+    ['<leader>5'] = { '<Cmd>BufferLineGoToBuffer 5<CR>', 'bufferline: goto 5' },
+    ['<leader>6'] = { '<Cmd>BufferLineGoToBuffer 6<CR>', 'bufferline: goto 6' },
+    ['<leader>7'] = { '<Cmd>BufferLineGoToBuffer 7<CR>', 'bufferline: goto 7' },
+    ['<leader>8'] = { '<Cmd>BufferLineGoToBuffer 8<CR>', 'bufferline: goto 8' },
+    ['<leader>9'] = { '<Cmd>BufferLineGoToBuffer 9<CR>', 'bufferline: goto 9' },
   }
 end
