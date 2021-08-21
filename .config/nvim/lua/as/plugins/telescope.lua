@@ -82,6 +82,20 @@ return function()
       git_branches = {
         theme = 'dropdown',
       },
+      git_bcommits = {
+        layout_config = {
+          horizontal = {
+            preview_width = 0.55,
+          },
+        },
+      },
+      git_commits = {
+        layout_config = {
+          horizontal = {
+            preview_width = 0.55,
+          },
+        },
+      },
       reloader = {
         theme = 'dropdown',
       },
