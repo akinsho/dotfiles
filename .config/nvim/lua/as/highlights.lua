@@ -1,6 +1,7 @@
 local api = vim.api
 local fmt = string.format
 local P = as.style.palette
+local levels =  vim.log.levels
 
 local M = {}
 
@@ -115,7 +116,10 @@ end
 ---@param fallback string
 ---@return string
 function M.get_hl(grp, attr, fallback)
-  assert(grp, 'Cannot get a highlight without specifying a group')
+  if not grp then
+    vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
+    return 'NONE'
+  end
   local attrs = { fg = 'foreground', bg = 'background' }
   attr = attrs[attr] or attr
   local hl = api.nvim_get_hl_by_name(grp, true)
@@ -125,7 +129,7 @@ function M.get_hl(grp, attr, fallback)
   local color = hl[attr] or fallback
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
   if not color then
-    vim.notify(fmt('%s %s does not exist', grp, attr))
+    vim.notify(fmt('%s %s does not exist', grp, attr), levels.ERROR)
     return 'NONE'
   end
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
