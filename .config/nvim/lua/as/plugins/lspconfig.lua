@@ -110,8 +110,6 @@ vim.lsp.diagnostic.set_signs = set_highest_signs
 local function setup_mappings(client, bufnr)
   local maps = {
     ['<leader>rf'] = { vim.lsp.buf.formatting, 'lsp: format buffer' },
-    ['<leader>cw'] = { vim.lsp.buf.workspace_symbol, 'lsp: workspace symbol' },
-    ['<leader>cs'] = { vim.lsp.buf.document_symbol, 'lsp: document symbol' },
     ['gi'] = 'lsp: implementation',
     ['gd'] = { vim.lsp.buf.definition, 'lsp: definition' },
     ['gr'] = { vim.lsp.buf.references, 'lsp: references' },

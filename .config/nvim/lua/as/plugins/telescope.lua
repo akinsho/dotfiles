@@ -165,7 +165,6 @@ return function()
       o = { builtins.buffers, 'buffers' },
       p = { installed_plugins, 'plugins' },
       O = { orgfiles, 'org files' },
-      w = { builtins.lsp_dynamic_workspace_symbols, 'workspace symbols', silent = false },
       s = { builtins.live_grep, 'grep string' },
       t = {
         name = '+tmux',
@@ -174,8 +173,10 @@ return function()
       },
       ['?'] = { builtins.help_tags, 'help' },
     },
-    c = {
+    ['<leader>c'] = {
       d = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
+      s = { builtins.lsp_document_symbols, 'telescope: document symbols' },
+      w = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
     },
   }
 end
