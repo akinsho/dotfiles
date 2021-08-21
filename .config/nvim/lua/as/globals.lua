@@ -300,9 +300,7 @@ local function make_mapper(mode, o)
     opts = opts and vim.deepcopy(opts) or {}
 
     local buffer = opts.buffer
-    -- don't pass invalid keys to set keymap
     opts.buffer = nil
-    -- add functions to a global table keyed by their index
     if type(rhs) == 'function' then
       local fn_id = as._create(rhs)
       rhs = string.format('<cmd>lua as._execute(%s)<CR>', fn_id)

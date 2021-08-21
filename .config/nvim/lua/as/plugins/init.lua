@@ -715,21 +715,6 @@ require('packer').startup {
       end,
     }
 
-    -- BUG: This needs to load after nvim-treesitter but the "after" key in packer is broken till #272 is fixed
-    use {
-      'mizlan/iswap.nvim',
-      cmd = { 'ISwap', 'ISwapWith' },
-      keys = '<localleader>sw',
-      setup = function()
-        require('which-key').register {
-          ['<localleader>s'] = { name = '+swap', w = 'swap arguments,parameters etc.' },
-        }
-      end,
-      config = function()
-        require('iswap').setup {}
-        as.nnoremap('<localleader>sw', '<Cmd>ISwapWith<CR>')
-      end,
-    }
     -- Use <Tab> to escape from pairs such as ""|''|() etc.
     use {
       'abecodes/tabout.nvim',
@@ -741,6 +726,7 @@ require('packer').startup {
         }
       end,
     }
+
     use {
       'mfussenegger/nvim-ts-hint-textobject',
       config = function()
@@ -748,6 +734,7 @@ require('packer').startup {
         as.vnoremap('m', ":'<'>lua require('tsht').nodes()<CR>")
       end,
     }
+
     use {
       'lewis6991/spellsitter.nvim',
       config = function()
