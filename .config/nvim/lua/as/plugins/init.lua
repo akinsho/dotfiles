@@ -918,7 +918,7 @@ require('packer').startup {
     --@see: https://github.com/wbthomason/packer.nvim/issues/464
     use {
       'gelguy/wilder.nvim',
-      event = 'CmdlineEnter',
+      event = { 'CursorHold', 'CmdlineEnter' },
       rocks = { 'luarocks-fetch-gitrec', 'pcre2' },
       requires = { 'romgrk/fzy-lua-native' },
       config = function()
