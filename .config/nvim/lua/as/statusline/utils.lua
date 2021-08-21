@@ -251,9 +251,9 @@ end
 
 --- @param hl string
 --- @param bg_hl string
-local function set_ft_icon_highlight(hl, bg_hl)
-  if not hl then
-    return ''
+local function highlight_ft_icon(hl, bg_hl)
+  if not hl or not bg_hl then
+    return
   end
   local name = hl .. 'Statusline'
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
@@ -270,7 +270,7 @@ end
 
 --- @param ctx table
 --- @param opts table
---- @return string, string
+--- @return string, string?
 local function filetype(ctx, opts)
   local ft_exception = exceptions.filetypes[ctx.filetype]
   if ft_exception then
@@ -287,7 +287,7 @@ local function filetype(ctx, opts)
   end
   if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
-    hl = set_ft_icon_highlight(hl, opts.icon_bg)
+    hl = highlight_ft_icon(hl, opts.icon_bg)
   end
   return icon, hl
 end
