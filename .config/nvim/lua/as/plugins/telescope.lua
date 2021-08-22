@@ -66,6 +66,9 @@ return function()
       oldfiles = {
         theme = 'dropdown',
       },
+      live_grep = {
+        file_ignore_patterns = { '.git/' },
+      },
       current_buffer_fuzzy_find = {
         theme = 'dropdown',
         previewer = false,
