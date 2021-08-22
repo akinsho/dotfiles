@@ -423,9 +423,13 @@ require('packer').startup {
       end,
       config = function()
         vim.cmd [[
-          let test#strategy = "neovim"
-          let test#neovim#term_position = "vert botright"
+          function! ToggleTermStrategy(cmd) abort
+            call luaeval("require('toggleterm').exec(_A[1])", [a:cmd])
+          endfunction
+
+          let g:test#custom_strategies = {'toggleterm': function('ToggleTermStrategy')}
         ]]
+        vim.g['test#strategy'] = 'toggleterm'
         as.nnoremap('<localleader>tf', '<cmd>TestFile<CR>')
         as.nnoremap('<localleader>tn', '<cmd>TestNearest<CR>')
         as.nnoremap('<localleader>ts', '<cmd>TestSuite<CR>')
