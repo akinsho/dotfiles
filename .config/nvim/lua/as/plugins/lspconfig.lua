@@ -182,7 +182,7 @@ function as.lsp.tagfunc(pattern, flags)
   return results
 end
 
-local icons = {
+as.lsp.icons = {
   Text = ' Text',
   Method = ' Method',
   Function = 'ƒ Function',
@@ -211,7 +211,7 @@ local icons = {
 
 local kinds = require('vim.lsp.protocol').CompletionItemKind
 for i, kind in ipairs(kinds) do
-  kinds[i] = icons[kind] or kind
+  kinds[i] = as.lsp.icons[kind] or kind
 end
 
 function as.lsp.on_attach(client, bufnr)
