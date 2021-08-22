@@ -5,7 +5,7 @@ return function()
 
   require('as.highlights').plugin(
     'telescope',
-    { 'TelescopeMatching', { link = 'Search', force = true } },
+    { 'TelescopeMatching', { link = 'Title', force = true } },
     { 'TelescopeBorder', { link = 'GreyFloatBorder', force = true } }
   )
 
@@ -13,6 +13,7 @@ return function()
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
       prompt_prefix = ' ',
+      selection_caret = '» ',
       mappings = {
         i = {
           ['<c-c>'] = function()
