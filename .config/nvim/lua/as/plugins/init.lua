@@ -973,7 +973,7 @@ require('packer').startup {
     }
 
     use_local {
-      'akinsho/nvim-toggleterm.lua',
+      'akinsho/toggleterm.nvim',
       local_path = 'personal',
       config = function()
         require('toggleterm').setup {
