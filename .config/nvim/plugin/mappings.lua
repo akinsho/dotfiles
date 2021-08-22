@@ -13,9 +13,6 @@ local onoremap = as.onoremap
 local cnoremap = as.cnoremap
 local tnoremap = as.tnoremap
 
---- work around to place functions in the global scope but namespaced within a table.
---- TODO: refactor this once nvim allows passing lua functions to mappings
-as.mappings = {}
 -----------------------------------------------------------------------------//
 -- Terminal {{{
 ------------------------------------------------------------------------------//

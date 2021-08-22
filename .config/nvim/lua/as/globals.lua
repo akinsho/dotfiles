@@ -10,6 +10,9 @@ _G.__as_global_callbacks = __as_global_callbacks or {}
 
 _G.as = {
   _store = __as_global_callbacks,
+  --- work around to place functions in the global scope but namespaced within a table.
+  --- TODO: refactor this once nvim allows passing lua functions to mappings
+  mappings = {},
 }
 
 -----------------------------------------------------------------------------//

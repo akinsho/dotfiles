@@ -9,7 +9,7 @@ end
 --- Use (s-)tab to:
 --- move to prev/next item in completion menuone
 --- jump to prev/next snippet's placeholder
-_G.__tab_complete = function()
+function as.mappings.tab_complete()
   local luasnip = require 'luasnip'
   if fn.pumvisible() == 1 then
     return t '<C-n>'
@@ -22,7 +22,7 @@ _G.__tab_complete = function()
   end
 end
 
-_G.__s_tab_complete = function()
+function as.mappings.s_tab_complete()
   local luasnip = require 'luasnip'
   if fn.pumvisible() == 1 then
     return t '<C-p>'
@@ -62,10 +62,10 @@ return function()
   local opts = { expr = true, silent = true }
 
   inoremap('<C-e>', 'compe#complete()', opts)
-  imap('<Tab>', 'v:lua.__tab_complete()', opts)
-  smap('<Tab>', 'v:lua.__tab_complete()', opts)
-  imap('<S-Tab>', 'v:lua.__s_tab_complete()', opts)
-  smap('<S-Tab>', 'v:lua.__s_tab_complete()', opts)
+  imap('<Tab>', 'v:lua.as.mappings.tab_complete()', opts)
+  smap('<Tab>', 'v:lua.as.mappings.tab_complete()', opts)
+  imap('<S-Tab>', 'v:lua.as.mappings.s_tab_complete()', opts)
+  smap('<S-Tab>', 'v:lua.as.mappings.s_tab_complete()', opts)
   inoremap('<C-f>', "compe#scroll({ 'delta': +4 })", opts)
   inoremap('<C-d>', "compe#scroll({ 'delta': -4 })", opts)
 end
