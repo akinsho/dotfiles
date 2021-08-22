@@ -818,16 +818,18 @@ require('packer').startup {
 
     use {
       'pwntester/octo.nvim',
-      cmd = 'Octo',
-      keys = { '<localleader>opl' },
+      cmd = 'Octo*',
       setup = function()
         require('which-key').register {
-          ['<localleader>o'] = { name = '+octo', p = { name = '+pull-request', l = 'PR List' } },
+          ['<localleader>o'] = {
+            name = '+octo',
+            p = { name = '+pull-request', l = { '<cmd>Octo pr list<CR>', 'list' } },
+            i = { name = '+issues', l = { '<cmd>Octo issue list<CR>', 'list' } },
+          },
         }
       end,
       config = function()
         require('octo').setup()
-        as.nnoremap('<localleader>opl', '<cmd>Octo pr list<CR>')
       end,
     }
     ---}}}
