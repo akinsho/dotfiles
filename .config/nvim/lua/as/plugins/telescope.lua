@@ -115,10 +115,17 @@ return function()
   --- from the setup call
   local builtins = require 'telescope.builtin'
 
+  local function project_files(opts)
+    local ok = pcall(builtins.git_files, opts)
+    if not ok then
+      builtins.find_files(opts)
+    end
+  end
+
   local function nvim_config()
     builtins.find_files {
       prompt_title = '~ nvim config ~',
-      cwd = vim.g.vim_dir,
+      cwd = vim.fn.stdpath 'config',
       file_ignore_patterns = { '.git/.*', 'dotbot/.*' },
     }
   end
@@ -164,7 +171,7 @@ return function()
   end
 
   require('which-key').register {
-    ['<c-p>'] = { builtins.git_files, 'telescope: find files' },
+    ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = '+telescope',
       a = { builtins.builtin, 'builtins' },
