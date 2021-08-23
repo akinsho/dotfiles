@@ -13,7 +13,7 @@ return function()
       end
     end
     result = table.concat(result, ' ')
-    return #result > 0 and ' ' .. result or ''
+    return #result > 0 and result or ''
   end
 
   local function custom_filter(buf, buf_nums)
