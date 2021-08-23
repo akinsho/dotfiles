@@ -381,7 +381,20 @@ require('packer').startup {
     use {
       'AckslD/nvim-neoclip.lua',
       config = function()
-        require('neoclip').setup()
+        require('neoclip').setup {
+          keys = {
+            i = {
+              select = '<c-p>',
+              paste = '<CR>',
+              paste_behind = '<c-k>',
+            },
+            n = {
+              select = 'p',
+              paste = '<CR>',
+              paste_behind = 'P',
+            },
+          },
+        }
         local function clip()
           require('telescope').extensions.neoclip.default(
             require('telescope.themes').get_dropdown()
