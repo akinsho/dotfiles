@@ -986,7 +986,7 @@ require('packer').startup {
       'akinsho/dependency-assist.nvim',
       local_path = 'personal',
       config = function()
-        return require('dependency_assist').setup()
+        require('dependency_assist').setup()
       end,
     }
 
@@ -998,6 +998,7 @@ require('packer').startup {
           open_mapping = [[<c-\>]],
           shade_filetypes = { 'none' },
           direction = 'vertical',
+          start_in_insert = true,
           float_opts = { border = 'curved' },
           size = function(term)
             if term.direction == 'horizontal' then
@@ -1009,7 +1010,6 @@ require('packer').startup {
         }
 
         local float_handler = function(term)
-          vim.cmd 'startinsert!'
           if vim.fn.mapcheck('jk', 't') ~= '' then
             vim.api.nvim_buf_del_keymap(term.bufnr, 't', 'jk')
             vim.api.nvim_buf_del_keymap(term.bufnr, 't', '<esc>')
