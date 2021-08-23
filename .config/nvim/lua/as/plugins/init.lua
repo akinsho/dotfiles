@@ -327,6 +327,8 @@ require('packer').startup {
 
     use_local {
       'akinsho/flutter-tools.nvim',
+      requires = { 'nvim-dap', 'plenary.nvim' },
+      local_path = 'personal',
       config = function()
         --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
         local ok, lsp_status = pcall(require, 'lsp-status')
@@ -366,8 +368,6 @@ require('packer').startup {
           },
         }
       end,
-      requires = { 'nvim-dap', 'plenary.nvim' },
-      local_path = 'personal',
     }
 
     -- The module key is so plugins like orgmode which register a source are able to do so
@@ -382,13 +382,13 @@ require('packer').startup {
       'AckslD/nvim-neoclip.lua',
       config = function()
         require('neoclip').setup()
+        local function clip()
+          require('telescope').extensions.neoclip.default(
+            require('telescope.themes').get_dropdown()
+          )
+        end
         require('which-key').register {
-          ['<localleader>p'] = {
-            function()
-              require('telescope').extensions.neoclip.default()
-            end,
-            'neoclip: open yank history',
-          },
+          ['<localleader>p'] = { clip, 'neoclip: open yank history' },
         }
       end,
     }
