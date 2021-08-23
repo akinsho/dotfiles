@@ -738,7 +738,7 @@ require('packer').startup {
       after = { 'nvim-compe' },
       config = function()
         require('tabout').setup {
-          ignore_beginning = true,
+          ignore_beginning = false,
         }
       end,
     }
