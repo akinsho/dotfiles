@@ -399,3 +399,18 @@ as.augroup('Utilities', {
     command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
   },
 })
+
+if as.has 'nvim-0.6' then
+  as.augroup('TerminalAutocommands', {
+    {
+      events = { 'TermClose' },
+      targets = { '*' },
+      cmd = function()
+        --- automatically close a terminal if the job was succesful
+        if not vim.v.event.status == 0 then
+          vim.cmd('bdelete! ' .. fn.expand '<abuf>')
+        end
+      end,
+    },
+  })
+end
