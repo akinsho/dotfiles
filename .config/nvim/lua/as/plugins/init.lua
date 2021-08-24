@@ -1052,7 +1052,6 @@ require('packer').startup {
     }
     use_local {
       'akinsho/bufferline.nvim',
-      branch = 'feature/functional-refactor',
       config = conf 'bufferline',
       local_path = 'personal',
       requires = 'nvim-web-devicons',
