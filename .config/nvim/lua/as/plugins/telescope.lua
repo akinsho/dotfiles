@@ -3,10 +3,18 @@ return function()
   local actions = require 'telescope.actions'
   local themes = require 'telescope.themes'
 
-  require('as.highlights').plugin(
+  local H = require 'as.highlights'
+  H.plugin(
     'telescope',
     { 'TelescopeMatching', { link = 'Title', force = true } },
-    { 'TelescopeBorder', { link = 'GreyFloatBorder', force = true } }
+    { 'TelescopeBorder', { link = 'GreyFloatBorder', force = true } },
+    {
+      'TelescopeSelectionCaret',
+      {
+        guifg = H.get_hl('Identifier', 'fg'),
+        guibg = H.get_hl('TelescopeSelection', 'bg'),
+      },
+    }
   )
 
   telescope.setup {

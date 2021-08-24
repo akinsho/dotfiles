@@ -2,6 +2,7 @@ return function()
   local fn = vim.fn
   local t = as.replace_termcodes
   local cmp = require 'cmp'
+  require('cmp_nvim_lsp').setup()
 
   local check_back_space = function()
     local col = fn.col '.' - 1
@@ -32,7 +33,6 @@ return function()
     end
   end
 
-  require('cmp_nvim_lsp').setup()
   cmp.setup {
     snippet = {
       expand = function(args)
