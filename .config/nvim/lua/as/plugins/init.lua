@@ -370,6 +370,7 @@ require('packer').startup {
       end,
     }
 
+    ---FIXME: lazy load this on InsertEnter as it's a bit expensive
     use {
       'hrsh7th/nvim-cmp',
       requires = {
