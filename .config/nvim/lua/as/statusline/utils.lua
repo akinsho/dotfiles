@@ -1,5 +1,4 @@
 local H = require 'as.highlights'
-local icons_loaded, devicons
 
 local fn = vim.fn
 local expand = fn.expand
@@ -282,9 +281,7 @@ local function filetype(ctx, opts)
   end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ':e')
-  if not icons_loaded then
-    icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
-  end
+  local icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
   if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
     hl = highlight_ft_icon(hl, opts.icon_bg)
