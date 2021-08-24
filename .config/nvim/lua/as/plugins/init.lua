@@ -370,12 +370,16 @@ require('packer').startup {
       end,
     }
 
-    -- The module key is so plugins like orgmode which register a source are able to do so
     use {
-      'hrsh7th/nvim-compe',
-      module = 'compe',
-      event = 'InsertEnter',
-      config = conf 'compe',
+      'hrsh7th/nvim-cmp',
+      requires = {
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-nvim-lua',
+        'saadparwaiz1/cmp_luasnip',
+      },
+      config = conf 'cmp',
     }
 
     use {
@@ -498,16 +502,11 @@ require('packer').startup {
     }
     use {
       'windwp/nvim-autopairs',
-      after = 'nvim-compe',
+      after = 'nvim-cmp',
       config = function()
         require('nvim-autopairs').setup {
           close_triple_quotes = true,
           check_ts = false,
-        }
-
-        require('nvim-autopairs.completion.compe').setup {
-          map_cr = true,
-          map_complete = true,
         }
       end,
     }
@@ -735,7 +734,7 @@ require('packer').startup {
     use {
       'abecodes/tabout.nvim',
       wants = { 'nvim-treesitter' },
-      after = { 'nvim-compe' },
+      after = { 'nvim-cmp' },
       config = function()
         require('tabout').setup {
           ignore_beginning = false,
