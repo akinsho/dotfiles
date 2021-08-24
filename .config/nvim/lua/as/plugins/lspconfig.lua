@@ -182,38 +182,6 @@ function as.lsp.tagfunc(pattern, flags)
   return results
 end
 
-as.lsp.icons = {
-  Text = ' Text',
-  Method = ' Method',
-  Function = 'ƒ Function',
-  Constructor = ' Constructor',
-  Field = '識 Field',
-  Variable = ' Variable',
-  Class = ' Class',
-  Interface = 'ﰮ Interface',
-  Module = ' Module',
-  Property = ' Property',
-  Unit = ' Unit',
-  Value = ' Value',
-  Enum = '了 Enum',
-  Keyword = ' Keyword',
-  Snippet = ' Snippet',
-  Color = ' Color',
-  File = ' File',
-  Reference = '渚 Reference',
-  Folder = ' Folder',
-  Constant = ' Constant',
-  Struct = ' Struct',
-  Event = '鬒 Event',
-  Operator = '\u{03a8} Operator',
-  TypeParameter = ' Type Parameter',
-}
-
-local kinds = require('vim.lsp.protocol').CompletionItemKind
-for i, kind in ipairs(kinds) do
-  kinds[i] = as.lsp.icons[kind] or kind
-end
-
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
