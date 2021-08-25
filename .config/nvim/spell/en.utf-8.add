@@ -224,3 +224,5 @@ multibyte
 vararg
 commandline
 autoload
+func
+num
