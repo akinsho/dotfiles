@@ -19,11 +19,20 @@ vim.g.vim_dir = vim.g.dotfiles .. '/.config/nvim'
 vim.g.mapleader = ',' -- Remap leader key
 vim.g.maplocalleader = ' ' -- Local leader is <Space>
 
+if pcall(require, 'plenary') then
+  RELOAD = require('plenary.reload').reload_module
+  R = function(name)
+    RELOAD(name)
+    return require(name)
+  end
+end
+
 ------------------------------------------------------------------------
 -- Plugin Configurations
 ------------------------------------------------------------------------
-require 'as.globals'
-require 'as.settings'
-require 'as.highlights'
-require 'as.statusline'
-require 'as.plugins'
+-- FIXME: this currently causes massive breakage when reloading my config as some modules error...
+R 'as.globals'
+R 'as.settings'
+R 'as.highlights'
+R 'as.statusline'
+R 'as.plugins'

@@ -76,14 +76,6 @@ as.style = {
 -----------------------------------------------------------------------------//
 -- Debugging
 -----------------------------------------------------------------------------//
-if pcall(require, 'plenary') then
-  RELOAD = require('plenary.reload').reload_module
-
-  R = function(name)
-    RELOAD(name)
-    return require(name)
-  end
-end
 
 -- inspect the contents of an object very quickly
 -- in your code or from the command-line:
