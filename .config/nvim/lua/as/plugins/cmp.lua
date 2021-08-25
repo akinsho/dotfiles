@@ -4,8 +4,6 @@ return function()
   local fmt = string.format
   local cmp = require 'cmp'
 
-  require('cmp_nvim_lsp').setup()
-
   local check_back_space = function()
     local col = fn.col '.' - 1
     return col == 0 or fn.getline('.'):sub(col, col):match '%s' ~= nil
