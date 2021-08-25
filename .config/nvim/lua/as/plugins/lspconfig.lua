@@ -248,30 +248,12 @@ command {
   end,
 }
 
---- Add extended capabilities for completion (cmp)
-local function set_capabilities(config)
-  config.capabilities = vim.lsp.protocol.make_client_capabilities()
-  config.capabilities.textDocument.completion.completionItem.snippetSupport = true
-  config.capabilities.textDocument.completion.completionItem.preselectSupport = true
-  config.capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-  config.capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-  config.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-  config.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-  config.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-  config.capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      'documentation',
-      'detail',
-      'additionalTextEdits',
-    },
-  }
-end
-
 ---Logic to (re)start installed language servers for use initialising lsps
 ---and restarting them on installing new ones
 function as.lsp.setup_servers()
   local lspinstall = require 'lspinstall'
   local lspconfig = require 'lspconfig'
+  local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 
   lspinstall.setup()
   local installed = lspinstall.installed_servers()
@@ -280,7 +262,8 @@ function as.lsp.setup_servers()
     local config = as.lsp.servers[server] and as.lsp.servers[server]() or {}
     config.flags = { debounce_text_changes = 500 }
     config.on_attach = as.lsp.on_attach
-    set_capabilities(config)
+    config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
+    cmp_nvim_lsp.update_capabilities(config.capabilities)
     config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
     lspconfig[server].setup(config)
   end
