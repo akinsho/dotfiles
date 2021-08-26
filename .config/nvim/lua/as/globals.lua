@@ -151,6 +151,13 @@ end
 ---@field modifiers string[] e.g. nested, once
 ---@field command string | function
 
+---@param command Autocommand
+local function is_valid_target(command)
+  return (command.targets and vim.tbl_islist(command.targets))
+    or vim.startswith(command.events[1], 'User ')
+end
+
+local L = vim.log.levels
 ---Create an autocommand
 ---@param name string
 ---@param commands Autocommand[]
@@ -158,20 +165,27 @@ function as.augroup(name, commands)
   vim.cmd('augroup ' .. name)
   vim.cmd 'autocmd!'
   for _, c in ipairs(commands) do
-    local command = c.command
-    if type(command) == 'function' then
-      local fn_id = as._create(command)
-      command = fmt('lua as._execute(%s)', fn_id)
-    end
-    vim.cmd(
-      string.format(
-        'autocmd %s %s %s %s',
-        table.concat(c.events, ','),
-        table.concat(c.targets or {}, ','),
-        table.concat(c.modifiers or {}, ' '),
-        command
+    if c.command and c.events and is_valid_target(c) then
+      local command = c.command
+      if type(command) == 'function' then
+        local fn_id = as._create(command)
+        command = fmt('lua as._execute(%s)', fn_id)
+      end
+      vim.cmd(
+        string.format(
+          'autocmd %s %s %s %s',
+          table.concat(c.events, ','),
+          table.concat(c.targets or {}, ','),
+          table.concat(c.modifiers or {}, ' '),
+          command
+        )
       )
-    )
+    else
+      vim.notify(
+        fmt('An autocommand in %s is specified incorrectly: %s', name, vim.inspect(name)),
+        L.ERROR
+      )
+    end
   end
   vim.cmd 'augroup END'
 end

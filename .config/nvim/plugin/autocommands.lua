@@ -405,8 +405,8 @@ if as.has 'nvim-0.6' then
     {
       events = { 'TermClose' },
       targets = { '*' },
-      cmd = function()
-        --- automatically close a terminal if the job was succesful
+      command = function()
+        --- automatically close a terminal if the job was successful
         if not vim.v.event.status == 0 then
           vim.cmd('bdelete! ' .. fn.expand '<abuf>')
         end
