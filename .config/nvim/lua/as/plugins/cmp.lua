@@ -60,6 +60,7 @@ return function()
           path = '[Path]',
           calc = '[Calc]',
           neorg = '[Neorg]',
+          orgmode = '[Org]',
           luasnip = '[Luasnip]',
           buffer = '[Buffer]',
         })[entry.source.name]
@@ -77,6 +78,7 @@ return function()
       { name = 'path' },
       { name = 'buffer' },
       { name = 'neorg' },
+      { name = 'orgmode' },
     },
   }
 end
