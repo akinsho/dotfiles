@@ -208,6 +208,7 @@ require('packer').startup {
     use {
       'kabouzeid/nvim-lspinstall',
       module = 'lspinstall',
+      requires = 'nvim-lspconfig',
       config = function()
         require('lspinstall').post_install_hook = function()
           as.lsp.setup_servers()
@@ -216,43 +217,24 @@ require('packer').startup {
       end,
     }
 
+    use { 'neovim/nvim-lspconfig', event = 'BufReadPre', config = conf 'lspconfig' }
+
     use {
-      'neovim/nvim-lspconfig',
-      event = 'BufReadPre',
-      config = conf 'lspconfig',
-      requires = {
-        {
-          'nvim-lua/lsp-status.nvim',
-          config = function()
-            local status = require 'lsp-status'
-            status.config {
-              indicator_hint = '',
-              indicator_info = '',
-              indicator_errors = '✗',
-              indicator_warnings = '',
-              status_symbol = ' ',
-            }
-            status.register_progress()
-          end,
-        },
-        {
-          'kosayoda/nvim-lightbulb',
-          config = function()
-            as.augroup('NvimLightbulb', {
-              {
-                events = { 'CursorHold', 'CursorHoldI' },
-                targets = { '*' },
-                command = function()
-                  require('nvim-lightbulb').update_lightbulb {
-                    sign = { enabled = false },
-                    virtual_text = { enabled = true },
-                  }
-                end,
-              },
-            })
-          end,
-        },
-      },
+      'kosayoda/nvim-lightbulb',
+      config = function()
+        as.augroup('NvimLightbulb', {
+          {
+            events = { 'CursorHold', 'CursorHoldI' },
+            targets = { '*' },
+            command = function()
+              require('nvim-lightbulb').update_lightbulb {
+                sign = { enabled = false },
+                virtual_text = { enabled = true },
+              }
+            end,
+          },
+        })
+      end,
     }
 
     use {
@@ -475,6 +457,24 @@ require('packer').startup {
     use 'folke/lua-dev.nvim'
 
     --}}}
+    -----------------------------------------------------------------------------//
+    -- UI
+    -----------------------------------------------------------------------------//
+
+    use {
+      'nvim-lua/lsp-status.nvim',
+      config = function()
+        local status = require 'lsp-status'
+        status.config {
+          indicator_hint = '',
+          indicator_info = '',
+          indicator_errors = '✗',
+          indicator_warnings = '',
+          status_symbol = ' ',
+        }
+        status.register_progress()
+      end,
+    }
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     --------------------------------------------------------------------------------
