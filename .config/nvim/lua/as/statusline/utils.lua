@@ -379,16 +379,10 @@ function M.diagnostic_info(context)
   }
 end
 
-local lsp_status
----@type boolean
-local ok
-
 ---The lsp servers current status
 ---@return string
 function M.lsp_status()
-  if not lsp_status then
-    ok, lsp_status = pcall(require, 'lsp-status')
-  end
+  local ok, lsp_status = pcall(require, 'lsp-status')
   if ok and lsp_status then
     return lsp_status.status_progress()
   end
