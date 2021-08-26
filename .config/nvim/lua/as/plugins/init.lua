@@ -374,11 +374,12 @@ require('packer').startup {
     use {
       'hrsh7th/nvim-cmp',
       requires = {
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-nvim-lua',
-        'saadparwaiz1/cmp_luasnip',
+        { 'hrsh7th/cmp-nvim-lsp' },
+        { 'f3fora/cmp-spell' },
+        { 'hrsh7th/cmp-path' },
+        { 'hrsh7th/cmp-buffer' },
+        { 'hrsh7th/cmp-nvim-lua' },
+        { 'saadparwaiz1/cmp_luasnip' },
       },
       config = conf 'cmp',
     }
@@ -643,6 +644,9 @@ require('packer').startup {
                 default_keybinds = true,
                 neorg_leader = '<Leader>o',
               },
+            },
+            ['core.norg.completion'] = {
+              engine = 'nvim-cmp',
             },
             ['core.norg.concealer'] = {},
             ['core.norg.dirman'] = {

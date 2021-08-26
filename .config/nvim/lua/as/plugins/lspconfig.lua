@@ -251,9 +251,13 @@ command {
 ---Logic to (re)start installed language servers for use initialising lsps
 ---and restarting them on installing new ones
 function as.lsp.setup_servers()
-  local lspinstall = require 'lspinstall'
   local lspconfig = require 'lspconfig'
-  local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+  local install_ok, lspinstall = pcall(require, 'lspinstall')
+  local nvim_lsp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  -- can't reasonably proceed if lspinstall isn't loaded
+  if not install_ok then
+    return vim.notify(lspinstall, vim.log.levels.ERROR)
+  end
 
   lspinstall.setup()
   local installed = lspinstall.installed_servers()
@@ -263,7 +267,9 @@ function as.lsp.setup_servers()
     config.flags = { debounce_text_changes = 500 }
     config.on_attach = as.lsp.on_attach
     config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
-    cmp_nvim_lsp.update_capabilities(config.capabilities)
+    if nvim_lsp_ok then
+      cmp_nvim_lsp.update_capabilities(config.capabilities)
+    end
     config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
     lspconfig[server].setup(config)
   end

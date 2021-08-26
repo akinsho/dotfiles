@@ -53,11 +53,13 @@ return function()
     formatting = {
       format = function(entry, vim_item)
         vim_item.kind = fmt('%s %s', as.style.lsp.kinds[vim_item.kind], vim_item.kind)
+        -- FIXME: automate this using a regex to normalise names
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           emoji = '[Emoji]',
           path = '[Path]',
           calc = '[Calc]',
+          neorg = '[Neorg]',
           luasnip = '[Luasnip]',
           buffer = '[Buffer]',
         })[entry.source.name]
@@ -71,8 +73,10 @@ return function()
       { name = 'luasnip' },
       { name = 'nvim_lsp' },
       { name = 'nvim_lua' },
+      { name = 'spell' },
       { name = 'path' },
       { name = 'buffer' },
+      { name = 'neorg' },
     },
   }
 end
