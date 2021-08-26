@@ -746,7 +746,6 @@ require('packer').startup {
         require('tabout').setup {
           ignore_beginning = false,
         }
-        as.imap('<c-l>', '<Plug>(Tabout)')
       end,
     }
 
