@@ -646,7 +646,9 @@ require('packer').startup {
               },
             },
             ['core.norg.completion'] = {
-              engine = 'nvim-cmp',
+              config = {
+                engine = 'nvim-cmp',
+              },
             },
             ['core.norg.concealer'] = {},
             ['core.norg.dirman'] = {
