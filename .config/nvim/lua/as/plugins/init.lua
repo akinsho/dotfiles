@@ -952,7 +952,7 @@ require('packer').startup {
       rocks = { 'luarocks-fetch-gitrec', 'pcre2' },
       requires = { 'romgrk/fzy-lua-native' },
       config = function()
-        as.source 'vimscript/wilder.vim'
+        as.source('vimscript/wilder.vim', true)
       end,
     }
 
@@ -1101,7 +1101,7 @@ as.command {
 }
 
 if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then
-  vim.cmd(fmt('source %s', PACKER_COMPILED_PATH))
+  as.source(PACKER_COMPILED_PATH)
   vim.g.packer_compiled_loaded = true
 end
 
