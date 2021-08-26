@@ -370,18 +370,11 @@ require('packer').startup {
       end,
     }
 
-    --- HACK: Lazy loading this plugin is complicated. cmp-nvim-lsp is required
-    --- by nvim-lspconfig (which is essentially a start plugin)
-    --- and it also requires cmp so trying to defer loading till
-    --- InsertEnter doesn't really work. This is a bit of a hack since
-    --- nvim_lsp is loaded and in turn loads cmp but nvim-lsp is loaded
-    --- by lspconfig which is "lazy loaded" on BufRead (which is essentially startup)
-    --- this all just tricks the profiler, rather than really lazy loads it.
     use {
       'hrsh7th/nvim-cmp',
       event = 'InsertEnter',
       requires = {
-        { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp', wants = 'nvim-cmp' },
+        { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
         { 'f3fora/cmp-spell', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
