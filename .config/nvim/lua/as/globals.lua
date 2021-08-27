@@ -153,8 +153,10 @@ end
 
 ---@param command Autocommand
 local function is_valid_target(command)
-  return (command.targets and vim.tbl_islist(command.targets))
-    or vim.startswith(command.events[1], 'User ')
+  return (command.targets and vim.tbl_islist(command.targets)) or vim.startswith(
+    command.events[1],
+    'User '
+  )
 end
 
 local L = vim.log.levels
@@ -352,9 +354,10 @@ local function make_mapper(mode, o)
     if buffer and type(buffer) == 'number' then
       opts = vim.tbl_extend('keep', opts, parent_opts)
       api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
-    elseif not buffer then
-      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
+      return
     end
+
+    api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
   end
 end
 
