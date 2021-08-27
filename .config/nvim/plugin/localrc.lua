@@ -36,7 +36,7 @@ local function setup_localrc(path)
   as.augroup('LocalRC', {
     {
       events = { 'BufWritePost' },
-      target = { path },
+      targets = { path },
       command = function()
         reload(path)
       end,
