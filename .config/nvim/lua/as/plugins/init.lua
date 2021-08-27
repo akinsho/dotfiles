@@ -543,6 +543,11 @@ require('packer').startup {
     use {
       'rcarriga/nvim-notify',
       config = function()
+        local notify = require 'notify'
+        notify.setup {
+          stages = 'fade_in_slide_out', -- fade
+          timeout = 3000,
+        }
         ---Send a notification
         --@param msg of the notification to show to the user
         --@param level Optional log level
@@ -560,7 +565,6 @@ require('packer').startup {
             [l.ERROR] = 'Error',
           }
           opts.title = opts.title or type(level) == 'string' and level or levels[level]
-          local notify = require 'notify'
           notify(msg, level, opts)
         end
       end,
