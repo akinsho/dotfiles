@@ -281,7 +281,7 @@ local function filetype(ctx, opts)
   end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ':e')
-  local icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
+  local icons_loaded, devicons = as.safe_require 'nvim-web-devicons'
   if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
     hl = highlight_ft_icon(hl, opts.icon_bg)
@@ -382,7 +382,7 @@ end
 ---The lsp servers current status
 ---@return string
 function M.lsp_status()
-  local ok, lsp_status = pcall(require, 'lsp-status')
+  local ok, lsp_status = as.safe_require('lsp-status', { silent = true })
   if ok and lsp_status then
     return lsp_status.status_progress()
   end

@@ -3,7 +3,7 @@ local M = {
   kitty = {},
 }
 
-local hl_ok, H = pcall(require, 'as.highlights')
+local hl_ok, H = as.safe_require('as.highlights', { silent = true })
 
 local fn = vim.fn
 local fmt = string.format
@@ -45,7 +45,7 @@ end
 local function fileicon()
   local name = fn.bufname()
   local icon, hl
-  local loaded, devicons = pcall(require, 'nvim-web-devicons')
+  local loaded, devicons = as.safe_require 'nvim-web-devicons'
   if loaded then
     icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ':e'), { default = true })
   end

@@ -319,7 +319,7 @@ require('packer').startup {
       local_path = 'personal',
       config = function()
         --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
-        local ok, lsp_status = pcall(require, 'lsp-status')
+        local ok, lsp_status = as.safe_require('lsp-status', { silent = true })
         local capabilities = ok and lsp_status.capabilities or nil
         require('flutter-tools').setup {
           ui = {

@@ -252,11 +252,11 @@ command {
 ---and restarting them on installing new ones
 function as.lsp.setup_servers()
   local lspconfig = require 'lspconfig'
-  local install_ok, lspinstall = pcall(require, 'lspinstall')
-  local nvim_lsp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  local install_ok, lspinstall = as.safe_require 'lspinstall'
+  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
   -- can't reasonably proceed if lspinstall isn't loaded
   if not install_ok then
-    return vim.notify(lspinstall, vim.log.levels.ERROR)
+    return
   end
 
   lspinstall.setup()

@@ -204,13 +204,15 @@ end
 
 ---Require a module using [pcall] and report any errors
 ---@param module string
-function as.safe_require(module)
+---@param opts table?
+---@return boolean, any
+function as.safe_require(module, opts)
+  opts = opts or { silent = false }
   local ok, err = pcall(require, module)
-  if not ok then
-    vim.notify(err, L.ERROR, {
-      title = 'Require Error',
-    })
+  if not ok and not opts.silent then
+    vim.notify(err, L.ERROR, { title = fmt('Error requiring: %s', module) })
   end
+  return ok, err
 end
 
 ---Check if a cmd is executable
