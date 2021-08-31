@@ -16,6 +16,7 @@ function M.config()
   neogit.setup {
     disable_signs = false,
     disable_commit_confirmation = true,
+    disable_builtin_notifications = true,
     signs = {
       section = { '', '' }, -- "", ""
       item = { '▸', '▾' },
