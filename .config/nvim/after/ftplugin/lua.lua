@@ -48,12 +48,4 @@ local function keyword(word, callback)
   end
 end
 
-local loaded, hover
-
-local function hover_doc()
-  loaded, hover = pcall(require, 'lspsaga.hover')
-  local cb = loaded and hover.render_hover_doc or nil
-  keyword(nil, cb)
-end
-
-nnoremap('gK', hover_doc, { buffer = 0 })
+nnoremap('gK', keyword, { buffer = 0 })
