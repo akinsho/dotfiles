@@ -153,10 +153,8 @@ end
 
 ---@param command Autocommand
 local function is_valid_target(command)
-  return (command.targets and vim.tbl_islist(command.targets)) or vim.startswith(
-    command.events[1],
-    'User '
-  )
+  return (command.targets and vim.tbl_islist(command.targets))
+    or vim.startswith(command.events[1], 'User ')
 end
 
 local L = vim.log.levels
@@ -173,6 +171,7 @@ function as.augroup(name, commands)
         local fn_id = as._create(command)
         command = fmt('lua as._execute(%s)', fn_id)
       end
+      c.events = type(c.events) == 'string' and { c.events } or c.events
       vim.cmd(
         string.format(
           'autocmd %s %s %s %s',
