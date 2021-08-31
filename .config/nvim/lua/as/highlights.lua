@@ -1,7 +1,7 @@
 local api = vim.api
 local fmt = string.format
 local P = as.style.palette
-local levels =  vim.log.levels
+local levels = vim.log.levels
 
 local M = {}
 

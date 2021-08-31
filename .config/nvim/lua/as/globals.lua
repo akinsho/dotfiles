@@ -203,6 +203,17 @@ function as.source(path, prefix)
   end
 end
 
+---Require a module using [pcall] and report any errors
+---@param module string
+function as.safe_require(module)
+  local ok, err = pcall(require, module)
+  if not ok then
+    vim.notify(err, L.ERROR, {
+      title = 'Require Error',
+    })
+  end
+end
+
 ---Check if a cmd is executable
 ---@param e string
 ---@return boolean

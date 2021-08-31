@@ -24,7 +24,7 @@ vim.cmd 'packadd! cfilter'
 -- packpath till later in the setup process e.g. when packer compiled is loaded
 -- so the following command needs to be manually executed
 -- luarocks install --lua-version=5.1 mpack
-require 'impatient'
+as.safe_require 'impatient'
 
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
