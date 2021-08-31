@@ -32,7 +32,7 @@ local function colors()
   local identifier_fg = H.get_hl('Identifier', 'fg')
   local inc_search_bg = H.get_hl('Search', 'bg')
 
-  local bg_color = H.darken_color(H.get_hl('Normal', 'bg'), -16)
+  local bg_color = H.alter_color(H.get_hl('Normal', 'bg'), -16)
 
   H.all {
     { 'StMetadata', { guifg = comment_fg, guibg = bg_color, gui = 'italic' } },

@@ -25,7 +25,7 @@ end
 ---@param color string
 ---@param percent number
 ---@return string
-function M.darken_color(color, percent)
+function M.alter_color(color, percent)
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then
     return 'NONE'
@@ -180,7 +180,7 @@ end
 local function general_overrides()
   local comment_fg = M.get_hl('Comment', 'fg')
   local keyword_fg = M.get_hl('Keyword', 'fg')
-  local msg_area_bg = M.darken_color(M.get_hl('Normal', 'bg'), -10)
+  local msg_area_bg = M.alter_color(M.get_hl('Normal', 'bg'), -10)
   M.all {
     { 'mkdLineBreak', { link = 'NONE', force = true } },
     -----------------------------------------------------------------------------//
@@ -274,8 +274,8 @@ end
 local function set_sidebar_highlight()
   local normal_bg = M.get_hl('Normal', 'bg')
   local split_color = M.get_hl('VertSplit', 'fg')
-  local bg_color = M.darken_color(normal_bg, -8)
-  local st_color = M.darken_color(M.get_hl('Visual', 'bg'), -20)
+  local bg_color = M.alter_color(normal_bg, -8)
+  local st_color = M.alter_color(M.get_hl('Visual', 'bg'), -20)
   local hls = {
     { 'PanelBackground', { guibg = bg_color } },
     { 'PanelHeading', { guibg = bg_color, gui = 'bold' } },
