@@ -19,6 +19,13 @@ utils.bootstrap_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
+-- FIXME: currently because mpack is required BEFORE packer
+-- loads it can't be loaded by packer which doesn't set the
+-- packpath till later in the setup process e.g. when packer compiled is loaded
+-- so the following command needs to be manually executed
+-- luarocks install --lua-version=5.1 mpack
+require 'impatient'
+
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
 --- or local variables
@@ -29,6 +36,9 @@ require('packer').startup {
     -- Core {{{3
     -----------------------------------------------------------------------------//
     use_rocks 'penlight'
+
+    -- NOTE: this plugin will be redundant once https://github.com/neovim/neovim/pull/15436 is merged
+    use 'lewis6991/impatient.nvim'
 
     use {
       'ahmedkhalf/project.nvim',
@@ -196,11 +206,7 @@ require('packer').startup {
       end,
     }
 
-    use {
-      'kyazdani42/nvim-tree.lua',
-      config = conf 'nvim-tree',
-      requires = 'nvim-web-devicons',
-    }
+    use { 'kyazdani42/nvim-tree.lua', config = conf 'nvim-tree', requires = 'nvim-web-devicons' }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{1
