@@ -1,5 +1,5 @@
-local api = vim.api
 local fmt = string.format
+local api = vim.api
 local P = as.style.palette
 local levels = vim.log.levels
 
@@ -154,7 +154,10 @@ end
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
 vim.g.doom_one_telescope_highlights = false
-vim.cmd 'colorscheme doom-one'
+-- FIXME: re-running the colorscheme command throws errors
+if vim.v.vim_did_enter ~= 1 then
+  vim.cmd 'colorscheme doom-one'
+end
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights
@@ -333,10 +336,6 @@ local function user_highlights()
   colorscheme_overrides()
   set_sidebar_highlight()
 end
-
----NOTE: apply user highlights when nvim first starts
---- then whenever the colorscheme changes
-user_highlights()
 
 as.augroup('UserHighlights', {
   {

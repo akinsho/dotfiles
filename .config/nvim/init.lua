@@ -21,7 +21,7 @@ vim.g.maplocalleader = ' ' -- Local leader is <Space>
 
 if pcall(require, 'plenary') then
   RELOAD = require('plenary.reload').reload_module
-  R = function(name)
+  function R(name)
     RELOAD(name)
     return require(name)
   end
@@ -30,7 +30,6 @@ end
 ------------------------------------------------------------------------
 -- Plugin Configurations
 ------------------------------------------------------------------------
--- FIXME: this currently causes massive breakage when reloading my config as some modules error...
 R 'as.globals'
 R 'as.settings'
 R 'as.highlights'
