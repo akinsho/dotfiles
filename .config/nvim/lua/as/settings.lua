@@ -189,6 +189,7 @@ vim.opt.autowriteall = true -- automatically :write before running commands and 
 vim.opt.clipboard = { 'unnamedplus' }
 vim.opt.laststatus = 2
 vim.opt.termguicolors = true
+vim.opt.guifont = 'Fira Code Regular Nerd Font Complete Mono:h14'
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
 -----------------------------------------------------------------------------//
