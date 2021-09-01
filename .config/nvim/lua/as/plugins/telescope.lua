@@ -194,10 +194,11 @@ return function()
       m = { builtins.man_pages, 'man pages' },
       h = { frecency, 'history' },
       n = { nvim_config, 'nvim config' },
-      r = { builtins.reloader, 'module reloader' },
       o = { builtins.buffers, 'buffers' },
       p = { installed_plugins, 'plugins' },
       O = { orgfiles, 'org files' },
+      R = { builtins.reloader, 'module reloader' },
+      r = { builtins.resume, 'resume last picker' },
       s = { builtins.live_grep, 'grep string' },
       t = {
         name = '+tmux',
