@@ -81,11 +81,6 @@
     "body": ["print('${1:message}');"],
     "description": "Print message"
   },
-  "print formatted snippet": {
-    "prefix": "pr",
-    "body": ["print('${1:label}: \\${$1}');$0"],
-    "description": "print variable"
-  },
   "Scaffold widget snippet": {
     "prefix": "fscaff",
     "body": [

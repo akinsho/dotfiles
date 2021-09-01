@@ -1,8 +1,11 @@
 return function()
   local ls = require 'luasnip'
+  local extras = require 'luasnip.extras'
   local snippet = ls.snippet
   local text = ls.text_node
   local insert = ls.insert_node
+  local l = extras.lambda
+  local match = extras.match
   local types = require 'luasnip.util.types'
 
   ls.config.set_config {
@@ -52,6 +55,19 @@ return function()
           'end',
         }),
         text '}',
+      }),
+    },
+    dart = {
+      snippet({
+        trig = 'pr',
+        name = 'print',
+        dscr = 'print a variable optionally wrapping it with braces',
+      }, {
+        text { "print('" },
+        insert(1, { 'label' }),
+        text ': $',
+        match(1, '%.', '{' .. l._1 .. '}', l._1),
+        text "');",
       }),
     },
   }
