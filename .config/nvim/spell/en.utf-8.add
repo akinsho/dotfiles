@@ -226,3 +226,5 @@ commandline
 autoload
 func
 num
+luarocks
+packpath
