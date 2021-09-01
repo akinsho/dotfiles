@@ -83,7 +83,7 @@
   },
   "print formatted snippet": {
     "prefix": "pr",
-    "body": ["print('${1:label}: \\${$1}');"],
+    "body": ["print('${1:label}: \\${$1}');$0"],
     "description": "print variable"
   },
   "Scaffold widget snippet": {
