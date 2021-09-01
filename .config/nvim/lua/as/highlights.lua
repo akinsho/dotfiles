@@ -150,14 +150,6 @@ function M.all(hls)
     M.set_hl(unpack(hl))
   end
 end
------------------------------------------------------------------------------//
--- Color Scheme {{{1
------------------------------------------------------------------------------//
-vim.g.doom_one_telescope_highlights = false
--- FIXME: re-running the colorscheme command throws errors
-if vim.v.vim_did_enter ~= 1 then
-  vim.cmd 'colorscheme doom-one'
-end
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights
@@ -314,8 +306,7 @@ local function colorscheme_overrides()
     local keyword_fg = M.get_hl('Keyword', 'fg')
     M.all {
       { 'CursorLineNr', { guifg = keyword_fg } },
-      -- TODO the default bold makes ... not use ligatures
-      -- a better fix would be to add ligatures to my font
+      -- TODO: the default bold makes ... not use ligatures a better fix would be to add ligatures to my font
       -- {"Constant", {gui = "NONE"}},
     }
   elseif vim.g.colors_name == 'onedark' then
@@ -349,5 +340,14 @@ as.augroup('UserHighlights', {
     command = on_sidebar_enter,
   },
 })
+
+-----------------------------------------------------------------------------//
+-- Color Scheme {{{1
+-----------------------------------------------------------------------------//
+if vim.v.vim_did_enter ~= 1 then
+  -- FIXME: re-running the colorscheme command throws errors, using silent surpresses them
+  vim.g.doom_one_telescope_highlights = false
+  vim.cmd 'colorscheme doom-one'
+end
 
 return M
