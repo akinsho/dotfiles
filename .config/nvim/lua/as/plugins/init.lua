@@ -40,7 +40,7 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     use_rocks 'penlight'
 
-    -- NOTE: this plugin will be redundant once https://github.com/neovim/neovim/pull/15436 is merged
+    -- TODO: this plugin will be redundant once https://github.com/neovim/neovim/pull/15436 is merged
     use 'lewis6991/impatient.nvim'
 
     use {
@@ -322,8 +322,8 @@ require('packer').startup {
       local_path = 'personal',
       config = function()
         --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
-        local ok, lsp_status = as.safe_require('lsp-status', { silent = true })
-        local capabilities = ok and lsp_status.capabilities or nil
+        local status_ok, lsp_status = as.safe_require('lsp-status', { silent = true })
+        local capabilities = status_ok and lsp_status.capabilities or nil
         require('flutter-tools').setup {
           ui = {
             border = 'rounded',
