@@ -48,7 +48,14 @@ local function setup_autocommands(client, _)
       {
         events = { 'BufWritePre' },
         targets = { '<buffer>' },
-        command = vim.lsp.buf.formatting_sync,
+        command = function()
+          -- BUG: folds are are removed when formatting is done, so we save the current state of the
+          -- view and re-apply it manually after formatting the buffer
+          -- @see: https://github.com/nvim-treesitter/nvim-treesitter/issues/1424#issuecomment-909181939
+          vim.cmd 'mkview!'
+          vim.lsp.buf.formatting_sync()
+          vim.cmd 'edit | loadview'
+        end,
       },
     })
   end
