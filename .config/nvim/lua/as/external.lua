@@ -3,7 +3,7 @@ local M = {
   kitty = {},
 }
 
-local highlights_loaded, H = pcall(require, 'as.highlights')
+local hl_ok, H = pcall(require, 'as.highlights')
 
 local fn = vim.fn
 local fmt = string.format
@@ -11,7 +11,7 @@ local fmt = string.format
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 function M.tmux.set_statusline(reset)
-  if not highlights_loaded then
+  if not hl_ok then
     return
   end
   local hl = reset and 'Normal' or 'MsgArea'
@@ -21,7 +21,7 @@ function M.tmux.set_statusline(reset)
 end
 
 function M.kitty.set_background()
-  if not highlights_loaded then
+  if not hl_ok then
     return
   end
   if vim.env.KITTY_LISTEN_ON then
@@ -32,7 +32,7 @@ end
 
 ---Reset the kitty terminal colors
 function M.kitty.clear_background()
-  if not highlights_loaded then
+  if not hl_ok then
     return
   end
   if vim.env.KITTY_LISTEN_ON then
@@ -53,7 +53,7 @@ local function fileicon()
 end
 
 function M.title_string()
-  if not highlights_loaded then
+  if not hl_ok then
     return
   end
   local dir = fn.fnamemodify(fn.getcwd(), ':t')
