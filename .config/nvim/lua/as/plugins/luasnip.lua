@@ -11,7 +11,12 @@ return function()
     ext_opts = {
       [types.choiceNode] = {
         active = {
-          virt_text = { { 'choiceNode', 'Comment' } },
+          virt_text = { { '●', 'Operator' } },
+        },
+      },
+      [types.insertNode] = {
+        active = {
+          virt_text = { { '●', 'Type' } },
         },
       },
     },
