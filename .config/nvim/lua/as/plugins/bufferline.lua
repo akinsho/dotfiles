@@ -51,6 +51,7 @@ return function()
       separator_style = os.getenv 'KITTY_WINDOW_ID' and 'slant' or 'padded_slant',
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = diagnostics_indicator,
+      diagnostics_update_in_insert = false,
       custom_filter = custom_filter,
       offsets = {
         {
