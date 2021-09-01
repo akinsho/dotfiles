@@ -12,6 +12,7 @@ call wilder#set_option('pipeline', [
     \   wilder#cmdline_pipeline(#{
     \     fuzzy: 1,
     \     sorter: wilder#python_difflib_sorter(),
+    \     fuzzy_filter: wilder#lua_fzy_filter(),
     \   }),
     \   wilder#python_search_pipeline(#{
     \     pattern: 'fuzzy',
