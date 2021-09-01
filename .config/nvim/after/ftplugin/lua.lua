@@ -1,3 +1,7 @@
+if not as then
+  return
+end
+
 local nnoremap = as.nnoremap
 
 local function find(word, ...)
