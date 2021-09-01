@@ -535,6 +535,7 @@ require('packer').startup {
       'mg979/vim-visual-multi',
       config = function()
         vim.g.VM_highlight_matches = 'underline'
+        vim.g.VM_theme = 'codedark'
         vim.g.VM_maps = {
           ['Find Under'] = '<C-e>',
           ['Find Subword Under'] = '<C-e>',
