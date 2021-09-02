@@ -61,7 +61,7 @@ require('packer').startup {
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         {
           'nvim-telescope/telescope-frecency.nvim',
-          requires = 'tami5/sql.nvim',
+          requires = 'tami5/sqlite.lua',
           after = 'telescope.nvim',
         },
         { 'camgraff/telescope-tmux.nvim' },
