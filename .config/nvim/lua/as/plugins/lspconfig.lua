@@ -196,7 +196,22 @@ function as.lsp.on_attach(client, bufnr)
   if client.resolved_capabilities.goto_definition then
     vim.bo[bufnr].tagfunc = 'v:lua.as.lsp.tagfunc'
   end
+
   require('lsp-status').on_attach(client)
+
+  -- NOTE: this does not work for dart because it doesn't currently support an activeParameter
+  local ok, lsp_signature = as.safe_require 'lsp_signature'
+  if ok then
+    local fix_enabled = client and client.name:match 'dart' ~= nil
+    lsp_signature.on_attach {
+      bind = true,
+      fix_pos = fix_enabled,
+      hint_enable = false,
+      handler_opts = {
+        border = 'rounded',
+      },
+    }
+  end
 end
 
 -----------------------------------------------------------------------------//
