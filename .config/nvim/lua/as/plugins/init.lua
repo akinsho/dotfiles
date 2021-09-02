@@ -553,7 +553,6 @@ require('packer').startup {
         --@param opts Dictionary with optional options (timeout, etc)
         vim.notify = function(msg, level, opts)
           local l = vim.log.levels
-          assert(type(msg) == 'string', 'msg should be a string')
           assert(type(level) ~= 'table', 'level should be one of vim.log.levels or a string')
           opts = opts or {}
           level = level or l.INFO
