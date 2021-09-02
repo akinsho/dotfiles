@@ -63,6 +63,7 @@ return function()
           orgmode = '[Org]',
           luasnip = '[Luasnip]',
           buffer = '[Buffer]',
+          spell = '[Spell]',
         })[entry.source.name]
         return vim_item
       end,
