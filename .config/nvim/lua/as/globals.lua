@@ -153,8 +153,8 @@ end
 
 ---@param command Autocommand
 local function is_valid_target(command)
-  return (command.targets and vim.tbl_islist(command.targets))
-    or vim.startswith(command.events[1], 'User ')
+  local valid_type = command.targets and vim.tbl_islist(command.targets)
+  return valid_type or vim.startswith(command.events[1], 'User ')
 end
 
 local L = vim.log.levels
