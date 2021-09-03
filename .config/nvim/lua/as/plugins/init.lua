@@ -302,7 +302,22 @@ require('packer').startup {
       end,
     }
 
-    use { 'ray-x/lsp_signature.nvim', module = 'lsp_signature' }
+    use {
+      'ray-x/lsp_signature.nvim',
+      branch = 'fix_pos_fun',
+      config = function()
+        require('lsp_signature').setup {
+          bind = true,
+          fix_pos = function(signatures, _) -- second argument is the client
+            return signatures[1].activeParameter >= 0 and signatures[1].parameters > 1
+          end,
+          hint_enable = false,
+          handler_opts = {
+            border = 'rounded',
+          },
+        }
+      end,
+    }
 
     use_local {
       'akinsho/flutter-tools.nvim',
