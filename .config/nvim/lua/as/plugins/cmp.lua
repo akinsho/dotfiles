@@ -34,6 +34,9 @@ return function()
   end
 
   cmp.setup {
+    experimental = {
+      ghost_text = false,
+    },
     snippet = {
       expand = function(args)
         require('luasnip').lsp_expand(args.body)
