@@ -553,7 +553,6 @@ require('packer').startup {
         --@param opts Dictionary with optional options (timeout, etc)
         vim.notify = function(msg, level, opts)
           local l = vim.log.levels
-          assert(type(level) ~= 'table', 'level should be one of vim.log.levels or a string')
           opts = opts or {}
           level = level or l.INFO
           local levels = {
@@ -565,6 +564,19 @@ require('packer').startup {
           opts.title = opts.title or type(level) == 'string' and level or levels[level]
           notify(msg, level, opts)
         end
+        local hls = { DEBUG = 'Normal', INFO = 'Directory', WARN = 'WarningMsg', ERROR = 'Error' }
+        as.command {
+          'NotificationHistory',
+          function()
+            local history = notify.history()
+            local messages = vim.tbl_map(function(notif)
+              return { unpack(notif.message), hls[notif.level] }
+            end, history)
+            for _, message in ipairs(messages) do
+              vim.api.nvim_echo({ message }, true, {})
+            end
+          end,
+        }
       end,
     }
 
