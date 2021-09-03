@@ -202,7 +202,7 @@ function as.lsp.on_attach(client, bufnr)
   -- NOTE: this does not work for dart because it doesn't currently support an activeParameter
   local ok, lsp_signature = as.safe_require 'lsp_signature'
   if ok then
-    local fix_enabled = client and client.name:match 'dart' ~= nil
+    local fix_enabled = client and not vim.tbl_contains({ 'dartls' }, client.name)
     lsp_signature.on_attach {
       bind = true,
       fix_pos = fix_enabled,
