@@ -208,11 +208,11 @@ end
 ---@return boolean, any
 function as.safe_require(module, opts)
   opts = opts or { silent = false }
-  local ok, err = pcall(require, module)
+  local ok, result = pcall(require, module)
   if not ok and not opts.silent then
-    vim.notify(err, L.ERROR, { title = fmt('Error requiring: %s', module) })
+    vim.notify(result, L.ERROR, { title = fmt('Error requiring: %s', module) })
   end
-  return ok, err
+  return ok, result
 end
 
 ---Check if a cmd is executable
