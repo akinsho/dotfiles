@@ -446,17 +446,18 @@ require('packer').startup {
         as.nnoremap('<localleader>ts', '<cmd>TestSuite<CR>')
       end,
     }
+
     use {
       'mfussenegger/nvim-dap',
       module = 'dap',
       keys = { '<localleader>dc' },
+      wants = 'nvim-dap-ui',
       setup = conf('dap').setup,
       config = conf('dap').config,
       requires = {
         {
           'rcarriga/nvim-dap-ui',
-          requires = 'nvim-dap',
-          after = 'nvim-dap',
+          opt = true,
           config = function()
             require('dapui').setup()
           end,
