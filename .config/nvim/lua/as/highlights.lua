@@ -258,11 +258,6 @@ local function general_overrides()
     },
     { 'LspDiagnosticsUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
     { 'LspDiagnosticsUnderlineInformation', { gui = 'undercurl', guisp = P.teal, guifg = 'none' } },
-    -----------------------------------------------------------------------------//
-    -- Notifications
-    -----------------------------------------------------------------------------//
-    { 'NvimNotificationError', { link = 'ErrorMsg' } },
-    { 'NvimNotificationInfo', { guifg = P.bright_blue } },
   }
 end
 
