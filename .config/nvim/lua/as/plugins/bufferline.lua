@@ -84,6 +84,22 @@ return function()
           padding = 1,
         },
       },
+      groups = {
+        {
+          highlight = { guifg = '#51AFEF' },
+          name = 'tests',
+          fn = function(buf)
+            return buf.filename:match '_spec' or buf.filename:match 'test'
+          end,
+        },
+        {
+          highlight = { guifg = '#C678DD' },
+          name = 'docs',
+          fn = function(buf)
+            return vim.tbl_contains({ 'markdown', 'help' }, vim.bo[buf.id].filetype)
+          end,
+        },
+      },
     },
   }
 
