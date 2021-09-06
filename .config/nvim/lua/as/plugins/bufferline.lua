@@ -86,14 +86,14 @@ return function()
       },
       groups = {
         {
-          highlight = { guisp = '#51AFEF', gui = 'underline' }, -- FIXME: highlight extends beyond filename
+          highlight = { guisp = '#51AFEF', gui = 'underline' },
           name = 'tests',
           fn = function(buf)
             return buf.filename:match '_spec' or buf.filename:match 'test'
           end,
         },
         {
-          name = 'ViewModels', -- FIXME: there can't be a space in group names
+          name = 'View models',
           fn = function(buf)
             return buf.filename:match 'view_model%.dart'
           end,
