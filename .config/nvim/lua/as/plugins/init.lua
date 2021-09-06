@@ -19,11 +19,6 @@ utils.bootstrap_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
--- FIXME: currently because mpack is required BEFORE packer
--- loads it can't be loaded by packer which doesn't set the
--- packpath till later in the setup process e.g. when packer compiled is loaded
--- so the following command needs to be manually executed
--- luarocks install --lua-version=5.1 mpack
 local ok, impatient = as.safe_require 'impatient'
 if ok then
   impatient.enable_profile()
