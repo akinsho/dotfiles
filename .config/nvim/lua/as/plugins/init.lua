@@ -307,9 +307,7 @@ require('packer').startup {
             return signatures[1].activeParameter >= 0 and signatures[1].parameters > 1
           end,
           hint_enable = false,
-          handler_opts = {
-            border = 'rounded',
-          },
+          handler_opts = { border = 'rounded' },
         }
       end,
     }
