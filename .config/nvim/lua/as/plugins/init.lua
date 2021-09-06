@@ -455,7 +455,7 @@ require('packer').startup {
         },
       },
     }
-
+    use 'jbyuki/one-small-step-for-vimkind'
     use 'folke/lua-dev.nvim'
 
     --}}}
