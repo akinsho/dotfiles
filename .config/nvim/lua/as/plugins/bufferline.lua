@@ -86,14 +86,26 @@ return function()
       },
       groups = {
         {
-          highlight = { guifg = '#51AFEF' },
+          highlight = { guisp = '#51AFEF', gui = 'underline' }, -- FIXME: highlight extends beyond filename
           name = 'tests',
           fn = function(buf)
             return buf.filename:match '_spec' or buf.filename:match 'test'
           end,
         },
         {
-          highlight = { guifg = '#C678DD' },
+          name = 'ViewModels', -- FIXME: there can't be a space in group names
+          fn = function(buf)
+            return buf.filename:match 'view_model%.dart'
+          end,
+        },
+        {
+          name = 'Screens',
+          fn = function(buf)
+            return buf.path:match 'screen'
+          end,
+        },
+        {
+          highlight = { guisp = '#C678DD', gui = 'underline' },
           name = 'docs',
           fn = function(buf)
             return vim.tbl_contains({ 'markdown', 'help' }, vim.bo[buf.id].filetype)
