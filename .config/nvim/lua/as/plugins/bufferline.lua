@@ -88,27 +88,27 @@ return function()
         {
           highlight = { guisp = '#51AFEF', gui = 'underline' },
           name = 'tests',
-          fn = function(buf)
+          matcher = function(buf)
             return buf.filename:match '_spec' or buf.filename:match 'test'
           end,
         },
         {
           name = 'View models',
-          fn = function(buf)
+          matcher = function(buf)
             return buf.filename:match 'view_model%.dart'
           end,
         },
         {
           name = 'Screens',
-          fn = function(buf)
+          matcher = function(buf)
             return buf.path:match 'screen'
           end,
         },
         {
           highlight = { guisp = '#C678DD', gui = 'underline' },
           name = 'docs',
-          fn = function(buf)
-            return vim.tbl_contains({ 'markdown', 'help' }, vim.bo[buf.id].filetype)
+          matcher = function(buf)
+            return buf.path:match '%.md' or buf.path:match '%.txt'
           end,
         },
       },
