@@ -298,9 +298,11 @@ require('packer').startup {
       config = function()
         require('lsp_signature').setup {
           bind = true,
-          fix_pos = function(signatures, _) -- second argument is the client
-            return signatures[1].activeParameter >= 0 and signatures[1].parameters > 1
-          end,
+          fix_pos = false,
+          -- FIXME: this doesn't work regardless of how the function below is specified
+          -- fix_pos = function(signatures, client) -- second argument is the client
+          --   return signatures[1].activeParameter >= 0 and signatures[1].parameters > 1
+          -- end,
           hint_enable = false,
           handler_opts = { border = 'rounded' },
         }
