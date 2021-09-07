@@ -1124,8 +1124,12 @@ as.augroup('PackerSetupInit', {
     targets = { '*/as/plugins/*.lua' },
     command = function()
       as.invalidate('as.plugins', true)
-      require('packer').compile()
-      packer_notify 'packer compiled...'
+      local ok, err = pcall(require('packer').compile)
+      if ok then
+        packer_notify 'packer compiled...'
+      else
+        packer_notify(err, vim.log.levels.ERROR)
+      end
     end,
   },
 })
