@@ -112,6 +112,13 @@ return function()
             return buf.path:match '%.md' or buf.path:match '%.txt'
           end,
         },
+        {
+          name = 'Build',
+          matcher = function(buf)
+            local ft = vim.api.nvim_buf_get_option(buf.id, 'filetype')
+            return vim.tbl_contains({ 'log', 'yaml', 'json' }, ft)
+          end,
+        },
       },
     },
   }
