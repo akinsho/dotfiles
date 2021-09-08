@@ -50,7 +50,6 @@ require('packer').startup {
 
     use {
       'nvim-telescope/telescope.nvim',
-      event = 'CursorHold',
       cmd = 'Telescope',
       keys = { '<c-p>', '<leader>fo', '<leader>ff', '<leader>fs' },
       module_pattern = 'telescope.*',
