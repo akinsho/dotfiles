@@ -68,6 +68,9 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export MANPATH="/usr/local/man:$MANPATH"
+if which nvim >/dev/null; then
+  export MANPAGER='nvim +Man!'
+fi
 
 # you may need to manually set your language environment
 export LC_ALL=en_GB.UTF-8
