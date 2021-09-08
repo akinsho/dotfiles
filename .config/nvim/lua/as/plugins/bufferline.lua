@@ -85,39 +85,43 @@ return function()
         },
       },
       groups = {
-        toggle_hidden_on_enter = true,
-        {
-          highlight = { guisp = '#51AFEF', gui = 'underline' },
-          name = 'tests',
-          matcher = function(buf)
-            return buf.filename:match '_spec' or buf.filename:match 'test'
-          end,
+        options = {
+          toggle_hidden_on_enter = true,
         },
-        {
-          name = 'View models',
-          matcher = function(buf)
-            return buf.filename:match 'view_model%.dart'
-          end,
-        },
-        {
-          name = 'Screens',
-          matcher = function(buf)
-            return buf.path:match 'screen'
-          end,
-        },
-        {
-          highlight = { guisp = '#C678DD', gui = 'underline' },
-          name = 'docs',
-          matcher = function(buf)
-            return buf.path:match '%.md' or buf.path:match '%.txt'
-          end,
-        },
-        {
-          name = 'Build',
-          matcher = function(buf)
-            local ft = vim.api.nvim_buf_get_option(buf.id, 'filetype')
-            return vim.tbl_contains({ 'log', 'yaml', 'json' }, ft)
-          end,
+        items = {
+          {
+            highlight = { guisp = '#51AFEF', gui = 'underline' },
+            name = 'tests',
+            matcher = function(buf)
+              return buf.filename:match '_spec' or buf.filename:match 'test'
+            end,
+          },
+          {
+            name = 'View models',
+            matcher = function(buf)
+              return buf.filename:match 'view_model%.dart'
+            end,
+          },
+          {
+            name = 'Screens',
+            matcher = function(buf)
+              return buf.path:match 'screen'
+            end,
+          },
+          {
+            highlight = { guisp = '#C678DD', gui = 'underline' },
+            name = 'docs',
+            matcher = function(buf)
+              return buf.path:match '%.md' or buf.path:match '%.txt'
+            end,
+          },
+          {
+            name = 'Build',
+            matcher = function(buf)
+              local ft = vim.api.nvim_buf_get_option(buf.id, 'filetype')
+              return vim.tbl_contains({ 'log', 'yaml', 'json' }, ft)
+            end,
+          },
         },
       },
     },
