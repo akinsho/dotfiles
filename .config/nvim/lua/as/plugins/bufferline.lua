@@ -85,6 +85,7 @@ return function()
         },
       },
       groups = {
+        toggle_hidden_on_enter = true,
         {
           highlight = { guisp = '#51AFEF', gui = 'underline' },
           name = 'tests',
