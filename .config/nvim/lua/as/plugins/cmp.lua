@@ -5,7 +5,7 @@ return function()
   local cmp = require 'cmp'
 
   local function get_luasnip()
-    local _, luasnip = as.safe_require('luasnip', { silent = true })
+    local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if not ok then
       return nil
     end
@@ -43,7 +43,7 @@ return function()
 
   cmp.setup {
     experimental = {
-      ghost_text = false,
+      ghost_text = true,
     },
     snippet = {
       expand = function(args)
