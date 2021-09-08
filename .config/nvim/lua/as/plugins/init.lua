@@ -443,7 +443,7 @@ require('packer').startup {
     use {
       'mfussenegger/nvim-dap',
       module = 'dap',
-      keys = { '<localleader>dc' },
+      keys = { '<localleader>dc, <localleader>db' },
       wants = 'nvim-dap-ui',
       setup = conf('dap').setup,
       config = conf('dap').config,
