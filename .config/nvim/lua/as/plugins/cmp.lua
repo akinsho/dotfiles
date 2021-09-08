@@ -12,19 +12,12 @@ return function()
     return luasnip
   end
 
-  local check_back_space = function()
-    local col = fn.col '.' - 1
-    return col == 0 or fn.getline('.'):sub(col, col):match '%s' ~= nil
-  end
-
   local function tab(fallback)
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
       return fn.feedkeys(t '<C-n>', 'n')
     elseif luasnip and luasnip.expand_or_jumpable() then
       return fn.feedkeys(t '<Plug>luasnip-expand-or-jump', '')
-    elseif check_back_space() then
-      fn.feedkeys(t '<Tab>', 'n')
     else
       fallback()
     end
