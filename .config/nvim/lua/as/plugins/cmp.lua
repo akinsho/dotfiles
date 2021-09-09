@@ -5,6 +5,11 @@ return function()
   local fmt = string.format
   local cmp = require 'cmp'
 
+  local function has_words_before()
+    local cursor = api.nvim_win_get_cursor(0)
+    return not api.nvim_get_current_line():sub(1, cursor[2]):match '^%s$'
+  end
+
   local function get_luasnip()
     local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if not ok then
@@ -17,7 +22,7 @@ return function()
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
       return api.nvim_feedkeys(t '<C-n>', 'n', true)
-    elseif luasnip and luasnip.expand_or_jumpable() then
+    elseif has_words_before() and luasnip and luasnip.expand_or_jumpable() then
       return api.nvim_feedkeys(t '<Plug>luasnip-expand-or-jump', '', true)
     else
       fallback()
@@ -28,7 +33,7 @@ return function()
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
       api.nvim_feedkeys(t '<C-p>', 'n', true)
-    elseif luasnip and luasnip.jumpable(-1) then
+    elseif has_words_before() and luasnip and luasnip.jumpable(-1) then
       api.nvim_feedkeys(t '<Plug>luasnip-jump-prev', '', true)
     else
       fallback()
