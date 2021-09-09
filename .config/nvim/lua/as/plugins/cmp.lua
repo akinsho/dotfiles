@@ -1,5 +1,6 @@
 return function()
   local fn = vim.fn
+  local api = vim.api
   local t = as.replace_termcodes
   local fmt = string.format
   local cmp = require 'cmp'
@@ -15,9 +16,9 @@ return function()
   local function tab(fallback)
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
-      return fn.feedkeys(t '<C-n>', 'n')
+      return api.nvim_feedkeys(t '<C-n>', 'n', true)
     elseif luasnip and luasnip.expand_or_jumpable() then
-      return fn.feedkeys(t '<Plug>luasnip-expand-or-jump', '')
+      return api.nvim_feedkeys(t '<Plug>luasnip-expand-or-jump', '', true)
     else
       fallback()
     end
@@ -26,9 +27,9 @@ return function()
   local function shift_tab(fallback)
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
-      fn.feedkeys(t '<C-p>', 'n')
+      api.nvim_feedkeys(t '<C-p>', 'n', true)
     elseif luasnip and luasnip.jumpable(-1) then
-      fn.feedkeys(t '<Plug>luasnip-jump-prev', '')
+      api.nvim_feedkeys(t '<Plug>luasnip-jump-prev', '', true)
     else
       fallback()
     end
@@ -78,7 +79,6 @@ return function()
     sources = {
       { name = 'luasnip' },
       { name = 'nvim_lsp' },
-      { name = 'nvim_lua' },
       { name = 'spell' },
       { name = 'path' },
       { name = 'buffer' },
@@ -86,4 +86,19 @@ return function()
       { name = 'orgmode' },
     },
   }
+
+  as.augroup('CmpFiletypes', {
+    {
+      events = { 'Filetype' },
+      targets = { 'lua' },
+      command = function()
+        cmp.setup.buffer {
+          sources = {
+            { name = 'nvim_lua' },
+            { name = 'buffer' },
+          },
+        }
+      end,
+    },
+  })
 end
