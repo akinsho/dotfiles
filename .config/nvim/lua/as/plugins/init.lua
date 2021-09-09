@@ -49,7 +49,8 @@ require('packer').startup {
     }
 
     use {
-      'nvim-telescope/telescope.nvim',
+      'fdschmidt93/telescope.nvim',
+      branch = 'fix/stale-lnum',
       cmd = 'Telescope',
       keys = { '<c-p>', '<leader>fo', '<leader>ff', '<leader>fs' },
       module_pattern = 'telescope.*',
