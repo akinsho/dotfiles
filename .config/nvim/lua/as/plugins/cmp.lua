@@ -91,19 +91,18 @@ return function()
       { name = 'orgmode' },
     },
   }
-
-  as.augroup('CmpFiletypes', {
-    {
-      events = { 'Filetype' },
-      targets = { 'lua' },
-      command = function()
-        cmp.setup.buffer {
-          sources = {
-            { name = 'nvim_lua' },
-            { name = 'buffer' },
-          },
-        }
-      end,
-    },
-  })
+  -- as.augroup('CmpFiletypes', {
+  --   {
+  --     events = { 'Filetype' },
+  --     targets = { 'lua' },
+  --     command = function()
+  --       cmp.setup.buffer {
+  --         sources = {
+  --           { name = 'nvim_lua' },
+  --           { name = 'buffer' },
+  --         },
+  --       }
+  --     end,
+  --   },
+  -- })
 end
