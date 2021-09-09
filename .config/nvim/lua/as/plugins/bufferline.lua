@@ -89,6 +89,7 @@ return function()
           toggle_hidden_on_enter = true,
         },
         items = {
+          { name = 'ungrouped' },
           {
             highlight = { guisp = '#51AFEF', gui = 'underline' },
             name = 'tests',
