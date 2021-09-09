@@ -42,6 +42,8 @@ return function()
     return mod_a > mod_b
   end
 
+  local groups = require("bufferline.groups")
+
   require('bufferline').setup {
     options = {
       sort_by = sort_by_mtime,
@@ -89,7 +91,7 @@ return function()
           toggle_hidden_on_enter = true,
         },
         items = {
-          { name = 'ungrouped' },
+          groups.builtin.ungrouped,
           {
             highlight = { guisp = '#51AFEF', gui = 'underline' },
             name = 'tests',
@@ -98,13 +100,13 @@ return function()
             end,
           },
           {
-            name = 'View models',
+            name = 'view models',
             matcher = function(buf)
               return buf.filename:match 'view_model%.dart'
             end,
           },
           {
-            name = 'Screens',
+            name = 'screens',
             matcher = function(buf)
               return buf.path:match 'screen'
             end,
@@ -114,13 +116,6 @@ return function()
             name = 'docs',
             matcher = function(buf)
               return buf.path:match '%.md' or buf.path:match '%.txt'
-            end,
-          },
-          {
-            name = 'Build',
-            matcher = function(buf)
-              local ft = vim.api.nvim_buf_get_option(buf.id, 'filetype')
-              return vim.tbl_contains({ 'log', 'yaml', 'json' }, ft)
             end,
           },
         },
