@@ -6,8 +6,9 @@ return function()
   local cmp = require 'cmp'
 
   local function has_words_before()
-    local cursor = api.nvim_win_get_cursor(0)
-    return not api.nvim_get_current_line():sub(1, cursor[2]):match '^%s$'
+    local line, col = unpack(api.nvim_win_get_cursor(0))
+    return col == 0
+      or api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' ~= nil
   end
 
   local function feed(key, mode)
