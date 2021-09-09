@@ -10,6 +10,11 @@ return function()
     return not api.nvim_get_current_line():sub(1, cursor[2]):match '^%s$'
   end
 
+  local function feed(key, mode)
+    mode = mode or ''
+    api.nvim_feedkeys(t(key), mode, true)
+  end
+
   local function get_luasnip()
     local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if not ok then
@@ -18,25 +23,25 @@ return function()
     return luasnip
   end
 
-  local function tab(fallback)
+  local function tab(_)
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
-      return api.nvim_feedkeys(t '<C-n>', 'n', true)
+      feed('<C-n>', 'n')
     elseif has_words_before() and luasnip and luasnip.expand_or_jumpable() then
-      return api.nvim_feedkeys(t '<Plug>luasnip-expand-or-jump', '', true)
+      feed('<Plug>luasnip-expand-or-jump', '')
     else
-      fallback()
+      feed '<Plug>(Tabout)'
     end
   end
 
-  local function shift_tab(fallback)
+  local function shift_tab(_)
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
-      api.nvim_feedkeys(t '<C-p>', 'n', true)
+      feed('<C-p>', 'n')
     elseif has_words_before() and luasnip and luasnip.jumpable(-1) then
-      api.nvim_feedkeys(t '<Plug>luasnip-jump-prev', '', true)
+      feed('<Plug>luasnip-jump-prev', '')
     else
-      fallback()
+      feed '<Plug>(TaboutBack)'
     end
   end
 
