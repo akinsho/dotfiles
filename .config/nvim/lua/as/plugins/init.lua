@@ -223,6 +223,7 @@ require('packer').startup {
 
     use {
       'kosayoda/nvim-lightbulb',
+      disable = true,
       config = function()
         as.augroup('NvimLightbulb', {
           {
@@ -693,6 +694,13 @@ require('packer').startup {
       local_path = 'personal',
       config = function()
         require('org-bullets').setup()
+      end,
+    }
+
+    use {
+      'lukas-reineke/headlines.nvim',
+      config = function()
+        require('headlines').setup()
       end,
     }
     -- }}}
