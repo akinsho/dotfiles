@@ -1082,7 +1082,6 @@ require('packer').startup {
     }
     use_local {
       'akinsho/bufferline.nvim',
-      branch = 'feature/buffer-groups',
       config = conf 'bufferline',
       local_path = 'personal',
       requires = 'nvim-web-devicons',
