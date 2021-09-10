@@ -1,7 +1,6 @@
 return function()
   local telescope = require 'telescope'
   local actions = require 'telescope.actions'
-  local themes = require 'telescope.themes'
 
   local H = require 'as.highlights'
   H.plugin(
@@ -153,6 +152,7 @@ return function()
   end
 
   local function frecency()
+    local themes = require 'telescope.themes'
     telescope.extensions.frecency.frecency(themes.get_dropdown {
       default_text = ':CWD:',
       winblend = 10,
