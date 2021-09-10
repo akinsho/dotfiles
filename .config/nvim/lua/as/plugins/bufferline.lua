@@ -42,7 +42,7 @@ return function()
     return mod_a > mod_b
   end
 
-  local groups = require("bufferline.groups")
+  local groups = require 'bufferline.groups'
 
   require('bufferline').setup {
     options = {
@@ -101,6 +101,7 @@ return function()
           },
           {
             name = 'view models',
+            highlight = { guisp = '#03589C', gui = 'underline' },
             matcher = function(buf)
               return buf.filename:match 'view_model%.dart'
             end,
@@ -115,7 +116,11 @@ return function()
             highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
             matcher = function(buf)
-              return buf.path:match '%.md' or buf.path:match '%.txt'
+              local found = false
+              for _, ext in ipairs { '%.md', '%.txt', '%.org', '%.norg', '%.wiki' } do
+                found = found or buf.path:match(ext)
+              end
+              return found
             end,
           },
         },
