@@ -1,6 +1,4 @@
 return function()
-  local fn = vim.fn
-
   local function is_ft(b, ft)
     return vim.bo[b].filetype == ft
   end
@@ -25,8 +23,8 @@ return function()
     if vim.tbl_isempty(logs) then
       return true
     end
-    local tab_num = fn.tabpagenr()
-    local last_tab = fn.tabpagenr '$'
+    local tab_num = vim.fn.tabpagenr()
+    local last_tab = vim.fn.tabpagenr '$'
     local is_log = is_ft(buf, 'log')
     if last_tab == 1 then
       return true
@@ -45,7 +43,6 @@ return function()
   end
 
   local groups = require 'bufferline.groups'
-  local List = require 'pl.List'
 
   require('bufferline').setup {
     options = {
@@ -99,7 +96,7 @@ return function()
             highlight = { guisp = '#51AFEF', gui = 'underline' },
             name = 'tests',
             matcher = function(buf)
-              return buf.filename:match '_spec' or buf.filename:match '_test'
+              return buf.filename:match '_spec' or buf.filename:match 'test'
             end,
           },
           {
@@ -119,8 +116,11 @@ return function()
             highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
             matcher = function(buf)
-              local l = List { 'md', 'txt', 'org', 'norg', 'wiki' }
-              return l:contains(fn.fnamemodify(buf.path, ':e'))
+              local found = false
+              for _, ext in ipairs { '%.md', '%.txt', '%.org', '%.norg', '%.wiki' } do
+                found = found or buf.path:match(ext)
+              end
+              return found
             end,
           },
         },
