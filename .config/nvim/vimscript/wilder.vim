@@ -9,6 +9,14 @@ call wilder#set_option('pipeline', [
     \     file_command: ['rg', '--files'],
     \     filters: ['fuzzy_filter', 'difflib_sorter'],
     \   }),
+    \   wilder#substitute_pipeline(#{
+    \     pipeline: wilder#python_search_pipeline(#{
+    \       skip_cmdtype_check: 1,
+    \       pattern: wilder#python_fuzzy_pattern(#{
+    \         start_at_boundary: 0,
+    \       }),
+    \     }),
+    \   }),
     \   wilder#cmdline_pipeline(#{
     \     fuzzy: 1,
     \     sorter: wilder#python_difflib_sorter(),
@@ -31,31 +39,36 @@ let s:menu_accent = wilder#make_hl(
     \ [{}, {}, #{foreground: '#f4468f'}]
     \)
 
+let s:wildmenu_renderer = wilder#wildmenu_renderer(#{
+    \  highlighter: s:highlighters,
+    \  separator: ' · ',
+    \})
+
+let s:popupmen_renderer = wilder#popupmenu_renderer(
+    \ wilder#popupmenu_border_theme(#{
+    \   winblend: 3,
+    \   empty_message: wilder#popupmenu_empty_message_with_spinner(),
+    \   highlights: #{
+    \    default: 'Pmenu',
+    \    border: 'FloatBorder',
+    \    accent: s:menu_accent,
+    \  },
+    \  border: 'rounded',
+    \  highlighter: s:highlighters,
+    \  left: [
+    \   wilder#popupmenu_devicons(),
+    \   wilder#popupmenu_buffer_flags({
+    \     'flags': ' a + ',
+    \     'icons': {'+': '', 'a': '', 'h': ''},
+    \   }),
+    \  ],
+    \  right: [' ', wilder#popupmenu_scrollbar()],
+    \ })
+    \)
+
 call wilder#set_option('renderer', wilder#renderer_mux({
-    \ ':': wilder#popupmenu_renderer(
-    \        wilder#popupmenu_border_theme(#{
-    \          winblend: 3,
-    \          empty_message: wilder#popupmenu_empty_message_with_spinner(),
-    \          highlights: #{
-    \           default: 'Pmenu',
-    \           border: 'FloatBorder',
-    \           accent: s:menu_accent,
-    \         },
-    \         border: 'rounded',
-    \         highlighter: s:highlighters,
-    \         left: [
-    \          wilder#popupmenu_devicons(),
-    \          wilder#popupmenu_buffer_flags({
-    \            'flags': ' a + ',
-    \            'icons': {'+': '', 'a': '', 'h': ''},
-    \          }),
-    \         ],
-    \         right: [' ', wilder#popupmenu_scrollbar()],
-    \        })
-    \     ),
-    \ '/': wilder#wildmenu_renderer(#{
-    \   highlighter: s:highlighters,
-    \   separator: ' · ',
-    \ }),
+    \ ':': s:popupmen_renderer,
+    \ '/': s:wildmenu_renderer,
+    \ 'substitute': s:wildmenu_renderer,
     \})
     \)
