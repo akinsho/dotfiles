@@ -29,7 +29,7 @@ return function()
     if fn.pumvisible() == 1 then
       feed('<C-n>', 'n')
     elseif has_words_before() and luasnip and luasnip.expand_or_jumpable() then
-      feed('<Plug>luasnip-expand-or-jump', '')
+      luasnip.expand_or_jump()
     else
       feed '<Plug>(Tabout)'
     end
@@ -40,7 +40,7 @@ return function()
     if fn.pumvisible() == 1 then
       feed('<C-p>', 'n')
     elseif has_words_before() and luasnip and luasnip.jumpable(-1) then
-      feed('<Plug>luasnip-jump-prev', '')
+      luasnip.jump(-1)
     else
       feed '<Plug>(TaboutBack)'
     end
