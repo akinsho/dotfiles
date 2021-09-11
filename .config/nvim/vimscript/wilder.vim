@@ -25,17 +25,34 @@ let s:highlighters = [
   \ wilder#lua_fzy_highlighter(),
   \]
 
+let s:menu_accent = wilder#make_hl(
+    \ 'WilderAccent',
+    \ 'Pmenu',
+    \ [{}, {}, #{foreground: '#f4468f'}]
+    \)
+
 call wilder#set_option('renderer', wilder#renderer_mux({
-    \ ':': wilder#popupmenu_renderer(#{
-    \  highlighter: s:highlighters,
-    \  left: [
-    \    wilder#popupmenu_devicons(),
-    \  ],
-    \  right: [
-    \   ' ',
-    \   wilder#popupmenu_scrollbar(),
-    \  ],
-    \ }),
+    \ ':': wilder#popupmenu_renderer(
+    \        wilder#popupmenu_border_theme(#{
+    \          winblend: 3,
+    \          empty_message: wilder#popupmenu_empty_message_with_spinner(),
+    \          highlights: #{
+    \           default: 'Pmenu',
+    \           border: 'FloatBorder',
+    \           accent: s:menu_accent,
+    \         },
+    \         border: 'rounded',
+    \         highlighter: s:highlighters,
+    \         left: [
+    \          wilder#popupmenu_devicons(),
+    \          wilder#popupmenu_buffer_flags({
+    \            'flags': ' a + ',
+    \            'icons': {'+': '', 'a': '', 'h': ''},
+    \          }),
+    \         ],
+    \         right: [' ', wilder#popupmenu_scrollbar()],
+    \        })
+    \     ),
     \ '/': wilder#wildmenu_renderer(#{
     \   highlighter: s:highlighters,
     \   separator: ' · ',
