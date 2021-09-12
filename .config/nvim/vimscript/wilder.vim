@@ -44,7 +44,7 @@ let s:wildmenu_renderer = wilder#wildmenu_renderer(#{
     \  separator: ' · ',
     \})
 
-let s:popupmen_renderer = wilder#popupmenu_renderer(
+let s:popupmenu_renderer = wilder#popupmenu_renderer(
     \ wilder#popupmenu_border_theme(#{
     \   winblend: 3,
     \   empty_message: wilder#popupmenu_empty_message_with_spinner(),
@@ -67,7 +67,7 @@ let s:popupmen_renderer = wilder#popupmenu_renderer(
     \)
 
 call wilder#set_option('renderer', wilder#renderer_mux({
-    \ ':': s:popupmen_renderer,
+    \ ':': s:popupmenu_renderer,
     \ '/': s:wildmenu_renderer,
     \ 'substitute': s:wildmenu_renderer,
     \})
