@@ -35,7 +35,7 @@ let s:highlighters = [
 
 let s:menu_accent = wilder#make_hl(
     \ 'WilderAccent',
-    \ 'Pmenu',
+    \ 'Normal',
     \ [{}, {}, #{foreground: '#f4468f'}]
     \)
 
@@ -49,8 +49,8 @@ let s:popupmenu_renderer = wilder#popupmenu_renderer(
     \   winblend: 3,
     \   empty_message: wilder#popupmenu_empty_message_with_spinner(),
     \   highlights: #{
-    \    default: 'Pmenu',
-    \    border: 'FloatBorder',
+    \    default: 'Normal',
+    \    border: 'NormalFloat',
     \    accent: s:menu_accent,
     \  },
     \  border: 'rounded',
