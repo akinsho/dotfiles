@@ -36,7 +36,7 @@ let s:highlighters = [
 let s:menu_accent = wilder#make_hl(
     \ 'WilderAccent',
     \ 'Normal',
-    \ [{}, {}, #{foreground: '#f4468f'}]
+    \ 'TabLineSel'
     \)
 
 let s:wildmenu_renderer = wilder#wildmenu_renderer(#{
