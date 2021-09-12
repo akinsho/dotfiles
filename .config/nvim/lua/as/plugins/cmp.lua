@@ -6,9 +6,12 @@ return function()
   local cmp = require 'cmp'
 
   local function has_words_before()
+    if vim.bo.buftype == 'prompt' then
+      return false
+    end
     local line, col = unpack(api.nvim_win_get_cursor(0))
-    return col == 0
-      or api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' ~= nil
+    return col ~= 0
+      and api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
   end
 
   local function feed(key, mode)
@@ -28,8 +31,10 @@ return function()
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
       feed('<C-n>', 'n')
-    elseif has_words_before() and luasnip and luasnip.expand_or_jumpable() then
+    elseif luasnip and luasnip.expand_or_jumpable() then
       luasnip.expand_or_jump()
+    elseif has_words_before() then
+      cmp.complete()
     else
       feed '<Plug>(Tabout)'
     end
@@ -39,7 +44,7 @@ return function()
     local luasnip = get_luasnip()
     if fn.pumvisible() == 1 then
       feed('<C-p>', 'n')
-    elseif has_words_before() and luasnip and luasnip.jumpable(-1) then
+    elseif luasnip and luasnip.jumpable(-1) then
       luasnip.jump(-1)
     else
       feed '<Plug>(TaboutBack)'
