@@ -201,6 +201,7 @@ require('packer').startup {
             'TelescopePrompt',
             'undotree',
             'flutterToolsOutline',
+            'norg',
             'org',
             'orgagenda',
             '', -- for all buffers without a file type
