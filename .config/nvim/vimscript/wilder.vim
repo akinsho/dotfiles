@@ -47,7 +47,6 @@ let s:wildmenu_renderer = wilder#wildmenu_renderer(#{
 let s:popupmenu_renderer = wilder#popupmenu_renderer(
     \ wilder#popupmenu_border_theme(#{
     \   winblend: 3,
-    \   empty_message: wilder#popupmenu_empty_message_with_spinner(),
     \   highlights: #{
     \    default: 'Normal',
     \    border: 'NormalFloat',
