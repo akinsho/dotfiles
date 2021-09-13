@@ -114,10 +114,6 @@ return function()
     },
   }
 
-  telescope.load_extension 'fzf'
-  telescope.load_extension 'tmux'
-  telescope.load_extension 'smart_history'
-
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call

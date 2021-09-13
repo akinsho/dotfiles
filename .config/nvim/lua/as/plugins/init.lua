@@ -55,10 +55,32 @@ require('packer').startup {
       module_pattern = 'telescope.*',
       config = conf 'telescope',
       requires = {
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-        { 'nvim-telescope/telescope-frecency.nvim', requires = 'tami5/sqlite.lua' },
-        { 'camgraff/telescope-tmux.nvim' },
-        { 'nvim-telescope/telescope-smart-history.nvim' },
+        {
+          'nvim-telescope/telescope-fzf-native.nvim',
+          run = 'make',
+          config = function()
+            require('telescope').load_extension 'fzf'
+          end,
+        },
+        {
+          'nvim-telescope/telescope-frecency.nvim',
+          after = 'telescope.nvim',
+          requires = 'tami5/sqlite.lua',
+        },
+        {
+          'camgraff/telescope-tmux.nvim',
+          after = 'telescope.nvim',
+          config = function()
+            require('telescope').load_extension 'tmux'
+          end,
+        },
+        {
+          'nvim-telescope/telescope-smart-history.nvim',
+          after = 'telescope.nvim',
+          config = function()
+            require('telescope').load_extension 'smart_history'
+          end,
+        },
       },
     }
 
@@ -965,7 +987,7 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     use {
       'phaazon/hop.nvim',
-      keys = { { 'n', 's' }, {'o', 'f'}, {'o', 'F'} },
+      keys = { { 'n', 's' }, { 'o', 'f' }, { 'o', 'F' } },
       config = function()
         local hop = require 'hop'
         -- remove h,j,k,l from hops list of keys
