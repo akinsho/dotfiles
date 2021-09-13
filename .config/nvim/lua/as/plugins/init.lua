@@ -445,20 +445,19 @@ require('packer').startup {
       'mfussenegger/nvim-dap',
       module = 'dap',
       keys = { '<localleader>dc, <localleader>db' },
-      wants = 'nvim-dap-ui',
       setup = conf('dap').setup,
       config = conf('dap').config,
       requires = {
         {
           'rcarriga/nvim-dap-ui',
-          opt = true,
+          after = 'nvim-dap',
           config = function()
             require('dapui').setup()
           end,
         },
       },
     }
-    use 'jbyuki/one-small-step-for-vimkind'
+    use { 'jbyuki/one-small-step-for-vimkind', requires = 'nvim-dap' }
     use { 'folke/lua-dev.nvim', commit = 'e958850' }
 
     --}}}
