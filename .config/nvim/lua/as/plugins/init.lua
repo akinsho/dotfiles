@@ -965,7 +965,7 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     use {
       'phaazon/hop.nvim',
-      keys = { { 'n', 's' } },
+      keys = { { 'n', 's' }, {'o', 'f'}, {'o', 'F'} },
       config = function()
         local hop = require 'hop'
         -- remove h,j,k,l from hops list of keys
