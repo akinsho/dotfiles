@@ -3,17 +3,6 @@ as.lsp = {}
 -- Autocommands
 -----------------------------------------------------------------------------//
 local function setup_autocommands(client, _)
-  as.augroup('LspLocationList', {
-    {
-      events = { 'User LspDiagnosticsChanged' },
-      command = function()
-        -- FIXME: this opens even when there is no content so this is closed by default
-        -- argument has changed in nvim nightly
-        local args = as.has 'nvim-0.6' and { open = false } or { open_loclist = false }
-        vim.lsp.diagnostic.set_loclist(args)
-      end,
-    },
-  })
   if client and client.resolved_capabilities.code_lens then
     as.augroup('LspCodeLens', {
       {
