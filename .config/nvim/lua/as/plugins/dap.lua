@@ -56,7 +56,7 @@ function M.config()
   as.nnoremap('<localleader>db', "<Cmd>lua require'dap'.toggle_breakpoint()<CR>")
   as.nnoremap(
     '<localleader>dB',
-    "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input 'Breakpoint condition: ')"
+    "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input 'Breakpoint condition: ')<CR>"
   )
 end
 
