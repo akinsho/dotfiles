@@ -20,20 +20,30 @@ end
 
 function M.config()
   local dap = require 'dap'
+  local fn = vim.fn
 
-  vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
-  vim.fn.sign_define('DapStopped', { text = '🟢', texthl = '', linehl = '', numhl = '' })
+  fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
+  fn.sign_define('DapStopped', { text = '🟢', texthl = '', linehl = '', numhl = '' })
 
   dap.configurations.lua = {
     {
       type = 'nlua',
       request = 'attach',
       name = 'Attach to running Neovim instance',
+      host = function()
+        local value = fn.input 'Host [default: 127.0.0.1]: '
+        return value ~= '' and value or '127.0.0.1'
+      end,
+      port = function()
+        local val = tonumber(fn.input 'Port: ')
+        assert(val, 'Please provide a port number')
+        return val
+      end,
     },
   }
 
   dap.adapters.nlua = function(callback, config)
-    callback { type = 'server', host = config.host or '127.0.0.1', port = config.port or 8088 }
+    callback { type = 'server', host = config.host, port = config.port }
   end
 
   -- NOTE: the window options can be set directly in this function
