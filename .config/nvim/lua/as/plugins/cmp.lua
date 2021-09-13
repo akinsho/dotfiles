@@ -15,8 +15,7 @@ return function()
   end
 
   local function feed(key, mode)
-    mode = mode or ''
-    api.nvim_feedkeys(t(key), mode, true)
+    api.nvim_feedkeys(t(key), mode or '', true)
   end
 
   local function get_luasnip()
@@ -33,6 +32,7 @@ return function()
       feed('<C-n>', 'n')
     elseif luasnip and luasnip.expand_or_jumpable() then
       luasnip.expand_or_jump()
+      -- This clause prevents tabout from triggering mid-end of a word
     elseif has_words_before() then
       cmp.complete()
     else
