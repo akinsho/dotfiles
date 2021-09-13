@@ -1,4 +1,6 @@
 return function()
+  local fn = vim.fn
+
   local function is_ft(b, ft)
     return vim.bo[b].filetype == ft
   end
@@ -43,6 +45,7 @@ return function()
   end
 
   local groups = require 'bufferline.groups'
+  local List = require 'plenary.collections.py_list'
 
   require('bufferline').setup {
     options = {
@@ -116,11 +119,8 @@ return function()
             highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
             matcher = function(buf)
-              local found = false
-              for _, ext in ipairs { '%.md', '%.txt', '%.org', '%.norg', '%.wiki' } do
-                found = found or buf.path:match(ext)
-              end
-              return found
+              local list = List { 'md', 'txt', 'org', 'norg', 'wiki' }
+              return list:contains(fn.fnamemodify(buf.path, ':e'))
             end,
           },
         },
