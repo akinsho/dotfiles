@@ -551,7 +551,7 @@ require('packer').startup {
         require('neoscroll').setup {
           mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', 'zt', 'zz', 'zb' },
           stop_eof = false,
-          hide_cursor = false,
+          hide_cursor = true,
         }
       end,
     }
@@ -1037,13 +1037,7 @@ require('packer').startup {
     use 'NTBBloodbath/doom-one.nvim'
     use 'monsonjeremy/onedark.nvim'
     use 'marko-cerovac/material.nvim'
-    use {
-      'projekt0n/github-nvim-theme',
-      event = 'ColorScheme github',
-      config = function()
-        require('github-theme').setup()
-      end,
-    }
+    use 'projekt0n/github-nvim-theme'
     use { 'Th3Whit3Wolf/one-nvim', opt = true }
     -- }}}
     ---------------------------------------------------------------------------------
