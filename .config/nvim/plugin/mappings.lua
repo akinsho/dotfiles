@@ -145,10 +145,6 @@ nnoremap('<C-w>f', '<C-w>vgf')
 vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
--- Switch from visual to visual block.
-xnoremap('r', function()
-  vim.notify 'Use <Ctrl-V> instead'
-end)
 -- https://www.reddit.com/r/neovim/comments/l8vyl8/a_plugin_to_improve_the_deletion_of_buffers/
 -- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
 local function buf_kill()

@@ -363,13 +363,12 @@ local function make_mapper(mode, o)
       rhs = string.format('<cmd>lua as._execute(%s)<CR>', fn_id)
     end
 
+    opts = vim.tbl_extend('keep', opts, parent_opts)
     if buffer and type(buffer) == 'number' then
-      opts = vim.tbl_extend('keep', opts, parent_opts)
-      api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
-      return
+      return api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
     end
 
-    api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
+    api.nvim_set_keymap(mode, lhs, rhs, opts)
   end
 end
 
