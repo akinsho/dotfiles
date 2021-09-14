@@ -573,10 +573,10 @@ require('packer').startup {
             for _, m in ipairs(notify.history()) do
               vim.api.nvim_echo({
                 { vim.fn.strftime('%FT%T', m.time), 'Identifier' },
-                { ' ', 'Normal' },
+                { ' ', 'MsgArea' },
                 { m.level, color[m.level] or 'Title' },
-                { ' ', 'Normal' },
-                { table.concat(m.message, ' '), 'Normal' },
+                { ' ', 'MsgArea' },
+                { table.concat(m.message, ' '), 'MsgArea' },
               }, false, {})
             end
           end,
