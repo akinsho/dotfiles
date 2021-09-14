@@ -383,7 +383,6 @@ as.omap = make_mapper('o', map_opts)
 as.tmap = make_mapper('t', map_opts)
 as.smap = make_mapper('s', map_opts)
 as.cmap = make_mapper('c', { noremap = false, silent = false })
-
 as.nnoremap = make_mapper('n', noremap_opts)
 as.xnoremap = make_mapper('x', noremap_opts)
 as.vnoremap = make_mapper('v', noremap_opts)

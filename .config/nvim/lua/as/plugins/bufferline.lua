@@ -118,6 +118,7 @@ return function()
           {
             highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
+            auto_close = true,
             matcher = function(buf)
               local list = List { 'md', 'txt', 'org', 'norg', 'wiki' }
               return list:contains(fn.fnamemodify(buf.path, ':e'))
