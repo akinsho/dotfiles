@@ -98,6 +98,7 @@ return function()
           {
             highlight = { guisp = '#51AFEF', gui = 'underline' },
             name = 'tests',
+            icon = '',
             matcher = function(buf)
               return buf.filename:match '_spec' or buf.filename:match 'test'
             end,
