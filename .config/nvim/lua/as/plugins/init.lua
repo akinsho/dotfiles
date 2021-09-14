@@ -22,8 +22,8 @@ utils.bootstrap_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
-local ok, impatient = as.safe_require 'impatient'
-if ok then
+local impatient_ok, impatient = as.safe_require 'impatient'
+if impatient_ok then
   impatient.enable_profile()
 end
 
