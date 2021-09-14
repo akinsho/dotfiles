@@ -601,16 +601,25 @@ require('packer').startup {
           opts.title = opts.title or type(level) == 'string' and level or levels[level]
           notify(msg, level, opts)
         end
-        local hls = { DEBUG = 'Normal', INFO = 'Directory', WARN = 'WarningMsg', ERROR = 'Error' }
+        --@see: https://github.com/rcarriga/nvim-notify/issues/11#issuecomment-913065517
         as.command {
-          'NotificationHistory',
+          'Messages',
           function()
-            local history = notify.history()
-            local messages = vim.tbl_map(function(notif)
-              return { unpack(notif.message), hls[notif.level] }
-            end, history)
-            for _, message in ipairs(messages) do
-              vim.api.nvim_echo({ message }, true, {})
+            local color = {
+              DEBUG = 'NotifyDEBUGTitle',
+              TRACE = 'NotifyTRACETitle',
+              INFO = 'NotifyINFOTitle',
+              WARN = 'NotifyWARNTitle',
+              ERROR = 'NotifyERRORTitle',
+            }
+            for _, m in ipairs(notify.history()) do
+              vim.api.nvim_echo({
+                { vim.fn.strftime('%FT%T', m.time), 'Identifier' },
+                { ' ', 'Normal' },
+                { m.level, color[m.level] or 'Title' },
+                { ' ', 'Normal' },
+                { table.concat(m.message, ' '), 'Normal' },
+              }, false, {})
             end
           end,
         }
