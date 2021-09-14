@@ -1016,6 +1016,9 @@ require('packer').startup {
     use_local {
       'akinsho/dependency-assist.nvim',
       local_path = 'personal',
+      branch = 'refactor',
+      --- requires libyaml-dev on ubuntu or libyaml on macOS
+      rocks = { { 'lyaml', server = 'http://rocks.moonscript.org' } },
       config = function()
         require('dependency_assist').setup()
       end,
