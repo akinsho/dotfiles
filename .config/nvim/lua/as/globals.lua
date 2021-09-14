@@ -354,13 +354,22 @@ local function make_mapper(mode, o)
   return function(lhs, rhs, opts)
     assert(lhs ~= mode, fmt('The lhs should not be the same as mode for %s', lhs))
     assert(type(rhs) == 'string' or type(rhs) == 'function', '"rhs" should be a function or string')
-    opts = opts and vim.deepcopy(opts) or {}
+    -- If the label is all that was passed in, set the opts automagically
+    opts = type(opts) == 'string' and { label = opts } or opts and vim.deepcopy(opts) or {}
 
     local buffer = opts.buffer
     opts.buffer = nil
     if type(rhs) == 'function' then
       local fn_id = as._create(rhs)
       rhs = string.format('<cmd>lua as._execute(%s)<CR>', fn_id)
+    end
+
+    if opts.label then
+      local ok, wk = as.safe_require('which-key', { silent = true })
+      if ok then
+        wk.register { [lhs] = opts.label }
+      end
+      opts.label = nil
     end
 
     opts = vim.tbl_extend('keep', opts, parent_opts)
