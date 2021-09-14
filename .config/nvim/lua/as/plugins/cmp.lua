@@ -5,15 +5,6 @@ return function()
   local fmt = string.format
   local cmp = require 'cmp'
 
-  local function has_words_before()
-    if vim.bo.buftype == 'prompt' then
-      return false
-    end
-    local line, col = unpack(api.nvim_win_get_cursor(0))
-    return col ~= 0
-      and api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-  end
-
   local function feed(key, mode)
     api.nvim_feedkeys(t(key), mode or '', true)
   end
@@ -32,9 +23,6 @@ return function()
       feed('<C-n>', 'n')
     elseif luasnip and luasnip.expand_or_jumpable() then
       luasnip.expand_or_jump()
-      -- This clause prevents tabout from triggering mid-end of a word
-    elseif has_words_before() then
-      cmp.complete()
     else
       feed '<Plug>(Tabout)'
     end
