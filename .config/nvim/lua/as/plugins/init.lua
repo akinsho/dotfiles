@@ -245,25 +245,6 @@ require('packer').startup {
     use { 'neovim/nvim-lspconfig', event = 'BufReadPre', config = conf 'lspconfig' }
 
     use {
-      'kosayoda/nvim-lightbulb',
-      disable = true,
-      config = function()
-        as.augroup('NvimLightbulb', {
-          {
-            events = { 'CursorHold', 'CursorHoldI' },
-            targets = { '*' },
-            command = function()
-              require('nvim-lightbulb').update_lightbulb {
-                sign = { enabled = false },
-                virtual_text = { enabled = true },
-              }
-            end,
-          },
-        })
-      end,
-    }
-
-    use {
       'jose-elias-alvarez/null-ls.nvim',
       requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
       -- trigger loading after lspconfig has started the other servers
@@ -344,31 +325,16 @@ require('packer').startup {
         local status_ok, lsp_status = as.safe_require('lsp-status', { silent = true })
         local capabilities = status_ok and lsp_status.capabilities or nil
         require('flutter-tools').setup {
-          ui = {
-            border = 'rounded',
-          },
-          debugger = {
-            enabled = true,
-          },
-          outline = {
-            -- only auto open if there is space
-            auto_open = vim.o.columns > 220,
-          },
+          ui = { border = 'rounded' },
+          debugger = { enabled = true },
+          outline = { auto_open = vim.o.columns > 220 },
           decorations = {
-            statusline = {
-              device = true,
-              app_version = true,
-            },
+            statusline = { device = true, app_version = true },
           },
-          widget_guides = {
-            enabled = true,
-            debug = true,
-          },
+          widget_guides = { enabled = true, debug = true },
           dev_log = { open_cmd = 'tabedit' },
           lsp = {
-            settings = {
-              showTodos = false,
-            },
+            settings = { showTodos = false },
             on_attach = as.lsp and as.lsp.on_attach or nil,
             --- This is necessary to prevent lsp-status' capabilities being
             --- given priority over that of the default config
@@ -399,16 +365,8 @@ require('packer').startup {
       config = function()
         require('neoclip').setup {
           keys = {
-            i = {
-              select = '<c-p>',
-              paste = '<CR>',
-              paste_behind = '<c-k>',
-            },
-            n = {
-              select = 'p',
-              paste = '<CR>',
-              paste_behind = 'P',
-            },
+            i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
+            n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
           },
         }
         local function clip()
