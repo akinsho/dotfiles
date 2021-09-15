@@ -1,12 +1,16 @@
 return function()
+  local fn = vim.fn
+
   local ls = require 'luasnip'
   local extras = require 'luasnip.extras'
+  local types = require 'luasnip.util.types'
+
   local snippet = ls.snippet
   local text = ls.text_node
+  local f = ls.function_node
   local insert = ls.insert_node
   local l = extras.lambda
   local match = extras.match
-  local types = require 'luasnip.util.types'
 
   ls.config.set_config {
     history = false,
@@ -48,13 +52,22 @@ return function()
         },
       }, {
         text "use { '",
-        insert(1, 'author/plugin'),
+        -- Get the author and URL in the clipboard and auto populate the author and project
+        f(function(_)
+          local default = 'author/plugin'
+          local clip = fn.getreg '*'
+          if not vim.startswith(clip, 'https://github.com/') then
+            return default
+          end
+          local parts = vim.split(clip, '/')
+          if #parts < 2 then
+            return default
+          end
+          local author, project = parts[#parts - 1], parts[#parts]
+          return author .. '/' .. project
+        end, {}),
         text "' ",
-        insert(2, {
-          ', config = function()',
-          '',
-          'end',
-        }),
+        insert(2, { ', config = function()', '', 'end' }),
         text '}',
       }),
     },
