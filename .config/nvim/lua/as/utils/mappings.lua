@@ -1,16 +1,14 @@
---[[
 -----------------------------------------------------------------------------//
 -- MAPPINGS
 -----------------------------------------------------------------------------//
-A very over-engineered mapping mini-module. Yes, I know I could have used one
-a number of plugins and be done with it.
-e.g
-- https://github.com/b0o/mapx.nvim [The Best Option]
-- https://github.com/svermeulen/vimpeccable [The Original]
-
-But frankly I like to be in control of my mappings and I honestly think that very soon this
-won't be needed as mappings are likely to become simpler once the native api is improved
---]]
+-- A very over-engineered mapping mini-module. Yes, I know I could have used one
+-- a number of plugins and be done with it.
+-- e.g
+-- - https://github.com/b0o/mapx.nvim [The Best Option]
+-- - https://github.com/svermeulen/vimpeccable [The Original]
+--
+-- But frankly I like to be in control of my mappings and I honestly think that very soon this
+-- won't be needed as mappings are likely to become simpler once the native api is improved
 
 local api = vim.api
 local fmt = string.format
@@ -51,7 +49,7 @@ local function make_mapper(mode, o)
     if opts.label then
       local ok, wk = as.safe_require('which-key', { silent = true })
       if ok then
-        wk.register { [lhs] = opts.label }
+        wk.register({ [lhs] = opts.label }, { mode = mode })
       end
       opts.label = nil
     end

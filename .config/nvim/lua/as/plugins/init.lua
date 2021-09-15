@@ -293,7 +293,11 @@ require('packer').startup {
             },
           },
         }
-        as.xnoremap('<leader>ca', "<esc><Cmd>lua require('lsp-fastaction').range_code_action()<CR>")
+        as.xnoremap(
+          '<leader>ca',
+          "<esc><Cmd>lua require('lsp-fastaction').range_code_action()<CR>",
+          'lsp: code action'
+        )
         require('which-key').register {
           ['<leader>ca'] = { fastaction.code_action, 'lsp: code action' },
         }
