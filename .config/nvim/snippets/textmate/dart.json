@@ -56,11 +56,6 @@
     "description": "Insert a function definition.",
     "body": ["${3:void} ${1:name}(${2:args}) {", "  $0", "}"]
   },
-  "class": {
-    "prefix": "class",
-    "description": "Insert a class definition.",
-    "body": ["class ${1:Name} {", "  $0", "}"]
-  },
   "typedef": {
     "prefix": "typedef",
     "description": "Insert a typedef.",
@@ -748,5 +743,21 @@
       ");"
     ],
     "description": "Create a testWidgets function"
+  },
+  "future": {
+    "prefix": "future",
+    "body": "Future<${1:void}>",
+    "description": "Future annotation"
+  },
+  "class": {
+    "prefix": "class",
+    "body": "class ${1:Name} ${2:extends ${3:SuperClass}}{\n\tfinal ${4:var};\n}",
+    "description": "Create a class"
+  },
+  "vm": {
+    "prefix": "vm",
+    "body": "class ${1:Name}ViewModel extends BaseViewModel {\n\t${1:Name}ViewModel(BuildContext context) : super(context: context);\n\n\tvoid ${3:someMethod}() {\n\t\t// TODO\n\t}\n}",
+    "description": "ViewModel"
   }
 }
+

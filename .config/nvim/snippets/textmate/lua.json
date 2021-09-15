@@ -360,5 +360,11 @@
     "description": "5.1\n\nunpack (list [, i [, j]])",
     "prefix": "unpack",
     "scope": "source.lua"
+  },
+  "param": {
+    "prefix": "param",
+    "body": "--- @param ${1:name} ${2:type}",
+    "description": "Add annotation"
   }
 }
+
