@@ -15,6 +15,8 @@ _G.as = {
   mappings = {},
 }
 
+require("as.utils.mappings") -- inject mapping helpers into the global namespace
+
 -----------------------------------------------------------------------------//
 -- UI
 -----------------------------------------------------------------------------//
@@ -331,76 +333,6 @@ function as.empty(item)
   end
 end
 
----check if a mapping already exists
----@param lhs string
----@param mode string
----@return boolean
-function as.has_map(lhs, mode)
-  mode = mode or 'n'
-  return vim.fn.maparg(lhs, mode) ~= ''
-end
-
----create a mapping function factory
----@param mode string
----@param o table
----@return fun(lhs: string, rhs: string, opts: table|nil) 'create a mapping'
-local function make_mapper(mode, o)
-  -- copy the opts table as extends will mutate the opts table passed in otherwise
-  local parent_opts = vim.deepcopy(o)
-  ---Create a mapping
-  ---@param lhs string
-  ---@param rhs string|function
-  ---@param opts table
-  return function(lhs, rhs, opts)
-    assert(lhs ~= mode, fmt('The lhs should not be the same as mode for %s', lhs))
-    assert(type(rhs) == 'string' or type(rhs) == 'function', '"rhs" should be a function or string')
-    -- If the label is all that was passed in, set the opts automagically
-    opts = type(opts) == 'string' and { label = opts } or opts and vim.deepcopy(opts) or {}
-
-    local buffer = opts.buffer
-    opts.buffer = nil
-    if type(rhs) == 'function' then
-      local fn_id = as._create(rhs)
-      rhs = string.format('<cmd>lua as._execute(%s)<CR>', fn_id)
-    end
-
-    if opts.label then
-      local ok, wk = as.safe_require('which-key', { silent = true })
-      if ok then
-        wk.register { [lhs] = opts.label }
-      end
-      opts.label = nil
-    end
-
-    opts = vim.tbl_extend('keep', opts, parent_opts)
-    if buffer and type(buffer) == 'number' then
-      return api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
-    end
-
-    api.nvim_set_keymap(mode, lhs, rhs, opts)
-  end
-end
-
-local map_opts = { noremap = false, silent = true }
-local noremap_opts = { noremap = true, silent = true }
-
-as.nmap = make_mapper('n', map_opts)
-as.xmap = make_mapper('x', map_opts)
-as.imap = make_mapper('i', map_opts)
-as.vmap = make_mapper('v', map_opts)
-as.omap = make_mapper('o', map_opts)
-as.tmap = make_mapper('t', map_opts)
-as.smap = make_mapper('s', map_opts)
-as.cmap = make_mapper('c', { noremap = false, silent = false })
-as.nnoremap = make_mapper('n', noremap_opts)
-as.xnoremap = make_mapper('x', noremap_opts)
-as.vnoremap = make_mapper('v', noremap_opts)
-as.inoremap = make_mapper('i', noremap_opts)
-as.onoremap = make_mapper('o', noremap_opts)
-as.tnoremap = make_mapper('t', noremap_opts)
-as.snoremap = make_mapper('s', noremap_opts)
-as.cnoremap = make_mapper('c', { noremap = true, silent = false })
-
 ---Create an nvim command
 ---@param args table
 function as.command(args)
@@ -430,3 +362,4 @@ function as.invalidate(path, recursive)
     require(path)
   end
 end
+
