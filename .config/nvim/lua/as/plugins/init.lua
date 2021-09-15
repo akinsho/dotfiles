@@ -631,14 +631,9 @@ require('packer').startup {
       rtp = 'vim',
       run = 'curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh',
       config = function()
-        require('which-key').register({
-          e = {
-            name = '+email',
-            l = { '<Cmd>Himalaya<CR>', 'list' },
-          },
-        }, {
-          prefix = '<localleader>',
-        })
+        require('which-key').register {
+          ['<localleader>e'] = { name = '+email', l = { '<Cmd>Himalaya<CR>', 'list' } },
+        }
       end,
     }
 
