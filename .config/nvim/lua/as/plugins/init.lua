@@ -693,7 +693,22 @@ require('packer').startup {
     use {
       'lukas-reineke/headlines.nvim',
       config = function()
-        require('headlines').setup()
+        require('as.highlights').plugin(
+          'Headlines',
+          { 'Headline1', { guibg = '#1f77b4', guifg = 'Black' } },
+          { 'Headline2', { guibg = '#2ca02c', guifg = 'Black' } },
+          { 'Headline3', { guibg = '#9467bd', guifg = 'Black' } }
+        )
+        vim.fn.sign_define {
+          { name = 'Headline1', linehl = 'Headline1' },
+          { name = 'Headline2', linehl = 'Headline2' },
+          { name = 'Headline3', linehl = 'Headline3' },
+        }
+        require('headlines').setup {
+          markdown = {
+            headline_signs = { 'Headline1', 'Headline2', 'Headline3' },
+          },
+        }
       end,
     }
     -- }}}
