@@ -25,10 +25,9 @@ vim.g.number_filetype_exclusions = {
   'help',
   'orgagenda',
   'org',
-  'lsputil_locations_list',
-  'lsputil_symbols_list',
   'himalaya',
   'Trouble',
+  'NeogitCommitMessage',
 }
 
 vim.g.number_buftype_exclusions = {
