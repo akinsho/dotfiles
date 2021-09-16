@@ -1,13 +1,9 @@
 return function()
   local fn = vim.fn
-
-  local function is_ft(b, ft)
-    return vim.bo[b].filetype == ft
-  end
-
-  local symbols = { error = ' ', warning = ' ', info = ' ' }
+  local api = vim.api
 
   local function diagnostics_indicator(_, _, diagnostics)
+    local symbols = { error = ' ', warning = ' ', info = ' ' }
     local result = {}
     for name, count in pairs(diagnostics) do
       if symbols[name] and count > 0 then
@@ -20,14 +16,14 @@ return function()
 
   local function custom_filter(buf, buf_nums)
     local logs = vim.tbl_filter(function(b)
-      return is_ft(b, 'log')
+      return vim.bo[b].filetype == 'log'
     end, buf_nums)
     if vim.tbl_isempty(logs) then
       return true
     end
     local tab_num = vim.fn.tabpagenr()
     local last_tab = vim.fn.tabpagenr '$'
-    local is_log = is_ft(buf, 'log')
+    local is_log = vim.bo[buf].filetype == 'log'
     if last_tab == 1 then
       return true
     end
@@ -35,7 +31,6 @@ return function()
     return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
   end
 
-  ---@diagnostic disable-next-line: unused-function, unused-local
   local function sort_by_mtime(a, b)
     local astat = vim.loop.fs_stat(a.path)
     local bstat = vim.loop.fs_stat(b.path)
