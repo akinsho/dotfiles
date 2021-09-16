@@ -11,4 +11,5 @@ augroup netrw
   autocmd FileType netrw nnoremap <buffer> q :q<CR>
   autocmd FileType netrw nnoremap <buffer> l <CR>
   autocmd FileType netrw nnoremap <buffer> h <CR>
+  autocmd FileType netrw nnoremap <buffer> o <CR>
 augroup END
