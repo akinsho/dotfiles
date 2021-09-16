@@ -693,11 +693,12 @@ require('packer').startup {
     use {
       'lukas-reineke/headlines.nvim',
       config = function()
+        -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
         require('as.highlights').plugin(
           'Headlines',
-          { 'Headline1', { guibg = '#1f77b4', guifg = 'Black' } },
-          { 'Headline2', { guibg = '#2ca02c', guifg = 'Black' } },
-          { 'Headline3', { guibg = '#9467bd', guifg = 'Black' } }
+          { 'Headline1', { guibg = '#4e79a7', guifg = 'White' } },
+          { 'Headline2', { guibg = '#e15759', guifg = 'White' } },
+          { 'Headline3', { guibg = '#f28e2c', guifg = 'White' } }
         )
         vim.fn.sign_define {
           { name = 'Headline1', linehl = 'Headline1' },
@@ -706,6 +707,9 @@ require('packer').startup {
         }
         require('headlines').setup {
           markdown = {
+            headline_signs = { 'Headline1', 'Headline2', 'Headline3' },
+          },
+          vimwiki = {
             headline_signs = { 'Headline1', 'Headline2', 'Headline3' },
           },
         }
