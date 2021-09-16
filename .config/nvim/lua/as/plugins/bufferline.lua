@@ -1,6 +1,5 @@
 return function()
   local fn = vim.fn
-  local api = vim.api
 
   local function diagnostics_indicator(_, _, diagnostics)
     local symbols = { error = ' ', warning = ' ', info = ' ' }
