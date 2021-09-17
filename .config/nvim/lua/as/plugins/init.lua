@@ -428,6 +428,14 @@ require('packer').startup {
     }
 
     use {
+      'rcarriga/vim-ultest',
+      cmd = 'Ultest',
+      wants = 'vim-test',
+      requires = { 'vim-test/vim-test' },
+      run = ':UpdateRemotePlugins',
+    }
+
+    use {
       'mfussenegger/nvim-dap',
       module = 'dap',
       keys = { '<localleader>dc', '<localleader>db' },
