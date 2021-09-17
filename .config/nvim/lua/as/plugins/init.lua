@@ -802,10 +802,12 @@ require('packer').startup {
     }
 
     use {
-      'mfussenegger/nvim-ts-hint-textobject',
+      'David-Kunz/treesitter-unit',
       config = function()
-        as.omap('m', ":<C-U>lua require('tsht').nodes()<CR>")
-        as.xnoremap('m', ":'<'>lua require('tsht').nodes()<CR>")
+        as.xnoremap('iu', ':lua require"treesitter-unit".select()<CR>')
+        as.xnoremap('au', ':lua require"treesitter-unit".select(true)<CR>')
+        as.onoremap('iu', '<Cmd>lua require"treesitter-unit".select()<CR>')
+        as.onoremap('au', '<Cmd>lua require"treesitter-unit".select(true)<CR>')
       end,
     }
 
