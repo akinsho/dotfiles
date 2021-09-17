@@ -58,6 +58,7 @@ require('packer').startup {
         {
           'nvim-telescope/telescope-fzf-native.nvim',
           run = 'make',
+          after = 'telescope.nvim',
           config = function()
             require('telescope').load_extension 'fzf'
           end,
