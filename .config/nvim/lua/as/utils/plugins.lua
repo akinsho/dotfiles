@@ -8,7 +8,7 @@ local is_home = not is_work
 ---A thin wrapper around vim.notify to add packer details to the message
 ---@param msg string
 function M.packer_notify(msg, level)
-  vim.notify(msg, level, { title = "Packer"})
+  vim.notify(msg, level, { title = 'Packer' })
 end
 
 -- Make sure packer is installed on the current machine and load

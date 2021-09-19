@@ -15,7 +15,8 @@ _G.as = {
   mappings = {},
 }
 
-require("as.utils.mappings") -- inject mapping helpers into the global namespace
+-- inject mapping helpers into the global namespace
+require 'as.utils.mappings'
 
 -----------------------------------------------------------------------------//
 -- UI
