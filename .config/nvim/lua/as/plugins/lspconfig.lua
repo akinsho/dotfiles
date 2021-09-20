@@ -1,4 +1,8 @@
 as.lsp = {}
+
+--- TODO: remove once 0.6 is stable (use vim.diagnostic)
+local diagnostics = as.nightly and vim.diagnostic or vim.lsp.diagnostic
+
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -50,52 +54,6 @@ local function setup_autocommands(client, _)
   end
 end
 
--- Capture real implementation of function that sets signs
-local orig_set_signs = vim.lsp.diagnostic.set_signs
-local diagnostic_cache = {}
-
----Override diagnostics signs helper to only show the single most relevant sign
----@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
----@param diagnostics table
----@param bufnr number
----@param client_id number
----@param sign_ns number
----@param opts table
-local function set_highest_signs(diagnostics, bufnr, client_id, sign_ns, opts)
-  -- original func runs some checks, which I think is worth doing but maybe overkill
-  if not diagnostics then
-    diagnostics = diagnostic_cache[bufnr][client_id]
-  end
-
-  -- early escape
-  if not diagnostics then
-    return
-  end
-
-  -- Work out max severity diagnostic per line
-  local max_severity_per_line = {}
-  for _, d in pairs(diagnostics) do
-    if max_severity_per_line[d.range.start.line] then
-      local current_d = max_severity_per_line[d.range.start.line]
-      if d.severity < current_d.severity then
-        max_severity_per_line[d.range.start.line] = d
-      end
-    else
-      max_severity_per_line[d.range.start.line] = d
-    end
-  end
-
-  -- map to list
-  local filtered_diagnostics = {}
-  for _, v in pairs(max_severity_per_line) do
-    table.insert(filtered_diagnostics, v)
-  end
-
-  -- call original function
-  orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
-end
-
-vim.lsp.diagnostic.set_signs = set_highest_signs
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -112,20 +70,15 @@ local function setup_mappings(client, bufnr)
     ['gI'] = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
     ['K'] = { vim.lsp.buf.hover, 'lsp: hover' },
   }
-
   maps[']c'] = {
     function()
-      vim.lsp.diagnostic.goto_prev {
-        popup_opts = { border = 'rounded', focusable = false },
-      }
+      diagnostics.goto_prev { popup_opts = { border = 'rounded', focusable = false } }
     end,
     'lsp: go to prev diagnostic',
   }
   maps['[c'] = {
     function()
-      vim.lsp.diagnostic.goto_next {
-        popup_opts = { border = 'rounded', focusable = false },
-      }
+      diagnostics.goto_next { popup_opts = { border = 'rounded', focusable = false } }
     end,
     'lsp: go to next diagnostic',
   }
@@ -225,26 +178,6 @@ as.lsp.servers = {
   end,
 }
 
------------------------------------------------------------------------------//
--- Commands
------------------------------------------------------------------------------//
-local command = as.command
-
-command {
-  'LspLog',
-  function()
-    local path = vim.lsp.get_log_path()
-    vim.cmd('edit ' .. path)
-  end,
-}
-
-command {
-  'Format',
-  function()
-    vim.lsp.buf.formatting_sync(nil, 1000)
-  end,
-}
-
 ---Logic to (re)start installed language servers for use initialising lsps
 ---and restarting them on installing new ones
 function as.lsp.setup_servers()
@@ -279,56 +212,5 @@ return function()
   end
   vim.g.lspconfig_has_setup = true
 
-  if vim.env.DEVELOPING then
-    vim.lsp.set_log_level(vim.lsp.log_levels.DEBUG)
-  end
-
-  -----------------------------------------------------------------------------//
-  -- Signs
-  -----------------------------------------------------------------------------//
-  vim.fn.sign_define {
-    {
-      name = 'LspDiagnosticsSignError',
-      text = as.style.icons.error,
-      texthl = 'LspDiagnosticsSignError',
-    },
-    {
-      name = 'LspDiagnosticsSignHint',
-      text = as.style.icons.hint,
-      texthl = 'LspDiagnosticsSignHint',
-    },
-    {
-      name = 'LspDiagnosticsSignWarning',
-      text = as.style.icons.warning,
-      texthl = 'LspDiagnosticsSignWarning',
-    },
-    {
-      name = 'LspDiagnosticsSignInformation',
-      text = as.style.icons.info,
-      texthl = 'LspDiagnosticsSignInformation',
-    },
-  }
-
-  -----------------------------------------------------------------------------//
-  -- Handler overrides
-  -----------------------------------------------------------------------------//
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {
-      underline = true,
-      virtual_text = false,
-      signs = true,
-      update_in_insert = false,
-    }
-  )
-
-  local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
-  local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
-
-  -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    { border = 'rounded', max_width = max_width, max_height = max_height }
-  )
   as.lsp.setup_servers()
 end

@@ -18,11 +18,11 @@ local M = {}
 --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
 --- but this is not universal across terminals so should be avoided
 local function colors()
-  local warning_fg = P.light_yellow
   local indicator_color = P.bright_blue
+  local warning_fg = as.style.lsp.colors.warn
 
-  local error_color = H.get_hl('LspDiagnosticsDefaultError', 'fg')
-  local info_color = H.get_hl('LspDiagnosticsDefaultInformation', 'fg')
+  local error_color = as.style.lsp.colors.error
+  local info_color = as.style.lsp.colors.info
   local normal_fg = H.get_hl('Normal', 'fg')
   local pmenu_bg = H.get_hl('Pmenu', 'bg')
   local string_fg = H.get_hl('String', 'fg')

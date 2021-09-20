@@ -1,6 +1,7 @@
 local fmt = string.format
 local api = vim.api
 local P = as.style.palette
+local L = as.style.lsp.colors
 local levels = vim.log.levels
 
 local M = {}
@@ -246,18 +247,24 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { 'LspReferenceText', { gui = 'underline' } },
     { 'LspReferenceRead', { gui = 'underline' } },
-    { 'LspDiagnosticsSignHint', { guifg = P.bright_yellow } },
-    { 'LspDiagnosticsDefaultHint', { guifg = P.bright_yellow } },
-    { 'LspDiagnosticsDefaultError', { guifg = P.pale_red } },
-    { 'LspDiagnosticsDefaultWarning', { guifg = P.dark_orange } },
-    { 'LspDiagnosticsDefaultInformation', { guifg = P.teal } },
-    { 'LspDiagnosticsUnderlineError', { gui = 'undercurl', guisp = P.pale_red, guifg = 'none' } },
-    {
-      'LspDiagnosticsUnderlineHint',
-      { gui = 'undercurl', guisp = P.bright_yellow, guifg = 'none' },
-    },
+    { 'DiagnosticHint', { guifg = L.hint } },
+    { 'DiagnosticError', { guifg = L.error } },
+    { 'DiagnosticWarning', { guifg = L.warn } },
+    { 'DiagnosticInfo', { guifg = L.info } },
+    { 'DiagnosticUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
+    { 'DiagnosticUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
+    { 'DiagnosticUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
+    { 'DiagnosticUnderlineInformation', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
+    -- TODO: delete the following when v0.6 is stable
+    { 'LspDiagnosticsSignHint', { guifg = L.hint } },
+    { 'LspDiagnosticsDefaultHint', { guifg = L.hint } },
+    { 'LspDiagnosticsDefaultError', { guifg = L.error } },
+    { 'LspDiagnosticsDefaultWarning', { guifg = L.warn } },
+    { 'LspDiagnosticsDefaultInformation', { guifg = L.info } },
+    { 'LspDiagnosticsUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
+    { 'LspDiagnosticsUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
     { 'LspDiagnosticsUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
-    { 'LspDiagnosticsUnderlineInformation', { gui = 'undercurl', guisp = P.teal, guifg = 'none' } },
+    { 'LspDiagnosticsUnderlineInformation', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
   }
 end
 

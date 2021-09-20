@@ -16,49 +16,14 @@ _G.as = {
 }
 
 -- inject mapping helpers into the global namespace
-require 'as.utils.mappings'
+R 'as.utils.mappings'
 
 -----------------------------------------------------------------------------//
 -- UI
 -----------------------------------------------------------------------------//
 -- Consistent store of various UI items to reuse throughout my config
-as.style = {
-  icons = {
-    error = '✗',
-    warning = '',
-    info = '',
-    hint = '',
-  },
-  lsp = {
-    kinds = {
-      Text = '',
-      Method = '',
-      Function = '',
-      Constructor = '',
-      Field = 'ﰠ',
-      Variable = '',
-      Class = 'ﴯ',
-      Interface = '',
-      Module = '',
-      Property = 'ﰠ',
-      Unit = '塞',
-      Value = '',
-      Enum = '',
-      Keyword = '',
-      Snippet = '',
-      Color = '',
-      File = '',
-      Reference = '',
-      Folder = '',
-      EnumMember = '',
-      Constant = '',
-      Struct = 'פּ',
-      Event = '',
-      Operator = '',
-      TypeParameter = '',
-    },
-  },
-  palette = {
+do
+  local palette = {
     pale_red = '#E06C75',
     dark_red = '#be5046',
     light_red = '#c43e1f',
@@ -73,8 +38,53 @@ as.style = {
     whitesmoke = '#626262',
     bright_blue = '#51afef',
     teal = '#15AABF',
-  },
-}
+  }
+
+  as.style = {
+    icons = {
+      error = '✗',
+      warn = '',
+      info = '',
+      hint = '',
+    },
+    lsp = {
+      colors = {
+        error = palette.pale_red,
+        warn = palette.dark_orange,
+        hint = palette.bright_yellow,
+        info = palette.teal,
+      },
+      kinds = {
+        Text = '',
+        Method = '',
+        Function = '',
+        Constructor = '',
+        Field = 'ﰠ',
+        Variable = '',
+        Class = 'ﴯ',
+        Interface = '',
+        Module = '',
+        Property = 'ﰠ',
+        Unit = '塞',
+        Value = '',
+        Enum = '',
+        Keyword = '',
+        Snippet = '',
+        Color = '',
+        File = '',
+        Reference = '',
+        Folder = '',
+        EnumMember = '',
+        Constant = '',
+        Struct = 'פּ',
+        Event = '',
+        Operator = '',
+        TypeParameter = '',
+      },
+    },
+    palette = palette,
+  }
+end
 
 -----------------------------------------------------------------------------//
 -- Debugging
@@ -139,6 +149,7 @@ end
 -----------------------------------------------------------------------------//
 -- Utils
 -----------------------------------------------------------------------------//
+
 function as._create(f)
   table.insert(as._store, f)
   return #as._store
@@ -289,6 +300,8 @@ function as.has(feature)
   return vim.fn.has(feature) > 0
 end
 
+as.nightly = as.has 'nvim-0.6'
+
 ---Check if directory exists using vim's isdirectory function
 ---@param path string
 ---@return boolean
@@ -363,4 +376,3 @@ function as.invalidate(path, recursive)
     require(path)
   end
 end
-
