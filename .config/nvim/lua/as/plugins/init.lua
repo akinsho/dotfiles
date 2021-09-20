@@ -447,7 +447,10 @@ require('packer').startup {
           'rcarriga/nvim-dap-ui',
           after = 'nvim-dap',
           config = function()
-            require('dapui').setup()
+            local dapui = require 'dapui'
+            dapui.setup()
+            as.nnoremap('<localleader>duc', dapui.close, 'dap-ui: close')
+            as.nnoremap('<localleader>dut', dapui.close, 'dap-ui: toggle')
           end,
         },
       },
@@ -958,8 +961,7 @@ require('packer').startup {
       config = function()
         require('as.highlights').plugin('exchange', { 'ExchangeRegion', { link = 'Search' } })
         vim.g.exchange_no_mappings = 1
-        as.xmap('X', '<Plug>(Exchange)')
-        as.nmap('X', '<Plug>(Exchange)')
+        as.map({ 'n', 'x' }, 'X', '<Plug>(Exchange)')
         as.nmap('Xc', '<Plug>(ExchangeClear)')
       end,
     }
