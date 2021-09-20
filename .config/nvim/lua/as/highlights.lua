@@ -177,6 +177,10 @@ local function general_overrides()
   local comment_fg = M.get_hl('Comment', 'fg')
   local keyword_fg = M.get_hl('Keyword', 'fg')
   local msg_area_bg = M.alter_color(M.get_hl('Normal', 'bg'), -10)
+  local hint_line = M.alter_color(L.hint, -80)
+  local error_line = M.alter_color(L.error, -80)
+  local warn_line = M.alter_color(L.warn, -80)
+  local info_line = M.alter_color(L.info, -80)
   M.all {
     { 'mkdLineBreak', { link = 'NONE', force = true } },
     -----------------------------------------------------------------------------//
@@ -255,12 +259,20 @@ local function general_overrides()
     { 'DiagnosticUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
     { 'DiagnosticUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
     { 'DiagnosticUnderlineInformation', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
+    { 'DiagnosticSignHintLine', { guibg = hint_line } },
+    { 'DiagnosticSignErrorLine', { guibg = error_line } },
+    { 'DiagnosticSignWarningLine', { guibg = warn_line } },
+    { 'DiagnosticSignInformationLine', { guibg = info_line } },
     -- TODO: delete the following when v0.6 is stable
     { 'LspDiagnosticsSignHint', { guifg = L.hint } },
     { 'LspDiagnosticsDefaultHint', { guifg = L.hint } },
     { 'LspDiagnosticsDefaultError', { guifg = L.error } },
     { 'LspDiagnosticsDefaultWarning', { guifg = L.warn } },
     { 'LspDiagnosticsDefaultInformation', { guifg = L.info } },
+    { 'LspDiagnosticsSignHintLine', { guibg = hint_line } },
+    { 'LspDiagnosticsSignErrorLine', { guibg = error_line } },
+    { 'LspDiagnosticsSignWarningLine', { guibg = warn_line } },
+    { 'LspDiagnosticsSignInformationLine', { guibg = info_line } },
     { 'LspDiagnosticsUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
     { 'LspDiagnosticsUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
     { 'LspDiagnosticsUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
