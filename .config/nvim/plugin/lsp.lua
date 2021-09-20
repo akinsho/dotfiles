@@ -110,6 +110,7 @@ if as.nightly then
     virtual_text = false,
     signs = true,
     update_in_insert = false,
+    severity_sort = true,
   }
 else
   lsp.handlers['textDocument/publishDiagnostics'] =
@@ -118,6 +119,7 @@ else
       virtual_text = false,
       signs = true,
       update_in_insert = false,
+      severity_sort = true,
     })
 end
 
