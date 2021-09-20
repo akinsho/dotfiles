@@ -4,6 +4,7 @@
 
 local lsp = vim.lsp
 local fn = vim.fn
+local fmt = string.format
 
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(vim.lsp.log_levels.DEBUG)
@@ -96,7 +97,7 @@ fn.sign_define(vim.tbl_map(function(t)
     name = hl,
     text = t.icon,
     texthl = hl,
-    linehl = hl .. 'Line',
+    linehl = fmt('%sLine', hl),
   }
 end, diagnostic_types))
 

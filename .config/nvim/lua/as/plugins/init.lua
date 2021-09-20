@@ -805,7 +805,7 @@ require('packer').startup {
     use {
       'David-Kunz/treesitter-unit',
       config = function()
-        local label = "treesitter: select"
+        local label = 'treesitter: select'
         as.xnoremap('iu', ':lua require"treesitter-unit".select()<CR>', label)
         as.xnoremap('au', ':lua require"treesitter-unit".select(true)<CR>', label)
         as.onoremap('iu', '<Cmd>lua require"treesitter-unit".select()<CR>', label)

@@ -27,6 +27,10 @@
     "prefix": "lapi",
     "body": ["local api = vim.api"]
   },
+  "fmt": {
+    "prefix": "lfmt",
+    "body": ["local fmt = string.format"]
+  },
   "inspect": {
     "prefix": "vi",
     "body": ["print(\"${1}: \" .. vim.inspect(${1}))"]
@@ -367,4 +371,3 @@
     "description": "Add annotation"
   }
 }
-
