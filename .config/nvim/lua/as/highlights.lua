@@ -207,11 +207,6 @@ local function general_overrides()
       { gui = 'undercurl', guibg = 'transparent', guifg = 'transparent', guisp = 'green' },
     },
     -----------------------------------------------------------------------------//
-    -- Vim syntax
-    -----------------------------------------------------------------------------//
-    { 'vimFunc', { link = 'function' } },
-    { 'vimUserFunc', { link = 'function' } },
-    -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
     { 'DiffAdd', { guibg = '#26332c', guifg = 'NONE' } },
@@ -257,12 +252,20 @@ local function general_overrides()
     { 'DiagnosticInfo', { guifg = L.info } },
     { 'DiagnosticUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
     { 'DiagnosticUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
-    { 'DiagnosticUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
-    { 'DiagnosticUnderlineInformation', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
+    { 'DiagnosticUnderlineWarn', { gui = 'undercurl', guisp = L.warn, guifg = 'none' } },
+    { 'DiagnosticUnderlineInfo', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
     { 'DiagnosticSignHintLine', { guibg = hint_line } },
     { 'DiagnosticSignErrorLine', { guibg = error_line } },
-    { 'DiagnosticSignWarningLine', { guibg = warn_line } },
-    { 'DiagnosticSignInformationLine', { guibg = info_line } },
+    { 'DiagnosticSignWarnLine', { guibg = warn_line } },
+    { 'DiagnosticSignInfoLine', { guibg = info_line } },
+    { 'DiagnosticSignWarn', { link = 'DiagnosticWarn', force = true } },
+    { 'DiagnosticSignInfo', { link = 'DiagnosticInfo', force = true } },
+    { 'DiagnosticSignHint', { link = 'DiagnosticHint', force = true } },
+    { 'DiagnosticSignError', { link = 'DiagnosticError', force = true } },
+    { 'DiagnosticFloatingWarn', { link = 'DiagnosticWarn', force = true } },
+    { 'DiagnosticFloatingInfo', { link = 'DiagnosticInfo', force = true } },
+    { 'DiagnosticFloatingHint', { link = 'DiagnosticHint', force = true } },
+    { 'DiagnosticFloatingError', { link = 'DiagnosticError', force = true } },
     -- TODO: delete the following when v0.6 is stable
     { 'LspDiagnosticsSignHint', { guifg = L.hint } },
     { 'LspDiagnosticsDefaultHint', { guifg = L.hint } },
