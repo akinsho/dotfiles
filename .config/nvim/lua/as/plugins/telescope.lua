@@ -33,7 +33,7 @@ return function()
         },
       },
       file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf' },
-      path_display = { 'smart', 'absolute' },
+      path_display = { 'smart', 'absolute', 'truncate' },
       layout_strategy = 'flex',
       layout_config = {
         horizontal = {
