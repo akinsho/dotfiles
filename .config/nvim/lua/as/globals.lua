@@ -236,22 +236,6 @@ function as.executable(e)
   return fn.executable(e) > 0
 end
 
----Echo a msg to the commandline
----@param msg string | table
----@param hl string
-function as.echomsg(msg, hl)
-  hl = hl or 'Title'
-  local msg_type = type(msg)
-  assert(
-    msg_type ~= 'string' or msg_type ~= 'table',
-    fmt('message should be a string or list of strings not a %s', msg_type)
-  )
-  if msg_type == 'string' then
-    msg = { { msg, hl } }
-  end
-  vim.api.nvim_echo(msg, true, {})
-end
-
 -- https://stackoverflow.com/questions/1283388/lua-merge-tables
 function as.deep_merge(t1, t2)
   for k, v in pairs(t2) do
@@ -301,20 +285,6 @@ function as.has(feature)
 end
 
 as.nightly = as.has 'nvim-0.6'
-
----Check if directory exists using vim's isdirectory function
----@param path string
----@return boolean
-function as.is_dir(path)
-  return fn.isdirectory(path) > 0
-end
-
----Check if a vim variable usually a number is truthy or not
----@param value integer
-function as.truthy(value)
-  assert(type(value) == 'number', fmt('Value should be a number but you passed %s', value))
-  return value > 0
-end
 
 ---Find an item in a list
 ---@generic T
