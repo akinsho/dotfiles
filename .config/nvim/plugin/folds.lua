@@ -7,12 +7,18 @@ local api = vim.api
 -- List of file types to use default fold text for
 local fold_exclusions = { 'vim' }
 
+---@param str string
+---@param pattern string
+---@return boolean
 local function contains(str, pattern)
   assert(str and pattern)
   return fn.match(str, pattern) >= 0
 end
 
-local function prepare_fold_section(value)
+---format the fold text e.g. replace tabs with spaces
+---@param value string
+---@return string
+local function format_section(value)
   -- 1. Replace tabs
   local str = fn.substitute(value, '\t', string.rep(' ', vim.bo.tabstop), 'g')
   -- 2. getline returns the line leading white space so we remove it
@@ -27,6 +33,8 @@ local function is_ignored()
   return vim.tbl_contains(fold_exclusions, vim.bo.filetype)
 end
 
+---@param item string
+---@return boolean
 local function is_import(item)
   return contains(item, '^import')
 end
@@ -61,21 +69,21 @@ end
   i.e.
   import {…} from 'apple'
 --]]
-local function handle_fold_start(start_text, end_text, foldsymbol)
+local function get_fold_start(start_text, end_text, foldsymbol)
   if is_import(start_text) and not contains_delimiter(end_text) then
     --- This regex matches anything after an import followed by a space
     --- this might not hold true for all languages but think it does
     --- for all the ones I use
     return fn.substitute(start_text, [[^import .\+]], 'import ' .. foldsymbol, '')
   end
-  return prepare_fold_section(start_text) .. foldsymbol
+  return format_section(start_text) .. foldsymbol
 end
 
-local function handle_fold_end(item)
+local function get_fold_end(item)
   if not contains_delimiter(item) or is_import(item) then
     return ''
   end
-  return prepare_fold_section(item)
+  return format_section(item)
 end
 
 function as.folds()
@@ -84,8 +92,8 @@ function as.folds()
   end
   local end_text = fn.getline(vim.v.foldend)
   local start_text = fn.getline(vim.v.foldstart)
-  local line_end = handle_fold_end(end_text)
-  local line_start = handle_fold_start(start_text, end_text, '…')
+  local line_end = get_fold_end(end_text)
+  local line_start = get_fold_start(start_text, end_text, '…')
   local line = line_start .. line_end
   local lines_count = vim.v.foldend - vim.v.foldstart + 1
   local count_text = '(' .. lines_count .. ' lines)'
