@@ -450,7 +450,7 @@ require('packer').startup {
             local dapui = require 'dapui'
             dapui.setup()
             as.nnoremap('<localleader>duc', dapui.close, 'dap-ui: close')
-            as.nnoremap('<localleader>dut', dapui.close, 'dap-ui: toggle')
+            as.nnoremap('<localleader>dut', dapui.toggle, 'dap-ui: toggle')
           end,
         },
       },
@@ -917,10 +917,7 @@ require('packer').startup {
     use {
       'AndrewRadev/splitjoin.vim',
       config = function()
-        require('which-key').register {
-          gS = 'splitjoin: split',
-          gJ = 'splitjoin: join',
-        }
+        require('which-key').register { gS = 'splitjoin: split', gJ = 'splitjoin: join' }
       end,
     }
     use {
@@ -1167,11 +1164,8 @@ as.augroup('PackerSetupInit', {
     command = function()
       as.invalidate('as.plugins', true)
       local ok, err = pcall(require('packer').compile)
-      if ok then
-        packer_notify 'packer compiled...'
-      else
-        packer_notify(err, vim.log.levels.ERROR)
-      end
+      local args = ok and { 'packer compiled...' } or { err, vim.log.levels.ERROR }
+      packer_notify(unpack(args))
     end,
   },
 })
