@@ -244,6 +244,9 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
+    -- avoid the urge to be "clever" and try and programmatically set these because
+    -- 1. the name are slightly different (more than just the prefix) i.e. Warn -> Warning
+    -- 2. Some plugins have not migrated so having both highlight groups is valuable
     { 'LspReferenceText', { gui = 'underline' } },
     { 'LspReferenceRead', { gui = 'underline' } },
     { 'DiagnosticHint', { guifg = L.hint } },
