@@ -5,7 +5,7 @@
 My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in case of laptop armageddon).
 
 I thought I'd document for myself and for others potentially some of the setup
-involved in the various programs my dotfiles cover.
+involved in the programs my dotfiles cover.
 
 ### Installation
 
@@ -19,7 +19,7 @@ curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | b
 - [Nvim (nightly)](https://github.com/neovim/neovim)
 - Language server support using [`neovim's lsp`](https://neovim.io/doc/user/lsp.html)
 
-- Minimal Zsh config without `oh-my-zsh`, async prompt for really large monorepos.
+- Minimal Zsh config without `oh-my-zsh`, async prompt for large monorepos.
 
   ![Zsh Prompt](./prompt.png)
 
