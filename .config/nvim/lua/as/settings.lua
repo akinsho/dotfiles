@@ -1,5 +1,4 @@
 local fn = vim.fn
-local is_dev = as.has 'nvim-0.6'
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -142,7 +141,9 @@ vim.opt.conceallevel = 2
 vim.opt.breakindentopt = 'sbr'
 vim.opt.linebreak = true -- lines wrap at words rather than random characters
 vim.opt.synmaxcol = 1024 -- don't syntax highlight long lines
-vim.opt.signcolumn = is_dev and 'auto:2-4' or 'yes:2'
+-- FIXME: use 'auto:2-4' when the ability to set only a single lsp sign is restored
+--@see: https://github.com/neovim/neovim/issues?q=set_signs
+vim.opt.signcolumn = 'yes:2'
 vim.opt.ruler = false
 vim.opt.cmdheight = 2 -- Set command line height to two lines
 vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
@@ -210,7 +211,7 @@ vim.opt.guicursor = {
   [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
 
-if is_dev then
+if as.nightly then
   vim.opt.cursorlineopt = 'screenline,number'
 end
 -----------------------------------------------------------------------------//
