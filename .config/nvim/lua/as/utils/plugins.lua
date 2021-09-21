@@ -105,4 +105,23 @@ function M.conf(name)
   return require(fmt('as.plugins.%s', name))
 end
 
+---Install an executable, returning the error if any
+---@param binary string
+---@param installer string
+---@param cmd string
+---@return string?
+function M.install(binary, installer, cmd)
+  cmd = cmd or 'install'
+  if not as.executable(binary) and as.executable(installer) then
+    local install_cmd = fmt('%s %s %s', installer, cmd, binary)
+    local ok, toggleterm = pcall(require, 'toggleterm')
+    if ok then
+      toggleterm.exec(install_cmd)
+    else
+      vim.cmd '25split'
+      fn.termopen(install_cmd)
+    end
+  end
+end
+
 return M

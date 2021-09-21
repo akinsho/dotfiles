@@ -247,6 +247,9 @@ require('packer').startup {
 
     use {
       'jose-elias-alvarez/null-ls.nvim',
+      run = function()
+        utils.install('write-good', 'npm', 'install -g')
+      end,
       requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
       -- trigger loading after lspconfig has started the other servers
       -- since there is otherwise a race condition and null-ls' setup would
@@ -257,16 +260,19 @@ require('packer').startup {
         null_ls.config {
           debounce = 150,
           sources = {
+            null_ls.builtins.diagnostics.write_good,
             null_ls.builtins.code_actions.gitsigns,
-            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.formatting.stylua.with {
+              condition = function(_utils)
+                return _utils.root_has_file 'stylua.toml'
+              end,
+            },
             null_ls.builtins.formatting.prettier.with {
               filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
             },
           },
         }
-        require('lspconfig')['null-ls'].setup {
-          on_attach = as.lsp.on_attach,
-        }
+        require('lspconfig')['null-ls'].setup { on_attach = as.lsp.on_attach }
       end,
     }
 
