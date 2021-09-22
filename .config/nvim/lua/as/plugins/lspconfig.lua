@@ -72,13 +72,17 @@ local function setup_mappings(client, bufnr)
   }
   maps[']c'] = {
     function()
-      diagnostics.goto_prev { popup_opts = { border = 'rounded', focusable = false } }
+      diagnostics.goto_prev {
+        popup_opts = { border = 'rounded', focusable = false, source = 'always' },
+      }
     end,
     'lsp: go to prev diagnostic',
   }
   maps['[c'] = {
     function()
-      diagnostics.goto_next { popup_opts = { border = 'rounded', focusable = false } }
+      diagnostics.goto_next {
+        popup_opts = { border = 'rounded', focusable = false, source = 'always' },
+      }
     end,
     'lsp: go to next diagnostic',
   }
