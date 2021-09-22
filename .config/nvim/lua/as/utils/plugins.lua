@@ -110,15 +110,15 @@ end
 ---@param installer string
 ---@param cmd string
 ---@return string?
-function M.install(binary, installer, cmd)
+function M.install(binary, installer, cmd, opts)
+  opts = opts or {silent = true}
   cmd = cmd or 'install'
   if not as.executable(binary) and as.executable(installer) then
     local install_cmd = fmt('%s %s %s', installer, cmd, binary)
-    local ok, toggleterm = pcall(require, 'toggleterm')
-    if ok then
-      toggleterm.exec(install_cmd)
+    if opts.silent then
+      vim.cmd('!'..install_cmd)
     else
-      vim.cmd '25split'
+      vim.cmd '25split | wincmd J'
       fn.termopen(install_cmd)
     end
   end

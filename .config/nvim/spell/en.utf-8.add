@@ -228,3 +228,4 @@ func
 num
 luarocks
 packpath
+fzy
