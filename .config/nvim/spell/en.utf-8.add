@@ -229,3 +229,6 @@ num
 luarocks
 packpath
 fzy
+VIMRUNTIME
+rplugin
+dir
