@@ -1,8 +1,6 @@
 return function()
-  local fn = vim.fn
   local api = vim.api
   local t = as.replace_termcodes
-  local fmt = string.format
   local cmp = require 'cmp'
 
   local function feed(key, mode)
@@ -19,8 +17,8 @@ return function()
 
   local function tab(_)
     local luasnip = get_luasnip()
-    if fn.pumvisible() == 1 then
-      feed('<C-n>', 'n')
+    if cmp.visible() then
+      cmp.select_next_item()
     elseif luasnip and luasnip.expand_or_jumpable() then
       luasnip.expand_or_jump()
     else
@@ -30,8 +28,8 @@ return function()
 
   local function shift_tab(_)
     local luasnip = get_luasnip()
-    if fn.pumvisible() == 1 then
-      feed('<C-p>', 'n')
+    if cmp.visible() then
+      cmp.select_prev_item()
     elseif luasnip and luasnip.jumpable(-1) then
       luasnip.jump(-1)
     else
@@ -42,6 +40,7 @@ return function()
   cmp.setup {
     experimental = {
       ghost_text = false,
+      custom_menu = true,
     },
     snippet = {
       expand = function(args)
@@ -62,10 +61,11 @@ return function()
     formatting = {
       deprecated = true,
       format = function(entry, vim_item)
-        vim_item.kind = fmt('%s %s', as.style.lsp.kinds[vim_item.kind], vim_item.kind)
+        vim_item.kind = as.style.lsp.kinds[vim_item.kind]
         -- FIXME: automate this using a regex to normalise names
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
+          nvim_lua = '[Lua]',
           emoji = '[Emoji]',
           path = '[Path]',
           calc = '[Calc]',
@@ -82,8 +82,8 @@ return function()
       border = 'rounded',
     },
     sources = {
-      { name = 'luasnip' },
       { name = 'nvim_lsp' },
+      { name = 'luasnip' },
       { name = 'spell' },
       { name = 'path' },
       { name = 'buffer' },
@@ -91,18 +91,4 @@ return function()
       { name = 'orgmode' },
     },
   }
-  -- as.augroup('CmpFiletypes', {
-  --   {
-  --     events = { 'Filetype' },
-  --     targets = { 'lua' },
-  --     command = function()
-  --       cmp.setup.buffer {
-  --         sources = {
-  --           { name = 'nvim_lua' },
-  --           { name = 'buffer' },
-  --         },
-  --       }
-  --     end,
-  --   },
-  -- })
 end
