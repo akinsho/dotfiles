@@ -11,9 +11,6 @@ local fmt = string.format
 
 local PACKER_COMPILED_PATH = fn.stdpath 'cache' .. '/packer/packer_compiled.lua'
 
-local function not_headless()
-  return #vim.api.nvim_list_uis() > 0
-end
 -----------------------------------------------------------------------------//
 -- Bootstrap Packer {{{3
 -----------------------------------------------------------------------------//
@@ -559,7 +556,7 @@ require('packer').startup {
 
     use {
       'rcarriga/nvim-notify',
-      cond = not_headless, -- TODO: causes blocking output in headless mode
+      cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = function()
         local notify = require 'notify'
         notify.setup {
