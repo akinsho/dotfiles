@@ -437,8 +437,21 @@ require('packer').startup {
       'rcarriga/vim-ultest',
       cmd = 'Ultest',
       wants = 'vim-test',
+      event = { 'BufEnter *_test.*,*_spec.*' },
       requires = { 'vim-test/vim-test' },
       run = ':UpdateRemotePlugins',
+      config = function()
+        local test_patterns = { '*_test.*', '*_spec.*' }
+        as.augroup('UltestTests', {
+          {
+            events = { 'BufWritePost' },
+            targets = test_patterns,
+            command = 'UltestNearest',
+          },
+        })
+        as.nmap(']t', '<Plug>(ultest-next-fail)')
+        as.nmap('[t', '<Plug>(ultest-prev-fail)')
+      end,
     }
 
     use {
