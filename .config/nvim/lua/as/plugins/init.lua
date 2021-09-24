@@ -830,6 +830,7 @@ require('packer').startup {
     use 'dart-lang/dart-vim-plugin'
     use 'plasticboy/vim-markdown'
     use 'mtdl9/vim-log-highlighting'
+    use 'fladson/vim-kitty'
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{1
