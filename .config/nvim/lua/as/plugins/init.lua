@@ -19,11 +19,10 @@ utils.bootstrap_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
-as.safe_require 'impatient'
--- FIXME: enabling profile breaks fzy-lua-native
--- if impatient_ok then
---   impatient.enable_profile()
--- end
+local impatient_ok, impatient = as.safe_require 'impatient'
+if impatient_ok then
+  impatient.enable_profile()
+end
 
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
