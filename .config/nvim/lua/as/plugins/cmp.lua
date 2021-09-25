@@ -18,7 +18,7 @@ return function()
   local function tab(_)
     local luasnip = get_luasnip()
     if cmp.visible() then
-      cmp.select_next_item()
+      cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
     elseif luasnip and luasnip.expand_or_jumpable() then
       luasnip.expand_or_jump()
     else
@@ -29,7 +29,7 @@ return function()
   local function shift_tab(_)
     local luasnip = get_luasnip()
     if cmp.visible() then
-      cmp.select_prev_item()
+      cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
     elseif luasnip and luasnip.jumpable(-1) then
       luasnip.jump(-1)
     else
@@ -40,7 +40,6 @@ return function()
   cmp.setup {
     experimental = {
       ghost_text = false,
-      custom_menu = true,
     },
     snippet = {
       expand = function(args)
