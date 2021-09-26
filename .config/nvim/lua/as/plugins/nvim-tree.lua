@@ -13,7 +13,6 @@ return function()
     },
   }
   vim.g.nvim_tree_special_files = {}
-  vim.g.nvim_tree_lsp_diagnostics = 1
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_group_empty = 1
   vim.g.nvim_tree_git_hl = 1
@@ -41,6 +40,7 @@ return function()
   as.nnoremap('<c-n>', [[<cmd>NvimTreeToggle<CR>]])
 
   require('nvim-tree').setup {
+    lsp_diagnostics = true,
     disable_netrw = true,
     hijack_netrw = true,
     open_on_setup = false,
