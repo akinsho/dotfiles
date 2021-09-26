@@ -30,54 +30,6 @@ command {
   end,
 }
 
-if not as.nightly then
-  -- Capture real implementation of function that sets signs
-  local orig_set_signs = vim.lsp.diagnostic.set_signs
-  local diagnostic_cache = {}
-
-  ---Override diagnostics signs helper to only show the single most relevant sign
-  ---@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
-  ---@param diagnostics table
-  ---@param bufnr number
-  ---@param client_id number
-  ---@param sign_ns number
-  ---@param opts table
-  local function set_highest_signs(diagnostics, bufnr, client_id, sign_ns, opts)
-    -- original func runs some checks, which I think is worth doing but maybe overkill
-    if not diagnostics then
-      diagnostics = diagnostic_cache[bufnr][client_id]
-    end
-
-    -- early escape
-    if not diagnostics then
-      return
-    end
-
-    -- Work out max severity diagnostic per line
-    local max_severity_per_line = {}
-    for _, d in pairs(diagnostics) do
-      if max_severity_per_line[d.range.start.line] then
-        local current_d = max_severity_per_line[d.range.start.line]
-        if d.severity < current_d.severity then
-          max_severity_per_line[d.range.start.line] = d
-        end
-      else
-        max_severity_per_line[d.range.start.line] = d
-      end
-    end
-
-    -- map to list
-    local filtered_diagnostics = {}
-    for _, v in pairs(max_severity_per_line) do
-      table.insert(filtered_diagnostics, v)
-    end
-
-    -- call original function
-    orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
-  end
-
-  vim.lsp.diagnostic.set_signs = set_highest_signs
-end
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
@@ -101,6 +53,100 @@ fn.sign_define(vim.tbl_map(function(t)
   }
 end, diagnostic_types))
 
+local all_namespaces = {}
+
+--- FIXME: this is a duplicate of an internal vim.diagnostic function
+---is it possible to do this without rewriting this logic
+---@param ns number namespace ID
+---@return table
+local function get_namespace(ns)
+  if not all_namespaces[ns] then
+    local name
+    for k, v in pairs(vim.api.nvim_get_namespaces()) do
+      if ns == v then
+        name = k
+        break
+      end
+    end
+
+    if not name then
+      return vim.notify('namespace does not exist or is anonymous', vim.log.levels.ERROR)
+    end
+
+    all_namespaces[ns] = {
+      name = name,
+      sign_group = string.format('vim.diagnostic.%s', name),
+      opts = {},
+    }
+  end
+  return all_namespaces[ns]
+end
+
+---Override diagnostics signs helper to only show the single most relevant sign
+---@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
+---@param diagnostics table[]
+---@param bufnr number
+---@param cache_id number
+---@return table[]
+local function filter_diagnostics(diagnostics, bufnr, cache_id)
+  if not diagnostics then
+    return {}
+  end
+  -- Work out max severity diagnostic per line
+  local max_severity_per_line = {}
+  for _, d in pairs(diagnostics) do
+    if max_severity_per_line[d.lnum] then
+      local current_d = max_severity_per_line[d.lnum]
+      if d.severity < current_d.severity then
+        max_severity_per_line[d.lnum] = d
+      end
+    else
+      max_severity_per_line[d.lnum] = d
+    end
+  end
+
+  -- map to list
+  local filtered_diagnostics = {}
+  for _, v in pairs(max_severity_per_line) do
+    table.insert(filtered_diagnostics, v)
+  end
+  return filtered_diagnostics
+end
+
+if not as.nightly then
+  -- Capture real implementation of function that sets signs
+  local set_signs = vim.lsp.diagnostic.set_signs
+  ---@param diagnostics table
+  ---@param bufnr number
+  ---@param client_id number
+  ---@param sign_ns number
+  ---@param opts table
+  vim.lsp.diagnostic.set_signs = function(diagnostics, bufnr, client_id, sign_ns, opts)
+    local filtered = filter_diagnostics(diagnostics, bufnr, client_id)
+    -- call original function
+    set_signs(filtered, bufnr, client_id, sign_ns, opts)
+  end
+else
+  local function display_signs(namespace, bufnr, diagnostics, opts)
+    local ns = get_namespace(namespace)
+    local filtered = filter_diagnostics(diagnostics, bufnr, 1)
+    for _, diagnostic in ipairs(filtered) do
+      local name = vim.diagnostic.severity[diagnostic.severity]
+      local hl = 'DiagnosticSign' .. name:sub(1, 1) .. name:sub(2, -1):lower()
+      fn.sign_place(0, ns.sign_group, hl, bufnr, {
+        priority = opts and opts.priority,
+        lnum = diagnostic.lnum + 1,
+      })
+    end
+  end
+
+  local show = vim.diagnostic.show
+  function vim.diagnostic.show(namespace, bufnr, diagnostics, opts)
+    show(namespace, bufnr, diagnostics, opts)
+    display_signs(namespace, bufnr, diagnostics, opts)
+  end
+end
+
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
@@ -108,7 +154,7 @@ if as.nightly then
   vim.diagnostic.config {
     underline = true,
     virtual_text = false,
-    signs = true,
+    signs = false,
     update_in_insert = false,
     severity_sort = true,
   }
