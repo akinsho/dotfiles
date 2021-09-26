@@ -962,6 +962,13 @@ require('packer').startup {
     use 'chaoren/vim-wordmotion'
 
     use {
+      'svermeulen/vim-subversive',
+      config = function()
+        as.nmap('S', '<plug>(SubversiveSubstitute)')
+      end,
+    }
+
+    use {
       'b3nj5m1n/kommentary',
       config = function()
         require('kommentary.config').configure_language(
