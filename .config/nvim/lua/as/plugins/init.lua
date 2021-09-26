@@ -893,7 +893,7 @@ require('packer').startup {
     }
     use {
       'sindrets/diffview.nvim',
-      cmd = { 'DiffviewOpen', 'DiffViewFileHistory' },
+      cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
       module = 'diffview',
       keys = '<localleader>gd',
       setup = function()
