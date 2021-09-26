@@ -23,16 +23,6 @@ return function()
     },
     ['g>'] = 'show message history',
     ['<leader>'] = {
-      ['0'] = 'which_key_ignore',
-      ['1'] = 'which_key_ignore',
-      ['2'] = 'which_key_ignore',
-      ['3'] = 'which_key_ignore',
-      ['4'] = 'which_key_ignore',
-      ['5'] = 'which_key_ignore',
-      ['6'] = 'which_key_ignore',
-      ['7'] = 'which_key_ignore',
-      ['8'] = 'which_key_ignore',
-      ['9'] = 'which_key_ignore',
       n = {
         name = '+new',
         f = 'create a new file',
