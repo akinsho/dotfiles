@@ -16,15 +16,10 @@ return function()
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_group_empty = 1
   vim.g.nvim_tree_git_hl = 1
-  vim.g.nvim_tree_width = '20%'
   vim.g.nvim_tree_width_allow_resize = 1
   vim.g.nvim_tree_root_folder_modifier = ':t'
   vim.g.nvim_tree_ignore = { '.DS_Store', 'fugitive:', '.git' }
   vim.g.nvim_tree_highlight_opened_files = 1
-  vim.g.nvim_tree_auto_resize = 1
-  vim.g.nvim_tree_bindings = {
-    { key = 'cd', cb = action 'cd' },
-  }
 
   require('as.highlights').plugin(
     'NvimTree',
@@ -40,6 +35,13 @@ return function()
   as.nnoremap('<c-n>', [[<cmd>NvimTreeToggle<CR>]])
 
   require('nvim-tree').setup {
+    view = {
+      width = '20%',
+      auto_resize = true,
+      list = {
+        { key = 'cd', cb = action 'cd' },
+      },
+    },
     lsp_diagnostics = true,
     disable_netrw = true,
     hijack_netrw = true,
