@@ -113,6 +113,8 @@ local function filter_diagnostics(diagnostics, bufnr, cache_id)
   return filtered_diagnostics
 end
 
+--- This overwrites the diagnostic show/set_signs function to replace it with a custom function
+-- that restricts nvim's diagnostic signs to only the single most severe one per line
 if not as.nightly then
   -- Capture real implementation of function that sets signs
   local set_signs = vim.lsp.diagnostic.set_signs
