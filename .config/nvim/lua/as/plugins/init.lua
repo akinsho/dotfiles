@@ -35,9 +35,6 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     use_rocks 'penlight'
 
-    -- TODO: this plugin will be redundant once https://github.com/neovim/neovim/pull/15436 is merged
-    use 'lewis6991/impatient.nvim'
-
     use {
       'ahmedkhalf/project.nvim',
       config = function()
@@ -747,8 +744,10 @@ require('packer').startup {
     }
     -- }}}
     --------------------------------------------------------------------------------
-    -- Profiling {{{1
+    -- Profiling & Startup {{{1
     --------------------------------------------------------------------------------
+    -- TODO: this plugin will be redundant once https://github.com/neovim/neovim/pull/15436 is merged
+    use 'lewis6991/impatient.nvim'
     use {
       'dstein64/vim-startuptime',
       cmd = 'StartupTime',
