@@ -94,13 +94,14 @@ local function filter_diagnostics(diagnostics, bufnr)
   -- Work out max severity diagnostic per line
   local max_severity_per_line = {}
   for _, d in pairs(diagnostics) do
-    if max_severity_per_line[d.lnum] then
-      local current_d = max_severity_per_line[d.lnum]
+    local lnum = as.nightly and d.lnum or d.range.start.line
+    if max_severity_per_line[lnum] then
+      local current_d = max_severity_per_line[lnum]
       if d.severity < current_d.severity then
-        max_severity_per_line[d.lnum] = d
+        max_severity_per_line[lnum] = d
       end
     else
-      max_severity_per_line[d.lnum] = d
+      max_severity_per_line[lnum] = d
     end
   end
 
