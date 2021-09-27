@@ -233,3 +233,4 @@ VIMRUNTIME
 rplugin
 dir
 nvim's
+enum
