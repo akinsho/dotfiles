@@ -786,6 +786,14 @@ require('packer').startup {
       end,
     }
 
+    use {
+      'ray-x/go.nvim',
+      ft = 'go',
+      config = function()
+        require('go').setup()
+      end,
+    }
+
     use 'dart-lang/dart-vim-plugin'
     use 'plasticboy/vim-markdown'
     use 'mtdl9/vim-log-highlighting'
