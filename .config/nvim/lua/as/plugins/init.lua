@@ -322,36 +322,6 @@ require('packer').startup {
       end,
     }
 
-    use_local {
-      'akinsho/flutter-tools.nvim',
-      requires = { 'nvim-dap', 'plenary.nvim' },
-      local_path = 'personal',
-      config = function()
-        --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
-        local status_ok, lsp_status = as.safe_require('lsp-status', { silent = true })
-        local capabilities = status_ok and lsp_status.capabilities or nil
-        require('flutter-tools').setup {
-          ui = { border = 'rounded' },
-          debugger = { enabled = true },
-          outline = { auto_open = vim.o.columns > 220 },
-          decorations = {
-            statusline = { device = true, app_version = true },
-          },
-          widget_guides = { enabled = true, debug = true },
-          dev_log = { open_cmd = 'tabedit' },
-          lsp = {
-            settings = { showTodos = false },
-            on_attach = as.lsp and as.lsp.on_attach or nil,
-            --- This is necessary to prevent lsp-status' capabilities being
-            --- given priority over that of the default config
-            capabilities = function(defaults)
-              return vim.tbl_deep_extend('keep', defaults, capabilities)
-            end,
-          },
-        }
-      end,
-    }
-
     use {
       'hrsh7th/nvim-cmp',
       module = 'cmp',
@@ -783,6 +753,44 @@ require('packer').startup {
       end,
     }
     -- }}}
+    -----------------------------------------------------------------------------//
+    -- Filetype Plugins {{{1
+    -----------------------------------------------------------------------------//
+    use_local {
+      'akinsho/flutter-tools.nvim',
+      requires = { 'nvim-dap', 'plenary.nvim' },
+      local_path = 'personal',
+      config = function()
+        --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
+        local status_ok, lsp_status = as.safe_require('lsp-status', { silent = true })
+        local capabilities = status_ok and lsp_status.capabilities or nil
+        require('flutter-tools').setup {
+          ui = { border = 'rounded' },
+          debugger = { enabled = true },
+          outline = { auto_open = vim.o.columns > 220 },
+          decorations = {
+            statusline = { device = true, app_version = true },
+          },
+          widget_guides = { enabled = true, debug = true },
+          dev_log = { open_cmd = 'tabedit' },
+          lsp = {
+            settings = { showTodos = false },
+            on_attach = as.lsp and as.lsp.on_attach or nil,
+            --- This is necessary to prevent lsp-status' capabilities being
+            --- given priority over that of the default config
+            capabilities = function(defaults)
+              return vim.tbl_deep_extend('keep', defaults, capabilities)
+            end,
+          },
+        }
+      end,
+    }
+
+    use 'dart-lang/dart-vim-plugin'
+    use 'plasticboy/vim-markdown'
+    use 'mtdl9/vim-log-highlighting'
+    use 'fladson/vim-kitty'
+    -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{1
     --------------------------------------------------------------------------------
@@ -838,10 +846,6 @@ require('packer').startup {
         require('spellsitter').setup {}
       end,
     }
-    use 'dart-lang/dart-vim-plugin'
-    use 'plasticboy/vim-markdown'
-    use 'mtdl9/vim-log-highlighting'
-    use 'fladson/vim-kitty'
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{1
