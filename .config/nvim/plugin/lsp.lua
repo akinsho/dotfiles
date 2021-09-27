@@ -86,9 +86,8 @@ end
 ---@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
 ---@param diagnostics table[]
 ---@param bufnr number
----@param cache_id number
 ---@return table[]
-local function filter_diagnostics(diagnostics, bufnr, cache_id)
+local function filter_diagnostics(diagnostics, bufnr)
   if not diagnostics then
     return {}
   end
@@ -124,14 +123,14 @@ if not as.nightly then
   ---@param sign_ns number
   ---@param opts table
   vim.lsp.diagnostic.set_signs = function(diagnostics, bufnr, client_id, sign_ns, opts)
-    local filtered = filter_diagnostics(diagnostics, bufnr, client_id)
+    local filtered = filter_diagnostics(diagnostics, bufnr)
     -- call original function
     set_signs(filtered, bufnr, client_id, sign_ns, opts)
   end
 else
   local function display_signs(namespace, bufnr, diagnostics, opts)
     local ns = get_namespace(namespace)
-    local filtered = filter_diagnostics(diagnostics, bufnr, 1)
+    local filtered = filter_diagnostics(diagnostics, bufnr)
     for _, diagnostic in ipairs(filtered) do
       local name = vim.diagnostic.severity[diagnostic.severity]
       local hl = 'DiagnosticSign' .. name:sub(1, 1) .. name:sub(2, -1):lower()
