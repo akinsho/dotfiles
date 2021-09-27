@@ -5,9 +5,6 @@
 --  _/    _/  _/  _/
 -- _/    _/  _/    _/
 ---------------------------------------------------------------------------------
--- NOTE: this is set by nvim by default but maybe too late
-vim.cmd 'syntax enable'
-
 vim.g.os = vim.loop.os_uname().sysname
 vim.g.open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
 vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand '~/.dotfiles'
