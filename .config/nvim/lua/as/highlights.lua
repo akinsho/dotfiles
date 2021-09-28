@@ -103,9 +103,10 @@ local function get_hl(group_name)
   if hl then
     local gui = {}
     for key, value in pairs(hl) do
-      if type(value) == 'number' then
+      local t = type(value)
+      if t == 'number' then
         result[attrs[key]] = '#' .. bit.tohex(value, 6)
-      elseif vim.tbl_contains({ 'underline', 'bold', 'undercurl', 'italic' }, key) then
+      elseif t == 'boolean' then -- NOTE: we presume that a boolean value is a GUI attribute
         table.insert(gui, key)
       end
     end
@@ -126,10 +127,10 @@ function M.set_hl(name, opts)
     else
       if opts.inherit then
         local attrs = get_hl(opts.inherit)
-        --- FIXME: deep extending does not merge { a = {'string1'}} with {b = {'string2'}}
+        --- FIXME: deep extending does not merge { a = {'one'}} with {b = {'two'}}
         --- correctly in nvim 0.5.1, but should do in 0.6
         opts.gui = (not opts.gui or not attrs.gui) and opts.gui
-          or table.concat({ opts.gui, table.concat(attrs.gui, ',') }, ',')
+          or opts.gui .. ',' .. table.concat(attrs.gui, ',')
         opts = vim.tbl_deep_extend('force', attrs, opts)
         opts.inherit = nil
       end
