@@ -6,7 +6,7 @@ return function()
   require('as.highlights').plugin(
     'Cmp',
     { 'CmpItemAbbrDeprecated', { gui = 'strikethrough', inherit = 'Comment' } },
-    { 'CmpItemAbbrMatchFuzzy', { gui = 'italic' } }
+    { 'CmpItemAbbrMatchFuzzy', { gui = 'italic', guifg = 'fg' } }
   )
 
   local function feed(key, mode)
