@@ -604,7 +604,7 @@ local function fetch_github_notifications()
         vim.defer_fn(function()
           -- data is a table, so check that the first value isn't an empty string
           if validate_github_response(data) then
-            local notifications = vim.fn.json_decode(data)
+            local notifications = vim.json and vim.json.decode(data[1]) or vim.fn.decode(data)
             vim.g.github_notifications = #notifications
           end
         end, 1)
