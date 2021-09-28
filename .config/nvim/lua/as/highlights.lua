@@ -76,6 +76,44 @@ function M.adopt_winhighlight(win_id, target, name, default)
   return name
 end
 
+---get a highlight groups details from the nvim API and format the result
+---to match the attributes seen when using `:highlight GroupName`
+--- `nvim_get_hl_by_name` e.g.
+---```json
+---{
+--- foreground: 123456
+--- background: 123456
+--- italic: true
+--- bold: true
+--}
+---```
+--- is converted to
+---```json
+---{
+--- gui: {"italic", "bold"}
+--- guifg: #FFXXXX
+--- guibg: #FFXXXX
+--}
+---```
+---@param group_name string A highlight group name
+local function get_hl(group_name)
+  local attrs = { foreground = 'guifg', background = 'guibg' }
+  local hl = api.nvim_get_hl_by_name(group_name, true)
+  local result = {}
+  if hl then
+    local gui = {}
+    for key, value in pairs(hl) do
+      if type(value) == 'number' then
+        result[attrs[key]] = '#' .. bit.tohex(value, 6)
+      elseif vim.tbl_contains({ 'underline', 'bold', 'undercurl', 'italic' }, key) then
+        table.insert(gui, key)
+      end
+    end
+    result.gui = #gui > 0 and gui or nil
+  end
+  return result
+end
+
 --- NOTE: vim.highlight's link and create are private, so
 --- eventually move to using `nvim_set_hl`
 ---@param name string
@@ -86,6 +124,13 @@ function M.set_hl(name, opts)
     if opts.link then
       vim.highlight.link(name, opts.link, opts.force)
     else
+      if opts.inherit then
+        local attrs = get_hl(opts.inherit)
+        opts.gui = (opts.gui and attrs.gui) and opts.gui .. ',' .. table.concat(attrs.gui, ',')
+        opts = vim.tbl_deep_extend('force', attrs, opts)
+        opts.inherit = nil
+      end
+      opts.gui = type(opts.gui) == 'table' and table.concat(opts.gui, ', ') or opts.gui
       local ok, msg = pcall(vim.highlight.create, name, opts)
       if not ok then
         vim.notify(fmt('Failed to set %s because: %s', name, msg))
@@ -94,23 +139,7 @@ function M.set_hl(name, opts)
   end
 end
 
----convert a table of gui values into a string
----@param hl table<string, string>
----@return string
-local function flatten_gui(hl)
-  local gui_attr = { 'underline', 'bold', 'undercurl', 'italic' }
-  local gui = {}
-  for name, value in pairs(hl) do
-    if value and vim.tbl_contains(gui_attr, name) then
-      table.insert(gui, name)
-    end
-  end
-  return table.concat(gui, ',')
-end
-
----Get the value a highlight group
----this function is a small wrapper around `nvim_get_hl_by_name`
----which handles errors, fallbacks as well as returning a gui value
+---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
 ---in the right format
 ---@param grp string
 ---@param attr string
@@ -121,20 +150,14 @@ function M.get_hl(grp, attr, fallback)
     vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
     return 'NONE'
   end
-  local attrs = { fg = 'foreground', bg = 'background' }
-  attr = attrs[attr] or attr
-  local hl = api.nvim_get_hl_by_name(grp, true)
-  if attr == 'gui' then
-    return flatten_gui(hl)
-  end
-  local color = hl[attr] or fallback
-  -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
+  local hl = get_hl(grp)
+  local color = hl[attr:match 'gui' and attr or fmt('gui%s', attr)] or fallback
   if not color then
     vim.notify(fmt('%s %s does not exist', grp, attr), levels.ERROR)
     return 'NONE'
   end
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
-  return '#' .. bit.tohex(color, 6)
+  return color
 end
 
 function M.clear_hl(name)
