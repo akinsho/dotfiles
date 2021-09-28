@@ -3,6 +3,12 @@ return function()
   local t = as.replace_termcodes
   local cmp = require 'cmp'
 
+  require('as.highlights').plugin(
+    'Cmp',
+    { 'CmpItemAbbrDeprecated', { gui = 'strikethrough', inherit = 'Comment' } },
+    { 'CmpItemAbbrMatchFuzzy', { gui = 'italic' } }
+  )
+
   local function feed(key, mode)
     api.nvim_feedkeys(t(key), mode or '', true)
   end

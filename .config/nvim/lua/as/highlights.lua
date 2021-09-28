@@ -126,7 +126,10 @@ function M.set_hl(name, opts)
     else
       if opts.inherit then
         local attrs = get_hl(opts.inherit)
-        opts.gui = (opts.gui and attrs.gui) and opts.gui .. ',' .. table.concat(attrs.gui, ',')
+        --- FIXME: deep extending does not merge { a = {'string1'}} with {b = {'string2'}}
+        --- correctly in nvim 0.5.1, but should do in 0.6
+        opts.gui = (not opts.gui or not attrs.gui) and opts.gui
+          or table.concat({ opts.gui, table.concat(attrs.gui, ',') }, ',')
         opts = vim.tbl_deep_extend('force', attrs, opts)
         opts.inherit = nil
       end
