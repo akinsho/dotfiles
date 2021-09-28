@@ -148,6 +148,13 @@ return function()
     }
   end
 
+  local function norgfiles()
+    builtins.find_files {
+      prompt_title = 'Norg',
+      cwd = vim.fn.expand '~/Dropbox/neorg/',
+    }
+  end
+
   local function frecency()
     local themes = require 'telescope.themes'
     telescope.extensions.frecency.frecency(themes.get_dropdown {
@@ -194,6 +201,7 @@ return function()
       o = { builtins.buffers, 'buffers' },
       p = { installed_plugins, 'plugins' },
       O = { orgfiles, 'org files' },
+      N = { norgfiles, 'norg files' },
       R = { builtins.reloader, 'module reloader' },
       r = { builtins.resume, 'resume last picker' },
       s = { builtins.live_grep, 'grep string' },
