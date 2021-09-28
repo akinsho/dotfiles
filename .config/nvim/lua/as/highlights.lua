@@ -115,8 +115,7 @@ local function get_hl(group_name)
   return result
 end
 
---- NOTE: vim.highlight's link and create are private, so
---- eventually move to using `nvim_set_hl`
+--- NOTE: vim.highlight's link and create are private, so eventually move to using `nvim_set_hl`
 ---@param name string
 ---@param opts table
 function M.set_hl(name, opts)
