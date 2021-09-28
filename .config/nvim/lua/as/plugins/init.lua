@@ -767,7 +767,7 @@ require('packer').startup {
         require('flutter-tools').setup {
           ui = { border = 'rounded' },
           debugger = { enabled = true },
-          outline = { auto_open = vim.o.columns > 220 },
+          outline = { auto_open = false },
           decorations = {
             statusline = { device = true, app_version = true },
           },
