@@ -415,8 +415,14 @@ require('packer').startup {
             command = 'UltestNearest',
           },
         })
-        as.nmap(']t', '<Plug>(ultest-next-fail)', 'ultest: next failure')
-        as.nmap('[t', '<Plug>(ultest-prev-fail)', 'ultest: previous failure')
+        as.nmap(']T', '<Plug>(ultest-next-fail)', {
+          label = 'ultest: next failure',
+          buffer = 0,
+        })
+        as.nmap('[T', '<Plug>(ultest-prev-fail)', {
+          label = 'ultest: previous failure',
+          buffer = 0,
+        })
       end,
     }
 
