@@ -116,13 +116,13 @@ local item_if = utils.item_if
 
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
-function _G.statusline()
+function _G.__statusline()
   -- use the statusline global variable which is set inside of statusline
   -- functions to the window for *that* statusline
   local curwin = vim.g.statusline_winid or 0
   local curbuf = vim.api.nvim_win_get_buf(curwin)
 
-  -- TODO reduce the available space whenever we add
+  -- TODO: reduce the available space whenever we add
   -- a component so we can use it to determine what to add
   local available_space = vim.api.nvim_win_get_width(curwin)
 
@@ -202,21 +202,22 @@ function _G.statusline()
     { file_item, 0 },
     -- LSP Status
     {
-      item(
-        utils.current_function(),
-        'StMetadata',
-        { before = '  ', prefix = '', prefix_color = 'StIdentifier' }
-      ),
+      item(utils.current_function(), 'StMetadata', {
+        before = '  ',
+        prefix = '',
+        prefix_color = 'StIdentifier',
+      }),
       4,
     },
     -- Local plugin dev indicator
     {
-      item_if(
-        available_space > 100 and 'local dev' or '',
-        vim.env.DEVELOPING ~= nil,
-        'StComment',
-        { prefix = '', padding = 'none', before = '  ', prefix_color = 'StWarning', small = 1 }
-      ),
+      item_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, 'StComment', {
+        prefix = '',
+        padding = 'none',
+        before = '  ',
+        prefix_color = 'StWarning',
+        small = 1,
+      }),
       2,
     },
     { separator },
@@ -235,30 +236,21 @@ function _G.statusline()
     { item(flutter.device and flutter.device.name or '', 'StMetadata'), 4 },
     { item(utils.lsp_status(), 'StMetadata'), 4 },
     {
-      item_if(
-        diagnostics.error.count,
-        diagnostics.error,
-        'StError',
-        { prefix = diagnostics.error.sign }
-      ),
+      item_if(diagnostics.error.count, diagnostics.error, 'StError', {
+        prefix = diagnostics.error.sign,
+      }),
       1,
     },
     {
-      item_if(
-        diagnostics.warning.count,
-        diagnostics.warning,
-        'StWarning',
-        { prefix = diagnostics.warning.sign }
-      ),
+      item_if(diagnostics.warning.count, diagnostics.warning, 'StWarning', {
+        prefix = diagnostics.warning.sign,
+      }),
       3,
     },
     {
-      item_if(
-        diagnostics.info.count,
-        diagnostics.info,
-        'StInfo',
-        { prefix = diagnostics.info.sign }
-      ),
+      item_if(diagnostics.info.count, diagnostics.info, 'StInfo', {
+        prefix = diagnostics.info.sign,
+      }),
       4,
     },
     { item(notifications, 'StTitle', { prefix = '' }), 3 },
@@ -289,12 +281,10 @@ function _G.statusline()
     },
     -- (Unexpected) Indentation
     {
-      item_if(
-        ctx.shiftwidth,
-        ctx.shiftwidth > 2 or not ctx.expandtab,
-        'StTitle',
-        { prefix = ctx.expandtab and 'Ξ' or '⇥', prefix_color = 'PmenuSbar' }
-      ),
+      item_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, 'StTitle', {
+        prefix = ctx.expandtab and 'Ξ' or '⇥',
+        prefix_color = 'PmenuSbar',
+      }),
       6,
     },
     { end_marker }
@@ -356,6 +346,6 @@ setup_autocommands()
 vim.g.qf_disable_statusline = 1
 
 -- set the statusline
-vim.o.statusline = '%!v:lua.statusline()'
+vim.o.statusline = '%!v:lua.__statusline()'
 
 return M
