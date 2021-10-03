@@ -45,7 +45,7 @@ return function()
     lsp_diagnostics = true,
     disable_netrw = true,
     hijack_netrw = true,
-    open_on_setup = false,
+    open_on_setup = true,
     hijack_cursor = true,
     update_cwd = true,
     update_focused_file = {

@@ -566,28 +566,6 @@ require('packer').startup {
           opts.title = opts.title or type(level) == 'string' and level or levels[level]
           notify(msg, level, opts)
         end
-        --@see: https://github.com/rcarriga/nvim-notify/issues/11#issuecomment-913065517
-        as.command {
-          'Messages',
-          function()
-            local color = {
-              DEBUG = 'NotifyDEBUGTitle',
-              TRACE = 'NotifyTRACETitle',
-              INFO = 'NotifyINFOTitle',
-              WARN = 'NotifyWARNTitle',
-              ERROR = 'NotifyERRORTitle',
-            }
-            for _, m in ipairs(notify.history()) do
-              vim.api.nvim_echo({
-                { vim.fn.strftime('%FT%T', m.time), 'Identifier' },
-                { ' ', 'MsgArea' },
-                { m.level, color[m.level] or 'Title' },
-                { ' ', 'MsgArea' },
-                { table.concat(m.message, ' '), 'MsgArea' },
-              }, false, {})
-            end
-          end,
-        }
       end,
     }
 
