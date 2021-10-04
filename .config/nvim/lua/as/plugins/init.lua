@@ -786,26 +786,30 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{1
     --------------------------------------------------------------------------------
-    -- TODO: converting a plugin from disabled to enabled inside a require doesn't work
-    use_local {
+    -- TODO: if a plugin which is specified as after for other plugins is converted to opt=true
+    -- trying to move that plugin to the opt directory fails
+    use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
+      event = 'BufReadPre',
       config = conf 'treesitter',
       local_path = 'contributing',
-      requires = { 'nvim-treesitter/nvim-treesitter-textobjects', 'p00f/nvim-ts-rainbow' },
-    }
-    use {
-      'nvim-treesitter/playground',
-      keys = '<leader>E',
-      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-      setup = function()
-        require('which-key').register {
-          ['<leader>E'] = 'treesitter: highlight cursor group',
-        }
-      end,
-      config = function()
-        as.nnoremap('<leader>E', '<Cmd>TSHighlightCapturesUnderCursor<CR>')
-      end,
+      wants = { 'null-ls.nvim', 'lua-dev.nvim' },
+      requires = {
+        { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' },
+        { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' },
+        {
+          'nvim-treesitter/playground',
+          keys = '<leader>E',
+          cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
+          setup = function()
+            require('which-key').register { ['<leader>E'] = 'treesitter: highlight cursor group' }
+          end,
+          config = function()
+            as.nnoremap('<leader>E', '<Cmd>TSHighlightCapturesUnderCursor<CR>')
+          end,
+        },
+      },
     }
 
     -- Use <Tab> to escape from pairs such as ""|''|() etc.
