@@ -53,35 +53,6 @@ fn.sign_define(vim.tbl_map(function(t)
   }
 end, diagnostic_types))
 
-local all_namespaces = {}
-
---- FIXME: this is a duplicate of an internal vim.diagnostic function
----is it possible to do this without rewriting this logic
----@param ns number namespace ID
----@return table
-local function get_namespace(ns)
-  if not all_namespaces[ns] then
-    local name
-    for k, v in pairs(vim.api.nvim_get_namespaces()) do
-      if ns == v then
-        name = k
-        break
-      end
-    end
-
-    if not name then
-      return vim.notify('namespace does not exist or is anonymous', vim.log.levels.ERROR)
-    end
-
-    all_namespaces[ns] = {
-      name = name,
-      sign_group = string.format('vim.diagnostic.%s', name),
-      opts = {},
-    }
-  end
-  return all_namespaces[ns]
-end
-
 ---Override diagnostics signs helper to only show the single most relevant sign
 ---@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
 ---@param diagnostics table[]
@@ -129,23 +100,22 @@ if not as.nightly then
     set_signs(filtered, bufnr, client_id, sign_ns, opts)
   end
 else
-  local function display_signs(namespace, bufnr, diagnostics, opts)
-    local ns = get_namespace(namespace)
+  local ns = vim.api.nvim_create_namespace 'severe-diagnostics'
+  local show = vim.diagnostic.show
+  local function display_signs(bufnr)
+    -- Get all diagnostics from the current buffer
+    local diagnostics = vim.diagnostic.get(bufnr)
     local filtered = filter_diagnostics(diagnostics, bufnr)
-    for _, diagnostic in ipairs(filtered) do
-      local name = vim.diagnostic.severity[diagnostic.severity]
-      local hl = 'DiagnosticSign' .. name:sub(1, 1) .. name:sub(2, -1):lower()
-      fn.sign_place(0, ns.sign_group, hl, bufnr, {
-        priority = opts and opts.priority,
-        lnum = diagnostic.lnum + 1,
-      })
-    end
+    show(ns, bufnr, filtered, {
+      virtual_text = false,
+      underline = false,
+      signs = true,
+    })
   end
 
-  local show = vim.diagnostic.show
-  function vim.diagnostic.show(namespace, bufnr, diagnostics, opts)
-    show(namespace, bufnr, diagnostics, opts)
-    display_signs(namespace, bufnr, diagnostics, opts)
+  function vim.diagnostic.show(namespace, bufnr, ...)
+    show(namespace, bufnr, ...)
+    display_signs(bufnr)
   end
 end
 
