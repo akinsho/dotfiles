@@ -528,8 +528,8 @@ require('packer').startup {
         vim.g.VM_maps = {
           ['Find Under'] = '<C-e>',
           ['Find Subword Under'] = '<C-e>',
-          ['Select Cursor Down'] = [[\j]],
-          ['Select Cursor Up'] = [[\k]],
+          ['Select Cursor Down'] = '\\j',
+          ['Select Cursor Up'] = '\\k',
         }
       end,
     }

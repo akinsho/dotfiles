@@ -302,9 +302,15 @@ local function setup_autocommands()
       targets = { '*' },
       command = colors,
     },
-    { events = { 'VimEnter' }, targets = { '*' }, command = utils.git_updates },
     {
-      events = { 'VimEnter' },
+      events = { 'BufReadPre' },
+      modifiers = { '++once' },
+      targets = { '*' },
+      command = utils.git_updates,
+    },
+    {
+      events = { 'BufReadPre' },
+      modifiers = { '++once' },
       targets = { '*' },
       command = utils.github_notifications,
     },
