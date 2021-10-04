@@ -12,12 +12,13 @@ local H = require 'as.highlights'
 local P = as.style.palette
 local M = {}
 
---- NOTE: Unicode characters including vim devicons should NOT be highlighted
---- as italic or bold, this is because the underlying bold font is not necessarily
---- patched with the nerd font characters
---- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
---- but this is not universal across terminals so should be avoided
 local function colors()
+  --- NOTE: Unicode characters including vim devicons should NOT be highlighted
+  --- as italic or bold, this is because the underlying bold font is not necessarily
+  --- patched with the nerd font characters
+  --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
+  --- but this is not universal across terminals so should be avoided
+
   local indicator_color = P.bright_blue
   local warning_fg = as.style.lsp.colors.warn
 
