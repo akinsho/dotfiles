@@ -16,12 +16,13 @@ vim.g.vim_dir = vim.g.dotfiles .. '/.config/nvim'
 vim.g.mapleader = ',' -- Remap leader key
 vim.g.maplocalleader = ' ' -- Local leader is <Space>
 
-if pcall(require, 'plenary') then
-  RELOAD = require('plenary.reload').reload_module
-  function R(name)
-    RELOAD(name)
-    return require(name)
-  end
+local ok, reload = pcall(require, 'plenary.reload')
+RELOAD = ok and reload.reload_module or function(...)
+  return ...
+end
+function R(name)
+  RELOAD(name)
+  return require(name)
 end
 
 ------------------------------------------------------------------------
