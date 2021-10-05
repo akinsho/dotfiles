@@ -19,8 +19,9 @@ utils.bootstrap_packer()
 -- cfilter plugin allows filter down an existing quickfix list
 vim.cmd 'packadd! cfilter'
 
+---@see: https://github.com/lewis6991/impatient.nvim/issues/35
 as.safe_require 'impatient'
--- FIXME: profiling causes load issues with fzy-lua-native
+-- -- FIXME: profiling causes load issues with fzy-lua-native
 -- if impatient_ok then
 --   impatient.enable_profile()
 -- end
