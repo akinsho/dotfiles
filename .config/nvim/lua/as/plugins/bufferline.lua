@@ -39,7 +39,6 @@ return function()
   end
 
   local groups = require 'bufferline.groups'
-  local List = require 'plenary.collections.py_list'
 
   require('bufferline').setup {
     options = {
@@ -113,10 +112,12 @@ return function()
           {
             highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
-            auto_close = true,
             matcher = function(buf)
-              local list = List { 'md', 'txt', 'org', 'norg', 'wiki' }
-              return list:contains(fn.fnamemodify(buf.path, ':e'))
+              for _, ext in ipairs { 'md', 'txt', 'org', 'norg', 'wiki' } do
+                if ext == fn.fnamemodify(buf.path, ':e') then
+                  return true
+                end
+              end
             end,
           },
         },
