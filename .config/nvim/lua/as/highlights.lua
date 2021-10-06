@@ -392,7 +392,6 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 if vim.v.vim_did_enter ~= 1 then
   -- FIXME: re-running the colorscheme command throws errors, using silent suppresses them
-  vim.g.doom_one_telescope_highlights = false
   vim.cmd 'colorscheme doom-one'
 end
 

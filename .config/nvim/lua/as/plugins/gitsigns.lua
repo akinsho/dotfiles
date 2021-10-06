@@ -27,11 +27,11 @@ return function()
 
   gitsigns.setup {
     signs = {
-      add = { hl = 'GitGutterAdd', text = '▌' },
-      change = { hl = 'GitGutterChange', text = '▌' },
-      delete = { hl = 'GitGutterDelete', text = '▌' },
-      topdelete = { hl = 'GitGutterDelete', text = '▌' },
-      changedelete = { hl = 'GitGutterChange', text = '▌' },
+      add = { hl = 'GitSignsAdd', text = '▌' },
+      change = { hl = 'GitSignsChange', text = '▌' },
+      delete = { hl = 'GitSignsDelete', text = '▌' },
+      topdelete = { hl = 'GitSignsDelete', text = '▌' },
+      changedelete = { hl = 'GitSignsChange', text = '▌' },
     },
     word_diff = false,
     numhl = false,
