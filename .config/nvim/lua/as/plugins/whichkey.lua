@@ -9,10 +9,6 @@ return function()
   }
 
   wk.register {
-    d = {
-      f = 'treesitter: peek function definition',
-      F = 'treesitter: peek class definition',
-    },
     [']'] = {
       name = '+next',
       ['<space>'] = 'add space below',
@@ -23,6 +19,10 @@ return function()
     },
     ['g>'] = 'show message history',
     ['<leader>'] = {
+      d = {
+        f = 'treesitter: peek function definition',
+        F = 'treesitter: peek class definition',
+      },
       n = {
         name = '+new',
         f = 'create a new file',

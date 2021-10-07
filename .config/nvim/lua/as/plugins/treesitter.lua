@@ -64,8 +64,8 @@ return function()
         enable = true,
         border = 'rounded',
         peek_definition_code = {
-          ['df'] = '@function.outer',
-          ['dF'] = '@class.outer',
+          ['<leader>df'] = '@function.outer',
+          ['<leader>dF'] = '@class.outer',
         },
       },
     },
