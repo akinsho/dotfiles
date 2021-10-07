@@ -175,7 +175,12 @@ if vim.env.TMUX ~= nil then
       events = { 'ColorScheme', 'FocusGained' },
       targets = { '*' },
       command = function()
-        require('as.external').tmux.set_statusline()
+        -- NOTE: there is a race condition here as the colors
+        -- for kitty to re-use need to be set AFTER the rest of the colorscheme
+        -- overrides
+        vim.defer_fn(function()
+          require('as.external').tmux.set_statusline()
+        end, 1)
       end,
     },
   })
