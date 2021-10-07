@@ -390,9 +390,6 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-if vim.v.vim_did_enter ~= 1 then
-  -- FIXME: re-running the colorscheme command throws errors, using silent suppresses them
-  vim.cmd 'colorscheme doom-one'
-end
+vim.cmd 'colorscheme doom-one'
 
 return M
