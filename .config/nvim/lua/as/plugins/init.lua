@@ -703,7 +703,18 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     -- Profiling & Startup {{{1
     --------------------------------------------------------------------------------
-    use 'nathom/filetype.nvim'
+    use {
+      'nathom/filetype.nvim',
+      config = function()
+        require('filetype').setup {
+          overrides = {
+            literal = {
+              ['kitty.conf'] = 'kitty',
+            },
+          },
+        }
+      end,
+    }
     -- TODO: this plugin will be redundant once https://github.com/neovim/neovim/pull/15436 is merged
     use 'lewis6991/impatient.nvim'
     use {
