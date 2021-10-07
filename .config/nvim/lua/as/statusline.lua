@@ -27,8 +27,6 @@ local function colors()
   local normal_fg = H.get_hl('Normal', 'fg')
   local pmenu_bg = H.get_hl('Pmenu', 'bg')
   local string_fg = H.get_hl('String', 'fg')
-  local comment_fg = H.get_hl('Comment', 'fg')
-  local comment_gui = H.get_hl('Comment', 'gui')
   local number_fg = H.get_hl('Number', 'fg')
   local identifier_fg = H.get_hl('Identifier', 'fg')
   local inc_search_bg = H.get_hl('Search', 'bg')
@@ -36,8 +34,8 @@ local function colors()
   local bg_color = H.alter_color(H.get_hl('Normal', 'bg'), -16)
 
   H.all {
-    { 'StMetadata', { guifg = comment_fg, guibg = bg_color, gui = 'italic' } },
-    { 'StMetadataPrefix', { guibg = bg_color, guifg = comment_fg } },
+    { 'StMetadata', { guibg = bg_color, inherit = 'Comment' } },
+    { 'StMetadataPrefix', { guibg = bg_color, inherit = 'Comment', gui = 'NONE' } },
     { 'StIndicator', { guibg = bg_color, guifg = indicator_color } },
     { 'StModified', { guifg = string_fg, guibg = bg_color } },
     { 'StGit', { guifg = P.light_red, guibg = bg_color } },
@@ -50,7 +48,7 @@ local function colors()
     { 'StParentDirectory', { guibg = bg_color, guifg = string_fg, gui = 'bold' } },
     { 'StIdentifier', { guifg = identifier_fg, guibg = bg_color } },
     { 'StTitle', { guibg = bg_color, guifg = 'LightGray', gui = 'bold' } },
-    { 'StComment', { guibg = bg_color, guifg = comment_fg, gui = comment_gui } },
+    { 'StComment', { guibg = bg_color, inherit = 'Comment' } },
     { 'StInactive', { guifg = bg_color, guibg = P.comment_grey } },
     { 'StatusLine', { guibg = bg_color } },
     { 'StatusLineNC', { guibg = bg_color, gui = 'NONE' } },
