@@ -104,7 +104,7 @@ local function get_hl(group_name)
     local gui = {}
     for key, value in pairs(hl) do
       local t = type(value)
-      if t == 'number' then
+      if t == 'number' and attrs[key] then
         result[attrs[key]] = '#' .. bit.tohex(value, 6)
       elseif t == 'boolean' then -- NOTE: we presume that a boolean value is a GUI attribute
         table.insert(gui, key)
@@ -128,8 +128,8 @@ function M.set_hl(name, opts)
         local attrs = get_hl(opts.inherit)
         --- FIXME: deep extending does not merge { a = {'one'}} with {b = {'two'}}
         --- correctly in nvim 0.5.1, but should do in 0.6
-        opts.gui = (not opts.gui or not attrs.gui) and opts.gui
-          or opts.gui .. ',' .. table.concat(attrs.gui, ',')
+        opts.gui = (opts.gui and attrs.gui) and opts.gui .. ',' .. table.concat(attrs.gui, ',')
+          or opts.gui
         opts = vim.tbl_deep_extend('force', attrs, opts)
         opts.inherit = nil
       end
@@ -156,7 +156,7 @@ function M.get_hl(grp, attr, fallback)
   local hl = get_hl(grp)
   local color = hl[attr:match 'gui' and attr or fmt('gui%s', attr)] or fallback
   if not color then
-    vim.notify(fmt('%s %s does not exist', grp, attr), levels.ERROR)
+    vim.notify(fmt('%s %s does not exist', grp, attr), levels.INFO)
     return 'NONE'
   end
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
