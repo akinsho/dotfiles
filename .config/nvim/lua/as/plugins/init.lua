@@ -654,7 +654,13 @@ require('packer').startup {
               config = {
                 workspaces = {
                   notes = '~/Dropbox/neorg',
+                  gtd = '~/Dropbox/neorg/tasks/',
                 },
+              },
+            },
+            ['core.gtd.base'] = {
+              config = {
+                workspace = 'tasks',
               },
             },
           },
