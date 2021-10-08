@@ -653,7 +653,7 @@ require('packer').startup {
             ['core.norg.dirman'] = {
               config = {
                 workspaces = {
-                  notes = '~/Dropbox/neorg',
+                  notes = '~/Dropbox/neorg/main/',
                   gtd = '~/Dropbox/neorg/tasks/',
                 },
               },
