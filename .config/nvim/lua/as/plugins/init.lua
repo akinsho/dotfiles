@@ -474,12 +474,6 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     use 'nanotee/luv-vimdocs'
     use 'milisims/nvim-luaref'
-    use {
-      'kevinhwang91/nvim-bqf',
-      config = function()
-        require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { guifg = 'Gray' } })
-      end,
-    }
 
     -- prevent select and visual mode from overwriting the clipboard
     use {
@@ -604,6 +598,24 @@ require('packer').startup {
           RGB = false,
           mode = 'background',
         })
+      end,
+    }
+    -----------------------------------------------------------------------------//
+    -- Quickfix
+    -----------------------------------------------------------------------------//
+    use {
+      'https://gitlab.com/yorickpeterse/nvim-pqf',
+      event = 'VimEnter',
+      config = function()
+        require('as.highlights').plugin('NvimPQF', { 'qfPosition', { link = 'Tag', force = true } })
+        require('pqf').setup()
+      end,
+    }
+
+    use {
+      'kevinhwang91/nvim-bqf',
+      config = function()
+        require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { guifg = 'Gray' } })
       end,
     }
     --------------------------------------------------------------------------------
