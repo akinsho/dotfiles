@@ -989,18 +989,12 @@ require('packer').startup {
     }
 
     use {
-      'b3nj5m1n/kommentary',
+      'numToStr/Comment.nvim',
       config = function()
-        require('kommentary.config').configure_language(
-          'default',
-          { ignore_whitespace = true, use_consistent_indentation = true }
-        )
-        require('kommentary.config').configure_language(
-          'lua',
-          { prefer_single_line_comments = true }
-        )
+        require('Comment').setup()
       end,
     }
+
     use {
       'tommcdo/vim-exchange',
       config = function()
