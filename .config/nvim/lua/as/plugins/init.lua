@@ -1072,21 +1072,7 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     -- Themes  {{{1
     --------------------------------------------------------------------------------
-    use {
-      'NTBBloodbath/doom-one.nvim',
-      config = function()
-        require('doom-one').setup {
-          plugins_integrations = {
-            telescope = false,
-            neogit = true,
-            gitsigns = true,
-            nvim_tree = true,
-            whichkey = true,
-            indent_blankline = true,
-          },
-        }
-      end,
-    }
+    use 'NTBBloodbath/doom-one.nvim'
     use 'monsonjeremy/onedark.nvim'
     use 'marko-cerovac/material.nvim'
     use 'projekt0n/github-nvim-theme'
