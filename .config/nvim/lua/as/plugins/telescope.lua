@@ -16,9 +16,23 @@ return function()
     }
   )
 
+  ---@param opts table
+  ---@return table
+  local function dropdown(opts)
+    return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts, {
+      borderchars = {
+        { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
+        results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
+        preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+      },
+    }))
+  end
+
   telescope.setup {
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
+      borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       prompt_prefix = ' ',
       selection_caret = '» ',
       mappings = {
@@ -156,8 +170,7 @@ return function()
   end
 
   local function frecency()
-    local themes = require 'telescope.themes'
-    telescope.extensions.frecency.frecency(themes.get_dropdown {
+    telescope.extensions.frecency.frecency(dropdown {
       default_text = ':CWD:',
       winblend = 10,
       border = true,
