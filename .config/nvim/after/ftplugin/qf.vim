@@ -12,10 +12,9 @@ setlocal norelativenumber
 setlocal nowrap
 setlocal signcolumn=yes
 setlocal colorcolumn=
-set nobuflisted " quickfix buffers should not pop up when doing :bn or :bp
+setlocal nobuflisted " quickfix buffers should not pop up when doing :bn or :bp
 call s:adjust_height(1, 10)
 setlocal winfixheight
-
 setlocal winhighlight=Normal:PanelBackground,SignColumn:PanelBackground
 "--------------------------------------------------------------------------------
 " Helper functions
