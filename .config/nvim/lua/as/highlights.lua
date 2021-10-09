@@ -308,7 +308,10 @@ local function general_overrides()
     { 'LspDiagnosticsUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
     { 'LspDiagnosticsUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
     { 'LspDiagnosticsUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
-    { 'LspDiagnosticsUnderlineInformation', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
+    {
+      'LspDiagnosticsUnderlineInformation',
+      { gui = 'undercurl', guisp = L.info, guifg = 'none' },
+    },
   }
 end
 

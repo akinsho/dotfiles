@@ -607,7 +607,7 @@ require('packer').startup {
       'https://gitlab.com/yorickpeterse/nvim-pqf',
       event = 'VimEnter',
       config = function()
-        require('as.highlights').plugin('NvimPQF', { 'qfPosition', { link = 'Tag', force = true } })
+        require('as.highlights').plugin('pqf', { 'qfPosition', { link = 'Tag', force = true } })
         require('pqf').setup()
       end,
     }
