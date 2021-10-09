@@ -25,6 +25,8 @@ return function()
     'NvimTree',
     { 'NvimTreeIndentMarker', { link = 'Comment' } },
     { 'NvimTreeNormal', { link = 'PanelBackground' } },
+    { 'NvimTreeNormalNC', { link = 'PanelBackground' } },
+    { 'NvimTreeSignColumn', { link = 'PanelBackground' } },
     { 'NvimTreeEndOfBuffer', { link = 'PanelBackground' } },
     { 'NvimTreeVertSplit', { link = 'PanelVertSplit' } },
     { 'NvimTreeStatusLine', { link = 'PanelSt' } },
