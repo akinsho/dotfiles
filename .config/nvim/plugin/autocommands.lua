@@ -361,7 +361,12 @@ as.augroup('Utilities', {
     targets = { '*' },
     command = function()
       local pos = fn.line [['"]]
-      if vim.bo.ft ~= 'gitcommit' and pos > 0 and pos <= fn.line '$' then
+      if
+        vim.bo.ft ~= 'gitcommit'
+        and vim.fn.win_gettype() ~= 'popup'
+        and pos > 0
+        and pos <= fn.line '$'
+      then
         vim.cmd 'keepjumps normal g`"'
       end
     end,
