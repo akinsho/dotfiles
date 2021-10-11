@@ -202,6 +202,7 @@ end
 local function general_overrides()
   local comment_fg = M.get_hl('Comment', 'fg')
   local keyword_fg = M.get_hl('Keyword', 'fg')
+  local search_bg = M.get_hl('Search', 'bg')
   local msg_area_bg = M.alter_color(M.get_hl('Normal', 'bg'), -10)
   local hint_line = M.alter_color(L.hint, -80)
   local error_line = M.alter_color(L.error, -80)
@@ -258,6 +259,7 @@ local function general_overrides()
     { 'Type', { gui = 'italic,bold' } },
     { 'Include', { gui = 'italic' } },
     { 'Folded', { gui = 'bold,italic' } },
+    { 'QuickFixLine', { guibg = search_bg } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
