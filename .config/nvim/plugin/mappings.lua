@@ -418,19 +418,21 @@ xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
-local function toggle_list(prefix)
+
+--- Utility function to toggle the location or the quickfix list
+function as.toggle_list(prefix)
+  local L = vim.log.levels
   for _, win in ipairs(api.nvim_list_wins()) do
     local buf = api.nvim_win_get_buf(win)
     local location_list = fn.getloclist(0, { filewinid = 0 })
     local is_loc_list = location_list.filewinid > 0
     if vim.bo[buf].filetype == 'qf' or is_loc_list then
-      fn.execute(prefix .. 'close')
-      return
+      return fn.execute(prefix .. 'close')
     end
   end
-  if prefix == 'l' and vim.tbl_isempty(fn.getloclist(0)) then
-    vim.notify('Location List is Empty.', 2)
-    return
+  local list = prefix == 'l' and fn.getloclist(0) or fn.getqflist()
+  if vim.tbl_isempty(list) then
+    return vim.notify(prefix == 'l' and 'Location' or 'QuickFix' .. ' List is Empty.', L.WARN)
   end
 
   local winnr = fn.winnr()
@@ -441,10 +443,10 @@ local function toggle_list(prefix)
 end
 
 nnoremap('<leader>ls', function()
-  toggle_list 'c'
+  as.toggle_list 'c'
 end)
 nnoremap('<leader>li', function()
-  toggle_list 'l'
+  as.toggle_list 'l'
 end)
 
 -----------------------------------------------------------------------------//

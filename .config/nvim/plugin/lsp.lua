@@ -5,9 +5,10 @@
 local lsp = vim.lsp
 local fn = vim.fn
 local fmt = string.format
+local L = vim.lsp.log_levels
 
 if vim.env.DEVELOPING then
-  vim.lsp.set_log_level(vim.lsp.log_levels.DEBUG)
+  vim.lsp.set_log_level(L.DEBUG)
 end
 
 -----------------------------------------------------------------------------//
@@ -24,9 +25,23 @@ command {
 }
 
 command {
-  'Format',
+  'LspFormat',
   function()
     vim.lsp.buf.formatting_sync(nil, 1000)
+  end,
+}
+
+command {
+  'LspDiagnostics',
+  function()
+    if not as.nightly then
+      ---@diagnostic disable-next-line: deprecated
+      vim.lsp.diagnostic.set_loclist { open = false }
+      as.toggle_list 'l'
+    else
+      vim.diagnostic.setqflist { open = false }
+      as.toggle_list 'c'
+    end
   end,
 }
 
