@@ -44,6 +44,7 @@ command {
     end
   end,
 }
+as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostics')
 
 -----------------------------------------------------------------------------//
 -- Signs
