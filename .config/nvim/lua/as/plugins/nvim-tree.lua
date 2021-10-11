@@ -44,7 +44,9 @@ return function()
         { key = 'cd', cb = action 'cd' },
       },
     },
-    lsp_diagnostics = true,
+    diagnostics = {
+      enable = true,
+    },
     disable_netrw = true,
     hijack_netrw = true,
     open_on_setup = true,
