@@ -1,17 +1,18 @@
 local H = require 'as.highlights'
 
 local fn = vim.fn
+local api = vim.api
 local expand = fn.expand
 local strwidth = fn.strwidth
 local fnamemodify = fn.fnamemodify
 local contains = vim.tbl_contains
+local fmt = string.format
 
 local M = {}
 
-local function get_toggleterm_name(_, bufnum)
+local function get_toggleterm_name(_, buf)
   local shell = fnamemodify(vim.env.SHELL, ':t')
-  local terminal_prefix = 'Terminal(' .. shell .. ')['
-  return terminal_prefix .. fn.getbufvar(bufnum, 'toggle_number') .. ']'
+  return fmt('Terminal(%s)[%s]', shell, api.nvim_buf_get_var(buf, 'toggle_number'))
 end
 
 local plain_filetypes = {
@@ -373,7 +374,8 @@ local function get_count(buf, severity)
     local s = vim.diagnostic.severity[severity:upper()]
     return #vim.diagnostic.get(buf, { severity = s })
   end
-  ---FIXME: remove  this once 0.6 or 5.1 is stable
+  --- FIXME: remove  this once 0.6 or 5.1 is stable
+  ---@diagnostic disable-next-line: deprecated
   return vim.lsp.diagnostic.get_count(buf, severity)
 end
 
