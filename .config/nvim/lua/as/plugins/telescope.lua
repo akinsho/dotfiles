@@ -19,7 +19,7 @@ return function()
   ---@param opts table
   ---@return table
   local function dropdown(opts)
-    return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts, {
+    return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
       borderchars = {
         { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
@@ -73,7 +73,7 @@ return function()
       },
     },
     pickers = {
-      buffers = {
+      buffers = dropdown {
         sort_mru = true,
         sort_lastused = true,
         show_all_buffers = true,
@@ -85,14 +85,11 @@ return function()
           n = { ['<c-x>'] = 'delete_buffer' },
         },
       },
-      oldfiles = {
-        theme = 'dropdown',
-      },
+      oldfiles = dropdown(),
       live_grep = {
         file_ignore_patterns = { '.git/' },
       },
-      current_buffer_fuzzy_find = {
-        theme = 'dropdown',
+      current_buffer_fuzzy_find = dropdown {
         previewer = false,
         shorten_path = false,
       },
@@ -105,9 +102,7 @@ return function()
       find_files = {
         hidden = true,
       },
-      git_branches = {
-        theme = 'dropdown',
-      },
+      git_branches = dropdown(),
       git_bcommits = {
         layout_config = {
           horizontal = {
@@ -122,9 +117,7 @@ return function()
           },
         },
       },
-      reloader = {
-        theme = 'dropdown',
-      },
+      reloader = dropdown(),
     },
   }
 
@@ -134,8 +127,7 @@ return function()
   local builtins = require 'telescope.builtin'
 
   local function project_files(opts)
-    local ok = pcall(builtins.git_files, opts)
-    if not ok then
+    if not pcall(builtins.git_files, opts) then
       builtins.find_files(opts)
     end
   end
