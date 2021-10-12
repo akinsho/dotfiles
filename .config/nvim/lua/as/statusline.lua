@@ -183,7 +183,8 @@ function _G.__statusline()
   local behind = updates.behind and tonumber(updates.behind) or 0
 
   -- Github notifications
-  local notifications = vim.g.github_notifications
+  local ghn_ok, ghn = pcall(require, 'github-notifications')
+  local notifications = ghn_ok and ghn.statusline_notification_count() or ''
 
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
@@ -252,7 +253,7 @@ function _G.__statusline()
       }),
       4,
     },
-    { item(notifications, 'StTitle', { prefix = '' }), 3 },
+    { item(notifications, 'StTitle'), 3 },
     -- Git Status
     { item(status.head, 'StBlue', { prefix = '', prefix_color = 'StGit' }), 1 },
     { item(status.changed, 'StTitle', { prefix = '', prefix_color = 'StWarning' }), 3 },
@@ -308,12 +309,6 @@ local function setup_autocommands()
       command = utils.git_updates,
     },
     {
-      events = { 'BufReadPre' },
-      modifiers = { '++once' },
-      targets = { '*' },
-      command = utils.github_notifications,
-    },
-    {
       events = { 'DirChanged' },
       targets = { '*' },
       command = utils.git_update_toggle,
@@ -326,20 +321,12 @@ local function setup_autocommands()
     -- },
     -- NOTE: user autocommands can't be joined into one autocommand
     {
-      events = { 'User AsyncGitJobComplete' },
-      command = utils.git_updates_refresh,
-    },
-    {
       events = { 'User NeogitStatusRefresh' },
       command = utils.git_updates_refresh,
     },
     {
       events = { 'User FugitiveChanged' },
       command = utils.git_updates_refresh,
-    },
-    {
-      events = { 'User FugitiveChanged' },
-      command = 'redrawstatus!',
     },
   })
 end

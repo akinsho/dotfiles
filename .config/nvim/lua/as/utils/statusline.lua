@@ -588,39 +588,6 @@ local function job(interval, task, on_complete)
   end
 end
 
----Validate the response from the github CLI is JSON
----@param data table
----@return boolean
-local function validate_github_response(data)
-  return vim.tbl_islist(data)
-    and not as.empty(data[1])
-    and type(data[1]) == 'string'
-    and not data[1]:match '<!DOCTYPE html>'
-end
-
-local function fetch_github_notifications()
-  fn.jobstart('gh api notifications', {
-    stdout_buffered = true,
-    on_stdout = function(_, data, _)
-      if data then
-        vim.defer_fn(function()
-          -- data is a table, so check that the first value isn't an empty string
-          if validate_github_response(data) then
-            local notifications = vim.json and vim.json.decode(data[1]) or vim.fn.json_decode(data)
-            vim.g.github_notifications = #notifications
-          end
-        end, 1)
-      end
-    end,
-  })
-end
-
-function M.github_notifications()
-  if fn.executable 'gh' > 0 then
-    job(300000, fetch_github_notifications)
-  end
-end
-
 ---check if in a git repository
 ---@return boolean
 local function is_git_repo()

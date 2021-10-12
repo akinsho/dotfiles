@@ -960,6 +960,11 @@ require('packer').startup {
         require('octo').setup()
       end,
     }
+
+    use {
+      'rlch/github-notifications.nvim',
+      requires = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    }
     ---}}}
     --------------------------------------------------------------------------------
     -- Text Objects {{{1

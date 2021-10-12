@@ -171,6 +171,10 @@ return function()
     })
   end
 
+  local function gh_notifications()
+    telescope.extensions.ghn.ghn(dropdown())
+  end
+
   local function installed_plugins()
     require('telescope.builtin').find_files {
       cwd = vim.fn.stdpath 'data' .. '/site/pack/packer',
@@ -195,6 +199,7 @@ return function()
       b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
       d = { dotfiles, 'dotfiles' },
       f = { builtins.find_files, 'find files' },
+      n = { gh_notifications, 'notifications' },
       g = {
         name = '+git',
         c = { builtins.git_commits, 'commits' },
@@ -202,7 +207,7 @@ return function()
       },
       m = { builtins.man_pages, 'man pages' },
       h = { frecency, 'history' },
-      n = { nvim_config, 'nvim config' },
+      c = { nvim_config, 'nvim config' },
       o = { builtins.buffers, 'buffers' },
       p = { installed_plugins, 'plugins' },
       O = { orgfiles, 'org files' },
