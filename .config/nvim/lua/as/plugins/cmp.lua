@@ -65,6 +65,7 @@ return function()
     },
     formatting = {
       deprecated = true,
+      fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, vim_item)
         vim_item.kind = as.style.lsp.kinds[vim_item.kind]
         -- FIXME: automate this using a regex to normalise names
