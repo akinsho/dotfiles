@@ -7,6 +7,7 @@ return function()
     'telescope',
     { 'TelescopeMatching', { link = 'Title', force = true } },
     { 'TelescopeBorder', { link = 'GreyFloatBorder', force = true } },
+    { 'TelescopePromptPrefix', { link = 'Statement', force = true } },
     {
       'TelescopeSelectionCaret',
       {
