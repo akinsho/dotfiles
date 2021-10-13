@@ -799,7 +799,10 @@ require('packer').startup {
           widget_guides = { enabled = true, debug = true },
           dev_log = { open_cmd = 'tabedit' },
           lsp = {
-            settings = { showTodos = false },
+            settings = {
+              showTodos = false,
+              renameFilesWithClasses = 'always',
+            },
             on_attach = as.lsp and as.lsp.on_attach or nil,
             --- This is necessary to prevent lsp-status' capabilities being
             --- given priority over that of the default config
