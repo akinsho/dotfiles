@@ -163,7 +163,8 @@ return function()
 
   local function frecency()
     telescope.extensions.frecency.frecency(dropdown {
-      default_text = ':CWD:',
+      -- NOTE: remove default text as it's slow
+      -- default_text = ':CWD:',
       winblend = 10,
       border = true,
       previewer = false,
