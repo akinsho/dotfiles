@@ -485,10 +485,11 @@ require('packer').startup {
     use {
       'chentau/marks.nvim',
       config = function()
+        require('as.highlights').plugin('marks', { 'MarkSignHL', { guifg = 'Red' } })
         require('marks').setup {
           default_mappings = true,
           mappings = {},
-          builtin_marks = { '.', '<', '>', '^' },
+          -- builtin_marks = { '.', '^' },
         }
       end,
     }
