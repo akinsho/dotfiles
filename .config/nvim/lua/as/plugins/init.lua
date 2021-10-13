@@ -662,7 +662,7 @@ require('packer').startup {
             ['core.keybinds'] = {
               config = {
                 default_keybinds = true,
-                neorg_leader = '<Leader>o',
+                neorg_leader = '<localleader>n',
               },
             },
             ['core.norg.completion'] = {
