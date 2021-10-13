@@ -486,6 +486,17 @@ require('packer').startup {
     }
 
     use {
+      'chentau/marks.nvim',
+      config = function()
+        require('marks').setup {
+          default_mappings = true,
+          mappings = {},
+          builtin_marks = { '.', '<', '>', '^' },
+        }
+      end,
+    }
+
+    use {
       'arecarn/vim-fold-cycle',
       config = function()
         vim.g.fold_cycle_default_mapping = 0
