@@ -40,7 +40,21 @@ command {
       as.toggle_list 'l'
     else
       vim.diagnostic.setqflist { open = false }
-      as.toggle_list 'c'
+      -- Open the quickfix list with diagnostics if any are present
+      -- and then keep the list updated
+      local is_open = as.toggle_list 'c'
+      if is_open then
+        as.augroup('LspDiagnosticUpdate', {
+          {
+            events = { 'User DiagnosticsChanged' },
+            command = function()
+              vim.diagnostic.setqflist { open = false }
+            end,
+          },
+        })
+      elseif fn.exists '#LspDiagnosticUpdate' > 0 then
+        vim.cmd 'autocmd! LspDiagnosticUpdate'
+      end
     end
   end,
 }
