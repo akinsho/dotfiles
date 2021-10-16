@@ -153,61 +153,48 @@ end
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
-  lua = function()
-    --- NOTE: This is the secret sauce that allows reading requires and variables
-    --- between different modules in the nvim lua context
-    --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
-    --- if I ever decide to move away from lua dev then use the above
-    return require('lua-dev').setup {
-      lspconfig = {
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = {
-                'vim',
-                'describe',
-                'it',
-                'before_each',
-                'after_each',
-                'pending',
-                'teardown',
-                'packer_plugins',
-              },
+  --- NOTE: This is the secret sauce that allows reading requires and variables
+  --- between different modules in the nvim lua context
+  --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
+  --- if I ever decide to move away from lua dev then use the above
+  sumneko_lua = require('lua-dev').setup {
+    lspconfig = {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {
+              'vim',
+              'describe',
+              'it',
+              'before_each',
+              'after_each',
+              'pending',
+              'teardown',
+              'packer_plugins',
             },
-            completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
           },
+          completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         },
       },
-    }
-  end,
+    },
+  },
 }
 
 ---Logic to (re)start installed language servers for use initialising lsps
 ---and restarting them on installing new ones
-function as.lsp.setup_servers()
-  local lspconfig = require 'lspconfig'
-  local install_ok, lspinstall = as.safe_require 'lspinstall'
+function as.lsp.get_server_config(server)
   local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
-  -- can't reasonably proceed if lspinstall isn't loaded
-  if not install_ok then
-    return
-  end
-
-  lspinstall.setup()
-  local installed = lspinstall.installed_servers()
   local status_capabilities = require('lsp-status').capabilities
-  for _, server in pairs(installed) do
-    local config = as.lsp.servers[server] and as.lsp.servers[server]() or {}
-    config.flags = { debounce_text_changes = 500 }
-    config.on_attach = as.lsp.on_attach
-    config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
-    if nvim_lsp_ok then
-      cmp_nvim_lsp.update_capabilities(config.capabilities)
-    end
-    config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
-    lspconfig[server].setup(config)
+  local conf = as.lsp.servers[server.name]
+  local config = type(conf) == 'table' and conf or {}
+  config.flags = { debounce_text_changes = 500 }
+  config.on_attach = as.lsp.on_attach
+  config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
+  if nvim_lsp_ok then
+    cmp_nvim_lsp.update_capabilities(config.capabilities)
   end
-  vim.cmd 'doautocmd User LspServersStarted'
+  config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
+  return config
 end
 
 return function()
@@ -216,5 +203,9 @@ return function()
   end
   vim.g.lspconfig_has_setup = true
 
-  as.lsp.setup_servers()
+  local lsp_installer = require 'nvim-lsp-installer'
+  lsp_installer.on_server_ready(function(server)
+    server:setup(as.lsp.get_server_config(server))
+    vim.cmd [[ do User LspAttachBuffers ]]
+  end)
 end

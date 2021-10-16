@@ -228,19 +228,8 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
-    use {
-      'kabouzeid/nvim-lspinstall',
-      module = 'lspinstall',
-      requires = 'nvim-lspconfig',
-      config = function()
-        require('lspinstall').post_install_hook = function()
-          as.lsp.setup_servers()
-          vim.cmd 'bufdo e'
-        end
-      end,
-    }
-
-    use { 'neovim/nvim-lspconfig', event = 'BufReadPre', config = conf 'lspconfig' }
+    use { 'neovim/nvim-lspconfig', config = conf 'lspconfig' }
+    use { 'williamboman/nvim-lsp-installer', requires = 'nvim-lspconfig' }
 
     use {
       'jose-elias-alvarez/null-ls.nvim',
@@ -251,7 +240,6 @@ require('packer').startup {
       -- trigger loading after lspconfig has started the other servers
       -- since there is otherwise a race condition and null-ls' setup would
       -- have to be moved into lspconfig.lua otherwise
-      event = 'User LspServersStarted',
       config = function()
         local null_ls = require 'null-ls'
         null_ls.config {
