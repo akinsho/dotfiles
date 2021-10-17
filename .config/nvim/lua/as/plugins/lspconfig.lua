@@ -198,11 +198,6 @@ function as.lsp.get_server_config(server)
 end
 
 return function()
-  if vim.g.lspconfig_has_setup then
-    return
-  end
-  vim.g.lspconfig_has_setup = true
-
   local lsp_installer = require 'nvim-lsp-installer'
   lsp_installer.on_server_ready(function(server)
     server:setup(as.lsp.get_server_config(server))
