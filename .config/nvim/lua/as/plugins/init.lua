@@ -229,7 +229,22 @@ require('packer').startup {
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
     use { 'neovim/nvim-lspconfig', config = conf 'lspconfig' }
-    use { 'williamboman/nvim-lsp-installer', requires = 'nvim-lspconfig' }
+    use {
+      'williamboman/nvim-lsp-installer',
+      requires = 'nvim-lspconfig',
+      config = function()
+        local lsp_installer_servers = require 'nvim-lsp-installer.servers'
+        for name, _ in pairs(as.lsp.servers) do
+          ---@type boolean, table|string
+          local ok, server = lsp_installer_servers.get_server(name)
+          if ok then
+            if not server:is_installed() then
+              server:install()
+            end
+          end
+        end
+      end,
+    }
 
     use {
       'jose-elias-alvarez/null-ls.nvim',
