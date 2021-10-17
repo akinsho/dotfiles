@@ -38,6 +38,7 @@ return function()
       selection_caret = '» ',
       mappings = {
         i = {
+          ['<C-w>'] = actions.send_selected_to_qflist,
           ['<c-c>'] = function()
             vim.cmd 'stopinsert!'
           end,
@@ -45,6 +46,9 @@ return function()
           ['<c-s>'] = actions.select_horizontal,
           ['<c-j>'] = actions.cycle_history_next,
           ['<c-k>'] = actions.cycle_history_prev,
+        },
+        n = {
+          ['<C-w>'] = actions.send_selected_to_qflist,
         },
       },
       file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf' },
