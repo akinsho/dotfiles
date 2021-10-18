@@ -72,4 +72,4 @@ _deps
 .ignore
 .fvm/flutter_sdk
 
-# vim:filetype=gitignore
+# vim:filetype=conf

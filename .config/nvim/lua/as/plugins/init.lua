@@ -742,6 +742,7 @@ require('packer').startup {
           overrides = {
             literal = {
               ['kitty.conf'] = 'kitty',
+              ['.gitignore'] = 'conf',
             },
           },
         }
