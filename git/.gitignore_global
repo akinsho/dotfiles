@@ -70,6 +70,6 @@ _deps
 .localrc.lua
 .exrc
 .ignore
-.fvm/flutter_sdk
+.fvm/
 
 # vim:filetype=conf
