@@ -150,6 +150,20 @@ end
 -- Utils
 -----------------------------------------------------------------------------//
 
+---Check whether or not the location or quickfix list is open
+---@return boolean
+function as.is_vim_list_open()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local location_list = fn.getloclist(0, { filewinid = 0 })
+    local is_loc_list = location_list.filewinid > 0
+    if vim.bo[buf].filetype == 'qf' or is_loc_list then
+      return true
+    end
+  end
+  return false
+end
+
 function as._create(f)
   table.insert(as._store, f)
   return #as._store

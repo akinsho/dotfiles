@@ -418,39 +418,35 @@ xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
-
 --- Utility function to toggle the location or the quickfix list
----@return boolean whether or not the list is open
-function as.toggle_list(prefix)
+---@param list_type '"quickfix"' | '"location"'
+---@return nil
+function as.toggle_list(list_type)
+  local is_location_target = list_type == 'location'
+  local prefix = is_location_target and 'l' or 'c'
   local L = vim.log.levels
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == 'qf' or is_loc_list then
-      fn.execute(prefix .. 'close')
-      return false
-    end
+  local is_open = as.is_vim_list_open()
+  if is_open then
+    return fn.execute(prefix .. 'close')
   end
-  local list = prefix == 'l' and fn.getloclist(0) or fn.getqflist()
+  local list = is_location_target and fn.getloclist(0) or fn.getqflist()
   if vim.tbl_isempty(list) then
-    vim.notify(prefix == 'l' and 'Location' or 'QuickFix' .. ' List is Empty.', L.WARN)
-    return false
+    local msg_prefix = (is_location_target and 'Location' or 'QuickFix')
+    return vim.notify(msg_prefix .. ' List is Empty.', L.WARN)
   end
 
   local winnr = fn.winnr()
   fn.execute(prefix .. 'open')
   if fn.winnr() ~= winnr then
-    vim.cmd [[wincmd p]]
+    vim.cmd 'wincmd p'
   end
-  return true
 end
 
 nnoremap('<leader>ls', function()
-  as.toggle_list 'c'
+  as.toggle_list 'quickfix'
 end)
 nnoremap('<leader>li', function()
-  as.toggle_list 'l'
+  as.toggle_list 'location'
 end)
 
 -----------------------------------------------------------------------------//
