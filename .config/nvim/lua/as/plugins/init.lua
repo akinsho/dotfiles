@@ -31,6 +31,8 @@ as.safe_require 'impatient'
 --- or local variables
 require('packer').startup {
   function(use, use_rocks)
+    -- FIXME: this no longer loads the local plugin since the compiled file now
+    -- loads packer.nvim so the local alias(local-packer) does not work
     use_local { 'wbthomason/packer.nvim', local_path = 'contributing', opt = true }
     -----------------------------------------------------------------------------//
     -- Core {{{3
