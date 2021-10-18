@@ -59,7 +59,7 @@ return function()
           preview_width = 0.45,
         },
       },
-      winblend = 10,
+      winblend = 3,
       history = {
         path = vim.fn.stdpath 'data' .. '/telescope_history.sqlite3',
       },
