@@ -233,6 +233,7 @@ local function general_overrides()
       'SpellBad',
       { gui = 'undercurl', guibg = 'transparent', guifg = 'transparent', guisp = 'green' },
     },
+    { 'PmenuSbar', { guibg = P.grey } },
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
