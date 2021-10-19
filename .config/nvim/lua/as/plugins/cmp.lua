@@ -5,6 +5,10 @@ return function()
 
   require('as.highlights').plugin(
     'Cmp',
+    { 'CmpItemKind', { link = 'Special', force = true } },
+    { 'CmpItemAbbr', { inherit = 'Comment', gui = 'NONE' } },
+    { 'CmpItemMenu', { inherit = 'NonText', gui = 'NONE' } },
+    { 'CmpItemAbbrMatch', { inherit = 'Pmenu', gui = 'bold' } },
     { 'CmpItemAbbrDeprecated', { gui = 'strikethrough', inherit = 'Comment' } },
     { 'CmpItemAbbrMatchFuzzy', { gui = 'italic', guifg = 'fg' } }
   )
