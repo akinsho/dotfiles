@@ -26,7 +26,7 @@ return function()
     if cmp.visible() then
       cmp.select_next_item()
     elseif luasnip and luasnip.expand_or_jumpable() then
-      luasnip.expand_or_jump()
+      feed '<Plug>luasnip-expand-or-jump'
     else
       feed '<Plug>(Tabout)'
     end
@@ -37,7 +37,7 @@ return function()
     if cmp.visible() then
       cmp.select_prev_item()
     elseif luasnip and luasnip.jumpable(-1) then
-      luasnip.jump(-1)
+      feed '<Plug>luasnip-jump-prev'
     else
       feed '<Plug>(TaboutBack)'
     end
@@ -68,8 +68,10 @@ return function()
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, vim_item)
         vim_item.kind = as.style.lsp.kinds[vim_item.kind]
+        local name = entry.source.name
+        local completion = entry.completion_item.data
         -- FIXME: automate this using a regex to normalise names
-        vim_item.menu = ({
+        local menu = ({
           nvim_lsp = '[LSP]',
           nvim_lua = '[Lua]',
           emoji = '[Emoji]',
@@ -77,10 +79,19 @@ return function()
           calc = '[Calc]',
           neorg = '[Neorg]',
           orgmode = '[Org]',
+          cmp_tabnine = '[TN]',
           luasnip = '[Luasnip]',
           buffer = '[Buffer]',
           spell = '[Spell]',
-        })[entry.source.name]
+        })[name]
+
+        if name == 'cmp_tabnine' then
+          if completion and completion.detail then
+            menu = completion.detail .. ' ' .. menu
+          end
+          vim_item.kind = ''
+        end
+        vim_item.menu = menu
         return vim_item
       end,
     },
@@ -90,6 +101,7 @@ return function()
     sources = {
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
+      { name = 'cmp_tabnine' },
       { name = 'spell' },
       { name = 'path' },
       { name = 'buffer' },
