@@ -47,7 +47,7 @@ local function setup_autocommands(client, _)
           -- @see: https://github.com/nvim-treesitter/nvim-treesitter/issues/1424#issuecomment-909181939
           vim.cmd 'mkview!'
           vim.lsp.buf.formatting_sync()
-          vim.cmd 'edit | loadview'
+          vim.cmd 'loadview'
         end,
       },
     })
