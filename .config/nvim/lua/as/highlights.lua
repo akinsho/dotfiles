@@ -128,8 +128,9 @@ function M.set_hl(name, opts)
         local attrs = get_hl(opts.inherit)
         --- FIXME: deep extending does not merge { a = {'one'}} with {b = {'two'}}
         --- correctly in nvim 0.5.1, but should do in 0.6
-        opts.gui = (opts.gui and attrs.gui) and opts.gui .. ',' .. table.concat(attrs.gui, ',')
-          or opts.gui
+        if opts.gui and not opts.gui:match 'NONE' and attrs.gui then
+          opts.gui = opts.gui .. ',' .. table.concat(attrs.gui, ',')
+        end
         opts = vim.tbl_deep_extend('force', attrs, opts)
         opts.inherit = nil
       end
