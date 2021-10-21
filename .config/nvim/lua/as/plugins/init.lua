@@ -796,9 +796,6 @@ require('packer').startup {
       requires = { 'nvim-dap', 'plenary.nvim' },
       local_path = 'personal',
       config = function()
-        --- TODO: this causes lsp-status to be loaded early, increasing it's startup time
-        local status_ok, lsp_status = as.safe_require('lsp-status', { silent = true })
-        local capabilities = status_ok and lsp_status.capabilities or nil
         require('flutter-tools').setup {
           ui = { border = 'rounded' },
           debugger = { enabled = true },
@@ -817,6 +814,8 @@ require('packer').startup {
             --- This is necessary to prevent lsp-status' capabilities being
             --- given priority over that of the default config
             capabilities = function(defaults)
+              local ok, status = as.safe_require('lsp-status', { silent = true })
+              local capabilities = ok and status.capabilities or {}
               return vim.tbl_deep_extend('keep', defaults, capabilities)
             end,
           },
