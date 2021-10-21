@@ -1,8 +1,5 @@
 as.lsp = {}
 
---- TODO: remove once 0.6 is stable (use vim.diagnostic)
-local diagnostics = as.nightly and vim.diagnostic or vim.lsp.diagnostic
-
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -70,10 +67,19 @@ local function setup_mappings(client, bufnr)
     ['gI'] = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
     ['K'] = { vim.lsp.buf.hover, 'lsp: hover' },
   }
+
+  -- FIXME: remove when 0.6 is released
+  local goto_key = as.nightly and 'float' or 'popup_opts'
+  local diagnostics = as.nightly and vim.diagnostic or vim.lsp.diagnostic
+
   maps[']c'] = {
     function()
       diagnostics.goto_prev {
-        popup_opts = { border = 'rounded', focusable = false, source = 'always' },
+        [goto_key] = {
+          border = 'rounded',
+          focusable = false,
+          source = 'always',
+        },
       }
     end,
     'lsp: go to prev diagnostic',
@@ -81,7 +87,11 @@ local function setup_mappings(client, bufnr)
   maps['[c'] = {
     function()
       diagnostics.goto_next {
-        popup_opts = { border = 'rounded', focusable = false, source = 'always' },
+        [goto_key] = {
+          border = 'rounded',
+          focusable = false,
+          source = 'always',
+        },
       }
     end,
     'lsp: go to next diagnostic',
