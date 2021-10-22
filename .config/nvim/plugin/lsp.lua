@@ -31,7 +31,7 @@ command {
 }
 
 local list_type = as.nightly and 'quickfix' or 'location'
-local function open_diagnostics()
+local function set_diagnostics()
   if as.nightly then
     return vim.diagnostic.setqflist { open = false }
   end
@@ -42,11 +42,20 @@ end
 command {
   'LspDiagnostics',
   function()
-    open_diagnostics()
+    set_diagnostics()
     as.toggle_list(list_type)
     if as.is_vim_list_open() then
+      local event = as.nightly and 'DiagnosticsChanged' or 'LspDiagnosticsChanged'
       as.augroup('LspDiagnosticUpdate', {
-        { events = { 'User DiagnosticsChanged' }, command = open_diagnostics },
+        {
+          events = { fmt('User %s', event) },
+          command = function()
+            set_diagnostics()
+            if as.is_vim_list_open() then
+              as.toggle_list(list_type)
+            end
+          end,
+        },
       })
     elseif fn.exists '#LspDiagnosticUpdate' > 0 then
       vim.cmd 'autocmd! LspDiagnosticUpdate'
