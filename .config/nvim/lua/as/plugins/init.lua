@@ -623,10 +623,16 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     use {
       'https://gitlab.com/yorickpeterse/nvim-pqf',
-      event = 'BufReadPre', -- Delay loading till after lsp signs are set
       config = function()
         require('as.highlights').plugin('pqf', { 'qfPosition', { link = 'Tag', force = true } })
-        require('pqf').setup()
+        require('pqf').setup {
+          signs = {
+            error = as.style.icons.error,
+            warning = as.style.icons.warn,
+            info = as.style.icons.info,
+            hint = as.style.icons.hint,
+          },
+        }
       end,
     }
 
