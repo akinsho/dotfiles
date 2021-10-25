@@ -101,15 +101,16 @@ return function()
     documentation = {
       border = 'rounded',
     },
-    sources = {
+    sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'cmp_tabnine' },
       { name = 'spell' },
       { name = 'path' },
-      { name = 'buffer' },
       { name = 'neorg' },
       { name = 'orgmode' },
-    },
+    }, {
+      { name = 'buffer' },
+    }),
   }
 end
