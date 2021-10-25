@@ -330,9 +330,11 @@ require('packer').startup {
     use {
       'hrsh7th/nvim-cmp',
       module = 'cmp',
+      branch = 'cmdline',
       event = 'InsertEnter',
       requires = {
         { 'hrsh7th/cmp-nvim-lsp' },
+        { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
         { 'f3fora/cmp-spell', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
@@ -1091,7 +1093,8 @@ require('packer').startup {
     --@see: https://github.com/wbthomason/packer.nvim/issues/464
     use {
       'gelguy/wilder.nvim',
-      event = { 'CursorHold', 'CmdlineEnter' },
+      opt = true,
+      -- event = { 'CursorHold', 'CmdlineEnter' },
       rocks = { 'luarocks-fetch-gitrec', 'pcre2' },
       requires = { 'romgrk/fzy-lua-native' },
       config = function()
