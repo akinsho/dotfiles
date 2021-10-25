@@ -356,9 +356,6 @@ end
 
 local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
-    -- HACK: override the pumblend set by doom-one, use until the behaviour of the setup function
-    -- is fixed, @see: https://github.com/NTBBloodbath/doom-one.nvim/issues/17
-    vim.opt.pumblend = 3
     local keyword_fg = M.get_hl('Keyword', 'fg')
     M.all {
       { 'CursorLineNr', { guifg = keyword_fg } },
