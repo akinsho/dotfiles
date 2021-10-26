@@ -9,9 +9,21 @@ involved in the programs my dotfiles cover.
 
 ### Installation
 
-```
-curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | bash
-```
+The installation script is out of date and doesn't work anymore.
+To setup a new machine instead follow these instructions:
+1. Check `git` is installed.
+2. (Mac OS) Install homebrew using the most recent instructions.
+
+#### dependencies:
+* `neovim`
+* `hombrew` (MacOS)
+* `ripgrep`
+* `fzf`
+* `delta`
+* `prettier`
+* `stylua`
+* `himalaya`
+
 
 ### Highlights / Tools
 
@@ -23,12 +35,12 @@ curl -s https://raw.githubusercontent.com/akinsho/dotfiles/master/install.sh | b
 
   ![Zsh Prompt](./prompt.png)
 
-Please **DO NOT** fork or clone this repo. It isn't a distro it's only intended for my personal usage, and maybe
-some inspiration, _not complete duplication_. If you see something very weird or very wrong please raise an issue instead.
+Please **DO NOT** fork or clone this repo. It isn't a distro it's intended for my personal usage, and perhaps
+some inspiration, _not complete duplication_. If you see something weird or wrong please raise an issue instead.
 
 ### Setup
 
-Setup is managed using [dotbot](https://github.com/anishathalye/dotbot). To setup symlinks run
+I manage my setup using [dotbot](https://github.com/anishathalye/dotbot). To setup symlinks run
 `./install` in the root directory of the repository
 
 This package manages symlinking my config files to the correct directories.
