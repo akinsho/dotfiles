@@ -156,7 +156,7 @@ __in_git() {
     [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]
 }
 
-# TODO these functions should not be run outside of a git repository
+# TODO: these functions should not be run outside of a git repository
 # this function adds a hook to the git vcs_info backend that depending
 # they can also be quite slow...
 # on the output of the git command adds an indicator to the the vcs info
@@ -357,7 +357,7 @@ __async_vcs_info_done() {
   # remove the handler and close the file descriptor
   zle -F "$1"
   exec {1}<&-
-  # reset the the prompt
+  # reset the prompt
   set-prompt
   zle && zle reset-prompt
 }
