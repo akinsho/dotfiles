@@ -165,31 +165,39 @@ end
 as.lsp.servers = {
   gopls = true,
   bashls = true,
-  --- NOTE: This is the secret sauce that allows reading requires and variables
+  ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
   --- if I ever decide to move away from lua dev then use the above
-  sumneko_lua = require('lua-dev').setup {
-    lspconfig = {
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = {
-              'vim',
-              'describe',
-              'it',
-              'before_each',
-              'after_each',
-              'pending',
-              'teardown',
-              'packer_plugins',
+  ---  NOTE: we return a function here so that the lua dev dependency is not
+  --- required till the setup function is called.
+  sumneko_lua = function()
+    local ok, lua_dev = as.safe_require 'lua-dev'
+    if not ok then
+      return {}
+    end
+    return lua_dev.setup {
+      lspconfig = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = {
+                'vim',
+                'describe',
+                'it',
+                'before_each',
+                'after_each',
+                'pending',
+                'teardown',
+                'packer_plugins',
+              },
             },
+            completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
           },
-          completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         },
       },
-    },
-  },
+    }
+  end,
 }
 
 ---Logic to (re)start installed language servers for use initialising lsps
@@ -198,7 +206,8 @@ function as.lsp.get_server_config(server)
   local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
   local status_capabilities = require('lsp-status').capabilities
   local conf = as.lsp.servers[server.name]
-  local config = type(conf) == 'table' and conf or {}
+  local conf_type = type(conf)
+  local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
   config.flags = { debounce_text_changes = 500 }
   config.on_attach = as.lsp.on_attach
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
