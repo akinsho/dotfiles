@@ -23,7 +23,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
 # Increase window resize speed for Cocoa applications
-defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+# defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
@@ -46,7 +46,7 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
 # Disable Resume system-wide
-# defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 
 # Restart automatically if the computer freezes
 sudo systemsetup -setrestartfreeze on
@@ -99,8 +99,8 @@ defaults write NSGlobalDomain AppleMetricUnits -bool true
 ###############################################################################
 
 # Require password immediately after sleep or screen saver begins
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0
+# defaults write com.apple.screensaver askForPassword -int 1
+# defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 # Stop iTunes from responding to the keyboard media keys
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
@@ -118,7 +118,7 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 # Display full POSIX path as Finder window title
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+# defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 # Disable the warning before emptying the Trash
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
@@ -131,7 +131,7 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 defaults write com.apple.dock show-process-indicators -bool true
 
 # Don’t animate opening applications from the Dock
-defaults write com.apple.dock launchanim -bool false
+# defaults write com.apple.dock launchanim -bool false
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
@@ -140,7 +140,7 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.screencapture location -string "$HOME/Desktop"
 
 # set MacOS Dock size
-defaults write com.apple.dock tilesize -int 50
+# defaults write com.apple.dock tilesize -int 50
 
 # Show hidden apps in the dock
 defaults write com.apple.Dock showhidden -bool yes
