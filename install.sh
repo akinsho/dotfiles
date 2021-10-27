@@ -113,6 +113,10 @@ if [ "$(uname)" == "Darwin" ]; then
   echo "Installing Homebrew apps from brew file"
 fi
 
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
 # Install n node version manager program
 curl -L https://git.io/n-install | bash
 
