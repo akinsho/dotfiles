@@ -330,7 +330,6 @@ require('packer').startup {
     use {
       'hrsh7th/nvim-cmp',
       module = 'cmp',
-      branch = 'cmdline',
       event = 'InsertEnter',
       requires = {
         { 'hrsh7th/cmp-nvim-lsp' },
