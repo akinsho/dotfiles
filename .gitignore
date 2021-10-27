@@ -8,3 +8,4 @@ node
 *.code-workspace
 session/
 packer_compiled.vim
+automatic_backups/
