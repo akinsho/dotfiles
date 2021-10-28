@@ -118,19 +118,17 @@ return function()
       { name = 'buffer' },
     }),
   }
+
+  local search_sources = {
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp_document_symbol' },
+    }, {
+      { name = 'buffer' },
+    }),
+  }
   -- Use buffer source for `/`.
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' },
-    },
-  })
-
-  cmp.setup.cmdline('?', {
-    sources = {
-      { name = 'buffer' },
-    },
-  })
-
+  cmp.setup.cmdline('/', search_sources)
+  cmp.setup.cmdline('?', search_sources)
   -- Use cmdline & path source for ':'.
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
