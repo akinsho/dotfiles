@@ -283,7 +283,7 @@ function _G.__statusline()
     {
       item_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, 'StTitle', {
         prefix = ctx.expandtab and 'Ξ' or '⇥',
-        prefix_color = 'PmenuSbar',
+        prefix_color = 'StatusLine',
       }),
       6,
     },
