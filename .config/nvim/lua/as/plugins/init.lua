@@ -21,10 +21,6 @@ vim.cmd 'packadd! cfilter'
 
 ---@see: https://github.com/lewis6991/impatient.nvim/issues/35
 as.safe_require 'impatient'
--- -- FIXME: profiling causes load issues with fzy-lua-native
--- if impatient_ok then
---   impatient.enable_profile()
--- end
 
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
