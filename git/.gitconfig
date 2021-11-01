@@ -2,6 +2,8 @@
   name = "Akin Sowemimo"
 [include]
   path = ~/.gitconfig.local
+[includeIf "gitdir:~/projects/work/"]
+  path = ~/projects/work/.gitconfig.work
 [status]
   submoduleSummary = true
 [commit]
