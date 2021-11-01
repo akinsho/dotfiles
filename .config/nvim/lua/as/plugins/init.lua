@@ -644,8 +644,15 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     use {
       'soywod/himalaya', --- Email in nvim
-      rtp = 'vim',
-      run = 'curl -sSL https://raw.githubusercontent.com/soywod/himalaya/master/install.sh | PREFIX=~/.local sh',
+      rtp = 'email-manager/vim',
+      run = function()
+        if as.has 'mac' then
+          vim.fn.execute 'brew install himalaya'
+        end
+      end,
+      cond = function()
+        return as.executable 'himalaya'
+      end,
       config = function()
         require('which-key').register {
           ['<localleader>e'] = { name = '+email', l = { '<Cmd>Himalaya<CR>', 'list' } },
