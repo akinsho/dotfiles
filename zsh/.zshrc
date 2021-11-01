@@ -448,3 +448,19 @@ bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
+
+#-------------------------------------------------------------------------------
+#               $PATH Updates
+#-------------------------------------------------------------------------------
+# NOTE: this is here because it must be loaded after homebrew is added to the
+# path which is done in the .zprofile which loads after the .zshenv
+
+# MacOS ships with an older version of Ruby which is built against an X86
+# system rather than ARM i.e. for M1+. So replace the system ruby with an
+# updated one from Homebrew and ensure it is before /usr/bin/ruby
+# Prepend to PATH
+path=(
+  "$(brew --prefix)/opt/ruby/bin"
+  "$(brew --prefix)/lib/ruby/gems/3.0.0/bin"
+  $path
+)
