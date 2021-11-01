@@ -1,11 +1,4 @@
-" wrapping is expensive don't do it for huge log files
-if line('$') > 100000
-  setlocal nowrap
-  syntax clear
-else
-  setlocal wrap
-endif
-
+setlocal nowrap
 setlocal foldmethod=manual
 setlocal colorcolumn=
 setlocal nolist
