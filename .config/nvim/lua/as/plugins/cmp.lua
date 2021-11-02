@@ -89,6 +89,7 @@ return function()
           cmp_tabnine = '[TN]',
           luasnip = '[Luasnip]',
           buffer = '[Buffer]',
+          fzy_buffer = '[Fuzzy]',
           spell = '[Spell]',
           cmdline = '[Command]',
         })[name]
@@ -115,7 +116,7 @@ return function()
       { name = 'neorg' },
       { name = 'orgmode' },
     }, {
-      { name = 'buffer' },
+      { name = 'fzy_buffer' },
     }),
   }
 
@@ -123,7 +124,7 @@ return function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp_document_symbol' },
     }, {
-      { name = 'buffer' },
+      { name = 'fzy_buffer' },
     }),
   }
   -- Use buffer source for `/`.

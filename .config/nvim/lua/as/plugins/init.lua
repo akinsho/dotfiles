@@ -334,6 +334,11 @@ require('packer').startup {
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
         { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
         { 'tzachar/cmp-tabnine', run = './install.sh', after = 'nvim-cmp' },
+        {
+          'tzachar/cmp-fzy-buffer',
+          after = 'nvim-cmp',
+          requires = { 'nvim-telescope/telescope-fzf-native.nvim' },
+        },
       },
       config = conf 'cmp',
     }
