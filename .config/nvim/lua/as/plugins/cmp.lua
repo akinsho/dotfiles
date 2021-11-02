@@ -29,7 +29,7 @@ return function()
     if cmp.visible() then
       cmp.select_next_item()
     elseif luasnip and luasnip.expand_or_jumpable() then
-      feed '<Plug>luasnip-expand-or-jump'
+      luasnip.expand_or_jump()
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
     else
@@ -42,7 +42,7 @@ return function()
     if cmp.visible() then
       cmp.select_prev_item()
     elseif luasnip and luasnip.jumpable(-1) then
-      feed '<Plug>luasnip-jump-prev'
+      luasnip.jump(-1)
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
     else
