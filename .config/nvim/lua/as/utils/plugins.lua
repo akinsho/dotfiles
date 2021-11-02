@@ -2,8 +2,8 @@ local M = {}
 
 local fmt = string.format
 local fn = vim.fn
-local is_work = as.has 'mac'
-local is_home = not is_work
+M.is_work = vim.env.WORK ~= nil
+M.is_home = not M.is_work
 
 ---A thin wrapper around vim.notify to add packer details to the message
 ---@param msg string
@@ -71,10 +71,10 @@ function M.with_local(spec)
     rocks = spec.rocks,
     as = fmt('local-%s', name),
     cond = is_contributing and M.developing or spec.local_cond,
-    disable = is_work or spec.local_disable,
+    disable = M.is_work or spec.local_disable,
   }
 
-  spec.disable = not is_contributing and is_home or false
+  spec.disable = not is_contributing and M.is_home or false
   spec.cond = is_contributing and M.not_developing or nil
 
   --- swap the keys and event if we are currently developing

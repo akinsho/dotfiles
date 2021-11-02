@@ -5,8 +5,6 @@ local use_local = utils.use_local
 local packer_notify = utils.packer_notify
 
 local fn = vim.fn
-local has = as.has
-local is_work = has 'mac'
 local fmt = string.format
 
 local PACKER_COMPILED_PATH = fn.stdpath 'cache' .. '/packer/packer_compiled.lua'
@@ -1120,7 +1118,7 @@ require('packer').startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
-    use { 'rafcamlet/nvim-luapad', cmd = 'Luapad', disable = is_work }
+    use { 'rafcamlet/nvim-luapad', cmd = 'Luapad', disable = utils.is_work }
     -- }}}
     ---------------------------------------------------------------------------------
     -- Personal plugins {{{1
