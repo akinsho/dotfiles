@@ -1072,18 +1072,24 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     use {
       'phaazon/hop.nvim',
-      keys = { { 'n', 's' }, { 'o', 'f' }, { 'x', 'f' }, { 'o', 'F' }, { 'x', 'F' } },
+      keys = { { 'n', 's' }, 'f', 'F' },
       config = function()
         local hop = require 'hop'
         -- remove h,j,k,l from hops list of keys
         hop.setup { keys = 'etovxqpdygfbzcisuran' }
         as.nnoremap('s', hop.hint_char1)
         -- NOTE: override F/f using hop motions
-        as.noremap({ 'o', 'x' }, 'F', function()
-          hop.hint_char1 { direction = require('hop.hint').HintDirection.BEFORE_CURSOR }
+        as.noremap({ 'o', 'x', 'n' }, 'F', function()
+          hop.hint_char1 {
+            direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
+            current_line_only = true,
+          }
         end)
-        as.noremap({ 'o', 'x' }, 'f', function()
-          hop.hint_char1 { direction = require('hop.hint').HintDirection.AFTER_CURSOR }
+        as.noremap({ 'o', 'x', 'n' }, 'f', function()
+          hop.hint_char1 {
+            direction = require('hop.hint').HintDirection.AFTER_CURSOR,
+            current_line_only = true,
+          }
         end)
       end,
     }
