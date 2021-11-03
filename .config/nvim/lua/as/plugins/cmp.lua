@@ -89,7 +89,8 @@ return function()
           cmp_tabnine = '[TN]',
           luasnip = '[Luasnip]',
           buffer = '[Buffer]',
-          fzy_buffer = '[Fuzzy]',
+          fuzzy_buffer = '[Fuzzy Buffer]',
+          fuzzy_path = '[Fuzzy Path]',
           spell = '[Spell]',
           cmdline = '[Command]',
         })[name]
@@ -112,11 +113,11 @@ return function()
       { name = 'luasnip' },
       { name = 'cmp_tabnine' },
       { name = 'spell' },
-      { name = 'path' },
+      { name = 'fuzzy_path' },
       { name = 'neorg' },
       { name = 'orgmode' },
     }, {
-      { name = 'fzy_buffer' },
+      { name = 'fuzzy_buffer' },
     }),
   }
 
@@ -124,16 +125,14 @@ return function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp_document_symbol' },
     }, {
-      { name = 'fzy_buffer' },
+      { name = 'fuzzy_buffer' },
     }),
   }
-  -- Use buffer source for `/`.
   cmp.setup.cmdline('/', search_sources)
   cmp.setup.cmdline('?', search_sources)
-  -- Use cmdline & path source for ':'.
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
-      { name = 'path' },
+      { name = 'fuzzy_path' },
     }, {
       { name = 'cmdline' },
     }),
