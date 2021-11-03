@@ -485,6 +485,16 @@ require('packer').startup {
     use 'nanotee/luv-vimdocs'
     use 'milisims/nvim-luaref'
 
+    use {
+      'github/copilot.vim',
+      config = function()
+        vim.g.copilot_filetypes = {
+          ['*'] = false,
+          lua = true,
+        }
+      end,
+    }
+
     -- prevent select and visual mode from overwriting the clipboard
     use {
       'kevinhwang91/nvim-hclipboard',
