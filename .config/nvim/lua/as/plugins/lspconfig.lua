@@ -112,7 +112,8 @@ local function setup_mappings(client, bufnr)
   end
 
   if client.supports_method 'textDocument/rename' then
-    maps['<leader>rn'] = { vim.lsp.buf.rename, 'lsp: rename' }
+    local renamer = as.lsp.rename or vim.lsp.buf.rename
+    maps['<leader>rn'] = { renamer, 'lsp: rename' }
   end
 
   require('which-key').register(maps, { buffer = 0 })

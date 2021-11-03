@@ -4,6 +4,7 @@
 
 local lsp = vim.lsp
 local fn = vim.fn
+local api = vim.api
 local fmt = string.format
 local L = vim.lsp.log_levels
 
@@ -134,7 +135,7 @@ if not as.nightly then
     set_signs(filtered, bufnr, client_id, sign_ns, opts)
   end
 else
-  local ns = vim.api.nvim_create_namespace 'severe-diagnostics'
+  local ns = api.nvim_create_namespace 'severe-diagnostics'
   local show = vim.diagnostic.show
   local function display_signs(bufnr)
     -- Get all diagnostics from the current buffer
@@ -156,6 +157,81 @@ end
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
+vim.lsp.handlers['textDocument/rename'] = function(err, result)
+  if err then
+    vim.notify(("Error running lsp query 'rename': " .. err), vim.log.levels.ERROR)
+  end
+  if result and result.changes then
+    local msg = ''
+    for f, c in pairs(result.changes) do
+      local new = c[1].newText
+      msg = msg .. fmt('%d changes -> %s', #c, f:gsub('file://', ''):gsub(fn.getcwd(), '.')) .. '\n'
+      msg = msg:sub(1, #msg - 1)
+      vim.notify(
+        msg,
+        vim.log.levels.INFO,
+        { title = fmt('Rename: %s -> %s', fn.expand '<cword>', new) }
+      )
+    end
+  end
+  vim.lsp.util.apply_workspace_edit(result)
+end
+
+local function rename(curr, win)
+  local name = vim.trim(fn.getline '.')
+  api.nvim_win_close(win, true)
+  if #name > 0 and name ~= curr then
+    local params = vim.lsp.util.make_position_params()
+    params.newName = name
+    vim.lsp.buf_request(0, 'textDocument/rename', params)
+  end
+end
+
+-- DIY Rename function inspired by a reddit post, which uses a floating window
+-- https://www.reddit.com/r/neovim/comments/ql4iuj/rename_hover_including_window_title_and/
+-- TODO: replace this with https://github.com/filipdutescu/renamer.nvim/
+-- once it's stable
+function as.lsp.rename()
+  local name = fn.expand '<cword>'
+  local ok, ts = pcall(require, 'nvim-treesitter-playground.hl-info')
+  local tshl = ''
+  if ok and ts then
+    if #ts <= 0 then
+      return
+    end
+    tshl = ts.get_treesitter_hl()
+    local ind = tshl[#tshl]:match '^.*()%*%*.*%*%*'
+    tshl = tshl[#tshl]:sub(ind + 2, -3)
+  end
+
+  local win = require('plenary.popup').create(name, {
+    title = 'New Name',
+    style = 'minimal',
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    relative = 'cursor',
+    borderhighlight = 'FloatBorder',
+    titlehighlight = 'Title',
+    highlight = tshl,
+    focusable = true,
+    width = 25,
+    height = 1,
+    line = 'cursor+2',
+    col = 'cursor-1',
+  })
+
+  local opts = { buffer = 0 }
+  as.inoremap('<Esc>', '<cmd>stopinsert | q!<CR>', opts)
+  as.nnoremap('<Esc>', '<cmd>stopinsert | q!<CR>', opts)
+  as.inoremap('<CR>', function()
+    vim.cmd 'stopinsert'
+    rename(name, win)
+  end, opts)
+  as.nnoremap('<CR>', function()
+    vim.cmd 'stopinsert'
+    rename(name, win)
+  end, opts)
+end
+
 if as.nightly then
   vim.diagnostic.config {
     underline = true,
