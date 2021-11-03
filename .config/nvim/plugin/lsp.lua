@@ -218,6 +218,9 @@ function as.lsp.rename()
     line = 'cursor+2',
     col = 'cursor-1',
   })
+  -- Move cursor to the end of the prefix
+  vim.cmd 'stopinsert'
+  vim.cmd 'startinsert!'
 
   local opts = { buffer = 0 }
   as.inoremap('<Esc>', '<cmd>stopinsert | q!<CR>', opts)
