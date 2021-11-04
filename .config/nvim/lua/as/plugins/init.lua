@@ -336,7 +336,7 @@ require('packer').startup {
         { 'tzachar/cmp-tabnine', run = './install.sh', after = 'nvim-cmp' },
         {
           'tzachar/cmp-fuzzy-path',
-          after = 'nvim-cmp',
+          after = 'cmp-path',
           requires = { 'hrsh7th/cmp-path', 'tzachar/fuzzy.nvim' },
         },
         {
