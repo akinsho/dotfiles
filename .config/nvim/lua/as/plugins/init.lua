@@ -176,6 +176,8 @@ require('packer').startup {
         require('indent_blankline').setup {
           char = '│', -- ┆ ┊ 
           show_foldtext = false,
+          show_current_context = true,
+          show_current_context_start = true,
           show_first_indent_level = true,
           filetype_exclude = {
             'startify',
@@ -201,7 +203,6 @@ require('packer').startup {
             '', -- for all buffers without a file type
           },
           buftype_exclude = { 'terminal', 'nofile' },
-          show_current_context = true,
           context_patterns = {
             'class',
             'function',
