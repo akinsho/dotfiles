@@ -33,7 +33,12 @@ return function()
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
     else
-      feed '<Plug>(Tabout)'
+      local copilot_keys = vim.fn['copilot#Accept']()
+      if copilot_keys ~= '' then
+        feed(copilot_keys, 'i')
+      else
+        feed '<Plug>(Tabout)'
+      end
     end
   end
 
@@ -46,13 +51,18 @@ return function()
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
     else
-      feed '<Plug>(TaboutBack)'
+      local copilot_keys = vim.fn['copilot#Accept']()
+      if copilot_keys ~= '' then
+        feed(copilot_keys, 'i')
+      else
+        feed '<Plug>(Tabout)'
+      end
     end
   end
 
   cmp.setup {
     experimental = {
-      ghost_text = true,
+      ghost_text = false, -- disable whilst using copilot
     },
     snippet = {
       expand = function(args)
@@ -64,7 +74,7 @@ return function()
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-e>'] = cmp.mapping.complete(),
+      ['<C-q>'] = cmp.mapping.complete(),
       ['<CR>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
