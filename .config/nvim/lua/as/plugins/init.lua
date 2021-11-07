@@ -273,6 +273,15 @@ require('packer').startup {
       end,
     }
 
+    use {
+      'filipdutescu/renamer.nvim',
+      config = function()
+        require('renamer').setup {
+          title = 'Rename',
+        }
+      end,
+    }
+
     use_local {
       'windwp/lsp-fastaction.nvim',
       local_path = 'contributing',
