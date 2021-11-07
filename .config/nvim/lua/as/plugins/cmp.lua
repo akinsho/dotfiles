@@ -103,6 +103,7 @@ return function()
           fuzzy_path = '[Fuzzy Path]',
           spell = '[Spell]',
           cmdline = '[Command]',
+          cmp_git = '[Git]',
         })[name]
 
         if name == 'cmp_tabnine' then
@@ -126,6 +127,7 @@ return function()
       { name = 'fuzzy_path' },
       { name = 'neorg' },
       { name = 'orgmode' },
+      { name = 'cmp_git' },
     }, {
       { name = 'fuzzy_buffer' },
     }),
