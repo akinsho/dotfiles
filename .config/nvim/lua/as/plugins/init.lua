@@ -512,10 +512,12 @@ require('packer').startup {
         vim.g.copilot_assume_mapped = true
         vim.g.copilot_tab_fallback = ''
         vim.g.copilot_filetypes = {
-          ['*'] = false,
+          ['*'] = true,
+          dart = false,
           gitcommit = false,
           NeogitCommitMessage = false,
         }
+        as.imap('<c-h>', [[copilot#Accept("\<CR>")]], { expr = true, script = true })
         require('as.highlights').plugin('copilot', {
           'CopilotSuggestion',
           { link = 'Comment', force = true },
