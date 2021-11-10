@@ -506,7 +506,8 @@ require('packer').startup {
         vim.g.copilot_tab_fallback = ''
         vim.g.copilot_filetypes = {
           ['*'] = false,
-          lua = true,
+          gitcommit = false,
+          NeogitCommitMessage = false,
         }
         require('as.highlights').plugin('copilot', {
           'CopilotSuggestion',
