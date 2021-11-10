@@ -185,3 +185,9 @@ lsp.handlers['textDocument/hover'] = lsp.with(
   lsp.handlers.hover,
   { border = 'rounded', max_width = max_width, max_height = max_height }
 )
+
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
+  border = 'rounded',
+  max_width = max_width,
+  max_height = max_height,
+})
