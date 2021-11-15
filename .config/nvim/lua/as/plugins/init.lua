@@ -1180,13 +1180,18 @@ require('packer').startup {
     -- Personal plugins {{{1
     -----------------------------------------------------------------------------//
     use_local {
-      'akinsho/dependency-assist.nvim',
+      'akinsho/pubspec-assist.nvim',
       local_path = 'personal',
-      branch = 'refactor',
-      --- requires libyaml-dev on ubuntu or libyaml on macOS
-      rocks = { { 'lyaml', server = 'http://rocks.moonscript.org' } },
+      rocks = {
+        'semver',
+        {
+          'lyaml',
+          server = 'http://rocks.moonscript.org',
+          env = { YAML_DIR = '/opt/homebrew/Cellar/libyaml/0.2.5/' },
+        },
+      },
       config = function()
-        require('dependency_assist').setup()
+        require('pubspec-assist').setup()
       end,
     }
 
