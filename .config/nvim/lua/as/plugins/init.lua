@@ -1128,12 +1128,14 @@ require('packer').startup {
           hop.hint_char1 {
             direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
             current_line_only = true,
+            inclusive_jump = true,
           }
         end)
         as.noremap({ 'o', 'x', 'n' }, 'f', function()
           hop.hint_char1 {
             direction = require('hop.hint').HintDirection.AFTER_CURSOR,
             current_line_only = true,
+            inclusive_jump = true,
           }
         end)
       end,
