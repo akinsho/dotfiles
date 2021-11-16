@@ -123,7 +123,7 @@ return function()
       { name = 'luasnip' },
       { name = 'cmp_tabnine' },
       { name = 'spell' },
-      { name = 'fuzzy_path' },
+      { name = 'path' },
       { name = 'neorg' },
       { name = 'orgmode' },
       { name = 'cmp_git' },
