@@ -1124,14 +1124,28 @@ require('packer').startup {
         hop.setup { keys = 'etovxqpdygfbzcisuran' }
         as.nnoremap('s', hop.hint_char1)
         -- NOTE: override F/f using hop motions
-        as.noremap({ 'o', 'x', 'n' }, 'F', function()
+        as.noremap({ 'x', 'n' }, 'F', function()
+          hop.hint_char1 {
+            direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
+            current_line_only = true,
+            inclusive_jump = false,
+          }
+        end)
+        as.noremap({ 'x', 'n' }, 'f', function()
+          hop.hint_char1 {
+            direction = require('hop.hint').HintDirection.AFTER_CURSOR,
+            current_line_only = true,
+            inclusive_jump = false,
+          }
+        end)
+        as.onoremap('F', function()
           hop.hint_char1 {
             direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
             current_line_only = true,
             inclusive_jump = true,
           }
         end)
-        as.noremap({ 'o', 'x', 'n' }, 'f', function()
+        as.onoremap('f', function()
           hop.hint_char1 {
             direction = require('hop.hint').HintDirection.AFTER_CURSOR,
             current_line_only = true,
