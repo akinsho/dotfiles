@@ -60,19 +60,22 @@ end
 ---@param bufnr integer?
 local function setup_mappings(client, bufnr)
   local maps = {
-    ['<leader>rf'] = { vim.lsp.buf.formatting, 'lsp: format buffer' },
-    ['gi'] = 'lsp: implementation',
-    ['gd'] = { vim.lsp.buf.definition, 'lsp: definition' },
-    ['gr'] = { vim.lsp.buf.references, 'lsp: references' },
-    ['gI'] = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
-    ['K'] = { vim.lsp.buf.hover, 'lsp: hover' },
+    n = {
+      ['<leader>rf'] = { vim.lsp.buf.formatting, 'lsp: format buffer' },
+      ['gi'] = 'lsp: implementation',
+      ['gd'] = { vim.lsp.buf.definition, 'lsp: definition' },
+      ['gr'] = { vim.lsp.buf.references, 'lsp: references' },
+      ['gI'] = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
+      ['K'] = { vim.lsp.buf.hover, 'lsp: hover' },
+    },
+    x = {},
   }
 
   -- FIXME: remove when 0.6 is released
   local goto_key = as.nightly and 'float' or 'popup_opts'
   local diagnostics = as.nightly and vim.diagnostic or vim.lsp.diagnostic
 
-  maps[']c'] = {
+  maps.n[']c'] = {
     function()
       diagnostics.goto_prev {
         [goto_key] = {
@@ -84,7 +87,7 @@ local function setup_mappings(client, bufnr)
     end,
     'lsp: go to prev diagnostic',
   }
-  maps['[c'] = {
+  maps.n['[c'] = {
     function()
       diagnostics.goto_next {
         [goto_key] = {
@@ -98,25 +101,24 @@ local function setup_mappings(client, bufnr)
   }
 
   if client.resolved_capabilities.implementation then
-    maps['gi'] = { vim.lsp.buf.implementation, 'lsp: impementation' }
+    maps.n['gi'] = { vim.lsp.buf.implementation, 'lsp: impementation' }
   end
 
   if client.resolved_capabilities.type_definition then
-    maps['<leader>gd'] = { vim.lsp.buf.type_definition, 'lsp: go to type definition' }
+    maps.n['<leader>gd'] = { vim.lsp.buf.type_definition, 'lsp: go to type definition' }
   end
 
-  if not as.has_map('<leader>ca', 'n') then
-    maps['<leader>ca'] = { vim.lsp.buf.code_action, 'lsp: code action' }
-    -- TODO: not sure that this works, since these keys likely override each other in which key
-    maps['<leader>ca'] = { vim.lsp.buf.range_code_action, 'lsp: code action', mode = 'x' }
-  end
+  maps.n['<leader>ca'] = { vim.lsp.buf.code_action, 'lsp: code action' }
+  maps.x['<leader>ca'] = { '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action' }
 
   if client.supports_method 'textDocument/rename' then
     local renamer = require('renamer').rename or vim.lsp.buf.rename
-    maps['<leader>rn'] = { renamer, 'lsp: rename' }
+    maps.n['<leader>rn'] = { renamer, 'lsp: rename' }
   end
 
-  require('which-key').register(maps, { buffer = 0 })
+  for mode, value in pairs(maps) do
+    require('which-key').register(value, { buffer = 0, mode = mode })
+  end
 end
 
 function as.lsp.tagfunc(pattern, flags)

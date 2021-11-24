@@ -74,6 +74,12 @@ require('packer').startup {
             require('telescope').load_extension 'smart_history'
           end,
         },
+        {
+          'nvim-telescope/telescope-ui-select.nvim',
+          config = function()
+            require('telescope').load_extension 'ui-select'
+          end,
+        },
       },
     }
 
@@ -284,9 +290,10 @@ require('packer').startup {
       end,
     }
 
-    use_local {
+    use {
       'windwp/lsp-fastaction.nvim',
       local_path = 'contributing',
+      disable = true,
       config = function()
         local fastaction = require 'lsp-fastaction'
         fastaction.setup {
