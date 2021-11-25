@@ -1,6 +1,7 @@
 return function()
   local telescope = require 'telescope'
   local actions = require 'telescope.actions'
+  local themes = require 'telescope.themes'
 
   local H = require 'as.highlights'
   H.plugin(
@@ -32,7 +33,7 @@ return function()
   ---@param opts table
   ---@return table
   local function dropdown(opts)
-    return require('telescope.themes').get_dropdown(get_border(opts))
+    return themes.get_dropdown(get_border(opts))
   end
 
   telescope.setup {
@@ -82,7 +83,13 @@ return function()
         override_file_sorter = true, -- override the file sorter
       },
       ['ui-select'] = {
-        require('telescope.themes').get_cursor(get_border()),
+        themes.get_cursor(get_border {
+          layout_config = {
+            cursor = {
+              width = 25,
+            },
+          },
+        }),
       },
     },
     pickers = {
