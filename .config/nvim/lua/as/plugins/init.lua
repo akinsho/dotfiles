@@ -468,7 +468,7 @@ require('packer').startup {
     use {
       'mfussenegger/nvim-dap',
       module = 'dap',
-      keys = { '<localleader>dc', '<localleader>db' },
+      keys = { '<localleader>dc', '<localleader>db', '<localleader>dut ' },
       setup = conf('dap').setup,
       config = conf('dap').config,
       requires = {
