@@ -801,6 +801,7 @@ require('packer').startup {
             literal = {
               ['kitty.conf'] = 'kitty',
               ['.gitignore'] = 'conf',
+              ['.env'] = 'sh',
             },
           },
         }
