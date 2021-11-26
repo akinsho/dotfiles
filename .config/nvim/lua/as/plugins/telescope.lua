@@ -85,9 +85,7 @@ return function()
       ['ui-select'] = {
         themes.get_cursor(get_border {
           layout_config = {
-            cursor = {
-              width = 25,
-            },
+            cursor = { width = 0.3 },
           },
         }),
       },
