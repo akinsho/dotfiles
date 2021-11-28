@@ -2,6 +2,7 @@ return function()
   local api = vim.api
   local t = as.replace_termcodes
   local cmp = require 'cmp'
+  local fmt = string.format
 
   require('as.highlights').plugin(
     'Cmp',
@@ -11,6 +12,14 @@ return function()
     { 'CmpItemAbbrDeprecated', { gui = 'strikethrough', inherit = 'Comment' } },
     { 'CmpItemAbbrMatchFuzzy', { gui = 'italic', guifg = 'fg' } }
   )
+
+  local lsp_hls = as.style.lsp.kind_highlights
+
+  local kind_hls = vim.tbl_map(function(key)
+    return { fmt('CmpItemKind%s', key), { inherit = lsp_hls[key], gui = 'NONE' } }
+  end, vim.tbl_keys(lsp_hls))
+
+  require('as.highlights').plugin('CmpKinds', unpack(kind_hls))
 
   local function feed(key, mode)
     api.nvim_feedkeys(t(key), mode or '', true)
