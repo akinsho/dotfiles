@@ -46,10 +46,11 @@ command {
     set_diagnostics()
     as.toggle_list(list_type)
     if as.is_vim_list_open() then
-      local event = as.nightly and 'DiagnosticsChanged' or 'LspDiagnosticsChanged'
+      local event = as.nightly and 'DiagnosticChanged' or 'User LspDiagnosticsChanged'
       as.augroup('LspDiagnosticUpdate', {
         {
-          events = { fmt('User %s', event) },
+          events = { event },
+          targets = as.nightly and { '*' } or nil,
           command = function()
             set_diagnostics()
             if as.is_vim_list_open() then
