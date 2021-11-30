@@ -688,24 +688,6 @@ require('packer').startup {
     -- Knowledge and task management {{{1
     --------------------------------------------------------------------------------
     use {
-      'soywod/himalaya', --- Email in nvim
-      rtp = 'email-manager/vim',
-      run = function()
-        if as.has 'mac' then
-          vim.fn.execute 'brew install himalaya'
-        end
-      end,
-      cond = function()
-        return as.executable 'himalaya'
-      end,
-      config = function()
-        require('which-key').register {
-          ['<localleader>e'] = { name = '+email', l = { '<Cmd>Himalaya<CR>', 'list' } },
-        }
-      end,
-    }
-
-    use {
       'vimwiki/vimwiki',
       branch = 'dev',
       keys = { '<leader>ww', '<leader>wt', '<leader>wi' },
@@ -931,17 +913,6 @@ require('packer').startup {
           completion = false,
           ignore_beginning = false,
         }
-      end,
-    }
-
-    use {
-      'David-Kunz/treesitter-unit',
-      config = function()
-        local label = 'treesitter: select'
-        as.xnoremap('iu', ':lua require"treesitter-unit".select()<CR>', label)
-        as.xnoremap('au', ':lua require"treesitter-unit".select(true)<CR>', label)
-        as.onoremap('iu', '<Cmd>lua require"treesitter-unit".select()<CR>', label)
-        as.onoremap('au', '<Cmd>lua require"treesitter-unit".select(true)<CR>', label)
       end,
     }
 
@@ -1190,10 +1161,6 @@ require('packer').startup {
         }
       end,
     }
-    use 'monsonjeremy/onedark.nvim'
-    use 'marko-cerovac/material.nvim'
-    use 'projekt0n/github-nvim-theme'
-    use { 'Th3Whit3Wolf/one-nvim', opt = true }
     -- }}}
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
