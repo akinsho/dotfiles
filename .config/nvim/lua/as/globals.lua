@@ -70,7 +70,7 @@ do
         Enum = 'Type',
         Keyword = 'Keyword',
         File = 'Directory',
-        Reference = 'Question',
+        Reference = 'Preproc',
         Constant = 'Constant',
         Struct = 'Type',
         Event = 'Variable',
