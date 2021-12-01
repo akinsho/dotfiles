@@ -370,13 +370,8 @@ end
 ---@param severity string
 ---@return number
 local function get_count(buf, severity)
-  if as.nightly then
-    local s = vim.diagnostic.severity[severity:upper()]
-    return #vim.diagnostic.get(buf, { severity = s })
-  end
-  --- FIXME: remove  this once 0.6 or 5.1 is stable
-  ---@diagnostic disable-next-line: deprecated
-  return vim.lsp.diagnostic.get_count(buf, severity)
+  local s = vim.diagnostic.severity[severity:upper()]
+  return #vim.diagnostic.get(buf, { severity = s })
 end
 
 function M.diagnostic_info(context)

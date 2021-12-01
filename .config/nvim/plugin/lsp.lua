@@ -31,30 +31,24 @@ command {
   end,
 }
 
-local list_type = as.nightly and 'quickfix' or 'location'
 local function set_diagnostics()
-  if as.nightly then
-    return vim.diagnostic.setqflist { open = false }
-  end
-  ---@diagnostic disable-next-line: deprecated
-  vim.lsp.diagnostic.set_loclist { open_loclist = false, workspace = true }
+  return vim.diagnostic.setqflist { open = false }
 end
 
 command {
   'LspDiagnostics',
   function()
     set_diagnostics()
-    as.toggle_list(list_type)
+    as.toggle_list 'quickfix'
     if as.is_vim_list_open() then
-      local event = as.nightly and 'DiagnosticChanged' or 'User LspDiagnosticsChanged'
       as.augroup('LspDiagnosticUpdate', {
         {
-          events = { event },
-          targets = as.nightly and { '*' } or nil,
+          events = { 'DiagnosticChanged' },
+          targets = { '*' },
           command = function()
             set_diagnostics()
             if as.is_vim_list_open() then
-              as.toggle_list(list_type)
+              as.toggle_list 'quickfix'
             end
           end,
         },
@@ -69,18 +63,15 @@ as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostic
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
-
-local prefix = as.nightly and 'DiagnosticSign' or 'LspDiagnosticsSign'
-
 local diagnostic_types = {
   { 'Hint', icon = as.style.icons.hint },
   { 'Error', icon = as.style.icons.error },
-  { as.nightly and 'Warn' or 'Warning', icon = as.style.icons.warn },
-  { as.nightly and 'Info' or 'Information', icon = as.style.icons.info },
+  { 'Warn', icon = as.style.icons.warn },
+  { 'Info', icon = as.style.icons.info },
 }
 
 fn.sign_define(vim.tbl_map(function(t)
-  local hl = prefix .. t[1]
+  local hl = 'DiagnosticSign' .. t[1]
   return {
     name = hl,
     text = t.icon,
@@ -101,7 +92,7 @@ local function filter_diagnostics(diagnostics, bufnr)
   -- Work out max severity diagnostic per line
   local max_severity_per_line = {}
   for _, d in pairs(diagnostics) do
-    local lnum = as.nightly and d.lnum or d.range.start.line
+    local lnum = d.lnum
     if max_severity_per_line[lnum] then
       local current_d = max_severity_per_line[lnum]
       if d.severity < current_d.severity then
@@ -122,61 +113,34 @@ end
 
 --- This overwrites the diagnostic show/set_signs function to replace it with a custom function
 --- that restricts nvim's diagnostic signs to only the single most severe one per line
-if not as.nightly then
-  -- Capture real implementation of function that sets signs
-  local set_signs = vim.lsp.diagnostic.set_signs
-  ---@param diagnostics table
-  ---@param bufnr number
-  ---@param client_id number
-  ---@param sign_ns number
-  ---@param opts table
-  vim.lsp.diagnostic.set_signs = function(diagnostics, bufnr, client_id, sign_ns, opts)
-    local filtered = filter_diagnostics(diagnostics, bufnr)
-    -- call original function
-    set_signs(filtered, bufnr, client_id, sign_ns, opts)
-  end
-else
-  local ns = api.nvim_create_namespace 'severe-diagnostics'
-  local show = vim.diagnostic.show
-  local function display_signs(bufnr)
-    -- Get all diagnostics from the current buffer
-    local diagnostics = vim.diagnostic.get(bufnr)
-    local filtered = filter_diagnostics(diagnostics, bufnr)
-    show(ns, bufnr, filtered, {
-      virtual_text = false,
-      underline = false,
-      signs = true,
-    })
-  end
+local ns = api.nvim_create_namespace 'severe-diagnostics'
+local show = vim.diagnostic.show
+local function display_signs(bufnr)
+  -- Get all diagnostics from the current buffer
+  local diagnostics = vim.diagnostic.get(bufnr)
+  local filtered = filter_diagnostics(diagnostics, bufnr)
+  show(ns, bufnr, filtered, {
+    virtual_text = false,
+    underline = false,
+    signs = true,
+  })
+end
 
-  function vim.diagnostic.show(namespace, bufnr, ...)
-    show(namespace, bufnr, ...)
-    display_signs(bufnr)
-  end
+function vim.diagnostic.show(namespace, bufnr, ...)
+  show(namespace, bufnr, ...)
+  display_signs(bufnr)
 end
 
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
-
-if as.nightly then
-  vim.diagnostic.config {
-    underline = true,
-    virtual_text = false,
-    signs = false,
-    update_in_insert = false,
-    severity_sort = true,
-  }
-else
-  lsp.handlers['textDocument/publishDiagnostics'] =
-    lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-      underline = true,
-      virtual_text = false,
-      signs = true,
-      update_in_insert = false,
-      severity_sort = true,
-    })
-end
+vim.diagnostic.config {
+  underline = true,
+  virtual_text = false,
+  signs = false,
+  update_in_insert = false,
+  severity_sort = true,
+}
 
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)

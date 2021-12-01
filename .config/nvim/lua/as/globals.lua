@@ -321,7 +321,7 @@ function as.has(feature)
   return vim.fn.has(feature) > 0
 end
 
-as.nightly = as.has 'nvim-0.6'
+as.nightly = as.has 'nvim-0.7'
 
 ---Find an item in a list
 ---@generic T

@@ -211,9 +211,7 @@ vim.opt.guicursor = {
   [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
 
-if as.nightly then
-  vim.opt.cursorlineopt = 'screenline,number'
-end
+vim.opt.cursorlineopt = 'screenline,number'
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//

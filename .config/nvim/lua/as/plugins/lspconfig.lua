@@ -71,14 +71,10 @@ local function setup_mappings(client, bufnr)
     x = {},
   }
 
-  -- FIXME: remove when 0.6 is released
-  local goto_key = as.nightly and 'float' or 'popup_opts'
-  local diagnostics = as.nightly and vim.diagnostic or vim.lsp.diagnostic
-
   maps.n[']c'] = {
     function()
-      diagnostics.goto_prev {
-        [goto_key] = {
+      vim.diagnostic.goto_prev {
+        float = {
           border = 'rounded',
           focusable = false,
           source = 'always',
@@ -89,8 +85,8 @@ local function setup_mappings(client, bufnr)
   }
   maps.n['[c'] = {
     function()
-      diagnostics.goto_next {
-        [goto_key] = {
+      vim.diagnostic.goto_next {
+        float = {
           border = 'rounded',
           focusable = false,
           source = 'always',
