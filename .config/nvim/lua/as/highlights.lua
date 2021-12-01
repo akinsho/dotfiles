@@ -299,23 +299,6 @@ local function general_overrides()
     { 'DiagnosticFloatingInfo', { link = 'DiagnosticInfo', force = true } },
     { 'DiagnosticFloatingHint', { link = 'DiagnosticHint', force = true } },
     { 'DiagnosticFloatingError', { link = 'DiagnosticError', force = true } },
-    -- TODO: delete the following when v0.6 is stable
-    { 'LspDiagnosticsSignHint', { guifg = L.hint } },
-    { 'LspDiagnosticsDefaultHint', { guifg = L.hint } },
-    { 'LspDiagnosticsDefaultError', { guifg = L.error } },
-    { 'LspDiagnosticsDefaultWarning', { guifg = L.warn } },
-    { 'LspDiagnosticsDefaultInformation', { guifg = L.info } },
-    { 'LspDiagnosticsSignHintLine', { guibg = hint_line } },
-    { 'LspDiagnosticsSignErrorLine', { guibg = error_line } },
-    { 'LspDiagnosticsSignWarningLine', { guibg = warn_line } },
-    { 'LspDiagnosticsSignInformationLine', { guibg = info_line } },
-    { 'LspDiagnosticsUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
-    { 'LspDiagnosticsUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
-    { 'LspDiagnosticsUnderlineWarning', { gui = 'undercurl', guisp = 'orange', guifg = 'none' } },
-    {
-      'LspDiagnosticsUnderlineInformation',
-      { gui = 'undercurl', guisp = L.info, guifg = 'none' },
-    },
   }
 end
 
