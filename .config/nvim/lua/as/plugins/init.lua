@@ -352,7 +352,7 @@ require('packer').startup {
       module = 'cmp',
       event = 'InsertEnter',
       requires = {
-        { 'hrsh7th/cmp-nvim-lsp' },
+        { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-lspconfig' },
         { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
         { 'f3fora/cmp-spell', after = 'nvim-cmp' },
@@ -836,7 +836,7 @@ require('packer').startup {
       config = function()
         require('flutter-tools').setup {
           ui = { border = 'rounded' },
-          debugger = { enabled = true },
+          debugger = { enabled = true, run_via_dap = true },
           outline = { auto_open = false },
           decorations = {
             statusline = { device = true, app_version = true },
