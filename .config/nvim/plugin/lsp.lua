@@ -1,7 +1,3 @@
--- TODO: Convert to use vim.diagnostic when 0.6 is stable
--- [ ] use DiagnosticSign* and remove LspDiagnosticSign*
--- [ ] use vim.diagnostic.config not handler overwrite
-
 local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
@@ -31,14 +27,10 @@ command {
   end,
 }
 
-local function set_diagnostics()
-  return vim.diagnostic.setqflist { open = false }
-end
-
 command {
   'LspDiagnostics',
   function()
-    set_diagnostics()
+    vim.diagnostic.setqflist { open = false }
     as.toggle_list 'quickfix'
     if as.is_vim_list_open() then
       as.augroup('LspDiagnosticUpdate', {
