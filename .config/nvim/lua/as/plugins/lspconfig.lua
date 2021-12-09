@@ -108,8 +108,7 @@ local function setup_mappings(client, bufnr)
   maps.x['<leader>ca'] = { '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action' }
 
   if client.supports_method 'textDocument/rename' then
-    local renamer = require('renamer').rename or vim.lsp.buf.rename
-    maps.n['<leader>rn'] = { renamer, 'lsp: rename' }
+    maps.n['<leader>rn'] = { vim.lsp.buf.rename, 'lsp: rename' }
   end
 
   for mode, value in pairs(maps) do

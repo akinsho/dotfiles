@@ -64,6 +64,11 @@ return function()
         horizontal = {
           preview_width = 0.45,
         },
+        cursor = get_border {
+          layout_config = {
+            cursor = { width = 0.3 },
+          },
+        },
       },
       winblend = 3,
       history = {
@@ -81,13 +86,6 @@ return function()
       fzf = {
         override_generic_sorter = true, -- override the generic sorter
         override_file_sorter = true, -- override the file sorter
-      },
-      ['ui-select'] = {
-        themes.get_cursor(get_border {
-          layout_config = {
-            cursor = { width = 0.3 },
-          },
-        }),
       },
     },
     pickers = {

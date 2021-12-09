@@ -74,12 +74,6 @@ require('packer').startup {
             require('telescope').load_extension 'smart_history'
           end,
         },
-        {
-          'nvim-telescope/telescope-ui-select.nvim',
-          config = function()
-            require('telescope').load_extension 'ui-select'
-          end,
-        },
       },
     }
 
@@ -282,15 +276,6 @@ require('packer').startup {
     }
 
     use {
-      'filipdutescu/renamer.nvim',
-      config = function()
-        require('renamer').setup {
-          title = 'Rename',
-        }
-      end,
-    }
-
-    use {
       'ray-x/lsp_signature.nvim',
       config = function()
         require('lsp_signature').setup {
@@ -455,6 +440,18 @@ require('packer').startup {
     -----------------------------------------------------------------------------//
     -- UI
     -----------------------------------------------------------------------------//
+    use {
+      'stevearc/dressing.nvim',
+      config = function()
+        require('dressing').setup {
+          select = {
+            telescope = {
+              theme = 'cursor',
+            },
+          },
+        }
+      end,
+    }
 
     use {
       'nvim-lua/lsp-status.nvim',
