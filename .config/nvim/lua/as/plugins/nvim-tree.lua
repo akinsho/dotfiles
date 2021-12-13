@@ -46,7 +46,7 @@ return function()
     diagnostics = {
       enable = true,
     },
-    disable_netrw = true,
+    disable_netrw = false,
     hijack_netrw = true,
     open_on_setup = true,
     hijack_cursor = true,
