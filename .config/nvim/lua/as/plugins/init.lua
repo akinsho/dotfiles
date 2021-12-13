@@ -660,7 +660,6 @@ require('packer').startup {
 
     use {
       'vhyrro/neorg',
-      branch = 'unstable',
       requires = { 'vhyrro/neorg-telescope' },
       config = function()
         require('neorg').setup {

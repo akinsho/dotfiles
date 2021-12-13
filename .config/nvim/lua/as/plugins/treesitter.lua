@@ -7,6 +7,21 @@ return function()
       branch = 'main',
     },
   }
+  parser_configs.norg_meta = {
+    install_info = {
+      url = 'https://github.com/nvim-neorg/tree-sitter-norg-meta',
+      files = { 'src/parser.c' },
+      branch = 'main',
+    },
+  }
+
+  parser_configs.norg_table = {
+    install_info = {
+      url = 'https://github.com/nvim-neorg/tree-sitter-norg-table',
+      files = { 'src/parser.c' },
+      branch = 'main',
+    },
+  }
   parser_configs.org = {
     install_info = {
       url = 'https://github.com/milisims/tree-sitter-org',
