@@ -677,7 +677,11 @@ require('packer').startup {
                 engine = 'nvim-cmp',
               },
             },
-            ['core.norg.concealer'] = {},
+            ['core.norg.concealer'] = {
+              config = {
+                markup = { enable = false }, -- disable whilst broken
+              },
+            },
             ['core.norg.dirman'] = {
               config = {
                 workspaces = {
