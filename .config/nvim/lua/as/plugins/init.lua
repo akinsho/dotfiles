@@ -795,7 +795,7 @@ require('packer').startup {
       config = function()
         require('flutter-tools').setup {
           ui = { border = 'rounded' },
-          debugger = { enabled = true, run_via_dap = true },
+          debugger = { enabled = true, run_via_dap = false },
           outline = { auto_open = false },
           decorations = {
             statusline = { device = true, app_version = true },
