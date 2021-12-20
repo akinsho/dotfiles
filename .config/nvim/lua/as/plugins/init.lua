@@ -610,9 +610,7 @@ require('packer').startup {
     }
     use {
       'iamcco/markdown-preview.nvim',
-      run = function()
-        vim.fn['mkdp#util#install']()
-      end,
+      run = 'cd app && yarn install',
       ft = { 'markdown' },
       config = function()
         vim.g.mkdp_auto_start = 0
@@ -677,11 +675,7 @@ require('packer').startup {
                 engine = 'nvim-cmp',
               },
             },
-            ['core.norg.concealer'] = {
-              config = {
-                markup = { enable = false }, -- disable whilst broken
-              },
-            },
+            ['core.norg.concealer'] = {},
             ['core.norg.dirman'] = {
               config = {
                 workspaces = {
