@@ -330,8 +330,10 @@ require('packer').startup {
         require('neoclip').setup {
           enable_persistant_history = true,
           keys = {
-            i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
-            n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
+            telescope = {
+              i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
+              n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
+            },
           },
         }
         local function clip()
