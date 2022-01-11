@@ -57,8 +57,7 @@ end
 
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client table lsp client
----@param bufnr integer?
-local function setup_mappings(client, bufnr)
+local function setup_mappings(client)
   local maps = {
     n = {
       ['<leader>rf'] = { vim.lsp.buf.formatting, 'lsp: format buffer' },
@@ -145,7 +144,7 @@ end
 
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
-  setup_mappings(client, bufnr)
+  setup_mappings(client)
 
   if client.resolved_capabilities.goto_definition then
     vim.bo[bufnr].tagfunc = 'v:lua.as.lsp.tagfunc'
