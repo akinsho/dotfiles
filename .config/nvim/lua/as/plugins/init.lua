@@ -443,6 +443,17 @@ require('packer').startup {
     -- UI
     -----------------------------------------------------------------------------//
     use {
+      'petertriho/nvim-scrollbar',
+      config = function()
+        require('scrollbar').setup {
+          handle = {
+            color = require('as.highlights').get_hl('PmenuSbar', 'bg'),
+          },
+          excluded_filetypes = { 'packer' },
+        }
+      end,
+    }
+    use {
       'stevearc/dressing.nvim',
       config = function()
         require('dressing').setup {
