@@ -457,6 +457,9 @@ require('packer').startup {
       'stevearc/dressing.nvim',
       config = function()
         require('dressing').setup {
+          input = {
+            insert_only = false,
+          },
           select = {
             telescope = {
               theme = 'cursor',
