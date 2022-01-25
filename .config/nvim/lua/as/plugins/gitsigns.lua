@@ -15,23 +15,23 @@ return function()
       require('which-key').register {
         ['<leader>h'] = {
           name = '+gitsigns hunk',
-          s = { '<cmd>lua require"gitsigns".stage_hunk()<CR>', 'stage' },
-          u = { '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>', 'undo stage' },
-          r = { '<cmd>lua require"gitsigns".reset_hunk()<CR>', 'reset hunk' },
-          p = { '<cmd>lua require"gitsigns".preview_hunk()<CR>', 'preview current hunk' },
+          s = { gitsigns.stage_hunk, 'stage' },
+          u = { gitsigns.undo_stage_hunk, 'undo stage' },
+          r = { gitsigns.reset_hunk, 'reset hunk' },
+          p = { gitsigns.preview_hunk, 'preview current hunk' },
           b = 'blame current line',
         },
         ['<localleader>g'] = {
           name = '+git',
-          w = { '<cmd>lua require"gitsigns".stage_buffer()<CR>', 'gitsigns: stage entire buffer' },
+          w = { gitsigns.stage_buffer, 'gitsigns: stage entire buffer' },
           r = {
             name = '+reset',
-            e = { '<cmd>lua require"gitsigns".reset_buffer()<CR>', 'gitsigns: reset entire buffer' },
+            e = { gitsigns.reset_buffer, 'gitsigns: reset entire buffer' },
           },
           b = {
             name = '+blame',
-            l = { '<cmd>lua require"gitsigns".blame_line()<CR>', 'gitsigns: blame current line' },
-            d = { '<cmd>lua require"gitsigns".toggle_word_diff()<CR>', 'gitsigns: toggle word diff' },
+            l = { gitsigns.blame_line, 'gitsigns: blame current line' },
+            d = { gitsigns.toggle_word_diff, 'gitsigns: toggle word diff' },
           },
         },
         ['[h'] = {
@@ -45,7 +45,9 @@ return function()
           expr = true,
         },
         ['<leader>lm'] = {
-          '<cmd>lua require"gitsigns".setqflist("all")<CR>',
+          function()
+            gitsigns.setqflist 'all'
+          end,
           'gitsigns: list modified in quickfix',
         },
       }
@@ -53,14 +55,12 @@ return function()
       as.onoremap('ih', ':<C-U>lua require"gitsigns".select_hunk()<CR>')
       as.xnoremap('ih', ':<C-U>lua require"gitsigns".select_hunk()<CR>')
       -- Text objects
-      as.vnoremap(
-        '<leader>hs',
-        '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>'
-      )
-      as.vnoremap(
-        '<leader>hr',
-        '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>'
-      )
+      as.vnoremap('<leader>hs', function()
+        gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+      end)
+      as.vnoremap('<leader>hr', function()
+        gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+      end)
     end,
   }
 end
