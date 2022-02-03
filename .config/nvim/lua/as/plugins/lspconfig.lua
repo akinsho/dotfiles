@@ -149,8 +149,6 @@ function as.lsp.on_attach(client, bufnr)
   if client.resolved_capabilities.goto_definition then
     vim.bo[bufnr].tagfunc = 'v:lua.as.lsp.tagfunc'
   end
-
-  require('lsp-status').on_attach(client)
 end
 
 -----------------------------------------------------------------------------//
@@ -210,7 +208,6 @@ as.lsp.servers = {
 ---and restarting them on installing new ones
 function as.lsp.get_server_config(server)
   local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
-  local status_capabilities = require('lsp-status').capabilities
   local conf = as.lsp.servers[server.name]
   local conf_type = type(conf)
   local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
@@ -220,7 +217,6 @@ function as.lsp.get_server_config(server)
   if nvim_lsp_ok then
     cmp_nvim_lsp.update_capabilities(config.capabilities)
   end
-  config.capabilities = as.deep_merge(status_capabilities, config.capabilities)
   return config
 end
 

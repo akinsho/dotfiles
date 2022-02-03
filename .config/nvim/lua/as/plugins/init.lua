@@ -470,17 +470,9 @@ require('packer').startup {
     }
 
     use {
-      'nvim-lua/lsp-status.nvim',
+      'j-hui/fidget.nvim',
       config = function()
-        local status = require 'lsp-status'
-        status.config {
-          indicator_hint = '',
-          indicator_info = '',
-          indicator_errors = '✗',
-          indicator_warnings = '',
-          status_symbol = ' ',
-        }
-        status.register_progress()
+        require('fidget').setup {}
       end,
     }
     --------------------------------------------------------------------------------
