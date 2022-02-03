@@ -388,16 +388,8 @@ function M.diagnostic_info(context)
 end
 
 function M.lsp_client()
-  local names = {}
-  for _, client in ipairs(vim.lsp.buf_get_clients(0)) do
-    if client.name then
-      table.insert(names, client.name)
-    end
-  end
-  if #names == 0 then
-    return ''
-  end
-  return '[' .. table.concat(names, ', ') .. ']'
+  local clients = vim.lsp.buf_get_clients(0)
+  return #clients > 0 and clients[#clients].name or ''
 end
 
 ---The currently focused function
