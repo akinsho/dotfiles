@@ -38,7 +38,6 @@ command {
           events = { 'DiagnosticChanged' },
           targets = { '*' },
           command = function()
-            set_diagnostics()
             if as.is_vim_list_open() then
               as.toggle_list 'quickfix'
             end
@@ -75,9 +74,9 @@ end, diagnostic_types))
 ---Override diagnostics signs helper to only show the single most relevant sign
 ---@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
 ---@param diagnostics table[]
----@param bufnr number
+---@param _ number buffer number
 ---@return table[]
-local function filter_diagnostics(diagnostics, bufnr)
+local function filter_diagnostics(diagnostics, _)
   if not diagnostics then
     return {}
   end
