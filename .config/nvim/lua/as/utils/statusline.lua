@@ -388,8 +388,15 @@ function M.diagnostic_info(context)
 end
 
 function M.lsp_client()
-  local clients = vim.lsp.buf_get_clients(0)
-  return #clients > 0 and clients[#clients].name or ''
+  for _, client in ipairs(vim.lsp.buf_get_clients(0)) do
+    if
+      client.config
+      and client.config.filetypes
+      and vim.tbl_contains(client.config.filetypes, vim.bo.filetype)
+    then
+      return client.name
+    end
+  end
 end
 
 ---The currently focused function
