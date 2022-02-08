@@ -799,6 +799,7 @@ require('packer').startup {
     use_local {
       'akinsho/flutter-tools.nvim',
       requires = { 'nvim-dap', 'plenary.nvim' },
+      branch = 'feature/lsp-color',
       local_path = 'personal',
       config = function()
         require('flutter-tools').setup {
