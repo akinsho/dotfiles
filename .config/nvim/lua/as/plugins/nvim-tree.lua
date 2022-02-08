@@ -48,7 +48,7 @@ return function()
     },
     disable_netrw = false,
     hijack_netrw = true,
-    open_on_setup = true,
+    open_on_setup = false,
     hijack_cursor = true,
     update_cwd = true,
     update_focused_file = {
