@@ -802,13 +802,6 @@ require('packer').startup {
               renameFilesWithClasses = 'always',
             },
             on_attach = as.lsp and as.lsp.on_attach or nil,
-            --- This is necessary to prevent lsp-status' capabilities being
-            --- given priority over that of the default config
-            capabilities = function(defaults)
-              local ok, status = as.safe_require('lsp-status', { silent = true })
-              local capabilities = ok and status.capabilities or {}
-              return vim.tbl_deep_extend('keep', defaults, capabilities)
-            end,
           },
         }
       end,
