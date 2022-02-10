@@ -498,7 +498,6 @@ require('packer').startup {
       config = function()
         require('as.highlights').plugin('marks', { 'MarkSignHL', { guifg = 'Red' } })
         require('marks').setup {
-          -- builtin_marks = { '.', '^' },
           bookmark_0 = {
             sign = '⚑',
             virt_text = 'bookmarks',
