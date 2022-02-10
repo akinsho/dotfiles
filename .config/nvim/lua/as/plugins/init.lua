@@ -781,7 +781,6 @@ require('packer').startup {
     use_local {
       'akinsho/flutter-tools.nvim',
       requires = { 'nvim-dap', 'plenary.nvim' },
-      branch = 'feature/lsp-color',
       local_path = 'personal',
       config = function()
         require('flutter-tools').setup {
@@ -794,6 +793,10 @@ require('packer').startup {
           widget_guides = { enabled = true, debug = true },
           dev_log = { open_cmd = 'tabedit' },
           lsp = {
+            color = {
+              background = true,
+              virtual_text = false,
+            },
             settings = {
               showTodos = false,
               renameFilesWithClasses = 'always',
