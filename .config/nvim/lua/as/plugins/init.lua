@@ -1004,6 +1004,15 @@ require('packer').startup {
     use 'chaoren/vim-wordmotion'
 
     use {
+      'gbprod/cutlass.nvim',
+      config = function()
+        require('cutlass').setup {
+          cut_key = 'x',
+        }
+      end,
+    }
+
+    use {
       'svermeulen/vim-subversive',
       config = function()
         as.nmap('S', '<plug>(SubversiveSubstitute)')
