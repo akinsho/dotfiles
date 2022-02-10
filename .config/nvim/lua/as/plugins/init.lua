@@ -938,23 +938,6 @@ require('packer').startup {
     }
 
     use {
-      'pwntester/octo.nvim',
-      cmd = 'Octo*',
-      setup = function()
-        require('which-key').register {
-          ['<localleader>o'] = {
-            name = '+octo',
-            p = { name = '+pull-request', l = { '<cmd>Octo pr list<CR>', 'list' } },
-            i = { name = '+issues', l = { '<cmd>Octo issue list<CR>', 'list' } },
-          },
-        }
-      end,
-      config = function()
-        require('octo').setup()
-      end,
-    }
-
-    use {
       'rlch/github-notifications.nvim',
       -- don't load this plugin if the gh cli is not installed
       cond = function()
