@@ -793,6 +793,7 @@ require('packer').startup {
           dev_log = { open_cmd = 'tabedit' },
           lsp = {
             color = {
+              enabled = true,
               background = true,
               virtual_text = false,
             },
