@@ -468,8 +468,7 @@ require('packer').startup {
       'github/copilot.vim',
       config = function()
         vim.g.copilot_no_tab_map = true
-        vim.g.copilot_assume_mapped = true
-        vim.g.copilot_tab_fallback = ''
+        vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
         vim.g.copilot_filetypes = {
           ['*'] = false,
           gitcommit = false,
@@ -477,7 +476,6 @@ require('packer').startup {
           dart = true,
           lua = true,
         }
-        as.imap('<c-h>', [[copilot#Accept("\<CR>")]], { expr = true, script = true })
         require('as.highlights').plugin('copilot', {
           'CopilotSuggestion',
           { link = 'Comment', force = true },

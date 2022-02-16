@@ -35,12 +35,8 @@ return function()
 
   local function tab(fallback)
     local luasnip = get_luasnip()
-    local copilot_keys = vim.fn['copilot#Accept']()
     if cmp.visible() then
       cmp.select_next_item()
-    elseif copilot_keys ~= '' then -- prioritise copilot over snippets
-      -- Copilot keys do not need to be wrapped in termcodes
-      api.nvim_feedkeys(copilot_keys, 'i', true)
     elseif luasnip and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
     elseif api.nvim_get_mode().mode == 'c' then
@@ -59,12 +55,7 @@ return function()
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
     else
-      local copilot_keys = vim.fn['copilot#Accept']()
-      if copilot_keys ~= '' then
-        feed(copilot_keys, 'i')
-      else
-        feed '<Plug>(Tabout)'
-      end
+      feed '<Plug>(Tabout)'
     end
   end
 
@@ -78,6 +69,9 @@ return function()
       end,
     },
     mapping = {
+      ['<c-g>'] = cmp.mapping(function()
+        feed(vim.fn['copilot#Accept'](t '<Tab>'), 'n')
+      end),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
