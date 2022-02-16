@@ -435,6 +435,7 @@ require('packer').startup {
         }
       end,
     }
+
     use {
       'stevearc/dressing.nvim',
       config = function()
@@ -444,7 +445,7 @@ require('packer').startup {
           },
           select = {
             telescope = {
-              theme = 'cursor',
+              theme = 'dropdown',
             },
           },
         }
