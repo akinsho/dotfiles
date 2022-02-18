@@ -96,7 +96,7 @@ local function setup_mappings(client)
   }
 
   if client.resolved_capabilities.implementation then
-    maps.n['gi'] = { vim.lsp.buf.implementation, 'lsp: impementation' }
+    maps.n['gi'] = { vim.lsp.buf.implementation, 'lsp: implementation' }
   end
 
   if client.resolved_capabilities.type_definition then
