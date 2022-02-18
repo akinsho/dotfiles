@@ -10,7 +10,6 @@
 -- But frankly I like to be in control of my mappings and I honestly think that very soon this
 -- won't be needed as mappings are likely to become simpler once the native api is improved
 
-local api = vim.api
 local fmt = string.format
 
 ---check if a mapping already exists
@@ -39,13 +38,6 @@ local function make_mapper(mode, o)
     -- If the label is all that was passed in, set the opts automagically
     opts = type(opts) == 'string' and { label = opts } or opts and vim.deepcopy(opts) or {}
 
-    local buffer = opts.buffer
-    opts.buffer = nil
-    if type(rhs) == 'function' then
-      local fn_id = as._create(rhs)
-      rhs = string.format('<cmd>lua as._execute(%s)<CR>', fn_id)
-    end
-
     if opts.label then
       local ok, wk = as.safe_require('which-key', { silent = true })
       if ok then
@@ -55,11 +47,7 @@ local function make_mapper(mode, o)
     end
 
     opts = vim.tbl_extend('keep', opts, parent_opts)
-    if buffer and type(buffer) == 'number' then
-      return api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts)
-    end
-
-    api.nvim_set_keymap(mode, lhs, rhs, opts)
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
 end
 
