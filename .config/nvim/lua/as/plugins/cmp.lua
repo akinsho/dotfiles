@@ -122,9 +122,9 @@ return function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
+      { name = 'path' },
       { name = 'cmp_tabnine' },
       { name = 'spell' },
-      { name = 'path' },
       { name = 'neorg' },
       { name = 'orgmode' },
       { name = 'cmp_git' },
