@@ -41,9 +41,8 @@ return function()
       set_env = { ['TERM'] = vim.env.TERM },
       borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       -- BUG: remove prefix as it is currently broken
-      -- seems to relate to prompt buffers although currently it isn't being set to
-      -- a prompt buffer
-      --@see: https://github.com/nvim-telescope/telescope.nvim/issues/1251
+      -- seems to relate to prompt buffers although currently it isn't being set to a prompt buffer
+      -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/1251
       prompt_prefix = '', -- 
       selection_caret = '» ',
       mappings = {
