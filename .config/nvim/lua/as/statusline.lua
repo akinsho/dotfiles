@@ -200,6 +200,7 @@ function _G.__statusline()
     { dir_item, 3 },
     { parent_item, 2 },
     { file_item, 0 },
+    { item_if('Saving…', vim.g.is_saving, 'StComment', { before = ' ' }), 1 },
     -- LSP Status
     {
       item(utils.current_function(), 'StMetadata', {
@@ -307,6 +308,18 @@ local function setup_autocommands()
       modifiers = { '++once' },
       targets = { '*' },
       command = utils.git_updates,
+    },
+    {
+      events = { 'BufWritePre' },
+      targets = { '*' },
+      command = function()
+        if not vim.g.is_saving then
+          vim.g.is_saving = true
+          vim.defer_fn(function()
+            vim.g.is_saving = false
+          end, 1000)
+        end
+      end,
     },
     {
       events = { 'DirChanged' },
