@@ -222,6 +222,7 @@ vim.opt.titlelen = 70
 -----------------------------------------------------------------------------//
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
+vim.g.did_load_filetypes = 0 -- deactivate vim based filetype detection
 vim.opt.showmode = false
 vim.opt.sessionoptions = {
   'globals',
