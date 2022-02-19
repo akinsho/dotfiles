@@ -684,17 +684,6 @@ require('packer').startup {
       end,
     }
 
-    use { 'kristijanhusak/orgmode.nvim', config = conf 'orgmode' }
-
-    use_local {
-      'akinsho/org-bullets.nvim',
-      requires = 'orgmode.nvim',
-      local_path = 'personal',
-      config = function()
-        require('org-bullets').setup()
-      end,
-    }
-
     use {
       'lukas-reineke/headlines.nvim',
       config = function()
