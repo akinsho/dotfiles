@@ -1,6 +1,7 @@
 return function()
   local telescope = require 'telescope'
   local actions = require 'telescope.actions'
+  local layout_actions = require 'telescope.actions.layout'
   local themes = require 'telescope.themes'
 
   local H = require 'as.highlights'
@@ -55,6 +56,8 @@ return function()
           ['<c-s>'] = actions.select_horizontal,
           ['<c-j>'] = actions.cycle_history_next,
           ['<c-k>'] = actions.cycle_history_prev,
+          ['<c-e>'] = layout_actions.toggle_preview,
+          ['<c-l>'] = layout_actions.cycle_layout_next,
         },
         n = {
           ['<C-w>'] = actions.send_selected_to_qflist,
