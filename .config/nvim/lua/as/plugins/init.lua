@@ -775,7 +775,7 @@ require('packer').startup {
             },
             settings = {
               showTodos = false,
-              renameFilesWithClasses = 'always',
+              renameFilesWithClasses = 'prompt',
             },
             on_attach = as.lsp and as.lsp.on_attach or nil,
           },
