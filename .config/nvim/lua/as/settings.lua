@@ -141,9 +141,7 @@ vim.opt.conceallevel = 2
 vim.opt.breakindentopt = 'sbr'
 vim.opt.linebreak = true -- lines wrap at words rather than random characters
 vim.opt.synmaxcol = 1024 -- don't syntax highlight long lines
--- FIXME: use 'auto:2-4' when the ability to set only a single lsp sign is restored
---@see: https://github.com/neovim/neovim/issues?q=set_signs
-vim.opt.signcolumn = 'yes:2'
+vim.opt.signcolumn = 'auto:2-4'
 vim.opt.ruler = false
 vim.opt.cmdheight = 2 -- Set command line height to two lines
 vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
