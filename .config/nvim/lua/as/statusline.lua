@@ -313,7 +313,7 @@ local function setup_autocommands()
       events = { 'BufWritePre' },
       targets = { '*' },
       command = function()
-        if not vim.g.is_saving then
+        if not vim.g.is_saving and vim.bo.modified then
           vim.g.is_saving = true
           vim.defer_fn(function()
             vim.g.is_saving = false
