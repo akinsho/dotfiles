@@ -370,7 +370,7 @@ require('packer').startup {
       },
     }
     use { 'jbyuki/one-small-step-for-vimkind', requires = 'nvim-dap' }
-    use { 'folke/lua-dev.nvim', commit = 'e958850' }
+    use 'folke/lua-dev.nvim'
 
     --}}}
     -----------------------------------------------------------------------------//
