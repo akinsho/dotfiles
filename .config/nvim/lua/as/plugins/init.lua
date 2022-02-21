@@ -383,7 +383,9 @@ require('packer').startup {
           handle = {
             color = require('as.highlights').get_hl('PmenuSbar', 'bg'),
           },
-          excluded_filetypes = { 'packer' },
+          -- NOTE: If telescope is not explicitly excluded this garbles input into its prompt buffer
+          excluded_filetypes = { 'packer', 'TelescopePrompt' },
+          excluded_buftypes = { 'terminal', 'prompt' },
         }
       end,
     }

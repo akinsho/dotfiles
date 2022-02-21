@@ -31,6 +31,7 @@ vim.g.number_filetype_exclusions = {
 }
 
 vim.g.number_buftype_exclusions = {
+  'prompt',
   'terminal',
   'help',
   'nofile',
