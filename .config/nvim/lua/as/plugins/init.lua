@@ -653,11 +653,20 @@ require('packer').startup {
         require('neorg').setup {
           load = {
             ['core.defaults'] = {},
+            -- FIXME: cannot unmap <c-s> and segfaults
             ['core.integrations.telescope'] = {},
             ['core.keybinds'] = {
               config = {
-                default_keybinds = true,
+                default_keybinds = false,
                 neorg_leader = '<localleader>n',
+                hook = function(keybinds)
+                  keybinds.map_event(
+                    'norg',
+                    'n',
+                    '<C-x>',
+                    'core.integrations.telescope.find_linkable'
+                  )
+                end,
               },
             },
             ['core.norg.completion'] = {
