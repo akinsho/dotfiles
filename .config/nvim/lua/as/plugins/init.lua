@@ -170,55 +170,7 @@ require('packer').startup {
       end,
     }
 
-    use {
-      'lukas-reineke/indent-blankline.nvim',
-      config = function()
-        require('indent_blankline').setup {
-          char = '│', -- ┆ ┊ 
-          show_foldtext = false,
-          show_current_context = true,
-          show_current_context_start = true,
-          show_first_indent_level = true,
-          filetype_exclude = {
-            'startify',
-            'dashboard',
-            'log',
-            'fugitive',
-            'gitcommit',
-            'packer',
-            'vimwiki',
-            'markdown',
-            'json',
-            'txt',
-            'vista',
-            'help',
-            'NvimTree',
-            'git',
-            'TelescopePrompt',
-            'undotree',
-            'flutterToolsOutline',
-            'norg',
-            'org',
-            'orgagenda',
-            '', -- for all buffers without a file type
-          },
-          buftype_exclude = { 'terminal', 'nofile' },
-          context_patterns = {
-            'class',
-            'function',
-            'method',
-            'block',
-            'list_literal',
-            'selector',
-            '^if',
-            '^table',
-            'if_statement',
-            'while',
-            'for',
-          },
-        }
-      end,
-    }
+    use { 'lukas-reineke/indent-blankline.nvim', config = conf 'indentline' }
 
     use { 'kyazdani42/nvim-tree.lua', config = conf 'nvim-tree', requires = 'nvim-web-devicons' }
     -- }}}
@@ -455,7 +407,11 @@ require('packer').startup {
     use {
       'j-hui/fidget.nvim',
       config = function()
-        require('fidget').setup {}
+        require('fidget').setup {
+          window = {
+            blend = 0, -- BUG: window blend of > 0 interacts with nvim-bqf 😰
+          },
+        }
       end,
     }
     --------------------------------------------------------------------------------
@@ -466,6 +422,7 @@ require('packer').startup {
 
     use {
       'github/copilot.vim',
+      opt = true,
       config = function()
         vim.g.copilot_no_tab_map = true
         vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
@@ -630,6 +587,7 @@ require('packer').startup {
 
     use {
       'kevinhwang91/nvim-bqf',
+      ft = 'qf',
       config = function()
         require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { guifg = 'Gray' } })
       end,
