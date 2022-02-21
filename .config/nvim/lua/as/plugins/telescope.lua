@@ -67,10 +67,9 @@ return function()
         horizontal = {
           preview_width = 0.45,
         },
-        cursor = get_border {
-          layout_config = {
-            cursor = { width = 0.3 },
-          },
+        cursor = { -- FIXME: this does not change the size of the cursor layout
+          width = 0.4,
+          height = 0.5,
         },
       },
       winblend = 3,
