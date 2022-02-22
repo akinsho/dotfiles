@@ -81,8 +81,8 @@ return function()
       end,
     },
     mapping = {
-      ['<c-g>'] = cmp.mapping(function()
-        feed(vim.fn['copilot#Accept'](t '<Tab>'), 'n')
+      ['<c-h>'] = cmp.mapping(function()
+        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](t '<Tab>'), 'n', true)
       end),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
