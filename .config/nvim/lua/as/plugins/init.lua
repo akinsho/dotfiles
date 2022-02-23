@@ -406,16 +406,6 @@ require('packer').startup {
       end,
     }
 
-    use {
-      'j-hui/fidget.nvim',
-      config = function()
-        require('fidget').setup {
-          window = {
-            blend = 0, -- BUG: window blend of > 0 interacts with nvim-bqf 😰
-          },
-        }
-      end,
-    }
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     --------------------------------------------------------------------------------
