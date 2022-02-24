@@ -324,6 +324,7 @@ local sidebar_fts = {
   'dap-repl',
   'flutterToolsOutline',
   'undotree',
+  'dapui_*',
 }
 
 local function on_sidebar_enter()

@@ -32,6 +32,7 @@ local plain = {
     'markdown',
     'NeogitStatus',
     'dap-repl',
+    'dapui',
   },
 
   buftypes = {
