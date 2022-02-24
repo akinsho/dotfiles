@@ -5,6 +5,8 @@ local fmt = string.format
 local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
+local icons = as.style.icons
+
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(L.DEBUG)
 end
@@ -56,10 +58,10 @@ as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostic
 -- Signs
 -----------------------------------------------------------------------------//
 local diagnostic_types = {
-  { 'Hint', icon = as.style.icons.hint },
-  { 'Error', icon = as.style.icons.error },
-  { 'Warn', icon = as.style.icons.warn },
-  { 'Info', icon = as.style.icons.info },
+  { 'Error', icon = icons.error },
+  { 'Warn', icon = icons.warn },
+  { 'Hint', icon = icons.hint },
+  { 'Info', icon = icons.info },
 }
 
 fn.sign_define(vim.tbl_map(function(t)
@@ -206,14 +208,18 @@ end
 -----------------------------------------------------------------------------//
 diagnostic.config {
   underline = true,
-  virtual_text = {
-    severity = diagnostic.severity.ERROR,
-    source = 'if_many',
-    prefix = ''
-  },
   signs = false,
   update_in_insert = false,
   severity_sort = true,
+  virtual_text = {
+    severity = diagnostic.severity.ERROR,
+    prefix = '',
+    -- NOTE: this relies on the ordering of the diagnostic types table above
+    format = function(event)
+      local setting = diagnostic_types[event.severity]
+      return (setting and setting.icon .. ' ' or '') .. event.message
+    end,
+  },
 }
 
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
