@@ -5,7 +5,6 @@ local api = vim.api
 local expand = fn.expand
 local strwidth = fn.strwidth
 local fnamemodify = fn.fnamemodify
-local contains = vim.tbl_contains
 local fmt = string.format
 
 local M = {}
@@ -15,31 +14,33 @@ local function get_toggleterm_name(_, buf)
   return fmt('Terminal(%s)[%s]', shell, api.nvim_buf_get_var(buf, 'toggle_number'))
 end
 
-local plain_filetypes = {
-  'help',
-  'ctrlsf',
-  'minimap',
-  'Trouble',
-  'tsplayground',
-  'coc-explorer',
-  'NvimTree',
-  'undotree',
-  'neoterm',
-  'vista',
-  'fugitive',
-  'startify',
-  'vimwiki',
-  'markdown',
-  'NeogitStatus',
-  'dap-repl',
-}
+local plain = {
+  filetypes = {
+    'help',
+    'ctrlsf',
+    'minimap',
+    'Trouble',
+    'tsplayground',
+    'coc-explorer',
+    'NvimTree',
+    'undotree',
+    'neoterm',
+    'vista',
+    'fugitive',
+    'startify',
+    'vimwiki',
+    'markdown',
+    'NeogitStatus',
+    'dap-repl',
+  },
 
-local plain_buftypes = {
-  'terminal',
-  'quickfix',
-  'nofile',
-  'nowrite',
-  'acwrite',
+  buftypes = {
+    'terminal',
+    'quickfix',
+    'nofile',
+    'nowrite',
+    'acwrite',
+  },
 }
 
 local exceptions = {
@@ -158,10 +159,16 @@ function M.prioritize(statusline, space, length)
   return M.prioritize(statusline, space, length - lowest.length)
 end
 
+local function matches(str, list)
+  return #vim.tbl_filter(function(item)
+    return item == str or string.match(str, item)
+  end, list) > 0
+end
+
 --- @param ctx table
 function M.is_plain(ctx)
-  return contains(plain_filetypes, ctx.filetype)
-    or contains(plain_buftypes, ctx.buftype)
+  return matches(ctx.filetype, plain.filetypes)
+    or matches(ctx.buftype, plain.buftypes)
     or ctx.preview
 end
 
