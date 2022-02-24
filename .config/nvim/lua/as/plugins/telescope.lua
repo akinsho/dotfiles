@@ -181,8 +181,6 @@ return function()
 
   local function frecency()
     telescope.extensions.frecency.frecency(dropdown {
-      -- NOTE: remove default text as it's slow
-      -- default_text = ':CWD:',
       winblend = 10,
       border = true,
       previewer = false,
@@ -192,6 +190,10 @@ return function()
 
   local function gh_notifications()
     telescope.extensions.ghn.ghn(dropdown())
+  end
+
+  local function prs()
+    telescope.extensions.gh.pull_request(dropdown())
   end
 
   local function installed_plugins()
@@ -223,6 +225,7 @@ return function()
         name = '+git',
         c = { builtins.git_commits, 'commits' },
         b = { builtins.git_branches, 'branches' },
+        p = { prs, 'PRs' },
       },
       m = { builtins.man_pages, 'man pages' },
       h = { frecency, 'history' },

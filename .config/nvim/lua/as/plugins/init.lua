@@ -74,6 +74,13 @@ require('packer').startup {
             require('telescope').load_extension 'smart_history'
           end,
         },
+        {
+          'nvim-telescope/telescope-github.nvim',
+          after = 'telescope.nvim',
+          config = function()
+            require('telescope').load_extension 'gh'
+          end,
+        },
       },
     }
 
