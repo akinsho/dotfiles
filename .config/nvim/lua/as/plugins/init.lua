@@ -373,6 +373,17 @@ require('packer').startup {
             dapui.setup()
             as.nnoremap('<localleader>duc', dapui.close, 'dap-ui: close')
             as.nnoremap('<localleader>dut', dapui.toggle, 'dap-ui: toggle')
+            local dap = require 'dap'
+            -- NOTE: this opens dap UI automatically when dap starts
+            -- dap.listeners.after.event_initialized['dapui_config'] = function()
+            --   dapui.open()
+            -- end
+            dap.listeners.before.event_terminated['dapui_config'] = function()
+              dapui.close()
+            end
+            dap.listeners.before.event_exited['dapui_config'] = function()
+              dapui.close()
+            end
           end,
         },
       },
