@@ -515,6 +515,7 @@ require('packer').startup {
       cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = function()
         local notify = require 'notify'
+        ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
         local renderer = require 'notify.render'
         notify.setup {
           stages = 'fade_in_slide_out',
