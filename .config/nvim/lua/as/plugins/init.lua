@@ -130,6 +130,7 @@ require('packer').startup {
       'rmagatti/auto-session',
       config = function()
         require('auto-session').setup {
+          log_level = 'error',
           auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath 'data'),
         }
       end,
