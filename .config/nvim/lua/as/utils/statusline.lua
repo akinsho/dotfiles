@@ -31,6 +31,7 @@ local plain_filetypes = {
   'vimwiki',
   'markdown',
   'NeogitStatus',
+  'dap-repl',
 }
 
 local plain_buftypes = {
