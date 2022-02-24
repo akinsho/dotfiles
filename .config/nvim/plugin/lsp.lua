@@ -2,6 +2,7 @@ local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
+local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
 if vim.env.DEVELOPING then
@@ -203,9 +204,13 @@ end
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
-vim.diagnostic.config {
+diagnostic.config {
   underline = true,
-  virtual_text = false,
+  virtual_text = {
+    severity = diagnostic.severity.ERROR,
+    source = 'if_many',
+    prefix = ''
+  },
   signs = false,
   update_in_insert = false,
   severity_sort = true,
