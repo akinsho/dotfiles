@@ -166,7 +166,7 @@ local function lsp_progress_notification(_, result, ctx)
     end
     local notif_data = client_notifs[client_id][result.token]
     if val.kind == 'begin' then
-      local message = format_message(val.message, val.percentage)
+      local message = format_message(val.message or 'Loading...', val.percentage)
       local notification = vim.notify(message, 'info', {
         title = format_title(val.title, vim.lsp.get_client_by_id(client_id)),
         icon = spinner_frames[1],
