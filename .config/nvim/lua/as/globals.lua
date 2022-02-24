@@ -42,7 +42,7 @@ do
 
   as.style = {
     icons = {
-      error = ' ', -- '✗'
+      error = '✗',
       warn = '',
       info = '',
       hint = '',

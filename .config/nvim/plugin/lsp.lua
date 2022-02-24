@@ -211,15 +211,7 @@ diagnostic.config {
   signs = false,
   update_in_insert = false,
   severity_sort = true,
-  virtual_text = {
-    severity = diagnostic.severity.ERROR,
-    prefix = '',
-    -- NOTE: this relies on the ordering of the diagnostic types table above
-    format = function(event)
-      local setting = diagnostic_types[event.severity]
-      return (setting and setting.icon .. ' ' or '') .. event.message
-    end,
-  },
+  virtual_text = false,
 }
 
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
