@@ -405,6 +405,13 @@ function M.current_function()
   return vim.b.lsp_current_function
 end
 
+function M.debugger()
+  if not package.loaded['dap'] then
+    return ''
+  end
+  return require('dap').status()
+end
+
 local function printf(format, current, total)
   if current == 0 and total == 0 then
     return ''

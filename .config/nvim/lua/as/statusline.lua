@@ -236,6 +236,7 @@ function _G.__statusline()
     { item(flutter.app_version, 'StMetadata'), 4 },
     { item(flutter.device and flutter.device.name or '', 'StMetadata'), 4 },
     { item(utils.lsp_client(), 'StMetadata'), 4 },
+    { item(utils.debugger(), 'StMetadata', { prefix = 'ﴫ' }), 4 },
     {
       item_if(diagnostics.error.count, diagnostics.error, 'StError', {
         prefix = diagnostics.error.sign,
