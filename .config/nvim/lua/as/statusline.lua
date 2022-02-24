@@ -259,8 +259,20 @@ function _G.__statusline()
     -- Git Status
     { item(status.head, 'StBlue', { prefix = '', prefix_color = 'StGit' }), 1 },
     { item(status.changed, 'StTitle', { prefix = '', prefix_color = 'StWarning' }), 3 },
-    { item(status.removed, 'StTitle', { prefix = '', prefix_color = 'StError' }), 3 },
-    { item(status.added, 'StTitle', { prefix = '', prefix_color = 'StGreen' }), 3 },
+    {
+      item(status.removed, 'StTitle', {
+        prefix = '', --[[  ]]
+        prefix_color = 'StError',
+      }),
+      3,
+    },
+    {
+      item(status.added, 'StTitle', {
+        prefix = '', --[[]]
+        prefix_color = 'StGreen',
+      }),
+      3,
+    },
     {
       item(
         ahead,
