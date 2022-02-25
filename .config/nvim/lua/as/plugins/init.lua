@@ -788,7 +788,6 @@ require('packer').startup {
     }
 
     use 'dart-lang/dart-vim-plugin'
-    use 'plasticboy/vim-markdown'
     use 'mtdl9/vim-log-highlighting'
     use 'fladson/vim-kitty'
     -- }}}
@@ -1073,7 +1072,7 @@ require('packer').startup {
     ---------------------------------------------------------------------------------
     -- Dev plugins  {{{1
     ---------------------------------------------------------------------------------
-    use { 'rafcamlet/nvim-luapad', cmd = 'Luapad', disable = utils.is_work }
+    use { 'rafcamlet/nvim-luapad', cmd = 'Luapad' }
     -- }}}
     ---------------------------------------------------------------------------------
     -- Personal plugins {{{1
