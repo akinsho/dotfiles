@@ -252,7 +252,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { 'TSKeywordReturn', { italic = true, foreground = keyword_fg } },
     { 'TSParameter', { italic = true, bold = true, foreground = 'NONE' } },
-    { 'TSError', { link = 'LspDiagnosticsUnderlineError' } },
+    { 'TSError', { undercurl = true, sp = error_line, foreground = 'NONE' } },
     -- highlight FIXME comments
     { 'commentTSWarning', { foreground = 'Red', bold = true } },
     { 'commentTSDanger', { foreground = '#FBBF24', bold = true } },
