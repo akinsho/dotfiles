@@ -10,6 +10,7 @@ vim.g.open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
 vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand '~/.dotfiles'
 vim.g.vim_dir = vim.g.dotfiles .. '/.config/nvim'
 
+vim.g.did_load_filetypes = 0 -- deactivate vim based filetype detection
 ------------------------------------------------------------------------
 -- Leader bindings
 ------------------------------------------------------------------------

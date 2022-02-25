@@ -411,17 +411,15 @@ as.augroup('Utilities', {
   },
 })
 
-if as.has 'nvim-0.6' then
-  as.augroup('TerminalAutocommands', {
-    {
-      events = { 'TermClose' },
-      targets = { '*' },
-      command = function()
-        --- automatically close a terminal if the job was successful
-        if not vim.v.event.status == 0 then
-          vim.cmd('bdelete! ' .. fn.expand '<abuf>')
-        end
-      end,
-    },
-  })
-end
+as.augroup('TerminalAutocommands', {
+  {
+    events = { 'TermClose' },
+    targets = { '*' },
+    command = function()
+      --- automatically close a terminal if the job was successful
+      if not vim.v.event.status == 0 then
+        vim.cmd('bdelete! ' .. fn.expand '<abuf>')
+      end
+    end,
+  },
+})

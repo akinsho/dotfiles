@@ -24,8 +24,6 @@ vim.opt.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
---- NOTE: remove this once 0.6 lands as it is now default
-vim.opt.hidden = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.eadirection = 'hor'
@@ -197,9 +195,6 @@ vim.opt.guifont = 'Fira Code Regular Nerd Font Complete Mono:h14'
 -- CREDIT: https://www.youtube.com/watch?v=F91VWOelFNE
 vim.opt.emoji = false
 -----------------------------------------------------------------------------//
---- NOTE: remove this once 0.6 lands, it is now default
-vim.opt.inccommand = 'nosplit'
------------------------------------------------------------------------------//
 -- Cursor {{{1
 -----------------------------------------------------------------------------//
 -- This is from the help docs, it enables mode shapes, "Cursor" highlight, and blinking
@@ -220,7 +215,6 @@ vim.opt.titlelen = 70
 -----------------------------------------------------------------------------//
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
-vim.g.did_load_filetypes = 0 -- deactivate vim based filetype detection
 vim.opt.showmode = false
 vim.opt.sessionoptions = {
   'globals',
