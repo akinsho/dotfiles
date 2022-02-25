@@ -57,7 +57,7 @@ local function colors()
     { 'StComment', { background = bg_color, inherit = 'Comment' } },
     { 'StInactive', { foreground = bg_color, background = P.comment_grey } },
     { 'StatusLine', { background = bg_color } },
-    { 'StatusLineNC', { background = bg_color, italic = false, bold = false } },
+    { 'StatusLineNC', { link = 'VertSplit' } },
     { 'StInfo', { foreground = info_color, background = bg_color, bold = true } },
     { 'StWarning', { foreground = warning_fg, background = bg_color } },
     { 'StError', { foreground = error_color, background = bg_color } },
@@ -151,7 +151,9 @@ function _G.__statusline()
   local file_modified = utils.modified(ctx, '●')
   local inactive = vim.api.nvim_get_current_win() ~= curwin
   local focused = vim.g.vim_in_focus or true
-  local minimal = plain or inactive or not focused
+  if inactive or not focused then
+    return string.rep('─', available_space)
+  end
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
@@ -159,13 +161,13 @@ function _G.__statusline()
   local add = make_status(statusline)
 
   add(
-    { item_if('▌', not minimal, 'StIndicator', { before = '', after = '' }), 0 },
+    { item_if('▌', not plain, 'StIndicator', { before = '', after = '' }), 0 },
     { utils.spacer(1), 0 }
   )
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
-  local segments = utils.file(ctx, minimal)
+  local segments = utils.file(ctx, plain)
   local dir, parent, file = segments.dir, segments.parent, segments.file
   local dir_item = utils.item(dir.item, dir.hl, dir.opts)
   local parent_item = utils.item(parent.item, parent.hl, parent.opts)
@@ -176,7 +178,7 @@ function _G.__statusline()
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
-  if minimal then
+  if plain then
     add({ readonly_item, 1 }, { dir_item, 3 }, { parent_item, 2 }, { file_item, 0 })
     return display(statusline, available_space)
   end

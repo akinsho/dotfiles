@@ -296,7 +296,7 @@ local function set_sidebar_highlight()
     { 'PanelBackground', { background = bg_color } },
     { 'PanelHeading', { background = bg_color, bold = true } },
     { 'PanelVertSplit', { foreground = split_color, background = bg_color } },
-    { 'PanelStNC', { background = st_color, cterm = { italic = true } } },
+    { 'PanelStNC', { background = bg_color, foreground = split_color } },
     { 'PanelSt', { background = st_color } },
   }
   for _, grp in ipairs(hls) do
