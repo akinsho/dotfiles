@@ -6,6 +6,7 @@ return function()
     show_current_context_start = true,
     show_first_indent_level = true,
     filetype_exclude = {
+      'dap-repl',
       'startify',
       'dashboard',
       'log',
