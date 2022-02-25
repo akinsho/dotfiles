@@ -145,32 +145,6 @@ nnoremap('<C-w>f', '<C-w>vgf')
 vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
--- https://www.reddit.com/r/neovim/comments/l8vyl8/a_plugin_to_improve_the_deletion_of_buffers/
--- alternatives: https://www.reddit.com/r/vim/comments/8drccb/vimsayonara_or_vimbbye
-local function buf_kill()
-  local buflisted = fn.getbufinfo { buflisted = 1 }
-  local cur_winid, cur_bufnr = api.nvim_get_current_win(), api.nvim_get_current_buf()
-  if #buflisted < 2 then
-    vim.cmd 'confirm qall'
-    return
-  end
-  for _, winid in ipairs(fn.getbufinfo(cur_bufnr)[1].windows) do
-    api.nvim_set_current_win(winid)
-    local backwards = cur_bufnr == buflisted[#buflisted].bufnr
-    if pcall(require, 'bufferline') then
-      require('bufferline').cycle(backwards and -1 or 1)
-    else
-      vim.cmd(backwards and 'bp' or 'bn')
-    end
-  end
-  api.nvim_set_current_win(cur_winid)
-  if not api.nvim_buf_is_valid(cur_bufnr) then
-    return
-  end
-  local is_terminal = vim.bo[cur_bufnr].buftype == 'terminal'
-  api.nvim_buf_delete(cur_bufnr, { force = is_terminal })
-end
-nnoremap('<leader>qq', buf_kill)
 nnoremap('<leader>qw', '<cmd>bd!<CR>')
 ----------------------------------------------------------------------------------
 -- Operators
