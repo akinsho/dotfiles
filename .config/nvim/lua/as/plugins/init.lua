@@ -402,6 +402,7 @@ require('packer').startup {
         },
       },
     }
+
     use { 'jbyuki/one-small-step-for-vimkind', requires = 'nvim-dap' }
     use 'folke/lua-dev.nvim'
 
@@ -570,6 +571,7 @@ require('packer').startup {
         as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>')
       end,
     }
+
     use {
       'iamcco/markdown-preview.nvim',
       run = function()
@@ -581,6 +583,7 @@ require('packer').startup {
         vim.g.mkdp_auto_close = 1
       end,
     }
+
     use {
       'norcalli/nvim-colorizer.lua',
       config = function()
@@ -859,7 +862,9 @@ require('packer').startup {
         end)
       end,
     }
+
     use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
+
     use {
       'rhysd/conflict-marker.vim',
       config = function()
@@ -878,6 +883,7 @@ require('packer').startup {
         vim.g.conflict_marker_end = '^>>>>>>> .*$'
       end,
     }
+
     use {
       'TimUntersberger/neogit',
       cmd = 'Neogit',
@@ -886,6 +892,7 @@ require('packer').startup {
       setup = conf('neogit').setup,
       config = conf('neogit').config,
     }
+
     use {
       'sindrets/diffview.nvim',
       cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
@@ -924,6 +931,7 @@ require('packer').startup {
         require('which-key').register { gS = 'splitjoin: split', gJ = 'splitjoin: join' }
       end,
     }
+
     use {
       'AndrewRadev/dsf.vim',
       config = function()
