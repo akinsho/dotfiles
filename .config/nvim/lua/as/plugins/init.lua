@@ -110,8 +110,8 @@ require('packer').startup {
           { 'TroubleNormal', { link = 'PanelBackground' } },
           { 'TroubleText', { link = 'PanelBackground' } },
           { 'TroubleIndent', { link = 'PanelVertSplit' } },
-          { 'TroubleFoldIcon', { guifg = 'yellow', gui = 'bold' } },
-          { 'TroubleLocation', { guifg = H.get_hl('Comment', 'fg') } }
+          { 'TroubleFoldIcon', { foreground = 'yellow', bold = true } },
+          { 'TroubleLocation', { foreground = H.get_hl('Comment', 'fg') } }
         )
         local trouble = require 'trouble'
         as.nnoremap('<leader>ld', '<cmd>TroubleToggle workspace_diagnostics<CR>')
@@ -460,10 +460,7 @@ require('packer').startup {
           dart = true,
           lua = true,
         }
-        require('as.highlights').plugin('copilot', {
-          'CopilotSuggestion',
-          { link = 'Comment', force = true },
-        })
+        require('as.highlights').plugin('copilot', { 'CopilotSuggestion', { link = 'Comment' } })
       end,
     }
 
@@ -479,7 +476,7 @@ require('packer').startup {
     use {
       'chentau/marks.nvim',
       config = function()
-        require('as.highlights').plugin('marks', { 'MarkSignHL', { guifg = 'Red' } })
+        require('as.highlights').plugin('marks', { 'MarkSignHL', { foreground = 'Red' } })
         require('marks').setup {
           bookmark_0 = {
             sign = '⚑',
@@ -600,7 +597,7 @@ require('packer').startup {
       'https://gitlab.com/yorickpeterse/nvim-pqf',
       event = 'BufReadPre',
       config = function()
-        require('as.highlights').plugin('pqf', { 'qfPosition', { link = 'Tag', force = true } })
+        require('as.highlights').plugin('pqf', { 'qfPosition', { link = 'Tag' } })
         require('pqf').setup {}
       end,
     }
@@ -609,7 +606,7 @@ require('packer').startup {
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { guifg = 'Gray' } })
+        require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { foreground = 'Gray' } })
       end,
     }
     --------------------------------------------------------------------------------
@@ -677,9 +674,9 @@ require('packer').startup {
         -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
         require('as.highlights').plugin(
           'Headlines',
-          { 'Headline1', { guibg = '#4e79a7', guifg = 'White' } },
-          { 'Headline2', { guibg = '#e15759', guifg = 'White' } },
-          { 'Headline3', { guibg = '#f28e2c', guifg = 'White' } }
+          { 'Headline1', { background = '#4e79a7', foreground = 'White' } },
+          { 'Headline2', { background = '#e15759', foreground = 'White' } },
+          { 'Headline3', { background = '#f28e2c', foreground = 'White' } }
         )
         vim.fn.sign_define {
           { name = 'Headline1', linehl = 'Headline1' },
@@ -862,11 +859,11 @@ require('packer').startup {
       config = function()
         require('as.highlights').plugin(
           'conflictMarker',
-          { 'ConflictMarkerBegin', { guibg = '#2f7366' } },
-          { 'ConflictMarkerOurs', { guibg = '#2e5049' } },
-          { 'ConflictMarkerTheirs', { guibg = '#344f69' } },
-          { 'ConflictMarkerEnd', { guibg = '#2f628e' } },
-          { 'ConflictMarkerCommonAncestorsHunk', { guibg = '#754a81' } }
+          { 'ConflictMarkerBegin', { background = '#2f7366' } },
+          { 'ConflictMarkerOurs', { background = '#2e5049' } },
+          { 'ConflictMarkerTheirs', { background = '#344f69' } },
+          { 'ConflictMarkerEnd', { background = '#2f628e' } },
+          { 'ConflictMarkerCommonAncestorsHunk', { background = '#754a81' } }
         )
         -- disable the default highlight group
         vim.g.conflict_marker_highlight_group = ''

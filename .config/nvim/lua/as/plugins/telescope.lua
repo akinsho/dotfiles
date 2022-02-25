@@ -7,15 +7,15 @@ return function()
   local H = require 'as.highlights'
   H.plugin(
     'telescope',
-    { 'TelescopeMatching', { link = 'Title', force = true } },
-    { 'TelescopeBorder', { link = 'GreyFloatBorder', force = true } },
-    { 'TelescopePromptPrefix', { link = 'Statement', force = true } },
-    { 'TelescopeTitle', { inherit = 'Normal', gui = 'bold' } },
+    { 'TelescopeMatching', { link = 'Title' } },
+    { 'TelescopeBorder', { link = 'GreyFloatBorder' } },
+    { 'TelescopePromptPrefix', { link = 'Statement' } },
+    { 'TelescopeTitle', { inherit = 'Normal', bold = true } },
     {
       'TelescopeSelectionCaret',
       {
-        guifg = H.get_hl('Identifier', 'fg'),
-        guibg = H.get_hl('TelescopeSelection', 'bg'),
+        foreground = H.get_hl('Identifier', 'fg'),
+        background = H.get_hl('TelescopeSelection', 'bg'),
       },
     }
   )

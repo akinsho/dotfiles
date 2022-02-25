@@ -6,11 +6,11 @@ return function()
 
   require('as.highlights').plugin(
     'Cmp',
-    { 'CmpItemAbbr', { inherit = 'Comment', gui = 'NONE' } },
-    { 'CmpItemMenu', { inherit = 'NonText', gui = 'NONE' } },
-    { 'CmpItemAbbrMatch', { inherit = 'Pmenu', gui = 'bold' } },
-    { 'CmpItemAbbrDeprecated', { gui = 'strikethrough', inherit = 'Comment' } },
-    { 'CmpItemAbbrMatchFuzzy', { gui = 'italic', guifg = 'fg' } }
+    { 'CmpItemAbbr', { inherit = 'Comment', italic = false, bold = false } },
+    { 'CmpItemMenu', { inherit = 'NonText', italic = false, bold = false } },
+    { 'CmpItemAbbrMatch', { inherit = 'Pmenu', bold = true } },
+    { 'CmpItemAbbrDeprecated', { strikethrough = true, inherit = 'Comment' } },
+    { 'CmpItemAbbrMatchFuzzy', { italic = true, foreground = 'fg' } }
   )
 
   -- FIXME: this hould not be required if we were using a prompt buffer in telescope i.e. prompt prefix
@@ -28,7 +28,10 @@ return function()
   local lsp_hls = as.style.lsp.kind_highlights
 
   local kind_hls = vim.tbl_map(function(key)
-    return { fmt('CmpItemKind%s', key), { inherit = lsp_hls[key], gui = 'NONE' } }
+    return {
+      fmt('CmpItemKind%s', key),
+      { inherit = lsp_hls[key], italic = false, bold = false, underline = false },
+    }
   end, vim.tbl_keys(lsp_hls))
 
   require('as.highlights').plugin('CmpKinds', unpack(kind_hls))

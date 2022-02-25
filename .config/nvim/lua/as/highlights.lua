@@ -50,32 +50,6 @@ function M.has_win_highlight(win_id, ...)
   return false, win_hl
 end
 
----A mechanism to allow inheritance of the winhighlight of a specific
----group in a window
----@param win_id number
----@param target string
----@param name string
----@param default string
-function M.adopt_winhighlight(win_id, target, name, default)
-  name = name .. win_id
-  local _, win_hl = M.has_win_highlight(win_id, target)
-  local hl_exists = vim.fn.hlexists(name) > 0
-  if not hl_exists then
-    local parts = vim.split(win_hl, ',')
-    local found = as.find(parts, function(part)
-      return part:match(target)
-    end)
-    if found then
-      local hl_group = vim.split(found, ':')[2]
-      local bg = M.get_hl(hl_group, 'bg')
-      local fg = M.get_hl(default, 'fg')
-      local gui = M.get_hl(default, 'gui')
-      M.set_hl(name, { guibg = bg, guifg = fg, gui = gui })
-    end
-  end
-  return name
-end
-
 ---get a highlight groups details from the nvim API and format the result
 ---to match the attributes seen when using `:highlight GroupName`
 --- `nvim_get_hl_by_name` e.g.
@@ -97,22 +71,39 @@ end
 ---```
 ---@param group_name string A highlight group name
 local function get_hl(group_name)
-  local attrs = { foreground = 'guifg', background = 'guibg' }
-  local hl = api.nvim_get_hl_by_name(group_name, true)
-  local result = {}
-  if hl then
-    local gui = {}
-    for key, value in pairs(hl) do
-      local t = type(value)
-      if t == 'number' and attrs[key] then
-        result[attrs[key]] = '#' .. bit.tohex(value, 6)
-      elseif t == 'boolean' then -- NOTE: we presume that a boolean value is a GUI attribute
-        table.insert(gui, key)
-      end
-    end
-    result.gui = #gui > 0 and gui or nil
+  local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
+  if ok then
+    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
+    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
+    --- BUG: API returns a true key which errors during the merge
+    hl[true] = nil
+    return hl
   end
-  return result
+  return {}
+end
+
+---A mechanism to allow inheritance of the winhighlight of a specific
+---group in a window
+---@param win_id number
+---@param target string
+---@param name string
+---@param default string
+function M.adopt_winhighlight(win_id, target, name, default)
+  name = name .. win_id
+  local _, win_hl = M.has_win_highlight(win_id, target)
+  local hl_exists = vim.fn.hlexists(name) > 0
+  if not hl_exists then
+    local parts = vim.split(win_hl, ',')
+    local found = as.find(parts, function(part)
+      return part:match(target)
+    end)
+    if found then
+      local hl_group = vim.split(found, ':')[2]
+      local bg = M.get_hl(hl_group, 'bg')
+      M.set_hl(name, { background = bg, inherit = default })
+    end
+  end
+  return name
 end
 
 --- NOTE: vim.highlight's link and create are private, so eventually move to using `nvim_set_hl`
@@ -120,26 +111,11 @@ end
 ---@param opts table
 function M.set_hl(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
-  if not vim.tbl_isempty(opts) then
-    if opts.link then
-      vim.highlight.link(name, opts.link, opts.force)
-    else
-      if opts.inherit then
-        local attrs = get_hl(opts.inherit)
-        --- FIXME: deep extending does not merge { a = {'one'}} with {b = {'two'}}
-        --- correctly in nvim 0.5.1, but should do in 0.6
-        if opts.gui and not opts.gui:match 'NONE' and attrs.gui then
-          opts.gui = opts.gui .. ',' .. table.concat(attrs.gui, ',')
-        end
-        opts = vim.tbl_deep_extend('force', attrs, opts)
-        opts.inherit = nil
-      end
-      opts.gui = type(opts.gui) == 'table' and table.concat(opts.gui, ', ') or opts.gui
-      local ok, msg = pcall(vim.highlight.create, name, opts)
-      if not ok then
-        vim.notify(fmt('Failed to set %s because: %s', name, msg))
-      end
-    end
+  local hl = get_hl(opts.inherit or name)
+  opts.inherit = nil
+  local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
+  if not ok then
+    vim.notify(fmt('Failed to set %s because: %s', name, msg))
   end
 end
 
@@ -155,9 +131,12 @@ function M.get_hl(grp, attr, fallback)
     return 'NONE'
   end
   local hl = get_hl(grp)
-  local color = hl[attr:match 'gui' and attr or fmt('gui%s', attr)] or fallback
+  attr = ({ fg = 'foreground', bg = 'background' })[attr] or attr
+  local color = hl[attr] or fallback
   if not color then
-    vim.notify(fmt('%s %s does not exist', grp, attr), levels.INFO)
+    vim.schedule(function()
+      vim.notify(fmt('%s %s does not exist', grp, attr), levels.INFO)
+    end)
     return 'NONE'
   end
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
@@ -210,95 +189,101 @@ local function general_overrides()
   local warn_line = M.alter_color(L.warn, -80)
   local info_line = M.alter_color(L.info, -80)
   M.all {
-    { 'mkdLineBreak', { link = 'NONE', force = true } },
+    { 'mkdLineBreak', { link = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
-    { 'MsgArea', { guibg = msg_area_bg } },
-    { 'MsgSeparator', { guifg = comment_fg, guibg = msg_area_bg } },
+    { 'MsgArea', { background = msg_area_bg } },
+    { 'MsgSeparator', { foreground = comment_fg, background = msg_area_bg } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
     { 'NormalFloat', { link = 'Normal' } },
     --- Highlight group for light coloured floats
-    { 'GreyFloat', { guibg = P.grey } },
-    { 'GreyFloatBorder', { guifg = P.grey } },
+    { 'GreyFloat', { background = P.grey } },
+    { 'GreyFloatBorder', { foreground = P.grey } },
     -----------------------------------------------------------------------------//
-    { 'CursorLineNr', { gui = 'bold' } },
-    { 'FoldColumn', { guibg = 'background' } },
-    { 'Folded', { guifg = comment_fg, guibg = 'NONE', gui = 'italic' } },
-    { 'TermCursor', { ctermfg = 'green', guifg = 'royalblue' } },
-    { 'IncSearch', { guibg = 'NONE', guifg = 'LightGreen', gui = 'italic,bold,underline' } },
-    -- Add undercurl to existing spellbad highlight
+    { 'CursorLineNr', { bold = true } },
+    { 'FoldColumn', { background = 'background' } },
+    { 'Folded', { foreground = comment_fg, background = 'NONE', italic = true } },
+    { 'TermCursor', { ctermfg = 'green', foreground = 'royalblue' } },
     {
-      'SpellBad',
-      { gui = 'undercurl', guibg = 'transparent', guifg = 'transparent', guisp = 'green' },
+      'IncSearch',
+      {
+        background = 'NONE',
+        foreground = 'LightGreen',
+        italic = true,
+        bold = true,
+        underline = true,
+      },
     },
-    { 'PmenuSbar', { guibg = P.grey } },
+    -- Add undercurl to existing spellbad highlight
+    { 'SpellBad', { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
+    { 'PmenuSbar', { background = P.grey } },
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    { 'DiffAdd', { guibg = '#26332c', guifg = 'NONE' } },
-    { 'DiffDelete', { guibg = '#572E33', guifg = '#5c6370', gui = 'NONE' } },
-    { 'DiffChange', { guibg = '#273842', guifg = 'NONE' } },
-    { 'DiffText', { guibg = '#314753', guifg = 'NONE' } },
-    { 'diffAdded', { link = 'DiffAdd', force = true } },
-    { 'diffChanged', { link = 'DiffChange', force = true } },
-    { 'diffRemoved', { link = 'DiffDelete', force = true } },
-    { 'diffBDiffer', { link = 'WarningMsg', force = true } },
-    { 'diffCommon', { link = 'WarningMsg', force = true } },
-    { 'diffDiffer', { link = 'WarningMsg', force = true } },
-    { 'diffFile', { link = 'Directory', force = true } },
-    { 'diffIdentical', { link = 'WarningMsg', force = true } },
-    { 'diffIndexLine', { link = 'Number', force = true } },
-    { 'diffIsA', { link = 'WarningMsg', force = true } },
-    { 'diffNoEOL', { link = 'WarningMsg', force = true } },
-    { 'diffOnly', { link = 'WarningMsg', force = true } },
+    { 'DiffAdd', { background = '#26332c', foreground = 'NONE' } },
+    { 'DiffDelete', { background = '#572E33', foreground = '#5c6370' } },
+    { 'DiffChange', { background = '#273842', foreground = 'NONE' } },
+    { 'DiffText', { background = '#314753', foreground = 'NONE' } },
+    { 'diffAdded', { link = 'DiffAdd' } },
+    { 'diffChanged', { link = 'DiffChange' } },
+    { 'diffRemoved', { link = 'DiffDelete' } },
+    { 'diffBDiffer', { link = 'WarningMsg' } },
+    { 'diffCommon', { link = 'WarningMsg' } },
+    { 'diffDiffer', { link = 'WarningMsg' } },
+    { 'diffFile', { link = 'Directory' } },
+    { 'diffIdentical', { link = 'WarningMsg' } },
+    { 'diffIndexLine', { link = 'Number' } },
+    { 'diffIsA', { link = 'WarningMsg' } },
+    { 'diffNoEOL', { link = 'WarningMsg' } },
+    { 'diffOnly', { link = 'WarningMsg' } },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    { 'Comment', { gui = 'italic' } },
-    { 'Type', { gui = 'italic,bold' } },
-    { 'Include', { gui = 'italic' } },
-    { 'Folded', { gui = 'bold,italic' } },
-    { 'QuickFixLine', { guibg = search_bg } },
+    { 'Comment', { italic = true } },
+    { 'Type', { italic = true, bold = true } },
+    { 'Include', { italic = true, bold = false } },
+    { 'Folded', { bold = true, italic = true } },
+    { 'QuickFixLine', { background = search_bg } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { 'TSKeywordReturn', { gui = 'italic', guifg = keyword_fg } },
-    { 'TSParameter', { gui = 'italic,bold' } },
-    { 'TSError', { link = 'LspDiagnosticsUnderlineError', force = true } },
+    { 'TSKeywordReturn', { italic = true, foreground = keyword_fg } },
+    { 'TSParameter', { italic = true, bold = true, foreground = 'NONE' } },
+    { 'TSError', { link = 'LspDiagnosticsUnderlineError' } },
     -- highlight FIXME comments
-    { 'commentTSWarning', { guifg = 'Red', gui = 'bold' } },
-    { 'commentTSDanger', { guifg = '#FBBF24', gui = 'bold' } },
+    { 'commentTSWarning', { foreground = 'Red', bold = true } },
+    { 'commentTSDanger', { foreground = '#FBBF24', bold = true } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
     -- avoid the urge to be "clever" and try and programmatically set these because
     -- 1. the name are slightly different (more than just the prefix) i.e. Warn -> Warning
     -- 2. Some plugins have not migrated so having both highlight groups is valuable
-    { 'LspReferenceText', { gui = 'underline' } },
-    { 'LspReferenceRead', { gui = 'underline' } },
-    { 'DiagnosticHint', { guifg = L.hint } },
-    { 'DiagnosticError', { guifg = L.error } },
-    { 'DiagnosticWarning', { guifg = L.warn } },
-    { 'DiagnosticInfo', { guifg = L.info } },
-    { 'DiagnosticUnderlineError', { gui = 'undercurl', guisp = L.error, guifg = 'none' } },
-    { 'DiagnosticUnderlineHint', { gui = 'undercurl', guisp = L.hint, guifg = 'none' } },
-    { 'DiagnosticUnderlineWarn', { gui = 'undercurl', guisp = L.warn, guifg = 'none' } },
-    { 'DiagnosticUnderlineInfo', { gui = 'undercurl', guisp = L.info, guifg = 'none' } },
-    { 'DiagnosticSignHintLine', { guibg = hint_line } },
-    { 'DiagnosticSignErrorLine', { guibg = error_line } },
-    { 'DiagnosticSignWarnLine', { guibg = warn_line } },
-    { 'DiagnosticSignInfoLine', { guibg = info_line } },
-    { 'DiagnosticSignWarn', { link = 'DiagnosticWarn', force = true } },
-    { 'DiagnosticSignInfo', { link = 'DiagnosticInfo', force = true } },
-    { 'DiagnosticSignHint', { link = 'DiagnosticHint', force = true } },
-    { 'DiagnosticSignError', { link = 'DiagnosticError', force = true } },
-    { 'DiagnosticFloatingWarn', { link = 'DiagnosticWarn', force = true } },
-    { 'DiagnosticFloatingInfo', { link = 'DiagnosticInfo', force = true } },
-    { 'DiagnosticFloatingHint', { link = 'DiagnosticHint', force = true } },
-    { 'DiagnosticFloatingError', { link = 'DiagnosticError', force = true } },
+    { 'LspReferenceText', { underline = true } },
+    { 'LspReferenceRead', { underline = true } },
+    { 'DiagnosticHint', { foreground = L.hint } },
+    { 'DiagnosticError', { foreground = L.error } },
+    { 'DiagnosticWarning', { foreground = L.warn } },
+    { 'DiagnosticInfo', { foreground = L.info } },
+    { 'DiagnosticUnderlineError', { undercurl = true, sp = L.error, foreground = 'none' } },
+    { 'DiagnosticUnderlineHint', { undercurl = true, sp = L.hint, foreground = 'none' } },
+    { 'DiagnosticUnderlineWarn', { undercurl = true, sp = L.warn, foreground = 'none' } },
+    { 'DiagnosticUnderlineInfo', { undercurl = true, sp = L.info, foreground = 'none' } },
+    { 'DiagnosticSignHintLine', { background = hint_line } },
+    { 'DiagnosticSignErrorLine', { background = error_line } },
+    { 'DiagnosticSignWarnLine', { background = warn_line } },
+    { 'DiagnosticSignInfoLine', { background = info_line } },
+    { 'DiagnosticSignWarn', { link = 'DiagnosticWarn' } },
+    { 'DiagnosticSignInfo', { link = 'DiagnosticInfo' } },
+    { 'DiagnosticSignHint', { link = 'DiagnosticHint' } },
+    { 'DiagnosticSignError', { link = 'DiagnosticError' } },
+    { 'DiagnosticFloatingWarn', { link = 'DiagnosticWarn' } },
+    { 'DiagnosticFloatingInfo', { link = 'DiagnosticInfo' } },
+    { 'DiagnosticFloatingHint', { link = 'DiagnosticHint' } },
+    { 'DiagnosticFloatingError', { link = 'DiagnosticError' } },
   }
 end
 
@@ -308,11 +293,11 @@ local function set_sidebar_highlight()
   local bg_color = M.alter_color(normal_bg, -8)
   local st_color = M.alter_color(M.get_hl('Visual', 'bg'), -20)
   local hls = {
-    { 'PanelBackground', { guibg = bg_color } },
-    { 'PanelHeading', { guibg = bg_color, gui = 'bold' } },
-    { 'PanelVertSplit', { guifg = split_color, guibg = bg_color } },
-    { 'PanelStNC', { guibg = st_color, cterm = 'italic' } },
-    { 'PanelSt', { guibg = st_color } },
+    { 'PanelBackground', { background = bg_color } },
+    { 'PanelHeading', { background = bg_color, bold = true } },
+    { 'PanelVertSplit', { foreground = split_color, background = bg_color } },
+    { 'PanelStNC', { background = st_color, cterm = { italic = true } } },
+    { 'PanelSt', { background = st_color } },
   }
   for _, grp in ipairs(hls) do
     M.set_hl(unpack(grp))
@@ -342,19 +327,22 @@ local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
     local keyword_fg = M.get_hl('Keyword', 'fg')
     M.all {
-      { 'CursorLineNr', { guifg = keyword_fg } },
+      { 'CursorLineNr', { foreground = keyword_fg } },
       -- TODO: the default bold makes ... not use ligatures a better fix would be to add ligatures to my font
       -- {"Constant", {gui = "NONE"}},
     }
   elseif vim.g.colors_name == 'onedark' then
     local comment_fg = M.get_hl('Comment', 'fg')
     M.all {
-      { 'Todo', { guifg = 'red', gui = 'bold' } },
-      { 'Substitute', { guifg = comment_fg, guibg = 'NONE', gui = 'strikethrough,bold' } },
-      { 'LspDiagnosticsFloatingWarning', { guibg = 'NONE' } },
-      { 'LspDiagnosticsFloatingError', { guibg = 'NONE' } },
-      { 'LspDiagnosticsFloatingHint', { guibg = 'NONE' } },
-      { 'LspDiagnosticsFloatingInformation', { guibg = 'NONE' } },
+      { 'Todo', { foreground = 'red', bold = true } },
+      {
+        'Substitute',
+        { foreground = comment_fg, background = 'NONE', strikethrough = true, bold = true },
+      },
+      { 'LspDiagnosticsFloatingWarning', { background = 'NONE' } },
+      { 'LspDiagnosticsFloatingError', { background = 'NONE' } },
+      { 'LspDiagnosticsFloatingHint', { background = 'NONE' } },
+      { 'LspDiagnosticsFloatingInformation', { background = 'NONE' } },
     }
   end
 end

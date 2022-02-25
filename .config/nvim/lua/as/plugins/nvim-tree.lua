@@ -30,7 +30,7 @@ return function()
     { 'NvimTreeVertSplit', { link = 'PanelVertSplit' } },
     { 'NvimTreeStatusLine', { link = 'PanelSt' } },
     { 'NvimTreeStatusLineNC', { link = 'PanelStNC' } },
-    { 'NvimTreeRootFolder', { gui = 'bold,italic', guifg = 'LightMagenta' } }
+    { 'NvimTreeRootFolder', { bold = true, italic = true, foreground = 'LightMagenta' } }
   )
 
   as.nnoremap('<c-n>', [[<cmd>NvimTreeToggle<CR>]])
