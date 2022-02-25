@@ -31,7 +31,9 @@ local function colors()
   local identifier_fg = H.get_hl('Identifier', 'fg')
   local inc_search_bg = H.get_hl('Search', 'bg')
 
-  local bg_color = H.alter_color(H.get_hl('Normal', 'bg'), -16)
+  local normal_bg = H.get_hl('Normal', 'bg')
+  local dim_color = H.alter_color(normal_bg, 40)
+  local bg_color = H.alter_color(normal_bg, -16)
 
   H.all {
     { 'StMetadata', { background = bg_color, inherit = 'Comment' } },
@@ -48,6 +50,7 @@ local function colors()
     { 'StCount', { foreground = 'bg', background = indicator_color, bold = true } },
     { 'StPrefix', { background = pmenu_bg, foreground = normal_fg } },
     { 'StDirectory', { background = bg_color, foreground = 'Gray', italic = true } },
+    { 'StDirectoryInactive', { background = bg_color, foreground = dim_color, italic = true } },
     { 'StParentDirectory', { background = bg_color, foreground = string_fg, bold = true } },
     { 'StIdentifier', { foreground = identifier_fg, background = bg_color } },
     { 'StTitle', { background = bg_color, foreground = 'LightGray', bold = true } },
