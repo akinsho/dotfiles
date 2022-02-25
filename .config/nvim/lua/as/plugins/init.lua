@@ -993,7 +993,9 @@ require('packer').startup {
         local hop = require 'hop'
         -- remove h,j,k,l from hops list of keys
         hop.setup { keys = 'etovxqpdygfbzcisuran' }
-        as.nnoremap('s', hop.hint_char1)
+        as.nnoremap('s', function()
+          hop.hint_char1 { multi_windows = true }
+        end)
         -- NOTE: override F/f using hop motions
         vim.keymap.set({ 'x', 'n' }, 'F', function()
           hop.hint_char1 {
