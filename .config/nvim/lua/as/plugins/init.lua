@@ -386,6 +386,12 @@ require('packer').startup {
             end
           end,
         },
+        {
+          'theHamsta/nvim-dap-virtual-text',
+          config = function()
+            require('nvim-dap-virtual-text').setup()
+          end,
+        },
       },
     }
     use { 'jbyuki/one-small-step-for-vimkind', requires = 'nvim-dap' }
