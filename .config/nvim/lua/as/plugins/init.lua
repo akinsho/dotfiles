@@ -425,7 +425,7 @@ require('packer').startup {
     }
 
     use {
-      'stevearc/dressing.nvim',
+      utils.dev 'contributing/dressing.nvim',
       config = function()
         require('dressing').setup {
           input = {
@@ -435,7 +435,14 @@ require('packer').startup {
           select = {
             winblend = 2,
             telescope = {
-              theme = 'dropdown',
+              theme = require('telescope.themes').get_cursor {
+                layout_config = {
+                  height = function(self, _, max_lines)
+                    local results = #self.finder.results
+                    return (results <= max_lines and results or max_lines - 10) + 4 -- 4 is the size of the window
+                  end,
+                },
+              },
             },
           },
         }
