@@ -566,7 +566,7 @@ require('packer').startup {
         }
       end,
       config = function()
-        vim.g.undotree_TreeNodeShape = '◉' -- Alternative: '◦'
+        vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
         as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>')
       end,
