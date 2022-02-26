@@ -1226,6 +1226,12 @@ as.augroup('PackerSetupInit', {
       require('packer').compile()
     end,
   },
+  {
+    events = { 'User PackerCompileDone' },
+    command = function()
+      vim.notify('Packer compile complete', nil, { title = 'Packer' })
+    end,
+  },
 })
 as.nnoremap('<leader>ps', [[<Cmd>PackerSync<CR>]])
 as.nnoremap('<leader>pc', [[<Cmd>PackerClean<CR>]])
