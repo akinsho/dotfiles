@@ -1,19 +1,14 @@
 # =============================================================================
 # Aliases
 # =============================================================================
-# LS does not work on macos as it uses a BSD version
-if [[ "$(uname)" == "Darwin" ]]; then
-  alias ls="ls -G"
-else
-  alias ls="ls --color=auto"
-  alias l='ls -lFh'     # size,show type,human readable
-  # When working on local plugins set an environment variable to check
-  # against inside nvim, this is not appicable on mac where I don't develop
-  # plugins (mac == work)
-  alias dv='DEVELOPING=1 nvim'
-  alias dvim='DEVELOPING=1 nvim'
-  alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
-fi
+alias ls="ls --color=auto"
+alias l='ls -lFh'     # size,show type,human readable
+# When working on local plugins set an environment variable to check
+# against inside nvim, this is not appicable on mac where I don't develop
+# plugins (mac == work)
+alias dv='DEVELOPING=1 nvim'
+alias dvim='DEVELOPING=1 nvim'
+alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias grep='grep --color'
 alias x="exit" # Exit Terminal
