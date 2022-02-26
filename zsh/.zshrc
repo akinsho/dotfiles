@@ -20,6 +20,10 @@ __DOTS[ITALIC_OFF]=$'\e[23m'
 
 PLUGIN_DIR=$DOTFILES/zsh/plugins
 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+fi
+
 # Init completions
 autoload -Uz compinit
 compinit
