@@ -69,7 +69,10 @@ return function()
         },
         cursor = { -- FIXME: this does not change the size of the cursor layout
           width = 0.4,
-          height = 0.5,
+          height = function(self, _, max_lines)
+            local results = #self.finder.results
+            return (results <= max_lines and results or max_lines - 10) + 4
+          end,
         },
       },
       winblend = 3,
