@@ -4,16 +4,23 @@ if not ok then
 end
 
 wk.register {
-  ['<localleader>n'] = {
-    name = '+neorg',
-    n = {
-      name = '+directory',
-    },
+  g = {
+    name = '+todos',
     t = {
-      name = '+todo',
-      c = 'capture',
-      e = 'edit',
-      v = 'views',
+      name = '+status',
+      u = 'task undone',
+      p = 'task pending',
+      d = 'task done',
+      h = 'task on_hold',
+      c = 'task cancelled',
+      r = 'task recurring',
+      i = 'task important',
     },
+  },
+  ['<localleader>t'] = {
+    name = '+gtd',
+    c = 'capture',
+    v = 'views',
+    e = 'edit',
   },
 }

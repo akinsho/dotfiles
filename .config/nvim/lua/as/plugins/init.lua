@@ -634,15 +634,17 @@ require('packer').startup {
       'vhyrro/neorg',
       requires = { 'vhyrro/neorg-telescope' },
       config = function()
+        as.nnoremap('<localleader>oc', '<Cmd>Neorg gtd capture<CR>')
+        as.nnoremap('<localleader>ov', '<Cmd>Neorg gtd views<CR>')
         require('neorg').setup {
           load = {
             ['core.defaults'] = {},
-            -- FIXME: cannot unmap <c-s> and segfaults
+            -- TODO: cannot unmap <c-s> and segfaults, raise an issue
             ['core.integrations.telescope'] = {},
             ['core.keybinds'] = {
               config = {
-                default_keybinds = false,
-                neorg_leader = '<localleader>n',
+                default_keybinds = true,
+                neorg_leader = '<localleader>',
                 hook = function(keybinds)
                   keybinds.map_event(
                     'norg',
