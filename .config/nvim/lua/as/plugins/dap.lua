@@ -47,7 +47,7 @@ function M.config()
   end
 
   -- DON'T automatically stop at exceptions
-  dap.defaults.fallback.exception_breakpoints = {}
+  -- dap.defaults.fallback.exception_breakpoints = {}
   -- NOTE: the window options can be set directly in this function
   as.nnoremap('<localleader>dt', "<Cmd>lua require'dap'.repl.toggle()<CR>")
   as.nnoremap('<localleader>dc', "<Cmd>lua require'dap'.continue()<CR>")
