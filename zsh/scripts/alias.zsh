@@ -3,22 +3,21 @@
 # =============================================================================
 alias ls="ls --color=auto --hyperlink=auto $@"
 alias l='ls -lFh'     # size,show type,human readable
-# When working on local plugins set an environment variable to check
-# against inside nvim, this is not appicable on mac where I don't develop
-# plugins (mac == work)
+
 alias dv='DEVELOPING=1 nvim'
 alias dvim='DEVELOPING=1 nvim'
 alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
+
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias grep='grep --color'
 alias x="exit" # Exit Terminal
 alias del="rm -rf"
 alias dots="cd $DOTFILES"
 alias lp="lsp"
-alias minimalvim="nvim -u ~/minimal.vim"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
+alias minimalvim="nvim -u ~/minimal.vim"
 # This allow using neovim remote when nvim is called from inside a running vim instance
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
