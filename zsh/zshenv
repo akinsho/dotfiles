@@ -1,15 +1,26 @@
-#!/usr/bin/zsh
+# vim:ft=zsh
 #-------------------------------------------------------------------------------
 #       ENV VARIABLES
 #-------------------------------------------------------------------------------
-
-export DOTFILES=$HOME/.dotfiles
-export PROJECTS_DIR=$HOME/projects
-export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal
+# PATH.
+# (N-/): do not register if the directory does not exists
+# (Nn[-1]-/)
+#
+#  N   : NULL_GLOB option (ignore path if the path does not match the glob)
+#  n   : Sort the output
+#  [-1]: Select the last item in the array
+#  -   : follow the symbol links
+#  /   : ignore files
+#  t   : tail of the path
+# CREDIT: @ahmedelgabri
+#--------------------------------------------------------------------------------
+export DOTFILES=${HOME}/.dotfiles
+export PROJECTS_DIR=${HOME}/projects
+export PERSONAL_PROJECTS_DIR=${PROJECTS_DIR}/personal
 
 # @see: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 if which rg >/dev/null; then
-  export RIPGREP_CONFIG_PATH=$DOTFILES/.config/rg/.ripgreprc
+  export RIPGREP_CONFIG_PATH=${DOTFILES}/.config/rg/.ripgreprc
 fi
 
 # Added by n-install (see http://git.io/n-install-repo).
@@ -25,11 +36,11 @@ fi
 
 path+=(
   "/usr/local/bin"
-  "$HOME/.npm/bin"
-  "$HOME/.local/bin"
+  ${HOME}/.npm/bin(N-/)
+  ${HOME}/.local/bin(N-/)
   # Dart -----------------------------------------------------------------------
-  "$HOME/flutter/.pub-cache/bin"
-  "$HOME/.pub-cache/bin"
+  ${HOME}/flutter/.pub-cache/bin(N-/)
+  ${HOME}/.pub-cache/bin(N-/)
 )
 
 # Go ---------------------------------------------------------------------------
@@ -42,7 +53,7 @@ case `uname` in
   Darwin)
     export ANDROID_SDK_ROOT=~/Library/Android/sdk/
     # Append to PATH
-    path+=("$HOME/flutter/bin")
+    path+=($HOME/flutter/bin(N-/))
 
     # Add LUA_PATH to the environment ensuring the lua version is set since
     # luarocks from homebrew uses lua 5.4 by default so would otherwise add the
@@ -58,17 +69,12 @@ case `uname` in
 
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   path+=(
-    "$JAVA_HOME/bin"
+    ${JAVA_HOME}/bin(N-/)
     # Add local build of neovim to path, remove this once stable nvim is released
-    "$HOME/neovim/bin"
+    ${HOME}/neovim/bin(N-/)
   )
-
   ;;
 esac
-
-if [ -d "$HOME/bin" ] ; then
-  path+=("$HOME/bin")
-fi
 
 export MANPATH="/usr/local/man:$MANPATH"
 if which nvim >/dev/null; then
