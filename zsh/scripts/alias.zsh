@@ -1,7 +1,7 @@
 # =============================================================================
 # Aliases
 # =============================================================================
-alias ls="ls --color=auto"
+alias ls="ls --color=auto --hyperlink=auto $@"
 alias l='ls -lFh'     # size,show type,human readable
 # When working on local plugins set an environment variable to check
 # against inside nvim, this is not appicable on mac where I don't develop
@@ -14,7 +14,6 @@ alias grep='grep --color'
 alias x="exit" # Exit Terminal
 alias del="rm -rf"
 alias dots="cd $DOTFILES"
-alias coding="cd $PROJECTS_DIR"
 alias lp="lsp"
 alias minimalvim="nvim -u ~/minimal.vim"
 alias v='nvim'
@@ -62,7 +61,6 @@ fi
 
 if [[ `uname` == 'Linux' ]]; then
   # https://stackoverflow.com/questions/53298843/how-do-i-install-bundletool
-  alias bundletool='java -jar ~/bundletool-all.jar'
   alias o='a -e xdg-open' # quick opening files with xdg-open
   alias open='xdg-open'
 
