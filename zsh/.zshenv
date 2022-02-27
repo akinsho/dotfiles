@@ -108,10 +108,6 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
-if which bat >/dev/null; then
-  export BAT_THEME="TwoDark"
-fi
-
 # Setting ag as the default source for fzf
 
 # --files: List files that would be searched but do not search
