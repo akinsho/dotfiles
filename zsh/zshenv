@@ -42,10 +42,6 @@ case `uname` in
     export ANDROID_SDK_ROOT=~/Library/Android/sdk/
     # Append to PATH
     path+=("$HOME/flutter/bin")
-    # NOTE: Add coreutils which make commands like ls run as they do on Linux rather
-    # than the BSD flavoured variant macos ships with
-    path=("$(brew --prefix)/opt/coreutils/libexec/gnubin" $path)
-    export MANPATH="$(brew --prefix)/opt/coreutils/libexec/gnuman:${MANPATH}"
 
     # Add LUA_PATH to the environment ensuring the lua version is set since
     # luarocks from homebrew uses lua 5.4 by default so would otherwise add the

@@ -466,5 +466,9 @@ bindkey '^U' autosuggest-accept
 path=(
   "$(brew --prefix)/opt/ruby/bin"
   "$(brew --prefix)/lib/ruby/gems/3.0.0/bin"
+  # NOTE: Add coreutils which make commands like ls run as they do on Linux rather than the BSD flavoured variant macos ships with
+  "$(brew --prefix)/opt/coreutils/libexec/gnubin"
   $path
 )
+
+export MANPATH="$(brew --prefix)/opt/coreutils/libexec/gnuman:${MANPATH}"
