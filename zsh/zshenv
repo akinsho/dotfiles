@@ -1,7 +1,8 @@
 #!/usr/bin/zsh
-#=======================================================================
+#-------------------------------------------------------------------------------
 #       ENV VARIABLES
-#=======================================================================
+#-------------------------------------------------------------------------------
+
 export DOTFILES=$HOME/.dotfiles
 export PROJECTS_DIR=$HOME/projects
 export PERSONAL_PROJECTS_DIR=$PROJECTS_DIR/personal
@@ -26,12 +27,12 @@ path+=(
   "/usr/local/bin"
   "$HOME/.npm/bin"
   "$HOME/.local/bin"
-  # Dart ============================================================
+  # Dart -----------------------------------------------------------------------
   "$HOME/flutter/.pub-cache/bin"
   "$HOME/.pub-cache/bin"
 )
 
-# GO ============================================================
+# Go ---------------------------------------------------------------------------
 if which go >/dev/null; then
   export GOPATH=$HOME/go
   path+=("$GOPATH/bin")
@@ -51,7 +52,7 @@ case `uname` in
     fi
   ;;
   Linux)
-  # JAVA ==========================================================
+  # Java -----------------------------------------------------------------------
   # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
   # Use Java 8 because -> https://stackoverflow.com/a/49759126
 
@@ -80,11 +81,11 @@ export LANG=en_GB.UTF-8
 
 # preferred editor for local and remote sessions
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+  export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+  export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
 else
-    export VISUAL="nvim"
-    export EDITOR="nvim"
+  export VISUAL="nvim"
+  export EDITOR="nvim"
 fi
 
 export USE_EDITOR=$EDITOR
