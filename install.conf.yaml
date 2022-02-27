@@ -15,6 +15,7 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zshrc: zsh/.zshrc
     ~/.zshenv: zsh/zshenv
+    ~/.zprofile: zsh/.zprofile
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
     ~/.config/nvim: .config/nvim
