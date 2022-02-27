@@ -136,8 +136,13 @@ require('packer').startup {
       end,
     }
 
+    -- NOTE: this and the plugin below it should never be active at the same time
+    -- so they have inverse conditions
     use {
       'christoomey/vim-tmux-navigator',
+      cond = function()
+        return vim.env.TMUX ~= nil
+      end,
       config = function()
         vim.g.tmux_navigator_no_mappings = 1
         as.nnoremap('<C-H>', '<cmd>TmuxNavigateLeft<cr>')
@@ -148,6 +153,14 @@ require('packer').startup {
         vim.g.tmux_navigator_disable_when_zoomed = 1
         vim.g.tmux_navigator_preserve_zoom = 1
         vim.g.tmux_navigator_save_on_switch = 2
+      end,
+    }
+
+    use {
+      'knubie/vim-kitty-navigator',
+      run = 'cp ./*.py ~/.config/kitty/',
+      cond = function()
+        return vim.env.TMUX == nil
       end,
     }
 
