@@ -64,9 +64,8 @@ case `uname` in
   ;;
   Linux)
   # Java -----------------------------------------------------------------------
-  # export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
   # Use Java 8 because -> https://stackoverflow.com/a/49759126
-
+  #  -----------------------------------------------------------------------
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   path+=(
     ${JAVA_HOME}/bin(N-/)
@@ -109,7 +108,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
-if ! type "$bat" > /dev/null; then
+if which bat >/dev/null; then
   export BAT_THEME="TwoDark"
 fi
 
