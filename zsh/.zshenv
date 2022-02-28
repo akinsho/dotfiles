@@ -103,20 +103,13 @@ if [ -f "$HOME/.environment.local.sh" ]; then
   source $HOME/.environment.local.sh
 fi
 
-# ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 
-# Setting ag as the default source for fzf
-
 # --files: List files that would be searched but do not search
 # --no-ignore: Do not respect .gitignore, etc...
 # --hidden: Search hidden files and folders
-# --follow: Follow symlinks
-# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-# Need to escape the "!" and "*" characters using /
-# --no-ignore = this flag shows node modules etc
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 
