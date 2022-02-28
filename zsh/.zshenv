@@ -14,6 +14,7 @@
 #  t   : tail of the path
 # CREDIT: @ahmedelgabri
 #--------------------------------------------------------------------------------
+export SYNC_DIR=${HOME}/Dropbox
 export DOTFILES=${HOME}/.dotfiles
 export PROJECTS_DIR=${HOME}/projects
 export PERSONAL_PROJECTS_DIR=${PROJECTS_DIR}/personal

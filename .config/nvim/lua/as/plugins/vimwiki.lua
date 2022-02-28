@@ -2,7 +2,8 @@ local M = {}
 
 function M.setup()
   local fn = vim.fn
-  local has_dropbox = fn.isdirectory(fn.expand '$HOME/Dropbox') > 0
+  local sync_dir = fn.expand '$SYNC_DIR'
+  local has_sync = fn.isdirectory(sync_dir) > 0
   local home = vim.env.HOME
 
   require('which-key').register({
@@ -16,7 +17,7 @@ function M.setup()
     prefix = '<leader>',
   })
 
-  vim.g.wiki_path = has_dropbox and home .. '/Dropbox/wiki' or home .. '/wiki'
+  vim.g.wiki_path = has_sync and sync_dir .. '/wiki' or home .. '/wiki'
 
   vim.g.wiki = {
     name = 'knowledge base',
@@ -28,7 +29,7 @@ function M.setup()
     auto_tags = 1,
   }
 
-  vim.g.learnings_wiki_path = has_dropbox and home .. '/Dropbox/learnings' or home .. '/learnings'
+  vim.g.learnings_wiki_path = has_sync and sync_dir .. '/learnings' or home .. '/learnings'
   vim.g.learnings_wiki = {
     name = 'Learnings',
     path = vim.g.learnings_wiki_path,

@@ -171,14 +171,14 @@ return function()
   local function orgfiles()
     builtins.find_files {
       prompt_title = 'Org',
-      cwd = vim.fn.expand '~/Dropbox/org/',
+      cwd = vim.fn.expand '$SYNC_DIR/org/',
     }
   end
 
   local function norgfiles()
     builtins.find_files {
       prompt_title = 'Norg',
-      cwd = vim.fn.expand '~/Dropbox/neorg/',
+      cwd = vim.fn.expand '$SYNC_DIR/neorg/',
     }
   end
 

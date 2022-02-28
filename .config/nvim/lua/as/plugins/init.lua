@@ -702,8 +702,8 @@ require('packer').startup {
             ['core.norg.dirman'] = {
               config = {
                 workspaces = {
-                  notes = '~/Dropbox/neorg/main/',
-                  tasks = '~/Dropbox/neorg/tasks/',
+                  notes = vim.fn.expand '$SYNC_DIR/neorg/main/',
+                  tasks = vim.fn.expand '$SYNC_DIR/neorg/tasks/',
                 },
               },
             },
