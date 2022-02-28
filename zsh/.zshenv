@@ -34,27 +34,29 @@ fi
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+#-------------------------------------------------------------------------------
+# Go
+#-------------------------------------------------------------------------------
+export GOPATH=$HOME/go
+#-------------------------------------------------------------------------------
+
 path+=(
-  "/usr/local/bin"
+  /usr/local/bin
   ${HOME}/.npm/bin(N-/)
   ${HOME}/.local/bin(N-/)
   # Dart -----------------------------------------------------------------------
   ${HOME}/flutter/.pub-cache/bin(N-/)
+  ${HOME}/flutter/bin(N-/)
   ${HOME}/.pub-cache/bin(N-/)
+  ${GOPATH}/bin(N-/)
+  # Add local build of neovim to path for development
+  ${HOME}/neovim/bin(N-/)
 )
 
-# Go ---------------------------------------------------------------------------
-if which go >/dev/null; then
-  export GOPATH=$HOME/go
-  path+=("$GOPATH/bin")
-fi
 
 case `uname` in
   Darwin)
-    export ANDROID_SDK_ROOT=~/Library/Android/sdk/
-    # Append to PATH
-    path+=($HOME/flutter/bin(N-/))
-
+    export ANDROID_SDK_ROOT=${HOME}/Library/Android/sdk/
     # Add LUA_PATH to the environment ensuring the lua version is set since
     # luarocks from homebrew uses lua 5.4 by default so would otherwise add the
     # wrong path
@@ -65,12 +67,10 @@ case `uname` in
   Linux)
   # Java -----------------------------------------------------------------------
   # Use Java 8 because -> https://stackoverflow.com/a/49759126
-  #  -----------------------------------------------------------------------
+  # ------------------------------------------------------------------------
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
   path+=(
     ${JAVA_HOME}/bin(N-/)
-    # Add local build of neovim to path, remove this once stable nvim is released
-    ${HOME}/neovim/bin(N-/)
   )
   ;;
 esac
