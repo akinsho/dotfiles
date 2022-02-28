@@ -555,13 +555,12 @@ require('packer').startup {
           },
         }
 
-        vim.api.nvim_create_autocmd {
+        vim.api.nvim_create_autocmd('FileType', {
           pattern = { 'yaml', 'toml' },
-          event = 'FileType',
           callback = function()
             map('n', '<C-a>', require('dial.map').inc_normal 'dep_files', { remap = true })
           end,
-        }
+        })
       end,
     }
 
