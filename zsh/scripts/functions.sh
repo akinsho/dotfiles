@@ -1,5 +1,4 @@
-#!/bin/zsh
-
+# vim:ft=zsh
 # courtesy of wes bos https://gist.github.com/wesbos/1432b08749e3cd2aea22fcea2628e2ed
 function _t() {
   # Defaults to 3 levels deep, do more with `t 5` or `t 1`
