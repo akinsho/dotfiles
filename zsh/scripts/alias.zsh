@@ -3,24 +3,22 @@
 # =============================================================================
 alias ls="ls --color=auto --hyperlink=auto $@"
 alias l='ls -lFh'     # size,show type,human readable
-
 alias dv='DEVELOPING=1 nvim'
-alias dvim='DEVELOPING=1 nvim'
 alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
-
-alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
+# Quick access to the .zshrc file
+alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc'
 alias grep='grep --color'
-alias x="exit" # Exit Terminal
+alias x="exit"
 alias del="rm -rf"
 alias dots="cd $DOTFILES"
-alias lp="lsp"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias minimalvim="nvim -u ~/minimal.vim"
-# This allow using neovim remote when nvim is called from inside a running vim instance
+# This allow using neovim remote when nvim is
+# called from inside a running vim instance
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+  alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
 fi
 alias cl='clear'
 alias restart="exec $SHELL"
@@ -33,9 +31,7 @@ alias ns="clear && npm start"
 alias nt="clear && npm test"
 alias yt="clear && yarn test"
 alias ys="clear && yarn start"
-
 alias md="mkdir -p"
-
 alias ta="tmux attach -t"
 alias td="tmux detach"
 alias tls="tmux ls"
@@ -44,14 +40,11 @@ alias tkill="tmux kill-session -t"
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
-
 # suffix aliases set the program type to use to open
 # a particular file with an extension
 alias -s js=nvim
 alias -s html=nvim
 alias -s css=nvim
-
-alias serve='python -m SimpleHTTPServer'
 alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 
 if which kitty >/dev/null; then
@@ -59,10 +52,8 @@ if which kitty >/dev/null; then
 fi
 
 if [[ `uname` == 'Linux' ]]; then
-  # https://stackoverflow.com/questions/53298843/how-do-i-install-bundletool
   alias o='a -e xdg-open' # quick opening files with xdg-open
   alias open='xdg-open'
-
 elif [[ `uname` == 'Darwin' ]]; then
   alias brewfile="cd $DOTFILES/.config/homebrew/ && brew bundle dump --force"
   alias brewupdate="brew bundle dump --force"

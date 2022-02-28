@@ -42,11 +42,6 @@ function colours() {
   done
 }
 
-# Vim
-function v() {
-  nvim "$@"
-}
-
 # chmod a directory
 function ch() {
   sudo chmod -R 777 "$@"
@@ -57,16 +52,6 @@ function cho() {
   sudo chown -R www:www "$@"
 }
 
-# Do a Git clone
-function clone() {
-  git clone "$@"
-}
-
-# Do a Git commit
-function quickie() {
-  git add .;git add -u :/;git commit -m "$@";
-}
-
 function quickpush() {
   git add .
   git commit -m "$@"
@@ -75,34 +60,9 @@ function quickpush() {
   echo 🚀  quick push success... or not.
 }
 
-# Do a Git push from the current branch
-function push() {
-  git push origin "$@"
-}
-
-# Do a Git push setting the upstream from your current branch
-function gpuo() {
-  git push --set-upstream origin "$@"
-}
-
-# Do a Git commit/push
-function gcap() {
-  git add .;git add -u :/;git commit -m "$@";git push
-}
-
 # Do a Git rebase
 function gpr() {
   git pull --rebase "$@"
-}
-
-# Do a Git commit/push and a heroku deploy
-function gcph() {
-  git add .;git add -u :/;git commit -m "$@";git push;git push heroku master
-}
-
-# Do a Heroku commit/push/deploy
-function gph() {
-  git add .;git add -u :/;git commit -m "$@";git push heroku master
 }
 
 # Install a generic NPM module and save to devDependencies
