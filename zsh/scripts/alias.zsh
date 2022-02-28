@@ -1,6 +1,6 @@
-# =============================================================================
+#------------------------------------------------------------------------------
 # Aliases
-# =============================================================================
+#------------------------------------------------------------------------------
 alias ls="ls --color=auto --hyperlink=auto $@"
 alias l='ls -lFh'     # size,show type,human readable
 alias dv='DEVELOPING=1 nvim'
@@ -10,13 +10,13 @@ alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc'
 alias grep='grep --color'
 alias x="exit"
 alias del="rm -rf"
+alias md="mkdir -p"
 alias dots="cd $DOTFILES"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias minimalvim="nvim -u ~/minimal.vim"
-# This allow using neovim remote when nvim is
-# called from inside a running vim instance
+# This allow using neovim remote when nvim is called from inside a running vim instance
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
   alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
 fi
@@ -25,13 +25,15 @@ alias restart="exec $SHELL"
 alias src='restart'
 alias dnd='do-not-disturb toggle'
 alias ez="nvim ~/.zshrc"
-alias ev="nvim ~/.vimrc"
 alias et="nvim ~/.tmux.conf"
-alias ns="clear && npm start"
-alias nt="clear && npm test"
-alias yt="clear && yarn test"
-alias ys="clear && yarn start"
-alias md="mkdir -p"
+(( $+commands[npm] )) && alias ns="clear && npm start"
+(( $+commands[npm] )) && alias nt="clear && npm test"
+(( $+commands[yarn] )) && alias yt="clear && yarn test"
+(( $+commands[yarn] )) && alias ys="clear && yarn start"
+(( $+commands[bat] )) && alias cat='bat'
+#------------------------------------------------------------------------------
+# Tmux
+#------------------------------------------------------------------------------
 alias ta="tmux attach -t"
 alias td="tmux detach"
 alias tls="tmux ls"

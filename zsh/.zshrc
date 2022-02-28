@@ -83,9 +83,8 @@ zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper
 #-------------------------------------------------------------------------------
 setopt AUTO_CD
 setopt RM_STAR_WAIT
-setopt CORRECT # command auto-correction
+setopt CORRECT                  # command auto-correction
 setopt COMPLETE_ALIASES
-# set some history options
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -95,8 +94,10 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
-setopt AUTOPARAMSLASH # tab completing directory appends a slash
-setopt SHARE_HISTORY # Share your history across all your terminal windows
+setopt AUTOPARAMSLASH            # tab completing directory appends a slash
+setopt SHARE_HISTORY             # Share your history across all your terminal windows
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits
 # Keep a ton of history.
 HISTSIZE=100000
 SAVEHIST=100000

@@ -1,5 +1,6 @@
 # vim:ft=zsh
-# courtesy of wes bos https://gist.github.com/wesbos/1432b08749e3cd2aea22fcea2628e2ed
+
+# @source https://gist.github.com/wesbos/1432b08749e3cd2aea22fcea2628e2ed
 function _t() {
   # Defaults to 3 levels deep, do more with `t 5` or `t 1`
   # pass additional args after
@@ -7,18 +8,8 @@ function _t() {
   tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst -L $levels -aC $@
 }
 
-# Default to using `bat` https://github.com/sharkdp/bat#installation if it has been installed
-cat() {
-  if hash bat 2>/dev/null; then
-    bat "$@"
-  else
-    command cat "$@"
-  fi
-}
-
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
-
 function port() {
   lsof -n -i ":$@" | grep LISTEN
 }
@@ -42,32 +33,12 @@ function colours() {
   done
 }
 
-# chmod a directory
-function ch() {
-  sudo chmod -R 777 "$@"
-}
-
-# chown a directory
-function cho() {
-  sudo chown -R www:www "$@"
-}
-
 function quickpush() {
   git add .
   git commit -m "$@"
   echo "🍏 commit message: [$@]"
   git push
   echo 🚀  quick push success... or not.
-}
-
-# Do a Git rebase
-function gpr() {
-  git pull --rebase "$@"
-}
-
-# Install a generic NPM module and save to devDependencies
-function npmi() {
-  npm install --save-dev "$@"
 }
 
 fancy-ctrl-z () {
