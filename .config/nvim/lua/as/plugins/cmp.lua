@@ -1,28 +1,25 @@
 return function()
   local api = vim.api
-  local t = as.replace_termcodes
   local cmp = require 'cmp'
-  local fmt = string.format
+  local h = require 'as.highlights'
+  local t = as.replace_termcodes
 
-  require('as.highlights').plugin(
-    'Cmp',
-    { 'CmpItemAbbr', { inherit = 'Comment', italic = false, bold = false } },
-    { 'CmpItemMenu', { inherit = 'NonText', italic = false, bold = false } },
-    { 'CmpItemAbbrMatch', { bold = true } },
-    { 'CmpItemAbbrDeprecated', { strikethrough = true, inherit = 'Comment' } },
-    { 'CmpItemAbbrMatchFuzzy', { italic = true, foreground = 'fg' } }
-  )
+  local keyword_fg = h.get_hl('Keyword', 'fg')
 
   local lsp_hls = as.style.lsp.kind_highlights
-
   local kind_hls = vim.tbl_map(function(key)
-    return {
-      fmt('CmpItemKind%s', key),
-      { inherit = lsp_hls[key], italic = false, bold = false, underline = false },
-    }
+    return { 'CmpItemKind' .. key, { foreground = h.get_hl(lsp_hls[key], 'fg') } }
   end, vim.tbl_keys(lsp_hls))
 
-  require('as.highlights').plugin('CmpKinds', unpack(kind_hls))
+  h.plugin(
+    'Cmp',
+    { 'CmpItemAbbr', { foreground = 'fg', background = 'NONE', italic = false, bold = false } },
+    { 'CmpItemMenu', { inherit = 'NonText', italic = false, bold = false } },
+    { 'CmpItemAbbrMatch', { foreground = keyword_fg } },
+    { 'CmpItemAbbrDeprecated', { strikethrough = true, inherit = 'Comment' } },
+    { 'CmpItemAbbrMatchFuzzy', { italic = true, foreground = keyword_fg } },
+    unpack(kind_hls)
+  )
 
   local function feed(key, mode)
     api.nvim_feedkeys(t(key), mode or '', true)
