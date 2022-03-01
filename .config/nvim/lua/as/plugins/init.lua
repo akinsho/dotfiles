@@ -615,6 +615,10 @@ require('packer').startup {
       'rcarriga/nvim-notify',
       cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = function()
+        -- this plugin is not safe to reload
+        if vim.g.packer_compiled_loaded then
+          return
+        end
         local notify = require 'notify'
         ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
         local renderer = require 'notify.render'
@@ -1124,6 +1128,10 @@ require('packer').startup {
       'folke/todo-comments.nvim',
       requires = 'nvim-lua/plenary.nvim',
       config = function()
+        -- this plugin is not safe to reload
+        if vim.g.packer_compiled_loaded then
+          return
+        end
         require('todo-comments').setup {
           highlight = {
             exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
