@@ -13,18 +13,6 @@ return function()
     { 'CmpItemAbbrMatchFuzzy', { italic = true, foreground = 'fg' } }
   )
 
-  -- FIXME: this hould not be required if we were using a prompt buffer in telescope i.e. prompt prefix
-  -- Deactivate cmp in telescope prompt buffer
-  as.augroup('CmpConfig', {
-    {
-      events = { 'FileType' },
-      targets = { 'TelescopePrompt' },
-      command = function()
-        cmp.setup.buffer { completion = { autocomplete = false } }
-      end,
-    },
-  })
-
   local lsp_hls = as.style.lsp.kind_highlights
 
   local kind_hls = vim.tbl_map(function(key)
