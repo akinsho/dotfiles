@@ -371,10 +371,13 @@ function as.command(args)
   vim.cmd(string.format('command! -nargs=%s %s %s %s', nargs, types, name, rhs))
 end
 
+---Reload lua modules
+---@param path string
+---@param recursive string
 function as.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
-      if key ~= '_G' and value and vim.fn.match(key, path) ~= -1 then
+      if key ~= '_G' and value and fn.match(key, path) ~= -1 then
         package.loaded[key] = nil
         require(key)
       end

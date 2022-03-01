@@ -392,7 +392,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 # https://www.topbug.net/blog/2016/10/11/speed-test-check-the-existence-of-a-command-in-bash-and-zsh/
 exists() { (( $+commands[$1] )); }
 
-# TODO also need to check for the existence of ~/.fzf/
+# TODO: also need to check for the existence of ~/.fzf/
 if [ ! -f ~/.fzf.zsh ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install
