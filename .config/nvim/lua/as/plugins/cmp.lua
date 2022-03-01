@@ -8,7 +8,7 @@ return function()
     'Cmp',
     { 'CmpItemAbbr', { inherit = 'Comment', italic = false, bold = false } },
     { 'CmpItemMenu', { inherit = 'NonText', italic = false, bold = false } },
-    { 'CmpItemAbbrMatch', { inherit = 'Pmenu', bold = true } },
+    { 'CmpItemAbbrMatch', { bold = true } },
     { 'CmpItemAbbrDeprecated', { strikethrough = true, inherit = 'Comment' } },
     { 'CmpItemAbbrMatchFuzzy', { italic = true, foreground = 'fg' } }
   )
@@ -75,6 +75,15 @@ return function()
   end
 
   cmp.setup {
+    window = {
+      completion = {
+        -- TODO: consider 'shadow', and tweak the winhighlight
+        border = 'rounded',
+      },
+      documentation = {
+        border = 'rounded',
+      },
+    },
     experimental = {
       ghost_text = false, -- disable whilst using copilot
     },
