@@ -84,6 +84,8 @@ require('packer').startup {
       },
     }
 
+    use { 'mrjones2014/dash.nvim', run = 'make install' }
+
     use 'kyazdani42/nvim-web-devicons'
 
     use { 'folke/which-key.nvim', config = conf 'whichkey' }
@@ -1256,6 +1258,9 @@ require('packer').startup {
     display = {
       prompt_border = 'rounded',
       open_cmd = 'silent topleft 65vnew',
+    },
+    git = {
+      clone_timeout = 240,
     },
     profile = {
       enable = true,
