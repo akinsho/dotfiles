@@ -438,7 +438,7 @@ require('packer').startup {
     }
 
     use {
-      utils.dev 'contributing/dressing.nvim',
+      'stevearc/dressing.nvim',
       config = function()
         require('dressing').setup {
           input = {
