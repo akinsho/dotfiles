@@ -640,6 +640,7 @@ require('packer').startup {
         }
         vim.notify = notify
         require('telescope').load_extension 'notify'
+        as.nnoremap('<leader>nd', notify.dismiss, { label = 'dismiss notifications' })
       end,
     }
 
