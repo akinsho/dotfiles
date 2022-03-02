@@ -437,8 +437,14 @@ require('packer').startup {
             color = require('as.highlights').get_hl('PmenuSbar', 'bg'),
           },
           -- NOTE: If telescope is not explicitly excluded this garbles input into its prompt buffer
-          excluded_filetypes = { 'packer', 'TelescopePrompt' },
-          excluded_buftypes = { 'terminal', 'prompt' },
+          excluded_filetypes = {
+            'packer',
+            'TelescopePrompt',
+          },
+          excluded_buftypes = {
+            'terminal',
+            'prompt',
+          },
         }
       end,
     }
@@ -662,9 +668,7 @@ require('packer').startup {
 
     use {
       'iamcco/markdown-preview.nvim',
-      run = function()
-        vim.fn['mkdp#util#install']()
-      end,
+      run = 'yarn install',
       ft = { 'markdown' },
       config = function()
         vim.g.mkdp_auto_start = 0
