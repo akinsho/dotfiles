@@ -619,23 +619,37 @@ local function git_read(result)
   end
 end
 
---- @param result table
-local function git_update_status(result)
-  return function(_, code, _)
-    if code == 0 and result and #result > 0 then
-      local parts = vim.split(result[1], '\t')
-      if parts and #parts > 1 then
-        local formatted = { behind = parts[1], ahead = parts[2] }
-        vim.g.git_statusline_updates = formatted
-      end
-    end
-  end
-end
-
+-- Use git and the native job API to first get the head of the repo
+-- check the state of the repo head against the origin copy we have
+-- the result format is in the format: `1       0`
+-- the first value commits ahead by and the second is commits behind by
 local function git_update_job()
-  local cmd = 'git rev-list --count --left-right @{upstream}...HEAD'
-  local result = {}
-  return fn.jobstart(cmd, { on_stdout = git_read(result), on_exit = git_update_status(result) })
+  local head = {}
+  fn.jobstart('git rev-parse --abbrev-ref HEAD', {
+    stdout_buffered = true,
+    on_stdout = git_read(head),
+    on_exit = function()
+      if not head[1] then
+        return
+      end
+      local branch = head[1]
+      local result = {}
+      fn.jobstart(fmt('git rev-list --count --left-right %s...origin/%s', branch, branch), {
+        stdout_buffered = true,
+        on_stdout = git_read(result),
+        on_exit = function(_, code, _)
+          if code > 0 and not result or not result[1] then
+            return
+          end
+          local parts = vim.split(result[1], '\t')
+          if parts and #parts > 1 then
+            local formatted = { behind = parts[2], ahead = parts[1] }
+            vim.g.git_statusline_updates = formatted
+          end
+        end,
+      })
+    end,
+  })
 end
 
 function M.git_updates_refresh()
