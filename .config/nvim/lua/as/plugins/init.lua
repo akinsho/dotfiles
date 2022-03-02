@@ -84,7 +84,7 @@ require('packer').startup {
       },
     }
 
-    use { 'mrjones2014/dash.nvim', run = 'make install' }
+    use { 'mrjones2014/dash.nvim', run = 'make install', after = 'telescope.nvim' }
 
     use 'kyazdani42/nvim-web-devicons'
 
