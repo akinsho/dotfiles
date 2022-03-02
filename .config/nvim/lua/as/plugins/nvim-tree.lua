@@ -46,6 +46,14 @@ return function()
     diagnostics = {
       enable = true,
     },
+    hijack_unnamed_buffer_when_opening = true,
+    hijack_directories = {
+      enable = true,
+      auto_open = true,
+    },
+    system_open = {
+      cmd = 'open',
+    },
     disable_netrw = false,
     hijack_netrw = true,
     open_on_setup = false,
