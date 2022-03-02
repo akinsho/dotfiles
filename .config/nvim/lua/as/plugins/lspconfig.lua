@@ -1,5 +1,4 @@
 as.lsp = {}
-local fmt = string.format
 
 -----------------------------------------------------------------------------//
 -- Autocommands
@@ -33,26 +32,6 @@ local function setup_autocommands(client, _)
       },
     })
   end
-  if client and client.resolved_capabilities.document_formatting then
-    -- format on save
-    as.augroup('LspFormat', {
-      {
-        events = { 'BufWritePre' },
-        targets = { '<buffer>' },
-        command = function()
-          -- BUG: folds are are removed when formatting is done, so we save the current state of the
-          -- view and re-apply it manually after formatting the buffer
-          -- @see: https://github.com/nvim-treesitter/nvim-treesitter/issues/1424#issuecomment-909181939
-          vim.cmd 'mkview!'
-          local ok, msg = pcall(vim.lsp.buf.formatting_sync, nil, 2000)
-          if not ok then
-            vim.notify(fmt('Error formatting file: %s', msg))
-          end
-          vim.cmd 'loadview'
-        end,
-      },
-    })
-  end
 end
 
 -----------------------------------------------------------------------------//
@@ -62,9 +41,11 @@ end
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client table lsp client
 local function setup_mappings(client)
+  local ok, lsp_format = pcall(require, 'lsp-format')
+  local format = ok and lsp_format.format or vim.lsp.buf.formatting
   local maps = {
     n = {
-      ['<leader>rf'] = { vim.lsp.buf.formatting, 'lsp: format buffer' },
+      ['<leader>rf'] = { format, 'lsp: format buffer' },
       ['gi'] = 'lsp: implementation',
       ['gd'] = { vim.lsp.buf.definition, 'lsp: definition' },
       ['gr'] = { vim.lsp.buf.references, 'lsp: references' },
@@ -149,6 +130,10 @@ end
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
+  local ok, lsp_format = pcall(require, 'lsp-format')
+  if ok then
+    lsp_format.on_attach(client)
+  end
 
   if client.resolved_capabilities.goto_definition then
     vim.bo[bufnr].tagfunc = 'v:lua.as.lsp.tagfunc'
