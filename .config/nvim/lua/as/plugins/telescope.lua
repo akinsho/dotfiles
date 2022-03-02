@@ -215,6 +215,10 @@ return function()
     }
   end
 
+  local function dash()
+    require('dash').search()
+  end
+
   require('which-key').register {
     ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
@@ -222,6 +226,7 @@ return function()
       a = { builtins.builtin, 'builtins' },
       b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
       d = { dotfiles, 'dotfiles' },
+      D = { dash, 'dash' },
       f = { builtins.find_files, 'find files' },
       n = { gh_notifications, 'notifications' },
       g = {
