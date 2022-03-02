@@ -363,7 +363,7 @@ require('packer').startup {
       cmd = 'Ultest',
       wants = 'vim-test',
       event = { 'BufEnter *_test.*,*_spec.*' },
-      requires = { 'vim-test/vim-test' },
+      requires = { 'vim-test' },
       run = ':UpdateRemotePlugins',
       config = function()
         local test_patterns = { '*_test.*', '*_spec.*' }
@@ -883,8 +883,6 @@ require('packer').startup {
     --------------------------------------------------------------------------------
     -- Syntax {{{1
     --------------------------------------------------------------------------------
-    -- TODO: if a plugin which is specified as after for other plugins is converted to opt=true
-    -- trying to move that plugin to the opt directory fails
     use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
