@@ -254,8 +254,9 @@ local function general_overrides()
     { 'TSParameter', { italic = true, bold = true, foreground = 'NONE' } },
     { 'TSError', { undercurl = true, sp = error_line, foreground = 'NONE' } },
     -- highlight FIXME comments
-    { 'commentTSWarning', { foreground = 'Red', bold = true } },
-    { 'commentTSDanger', { foreground = '#FBBF24', bold = true } },
+    { 'commentTSWarning', { background = P.light_red, foreground = 'fg', bold = true } },
+    { 'commentTSDanger', { background = L.hint, foreground = '#1B2229', bold = true } },
+    { 'commentTSNote', { background = L.info, foreground = '#1B2229', bold = true } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//

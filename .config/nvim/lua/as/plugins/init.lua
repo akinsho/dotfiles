@@ -1129,22 +1129,6 @@ require('packer').startup {
       end,
     }
 
-    use {
-      'folke/todo-comments.nvim',
-      requires = 'nvim-lua/plenary.nvim',
-      config = function()
-        -- this plugin is not safe to reload
-        if vim.g.packer_compiled_loaded then
-          return
-        end
-        require('todo-comments').setup {
-          highlight = {
-            exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
-          },
-        }
-        as.nnoremap('<leader>lt', '<Cmd>TodoTrouble<CR>', 'trouble: todos')
-      end,
-    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Themes  {{{1
