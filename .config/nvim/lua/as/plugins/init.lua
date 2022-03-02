@@ -1302,6 +1302,23 @@ as.augroup('PackerSetupInit', {
     end,
   },
   {
+    events = { 'BufEnter' },
+    targets = { '<buffer>' },
+    --- Open a repository from an authorname/repository string
+    --- e.g. 'akinso/example-repo'
+    command = function()
+      as.nnoremap('gf', function()
+        local repo = fn.expand '<cfile>'
+        if not repo or #vim.split(repo, '/') ~= 2 then
+          return vim.cmd 'norm! gf'
+        end
+        local url = fmt('https://www.github.com/%s', repo)
+        fn.jobstart('open ' .. url)
+        vim.notify(fmt('Opening %s at %s', repo, url))
+      end)
+    end,
+  },
+  {
     events = { 'User PackerCompileDone' },
     command = function()
       vim.notify('Packer compile complete', nil, { title = 'Packer' })
