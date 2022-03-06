@@ -268,11 +268,20 @@ local function highlight_ft_icon(hl, bg_hl)
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
   local fg_color = H.get_hl(hl, 'fg')
   local bg_color = H.get_hl(bg_hl, 'bg')
+  local function hl_icon()
+    if fg_color and bg_color then
+      api.nvim_set_hl(0, name, { background = bg_color, foreground = fg_color })
+    end
+  end
   if bg_color and fg_color then
-    local cmd = { 'highlight ', name, ' guibg=', bg_color, ' guifg=', fg_color }
-    local str = table.concat(cmd)
-    as.augroup(name, { { events = { 'ColorScheme' }, targets = { '*' }, command = str } })
-    vim.cmd(string.format("silent execute '%s'", str))
+    as.augroup(name, {
+      {
+        events = { 'ColorScheme' },
+        targets = { '*' },
+        command = hl_icon,
+      },
+    })
+    hl_icon()
   end
   return name
 end
