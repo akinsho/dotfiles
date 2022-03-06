@@ -42,6 +42,7 @@ return function()
 
   require('bufferline').setup {
     options = {
+      mode = 'tabs',
       sort_by = sort_by_mtime,
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
