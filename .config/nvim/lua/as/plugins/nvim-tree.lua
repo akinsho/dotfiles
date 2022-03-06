@@ -47,6 +47,7 @@ return function()
       enable = true,
     },
     hijack_unnamed_buffer_when_opening = true,
+    sort_by = 'modification_time',
     hijack_directories = {
       enable = true,
       auto_open = true,
