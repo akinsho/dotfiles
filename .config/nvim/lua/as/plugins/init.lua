@@ -270,7 +270,6 @@ require('packer').startup {
       'hrsh7th/nvim-cmp',
       module = 'cmp',
       branch = 'dev',
-      lock = true,
       event = 'InsertEnter',
       requires = {
         { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-lspconfig' },
