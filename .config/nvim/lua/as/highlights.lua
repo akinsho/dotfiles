@@ -56,8 +56,7 @@ local function get_hl(group_name)
   if ok then
     hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
     hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
-    --- BUG: API returns a true key which errors during the merge
-    hl[true] = nil
+    hl[true] = nil -- BUG: API returns a true key which errors during the merge
     return hl
   end
   return {}
