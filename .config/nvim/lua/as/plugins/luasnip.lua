@@ -87,5 +87,5 @@ return function()
   }
 
   -- NOTE: load external snippets last so they are not overruled by ls.snippets
-  require('luasnip.loaders.from_vscode').load { paths = './snippets/textmate' }
+  require('luasnip.loaders.from_vscode').lazy_load { paths = './snippets/textmate' }
 end
