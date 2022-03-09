@@ -222,6 +222,14 @@ require('packer').startup {
     use 'b0o/schemastore.nvim'
 
     use {
+      'narutoxy/dim.lua',
+      requires = { 'nvim-treesitter/nvim-treesitter', 'neovim/nvim-lspconfig' },
+      config = function()
+        require('dim').setup()
+      end,
+    }
+
+    use {
       'jose-elias-alvarez/null-ls.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
       -- trigger loading after lspconfig has started the other servers
