@@ -152,7 +152,7 @@ local function update_spinner(client_id, token)
 end
 
 local function format_title(title, client)
-  return client.name .. (#title > 0 and ': ' .. title or '')
+  return (client and client.name or '') .. (#title > 0 and ': ' .. title or '')
 end
 
 local function format_message(message, percentage)
