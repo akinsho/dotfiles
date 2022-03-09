@@ -827,7 +827,7 @@ require('packer').startup {
       end,
     }
     -- sets searchable path for filetypes like go so 'gf' works
-    use { 'tpope/vim-apathy', ft = { 'go', 'python', 'javascript', 'typescript' } }
+    use 'tpope/vim-apathy'
     use { 'tpope/vim-projectionist', config = conf 'vim-projectionist' }
     use {
       'tpope/vim-surround',
@@ -1026,27 +1026,43 @@ require('packer').startup {
     }
 
     use {
-      'AndrewRadev/dsf.vim',
+      'Matt-A-Bennett/vim-surround-funk',
       config = function()
-        vim.g.dsf_no_mappings = 1
+        vim.g.surround_funk_create_mappings = 0
         require('which-key').register {
           d = {
             name = '+dsf: function text object',
             s = {
-              f = { '<Plug>DsfDelete', 'delete surrounding function' },
-              nf = { '<Plug>DsfNextDelete', 'delete next surrounding function' },
+              f = { '<Plug>(DeleteSurroundingFunction)', 'delete surrounding function' },
+              F = { '<Plug>(DeleteSurroundingFUNCTION)', 'delete surrounding outer function' },
             },
           },
           c = {
             name = '+dsf: function text object',
             s = {
-              f = { '<Plug>DsfChange', 'change surrounding function' },
-              nf = { '<Plug>DsfNextChange', 'change next surrounding function' },
+              f = { '<Plug>(ChangeSurroundingFunction)', 'change surrounding function' },
+              F = { '<Plug>(ChangeSurroundingFUNCTION)', 'change outer surrounding function' },
             },
           },
         }
       end,
     }
+
+    use {
+      'protex/better-digraphs.nvim',
+      config = function()
+        as.inoremap('<C-k><C-k>', function()
+          require('betterdigraphs').digraphs 'i'
+        end)
+        as.nnoremap('r<C-k><C-k>', function()
+          require('betterdigraphs').digraphs 'r'
+        end)
+        as.vnoremap('r<C-k><C-k>', function()
+          require('betterdigraphs').digraphs 'gvr'
+        end)
+      end,
+    }
+
     use 'chaoren/vim-wordmotion'
 
     use {
