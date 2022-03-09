@@ -28,7 +28,9 @@ local function setup_autocommands(client, _)
       {
         events = { 'CursorMoved' },
         targets = { '<buffer>' },
-        command = vim.lsp.buf.clear_references,
+        command = function()
+          vim.lsp.buf.clear_references()
+        end,
       },
     })
   end
