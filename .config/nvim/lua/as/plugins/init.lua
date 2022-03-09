@@ -219,8 +219,6 @@ require('packer').startup {
       end,
     }
 
-    use 'b0o/schemastore.nvim'
-
     use {
       'narutoxy/dim.lua',
       requires = { 'nvim-treesitter/nvim-treesitter', 'neovim/nvim-lspconfig' },

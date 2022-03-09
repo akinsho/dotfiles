@@ -151,15 +151,6 @@ end
 as.lsp.servers = {
   gopls = true,
   bashls = true,
-  jsonls = function()
-    return {
-      settings = {
-        json = {
-          schemas = require('schemastore').json.schemas(),
-        },
-      },
-    }
-  end,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
