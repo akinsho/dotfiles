@@ -1074,13 +1074,6 @@ require('packer').startup {
     use 'chaoren/vim-wordmotion'
 
     use {
-      'svermeulen/vim-subversive',
-      config = function()
-        as.nmap('S', '<plug>(SubversiveSubstitute)')
-      end,
-    }
-
-    use {
       'numToStr/Comment.nvim',
       config = function()
         require('Comment').setup()
@@ -1088,14 +1081,27 @@ require('packer').startup {
     }
 
     use {
-      'tommcdo/vim-exchange',
+      'gbprod/substitute.nvim',
       config = function()
-        require('as.highlights').plugin('exchange', { 'ExchangeRegion', { link = 'Search' } })
-        vim.g.exchange_no_mappings = 1
-        vim.keymap.set({ 'n', 'x' }, 'X', '<Plug>(Exchange)')
-        as.nmap('Xc', '<Plug>(ExchangeClear)')
+        require('substitute').setup()
+        as.nnoremap('S', function()
+          require('substitute').operator()
+        end)
+        as.xnoremap('S', function()
+          require('substitute').visual()
+        end)
+        as.nnoremap('X', function()
+          require('substitute.exchange').operator()
+        end)
+        as.xnoremap('X', function()
+          require('substitute.exchange').visual()
+        end)
+        as.nnoremap('Xc', function()
+          require('substitute.exchange').cancel()
+        end)
       end,
     }
+
     use 'wellle/targets.vim'
     use {
       'kana/vim-textobj-user',
