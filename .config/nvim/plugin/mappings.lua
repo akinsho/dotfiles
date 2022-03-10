@@ -1,6 +1,5 @@
 local has = as.has
 local fn = vim.fn
-local api = vim.api
 local command = as.command
 local fmt = string.format
 
