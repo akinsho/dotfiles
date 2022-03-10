@@ -38,8 +38,8 @@ command {
     if as.is_vim_list_open() then
       as.augroup('LspDiagnosticUpdate', {
         {
-          events = { 'DiagnosticChanged' },
-          targets = { '*' },
+          event = { 'DiagnosticChanged' },
+          pattern = { '*' },
           command = function()
             if as.is_vim_list_open() then
               as.toggle_list 'quickfix'

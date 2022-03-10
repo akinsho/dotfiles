@@ -15,13 +15,13 @@ vim.api.nvim_exec(
 as.augroup('VimrcIncSearchHighlight', {
   {
     -- automatically clear search highlight once leaving the commandline
-    events = { 'CmdlineEnter' },
-    targets = { '[/\\?]' },
+    event = { 'CmdlineEnter' },
+    pattern = { '[/\\?]' },
     command = ':set hlsearch  | redrawstatus',
   },
   {
-    events = { 'CmdlineLeave' },
-    targets = { '[/\\?]' },
+    event = { 'CmdlineLeave' },
+    pattern = { '[/\\?]' },
     command = ':set nohlsearch | redrawstatus',
   },
 })
@@ -49,14 +49,14 @@ end
 as.augroup('SmartClose', {
   {
     -- Auto open grep quickfix window
-    events = { 'QuickFixCmdPost' },
-    targets = { '*grep*' },
+    event = { 'QuickFixCmdPost' },
+    pattern = { '*grep*' },
     command = 'cwindow',
   },
   {
     -- Close certain filetypes by pressing q.
-    events = { 'FileType' },
-    targets = { '*' },
+    event = { 'FileType' },
+    pattern = '*',
     command = function()
       local is_readonly = (vim.bo.readonly or not vim.bo.modifiable) and fn.hasmapto('q', 'n') == 0
 
@@ -72,8 +72,8 @@ as.augroup('SmartClose', {
   },
   {
     -- Close quick fix window if the file containing it was closed
-    events = { 'BufEnter' },
-    targets = { '*' },
+    event = { 'BufEnter' },
+    pattern = '*',
     command = function()
       if fn.winnr '$' == 1 and vim.bo.buftype == 'quickfix' then
         api.nvim_buf_delete(0, { force = true })
@@ -82,9 +82,9 @@ as.augroup('SmartClose', {
   },
   {
     -- automatically close corresponding loclist when quitting a window
-    events = { 'QuitPre' },
-    targets = { '*' },
-    modifiers = { 'nested' },
+    event = { 'QuitPre' },
+    pattern = '*',
+    nested = true,
     command = function()
       if vim.bo.filetype ~= 'qf' then
         vim.cmd 'silent! lclose'
@@ -96,8 +96,8 @@ as.augroup('SmartClose', {
 as.augroup('ExternalCommands', {
   {
     -- Open images in an image viewer (probably Preview)
-    events = { 'BufEnter' },
-    targets = { '*.png,*.jpg,*.gif' },
+    event = { 'BufEnter' },
+    pattern = { '*.png', '*.jpg', '*.gif' },
     command = function()
       vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand '%'))
     end,
@@ -107,8 +107,8 @@ as.augroup('ExternalCommands', {
 as.augroup('CheckOutsideTime', {
   {
     -- automatically check for changed files outside vim
-    events = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
-    targets = { '*' },
+    event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
+    pattern = '*',
     command = 'silent! checktime',
   },
 })
@@ -116,13 +116,13 @@ as.augroup('CheckOutsideTime', {
 -- See :h skeleton
 as.augroup('Templates', {
   {
-    events = { 'BufNewFile' },
-    targets = { '*.sh' },
+    event = { 'BufNewFile' },
+    pattern = { '*.sh' },
     command = '0r $DOTFILES/.config/nvim/templates/skeleton.sh',
   },
   {
-    events = { 'BufNewFile' },
-    targets = { '*.lua' },
+    event = { 'BufNewFile' },
+    pattern = { '*.lua' },
     command = '0r $DOTFILES/.config/nvim/templates/skeleton.lua',
   },
 })
@@ -149,8 +149,8 @@ end
 
 as.augroup('ClearCommandMessages', {
   {
-    events = { 'CmdlineLeave', 'CmdlineChanged' },
-    targets = { ':' },
+    event = { 'CmdlineLeave', 'CmdlineChanged' },
+    pattern = { ':' },
     command = clear_commandline(),
   },
 })
@@ -158,22 +158,22 @@ as.augroup('ClearCommandMessages', {
 if vim.env.TMUX ~= nil then
   as.augroup('External', {
     {
-      events = { 'BufEnter' },
-      targets = { '*' },
+      event = { 'BufEnter' },
+      pattern = '*',
       command = function()
         vim.o.titlestring = require('as.external').title_string()
       end,
     },
     {
-      events = { 'VimLeavePre' },
-      targets = { '*' },
+      event = { 'VimLeavePre' },
+      pattern = '*',
       command = function()
         require('as.external').tmux.set_statusline(true)
       end,
     },
     {
-      events = { 'ColorScheme', 'FocusGained' },
-      targets = { '*' },
+      event = { 'ColorScheme', 'FocusGained' },
+      pattern = '*',
       command = function()
         -- NOTE: there is a race condition here as the colors
         -- for kitty to re-use need to be set AFTER the rest of the colorscheme
@@ -189,8 +189,8 @@ end
 as.augroup('TextYankHighlight', {
   {
     -- don't execute silently in case of errors
-    events = { 'TextYankPost' },
-    targets = { '*' },
+    event = { 'TextYankPost' },
+    pattern = '*',
     command = function()
       vim.highlight.on_yank {
         timeout = 500,
@@ -246,15 +246,15 @@ end
 as.augroup('CustomColorColumn', {
   {
     -- Update the cursor column to match current window size
-    events = { 'WinEnter', 'BufEnter', 'VimResized', 'FileType' },
-    targets = { '*' },
+    event = { 'WinEnter', 'BufEnter', 'VimResized', 'FileType' },
+    pattern = '*',
     command = function()
       check_color_column()
     end,
   },
   {
-    events = { 'WinLeave' },
-    targets = { '*' },
+    event = { 'WinLeave' },
+    pattern = { '*' },
     command = function()
       check_color_column(true)
     end,
@@ -265,9 +265,9 @@ as.augroup('UpdateVim', {
     -- TODO: not clear what effect this has in the post vimscript world
     -- it correctly sources $MYVIMRC but all the other files that it
     -- requires will need to be resourced or reloaded themselves
-    events = 'BufWritePost',
-    targets = { '$DOTFILES/**/nvim/plugin/*.{lua,vim}', '$MYVIMRC' },
-    modifiers = { '++nested' },
+    event = 'BufWritePost',
+    pattern = { '$DOTFILES/**/nvim/plugin/*.{lua,vim}', '$MYVIMRC' },
+    nested = true,
     command = function()
       local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
       msg = ok and 'sourced ' .. vim.fn.fnamemodify(vim.env.MYVIMRC, ':t') or msg
@@ -275,14 +275,14 @@ as.augroup('UpdateVim', {
     end,
   },
   {
-    events = { 'FocusLost' },
-    targets = { '*' },
+    event = { 'FocusLost' },
+    pattern = { '*' },
     command = 'silent! wall',
   },
   -- Make windows equal size when vim resizes
   {
-    events = { 'VimResized' },
-    targets = { '*' },
+    event = { 'VimResized' },
+    pattern = { '*' },
     command = 'wincmd =',
   },
 })
@@ -290,21 +290,21 @@ as.augroup('UpdateVim', {
 as.augroup('WindowBehaviours', {
   {
     -- map q to close command window on quit
-    events = { 'CmdwinEnter' },
-    targets = { '*' },
+    event = { 'CmdwinEnter' },
+    pattern = { '*' },
     command = 'nnoremap <silent><buffer><nowait> q <C-W>c',
   },
   -- Automatically jump into the quickfix window on open
   {
-    events = { 'QuickFixCmdPost' },
-    targets = { '[^l]*' },
-    modifiers = { 'nested' },
+    event = { 'QuickFixCmdPost' },
+    pattern = { '[^l]*' },
+    nested = true,
     command = 'cwindow',
   },
   {
-    events = { 'QuickFixCmdPost' },
-    targets = { 'l*' },
-    modifiers = { 'nested' },
+    event = { 'QuickFixCmdPost' },
+    pattern = { 'l*' },
+    nested = true,
     command = 'lwindow',
   },
 })
@@ -318,8 +318,8 @@ end
 
 as.augroup('Cursorline', {
   {
-    events = { 'BufEnter' },
-    targets = { '*' },
+    event = { 'BufEnter' },
+    pattern = { '*' },
     command = function()
       if should_show_cursorline() then
         vim.wo.cursorline = true
@@ -327,8 +327,8 @@ as.augroup('Cursorline', {
     end,
   },
   {
-    events = { 'BufLeave' },
-    targets = { '*' },
+    event = { 'BufLeave' },
+    pattern = { '*' },
     command = function()
       vim.wo.cursorline = false
     end,
@@ -346,8 +346,8 @@ end
 as.augroup('Utilities', {
   {
     -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
-    events = { 'BufReadCmd' },
-    targets = { 'file:///*' },
+    event = { 'BufReadCmd' },
+    pattern = { 'file:///*' },
     command = function()
       vim.cmd(fmt('bd!|edit %s', vim.uri_from_fname '<afile>'))
     end,
@@ -357,8 +357,8 @@ as.augroup('Utilities', {
     -- When editing a file, always jump to the last known cursor position.
     -- Don't do it for commit messages, when the position is invalid, or when
     -- inside an event handler (happens when dropping a file on gvim).
-    events = { 'BufWinEnter' },
-    targets = { '*' },
+    event = { 'BufWinEnter' },
+    pattern = { '*' },
     command = function()
       local pos = fn.line [['"]]
       if
@@ -372,18 +372,18 @@ as.augroup('Utilities', {
     end,
   },
   {
-    events = { 'FileType' },
-    targets = { 'gitcommit', 'gitrebase' },
+    event = { 'FileType' },
+    pattern = { 'gitcommit', 'gitrebase' },
     command = 'set bufhidden=delete',
   },
   {
-    events = { 'BufWritePre', 'FileWritePre' },
-    targets = { '*' },
+    event = { 'BufWritePre', 'FileWritePre' },
+    pattern = { '*' },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
   },
   {
-    events = { 'BufLeave' },
-    targets = { '*' },
+    event = { 'BufLeave' },
+    pattern = { '*' },
     command = function()
       if can_save() then
         vim.cmd 'silent! update'
@@ -391,9 +391,9 @@ as.augroup('Utilities', {
     end,
   },
   {
-    events = { 'BufWritePost' },
-    targets = { '*' },
-    modifiers = { 'nested' },
+    event = { 'BufWritePost' },
+    pattern = { '*' },
+    nested = true,
     command = function()
       if as.empty(vim.bo.filetype) or fn.exists 'b:ftdetect' == 1 then
         vim.cmd [[
@@ -405,16 +405,16 @@ as.augroup('Utilities', {
     end,
   },
   {
-    events = { 'Syntax' },
-    targets = { '*' },
+    event = { 'Syntax' },
+    pattern = { '*' },
     command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
   },
 })
 
 as.augroup('TerminalAutocommands', {
   {
-    events = { 'TermClose' },
-    targets = { '*' },
+    event = { 'TermClose' },
+    pattern = '*',
     command = function()
       --- automatically close a terminal if the job was successful
       if not vim.v.event.status == 0 then

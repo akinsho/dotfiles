@@ -7,27 +7,45 @@ local function setup_autocommands(client, _)
   if client and client.resolved_capabilities.code_lens then
     as.augroup('LspCodeLens', {
       {
-        events = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-        targets = { '<buffer>' },
-        command = vim.lsp.codelens.refresh,
+        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+        buffer = 0,
+        command = function()
+          vim.lsp.codelens.refresh()
+        end,
       },
     })
   end
   if client and client.resolved_capabilities.document_highlight then
     as.augroup('LspCursorCommands', {
       {
-        events = { 'CursorHold' },
-        targets = { '<buffer>' },
-        command = vim.lsp.buf.document_highlight,
+        event = 'CursorHold',
+        buffer = 0,
+        command = function()
+          vim.lsp.buf.document_highlight()
+        end,
       },
       {
-        events = { 'CursorHoldI' },
-        targets = { '<buffer>' },
-        command = vim.lsp.buf.document_highlight,
+        event = 'CursorHoldI',
+        buffer = 0,
+        command = function()
+          vim.lsp.buf.document_highlight()
+        end,
       },
       {
-        events = { 'CursorMoved' },
-        targets = { '<buffer>' },
+        event = 'CursorMoved',
+        buffer = 0,
+        command = function()
+          vim.lsp.buf.clear_references()
+        end,
+      },
+    })
+  end
+  if client and client.resolved_capabilities.document_formatting then
+    -- format on save
+    as.augroup('LspFormat', {
+      {
+        event = { 'BufWritePre' },
+        buffer = 0,
         command = function()
           vim.lsp.buf.clear_references()
         end,
@@ -206,6 +224,5 @@ return function()
   local lsp_installer = require 'nvim-lsp-installer'
   lsp_installer.on_server_ready(function(server)
     server:setup(as.lsp.get_server_config(server))
-    vim.cmd [[ do User LspAttachBuffers ]]
   end)
 end

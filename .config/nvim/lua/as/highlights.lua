@@ -149,8 +149,7 @@ function M.plugin(name, ...)
   M.all(hls)
   as.augroup(fmt('%sHighlightOverrides', name), {
     {
-      events = { 'ColorScheme' },
-      targets = { '*' },
+      event = 'ColorScheme',
       command = function()
         M.all(hls)
       end,
@@ -335,14 +334,17 @@ end
 
 as.augroup('UserHighlights', {
   {
-    events = { 'ColorScheme' },
-    targets = { '*' },
-    command = user_highlights,
+    event = 'ColorScheme',
+    command = function()
+      user_highlights()
+    end,
   },
   {
-    events = { 'FileType' },
-    targets = sidebar_fts,
-    command = on_sidebar_enter,
+    event = 'FileType',
+    pattern = sidebar_fts,
+    command = function()
+      on_sidebar_enter()
+    end,
   },
 })
 

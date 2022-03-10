@@ -171,8 +171,8 @@ require('packer').startup {
       config = function()
         as.augroup('PlenaryTests', {
           {
-            events = { 'BufEnter' },
-            targets = { '*/personal/*/tests/*_spec.lua' },
+            event = 'BufEnter',
+            pattern = { '*/personal/*/tests/*_spec.lua' },
             command = function()
               require('which-key').register({
                 t = {
@@ -377,8 +377,8 @@ require('packer').startup {
         local test_patterns = { '*_test.*', '*_spec.*' }
         as.augroup('UltestTests', {
           {
-            events = { 'BufWritePost' },
-            targets = test_patterns,
+            event = { 'BufWritePost' },
+            pattern = test_patterns,
             command = 'UltestNearest',
           },
         })
@@ -1308,18 +1308,19 @@ end
 
 as.augroup('PackerSetupInit', {
   {
-    events = { 'BufWritePost' },
-    targets = { '*/as/plugins/*.lua' },
+    event = 'BufWritePost',
+    pattern = { '*/as/plugins/*.lua' },
+    description = 'Packer setup and reload',
     command = function()
       as.invalidate('as.plugins', true)
       require('packer').compile()
     end,
   },
   {
-    events = { 'BufEnter' },
-    targets = { '<buffer>' },
+    event = 'BufEnter',
     --- Open a repository from an authorname/repository string
     --- e.g. 'akinso/example-repo'
+    buffer = 0,
     command = function()
       as.nnoremap('gf', function()
         local repo = fn.expand '<cfile>'
@@ -1332,13 +1333,18 @@ as.augroup('PackerSetupInit', {
       end)
     end,
   },
-  {
-    events = { 'User PackerCompileDone' },
-    command = function()
-      vim.notify('Packer compile complete', nil, { title = 'Packer' })
-    end,
-  },
+  -- FIXME: user autocommands are triggered multiple times
+  -- {
+  -- event = 'User PackerCompileDone',
+  -- command = function()
+  --   print 'calling compile done'
+  --   vim.notify('Packer compile complete', nil, { title = 'Packer' })
+  -- end,
+  -- },
 })
+
+vim.cmd [[autocmd! User PackerCompileDone lua vim.notify('Packer compile complete', nil, { title = 'Packer' })]]
+
 as.nnoremap('<leader>ps', [[<Cmd>PackerSync<CR>]])
 as.nnoremap('<leader>pc', [[<Cmd>PackerClean<CR>]])
 

@@ -35,8 +35,8 @@ end
 local function setup_localrc(path)
   as.augroup('LocalRC', {
     {
-      events = { 'BufWritePost' },
-      targets = { path },
+      event = { 'BufWritePost' },
+      pattern = { path },
       command = function()
         reload(path)
       end,
@@ -100,9 +100,11 @@ end
 
 as.augroup('LoadLocalInit', {
   {
-    events = { 'VimEnter' },
-    targets = { '*' },
-    command = load,
+    event = { 'VimEnter' },
+    pattern = { '*' },
+    command = function()
+      load()
+    end,
   },
 })
 

@@ -258,6 +258,15 @@ local function filename(ctx, modifier)
   return dir, parent, fname
 end
 
+---@param name string
+---@param fg string
+---@param bg string
+local function create_hl(name, fg, bg)
+  if fg and bg then
+    api.nvim_set_hl(0, name, { foreground = fg, background = bg })
+  end
+end
+
 --- @param hl string
 --- @param bg_hl string
 local function highlight_ft_icon(hl, bg_hl)
@@ -268,20 +277,16 @@ local function highlight_ft_icon(hl, bg_hl)
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
   local fg_color = H.get_hl(hl, 'fg')
   local bg_color = H.get_hl(bg_hl, 'bg')
-  local function hl_icon()
-    if fg_color and bg_color then
-      api.nvim_set_hl(0, name, { background = bg_color, foreground = fg_color })
-    end
-  end
   if bg_color and fg_color then
     as.augroup(name, {
       {
-        events = { 'ColorScheme' },
-        targets = { '*' },
-        command = hl_icon,
+        event = 'ColorScheme',
+        command = function()
+          create_hl(name, fg_color, bg_color)
+        end,
       },
     })
-    hl_icon()
+    create_hl(name, fg_color, bg_color)
   end
   return name
 end

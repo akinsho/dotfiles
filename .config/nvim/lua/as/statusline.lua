@@ -317,22 +317,26 @@ end
 
 local function setup_autocommands()
   as.augroup('CustomStatusline', {
-    { events = { 'FocusGained' }, targets = { '*' }, command = 'let g:vim_in_focus = v:true' },
-    { events = { 'FocusLost' }, targets = { '*' }, command = 'let g:vim_in_focus = v:false' },
+    { event = { 'FocusGained' }, pattern = { '*' }, command = 'let g:vim_in_focus = v:true' },
+    { event = { 'FocusLost' }, pattern = { '*' }, command = 'let g:vim_in_focus = v:false' },
     {
-      events = { 'VimEnter', 'ColorScheme' },
-      targets = { '*' },
-      command = colors,
+      event = { 'VimEnter', 'ColorScheme' },
+      pattern = { '*' },
+      command = function()
+        colors()
+      end,
     },
     {
-      events = { 'BufReadPre' },
-      modifiers = { '++once' },
-      targets = { '*' },
-      command = utils.git_updates,
+      event = { 'BufReadPre' },
+      once = true,
+      pattern = { '*' },
+      command = function()
+        utils.git_updates()
+      end,
     },
     {
-      events = { 'BufWritePre' },
-      targets = { '*' },
+      event = { 'BufWritePre' },
+      pattern = { '*' },
       command = function()
         if not vim.g.is_saving and vim.bo.modified then
           vim.g.is_saving = true
@@ -343,24 +347,24 @@ local function setup_autocommands()
       end,
     },
     {
-      events = { 'DirChanged' },
-      targets = { '*' },
-      command = utils.git_update_toggle,
+      event = { 'DirChanged' },
+      pattern = { '*' },
+      command = function()
+        utils.git_update_toggle()
+      end,
     },
     --- NOTE: enable to update search count on cursor move
     -- {
-    --   events = {"CursorMoved", "CursorMovedI"},
-    --   targets = {"*"},
-    --   command = utils.update_search_count
+    --   event = {"CursorMoved", "CursorMovedI"},
+    --   pattern = {"*"},
+    --   command = function () utils.update_search_coun() endt
     -- },
     -- NOTE: user autocommands can't be joined into one autocommand
     {
-      events = { 'User NeogitStatusRefresh' },
-      command = utils.git_updates_refresh,
-    },
-    {
-      events = { 'User FugitiveChanged' },
-      command = utils.git_updates_refresh,
+      event = { 'User NeogitStatusRefresh' },
+      command = function()
+        utils.git_updates_refresh()
+      end,
     },
   })
 end
