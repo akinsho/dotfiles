@@ -3,7 +3,7 @@ return function()
     char = '│', -- ┆ ┊ 
     show_foldtext = false,
     show_current_context = true,
-    show_current_context_start = true,
+    show_current_context_start = false,
     show_current_context_start_on_current_line = false,
     show_first_indent_level = true,
     filetype_exclude = {
