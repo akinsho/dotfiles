@@ -196,7 +196,8 @@ local function general_overrides()
       },
     },
     -- Add undercurl to existing spellbad highlight
-    { 'SpellBad', { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
+    { 'SpellBad', { underdash = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
+    { 'SpellRare', { underdash = true } },
     { 'PmenuSbar', { background = P.grey } },
     -----------------------------------------------------------------------------//
     -- Diff
