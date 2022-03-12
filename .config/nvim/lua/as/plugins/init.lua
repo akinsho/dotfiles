@@ -978,6 +978,7 @@ packer.startup {
 
     use {
       'rhysd/conflict-marker.vim',
+      opt = true,
       config = function()
         require('as.highlights').plugin(
           'conflictMarker',
@@ -1281,6 +1282,14 @@ packer.startup {
       config = conf 'bufferline',
       local_path = 'personal',
       requires = 'nvim-web-devicons',
+    }
+
+    use_local {
+      'akinsho/git-conflict.nvim',
+      local_path = 'personal',
+      config = function()
+        require('git-conflict').setup()
+      end,
     }
     --}}}
     ---------------------------------------------------------------------------------
