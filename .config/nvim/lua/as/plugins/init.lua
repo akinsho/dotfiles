@@ -85,7 +85,13 @@ packer.startup {
       },
     }
 
-    use { 'mrjones2014/dash.nvim', run = 'make install', after = 'telescope.nvim' }
+    use {
+      'mrjones2014/dash.nvim',
+      command = 'Dash',
+      module = 'dash',
+      run = 'make install',
+      after = 'telescope.nvim',
+    }
 
     use 'kyazdani42/nvim-web-devicons'
 
@@ -576,11 +582,14 @@ packer.startup {
           },
         }
 
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = { 'yaml', 'toml' },
-          callback = function()
-            map('n', '<C-a>', require('dial.map').inc_normal 'dep_files', { remap = true })
-          end,
+        as.augroup('DialMaps', {
+          {
+            event = 'FileType',
+            pattern = { 'yaml', 'toml' },
+            command = function()
+              map('n', '<C-a>', require('dial.map').inc_normal 'dep_files', { remap = true })
+            end,
+          },
         })
       end,
     }
