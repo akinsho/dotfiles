@@ -20,10 +20,11 @@ vim.cmd 'packadd! cfilter'
 ---@see: https://github.com/lewis6991/impatient.nvim/issues/35
 as.safe_require 'impatient'
 
+local packer = require 'packer'
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
 --- or local variables
-require('packer').startup {
+packer.startup {
   function(use, use_rocks)
     -- FIXME: this no longer loads the local plugin since the compiled file now
     -- loads packer.nvim so the local alias(local-packer) does not work
@@ -1319,13 +1320,13 @@ as.augroup('PackerSetupInit', {
     description = 'Packer setup and reload',
     command = function()
       as.invalidate('as.plugins', true)
-      require('packer').compile()
+      packer.compile()
     end,
   },
+  --- Open a repository from an authorname/repository string
+  --- e.g. 'akinso/example-repo'
   {
     event = 'BufEnter',
-    --- Open a repository from an authorname/repository string
-    --- e.g. 'akinso/example-repo'
     buffer = 0,
     command = function()
       as.nnoremap('gf', function()
@@ -1341,11 +1342,11 @@ as.augroup('PackerSetupInit', {
   },
   -- FIXME: user autocommands are triggered multiple times
   -- {
-  -- event = 'User PackerCompileDone',
-  -- command = function()
-  --   print 'calling compile done'
-  --   vim.notify('Packer compile complete', nil, { title = 'Packer' })
-  -- end,
+  --   event = 'User PackerCompileDone',
+  --   description = 'Inform me that packer has finished compiling',
+  --   command = function()
+  --     vim.notify('Packer compile complete', nil, { title = 'Packer' })
+  --   end,
   -- },
 })
 
