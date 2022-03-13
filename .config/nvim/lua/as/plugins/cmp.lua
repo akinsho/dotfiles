@@ -135,12 +135,19 @@ return function()
       { name = 'cmp_tabnine' },
       { name = 'spell' },
       { name = 'neorg' },
-      { name = 'orgmode' },
       { name = 'cmp_git' },
     }, {
       { name = 'buffer' },
     }),
   }
+
+  cmp.setup.filetype('NeogitCommitMessage', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' },
+    }, {
+      { name = 'buffer' },
+    }),
+  })
 
   local search_sources = {
     sources = cmp.config.sources({
@@ -149,6 +156,7 @@ return function()
       { name = 'buffer' },
     }),
   }
+
   cmp.setup.cmdline('/', search_sources)
   cmp.setup.cmdline('?', search_sources)
   cmp.setup.cmdline(':', {
