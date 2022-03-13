@@ -309,12 +309,16 @@ end
 vim.g.mc = [[y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>]]
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
-nnoremap('cq', [[:lua as.mappings.setup_CR()<CR>*``qz]])
-nnoremap('cQ', [[:lua as.mappings.setup_CR()<CR>#``qz]])
-xnoremap('cq', [[":\<C-u>lua as.mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]], { expr = true })
+nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_CR()<CR>*``qz]])
+nnoremap('cQ', [[:\<C-u>call v:lua.as.mappings.setup_CR()<CR>#``qz]])
+xnoremap(
+  'cq',
+  [[":\<C-u>call v:lua.as.mappings.setup_CR()<CR>gv" . g:mc . "``qz"]],
+  { expr = true }
+)
 xnoremap(
   'cQ',
-  [[":\<C-u>lua as.mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  [[":\<C-u>call v:lua.as.mappings.setup_CR()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
 )
 
