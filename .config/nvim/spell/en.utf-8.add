@@ -236,3 +236,6 @@ nvim's
 enum
 homebrew
 app
+extmark
+bufnr
+lnum
