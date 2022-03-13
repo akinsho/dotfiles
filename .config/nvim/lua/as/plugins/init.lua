@@ -1052,15 +1052,15 @@ packer.startup {
           d = {
             name = '+dsf: function text object',
             s = {
-              f = { '<Plug>(DeleteSurroundingFunction)', 'delete surrounding function' },
-              F = { '<Plug>(DeleteSurroundingFUNCTION)', 'delete surrounding outer function' },
+              F = { '<Plug>(DeleteSurroundingFunction)', 'delete surrounding function' },
+              f = { '<Plug>(DeleteSurroundingFUNCTION)', 'delete surrounding outer function' },
             },
           },
           c = {
             name = '+dsf: function text object',
             s = {
-              f = { '<Plug>(ChangeSurroundingFunction)', 'change surrounding function' },
-              F = { '<Plug>(ChangeSurroundingFUNCTION)', 'change outer surrounding function' },
+              F = { '<Plug>(ChangeSurroundingFunction)', 'change surrounding function' },
+              f = { '<Plug>(ChangeSurroundingFUNCTION)', 'change outer surrounding function' },
             },
           },
         }
@@ -1069,6 +1069,7 @@ packer.startup {
 
     use {
       'protex/better-digraphs.nvim',
+      keys = { { 'i', '<C-k><C-k>' } },
       config = function()
         as.inoremap('<C-k><C-k>', function()
           require('betterdigraphs').digraphs 'i'
