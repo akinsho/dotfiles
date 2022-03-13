@@ -977,26 +977,6 @@ packer.startup {
     use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
 
     use {
-      'rhysd/conflict-marker.vim',
-      opt = true,
-      config = function()
-        require('as.highlights').plugin(
-          'conflictMarker',
-          { 'ConflictMarkerBegin', { background = '#2f7366' } },
-          { 'ConflictMarkerOurs', { background = '#2e5049' } },
-          { 'ConflictMarkerTheirs', { background = '#344f69' } },
-          { 'ConflictMarkerEnd', { background = '#2f628e' } },
-          { 'ConflictMarkerCommonAncestorsHunk', { background = '#754a81' } }
-        )
-        -- disable the default highlight group
-        vim.g.conflict_marker_highlight_group = ''
-        -- Include text after begin and end markers
-        vim.g.conflict_marker_begin = '^<<<<<<< .*$'
-        vim.g.conflict_marker_end = '^>>>>>>> .*$'
-      end,
-    }
-
-    use {
       'TimUntersberger/neogit',
       cmd = 'Neogit',
       keys = { '<localleader>gs', '<localleader>gl', '<localleader>gp' },
@@ -1289,7 +1269,9 @@ packer.startup {
       'akinsho/git-conflict.nvim',
       local_path = 'personal',
       config = function()
-        require('git-conflict').setup()
+        require('git-conflict').setup {
+          disable_diagnostics = true,
+        }
       end,
     }
     --}}}
