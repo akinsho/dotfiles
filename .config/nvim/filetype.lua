@@ -8,6 +8,7 @@ vim.filetype.add {
   filename = {
     ['.gitignore'] = 'conf',
     ['Podfile'] = 'ruby',
+    ['Podfile.lock'] = 'yaml',
   },
   pattern = {
     ['*.gradle'] = 'groovy',
