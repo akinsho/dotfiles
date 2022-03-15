@@ -361,7 +361,8 @@ local function setup_autocommands()
     -- },
     -- NOTE: user autocommands can't be joined into one autocommand
     {
-      event = { 'User NeogitStatusRefresh' },
+      event = 'User',
+      pattern = 'NeogitStatusRefresh',
       command = function()
         utils.git_updates_refresh()
       end,
