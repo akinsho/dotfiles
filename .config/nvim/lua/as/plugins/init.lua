@@ -778,25 +778,25 @@ packer.startup {
 
     use {
       'lukas-reineke/headlines.nvim',
-      config = function()
+      setup = function()
         -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
+        -- NOTE: this must be set in the setup function or it will crash nvim...
         require('as.highlights').plugin(
           'Headlines',
-          { 'Headline1', { background = '#4e79a7', foreground = 'White' } },
-          { 'Headline2', { background = '#e15759', foreground = 'White' } },
-          { 'Headline3', { background = '#f28e2c', foreground = 'White' } }
+          { 'Headline1', { background = '#003c30', foreground = 'White' } },
+          { 'Headline2', { background = '#00441b', foreground = 'White' } },
+          { 'Headline3', { background = '#084081', foreground = 'White' } },
+          { 'Dash', { background = '#0b60a1', bold = true } }
         )
-        vim.fn.sign_define {
-          { name = 'Headline1', linehl = 'Headline1' },
-          { name = 'Headline2', linehl = 'Headline2' },
-          { name = 'Headline3', linehl = 'Headline3' },
-        }
+      end,
+      config = function()
         require('headlines').setup {
           markdown = {
-            headline_signs = { 'Headline1', 'Headline2', 'Headline3' },
+            headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
           },
-          vimwiki = {
-            headline_signs = { 'Headline1', 'Headline2', 'Headline3' },
+          yaml = {
+            dash_pattern = '^---+$',
+            dash_highlight = 'Dash',
           },
         }
       end,
