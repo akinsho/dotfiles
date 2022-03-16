@@ -5,10 +5,12 @@ end
 vim.g.do_filetype_lua = 1
 
 vim.filetype.add {
+  extension = {
+    lock = 'yaml',
+  },
   filename = {
     ['.gitignore'] = 'conf',
-    ['Podfile'] = 'ruby',
-    ['Podfile.lock'] = 'yaml',
+    Podfile = 'ruby',
   },
   pattern = {
     ['*.gradle'] = 'groovy',
