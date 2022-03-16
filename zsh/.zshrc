@@ -416,6 +416,18 @@ if exists zoxide; then
 fi
 
 #-------------------------------------------------------------------------------
+#               PYENV
+#-------------------------------------------------------------------------------
+# NOTE: this is loaded after home brew as it was installed via homebrew and will
+# otherwise not exist if homebrew does not
+if exists pyenv; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
+
+#-------------------------------------------------------------------------------
 #               Mappings
 #-------------------------------------------------------------------------------
 export KEYTIMEOUT=1
