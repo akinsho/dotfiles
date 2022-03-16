@@ -25,19 +25,11 @@ return function()
     api.nvim_feedkeys(t(key), mode or '', true)
   end
 
-  local function get_luasnip()
-    local ok, luasnip = as.safe_require('luasnip', { silent = true })
-    if not ok then
-      return nil
-    end
-    return luasnip
-  end
-
   local function tab(fallback)
-    local luasnip = get_luasnip()
+    local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
-    elseif luasnip and luasnip.expand_or_locally_jumpable() then
+    elseif ok and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
@@ -47,10 +39,10 @@ return function()
   end
 
   local function shift_tab(fallback)
-    local luasnip = get_luasnip()
+    local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_prev_item()
-    elseif luasnip and luasnip.jumpable(-1) then
+    elseif ok and luasnip.jumpable(-1) then
       luasnip.jump(-1)
     elseif api.nvim_get_mode().mode == 'c' then
       fallback()
