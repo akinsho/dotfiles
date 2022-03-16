@@ -638,6 +638,9 @@ packer.startup {
       'j-hui/fidget.nvim',
       config = function()
         require('fidget').setup {
+          text = {
+            spinner = 'moon',
+          },
           window = {
             blend = 0,
           },
