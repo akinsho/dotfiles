@@ -635,6 +635,17 @@ packer.startup {
     }
 
     use {
+      'j-hui/fidget.nvim',
+      config = function()
+        require('fidget').setup {
+          window = {
+            blend = 0,
+          },
+        }
+      end,
+    }
+
+    use {
       'rcarriga/nvim-notify',
       cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = function()
