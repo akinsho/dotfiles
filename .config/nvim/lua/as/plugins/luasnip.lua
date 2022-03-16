@@ -6,13 +6,13 @@ return function()
   local types = require 'luasnip.util.types'
   local fmt = require('luasnip.extras.fmt').fmt
 
-  local snippet = ls.snippet
   local f = ls.function_node
   local c = ls.choice_node
-  local text = ls.text_node
-  local insert = ls.insert_node
   local l = extras.lambda
+  local snippet = ls.snippet
+  local text = ls.text_node
   local match = extras.match
+  local insert = ls.insert_node
 
   ls.config.set_config {
     history = false,
@@ -65,6 +65,29 @@ return function()
         }),
         insert(0),
       }),
+      snippet(
+        { trig = 'hr', name = 'Header' },
+        fmt(
+          [[
+            {1}
+            {2} {3}
+            {1}
+            {4}
+          ]],
+          {
+            f(function()
+              local comment = string.format(vim.bo.commentstring:gsub(' ', '') or '#%s', '-')
+              local col = vim.bo.textwidth or 80
+              return comment .. string.rep('-', col - #comment)
+            end),
+            f(function()
+              return vim.bo.commentstring:gsub('%%s', '')
+            end),
+            insert(1, 'HEADER'),
+            insert(0),
+          }
+        )
+      ),
     },
     lua = {
       snippet(
