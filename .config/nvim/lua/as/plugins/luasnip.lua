@@ -7,8 +7,9 @@ return function()
   local fmt = require('luasnip.extras.fmt').fmt
 
   local snippet = ls.snippet
-  local text = ls.text_node
   local f = ls.function_node
+  local c = ls.choice_node
+  local text = ls.text_node
   local insert = ls.insert_node
   local l = extras.lambda
   local match = extras.match
@@ -54,6 +55,17 @@ return function()
   end)
 
   ls.snippets = {
+    all = {
+      snippet({ trig = 'td', name = 'TODO' }, {
+        c(1, {
+          text 'TODO: ',
+          text 'FIXME: ',
+          text 'HACK: ',
+          text 'BUG: ',
+        }),
+        insert(0),
+      }),
+    },
     lua = {
       snippet(
         {
