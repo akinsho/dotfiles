@@ -22,6 +22,7 @@
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [alias]
+  sc = smart-checkout
   pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; } ; f"
   fix='$EDITOR `git diff --name-only | uniq`'
   # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
