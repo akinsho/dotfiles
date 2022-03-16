@@ -537,7 +537,13 @@ packer.startup {
     -- NOTE: 'edluffy/specs.nvim' is an alternative
     -- except it doesn't play nicely with telescope
     -- showing duplicate beacons and isn't well maintained
-    use 'DanilaMihailov/beacon.nvim'
+    use {
+      'DanilaMihailov/beacon.nvim',
+      setup = function()
+        vim.g.beacon_ignore_buffers = { [[\w*git*\w]], 'nofile' }
+        vim.g.beacon_ignore_filetypes = { 'TelescopePrompt', 'NeogitStatus', 'NeogitPopup' }
+      end,
+    }
 
     use {
       'monaqa/dial.nvim',
