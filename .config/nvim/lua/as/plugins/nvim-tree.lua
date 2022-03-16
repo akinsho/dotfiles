@@ -43,6 +43,14 @@ return function()
         { key = 'cd', cb = action 'cd' },
       },
     },
+    git = {
+      ignore = false,
+    },
+    actions = {
+      open_file = {
+        resize_window = false,
+      },
+    },
     diagnostics = {
       enable = true,
     },
