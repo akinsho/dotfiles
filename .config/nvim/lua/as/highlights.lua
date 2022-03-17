@@ -165,7 +165,6 @@ local function general_overrides()
   local hint_line = M.alter_color(L.hint, -80)
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
-  local info_line = M.alter_color(L.info, -80)
   M.all {
     { 'mkdLineBreak', { link = 'NONE' } },
     -----------------------------------------------------------------------------//
@@ -255,7 +254,6 @@ local function general_overrides()
     { 'DiagnosticSignHintLine', { background = hint_line } },
     { 'DiagnosticSignErrorLine', { background = error_line } },
     { 'DiagnosticSignWarnLine', { background = warn_line } },
-    { 'DiagnosticSignInfoLine', { background = info_line } },
     { 'DiagnosticSignWarn', { link = 'DiagnosticWarn' } },
     { 'DiagnosticSignInfo', { link = 'DiagnosticInfo' } },
     { 'DiagnosticSignHint', { link = 'DiagnosticHint' } },
