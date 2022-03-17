@@ -49,17 +49,30 @@ function M.config()
   -- DON'T automatically stop at exceptions
   -- dap.defaults.fallback.exception_breakpoints = {}
   -- NOTE: the window options can be set directly in this function
-  as.nnoremap('<localleader>dt', "<Cmd>lua require'dap'.repl.toggle()<CR>")
-  as.nnoremap('<localleader>dc', "<Cmd>lua require'dap'.continue()<CR>")
-  as.nnoremap('<localleader>de', "<Cmd>lua require'dap'.step_out()<CR>")
-  as.nnoremap('<localleader>di', "<Cmd>lua require'dap'.step_into()<CR>")
-  as.nnoremap('<localleader>do', "<Cmd>lua require'dap'.step_over()<CR>")
-  as.nnoremap('<localleader>dl', "<Cmd>lua require'dap'.run_last()<CR>")
-  as.nnoremap('<localleader>db', "<Cmd>lua require'dap'.toggle_breakpoint()<CR>")
-  as.nnoremap(
-    '<localleader>dB',
-    "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input 'Breakpoint condition: ')<CR>"
-  )
+  as.nnoremap('<localleader>dt', function()
+    require('dap').repl.toggle()
+  end)
+  as.nnoremap('<localleader>dc', function()
+    require('dap').continue()
+  end)
+  as.nnoremap('<localleader>de', function()
+    require('dap').step_out()
+  end)
+  as.nnoremap('<localleader>di', function()
+    require('dap').step_into()
+  end)
+  as.nnoremap('<localleader>do', function()
+    require('dap').step_over()
+  end)
+  as.nnoremap('<localleader>dl', function()
+    require('dap').run_last()
+  end)
+  as.nnoremap('<localleader>db', function()
+    require('dap').toggle_breakpoint()
+  end)
+  as.nnoremap('<localleader>dB', function()
+    require('dap').set_breakpoint(fn.input 'Breakpoint condition: ')
+  end)
 end
 
 return M
