@@ -141,16 +141,17 @@ return function()
       ),
     },
     dart = {
-      snippet({
-        trig = 'pr',
-        name = 'print',
-        dscr = 'print a variable optionally wrapping it with braces',
-      }, {
-        fmt([[print('{}:  ${{{}}}')]], {
+      snippet(
+        {
+          trig = 'pr',
+          name = 'print',
+          dscr = 'print a variable optionally wrapping it with braces',
+        },
+        fmt([[print('{}: ${}')]], {
           insert(1, { 'label' }),
           match(1, '%.', '{' .. l._1 .. '}', l._1),
-        }),
-      }),
+        })
+      ),
     },
   }
 
