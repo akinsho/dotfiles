@@ -754,6 +754,7 @@ packer.startup {
 
     use {
       'vhyrro/neorg',
+      -- tag = '*', FIXME: add tag once neorg reaches 0.1
       requires = { 'vhyrro/neorg-telescope' },
       config = function()
         as.nnoremap('<localleader>oc', '<Cmd>Neorg gtd capture<CR>')
