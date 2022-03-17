@@ -470,6 +470,9 @@ packer.startup {
 
     use {
       'stevearc/dressing.nvim',
+      -- NOTE: Defer loading till telescope is loaded
+      -- this implicitly loads telescope so needs to be delayed
+      after = 'telescope.nvim',
       config = function()
         require('as.highlights').plugin(
           'dressing',
@@ -481,7 +484,6 @@ packer.startup {
             winblend = 2,
           },
           select = {
-            winblend = 2,
             telescope = require('telescope.themes').get_cursor {
               layout_config = {
                 height = function(self, _, max_lines)
