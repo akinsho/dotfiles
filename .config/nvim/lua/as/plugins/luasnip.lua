@@ -16,8 +16,7 @@ return function()
 
   ls.config.set_config {
     history = false,
-    -- if you have dynamic snippets, it updates as you type
-    updateevents = 'TextChangedI',
+    updateevents = 'InsertLeave', -- NOTE: changing this to TextChanged causes formatting issues
     region_check_events = 'CursorMoved,CursorHold,InsertEnter',
     delete_check_events = 'InsertLeave',
     ext_opts = {

@@ -331,6 +331,8 @@ packer.startup {
       end,
     }
 
+    -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
+    -- causes formatting bugs on save when updateevents are TextChanged{I}
     use {
       'L3MON4D3/LuaSnip',
       event = 'InsertEnter',
