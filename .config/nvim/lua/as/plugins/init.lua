@@ -471,6 +471,10 @@ packer.startup {
     use {
       'stevearc/dressing.nvim',
       config = function()
+        require('as.highlights').plugin(
+          'dressing',
+          { 'FloatTitle', { inherit = 'Normal', bold = true } }
+        )
         require('dressing').setup {
           input = {
             insert_only = false,
@@ -478,14 +482,12 @@ packer.startup {
           },
           select = {
             winblend = 2,
-            telescope = {
-              theme = require('telescope.themes').get_cursor {
-                layout_config = {
-                  height = function(self, _, max_lines)
-                    local results = #self.finder.results
-                    return (results <= max_lines and results or max_lines - 10) + 4 -- 4 is the size of the window
-                  end,
-                },
+            telescope = require('telescope.themes').get_cursor {
+              layout_config = {
+                height = function(self, _, max_lines)
+                  local results = #self.finder.results
+                  return (results <= max_lines and results or max_lines - 10) + 4 -- 4 is the size of the window
+                end,
               },
             },
           },
