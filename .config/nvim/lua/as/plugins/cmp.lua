@@ -126,12 +126,19 @@ return function()
       { name = 'path' },
       { name = 'cmp_tabnine' },
       { name = 'spell' },
-      { name = 'neorg' },
-      { name = 'cmp_git' },
     }, {
       { name = 'buffer' },
     }),
   }
+
+  cmp.setup.filetype('norg', {
+    sources = cmp.config.sources({
+      { name = 'neorg' },
+    }, {
+      { name = 'buffer' },
+      { name = 'cmp_tabnine' },
+    }),
+  })
 
   cmp.setup.filetype('NeogitCommitMessage', {
     sources = cmp.config.sources({
