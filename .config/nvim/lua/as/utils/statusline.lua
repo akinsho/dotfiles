@@ -499,13 +499,16 @@ local function mode_highlight(mode)
   end
 end
 
+-- FIXME: operator pending mode doesn't show up
 function M.mode()
-  local current_mode = vim.fn.mode()
+  local current_mode = api.nvim_get_mode().mode
   local hl = mode_highlight(current_mode)
 
   local mode_map = {
     ['n'] = 'NORMAL',
-    ['no'] = 'N·OPERATOR PENDING ',
+    ['no'] = 'N·OPERATOR PENDING',
+    ['nov'] = 'N·OPERATOR BLOCK',
+    ['noV'] = 'N·OPERATOR LINE',
     ['v'] = 'VISUAL',
     ['V'] = 'V·LINE',
     [''] = 'V·BLOCK',
