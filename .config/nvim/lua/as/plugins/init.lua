@@ -1196,7 +1196,6 @@ packer.startup {
       'akinsho/pubspec-assist.nvim',
       local_path = 'personal',
       rocks = {
-        'semver',
         {
           'lyaml',
           server = 'http://rocks.moonscript.org',
