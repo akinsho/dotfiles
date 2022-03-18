@@ -47,7 +47,8 @@ return function()
     end
   end)
 
-  vim.keymap.set({ 's', 'i' }, '<c-k>', function()
+  -- <C-K> is easier to hit but swallows the digraph key
+  vim.keymap.set({ 's', 'i' }, '<c-b>', function()
     if ls.jumpable(-1) then
       ls.jump(-1)
     end
