@@ -852,6 +852,7 @@ packer.startup {
           yaml = {
             dash_pattern = '^---+$',
             dash_highlight = 'Dash',
+            dash_string = '-',
           },
         }
       end,
