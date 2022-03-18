@@ -564,6 +564,7 @@ packer.startup {
 
     use {
       'edluffy/specs.nvim',
+      opt = true,
       config = function()
         -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
         local specs = require 'specs'
