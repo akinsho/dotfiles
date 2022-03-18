@@ -149,11 +149,7 @@ function _G.__statusline()
   ----------------------------------------------------------------------------//
   local plain = utils.is_plain(ctx)
   local file_modified = utils.modified(ctx, '●')
-  local inactive = vim.api.nvim_get_current_win() ~= curwin
   local focused = vim.g.vim_in_focus or true
-  if inactive or not focused then
-    return string.rep('─', available_space)
-  end
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
@@ -178,7 +174,7 @@ function _G.__statusline()
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
-  if plain then
+  if plain or not focused then
     add({ readonly_item, 1 }, { dir_item, 3 }, { parent_item, 2 }, { file_item, 0 })
     return display(statusline, available_space)
   end

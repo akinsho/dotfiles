@@ -31,7 +31,6 @@ vim.opt.eadirection = 'hor'
 -- do not use split or vsplit to ensure we don't open any new windows
 vim.o.switchbuf = 'useopen,uselast'
 vim.opt.fillchars = {
-  vert = '▕', -- alternatives │
   fold = ' ',
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
@@ -182,7 +181,7 @@ vim.opt.completeopt = { 'menuone', 'noselect' }
 vim.opt.hlsearch = false
 vim.opt.autowriteall = true -- automatically :write before running commands and changing files
 vim.opt.clipboard = { 'unnamedplus' }
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.opt.guifont = 'Fira Code Regular Nerd Font Complete Mono:h14'
 -----------------------------------------------------------------------------//
