@@ -22,8 +22,10 @@ function M.config()
   local dap = require 'dap'
   local fn = vim.fn
 
-  fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
-  fn.sign_define('DapStopped', { text = '🟢', texthl = '', linehl = '', numhl = '' })
+  fn.sign_define {
+    { name = 'DapBreakpoint', text = '🛑', texthl = '', linehl = '', numhl = '' },
+    { name = 'DapStopped', text = '🟢', texthl = '', linehl = '', numhl = '' },
+  }
 
   dap.configurations.lua = {
     {
@@ -49,8 +51,9 @@ function M.config()
   -- DON'T automatically stop at exceptions
   -- dap.defaults.fallback.exception_breakpoints = {}
   -- NOTE: the window options can be set directly in this function
+
   as.nnoremap('<localleader>dt', function()
-    require('dap').repl.toggle()
+    require('dap').repl.toggle(nil, 'botright split')
   end)
   as.nnoremap('<localleader>dc', function()
     require('dap').continue()
