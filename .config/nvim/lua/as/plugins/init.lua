@@ -556,6 +556,7 @@ packer.startup {
           bookmark_0 = {
             sign = '⚑',
             virt_text = 'bookmarks',
+            builtin_marks = { '.' },
           },
         }
       end,
