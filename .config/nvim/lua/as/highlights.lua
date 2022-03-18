@@ -166,6 +166,8 @@ local function general_overrides()
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
   M.all {
+    { 'VertSplit', { background = 'NONE', foreground = M.get_hl('NonText', 'fg') } },
+    { 'WinSeparator', { background = 'NONE', foreground = M.get_hl('NonText', 'fg') } },
     { 'mkdLineBreak', { link = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- Commandline
@@ -274,6 +276,7 @@ local function set_sidebar_highlight()
     { 'PanelBackground', { background = bg_color } },
     { 'PanelHeading', { background = bg_color, bold = true } },
     { 'PanelVertSplit', { foreground = split_color, background = bg_color } },
+    { 'PanelWinSeparator', { foreground = split_color, background = bg_color } },
     { 'PanelStNC', { background = bg_color, foreground = split_color } },
     { 'PanelSt', { background = st_color } },
   }
