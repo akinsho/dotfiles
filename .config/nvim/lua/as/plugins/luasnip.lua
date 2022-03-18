@@ -16,7 +16,6 @@ return function()
 
   ls.config.set_config {
     history = false,
-    updateevents = 'InsertLeave', -- NOTE: changing this to TextChanged causes formatting issues
     region_check_events = 'CursorMoved,CursorHold,InsertEnter',
     delete_check_events = 'InsertLeave',
     ext_opts = {
