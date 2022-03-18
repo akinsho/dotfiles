@@ -35,7 +35,7 @@ return function()
   }
 
   -- <c-l> is selecting within a list of options.
-  vim.keymap.set('i', '<c-l>', function()
+  vim.keymap.set({ 's', 'i' }, '<c-l>', function()
     if ls.choice_active() then
       ls.change_choice(1)
     end
@@ -113,30 +113,33 @@ return function()
             "use {'author/plugin'}",
           },
         },
-        fmt(
-          [[
-          use {{"{}", config = function()
-            {}
-          end}}
-          ]],
-          {
-            d(1, function()
-              -- Get the author and URL in the clipboard and auto populate the author and project
-              local default = snippet('', { insert(1, 'author'), text '/', insert(2, 'plugin') })
-              local clip = fn.getreg '*'
-              if not vim.startswith(clip, 'https://github.com/') then
-                return default
+        fmt([[use {{"{}"{}}}]], {
+          d(1, function()
+            -- Get the author and URL in the clipboard and auto populate the author and project
+            local default = snippet('', { insert(1, 'author'), text '/', insert(2, 'plugin') })
+            local clip = fn.getreg '*'
+            if not vim.startswith(clip, 'https://github.com/') then
+              return default
+            end
+            local parts = vim.split(clip, '/')
+            if #parts < 2 then
+              return default
+            end
+            local author, project = parts[#parts - 1], parts[#parts]
+            return snippet('', { text(author .. '/' .. project) })
+          end),
+          c(2, {
+            fmt(
+              [[
+              , config = function()
+                require("{}").setup()
               end
-              local parts = vim.split(clip, '/')
-              if #parts < 2 then
-                return default
-              end
-              local author, project = parts[#parts - 1], parts[#parts]
-              return snippet('', { text(author .. '/' .. project) })
-            end),
-            insert(0),
-          }
-        )
+              ]],
+              { insert(1, 'module') }
+            ),
+            text '',
+          }),
+        })
       ),
     },
     dart = {
