@@ -7,6 +7,7 @@ return function()
   local fmt = require('luasnip.extras.fmt').fmt
 
   local f = ls.function_node
+  local d = ls.dynamic_node
   local c = ls.choice_node
   local l = extras.lambda
   local snippet = ls.snippet
@@ -119,9 +120,9 @@ return function()
           end}}
           ]],
           {
-            f(function()
+            d(1, function()
               -- Get the author and URL in the clipboard and auto populate the author and project
-              local default = 'author/plugin'
+              local default = snippet('', { insert(1, 'author'), text '/', insert(2, 'plugin') })
               local clip = fn.getreg '*'
               if not vim.startswith(clip, 'https://github.com/') then
                 return default
@@ -131,7 +132,7 @@ return function()
                 return default
               end
               local author, project = parts[#parts - 1], parts[#parts]
-              return author .. '/' .. project
+              return snippet('', { text(author .. '/' .. project) })
             end),
             insert(0),
           }
