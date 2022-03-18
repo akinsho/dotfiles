@@ -459,8 +459,10 @@ packer.startup {
           excluded_filetypes = {
             'packer',
             'TelescopePrompt',
+            'NvimTree',
           },
           excluded_buftypes = {
+            'nofile',
             'terminal',
             'prompt',
           },
