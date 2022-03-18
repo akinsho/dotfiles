@@ -287,10 +287,9 @@ end
 
 local sidebar_fts = {
   'packer',
-  'dap-repl',
   'flutterToolsOutline',
   'undotree',
-  'dapui_*',
+  'dap-repl',
 }
 
 local function on_sidebar_enter()
