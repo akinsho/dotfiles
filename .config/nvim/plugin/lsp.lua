@@ -16,42 +16,33 @@ end
 -----------------------------------------------------------------------------//
 local command = as.command
 
-command {
-  'LspLog',
-  function()
-    vim.cmd('edit ' .. vim.lsp.get_log_path())
-  end,
-}
+command('LspLog', function()
+  vim.cmd('edit ' .. vim.lsp.get_log_path())
+end)
 
-command {
-  'LspFormat',
-  function()
-    vim.lsp.buf.formatting_sync(nil, 1000)
-  end,
-}
+command('LspFormat', function()
+  vim.lsp.buf.formatting_sync(nil, 1000)
+end)
 
-command {
-  'LspDiagnostics',
-  function()
-    vim.diagnostic.setqflist { open = false }
-    as.toggle_list 'quickfix'
-    if as.is_vim_list_open() then
-      as.augroup('LspDiagnosticUpdate', {
-        {
-          event = { 'DiagnosticChanged' },
-          pattern = { '*' },
-          command = function()
-            if as.is_vim_list_open() then
-              as.toggle_list 'quickfix'
-            end
-          end,
-        },
-      })
-    elseif fn.exists '#LspDiagnosticUpdate' > 0 then
-      vim.cmd 'autocmd! LspDiagnosticUpdate'
-    end
-  end,
-}
+command('LspDiagnostics', function()
+  vim.diagnostic.setqflist { open = false }
+  as.toggle_list 'quickfix'
+  if as.is_vim_list_open() then
+    as.augroup('LspDiagnosticUpdate', {
+      {
+        event = { 'DiagnosticChanged' },
+        pattern = { '*' },
+        command = function()
+          if as.is_vim_list_open() then
+            as.toggle_list 'quickfix'
+          end
+        end,
+      },
+    })
+  elseif fn.exists '#LspDiagnosticUpdate' > 0 then
+    vim.cmd 'autocmd! LspDiagnosticUpdate'
+  end
+end)
 as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostics')
 
 -----------------------------------------------------------------------------//

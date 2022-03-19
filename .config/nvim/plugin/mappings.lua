@@ -433,51 +433,36 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-command {
-  'ToggleBackground',
-  function()
-    vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
-  end,
-}
+command('ToggleBackground', function()
+  vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+end)
 ------------------------------------------------------------------------------
-command { 'Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
-command {
-  'ReloadModule',
-  function(args)
-    require('plenary.reload').reload_module(args)
-  end,
+command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
+command('ReloadModule', function(args)
+  require('plenary.reload').reload_module(args)
+end, {
   nargs = 1,
-}
-command {
-  'TabMessage',
-  [[call utils#tab_message(<q-args>)]],
-  nargs = '+',
-  types = { '-complete=command' },
-}
+})
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
 -- selection placing into the black hole register
-command {
-  'MoveWrite',
-  [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]],
-  types = { '-bang', '-range', '-complete=file' },
+command('MoveWrite', [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]], {
   nargs = 1,
-}
-command {
-  'MoveAppend',
-  [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]],
-  types = { '-bang', '-range', '-complete=file' },
+  bang = true,
+  range = true,
+  complete = 'file',
+})
+command('MoveAppend', [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]], {
   nargs = 1,
-}
-command { 'AutoResize', [[call utils#auto_resize(<args>)]], { '-nargs=?' } }
+  bang = true,
+  range = true,
+  complete = 'file',
+})
+command('AutoResize', [[call utils#auto_resize(<args>)]], { nargs = '?' })
 
-command {
-  'LuaInvalidate',
-  function(pattern)
-    require('as.utils').invalidate(pattern, true)
-  end,
-  nargs = 1,
-}
+command('LuaInvalidate', function(pattern)
+  require('as.utils').invalidate(pattern, true)
+end, { nargs = 1 })
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//

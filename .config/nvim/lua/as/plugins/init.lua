@@ -1299,12 +1299,9 @@ packer.startup {
           on_open = float_handler,
         }
 
-        as.command {
-          'Htop',
-          function()
-            htop:toggle()
-          end,
-        }
+        as.command('Htop', function()
+          htop:toggle()
+        end)
 
         require('which-key').register {
           ['<leader>lg'] = {
@@ -1352,20 +1349,14 @@ packer.startup {
   },
 }
 
-as.command {
-  'PackerCompiledEdit',
-  function()
-    vim.cmd(fmt('edit %s', PACKER_COMPILED_PATH))
-  end,
-}
+as.command('PackerCompiledEdit', function()
+  vim.cmd(fmt('edit %s', PACKER_COMPILED_PATH))
+end)
 
-as.command {
-  'PackerCompiledDelete',
-  function()
-    vim.fn.delete(PACKER_COMPILED_PATH)
-    packer_notify(fmt('Deleted %s', PACKER_COMPILED_PATH))
-  end,
-}
+as.command('PackerCompiledDelete', function()
+  vim.fn.delete(PACKER_COMPILED_PATH)
+  packer_notify(fmt('Deleted %s', PACKER_COMPILED_PATH))
+end)
 
 if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then
   as.source(PACKER_COMPILED_PATH)

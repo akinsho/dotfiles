@@ -56,17 +56,14 @@ function M.setup()
 end
 
 function M.config()
-  as.command {
-    'CloseVimWikis',
-    function()
-      local bufs = vim.fn.getbufinfo { buflisted = true }
-      for _, buf in ipairs(bufs) do
-        if vim.bo[buf.bufnr].filetype == 'vimwiki' then
-          vim.api.nvim_buf_delete(buf.bufnr, { force = true })
-        end
+  as.command('CloseVimWikis', function()
+    local bufs = vim.fn.getbufinfo { buflisted = true }
+    for _, buf in ipairs(bufs) do
+      if vim.bo[buf.bufnr].filetype == 'vimwiki' then
+        vim.api.nvim_buf_delete(buf.bufnr, { force = true })
       end
-    end,
-  }
+    end
+  end)
 
   require('which-key').register({
     w = {

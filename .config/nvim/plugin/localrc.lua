@@ -108,4 +108,4 @@ as.augroup('LoadLocalInit', {
   },
 })
 
-as.command { 'LocalrcEdit', open }
+as.command('LocalrcEdit', open)
