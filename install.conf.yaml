@@ -15,6 +15,9 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zshrc: zsh/.zshrc
     ~/.zshenv: zsh/.zshenv
+    ~/.Brewfile:
+      if: "[ `uname` = Darwin ]"
+      path: macos/Brewfile
     ~/.zprofile: zsh/.zprofile
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage

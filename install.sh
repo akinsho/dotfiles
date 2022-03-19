@@ -78,7 +78,9 @@ fi
 install_missing_packages || echo "failed to install missing packages"
 
 # Clone my dotfiles repo into ~/.dotfiles/ if needed
-echo "dotfiles -------------------------------------------------"
+echo "---------------------------------------------------------"
+echo "dotfiles"
+echo "---------------------------------------------------------"
 
 export DOTFILES="$HOME/.dotfiles"
 
@@ -94,23 +96,19 @@ git submodule update --init --recursive
 
 cd "$HOME" || exit
 echo "---------------------------------------------------------"
-
 echo "You'll need to log out for this to take effect"
-
-echo "running macos defaults"
-echo "this may take a while.. as well"
 echo "---------------------------------------------------------"
 
 if [ "$(uname)" == "Darwin" ]; then
-  source "$DOTFILES/configs/.macos"
-
+echo "---------------------------------------------------------"
+echo "running macos defaults"
+echo "this may take a while.. as well"
+echo "---------------------------------------------------------"
+  source "$DOTFILES/configs/macos/install.sh"
   echo "Installing brew bundle"
   brew tap Homebrew/bundle
-
-  cd "$DOTFILES/.config/homebrew/" || echo "Couldn't get into Homebrew subdir"
-
-  brew bundle
-  echo "Installing Homebrew apps from brew file"
+  brew bundle --global
+  echo "Installing Homebrew apps from Brewfile"
 fi
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
@@ -123,15 +121,18 @@ curl -L https://git.io/n-install | bash
 # Install rust
 curl https://sh.rustup.rs -sSf | sh
 
-if exists cargo; then
-  cargo install stylua
-  cargo install git-delta
-  cargo install topgrade
-  # cargo install cargo-update # requires libopenssl-dev on ubuntu
+# These are handled by homebrew on macos
+if [ "$(uname)" == "Linux" ]
+  if exists cargo; then
+    cargo install stylua
+    cargo install git-delta
+    cargo install topgrade
+    # cargo install cargo-update # requires libopenssl-dev on ubuntu
 
   # install ripgrep via cargo in case it failed via apt or brew
   if ! exists rg; then
     cargo install ripgrep
+  fi
   fi
 fi
 

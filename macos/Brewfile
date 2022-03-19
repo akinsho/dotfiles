@@ -57,8 +57,12 @@ cask "slack"
 cask "spotify"
 cask "vlc"
 cask "webtorrent"
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
+mas "Amphetamine", id: 937984704
+mas "Dropover", id: 1355679052
+mas "Flow", id: 1423210932
+mas "Hand Mirror", id: 1502839586
 mas "Pages", id: 409201541
+mas "Prime Video", id: 545519333
+mas "Spark", id: 1176895641
+mas "Todoist", id: 585829637
 mas "Xcode", id: 497799835
