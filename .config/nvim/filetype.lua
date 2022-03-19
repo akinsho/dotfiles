@@ -11,6 +11,7 @@ vim.filetype.add {
   filename = {
     ['.gitignore'] = 'conf',
     Podfile = 'ruby',
+    Brewfile = 'ruby',
   },
   pattern = {
     ['*.gradle'] = 'groovy',

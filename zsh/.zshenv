@@ -118,3 +118,5 @@ export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # Don't open FZF in a separate split in tmux
 export FZF_TMUX=0
+
+export HOMEBREW_BUNDLE_FILE="$DOTFILES/.config/homebrew/Brewfile"
