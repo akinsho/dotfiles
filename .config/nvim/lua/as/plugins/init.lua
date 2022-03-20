@@ -1270,7 +1270,7 @@ packer.startup {
         require('toggleterm').setup {
           open_mapping = [[<c-\>]],
           shade_filetypes = { 'none' },
-          direction = 'vertical',
+          direction = 'horizontal',
           insert_mappings = false,
           start_in_insert = true,
           float_opts = { border = 'curved', winblend = 3 },
