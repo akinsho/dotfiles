@@ -488,9 +488,12 @@ packer.startup {
           select = {
             telescope = require('telescope.themes').get_cursor {
               layout_config = {
-                height = function(self, _, max_lines)
+                height = function(self, _, _)
                   local results = #self.finder.results
-                  return (results <= max_lines and results or max_lines - 10) + 4 -- 4 is the size of the window
+                  local tabline, statusline = 1, 1
+                  local PADDING = 4 -- NOTE: this represents the size of the telescope window
+                  local LIMIT = math.floor((vim.o.lines - tabline - statusline) / 2)
+                  return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
                 end,
               },
             },
