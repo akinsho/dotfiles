@@ -805,13 +805,13 @@ packer.startup {
         require('neorg').setup {
           load = {
             ['core.defaults'] = {},
-            -- TODO: cannot unmap <c-s> and segfaults, raise an issue
             ['core.integrations.telescope'] = {},
             ['core.keybinds'] = {
               config = {
                 default_keybinds = true,
                 neorg_leader = '<localleader>',
                 hook = function(keybinds)
+                  keybinds.unmap('norg', 'n', '<C-s>')
                   keybinds.map_event(
                     'norg',
                     'n',
