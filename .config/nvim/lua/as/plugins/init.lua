@@ -679,7 +679,7 @@ packer.startup {
     }
 
     use {
-      utils.dev 'contributing/fidget.nvim',
+      'j-hui/fidget.nvim',
       local_path = 'contributing',
       config = function()
         require('fidget').setup {
