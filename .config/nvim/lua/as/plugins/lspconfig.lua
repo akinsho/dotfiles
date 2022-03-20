@@ -66,11 +66,11 @@ local function setup_mappings(client)
   local maps = {
     n = {
       ['<leader>rf'] = { format, 'lsp: format buffer' },
-      ['gi'] = 'lsp: implementation',
-      ['gd'] = { vim.lsp.buf.definition, 'lsp: definition' },
-      ['gr'] = { vim.lsp.buf.references, 'lsp: references' },
-      ['gI'] = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
-      ['K'] = { vim.lsp.buf.hover, 'lsp: hover' },
+      gi = 'lsp: implementation',
+      gd = { vim.lsp.buf.definition, 'lsp: definition' },
+      gr = { vim.lsp.buf.references, 'lsp: references' },
+      gI = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
+      K = { vim.lsp.buf.hover, 'lsp: hover' },
     },
     x = {},
   }
