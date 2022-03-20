@@ -21,20 +21,14 @@ return function()
     unpack(kind_hls)
   )
 
-  local function feed(key, mode)
-    api.nvim_feedkeys(t(key), mode or '', true)
-  end
-
   local function tab(fallback)
     local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
-    elseif api.nvim_get_mode().mode == 'c' then
-      fallback()
     else
-      feed '<Plug>(Tabout)'
+      fallback()
     end
   end
 
@@ -44,10 +38,8 @@ return function()
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then
       luasnip.jump(-1)
-    elseif api.nvim_get_mode().mode == 'c' then
-      fallback()
     else
-      feed '<Plug>(Tabout)'
+      fallback()
     end
   end
 
