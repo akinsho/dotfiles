@@ -31,6 +31,7 @@ return function()
       c = ls.choice_node,
       d = ls.dynamic_node,
       i = ls.insert_node,
+      l = extras.lamda,
       snippet = ls.snippet,
     },
   }
