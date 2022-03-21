@@ -30,20 +30,11 @@ return function()
     return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
   end
 
-  local function sort_by_mtime(a, b)
-    local astat = vim.loop.fs_stat(a.path)
-    local bstat = vim.loop.fs_stat(b.path)
-    local mod_a = astat and astat.mtime.sec or 0
-    local mod_b = bstat and bstat.mtime.sec or 0
-    return mod_a > mod_b
-  end
-
   local groups = require 'bufferline.groups'
 
   require('bufferline').setup {
     options = {
       mode = 'buffers', -- tabs
-      sort_by = sort_by_mtime,
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
       ---based on https://github.com/kovidgoyal/kitty/issues/957
