@@ -276,7 +276,7 @@ packer.startup {
           fix_pos = false,
           auto_close_after = 15, -- close after 15 seconds
           hint_enable = false,
-          handler_opts = { border = 'rounded' },
+          handler_opts = { border = as.style.border.line },
         }
       end,
     }
@@ -921,7 +921,7 @@ packer.startup {
       local_path = 'personal',
       config = function()
         require('flutter-tools').setup {
-          ui = { border = 'rounded' },
+          ui = { border = as.style.border.line },
           debugger = {
             enabled = true,
             run_via_dap = true,
@@ -1352,7 +1352,7 @@ packer.startup {
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
-      prompt_border = 'rounded',
+      prompt_border = as.style.border.line,
       open_cmd = 'silent topleft 65vnew',
     },
     git = {

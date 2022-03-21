@@ -42,6 +42,18 @@ do
       info = '',
       hint = '',
     },
+    border = {
+      line = {
+        { '🭽', 'FloatBorder' },
+        { '▔', 'FloatBorder' },
+        { '🭾', 'FloatBorder' },
+        { '▕', 'FloatBorder' },
+        { '🭿', 'FloatBorder' },
+        { '▁', 'FloatBorder' },
+        { '🭼', 'FloatBorder' },
+        { '▏', 'FloatBorder' },
+      },
+    },
     lsp = {
       colors = {
         error = palette.pale_red,

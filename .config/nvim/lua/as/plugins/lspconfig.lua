@@ -1,5 +1,6 @@
 as.lsp = {}
 
+local line_border = as.style.border.line
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -79,7 +80,7 @@ local function setup_mappings(client)
     function()
       vim.diagnostic.goto_prev {
         float = {
-          border = 'rounded',
+          border = line_border,
           focusable = false,
           source = 'always',
         },
@@ -91,7 +92,7 @@ local function setup_mappings(client)
     function()
       vim.diagnostic.goto_next {
         float = {
-          border = 'rounded',
+          border = line_border,
           focusable = false,
           source = 'always',
         },

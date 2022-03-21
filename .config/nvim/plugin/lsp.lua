@@ -6,6 +6,7 @@ local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
 local icons = as.style.icons
+local line_border = as.style.border.line
 
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(L.DEBUG)
@@ -111,11 +112,11 @@ local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 lsp.handlers['textDocument/hover'] = lsp.with(
   lsp.handlers.hover,
-  { border = 'rounded', max_width = max_width, max_height = max_height }
+  { border = line_border, max_width = max_width, max_height = max_height }
 )
 
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
-  border = 'rounded',
+  border = line_border,
   max_width = max_width,
   max_height = max_height,
 })

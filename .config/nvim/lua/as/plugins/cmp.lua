@@ -1,8 +1,8 @@
 return function()
-  local api = vim.api
   local cmp = require 'cmp'
   local h = require 'as.highlights'
   local t = as.replace_termcodes
+  local line_border = as.style.border.line
 
   local keyword_fg = h.get_hl('Keyword', 'fg')
 
@@ -13,6 +13,7 @@ return function()
 
   h.plugin(
     'Cmp',
+    { 'CmpBorderedWindow_Normal', { link = 'NormalFloat' } },
     { 'CmpItemAbbr', { foreground = 'fg', background = 'NONE', italic = false, bold = false } },
     { 'CmpItemMenu', { inherit = 'NonText', italic = false, bold = false } },
     { 'CmpItemAbbrMatch', { foreground = keyword_fg } },
@@ -47,10 +48,10 @@ return function()
     window = {
       completion = {
         -- TODO: consider 'shadow', and tweak the winhighlight
-        border = 'rounded',
+        border = line_border,
       },
       documentation = {
-        border = 'rounded',
+        border = line_border,
       },
     },
     experimental = {
@@ -110,7 +111,7 @@ return function()
       end,
     },
     documentation = {
-      border = 'rounded',
+      border = line_border,
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
