@@ -970,7 +970,6 @@ packer.startup {
     use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate',
-      event = 'BufReadPre',
       config = conf 'treesitter',
       local_path = 'contributing',
       wants = { 'null-ls.nvim', 'lua-dev.nvim' },
