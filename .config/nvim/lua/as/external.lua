@@ -61,7 +61,7 @@ function M.title_string()
   if not hl then
     return (icon or '') .. ' '
   end
-  local has_tmux = os.getenv 'TMUX'
+  local has_tmux = vim.env.TMUX ~= nil
   return has_tmux and fmt('%s #[fg=%s]%s ', dir, H.get_hl(hl, 'fg'), icon) or dir .. ' ' .. icon
 end
 
