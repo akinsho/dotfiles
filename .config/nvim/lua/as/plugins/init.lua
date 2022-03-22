@@ -684,6 +684,21 @@ packer.startup {
     }
 
     use {
+      'danymat/neogen',
+      setup = function()
+        require('which-key').register {
+          ['<localleader>nc'] = 'comment: generate',
+        }
+      end,
+      keys = { '<localleader>nc' },
+      requires = 'nvim-treesitter/nvim-treesitter',
+      config = function()
+        require('neogen').setup { snippet_engine = 'luasnip' }
+        as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
+      end,
+    }
+
+    use {
       'j-hui/fidget.nvim',
       local_path = 'contributing',
       config = function()
