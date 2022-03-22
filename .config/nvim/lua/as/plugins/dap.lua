@@ -23,7 +23,7 @@ function M.config()
   local fn = vim.fn
 
   fn.sign_define {
-    { name = 'DapBreakpoint', text = '🛑', texthl = '', linehl = '', numhl = '' },
+    { name = 'DapBreakpoint', text = as.style.icons.bug, texthl = '', linehl = '', numhl = '' },
     { name = 'DapStopped', text = '🟢', texthl = '', linehl = '', numhl = '' },
   }
 

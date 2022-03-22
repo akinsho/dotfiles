@@ -41,6 +41,9 @@ do
       warn = '',
       info = '',
       hint = '',
+      bug = '',
+      question = '',
+
     },
     border = {
       line = {
