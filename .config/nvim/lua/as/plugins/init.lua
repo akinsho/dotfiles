@@ -544,6 +544,13 @@ packer.startup {
       end,
     }
 
+    use {
+      'simeji/winresizer',
+      setup = function()
+        vim.g.winresizer_start_key = '<leader>w'
+      end,
+    }
+
     -- prevent select and visual mode from overwriting the clipboard
     use {
       'kevinhwang91/nvim-hclipboard',
@@ -570,25 +577,6 @@ packer.startup {
             sign = '⚑',
             virt_text = 'bookmarks',
             builtin_marks = { '.' },
-          },
-        }
-      end,
-    }
-
-    use {
-      'edluffy/specs.nvim',
-      opt = true,
-      config = function()
-        -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
-        local specs = require 'specs'
-        specs.setup {
-          popup = {
-            delay_ms = 10,
-            inc_ms = 10,
-            blend = 10,
-            width = 50,
-            winhl = 'PmenuSbar',
-            resizer = specs.slide_resizer,
           },
         }
       end,
