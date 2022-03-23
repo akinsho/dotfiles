@@ -43,7 +43,7 @@ return function()
       set_env = { ['TERM'] = vim.env.TERM },
       borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       prompt_prefix = icons.misc.telescope .. ' ',
-      selection_caret = '» ',
+      selection_caret = icons.misc.chevron_right .. ' ',
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,

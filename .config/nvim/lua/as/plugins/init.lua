@@ -456,16 +456,8 @@ packer.startup {
             color = require('as.highlights').get_hl('PmenuSbar', 'bg'),
           },
           -- NOTE: If telescope is not explicitly excluded this garbles input into its prompt buffer
-          excluded_filetypes = {
-            'packer',
-            'TelescopePrompt',
-            'NvimTree',
-          },
-          excluded_buftypes = {
-            'nofile',
-            'terminal',
-            'prompt',
-          },
+          excluded_buftypes = { 'nofile', 'terminal', 'prompt' },
+          excluded_filetypes = { 'packer', 'TelescopePrompt', 'NvimTree' },
         }
       end,
     }
