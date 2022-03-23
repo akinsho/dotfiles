@@ -807,6 +807,7 @@ packer.startup {
         as.nnoremap('<localleader>oc', '<Cmd>Neorg gtd capture<CR>')
         as.nnoremap('<localleader>ov', '<Cmd>Neorg gtd views<CR>')
         require('neorg').setup {
+          configure_parsers = true,
           load = {
             ['core.defaults'] = {},
             ['core.integrations.telescope'] = {},
