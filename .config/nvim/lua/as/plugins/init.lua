@@ -478,12 +478,13 @@ packer.startup {
       config = function()
         require('as.highlights').plugin(
           'dressing',
-          { 'FloatTitle', { inherit = 'Normal', bold = true } }
+          { 'FloatTitle', { inherit = 'Visual', bold = true } }
         )
         require('dressing').setup {
           input = {
             insert_only = false,
             winblend = 2,
+            border = as.style.border.line,
           },
           select = {
             telescope = require('telescope.themes').get_cursor {
