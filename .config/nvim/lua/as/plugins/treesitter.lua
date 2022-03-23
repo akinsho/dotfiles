@@ -1,4 +1,7 @@
 return function()
+  local parsers = require 'nvim-treesitter.parsers'
+  local rainbow_enabled = { 'dart' }
+
   require('nvim-treesitter.configs').setup {
     ensure_installed = 'maintained',
     highlight = {
@@ -62,7 +65,15 @@ return function()
     },
     rainbow = {
       enable = true,
-      disable = { 'lua', 'json', 'html' },
+      disable = vim.tbl_filter(function(p)
+        local disable = true
+        for _, lang in pairs(rainbow_enabled) do
+          if p == lang then
+            disable = false
+          end
+        end
+        return disable
+      end, parsers.available_parsers()),
       colors = {
         'royalblue3',
         'darkorange3',
