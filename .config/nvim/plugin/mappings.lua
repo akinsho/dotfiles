@@ -112,23 +112,8 @@ inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 ------------------------------------------------------------------------------
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
--- source: https://www.reddit.com/r/vim/comments/i8b5z1/is_there_a_more_elegant_way_to_move_lines_than_eg/
-if has 'mac' then
-  -- Allow using alt in macOS without enabling “Use Option as Meta key”
-  nmap('¬', '<a-l>')
-  nmap('˙', '<a-h>')
-  nmap('∆', '<a-j>')
-  nmap('˚', '<a-k>')
-  nnoremap('∆', '<cmd>move+<CR>==')
-  nnoremap('˚', '<cmd>move-2<CR>==')
-  xnoremap('˚', ":move-2<CR>='[gv")
-  xnoremap('∆', ":move'>+<CR>='[gv")
-else
-  nnoremap('<a-k>', '<cmd>move-2<CR>==')
-  nnoremap('<a-j>', '<cmd>move+<CR>==')
-  xnoremap('<a-k>', ":move-2<CR>='[gv")
-  xnoremap('<a-j>', ":move'>+<CR>='[gv")
-end
+nnoremap('<a-k>', '<cmd>move-2<CR>==')
+nnoremap('<a-j>', '<cmd>move+<CR>==')
 ----------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------
@@ -136,6 +121,7 @@ end
 nnoremap('<localleader>wh', '<C-W>t <C-W>K')
 -- Change two vertically split windows to horizontal splits
 nnoremap('<localleader>wv', '<C-W>t <C-W>H')
+----------------------------------------------------------------------------------
 -- equivalent to gf but opens the window in a vertical split
 -- vim doesn't have a native mapping for this as <C-w>f normally
 -- opens a horizontal split
