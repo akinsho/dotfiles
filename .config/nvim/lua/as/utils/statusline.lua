@@ -402,7 +402,7 @@ function M.diagnostic_info(context)
   if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
     return { error = {}, warning = {}, info = {} }
   end
-  local icons = as.style.icons
+  local icons = as.style.icons.lsp
   return {
     error = { count = get_count(buf, 'Error'), sign = icons.error },
     warning = { count = get_count(buf, 'Warning'), sign = icons.warn },

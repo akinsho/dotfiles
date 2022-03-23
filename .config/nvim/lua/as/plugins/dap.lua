@@ -21,9 +21,10 @@ end
 function M.config()
   local dap = require 'dap'
   local fn = vim.fn
+  local icons = as.style.icons
 
   fn.sign_define {
-    { name = 'DapBreakpoint', text = as.style.icons.bug, texthl = '', linehl = '', numhl = '' },
+    { name = 'DapBreakpoint', text = icons.misc.bug, texthl = '', linehl = '', numhl = '' },
     { name = 'DapStopped', text = '🟢', texthl = '', linehl = '', numhl = '' },
   }
 

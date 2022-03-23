@@ -5,7 +5,7 @@ local fmt = string.format
 local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
-local icons = as.style.icons
+local icons = as.style.icons.lsp
 local line_border = as.style.border.line
 
 if vim.env.DEVELOPING then

@@ -3,6 +3,7 @@ return function()
   local actions = require 'telescope.actions'
   local layout_actions = require 'telescope.actions.layout'
   local themes = require 'telescope.themes'
+  local icons = as.style.icons
 
   local H = require 'as.highlights'
   H.plugin(
@@ -41,7 +42,7 @@ return function()
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
       borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-      prompt_prefix = ' ',
+      prompt_prefix = icons.misc.telescope .. ' ',
       selection_caret = '» ',
       mappings = {
         i = {
