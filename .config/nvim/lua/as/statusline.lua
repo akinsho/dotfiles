@@ -10,6 +10,7 @@ local utils = require 'as.utils.statusline'
 local H = require 'as.highlights'
 
 local P = as.style.palette
+local icons = as.style.icons
 local M = {}
 
 local function colors()
@@ -148,7 +149,7 @@ function _G.__statusline()
   -- Modifiers
   ----------------------------------------------------------------------------//
   local plain = utils.is_plain(ctx)
-  local file_modified = utils.modified(ctx, '●')
+  local file_modified = utils.modified(ctx, icons.misc.circle)
   local focused = vim.g.vim_in_focus or true
   ----------------------------------------------------------------------------//
   -- Setup
@@ -216,7 +217,7 @@ function _G.__statusline()
     -- Local plugin dev indicator
     {
       item_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, 'StComment', {
-        prefix = '',
+        prefix = icons.misc.tools,
         padding = 'none',
         before = '  ',
         prefix_color = 'StWarning',
@@ -239,7 +240,7 @@ function _G.__statusline()
     { item(flutter.app_version, 'StMetadata'), 4 },
     { item(flutter.device and flutter.device.name or '', 'StMetadata'), 4 },
     { item(utils.lsp_client(), 'StMetadata'), 4 },
-    { item(utils.debugger(), 'StMetadata', { prefix = 'ﴫ' }), 4 },
+    { item(utils.debugger(), 'StMetadata', { prefix = icons.misc.bug }), 4 },
     {
       item_if(diagnostics.error.count, diagnostics.error, 'StError', {
         prefix = diagnostics.error.sign,
@@ -260,35 +261,39 @@ function _G.__statusline()
     },
     { item(notifications, 'StTitle'), 3 },
     -- Git Status
-    { item(status.head, 'StBlue', { prefix = '', prefix_color = 'StGit' }), 1 },
-    { item(status.changed, 'StTitle', { prefix = '', prefix_color = 'StWarning' }), 3 },
+    { item(status.head, 'StBlue', { prefix = icons.git.logo, prefix_color = 'StGit' }), 1 },
+    { item(status.changed, 'StTitle', { prefix = icons.git.mod, prefix_color = 'StWarning' }), 3 },
     {
       item(status.removed, 'StTitle', {
-        prefix = '', --[[  ]]
+        prefix = icons.git.remove,
         prefix_color = 'StError',
       }),
       3,
     },
     {
       item(status.added, 'StTitle', {
-        prefix = '', --[[]]
+        prefix = icons.git.add,
         prefix_color = 'StGreen',
       }),
       3,
     },
     {
-      item(
-        ahead,
-        'StTitle',
-        { prefix = '⇡', prefix_color = 'StGreen', after = behind > 0 and '' or ' ', before = '' }
-      ),
+      item(ahead, 'StTitle', {
+        prefix = icons.misc.up,
+        prefix_color = 'StGreen',
+        after = behind > 0 and '' or ' ',
+        before = '',
+      }),
       5,
     },
-    { item(behind, 'StTitle', { prefix = '⇣', prefix_color = 'StNumber', after = ' ' }), 5 },
-    -- Current line number/total line number,  alternatives 
+    {
+      item(behind, 'StTitle', { prefix = icons.misc.down, prefix_color = 'StNumber', after = ' ' }),
+      5,
+    },
+    -- Current line number/total line number
     {
       utils.line_info {
-        prefix = 'ℓ',
+        prefix = icons.misc.line,
         prefix_color = 'StMetadataPrefix',
         current_hl = 'StTitle',
         total_hl = 'StComment',
@@ -299,7 +304,7 @@ function _G.__statusline()
     -- (Unexpected) Indentation
     {
       item_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, 'StTitle', {
-        prefix = ctx.expandtab and 'Ξ' or '⇥',
+        prefix = ctx.expandtab and icons.misc.indent or icons.misc.tab,
         prefix_color = 'StatusLine',
       }),
       6,
