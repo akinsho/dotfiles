@@ -123,10 +123,8 @@ function M.get_hl(grp, attr, fallback)
 end
 
 function M.clear_hl(name)
-  if not name then
-    return
-  end
-  vim.cmd(fmt('highlight clear %s', name))
+  assert(name, 'name is required to clear a highlight')
+  api.nvim_set_hl(0, name, {})
 end
 
 ---Apply a list of highlights
