@@ -192,16 +192,6 @@ local function general_overrides()
     { 'FoldColumn', { background = 'background' } },
     { 'Folded', { foreground = comment_fg, background = 'NONE', italic = true } },
     { 'TermCursor', { ctermfg = 'green', foreground = 'royalblue' } },
-    {
-      'IncSearch',
-      {
-        background = 'NONE',
-        foreground = 'LightGreen',
-        italic = true,
-        bold = true,
-        underline = true,
-      },
-    },
     -- Add undercurl to existing spellbad highlight
     { 'SpellBad', { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
     { 'SpellRare', { undercurl = true } },
