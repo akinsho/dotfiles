@@ -31,6 +31,9 @@ return function()
           ['ic'] = '@class.inner',
           ['aC'] = '@conditional.outer',
           ['iC'] = '@conditional.inner',
+          -- FIXME: this is unusable
+          -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/133 is resolved
+          -- ['ax'] = '@comment.outer',
         },
       },
       swap = {
