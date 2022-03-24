@@ -93,38 +93,9 @@ packer.startup {
       'folke/trouble.nvim',
       keys = { '<leader>ld' },
       cmd = { 'TroubleToggle' },
-      setup = function()
-        require('which-key').register {
-          ['<leader>l'] = {
-            d = 'trouble: toggle',
-            r = 'trouble: lsp references',
-          },
-          ['[d'] = 'trouble: next item',
-          [']d'] = 'trouble: previous item',
-        }
-      end,
       requires = 'nvim-web-devicons',
-      config = function()
-        local H = require 'as.highlights'
-        H.plugin(
-          'trouble',
-          { 'TroubleNormal', { link = 'PanelBackground' } },
-          { 'TroubleText', { link = 'PanelBackground' } },
-          { 'TroubleIndent', { link = 'PanelVertSplit' } },
-          { 'TroubleFoldIcon', { foreground = 'yellow', bold = true } },
-          { 'TroubleLocation', { foreground = H.get_hl('Comment', 'fg') } }
-        )
-        local trouble = require 'trouble'
-        as.nnoremap('<leader>ld', '<cmd>TroubleToggle workspace_diagnostics<CR>')
-        as.nnoremap('<leader>lr', '<cmd>TroubleToggle lsp_references<CR>')
-        as.nnoremap(']d', function()
-          trouble.previous { skip_groups = true, jump = true }
-        end)
-        as.nnoremap('[d', function()
-          trouble.next { skip_groups = true, jump = true }
-        end)
-        trouble.setup { auto_close = true, auto_preview = false }
-      end,
+      setup = conf('trouble').setup,
+      config = conf('trouble').config,
     }
 
     use {
@@ -231,33 +202,7 @@ packer.startup {
     use {
       'jose-elias-alvarez/null-ls.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
-      -- trigger loading after lspconfig has started the other servers
-      -- since there is otherwise a race condition and null-ls' setup would
-      -- have to be moved into lspconfig.lua otherwise
-      config = function()
-        local null_ls = require 'null-ls'
-        -- NOTE: this plugin will break if it's dependencies are not installed
-        null_ls.setup {
-          debounce = 150,
-          on_attach = as.lsp.on_attach,
-          sources = {
-            null_ls.builtins.code_actions.gitsigns,
-            null_ls.builtins.diagnostics.zsh,
-            null_ls.builtins.formatting.stylua.with {
-              condition = function(_utils)
-                return as.executable 'stylua'
-                  and _utils.root_has_file { 'stylua.toml', '.stylua.toml' }
-              end,
-            },
-            null_ls.builtins.formatting.prettier.with {
-              filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
-              condition = function()
-                return as.executable 'prettier'
-              end,
-            },
-          },
-        }
-      end,
+      config = conf 'null-ls',
     }
 
     use {
@@ -401,27 +346,7 @@ packer.startup {
         {
           'rcarriga/nvim-dap-ui',
           after = 'nvim-dap',
-          config = function()
-            require('dapui').setup()
-            as.nnoremap('<localleader>duc', function()
-              require('dapui').close()
-            end, 'dap-ui: close')
-            as.nnoremap('<localleader>dut', function()
-              require('dapui').toggle()
-            end, 'dap-ui: toggle')
-
-            -- NOTE: this opens dap UI automatically when dap starts
-            local dap = require 'dap'
-            -- dap.listeners.after.event_initialized['dapui_config'] = function()
-            --   dapui.open()
-            -- end
-            dap.listeners.before.event_terminated['dapui_config'] = function()
-              require('dapui').close()
-            end
-            dap.listeners.before.event_exited['dapui_config'] = function()
-              require('dapui').close()
-            end
-          end,
+          config = conf 'dapui',
         },
         {
           'theHamsta/nvim-dap-virtual-text',
@@ -566,47 +491,7 @@ packer.startup {
       end,
     }
 
-    use {
-      'monaqa/dial.nvim',
-      config = function()
-        local dial = require 'dial.map'
-        local augend = require 'dial.augend'
-        local map = vim.keymap.set
-        map('n', '<C-a>', dial.inc_normal(), { remap = false })
-        map('n', '<C-x>', dial.dec_normal(), { remap = false })
-        map('v', '<C-a>', dial.inc_visual(), { remap = false })
-        map('v', '<C-x>', dial.dec_visual(), { remap = false })
-        map('v', 'g<C-a>', dial.inc_gvisual(), { remap = false })
-        map('v', 'g<C-x>', dial.dec_gvisual(), { remap = false })
-        require('dial.config').augends:register_group {
-          -- default augends used when no group name is specified
-          default = {
-            augend.integer.alias.decimal,
-            augend.integer.alias.hex,
-            augend.date.alias['%Y/%m/%d'],
-            augend.constant.alias.bool,
-            augend.constant.new {
-              elements = { '&&', '||' },
-              word = false,
-              cyclic = true,
-            },
-          },
-          dep_files = {
-            augend.semver.alias.semver,
-          },
-        }
-
-        as.augroup('DialMaps', {
-          {
-            event = 'FileType',
-            pattern = { 'yaml', 'toml' },
-            command = function()
-              map('n', '<C-a>', require('dial.map').inc_normal 'dep_files', { remap = true })
-            end,
-          },
-        })
-      end,
-    }
+    use { 'monaqa/dial.nvim', config = conf 'dial' }
 
     use {
       'jghauser/fold-cycle.nvim',
@@ -788,7 +673,7 @@ packer.startup {
       'vhyrro/neorg',
       -- tag = '*', FIXME: add tag once neorg reaches 0.1
       requires = { 'vhyrro/neorg-telescope' },
-      config = conf('neorg'),
+      config = conf 'neorg',
     }
 
     use {
@@ -1120,43 +1005,7 @@ packer.startup {
     use {
       'phaazon/hop.nvim',
       keys = { { 'n', 's' }, 'f', 'F' },
-      config = function()
-        local hop = require 'hop'
-        -- remove h,j,k,l from hops list of keys
-        hop.setup { keys = 'etovxqpdygfbzcisuran' }
-        as.nnoremap('s', function()
-          hop.hint_char1 { multi_windows = true }
-        end)
-        -- NOTE: override F/f using hop motions
-        vim.keymap.set({ 'x', 'n' }, 'F', function()
-          hop.hint_char1 {
-            direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
-            current_line_only = true,
-            inclusive_jump = false,
-          }
-        end)
-        vim.keymap.set({ 'x', 'n' }, 'f', function()
-          hop.hint_char1 {
-            direction = require('hop.hint').HintDirection.AFTER_CURSOR,
-            current_line_only = true,
-            inclusive_jump = false,
-          }
-        end)
-        as.onoremap('F', function()
-          hop.hint_char1 {
-            direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
-            current_line_only = true,
-            inclusive_jump = true,
-          }
-        end)
-        as.onoremap('f', function()
-          hop.hint_char1 {
-            direction = require('hop.hint').HintDirection.AFTER_CURSOR,
-            current_line_only = true,
-            inclusive_jump = true,
-          }
-        end)
-      end,
+      config = conf 'hop',
     }
 
     -- }}}
