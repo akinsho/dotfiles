@@ -618,10 +618,12 @@ packer.startup {
     }
 
     use {
-      'arecarn/vim-fold-cycle',
+      'jghauser/fold-cycle.nvim',
       config = function()
-        vim.g.fold_cycle_default_mapping = 0
-        as.nmap('<BS>', '<Plug>(fold-cycle-close)')
+        require('fold-cycle').setup()
+        as.nnoremap('<BS>', function()
+          require('fold-cycle').open()
+        end)
       end,
     }
     use {
