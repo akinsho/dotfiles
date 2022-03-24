@@ -19,8 +19,8 @@ setlocal winhighlight=Normal:PanelBackground,SignColumn:PanelBackground,EndOfBuf
 "--------------------------------------------------------------------------------
 " Helper functions
 "--------------------------------------------------------------------------------
-nnoremap <silent><buffer>dd :call utils#qf_delete(bufnr())<CR>
-vnoremap <silent><buffer>d  :call utils#qf_delete(bufnr())<CR>
+nnoremap <silent><buffer>dd :lua as.qf.delete()<CR>
+vnoremap <silent><buffer>d  :lua as.qf.delete()<CR>
 "--------------------------------------------------------------------------------
 " Mappings
 "--------------------------------------------------------------------------------

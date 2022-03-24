@@ -1,7 +1,9 @@
 local fn = vim.fn
 local api = vim.api
 
-function as.qftf(info)
+as.qf = {}
+
+function as.qf.textfunc(info)
   local items
   local ret = {}
   if info.quickfix == 1 then
@@ -40,4 +42,30 @@ function as.qftf(info)
     table.insert(ret, str)
   end
   return ret
+end
+
+-- NOTE: we define this outside of our ftplugin/qf.vim
+-- since that is loaded on each run of our qf window
+-- this means that it would be recreated each time if
+-- not defined separately, so on replacing the quickfix
+-- we would recreate this function during it's execution
+-- source: https://vi.stackexchange.com/a/21255
+-- using range-aware function
+function as.qf.delete(bufnr)
+  bufnr = bufnr or api.nvim_get_current_buf()
+  local qfl = fn.getqflist()
+  local line = unpack(api.nvim_win_get_cursor(0))
+  if api.nvim_get_mode().mode == 'v' then
+    -- no need for filter() and such; just drop the items in range
+    local firstline = unpack(api.nvim_buf_get_mark(0, '<'))
+    local lastline = unpack(api.nvim_buf_get_mark(0, '>'))
+    fn.remove(qfl, firstline - 1, lastline - 1)
+  else
+    table.remove(qfl, line)
+  end
+  -- replace items in the current list, do not make a new copy of it;
+  -- this also preserves the list title
+  fn.setqflist({}, 'r', { items = qfl })
+  -- restore current line
+  fn.setpos('.', { bufnr, line, 1, 0 })
 end
