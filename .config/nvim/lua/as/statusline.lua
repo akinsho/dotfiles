@@ -209,7 +209,6 @@ function _G.__statusline()
     {
       item(utils.current_function(), 'StMetadata', {
         before = '  ',
-        prefix = '',
         prefix_color = 'StIdentifier',
       }),
       4,

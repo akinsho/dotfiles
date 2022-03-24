@@ -425,7 +425,10 @@ end
 ---The currently focused function
 ---@return string?
 function M.current_function()
-  return vim.b.lsp_current_function
+  local gps = require 'nvim-gps'
+  if gps.is_available() then
+    return gps.get_location()
+  end
 end
 
 function M.debugger()

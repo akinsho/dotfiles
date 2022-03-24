@@ -297,9 +297,7 @@ packer.startup {
           'petertriho/cmp-git',
           after = 'nvim-cmp',
           config = function()
-            require('cmp_git').setup {
-              filetypes = { 'gitcommit', 'NeogitCommitMessage' },
-            }
+            require('cmp_git').setup { filetypes = { 'gitcommit', 'NeogitCommitMessage' } }
           end,
         },
         { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
@@ -962,6 +960,13 @@ packer.startup {
     use 'dart-lang/dart-vim-plugin'
     use 'mtdl9/vim-log-highlighting'
     use 'fladson/vim-kitty'
+    use {
+      'SmiteshP/nvim-gps',
+      requires = 'nvim-treesitter/nvim-treesitter',
+      config = function()
+        require('nvim-gps').setup {}
+      end,
+    }
     -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{1
