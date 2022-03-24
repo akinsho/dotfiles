@@ -85,14 +85,6 @@ packer.startup {
       },
     }
 
-    use {
-      'mrjones2014/dash.nvim',
-      command = 'Dash',
-      module = 'dash',
-      run = 'make install',
-      after = 'telescope.nvim',
-    }
-
     use 'kyazdani42/nvim-web-devicons'
 
     use { 'folke/which-key.nvim', config = conf 'whichkey' }
