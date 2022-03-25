@@ -55,11 +55,17 @@ function as.qf.delete(bufnr)
   bufnr = bufnr or api.nvim_get_current_buf()
   local qfl = fn.getqflist()
   local line = unpack(api.nvim_win_get_cursor(0))
+  -- FIXME: get visual selection so this functionality can work in visual mode
   if api.nvim_get_mode().mode == 'v' then
-    -- no need for filter() and such; just drop the items in range
     local firstline = unpack(api.nvim_buf_get_mark(0, '<'))
     local lastline = unpack(api.nvim_buf_get_mark(0, '>'))
-    fn.remove(qfl, firstline - 1, lastline - 1)
+    local result = {}
+    for i, item in ipairs(qfl) do
+      if i < firstline or i > lastline then
+        table.insert(result, item)
+      end
+    end
+    qfl = result
   else
     table.remove(qfl, line)
   end
