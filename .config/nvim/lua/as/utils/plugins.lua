@@ -70,6 +70,7 @@ function M.with_local(spec)
     config = spec.config,
     setup = spec.setup,
     rocks = spec.rocks,
+    opt = spec.local_opt,
     as = fmt('local-%s', name),
     cond = is_contributing and M.developing or spec.local_cond,
     disable = M.is_work or spec.local_disable,
