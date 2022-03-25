@@ -6,17 +6,6 @@ function M.setup()
   local has_sync = fn.isdirectory(sync_dir) > 0
   local home = vim.env.HOME
 
-  require('which-key').register({
-    ['w'] = {
-      name = '+wiki',
-      i = 'wiki: index',
-      t = 'wiki: open index in tab',
-      w = 'wiki: open diary',
-    },
-  }, {
-    prefix = '<leader>',
-  })
-
   vim.g.wiki_path = has_sync and sync_dir .. '/wiki' or home .. '/wiki'
 
   vim.g.wiki = {
