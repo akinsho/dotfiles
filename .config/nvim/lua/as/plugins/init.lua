@@ -738,6 +738,15 @@ packer.startup {
         require('go').setup {
           gopls_cmd = { install_root_dir .. '/go/gopls' },
         }
+        as.augroup('Golang', {
+          {
+            event = { 'BufWritePre' },
+            pattern = { '*.go' },
+            command = function()
+              require('go.format').goimport()
+            end,
+          },
+        })
       end,
     }
 
