@@ -506,7 +506,15 @@ packer.startup {
       config = function()
         require('nvim-autopairs').setup {
           close_triple_quotes = true,
-          check_ts = false,
+          check_ts = true,
+          ts_config = {
+            lua = { 'string' },
+            dart = { 'string' },
+            javascript = { 'template_string' },
+          },
+          fast_wrap = {
+            map = '<c-e>',
+          },
         }
       end,
     }
