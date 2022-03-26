@@ -378,7 +378,7 @@ as.augroup('Utilities', {
   },
   { -- TODO: should this be done in ftplugin files
     event = { 'FileType' },
-    pattern = { 'lua', 'vim', 'go', 'dart', 'python', 'javascript', 'typescript', 'rust' },
+    pattern = { 'lua', 'vim', 'dart', 'python', 'javascript', 'typescript', 'rust' },
     command = 'setlocal spell',
   },
   {
