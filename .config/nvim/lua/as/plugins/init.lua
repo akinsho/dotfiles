@@ -724,8 +724,10 @@ packer.startup {
         local path = require 'nvim-lsp-installer.path'
         local install_root_dir = path.concat { vim.fn.stdpath 'data', 'lsp_servers' }
         require('go').setup {
-          goimport = 'goimport',
           gopls_cmd = { install_root_dir .. '/go/gopls' },
+          lsp_cfg = true,
+          lsp_gofumpt = true,
+          lsp_on_attach = as.lsp.on_attach,
         }
         as.augroup('Golang', {
           {
