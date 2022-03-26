@@ -467,29 +467,7 @@ packer.startup {
       end,
     }
 
-    use {
-      'chentau/marks.nvim',
-      config = function()
-        require('as.highlights').plugin('marks', { 'MarkSignHL', { foreground = 'Red' } })
-        require('which-key').register({
-          m = {
-            name = '+marks',
-            b = { '<Cmd>MarksListBuf<CR>', 'list buffer' },
-            g = { '<Cmd>MarksQFListGlobal<CR>', 'list global' },
-            ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'list bookmark' },
-          },
-        }, { prefix = '<leader>' })
-        require('marks').setup {
-          -- NOTE: Don't use a builtin marks as they add a sign column to *all* windows
-          -- regardless of if there is a valid sign in that window or not
-          excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
-          bookmark_0 = {
-            sign = '⚑',
-            virt_text = 'bookmarks',
-          },
-        }
-      end,
-    }
+    use { 'chentau/marks.nvim', config = conf 'marks' }
 
     use { 'monaqa/dial.nvim', config = conf 'dial' }
 
@@ -746,6 +724,7 @@ packer.startup {
         local path = require 'nvim-lsp-installer.path'
         local install_root_dir = path.concat { vim.fn.stdpath 'data', 'lsp_servers' }
         require('go').setup {
+          goimport = 'goimport',
           gopls_cmd = { install_root_dir .. '/go/gopls' },
         }
         as.augroup('Golang', {
@@ -753,7 +732,7 @@ packer.startup {
             event = { 'BufWritePre' },
             pattern = { '*.go' },
             command = function()
-              require('go.format').goimport()
+              require('go.format').gofmt()
             end,
           },
         })
