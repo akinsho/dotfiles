@@ -41,18 +41,6 @@ local function setup_autocommands(client, _)
       },
     })
   end
-  if client and client.resolved_capabilities.document_formatting then
-    -- format on save
-    as.augroup('LspFormat', {
-      {
-        event = { 'BufWritePre' },
-        buffer = 0,
-        command = function()
-          vim.lsp.buf.clear_references()
-        end,
-      },
-    })
-  end
 end
 
 -----------------------------------------------------------------------------//
