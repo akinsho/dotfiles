@@ -733,9 +733,7 @@ packer.startup {
           {
             event = { 'BufWritePre' },
             pattern = { '*.go' },
-            command = function()
-              require('go.format').gofmt()
-            end,
+            command = 'silent! lua require("go.format").goimport()',
           },
         })
       end,
