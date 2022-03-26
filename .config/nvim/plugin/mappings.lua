@@ -140,10 +140,8 @@ inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
 -- source: https://www.reddit.com/r/vim/comments/i8b5z1/is_there_a_more_elegant_way_to_move_lines_than_eg/
-if has 'mac' then
+if as.has 'mac' then
   -- Allow using alt in macOS without enabling “Use Option as Meta key”
-  nmap('¬', '<a-l>')
-  nmap('˙', '<a-h>')
   nmap('∆', '<a-j>')
   nmap('˚', '<a-k>')
   nnoremap('∆', '<cmd>move+<CR>==')
