@@ -168,7 +168,13 @@ end
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
-  gopls = true,
+  gopls = {
+    -- Disable formatting so `go.nvim` can handle it
+    on_attach = function(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
+      as.lsp.on_attach(client, bufnr)
+    end,
+  },
   bashls = true,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
@@ -216,7 +222,7 @@ function as.lsp.get_server_config(server)
   local conf_type = type(conf)
   local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
   config.flags = { debounce_text_changes = 500 }
-  config.on_attach = as.lsp.on_attach
+  config.on_attach = config.on_attach or as.lsp.on_attach
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
   if nvim_lsp_ok then
     cmp_nvim_lsp.update_capabilities(config.capabilities)
