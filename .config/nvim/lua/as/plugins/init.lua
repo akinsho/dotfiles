@@ -480,8 +480,9 @@ packer.startup {
           },
         }, { prefix = '<leader>' })
         require('marks').setup {
+          -- NOTE: Don't use a builtin marks as they add a sign column to *all* windows
+          -- regardless of if there is a valid sign in that window or not
           excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
-          builtin_marks = { "'" },
           bookmark_0 = {
             sign = '⚑',
             virt_text = 'bookmarks',
