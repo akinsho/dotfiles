@@ -239,7 +239,6 @@ packer.startup {
           end,
         },
         { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-        { 'tzachar/cmp-tabnine', run = './install.sh', after = 'nvim-cmp' },
       },
       config = conf 'cmp',
     }
@@ -438,7 +437,6 @@ packer.startup {
 
     use {
       'github/copilot.vim',
-      opt = true,
       config = function()
         vim.g.copilot_no_tab_map = true
         vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
