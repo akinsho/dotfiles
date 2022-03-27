@@ -128,9 +128,7 @@ function _G.__statusline()
   local curwin = vim.g.statusline_winid or 0
   local curbuf = vim.api.nvim_win_get_buf(curwin)
 
-  -- TODO: reduce the available space whenever we add
-  -- a component so we can use it to determine what to add
-  local available_space = vim.api.nvim_win_get_width(curwin)
+  local available_space = vim.o.columns
 
   local ctx = {
     bufnum = curbuf,
