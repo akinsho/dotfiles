@@ -1,6 +1,6 @@
----@diagnostic disable: undefined-global
 local fn = vim.fn
 
+---@diagnostic disable: undefined-global
 return {
   snippet(
     {
