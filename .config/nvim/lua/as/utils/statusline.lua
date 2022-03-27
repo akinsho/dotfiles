@@ -362,7 +362,7 @@ function M.file(ctx, minimal)
   local directory_hl = minimal and 'StDirectoryInactive' or 'StDirectory'
   local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
-  if H.has_win_highlight(curwin, 'Normal', 'StatusLine') then
+  if H.winhighlight_exists(curwin, 'Normal', 'StatusLine') then
     directory_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
     filename_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
     parent_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
