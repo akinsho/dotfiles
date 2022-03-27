@@ -156,7 +156,7 @@ function _G.__statusline()
   local add = make_status(statusline)
 
   add(
-    { item_if('▌', not plain, 'StIndicator', { before = '', after = '' }), 0 },
+    { item_if(icons.misc.block, not plain, 'StIndicator', { before = '', after = '' }), 0 },
     { utils.spacer(1), 0 }
   )
   ----------------------------------------------------------------------------//

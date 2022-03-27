@@ -96,6 +96,7 @@ as.style = {
       double_chevron_right = '»',
       table = '',
       calendar = '',
+      block = '▌',
     },
   },
   border = {
