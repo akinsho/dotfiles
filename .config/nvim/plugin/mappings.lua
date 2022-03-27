@@ -463,8 +463,8 @@ command('ToggleBackground', function()
 end)
 ------------------------------------------------------------------------------
 command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
-command('ReloadModule', function(args)
-  require('plenary.reload').reload_module(args)
+command('ReloadModule', function(tbl)
+  require('plenary.reload').reload_module(tbl.args)
 end, {
   nargs = 1,
 })
