@@ -208,9 +208,8 @@ function _G.__statusline()
     { item_if('Saving…', vim.g.is_saving, 'StComment', { before = ' ' }), 1 },
     -- LSP Status
     {
-      item(utils.current_function(), 'StMetadata', {
+      item(utils.current_function(), 'StMetadataPrefix', {
         before = '  ',
-        prefix_color = 'StIdentifier',
       }),
       4,
     },
