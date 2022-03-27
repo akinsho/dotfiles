@@ -167,7 +167,8 @@ function _G.__statusline()
   local dir_item = utils.item(dir.item, dir.hl, dir.opts)
   local parent_item = utils.item(parent.item, parent.hl, parent.opts)
   local file_item = utils.item(file.item, file.hl, file.opts)
-  local readonly_item = utils.item(utils.readonly(ctx), 'StError')
+  local readonly_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomError', 'StError')
+  local readonly_item = utils.item(utils.readonly(ctx), readonly_hl)
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
