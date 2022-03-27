@@ -220,7 +220,7 @@ local function general_overrides()
     { 'Type', { italic = true, bold = true } },
     { 'Include', { italic = true, bold = false } },
     { 'Folded', { bold = true, italic = true } },
-    { 'QuickFixLine', { background = search_bg } },
+    { 'QuickFixLine', { background = search_bg, foreground = 'NONE', italic = true } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
