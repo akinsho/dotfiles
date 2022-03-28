@@ -186,9 +186,6 @@ local function general_overrides()
     { 'CodeBlock', { background = code_block } },
     { 'markdownCode', { background = code_block } },
     { 'markdownCodeBlock', { background = code_block } },
-    --- Highlight group for light coloured floats
-    { 'GreyFloat', { background = P.grey } },
-    { 'GreyFloatBorder', { foreground = P.grey } },
     -----------------------------------------------------------------------------//
     { 'CursorLineNr', { bold = true } },
     { 'FoldColumn', { background = 'background' } },

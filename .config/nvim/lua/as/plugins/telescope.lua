@@ -9,7 +9,7 @@ return function()
   H.plugin(
     'telescope',
     { 'TelescopeMatching', { link = 'Title' } },
-    { 'TelescopeBorder', { link = 'GreyFloatBorder' } },
+    { 'TelescopeBorder', { foreground = as.style.palette.grey } },
     { 'TelescopePromptPrefix', { link = 'Statement' } },
     { 'TelescopeTitle', { inherit = 'Normal', bold = true } },
     {
