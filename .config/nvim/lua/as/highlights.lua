@@ -285,6 +285,7 @@ local sidebar_fts = {
   'flutterToolsOutline',
   'undotree',
   'dap-repl',
+  'qf',
 }
 
 local function on_sidebar_enter()
@@ -295,6 +296,7 @@ local function on_sidebar_enter()
     'StatusLineNC:PanelStNC',
     'SignColumn:PanelBackground',
     'VertSplit:PanelVertSplit',
+    'WinSeparator:PanelWinSeparator',
   }, ',')
 end
 
