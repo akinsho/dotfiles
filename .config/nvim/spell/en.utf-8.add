@@ -239,3 +239,4 @@ app
 extmark
 bufnr
 lnum
+libuv
