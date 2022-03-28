@@ -9,8 +9,10 @@
 local utils = require 'as.utils.statusline'
 local H = require 'as.highlights'
 
+local api = vim.api
 local P = as.style.palette
 local icons = as.style.icons
+
 local M = {}
 
 local function colors()
@@ -126,14 +128,14 @@ function _G.__statusline()
   -- use the statusline global variable which is set inside of statusline
   -- functions to the window for *that* statusline
   local curwin = vim.g.statusline_winid or 0
-  local curbuf = vim.api.nvim_win_get_buf(curwin)
+  local curbuf = api.nvim_win_get_buf(curwin)
 
   local available_space = vim.o.columns
 
   local ctx = {
     bufnum = curbuf,
     winid = curwin,
-    bufname = vim.fn.bufname(curbuf),
+    bufname = api.nvim_buf_get_name(curbuf),
     preview = vim.wo[curwin].previewwindow,
     readonly = vim.bo[curbuf].readonly,
     filetype = vim.bo[curbuf].ft,
