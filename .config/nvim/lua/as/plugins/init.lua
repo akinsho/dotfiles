@@ -881,22 +881,6 @@ packer.startup {
 
     use { 'Matt-A-Bennett/vim-surround-funk', config = conf 'surround-funk' }
 
-    use {
-      'protex/better-digraphs.nvim',
-      keys = { { 'i', '<C-k><C-k>' } },
-      config = function()
-        as.inoremap('<C-k><C-k>', function()
-          require('betterdigraphs').digraphs 'i'
-        end)
-        as.nnoremap('r<C-k><C-k>', function()
-          require('betterdigraphs').digraphs 'r'
-        end)
-        as.vnoremap('r<C-k><C-k>', function()
-          require('betterdigraphs').digraphs 'gvr'
-        end)
-      end,
-    }
-
     use 'chaoren/vim-wordmotion'
 
     use {
