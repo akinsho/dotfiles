@@ -1,7 +1,5 @@
 return function()
-  local gitsigns = require 'gitsigns'
-
-  gitsigns.setup {
+  require('gitsigns').setup {
     signs = {
       add = { hl = 'GitSignsAdd', text = '▌' },
       change = { hl = 'GitSignsChange', text = '▌' },
@@ -11,56 +9,60 @@ return function()
     },
     word_diff = false,
     numhl = false,
+    preview_config = {
+      border = as.style.border.current,
+    },
     on_attach = function()
+      local gs = package.loaded.gitsigns
+
+      local function qf_list_modified()
+        gs.setqflist 'all'
+      end
       require('which-key').register {
         ['<leader>h'] = {
           name = '+gitsigns hunk',
-          s = { gitsigns.stage_hunk, 'stage' },
-          u = { gitsigns.undo_stage_hunk, 'undo stage' },
-          r = { gitsigns.reset_hunk, 'reset hunk' },
-          p = { gitsigns.preview_hunk, 'preview current hunk' },
+          s = { gs.stage_hunk, 'stage' },
+          u = { gs.undo_stage_hunk, 'undo stage' },
+          r = { gs.reset_hunk, 'reset hunk' },
+          p = { gs.preview_hunk, 'preview current hunk' },
           b = 'blame current line',
         },
         ['<localleader>g'] = {
           name = '+git',
-          w = { gitsigns.stage_buffer, 'gitsigns: stage entire buffer' },
+          w = { gs.stage_buffer, 'gitsigns: stage entire buffer' },
           r = {
             name = '+reset',
-            e = { gitsigns.reset_buffer, 'gitsigns: reset entire buffer' },
+            e = { gs.reset_buffer, 'gitsigns: reset entire buffer' },
           },
           b = {
             name = '+blame',
-            l = { gitsigns.blame_line, 'gitsigns: blame current line' },
-            d = { gitsigns.toggle_word_diff, 'gitsigns: toggle word diff' },
+            l = { gs.blame_line, 'gitsigns: blame current line' },
+            d = { gs.toggle_word_diff, 'gitsigns: toggle word diff' },
           },
         },
-        ['[h'] = {
-          "&diff ? ']h' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'",
-          'go to next git hunk',
-          expr = true,
-        },
-        [']h'] = {
-          "&diff ? '[h' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
-          'go to previous git hunk',
-          expr = true,
-        },
-        ['<leader>lm'] = {
-          function()
-            gitsigns.setqflist 'all'
-          end,
-          'gitsigns: list modified in quickfix',
-        },
+        ['[h'] = 'go to next git hunk',
+        [']h'] = 'go to previous git hunk',
+        ['<leader>lm'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
       }
 
-      as.onoremap('ih', ':<C-U>lua require"gitsigns".select_hunk()<CR>')
-      as.xnoremap('ih', ':<C-U>lua require"gitsigns".select_hunk()<CR>')
-      -- Text objects
-      as.vnoremap('<leader>hs', function()
-        gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end)
-      as.vnoremap('<leader>hr', function()
-        gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end)
+      -- Navigation
+      as.nnoremap('[h', function()
+        vim.schedule(function()
+          gs.next_hunk()
+        end)
+        return '<Ignore>'
+      end, { expr = true })
+
+      as.nnoremap(']h', function()
+        vim.schedule(function()
+          gs.prev_hunk()
+        end)
+        return '<Ignore>'
+      end, { expr = true })
+
+      vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+      vim.keymap.set({ 'n', 'v' }, '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
+      vim.keymap.set({ 'n', 'v' }, '<leader>hr', '<cmd>Gitsigns reset_hunk<CR>')
     end,
   }
 end
