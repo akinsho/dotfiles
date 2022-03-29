@@ -1,6 +1,5 @@
 as.lsp = {}
 
-local line_border = as.style.border.line
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -66,25 +65,13 @@ local function setup_mappings(client)
 
   maps.n[']c'] = {
     function()
-      vim.diagnostic.goto_prev {
-        float = {
-          border = line_border,
-          focusable = false,
-          source = 'always',
-        },
-      }
+      vim.diagnostic.goto_prev()
     end,
     'lsp: go to prev diagnostic',
   }
   maps.n['[c'] = {
     function()
-      vim.diagnostic.goto_next {
-        float = {
-          border = line_border,
-          focusable = false,
-          source = 'always',
-        },
-      }
+      vim.diagnostic.goto_next()
     end,
     'lsp: go to next diagnostic',
   }

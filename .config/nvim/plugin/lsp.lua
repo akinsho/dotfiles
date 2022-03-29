@@ -104,6 +104,11 @@ diagnostic.config {
   update_in_insert = false,
   severity_sort = true,
   virtual_text = false,
+  float = {
+    border = line_border,
+    focusable = false,
+    source = 'always',
+  },
 }
 
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
