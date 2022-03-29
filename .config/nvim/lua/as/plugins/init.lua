@@ -458,6 +458,15 @@ packer.startup {
       end,
     }
 
+    use {
+      'klen/nvim-config-local',
+      config = function()
+        require('config-local').setup {
+          config_files = { '.localrc.lua', '.vimrc', '.vimrc.lua' },
+        }
+      end,
+    }
+
     -- prevent select and visual mode from overwriting the clipboard
     use {
       'kevinhwang91/nvim-hclipboard',
