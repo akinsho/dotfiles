@@ -29,7 +29,9 @@ end
 ------------------------------------------------------------------------
 -- Plugin Configurations
 ------------------------------------------------------------------------
+-- Order matters here as globals needs to be instantiated first etc.
 R 'as.globals'
+R 'as.styles'
 R 'as.settings'
 R 'as.highlights'
 R 'as.statusline'
