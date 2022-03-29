@@ -2,7 +2,7 @@ return function()
   local cmp = require 'cmp'
   local h = require 'as.highlights'
   local t = as.replace_termcodes
-  local border = as.style.border.current
+  local border = as.style.current.border
 
   local keyword_fg = h.get_hl('Keyword', 'fg')
 

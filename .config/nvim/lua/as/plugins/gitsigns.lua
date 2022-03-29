@@ -10,7 +10,7 @@ return function()
     word_diff = false,
     numhl = false,
     preview_config = {
-      border = as.style.border.current,
+      border = as.style.current.border,
     },
     on_attach = function()
       local gs = package.loaded.gitsigns

@@ -6,7 +6,7 @@ local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
 local icons = as.style.icons.lsp
-local border = as.style.border.current
+local border = as.style.current.border
 
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(L.DEBUG)

@@ -213,7 +213,7 @@ packer.startup {
           fix_pos = false,
           auto_close_after = 15, -- close after 15 seconds
           hint_enable = false,
-          handler_opts = { border = as.style.border.current },
+          handler_opts = { border = as.style.current.border },
         }
       end,
     }
@@ -391,7 +391,7 @@ packer.startup {
           input = {
             insert_only = false,
             winblend = 2,
-            border = as.style.border.current,
+            border = as.style.current.border,
           },
           select = {
             telescope = require('telescope.themes').get_cursor {
@@ -1019,7 +1019,7 @@ packer.startup {
   config = {
     compile_path = PACKER_COMPILED_PATH,
     display = {
-      prompt_border = as.style.border.current,
+      prompt_border = as.style.current.border,
       open_cmd = 'silent topleft 65vnew',
     },
     git = {

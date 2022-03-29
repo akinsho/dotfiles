@@ -162,6 +162,9 @@ as.style = {
 ----------------------------------------------------------------------------------------------------
 -- Global style settings
 ----------------------------------------------------------------------------------------------------
--- Some styles can be tweak here to apply globally i.e. by setting the current value for that style
+-- Some styles can be tweaked here to apply globally i.e. by setting the current value for that style
 
-as.style.border.current = as.style.border.line
+-- The current styles for various UI elements
+as.style.current = {
+  border = as.style.border.line,
+}
