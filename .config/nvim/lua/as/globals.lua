@@ -34,7 +34,21 @@ local palette = {
   teal = '#15AABF',
 }
 
+local borders = {
+  line = {
+    { '🭽', 'FloatBorder' },
+    { '▔', 'FloatBorder' },
+    { '🭾', 'FloatBorder' },
+    { '▕', 'FloatBorder' },
+    { '🭿', 'FloatBorder' },
+    { '▁', 'FloatBorder' },
+    { '🭼', 'FloatBorder' },
+    { '▏', 'FloatBorder' },
+  },
+}
+
 as.style = {
+  border = vim.tbl_extend('force', borders, { current = borders.line }),
   icons = {
     lsp = {
       error = '✗',
@@ -97,18 +111,6 @@ as.style = {
       table = '',
       calendar = '',
       block = '▌',
-    },
-  },
-  border = {
-    line = {
-      { '🭽', 'FloatBorder' },
-      { '▔', 'FloatBorder' },
-      { '🭾', 'FloatBorder' },
-      { '▕', 'FloatBorder' },
-      { '🭿', 'FloatBorder' },
-      { '▁', 'FloatBorder' },
-      { '🭼', 'FloatBorder' },
-      { '▏', 'FloatBorder' },
     },
   },
   lsp = {

@@ -2,7 +2,7 @@ return function()
   local cmp = require 'cmp'
   local h = require 'as.highlights'
   local t = as.replace_termcodes
-  local line_border = as.style.border.line
+  local border = as.style.border.current
 
   local keyword_fg = h.get_hl('Keyword', 'fg')
 
@@ -48,10 +48,10 @@ return function()
     window = {
       completion = {
         -- TODO: consider 'shadow', and tweak the winhighlight
-        border = line_border,
+        border = border,
       },
       documentation = {
-        border = line_border,
+        border = border,
       },
     },
     experimental = {
@@ -111,7 +111,7 @@ return function()
       end,
     },
     documentation = {
-      border = line_border,
+      border = border,
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
