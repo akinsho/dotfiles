@@ -14,6 +14,12 @@ local function get_toggleterm_name(_, buf)
   return fmt('Terminal(%s)[%s]', shell, api.nvim_buf_get_var(buf, 'toggle_number'))
 end
 
+-- Capture the type of the neo tree buffer opened
+local function get_neotree_name(fname, _)
+  local parts = vim.split(fname, ' ')
+  return fmt('Neo Tree(%s)', parts[2])
+end
+
 local plain = {
   filetypes = {
     'help',
@@ -23,6 +29,7 @@ local plain = {
     'tsplayground',
     'coc-explorer',
     'NvimTree',
+    'neo-tree',
     'undotree',
     'neoterm',
     'vista',
@@ -71,6 +78,7 @@ local exceptions = {
     undotree = 'פּ',
     ['coc-explorer'] = '',
     NvimTree = 'פּ',
+    ['neo-tree'] = 'פּ',
     toggleterm = ' ',
     calendar = '',
     minimap = '',
@@ -100,6 +108,7 @@ local exceptions = {
     octo = 'Octo',
     ['coc-explorer'] = 'Coc Explorer',
     NvimTree = 'Nvim Tree',
+    ['neo-tree'] = get_neotree_name,
     toggleterm = get_toggleterm_name,
     ['dap-repl'] = 'Debugger REPL',
   },

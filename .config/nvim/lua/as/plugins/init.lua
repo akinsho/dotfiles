@@ -165,7 +165,16 @@ packer.startup {
 
     use { 'lukas-reineke/indent-blankline.nvim', config = conf 'indentline' }
 
-    use { 'kyazdani42/nvim-tree.lua', config = conf 'nvim-tree', requires = 'nvim-web-devicons' }
+    use {
+      'nvim-neo-tree/neo-tree.nvim',
+      branch = 'v2.x',
+      config = conf 'neo-tree',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'MunifTanjim/nui.nvim',
+        'kyazdani42/nvim-web-devicons',
+      },
+    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{1

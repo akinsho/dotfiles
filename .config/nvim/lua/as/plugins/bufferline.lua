@@ -56,6 +56,11 @@ return function()
           highlight = 'PanelHeading',
         },
         {
+          filetype = 'neo-tree',
+          text = 'Explorer',
+          highlight = 'PanelHeading',
+        },
+        {
           filetype = 'DiffviewFiles',
           text = 'Diff View',
           highlight = 'PanelHeading',
