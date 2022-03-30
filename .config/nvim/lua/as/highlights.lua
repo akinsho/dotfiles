@@ -222,6 +222,11 @@ local function general_overrides()
     { 'Include', { italic = true, bold = false } },
     { 'Folded', { bold = true, italic = true } },
     { 'QuickFixLine', { background = search_bg, foreground = 'NONE', italic = true } },
+    -- Neither the sign column or end of buffer highlights require an explicit background
+    -- they should both just use the background that is in the window they are in.
+    -- if either are specified this can lead to issues when a winhighlight is set
+    { 'SignColumn', { background = 'NONE' } },
+    { 'EndOfBuffer', { background = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
@@ -284,6 +289,7 @@ local sidebar_fts = {
   'packer',
   'flutterToolsOutline',
   'undotree',
+  'neo-tree',
   'dap-repl',
   'qf',
 }
