@@ -361,7 +361,10 @@ as.augroup('Utilities', {
       if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
         local row, col = unpack(api.nvim_buf_get_mark(0, '"'))
         if { row, col } ~= { 0, 0 } then
-          api.nvim_win_set_cursor(0, { row, 0 })
+          local ok, msg = pcall(api.nvim_win_set_cursor, 0, { row, 0 })
+          if not ok then
+            vim.notify(msg, 'error')
+          end
         end
       end
     end,
