@@ -12,6 +12,14 @@ return function()
   require('neo-tree').setup {
     enable_git_status = true,
     git_status_async = true,
+    event_handlers = {
+      {
+        event = 'neo_tree_buffer_enter',
+        handler = function()
+          vim.wo.signcolumn = 'no'
+        end,
+      },
+    },
     filesystem = {
       netrw_hijack_behavior = 'open_current',
       filtered_items = {
