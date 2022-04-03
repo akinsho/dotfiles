@@ -363,7 +363,7 @@ as.augroup('Utilities', {
         if { row, col } ~= { 0, 0 } then
           local ok, msg = pcall(api.nvim_win_set_cursor, 0, { row, 0 })
           if not ok then
-            vim.notify(msg, 'error')
+            vim.notify(msg, 'error', { title = 'Last cursor position' })
           end
         end
       end
