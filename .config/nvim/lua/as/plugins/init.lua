@@ -85,7 +85,12 @@ packer.startup {
       },
     }
 
-    use 'kyazdani42/nvim-web-devicons'
+    use {
+      'kyazdani42/nvim-web-devicons',
+      config = function()
+        require('nvim-web-devicons').setup { default = true }
+      end,
+    }
 
     use { 'folke/which-key.nvim', config = conf 'whichkey' }
 
