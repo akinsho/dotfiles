@@ -142,6 +142,8 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
 
+P = vim.pretty_print
+
 ---@class Autocommand
 ---@field description string
 ---@field event  string[] list of autocommand events
