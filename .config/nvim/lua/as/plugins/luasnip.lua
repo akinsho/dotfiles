@@ -61,6 +61,9 @@ return function()
   end)
 
   require('luasnip.loaders.from_lua').lazy_load()
+  -- NOTE: the loader is called twice so it picks up the defaults first then my custom textmate
+  -- snippets. @see: https://github.com/L3MON4D3/LuaSnip/issues/364
+  require('luasnip.loaders.from_vscode').lazy_load()
   require('luasnip.loaders.from_vscode').lazy_load { paths = './snippets/textmate' }
 
   ls.filetype_extend('dart', { 'flutter' })
