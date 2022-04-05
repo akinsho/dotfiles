@@ -446,7 +446,6 @@ packer.startup {
 
     use {
       'github/copilot.vim',
-      opt = true,
       config = function()
         vim.g.copilot_no_tab_map = true
         vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
@@ -459,20 +458,6 @@ packer.startup {
         }
         require('as.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
       end,
-    }
-
-    use {
-      'zbirenbaum/copilot.lua',
-      event = 'InsertEnter',
-      config = function()
-        vim.schedule(function()
-          require 'copilot'
-        end)
-      end,
-    }
-    use {
-      'zbirenbaum/copilot-cmp',
-      after = { 'copilot.lua', 'nvim-cmp' },
     }
 
     use {

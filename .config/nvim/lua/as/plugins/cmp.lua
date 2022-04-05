@@ -91,7 +91,6 @@ return function()
 
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
-          copilot = '[Copilot]',
           nvim_lua = '[Lua]',
           emoji = '[Emoji]',
           path = '[Path]',
@@ -113,7 +112,6 @@ return function()
       border = border,
     },
     sources = cmp.config.sources({
-      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
