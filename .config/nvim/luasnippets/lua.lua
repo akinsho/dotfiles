@@ -1,4 +1,10 @@
 local fn = vim.fn
+local rep = require('luasnip.extras').rep
+
+local function import_suffix(import_name)
+  local parts = vim.split(import_name[1][1], '.', true)
+  return parts[#parts] or ''
+end
 
 ---@diagnostic disable: undefined-global
 return {
@@ -9,12 +15,27 @@ return {
       dscr = 'Require a module and set the import to the last word',
     },
     fmt([[local {} = require("{}")]], {
-      f(function(import_name)
-        local parts = vim.split(import_name[1][1], '.', true)
-        return parts[#parts] or ''
-      end, { 1 }),
+      f(import_suffix, { 1 }),
       i(1),
     })
+  ),
+  snippet(
+    {
+      trig = 'lreq',
+      name = 'lazy require module',
+      dscr = 'Lazy require a module and set the import to the last word',
+    },
+    fmt(
+      [[
+    ---@module "{3}"
+    local {1} = lazy.require("{2}")
+    ]],
+      {
+        f(import_suffix, { 1 }),
+        i(1),
+        rep(1),
+      }
+    )
   ),
   snippet(
     {
