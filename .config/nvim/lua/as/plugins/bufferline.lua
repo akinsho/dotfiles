@@ -34,6 +34,9 @@ return function()
 
   require('bufferline').setup {
     options = {
+      debug = {
+        logging = true,
+      },
       mode = 'buffers', -- tabs
       sort_by = 'insert_after_current',
       right_mouse_command = 'vert sbuffer %d',
