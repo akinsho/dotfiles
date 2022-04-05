@@ -837,6 +837,19 @@ packer.startup {
       end,
     }
 
+    use {
+      'pwntester/octo.nvim',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope.nvim',
+        'kyazdani42/nvim-web-devicons',
+      },
+      cmd = 'Octo',
+      config = function()
+        require('octo').setup()
+      end,
+    }
+
     use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
 
     use {
