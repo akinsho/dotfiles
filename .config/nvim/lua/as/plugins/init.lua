@@ -443,11 +443,9 @@ packer.startup {
         vim.g.copilot_no_tab_map = true
         vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
         vim.g.copilot_filetypes = {
-          ['*'] = false,
+          ['*'] = true,
           gitcommit = false,
           NeogitCommitMessage = false,
-          dart = true,
-          lua = true,
         }
         require('as.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
       end,
