@@ -3,6 +3,8 @@ if not as then
 end
 
 local nnoremap = as.nnoremap
+local fn = vim.fn
+local fmt = string.format
 
 local function find(word, ...)
   for _, str in ipairs { ... } do
@@ -22,7 +24,7 @@ local function keyword(word, callback)
   local original_iskeyword = vim.bo.iskeyword
 
   vim.bo.iskeyword = vim.bo.iskeyword .. ',.'
-  word = word or vim.fn.expand '<cword>'
+  word = word or fn.expand '<cword>'
 
   vim.bo.iskeyword = original_iskeyword
 
@@ -52,4 +54,15 @@ local function keyword(word, callback)
   end
 end
 
+-- This allows tpope's vim.surround to surround a text object with a function or conditional
+vim.b[fmt('surround_%s', fn.char2nr 'F')] = 'function \1function: \1() \r end'
+vim.b[fmt('surround_%s', fn.char2nr 'i')] = 'if \1if: \1 then \r end'
+
 nnoremap('gK', keyword, { buffer = 0 })
+nnoremap('<leader>so', function()
+  vim.cmd 'luafile %'
+  vim.notify('Sourced ' .. fn.expand '%')
+end)
+
+vim.opt_local.textwidth = 100
+vim.opt_local.formatoptions:remove 'o'
