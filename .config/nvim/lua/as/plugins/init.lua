@@ -736,6 +736,10 @@ packer.startup {
           lsp_cfg = true,
           lsp_gofumpt = true,
           lsp_on_attach = as.lsp.on_attach,
+          lsp_diag_virtual_text = {
+            space = 0,
+            prefix = as.style.icons.misc.bug,
+          },
         }
         as.augroup('Golang', {
           {
@@ -837,7 +841,7 @@ packer.startup {
       },
       cmd = 'Octo',
       keys = { '<leader>Oli', '<leader>Olp' },
-      config = conf('octo'),
+      config = conf 'octo',
     }
 
     use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
