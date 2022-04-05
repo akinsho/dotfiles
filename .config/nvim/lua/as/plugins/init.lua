@@ -75,13 +75,6 @@ packer.startup {
             require('telescope').load_extension 'smart_history'
           end,
         },
-        {
-          'nvim-telescope/telescope-github.nvim',
-          after = 'telescope.nvim',
-          config = function()
-            require('telescope').load_extension 'gh'
-          end,
-        },
       },
     }
 
@@ -845,8 +838,19 @@ packer.startup {
         'kyazdani42/nvim-web-devicons',
       },
       cmd = 'Octo',
+      keys = { '<leader>Oli', '<leader>Olp' },
       config = function()
         require('octo').setup()
+        require('which-key').register({
+          O = {
+            name = '+octo',
+            l = {
+              name = '+list',
+              i = { '<Cmd>Octo issue list<CR>', 'issues' },
+              p = { '<Cmd>Octo pr list<CR>', 'pull requests' },
+            },
+          },
+        }, { prefix = '<leader>' })
       end,
     }
 
