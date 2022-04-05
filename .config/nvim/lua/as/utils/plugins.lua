@@ -25,7 +25,7 @@ function M.bootstrap_packer()
     vim.cmd 'packadd! packer.nvim'
     require('packer').sync()
   else
-    -- FIXME: currently developement versions of packer do not work
+    -- FIXME: currently development versions of packer do not work
     -- local name = vim.env.DEVELOPING and 'local-packer.nvim' or 'packer.nvim'
     vim.cmd(fmt('packadd! %s', 'packer.nvim'))
   end
