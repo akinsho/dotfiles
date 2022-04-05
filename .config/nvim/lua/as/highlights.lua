@@ -304,26 +304,7 @@ end
 local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
     local keyword_fg = M.get_hl('Keyword', 'fg')
-    M.all {
-      CursorLineNr = { foreground = keyword_fg },
-      -- TODO: the default bold makes ... not use ligatures a better fix would be to add ligatures to my font
-      -- {"Constant", {gui = "NONE"}},
-    }
-  elseif vim.g.colors_name == 'onedark' then
-    local comment_fg = M.get_hl('Comment', 'fg')
-    M.all {
-      Todo = { foreground = 'red', bold = true },
-      Substitute = {
-        foreground = comment_fg,
-        background = 'NONE',
-        strikethrough = true,
-        bold = true,
-      },
-      LspDiagnosticsFloatingWarning = { background = 'NONE' },
-      LspDiagnosticsFloatingError = { background = 'NONE' },
-      LspDiagnosticsFloatingHint = { background = 'NONE' },
-      LspDiagnosticsFloatingInformation = { background = 'NONE' },
-    }
+    M.all { CursorLineNr = { foreground = keyword_fg } }
   end
 end
 
