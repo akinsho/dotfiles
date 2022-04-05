@@ -3,7 +3,6 @@ return function()
   local map = vim.keymap.set
   -- operator pending mode: grip surround
   map({ 'n', 'v' }, 'gs', '<Plug>(GripSurroundObject)')
-  map({ 'n', 'v' }, 'gS', '<Plug>(GripSurroundObjectNoPaste)')
   map({ 'o', 'x' }, 'sF', '<Plug>(SelectWholeFUNCTION)')
 
   require('which-key').register {
