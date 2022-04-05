@@ -24,9 +24,25 @@ function M.config()
   local icons = as.style.icons
 
   fn.sign_define {
-    { name = 'DapBreakpoint', text = icons.misc.bug, texthl = '', linehl = '', numhl = '' },
-    { name = 'DapStopped', text = '🟢', texthl = '', linehl = '', numhl = '' },
+    {
+      name = 'DapBreakpoint',
+      text = icons.misc.bug,
+      texthl = 'DapBreakpoint',
+      linehl = '',
+      numhl = '',
+    },
+    {
+      name = 'DapStopped',
+      text = '🟢',
+      texthl = 'DapStopped',
+      linehl = '',
+      numhl = '',
+    },
   }
+
+  require('as.highlights').plugin('dap', {
+    DapBreakpoint = { foreground = as.style.palette.light_red },
+  })
 
   dap.configurations.lua = {
     {
