@@ -188,7 +188,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     CursorLineNr = { bold = true },
     FoldColumn = { background = 'background' },
-    Folded = { foreground = comment_fg, background = 'NONE', italic = true },
+    Folded = { inherit = 'Comment', italic = true, bold = true },
     TermCursor = { ctermfg = 'green', foreground = 'royalblue' },
     -- Add undercurl to existing spellbad highlight
     SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
