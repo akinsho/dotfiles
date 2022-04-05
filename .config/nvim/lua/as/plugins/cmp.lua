@@ -14,18 +14,14 @@ return function()
 
   h.plugin(
     'Cmp',
-    vim.tbl_extend(
-      'force',
-      {
-        CmpBorderedWindow_Normal = { link = 'NormalFloat' },
-        CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
-        CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
-        CmpItemAbbrMatch = { foreground = keyword_fg },
-        CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
-        CmpItemAbbrMatchFuzzy = { italic = true, foreground = keyword_fg },
-      },
-      kind_hls
-    )
+    vim.tbl_extend('force', {
+      CmpBorderedWindow_Normal = { link = 'NormalFloat' },
+      CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
+      CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
+      CmpItemAbbrMatch = { foreground = keyword_fg },
+      CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
+      CmpItemAbbrMatchFuzzy = { italic = true, foreground = keyword_fg },
+    }, kind_hls)
   )
 
   local function tab(fallback)
@@ -131,7 +127,8 @@ return function()
 
   cmp.setup.filetype('NeogitCommitMessage', {
     sources = cmp.config.sources({
-      { name = 'cmp_git' },
+      { name = 'luasnip' },
+      -- { name = 'cmp_git' },
     }, {
       { name = 'buffer' },
     }),
