@@ -839,19 +839,7 @@ packer.startup {
       },
       cmd = 'Octo',
       keys = { '<leader>Oli', '<leader>Olp' },
-      config = function()
-        require('octo').setup()
-        require('which-key').register({
-          O = {
-            name = '+octo',
-            l = {
-              name = '+list',
-              i = { '<Cmd>Octo issue list<CR>', 'issues' },
-              p = { '<Cmd>Octo pr list<CR>', 'pull requests' },
-            },
-          },
-        }, { prefix = '<leader>' })
-      end,
+      config = conf('octo'),
     }
 
     use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
