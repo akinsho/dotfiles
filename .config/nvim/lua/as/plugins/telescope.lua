@@ -6,20 +6,16 @@ return function()
   local icons = as.style.icons
 
   local H = require 'as.highlights'
-  H.plugin(
-    'telescope',
-    { 'TelescopeMatching', { link = 'Title' } },
-    { 'TelescopeBorder', { foreground = as.style.palette.grey } },
-    { 'TelescopePromptPrefix', { link = 'Statement' } },
-    { 'TelescopeTitle', { inherit = 'Normal', bold = true } },
-    {
-      'TelescopeSelectionCaret',
-      {
-        foreground = H.get_hl('Identifier', 'fg'),
-        background = H.get_hl('TelescopeSelection', 'bg'),
-      },
-    }
-  )
+  H.plugin('telescope', {
+    TelescopeMatching = { link = 'Title' },
+    TelescopeBorder = { foreground = as.style.palette.grey },
+    TelescopePromptPrefix = { link = 'Statement' },
+    TelescopeTitle = { inherit = 'Normal', bold = true },
+    TelescopeSelectionCaret = {
+      foreground = H.get_hl('Identifier', 'fg'),
+      background = H.get_hl('TelescopeSelection', 'bg'),
+    },
+  })
 
   local function get_border(opts)
     return vim.tbl_deep_extend('force', opts or {}, {

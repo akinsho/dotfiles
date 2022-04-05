@@ -1,5 +1,5 @@
 return function()
-  require('as.highlights').plugin('marks', { 'MarkSignHL', { foreground = 'Red' } })
+  require('as.highlights').plugin('marks', { MarkSignHL = { foreground = 'Red' } })
   require('which-key').register({
     m = {
       name = '+marks',

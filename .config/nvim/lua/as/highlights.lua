@@ -132,10 +132,10 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table[]
+---@param hls table<string, table<string, boolean|string>>[]
 function M.all(hls)
-  for _, hl in ipairs(hls) do
-    M.set_hl(unpack(hl))
+  for name, hl in pairs(hls) do
+    M.set_hl(name, hl)
   end
 end
 
@@ -145,9 +145,8 @@ end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
 ---@vararg table list of highlights
-function M.plugin(name, ...)
+function M.plugin(name, hls)
   name = name:gsub('^%l', string.upper) -- capitalise the name for autocommand convention sake
-  local hls = { ... }
   M.all(hls)
   as.augroup(fmt('%sHighlightOverrides', name), {
     {
@@ -170,100 +169,99 @@ local function general_overrides()
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
   M.all {
-    { 'VertSplit', { background = 'NONE', foreground = M.get_hl('NonText', 'fg') } },
-    { 'WinSeparator', { background = 'NONE', foreground = M.get_hl('NonText', 'fg') } },
-    { 'mkdLineBreak', { link = 'NONE' } },
+    VertSplit = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
+    WinSeparator = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
+    mkdLineBreak = { link = 'NONE' },
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
-    { 'MsgArea', { background = msg_area_bg } },
-    { 'MsgSeparator', { foreground = comment_fg, background = msg_area_bg } },
+    MsgArea = { background = msg_area_bg },
+    MsgSeparator = { foreground = comment_fg, background = msg_area_bg },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
-    { 'NormalFloat', { inherit = 'Pmenu' } },
-    { 'FloatBorder', { inherit = 'NormalFloat', foreground = M.get_hl('NonText', 'fg') } },
-    { 'CodeBlock', { background = code_block } },
-    { 'markdownCode', { background = code_block } },
-    { 'markdownCodeBlock', { background = code_block } },
+    NormalFloat = { inherit = 'Pmenu' },
+    FloatBorder = { inherit = 'NormalFloat', foreground = M.get_hl('NonText', 'fg') },
+    CodeBlock = { background = code_block },
+    markdownCode = { background = code_block },
+    markdownCodeBlock = { background = code_block },
     -----------------------------------------------------------------------------//
-    { 'CursorLineNr', { bold = true } },
-    { 'FoldColumn', { background = 'background' } },
-    { 'Folded', { foreground = comment_fg, background = 'NONE', italic = true } },
-    { 'TermCursor', { ctermfg = 'green', foreground = 'royalblue' } },
+    CursorLineNr = { bold = true },
+    FoldColumn = { background = 'background' },
+    Folded = { foreground = comment_fg, background = 'NONE', italic = true },
+    TermCursor = { ctermfg = 'green', foreground = 'royalblue' },
     -- Add undercurl to existing spellbad highlight
-    { 'SpellBad', { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
-    { 'SpellRare', { undercurl = true } },
-    { 'PmenuSbar', { background = P.grey } },
+    SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
+    SpellRare = { undercurl = true },
+    PmenuSbar = { background = P.grey },
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    { 'DiffAdd', { background = '#26332c', foreground = 'NONE' } },
-    { 'DiffDelete', { background = '#572E33', foreground = '#5c6370' } },
-    { 'DiffChange', { background = '#273842', foreground = 'NONE' } },
-    { 'DiffText', { background = '#314753', foreground = 'NONE' } },
-    { 'diffAdded', { link = 'DiffAdd' } },
-    { 'diffChanged', { link = 'DiffChange' } },
-    { 'diffRemoved', { link = 'DiffDelete' } },
-    { 'diffBDiffer', { link = 'WarningMsg' } },
-    { 'diffCommon', { link = 'WarningMsg' } },
-    { 'diffDiffer', { link = 'WarningMsg' } },
-    { 'diffFile', { link = 'Directory' } },
-    { 'diffIdentical', { link = 'WarningMsg' } },
-    { 'diffIndexLine', { link = 'Number' } },
-    { 'diffIsA', { link = 'WarningMsg' } },
-    { 'diffNoEOL', { link = 'WarningMsg' } },
-    { 'diffOnly', { link = 'WarningMsg' } },
+    DiffAdd = { background = '#26332c', foreground = 'NONE' },
+    DiffDelete = { background = '#572E33', foreground = '#5c6370' },
+    DiffChange = { background = '#273842', foreground = 'NONE' },
+    DiffText = { background = '#314753', foreground = 'NONE' },
+    diffAdded = { link = 'DiffAdd' },
+    diffChanged = { link = 'DiffChange' },
+    diffRemoved = { link = 'DiffDelete' },
+    diffBDiffer = { link = 'WarningMsg' },
+    diffCommon = { link = 'WarningMsg' },
+    diffDiffer = { link = 'WarningMsg' },
+    diffFile = { link = 'Directory' },
+    diffIdentical = { link = 'WarningMsg' },
+    diffIndexLine = { link = 'Number' },
+    diffIsA = { link = 'WarningMsg' },
+    diffNoEOL = { link = 'WarningMsg' },
+    diffOnly = { link = 'WarningMsg' },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    { 'Comment', { italic = true } },
-    { 'Type', { italic = true, bold = true } },
-    { 'Include', { italic = true, bold = false } },
-    { 'Folded', { bold = true, italic = true } },
-    { 'QuickFixLine', { background = search_bg, foreground = 'NONE', italic = true } },
+    Comment = { italic = true },
+    Type = { italic = true, bold = true },
+    Include = { italic = true, bold = false },
+    QuickFixLine = { background = search_bg, foreground = 'NONE', italic = true },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
-    { 'SignColumn', { background = 'NONE' } },
-    { 'EndOfBuffer', { background = 'NONE' } },
+    SignColumn = { background = 'NONE' },
+    EndOfBuffer = { background = 'NONE' },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { 'TSKeywordReturn', { italic = true, foreground = keyword_fg } },
-    { 'TSParameter', { italic = true, bold = true, foreground = 'NONE' } },
-    { 'TSError', { undercurl = true, sp = error_line, foreground = 'NONE' } },
+    TSKeywordReturn = { italic = true, foreground = keyword_fg },
+    TSParameter = { italic = true, bold = true, foreground = 'NONE' },
+    TSError = { undercurl = true, sp = error_line, foreground = 'NONE' },
     -- highlight FIXME comments
-    { 'commentTSWarning', { background = P.light_red, foreground = 'fg', bold = true } },
-    { 'commentTSDanger', { background = L.hint, foreground = '#1B2229', bold = true } },
-    { 'commentTSNote', { background = L.info, foreground = '#1B2229', bold = true } },
+    commentTSWarning = { background = P.light_red, foreground = 'fg', bold = true },
+    commentTSDanger = { background = L.hint, foreground = '#1B2229', bold = true },
+    commentTSNote = { background = L.info, foreground = '#1B2229', bold = true },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
     -- avoid the urge to be "clever" and try and programmatically set these because
     -- 1. the name are slightly different (more than just the prefix) i.e. Warn -> Warning
     -- 2. Some plugins have not migrated so having both highlight groups is valuable
-    { 'LspReferenceText', { underline = true } },
-    { 'LspReferenceRead', { underline = true } },
-    { 'DiagnosticHint', { foreground = L.hint } },
-    { 'DiagnosticError', { foreground = L.error } },
-    { 'DiagnosticWarning', { foreground = L.warn } },
-    { 'DiagnosticInfo', { foreground = L.info } },
-    { 'DiagnosticUnderlineError', { undercurl = true, sp = L.error, foreground = 'none' } },
-    { 'DiagnosticUnderlineHint', { undercurl = true, sp = L.hint, foreground = 'none' } },
-    { 'DiagnosticUnderlineWarn', { undercurl = true, sp = L.warn, foreground = 'none' } },
-    { 'DiagnosticUnderlineInfo', { undercurl = true, sp = L.info, foreground = 'none' } },
-    { 'DiagnosticSignHintLine', { background = hint_line } },
-    { 'DiagnosticSignErrorLine', { background = error_line } },
-    { 'DiagnosticSignWarnLine', { background = warn_line } },
-    { 'DiagnosticSignWarn', { link = 'DiagnosticWarn' } },
-    { 'DiagnosticSignInfo', { link = 'DiagnosticInfo' } },
-    { 'DiagnosticSignHint', { link = 'DiagnosticHint' } },
-    { 'DiagnosticSignError', { link = 'DiagnosticError' } },
-    { 'DiagnosticFloatingWarn', { link = 'DiagnosticWarn' } },
-    { 'DiagnosticFloatingInfo', { link = 'DiagnosticInfo' } },
-    { 'DiagnosticFloatingHint', { link = 'DiagnosticHint' } },
-    { 'DiagnosticFloatingError', { link = 'DiagnosticError' } },
+    LspReferenceText = { underline = true },
+    LspReferenceRead = { underline = true },
+    DiagnosticHint = { foreground = L.hint },
+    DiagnosticError = { foreground = L.error },
+    DiagnosticWarning = { foreground = L.warn },
+    DiagnosticInfo = { foreground = L.info },
+    DiagnosticUnderlineError = { undercurl = true, sp = L.error, foreground = 'none' },
+    DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, foreground = 'none' },
+    DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, foreground = 'none' },
+    DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, foreground = 'none' },
+    DiagnosticSignHintLine = { background = hint_line },
+    DiagnosticSignErrorLine = { background = error_line },
+    DiagnosticSignWarnLine = { background = warn_line },
+    DiagnosticSignWarn = { link = 'DiagnosticWarn' },
+    DiagnosticSignInfo = { link = 'DiagnosticInfo' },
+    DiagnosticSignHint = { link = 'DiagnosticHint' },
+    DiagnosticSignError = { link = 'DiagnosticError' },
+    DiagnosticFloatingWarn = { link = 'DiagnosticWarn' },
+    DiagnosticFloatingInfo = { link = 'DiagnosticInfo' },
+    DiagnosticFloatingHint = { link = 'DiagnosticHint' },
+    DiagnosticFloatingError = { link = 'DiagnosticError' },
   }
 end
 
@@ -272,17 +270,14 @@ local function set_sidebar_highlight()
   local split_color = M.get_hl('VertSplit', 'fg')
   local bg_color = M.alter_color(normal_bg, -8)
   local st_color = M.alter_color(M.get_hl('Visual', 'bg'), -20)
-  local hls = {
-    { 'PanelBackground', { background = bg_color } },
-    { 'PanelHeading', { background = bg_color, bold = true } },
-    { 'PanelVertSplit', { foreground = split_color, background = bg_color } },
-    { 'PanelWinSeparator', { foreground = split_color, background = bg_color } },
-    { 'PanelStNC', { background = bg_color, foreground = split_color } },
-    { 'PanelSt', { background = st_color } },
+  M.all {
+    PanelBackground = { background = bg_color },
+    PanelHeading = { background = bg_color, bold = true },
+    PanelVertSplit = { foreground = split_color, background = bg_color },
+    PanelWinSeparator = { foreground = split_color, background = bg_color },
+    PanelStNC = { background = bg_color, foreground = split_color },
+    PanelSt = { background = st_color },
   }
-  for _, grp in ipairs(hls) do
-    M.set_hl(unpack(grp))
-  end
 end
 
 local sidebar_fts = {
@@ -310,22 +305,24 @@ local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
     local keyword_fg = M.get_hl('Keyword', 'fg')
     M.all {
-      { 'CursorLineNr', { foreground = keyword_fg } },
+      CursorLineNr = { foreground = keyword_fg },
       -- TODO: the default bold makes ... not use ligatures a better fix would be to add ligatures to my font
       -- {"Constant", {gui = "NONE"}},
     }
   elseif vim.g.colors_name == 'onedark' then
     local comment_fg = M.get_hl('Comment', 'fg')
     M.all {
-      { 'Todo', { foreground = 'red', bold = true } },
-      {
-        'Substitute',
-        { foreground = comment_fg, background = 'NONE', strikethrough = true, bold = true },
+      Todo = { foreground = 'red', bold = true },
+      Substitute = {
+        foreground = comment_fg,
+        background = 'NONE',
+        strikethrough = true,
+        bold = true,
       },
-      { 'LspDiagnosticsFloatingWarning', { background = 'NONE' } },
-      { 'LspDiagnosticsFloatingError', { background = 'NONE' } },
-      { 'LspDiagnosticsFloatingHint', { background = 'NONE' } },
-      { 'LspDiagnosticsFloatingInformation', { background = 'NONE' } },
+      LspDiagnosticsFloatingWarning = { background = 'NONE' },
+      LspDiagnosticsFloatingError = { background = 'NONE' },
+      LspDiagnosticsFloatingHint = { background = 'NONE' },
+      LspDiagnosticsFloatingInformation = { background = 'NONE' },
     }
   end
 end

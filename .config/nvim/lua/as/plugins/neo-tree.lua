@@ -1,11 +1,10 @@
 return function()
-  require('as.highlights').plugin(
-    'NeoTree',
-    { 'NeoTreeIndentMarker', { link = 'Comment' } },
-    { 'NeoTreeNormal', { link = 'PanelBackground' } },
-    { 'NeoTreeNormalNC', { link = 'PanelBackground' } },
-    { 'NeoTreeRootName', { bold = true, italic = true, foreground = 'LightMagenta' } }
-  )
+  require('as.highlights').plugin('NeoTree', {
+    NeoTreeIndentMarker = { link = 'Comment' },
+    NeoTreeNormal = { link = 'PanelBackground' },
+    NeoTreeNormalNC = { link = 'PanelBackground' },
+    NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' },
+  })
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = as.style.icons
   as.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')

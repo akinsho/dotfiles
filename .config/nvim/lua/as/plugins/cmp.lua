@@ -3,23 +3,29 @@ return function()
   local h = require 'as.highlights'
   local t = as.replace_termcodes
   local border = as.style.current.border
+  local lsp_hls = as.style.lsp.kind_highlights
+
+  local kind_hls = {}
+  for key, _ in pairs(lsp_hls) do
+    kind_hls['CmpItemKind' .. key] = { foreground = h.get_hl(lsp_hls[key], 'fg') }
+  end
 
   local keyword_fg = h.get_hl('Keyword', 'fg')
 
-  local lsp_hls = as.style.lsp.kind_highlights
-  local kind_hls = vim.tbl_map(function(key)
-    return { 'CmpItemKind' .. key, { foreground = h.get_hl(lsp_hls[key], 'fg') } }
-  end, vim.tbl_keys(lsp_hls))
-
   h.plugin(
     'Cmp',
-    { 'CmpBorderedWindow_Normal', { link = 'NormalFloat' } },
-    { 'CmpItemAbbr', { foreground = 'fg', background = 'NONE', italic = false, bold = false } },
-    { 'CmpItemMenu', { inherit = 'NonText', italic = false, bold = false } },
-    { 'CmpItemAbbrMatch', { foreground = keyword_fg } },
-    { 'CmpItemAbbrDeprecated', { strikethrough = true, inherit = 'Comment' } },
-    { 'CmpItemAbbrMatchFuzzy', { italic = true, foreground = keyword_fg } },
-    unpack(kind_hls)
+    vim.tbl_extend(
+      'force',
+      {
+        CmpBorderedWindow_Normal = { link = 'NormalFloat' },
+        CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
+        CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
+        CmpItemAbbrMatch = { foreground = keyword_fg },
+        CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
+        CmpItemAbbrMatchFuzzy = { italic = true, foreground = keyword_fg },
+      },
+      kind_hls
+    )
   )
 
   local function tab(fallback)

@@ -394,7 +394,7 @@ packer.startup {
       config = function()
         require('as.highlights').plugin(
           'dressing',
-          { 'FloatTitle', { inherit = 'Visual', bold = true } }
+          { FloatTitle = { inherit = 'Visual', bold = true } }
         )
         require('dressing').setup {
           input = {
@@ -457,7 +457,7 @@ packer.startup {
           dart = true,
           lua = true,
         }
-        require('as.highlights').plugin('copilot', { 'CopilotSuggestion', { link = 'Comment' } })
+        require('as.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
       end,
     }
 
@@ -642,7 +642,7 @@ packer.startup {
       'https://gitlab.com/yorickpeterse/nvim-pqf',
       event = 'BufReadPre',
       config = function()
-        require('as.highlights').plugin('pqf', { 'qfPosition', { link = 'Tag' } })
+        require('as.highlights').plugin('pqf', { qfPosition = { link = 'Tag' } })
         require('pqf').setup {}
       end,
     }
@@ -651,7 +651,7 @@ packer.startup {
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        require('as.highlights').plugin('bqf', { 'BqfPreviewBorder', { foreground = 'Gray' } })
+        require('as.highlights').plugin('bqf', { BqfPreviewBorder = { foreground = 'Gray' } })
       end,
     }
     --------------------------------------------------------------------------------
@@ -680,10 +680,12 @@ packer.startup {
         -- NOTE: this must be set in the setup function or it will crash nvim...
         require('as.highlights').plugin(
           'Headlines',
-          { 'Headline1', { background = '#003c30', foreground = 'White' } },
-          { 'Headline2', { background = '#00441b', foreground = 'White' } },
-          { 'Headline3', { background = '#084081', foreground = 'White' } },
-          { 'Dash', { background = '#0b60a1', bold = true } }
+          {
+            Headline1 = { background = '#003c30', foreground = 'White' },
+            Headline2 = { background = '#00441b', foreground = 'White' },
+            Headline3 = { background = '#084081', foreground = 'White' },
+            Dash = { background = '#0b60a1', bold = true },
+          }
         )
       end,
       config = function()

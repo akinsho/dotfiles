@@ -4,14 +4,13 @@ return function()
   if vim.g.packer_compiled_loaded then
     return
   end
-  require('as.highlights').plugin(
-    'notify',
-    { 'NotifyERRORBody', { link = 'NormalFloat' } },
-    { 'NotifyWARNBody', { link = 'NormalFloat' } },
-    { 'NotifyINFOBody', { link = 'NormalFloat' } },
-    { 'NotifyDEBUGBody', { link = 'NormalFloat' } },
-    { 'NotifyTRACEBody', { link = 'NormalFloat' } }
-  )
+  require('as.highlights').plugin('notify', {
+    NotifyERRORBody = { link = 'NormalFloat' },
+    NotifyWARNBody = { link = 'NormalFloat' },
+    NotifyINFOBody = { link = 'NormalFloat' },
+    NotifyDEBUGBody = { link = 'NormalFloat' },
+    NotifyTRACEBody = { link = 'NormalFloat' },
+  })
   local notify = require 'notify'
   ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
   local renderer = require 'notify.render'
