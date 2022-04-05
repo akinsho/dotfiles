@@ -86,6 +86,7 @@ return function()
         -- FIXME: automate this using a regex to normalise names
         local menu = ({
           nvim_lsp = '[LSP]',
+          copilot = '[Copilot]',
           nvim_lua = '[Lua]',
           emoji = '[Emoji]',
           path = '[Path]',
@@ -114,6 +115,7 @@ return function()
       border = border,
     },
     sources = cmp.config.sources({
+      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
