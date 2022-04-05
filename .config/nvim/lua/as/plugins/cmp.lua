@@ -82,9 +82,8 @@ return function()
       format = function(entry, vim_item)
         vim_item.kind = as.style.lsp.kinds[vim_item.kind]
         local name = entry.source.name
-        local completion = entry.completion_item.data
-        -- FIXME: automate this using a regex to normalise names
-        local menu = ({
+
+        vim_item.menu = ({
           nvim_lsp = '[LSP]',
           copilot = '[Copilot]',
           nvim_lua = '[Lua]',
@@ -101,13 +100,6 @@ return function()
           cmp_git = '[Git]',
         })[name]
 
-        if name == 'cmp_tabnine' then
-          if completion and completion.detail then
-            menu = completion.detail .. ' ' .. menu
-          end
-          vim_item.kind = ''
-        end
-        vim_item.menu = menu
         return vim_item
       end,
     },
@@ -119,7 +111,6 @@ return function()
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
-      { name = 'cmp_tabnine' },
       { name = 'spell' },
     }, {
       { name = 'buffer' },
@@ -131,7 +122,6 @@ return function()
       { name = 'neorg' },
     }, {
       { name = 'buffer' },
-      { name = 'cmp_tabnine' },
     }),
   })
 
