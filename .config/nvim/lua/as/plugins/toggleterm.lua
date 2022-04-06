@@ -34,7 +34,7 @@ return function()
 
   local htop = Terminal:new {
     cmd = 'htop',
-    hidden = 'true',
+    hidden = true,
     direction = 'float',
     on_open = float_handler,
   }
