@@ -238,6 +238,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
+    LspCodeLens = { link = 'NonText' },
     LspReferenceText = { underline = true },
     LspReferenceRead = { underline = true },
     DiagnosticHint = { foreground = L.hint },
