@@ -358,11 +358,16 @@ as.augroup('Utilities', {
     event = { 'BufReadPost' },
     command = function()
       if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
-        local row, col = unpack(api.nvim_buf_get_mark(0, '"'))
-        if { row, col } ~= { 0, 0 } then
-          local ok, msg = pcall(api.nvim_win_set_cursor, 0, { row, 0 })
-          if not ok then
-            vim.notify(msg, 'error', { title = 'Last cursor position' })
+        if fn.line [['"]] > 0 and fn.line [['"]] <= fn.line '$' then
+          -- Check if the last line of the buffer is the same as the window
+          if fn.line 'w$' == fn.line '$' then
+            -- Set line to last line edited
+            vim.cmd [[normal! g`"]]
+            -- Try to center
+          elseif fn.line '$' - fn.line [['"]] > ((fn.line 'w$' - fn.line 'w0') / 2) - 1 then
+            vim.cmd [[normal! g`"zz]]
+          else
+            vim.cmd [[normal! G'"<c-e>]]
           end
         end
       end
