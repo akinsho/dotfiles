@@ -666,11 +666,6 @@ packer.startup {
           markdown = {
             headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
           },
-          yaml = {
-            dash_pattern = '^---+$',
-            dash_highlight = 'Dash',
-            dash_string = '-',
-          },
         }
       end,
     }
