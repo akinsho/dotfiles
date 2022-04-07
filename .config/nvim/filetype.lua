@@ -10,6 +10,7 @@ vim.filetype.add {
   },
   filename = {
     ['.gitignore'] = 'conf',
+    ['go.mod'] = 'gomod',
     Podfile = 'ruby',
     Brewfile = 'ruby',
   },
