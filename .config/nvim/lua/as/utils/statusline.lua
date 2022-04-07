@@ -37,6 +37,7 @@ local plain = {
     'startify',
     'vimwiki',
     'markdown',
+    'norg',
     'NeogitStatus',
     'dap-repl',
     'dapui',

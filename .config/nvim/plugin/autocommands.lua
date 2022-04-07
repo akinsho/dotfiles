@@ -212,6 +212,7 @@ local column_clear = {
   'org',
   'orgagenda',
   'NeogitStatus',
+  'norg',
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
