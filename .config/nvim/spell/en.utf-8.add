@@ -240,3 +240,4 @@ extmark
 bufnr
 lnum
 libuv
+userdata
