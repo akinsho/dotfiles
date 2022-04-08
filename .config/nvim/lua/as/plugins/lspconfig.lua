@@ -3,12 +3,16 @@ as.lsp = {}
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
-local function setup_autocommands(client, _)
+
+--- Add lsp autocommands
+---@param client table<string, any>
+---@param bufnr number
+local function setup_autocommands(client, bufnr)
   if client and client.resolved_capabilities.code_lens then
     as.augroup('LspCodeLens', {
       {
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-        buffer = 0,
+        buffer = bufnr,
         command = function()
           vim.lsp.codelens.refresh()
         end,
@@ -19,21 +23,23 @@ local function setup_autocommands(client, _)
     as.augroup('LspCursorCommands', {
       {
         event = 'CursorHold',
-        buffer = 0,
+        buffer = bufnr,
         command = function()
           vim.lsp.buf.document_highlight()
         end,
       },
       {
         event = 'CursorHoldI',
-        buffer = 0,
+        description = 'LSP: Document Highlight (insert)',
+        buffer = bufnr,
         command = function()
           vim.lsp.buf.document_highlight()
         end,
       },
       {
         event = 'CursorMoved',
-        buffer = 0,
+        description = 'LSP: Document Highlight (Clear)',
+        buffer = bufnr,
         command = function()
           vim.lsp.buf.clear_references()
         end,
