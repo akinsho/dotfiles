@@ -239,8 +239,11 @@ local function general_overrides()
     -- LSP
     -----------------------------------------------------------------------------//
     LspCodeLens = { link = 'NonText' },
-    LspReferenceText = { underline = true },
-    LspReferenceRead = { underline = true },
+    LspReferenceText = { underline = true, background = 'NONE' },
+    LspReferenceRead = { underline = true, background = 'NONE' },
+    -- This represents when a reference is assigned which is more interesting than regular
+    -- occurrences so should be highlighted more distinctly
+    LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
     DiagnosticHint = { foreground = L.hint },
     DiagnosticError = { foreground = L.error },
     DiagnosticWarning = { foreground = L.warn },
