@@ -5,6 +5,7 @@ local api = vim.api
 local expand = fn.expand
 local strwidth = fn.strwidth
 local fnamemodify = fn.fnamemodify
+local luv = vim.loop
 local fmt = string.format
 
 local M = {}
@@ -615,19 +616,22 @@ end
 ---A thin wrapper around nvim's job api
 ---@param interval number
 ---@param task function
----@param on_complete function?
+---@param on_complete fun(timer: userdata)
 local function job(interval, task, on_complete)
   vim.defer_fn(task, 2000)
   local pending_job
-  local timer = fn.timer_start(interval, function()
+  --- @type userdata
+  local timer = luv.new_timer()
+  timer:start(0, interval, function()
     -- clear previous job
     if pending_job then
-      fn.jobstop(pending_job)
+      vim.schedule(function()
+        vim.notify 'Updating JOB'
+        fn.jobstop(pending_job)
+        pending_job = task()
+      end)
     end
-    pending_job = task()
-  end, {
-    ['repeat'] = -1,
-  })
+  end)
   if on_complete then
     on_complete(timer)
   end
@@ -676,14 +680,21 @@ function M.git_updates_refresh()
   git_update_job()
 end
 
+--- @type userdata
+local git_timer
+
 function M.git_update_toggle()
-  local on = is_git_repo()
-  if on then
+  local is_repo = is_git_repo()
+  if is_repo then
     M.git_updates()
   end
-  if vim.g.git_statusline_updates_timer then
-    local status = on and 0 or 1
-    fn.timer_pause(vim.g.git_statusline_updates_timer, status)
+  if not git_timer then
+    return
+  end
+  if is_repo then
+    git_timer:start()
+  else
+    git_timer:stop()
   end
 end
 
@@ -691,7 +702,7 @@ end
 --- we are currently ahead or behind upstream
 function M.git_updates()
   job(30000, git_update_job, function(timer)
-    vim.g.git_statusline_updates_timer = timer
+    git_timer = timer
   end)
 end
 
