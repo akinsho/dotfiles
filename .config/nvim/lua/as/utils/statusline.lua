@@ -626,7 +626,6 @@ local function job(interval, task, on_complete)
     -- clear previous job
     if pending_job then
       vim.schedule(function()
-        vim.notify 'Updating JOB'
         fn.jobstop(pending_job)
         pending_job = task()
       end)
@@ -688,12 +687,7 @@ function M.git_update_toggle()
   if is_repo then
     M.git_updates()
   end
-  if not git_timer then
-    return
-  end
-  if is_repo then
-    git_timer:start()
-  else
+  if git_timer and git_timer:is_active() and not is_repo then
     git_timer:stop()
   end
 end
