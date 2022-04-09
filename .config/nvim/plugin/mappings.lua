@@ -140,20 +140,13 @@ inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
 -- source: https://www.reddit.com/r/vim/comments/i8b5z1/is_there_a_more_elegant_way_to_move_lines_than_eg/
-if as.has 'mac' then
-  -- Allow using alt in macOS without enabling “Use Option as Meta key”
-  nmap('∆', '<a-j>')
-  nmap('˚', '<a-k>')
-  nnoremap('∆', '<cmd>move+<CR>==')
-  nnoremap('˚', '<cmd>move-2<CR>==')
-  xnoremap('˚', ":move-2<CR>='[gv")
-  xnoremap('∆', ":move'>+<CR>='[gv")
-else
-  nnoremap('<a-k>', '<cmd>move-2<CR>==')
-  nnoremap('<a-j>', '<cmd>move+<CR>==')
-  xnoremap('<a-k>', ":move-2<CR>='[gv")
-  xnoremap('<a-j>', ":move'>+<CR>='[gv")
-end
+-- Alternatively to allow using alt in macOS without enabling “Use Option as Meta key”
+-- nmap('∆', '<a-j>')
+-- nmap('˚', '<a-k>')
+nnoremap('<a-k>', '<cmd>move-2<CR>==')
+nnoremap('<a-j>', '<cmd>move+<CR>==')
+xnoremap('<a-k>', ":move-2<CR>='[gv")
+xnoremap('<a-j>', ":move'>+<CR>='[gv")
 ----------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------
