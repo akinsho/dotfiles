@@ -8,6 +8,7 @@ return function()
     show_current_context_start_on_current_line = false,
     show_first_indent_level = true,
     filetype_exclude = {
+      'neo-tree-popup',
       'dap-repl',
       'startify',
       'dashboard',
