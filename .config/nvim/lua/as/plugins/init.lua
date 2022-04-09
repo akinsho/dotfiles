@@ -67,13 +67,6 @@ packer.startup {
           requires = 'tami5/sqlite.lua',
         },
         {
-          'camgraff/telescope-tmux.nvim',
-          after = 'telescope.nvim',
-          config = function()
-            require('telescope').load_extension 'tmux'
-          end,
-        },
-        {
           'nvim-telescope/telescope-smart-history.nvim',
           after = 'telescope.nvim',
           config = function()
