@@ -2,6 +2,7 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local contains = vim.tbl_contains
+local map = vim.keymap.set
 
 vim.api.nvim_exec(
   [[
@@ -12,20 +13,52 @@ vim.api.nvim_exec(
   ''
 )
 
+----------------------------------------------------------------------------------------------------
+-- HLSEARCH
+----------------------------------------------------------------------------------------------------
+--[[
+In order to get hlsearch working the way I like i.e. on when using /,?,N,n,*,#, etc. and off when
+When I'm not using them, I need to set the following:
+The mappings below are essentially faked user input this is because in order to automatically turn off
+the search highlight just changing the value of 'hlsearch' inside a function does not work
+read `:h nohlsearch`. So to have this work I check that the current mouse position is not a search
+result, if it is we leave highlighting on, otherwise I turn it off on cursor moved by faking my input
+using the expr mappings below.
+
+This is based on the implementation discussed here:
+https://github.com/neovim/neovim/issues/5581
+--]]
+
+map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', { expr = true })
+
+local function stop_hl()
+  if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then
+    return
+  end
+  api.nvim_feedkeys(as.replace_termcodes '<Plug>(StopHL)', 'm', false)
+end
+
+local function hl_search()
+  local col = api.nvim_win_get_cursor(0)[2]
+  local curr_line = api.nvim_get_current_line()
+  local _, p_start, p_end = unpack(fn.matchstrpos(curr_line, fn.getreg '/', 0))
+  -- if the cursor is in a search result, leave highlighting on
+  if col < p_start or col > p_end then
+    stop_hl()
+  end
+end
+
 as.augroup('VimrcIncSearchHighlight', {
   {
-    -- automatically clear search highlight once leaving the commandline
-    event = { 'CmdlineEnter' },
-    pattern = { '[/\\?]' },
-    command = ':set hlsearch',
+    event = { 'CursorMoved' },
+    command = function()
+      hl_search()
+    end,
   },
   {
-    event = { 'CmdlineLeave' },
-    pattern = { '[/\\?]' },
+    event = { 'InsertEnter' },
     command = function()
-      vim.defer_fn(function()
-        vim.o.hlsearch = false
-      end, 10000)
+      stop_hl()
     end,
   },
   {
