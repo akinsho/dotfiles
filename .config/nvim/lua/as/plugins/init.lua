@@ -887,9 +887,15 @@ packer.startup {
     -- Text Objects {{{1
     --------------------------------------------------------------------------------
     use {
-      'AndrewRadev/splitjoin.vim',
+      'AckslD/nvim-trevJ.lua',
+      module = 'trevj',
+      setup = function()
+        as.nnoremap('gS', function()
+          require('trevj').format_at_cursor()
+        end, { label = 'splitjoin: split' })
+      end,
       config = function()
-        require('which-key').register { gS = 'splitjoin: split', gJ = 'splitjoin: join' }
+        require('trevj').setup()
       end,
     }
 
