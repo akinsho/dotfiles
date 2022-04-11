@@ -22,7 +22,11 @@ as.augroup('VimrcIncSearchHighlight', {
   {
     event = { 'CmdlineLeave' },
     pattern = { '[/\\?]' },
-    command = ':set nohlsearch | redrawstatus',
+    command = function()
+      vim.defer_fn(function()
+        vim.cmd ':set nohlsearch | redrawstatus'
+      end, 10000)
+    end,
   },
 })
 
