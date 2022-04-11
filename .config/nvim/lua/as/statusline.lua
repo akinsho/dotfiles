@@ -349,16 +349,6 @@ local function setup_autocommands()
         utils.git_update_toggle()
       end,
     },
-    --- NOTE: enable to update search count on cursor move
-    {
-      event = { 'CursorMoved' },
-      pattern = { '*' },
-      command = function()
-        if vim.o.hlsearch then
-          utils.update_search_count(vim.loop.new_timer())
-        end
-      end,
-    },
     {
       event = 'User',
       pattern = 'NeogitStatusRefresh',
