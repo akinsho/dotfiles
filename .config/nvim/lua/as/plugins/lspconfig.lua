@@ -22,16 +22,16 @@ local function setup_autocommands(client, bufnr)
   if client and client.resolved_capabilities.document_highlight then
     as.augroup('LspCursorCommands', {
       {
-        event = 'CursorHold',
+        event = { 'CursorHold' },
         buffer = bufnr,
         command = function()
-          vim.lsp.buf.document_highlight()
+          vim.diagnostic.open_float(nil, { focus = false })
         end,
       },
       {
-        event = 'CursorHoldI',
-        description = 'LSP: Document Highlight (insert)',
+        event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
+        description = 'LSP: Document Highlight',
         command = function()
           vim.lsp.buf.document_highlight()
         end,
