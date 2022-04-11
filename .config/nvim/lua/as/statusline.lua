@@ -203,7 +203,7 @@ function _G.__statusline()
     { item_if(file_modified, ctx.modified, 'StModified'), 1 },
     { readonly_item, 2 },
     { item(utils.mode()), 0 },
-    { item_if(utils.search_count(), vim.o.hlsearch, 'StCount'), 1 },
+    { item_if(utils.search_count(), vim.v.hlsearch > 0, 'StCount'), 1 },
     { dir_item, 3 },
     { parent_item, 2 },
     { file_item, 0 },
