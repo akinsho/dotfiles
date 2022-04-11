@@ -490,15 +490,15 @@ end
 local search_count_timer
 --- Timer to update the search count as the file is travelled
 ---@return function
-function M.update_search_count()
-  if search_count_timer then
-    fn.timer_stop(search_count_timer)
-  end
-  search_count_timer = fn.timer_start(200, function(timer)
-    if timer == search_count_timer then
-      fn.searchcount { recompute = 1, maxcount = 0, timeout = 100 }
-      vim.cmd 'redrawstatus'
-    end
+function M.update_search_count(timer)
+  search_count_timer = timer
+  timer:start(0, 200, function()
+    vim.schedule(function()
+      if timer == search_count_timer then
+        fn.searchcount { recompute = 1, maxcount = 0, timeout = 100 }
+        vim.cmd 'redrawstatus'
+      end
+    end)
   end)
 end
 -----------------------------------------------------------------------------//

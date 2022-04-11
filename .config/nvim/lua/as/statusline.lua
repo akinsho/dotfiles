@@ -350,12 +350,15 @@ local function setup_autocommands()
       end,
     },
     --- NOTE: enable to update search count on cursor move
-    -- {
-    --   event = {"CursorMoved", "CursorMovedI"},
-    --   pattern = {"*"},
-    --   command = function () utils.update_search_count() end
-    -- },
-    -- NOTE: user autocommands can't be joined into one autocommand
+    {
+      event = { 'CursorMoved' },
+      pattern = { '*' },
+      command = function()
+        if vim.o.hlsearch then
+          utils.update_search_count(vim.loop.new_timer())
+        end
+      end,
+    },
     {
       event = 'User',
       pattern = 'NeogitStatusRefresh',
