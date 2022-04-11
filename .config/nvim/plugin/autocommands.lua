@@ -17,15 +17,22 @@ as.augroup('VimrcIncSearchHighlight', {
     -- automatically clear search highlight once leaving the commandline
     event = { 'CmdlineEnter' },
     pattern = { '[/\\?]' },
-    command = ':set hlsearch  | redrawstatus',
+    command = ':set hlsearch',
   },
   {
     event = { 'CmdlineLeave' },
     pattern = { '[/\\?]' },
     command = function()
       vim.defer_fn(function()
-        vim.cmd ':set nohlsearch | redrawstatus'
+        vim.o.hlsearch = false
       end, 10000)
+    end,
+  },
+  {
+    event = { 'OptionSet' },
+    pattern = { 'hlsearch' },
+    command = function()
+      vim.cmd 'redrawstatus'
     end,
   },
 })
