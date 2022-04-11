@@ -738,10 +738,7 @@ packer.startup {
           lsp_cfg = true,
           lsp_gofumpt = true,
           lsp_on_attach = as.lsp.on_attach,
-          lsp_diag_virtual_text = {
-            space = 0,
-            prefix = as.style.icons.misc.bug,
-          },
+          lsp_diag_virtual_text = false,
         }
         as.augroup('Golang', {
           {
