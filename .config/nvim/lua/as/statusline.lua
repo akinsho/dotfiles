@@ -277,7 +277,7 @@ function _G.__statusline()
       item(ahead, 'StTitle', {
         prefix = icons.misc.up,
         prefix_color = 'StGreen',
-        after = behind > 0 and '' or ' ',
+        after = '',
         before = '',
       }),
       5,
@@ -285,14 +285,6 @@ function _G.__statusline()
     {
       item(behind, 'StTitle', { prefix = icons.misc.down, prefix_color = 'StNumber', after = ' ' }),
       5,
-    },
-    { -- column
-      item('%-3c', 'StTitle', {
-        prefix = 'Col:',
-        prefix_color = 'StMetadataPrefix',
-        after = '',
-      }),
-      7,
     },
     -- Current line number/total line number
     {
@@ -303,6 +295,13 @@ function _G.__statusline()
         total_hl = 'StComment',
         sep_hl = 'StComment',
       },
+      7,
+    },
+    { -- column
+      item('%-3c', 'StTitle', {
+        prefix = 'Col:',
+        prefix_color = 'StMetadataPrefix',
+      }),
       7,
     },
     -- (Unexpected) Indentation
