@@ -286,6 +286,14 @@ function _G.__statusline()
       item(behind, 'StTitle', { prefix = icons.misc.down, prefix_color = 'StNumber', after = ' ' }),
       5,
     },
+    { -- column
+      item('%-3c', 'StTitle', {
+        prefix = 'Col:',
+        prefix_color = 'StMetadataPrefix',
+        after = '',
+      }),
+      7,
+    },
     -- Current line number/total line number
     {
       utils.line_info {

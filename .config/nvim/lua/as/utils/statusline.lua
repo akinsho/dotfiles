@@ -333,7 +333,7 @@ end
 
 --- This function gets and decorates the current and total line count
 --- it derives this using the line() function rather than the %l/%L statusline
---- format strings because these cannot be
+--- format strings because these cannot be counted before hand
 -- @param opts table
 function M.line_info(opts)
   local sep = opts.sep or '/'
@@ -349,7 +349,6 @@ function M.line_info(opts)
   local length = strwidth(prefix .. current .. sep .. last)
   return {
     table.concat {
-      ' ',
       wrap(prefix_color),
       prefix,
       ' ',
