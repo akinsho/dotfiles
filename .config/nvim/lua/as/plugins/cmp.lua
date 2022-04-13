@@ -15,7 +15,6 @@ return function()
   h.plugin(
     'Cmp',
     vim.tbl_extend('force', {
-      CmpBorderedWindow_Normal = { link = 'NormalFloat' },
       CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
       CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
       CmpItemAbbrMatch = { foreground = keyword_fg },
@@ -46,15 +45,19 @@ return function()
     end
   end
 
+  local cmp_window = {
+    border = border,
+    winhighlight = table.concat({
+      'Normal:NormalFloat',
+      'FloatBorder:FloatBorder',
+      'CursorLine:Visual',
+      'Search:None',
+    }, ','),
+  }
   cmp.setup {
     window = {
-      completion = {
-        -- TODO: consider 'shadow', and tweak the winhighlight
-        border = border,
-      },
-      documentation = {
-        border = border,
-      },
+      completion = cmp.config.window.bordered(cmp_window),
+      documentation = cmp.config.window.bordered(cmp_window),
     },
     experimental = {
       ghost_text = false, -- disable whilst using copilot
@@ -103,9 +106,6 @@ return function()
 
         return vim_item
       end,
-    },
-    documentation = {
-      border = border,
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
