@@ -59,9 +59,6 @@ return function()
       completion = cmp.config.window.bordered(cmp_window),
       documentation = cmp.config.window.bordered(cmp_window),
     },
-    experimental = {
-      ghost_text = false, -- disable whilst using copilot
-    },
     snippet = {
       expand = function(args)
         require('luasnip').lsp_expand(args.body)
@@ -128,7 +125,6 @@ return function()
   cmp.setup.filetype('NeogitCommitMessage', {
     sources = cmp.config.sources({
       { name = 'luasnip' },
-      -- { name = 'cmp_git' },
     }, {
       { name = 'buffer' },
     }),
