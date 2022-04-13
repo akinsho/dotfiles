@@ -228,6 +228,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
+    TSNamespace = { link = 'TypeBuiltin' },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     TSError = { undercurl = true, sp = error_line, foreground = 'NONE' },
