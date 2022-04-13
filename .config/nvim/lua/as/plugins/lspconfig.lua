@@ -129,12 +129,15 @@ function as.lsp.tagfunc(pattern, flags)
   return results
 end
 
+local format_exclusions = { 'go' }
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
   local ok, lsp_format = pcall(require, 'lsp-format')
-  if ok then
-    lsp_format.on_attach(client)
+  if not vim.tbl_contains(format_exclusions, vim.bo[bufnr].filetype) then
+    if ok then
+      lsp_format.on_attach(client)
+    end
   end
 
   if client.resolved_capabilities.goto_definition then
