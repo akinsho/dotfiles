@@ -133,6 +133,9 @@ return function()
   })
 
   local search_sources = {
+    view = {
+      entries = { name = 'custom', direction = 'bottom_up' },
+    },
     sources = cmp.config.sources({
       { name = 'nvim_lsp_document_symbol' },
     }, {
