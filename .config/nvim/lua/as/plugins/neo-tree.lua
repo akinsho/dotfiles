@@ -30,8 +30,9 @@ return function()
     filesystem = {
       netrw_hijack_behavior = 'open_current',
       filtered_items = {
+        visible = true,
         hide_dotfiles = false,
-        hide_gitignored = false,
+        hide_gitignored = true,
       },
     },
     default_component_configs = {
