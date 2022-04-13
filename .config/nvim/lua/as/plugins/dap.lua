@@ -33,7 +33,7 @@ function M.config()
     },
     {
       name = 'DapStopped',
-      text = '🟢',
+      text = icons.misc.bookmark,
       texthl = 'DapStopped',
       linehl = '',
       numhl = '',
@@ -42,6 +42,7 @@ function M.config()
 
   require('as.highlights').plugin('dap', {
     DapBreakpoint = { foreground = as.style.palette.light_red },
+    DapStopped = { foreground = as.style.palette.green },
   })
 
   dap.configurations.lua = {
