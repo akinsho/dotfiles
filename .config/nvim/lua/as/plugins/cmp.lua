@@ -1,6 +1,8 @@
 return function()
   local cmp = require 'cmp'
   local h = require 'as.highlights'
+
+  local api = vim.api
   local t = as.replace_termcodes
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.kind_highlights
@@ -66,7 +68,7 @@ return function()
     },
     mapping = {
       ['<c-h>'] = cmp.mapping(function()
-        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](t '<Tab>'), 'n', true)
+        api.nvim_feedkeys(vim.fn['copilot#Accept'](t '<Tab>'), 'n', true)
       end),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
