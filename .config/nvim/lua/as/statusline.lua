@@ -277,7 +277,6 @@ function _G.__statusline()
       item(ahead, 'StTitle', {
         prefix = icons.misc.up,
         prefix_color = 'StGreen',
-        after = '',
         before = '',
       }),
       5,
