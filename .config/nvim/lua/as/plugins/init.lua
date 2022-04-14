@@ -494,6 +494,16 @@ packer.startup {
         end)
       end,
     }
+
+    use {
+      'rainbowhxch/beacon.nvim',
+      config = function()
+        require('beacon').setup {
+          ignore_buffers = { 'terminal', 'nofile' },
+          ignore_filetypes = { 'neo-tree', 'qf', 'NeogitStatus', 'packer' },
+        }
+      end,
+    }
     use {
       'windwp/nvim-autopairs',
       after = 'nvim-cmp',
