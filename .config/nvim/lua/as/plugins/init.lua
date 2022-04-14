@@ -749,6 +749,7 @@ packer.startup {
           lsp_gofumpt = true,
           lsp_on_attach = as.lsp.on_attach,
           lsp_diag_virtual_text = false,
+          dap_debug_keymap = false,
         }
         as.augroup('Golang', {
           {
