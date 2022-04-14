@@ -500,7 +500,14 @@ packer.startup {
       config = function()
         require('beacon').setup {
           ignore_buffers = { 'terminal', 'nofile' },
-          ignore_filetypes = { 'neo-tree', 'qf', 'NeogitStatus', 'packer' },
+          ignore_filetypes = {
+            'neo-tree',
+            'qf',
+            'NeogitCommitMessage',
+            'NeogitStatus',
+            'packer',
+            'trouble',
+          },
         }
       end,
     }
