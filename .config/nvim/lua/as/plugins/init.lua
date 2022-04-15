@@ -380,6 +380,17 @@ packer.startup {
     }
 
     use {
+      'b0o/incline.nvim',
+      config = function()
+        require('incline').setup {
+          hide = {
+            focused_win = true,
+          },
+        }
+      end,
+    }
+
+    use {
       'stevearc/dressing.nvim',
       -- NOTE: Defer loading till telescope is loaded
       -- this implicitly loads telescope so needs to be delayed
