@@ -461,6 +461,7 @@ packer.startup {
           ['*'] = true,
           gitcommit = false,
           NeogitCommitMessage = false,
+          DressingInput = false,
           ['neo-tree-popup'] = false,
         }
         require('as.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
