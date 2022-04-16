@@ -194,22 +194,9 @@ return function()
 
   local function installed_plugins()
     require('telescope.builtin').find_files {
+      prompt_title = '~ plugins ~',
       cwd = vim.fn.stdpath 'data' .. '/site/pack/packer',
     }
-  end
-
-  local function tmux_sessions()
-    telescope.extensions.tmux.sessions {}
-  end
-
-  local function tmux_windows()
-    telescope.extensions.tmux.windows {
-      entry_format = '#S: #T',
-    }
-  end
-
-  local function dash()
-    require('dash').search()
   end
 
   require('which-key').register {
@@ -219,7 +206,6 @@ return function()
       a = { builtins.builtin, 'builtins' },
       b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
       d = { dotfiles, 'dotfiles' },
-      D = { dash, 'dash' },
       f = { builtins.find_files, 'find files' },
       n = { gh_notifications, 'notifications' },
       g = {
@@ -237,11 +223,6 @@ return function()
       R = { builtins.reloader, 'module reloader' },
       r = { builtins.resume, 'resume last picker' },
       s = { builtins.live_grep, 'grep string' },
-      t = {
-        name = '+tmux',
-        s = { tmux_sessions, 'sessions' },
-        w = { tmux_windows, 'windows' },
-      },
       ['?'] = { builtins.help_tags, 'help' },
     },
     ['<leader>c'] = {
