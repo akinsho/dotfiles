@@ -1,17 +1,42 @@
 local M = {}
 
 function M.setup()
+  local fn = vim.fn
+  local function repl_toggle()
+    require('dap').repl.toggle(nil, 'botright split')
+  end
+  local function continue()
+    require('dap').continue()
+  end
+  local function step_out()
+    require('dap').step_out()
+  end
+  local function step_into()
+    require('dap').step_into()
+  end
+  local function step_over()
+    require('dap').step_over()
+  end
+  local function run_last()
+    require('dap').run_last()
+  end
+  local function toggle_breakpoint()
+    require('dap').toggle_breakpoint()
+  end
+  local function set_breakpoint()
+    require('dap').set_breakpoint(fn.input 'Breakpoint condition: ')
+  end
   require('which-key').register({
     d = {
       name = '+debugger',
-      b = 'dap: toggle breakpoint',
-      B = 'dap: set breakpoint',
-      c = 'dap: continue or start debugging',
-      e = 'dap: step out',
-      i = 'dap: step into',
-      o = 'dap: step over',
-      l = 'dap REPL: run last',
-      t = 'dap REPL: toggle',
+      b = { toggle_breakpoint, 'dap: toggle breakpoint' },
+      B = { set_breakpoint, 'dap: set breakpoint' },
+      c = { continue, 'dap: continue or start debugging' },
+      e = { step_out, 'dap: step out' },
+      i = { step_into, 'dap: step into' },
+      o = { step_over, 'dap: step over' },
+      l = { run_last, 'dap REPL: run last' },
+      t = { repl_toggle, 'dap REPL: toggle' },
     },
   }, {
     prefix = '<localleader>',
@@ -69,31 +94,6 @@ function M.config()
   -- DON'T automatically stop at exceptions
   -- dap.defaults.fallback.exception_breakpoints = {}
   -- NOTE: the window options can be set directly in this function
-
-  as.nnoremap('<localleader>dt', function()
-    require('dap').repl.toggle(nil, 'botright split')
-  end)
-  as.nnoremap('<localleader>dc', function()
-    require('dap').continue()
-  end)
-  as.nnoremap('<localleader>de', function()
-    require('dap').step_out()
-  end)
-  as.nnoremap('<localleader>di', function()
-    require('dap').step_into()
-  end)
-  as.nnoremap('<localleader>do', function()
-    require('dap').step_over()
-  end)
-  as.nnoremap('<localleader>dl', function()
-    require('dap').run_last()
-  end)
-  as.nnoremap('<localleader>db', function()
-    require('dap').toggle_breakpoint()
-  end)
-  as.nnoremap('<localleader>dB', function()
-    require('dap').set_breakpoint(fn.input 'Breakpoint condition: ')
-  end)
 end
 
 return M
