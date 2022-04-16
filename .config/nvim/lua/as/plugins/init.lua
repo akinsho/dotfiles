@@ -511,6 +511,7 @@ packer.startup {
       'rainbowhxch/beacon.nvim',
       config = function()
         require('beacon').setup {
+          minimal_jump = 20,
           ignore_buffers = { 'terminal', 'nofile' },
           ignore_filetypes = {
             'neo-tree',
