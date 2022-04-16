@@ -541,16 +541,16 @@ packer.startup {
         }
       end,
     }
+
     use {
-      'karb94/neoscroll.nvim',
+      'declancm/cinnamon.nvim', -- NOTE: alternative: 'karb94/neoscroll.nvim'
       config = function()
-        require('neoscroll').setup {
-          mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', 'zt', 'zz', 'zb' },
-          stop_eof = false,
-          hide_cursor = true,
+        require('cinnamon').setup {
+          extra_keymaps = true,
         }
       end,
     }
+
     use {
       'mg979/vim-visual-multi',
       config = function()
