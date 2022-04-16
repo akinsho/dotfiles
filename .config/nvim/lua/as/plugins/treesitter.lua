@@ -75,6 +75,9 @@ return function()
         },
       },
     },
+    endwise = {
+      enable = true,
+    },
     rainbow = {
       enable = true,
       disable = vim.tbl_filter(function(p)
