@@ -517,6 +517,7 @@ packer.startup {
             'neo-tree',
             'qf',
             'NeogitCommitMessage',
+            'NeogitPopup',
             'NeogitStatus',
             'packer',
             'trouble',
