@@ -767,6 +767,7 @@ packer.startup {
           gopls_cmd = { install_root_dir .. '/go/gopls' },
           max_line_len = 100,
           goimport = 'goimports',
+          icons = false,
           lsp_cfg = true,
           lsp_gofumpt = true,
           lsp_on_attach = as.lsp.on_attach,
