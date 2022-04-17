@@ -86,6 +86,13 @@ return function()
         items = {
           groups.builtin.ungrouped,
           {
+            name = 'dotfiles',
+            icon = '',
+            matcher = function(buf)
+              return buf.name:match '^%.' ~= nil
+            end,
+          },
+          {
             highlight = { guisp = '#51AFEF', gui = 'underline' },
             name = 'tests',
             icon = '',
@@ -94,21 +101,9 @@ return function()
             end,
           },
           {
-            name = 'view models',
-            highlight = { guisp = '#03589C', gui = 'underline' },
-            matcher = function(buf)
-              return buf.filename:match 'view_model%.dart'
-            end,
-          },
-          {
-            name = 'screens',
-            matcher = function(buf)
-              return buf.path:match 'screen'
-            end,
-          },
-          {
             highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
+            icon = '',
             matcher = function(buf)
               for _, ext in ipairs { 'md', 'txt', 'org', 'norg', 'wiki' } do
                 if ext == fn.fnamemodify(buf.path, ':e') then
