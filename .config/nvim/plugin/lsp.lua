@@ -35,6 +35,9 @@ command('LspDiagnostics', function()
         pattern = { '*' },
         command = function()
           if as.is_vim_list_open() then
+            vim.diagnostic.setqflist { open = false }
+          end
+          if #vim.fn.getqflist() == 0 then
             as.toggle_list 'quickfix'
           end
         end,
