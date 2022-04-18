@@ -159,8 +159,6 @@ packer.startup {
     use {
       'nvim-neo-tree/neo-tree.nvim',
       branch = 'v2.x',
-      keys = '<C-N>',
-      cmd = 'NeoTree',
       config = conf 'neo-tree',
       requires = {
         'nvim-lua/plenary.nvim',
