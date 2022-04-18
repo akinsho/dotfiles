@@ -173,7 +173,16 @@ packer.startup {
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
     use { 'neovim/nvim-lspconfig', config = conf 'lspconfig' }
-    use 'lukas-reineke/lsp-format.nvim'
+
+    use {
+      'lukas-reineke/lsp-format.nvim',
+      config = function()
+        require('lsp-format').setup {
+          go = { exclude = { 'gopls' } },
+        }
+      end,
+    }
+
     use {
       'williamboman/nvim-lsp-installer',
       requires = 'nvim-lspconfig',
