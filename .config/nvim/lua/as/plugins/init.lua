@@ -439,6 +439,19 @@ packer.startup {
         }
       end,
     }
+
+    use {
+      'simrat39/symbols-outline.nvim',
+      cmd = 'SymbolsOutline',
+      setup = function()
+        as.nnoremap('<leader>lS', '<Cmd>SymbolsOutline<CR>', 'toggle: symbols outline')
+        vim.g.symbols_outline = {
+          border = as.style.current.border,
+          auto_preview = false,
+        }
+      end,
+    }
+
     use {
       'folke/todo-comments.nvim',
       requires = 'nvim-lua/plenary.nvim',
