@@ -1024,6 +1024,7 @@ packer.startup {
     -----------------------------------------------------------------------------//
     use_local {
       'akinsho/pubspec-assist.nvim',
+      ft = { 'dart', 'yaml' },
       local_path = 'personal',
       rocks = {
         {
