@@ -69,7 +69,9 @@ as.augroup('VimrcIncSearchHighlight', {
     event = { 'OptionSet' },
     pattern = { 'hlsearch' },
     command = function()
-      vim.cmd 'redrawstatus'
+      vim.schedule(function()
+        vim.cmd 'redrawstatus'
+      end)
     end,
   },
 })
