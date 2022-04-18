@@ -98,6 +98,9 @@ vim.diagnostic.handlers.signs = {
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
+local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
+local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
+
 diagnostic.config {
   signs = true,
   underline = true,
@@ -105,14 +108,13 @@ diagnostic.config {
   severity_sort = true,
   virtual_text = false,
   float = {
+    max_width = max_width,
+    max_height = max_height,
     border = border,
     focusable = false,
     source = 'always',
   },
 }
-
-local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
-local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 lsp.handlers['textDocument/hover'] = lsp.with(
