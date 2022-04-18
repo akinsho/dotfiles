@@ -287,8 +287,7 @@ local sidebar_fts = {
   'flutterToolsOutline',
   'undotree',
   'neo-tree',
-  'dap-repl',
-  'qf',
+  'Outline',
 }
 
 local function on_sidebar_enter()
