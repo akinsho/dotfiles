@@ -25,28 +25,35 @@ command('LspFormat', function()
   vim.lsp.buf.formatting_sync(nil, 1000)
 end)
 
-command('LspDiagnostics', function()
-  vim.diagnostic.setqflist { open = false }
-  as.toggle_list 'quickfix'
-  if as.is_vim_list_open() then
-    as.augroup('LspDiagnosticUpdate', {
-      {
-        event = { 'DiagnosticChanged' },
-        pattern = { '*' },
-        command = function()
-          if as.is_vim_list_open() then
-            vim.diagnostic.setqflist { open = false }
-          end
+-- A helper function to auto-update the quickfix list when new diagnostics come
+-- in and close it once everything is resolved. This functionality only runs whilst
+-- the list is open.
+local function make_diagnostic_qf_updater()
+  local cmd_id = nil
+  return function()
+    vim.diagnostic.setqflist { open = false }
+    as.toggle_list 'quickfix'
+    if not as.is_vim_list_open() and cmd_id then
+      api.nvim_del_autocmd(cmd_id)
+      cmd_id = nil
+    end
+    if cmd_id then
+      return
+    end
+    cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
+      callback = function()
+        if as.is_vim_list_open() then
+          vim.diagnostic.setqflist { open = false }
           if #vim.fn.getqflist() == 0 then
             as.toggle_list 'quickfix'
           end
-        end,
-      },
+        end
+      end,
     })
-  elseif fn.exists '#LspDiagnosticUpdate' > 0 then
-    vim.cmd 'autocmd! LspDiagnosticUpdate'
   end
-end)
+end
+
+command('LspDiagnostics', make_diagnostic_qf_updater())
 as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostics')
 
 -----------------------------------------------------------------------------//
