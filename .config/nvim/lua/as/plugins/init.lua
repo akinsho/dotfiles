@@ -834,10 +834,12 @@ packer.startup {
       keys = '<leader>E',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
       setup = function()
-        require('which-key').register { ['<leader>E'] = 'treesitter: highlight cursor group' }
-      end,
-      config = function()
-        as.nnoremap('<leader>E', '<Cmd>TSHighlightCapturesUnderCursor<CR>')
+        require('which-key').register {
+          ['<leader>E'] = {
+            '<Cmd>TSHighlightCapturesUnderCursor<CR>',
+            'treesitter: highlight cursor group',
+          },
+        }
       end,
     }
 
