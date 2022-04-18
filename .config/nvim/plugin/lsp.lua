@@ -28,6 +28,7 @@ end)
 -- A helper function to auto-update the quickfix list when new diagnostics come
 -- in and close it once everything is resolved. This functionality only runs whilst
 -- the list is open.
+-- similar functionality is provided by: https://github.com/onsails/diaglist.nvim
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
