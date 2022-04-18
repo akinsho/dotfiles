@@ -244,38 +244,6 @@ packer.startup {
       config = conf 'cmp',
     }
 
-    use {
-      'AckslD/nvim-neoclip.lua',
-      config = function()
-        require('neoclip').setup {
-          enable_persistent_history = true,
-          keys = {
-            telescope = {
-              i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
-              n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
-            },
-          },
-        }
-        local function clip()
-          require('telescope').extensions.neoclip.default(
-            require('telescope.themes').get_dropdown()
-          )
-        end
-        require('which-key').register {
-          ['<localleader>p'] = { clip, 'neoclip: open yank history' },
-        }
-      end,
-    }
-
-    -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
-    -- causes formatting bugs on save when updateevents are TextChanged{I}
-    use {
-      'L3MON4D3/LuaSnip',
-      event = 'InsertEnter',
-      module = 'luasnip',
-      requires = 'rafamadriz/friendly-snippets',
-      config = conf 'luasnip',
-    }
     -- }}}
     -----------------------------------------------------------------------------//
     -- Testing and Debugging {{{1
@@ -432,6 +400,38 @@ packer.startup {
     use 'nanotee/luv-vimdocs'
     use 'milisims/nvim-luaref'
 
+    -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
+    -- causes formatting bugs on save when updateevents are TextChanged{I}
+    use {
+      'L3MON4D3/LuaSnip',
+      event = 'InsertEnter',
+      module = 'luasnip',
+      requires = 'rafamadriz/friendly-snippets',
+      config = conf 'luasnip',
+    }
+
+    use {
+      'AckslD/nvim-neoclip.lua',
+      config = function()
+        require('neoclip').setup {
+          enable_persistent_history = true,
+          keys = {
+            telescope = {
+              i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
+              n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
+            },
+          },
+        }
+        local function clip()
+          require('telescope').extensions.neoclip.default(
+            require('telescope.themes').get_dropdown()
+          )
+        end
+        require('which-key').register {
+          ['<localleader>p'] = { clip, 'neoclip: open yank history' },
+        }
+      end,
+    }
     use {
       'folke/todo-comments.nvim',
       requires = 'nvim-lua/plenary.nvim',
