@@ -1150,7 +1150,4 @@ as.augroup('PackerSetupInit', {
   },
 })
 
-as.nnoremap('<leader>ps', [[<Cmd>PackerSync<CR>]])
-as.nnoremap('<leader>pc', [[<Cmd>PackerClean<CR>]])
-
 -- vim:foldmethod=marker
