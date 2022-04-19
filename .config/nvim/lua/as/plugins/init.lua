@@ -479,7 +479,7 @@ packer.startup {
       'github/copilot.vim',
       config = function()
         vim.g.copilot_no_tab_map = true
-        as.imap('<Plug>(vimrc:copilot-dummy-map)', "copilot#Accept('<Tab>')", { expr = true })
+        as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
         as.inoremap('<M-]>', '<Plug>(copilot-next)')
         as.inoremap('<M-[>', '<Plug>(copilot-previous)')
         as.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
