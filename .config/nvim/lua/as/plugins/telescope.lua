@@ -213,6 +213,12 @@ return function()
         c = { builtins.git_commits, 'commits' },
         b = { builtins.git_branches, 'branches' },
       },
+      l = {
+        name = '+lsp',
+        e = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
+        d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
+        s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
+      },
       m = { builtins.man_pages, 'man pages' },
       h = { frecency, 'history' },
       c = { nvim_config, 'nvim config' },
@@ -224,11 +230,6 @@ return function()
       r = { builtins.resume, 'resume last picker' },
       s = { builtins.live_grep, 'grep string' },
       ['?'] = { builtins.help_tags, 'help' },
-    },
-    ['<leader>c'] = {
-      d = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
-      s = { builtins.lsp_document_symbols, 'telescope: document symbols' },
-      w = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
     },
   }
 end
