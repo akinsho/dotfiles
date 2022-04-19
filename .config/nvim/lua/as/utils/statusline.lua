@@ -203,7 +203,7 @@ local function special_buffers(ctx)
     return 'Location List'
   end
   if ctx.buftype == 'quickfix' then
-    return 'Quickfix'
+    return 'Quickfix List'
   end
   if normal_term then
     return 'Terminal(' .. fnamemodify(vim.env.SHELL, ':t') .. ')'
