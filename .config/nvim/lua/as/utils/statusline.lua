@@ -427,16 +427,15 @@ function M.diagnostic_info(context)
   }
 end
 
-function M.lsp_client()
-  for _, client in ipairs(vim.lsp.buf_get_clients(0)) do
-    if
-      client.config
-      and client.config.filetypes
-      and vim.tbl_contains(client.config.filetypes, vim.bo.filetype)
-    then
-      return client.name
+function M.lsp_client(ctx)
+  local names = {}
+  local clients = vim.lsp.buf_get_clients(ctx.bufnum)
+  for _, client in ipairs(clients) do
+    if client.name and (not client.name:match 'null' or #clients == 1) then
+      table.insert(names, client.name)
     end
   end
+  return table.concat(names, ' ')
 end
 
 ---The currently focused function
