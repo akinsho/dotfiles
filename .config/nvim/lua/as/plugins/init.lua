@@ -823,7 +823,6 @@ packer.startup {
       run = ':TSUpdate',
       config = conf 'treesitter',
       local_path = 'contributing',
-      wants = { 'null-ls.nvim', 'lua-dev.nvim' },
     }
 
     use { 'RRethy/nvim-treesitter-endwise' }
