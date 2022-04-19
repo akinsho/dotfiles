@@ -178,6 +178,7 @@ packer.startup {
         require('lsp-format').setup {
           go = { exclude = { 'gopls' } },
         }
+        as.nnoremap('<leader>rd', '<Cmd>FormatToggle<CR>', 'lsp format: toggle')
       end,
     }
 
