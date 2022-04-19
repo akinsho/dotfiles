@@ -552,6 +552,15 @@ packer.startup {
         }
       end,
     }
+
+    use {
+      'mfussenegger/nvim-treehopper',
+      config = function()
+        as.omap('m', ":<C-U>lua require('tsht').nodes()<CR>")
+        as.vnoremap('m', ":lua require('tsht').nodes()<CR>")
+      end,
+    }
+
     use {
       'windwp/nvim-autopairs',
       after = 'nvim-cmp',
