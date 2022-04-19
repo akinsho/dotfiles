@@ -363,6 +363,11 @@ packer.startup {
           hide = {
             focused_win = true,
           },
+          window = {
+            options = {
+              winhighlight = 'Normal:Search',
+            },
+          },
         }
       end,
     }
