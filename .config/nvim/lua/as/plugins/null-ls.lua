@@ -5,7 +5,7 @@ return function()
     debounce = 150,
     on_attach = as.lsp.on_attach,
     sources = {
-      -- null_ls.builtins.code_actions.gitsigns,
+      null_ls.builtins.diagnostics.golangci_lint,
       null_ls.builtins.diagnostics.zsh,
       null_ls.builtins.formatting.stylua.with {
         condition = function(_utils)
