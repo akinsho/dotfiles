@@ -808,6 +808,7 @@ packer.startup {
           lsp_on_attach = as.lsp.on_attach,
           lsp_diag_virtual_text = false,
           dap_debug_keymap = false,
+          textobjects = false,
         }
         as.augroup('Golang', {
           {
