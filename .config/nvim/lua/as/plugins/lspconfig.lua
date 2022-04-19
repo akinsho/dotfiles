@@ -55,8 +55,8 @@ end
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client table lsp client
 local function setup_mappings(client)
-  local ok, lsp_format = pcall(require, 'lsp-format')
-  local format = ok and lsp_format.format or vim.lsp.buf.formatting
+  local ok = pcall(require, 'lsp-format')
+  local format = ok and '<Cmd>Format<CR>' or vim.lsp.buf.formatting
   local maps = {
     n = {
       ['<leader>rf'] = { format, 'lsp: format buffer' },
