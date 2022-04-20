@@ -406,6 +406,8 @@ function as.mappings.grep_operator(type)
 end
 
 -- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
+nnoremap('<leader>g', [[:silent! set operatorfunc=v:lua.as.mappings.grep_operator<cr>g@]])
+xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]])
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
@@ -418,8 +420,6 @@ local function open_link()
   end
 end
 nnoremap('gx', open_link)
-nnoremap('<leader>g', [[:silent! set operatorfunc=v:lua.as.mappings.grep_operator<cr>g@]])
-xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]])
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
