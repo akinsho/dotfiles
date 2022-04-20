@@ -208,8 +208,7 @@ function as.lsp.get_server_config(server)
 end
 
 return function()
-  local lsp_installer = require 'nvim-lsp-installer'
-  lsp_installer.on_server_ready(function(server)
+  require('nvim-lsp-installer').on_server_ready(function(server)
     server:setup(as.lsp.get_server_config(server))
   end)
 end
