@@ -805,6 +805,7 @@ packer.startup {
           icons = false,
           lsp_cfg = true,
           lsp_gofumpt = true,
+          lsp_keymaps = false,
           lsp_on_attach = as.lsp.on_attach,
           lsp_diag_virtual_text = false,
           dap_debug_keymap = false,
