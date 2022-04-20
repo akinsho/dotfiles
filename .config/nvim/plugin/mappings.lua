@@ -406,6 +406,18 @@ function as.mappings.grep_operator(type)
 end
 
 -- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
+-----------------------------------------------------------------------------//
+-- GX - replicate netrw functionality
+-----------------------------------------------------------------------------//
+local function open_link()
+  local file = fn.expand '<cfile>'
+  if fn.isdirectory(file) > 0 then
+    vim.cmd('edit ' .. file)
+  else
+    fn.jobstart({ vim.g.open_command, file }, { detach = true })
+  end
+end
+nnoremap('gx', open_link)
 nnoremap('<leader>g', [[:silent! set operatorfunc=v:lua.as.mappings.grep_operator<cr>g@]])
 xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]])
 ---------------------------------------------------------------------------------
