@@ -57,6 +57,7 @@ return function()
     }, ','),
   }
   cmp.setup {
+    preselect = cmp.PreselectMode.None,
     window = {
       completion = cmp.config.window.bordered(cmp_window),
       documentation = cmp.config.window.bordered(cmp_window),
