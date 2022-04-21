@@ -161,7 +161,6 @@ end
 local function general_overrides()
   local comment_fg = M.get_hl('Comment', 'fg')
   local keyword_fg = M.get_hl('Keyword', 'fg')
-  local search_bg = M.get_hl('Search', 'bg')
   local normal_bg = M.get_hl('Normal', 'bg')
   local code_block = M.alter_color(normal_bg, 30)
   local msg_area_bg = M.alter_color(normal_bg, -10)
@@ -219,7 +218,7 @@ local function general_overrides()
     Comment = { italic = true },
     Type = { italic = true, bold = true },
     Include = { italic = true, bold = false },
-    QuickFixLine = { background = search_bg, foreground = 'NONE', italic = true },
+    QuickFixLine = { inherit = 'PmenuSbar', foreground = 'NONE', italic = true },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
