@@ -430,12 +430,17 @@ end
 function M.lsp_client(ctx)
   local names = {}
   local clients = vim.lsp.buf_get_clients(ctx.bufnum)
-  for _, client in ipairs(clients) do
-    if client.name and (not client.name:match 'null' or #clients == 1) then
+  -- Show a special truncated symbol for null ls since showing it's full name
+  -- is a waste of space, I want to know it's running but not have it's name taking up space
+  local has_null_ls = false
+  for _, client in pairs(clients) do
+    local is_null = client.name:match 'null'
+    has_null_ls = has_null_ls or is_null
+    if not is_null then
       table.insert(names, client.name)
     end
   end
-  return table.concat(names, ' ')
+  return table.concat(names, ' ') .. (has_null_ls and ' (N)' or '')
 end
 
 ---The currently focused function
