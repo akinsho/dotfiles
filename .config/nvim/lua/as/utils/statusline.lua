@@ -616,19 +616,20 @@ end
 ---@param task function
 ---@param on_complete fun(timer: userdata)
 local function job(interval, task, on_complete)
-  vim.defer_fn(task, 2000)
   local pending_job
-  --- @type userdata
   local timer = luv.new_timer()
-  timer:start(0, interval, function()
-    -- clear previous job
+  local function callback()
     if pending_job then
-      vim.schedule(function()
-        fn.jobstop(pending_job)
-        pending_job = task()
-      end)
+      fn.jobstop(pending_job)
     end
-  end)
+    pending_job = task()
+  end
+  local fail = timer:start(0, interval, vim.schedule_wrap(callback))
+  if fail ~= 0 then
+    vim.schedule(function()
+      vim.notify('Failed to start git update job: ' .. fail)
+    end)
+  end
   if on_complete then
     on_complete(timer)
   end
@@ -656,6 +657,9 @@ end
 -- the result format is in the format: `1       0`
 -- the first value commits ahead by and the second is commits behind by
 local function git_update_job()
+  if not is_git_repo() then
+    return
+  end
   local result = {}
   fn.jobstart('git rev-list --count --left-right @{upstream}...HEAD', {
     stdout_buffered = true,
@@ -677,25 +681,10 @@ function M.git_updates_refresh()
   git_update_job()
 end
 
---- @type userdata
-local git_timer
-
-function M.git_update_toggle()
-  local is_repo = is_git_repo()
-  if is_repo then
-    M.git_updates()
-  end
-  if git_timer and git_timer:is_active() and not is_repo then
-    git_timer:stop()
-  end
-end
-
 --- starts a timer to check for the whether
 --- we are currently ahead or behind upstream
 function M.git_updates()
-  job(30000, git_update_job, function(timer)
-    git_timer = timer
-  end)
+  job(10000, git_update_job)
 end
 
 return M

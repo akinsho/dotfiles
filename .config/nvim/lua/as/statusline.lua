@@ -349,13 +349,6 @@ local function setup_autocommands()
       end,
     },
     {
-      event = { 'DirChanged' },
-      pattern = { '*' },
-      command = function()
-        utils.git_update_toggle()
-      end,
-    },
-    {
       event = 'User',
       pattern = 'NeogitStatusRefresh',
       command = function()
