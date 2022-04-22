@@ -614,8 +614,7 @@ end
 ---A thin wrapper around nvim's job api
 ---@param interval number
 ---@param task function
----@param on_complete fun(timer: userdata)
-local function job(interval, task, on_complete)
+local function job(interval, task)
   local pending_job
   local timer = luv.new_timer()
   local function callback()
@@ -629,9 +628,6 @@ local function job(interval, task, on_complete)
     vim.schedule(function()
       vim.notify('Failed to start git update job: ' .. fail)
     end)
-  end
-  if on_complete then
-    on_complete(timer)
   end
 end
 
