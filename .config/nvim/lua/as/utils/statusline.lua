@@ -611,10 +611,9 @@ end
 -- Git/Github helper functions
 -----------------------------------------------------------------------------//
 
----A thin wrapper around nvim's job api
 ---@param interval number
 ---@param task function
-local function job(interval, task)
+local function run_task_on_interval(interval, task)
   local pending_job
   local timer = luv.new_timer()
   local function callback()
@@ -680,7 +679,7 @@ end
 --- starts a timer to check for the whether
 --- we are currently ahead or behind upstream
 function M.git_updates()
-  job(10000, git_update_job)
+  run_task_on_interval(10000, git_update_job)
 end
 
 return M
