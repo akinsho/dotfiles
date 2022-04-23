@@ -241,7 +241,9 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     -- If the label is all that was passed in, set the opts automagically
-    opts = type(opts) == 'string' and { label = opts } or opts and vim.deepcopy(opts) or {}
+    -- FIXME: if which key ever natively supports using the desc then remove direct call
+    -- to whichkey and just rely on desc
+    opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
     if opts.label then
       local ok, wk = as.safe_require('which-key', { silent = true })
       if ok then
