@@ -112,9 +112,6 @@ return function()
         previewer = false,
         shorten_path = false,
       },
-      lsp_code_actions = {
-        theme = 'cursor',
-      },
       colorscheme = {
         enable_preview = true,
       },
