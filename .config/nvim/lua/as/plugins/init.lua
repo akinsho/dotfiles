@@ -76,6 +76,14 @@ packer.startup {
       },
     }
 
+    use {
+      'ilAYAli/scMRU.nvim',
+      cmd = { 'Mfu', 'Mru' },
+      setup = function()
+        as.nnoremap('<leader>fm', '<Cmd>Mfu<CR>', 'most frequently used')
+      end,
+    }
+
     use 'kyazdani42/nvim-web-devicons'
 
     use { 'folke/which-key.nvim', config = conf 'whichkey' }

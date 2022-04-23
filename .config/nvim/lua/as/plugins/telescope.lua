@@ -217,7 +217,6 @@ return function()
         d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
         s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
       },
-      m = { builtins.man_pages, 'man pages' },
       h = { frecency, 'history' },
       c = { nvim_config, 'nvim config' },
       o = { builtins.buffers, 'buffers' },
