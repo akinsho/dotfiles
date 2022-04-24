@@ -1,6 +1,6 @@
 # .dotfiles
 
-![Neovim Setup](./dotfiles.png "Vim Setup")
+<img width="1719" alt="dotfiles" src="https://user-images.githubusercontent.com/22454918/164985104-93e4ecc6-4b92-4e6a-9483-439bc88e397b.png">
 
 My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in case of laptop armageddon).
 
