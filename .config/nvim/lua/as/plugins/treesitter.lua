@@ -8,7 +8,7 @@ return function()
     { 'ruby', 'elm', 'go', 'gomod', 'markdown', 'help', 'vim', 'comment', 'css' },
     { 'lua', 'teal', 'typescript', 'tsx', 'javascript', 'jsdoc', 'json', 'jsonc' },
     { 'dockerfile', 'kotlin', 'graphql', 'html', 'yaml', 'make', 'ocaml' },
-    { 'java', 'python', 'swift', 'rust', 'yaml', 'norg', 'norg_meta' },
+    { 'java', 'python', 'swift', 'rust', 'yaml', 'norg' },
   }
 
   require('nvim-treesitter.configs').setup {
