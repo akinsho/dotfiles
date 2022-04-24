@@ -5,10 +5,10 @@ return function()
   -- that doesn't require the user to keep track of languages they use or might use
   local languages = vim.tbl_flatten {
     { 'c', 'hcl', 'comment', 'make', 'query', 'toml', 'dart', 'bash', 'regex' },
-    { 'ruby', 'elm', 'go', 'gomod', 'markdown', 'help', 'vim', 'norg', 'comment', 'css' },
+    { 'ruby', 'elm', 'go', 'gomod', 'markdown', 'help', 'vim', 'comment', 'css' },
     { 'lua', 'teal', 'typescript', 'tsx', 'javascript', 'jsdoc', 'json', 'jsonc' },
     { 'dockerfile', 'kotlin', 'graphql', 'html', 'yaml', 'make', 'ocaml' },
-    { 'java', 'python', 'swift', 'rust', 'yaml' },
+    { 'java', 'python', 'swift', 'rust', 'yaml', 'norg', 'norg_meta' },
   }
 
   require('nvim-treesitter.configs').setup {
