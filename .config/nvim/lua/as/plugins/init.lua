@@ -240,6 +240,7 @@ packer.startup {
       'hrsh7th/nvim-cmp',
       module = 'cmp',
       event = 'InsertEnter',
+      config = conf 'cmp',
       requires = {
         { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-lspconfig' },
         { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
@@ -247,6 +248,7 @@ packer.startup {
         { 'f3fora/cmp-spell', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+        { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
         {
           'petertriho/cmp-git',
           after = 'nvim-cmp',
@@ -254,9 +256,7 @@ packer.startup {
             require('cmp_git').setup { filetypes = { 'gitcommit', 'NeogitCommitMessage' } }
           end,
         },
-        { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
       },
-      config = conf 'cmp',
     }
 
     -- }}}
