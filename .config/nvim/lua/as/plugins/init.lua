@@ -808,7 +808,7 @@ packer.startup {
         require('go').setup {
           gopls_cmd = { install_root_dir .. '/go/gopls' },
           max_line_len = 100,
-          goimport = 'goimports',
+          goimport = 'gopls', -- NOTE: using goimports comes with unintended formatting consequences
           icons = false,
           lsp_cfg = {
             codelenses = {
