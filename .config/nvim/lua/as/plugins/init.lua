@@ -889,6 +889,8 @@ packer.startup {
         }
       end,
     }
+
+    use { 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' }
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{1
