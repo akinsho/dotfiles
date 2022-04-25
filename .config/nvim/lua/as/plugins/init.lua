@@ -810,7 +810,9 @@ packer.startup {
           max_line_len = 100,
           goimport = 'goimports',
           icons = false,
-          lsp_cfg = true,
+          lsp_cfg = {
+            analyses = { unusedparams = true },
+          },
           lsp_gofumpt = true,
           lsp_keymaps = false,
           lsp_on_attach = as.lsp.on_attach,
