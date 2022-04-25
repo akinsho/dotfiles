@@ -811,7 +811,12 @@ packer.startup {
           goimport = 'goimports',
           icons = false,
           lsp_cfg = {
-            analyses = { unusedparams = true },
+            codelenses = {
+              gc_details = false,
+            },
+            analyses = {
+              unusedparams = true,
+            },
           },
           lsp_gofumpt = true,
           lsp_keymaps = false,
