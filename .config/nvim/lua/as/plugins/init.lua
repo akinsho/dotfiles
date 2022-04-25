@@ -612,7 +612,7 @@ packer.startup {
     use {
       'itchyny/vim-highlighturl',
       config = function()
-        vim.g.highlighturl_guifg = require('as.highlights').get_hl('Keyword', 'fg')
+        vim.g.highlighturl_guifg = require('as.highlights').get_hl('URL', 'fg')
       end,
     }
 
