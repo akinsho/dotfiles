@@ -799,11 +799,7 @@ packer.startup {
       config = conf 'flutter-tools',
     }
 
-    use {
-      'ray-x/go.nvim',
-      ft = 'go',
-      config = conf 'go',
-    }
+    use { 'ray-x/go.nvim', ft = 'go', config = conf 'go' }
 
     use 'dart-lang/dart-vim-plugin'
     use 'mtdl9/vim-log-highlighting'

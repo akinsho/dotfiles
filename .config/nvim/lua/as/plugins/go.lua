@@ -1,8 +1,12 @@
 return function()
-  local path = require 'nvim-lsp-installer.path'
-  local install_root_dir = path.concat { vim.fn.stdpath 'data', 'lsp_servers' }
+  local ok, path = as.safe_require 'nvim-lsp-installer.path'
+  local gopls_cmd
+  if ok then
+    local install_root_dir = path.concat { vim.fn.stdpath 'data', 'lsp_servers' }
+    gopls_cmd = { install_root_dir .. '/go/gopls' }
+  end
   require('go').setup {
-    gopls_cmd = { install_root_dir .. '/go/gopls' },
+    gopls_cmd = gopls_cmd,
     max_line_len = 100,
     goimport = 'gopls', -- NOTE: using goimports comes with unintended formatting consequences
     icons = false,
