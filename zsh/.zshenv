@@ -29,10 +29,6 @@ if [ -d "$HOME/n" ]; then
   export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi
 
-if which yarn >/dev/null; then
-  path+=("$(yarn global bin)")
-fi
-
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 #-------------------------------------------------------------------------------
