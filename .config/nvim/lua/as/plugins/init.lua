@@ -249,8 +249,7 @@ packer.startup {
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
         {
           'petertriho/cmp-git',
-          opt = true,
-          -- after = 'nvim-cmp',
+          after = 'nvim-cmp',
           config = function()
             require('cmp_git').setup { filetypes = { 'gitcommit', 'NeogitCommitMessage' } }
           end,
