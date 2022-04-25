@@ -101,7 +101,7 @@ return function()
           buffer = '[Buffer]',
           spell = '[Spell]',
           cmdline = '[Command]',
-          cmp_git = '[Git]',
+          git = '[Git]',
         })[name]
 
         return vim_item
@@ -127,6 +127,7 @@ return function()
 
   cmp.setup.filetype('NeogitCommitMessage', {
     sources = cmp.config.sources({
+      { name = 'git' },
       { name = 'luasnip' },
     }, {
       { name = 'buffer' },
