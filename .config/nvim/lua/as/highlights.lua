@@ -171,6 +171,8 @@ local function general_overrides()
     VertSplit = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
     WinSeparator = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
     mkdLineBreak = { link = 'NONE' },
+    Directory = { inherit = 'Keyword', bold = true },
+    URL = { inherit = 'Keyword', underline = true },
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
