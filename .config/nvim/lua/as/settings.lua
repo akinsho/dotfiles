@@ -226,15 +226,6 @@ vim.opt.sessionoptions = {
 }
 vim.opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 vim.opt.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
------------------------------------------------------------------------------//
--- Shada (Shared Data)
------------------------------------------------------------------------------//
--- NOTE: don't store marks as they are currently broke i.e.
--- are incorrectly resurrected after deletion
--- replace '100 with '0 the default which stores 100 marks
--- add f0 so file marks aren't stored
--- @credit: wincent
-vim.opt.shada = "!,'0,f0,<50,s10,h"
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
