@@ -74,7 +74,7 @@ fs() {
 fe() {
   local files
   IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview\
-  'bat --theme="OneHalfDark" --color "always" {}' --preview-window=right:60% ))
+  'bat --color "always" {}' --preview-window=right:60% ))
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
