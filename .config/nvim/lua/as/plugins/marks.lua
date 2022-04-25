@@ -9,8 +9,7 @@ return function()
     },
   }, { prefix = '<leader>' })
   require('marks').setup {
-    -- NOTE: Don't use a builtin marks as they add a sign column to *all* windows
-    -- regardless of if there is a valid sign in that window or not
+    force_write_shada = true,
     excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
     bookmark_0 = {
       sign = '⚑',
