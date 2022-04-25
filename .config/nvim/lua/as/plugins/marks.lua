@@ -13,7 +13,7 @@ return function()
     excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
     bookmark_0 = {
       sign = '⚑',
-      virt_text = 'bookmarks',
+      virt_text = '',
     },
   }
 end
