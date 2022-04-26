@@ -109,8 +109,8 @@ vim.diagnostic.handlers.signs = {
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
-local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
-local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
+local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
+local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config {
   signs = true,
