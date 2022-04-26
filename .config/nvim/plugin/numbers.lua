@@ -45,6 +45,8 @@ local function is_floating_win()
   return vim.fn.win_gettype() == 'popup'
 end
 
+local is_enabled = true
+
 ---Determines whether or not a window should be ignored by this plugin
 ---@return boolean
 local function is_ignored()
@@ -84,15 +86,16 @@ local function is_blocked()
 end
 
 local function enable_relative_number()
+  if not is_enabled then
+    return
+  end
   if is_ignored() then
     return
   end
   if is_blocked() then
-    -- setlocal nonumber norelativenumber
     vim.wo.number = false
     vim.wo.relativenumber = false
   else
-    -- setlocal number relativenumber
     vim.wo.number = true
     vim.wo.relativenumber = true
   end
@@ -103,28 +106,37 @@ local function disable_relative_number()
     return
   end
   if is_blocked() then
-    -- setlocal nonumber norelativenumber
     vim.wo.number = false
     vim.wo.relativenumber = false
   else
-    -- setlocal number norelativenumber
     vim.wo.number = true
     vim.wo.relativenumber = false
   end
 end
 
+as.command('ToggleRelativeNumber', function()
+  is_enabled = not is_enabled
+  if is_enabled then
+    enable_relative_number()
+  else
+    disable_relative_number()
+  end
+end)
+
 as.augroup('ToggleRelativeLineNumbers', {
   {
     event = { 'BufEnter', 'FileType', 'FocusGained', 'InsertLeave' },
     pattern = { '*' },
-    command = function ()
-       enable_relative_number()
+    command = function()
+      enable_relative_number()
     end,
   },
   {
     event = { 'FocusLost', 'BufLeave', 'InsertEnter', 'TermOpen' },
     pattern = { '*' },
-    command = function() disable_relative_number() end,
+    command = function()
+      disable_relative_number()
+    end,
   },
 })
 
