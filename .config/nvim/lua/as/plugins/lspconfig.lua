@@ -150,6 +150,7 @@ end
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
   gopls = true,
+  terraform = true,
   bashls = true,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
