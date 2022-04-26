@@ -151,7 +151,6 @@ end
 as.lsp.servers = {
   gopls = true,
   terraform = true,
-  bashls = true,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
