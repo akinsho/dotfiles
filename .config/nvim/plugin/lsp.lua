@@ -123,7 +123,7 @@ diagnostic.config {
     max_height = max_height,
     border = border,
     focusable = false,
-    source = 'always',
+    source = 'if_many',
   },
 }
 
