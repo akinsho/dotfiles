@@ -90,6 +90,7 @@ local function setup_mappings(client)
     maps.n['<leader>gd'] = { vim.lsp.buf.type_definition, 'lsp: go to type definition' }
   end
 
+  maps.n['<leader>cl'] = { vim.lsp.codelens.run, 'lsp: run code lens' }
   maps.n['<leader>ca'] = { vim.lsp.buf.code_action, 'lsp: code action' }
   maps.x['<leader>ca'] = { '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action' }
 
