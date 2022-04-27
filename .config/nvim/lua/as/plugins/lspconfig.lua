@@ -150,6 +150,7 @@ end
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
   gopls = false, -- NOTE: this is loaded by it's own plugin
+  tsserver = true,
   graphql = true,
   jsonls = true,
   bashls = true,
