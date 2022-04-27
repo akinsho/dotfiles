@@ -186,6 +186,10 @@ return function()
     })
   end
 
+  local function notifications()
+    telescope.extensions.notify.notify(dropdown())
+  end
+
   local function gh_notifications()
     telescope.extensions.ghn.ghn(dropdown())
   end
@@ -205,11 +209,12 @@ return function()
       b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
       d = { dotfiles, 'dotfiles' },
       f = { builtins.find_files, 'find files' },
-      n = { gh_notifications, 'notifications' },
+      n = { notifications, 'notifications' },
       g = {
         name = '+git',
         c = { builtins.git_commits, 'commits' },
         b = { builtins.git_branches, 'branches' },
+        n = { gh_notifications, 'notifications' },
       },
       l = {
         name = '+lsp',
