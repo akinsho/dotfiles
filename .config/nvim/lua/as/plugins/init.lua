@@ -302,11 +302,10 @@ packer.startup {
       requires = { 'vim-test' },
       run = ':UpdateRemotePlugins',
       config = function()
-        local test_patterns = { '*_test.*', '*_spec.*' }
         as.augroup('UltestTests', {
           {
             event = { 'BufWritePost' },
-            pattern = test_patterns,
+            pattern = { '*_test.*', '*_spec.*' },
             command = 'UltestNearest',
           },
         })
