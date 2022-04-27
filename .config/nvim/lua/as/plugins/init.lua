@@ -370,11 +370,12 @@ packer.startup {
           hide = {
             focused_win = true,
           },
-          window = {
-            options = {
-              winhighlight = 'Normal:Search',
-            },
-          },
+          -- BUG: this is currently broken due to a bug in Neovim
+          -- window = {
+          --   options = {
+          --     winhighlight = 'Normal:Search',
+          --   },
+          -- },
         }
       end,
     }
