@@ -296,10 +296,9 @@ packer.startup {
 
     use {
       'rcarriga/vim-ultest',
-      cmd = 'Ultest',
       wants = 'vim-test',
-      event = { 'BufEnter *_test.*,*_spec.*' },
       requires = { 'vim-test' },
+      opt = true,
       run = ':UpdateRemotePlugins',
       config = function()
         as.augroup('UltestTests', {
