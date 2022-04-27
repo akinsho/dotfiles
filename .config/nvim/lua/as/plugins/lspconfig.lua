@@ -150,6 +150,19 @@ end
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
   gopls = false, -- NOTE: this is loaded by it's own plugin
+  golangci_lint_ls = {
+    init_options = {
+      command = {
+        'golangci-lint',
+        'run',
+        '--enable-all',
+        '--disable',
+        'lll',
+        '--out-format',
+        'json',
+      },
+    },
+  },
   tsserver = true,
   graphql = true,
   jsonls = true,
