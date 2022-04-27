@@ -149,8 +149,12 @@ end
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like runtimepath for lua is correctly populated
 as.lsp.servers = {
-  gopls = true,
-  terraform = true,
+  gopls = false, -- NOTE: this is loaded by it's own plugin
+  graphql = true,
+  jsonls = true,
+  bashls = true,
+  vimls = true,
+  terraformls = true,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
@@ -209,6 +213,8 @@ end
 
 return function()
   require('nvim-lsp-installer').on_server_ready(function(server)
-    server:setup(as.lsp.get_server_config(server))
+    if as.lsp.servers[server.name] then
+      server:setup(as.lsp.get_server_config(server))
+    end
   end)
 end
