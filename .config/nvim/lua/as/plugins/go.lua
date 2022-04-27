@@ -10,9 +10,13 @@ return function()
     max_line_len = 100,
     goimport = 'gopls', -- NOTE: using goimports comes with unintended formatting consequences
     icons = false,
+    lsp_codelens = false,
     lsp_cfg = {
       codelenses = {
+        generate = true,
         gc_details = false,
+        test = true,
+        tidy = true,
       },
       analyses = {
         unusedparams = true,
