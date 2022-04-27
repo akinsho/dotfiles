@@ -103,33 +103,6 @@ local function setup_mappings(client)
   end
 end
 
-function as.lsp.tagfunc(pattern, flags)
-  if flags ~= 'c' then
-    return vim.NIL
-  end
-  local params = vim.lsp.util.make_position_params()
-  local client_id_to_results, err = vim.lsp.buf_request_sync(
-    0,
-    'textDocument/definition',
-    params,
-    500
-  )
-  assert(not err, vim.inspect(err))
-
-  local results = {}
-  for _, lsp_results in ipairs(client_id_to_results) do
-    for _, location in ipairs(lsp_results.result or {}) do
-      local start = location.range.start
-      table.insert(results, {
-        name = pattern,
-        filename = vim.uri_to_fname(location.uri),
-        cmd = string.format('call cursor(%d, %d)', start.line + 1, start.character + 1),
-      })
-    end
-  end
-  return results
-end
-
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
@@ -138,8 +111,12 @@ function as.lsp.on_attach(client, bufnr)
     lsp_format.on_attach(client)
   end
 
-  if client.resolved_capabilities.goto_definition then
-    vim.bo[bufnr].tagfunc = 'v:lua.as.lsp.tagfunc'
+  if client.resolved_capabilities.goto_definition == true then
+    vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
+  end
+
+  if client.resolved_capabilities.document_formatting == true then
+    vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
   end
 end
 
