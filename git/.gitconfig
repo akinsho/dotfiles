@@ -35,6 +35,9 @@
   reset-up = reset --hard $(git upstream)
   sl = log --oneline --decorate -20
   new = checkout -b
+[diff]
+  colorMoved = default
+  navigate = true  # use n and N to move between diff sections
 [delta]
   features = line-numbers decorations
 [delta "decorations"]
@@ -42,6 +45,8 @@
   file-style = bold yellow ul
 [interactive]
   diffFilter = delta --color-only
+[merge]
+  conflictstyle = diff3
 [push]
   default = current
 [push]
