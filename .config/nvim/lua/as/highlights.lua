@@ -106,7 +106,7 @@ end
 ---in the right format
 ---@param group string
 ---@param attribute string
----@param fallback string
+---@param fallback string?
 ---@return string
 function M.get_hl(group, attribute, fallback)
   if not group then

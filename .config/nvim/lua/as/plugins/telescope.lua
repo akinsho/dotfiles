@@ -28,7 +28,7 @@ return function()
     })
   end
 
-  ---@param opts table
+  ---@param opts table?
   ---@return table
   local function dropdown(opts)
     return themes.get_dropdown(get_border(opts))

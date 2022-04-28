@@ -184,7 +184,7 @@ end
 ---Create an nvim command
 ---@param name any
 ---@param rhs string|fun(args: CommandArgs)
----@param opts table
+---@param opts table?
 function as.command(name, rhs, opts)
   opts = opts or {}
   api.nvim_create_user_command(name, rhs, opts)
