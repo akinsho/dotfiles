@@ -9,6 +9,7 @@ return function()
   }
 
   wk.register {
+    ['<space><space>'] = 'toggle fold under cursor',
     [']'] = {
       name = '+next',
       ['<space>'] = 'add space below',
