@@ -429,6 +429,7 @@ packer.startup {
             require('telescope.themes').get_dropdown()
           )
         end
+
         require('which-key').register {
           ['<localleader>p'] = { clip, 'neoclip: open yank history' },
         }
@@ -983,6 +984,7 @@ packer.startup {
     --------------------------------------------------------------------------------
     -- Themes  {{{1
     --------------------------------------------------------------------------------
+    use 'EdenEast/nightfox.nvim'
     use {
       'NTBBloodbath/doom-one.nvim',
       config = function()
