@@ -102,7 +102,7 @@ return function()
             name = 'tests',
             icon = '',
             matcher = function(buf)
-              return buf.filename:match '_spec' or buf.filename:match 'test'
+              return buf.filename:match '_spec' or buf.filename:match '_test'
             end,
           },
           {
