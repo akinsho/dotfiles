@@ -327,7 +327,7 @@ packer.startup {
     use {
       'b0o/incline.nvim',
       config = function()
-        -- BUG: winhighlight  is currently broken due to a bug in Neovim
+        -- BUG: winhighlight is currently broken
         -- @see: https://github.com/neovim/neovim/issues/18283
         require('incline').setup {
           render = function(props)
