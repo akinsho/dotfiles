@@ -210,17 +210,14 @@ function as.lsp.install_servers()
   lsp_installer.setup()
 end
 
-vim.g.lsp_setup_completed = false
-
 return function()
-  as.lsp.install_servers()
-  if vim.g.lsp_setup_completed then
+  if vim.v.vim_did_enter == 1 then
     return
   end
+  as.lsp.install_servers()
   for name, config in pairs(as.lsp.servers) do
     if config then
       require('lspconfig')[name].setup(as.lsp.get_server_config(config))
     end
   end
-  vim.g.lsp_setup_completed = true
 end
