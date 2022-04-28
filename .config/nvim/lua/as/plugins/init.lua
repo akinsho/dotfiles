@@ -257,18 +257,32 @@ packer.startup {
     -----------------------------------------------------------------------------//
     -- Testing and Debugging {{{1
     -----------------------------------------------------------------------------//
-    use { 'vim-test/vim-test', config = conf 'vim-test' }
+    use {
+      'vim-test/vim-test',
+      cmd = { 'TestNearest', 'TestFile' },
+      setup = conf('vim-test').setup,
+      config = conf('vim-test').config,
+    }
 
     use {
       'rcarriga/vim-ultest',
+      wants = { 'vim-test' },
       requires = { 'vim-test' },
       run = ':UpdateRemotePlugins',
+      cmd = 'Ultest',
+      event = { 'BufEnter *_test.*,*_spec.*' },
       config = function()
+        local pattern = { '*_test.*', '*_spec.*' }
         as.augroup('UltestTests', {
+          { event = 'BufWritePost', pattern = pattern, command = 'UltestNearest' },
           {
-            event = { 'BufWritePost' },
-            pattern = { '*_test.*', '*_spec.*' },
-            command = 'UltestNearest',
+            event = 'BufEnter',
+            pattern = pattern,
+            command = function()
+              vim.schedule(function()
+                vim.cmd 'Ultest'
+              end)
+            end,
           },
         })
         as.nmap(']t', '<Plug>(ultest-next-fail)', {
