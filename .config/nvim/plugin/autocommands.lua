@@ -4,14 +4,11 @@ local fmt = string.format
 local contains = vim.tbl_contains
 local map = vim.keymap.set
 
-vim.api.nvim_exec(
-  [[
-   augroup vimrc -- Ensure all autocommands are cleared
-   autocmd!
-   augroup END
-  ]],
-  ''
-)
+vim.cmd [[
+  augroup vimrc -- Ensure all autocommands are cleared
+  autocmd!
+  augroup END
+]]
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
