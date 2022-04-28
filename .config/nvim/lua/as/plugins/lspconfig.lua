@@ -207,19 +207,20 @@ function as.lsp.install_servers()
     local msg = { 'Installing missing language servers: ', table.concat(to_install, ', ') }
     vim.notify(msg, 'info', { title = 'LSP Installer' })
   end
-  lsp_installer.setup {}
+  lsp_installer.setup()
 end
 
-vim.g.has_lsp_setup = false
+vim.g.lsp_setup_completed = false
 
 return function()
-  -- FIXME: lspconfig cannot be re-run without errors so we check if it has been setup and if has we abort
-  if vim.g.has_lsp_setup then
+  as.lsp.install_servers()
+  if vim.g.lsp_setup_completed then
     return
   end
-  as.lsp.install_servers()
   for name, config in pairs(as.lsp.servers) do
-    require('lspconfig')[name].setup(as.lsp.get_server_config(config))
+    if config then
+      require('lspconfig')[name].setup(as.lsp.get_server_config(config))
+    end
   end
-  vim.g.has_lsp_setup = true
+  vim.g.lsp_setup_completed = true
 end
