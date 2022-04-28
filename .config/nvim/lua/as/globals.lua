@@ -163,7 +163,7 @@ function as.augroup(name, commands)
   for _, autocmd in ipairs(commands) do
     local is_callback = type(autocmd.command) == 'function'
     api.nvim_create_autocmd(autocmd.event, {
-      group = id,
+      group = name,
       pattern = autocmd.pattern,
       desc = autocmd.description,
       callback = is_callback and autocmd.command or nil,
