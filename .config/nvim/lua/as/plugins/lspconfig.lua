@@ -190,31 +190,13 @@ function as.lsp.get_server_config(conf)
   return config
 end
 
---- Language servers specified in lsp servers are checked to see if any are missing on the system
---- if so we use nvim lsp installer to install them all. The is then setup, which MUST happen
---- before lspconfig is then use to setup each server
-function as.lsp.install_servers()
-  local lsp_installer = require 'nvim-lsp-installer'
-  local to_install = {}
-  for name, _ in pairs(as.lsp.servers) do
-    local server_is_found, server = lsp_installer.get_server(name)
-    if server_is_found and not server:is_installed() then
-      table.insert(to_install, name)
-      server:install()
-    end
-  end
-  if #to_install > 0 then
-    local msg = { 'Installing missing language servers: ', table.concat(to_install, ', ') }
-    vim.notify(msg, 'info', { title = 'LSP Installer' })
-  end
-  lsp_installer.setup()
-end
-
 return function()
+  require('nvim-lsp-installer').setup {
+    ensure_installed = vim.tbl_keys(as.lsp.servers),
+  }
   if vim.v.vim_did_enter == 1 then
     return
   end
-  as.lsp.install_servers()
   for name, config in pairs(as.lsp.servers) do
     if config then
       require('lspconfig')[name].setup(as.lsp.get_server_config(config))
