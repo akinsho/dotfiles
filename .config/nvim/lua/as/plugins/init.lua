@@ -144,7 +144,7 @@ packer.startup {
             pattern = { '*/personal/*/tests/*_spec.lua' },
             command = function()
               require('which-key').register({
-                t = {
+                ['<localleader>t'] = {
                   name = '+plenary',
                   f = { '<Plug>PlenaryTestFile', 'test file' },
                   d = {
@@ -152,10 +152,7 @@ packer.startup {
                     'test directory',
                   },
                 },
-              }, {
-                prefix = '<localleader>',
-                buffer = 0,
-              })
+              }, { buffer = 0 })
             end,
           },
         })
@@ -182,11 +179,14 @@ packer.startup {
       'williamboman/nvim-lsp-installer',
       requires = { { 'neovim/nvim-lspconfig', config = conf 'lspconfig' } },
       config = function()
-        vim.api.nvim_create_autocmd('Filetype', {
-          pattern = 'lsp-installer',
-          callback = function()
-            vim.api.nvim_win_set_config(0, { border = as.style.current.border })
-          end,
+        as.augroup('LspInstallerConfig', {
+          {
+            event = 'Filetype',
+            pattern = 'lsp-installer',
+            command = function()
+              vim.api.nvim_win_set_config(0, { border = as.style.current.border })
+            end,
+          },
         })
       end,
     }
@@ -1012,6 +1012,7 @@ as.augroup('PackerSetupInit', {
   {
     event = 'BufEnter',
     buffer = 0,
+    description = 'Open plugin URLs',
     command = open_plugin_url,
   },
   {
