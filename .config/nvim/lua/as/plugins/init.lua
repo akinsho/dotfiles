@@ -306,9 +306,7 @@ packer.startup {
       'petertriho/nvim-scrollbar',
       config = function()
         require('scrollbar').setup {
-          handle = {
-            color = require('as.highlights').get_hl('PmenuSbar', 'bg'),
-          },
+          handle = { color = require('as.highlights').get_hl('PmenuSbar', 'bg') },
           -- NOTE: If telescope is not explicitly excluded this garbles input into its prompt buffer
           excluded_buftypes = { 'nofile', 'terminal', 'prompt' },
           excluded_filetypes = { 'packer', 'TelescopePrompt', 'NvimTree' },
@@ -608,6 +606,7 @@ packer.startup {
     --------------------------------------------------------------------------------
     -- Knowledge and task management {{{1
     --------------------------------------------------------------------------------
+    -- TODO: complete migration to neorg
     use {
       'vimwiki/vimwiki',
       branch = 'dev',
@@ -617,12 +616,7 @@ packer.startup {
       config = conf('vimwiki').config,
     }
 
-    use {
-      'vhyrro/neorg',
-      -- tag = '*', FIXME: add tag once neorg reaches 0.1
-      requires = { 'vhyrro/neorg-telescope' },
-      config = conf 'neorg',
-    }
+    use { 'vhyrro/neorg', requires = { 'vhyrro/neorg-telescope' }, config = conf 'neorg' }
 
     use {
       'lukas-reineke/headlines.nvim',
@@ -726,12 +720,11 @@ packer.startup {
       keys = '<leader>E',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
       setup = function()
-        require('which-key').register {
-          ['<leader>E'] = {
-            '<Cmd>TSHighlightCapturesUnderCursor<CR>',
-            'treesitter: highlight cursor group',
-          },
-        }
+        as.nnoremap(
+          '<leader>E',
+          '<Cmd>TSHighlightCapturesUnderCursor<CR>',
+          'treesitter: highlight cursor group'
+        )
       end,
     }
 
@@ -751,9 +744,7 @@ packer.startup {
     use {
       'lewis6991/spellsitter.nvim',
       config = function()
-        require('spellsitter').setup {
-          enable = true,
-        }
+        require('spellsitter').setup { enable = true }
       end,
     }
 
@@ -991,6 +982,8 @@ if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) t
   vim.g.packer_compiled_loaded = true
 end
 
+--- Open a repository from an authorname/repository string
+--- e.g. 'akinso/example-repo'
 local function open_plugin_url()
   as.nnoremap('gf', function()
     local repo = fn.expand '<cfile>'
@@ -1016,8 +1009,6 @@ as.augroup('PackerSetupInit', {
       packer.compile()
     end,
   },
-  --- Open a repository from an authorname/repository string
-  --- e.g. 'akinso/example-repo'
   {
     event = 'BufEnter',
     buffer = 0,
