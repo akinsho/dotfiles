@@ -181,6 +181,14 @@ packer.startup {
     use {
       'williamboman/nvim-lsp-installer',
       requires = { { 'neovim/nvim-lspconfig', config = conf 'lspconfig' } },
+      config = function()
+        vim.api.nvim_create_autocmd('Filetype', {
+          pattern = 'lsp-installer',
+          callback = function()
+            vim.api.nvim_win_set_config(0, { border = as.style.current.border })
+          end,
+        })
+      end,
     }
 
     use {
