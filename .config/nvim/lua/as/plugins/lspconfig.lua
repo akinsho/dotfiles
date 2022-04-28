@@ -178,12 +178,11 @@ as.lsp.servers = {
 ---@param conf table<string, any>
 ---@return table<string, any>
 function as.lsp.get_server_config(conf)
-  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
   local conf_type = type(conf)
   local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
-  config.flags = { debounce_text_changes = 500 }
   config.on_attach = config.on_attach or as.lsp.on_attach
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
+  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
   if nvim_lsp_ok then
     cmp_nvim_lsp.update_capabilities(config.capabilities)
   end
