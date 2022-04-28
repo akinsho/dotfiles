@@ -187,11 +187,10 @@ as.lsp.servers = {
 
 ---Logic to (re)start installed language servers for use initialising lsps
 ---and restarting them on installing new ones
----@param server table<string, any>
+---@param conf table<string, any>
 ---@return table<string, any>
-function as.lsp.get_server_config(server)
+function as.lsp.get_server_config(conf)
   local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
-  local conf = as.lsp.servers[server.name]
   local conf_type = type(conf)
   local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
   config.flags = { debounce_text_changes = 500 }
@@ -203,10 +202,36 @@ function as.lsp.get_server_config(server)
   return config
 end
 
-return function()
-  require('nvim-lsp-installer').on_server_ready(function(server)
-    if as.lsp.servers[server.name] then
-      server:setup(as.lsp.get_server_config(server))
+--- Language servers specified in lsp servers are checked to see if any are missing on the system
+--- if so we use nvim lsp installer to install them all. The is then setup, which MUST happen
+--- before lspconfig is then use to setup each server
+function as.lsp.install_servers()
+  local lsp_installer = require 'nvim-lsp-installer'
+  local to_install = {}
+  for name, _ in pairs(as.lsp.servers) do
+    local server_is_found, server = lsp_installer.get_server(name)
+    if server_is_found and not server:is_installed() then
+      table.insert(to_install, name)
+      server:install()
     end
-  end)
+  end
+  if #to_install > 0 then
+    local msg = { 'Installing missing language servers: ', table.concat(to_install, ', ') }
+    vim.notify(msg, 'info', { title = 'LSP Installer' })
+  end
+  lsp_installer.setup {}
+end
+
+vim.g.has_lsp_setup = false
+
+return function()
+  -- FIXME: lspconfig cannot be re-run without errors so we check if it has been setup and if has we abort
+  if vim.g.has_lsp_setup then
+    return
+  end
+  as.lsp.install_servers()
+  for name, config in pairs(as.lsp.servers) do
+    require('lspconfig')[name].setup(as.lsp.get_server_config(config))
+  end
+  vim.g.has_lsp_setup = true
 end
