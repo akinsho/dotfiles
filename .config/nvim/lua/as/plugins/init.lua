@@ -257,42 +257,11 @@ packer.startup {
     -----------------------------------------------------------------------------//
     -- Testing and Debugging {{{1
     -----------------------------------------------------------------------------//
-    use {
-      'vim-test/vim-test',
-      cmd = { 'Test*' },
-      keys = { '<localleader>tf', '<localleader>tn', '<localleader>ts' },
-      setup = function()
-        require('which-key').register({
-          t = {
-            name = '+vim-test',
-            f = 'test: file',
-            n = 'test: nearest',
-            s = 'test: suite',
-          },
-        }, {
-          prefix = '<localleader>',
-        })
-      end,
-      config = function()
-        vim.cmd [[
-          function! ToggleTermStrategy(cmd) abort
-            call luaeval("require('toggleterm').exec(_A[1])", [a:cmd])
-          endfunction
-
-          let g:test#custom_strategies = {'toggleterm': function('ToggleTermStrategy')}
-        ]]
-        vim.g['test#strategy'] = 'toggleterm'
-        as.nnoremap('<localleader>tf', '<cmd>TestFile<CR>')
-        as.nnoremap('<localleader>tn', '<cmd>TestNearest<CR>')
-        as.nnoremap('<localleader>ts', '<cmd>TestSuite<CR>')
-      end,
-    }
+    use { 'vim-test/vim-test', config = conf 'vim-test' }
 
     use {
       'rcarriga/vim-ultest',
-      wants = 'vim-test',
       requires = { 'vim-test' },
-      opt = true,
       run = ':UpdateRemotePlugins',
       config = function()
         as.augroup('UltestTests', {
