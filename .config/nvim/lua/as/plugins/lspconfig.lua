@@ -25,7 +25,7 @@ local function setup_autocommands(client, bufnr)
         event = { 'CursorHold' },
         buffer = bufnr,
         command = function()
-          vim.diagnostic.open_float({ scope = 'cursor' }, { focus = false })
+          vim.diagnostic.open_float({ scope = 'line' }, { focus = false })
         end,
       },
       {
