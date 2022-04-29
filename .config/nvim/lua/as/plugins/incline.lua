@@ -1,16 +1,26 @@
 return function()
   require('incline').setup {
+    hide = { focused_win = true },
     render = function(props)
       local fmt, icons = string.format, as.style.icons.misc
       local bufname = vim.api.nvim_buf_get_name(props.buf)
       if bufname == '' then
         return '[No name]'
       end
+      local directory_color = require('as.highlights').get_hl('Directory', 'fg')
       local parts = vim.split(vim.fn.fnamemodify(bufname, ':.'), '/')
-      local icon, _ = require('nvim-web-devicons').get_icon(bufname, nil, { default = true })
-      parts[#parts] = fmt('%s %s', icon, parts[#parts])
-      return table.concat(parts, fmt(' %s ', icons.chevron_right))
+      local icon, color = require('nvim-web-devicons').get_icon_color(bufname)
+      local result = {}
+      for idx, part in ipairs(parts) do
+        if next(parts, idx) then
+          table.insert(result, { part })
+          table.insert(result, { fmt(' %s ', icons.chevron_right), guifg = directory_color })
+        else
+          table.insert(result, { part, gui = 'underline,bold' })
+        end
+      end
+      table.insert(result, #result, { icon .. ' ', guifg = color })
+      return result
     end,
-    hide = { focused_win = true },
   }
 end
