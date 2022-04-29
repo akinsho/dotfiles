@@ -304,6 +304,7 @@ packer.startup {
     -----------------------------------------------------------------------------//
     use {
       'petertriho/nvim-scrollbar',
+      opt = true,
       config = function()
         require('scrollbar').setup {
           handle = { color = require('as.highlights').get_hl('PmenuSbar', 'bg') },
