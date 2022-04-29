@@ -91,10 +91,9 @@ return function()
         items = {
           groups.builtin.ungrouped,
           {
-            name = 'dotfiles',
-            icon = '',
+            name = 'Terraform',
             matcher = function(buf)
-              return buf.name:match '^%.' ~= nil
+              return buf.name:match '%.tf' ~= nil
             end,
           },
           {
