@@ -191,7 +191,7 @@ end
 
 return function()
   require('nvim-lsp-installer').setup {
-    ensure_installed = vim.tbl_keys(as.lsp.servers),
+    automatic_installation = true,
   }
   if vim.v.vim_did_enter == 1 then
     return
