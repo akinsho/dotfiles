@@ -9,9 +9,6 @@ return function()
       end
       local directory_color = require('as.highlights').get_hl('Directory', 'fg')
       local parts = vim.split(vim.fn.fnamemodify(bufname, ':.'), '/')
-      local icon, color = require('nvim-web-devicons').get_icon_color(bufname, nil, {
-        default = true,
-      })
       local result = {}
       for idx, part in ipairs(parts) do
         if next(parts, idx) then
@@ -21,7 +18,12 @@ return function()
           table.insert(result, { part, gui = 'underline,bold' })
         end
       end
-      table.insert(result, #result, { icon .. ' ', guifg = color })
+      local icon, color = require('nvim-web-devicons').get_icon_color(bufname, nil, {
+        default = true,
+      })
+      if icon then
+        table.insert(result, #result, { icon .. ' ', guifg = color })
+      end
       return result
     end,
   }
