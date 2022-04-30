@@ -1,18 +1,10 @@
 return function()
   local parsers = require 'nvim-treesitter.parsers'
   local rainbow_enabled = { 'dart' }
-  -- Flattening a nested list for readability only hopefully one day there will be a way to do this
-  -- that doesn't require the user to keep track of languages they use or might use
-  local languages = vim.tbl_flatten {
-    { 'c', 'hcl', 'comment', 'make', 'query', 'toml', 'dart', 'bash', 'regex' },
-    { 'ruby', 'elm', 'go', 'gomod', 'markdown', 'help', 'vim', 'comment', 'css' },
-    { 'lua', 'teal', 'typescript', 'tsx', 'javascript', 'jsdoc', 'json', 'jsonc' },
-    { 'dockerfile', 'kotlin', 'graphql', 'html', 'yaml', 'make', 'ocaml' },
-    { 'java', 'python', 'swift', 'rust', 'yaml', 'norg', 'proto' },
-  }
 
   require('nvim-treesitter.configs').setup {
-    ensure_installed = languages,
+    ensure_installed = 'all',
+    ignore_install = { 'phpdoc' }, -- list of parser which cause issues or crashes
     highlight = {
       enable = true,
     },
