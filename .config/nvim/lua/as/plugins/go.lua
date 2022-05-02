@@ -9,7 +9,6 @@ return function()
     max_line_len = 100,
     goimport = 'gopls',
     icons = false,
-    lsp_codelens = true,
     lsp_cfg = {
       capabilities = capabilities,
       codelenses = {
