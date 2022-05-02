@@ -30,6 +30,8 @@ return function()
     filesystem = {
       hijack_netrw_behavior = 'open_current',
       use_libuv_file_watcher = true,
+      group_empty_dirs = true,
+      follow_current_file = true,
       filtered_items = {
         visible = true,
         hide_dotfiles = false,
