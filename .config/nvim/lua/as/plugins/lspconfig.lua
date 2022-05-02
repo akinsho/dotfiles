@@ -8,6 +8,9 @@ as.lsp = {}
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
+  -- TODO: all references to `resolved_capabilities.capability_name` will need to be changed to
+  -- `server_capabilities.camelCaseCapabilityName`
+  -- https://github.com/neovim/neovim/issues/14090#issuecomment-1113956767
   if client and client.resolved_capabilities.code_lens then
     as.augroup('LspCodeLens', {
       {
