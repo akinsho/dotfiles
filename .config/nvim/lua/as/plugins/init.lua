@@ -165,15 +165,13 @@ packer.startup {
       'nvim-neo-tree/neo-tree.nvim',
       branch = 'v2.x',
       config = conf 'neo-tree',
+      keys = { '<C-N>' },
+      cmd = { 'NeoTree' },
       requires = {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
         'kyazdani42/nvim-web-devicons',
-        {
-          's1n7ax/nvim-window-picker',
-          tag = "1.*",
-          config = conf('window-picker'),
-        }
+        { 's1n7ax/nvim-window-picker', tag = '1.*', config = conf 'window-picker' },
       },
     }
     -- }}}
@@ -518,13 +516,13 @@ packer.startup {
 
     use {
       'danymat/neogen',
+      keys = { '<localleader>nc' },
+      requires = 'nvim-treesitter/nvim-treesitter',
       setup = function()
         require('which-key').register {
           ['<localleader>nc'] = 'comment: generate',
         }
       end,
-      keys = { '<localleader>nc' },
-      requires = 'nvim-treesitter/nvim-treesitter',
       config = function()
         require('neogen').setup { snippet_engine = 'luasnip' }
         as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
