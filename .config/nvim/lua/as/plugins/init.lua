@@ -169,6 +169,11 @@ packer.startup {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
         'kyazdani42/nvim-web-devicons',
+        {
+          's1n7ax/nvim-window-picker',
+          tag = "1.*",
+          config = conf('window-picker'),
+        }
       },
     }
     -- }}}
