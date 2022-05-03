@@ -619,7 +619,11 @@ packer.startup {
       config = conf('vimwiki').config,
     }
 
-    use { 'vhyrro/neorg', requires = { 'vhyrro/neorg-telescope' }, config = conf 'neorg' }
+    use {
+      'vhyrro/neorg',
+      requires = { 'vhyrro/neorg-telescope', 'max397574/neorg-kanban' },
+      config = conf 'neorg',
+    }
 
     use {
       'lukas-reineke/headlines.nvim',

@@ -4,6 +4,7 @@ return function()
   require('neorg').setup {
     configure_parsers = true,
     load = {
+      ['external.kanban'] = {},
       ['core.defaults'] = {},
       ['core.integrations.telescope'] = {},
       ['core.keybinds'] = {
