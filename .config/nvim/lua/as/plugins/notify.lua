@@ -15,6 +15,12 @@ return function()
   ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
   local renderer = require('notify.render')
   notify.setup({
+    max_width = function()
+      return math.floor(vim.o.columns * 0.8)
+    end,
+    max_height = function()
+      return math.floor(vim.o.lines * 0.8)
+    end,
     background_colour = 'NormalFloat',
     stages = 'fade_in_slide_out',
     on_open = function(win)
