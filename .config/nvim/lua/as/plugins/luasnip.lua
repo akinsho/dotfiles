@@ -60,6 +60,27 @@ return function()
     end
   end)
 
+  as.augroup('LuasnipDiagnostics', {
+    {
+      event = 'ModeChanged',
+      pattern = '[is]:n',
+      command = function()
+        if ls.in_snippet() then
+          return vim.diagnostic.enable()
+        end
+      end,
+    },
+    {
+      event = 'ModeChanged',
+      pattern = '*:s',
+      command = function()
+        if ls.in_snippet() then
+          return vim.diagnostic.disable()
+        end
+      end,
+    },
+  })
+
   require('luasnip.loaders.from_lua').lazy_load()
   -- NOTE: the loader is called twice so it picks up the defaults first then my custom textmate
   -- snippets. @see: https://github.com/L3MON4D3/LuaSnip/issues/364
