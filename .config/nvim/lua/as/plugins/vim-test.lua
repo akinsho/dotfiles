@@ -14,7 +14,7 @@ end
 function M.config()
   vim.cmd [[
     function! ToggleTermStrategy(cmd) abort
-      call luaeval("require('toggleterm').exec(_A[1])", [a:cmd])
+      call luaeval("require('toggleterm').exec(_A[1], nil, nil, nil, 'float')", [a:cmd])
     endfunction
     let g:test#custom_strategies = {'toggleterm': function('ToggleTermStrategy')}
     let g:test#strategy = 'toggleterm'
