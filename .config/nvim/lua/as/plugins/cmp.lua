@@ -72,14 +72,15 @@ return function()
         api.nvim_feedkeys(vim.fn['copilot#Accept'](t('<Tab>')), 'n', true)
       end),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
+      ['<C-q>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-q>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false, -- If nothing is selected don't complete
-      }),
+      ['<C-space>'] = cmp.mapping.complete(),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
     },
     formatting = {
       deprecated = true,
@@ -150,6 +151,7 @@ return function()
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
       { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+      { name = 'path' },
     }),
   })
 end
