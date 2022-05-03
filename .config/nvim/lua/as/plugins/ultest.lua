@@ -2,6 +2,8 @@ local M = {}
 
 function M.setup()
   vim.g.ultest_running_sign = ''
+  vim.g.ultest_output_max_width = math.floor(vim.o.columns * 0.8)
+  vim.g.ultest_output_max_height = math.floor(vim.o.lines * 0.3)
 end
 
 function M.config()
