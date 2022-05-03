@@ -1,8 +1,8 @@
 return function()
-  local parsers = require 'nvim-treesitter.parsers'
+  local parsers = require('nvim-treesitter.parsers')
   local rainbow_enabled = { 'dart' }
 
-  require('nvim-treesitter.configs').setup {
+  require('nvim-treesitter.configs').setup({
     ensure_installed = 'all',
     ignore_install = { 'phpdoc' }, -- list of parser which cause issues or crashes
     highlight = {
@@ -95,7 +95,7 @@ return function()
       use_virtual_text = true,
       lint_events = { 'BufWrite', 'CursorHold' },
     },
-  }
+  })
 
   -- NOTE: this is to allow markdown highlighting in octo buffers
   local parser_config = parsers.get_parser_configs()

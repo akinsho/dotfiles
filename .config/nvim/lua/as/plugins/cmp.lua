@@ -1,6 +1,6 @@
 return function()
-  local cmp = require 'cmp'
-  local h = require 'as.highlights'
+  local cmp = require('cmp')
+  local h = require('as.highlights')
 
   local api = vim.api
   local t = as.replace_termcodes
@@ -56,7 +56,7 @@ return function()
       'Search:None',
     }, ','),
   }
-  cmp.setup {
+  cmp.setup({
     preselect = cmp.PreselectMode.None,
     window = {
       completion = cmp.config.window.bordered(cmp_window),
@@ -69,17 +69,17 @@ return function()
     },
     mapping = {
       ['<c-h>'] = cmp.mapping(function()
-        api.nvim_feedkeys(vim.fn['copilot#Accept'](t '<Tab>'), 'n', true)
+        api.nvim_feedkeys(vim.fn['copilot#Accept'](t('<Tab>')), 'n', true)
       end),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-q>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm {
+      ['<CR>'] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = false, -- If nothing is selected don't complete
-      },
+      }),
     },
     formatting = {
       deprecated = true,
@@ -115,7 +115,7 @@ return function()
     }, {
       { name = 'buffer' },
     }),
-  }
+  })
 
   cmp.setup.filetype('norg', {
     sources = cmp.config.sources({
@@ -148,8 +148,8 @@ return function()
   cmp.setup.cmdline('/', search_sources)
   cmp.setup.cmdline('?', search_sources)
   cmp.setup.cmdline(':', {
-    sources = cmp.config.sources {
+    sources = cmp.config.sources({
       { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-    },
+    }),
   })
 end

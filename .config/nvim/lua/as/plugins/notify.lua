@@ -11,10 +11,10 @@ return function()
     NotifyDEBUGBody = { link = 'NormalFloat' },
     NotifyTRACEBody = { link = 'NormalFloat' },
   })
-  local notify = require 'notify'
+  local notify = require('notify')
   ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
-  local renderer = require 'notify.render'
-  notify.setup {
+  local renderer = require('notify.render')
+  notify.setup({
     background_colour = 'NormalFloat',
     stages = 'fade_in_slide_out',
     on_open = function(win)
@@ -27,8 +27,8 @@ return function()
       local style = notif.title[1] == '' and 'minimal' or 'default'
       renderer[style](bufnr, notif, highlights)
     end,
-  }
+  })
   vim.notify = notify
-  require('telescope').load_extension 'notify'
+  require('telescope').load_extension('notify')
   as.nnoremap('<leader>nd', notify.dismiss, { label = 'dismiss notifications' })
 end

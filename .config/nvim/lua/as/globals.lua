@@ -36,8 +36,8 @@ local installed
 ---@return boolean
 function as.plugin_installed(plugin_name)
   if not installed then
-    local dirs = fn.expand(fn.stdpath 'data' .. '/site/pack/packer/start/*', true, true)
-    local opt = fn.expand(fn.stdpath 'data' .. '/site/pack/packer/opt/*', true, true)
+    local dirs = fn.expand(fn.stdpath('data') .. '/site/pack/packer/start/*', true, true)
+    local opt = fn.expand(fn.stdpath('data') .. '/site/pack/packer/opt/*', true, true)
     vim.list_extend(dirs, opt)
     installed = vim.tbl_map(function(path)
       return fn.fnamemodify(path, ':t')
@@ -222,7 +222,7 @@ function as.has(feature)
   return vim.fn.has(feature) > 0
 end
 
-as.nightly = as.has 'nvim-0.7'
+as.nightly = as.has('nvim-0.7')
 
 ----------------------------------------------------------------------------------------------------
 -- Mappings

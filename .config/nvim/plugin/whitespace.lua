@@ -4,7 +4,7 @@
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local H = require 'as.highlights'
+local H = require('as.highlights')
 
 local fn = vim.fn
 
@@ -49,7 +49,7 @@ as.augroup('WhitespaceMatch', {
     pattern = { '*' },
     description = 'Show extra whitespace on insert leave, buf enter or filetype',
     command = function()
-      toggle_trailing 'n'
+      toggle_trailing('n')
     end,
   },
   {
@@ -57,7 +57,7 @@ as.augroup('WhitespaceMatch', {
     description = 'Show extra whitespace on insert enter',
     pattern = { '*' },
     command = function()
-      toggle_trailing 'i'
+      toggle_trailing('i')
     end,
   },
 })

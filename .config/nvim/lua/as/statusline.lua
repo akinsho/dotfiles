@@ -6,8 +6,8 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
-local utils = require 'as.utils.statusline'
-local H = require 'as.highlights'
+local utils = require('as.utils.statusline')
+local H = require('as.highlights')
 
 local api = vim.api
 local P = as.style.palette
@@ -38,7 +38,7 @@ local function colors()
   local dim_color = H.alter_color(normal_bg, 40)
   local bg_color = H.alter_color(normal_bg, -16)
 
-  H.all {
+  H.all({
     StMetadata = { background = bg_color, inherit = 'Comment' },
     StMetadataPrefix = {
       background = bg_color,
@@ -78,7 +78,7 @@ local function colors()
     StModeVisual = { background = bg_color, foreground = P.magenta, bold = true },
     StModeReplace = { background = bg_color, foreground = P.dark_red, bold = true },
     StModeCommand = { background = bg_color, foreground = inc_search_bg, bold = true },
-  }
+  })
 end
 
 --- @param tbl table
@@ -287,13 +287,13 @@ function _G.__statusline()
     },
     -- Current line number/total line number
     {
-      utils.line_info {
+      utils.line_info({
         prefix = icons.misc.line,
         prefix_color = 'StMetadataPrefix',
         current_hl = 'StTitle',
         total_hl = 'StComment',
         sep_hl = 'StComment',
-      },
+      }),
       7,
     },
     { -- column

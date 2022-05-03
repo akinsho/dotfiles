@@ -1,5 +1,5 @@
 return function()
-  require('flutter-tools').setup {
+  require('flutter-tools').setup({
     ui = { border = as.style.current.border },
     debugger = {
       enabled = true,
@@ -23,5 +23,5 @@ return function()
       },
       on_attach = as.lsp and as.lsp.on_attach or nil,
     },
-  }
+  })
 end

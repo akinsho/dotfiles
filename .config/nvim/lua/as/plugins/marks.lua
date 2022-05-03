@@ -8,12 +8,12 @@ return function()
       ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'list bookmark' },
     },
   }, { prefix = '<leader>' })
-  require('marks').setup {
+  require('marks').setup({
     force_write_shada = true,
     excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
     bookmark_0 = {
       sign = '⚑',
       virt_text = '',
     },
-  }
+  })
 end

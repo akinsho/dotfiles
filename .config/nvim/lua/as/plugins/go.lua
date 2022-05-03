@@ -1,11 +1,11 @@
 return function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
+  local lsp_ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
   if lsp_ok then
     capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
   end
 
-  require('go').setup {
+  require('go').setup({
     max_line_len = 100,
     goimport = 'gopls',
     icons = false,
@@ -27,7 +27,7 @@ return function()
     lsp_diag_virtual_text = false,
     dap_debug_keymap = false,
     textobjects = false,
-  }
+  })
   as.augroup('Golang', {
     {
       event = { 'BufWritePre' },

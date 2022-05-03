@@ -1,5 +1,5 @@
 return function()
-  require('toggleterm').setup {
+  require('toggleterm').setup({
     open_mapping = [[<c-\>]],
     shade_filetypes = { 'none' },
     direction = 'horizontal',
@@ -13,7 +13,7 @@ return function()
         return math.floor(vim.o.columns * 0.4)
       end
     end,
-  }
+  })
 
   local float_handler = function(term)
     if vim.fn.mapcheck('jk', 't') ~= '' then
@@ -24,31 +24,31 @@ return function()
 
   local Terminal = require('toggleterm.terminal').Terminal
 
-  local lazygit = Terminal:new {
+  local lazygit = Terminal:new({
     cmd = 'lazygit',
     dir = 'git_dir',
     hidden = true,
     direction = 'float',
     on_open = float_handler,
-  }
+  })
 
-  local htop = Terminal:new {
+  local htop = Terminal:new({
     cmd = 'htop',
     hidden = true,
     direction = 'float',
     on_open = float_handler,
-  }
+  })
 
   as.command('Htop', function()
     htop:toggle()
   end)
 
-  require('which-key').register {
+  require('which-key').register({
     ['<leader>lg'] = {
       function()
         lazygit:toggle()
       end,
       'toggleterm: toggle lazygit',
     },
-  }
+  })
 end

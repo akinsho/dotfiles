@@ -32,8 +32,8 @@ end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
-    vim.diagnostic.setqflist { open = false }
-    as.toggle_list 'quickfix'
+    vim.diagnostic.setqflist({ open = false })
+    as.toggle_list('quickfix')
     if not as.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
       cmd_id = nil
@@ -44,9 +44,9 @@ local function make_diagnostic_qf_updater()
     cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if as.is_vim_list_open() then
-          vim.diagnostic.setqflist { open = false }
+          vim.diagnostic.setqflist({ open = false })
           if #vim.fn.getqflist() == 0 then
-            as.toggle_list 'quickfix'
+            as.toggle_list('quickfix')
           end
         end
       end,
@@ -80,7 +80,7 @@ end, diagnostic_types))
 --- Restricts nvim's diagnostic signs to only the single most severe one per line
 --- @see `:help vim.diagnostic`
 
-local ns = api.nvim_create_namespace 'severe-diagnostics'
+local ns = api.nvim_create_namespace('severe-diagnostics')
 --- Get a reference to the original signs handler
 local signs_handler = vim.diagnostic.handlers.signs
 --- Override the built-in signs handler
@@ -112,7 +112,7 @@ vim.diagnostic.handlers.signs = {
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
-diagnostic.config {
+diagnostic.config({
   signs = true,
   underline = true,
   update_in_insert = false,
@@ -125,7 +125,7 @@ diagnostic.config {
     focusable = false,
     source = 'if_many',
   },
-}
+})
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 lsp.handlers['textDocument/hover'] = lsp.with(

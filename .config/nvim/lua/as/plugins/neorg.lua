@@ -1,7 +1,7 @@
 return function()
   as.nnoremap('<localleader>oc', '<Cmd>Neorg gtd capture<CR>')
   as.nnoremap('<localleader>ov', '<Cmd>Neorg gtd views<CR>')
-  require('neorg').setup {
+  require('neorg').setup({
     configure_parsers = true,
     load = {
       ['external.kanban'] = {},
@@ -26,8 +26,8 @@ return function()
       ['core.norg.dirman'] = {
         config = {
           workspaces = {
-            notes = vim.fn.expand '$SYNC_DIR/neorg/main/',
-            tasks = vim.fn.expand '$SYNC_DIR/neorg/tasks/',
+            notes = vim.fn.expand('$SYNC_DIR/neorg/main/'),
+            tasks = vim.fn.expand('$SYNC_DIR/neorg/tasks/'),
           },
         },
       },
@@ -37,5 +37,5 @@ return function()
         },
       },
     },
-  }
+  })
 end

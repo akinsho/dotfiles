@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   local fn = vim.fn
-  local sync_dir = fn.expand '$SYNC_DIR'
+  local sync_dir = fn.expand('$SYNC_DIR')
   local has_sync = fn.isdirectory(sync_dir) > 0
   local home = vim.env.HOME
 
@@ -46,7 +46,7 @@ end
 
 function M.config()
   as.command('CloseVimWikis', function()
-    local bufs = vim.fn.getbufinfo { buflisted = true }
+    local bufs = vim.fn.getbufinfo({ buflisted = true })
     for _, buf in ipairs(bufs) do
       if vim.bo[buf.bufnr].filetype == 'vimwiki' then
         vim.api.nvim_buf_delete(buf.bufnr, { force = true })

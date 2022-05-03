@@ -44,7 +44,7 @@ end
 --- @return boolean, string
 function M.winhighlight_exists(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
-  for _, target in ipairs { ... } do
+  for _, target in ipairs({ ... }) do
     if win_hl:match(target) ~= nil then
       return true, win_hl
     end
@@ -167,7 +167,7 @@ local function general_overrides()
   local hint_line = M.alter_color(L.hint, -80)
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
-  M.all {
+  M.all({
     VertSplit = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
     WinSeparator = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
     mkdLineBreak = { link = 'NONE' },
@@ -265,7 +265,7 @@ local function general_overrides()
     DiagnosticFloatingInfo = { link = 'DiagnosticInfo' },
     DiagnosticFloatingHint = { link = 'DiagnosticHint' },
     DiagnosticFloatingError = { link = 'DiagnosticError' },
-  }
+  })
 end
 
 local function set_sidebar_highlight()
@@ -273,14 +273,14 @@ local function set_sidebar_highlight()
   local split_color = M.get_hl('VertSplit', 'fg')
   local bg_color = M.alter_color(normal_bg, -8)
   local st_color = M.alter_color(M.get_hl('Visual', 'bg'), -20)
-  M.all {
+  M.all({
     PanelBackground = { background = bg_color },
     PanelHeading = { background = bg_color, bold = true },
     PanelVertSplit = { foreground = split_color, background = bg_color },
     PanelWinSeparator = { foreground = split_color, background = bg_color },
     PanelStNC = { background = bg_color, foreground = split_color },
     PanelSt = { background = st_color },
-  }
+  })
 end
 
 local sidebar_fts = {
@@ -306,7 +306,7 @@ end
 local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
     local keyword_fg = M.get_hl('Keyword', 'fg')
-    M.all { CursorLineNr = { foreground = keyword_fg } }
+    M.all({ CursorLineNr = { foreground = keyword_fg } })
   end
 end
 
@@ -335,8 +335,8 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-if as.plugin_installed 'doom-one.nvim' then
-  vim.cmd 'colorscheme doom-one'
+if as.plugin_installed('doom-one.nvim') then
+  vim.cmd('colorscheme doom-one')
 end
 
 return M

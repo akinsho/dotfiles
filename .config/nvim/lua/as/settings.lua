@@ -89,17 +89,17 @@ vim.opt.foldmethod = 'expr'
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
-if as.executable 'rg' then
+if as.executable('rg') then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.opt.grepformat = vim.opt.grepformat ^ { '%f:%l:%c:%m' }
-elseif as.executable 'ag' then
+elseif as.executable('ag') then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   vim.opt.grepformat = vim.opt.grepformat ^ { '%f:%l:%c:%m' }
 end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-vim.opt.wildcharm = fn.char2nr(as.replace_termcodes [[<Tab>]])
+vim.opt.wildcharm = fn.char2nr(as.replace_termcodes([[<Tab>]]))
 vim.opt.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
 vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
@@ -209,7 +209,7 @@ function as.modified_icon()
   return vim.bo.modified and as.style.icons.misc.circle or ''
 end
 vim.opt.titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
-vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv 'SHELL', ':t')
+vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
 vim.opt.title = true
 vim.opt.titlelen = 70
 -----------------------------------------------------------------------------//
@@ -245,11 +245,11 @@ vim.opt.sidescroll = 1
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
-vim.opt.spellsuggest:prepend { 12 }
+vim.opt.spellsuggest:prepend({ 12 })
 vim.opt.spelloptions = 'camel'
 vim.opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
 vim.opt.fileformats = { 'unix', 'mac', 'dos' }
-vim.opt.spelllang:append 'programming'
+vim.opt.spelllang:append('programming')
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
@@ -262,7 +262,7 @@ vim.opt.exrc = true -- Allow project local vimrc files example .nvimrc see :h ex
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
-if as.executable 'nvr' then
+if as.executable('nvr') then
   vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
   vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end

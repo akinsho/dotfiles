@@ -1,5 +1,5 @@
 return function()
-  require('indent_blankline').setup {
+  require('indent_blankline').setup({
     char = '│', -- ┆ ┊ 
     show_foldtext = false,
     context_char = '┃',
@@ -46,5 +46,5 @@ return function()
       'while',
       'for',
     },
-  }
+  })
 end

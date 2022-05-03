@@ -24,7 +24,7 @@ function M.setup()
     require('dap').toggle_breakpoint()
   end
   local function set_breakpoint()
-    require('dap').set_breakpoint(fn.input 'Breakpoint condition: ')
+    require('dap').set_breakpoint(fn.input('Breakpoint condition: '))
   end
   require('which-key').register({
     d = {
@@ -44,11 +44,11 @@ function M.setup()
 end
 
 function M.config()
-  local dap = require 'dap'
+  local dap = require('dap')
   local fn = vim.fn
   local icons = as.style.icons
 
-  fn.sign_define {
+  fn.sign_define({
     {
       name = 'DapBreakpoint',
       text = icons.misc.bug,
@@ -63,7 +63,7 @@ function M.config()
       linehl = '',
       numhl = '',
     },
-  }
+  })
 
   require('as.highlights').plugin('dap', {
     DapBreakpoint = { foreground = as.style.palette.light_red },
@@ -76,11 +76,11 @@ function M.config()
       request = 'attach',
       name = 'Attach to running Neovim instance',
       host = function()
-        local value = fn.input 'Host [default: 127.0.0.1]: '
+        local value = fn.input('Host [default: 127.0.0.1]: ')
         return value ~= '' and value or '127.0.0.1'
       end,
       port = function()
-        local val = tonumber(fn.input 'Port: ')
+        local val = tonumber(fn.input('Port: '))
         assert(val, 'Please provide a port number')
         return val
       end,
@@ -88,7 +88,7 @@ function M.config()
   }
 
   dap.adapters.nlua = function(callback, config)
-    callback { type = 'server', host = config.host, port = config.port }
+    callback({ type = 'server', host = config.host, port = config.port })
   end
 
   -- DON'T automatically stop at exceptions

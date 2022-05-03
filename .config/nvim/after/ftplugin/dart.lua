@@ -1,6 +1,6 @@
 -- remove the "t" option added by dart-vim-plugin which forces lines to autowrap at text
 -- width which is very annoying
-vim.opt_local.formatoptions:remove 't'
+vim.opt_local.formatoptions:remove('t')
 
 -- TODO: ask treesitter team what the correct way to do this is
 -- disable syntax based highlighting for dart and use only treesitter

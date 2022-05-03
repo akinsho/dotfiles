@@ -3,7 +3,7 @@ if not ok then
   return
 end
 
-wk.register {
+wk.register({
   g = {
     name = '+todos',
     t = {
@@ -23,4 +23,4 @@ wk.register {
     v = 'views',
     e = 'edit',
   },
-}
+})

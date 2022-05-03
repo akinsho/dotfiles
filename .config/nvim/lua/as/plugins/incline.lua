@@ -1,5 +1,5 @@
 return function()
-  require('incline').setup {
+  require('incline').setup({
     hide = { focused_win = true },
     render = function(props)
       local fmt, icons = string.format, as.style.icons.misc
@@ -26,5 +26,5 @@ return function()
       end
       return result
     end,
-  }
+  })
 end

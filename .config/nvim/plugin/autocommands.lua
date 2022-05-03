@@ -4,11 +4,11 @@ local fmt = string.format
 local contains = vim.tbl_contains
 local map = vim.keymap.set
 
-vim.cmd [[
+vim.cmd([[
   augroup vimrc -- Ensure all autocommands are cleared
   autocmd!
   augroup END
-]]
+]])
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
@@ -32,13 +32,13 @@ local function stop_hl()
   if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then
     return
   end
-  api.nvim_feedkeys(as.replace_termcodes '<Plug>(StopHL)', 'm', false)
+  api.nvim_feedkeys(as.replace_termcodes('<Plug>(StopHL)'), 'm', false)
 end
 
 local function hl_search()
   local col = api.nvim_win_get_cursor(0)[2]
   local curr_line = api.nvim_get_current_line()
-  local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg '/', 0)
+  local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg('/'), 0)
   if not ok then
     return vim.notify(match, 'error', { title = 'HL SEARCH' })
   end
@@ -67,7 +67,7 @@ as.augroup('VimrcIncSearchHighlight', {
     pattern = { 'hlsearch' },
     command = function()
       vim.schedule(function()
-        vim.cmd 'redrawstatus'
+        vim.cmd('redrawstatus')
       end)
     end,
   },
@@ -88,7 +88,7 @@ local smart_close_filetypes = {
 }
 
 local function smart_close()
-  if fn.winnr '$' ~= 1 then
+  if fn.winnr('$') ~= 1 then
     api.nvim_win_close(0, true)
   end
 end
@@ -122,7 +122,7 @@ as.augroup('SmartClose', {
     event = { 'BufEnter' },
     pattern = '*',
     command = function()
-      if fn.winnr '$' == 1 and vim.bo.buftype == 'quickfix' then
+      if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
         api.nvim_buf_delete(0, { force = true })
       end
     end,
@@ -134,7 +134,7 @@ as.augroup('SmartClose', {
     nested = true,
     command = function()
       if vim.bo.filetype ~= 'qf' then
-        vim.cmd 'silent! lclose'
+        vim.cmd('silent! lclose')
       end
     end,
   },
@@ -146,7 +146,7 @@ as.augroup('ExternalCommands', {
     event = { 'BufEnter' },
     pattern = { '*.png', '*.jpg', '*.gif' },
     command = function()
-      vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand '%'))
+      vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%')))
     end,
   },
 })
@@ -188,7 +188,7 @@ local function clear_commandline()
     end
     timer = vim.defer_fn(function()
       if fn.mode() == 'n' then
-        vim.cmd [[echon '']]
+        vim.cmd([[echon '']])
       end
     end, 10000)
   end
@@ -239,11 +239,11 @@ as.augroup('TextYankHighlight', {
     event = { 'TextYankPost' },
     pattern = '*',
     command = function()
-      vim.highlight.on_yank {
+      vim.highlight.on_yank({
         timeout = 500,
         on_visual = false,
         higroup = 'Visual',
-      }
+      })
     end,
   },
 })
@@ -314,7 +314,7 @@ as.augroup('UpdateVim', {
     -- it correctly sources $MYVIMRC but all the other files that it
     -- requires will need to be resourced or reloaded themselves
     event = 'BufWritePost',
-    pattern = { '$DOTFILES/**/nvim/plugin/*.{lua,vim}', fn.expand '$MYVIMRC' },
+    pattern = { '$DOTFILES/**/nvim/plugin/*.{lua,vim}', fn.expand('$MYVIMRC') },
     nested = true,
     command = function()
       local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
@@ -397,7 +397,7 @@ as.augroup('Utilities', {
     event = { 'BufReadCmd' },
     pattern = { 'file:///*' },
     command = function()
-      vim.cmd(fmt('bd!|edit %s', vim.uri_from_fname '<afile>'))
+      vim.cmd(fmt('bd!|edit %s', vim.uri_from_fname('<afile>')))
     end,
   },
   {
@@ -406,16 +406,16 @@ as.augroup('Utilities', {
     event = { 'BufReadPost' },
     command = function()
       if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
-        if fn.line [['"]] > 0 and fn.line [['"]] <= fn.line '$' then
+        if fn.line([['"]]) > 0 and fn.line([['"]]) <= fn.line('$') then
           -- Check if the last line of the buffer is the same as the window
-          if fn.line 'w$' == fn.line '$' then
+          if fn.line('w$') == fn.line('$') then
             -- Set line to last line edited
-            vim.cmd [[normal! g`"]]
+            vim.cmd([[normal! g`"]])
             -- Try to center
-          elseif fn.line '$' - fn.line [['"]] > ((fn.line 'w$' - fn.line 'w0') / 2) - 1 then
-            vim.cmd [[normal! g`"zz]]
+          elseif fn.line('$') - fn.line([['"]]) > ((fn.line('w$') - fn.line('w0')) / 2) - 1 then
+            vim.cmd([[normal! g`"zz]])
           else
-            vim.cmd [[normal! G'"<c-e>]]
+            vim.cmd([[normal! G'"<c-e>]])
           end
         end
       end
@@ -441,7 +441,7 @@ as.augroup('Utilities', {
     pattern = { '*' },
     command = function()
       if can_save() then
-        vim.cmd 'silent! update'
+        vim.cmd('silent! update')
       end
     end,
   },
@@ -450,12 +450,12 @@ as.augroup('Utilities', {
     pattern = { '*' },
     nested = true,
     command = function()
-      if as.empty(vim.bo.filetype) or fn.exists 'b:ftdetect' == 1 then
-        vim.cmd [[
+      if as.empty(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
+        vim.cmd([[
             unlet! b:ftdetect
             filetype detect
             echom 'Filetype set to ' . &ft
-          ]]
+          ]])
       end
     end,
   },
@@ -473,7 +473,7 @@ as.augroup('TerminalAutocommands', {
     command = function()
       --- automatically close a terminal if the job was successful
       if not vim.v.event.status == 0 then
-        vim.cmd('bdelete! ' .. fn.expand '<abuf>')
+        vim.cmd('bdelete! ' .. fn.expand('<abuf>'))
       end
     end,
   },

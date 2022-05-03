@@ -1,11 +1,11 @@
 return function()
-  local telescope = require 'telescope'
-  local actions = require 'telescope.actions'
-  local layout_actions = require 'telescope.actions.layout'
-  local themes = require 'telescope.themes'
+  local telescope = require('telescope')
+  local actions = require('telescope.actions')
+  local layout_actions = require('telescope.actions.layout')
+  local themes = require('telescope.themes')
   local icons = as.style.icons
 
-  local H = require 'as.highlights'
+  local H = require('as.highlights')
   H.plugin('telescope', {
     TelescopeMatching = { link = 'Title' },
     TelescopeBorder = { foreground = as.style.palette.grey },
@@ -34,7 +34,7 @@ return function()
     return themes.get_dropdown(get_border(opts))
   end
 
-  telescope.setup {
+  telescope.setup({
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
       borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
@@ -45,7 +45,7 @@ return function()
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
           ['<c-c>'] = function()
-            vim.cmd 'stopinsert!'
+            vim.cmd('stopinsert!')
           end,
           ['<esc>'] = actions.close,
           ['<c-s>'] = actions.select_horizontal,
@@ -75,7 +75,7 @@ return function()
       },
       winblend = 3,
       history = {
-        path = vim.fn.stdpath 'data' .. '/telescope_history.sqlite3',
+        path = vim.fn.stdpath('data') .. '/telescope_history.sqlite3',
       },
     },
     extensions = {
@@ -92,7 +92,7 @@ return function()
       },
     },
     pickers = {
-      buffers = dropdown {
+      buffers = dropdown({
         sort_mru = true,
         sort_lastused = true,
         show_all_buffers = true,
@@ -103,7 +103,7 @@ return function()
           i = { ['<c-x>'] = 'delete_buffer' },
           n = { ['<c-x>'] = 'delete_buffer' },
         },
-      },
+      }),
       oldfiles = dropdown(),
       live_grep = {
         file_ignore_patterns = { '.git/' },
@@ -112,10 +112,10 @@ return function()
           return { prompt = prompt:gsub('%s', '.*') }
         end,
       },
-      current_buffer_fuzzy_find = dropdown {
+      current_buffer_fuzzy_find = dropdown({
         previewer = false,
         shorten_path = false,
-      },
+      }),
       colorscheme = {
         enable_preview = true,
       },
@@ -139,12 +139,12 @@ return function()
       },
       reloader = dropdown(),
     },
-  }
+  })
 
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
-  local builtins = require 'telescope.builtin'
+  local builtins = require('telescope.builtin')
 
   local function project_files(opts)
     if not pcall(builtins.git_files, opts) then
@@ -153,41 +153,41 @@ return function()
   end
 
   local function nvim_config()
-    builtins.find_files {
+    builtins.find_files({
       prompt_title = '~ nvim config ~',
-      cwd = vim.fn.stdpath 'config',
+      cwd = vim.fn.stdpath('config'),
       file_ignore_patterns = { '.git/.*', 'dotbot/.*' },
-    }
+    })
   end
 
   local function dotfiles()
-    builtins.find_files {
+    builtins.find_files({
       prompt_title = '~ dotfiles ~',
       cwd = vim.g.dotfiles,
-    }
+    })
   end
 
   local function orgfiles()
-    builtins.find_files {
+    builtins.find_files({
       prompt_title = 'Org',
-      cwd = vim.fn.expand '$SYNC_DIR/org/',
-    }
+      cwd = vim.fn.expand('$SYNC_DIR/org/'),
+    })
   end
 
   local function norgfiles()
-    builtins.find_files {
+    builtins.find_files({
       prompt_title = 'Norg',
-      cwd = vim.fn.expand '$SYNC_DIR/neorg/',
-    }
+      cwd = vim.fn.expand('$SYNC_DIR/neorg/'),
+    })
   end
 
   local function frecency()
-    telescope.extensions.frecency.frecency(dropdown {
+    telescope.extensions.frecency.frecency(dropdown({
       winblend = 10,
       border = true,
       previewer = false,
       shorten_path = false,
-    })
+    }))
   end
 
   local function notifications()
@@ -199,13 +199,13 @@ return function()
   end
 
   local function installed_plugins()
-    require('telescope.builtin').find_files {
+    require('telescope.builtin').find_files({
       prompt_title = '~ plugins ~',
-      cwd = vim.fn.stdpath 'data' .. '/site/pack/packer',
-    }
+      cwd = vim.fn.stdpath('data') .. '/site/pack/packer',
+    })
   end
 
-  require('which-key').register {
+  require('which-key').register({
     ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = '+telescope',
@@ -237,5 +237,5 @@ return function()
       s = { builtins.live_grep, 'grep string' },
       ['?'] = { builtins.help_tags, 'help' },
     },
-  }
+  })
 end

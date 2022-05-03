@@ -6,9 +6,9 @@ return {
     f(function(args)
       return { ' ' .. string.rep('.', 80 - (#args[1][1] + #args[2][1] + 2 + 2)) .. ' ' }
     end, { 1, 2 }),
-    t { '|' },
+    t({ '|' }),
     i(2),
-    t { '|' },
+    t({ '|' }),
     i(0),
   }),
 }

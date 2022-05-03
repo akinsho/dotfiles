@@ -13,7 +13,7 @@ function M.config()
       pattern = pattern,
       command = function()
         vim.schedule(function()
-          vim.cmd 'Ultest'
+          vim.cmd('Ultest')
         end)
       end,
     },

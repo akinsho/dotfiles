@@ -8,7 +8,7 @@ return function()
   end, 'dap-ui: toggle')
 
   -- NOTE: this opens dap UI automatically when dap starts
-  local dap = require 'dap'
+  local dap = require('dap')
   -- dap.listeners.after.event_initialized['dapui_config'] = function()
   --   dapui.open()
   -- end

@@ -1,4 +1,4 @@
-local H = require 'as.highlights'
+local H = require('as.highlights')
 
 local fn = vim.fn
 local api = vim.api
@@ -323,7 +323,7 @@ local function filetype(ctx, opts)
   end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ':e')
-  local icons_loaded, devicons = as.safe_require 'nvim-web-devicons'
+  local icons_loaded, devicons = as.safe_require('nvim-web-devicons')
   if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
     hl = highlight_ft_icon(hl, opts.icon_bg)
@@ -343,12 +343,12 @@ function M.line_info(opts)
   local total_hl = opts.total_hl
   local sep_hl = opts.total_hl
 
-  local current = fn.line '.'
-  local last = fn.line '$'
+  local current = fn.line('.')
+  local last = fn.line('$')
 
   local length = strwidth(prefix .. current .. sep .. last)
   return {
-    table.concat {
+    table.concat({
       wrap(prefix_color),
       prefix,
       ' ',
@@ -359,7 +359,7 @@ function M.line_info(opts)
       wrap(total_hl),
       last,
       ' ',
-    },
+    }),
     length,
   }
 end
@@ -434,7 +434,7 @@ function M.lsp_client(ctx)
   -- is a waste of space, I want to know it's running but not have it's name taking up space
   local has_null_ls = false
   for _, client in pairs(clients) do
-    local is_null = client.name:match 'null'
+    local is_null = client.name:match('null')
     has_null_ls = has_null_ls or is_null
     if not is_null then
       table.insert(names, client.name)
@@ -446,7 +446,7 @@ end
 ---The currently focused function
 ---@return string?
 function M.current_function()
-  local gps = require 'nvim-gps'
+  local gps = require('nvim-gps')
   if gps.is_available() then
     return gps.get_location()
   end
@@ -470,7 +470,7 @@ end
 -- Last search count
 -----------------------------------------------------------------------------//
 function M.search_count()
-  local result = fn.searchcount { recompute = 0 }
+  local result = fn.searchcount({ recompute = 0 })
   if vim.tbl_isempty(result) then
     return ''
   end
@@ -478,7 +478,7 @@ function M.search_count()
   --- using [%s] but this value seems flaky
   -- local search_reg = fn.getreg("@/")
   if result.incomplete == 1 then -- timed out
-    return printf ' ?/?? '
+    return printf(' ?/?? ')
   elseif result.incomplete == 2 then -- max count exceeded
     if result.total > result.maxcount and result.current > result.maxcount then
       return printf(' >%d/>%d ', result.current, result.total)
@@ -498,8 +498,8 @@ function M.update_search_count(timer)
   timer:start(0, 200, function()
     vim.schedule(function()
       if timer == search_count_timer then
-        fn.searchcount { recompute = 1, maxcount = 0, timeout = 100 }
-        vim.cmd 'redrawstatus'
+        fn.searchcount({ recompute = 1, maxcount = 0, timeout = 100 })
+        vim.cmd('redrawstatus')
       end
     end)
   end)
@@ -507,9 +507,9 @@ end
 -----------------------------------------------------------------------------//
 
 local function mode_highlight(mode)
-  local visual_regex = vim.regex [[\(v\|V\|\)]]
-  local command_regex = vim.regex [[\(c\|cv\|ce\)]]
-  local replace_regex = vim.regex [[\(Rc\|R\|Rv\|Rx\)]]
+  local visual_regex = vim.regex([[\(v\|V\|\)]])
+  local command_regex = vim.regex([[\(c\|cv\|ce\)]])
+  local replace_regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]])
   if mode == 'i' then
     return 'StModeInsert'
   elseif visual_regex:match_str(mode) then

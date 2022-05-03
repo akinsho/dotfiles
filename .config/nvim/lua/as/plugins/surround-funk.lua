@@ -5,7 +5,7 @@ return function()
   map({ 'n', 'v' }, 'gs', '<Plug>(GripSurroundObject)')
   map({ 'o', 'x' }, 'sF', '<Plug>(SelectWholeFUNCTION)')
 
-  require('which-key').register {
+  require('which-key').register({
     y = {
       name = '+ysf: yank ',
       s = {
@@ -30,5 +30,5 @@ return function()
         f = { '<Plug>(ChangeSurroundingFUNCTION)', 'change outer surrounding function' },
       },
     },
-  }
+  })
 end

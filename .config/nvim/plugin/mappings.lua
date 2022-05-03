@@ -45,12 +45,12 @@ as.augroup('AddTerminalMappings', {
 -- repeat macros across a visual range
 ------------------------------------------------------------------------------
 -- TODO: converting this to lua does not work for some obscure reason.
-vim.cmd [[
+vim.cmd([[
   function! ExecuteMacroOverVisualRange()
     echo "@".getcmdline()
     execute ":'<,'>normal @".nr2char(getchar())
   endfunction
-]]
+]])
 
 xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
 --}}}
@@ -117,8 +117,8 @@ local function modify_line_end_delimiter(character)
     end
   end
 end
-nnoremap('<localleader>,', modify_line_end_delimiter ',')
-nnoremap('<localleader>;', modify_line_end_delimiter ';')
+nnoremap('<localleader>,', modify_line_end_delimiter(','))
+nnoremap('<localleader>;', modify_line_end_delimiter(';'))
 -----------------------------------------------------------------------------//
 
 nmap('<ScrollWheelDown>', '<c-d>')
@@ -294,7 +294,7 @@ nmap(
 -- This line opens the vimrc in a vertical split
 nnoremap('<leader>ev', [[<Cmd>vsplit $MYVIMRC<cr>]])
 -- This line opens my plugins file in a vertical split
-nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdpath 'config'))
+nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdpath('config')))
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
@@ -324,7 +324,7 @@ function as.mappings.setup_CR()
   nmap('<Enter>', [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
 end
 
-vim.g.mc = as.replace_termcodes [[y/\V<C-r>=escape(@", '/')<CR><CR>]]
+vim.g.mc = as.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_CR()<CR>*``qz]])
@@ -388,20 +388,20 @@ xnoremap(
 -- Grep Operator
 ----------------------------------------------------------------------------------
 function as.mappings.grep_operator(type)
-  local saved_unnamed_register = fn.getreg '@@'
-  if type:match 'v' then
-    vim.cmd [[normal! `<v`>y]]
-  elseif type:match 'char' then
-    vim.cmd [[normal! `[v`]y']]
+  local saved_unnamed_register = fn.getreg('@@')
+  if type:match('v') then
+    vim.cmd([[normal! `<v`>y]])
+  elseif type:match('char') then
+    vim.cmd([[normal! `[v`]y']])
   else
     return
   end
   -- Use Winnr to check if the cursor has moved it if has restore it
   local winnr = fn.winnr()
-  vim.cmd [[silent execute 'grep! ' . shellescape(@@) . ' .']]
+  vim.cmd([[silent execute 'grep! ' . shellescape(@@) . ' .']])
   fn.setreg('@@', saved_unnamed_register)
   if fn.winnr() ~= winnr then
-    vim.cmd [[wincmd p]]
+    vim.cmd([[wincmd p]])
   end
 end
 
@@ -412,7 +412,7 @@ xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
 local function open_link()
-  local file = fn.expand '<cfile>'
+  local file = fn.expand('<cfile>')
   if fn.isdirectory(file) > 0 then
     vim.cmd('edit ' .. file)
   else
@@ -443,15 +443,15 @@ function as.toggle_list(list_type)
   local winnr = fn.winnr()
   fn.execute(prefix .. 'open')
   if fn.winnr() ~= winnr then
-    vim.cmd 'wincmd p'
+    vim.cmd('wincmd p')
   end
 end
 
 nnoremap('<leader>ls', function()
-  as.toggle_list 'quickfix'
+  as.toggle_list('quickfix')
 end)
 nnoremap('<leader>li', function()
-  as.toggle_list 'location'
+  as.toggle_list('location')
 end)
 
 -----------------------------------------------------------------------------//
@@ -507,13 +507,13 @@ local auto_resize = function()
       vim.cmd(fmt('let &winheight=&lines * %d / 10 ', fraction))
       vim.cmd(fmt('let &winwidth=&columns * %d / 10 ', fraction))
       auto_resize_on = true
-      vim.notify 'Auto resize ON'
+      vim.notify('Auto resize ON')
     else
-      vim.cmd 'let &winheight=30'
-      vim.cmd 'let &winwidth=30'
-      vim.cmd 'wincmd ='
+      vim.cmd('let &winheight=30')
+      vim.cmd('let &winwidth=30')
+      vim.cmd('wincmd =')
       auto_resize_on = false
-      vim.notify 'Auto resize OFF'
+      vim.notify('Auto resize OFF')
     end
   end
 end

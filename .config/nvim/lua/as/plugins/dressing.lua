@@ -1,13 +1,13 @@
 return function()
   require('as.highlights').plugin('dressing', { FloatTitle = { inherit = 'Visual', bold = true } })
-  require('dressing').setup {
+  require('dressing').setup({
     input = {
       insert_only = false,
       winblend = 2,
       border = as.style.current.border,
     },
     select = {
-      telescope = require('telescope.themes').get_cursor {
+      telescope = require('telescope.themes').get_cursor({
         layout_config = {
           -- NOTE: the limit is half the max lines because this is the cursor theme so
           -- unless the cursor is at the top or bottom it realistically most often will
@@ -19,7 +19,7 @@ return function()
             return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
           end,
         },
-      },
+      }),
     },
-  }
+  })
 end

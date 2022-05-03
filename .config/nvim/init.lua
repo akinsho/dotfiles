@@ -7,7 +7,7 @@
 ---------------------------------------------------------------------------------
 vim.g.os = vim.loop.os_uname().sysname
 vim.g.open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
-vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand '~/.dotfiles'
+vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand('~/.dotfiles')
 vim.g.vim_dir = vim.g.dotfiles .. '/.config/nvim'
 
 vim.g.did_load_filetypes = 0 -- deactivate vim based filetype detection
@@ -35,9 +35,9 @@ vim.g.loaded_netrwPlugin = 1
 -- Plugin Configurations
 ------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
-R 'as.globals'
-R 'as.styles'
-R 'as.settings'
-R 'as.highlights'
-R 'as.statusline'
-R 'as.plugins'
+R('as.globals')
+R('as.styles')
+R('as.settings')
+R('as.highlights')
+R('as.statusline')
+R('as.plugins')

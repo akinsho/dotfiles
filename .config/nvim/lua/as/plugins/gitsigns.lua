@@ -1,5 +1,5 @@
 return function()
-  require('gitsigns').setup {
+  require('gitsigns').setup({
     signs = {
       add = { hl = 'GitSignsAdd', text = '▌' },
       change = { hl = 'GitSignsChange', text = '▌' },
@@ -17,9 +17,9 @@ return function()
       local gs = package.loaded.gitsigns
 
       local function qf_list_modified()
-        gs.setqflist 'all'
+        gs.setqflist('all')
       end
-      require('which-key').register {
+      require('which-key').register({
         ['<leader>h'] = {
           name = '+gitsigns hunk',
           s = { gs.stage_hunk, 'stage' },
@@ -44,7 +44,7 @@ return function()
         ['[h'] = 'go to next git hunk',
         [']h'] = 'go to previous git hunk',
         ['<leader>lm'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
-      }
+      })
 
       -- Navigation
       as.nnoremap('[h', function()
@@ -62,15 +62,15 @@ return function()
       end, { expr = true })
 
       vim.keymap.set('v', '<leader>hs', function()
-        gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
       end)
       vim.keymap.set('v', '<leader>hr', function()
-        gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
       end)
 
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
       vim.keymap.set({ 'n' }, '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
       vim.keymap.set({ 'n' }, '<leader>hr', '<cmd>Gitsigns reset_hunk<CR>')
     end,
-  }
+  })
 end

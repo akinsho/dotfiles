@@ -9,12 +9,12 @@ vim.opt_local.smarttab = true
 if not as then
   return
 end
-local ok, whichkey = as.safe_require 'which-key'
+local ok, whichkey = as.safe_require('which-key')
 if not ok then
   return
 end
 
-whichkey.register {
+whichkey.register({
   ['<leader>g'] = {
     name = '+Go',
     b = { '<Cmd>GoBuild<CR>', 'build' },
@@ -25,4 +25,4 @@ whichkey.register {
     },
     ie = { '<Cmd>GoIfErr<CR>', 'if err' },
   },
-}
+})

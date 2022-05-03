@@ -1,14 +1,14 @@
 return function()
-  local wk = require 'which-key'
-  wk.setup {
+  local wk = require('which-key')
+  wk.setup({
     plugins = {
       spelling = {
         enabled = true,
       },
     },
-  }
+  })
 
-  wk.register {
+  wk.register({
     ['<space><space>'] = 'toggle fold under cursor',
     [']'] = {
       name = '+next',
@@ -98,5 +98,5 @@ return function()
       ['/'] = 'find matching word in buffer',
       ['<tab>'] = 'open commandline bufferlist',
     },
-  }
+  })
 end

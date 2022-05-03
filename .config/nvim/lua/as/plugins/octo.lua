@@ -16,7 +16,7 @@ return function()
       event = 'FileType',
       pattern = 'octo',
       command = function()
-        require('as.highlights').clear_hl 'OctoEditable'
+        require('as.highlights').clear_hl('OctoEditable')
         as.nnoremap('q', '<Cmd>Bwipeout<CR>', { buffer = 0 })
       end,
     },

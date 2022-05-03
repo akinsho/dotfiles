@@ -97,7 +97,7 @@ local function setup_mappings(client)
   maps.n['<leader>ca'] = { vim.lsp.buf.code_action, 'lsp: code action' }
   maps.x['<leader>ca'] = { '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action' }
 
-  if client.supports_method 'textDocument/rename' then
+  if client.supports_method('textDocument/rename') then
     maps.n['<leader>rn'] = { vim.lsp.buf.rename, 'lsp: rename' }
   end
 
@@ -145,11 +145,11 @@ as.lsp.servers = {
   ---  NOTE: we return a function here so that the lua dev dependency is not
   --- required till the setup function is called.
   sumneko_lua = function()
-    local ok, lua_dev = as.safe_require 'lua-dev'
+    local ok, lua_dev = as.safe_require('lua-dev')
     if not ok then
       return {}
     end
-    return lua_dev.setup {
+    return lua_dev.setup({
       library = {
         plugins = { 'plenary.nvim' },
       },
@@ -172,7 +172,7 @@ as.lsp.servers = {
           },
         },
       },
-    }
+    })
   end,
 }
 
@@ -185,7 +185,7 @@ function as.lsp.get_server_config(conf)
   local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
   config.on_attach = config.on_attach or as.lsp.on_attach
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
-  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require 'cmp_nvim_lsp'
+  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
   if nvim_lsp_ok then
     cmp_nvim_lsp.update_capabilities(config.capabilities)
   end
@@ -193,9 +193,9 @@ function as.lsp.get_server_config(conf)
 end
 
 return function()
-  require('nvim-lsp-installer').setup {
+  require('nvim-lsp-installer').setup({
     automatic_installation = true,
-  }
+  })
   if vim.v.vim_did_enter == 1 then
     return
   end
