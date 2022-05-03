@@ -262,7 +262,7 @@ packer.startup {
     -----------------------------------------------------------------------------//
     use {
       'vim-test/vim-test',
-      cmd = { 'TestNearest', 'TestFile' },
+      cmd = { 'TestFile', 'TestNearest', 'TestSuite' },
       setup = conf('vim-test').setup,
       config = conf('vim-test').config,
     }
@@ -271,9 +271,7 @@ packer.startup {
       'rcarriga/vim-ultest',
       wants = { 'vim-test' },
       requires = { 'vim-test' },
-      run = ':UpdateRemotePlugins',
-      cmd = 'Ultest',
-      event = { 'BufEnter *_test.*,*_spec.*' },
+      cmd = { 'Ultest', 'UltestNearest', 'UltestSummary' },
       setup = conf('ultest').setup,
       config = conf('ultest').config,
     }
