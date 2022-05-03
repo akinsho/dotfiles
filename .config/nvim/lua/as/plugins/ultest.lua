@@ -1,4 +1,10 @@
-return function()
+local M = {}
+
+function M.setup()
+  vim.g.ultest_running_sign = ''
+end
+
+function M.config()
   local pattern = { '*_test.*', '*_spec.*' }
   as.augroup('UltestTests', {
     { event = 'BufWritePost', pattern = pattern, command = 'UltestNearest' },
@@ -21,3 +27,5 @@ return function()
     buffer = 0,
   })
 end
+
+return M

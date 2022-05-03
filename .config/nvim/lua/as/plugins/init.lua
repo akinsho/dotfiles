@@ -274,7 +274,8 @@ packer.startup {
       run = ':UpdateRemotePlugins',
       cmd = 'Ultest',
       event = { 'BufEnter *_test.*,*_spec.*' },
-      config = conf 'ultest',
+      setup = conf('ultest').setup,
+      config = conf('ultest').config,
     }
 
     use {
