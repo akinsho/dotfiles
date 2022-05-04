@@ -43,12 +43,7 @@ return function()
     htop:toggle()
   end)
 
-  require('which-key').register({
-    ['<leader>lg'] = {
-      function()
-        lazygit:toggle()
-      end,
-      'toggleterm: toggle lazygit',
-    },
-  })
+  as.nnoremap('<leader>lg', function()
+    lazygit:toggle()
+  end, 'toggleterm: toggle lazygit')
 end

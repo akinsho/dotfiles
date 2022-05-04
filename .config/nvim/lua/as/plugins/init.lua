@@ -90,7 +90,6 @@ packer.startup({
 
     use({
       'folke/trouble.nvim',
-      keys = { '<leader>ld' },
       cmd = { 'TroubleToggle' },
       requires = 'nvim-web-devicons',
       setup = conf('trouble').setup,
@@ -369,9 +368,7 @@ packer.startup({
           )
         end
 
-        require('which-key').register({
-          ['<localleader>p'] = { clip, 'neoclip: open yank history' },
-        })
+        as.nnoremap('<localleader>p', clip, 'neoclip: open yank history')
       end,
     })
 
@@ -531,14 +528,12 @@ packer.startup({
       'danymat/neogen',
       keys = { '<localleader>nc' },
       requires = 'nvim-treesitter/nvim-treesitter',
+      module = 'neogen',
       setup = function()
-        require('which-key').register({
-          ['<localleader>nc'] = 'comment: generate',
-        })
+        as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
       end,
       config = function()
         require('neogen').setup({ snippet_engine = 'luasnip' })
-        as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
       end,
     })
 
@@ -547,12 +542,8 @@ packer.startup({
       local_path = 'contributing',
       config = function()
         require('fidget').setup({
-          text = {
-            spinner = 'moon',
-          },
-          window = {
-            blend = 0,
-          },
+          text = { spinner = 'moon' },
+          window = { blend = 0 },
         })
       end,
     })
@@ -563,16 +554,12 @@ packer.startup({
     use({
       'mbbill/undotree',
       cmd = 'UndotreeToggle',
-      keys = '<leader>u',
       setup = function()
-        require('which-key').register({
-          ['<leader>u'] = 'undotree: toggle',
-        })
+        as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
       end,
       config = function()
         vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
-        as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>')
       end,
     })
 
@@ -783,9 +770,7 @@ packer.startup({
       module = 'diffview',
       keys = '<localleader>gd',
       setup = function()
-        require('which-key').register({
-          ['<localleader>gd'] = { '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD' },
-        })
+        as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
       end,
       config = function()
         require('diffview').setup({

@@ -1,26 +1,18 @@
 local M = {}
 
 function M.setup()
-  require('which-key').register({
-    ['<leader>l'] = {
-      d = 'trouble: toggle',
-      r = 'trouble: lsp references',
-    },
-    ['[d'] = 'trouble: next item',
-    [']d'] = 'trouble: previous item',
-  })
+  as.nnoremap('<leader>ld', '<cmd>TroubleToggle workspace_diagnostics<CR>', 'trouble: toggle')
+  as.nnoremap('<leader>lr', '<cmd>TroubleToggle lsp_references<CR>', 'trouble: lsp references')
 end
 
 function M.config()
   local trouble = require('trouble')
-  as.nnoremap('<leader>ld', '<cmd>TroubleToggle workspace_diagnostics<CR>')
-  as.nnoremap('<leader>lr', '<cmd>TroubleToggle lsp_references<CR>')
   as.nnoremap(']d', function()
     trouble.previous({ skip_groups = true, jump = true })
-  end)
+  end, 'trouble: previous item')
   as.nnoremap('[d', function()
     trouble.next({ skip_groups = true, jump = true })
-  end)
+  end, 'trouble: next item')
   trouble.setup({ auto_close = true, auto_preview = false })
 end
 

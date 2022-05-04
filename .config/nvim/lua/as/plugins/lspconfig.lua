@@ -60,49 +60,30 @@ end
 local function setup_mappings(client)
   local ok = pcall(require, 'lsp-format')
   local format = ok and '<Cmd>Format<CR>' or vim.lsp.buf.formatting
-  local maps = {
-    n = {
-      ['<leader>rf'] = { format, 'lsp: format buffer' },
-      gi = 'lsp: implementation',
-      gd = { vim.lsp.buf.definition, 'lsp: definition' },
-      gr = { vim.lsp.buf.references, 'lsp: references' },
-      gI = { vim.lsp.buf.incoming_calls, 'lsp: incoming calls' },
-      K = { vim.lsp.buf.hover, 'lsp: hover' },
-    },
-    x = {},
-  }
-
-  maps.n[']c'] = {
-    function()
-      vim.diagnostic.goto_prev()
-    end,
-    'lsp: go to prev diagnostic',
-  }
-  maps.n['[c'] = {
-    function()
-      vim.diagnostic.goto_next()
-    end,
-    'lsp: go to next diagnostic',
-  }
+  as.nnoremap('<leader>rf', format, 'lsp: format buffer')
+  as.nnoremap('gd', vim.lsp.buf.definition, 'lsp: definition')
+  as.nnoremap('gd', vim.lsp.buf.references, 'lsp: references')
+  as.nnoremap('gI', vim.lsp.buf.incoming_calls, 'lsp: incoming calls')
+  as.nnoremap('K', vim.lsp.buf.hover, 'lsp: hover')
+  as.nnoremap(']c', vim.diagnostic.goto_prev, 'lsp: go to prev diagnostic')
+  as.nnoremap('[c', vim.diagnostic.goto_next, 'lsp: go to next diagnostic')
+  as.nnoremap('<leader>ca', vim.lsp.buf.code_action, 'lsp: code action')
+  as.xnoremap('<leader>ca', '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action')
 
   if client.resolved_capabilities.implementation then
-    maps.n['gi'] = { vim.lsp.buf.implementation, 'lsp: implementation' }
+    as.nnoremap('gi', vim.lsp.buf.implementation, 'lsp: implementation')
   end
 
   if client.resolved_capabilities.type_definition then
-    maps.n['<leader>gd'] = { vim.lsp.buf.type_definition, 'lsp: go to type definition' }
+    as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, 'lsp: go to type definition')
   end
 
-  maps.n['<leader>cl'] = { vim.lsp.codelens.run, 'lsp: run code lens' }
-  maps.n['<leader>ca'] = { vim.lsp.buf.code_action, 'lsp: code action' }
-  maps.x['<leader>ca'] = { '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action' }
+  if client.resolved_capabilities.code_lens then
+    as.nnoremap('<leader>cl', vim.lsp.codelens.run, 'lsp: run code lens')
+  end
 
   if client.supports_method('textDocument/rename') then
-    maps.n['<leader>rn'] = { vim.lsp.buf.rename, 'lsp: rename' }
-  end
-
-  for mode, value in pairs(maps) do
-    require('which-key').register(value, { buffer = 0, mode = mode })
+    as.nnoremap('<leader>rn', vim.lsp.buf.rename, 'lsp: rename')
   end
 end
 
