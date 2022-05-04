@@ -256,6 +256,19 @@ packer.startup({
       },
     })
 
+    -- Use <Tab> to escape from pairs such as ""|''|() etc.
+    use({
+      'abecodes/tabout.nvim',
+      wants = { 'nvim-treesitter' },
+      after = { 'nvim-cmp' },
+      config = function()
+        require('tabout').setup({
+          completion = false,
+          ignore_beginning = false,
+        })
+      end,
+    })
+
     -- }}}
     -----------------------------------------------------------------------------//
     -- Testing and Debugging {{{1
@@ -722,19 +735,6 @@ packer.startup({
       end,
     })
 
-    -- Use <Tab> to escape from pairs such as ""|''|() etc.
-    use({
-      'abecodes/tabout.nvim',
-      wants = { 'nvim-treesitter' },
-      after = { 'nvim-cmp' },
-      config = function()
-        require('tabout').setup({
-          completion = false,
-          ignore_beginning = false,
-        })
-      end,
-    })
-
     use({
       'lewis6991/spellsitter.nvim',
       config = function()
@@ -783,10 +783,11 @@ packer.startup({
       module = 'diffview',
       keys = '<localleader>gd',
       setup = function()
-        require('which-key').register({ ['<localleader>gd'] = 'diffview: diff HEAD' })
+        require('which-key').register({
+          ['<localleader>gd'] = { '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD' },
+        })
       end,
       config = function()
-        as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>')
         require('diffview').setup({
           enhanced_diff_hl = true,
           key_bindings = {
