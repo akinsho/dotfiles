@@ -105,7 +105,6 @@ return function()
             end,
           },
           {
-            highlight = { guisp = '#C678DD', gui = 'underline' },
             name = 'docs',
             icon = '',
             matcher = function(buf)
