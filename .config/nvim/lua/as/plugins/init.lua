@@ -749,7 +749,7 @@ packer.startup({
         linker.setup({ mappings = '<localleader>gu' })
         as.nnoremap('<localleader>go', function()
           linker.get_repo_url({ action_callback = require('gitlinker.actions').open_in_browser })
-        end)
+        end, 'gitlinker: open in browser')
       end,
     })
 
