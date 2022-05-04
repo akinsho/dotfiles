@@ -21,11 +21,11 @@ function M.config()
     },
   })
   as.nmap(']t', '<Plug>(ultest-next-fail)', {
-    label = 'ultest: next failure',
+    desc = 'ultest: next failure',
     buffer = 0,
   })
   as.nmap('[t', '<Plug>(ultest-prev-fail)', {
-    label = 'ultest: previous failure',
+    desc = 'ultest: previous failure',
     buffer = 0,
   })
 end

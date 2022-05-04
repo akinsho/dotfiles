@@ -36,5 +36,5 @@ return function()
   })
   vim.notify = notify
   require('telescope').load_extension('notify')
-  as.nnoremap('<leader>nd', notify.dismiss, { label = 'dismiss notifications' })
+  as.nnoremap('<leader>nd', notify.dismiss, { desc = 'dismiss notifications' })
 end

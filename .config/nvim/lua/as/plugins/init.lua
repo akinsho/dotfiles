@@ -816,7 +816,7 @@ packer.startup({
       setup = function()
         as.nnoremap('gS', function()
           require('trevj').format_at_cursor()
-        end, { label = 'splitjoin: split' })
+        end, { desc = 'splitjoin: split' })
       end,
       config = function()
         require('trevj').setup()
