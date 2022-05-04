@@ -102,6 +102,7 @@ return function()
           buffer = '[Buffer]',
           spell = '[Spell]',
           cmdline = '[Command]',
+          rg = '[Rg]',
           git = '[Git]',
         })[name]
 
@@ -111,6 +112,7 @@ return function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
+      { name = 'rg' },
       { name = 'path' },
       { name = 'spell' },
     }, {
