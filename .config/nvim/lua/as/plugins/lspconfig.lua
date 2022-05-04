@@ -60,30 +60,33 @@ end
 local function setup_mappings(client)
   local ok = pcall(require, 'lsp-format')
   local format = ok and '<Cmd>Format<CR>' or vim.lsp.buf.formatting
-  as.nnoremap('<leader>rf', format, 'lsp: format buffer')
-  as.nnoremap('gd', vim.lsp.buf.definition, 'lsp: definition')
-  as.nnoremap('gd', vim.lsp.buf.references, 'lsp: references')
-  as.nnoremap('gI', vim.lsp.buf.incoming_calls, 'lsp: incoming calls')
-  as.nnoremap('K', vim.lsp.buf.hover, 'lsp: hover')
-  as.nnoremap(']c', vim.diagnostic.goto_prev, 'lsp: go to prev diagnostic')
-  as.nnoremap('[c', vim.diagnostic.goto_next, 'lsp: go to next diagnostic')
-  as.nnoremap('<leader>ca', vim.lsp.buf.code_action, 'lsp: code action')
-  as.xnoremap('<leader>ca', '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>', 'lsp: code action')
+  local function with_desc(desc)
+    return { buffer = 0, desc = desc }
+  end
+  as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
+  as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
+  as.nnoremap('gd', vim.lsp.buf.references, with_desc('lsp: references'))
+  as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
+  as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
+  as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
+  as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+  as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
 
   if client.resolved_capabilities.implementation then
-    as.nnoremap('gi', vim.lsp.buf.implementation, 'lsp: implementation')
+    as.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: implementation'))
   end
 
   if client.resolved_capabilities.type_definition then
-    as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, 'lsp: go to type definition')
+    as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   end
 
   if client.resolved_capabilities.code_lens then
-    as.nnoremap('<leader>cl', vim.lsp.codelens.run, 'lsp: run code lens')
+    as.nnoremap('<leader>cl', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
   end
 
   if client.supports_method('textDocument/rename') then
-    as.nnoremap('<leader>rn', vim.lsp.buf.rename, 'lsp: rename')
+    as.nnoremap('<leader>rn', vim.lsp.buf.rename, with_desc('lsp: rename'))
   end
 end
 
