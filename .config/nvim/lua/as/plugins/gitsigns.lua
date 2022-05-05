@@ -19,14 +19,12 @@ return function()
       local function qf_list_modified()
         gs.setqflist('all')
       end
+
       require('which-key').register({
         ['<leader>h'] = {
           name = '+gitsigns hunk',
-          s = { gs.stage_hunk, 'stage' },
           u = { gs.undo_stage_hunk, 'undo stage' },
-          r = { gs.reset_hunk, 'reset hunk' },
           p = { gs.preview_hunk, 'preview current hunk' },
-          b = 'blame current line',
         },
         ['<localleader>g'] = {
           name = '+git',
@@ -41,8 +39,6 @@ return function()
             d = { gs.toggle_word_diff, 'gitsigns: toggle word diff' },
           },
         },
-        ['[h'] = 'go to next git hunk',
-        [']h'] = 'go to previous git hunk',
         ['<leader>lm'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
       })
 
@@ -52,14 +48,14 @@ return function()
           gs.next_hunk()
         end)
         return '<Ignore>'
-      end, { expr = true })
+      end, { expr = true, desc = 'go to next git hunk' })
 
       as.nnoremap(']h', function()
         vim.schedule(function()
           gs.prev_hunk()
         end)
         return '<Ignore>'
-      end, { expr = true })
+      end, { expr = true, desc = 'go to previous git hunk' })
 
       vim.keymap.set('v', '<leader>hs', function()
         gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
@@ -69,8 +65,15 @@ return function()
       end)
 
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-      vim.keymap.set({ 'n' }, '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
-      vim.keymap.set({ 'n' }, '<leader>hr', '<cmd>Gitsigns reset_hunk<CR>')
+
+      vim.keymap.set('n', '<leader>hs', gs.stage_hunk, { desc = 'stage current hunk' })
+      vim.keymap.set('n', '<leader>hr', gs.reset_hunk, { desc = 'reset current hunk' })
+      vim.keymap.set(
+        'n',
+        '<leader>hb',
+        gs.toggle_current_line_blame,
+        { desc = 'toggle current line blame' }
+      )
     end,
   })
 end
