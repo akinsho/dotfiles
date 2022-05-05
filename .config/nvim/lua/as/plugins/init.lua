@@ -455,7 +455,7 @@ packer.startup({
       config = function()
         require('beacon').setup({
           minimal_jump = 20,
-          ignore_buffers = { 'terminal', 'nofile' },
+          ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
           ignore_filetypes = {
             'neo-tree',
             'qf',

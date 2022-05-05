@@ -117,6 +117,7 @@ local function modify_line_end_delimiter(character)
     end
   end
 end
+
 nnoremap('<localleader>,', modify_line_end_delimiter(','))
 nnoremap('<localleader>;', modify_line_end_delimiter(';'))
 -----------------------------------------------------------------------------//
@@ -298,6 +299,7 @@ nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdp
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
+nnoremap('<leader>cl', [[:let @"=expand("%:p")<CR>]], 'yank file path into the clipboard')
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
@@ -419,6 +421,7 @@ local function open_link()
     fn.jobstart({ vim.g.open_command, file }, { detach = true })
   end
 end
+
 nnoremap('gx', open_link)
 ---------------------------------------------------------------------------------
 -- Toggle list
