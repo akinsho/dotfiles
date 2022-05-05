@@ -113,9 +113,9 @@ return function()
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
-      { name = 'spell' },
     }, {
       { name = 'buffer' },
+      { name = 'spell' },
     }),
   })
 
