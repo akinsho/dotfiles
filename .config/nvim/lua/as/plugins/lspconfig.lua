@@ -63,15 +63,19 @@ local function setup_mappings(client)
   local function with_desc(desc)
     return { buffer = 0, desc = desc }
   end
+
   as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
   as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
   as.nnoremap('gd', vim.lsp.buf.references, with_desc('lsp: references'))
-  as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
   as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
   as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
+
+  if client.supports_method('textDocument/prepareCallHierarchy') then
+    as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  end
 
   if client.resolved_capabilities.implementation then
     as.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: implementation'))
