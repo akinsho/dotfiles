@@ -24,6 +24,7 @@ brew "golangci-lint"
 brew "himalaya"
 brew "htop"
 brew "imagemagick"
+brew "kubernetes-cli"
 brew "lazygit"
 brew "libyaml"
 brew "lua@5.1"
@@ -56,22 +57,25 @@ cask "docker"
 cask "dozer"
 cask "flutter"
 cask "google-chrome"
+cask "google-cloud-sdk"
 cask "iina"
 cask "kitty"
 cask "microsoft-teams"
 cask "postman"
 cask "slack"
 cask "spotify"
+cask "stats"
 cask "vlc"
 cask "webtorrent"
 mas "Amphetamine", id: 937984704
+mas "Color Picker", id: 1545870783
 mas "Dropover", id: 1355679052
-mas "Flow", id: 1423210932
 mas "GIPHY CAPTURE", id: 668208984
 mas "Hand Mirror", id: 1502839586
 mas "Microsoft Outlook", id: 985367838
 mas "Pages", id: 409201541
 mas "Prime Video", id: 545519333
+mas "Shortery", id: 1594183810
 mas "Spark", id: 1176895641
 mas "Todoist", id: 585829637
 mas "Xcode", id: 497799835
