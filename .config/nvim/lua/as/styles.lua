@@ -101,7 +101,7 @@ as.style = {
     colors = {
       error = palette.pale_red,
       warn = palette.dark_orange,
-      hint = palette.bright_yellow,
+      hint = palette.light_yellow,
       info = palette.teal,
     },
     kind_highlights = {
