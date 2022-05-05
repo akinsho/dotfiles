@@ -8,6 +8,6 @@ return function()
         buftype = { 'terminal' },
       },
     },
-    other_win_hl_color = '#e35e4f',
+    other_win_hl_color = require('as.highlights').get_hl('Visual', 'bg'),
   })
 end
