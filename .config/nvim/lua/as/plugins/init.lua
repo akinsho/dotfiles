@@ -403,6 +403,7 @@ packer.startup({
           gitcommit = false,
           NeogitCommitMessage = false,
           DressingInput = false,
+          TelescopePrompt = false,
           ['neo-tree-popup'] = false,
         }
         require('as.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
