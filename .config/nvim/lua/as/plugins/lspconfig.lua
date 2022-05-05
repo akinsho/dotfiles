@@ -64,14 +64,27 @@ local function setup_mappings(client)
     return { buffer = 0, desc = desc }
   end
 
-  as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
-  as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
-  as.nnoremap('gd', vim.lsp.buf.references, with_desc('lsp: references'))
-  as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
-  as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
-  as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
+
+  if client.resolved_capabilities.document_formatting then
+    as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
+  end
+
+  if client.resolved_capabilities.code_action then
+    as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+    as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
+  end
+
+  if client.resolved_capabilities.goto_definition then
+    as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
+  end
+  if client.resolved_capabilities.find_references then
+    as.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
+  end
+  if client.resolved_capabilities.hover then
+    as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
+  end
 
   if client.supports_method('textDocument/prepareCallHierarchy') then
     as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
