@@ -5,7 +5,7 @@ return function()
     filter_rules = {
       bo = {
         filetype = { 'neo-tree-popup', 'quickfix' },
-        buftype = { 'terminal' },
+        buftype = { 'terminal', 'quickfix' },
       },
     },
     other_win_hl_color = require('as.highlights').get_hl('Visual', 'bg'),
