@@ -997,14 +997,6 @@ as.augroup('PackerSetupInit', {
     description = 'Open plugin URLs',
     command = open_plugin_url,
   },
-  {
-    event = 'User',
-    pattern = 'PackerCompileDone',
-    description = 'Inform me that packer has finished compiling',
-    command = function()
-      vim.notify('Packer compile complete', nil, { title = 'Packer' })
-    end,
-  },
 })
 
 -- vim:foldmethod=marker
