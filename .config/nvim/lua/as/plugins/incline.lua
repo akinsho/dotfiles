@@ -1,11 +1,13 @@
 return function()
   local function render(props)
     local fmt, icons = string.format, as.style.icons.misc
+    local devicons = require('nvim-web-devicons')
+    local highlights = require('as.highlights')
     local bufname = vim.api.nvim_buf_get_name(props.buf)
     if bufname == '' then
       return '[No name]'
     end
-    local directory_color = require('as.highlights').get_hl('Directory', 'fg')
+    local directory_color = highlights.get_hl('Directory', 'fg')
     local parts = vim.split(vim.fn.fnamemodify(bufname, ':.'), '/')
     local result = {}
     for idx, part in ipairs(parts) do
@@ -18,16 +20,27 @@ return function()
         table.insert(result, { part, gui = 'underline,bold' })
       end
     end
-    local icon, color = require('nvim-web-devicons').get_icon_color(bufname, nil, {
-      default = true,
-    })
-    if icon then
-      table.insert(result, #result, { icon .. ' ', guifg = color })
-    end
+    local icon, color = devicons.get_icon_color(bufname, nil, { default = true })
+    table.insert(result, #result, { icon .. ' ', guifg = color })
     return result
   end
 
   require('incline').setup({
+    window = {
+      winhighlight = {
+        inactive = {
+          Normal = 'Normal',
+        },
+      },
+      width = 'fill',
+      padding = { left = 2, right = 1 },
+      margin = {
+        horizontal = 0,
+      },
+      placement = {
+        horizontal = 'center',
+      },
+    },
     hide = { focused_win = true },
     render = render,
   })
