@@ -1,4 +1,5 @@
 return function()
+  local api = vim.api
   local ls = require('luasnip')
   local types = require('luasnip.util.types')
   local extras = require('luasnip.extras')
@@ -64,18 +65,18 @@ return function()
     {
       event = 'ModeChanged',
       pattern = '[is]:n',
-      command = function()
+      command = function(args)
         if ls.in_snippet() then
-          return vim.diagnostic.enable()
+          return pcall(vim.diagnostic.enable, args.buf)
         end
       end,
     },
     {
       event = 'ModeChanged',
       pattern = '*:s',
-      command = function()
+      command = function(args)
         if ls.in_snippet() then
-          return vim.diagnostic.disable()
+          return pcall(vim.diagnostic.disable, args.buf)
         end
       end,
     },
