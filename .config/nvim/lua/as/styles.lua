@@ -62,6 +62,7 @@ as.style = {
       object = '',
     },
     misc = {
+      ellipsis = '…',
       up = '⇡',
       down = '⇣',
       line = 'ℓ', -- ''
