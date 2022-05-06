@@ -78,7 +78,7 @@ local function setup_mappings(client)
   if client.server_capabilities.definitionProvider then
     as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
   end
-  if client.server_capabilities.findReferencesProvider then
+  if client.server_capabilities.referencesProvider then
     as.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
   end
   if client.server_capabilities.hoverProvider then
