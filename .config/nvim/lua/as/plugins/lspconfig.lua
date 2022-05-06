@@ -65,9 +65,7 @@ local function setup_mappings(client)
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
 
   if client.server_capabilities.documentFormattingProvider then
-    as.nnoremap('<leader>rf', function()
-      vim.lsp.buf.formatting_sync(nil, 1000)
-    end, with_desc('lsp: format buffer'))
+    as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
   end
 
   if client.server_capabilities.codeActionProvider then
