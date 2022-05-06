@@ -8,10 +8,7 @@ as.lsp = {}
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
-  -- TODO: all references to `resolved_capabilities.capability_name` will need to be changed to
-  -- `server_capabilities.camelCaseCapabilityName`
-  -- https://github.com/neovim/neovim/issues/14090#issuecomment-1113956767
-  if client and client.resolved_capabilities.code_lens then
+  if client and client.server_capabilities.codeLensProvider then
     as.augroup('LspCodeLens', {
       {
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
@@ -22,7 +19,7 @@ local function setup_autocommands(client, bufnr)
       },
     })
   end
-  if client and client.resolved_capabilities.document_highlight then
+  if client and client.server_capabilities.documentHighlightProvider then
     as.augroup('LspCursorCommands', {
       {
         event = { 'CursorHold' },
@@ -67,22 +64,24 @@ local function setup_mappings(client)
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
 
-  if client.resolved_capabilities.document_formatting then
-    as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
+  if client.server_capabilities.documentFormattingProvider then
+    as.nnoremap('<leader>rf', function()
+      vim.lsp.buf.formatting_sync(nil, 1000)
+    end, with_desc('lsp: format buffer'))
   end
 
-  if client.resolved_capabilities.code_action then
+  if client.server_capabilities.codeActionProvider then
     as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
     as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
   end
 
-  if client.resolved_capabilities.goto_definition then
+  if client.server_capabilities.definitionProvider then
     as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
   end
-  if client.resolved_capabilities.find_references then
+  if client.server_capabilities.findReferencesProvider then
     as.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
   end
-  if client.resolved_capabilities.hover then
+  if client.server_capabilities.hoverProvider then
     as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
   end
 
@@ -90,19 +89,19 @@ local function setup_mappings(client)
     as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   end
 
-  if client.resolved_capabilities.implementation then
+  if client.server_capabilities.implementationProvider then
     as.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: implementation'))
   end
 
-  if client.resolved_capabilities.type_definition then
+  if client.server_capabilities.typeDefinitionProvider then
     as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client.server_capabilities.codeLensProvider then
     as.nnoremap('<leader>cl', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
   end
 
-  if client.supports_method('textDocument/rename') then
+  if client.server_capabilities.renameProvider then
     as.nnoremap('<leader>rn', vim.lsp.buf.rename, with_desc('lsp: rename'))
   end
 end
@@ -115,11 +114,11 @@ function as.lsp.on_attach(client, bufnr)
     lsp_format.on_attach(client)
   end
 
-  if client.resolved_capabilities.goto_definition == true then
+  if client.server_capabilities.definitionProvider then
     vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
   end
 
-  if client.resolved_capabilities.document_formatting == true then
+  if client.server_capabilities.documentFormattingProvider then
     vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
   end
 end
