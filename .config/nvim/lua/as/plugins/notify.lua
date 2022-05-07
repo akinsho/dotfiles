@@ -4,7 +4,13 @@ return function()
   if vim.g.packer_compiled_loaded then
     return
   end
-  require('as.highlights').plugin('notify', {
+  local H = require('as.highlights')
+  H.plugin('notify', {
+    NotifyERRORBorder = { bg = { from = 'NormalFloat' } },
+    NotifyWARNBorder = { bg = { from = 'NormalFloat' } },
+    NotifyINFOBorder = { bg = { from = 'NormalFloat' } },
+    NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } },
+    NotifyTRACEBorder = { bg = { from = 'NormalFloat' } },
     NotifyERRORBody = { link = 'NormalFloat' },
     NotifyWARNBody = { link = 'NormalFloat' },
     NotifyINFOBody = { link = 'NormalFloat' },
