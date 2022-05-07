@@ -285,17 +285,17 @@ local function general_overrides()
     DiagnosticSignWarnLine = { background = warn_line },
     DiagnosticSignHintNr = {
       inherit = 'DiagnosticSignHintLine',
-      foreground = comment_fg,
+      foreground = { from = 'Normal' },
       bold = true,
     },
     DiagnosticSignErrorNr = {
       inherit = 'DiagnosticSignErrorLine',
-      foreground = comment_fg,
+      foreground = { from = 'Normal' },
       bold = true,
     },
     DiagnosticSignWarnLineNr = {
       inherit = 'DiagnosticSignWarnLine',
-      foreground = comment_fg,
+      foreground = { from = 'Normal' },
       bold = true,
     },
     DiagnosticSignWarn = { link = 'DiagnosticWarn' },
