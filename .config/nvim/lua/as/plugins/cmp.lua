@@ -7,21 +7,18 @@ return function()
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.kind_highlights
 
-  local kind_hls = {}
+  local kind_hls = {
+    CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
+    CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
+    CmpItemAbbrMatch = { foreground = { from = 'Keyword' } },
+    CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
+    CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
+  }
   for key, _ in pairs(lsp_hls) do
     kind_hls['CmpItemKind' .. key] = { foreground = { from = lsp_hls[key] } }
   end
 
-  h.plugin(
-    'Cmp',
-    vim.tbl_extend('force', {
-      CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
-      CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
-      CmpItemAbbrMatch = { foreground = { from = 'Keyword' } },
-      CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
-      CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
-    }, kind_hls)
-  )
+  h.plugin('Cmp', kind_hls)
 
   local function tab(fallback)
     local ok, luasnip = as.safe_require('luasnip', { silent = true })
