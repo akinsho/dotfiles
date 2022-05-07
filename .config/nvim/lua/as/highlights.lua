@@ -321,7 +321,10 @@ end
 local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
     local keyword_fg = M.get_hl('Keyword', 'fg')
-    M.all({ CursorLineNr = { foreground = keyword_fg } })
+    M.all({
+      CursorLineNr = { foreground = keyword_fg },
+      LineNr = { background = 'NONE' },
+    })
   end
 end
 
