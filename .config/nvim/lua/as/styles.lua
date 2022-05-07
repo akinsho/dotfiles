@@ -22,16 +22,7 @@ local palette = {
 
 as.style = {
   border = {
-    line = {
-      { '🭽', 'FloatBorder' },
-      { '▔', 'FloatBorder' },
-      { '🭾', 'FloatBorder' },
-      { '▕', 'FloatBorder' },
-      { '🭿', 'FloatBorder' },
-      { '▁', 'FloatBorder' },
-      { '🭼', 'FloatBorder' },
-      { '▏', 'FloatBorder' },
-    },
+    line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
   },
   icons = {
     lsp = {
