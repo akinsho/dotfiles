@@ -76,7 +76,7 @@ return function()
           end,
         },
       },
-      winblend = 3,
+      winblend = 5,
       history = {
         path = vim.fn.stdpath('data') .. '/telescope_history.sqlite3',
       },
