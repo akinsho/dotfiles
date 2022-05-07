@@ -245,6 +245,7 @@ packer.startup({
         { 'f3fora/cmp-spell', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+        { 'uga-rosa/cmp-dictionary', after = 'nvim-cmp' },
         { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
         {
           'petertriho/cmp-git',

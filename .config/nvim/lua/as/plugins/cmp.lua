@@ -82,8 +82,6 @@ return function()
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, vim_item)
         vim_item.kind = as.style.lsp.kinds[vim_item.kind]
-        local name = entry.source.name
-
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           nvim_lua = '[Lua]',
@@ -94,13 +92,13 @@ return function()
           orgmode = '[Org]',
           cmp_tabnine = '[TN]',
           luasnip = '[Luasnip]',
+          dictionary = '[Dictionary]',
           buffer = '[Buffer]',
           spell = '[Spell]',
           cmdline = '[Command]',
           rg = '[Rg]',
           git = '[Git]',
-        })[name]
-
+        })[entry.source.name]
         return vim_item
       end,
     },
