@@ -3,13 +3,17 @@ return function()
   local actions = require('telescope.actions')
   local layout_actions = require('telescope.actions.layout')
   local themes = require('telescope.themes')
+  local H = require('as.highlights')
   local icons = as.style.icons
 
-  local H = require('as.highlights')
   H.plugin('telescope', {
-    TelescopeMatching = { link = 'Title' },
-    TelescopeBorder = { foreground = as.style.palette.grey },
+    TelescopePromptTitle = { fg = { from = 'Directory' }, bold = true },
+    TelescopeResultsTitle = { fg = { from = 'Normal' }, bold = true },
+    TelescopePreviewTitle = { fg = { from = 'Normal' }, bold = true },
+
     TelescopePromptPrefix = { link = 'Statement' },
+    TelescopeBorder = { foreground = as.style.palette.grey },
+    TelescopeMatching = { link = 'Title' },
     TelescopeTitle = { inherit = 'Normal', bold = true },
     TelescopeSelectionCaret = {
       fg = { from = 'Identifier' },
@@ -17,10 +21,9 @@ return function()
     },
   })
 
-  local function get_border(opts)
+  local function rectangular_border(opts)
     return vim.tbl_deep_extend('force', opts or {}, {
       borderchars = {
-        { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
         results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
         preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
@@ -31,7 +34,7 @@ return function()
   ---@param opts table?
   ---@return table
   local function dropdown(opts)
-    return themes.get_dropdown(get_border(opts))
+    return themes.get_dropdown(rectangular_border(opts))
   end
 
   telescope.setup({
@@ -87,8 +90,8 @@ return function()
         },
       },
       fzf = {
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
+        override_generic_sorter = true,
+        override_file_sorter = true,
       },
     },
     pickers = {
@@ -98,7 +101,6 @@ return function()
         show_all_buffers = true,
         ignore_current_buffer = true,
         previewer = false,
-        theme = 'dropdown',
         mappings = {
           i = { ['<c-x>'] = 'delete_buffer' },
           n = { ['<c-x>'] = 'delete_buffer' },
