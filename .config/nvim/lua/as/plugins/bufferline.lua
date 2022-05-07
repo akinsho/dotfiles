@@ -42,7 +42,7 @@ return function()
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
       ---based on https://github.com/kovidgoyal/kitty/issues/957
-      separator_style = os.getenv('KITTY_WINDOW_ID') and 'slant' or 'padded_slant',
+      -- separator_style = os.getenv('KITTY_WINDOW_ID') and 'slant' or 'padded_slant',
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = diagnostics_indicator,
       diagnostics_update_in_insert = false,
