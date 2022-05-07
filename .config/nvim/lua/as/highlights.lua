@@ -90,11 +90,30 @@ function M.adopt_winhighlight(win_id, target, name, fallback)
   return win_hl_name
 end
 
+---This helper takes a table of highlights and converts any highlights
+---specified as `highlight_prop = { from = 'group'}` into the underlying colour
+---by querying the highlight property of the from group so it can be used when specifying highlights
+---as a shorthand to derive the right color.
+---For example:
+---```lua
+---  M.set_hl({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
+---```
+---This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
+---@param opts table<string, string|boolean|table<string,string>>
+local function convert_hl_to_val(opts)
+  for name, value in pairs(opts) do
+    if type(value) == 'table' and value.from then
+      opts[name] = M.get_hl(value.from, name)
+    end
+  end
+end
+
 ---@param name string
 ---@param opts table
 function M.set_hl(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
   local hl = get_hl(opts.inherit or name)
+  convert_hl_to_val(opts)
   opts.inherit = nil
   local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
   if not ok then
@@ -168,8 +187,8 @@ local function general_overrides()
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
   M.all({
-    VertSplit = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
-    WinSeparator = { background = 'NONE', foreground = M.get_hl('NonText', 'fg') },
+    VertSplit = { background = 'NONE', foreground = { from = 'NonText' } },
+    WinSeparator = { background = 'NONE', foreground = { from = 'NonText' } },
     mkdLineBreak = { link = 'NONE' },
     Directory = { inherit = 'Keyword', bold = true },
     URL = { inherit = 'Keyword', underline = true },
@@ -182,7 +201,7 @@ local function general_overrides()
     -- Floats
     -----------------------------------------------------------------------------//
     NormalFloat = { inherit = 'Pmenu' },
-    FloatBorder = { inherit = 'NormalFloat', foreground = M.get_hl('NonText', 'fg') },
+    FloatBorder = { inherit = 'NormalFloat', foreground = { from = 'NonText' } },
     CodeBlock = { background = code_block },
     markdownCode = { background = code_block },
     markdownCodeBlock = { background = code_block },
@@ -320,9 +339,8 @@ end
 
 local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
-    local keyword_fg = M.get_hl('Keyword', 'fg')
     M.all({
-      CursorLineNr = { foreground = keyword_fg },
+      CursorLineNr = { foreground = { from = 'Keyword' } },
       LineNr = { background = 'NONE' },
     })
   end

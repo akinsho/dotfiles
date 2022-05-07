@@ -9,19 +9,17 @@ return function()
 
   local kind_hls = {}
   for key, _ in pairs(lsp_hls) do
-    kind_hls['CmpItemKind' .. key] = { foreground = h.get_hl(lsp_hls[key], 'fg') }
+    kind_hls['CmpItemKind' .. key] = { foreground = { from = lsp_hls[key] } }
   end
-
-  local keyword_fg = h.get_hl('Keyword', 'fg')
 
   h.plugin(
     'Cmp',
     vim.tbl_extend('force', {
       CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
       CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
-      CmpItemAbbrMatch = { foreground = keyword_fg },
+      CmpItemAbbrMatch = { foreground = { from = 'Keyword' } },
       CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
-      CmpItemAbbrMatchFuzzy = { italic = true, foreground = keyword_fg },
+      CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
     }, kind_hls)
   )
 

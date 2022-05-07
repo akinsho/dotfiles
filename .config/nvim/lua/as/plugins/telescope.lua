@@ -12,8 +12,8 @@ return function()
     TelescopePromptPrefix = { link = 'Statement' },
     TelescopeTitle = { inherit = 'Normal', bold = true },
     TelescopeSelectionCaret = {
-      foreground = H.get_hl('Identifier', 'fg'),
-      background = H.get_hl('TelescopeSelection', 'bg'),
+      fg = { from = 'Identifier' },
+      bg = { from = 'TelescopeSelection' },
     },
   })
 
