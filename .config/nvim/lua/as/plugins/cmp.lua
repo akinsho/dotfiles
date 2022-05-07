@@ -114,27 +114,8 @@ return function()
     }),
   })
 
-  cmp.setup.filetype('norg', {
-    sources = cmp.config.sources({
-      { name = 'neorg' },
-    }, {
-      { name = 'buffer' },
-    }),
-  })
-
-  cmp.setup.filetype('NeogitCommitMessage', {
-    sources = cmp.config.sources({
-      { name = 'git' },
-      { name = 'luasnip' },
-    }, {
-      { name = 'buffer' },
-    }),
-  })
-
   local search_sources = {
-    view = {
-      entries = { name = 'custom', direction = 'bottom_up' },
-    },
+    view = { entries = { name = 'custom', direction = 'bottom_up' } },
     sources = cmp.config.sources({
       { name = 'nvim_lsp_document_symbol' },
     }, {

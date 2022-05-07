@@ -10,3 +10,17 @@ onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
 if v:lua.as.plugin_loaded("markdown-preview.nvim")
   nmap <buffer> <localleader>p <Plug>MarkdownPreviewToggle
 endif
+
+if v:lua.as.plugin_loaded("nvim-cmp")
+lua << EOF
+local cmp = require('cmp')
+cmp.setup.filetype('markdown', {
+  sources = cmp.config.sources({
+    { name = 'dictionary' },
+    { name = 'spell' },
+  }, {
+    { name = 'buffer' },
+  }),
+})
+EOF
+endif
