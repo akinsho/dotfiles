@@ -37,9 +37,6 @@ return function()
       margin = {
         horizontal = 0,
       },
-      placement = {
-        horizontal = 'center',
-      },
     },
     hide = { focused_win = true },
     render = render,
