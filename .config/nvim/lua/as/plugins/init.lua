@@ -76,13 +76,7 @@ packer.startup({
       },
     })
 
-    use({
-      'ilAYAli/scMRU.nvim',
-      cmd = { 'Mfu', 'Mru' },
-      setup = function()
-        as.nnoremap('<leader>fm', '<Cmd>Mfu<CR>', 'most frequently used')
-      end,
-    })
+    use({ 'ilAYAli/scMRU.nvim', module = 'mru' })
 
     use('kyazdani42/nvim-web-devicons')
 

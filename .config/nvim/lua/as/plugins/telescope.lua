@@ -192,6 +192,18 @@ return function()
     }))
   end
 
+  local function MRU()
+    require('mru').display_cache(dropdown({
+      previewer = false,
+    }))
+  end
+
+  local function MFU()
+    require('mru').display_cache(
+      vim.tbl_extend('keep', { algorithm = 'mfu' }, dropdown({ previewer = false }))
+    )
+  end
+
   local function notifications()
     telescope.extensions.notify.notify(dropdown())
   end
@@ -228,7 +240,9 @@ return function()
         d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
         s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
       },
-      h = { frecency, 'history' },
+      m = { MRU, 'Most recently used files' },
+      F = { MFU, 'Most frequently used files' },
+      h = { frecency, 'Frecency' },
       c = { nvim_config, 'nvim config' },
       o = { builtins.buffers, 'buffers' },
       p = { installed_plugins, 'plugins' },
