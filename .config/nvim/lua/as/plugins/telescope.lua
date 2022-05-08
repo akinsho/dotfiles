@@ -7,9 +7,19 @@ return function()
   local icons = as.style.icons
 
   H.plugin('telescope', {
-    TelescopePromptTitle = { fg = { from = 'Directory' }, bold = true },
-    TelescopeResultsTitle = { fg = { from = 'Normal' }, bold = true },
-    TelescopePreviewTitle = { fg = { from = 'Normal' }, bold = true },
+    TelescopePromptTitle = {
+      fg = { from = 'Directory' },
+      bold = true,
+    },
+    TelescopeResultsTitle = {
+      fg = { from = 'Normal' },
+      bold = true,
+    },
+    TelescopePreviewTitle = {
+      bg = { from = 'LineNr', attr = 'fg' },
+      fg = { from = 'Normal' },
+      bold = true,
+    },
 
     TelescopePromptPrefix = { link = 'Statement' },
     TelescopeBorder = { foreground = as.style.palette.grey },
