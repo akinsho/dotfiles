@@ -11,24 +11,24 @@ involved in the programs my dotfiles cover.
 
 The installation script is out of date and doesn't work anymore.
 To setup a new machine instead follow these instructions:
+
 1. Check `git` is installed.
 2. (Mac OS) Install homebrew using the most recent instructions.
 
 #### dependencies:
-* `neovim`
-* `hombrew` (MacOS)
-* `ripgrep`
-* `fzf`
-* `delta`
-* `prettier`
-* `stylua`
-* `himalaya`
 
+- `neovim`
+- `hombrew` (MacOS)
+- `ripgrep`
+- `fzf`
+- `delta`
+- `prettier`
+- `stylua`
 
 ### Highlights / Tools
 
 - [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
-- [Nvim (nightly)](https://github.com/neovim/neovim)
+- [Nvim](https://github.com/neovim/neovim)
 - Language server support using [`neovim's lsp`](https://neovim.io/doc/user/lsp.html)
 
 - Minimal Zsh config without `oh-my-zsh`, async prompt for large monorepos.
