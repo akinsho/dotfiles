@@ -293,7 +293,7 @@ local function general_overrides()
       foreground = { from = 'Normal' },
       bold = true,
     },
-    DiagnosticSignWarnLineNr = {
+    DiagnosticSignWarnNr = {
       inherit = 'DiagnosticSignWarnLine',
       foreground = { from = 'Normal' },
       bold = true,
