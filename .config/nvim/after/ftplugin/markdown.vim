@@ -18,6 +18,7 @@ cmp.setup.filetype('markdown', {
   sources = cmp.config.sources({
     { name = 'dictionary' },
     { name = 'spell' },
+    { name = 'emoji' },
   }, {
     { name = 'buffer' },
   }),

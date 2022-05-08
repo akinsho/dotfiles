@@ -30,6 +30,7 @@ if as.plugin_loaded('nvim-cmp') then
       { name = 'neorg' },
       { name = 'dictionary' },
       { name = 'spell' },
+      { name = 'emoji' },
     }, {
       { name = 'buffer' },
     }),
