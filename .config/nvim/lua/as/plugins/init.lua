@@ -498,6 +498,7 @@ packer.startup({
       config = function()
         require('cinnamon').setup({
           extra_keymaps = true,
+          scroll_limit = 50,
         })
       end,
     })
