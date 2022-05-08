@@ -4,7 +4,7 @@ return function()
     include_current = false,
     filter_rules = {
       bo = {
-        filetype = { 'neo-tree-popup', 'quickfix' },
+        filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
         buftype = { 'terminal', 'quickfix' },
       },
     },
