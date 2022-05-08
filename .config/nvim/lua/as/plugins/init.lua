@@ -767,7 +767,6 @@ packer.startup({
       'sindrets/diffview.nvim',
       cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
       module = 'diffview',
-      keys = '<localleader>gd',
       setup = function()
         as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
       end,
