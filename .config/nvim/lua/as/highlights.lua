@@ -103,7 +103,7 @@ end
 local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      opts[name] = M.get_hl(value.from, name)
+      opts[name] = M.get_hl(value.from, vim.F.if_nil(value.attr, name))
     end
   end
 end
