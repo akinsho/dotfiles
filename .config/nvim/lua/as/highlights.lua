@@ -183,7 +183,7 @@ local function general_overrides()
   local normal_bg = M.get_hl('Normal', 'bg')
   local code_block = M.alter_color(normal_bg, 30)
   local msg_area_bg = M.alter_color(normal_bg, -10)
-  local hint_line = M.alter_color(L.hint, -80)
+  local hint_line = M.alter_color(L.hint, -70)
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
   M.all({
