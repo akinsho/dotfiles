@@ -63,15 +63,15 @@ return function()
       end,
     },
     mapping = {
+      ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
+      ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
       ['<c-h>'] = cmp.mapping(function()
         api.nvim_feedkeys(vim.fn['copilot#Accept'](t('<Tab>')), 'n', true)
       end),
-      ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
       ['<C-q>'] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-space>'] = cmp.mapping.complete(),
