@@ -101,7 +101,6 @@ return function()
           calc = '[Calc]',
           neorg = '[Neorg]',
           orgmode = '[Org]',
-          cmp_tabnine = '[TN]',
           luasnip = '[Luasnip]',
           dictionary = '[Dictionary]',
           buffer = '[Buffer]',
