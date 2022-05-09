@@ -92,7 +92,7 @@ return function()
       deprecated = true,
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
-        vim_item.kind = fmt('%s %s', vim_item.kind, as.style.lsp.kinds[vim_item.kind])
+        vim_item.kind = fmt('%s %s', as.style.lsp.codicons[vim_item.kind], vim_item.kind)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           nvim_lua = '[Lua]',
