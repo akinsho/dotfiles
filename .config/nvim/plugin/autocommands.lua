@@ -105,10 +105,9 @@ as.augroup('SmartClose', {
     event = { 'FileType' },
     pattern = '*',
     command = function()
-      local is_readonly = (vim.bo.readonly or not vim.bo.modifiable) and fn.hasmapto('q', 'n') == 0
+      local is_unmapped = fn.hasmapto('q', 'n') == 0
 
-      local is_eligible = vim.bo.buftype ~= ''
-        or is_readonly
+      local is_eligible = is_unmapped
         or vim.wo.previewwindow
         or contains(smart_close_filetypes, vim.bo.filetype)
 
