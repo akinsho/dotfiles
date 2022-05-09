@@ -209,6 +209,29 @@ packer.startup({
     })
 
     use({
+      'kosayoda/nvim-lightbulb',
+      config = function()
+        require('as.highlights').plugin('lightbulb', {
+          LightBulbFloatWin = { link = 'Normal' },
+        })
+        local lightbulb = require('nvim-lightbulb')
+        lightbulb.setup({
+          ignore = { 'null-ls' },
+          sign = { enabled = false },
+          float = { enabled = true, win_opts = { border = 'none' } },
+        })
+        as.augroup('Lightbulb', {
+          {
+            event = { 'CursorHold', 'CursorHoldI' },
+            command = function()
+              lightbulb.update_lightbulb()
+            end,
+          },
+        })
+      end,
+    })
+
+    use({
       'jose-elias-alvarez/null-ls.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
       config = conf('null-ls'),
