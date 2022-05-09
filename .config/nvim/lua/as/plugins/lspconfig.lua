@@ -148,12 +148,11 @@ as.lsp.servers = {
       return {}
     end
     return lua_dev.setup({
-      library = {
-        plugins = { 'plenary.nvim' },
-      },
+      library = { plugins = { 'plenary.nvim' } },
       lspconfig = {
         settings = {
           Lua = {
+            format = { enable = false },
             diagnostics = {
               globals = {
                 'vim',
