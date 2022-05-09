@@ -4,6 +4,7 @@ return function()
 
   local fn = vim.fn
   local api = vim.api
+  local fmt = string.format
   local t = as.replace_termcodes
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.kind_highlights
@@ -89,9 +90,9 @@ return function()
     },
     formatting = {
       deprecated = true,
-      fields = { 'kind', 'abbr', 'menu' },
+      fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
-        vim_item.kind = as.style.lsp.kinds[vim_item.kind]
+        vim_item.kind = fmt('%s %s', vim_item.kind, as.style.lsp.kinds[vim_item.kind])
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           nvim_lua = '[Lua]',
