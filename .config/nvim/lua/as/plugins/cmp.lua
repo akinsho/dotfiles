@@ -2,6 +2,7 @@ return function()
   local cmp = require('cmp')
   local h = require('as.highlights')
 
+  local fn = vim.fn
   local api = vim.api
   local t = as.replace_termcodes
   local border = as.style.current.border
@@ -20,12 +21,19 @@ return function()
 
   h.plugin('Cmp', kind_hls)
 
+  local has_words_before = function()
+    local col = api.nvim_win_get_cursor(0)[2]
+    return col ~= 0 and api.nvim_get_current_line():sub(col, col):match('%s') == nil
+  end
+
   local function tab(fallback)
     local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
+    elseif has_words_before() then
+      cmp.complete()
     else
       fallback()
     end
@@ -37,6 +45,8 @@ return function()
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then
       luasnip.jump(-1)
+    elseif has_words_before() then
+      cmp.complete()
     else
       fallback()
     end
@@ -66,7 +76,7 @@ return function()
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
       ['<c-h>'] = cmp.mapping(function()
-        api.nvim_feedkeys(vim.fn['copilot#Accept'](t('<Tab>')), 'n', true)
+        api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true)
       end),
       ['<C-q>'] = cmp.mapping({
         i = cmp.mapping.abort(),
@@ -112,8 +122,8 @@ return function()
         options = {
           get_bufnrs = function()
             local bufs = {}
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              bufs[vim.api.nvim_win_get_buf(win)] = true
+            for _, win in ipairs(api.nvim_list_wins()) do
+              bufs[api.nvim_win_get_buf(win)] = true
             end
             return vim.tbl_keys(bufs)
           end,
