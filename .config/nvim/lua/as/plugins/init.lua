@@ -334,15 +334,9 @@ packer.startup({
     -- UI
     -----------------------------------------------------------------------------//
     use({
-      'petertriho/nvim-scrollbar',
-      opt = true,
+      'lewis6991/satellite.nvim',
       config = function()
-        require('scrollbar').setup({
-          handle = { color = require('as.highlights').get_hl('PmenuSbar', 'bg') },
-          -- NOTE: If telescope is not explicitly excluded this garbles input into its prompt buffer
-          excluded_buftypes = { 'nofile', 'terminal', 'prompt' },
-          excluded_filetypes = { 'packer', 'TelescopePrompt', 'NvimTree' },
-        })
+        require('satellite').setup()
       end,
     })
 
