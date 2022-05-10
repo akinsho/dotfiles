@@ -142,32 +142,33 @@ as.lsp.servers = {
   ---  NOTE: we return a function here so that the lua dev dependency is not
   --- required till the setup function is called.
   sumneko_lua = function()
+    local settings = {
+      settings = {
+        Lua = {
+          format = { enable = false },
+          diagnostics = {
+            globals = {
+              'vim',
+              'describe',
+              'it',
+              'before_each',
+              'after_each',
+              'pending',
+              'teardown',
+              'packer_plugins',
+            },
+          },
+          completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
+        },
+      },
+    }
     local ok, lua_dev = as.safe_require('lua-dev')
     if not ok then
-      return {}
+      return settings
     end
     return lua_dev.setup({
       library = { plugins = { 'plenary.nvim' } },
-      lspconfig = {
-        settings = {
-          Lua = {
-            format = { enable = false },
-            diagnostics = {
-              globals = {
-                'vim',
-                'describe',
-                'it',
-                'before_each',
-                'after_each',
-                'pending',
-                'teardown',
-                'packer_plugins',
-              },
-            },
-            completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
-          },
-        },
-      },
+      lspconfig = settings,
     })
   end,
 }
