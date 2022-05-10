@@ -5,6 +5,7 @@ return function()
     on_attach = as.lsp.on_attach,
     sources = {
       null_ls.builtins.diagnostics.zsh,
+      null_ls.builtins.diagnostics.golangci_lint,
       null_ls.builtins.formatting.stylua.with({
         condition = function(_utils)
           return as.executable('stylua') and _utils.root_has_file({ 'stylua.toml', '.stylua.toml' })
