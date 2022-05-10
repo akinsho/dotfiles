@@ -395,8 +395,9 @@ as.augroup('Utilities', {
     -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
     event = { 'BufReadCmd' },
     pattern = { 'file:///*' },
-    command = function()
-      vim.cmd(fmt('bd!|edit %s', vim.uri_from_fname('<afile>')))
+    nested = true,
+    command = function(args)
+      vim.cmd(fmt('bd!|edit %s', vim.uri_to_fname(args.file)))
     end,
   },
   {
