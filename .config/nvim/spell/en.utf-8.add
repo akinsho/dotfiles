@@ -243,3 +243,4 @@ libuv
 userdata
 OAuth
 runtimepath
+namespaced
