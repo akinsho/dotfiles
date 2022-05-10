@@ -139,8 +139,6 @@ as.lsp.servers = {
   --- between different modules in the nvim lua context
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
   --- if I ever decide to move away from lua dev then use the above
-  ---  NOTE: we return a function here so that the lua dev dependency is not
-  --- required till the setup function is called.
   sumneko_lua = function()
     local settings = {
       settings = {
