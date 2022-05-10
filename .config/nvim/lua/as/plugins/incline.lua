@@ -17,7 +17,7 @@ return function()
           { fmt(' %s ', icons.chevron_right), guifg = directory_color },
         })
       else
-        table.insert(result, { part, gui = 'underline,bold' })
+        table.insert(result, { part, gui = 'underline,bold', guisp = directory_color })
       end
     end
     local icon, color = devicons.get_icon_color(bufname, nil, { default = true })
