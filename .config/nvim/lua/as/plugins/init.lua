@@ -96,7 +96,7 @@ packer.startup({
         require('auto-session').setup({
           log_level = 'error',
           auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath('data')),
-          auto_session_use_git_branch = true,
+          auto_session_use_git_branch = false, -- This cause inconsistent results
         })
       end,
     })
