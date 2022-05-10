@@ -976,23 +976,6 @@ if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) t
   vim.g.packer_compiled_loaded = true
 end
 
---- Open a repository from an authorname/repository string
---- e.g. 'akinso/example-repo'
-local function open_plugin_url()
-  as.nnoremap('gf', function()
-    local repo = fn.expand('<cfile>')
-    if repo:match('https://') then
-      return vim.cmd('norm gx')
-    end
-    if not repo or #vim.split(repo, '/') ~= 2 then
-      return vim.cmd('norm! gf')
-    end
-    local url = fmt('https://www.github.com/%s', repo)
-    fn.jobstart(fmt('%s %s', vim.g.open_command, url))
-    vim.notify(fmt('Opening %s at %s', repo, url))
-  end)
-end
-
 as.augroup('PackerSetupInit', {
   {
     event = 'BufWritePost',
@@ -1002,12 +985,6 @@ as.augroup('PackerSetupInit', {
       as.invalidate('as.plugins', true)
       packer.compile()
     end,
-  },
-  {
-    event = 'BufEnter',
-    buffer = 0,
-    description = 'Open plugin URLs',
-    command = open_plugin_url,
   },
 })
 
