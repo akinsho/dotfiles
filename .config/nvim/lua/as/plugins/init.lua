@@ -460,7 +460,9 @@ packer.startup({
     use({
       'jghauser/fold-cycle.nvim',
       config = function()
-        require('fold-cycle').setup()
+        require('fold-cycle').setup({
+          softwrap_movement_fix = false,
+        })
         as.nnoremap('<BS>', function()
           require('fold-cycle').open()
         end)
