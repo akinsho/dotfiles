@@ -9,9 +9,11 @@ return function()
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.kind_highlights
 
+  -- Make the source information less prominent
+  local faded = h.alter_color(h.get_hl('Pmenu', 'bg'), 30)
   local kind_hls = {
     CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
-    CmpItemMenu = { inherit = 'NonText', italic = false, bold = false },
+    CmpItemMenu = { foreground = faded, italic = true, bold = false },
     CmpItemAbbrMatch = { foreground = { from = 'Keyword' } },
     CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
     CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
