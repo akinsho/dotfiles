@@ -17,6 +17,7 @@ return function()
         test = true,
         tidy = true,
       },
+      buildFlags = { '-tags=thirdparty' }, -- TODO: this should be project local
       analyses = {
         unusedparams = true,
       },
