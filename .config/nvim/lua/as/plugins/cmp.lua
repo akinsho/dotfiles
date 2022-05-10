@@ -22,19 +22,12 @@ return function()
 
   h.plugin('Cmp', kind_hls)
 
-  local has_words_before = function()
-    local col = api.nvim_win_get_cursor(0)[2]
-    return col ~= 0 and api.nvim_get_current_line():sub(col, col):match('%s') == nil
-  end
-
   local function tab(fallback)
     local ok, luasnip = as.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
-    elseif has_words_before() then
-      cmp.complete()
     else
       fallback()
     end
@@ -46,8 +39,6 @@ return function()
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then
       luasnip.jump(-1)
-    elseif has_words_before() then
-      cmp.complete()
     else
       fallback()
     end
