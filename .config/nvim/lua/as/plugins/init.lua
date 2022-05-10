@@ -211,9 +211,6 @@ packer.startup({
     use({
       'kosayoda/nvim-lightbulb',
       config = function()
-        require('as.highlights').plugin('lightbulb', {
-          LightBulbFloatWin = { link = 'Normal' },
-        })
         local lightbulb = require('nvim-lightbulb')
         lightbulb.setup({
           ignore = { 'null-ls' },
