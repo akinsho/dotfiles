@@ -63,8 +63,8 @@ as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostic
 local diagnostic_types = {
   { 'Error', icon = icons.error },
   { 'Warn', icon = icons.warn },
-  { 'Hint', icon = icons.hint },
   { 'Info', icon = icons.info },
+  { 'Hint', icon = icons.hint },
 }
 
 fn.sign_define(vim.tbl_map(function(t)

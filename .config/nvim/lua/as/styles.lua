@@ -94,7 +94,7 @@ as.style = {
     colors = {
       error = palette.pale_red,
       warn = palette.dark_orange,
-      hint = palette.light_yellow,
+      hint = palette.bright_blue,
       info = palette.teal,
     },
     kind_highlights = {
