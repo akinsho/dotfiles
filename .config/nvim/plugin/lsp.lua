@@ -125,6 +125,11 @@ diagnostic.config({
     border = border,
     focusable = false,
     source = 'always',
+    prefix = function(diag, i, _)
+      local level = diagnostic_types[diag.severity]
+      local prefix = fmt('%d. %s ', i, level.icon)
+      return prefix, 'Diagnostic' .. level[1]
+    end,
   },
 })
 
