@@ -258,7 +258,7 @@ local function general_overrides()
     TSNamespace = { link = 'TypeBuiltin' },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
-    TSError = { undercurl = true, sp = error_line, foreground = 'NONE' },
+    TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
     -- highlight FIXME comments
     commentTSWarning = { background = P.light_red, foreground = 'fg', bold = true },
     commentTSDanger = { background = L.hint, foreground = '#1B2229', bold = true },
