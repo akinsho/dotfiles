@@ -11,15 +11,18 @@ return function()
     icons = false,
     lsp_cfg = {
       capabilities = capabilities,
-      codelenses = {
-        generate = true,
-        gc_details = false,
-        test = true,
-        tidy = true,
-      },
-      buildFlags = { '-tags=thirdparty' }, -- TODO: this should be project local
-      analyses = {
-        unusedparams = true,
+      settings = {
+        gopls = {
+          codelenses = {
+            generate = true,
+            gc_details = false,
+            test = true,
+            tidy = true,
+          },
+          analyses = {
+            unusedparams = true,
+          },
+        },
       },
     },
     lsp_gofumpt = true,
