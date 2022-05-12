@@ -753,6 +753,16 @@ packer.startup({
     })
 
     use({
+      'nvim-treesitter/nvim-treesitter-context',
+      config = function()
+        require('as.highlights').plugin('treesitter-context', {
+          TreesitterContext = { inherit = 'Normal' },
+        })
+        require('treesitter-context').setup()
+      end,
+    })
+
+    use({
       'lewis6991/spellsitter.nvim',
       config = function()
         require('spellsitter').setup({ enable = true })
