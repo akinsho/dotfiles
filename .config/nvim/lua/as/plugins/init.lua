@@ -262,6 +262,7 @@ packer.startup({
         { 'uga-rosa/cmp-dictionary', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
         { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+        { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
         {
           'petertriho/cmp-git',
           after = 'nvim-cmp',

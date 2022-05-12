@@ -97,6 +97,7 @@ return function()
           buffer = '[B]',
           spell = '[SP]',
           cmdline = '[Cmd]',
+          cmdline_history = '[Hist]',
           rg = '[Rg]',
           git = '[Git]',
         })[entry.source.name]
@@ -138,6 +139,7 @@ return function()
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
       { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+      { name = 'cmdline_history' },
       { name = 'path' },
     }),
   })
