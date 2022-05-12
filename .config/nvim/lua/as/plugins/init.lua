@@ -352,7 +352,9 @@ packer.startup({
         -- FIXME: this should be reported upstream at some point This plugin
         -- is not safe to reload due to repeated attempts to map already mapped keys
         as.block_reload(function()
-          require('satellite').setup()
+          require('satellite').setup({
+            excluded_filetypes = { 'packer', 'neo-tree', 'neo-tree-popup' },
+          })
         end)
       end,
     })
