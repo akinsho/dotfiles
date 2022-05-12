@@ -9,6 +9,16 @@ local fmt = string.format
 
 local PACKER_COMPILED_PATH = fn.stdpath('cache') .. '/packer/packer_compiled.lua'
 
+---Some plugins are not safe to be reloaded because their setup functions
+---and are not idempotent. This wraps the setup calls of such plugins
+---@param func fun()
+function as.block_reload(func)
+  if vim.g.packer_compiled_loaded then
+    return
+  end
+  func()
+end
+
 -----------------------------------------------------------------------------//
 -- Bootstrap Packer {{{3
 -----------------------------------------------------------------------------//
@@ -337,7 +347,11 @@ packer.startup({
     use({
       'lewis6991/satellite.nvim',
       config = function()
-        require('satellite').setup()
+        -- FIXME: this should be reported upstream at some point This plugin
+        -- is not safe to reload due to repeated attempts to map already mapped keys
+        as.block_reload(function()
+          require('satellite').setup()
+        end)
       end,
     })
 
@@ -389,16 +403,14 @@ packer.startup({
       'folke/todo-comments.nvim',
       requires = 'nvim-lua/plenary.nvim',
       config = function()
-        -- this plugin is not safe to reload
-        if vim.g.packer_compiled_loaded then
-          return
-        end
-        require('todo-comments').setup({
-          highlight = {
-            exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
-          },
-        })
-        as.nnoremap('<leader>lt', '<Cmd>TodoTrouble<CR>', 'trouble: todos')
+        as.block_reload(function()
+          require('todo-comments').setup({
+            highlight = {
+              exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
+            },
+          })
+          as.nnoremap('<leader>lt', '<Cmd>TodoTrouble<CR>', 'trouble: todos')
+        end)
       end,
     })
 
