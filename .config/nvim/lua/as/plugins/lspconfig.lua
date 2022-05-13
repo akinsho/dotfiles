@@ -145,16 +145,7 @@ as.lsp.servers = {
         Lua = {
           format = { enable = false },
           diagnostics = {
-            globals = {
-              'vim',
-              'describe',
-              'it',
-              'before_each',
-              'after_each',
-              'pending',
-              'teardown',
-              'packer_plugins',
-            },
+            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         },
