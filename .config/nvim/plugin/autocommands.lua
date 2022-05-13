@@ -87,6 +87,8 @@ local smart_close_filetypes = {
   'qf',
 }
 
+local smart_close_buftypes = { 'nofile' }
+
 local function smart_close()
   if fn.winnr('$') ~= 1 then
     api.nvim_win_close(0, true)
@@ -109,6 +111,7 @@ as.augroup('SmartClose', {
 
       local is_eligible = is_unmapped
         or vim.wo.previewwindow
+        or contains(smart_close_buftypes, vim.bo.buftype)
         or contains(smart_close_filetypes, vim.bo.filetype)
 
       if is_eligible then
