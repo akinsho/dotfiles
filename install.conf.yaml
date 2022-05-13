@@ -32,9 +32,6 @@
     ~/.config/lazygit/config.yml:
       force: true
       path: .config/lazygit/config.yml
-    ~/.config/himalaya:
-      force: true
-      path: .config/himalaya
     ~/Library/Application Support/lazygit/config.yml:
       if: "[ `uname` = Darwin ]"
       path: .config/lazygit/config.yml
