@@ -464,7 +464,7 @@ packer.startup({
       end,
     })
 
-    use({ 'chentau/marks.nvim', config = conf('marks') })
+    use({ 'chentoast/marks.nvim', config = conf('marks') })
 
     use({ 'monaqa/dial.nvim', config = conf('dial') })
 
@@ -595,7 +595,9 @@ packer.startup({
 
     use({
       'iamcco/markdown-preview.nvim',
-      run = 'cd app && yarn install',
+      run = function()
+        vim.fn['mkdp#util#install']()
+      end,
       ft = { 'markdown' },
       config = function()
         vim.g.mkdp_auto_start = 0
@@ -641,16 +643,6 @@ packer.startup({
     --------------------------------------------------------------------------------
     -- Knowledge and task management {{{1
     --------------------------------------------------------------------------------
-    -- TODO: complete migration to neorg
-    use({
-      'vimwiki/vimwiki',
-      branch = 'dev',
-      keys = { '<leader>ww', '<leader>wt', '<leader>wi' },
-      event = { 'BufEnter *.wiki' },
-      setup = conf('vimwiki').setup,
-      config = conf('vimwiki').config,
-    })
-
     use({
       'vhyrro/neorg',
       requires = { 'vhyrro/neorg-telescope', 'max397574/neorg-kanban' },
