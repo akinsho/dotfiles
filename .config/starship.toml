@@ -1,0 +1,45 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+
+# icon options =  ❯   
+#
+# Top left:     directory(gitbranch) ● ●
+
+add_newline = true
+format = """
+[$directory\\(($git_branch)\\)](bold orange)$all
+"""
+[character]
+format = "$symbol "
+success_symbol = "[➜](bold green)"
+vicmd_symbol = "[](green)"
+
+[git_status]
+format = """
+([\
+$conflicted \
+[$stashed](blue) \
+$deleted\
+$renamed \
+[$modified](green) \
+$staged\
+$untracked\
+[$ahead_behind](yellow)\
+]($style))"""
+stashed = ""
+modified = "●"
+
+[git_branch]
+format = "[$branch(:$remote_branch)]($style)"
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style)"
+
+[aws]
+disabled = true
+symbol = "☁"
+
+[gcloud]
+symbol = ""
+disabled = true
