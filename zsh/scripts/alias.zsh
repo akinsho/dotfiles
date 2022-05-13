@@ -1,7 +1,12 @@
 #------------------------------------------------------------------------------
-# Aliases
+# ALIASES
 #------------------------------------------------------------------------------
+alias ...="cd ../../.."
+alias ....="cd ../../../.."
 alias ls="ls --color=auto --hyperlink=auto $@"
+if [[ $+commands[exa] ]]; then
+  alias ll="exa --long --all --git --group-directories-first --icons $@"
+fi
 alias l='ls -lFh'     # size,show type,human readable
 alias dv='DEVELOPING=1 nvim'
 alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
@@ -31,7 +36,7 @@ alias et="nvim ~/.tmux.conf"
 (( $+commands[yarn] )) && alias ys="clear && yarn start"
 (( $+commands[bat] )) && alias cat='bat'
 #------------------------------------------------------------------------------
-# Tmux
+# TMUX
 #------------------------------------------------------------------------------
 alias ta="tmux attach -t"
 alias td="tmux detach"
