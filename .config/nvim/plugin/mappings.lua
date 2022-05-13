@@ -341,8 +341,6 @@ xnoremap(
   [[":\<C-u>call v:lua.as.mappings.setup_CR()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
 )
-
-nnoremap('gf', '<Cmd>e <cfile><CR>')
 -----------------------------------------------------------------------------//
 -- Command mode related
 -----------------------------------------------------------------------------//
@@ -419,42 +417,28 @@ end
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
-
 local function open_link()
   local file = fn.expand('<cfile>')
   if fn.isdirectory(file) > 0 then
-    vim.cmd('edit ' .. file)
-  else
-    open(file)
-  end
-end
-nnoremap('gx', open_link)
------------------------------------------------------------------------------//
--- Open plugin/repo paths
------------------------------------------------------------------------------//
---- Open a repository from an authorname/repository string
---- e.g. 'akinso/example-repo'
-local function open_path()
-  local path = fn.expand('<cfile>')
-  if path:match('https://') then
-    return vim.cmd('norm gx')
+    return vim.cmd('edit ' .. file)
   end
   -- Any URI with a protocol segment
   local protocol_uri_regex = '%a*:%/%/[%a%d%#%[%]%-%%+:;!$@/?&=_.,~*()]*'
-  if path:match(protocol_uri_regex) then
+  if file:match(protocol_uri_regex) then
     return vim.cmd('norm! gf')
   end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
-  local link = string.match(path, plugin_url_regex)
+  local link = string.match(file, plugin_url_regex)
   if link then
     return open(fmt('https://www.github.com/%s', link))
   end
-  return vim.cmd('norm! gf')
+  open(file)
 end
-nnoremap('gf', open_path)
+nnoremap('gx', open_link)
 
+nnoremap('gf', '<Cmd>e <cfile><CR>')
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
