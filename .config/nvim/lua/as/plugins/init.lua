@@ -382,6 +382,33 @@ packer.startup({
     })
 
     use({
+      'ThePrimeagen/refactoring.nvim',
+      config = function()
+        local refactoring = require('refactoring')
+        refactoring.setup({
+          prompt_func_return_type = {
+            go = true,
+          },
+          prompt_func_param_type = {
+            go = true,
+          },
+        })
+        as.vnoremap('<leader>rr', function()
+          refactoring.select_refactor()
+        end, 'refactor: select')
+        as.nnoremap('<leader>rp', function()
+          refactoring.debug.printf()
+        end, 'refactor: printf')
+        as.vnoremap('<leader>rv', function()
+          refactoring.debug.print_var()
+        end, 'refactor: printf')
+        as.nnoremap('<leader>rc', function()
+          refactoring.debug.cleanup()
+        end)
+      end,
+    })
+
+    use({
       'AckslD/nvim-neoclip.lua',
       config = function()
         require('neoclip').setup({
