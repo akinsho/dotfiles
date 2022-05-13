@@ -3,7 +3,6 @@
 
 
 # icon options =  ❯   
-#
 # Top left:     directory(gitbranch) ● ●
 
 add_newline = true
@@ -18,11 +17,11 @@ vicmd_symbol = "[](green)"
 [git_status]
 format = """
 ([\
-$conflicted \
+ ($conflicted) \
 [$stashed](blue) \
 $deleted\
-$renamed \
-[$modified](green) \
+($renamed )\
+[($modified )](green)\
 $staged\
 $untracked\
 [$ahead_behind](yellow)\
