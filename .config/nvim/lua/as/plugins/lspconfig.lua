@@ -22,6 +22,13 @@ local function setup_autocommands(client, bufnr)
   if client and client.server_capabilities.documentHighlightProvider then
     as.augroup('LspCursorCommands', {
       {
+        event = { 'CursorHold' },
+        buffer = bufnr,
+        command = function()
+          vim.diagnostic.open_float({ scope = 'line' }, { focus = false })
+        end,
+      },
+      {
         event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
         description = 'LSP: Document Highlight',
