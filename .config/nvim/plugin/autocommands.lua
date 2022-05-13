@@ -81,7 +81,7 @@ local smart_close_filetypes = {
   'qf',
 }
 
-local smart_close_buftypes = { 'nofile' }
+local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
 
 local function smart_close()
   if fn.winnr('$') ~= 1 then
