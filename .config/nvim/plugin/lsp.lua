@@ -32,6 +32,9 @@ end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
+    if not api.nvim_buf_is_valid(0) then
+      return
+    end
     vim.diagnostic.setqflist({ open = false })
     as.toggle_list('quickfix')
     if not as.is_vim_list_open() and cmd_id then
