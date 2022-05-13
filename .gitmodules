@@ -14,3 +14,6 @@
 [submodule "zsh-completions"]
 	path = zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
+[submodule "zsh/plugins/zsh-auto-notify"]
+	path = zsh/plugins/zsh-auto-notify
+	url = git@github.com:MichaelAquilina/zsh-auto-notify.git

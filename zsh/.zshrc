@@ -37,6 +37,7 @@ source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
 source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
 source $PLUGIN_DIR/last-working-dir.zsh
+source $PLUGIN_DIR/zsh-auto-notify/auto-notify.plugin.zsh
 autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               Completion
