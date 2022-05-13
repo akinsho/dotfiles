@@ -22,6 +22,7 @@
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
     ~/.config/nvim: .config/nvim
+    ~/.config/starship.toml: ""
     ~/.config/kitty:
       force: true
       path: .config/kitty
