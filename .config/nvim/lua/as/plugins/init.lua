@@ -313,7 +313,7 @@ packer.startup({
       'rcarriga/vim-ultest',
       wants = { 'vim-test' },
       requires = { 'vim-test' },
-      cmd = { 'Ultest', 'UltestNearest', 'UltestSummary' },
+      event = 'CursorHold *_spec.*,*_test.*',
       setup = conf('ultest').setup,
       config = conf('ultest').config,
     })

@@ -7,6 +7,7 @@ function M.setup()
 end
 
 function M.config()
+  vim.cmd('UpdateRemotePlugins')
   local pattern = { '*_test.*', '*_spec.*' }
   as.augroup('UltestTests', {
     { event = 'BufWritePost', pattern = pattern, command = 'UltestNearest' },
