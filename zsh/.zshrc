@@ -119,9 +119,6 @@ HISTFILE=~/.zsh_history
 #-------------------------------------------------------------------------------
 bindkey -v # enables vi mode, using -e = emacs
 
-# Add the zsh directory to the autoload dirs
-fpath+=$DOTFILES/zsh/zshfunctions
-
 # Correction prompt
 export SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 #-------------------------------------------------------------------------------
