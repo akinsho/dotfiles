@@ -118,7 +118,14 @@ diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
-  virtual_text = false,
+  virtual_text = {
+    source = 'always',
+    prefix = '',
+    format = function(diag)
+      local icon = diagnostic_types[diag.severity].icon
+      return icon .. ' ' .. diag.message
+    end,
+  },
   float = {
     max_width = max_width,
     max_height = max_height,
