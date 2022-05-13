@@ -5,20 +5,29 @@
 # icon options =  ❯   
 # Top left:     directory(gitbranch) ● ●
 
-add_newline = true
 format = """
-[$directory\\(($git_branch)\\)](bold orange)$all
+$directory(bold green)(\\($git_branch\\)) $all $fill $time\
+$line_break\
+$character
 """
+
 [character]
 format = "$symbol "
 success_symbol = "[➜](bold green)"
 vicmd_symbol = "[](green)"
 
+[fill]
+symbol = " "
+
+[time]
+format = "[$time]($style)"
+disabled = false
+
 [git_status]
 format = """
 ([\
- ($conflicted) \
-[$stashed](blue) \
+($conflicted )\
+[($stashed )](blue)\
 $deleted\
 ($renamed )\
 [($modified )](green)\
@@ -31,9 +40,11 @@ modified = "●"
 
 [git_branch]
 format = "[$branch(:$remote_branch)]($style)"
+style = "italic blue"
 
 [directory]
 format = "[$path]($style)[$read_only]($read_only_style)"
+style = "bold green"
 
 [aws]
 disabled = true
@@ -42,3 +53,7 @@ symbol = "☁"
 [gcloud]
 symbol = ""
 disabled = true
+
+[lua]
+format = "[$symbol ($version )]($style)"
+symbol = ""
