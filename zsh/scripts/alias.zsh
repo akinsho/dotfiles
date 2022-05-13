@@ -11,7 +11,8 @@ alias l='ls -lFh'     # size,show type,human readable
 alias dv='DEVELOPING=1 nvim'
 alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
 # Quick access to the .zshrc file
-alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc'
+alias ez="${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc"
+alias et="${=EDITOR} ${ZDOTDIR:-$HOME}/.tmux.conf"
 alias grep='grep --color'
 alias x="exit"
 alias del="rm -rf"
@@ -25,11 +26,8 @@ alias notes="cd $SYNC_DIR/neorg/ && nvim"
 # This allow using neovim remote when nvim is called from inside a running vim instance
 [ -n "$NVIM_LISTEN_ADDRESS" ] && alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
 alias cl='clear'
-alias restart="exec $SHELL"
-alias src='restart'
+alias src="exec $SHELL"
 alias dnd='do-not-disturb toggle'
-alias ez="nvim ~/.zshrc"
-alias et="nvim ~/.tmux.conf"
 (( $+commands[npm] )) && alias ns="clear && npm start"
 (( $+commands[npm] )) && alias nt="clear && npm test"
 (( $+commands[yarn] )) && alias yt="clear && yarn test"
@@ -46,8 +44,7 @@ alias tkill="tmux kill-session -t"
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
-# suffix aliases set the program type to use to open
-# a particular file with an extension
+# suffix aliases set the program type to use to open a particular file with an extension
 alias -s js=nvim
 alias -s html=nvim
 alias -s css=nvim
@@ -84,6 +81,7 @@ function git_main_branch() {
 # from being evaluated immediately rather than in the shell when the alias is
 # expanded
 alias g="git"
+alias glog="git log"
 alias gss="git status -s"
 alias gst="git status"
 alias gc="git commit"
