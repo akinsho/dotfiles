@@ -4,12 +4,6 @@ local fmt = string.format
 local contains = vim.tbl_contains
 local map = vim.keymap.set
 
-vim.cmd([[
-  augroup vimrc -- Ensure all autocommands are cleared
-  autocmd!
-  augroup END
-]])
-
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
 ----------------------------------------------------------------------------------------------------
@@ -461,11 +455,6 @@ as.augroup('Utilities', {
           ]])
       end
     end,
-  },
-  {
-    event = { 'Syntax' },
-    pattern = { '*' },
-    command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
   },
 })
 
