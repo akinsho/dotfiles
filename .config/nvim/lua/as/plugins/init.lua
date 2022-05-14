@@ -394,7 +394,7 @@ packer.startup({
           },
         })
         as.vnoremap('<leader>rr', function()
-          refactoring.select_refactor()
+          require('telescope').extensions.refactoring.refactors()
         end, 'refactor: select')
         as.nnoremap('<leader>rp', function()
           refactoring.debug.printf()
