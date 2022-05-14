@@ -34,7 +34,7 @@ $deleted\
 $staged\
 $untracked\
 [$ahead_behind](yellow)\
-]($style))"""
+]($style) )"""
 stashed = ""
 modified = "●"
 
