@@ -422,13 +422,9 @@ local function open_link()
   if fn.isdirectory(file) > 0 then
     return vim.cmd('edit ' .. file)
   end
+
   if file:match('https://') then
     return open(file)
-  end
-  -- Any URI with a protocol segment
-  local protocol_uri_regex = '%a*:%/%/[%a%d%#%[%]%-%%+:;!$@/?&=_.,~*()]*'
-  if file:match(protocol_uri_regex) then
-    return vim.cmd('norm! gf')
   end
 
   -- consider anything that looks like string/string a github link
