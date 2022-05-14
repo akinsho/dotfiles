@@ -27,6 +27,7 @@ return function()
 
   require('incline').setup({
     window = {
+      zindex = 49, -- Make zindex slightly lower than telescope
       winhighlight = {
         inactive = {
           Normal = 'Normal',
