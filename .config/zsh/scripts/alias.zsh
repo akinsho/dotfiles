@@ -92,6 +92,7 @@ function git_main_branch() {
 # from being evaluated immediately rather than in the shell when the alias is
 # expanded
 alias g="git"
+alias gs="git status"
 alias glog="git log"
 alias gss="git status -s"
 alias gst="git status"
