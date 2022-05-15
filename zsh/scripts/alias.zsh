@@ -5,10 +5,11 @@ alias ...="cd ../../.."
 alias ....="cd ../../../.."
 alias ls="ls --color=auto --hyperlink=auto $@"
 if [[ $+commands[exa] ]]; then
-  alias ll="exa --long --all --git --color=always --group-directories-first --icons $@"
+  alias l="exa --long --all --git --color=always --group-directories-first --icons $@"
   alias lt="exa --icons --all --color=always -T $@"
+else
+  alias l='ls -lFh'     # size,show type,human readable
 fi
-alias l='ls -lFh'     # size,show type,human readable
 alias dv='DEVELOPING=1 nvim'
 alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
 # Quick access to the .zshrc file
