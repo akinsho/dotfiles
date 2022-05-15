@@ -71,5 +71,6 @@ _deps
 .exrc
 .ignore
 .fvm/
+.gonvim/
 
 # vim:filetype=conf
