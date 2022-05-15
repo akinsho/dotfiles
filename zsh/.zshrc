@@ -207,3 +207,4 @@ bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
+bindkey '^]' clear-screen
