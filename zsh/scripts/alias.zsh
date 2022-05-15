@@ -1,8 +1,6 @@
 #------------------------------------------------------------------------------
 # ALIASES
 #------------------------------------------------------------------------------
-alias ...="cd ../../.."
-alias ....="cd ../../../.."
 alias ls="ls --color=auto --hyperlink=auto $@"
 if [[ $+commands[exa] ]]; then
   alias l="exa --long --all --git --color=always --group-directories-first --icons $@"
@@ -35,6 +33,17 @@ alias dnd='do-not-disturb toggle'
 (( $+commands[yarn] )) && alias yt="clear && yarn test"
 (( $+commands[yarn] )) && alias ys="clear && yarn start"
 (( $+commands[bat] )) && alias cat='bat'
+#-------------------------------------------------------------------------------
+#  DIRECTORIES
+#-------------------------------------------------------------------------------
+alias ...="cd ../../.."
+alias ....="cd ../../../.."
+
+# @see: https://thevaluable.dev/zsh-install-configure-mouseless/
+# These mappings allow listing the directory stack and jumping to an entry
+# based on it's number in the list
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
 #------------------------------------------------------------------------------
 # TMUX
 #------------------------------------------------------------------------------
