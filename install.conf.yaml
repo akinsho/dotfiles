@@ -13,14 +13,11 @@
 - link:
     ~/.dotfiles: ""
     ~/.tmux.conf: tmux/.tmux.conf
-    ~/.zshrc: zsh/.zshrc
-    ~/.zshenv: zsh/.zshenv
-    ~/.Brewfile:
-      if: "[ `uname` = Darwin ]"
-      path: macos/Brewfile
-    ~/.zprofile: zsh/.zprofile
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
+    ~/.zshenv: zsh/.zshenv
+    ~/.config/zsh/.zshrc: zsh/.zshrc
+    ~/.config/zsh/.zprofile: zsh/.zprofile
     ~/.config/nvim: .config/nvim
     ~/.config/starship.toml: ""
     ~/.config/kitty:
@@ -32,6 +29,9 @@
     ~/.config/lazygit/config.yml:
       force: true
       path: .config/lazygit/config.yml
+    ~/.Brewfile:
+      if: "[ `uname` = Darwin ]"
+      path: macos/Brewfile
     ~/Library/Application Support/lazygit/config.yml:
       if: "[ `uname` = Darwin ]"
       path: .config/lazygit/config.yml

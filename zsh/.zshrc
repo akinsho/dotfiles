@@ -20,6 +20,8 @@ __DOTS[ITALIC_OFF]=$'\e[23m'
 
 PLUGIN_DIR=$DOTFILES/zsh/plugins
 
+_comp_options+=(globdots) # Include hidden files.
+
 if type brew &>/dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
@@ -57,8 +59,6 @@ zstyle ':completion:*' list-colors ''
 # (not just tab/shift-tab but cursor keys as well):
 zstyle ':completion:*' menu select
 zmodload zsh/complist
-
-_comp_options+=(globdots) # Include hidden files.
 
 # use the vi navigation keys in menu completion
 bindkey -M menuselect 'h' vi-backward-char
@@ -119,7 +119,7 @@ setopt PUSHD_SILENT              # Do not print the directory stack after pushd 
 # Keep a ton of history.
 HISTSIZE=100000
 SAVEHIST=100000
-HISTFILE=~/.zsh_history
+HISTFILE=$ZDOTDIR/.zsh_history
 
 
 # Correction prompt
