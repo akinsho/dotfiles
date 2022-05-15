@@ -56,5 +56,7 @@ symbol = ""
 disabled = true
 
 [lua]
-format = "[$symbol ($version )]($style)"
-symbol = ""
+symbol = " "
+
+[golang]
+symbol = " "
