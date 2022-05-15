@@ -157,7 +157,7 @@ case `uname` in
     source "$DOTFILES/macos/init.sh"
     ;;
   Linux)
-    source "$DOTFILES/linux/functions.sh"
+    source "$DOTFILES/linux/init.sh"
     ;;
 esac
 
