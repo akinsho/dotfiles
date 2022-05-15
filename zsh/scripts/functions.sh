@@ -1,13 +1,5 @@
 # vim:ft=zsh
 
-# @source https://gist.github.com/wesbos/1432b08749e3cd2aea22fcea2628e2ed
-function _t() {
-  # Defaults to 3 levels deep, do more with `t 5` or `t 1`
-  # pass additional args after
-  local levels=${1:-3}; shift
-  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst -L $levels -aC $@
-}
-
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 function port() {
@@ -33,12 +25,17 @@ function colours() {
   done
 }
 
-function quickpush() {
-  git add .
-  git commit -m "$@"
-  echo "🍏 commit message: [$@]"
-  git push
-  echo 🚀  quick push success... or not.
+
+function build-nvim() {
+    neovim_dir="$PROJECTS_DIR/contributing/neovim"
+    [ ! -d $neovim_dir ] && git clone git@github.com:neovim/neovim.git $neovim_dir
+    pushd $neovim_dir
+    git checkout master
+    git pull upstream master
+    [ -d "$neovim_dir/build/" ] && rm -r ./build/  # clear the CMake cache
+    make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
+    make install
+    popd
 }
 
 fancy-ctrl-z () {
