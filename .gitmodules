@@ -17,3 +17,6 @@
 [submodule "zsh/plugins/zsh-auto-notify"]
 	path = .config/zsh/plugins/zsh-auto-notify
 	url = git@github.com:MichaelAquilina/zsh-auto-notify.git
+[submodule "/Users/akin/.dotfiles/.config/zsh/plugins/zsh-autopair"]
+	path = /Users/akin/.dotfiles/.config/zsh/plugins/zsh-autopair
+	url = git@github.com:hlissner/zsh-autopair.git
