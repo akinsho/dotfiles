@@ -19,7 +19,7 @@
     ~/.config/zsh/.zshrc: zsh/.zshrc
     ~/.config/zsh/.zprofile: zsh/.zprofile
     ~/.config/nvim: .config/nvim
-    ~/.config/starship.toml: ""
+    ~/.config/starship.toml: .config/starship.toml
     ~/.config/kitty:
       force: true
       path: .config/kitty
@@ -41,4 +41,4 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - [cp ./git/config.template ~/.gitconfig.local]
+    - [cp -n ./git/config.template ~/.gitconfig.local]
