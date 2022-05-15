@@ -15,9 +15,8 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
-    ~/.zshenv: zsh/.zshenv
-    ~/.config/zsh/.zshrc: zsh/.zshrc
-    ~/.config/zsh/.zprofile: zsh/.zprofile
+    ~/.zshenv: .config/zsh/.zshenv
+    ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
     ~/.config/starship.toml: .config/starship.toml
     ~/.config/kitty:
