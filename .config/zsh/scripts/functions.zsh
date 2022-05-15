@@ -1,5 +1,3 @@
-# vim:ft=zsh
-
 # A Handful of very useful functions courtesy of
 # https://github.com/jdsimcoe/dotfiles/blob/master/.zshrc
 function port() {
@@ -27,15 +25,15 @@ function colours() {
 
 
 function build-nvim() {
-    neovim_dir="$PROJECTS_DIR/contributing/neovim"
-    [ ! -d $neovim_dir ] && git clone git@github.com:neovim/neovim.git $neovim_dir
-    pushd $neovim_dir
-    git checkout master
-    git pull upstream master
-    [ -d "$neovim_dir/build/" ] && rm -r ./build/  # clear the CMake cache
-    make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
-    make install
-    popd
+  neovim_dir="$PROJECTS_DIR/contributing/neovim"
+  [ ! -d $neovim_dir ] && git clone git@github.com:neovim/neovim.git $neovim_dir
+  pushd $neovim_dir
+  git checkout master
+  git pull upstream master
+  [ -d "$neovim_dir/build/" ] && rm -r ./build/  # clear the CMake cache
+  make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
+  make install
+  popd
 }
 
 fancy-ctrl-z () {

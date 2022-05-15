@@ -17,32 +17,31 @@ typeset -A __DOTS
 __DOTS[ITALIC_ON]=$'\e[3m'
 __DOTS[ITALIC_OFF]=$'\e[23m'
 
-
-PLUGIN_DIR=$DOTFILES/zsh/plugins
+# ZSH only and most performant way to check existence of an executable
+# https://www.topbug.net/blog/2016/10/11/speed-test-check-the-existence-of-a-command-in-bash-and-zsh/
+exists() { (( $+commands[$1] )); }
 
 _comp_options+=(globdots) # Include hidden files.
 
-if type brew &>/dev/null; then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+if exists brew; then
+  fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 fi
 
 # Init completions
 autoload -Uz compinit
 compinit
 
-# ZSH only and most performant way to check existence of an executable
-# https://www.topbug.net/blog/2016/10/11/speed-test-check-the-existence-of-a-command-in-bash-and-zsh/
-exists() { (( $+commands[$1] )); }
+source $ZDOTDIR/plugins.zsh
 #-------------------------------------------------------------------------------
 #           SOURCE PLUGINS
 #-------------------------------------------------------------------------------
 # These should be source *BEFORE* setting up hooks
-source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
-source $PLUGIN_DIR/alias-tips/alias-tips.plugin.zsh
-source $PLUGIN_DIR/zsh-auto-notify/auto-notify.plugin.zsh
-source $PLUGIN_DIR/last-working-dir/last-working-dir.zsh
+zsh_add_plugin    "zsh-users/zsh-syntax-highlighting"
+zsh_add_plugin    "zsh-users/zsh-autosuggestions"
+zsh_add_plugin    "zsh-users/zsh-completions"
+zsh_add_plugin    "djui/alias-tips"
+zsh_add_plugin    "MichaelAquilina/zsh-auto-notify" "auto-notify.plugin"
+zsh_source_plugin "last-working-dir/last-working-dir"
 autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               COMPLETION
@@ -199,7 +198,7 @@ fi
 #   LOCAL SCRIPTS
 #-------------------------------------------------------------------------------
 # source all zsh and sh files
-for script in $DOTFILES/zsh/scripts/*; do
+for script in $ZDOTDIR/scripts/*; do
   source $script
 done
 
@@ -246,6 +245,13 @@ if exists pyenv; then
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
+fi
+
+if [[ -n $KITTY_INSTALLATION_DIR ]]; then
+  export KITTY_SHELL_INTEGRATION="enabled"
+  autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+  kitty-integration
+  unfunction kitty-integration
 fi
 #-------------------------------------------------------------------------------
 #               MAPPINGS
