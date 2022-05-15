@@ -3,17 +3,17 @@
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
 [submodule "alias-tips"]
-	path = zsh/plugins/alias-tips
+	path = .config/zsh/plugins/alias-tips
 	url = https://github.com/djui/alias-tips
 [submodule "zsh-syntax-highlighting"]
-	path = zsh/plugins/zsh-syntax-highlighting
+	path = .config/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
 [submodule "zsh-autosuggestions"]
-	path = zsh/plugins/zsh-autosuggestions
+	path = .config/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule "zsh-completions"]
-	path = zsh/plugins/zsh-completions
+	path = .config/zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
 [submodule "zsh/plugins/zsh-auto-notify"]
-	path = zsh/plugins/zsh-auto-notify
+	path = .config/zsh/plugins/zsh-auto-notify
 	url = git@github.com:MichaelAquilina/zsh-auto-notify.git
