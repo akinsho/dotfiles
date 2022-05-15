@@ -58,6 +58,8 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 
+_comp_options+=(globdots) # Include hidden files.
+
 # use the vi navigation keys in menu completion
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -140,6 +142,9 @@ add-zsh-hook chpwd () {
   chpwd_last_working_dir
 }
 
+#-------------------------------------------------------------------------------
+#  PROMPT
+#-------------------------------------------------------------------------------
 if exists starship; then
   eval "$(starship init zsh)"
 fi
