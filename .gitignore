@@ -3,9 +3,11 @@ node_modules
 node
 .DS_Store
 *~
-.tern-port
 .netrwhist
 *.code-workspace
 session/
 packer_compiled.vim
 automatic_backups/
+
+.zsh_history
+.zcompdump
