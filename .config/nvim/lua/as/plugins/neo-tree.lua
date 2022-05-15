@@ -36,6 +36,9 @@ return function()
         visible = true,
         hide_dotfiles = false,
         hide_gitignored = true,
+        never_show = {
+          '.DS_Store',
+        },
       },
     },
     default_component_configs = {
