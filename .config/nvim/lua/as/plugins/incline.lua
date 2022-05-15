@@ -30,7 +30,7 @@ return function()
       zindex = 49, -- Make zindex slightly lower than telescope
       winhighlight = {
         inactive = {
-          Normal = 'Normal',
+          Normal = 'Pmenu',
         },
       },
       width = 'fill',
