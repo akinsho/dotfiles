@@ -5,7 +5,8 @@ alias ...="cd ../../.."
 alias ....="cd ../../../.."
 alias ls="ls --color=auto --hyperlink=auto $@"
 if [[ $+commands[exa] ]]; then
-  alias ll="exa --long --all --git --group-directories-first --icons $@"
+  alias ll="exa --long --all --git --color=always --group-directories-first --icons $@"
+  alias lt="exa --icons --all --color=always -T $@"
 fi
 alias l='ls -lFh'     # size,show type,human readable
 alias dv='DEVELOPING=1 nvim'
