@@ -209,3 +209,6 @@ bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^U' autosuggest-accept
 bindkey '^]' clear-screen
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^E' edit-command-line
