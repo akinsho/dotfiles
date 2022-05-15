@@ -32,7 +32,7 @@ compinit
 # https://www.topbug.net/blog/2016/10/11/speed-test-check-the-existence-of-a-command-in-bash-and-zsh/
 exists() { (( $+commands[$1] )); }
 #-------------------------------------------------------------------------------
-#           Plugins
+#           SOURCE PLUGINS
 #-------------------------------------------------------------------------------
 # These should be source *BEFORE* setting up hooks
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -43,7 +43,7 @@ source $PLUGIN_DIR/zsh-auto-notify/auto-notify.plugin.zsh
 source $PLUGIN_DIR/last-working-dir/last-working-dir.zsh
 autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
-#               Completion
+#               COMPLETION
 #-------------------------------------------------------------------------------
 # Completion for kitty
 if [[ "$TERM" == "xterm-kitty" ]]; then
@@ -93,7 +93,7 @@ zstyle ':completion:*' list-suffixes true
 # - Substring complete (ie. bar -> foobar).
 zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 #-------------------------------------------------------------------------------
-#               Options
+#               OPTIONS
 #-------------------------------------------------------------------------------
 setopt AUTO_CD
 setopt RM_STAR_WAIT
@@ -116,15 +116,15 @@ setopt INC_APPEND_HISTORY        # Write to the history file immediately, not wh
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
-#-------------------------------------------------------------------------------
-#               Vi-mode
-#-------------------------------------------------------------------------------
-bindkey -v # enables vi mode, using -e = emacs
 
 # Correction prompt
 export SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 #-------------------------------------------------------------------------------
-#           Hooks
+#               VI-MODE
+#-------------------------------------------------------------------------------
+bindkey -v # enables vi mode, using -e = emacs
+#-------------------------------------------------------------------------------
+#           HOOKS
 #-------------------------------------------------------------------------------
 autoload -Uz add-zsh-hook
 
@@ -165,7 +165,9 @@ case `uname` in
     source "$DOTFILES/linux/init.sh"
     ;;
 esac
-
+#-------------------------------------------------------------------------------
+#  PLUGINS
+#-------------------------------------------------------------------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
@@ -192,20 +194,14 @@ if exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
 
-#-------------------------------------------------------------------------------
-#               PYENV
-#-------------------------------------------------------------------------------
-# NOTE: this is loaded after home brew as it was installed via homebrew and will
-# otherwise not exist if homebrew does not
 if exists pyenv; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
 fi
-
 #-------------------------------------------------------------------------------
-#               Mappings
+#               MAPPINGS
 #-------------------------------------------------------------------------------
 export KEYTIMEOUT=1
 bindkey ‘^R’ history-incremental-search-backward
