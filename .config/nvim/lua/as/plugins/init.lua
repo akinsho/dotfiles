@@ -353,7 +353,13 @@ packer.startup({
         -- is not safe to reload due to repeated attempts to map already mapped keys
         as.block_reload(function()
           require('satellite').setup({
-            excluded_filetypes = { 'packer', 'neo-tree', 'neo-tree-popup' },
+            excluded_filetypes = {
+              'packer',
+              'neo-tree',
+              'neo-tree-popup',
+              'dapui_scopes',
+              'dapui_stacks',
+            },
           })
         end)
       end,
