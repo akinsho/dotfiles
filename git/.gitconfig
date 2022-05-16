@@ -1,5 +1,6 @@
 [user]
   name = "Akin Sowemimo"
+  email = 22454918+akinsho@users.noreply.github.com
 [include]
   path = ~/.gitconfig.local
 [includeIf "gitdir:~/projects/work/"]
