@@ -79,6 +79,7 @@ local smart_close_filetypes = {
   'log',
   'tsplayground',
   'qf',
+  'lspinfo',
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
