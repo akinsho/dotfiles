@@ -760,7 +760,6 @@ packer.startup({
     use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
     use({
       'nvim-treesitter/playground',
-      keys = '<leader>E',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
       setup = function()
         as.nnoremap(
