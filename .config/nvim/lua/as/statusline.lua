@@ -350,7 +350,11 @@ local function setup_autocommands()
     },
     {
       event = 'User',
-      pattern = 'NeogitStatusRefresh',
+      pattern = {
+        'NeogitPushComplete',
+        'NeogitCommitComplete',
+        'NeogitStatusRefresh',
+      },
       command = function()
         utils.git_updates_refresh()
       end,

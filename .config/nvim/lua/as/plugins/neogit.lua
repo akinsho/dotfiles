@@ -36,6 +36,14 @@ function M.config()
   end)
   as.nnoremap('<localleader>gl', neogit.popups.pull.create)
   as.nnoremap('<localleader>gp', neogit.popups.push.create)
+
+  as.augroup('NeogitEvents', {
+    {
+      event = 'User',
+      pattern = 'NeogitPushComplete',
+      command = neogit.close,
+    },
+  })
 end
 
 return M
