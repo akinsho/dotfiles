@@ -56,9 +56,7 @@ alias tkill="tmux kill-session -t"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
 # suffix aliases set the program type to use to open a particular file with an extension
-alias -s js=nvim
-alias -s html=nvim
-alias -s css=nvim
+alias -s {js,html,js,ts,css,md}=nvim
 alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 
 if which kitty >/dev/null; then
