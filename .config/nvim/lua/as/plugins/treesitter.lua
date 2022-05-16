@@ -96,8 +96,4 @@ return function()
       lint_events = { 'BufWrite', 'CursorHold' },
     },
   })
-
-  -- NOTE: this is to allow markdown highlighting in octo buffers
-  local parser_config = parsers.get_parser_configs()
-  parser_config.markdown.filetype_to_parsername = 'octo'
 end
