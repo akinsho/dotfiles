@@ -18,7 +18,6 @@
     ~/.zshenv: .config/zsh/.zshenv
     ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
-    ~/.config/starship.toml: .config/starship.toml
     ~/.config/kitty:
       force: true
       path: .config/kitty
