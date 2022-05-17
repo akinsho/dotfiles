@@ -380,7 +380,13 @@ as.augroup('Cursorline', {
   },
 })
 
-local save_excluded = { 'lua.luapad', 'gitcommit', 'NeogitCommitMessage' }
+local save_excluded = {
+  'neo-tree',
+  'neo-tree-popup',
+  'lua.luapad',
+  'gitcommit',
+  'NeogitCommitMessage',
+}
 local function can_save()
   return as.empty(vim.bo.buftype)
     and not as.empty(vim.bo.filetype)
