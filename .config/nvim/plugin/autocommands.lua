@@ -404,17 +404,12 @@ as.augroup('Utilities', {
     event = { 'BufReadPost' },
     command = function()
       if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
-        if fn.line([['"]]) > 0 and fn.line([['"]]) <= fn.line('$') then
-          -- Check if the last line of the buffer is the same as the window
-          if fn.line('w$') == fn.line('$') then
-            -- Set line to last line edited
-            vim.cmd([[normal! g`"]])
-            -- Try to center
-          elseif fn.line('$') - fn.line([['"]]) > ((fn.line('w$') - fn.line('w0')) / 2) - 1 then
-            vim.cmd([[normal! g`"zz]])
-          else
-            vim.cmd([[normal! G'"<c-e>]])
-          end
+        local last_place_mark = vim.api.nvim_buf_get_mark(0, '"')
+        local line_nr = last_place_mark[1]
+        local last_line = vim.api.nvim_buf_line_count(0)
+
+        if line_nr > 0 and line_nr <= last_line then
+          vim.api.nvim_win_set_cursor(0, last_place_mark)
         end
       end
     end,
