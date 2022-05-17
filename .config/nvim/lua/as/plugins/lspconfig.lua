@@ -134,6 +134,7 @@ as.lsp.servers = {
   jsonls = true,
   bashls = true,
   vimls = true,
+  yamlls = true,
   terraformls = true,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
