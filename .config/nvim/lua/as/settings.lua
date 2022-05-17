@@ -216,11 +216,11 @@ vim.opt.titlelen = 70
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
 vim.opt.showmode = false
+-- NOTE: Don't remember help files since that will error if they are from a lazy loaded plugin
 vim.opt.sessionoptions = {
   'globals',
   'buffers',
   'curdir',
-  'help',
   'winpos',
   'tabpages',
 }
