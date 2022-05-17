@@ -1,3 +1,4 @@
+tap "bufbuild/buf"
 tap "buo/cask-upgrade"
 tap "craciuncezar/tap"
 tap "homebrew/bundle"
@@ -6,66 +7,139 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "jesseduffield/lazygit"
 tap "neovim/neovim"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# GNU compiler collection
 brew "gcc"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-brew "coreutils"
-brew "node"
+# Library for command-line editing
 brew "readline"
-brew "sqlite"
+# General-purpose data compression with high compression ratio
 brew "xz"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Platform built on V8 to build network applications
+brew "node"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
+# LLVM bytecode to JavaScript compiler
 brew "emscripten"
+# Modern replacement for 'ls'
+brew "exa"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Command-line outline and bitmap font editor/converter
+brew "fontforge"
+# GitHub command-line tool
 brew "gh"
+# Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Extensions to follow Vincent Driessen's branching model
 brew "git-flow"
+# Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Fast linters runner for Go
 brew "golangci-lint"
+# CLI email client written in Rust
 brew "himalaya"
+# Improved top (interactive process viewer)
 brew "htop"
+# Tools and libraries to manipulate images in many formats
 brew "imagemagick"
+# Kubernetes command-line interface
 brew "kubernetes-cli"
+# Simple terminal UI for git commands
 brew "lazygit"
+# YAML Parser
 brew "libyaml"
+# Powerful, lightweight programming language (v5.1.5)
 brew "lua@5.1"
+# Just-In-Time Compiler (JIT) for the Lua programming language
 brew "luajit", args: ["HEAD"]
+# Keep your Mac's application settings in sync
 brew "mackup"
+# Mac App Store command-line interface
 brew "mas"
+# Parser generator tool and incremental parsing library
 brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Control nvim processes using `nvr` command-line tool
 brew "neovim-remote"
+# Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
+# Swiss-army knife of markup format conversion
 brew "pandoc"
+# Python version management
 brew "pyenv"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Powerful, clean, object-oriented scripting language
 brew "ruby"
+# CLI utility for manipulating SQLite databases
 brew "sqlite-utils"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Tool to build, change, and version infrastructure
 brew "terraform"
+# Programmatically correct mistyped console commands
 brew "thefuck"
+# Terminal multiplexer
 brew "tmux"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Internet file retriever
 brew "wget"
+# General-purpose lossless data-compression library
 brew "zlib"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Additional completion definitions for zsh
 brew "zsh-completions"
+# A new way of working with Protocol Buffers.
+brew "bufbuild/buf/buf"
+# A git command extension for switching git branches more efficiently.
 brew "craciuncezar/tap/git-smart-checkout"
+# Enable Windows-like alt-tab
 cask "alt-tab"
+# Tools for building Android applications
 cask "android-studio"
+# Open links in any browser
 cask "choosy"
+# API documentation browser and code snippet manager
 cask "dash"
+# App to build and share containerized applications and microservices
 cask "docker"
+# Tool to hide status bar icons
 cask "dozer"
+# UI toolkit for building applications for mobile, web and desktop
 cask "flutter"
+# Web browser
 cask "google-chrome"
+# Set of tools to manage resources and applications hosted on Google Cloud
 cask "google-cloud-sdk"
+# Free and open-source media player
 cask "iina"
+# GPU-based terminal emulator
 cask "kitty"
+# Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
+# Collaboration platform for API development
 cask "postman"
+# Emoji picker optimized for blind people
+cask "rocket"
+# Team communication and collaboration software
 cask "slack"
+# Music streaming service
 cask "spotify"
+# System monitor for the menu bar
 cask "stats"
+# Desktop client for Telegram messenger
+cask "telegram-desktop"
+# Multimedia player
 cask "vlc"
+# Torrent streaming application
 cask "webtorrent"
 mas "Amphetamine", id: 937984704
 mas "Color Picker", id: 1545870783
@@ -73,6 +147,7 @@ mas "Dropover", id: 1355679052
 mas "GIPHY CAPTURE", id: 668208984
 mas "Hand Mirror", id: 1502839586
 mas "Microsoft Outlook", id: 985367838
+mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Prime Video", id: 545519333
 mas "Shortery", id: 1594183810
