@@ -26,8 +26,6 @@ _comp_options+=(globdots) # Include hidden files.
 if exists brew; then
   fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 fi
-# Add the zsh directory to the autoload dirs
-fpath+=($ZDOTDIR/zsh-functions)
 
 # Init completions
 autoload -Uz compinit
@@ -259,8 +257,6 @@ function +vi-git-stash() {
     fi
   fi
 }
-
-autoload -Uz fill_line && fill_line
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
@@ -272,29 +268,26 @@ autoload -Uz fill_line && fill_line
 # %B..%b - bold
 # %* - reset highlight
 # %j - background jobs
-#
-# Requires: prompt_percent and no_prompt_subst.
 function set-prompt() {
   emulate -L zsh
-  # directory(branch)                     10:51
-  # ❯  █
+  # directory(branch)
+  # ❯  █                                  10:51
   #
   # icon options =  ❯   
   #
   # Top left:     directory(gitbranch) ● ●
-  # Top right:    Time
   # Bottom left:  ➜
-  # Bottom right: empty
+  # Bottom right:    Time
   local dots_prompt_icon="%F{magenta}➜ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
   local execution_time="%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f "
 
   local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}…%{$__DOTS[ITALIC_OFF]%}%f)"
-  local top_left="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
-  local top_right="${vim_mode}${execution_time}%F{240}%*%f"
-  local bottom_left="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
-
-  PROMPT="$(fill_line "$top_left" "$top_right")"$'\n'$bottom_left
+  local top="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
+  local bottom="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
+  # Right prompt
+  export RPROMPT="${vim_mode}${execution_time}%F{240}%*%f"
+  export PROMPT="$top"$'\n'$bottom
 }
 
 # Correction prompt
