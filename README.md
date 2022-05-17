@@ -7,9 +7,6 @@ My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in c
 I thought I'd document for myself and for others potentially some of the setup
 involved in the programs my dotfiles cover.
 
-Please **DO NOT** fork or clone this repo. It isn't a distro it's intended for my personal usage, and perhaps
-some inspiration, _not complete duplication_. If you see something weird or wrong please raise an issue instead.
-
 ### Installation
 
 The installation script is out of date and doesn't work anymore.
@@ -32,7 +29,14 @@ To setup a new machine instead follow these instructions:
 
 - [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
 - [Nvim](https://github.com/neovim/neovim)
-- Language server support using [`neovim's LSP`](https://neovim.io/doc/user/lsp.html)
+- Language server support using [`Neovim's LSP`](https://neovim.io/doc/user/lsp.html)
+
+- Minimal Zsh config without `oh-my-zsh`, async prompt for large monorepos.
+
+  ![Zsh Prompt](./prompt.png)
+
+Please **DO NOT** fork or clone this repo. It isn't a distro it's intended for my personal usage, and perhaps
+some inspiration, _not complete duplication_. If you see something weird or wrong please raise an issue instead.
 
 ### Setup
 
