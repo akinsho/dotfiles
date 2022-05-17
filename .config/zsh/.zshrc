@@ -241,6 +241,8 @@ if exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
 
+# NOTE: this needs to load here as it must happen after homebrew is intialized
+# which happens in the .zprofile after the .zshenv has already been read
 if exists pyenv; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
