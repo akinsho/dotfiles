@@ -154,19 +154,12 @@ bindkey -M visual S add-surround
 
 # https://superuser.com/questions/151803/how-do-i-customize-zshs-vim-mode
 # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
-vim_ins_mode=""
-vim_cmd_mode="%F{green} %f"
-vim_mode=$vim_ins_mode
-
-function zle-keymap-select {
-  vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
-  set-prompt
-  zle && zle reset-prompt
-}
-zle -N zle-keymap-select
+vim_insert_mode=""
+vim_normal_mode="%F{green} %f"
+vim_mode=$vim_insert_mode
 
 function zle-line-finish {
-  vim_mode=$vim_ins_mode
+  vim_mode=$vim_insert_mode
 }
 zle -N zle-line-finish
 
@@ -175,7 +168,7 @@ zle -N zle-line-finish
 # set vim_mode to INS and then repropagate the SIGINT,
 # so if anything else depends on it, we will not break it
 function TRAPINT() {
-  vim_mode=$vim_ins_mode
+  vim_mode=$vim_insert_mode
   return $(( 128 + $1 ))
 }
 
@@ -185,6 +178,10 @@ cursor_mode() {
   cursor_beam='\e[6 q'
 
   function zle-keymap-select {
+    vim_mode="${${KEYMAP/vicmd/${vim_normal_mode}}/(main|viins)/${vim_insert_mode}}"
+    set-prompt
+    zle && zle reset-prompt
+
     if [[ ${KEYMAP} == vicmd ]] ||
         [[ $1 = 'block' ]]; then
         echo -ne $cursor_block
