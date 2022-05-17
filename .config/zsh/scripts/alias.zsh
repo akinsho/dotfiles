@@ -67,7 +67,7 @@ if [[ `uname` == 'Linux' ]]; then
   alias o='a -e xdg-open' # quick opening files with xdg-open
   alias open='xdg-open'
 elif [[ `uname` == 'Darwin' ]]; then
-  alias brewfile="brew bundle dump --global --force"
+  alias brewfile="brew bundle dump --describe --global --force"
 fi
 
 # Check if main exists and use instead of master
