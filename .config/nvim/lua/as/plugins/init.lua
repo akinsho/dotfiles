@@ -228,13 +228,8 @@ packer.startup({
           ignore = { 'null-ls' },
           sign = { enabled = false },
           float = { enabled = true, win_opts = { border = 'none' } },
-        })
-        as.augroup('Lightbulb', {
-          {
-            event = { 'CursorHold', 'CursorHoldI' },
-            command = function()
-              lightbulb.update_lightbulb()
-            end,
+          autocmd = {
+            enabled = true,
           },
         })
       end,
