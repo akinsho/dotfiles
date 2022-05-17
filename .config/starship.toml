@@ -6,22 +6,23 @@
 # Top left:     directory(gitbranch) ● ●
 
 format = """
-$directory(bold green)(\\($git_branch\\)) $all\
+$directory(bold green)(\\($git_branch\\)) $git_status\
+$git_commit\
+$git_state\
 $line_break\
+$jobs\
 $character
 """
 
-right_format = "$time"
+right_format = "$all $time"
 # Remove the newline that separates prompts, it eats up too much space
 add_newline = false
 
 [character]
 format = "$symbol "
-success_symbol = "[➜](bold green)"
-vicmd_symbol = "[](green)"
-
-[fill]
-symbol = " "
+success_symbol = "[➜](bold purple) "
+error_symbol = "[✗](bold red) "
+vicmd_symbol = "[](#137628) "
 
 [time]
 format = "[$time]($style)"
@@ -61,6 +62,8 @@ disabled = true
 
 [lua]
 symbol = " "
+format = " [$symbol($version )]($style)"
 
 [golang]
 symbol = " "
+format = "[$symbol($version )]($style)"
