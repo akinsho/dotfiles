@@ -4,6 +4,16 @@ as.lsp = {}
 -- Autocommands
 -----------------------------------------------------------------------------//
 
+-- Show the popup diagnostics window, but only once for the current cursor location
+-- by checking whether the word under the cursor has changed.
+local function diagnostic_popup()
+  local cword = vim.fn.expand('<cword>')
+  if cword ~= vim.w.lsp_diagnostics_cword then
+    vim.w.lsp_diagnostics_cword = cword
+    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
+  end
+end
+
 --- Add lsp autocommands
 ---@param client table<string, any>
 ---@param bufnr number
@@ -25,7 +35,7 @@ local function setup_autocommands(client, bufnr)
         event = { 'CursorHold' },
         buffer = bufnr,
         command = function()
-          vim.diagnostic.open_float({ scope = 'line' }, { focus = false })
+          diagnostic_popup()
         end,
       },
       {
