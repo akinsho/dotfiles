@@ -179,7 +179,6 @@ cursor_mode() {
 
   function zle-keymap-select {
     vim_mode="${${KEYMAP/vicmd/${vim_normal_mode}}/(main|viins)/${vim_insert_mode}}"
-    set-prompt
     zle && zle reset-prompt
 
     if [[ ${KEYMAP} == vicmd ]] ||
@@ -257,40 +256,32 @@ function +vi-git-stash() {
 #-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
-# Sets PROMPT and RPROMPT.
-#
+setopt PROMPT_SUBST
 # %F...%f - - foreground color
 # toggle color based on success %F{%(?.green.red)}
 # %F{a_color} - color specifier
 # %B..%b - bold
 # %* - reset highlight
 # %j - background jobs
-function set-prompt() {
-  emulate -L zsh
-  # directory(branch)
-  # ❯  █                                  10:51
-  #
-  # icon options =  ❯   
-  #
-  # Top left:     directory(gitbranch) ● ●
-  # Bottom left:  ➜
-  # Bottom right:    Time
+#
+# directory(branch) ● ●
+# ❯  █                                  10:51
+#
+# icon options =  ❯   
+function __prompt_eval() {
   local dots_prompt_icon="%F{magenta}➜ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
-  local execution_time="%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f "
-
   local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}…%{$__DOTS[ITALIC_OFF]%}%f)"
   local top="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
   local bottom="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
-  # Right prompt
-  export RPROMPT="${vim_mode}${execution_time}%F{240}%*%f"
-  export PROMPT="$top"$'\n'$bottom
+  echo "$top"$'\n'$bottom
 }
-
+# NOTE: VERY IMPORTANT: the type of quotes used matters greatly. Single quotes MUST be used for these variables
+export PROMPT='$(__prompt_eval)'
+# Right prompt
+export RPROMPT='${vim_mode}%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f %F{240}%*%f'
 # Correction prompt
 export SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
-
-setopt noprompt{bang,subst} prompt{cr,percent,sp}
 #-------------------------------------------------------------------------------
 #           Execution time
 #-------------------------------------------------------------------------------
@@ -382,8 +373,6 @@ __async_vcs_info_done() {
   # remove the handler and close the file descriptor
   zle -F "$1"
   exec {1}<&-
-  # reset the prompt
-  set-prompt
   zle && zle reset-prompt
 }
 
@@ -394,14 +383,12 @@ __async_vcs_info_done() {
 # Resource: [TRAP functions]
 # http://zsh.sourceforge.net/Doc/Release/Functions.html#Trap-Functions
 function TRAPWINCH () {
-  set-prompt
   zle && zle reset-prompt
 }
 
 add-zsh-hook precmd () {
   __timings_precmd
   __async_vcs_start # start async job to populate git info
-  set-prompt
 }
 
 add-zsh-hook chpwd () {
