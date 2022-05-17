@@ -6,10 +6,14 @@
 # Top left:     directory(gitbranch) ● ●
 
 format = """
-$directory(bold green)(\\($git_branch\\)) $all $fill $time\
+$directory(bold green)(\\($git_branch\\)) $all\
 $line_break\
 $character
 """
+
+right_format = "$time"
+# Remove the newline that separates prompts, it eats up too much space
+add_newline = false
 
 [character]
 format = "$symbol "
