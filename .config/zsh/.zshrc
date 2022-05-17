@@ -157,7 +157,7 @@ bindkey -M visual S add-surround
 # https://superuser.com/questions/151803/how-do-i-customize-zshs-vim-mode
 # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
 vim_ins_mode=""
-vim_cmd_mode="%F{green} %f"
+vim_cmd_mode="%F{green} %f"
 vim_mode=$vim_ins_mode
 
 function zle-keymap-select {
@@ -225,7 +225,7 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
-zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f"
+zstyle ':vcs_info:*' unstagedstr "%F{red} ✗%f"
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash
 zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
@@ -251,7 +251,7 @@ function +vi-git-untracked() {
 }
 
 function +vi-git-stash() {
-  local stash_icon="" # 📦 ● $
+  local stash_icon=""
   emulate -L zsh
   if __in_git; then
     if [[ -n $(git rev-list --walk-reflogs --count refs/stash 2> /dev/null) ]]; then
@@ -404,21 +404,18 @@ __async_vcs_info_done() {
 # Resource: [TRAP functions]
 # http://zsh.sourceforge.net/Doc/Release/Functions.html#Trap-Functions
 function TRAPWINCH () {
-  # clear
   set-prompt
   zle && zle reset-prompt
 }
 
 add-zsh-hook precmd () {
   __timings_precmd
-  # start async job to populate git info
-  __async_vcs_start
+  __async_vcs_start # start async job to populate git info
   set-prompt
 }
 
 add-zsh-hook chpwd () {
-  # clear current vcs_info
-  _git_status_prompt=""
+  _git_status_prompt="" # clear current vcs_info
   chpwd_last_working_dir
 }
 
