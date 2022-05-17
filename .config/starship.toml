@@ -33,7 +33,7 @@ disabled = false
 format = """
 ([\
 ($conflicted )\
-[($stashed )](blue)\
+[($stashed )](yellow)\
 $deleted\
 ($renamed )\
 [($modified )](green)\
