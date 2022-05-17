@@ -26,8 +26,8 @@ vicmd_symbol = "[](#137628) "
 
 [time]
 format = "[$time]($style)"
-disabled = false
 style = "dimmed #818181"
+disabled = false
 
 [git_status]
 format = """
@@ -47,14 +47,12 @@ modified = "●"
 [git_branch]
 format = "[$branch(:$remote_branch)]($style)"
 style = "italic blue"
+symbol = " "
 
 [directory]
 format = "[$path]($style)[$read_only]($read_only_style)"
 style = "bold green"
-
-[aws]
-disabled = true
-symbol = "☁"
+read_only = " "
 
 [gcloud]
 symbol = ""
@@ -62,8 +60,65 @@ disabled = true
 
 [lua]
 symbol = " "
-format = " [$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 
 [golang]
 symbol = " "
-format = "[$symbol($version )]($style)"
+format = "[$symbol($version)]($style)"
+
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[spack]
+symbol = "🅢 "
+
+[rust]
+symbol = " "
