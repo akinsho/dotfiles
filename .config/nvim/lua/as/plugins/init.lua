@@ -351,6 +351,7 @@ packer.startup({
             excluded_filetypes = {
               'packer',
               'neo-tree',
+              'norg',
               'neo-tree-popup',
               'dapui_scopes',
               'dapui_stacks',
