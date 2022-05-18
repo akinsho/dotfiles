@@ -32,6 +32,8 @@ autoload -Uz compinit
 compinit
 
 source $ZDOTDIR/plugins.zsh
+
+autoload -U colors && colors # Enable colors in prompt
 #-------------------------------------------------------------------------------
 #           SOURCE PLUGINS
 #-------------------------------------------------------------------------------
@@ -207,7 +209,9 @@ cursor_mode
 # vcs_info is a zsh native module for getting git info into your
 # prompt. It's not as fast as using git directly in some cases
 # but easy and well documented.
-# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
+# Resources:
+# 1. http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
+# 2. https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
 # %c - git staged
 # %u - git untracked
 # %b - git branch
@@ -221,9 +225,9 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
 zstyle ':vcs_info:*' unstagedstr "%F{red} ✗%f"
 zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash git-compare
 zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
-zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u"
+zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u%m"
 
 __in_git() {
     [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]
@@ -252,6 +256,29 @@ function +vi-git-stash() {
       hook_com[unstaged]+=" %F{yellow}$stash_icon%f "
     fi
   fi
+}
+# git: Show +N/-N when your local branch is ahead-of or behind remote HEAD.
+# Make sure you have added misc to your 'formats':  %m
+# source: https://github.com/zsh-users/zsh/blob/545c42cdac25b73134a9577e3c0efa36d76b4091/Misc/vcs_info-examples#L180
+function +vi-git-compare() {
+  local ahead behind
+  local -a gitstatus
+
+  # Exit early in case the worktree is on a detached HEAD
+  git rev-parse ${hook_com[branch]}@{upstream} >/dev/null 2>&1 || return 0
+
+  local -a ahead_and_behind=(
+      $(git rev-list --left-right --count HEAD...${hook_com[branch]}@{upstream} 2>/dev/null)
+  )
+
+  ahead=${ahead_and_behind[1]}
+  behind=${ahead_and_behind[2]}
+
+  local ahead_symbol="%{$fg[red]%}⇡%{$reset_color%}${ahead}"
+  local behind_symbol="%{$fg[cyan]%}⇣%{$reset_color%}${behind}"
+  (( $ahead )) && gitstatus+=( "${ahead_symbol}" )
+  (( $behind )) && gitstatus+=( "${behind_symbol}" )
+  hook_com[misc]+=${(j:/:)gitstatus}
 }
 #-------------------------------------------------------------------------------
 #               Prompt
