@@ -10,6 +10,7 @@ vim.filetype.add({
   },
   filename = {
     ['.gitignore'] = 'conf',
+    ['launch.json'] = 'jsonc',
     Podfile = 'ruby',
     Brewfile = 'ruby',
   },
