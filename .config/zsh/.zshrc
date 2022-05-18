@@ -76,7 +76,7 @@ zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)
 # Categorize completion suggestions with headings:
 zstyle ':completion:*' group-name ''
 # Style the group names
-zstyle ':completion:*' format %F{magenta}%B%U%{$__DOTS[ITALIC_ON]%}%d%{$__DOTS[ITALIC_OFF]%}%b%u%f
+zstyle ':completion:*' format %F{yellow}%B%U%{$__DOTS[ITALIC_ON]%}%d%{$__DOTS[ITALIC_OFF]%}%b%u%f
 
 # Added by running `compinstall`
 zstyle ':completion:*' expand suffix
@@ -269,10 +269,10 @@ setopt PROMPT_SUBST
 #
 # icon options =  ❯   
 function __prompt_eval() {
-  local dots_prompt_icon="%F{magenta}➜ %f"
+  local dots_prompt_icon="%F{green}➜ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
   local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}…%{$__DOTS[ITALIC_OFF]%}%f)"
-  local top="%B%F{10}%1~%f%b${_git_status_prompt:-$placeholder}"
+  local top="%B%F{magenta}%1~%f%b${_git_status_prompt:-$placeholder}"
   local character="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
   local bottom=$([[ -n "$vim_mode" ]] && echo "$vim_mode" || echo "$character")
   echo "$top"$'\n'$bottom
