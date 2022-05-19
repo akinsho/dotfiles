@@ -480,17 +480,18 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 exists() { (( $+commands[$1] )); }
 
 # TODO: also need to check for the existence of ~/.fzf/
-if [ ! -f ~/.fzf.zsh ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
+if [ ! -f $HOME/.fzf.zsh ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  $HOME/.fzf/install
 fi
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 if exists hub; then
   eval "$(hub alias -s)" # Aliases 'hub' to git
 fi
 
 if [[ ! "$(exists nvr)" && "$(exists pip3)" ]]; then
+  echo "Installing neovim-remote"
   pip3 install neovim-remote
 fi
 
@@ -504,11 +505,12 @@ fi
 
 # NOTE: this needs to load here as it must happen after homebrew is intialized
 # which happens in the .zprofile after the .zshenv has already been read
+# TODO: pyenv slows down starting the shell
 if exists pyenv; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
+  eval "$(pyenv init - --no-rehash zsh)"
 fi
 
 if [[ -n $KITTY_INSTALLATION_DIR ]]; then
