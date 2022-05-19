@@ -571,7 +571,6 @@ packer.startup({
 
     use({
       'danymat/neogen',
-      keys = { '<localleader>nc' },
       requires = 'nvim-treesitter/nvim-treesitter',
       module = 'neogen',
       setup = function()
