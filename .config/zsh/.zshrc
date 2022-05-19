@@ -379,7 +379,14 @@ autoload -Uz add-zsh-hook
 # as is the case with zsh-async this method forks a process sends
 # it the command to evaluate which is written to a file descriptor
 #
-# *fd - file descriptor
+# terminology:
+# exec - replaces the current shell. This means no subshell is
+# created and the current process is replaced with this new command.
+# fd/FD - file descriptor
+# &- closes a FD e.g. "exec 3<&-" closes FD 3
+# file descriptor 0 is stdin (the standard input),
+# 1 is stdout (the standard output),
+# 2 is stderr (the standard error).
 #
 # https://www.zsh.org/mla/users/2018/msg00424.html
 # https://github.com/sorin-ionescu/prezto/pull/1805/files#diff-6a24e7644c4c0969110e86872283ec82L79
