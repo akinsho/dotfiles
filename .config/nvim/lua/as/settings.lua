@@ -80,12 +80,6 @@ vim.opt.foldlevelstart = 3
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldmethod = 'expr'
 -----------------------------------------------------------------------------//
--- Quickfix {{{1
------------------------------------------------------------------------------//
---- FIXME: Need to use a lambda rather than a lua function directly
---- @see https://github.com/neovim/neovim/pull/14886
--- vim.o.quickfixtextfunc = '{i -> v:lua.as.qftf(i)}'
------------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- Use faster grep alternatives if possible
