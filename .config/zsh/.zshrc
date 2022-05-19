@@ -121,7 +121,7 @@ setopt PUSHD_SILENT              # Do not print the directory stack after pushd 
 # Keep a ton of history.
 HISTSIZE=100000
 SAVEHIST=100000
-HISTFILE=$ZDOTDIR/.zsh_history
+HISTFILE=$ZSH_CACHE_DIR/.zsh_history
 
 #-------------------------------------------------------------------------------
 #               VI-MODE
