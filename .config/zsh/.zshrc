@@ -501,12 +501,13 @@ fi
 
 # NOTE: this needs to load here as it must happen after homebrew is intialized
 # which happens in the .zprofile after the .zshenv has already been read
-# TODO: pyenv slows down starting the shell
 if exists pyenv; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
-  eval "$(pyenv init - --no-rehash zsh)"
+  # this line adds autocompletion and allows using the pyenv command
+  # but I don't write python so don't need this and it slows down the shell
+  # eval "$(pyenv init - --no-rehash zsh)"
 fi
 
 if [[ -n $KITTY_INSTALLATION_DIR ]]; then
