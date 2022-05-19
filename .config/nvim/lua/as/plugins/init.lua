@@ -367,8 +367,6 @@ packer.startup({
       end,
     })
 
-    use({ 'b0o/incline.nvim', config = conf('incline') })
-
     -- NOTE: Defer loading till telescope is loaded this
     -- as it implicitly loads telescope so needs to be delayed
     use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('dressing') })
