@@ -212,6 +212,9 @@ cursor_mode
 # Resources:
 # 1. http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
 # 2. https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
+# 3. using vcs_infow with check-for-changes can be expensive if used in large repos
+#    see the link below if looking for how to avoid running these check for changes on large repos
+#    https://github.com/zsh-users/zsh/blob/545c42cdac25b73134a9577e3c0efa36d76b4091/Misc/vcs_info-examples#L72
 # %c - git staged
 # %u - git untracked
 # %b - git branch
@@ -225,7 +228,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
 zstyle ':vcs_info:*' unstagedstr "%F{red} ✗%f"
 zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash git-compare
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash git-compare git-remotebranch
 zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u%m"
 
@@ -233,9 +236,6 @@ __in_git() {
     [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]
 }
 
-# TODO: these functions should not be run outside of a git repository
-# this function adds a hook to the git vcs_info backend that depending
-# they can also be quite slow...
 # on the output of the git command adds an indicator to the the vcs info
 # use --directory and --no-empty-directory to speed up command
 # https://stackoverflow.com/questions/11122410/fastest-way-to-get-git-status-in-bash
@@ -279,6 +279,23 @@ function +vi-git-compare() {
   (( $ahead )) && gitstatus+=( "${ahead_symbol}" )
   (( $behind )) && gitstatus+=( "${behind_symbol}" )
   hook_com[misc]+=${(j:/:)gitstatus}
+}
+
+## git: Show remote branch name for remote-tracking branches
+function +vi-git-remotebranch() {
+    local remote
+
+    # Are we on a remote-tracking branch?
+    remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
+        --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+
+    # The first test will show a tracking branch whenever there is one. The
+    # second test, however, will only show the remote branch's name if it
+    # differs from the local one.
+    # if [[ -n ${remote} ]] ; then
+    if [[ -n ${remote} && ${remote#*/} != ${hook_com[branch]} ]] ; then
+        hook_com[branch]="${hook_com[branch]}→[${remote}]"
+    fi
 }
 #-------------------------------------------------------------------------------
 #               Prompt
