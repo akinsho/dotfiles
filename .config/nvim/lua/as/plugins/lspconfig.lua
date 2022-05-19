@@ -135,6 +135,50 @@ end
 -- Language servers
 -----------------------------------------------------------------------------//
 
+--- This is a product of over-engineering dear reader. The LSP servers table
+--- can contain a server specified in a bunch of different ways, which is arguably
+--- barely more convenient. This function is a helper than then marshals things
+--- into the correct shape. All this is more for fun and experimentation with lua
+--- than because it's remotely necessary.
+---@param name string | number
+---@param config table<string, any> | function | string
+---@return table<string, any>
+function as.lsp.convert_config(name, config)
+  if type(name) == 'number' then
+    name = config
+  end
+  local config_type = type(config)
+  local data = ({
+    ['string'] = function()
+      return {}
+    end,
+    ['boolean'] = function()
+      return {}
+    end,
+    ['table'] = function()
+      return config
+    end,
+    ['function'] = function()
+      return config()
+    end,
+  })[config_type]()
+  return name, data
+end
+
+---Logic to (re)start installed language servers for use initialising lsps
+---and restarting them on installing new ones
+---@param config table<string, any>
+---@return string, table<string, any>
+function as.lsp.get_server_config(config)
+  config.on_attach = config.on_attach or as.lsp.on_attach
+  config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
+  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
+  if nvim_lsp_ok then
+    cmp_nvim_lsp.update_capabilities(config.capabilities)
+  end
+  return config
+end
+
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like the runtimepath for lua is correctly populated
 as.lsp.servers = {
@@ -175,22 +219,6 @@ as.lsp.servers = {
   end,
 }
 
----Logic to (re)start installed language servers for use initialising lsps
----and restarting them on installing new ones
----@param conf table<string, any>
----@return table<string, any>
-function as.lsp.get_server_config(conf)
-  local __type = type(conf)
-  local config = __type == 'table' and conf or __type == 'function' and conf() or {}
-  config.on_attach = config.on_attach or as.lsp.on_attach
-  config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
-  local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
-  if nvim_lsp_ok then
-    cmp_nvim_lsp.update_capabilities(config.capabilities)
-  end
-  return config
-end
-
 return function()
   require('nvim-lsp-installer').setup({
     automatic_installation = true,
@@ -199,9 +227,7 @@ return function()
     return
   end
   for name, config in pairs(as.lsp.servers) do
-    if type(name) == 'number' then
-      name = config
-    end
+    name, config = as.lsp.convert_config(name, config)
     if config then
       require('lspconfig')[name].setup(as.lsp.get_server_config(config))
     end
