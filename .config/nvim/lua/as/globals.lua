@@ -73,7 +73,7 @@ end
 function as.truncate(str, max_len)
   assert(str and max_len, 'string and max_len must be provided')
   return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. as.style.icons.misc.ellipsis
-      or str
+    or str
 end
 
 ---Determine if a value of any type is empty
@@ -147,6 +147,17 @@ end
 -- API Wrappers
 ----------------------------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
+
+---Check that the current nvim version is greater than or equal to the given version
+---@param major number
+---@param minor number
+---@param _ number patch
+---@return unknown
+function as.version(major, minor, _)
+  assert(major and minor, 'major and minor must be provided')
+  local v = vim.version()
+  return major >= v.major and minor >= v.minor
+end
 
 P = vim.pretty_print
 

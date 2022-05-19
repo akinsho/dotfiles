@@ -13,6 +13,157 @@ if vim.env.DEVELOPING then
 end
 
 -----------------------------------------------------------------------------//
+-- Autocommands
+-----------------------------------------------------------------------------//
+
+-- Show the popup diagnostics window, but only once for the current cursor location
+-- by checking whether the word under the cursor has changed.
+local function diagnostic_popup()
+  local cword = vim.fn.expand('<cword>')
+  if cword ~= vim.w.lsp_diagnostics_cword then
+    vim.w.lsp_diagnostics_cword = cword
+    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
+  end
+end
+
+--- Add lsp autocommands
+---@param client table<string, any>
+---@param bufnr number
+local function setup_autocommands(client, bufnr)
+  if client and client.server_capabilities.codeLensProvider then
+    as.augroup('LspCodeLens', {
+      {
+        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+        buffer = bufnr,
+        command = function()
+          vim.lsp.codelens.refresh()
+        end,
+      },
+    })
+  end
+  if client and client.server_capabilities.documentHighlightProvider then
+    as.augroup('LspCursorCommands', {
+      {
+        event = { 'CursorHold' },
+        buffer = bufnr,
+        command = function()
+          diagnostic_popup()
+        end,
+      },
+      {
+        event = { 'CursorHold', 'CursorHoldI' },
+        buffer = bufnr,
+        description = 'LSP: Document Highlight',
+        command = function()
+          pcall(vim.lsp.buf.document_highlight)
+        end,
+      },
+      {
+        event = 'CursorMoved',
+        description = 'LSP: Document Highlight (Clear)',
+        buffer = bufnr,
+        command = function()
+          vim.lsp.buf.clear_references()
+        end,
+      },
+    })
+  end
+end
+
+-----------------------------------------------------------------------------//
+-- Mappings
+-----------------------------------------------------------------------------//
+
+---Setup mapping when an lsp attaches to a buffer
+---@param client table lsp client
+local function setup_mappings(client)
+  local ok = pcall(require, 'lsp-format')
+  local format = ok and '<Cmd>Format<CR>' or vim.lsp.buf.formatting
+  local function with_desc(desc)
+    return { buffer = 0, desc = desc }
+  end
+
+  as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
+  as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
+
+  if client.server_capabilities.documentFormattingProvider then
+    as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
+  end
+
+  if client.server_capabilities.codeActionProvider then
+    as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+    as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
+  end
+
+  if client.server_capabilities.definitionProvider then
+    as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
+  end
+  if client.server_capabilities.referencesProvider then
+    as.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
+  end
+  if client.server_capabilities.hoverProvider then
+    as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
+  end
+
+  if client.supports_method('textDocument/prepareCallHierarchy') then
+    as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  end
+
+  if client.server_capabilities.implementationProvider then
+    as.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: implementation'))
+  end
+
+  if client.server_capabilities.typeDefinitionProvider then
+    as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+  end
+
+  if client.server_capabilities.codeLensProvider then
+    as.nnoremap('<leader>cl', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
+  end
+
+  if client.server_capabilities.renameProvider then
+    as.nnoremap('<leader>rn', vim.lsp.buf.rename, with_desc('lsp: rename'))
+  end
+end
+
+-----------------------------------------------------------------------------//
+-- Lsp setup/teardown
+-----------------------------------------------------------------------------//
+
+---Add buffer local mappings, autocommands, tagfunc etc for attaching servers
+---@param client table lsp client
+---@param bufnr number
+function as.lsp.on_attach(client, bufnr)
+  setup_autocommands(client, bufnr)
+  setup_mappings(client)
+  local format_ok, lsp_format = pcall(require, 'lsp-format')
+  if format_ok then
+    lsp_format.on_attach(client)
+  end
+
+  if client.server_capabilities.definitionProvider then
+    vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
+  end
+
+  if client.server_capabilities.documentFormattingProvider then
+    vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
+  end
+end
+
+if as.version(0, 8) then
+  as.augroup('LspSetupCommands', {
+    {
+      event = 'LspAttach',
+      desc = 'setup the language server autocommands',
+      command = function(args)
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        as.lsp.on_attach(client, bufnr)
+      end,
+    },
+  })
+end
+-----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
 local command = as.command
