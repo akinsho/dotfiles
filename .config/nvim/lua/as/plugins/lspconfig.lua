@@ -138,15 +138,16 @@ end
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like the runtimepath for lua is correctly populated
 as.lsp.servers = {
-  sourcekit = true,
+  'sourcekit',
+  'sqls',
+  'tsserver',
+  'graphql',
+  'jsonls',
+  'bashls',
+  'vimls',
+  'yamlls',
+  'terraformls',
   gopls = false, -- NOTE: this is loaded by it's own plugin
-  tsserver = true,
-  graphql = true,
-  jsonls = true,
-  bashls = true,
-  vimls = true,
-  yamlls = true,
-  terraformls = true,
   ---  NOTE: This is the secret sauce that allows reading requires and variables
   --- between different modules in the nvim lua context
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
@@ -179,8 +180,8 @@ as.lsp.servers = {
 ---@param conf table<string, any>
 ---@return table<string, any>
 function as.lsp.get_server_config(conf)
-  local conf_type = type(conf)
-  local config = conf_type == 'table' and conf or conf_type == 'function' and conf() or {}
+  local __type = type(conf)
+  local config = __type == 'table' and conf or __type == 'function' and conf() or {}
   config.on_attach = config.on_attach or as.lsp.on_attach
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
   local nvim_lsp_ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
@@ -198,6 +199,9 @@ return function()
     return
   end
   for name, config in pairs(as.lsp.servers) do
+    if type(name) == 'number' then
+      name = config
+    end
     if config then
       require('lspconfig')[name].setup(as.lsp.get_server_config(config))
     end
