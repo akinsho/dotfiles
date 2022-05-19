@@ -1,6 +1,7 @@
 tap "bufbuild/buf"
 tap "buo/cask-upgrade"
 tap "craciuncezar/tap"
+tap "datawire/blackbird"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
@@ -45,6 +46,8 @@ brew "golangci-lint"
 brew "himalaya"
 # Improved top (interactive process viewer)
 brew "htop"
+# Database of common MIME types
+brew "shared-mime-info"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Kubernetes command-line interface
@@ -101,6 +104,8 @@ brew "zsh-completions"
 brew "bufbuild/buf/buf"
 # A git command extension for switching git branches more efficiently.
 brew "craciuncezar/tap/git-smart-checkout"
+# Local dev environment attached to a remote Kubernetes cluster
+brew "datawire/blackbird/telepresence-arm64"
 # Enable Windows-like alt-tab
 cask "alt-tab"
 # Tools for building Android applications
