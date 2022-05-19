@@ -443,15 +443,6 @@ function M.lsp_client(ctx)
   return table.concat(names, ' ') .. (has_null_ls and ' (N)' or '')
 end
 
----The currently focused function
----@return string?
-function M.current_function()
-  local gps = require('nvim-gps')
-  if gps.is_available() then
-    return gps.get_location()
-  end
-end
-
 function M.debugger()
   if not package.loaded['dap'] then
     return ''

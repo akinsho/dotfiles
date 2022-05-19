@@ -208,8 +208,6 @@ function _G.__statusline()
     { parent_item, 2 },
     { file_item, 0 },
     { item_if('Saving…', vim.g.is_saving, 'StComment', { before = ' ' }), 1 },
-    -- LSP Status
-    { item(utils.current_function(), 'StMetadataPrefix', { before = '  ' }), 4 },
     -- Local plugin dev indicator
     {
       item_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, 'StComment', {
