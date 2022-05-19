@@ -18,15 +18,10 @@ end
 
 local hl_end = '%*'
 
-local excluded = { 'NeogitStatus' }
-
 function as.winbar.render()
   local buf = api.nvim_win_get_buf(vim.g.statusline_winid)
   local bufname = api.nvim_buf_get_name(buf)
   local winline = ' ' -- 1 space padding
-  if vim.tbl_contains(excluded, vim.bo.filetype) and api.nvim_win_get then
-    return ''
-  end
   if bufname == '' then
     return winline .. '[No name]'
   end
@@ -46,19 +41,38 @@ function as.winbar.render()
   return winline
 end
 
+-- Count the number of windows but ignore floating ones.
+local function get_valid_wins()
+  local wins = {}
+  for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
+    if fn.win_gettype(api.nvim_win_get_number(win)) == '' then
+      table.insert(wins, win)
+    end
+  end
+  return wins
+end
+
+local excluded = { 'NeogitStatus', 'NeogitCommitMessage' }
+
 as.augroup('AttachWinbar', {
   {
-    event = { 'WinEnter' },
-    desc = 'Clear winbar for active window',
+    event = { 'WinEnter', 'BufEnter', 'WinClosed', 'BufDelete' },
+    desc = 'Toggle winbar',
     command = function()
-      vim.wo.winbar = ''
-    end,
-  },
-  {
-    event = { 'WinLeave' },
-    desc = 'Add path winbar for inactive window',
-    command = function()
-      vim.wo.winbar = '%!v:lua.as.winbar.render()'
+      local valid_wins = get_valid_wins()
+      for _, win in ipairs(valid_wins) do
+        local buf = api.nvim_win_get_buf(win)
+        if
+          not vim.tbl_contains(excluded, vim.bo[buf].filetype)
+          and vim.bo[buf].buftype == ''
+          and vim.bo[buf].filetype ~= ''
+          and #valid_wins > 1
+        then
+          vim.wo[win].winbar = '%!v:lua.as.winbar.render()'
+        else
+          vim.wo[win].winbar = ''
+        end
+      end
     end,
   },
 })
