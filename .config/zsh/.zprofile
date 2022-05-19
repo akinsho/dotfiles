@@ -13,12 +13,13 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # system rather than ARM i.e. for M1+. So replace the system ruby with an
 # updated one from Homebrew and ensure it is before /usr/bin/ruby
 # Prepend to PATH
+export BREW_PREFIX="$(brew --prefix)"
 path=(
-  "$(brew --prefix)/opt/ruby/bin"
-  "$(brew --prefix)/lib/ruby/gems/3.0.0/bin"
+  "$BREW_PREFIX/opt/ruby/bin"
+  "$BREW_PREFIX/lib/ruby/gems/3.0.0/bin"
   # NOTE: Add coreutils which make commands like ls run as they do on Linux rather than the BSD flavoured variant macos ships with
-  "$(brew --prefix)/opt/coreutils/libexec/gnubin"
+  "$BREW_PREFIX/opt/coreutils/libexec/gnubin"
   $path
 )
 
-export MANPATH="$(brew --prefix)/opt/coreutils/libexec/gnuman:${MANPATH}"
+export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:${MANPATH}"
