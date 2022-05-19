@@ -348,6 +348,14 @@ packer.startup({
         -- is not safe to reload due to repeated attempts to map already mapped keys
         as.block_reload(function()
           require('satellite').setup({
+            handlers = {
+              gitsigns = {
+                enable = false,
+              },
+              marks = {
+                enable = false,
+              },
+            },
             excluded_filetypes = {
               'packer',
               'neo-tree',
