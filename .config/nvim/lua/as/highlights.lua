@@ -350,6 +350,7 @@ local sidebar_fts = {
   'undotree',
   'neo-tree',
   'Outline',
+  'dbui',
 }
 
 local function on_sidebar_enter()

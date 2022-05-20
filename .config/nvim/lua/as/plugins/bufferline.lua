@@ -50,6 +50,10 @@ return function()
       custom_filter = custom_filter,
       offsets = {
         {
+          filetype = 'dbui',
+          highlight = 'PanelHeading',
+        },
+        {
           filetype = 'undotree',
           text = 'Undotree',
           highlight = 'PanelHeading',
