@@ -111,23 +111,4 @@ function M.conf(name)
   return require(fmt('as.plugins.%s', name))
 end
 
----Install an executable, returning the error if any
----@param binary string
----@param installer string
----@param cmd string
----@return string?
-function M.install(binary, installer, cmd, opts)
-  opts = opts or { silent = true }
-  cmd = cmd or 'install'
-  if not as.executable(binary) and as.executable(installer) then
-    local install_cmd = fmt('%s %s %s', installer, cmd, binary)
-    if opts.silent then
-      vim.cmd('!' .. install_cmd)
-    else
-      -- open a small split, make it full width, run the command
-      vim.cmd(fmt('25split | wincmd J | terminal %s', install_cmd))
-    end
-  end
-end
-
 return M
