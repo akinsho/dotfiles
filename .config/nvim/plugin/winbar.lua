@@ -1,3 +1,7 @@
+if not as.version(0, 8) then
+  return
+end
+
 as.winbar = {}
 
 local fn = vim.fn
