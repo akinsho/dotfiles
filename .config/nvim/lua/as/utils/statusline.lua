@@ -440,7 +440,7 @@ function M.lsp_client(ctx)
       table.insert(names, client.name)
     end
   end
-  return table.concat(names, ' ') .. (has_null_ls and ' (N)' or '')
+  return table.concat(names, ' ') .. (has_null_ls and ' ␀' or '')
 end
 
 function M.debugger()
