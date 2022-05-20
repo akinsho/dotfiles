@@ -49,6 +49,10 @@ autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               COMPLETION
 #-------------------------------------------------------------------------------
+setopt ALWAYS_TO_END
+setopt AUTO_MENU
+setopt LIST_PACKED
+
 # Completion for kitty
 if [[ "$TERM" == "xterm-kitty" ]]; then
   kitty + complete setup zsh | source /dev/stdin
