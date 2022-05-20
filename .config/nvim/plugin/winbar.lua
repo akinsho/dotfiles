@@ -50,17 +50,17 @@ local function get_icon_hl(t)
   return hl(hl_map[icon_type] or 'WinbarIcon')
 end
 
-local hls = vim.tbl_extend(
-  'keep',
+local hls = as.fold(
+  function(accum, hl_name, name)
+    accum[fmt('Winbar%sIcon', name:gsub('^%l', string.upper))] = { foreground = { from = hl_name } }
+    return accum
+  end,
+  hl_map,
   {
     WinbarIcon = { inherit = 'Function' },
     WinbarDirectory = { inherit = 'Directory' },
     WinbarCurrent = { bold = true, underline = true, sp = { from = 'Directory', attr = 'fg' } },
-  },
-  as.fold(function(accum, hl_name, name)
-    accum[fmt('Winbar%sIcon', name:gsub('^%l', string.upper))] = { foreground = { from = hl_name } }
-    return accum
-  end, hl_map, {})
+  }
 )
 
 highlights.plugin('winbar', hls)
