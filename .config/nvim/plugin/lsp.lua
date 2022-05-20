@@ -75,10 +75,10 @@ end
 -----------------------------------------------------------------------------//
 
 ---Setup mapping when an lsp attaches to a buffer
----@param client table lsp client
-local function setup_mappings(client)
   local ok = pcall(require, 'lsp-format')
   local format = ok and '<Cmd>Format<CR>' or vim.lsp.buf.formatting
+---@param _ table lsp client
+local function setup_mappings(_)
   local function with_desc(desc)
     return { buffer = 0, desc = desc }
   end
@@ -86,44 +86,18 @@ local function setup_mappings(client)
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
 
-  if client.server_capabilities.documentFormattingProvider then
     as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
-  end
 
-  if client.server_capabilities.codeActionProvider then
-    as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
-    as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
-  end
-
-  if client.server_capabilities.definitionProvider then
-    as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
-  end
-  if client.server_capabilities.referencesProvider then
-    as.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
-  end
-  if client.server_capabilities.hoverProvider then
-    as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
-  end
-
-  if client.supports_method('textDocument/prepareCallHierarchy') then
-    as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
-  end
-
-  if client.server_capabilities.implementationProvider then
-    as.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: implementation'))
-  end
-
-  if client.server_capabilities.typeDefinitionProvider then
-    as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
-  end
-
-  if client.server_capabilities.codeLensProvider then
-    as.nnoremap('<leader>cl', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
-  end
-
-  if client.server_capabilities.renameProvider then
-    as.nnoremap('<leader>rn', vim.lsp.buf.rename, with_desc('lsp: rename'))
-  end
+  as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+  as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
+  as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
+  as.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
+  as.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
+  as.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  as.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: implementation'))
+  as.nnoremap('<leader>gd', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+  as.nnoremap('<leader>cl', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
+  as.nnoremap('<leader>rn', vim.lsp.buf.rename, with_desc('lsp: rename'))
 end
 
 -----------------------------------------------------------------------------//
