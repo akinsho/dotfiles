@@ -2,8 +2,6 @@ if not as.version(0, 8) then
   return
 end
 
-as.winbar = {}
-
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
@@ -16,6 +14,8 @@ local function hl(str)
 end
 
 local hl_end = '%*'
+
+local separator = hl('WinbarDirectory') .. fmt(' %s ', icons.chevron_right) .. hl_end
 
 local hl_map = {
   ['class'] = 'Class',
@@ -54,41 +54,48 @@ local hls = as.fold(
 
 highlights.plugin('winbar', hls)
 
-function as.winbar.breadcrumbs()
+--- TODO: if not the current window this should just show the fallback
+--- Seeing the current symbol in a non-active window is pointless IMO
+local function breadcrumbs()
   local gps = require('nvim-gps')
   local data = gps.is_available() and gps.get_data() or nil
   if not data or vim.tbl_isempty(data) then
-    return as.winbar.path()
+    return hl('NonText') .. '⋯'
   end
-  local winline = ' '
-
+  local winline = ''
   for index, item in ipairs(data) do
-    winline = winline .. get_icon_hl(item.type) .. item.icon .. hl_end .. item.text .. hl_end
-    if next(data, index) then
-      winline = winline .. hl('WinbarDirectory') .. fmt(' %s ', icons.chevron_right) .. hl_end
-    end
+    winline = winline
+      .. get_icon_hl(item.type)
+      .. item.icon
+      .. hl_end
+      .. item.text
+      .. hl_end
+      .. (next(data, index) and separator or '')
   end
   return winline
 end
 
-function as.winbar.path()
-  local buf = api.nvim_get_current_buf()
-  local bufname = api.nvim_buf_get_name(buf)
-  local winline = ' ' -- 1 space padding
+function as.winbar()
+  local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
+  local winline = ' '
   if bufname == '' then
     return winline .. '[No name]'
   end
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
+  local icon, color = devicons.get_icon(bufname, nil, { default = true })
   for idx, part in ipairs(parts) do
     if next(parts, idx) then
-      winline = winline
-        .. as.truncate(part, 20)
-        .. hl('WinbarDirectory')
-        .. fmt(' %s ', icons.chevron_right)
-        .. hl_end
+      winline = winline .. as.truncate(part, 20) .. separator
     else
-      local icon, color = devicons.get_icon(bufname, nil, { default = true })
-      winline = winline .. hl(color) .. icon .. ' ' .. hl('WinbarCurrent') .. part .. hl_end
+      winline = winline
+        .. hl(color)
+        .. icon
+        .. ' '
+        .. hl('WinbarCurrent')
+        .. part
+        .. hl_end
+        .. separator
+        .. breadcrumbs()
     end
   end
   return winline
@@ -103,16 +110,13 @@ as.augroup('AttachWinbar', {
     command = function()
       for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
         local buf = api.nvim_win_get_buf(win)
-        local is_current = win == api.nvim_get_current_win()
         if
           not vim.tbl_contains(excluded, vim.bo[buf].filetype)
           and fn.win_gettype(win) == ''
           and vim.bo[buf].buftype == ''
           and vim.bo[buf].filetype ~= ''
         then
-          -- The current buffer should show breadcrumbs and others should show their paths
-          local str = is_current and 'breadcrumbs' or 'path'
-          vim.wo[win].winbar = '%{%v:lua.as.winbar.' .. str .. '()%}'
+          vim.wo[win].winbar = '%{%v:lua.as.winbar()%}'
         else
           vim.wo[win].winbar = ''
         end
