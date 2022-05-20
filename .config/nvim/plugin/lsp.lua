@@ -136,19 +136,17 @@ function as.lsp.on_attach(client, bufnr)
   end
 end
 
-if as.version(0, 8) then
-  as.augroup('LspSetupCommands', {
-    {
-      event = 'LspAttach',
-      desc = 'setup the language server autocommands',
-      command = function(args)
-        local bufnr = args.buf
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        as.lsp.on_attach(client, bufnr)
-      end,
-    },
-  })
-end
+as.augroup('LspSetupCommands', {
+  {
+    event = 'LspAttach',
+    desc = 'setup the language server autocommands',
+    command = function(args)
+      local bufnr = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      as.lsp.on_attach(client, bufnr)
+    end,
+  },
+})
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//

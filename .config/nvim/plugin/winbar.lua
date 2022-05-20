@@ -1,7 +1,3 @@
-if not as.version(0, 8) then
-  return
-end
-
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
