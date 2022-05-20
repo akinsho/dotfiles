@@ -416,7 +416,7 @@ end
 
 function M.diagnostic_info(context)
   local buf = context.bufnum
-  if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
+  if vim.tbl_isempty(vim.lsp.get_active_clients({ bufnr = buf })) then
     return { error = {}, warning = {}, info = {} }
   end
   local icons = as.style.icons.lsp
@@ -429,7 +429,7 @@ end
 
 function M.lsp_client(ctx)
   local names = {}
-  local clients = vim.lsp.buf_get_clients(ctx.bufnum)
+  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
   -- Show a special truncated symbol for null ls since showing it's full name
   -- is a waste of space, I want to know it's running but not have it's name taking up space
   local has_null_ls = false
