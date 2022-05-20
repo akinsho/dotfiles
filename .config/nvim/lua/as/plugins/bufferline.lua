@@ -84,11 +84,18 @@ return function()
             end,
           },
           {
+            name = 'SQL',
+            matcher = function(buf)
+              return buf.filename:match('%.sql$')
+            end,
+          },
+          {
             highlight = { guisp = '#51AFEF', gui = 'underline' },
             name = 'tests',
             icon = '',
             matcher = function(buf)
-              return buf.filename:match('_spec') or buf.filename:match('_test')
+              local name = buf.filename
+              return name:match('%.sql$') == nil and name:match('_spec') or name:match('_test')
             end,
           },
           {
