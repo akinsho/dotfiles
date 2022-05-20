@@ -11,17 +11,6 @@ local devicons = require('nvim-web-devicons')
 local highlights = require('as.highlights')
 local icons = as.style.icons.misc
 
--- Count the number of windows but ignore floating ones.
-local function get_valid_wins()
-  local wins = {}
-  for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
-    if fn.win_gettype(api.nvim_win_get_number(win)) == '' then
-      table.insert(wins, win)
-    end
-  end
-  return wins
-end
-
 local function hl(str)
   return '%#' .. str .. '#'
 end
@@ -65,7 +54,24 @@ local hls = as.fold(
 
 highlights.plugin('winbar', hls)
 
-function as.winbar.render()
+function as.winbar.breadcrumbs()
+  local gps = require('nvim-gps')
+  local data = gps.is_available() and gps.get_data() or nil
+  if not data or vim.tbl_isempty(data) then
+    return as.winbar.path()
+  end
+  local winline = ' '
+
+  for index, item in ipairs(data) do
+    winline = winline .. get_icon_hl(item.type) .. item.icon .. hl_end .. item.text .. hl_end
+    if next(data, index) then
+      winline = winline .. hl('WinbarDirectory') .. fmt(' %s ', icons.chevron_right) .. hl_end
+    end
+  end
+  return winline
+end
+
+function as.winbar.path()
   local buf = api.nvim_get_current_buf()
   local bufname = api.nvim_buf_get_name(buf)
   local winline = ' ' -- 1 space padding
@@ -88,26 +94,6 @@ function as.winbar.render()
   return winline
 end
 
-local function breadcrumbs_available()
-  return require('nvim-gps').is_available()
-end
-
-function as.winbar.breadcrumbs()
-  local gps = require('nvim-gps')
-  local data = gps.get_data()
-  local winline = ' '
-  if vim.tbl_isempty(data) then
-    return as.winbar.render()
-  end
-  for index, item in ipairs(data) do
-    winline = winline .. get_icon_hl(item.type) .. item.icon .. hl_end .. item.text .. hl_end
-    if next(data, index) then
-      winline = winline .. hl('WinbarDirectory') .. fmt(' %s ', icons.chevron_right) .. hl_end
-    end
-  end
-  return winline
-end
-
 local excluded = { 'NeogitStatus', 'NeogitCommitMessage' }
 
 as.augroup('AttachWinbar', {
@@ -115,18 +101,17 @@ as.augroup('AttachWinbar', {
     event = { 'WinEnter', 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
     command = function()
-      local valid_wins = get_valid_wins()
-      for _, win in ipairs(valid_wins) do
+      for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
         local buf = api.nvim_win_get_buf(win)
         local is_current = win == api.nvim_get_current_win()
         if
           not vim.tbl_contains(excluded, vim.bo[buf].filetype)
+          and fn.win_gettype(win) == ''
           and vim.bo[buf].buftype == ''
           and vim.bo[buf].filetype ~= ''
-          and breadcrumbs_available()
         then
           -- The current buffer should show breadcrumbs and others should show their paths
-          local str = is_current and 'breadcrumbs' or 'render'
+          local str = is_current and 'breadcrumbs' or 'path'
           vim.wo[win].winbar = '%{%v:lua.as.winbar.' .. str .. '()%}'
         else
           vim.wo[win].winbar = ''
