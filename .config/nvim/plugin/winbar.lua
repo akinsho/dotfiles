@@ -119,8 +119,9 @@ as.augroup('AttachWinbar', {
           not vim.tbl_contains(excluded, vim.bo[buf].filetype)
           and vim.bo[buf].buftype == ''
           and vim.bo[buf].filetype ~= ''
-          and (not is_current or breadcrumbs_available())
+          and breadcrumbs_available()
         then
+          -- The current buffer should show breadcrumbs and others should show their paths
           local str = is_current and 'breadcrumbs' or 'render'
           vim.wo[win].winbar = '%{%v:lua.as.winbar.' .. str .. '()%}'
         else
