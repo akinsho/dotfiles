@@ -14,6 +14,22 @@ _G.as = {
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
+
+--- Convert a list or map of items into a value by iterating all it's fields and transforming
+--- them with a callback
+---@generic T : table
+---@param callback fun(T, T, key: string | number): T
+---@param list T[]
+---@param accum T
+---@return T
+function as.fold(callback, list, accum)
+  for k, v in pairs(list) do
+    accum = callback(accum, v, k)
+    assert(accum, 'The accumulator must be return on each iteration')
+  end
+  return accum
+end
+
 ---Find an item in a list
 ---@generic T
 ---@param haystack T[]
