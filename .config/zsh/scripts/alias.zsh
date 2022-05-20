@@ -8,9 +8,6 @@ if [[ $+commands[exa] ]]; then
 else
   alias l='ls -lFh'     # size,show type,human readable
 fi
-alias dv='DEVELOPING=1 nvim'
-alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
-# Quick access to the .zshrc file
 alias ez="${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc"
 alias et="${=EDITOR} ${ZDOTDIR:-$HOME}/.tmux.conf"
 alias grep='grep --color'
@@ -18,27 +15,38 @@ alias x="exit"
 alias del="rm -rf"
 alias md="mkdir -p"
 alias dots="cd $DOTFILES"
-alias v='nvim'
-alias vi='nvim'
-alias vim='nvim'
-alias minimalvim="nvim -u ~/minimal.vim"
-alias notes="cd $SYNC_DIR/neorg/ && nvim"
-# This allow using neovim remote when nvim is called from inside a running vim instance
-[ -n "$NVIM_LISTEN_ADDRESS" ] && alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
 alias cl='clear'
 alias src="exec $SHELL"
 alias dnd='do-not-disturb toggle'
+#-------------------------------------------------------------------------------
+#  APP ALIASES
+#-------------------------------------------------------------------------------
 (( $+commands[npm] )) && alias ns="clear && npm start"
 (( $+commands[npm] )) && alias nt="clear && npm test"
 (( $+commands[yarn] )) && alias yt="clear && yarn test"
 (( $+commands[yarn] )) && alias ys="clear && yarn start"
 (( $+commands[bat] )) && alias cat='bat'
+(( $+commands[lazygit] )) && alias lg='lazygit'
+(( $+commands[fuck] )) && alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
+(( $+commands[kitty] )) && alias icat="kitty +kitten icat"
+#-------------------------------------------------------------------------------
+#  NEOVIM
+#-------------------------------------------------------------------------------
+if [[ -n "$NVIM_LISTEN_ADDRESS" || -n "$NVIM" ]]; then
+  alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+fi
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias dv='DEVELOPING=1 nvim'
+alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
+alias minimalvim="nvim -u ~/minimal.vim"
+alias notes="cd $SYNC_DIR/neorg/ && nvim"
 #-------------------------------------------------------------------------------
 #  DIRECTORIES
 #-------------------------------------------------------------------------------
 alias ...="cd ../../.."
 alias ....="cd ../../../.."
-
 # @see: https://thevaluable.dev/zsh-install-configure-mouseless/
 # These mappings allow listing the directory stack and jumping to an entry
 # based on it's number in the list
@@ -52,17 +60,18 @@ alias td="tmux detach"
 alias tls="tmux ls"
 alias tkss="killall tmux"
 alias tkill="tmux kill-session -t"
-# IP addresses
+#------------------------------------------------------------------------------
+# IP ADDRESSES
+#------------------------------------------------------------------------------
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
+#------------------------------------------------------------------------------
 # suffix aliases set the program type to use to open a particular file with an extension
 alias -s {js,html,js,ts,css,md}=nvim
-alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 
-if which kitty >/dev/null; then
-  alias icat="kitty +kitten icat"
-fi
-
+# -------------------------------------------------------------------------------
+# GIT ALIASES
+# -------------------------------------------------------------------------------
 if [[ `uname` == 'Linux' ]]; then
   alias o='a -e xdg-open' # quick opening files with xdg-open
   alias open='xdg-open'
@@ -81,10 +90,6 @@ function git_main_branch() {
   done
   echo master
 }
-
-# -------------------------------------------------------------------------------
-# Git aliases
-# -------------------------------------------------------------------------------
 # source: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh#L53
 # NOTE: a lot of these commands are single quoted ON PURPOSE to prevent them
 # from being evaluated immediately rather than in the shell when the alias is
