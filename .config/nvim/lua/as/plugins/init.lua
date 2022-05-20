@@ -203,16 +203,6 @@ packer.startup({
     })
 
     use({
-      'lukas-reineke/lsp-format.nvim',
-      config = function()
-        require('lsp-format').setup({
-          go = { exclude = { 'gopls' } },
-        })
-        as.nnoremap('<leader>rd', '<Cmd>FormatToggle<CR>', 'lsp format: toggle')
-      end,
-    })
-
-    use({
       'narutoxy/dim.lua',
       requires = { 'nvim-treesitter/nvim-treesitter', 'neovim/nvim-lspconfig' },
       config = function()

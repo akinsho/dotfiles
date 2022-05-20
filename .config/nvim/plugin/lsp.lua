@@ -30,6 +30,22 @@ end
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
+  if client and client.server_capabilities.documentFormattingProvider then
+    as.augroup('LspFormatting', {
+      {
+        event = 'BufWritePre',
+        bufnr = bufnr,
+        command = function()
+          if vim.fn.bufloaded(bufnr) then
+            vim.lsp.buf.format({
+              bufnr = bufnr,
+              async = true,
+            })
+          end
+        end,
+      },
+    })
+  end
   if client and client.server_capabilities.codeLensProvider then
     as.augroup('LspCodeLens', {
       {
@@ -75,8 +91,6 @@ end
 -----------------------------------------------------------------------------//
 
 ---Setup mapping when an lsp attaches to a buffer
-  local ok = pcall(require, 'lsp-format')
-  local format = ok and '<Cmd>Format<CR>' or vim.lsp.buf.formatting
 ---@param _ table lsp client
 local function setup_mappings(_)
   local function with_desc(desc)
@@ -86,7 +100,9 @@ local function setup_mappings(_)
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
 
-    as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
+  as.nnoremap('<leader>rf', function()
+    vim.lsp.format({ async = true })
+  end, with_desc('lsp: format buffer'))
 
   as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
   as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
@@ -110,10 +126,6 @@ end
 function as.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
-  local format_ok, lsp_format = pcall(require, 'lsp-format')
-  if format_ok then
-    lsp_format.on_attach(client)
-  end
 
   if client.server_capabilities.definitionProvider then
     vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
@@ -147,7 +159,7 @@ command('LspLog', function()
 end)
 
 command('LspFormat', function()
-  vim.lsp.buf.formatting_sync(nil, 1000)
+  vim.lsp.buf.format()
 end)
 
 -- A helper function to auto-update the quickfix list when new diagnostics come
