@@ -7,8 +7,8 @@ cmp.setup.filetype('NeogitCommitMessage', {
   sources = cmp.config.sources({
     { name = 'git' },
     { name = 'luasnip' },
-    { name = 'spell' },
     { name = 'dictionary' },
+    { name = 'spell' },
   }, {
     { name = 'buffer' },
   }),
