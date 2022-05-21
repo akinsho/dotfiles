@@ -480,7 +480,8 @@ packer.startup({
         require('as.highlights').plugin('beacon', {
           Beacon = { link = 'Cursor' },
         })
-        require('beacon').setup({
+        local beacon = require('beacon')
+        beacon.setup({
           minimal_jump = 20,
           ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
           ignore_filetypes = {
@@ -491,6 +492,15 @@ packer.startup({
             'NeogitStatus',
             'packer',
             'trouble',
+          },
+        })
+        as.augroup('BeaconCmds', {
+          {
+            event = 'BufReadPre',
+            pattern = '*.norg',
+            command = function()
+              beacon.beacon_off()
+            end,
           },
         })
       end,
