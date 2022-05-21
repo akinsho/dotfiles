@@ -313,9 +313,11 @@ as.augroup('UpdateVim', {
     event = 'BufWritePost',
     pattern = { '$DOTFILES/**/nvim/plugin/*.{lua,vim}', fn.expand('$MYVIMRC') },
     nested = true,
-    command = function()
+    command = function(args)
+      local path = api.nvim_buf_get_name(args.buf)
+      vim.cmd('source ' .. path)
       local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
-      msg = ok and 'sourced ' .. vim.fn.fnamemodify(vim.env.MYVIMRC, ':t') or msg
+      msg = ok and fmt('sourced %s and %s', path, fn.fnamemodify(vim.env.MYVIMRC, ':t')) or msg
       vim.notify(msg)
     end,
   },

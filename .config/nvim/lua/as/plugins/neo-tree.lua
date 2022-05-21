@@ -42,6 +42,9 @@ return function()
       },
     },
     default_component_configs = {
+      icon = {
+        folder_empty = '',
+      },
       git_status = {
         symbols = {
           added = icons.git.add,
