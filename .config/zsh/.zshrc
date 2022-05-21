@@ -230,7 +230,7 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
-zstyle ':vcs_info:*' unstagedstr "%F{red} ✗%f"
+zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # alternative: ✘
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash git-compare git-remotebranch
 zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
