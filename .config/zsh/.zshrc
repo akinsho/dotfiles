@@ -282,7 +282,11 @@ function +vi-git-compare() {
   local behind_symbol="%{$fg[cyan]%}⇣%{$reset_color%}${behind}"
   (( $ahead )) && gitstatus+=( "${ahead_symbol}" )
   (( $behind )) && gitstatus+=( "${behind_symbol}" )
-  hook_com[misc]+=${(j:/:)gitstatus}
+  # `(j:<char>:)` represents joining the items of a list with a character
+  # similar to a string.join type operation this can also be written as
+  # (j./.) the character representing each part is interchangeable, and the
+  # middle character represents the string to use to join the items
+  hook_com[misc]+="${(j: :)gitstatus}"
 }
 
 ## git: Show remote branch name for remote-tracking branches
