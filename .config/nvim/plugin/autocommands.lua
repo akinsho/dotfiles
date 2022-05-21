@@ -368,9 +368,7 @@ as.augroup('Cursorline', {
     event = { 'BufEnter' },
     pattern = { '*' },
     command = function()
-      if should_show_cursorline() then
-        vim.wo.cursorline = true
-      end
+      vim.wo.cursorline = should_show_cursorline()
     end,
   },
   {
