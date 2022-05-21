@@ -202,24 +202,19 @@ as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostic
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
-local diagnostic_types = {
-  { 'Error', icon = icons.error },
-  { 'Warn', icon = icons.warn },
-  { 'Info', icon = icons.info },
-  { 'Hint', icon = icons.hint },
-}
+local function sign(opts)
+  fn.sign_define(opts.highlight, {
+    text = opts.icon,
+    texthl = opts.highlight,
+    numhl = fmt('%sNr', opts.highlight),
+    linehl = fmt('%sLine', opts.highlight),
+  })
+end
 
-fn.sign_define(vim.tbl_map(function(t)
-  local hl = 'DiagnosticSign' .. t[1]
-  return {
-    name = hl,
-    text = t.icon,
-    texthl = hl,
-    numhl = fmt('%sNr', hl),
-    linehl = fmt('%sLine', hl),
-  }
-end, diagnostic_types))
-
+sign({ highlight = 'DiagnosticSignError', icon = icons.error })
+sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
+sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
+sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
 -----------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
@@ -286,9 +281,9 @@ diagnostic.config({
     focusable = false,
     source = 'always',
     prefix = function(diag, i, _)
-      local level = diagnostic_types[diag.severity]
-      local prefix = fmt('%d. %s ', i, level.icon)
-      return prefix, 'Diagnostic' .. level[1]
+      local level = diagnostic.severity[diag.severity]
+      local prefix = fmt('%d. %s ', i, icons[level:lower()])
+      return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
 })
