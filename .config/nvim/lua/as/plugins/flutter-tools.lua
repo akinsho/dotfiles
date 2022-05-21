@@ -21,7 +21,6 @@ return function()
         showTodos = true,
         renameFilesWithClasses = 'prompt',
       },
-      on_attach = as.lsp and as.lsp.on_attach or nil,
     },
   })
 end

@@ -130,7 +130,7 @@ end
 ---Add buffer local mappings, autocommands, tagfunc etc for attaching servers
 ---@param client table lsp client
 ---@param bufnr number
-function as.lsp.on_attach(client, bufnr)
+local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
 
@@ -150,7 +150,7 @@ as.augroup('LspSetupCommands', {
     command = function(args)
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      as.lsp.on_attach(client, bufnr)
+      on_attach(client, bufnr)
     end,
   },
 })
