@@ -52,6 +52,8 @@ as.style = {
       array = '',
       number = '',
       object = '',
+      null = '[]',
+      float = '',
     },
     misc = {
       ellipsis = '…',
