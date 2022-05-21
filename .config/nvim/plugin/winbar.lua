@@ -58,7 +58,7 @@ highlights.plugin('winbar', hls)
 --- Seeing the current symbol in a non-active window is pointless
 local function breadcrumbs()
   local data = gps.is_available() and gps.get_data() or nil
-  if not data or vim.tbl_isempty(data) then
+  if not data or type(data) ~= 'table' or vim.tbl_isempty(data) then
     return hl('NonText') .. '⋯'
   end
   local winline = ''
@@ -113,9 +113,9 @@ as.augroup('AttachWinbar', {
         local buf = api.nvim_win_get_buf(win)
         if
           not vim.tbl_contains(excluded, vim.bo[buf].filetype)
-          and fn.win_gettype(win) == ''
-          and vim.bo[buf].buftype == ''
-          and vim.bo[buf].filetype ~= ''
+          and as.empty(fn.win_gettype(win))
+          and as.empty(vim.bo[buf].buftype)
+          and not as.empty(vim.bo[buf].filetype)
         then
           vim.wo[win].winbar = '%{%v:lua.as.winbar()%}'
         else
