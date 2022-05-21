@@ -88,9 +88,7 @@ as.lsp.servers = {
 }
 
 return function()
-  require('nvim-lsp-installer').setup({
-    automatic_installation = true,
-  })
+  require('nvim-lsp-installer').setup({ automatic_installation = true })
   if vim.v.vim_did_enter == 1 then
     return
   end

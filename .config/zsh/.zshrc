@@ -286,6 +286,7 @@ function +vi-git-compare() {
   # similar to a string.join type operation this can also be written as
   # (j./.) the character representing each part is interchangeable, and the
   # middle character represents the string to use to join the items
+  # https://zsh.sourceforge.io/Guide/zshguide05.html#l124
   hook_com[misc]+="${(j: :)gitstatus}"
 }
 
