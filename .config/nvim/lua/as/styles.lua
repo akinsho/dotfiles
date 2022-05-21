@@ -29,8 +29,8 @@ as.style = {
     lsp = {
       error = '✗',
       warn = '',
-      info = '',
-      hint = '',
+      info = '', -- 
+      hint = '', -- ⚑
     },
     git = {
       add = '', -- '',
