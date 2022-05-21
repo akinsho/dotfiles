@@ -1,8 +1,10 @@
+local gps = require('nvim-gps')
+local devicons = require('nvim-web-devicons')
+local highlights = require('as.highlights')
+
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local devicons = require('nvim-web-devicons')
-local highlights = require('as.highlights')
 local icons = as.style.icons.misc
 
 local function hl(str)
@@ -42,6 +44,8 @@ local hls = as.fold(
   end,
   hl_map,
   {
+    Winbar = { bold = true },
+    WinbarCrumb = { bold = true },
     WinbarIcon = { inherit = 'Function' },
     WinbarDirectory = { inherit = 'Directory' },
     WinbarCurrent = { bold = true, underline = true, sp = { from = 'Directory', attr = 'fg' } },
@@ -51,9 +55,8 @@ local hls = as.fold(
 highlights.plugin('winbar', hls)
 
 --- TODO: if not the current window this should just show the fallback
---- Seeing the current symbol in a non-active window is pointless IMO
+--- Seeing the current symbol in a non-active window is pointless
 local function breadcrumbs()
-  local gps = require('nvim-gps')
   local data = gps.is_available() and gps.get_data() or nil
   if not data or vim.tbl_isempty(data) then
     return hl('NonText') .. '⋯'
@@ -63,7 +66,9 @@ local function breadcrumbs()
     winline = winline
       .. get_icon_hl(item.type)
       .. item.icon
+      .. ' '
       .. hl_end
+      .. hl('WinbarCrumb')
       .. item.text
       .. hl_end
       .. (next(data, index) and separator or '')
