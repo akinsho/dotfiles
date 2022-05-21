@@ -26,6 +26,12 @@ local function diagnostic_popup()
   end
 end
 
+local function formatting_filter(clients)
+  return vim.tbl_filter(function(c)
+    return c.name ~= 'gopls'
+  end, clients)
+end
+
 --- Add lsp autocommands
 ---@param client table<string, any>
 ---@param bufnr number
@@ -36,10 +42,11 @@ local function setup_autocommands(client, bufnr)
         event = 'BufWritePre',
         bufnr = bufnr,
         command = function()
-          if vim.fn.bufloaded(bufnr) then
+          if fn.bufloaded(bufnr) then
             vim.lsp.buf.format({
               bufnr = bufnr,
               async = true,
+              filter = formatting_filter,
             })
           end
         end,
