@@ -107,10 +107,7 @@ local function setup_mappings(_)
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
 
-  as.nnoremap('<leader>rf', function()
-    vim.lsp.format({ async = true })
-  end, with_desc('lsp: format buffer'))
-
+  as.nnoremap('<leader>rf', vim.lsp.buf.format, with_desc('lsp: format buffer'))
   as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
   as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
   as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
