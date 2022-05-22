@@ -104,7 +104,8 @@ function as.winbar(current_win)
   return winline
 end
 
-local excluded = { 'NeogitStatus', 'NeogitCommitMessage' }
+local excluded = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' }
+local allow_list = { 'toggleterm' }
 
 as.augroup('AttachWinbar', {
   {
@@ -120,8 +121,8 @@ as.augroup('AttachWinbar', {
           and as.empty(vim.bo[buf].buftype)
           and not as.empty(vim.bo[buf].filetype)
         then
-        else
           vim.wo[win].winbar = fmt('%%{%%v:lua.as.winbar(%d)%%}', current)
+        elseif not vim.tbl_contains(allow_list, vim.bo[buf].filetype) then
           vim.wo[win].winbar = ''
         end
       end
