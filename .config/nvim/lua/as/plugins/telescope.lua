@@ -76,7 +76,7 @@ return function()
       layout_strategy = 'flex',
       layout_config = {
         horizontal = {
-          preview_width = 0.45,
+          preview_width = 0.55,
         },
         cursor = { -- FIXME: this does not change the size of the cursor layout
           width = 0.4,
