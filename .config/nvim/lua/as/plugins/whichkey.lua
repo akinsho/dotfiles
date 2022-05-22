@@ -6,6 +6,12 @@ return function()
         enabled = true,
       },
     },
+    window = {
+      border = as.style.current.border,
+    },
+    layout = {
+      align = 'center',
+    },
   })
 
   wk.register({
