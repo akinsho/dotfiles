@@ -76,12 +76,15 @@ local function breadcrumbs()
   return winline
 end
 
-function as.winbar()
+---@param current_win number the actual real window
+---@return string
+function as.winbar(current_win)
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   local winline = ' '
   if bufname == '' then
     return winline .. '[No name]'
   end
+  local is_current = current_win == api.nvim_get_current_win()
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
   for idx, part in ipairs(parts) do
@@ -95,8 +98,7 @@ function as.winbar()
         .. hl('WinbarCurrent')
         .. part
         .. hl_end
-        .. separator
-        .. breadcrumbs()
+        .. (is_current and separator .. breadcrumbs() or '')
     end
   end
   return winline
@@ -109,6 +111,7 @@ as.augroup('AttachWinbar', {
     event = { 'WinEnter', 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
     command = function()
+      local current = api.nvim_get_current_win()
       for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
         local buf = api.nvim_win_get_buf(win)
         if
@@ -117,8 +120,8 @@ as.augroup('AttachWinbar', {
           and as.empty(vim.bo[buf].buftype)
           and not as.empty(vim.bo[buf].filetype)
         then
-          vim.wo[win].winbar = '%{%v:lua.as.winbar()%}'
         else
+          vim.wo[win].winbar = fmt('%%{%%v:lua.as.winbar(%d)%%}', current)
           vim.wo[win].winbar = ''
         end
       end
