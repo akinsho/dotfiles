@@ -156,10 +156,6 @@ as.augroup('LspSetupCommands', {
 -----------------------------------------------------------------------------//
 local command = as.command
 
-command('LspLog', function()
-  vim.cmd('edit ' .. vim.lsp.get_log_path())
-end)
-
 command('LspFormat', function()
   vim.lsp.buf.format()
 end)
