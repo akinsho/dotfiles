@@ -11,3 +11,4 @@ automatic_backups/
 
 .zsh_history
 .zcompdump
+.zcompcache
