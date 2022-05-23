@@ -101,7 +101,7 @@ function as.winbar(current_win)
   add(utils.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if bufname == '' then
+  if as.empty(bufname) then
     return add(component('[No name]', 'Winbar', { priority = 0 }))
   end
 
