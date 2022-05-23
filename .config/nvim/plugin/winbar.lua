@@ -50,17 +50,21 @@ local hls = as.fold(
 highlights.plugin('winbar', hls)
 
 local function breadcrumbs()
-  local priority = 0
   local data = gps.is_available() and gps.get_data() or nil
   if not data or type(data) ~= 'table' or vim.tbl_isempty(data) then
-    return { { utils.item('⋯', 'NonText'), priority } }
+    return { { utils.item('⋯', 'NonText'), 0 } }
   end
   return as.fold(function(accum, item, index)
-    table.insert(accum, { utils.item(item.icon, get_icon_hl(item.type)), priority })
-    table.insert(accum, { utils.item(item.text, 'WinbarCrumb'), priority })
-    if next(data, index) then
-      table.insert(accum, { utils.item(separator, 'WinbarDirectory'), priority })
-    end
+    local has_next = next(data, index) ~= nil
+    table.insert(accum, {
+      utils.item(item.text, 'WinbarCrumb', {
+        prefix = item.icon,
+        prefix_color = get_icon_hl(item.type),
+        suffix = has_next and separator or nil,
+        suffix_color = has_next and 'WinbarDirectory' or nil,
+      }),
+      0,
+    })
     return accum
   end, data, {})
 end
@@ -70,29 +74,35 @@ end
 function as.winbar(current_win)
   local winbar = {}
   local add = utils.winline(winbar)
+
+  add({ utils.spacer(1), 0 })
+
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if bufname == '' then
     return add({ utils.item('[No name]', 'Winbar'), 0 })
   end
+
   local is_current = current_win == api.nvim_get_current_win()
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
-  local width = api.nvim_win_get_width(api.nvim_get_current_win())
+
   as.foreach(function(part, index)
     local priority = #parts - index
-    if next(parts, index) then
-      add(
-        { utils.item(part, 'Winbar'), priority },
-        { utils.item(separator, 'WinbarDirectory'), priority }
-      )
-    else
-      add({ utils.item(icon, color), priority }, { utils.item(part, 'WinbarCurrent'), priority })
-      if is_current then
-        add(unpack(breadcrumbs()))
-      end
-    end
+    local has_next = next(parts, index)
+    add({
+      utils.item(part, has_next and 'Winbar' or 'WinbarCurrent', {
+        suffix = (has_next or is_current) and separator or nil,
+        suffix_color = (has_next or is_current) and 'WinbarDirectory' or nil,
+        prefix = not has_next and icon or nil,
+        prefix_color = not has_next and color or nil,
+      }),
+      priority,
+    })
   end, parts)
-  return utils.display(winbar, width)
+  if is_current then
+    add(unpack(breadcrumbs()))
+  end
+  return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
 local excluded = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' }
