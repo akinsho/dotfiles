@@ -26,9 +26,11 @@ local function diagnostic_popup()
   end
 end
 
+local format_exclusions = { 'gopls', 'sumneko_lua' }
+
 local function formatting_filter(clients)
   return vim.tbl_filter(function(c)
-    return c.name ~= 'gopls'
+    return not vim.tbl_contains(format_exclusions, c.name)
   end, clients)
 end
 
