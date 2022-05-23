@@ -41,6 +41,7 @@ local hls = as.fold(
   hl_map,
   {
     Winbar = { bold = true },
+    WinbarNC = { bold = false },
     WinbarCrumb = { bold = true },
     WinbarIcon = { inherit = 'Function' },
     WinbarDirectory = { inherit = 'Directory' },
@@ -91,7 +92,7 @@ function as.winbar(current_win)
   as.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local has_next = next(parts, index)
-    add(component(part, has_next and 'Winbar' or 'WinbarCurrent', {
+    add(component(part, (not has_next and is_current) and 'WinbarCurrent' or nil, {
       suffix = (has_next or is_current) and separator or nil,
       suffix_color = (has_next or is_current) and 'WinbarDirectory' or nil,
       prefix = not has_next and icon or nil,
