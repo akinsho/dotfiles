@@ -572,15 +572,16 @@ function M.item(component, hl, opts)
     return M.spacer()
   end
   opts = opts or {}
+  local padding = ' '
   local before = opts.before or ''
-  local after = opts.after or ' '
-  local prefix = opts.prefix or ''
-  local suffix = opts.suffix or ''
+  local after = opts.after or padding
+  local prefix = opts.prefix and opts.prefix .. padding or ''
+  local suffix = opts.suffix and padding .. opts.suffix or ''
 
   local prefix_color = opts.prefix_color or hl
   local suffix_color = opts.suffix_color or hl
-  local prefix_item = prefix ~= '' and wrap(prefix_color) .. prefix .. ' ' or ''
-  local suffix_item = suffix ~= '' and ' ' .. wrap(suffix_color) .. suffix or ''
+  local prefix_item = prefix ~= '' and wrap(prefix_color) .. prefix or ''
+  local suffix_item = suffix ~= '' and wrap(suffix_color) .. suffix or ''
 
   --- handle numeric inputs etc.
   if type(component) ~= 'string' then
