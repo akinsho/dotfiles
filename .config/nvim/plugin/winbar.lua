@@ -10,6 +10,7 @@ local fmt = string.format
 local icons = as.style.icons.misc
 
 local separator = icons.chevron_right
+local ellipsis = icons.ellipsis
 
 local hl_map = {
   ['class'] = 'Class',
@@ -74,7 +75,7 @@ highlights.plugin('winbar', hls)
 local function breadcrumbs()
   local data = gps.is_available() and gps.get_data() or nil
   if not data or type(data) ~= 'table' or vim.tbl_isempty(data) then
-    return { utils.component('⋯', 'NonText', { priority = 0 }) }
+    return { utils.component(ellipsis, 'NonText', { priority = 0 }) }
   end
   return as.fold(function(accum, item, index)
     local has_next = next(data, index) ~= nil
