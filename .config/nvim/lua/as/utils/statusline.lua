@@ -543,17 +543,17 @@ function M.component(component, hl, opts)
     opts and opts.priority,
     fmt("each item's priority is required: %s is missing one", component)
   )
-  opts.padding = opts.padding or {suffix = true, prefix = true}
+  opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
   local before = opts.before or ''
   local after = opts.after or padding
   local prefix = opts.prefix and opts.prefix .. (opts.padding.prefix and padding or '') or ''
   local suffix = opts.suffix and (opts.padding.suffix and padding or '') .. opts.suffix or ''
 
-  local prefix_color = opts.prefix_color or hl
-  local suffix_color = opts.suffix_color or hl
-  local prefix_item = prefix ~= '' and wrap(prefix_color) .. prefix or ''
-  local suffix_item = suffix ~= '' and wrap(suffix_color) .. suffix or ''
+  local prefix_color = opts.prefix_color
+  local suffix_color = opts.suffix_color
+  local prefix_item = (prefix ~= '' and prefix_color) and wrap(prefix_color) .. prefix or ''
+  local suffix_item = (suffix ~= '' and suffix_color) and wrap(suffix_color) .. suffix or ''
 
   --- handle numeric inputs etc.
   if type(component) ~= 'string' then
