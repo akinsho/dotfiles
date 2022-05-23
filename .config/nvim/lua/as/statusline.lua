@@ -32,7 +32,6 @@ local function colors()
   local pmenu_bg = H.get_hl('Pmenu', 'bg')
   local string_fg = H.get_hl('String', 'fg')
   local number_fg = H.get_hl('Number', 'fg')
-  local identifier_fg = H.get_hl('Identifier', 'fg')
   local inc_search_bg = H.get_hl('Search', 'bg')
 
   local normal_bg = H.get_hl('Normal', 'bg')
@@ -58,10 +57,8 @@ local function colors()
     StDirectory = { background = bg_color, foreground = 'Gray', italic = true },
     StDirectoryInactive = { background = bg_color, foreground = dim_color, italic = true },
     StParentDirectory = { background = bg_color, foreground = string_fg, bold = true },
-    StIdentifier = { foreground = identifier_fg, background = bg_color },
     StTitle = { background = bg_color, foreground = 'LightGray', bold = true },
     StComment = { background = bg_color, inherit = 'Comment' },
-    StInactive = { foreground = bg_color, background = P.comment_grey },
     StatusLine = { background = bg_color },
     StatusLineNC = { link = 'VertSplit' },
     StInfo = { foreground = info_color, background = bg_color, bold = true },
