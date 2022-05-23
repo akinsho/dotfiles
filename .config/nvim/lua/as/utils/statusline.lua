@@ -10,6 +10,14 @@ local fmt = string.format
 
 local M = {}
 
+local constants = {
+  HL_END = '%*',
+  ALIGN = '%=',
+  END = '%<',
+}
+
+M.constants = constants
+
 local function get_toggleterm_name(_, buf)
   local shell = fnamemodify(vim.env.SHELL, ':t')
   return fmt('Terminal(%s)[%s]', shell, api.nvim_buf_get_var(buf, 'toggle_number'))
@@ -566,7 +574,16 @@ function M.component(component, hl, opts)
 
   return {
     {
-      table.concat({ before, prefix_item, wrap(hl), component, '%*', suffix_item, after }),
+      table.concat({
+        before,
+        prefix_item,
+        constants.HL_END,
+        hl and wrap(hl) or '',
+        component,
+        constants.HL_END,
+        suffix_item,
+        after,
+      }),
       api.nvim_strwidth(component .. before .. after .. suffix .. prefix),
     },
     opts.priority,

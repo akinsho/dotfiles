@@ -10,9 +10,9 @@ local utils = require('as.utils.statusline')
 local H = require('as.highlights')
 
 local api = vim.api
-local fn = vim.fn
-local P = as.style.palette
 local icons = as.style.icons
+local P = as.style.palette
+local C = utils.constants
 
 local M = {}
 
@@ -82,8 +82,8 @@ local function colors()
   })
 end
 
-local separator = { '%=' }
-local end_marker = { '%<' }
+local separator = { C.ALIGN }
+local end_marker = { C.END }
 
 local component = utils.component
 local component_if = utils.component_if
