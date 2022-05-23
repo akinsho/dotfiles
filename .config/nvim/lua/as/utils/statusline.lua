@@ -14,6 +14,7 @@ local constants = {
   HL_END = '%*',
   ALIGN = '%=',
   END = '%<',
+  CLICK_END = '%X',
 }
 
 M.constants = constants
@@ -600,6 +601,14 @@ end
 ----------------------------------------------------------------------------------------------------
 -- COMPONENTS
 ----------------------------------------------------------------------------------------------------
+
+---@param func_name string
+---@param id string
+---@return string
+local function get_click_start(func_name, id)
+  return '%' .. id .. '@' .. func_name .. '@'
+end
+
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
 --- @param size number
@@ -641,6 +650,9 @@ function M.component(component, hl, opts)
   local prefix_item = (prefix ~= '' and prefix_color) and wrap(prefix_color) .. prefix or ''
   local suffix_item = (suffix ~= '' and suffix_color) and wrap(suffix_color) .. suffix or ''
 
+  local click_start = opts.click and get_click_start(opts.click, opts.id) or ''
+  local click_end = opts.click and constants.CLICK_END or ''
+
   --- handle numeric inputs etc.
   if type(component) ~= 'string' then
     component = tostring(component)
@@ -653,6 +665,7 @@ function M.component(component, hl, opts)
   return {
     {
       table.concat({
+        click_start,
         before,
         prefix_item,
         constants.HL_END,
@@ -661,6 +674,7 @@ function M.component(component, hl, opts)
         constants.HL_END,
         suffix_item,
         after,
+        click_end,
       }),
       api.nvim_strwidth(component .. before .. after .. suffix .. prefix),
     },
