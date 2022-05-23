@@ -33,6 +33,26 @@ local function get_icon_hl(t)
   return hl_map[icon_type] or 'WinbarIcon'
 end
 
+vim.cmd([[
+function! HandleWinbarClick(minwid, clicks, btn, modifiers) abort
+  call v:lua.as.winbar_click(a:minwid, a:clicks, a:btn, a:modifiers)
+endfunction
+]])
+
+--- A mapping of each winbar items ID to its path
+--- @type table<string, string>
+as.winbar_state = {}
+
+---@param id number
+---@param _ number number of clicks
+---@param _ "l"|"r"|"m" the button clicked
+---@param _ string modifiers
+function as.winbar_click(id, _, _, _)
+  if id then
+    vim.cmd('edit ' .. as.winbar_state[id])
+  end
+end
+
 local hls = as.fold(
   function(accum, hl_name, name)
     accum[fmt('Winbar%sIcon', name:gsub('^%l', string.upper))] = { foreground = { from = hl_name } }
@@ -92,7 +112,10 @@ function as.winbar(current_win)
   as.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local has_next = next(parts, index)
+    as.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, (not has_next and is_current) and 'WinbarCurrent' or nil, {
+      id = priority,
+      click = 'HandleWinbarClick',
       suffix = (has_next or is_current) and separator or nil,
       suffix_color = (has_next or is_current) and 'WinbarDirectory' or nil,
       prefix = not has_next and icon or nil,
