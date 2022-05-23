@@ -45,7 +45,7 @@ local function setup_autocommands(client, bufnr)
           if fn.bufloaded(bufnr) then
             vim.lsp.buf.format({
               bufnr = bufnr,
-              async = true,
+              async = false, -- NOTE: this is super dangerous
               filter = formatting_filter,
             })
           end
