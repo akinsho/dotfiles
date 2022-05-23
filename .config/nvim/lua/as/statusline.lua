@@ -10,6 +10,7 @@ local utils = require('as.utils.statusline')
 local H = require('as.highlights')
 
 local api = vim.api
+local fn = vim.fn
 local P = as.style.palette
 local icons = as.style.icons
 
@@ -270,15 +271,22 @@ function _G.__statusline()
       after = ' ',
       priority = 5,
     }),
+
     -- Current line number/total line number
-    utils.line_info({
+    component(api.nvim_win_get_cursor(0)[1], 'StTitle', {
+      after = '',
       prefix = icons.misc.line,
       prefix_color = 'StMetadataPrefix',
-      current_hl = 'StTitle',
-      total_hl = 'StComment',
-      sep_hl = 'StComment',
       priority = 7,
     }),
+    component(api.nvim_buf_line_count(ctx.bufnum), 'StComment', {
+      before = '',
+      prefix = '/',
+      padding = { prefix = false, suffix = true },
+      prefix_color = 'StComment',
+      priority = 7,
+    }),
+
     -- column
     component('%-3c', 'StTitle', {
       prefix = 'Col:',
