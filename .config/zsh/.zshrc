@@ -27,7 +27,7 @@ if exists brew; then
   fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 fi
 
-# Init completions
+# INIT COMPLETIONS
 autoload -Uz compinit
 compinit
 
@@ -44,7 +44,6 @@ zsh_add_plugin    "zsh-users/zsh-completions"
 zsh_add_plugin    "djui/alias-tips"
 zsh_add_plugin    "MichaelAquilina/zsh-auto-notify" "auto-notify.plugin"
 zsh_add_plugin    "hlissner/zsh-autopair"
-zsh_source_plugin "last-working-dir/last-working-dir"
 autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               COMPLETION
@@ -105,6 +104,8 @@ zstyle ':completion:*' matcher-list '' \
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR/zcompcache"
+
+zstyle ':completion:*:*:cdr:*:*' menu selection
 #-------------------------------------------------------------------------------
 #               OPTIONS
 #-------------------------------------------------------------------------------
@@ -459,9 +460,12 @@ add-zsh-hook precmd () {
   __async_vcs_start # start async job to populate git info
 }
 
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd
+
 add-zsh-hook chpwd () {
   _git_status_prompt="" # clear current vcs_info
-  chpwd_last_working_dir
+  chpwd_recent_dirs
 }
 
 
