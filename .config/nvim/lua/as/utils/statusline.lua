@@ -3,7 +3,7 @@ local H = require('as.highlights')
 local fn = vim.fn
 local api = vim.api
 local expand = fn.expand
-local strwidth = fn.strwidth
+local strwidth = api.nvim_strwidth
 local fnamemodify = fn.fnamemodify
 local luv = vim.loop
 local fmt = string.format
@@ -575,10 +575,12 @@ function M.item(component, hl, opts)
   local before = opts.before or ''
   local after = opts.after or ' '
   local prefix = opts.prefix or ''
-  local prefix_size = strwidth(prefix)
+  local suffix = opts.suffix or ''
 
   local prefix_color = opts.prefix_color or hl
-  prefix = prefix ~= '' and wrap(prefix_color) .. prefix .. ' ' or ''
+  local suffix_color = opts.suffix_color or hl
+  local prefix_item = prefix ~= '' and wrap(prefix_color) .. prefix .. ' ' or ''
+  local suffix_item = suffix ~= '' and ' ' .. wrap(suffix_color) .. suffix or ''
 
   --- handle numeric inputs etc.
   if type(component) ~= 'string' then
@@ -589,8 +591,10 @@ function M.item(component, hl, opts)
     component = component:sub(1, opts.max_size - 1) .. '…'
   end
 
-  local parts = { before, prefix, wrap(hl), component, '%*', after }
-  return { table.concat(parts), api.nvim_strwidth(component .. before .. after) + prefix_size }
+  return {
+    table.concat({ before, prefix_item, wrap(hl), component, '%*', suffix_item, after }),
+    api.nvim_strwidth(component .. before .. after .. suffix .. prefix),
+  }
 end
 
 --- @param item string
