@@ -77,7 +77,7 @@ function as.winbar(current_win)
   local winbar = {}
   local add = utils.winline(winbar)
 
-  add({ utils.spacer(1), 0 })
+  add(utils.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if bufname == '' then
