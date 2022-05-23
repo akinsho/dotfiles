@@ -81,42 +81,6 @@ local function colors()
   })
 end
 
---- @param tbl table
---- @param next string
---- @param priority table
-local function append(tbl, next, priority)
-  priority = priority or 0
-  local component, length = unpack(next)
-  if component and component ~= '' and next and tbl then
-    table.insert(tbl, { component = component, priority = priority, length = length })
-  end
-end
-
---- @param statusline table
---- @param available_space number
-local function display(statusline, available_space)
-  local str = ''
-  local items = utils.prioritize(statusline, available_space)
-  for _, item in ipairs(items) do
-    if type(item.component) == 'string' then
-      str = str .. item.component
-    end
-  end
-  return str
-end
-
----Aggregate pieces of the statusline
----@param tbl table
----@return function
-local function make_status(tbl)
-  return function(...)
-    for i = 1, select('#', ...) do
-      local item = select(i, ...)
-      append(tbl, unpack(item))
-    end
-  end
-end
-
 local separator = { '%=' }
 local end_marker = { '%<' }
 
@@ -156,7 +120,7 @@ function _G.__statusline()
   -- Setup
   ----------------------------------------------------------------------------//
   local statusline = {}
-  local add = make_status(statusline)
+  local add = utils.winline(statusline)
 
   add(
     { item_if(icons.misc.block, not plain, 'StIndicator', { before = '', after = '' }), 0 },
@@ -179,7 +143,7 @@ function _G.__statusline()
   ----------------------------------------------------------------------------//
   if plain or not focused then
     add({ readonly_item, 1 }, { dir_item, 3 }, { parent_item, 2 }, { file_item, 0 })
-    return display(statusline, available_space)
+    return utils.display(statusline, available_space)
   end
   -----------------------------------------------------------------------------//
   -- Variables
@@ -312,7 +276,7 @@ function _G.__statusline()
     { end_marker }
   )
   -- removes 5 columns to add some padding
-  return display(statusline, available_space - 5)
+  return utils.display(statusline, available_space - 5)
 end
 
 local function setup_autocommands()

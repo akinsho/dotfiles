@@ -160,7 +160,7 @@ end
 --- @param statusline table
 --- @param space number
 --- @param length number
-function M.prioritize(statusline, space, length)
+local function prioritize(statusline, space, length)
   length = length or sum_lengths(statusline)
   if length <= space then
     return statusline
@@ -174,7 +174,7 @@ function M.prioritize(statusline, space, length)
     end
   end
   table.remove(statusline, index_to_remove)
-  return M.prioritize(statusline, space, length - lowest.length)
+  return prioritize(statusline, space, length - lowest.length)
 end
 
 local function matches(str, list)
@@ -603,6 +603,46 @@ function M.item_if(item, condition, hl, opts)
   end
   return M.item(item, hl, opts)
 end
+
+----------------------------------------------------------------------------------------------------
+-- WINLINE
+----------------------------------------------------------------------------------------------------
+--- @param tbl table
+--- @param next string
+--- @param priority table
+local function append(tbl, next, priority)
+  priority = priority or 0
+  local component, length = unpack(next)
+  if component and component ~= '' and next and tbl then
+    table.insert(tbl, { component = component, priority = priority, length = length })
+  end
+end
+
+--- @param statusline table
+--- @param available_space number
+function M.display(statusline, available_space)
+  local str = ''
+  local items = prioritize(statusline, available_space)
+  for _, item in ipairs(items) do
+    if type(item.component) == 'string' then
+      str = str .. item.component
+    end
+  end
+  return str
+end
+
+---Aggregate pieces of the statusline
+---@param tbl table
+---@return function
+function M.winline(tbl)
+  return function(...)
+    for i = 1, select('#', ...) do
+      local item = select(i, ...)
+      append(tbl, unpack(item))
+    end
+  end
+end
+----------------------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------//
 -- Git/Github helper functions
