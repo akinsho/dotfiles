@@ -590,7 +590,7 @@ function M.item(component, hl, opts)
   end
 
   local parts = { before, prefix, wrap(hl), component, '%*', after }
-  return { table.concat(parts), #component + #before + #after + prefix_size }
+  return { table.concat(parts), api.nvim_strwidth(component .. before .. after) + prefix_size }
 end
 
 --- @param item string
