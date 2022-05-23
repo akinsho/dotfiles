@@ -30,6 +30,15 @@ function as.fold(callback, list, accum)
   return accum
 end
 
+---@generic T : table
+---@param callback fun(T, T, key: string | number): T
+---@param list T[]
+function as.foreach(callback, list)
+  for k, v in pairs(list) do
+    callback(v, k)
+  end
+end
+
 ---Find an item in a list
 ---@generic T
 ---@param haystack T[]
