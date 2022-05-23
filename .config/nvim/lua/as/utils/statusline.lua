@@ -108,14 +108,10 @@ local function wrap(hl)
   return '%#' .. hl .. '#'
 end
 
-local function sum_lengths(tbl)
-  local length = 0
-  for _, c in ipairs(tbl) do
-    if c.length then
-      length = c.length + length
-    end
-  end
-  return length
+local function sum_lengths(list)
+  return as.fold(function(acc, item)
+    return acc + (item.length or 0)
+  end, list, 0)
 end
 
 local function is_lowest(item, lowest)
@@ -141,7 +137,7 @@ end
 
 --- Take the lowest priority items out of the statusline if we don't have
 --- space for them.
---- TODO currently this doesn't account for if an item that has a lower priority
+--- TODO: currently this doesn't account for if an item that has a lower priority
 --- could be fit in instead
 --- @param statusline table
 --- @param space number
@@ -204,22 +200,13 @@ end
 --- @param ctx table
 --- @param icon string | nil
 function M.modified(ctx, icon)
-  icon = icon or '✎'
-  if ctx.filetype == 'help' then
-    return ''
-  end
-  return ctx.modified and icon or ''
+  return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or ''
 end
 
 --- @param ctx table
 --- @param icon string | nil
 function M.readonly(ctx, icon)
-  icon = icon or ''
-  if ctx.readonly then
-    return ' ' .. icon
-  else
-    return ''
-  end
+  return ctx.readonly and ' ' .. (icon or '') or ''
 end
 
 --- @param bufnum number
@@ -262,15 +249,6 @@ local function filename(ctx, modifier)
   return dir, parent, fname
 end
 
----@param name string
----@param fg string
----@param bg string
-local function create_hl(name, fg, bg)
-  if fg and bg then
-    api.nvim_set_hl(0, name, { foreground = fg, background = bg })
-  end
-end
-
 --- @param hl string
 --- @param bg_hl string
 local function highlight_ft_icon(hl, bg_hl)
@@ -286,11 +264,11 @@ local function highlight_ft_icon(hl, bg_hl)
       {
         event = 'ColorScheme',
         command = function()
-          create_hl(name, fg_color, bg_color)
+          api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
         end,
       },
     })
-    create_hl(name, fg_color, bg_color)
+    api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
   end
   return name
 end
@@ -362,8 +340,7 @@ end
 ---@param severity string
 ---@return number
 local function get_count(buf, severity)
-  local s = vim.diagnostic.severity[severity:upper()]
-  return #vim.diagnostic.get(buf, { severity = s })
+  return #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity[severity:upper()] })
 end
 
 function M.diagnostic_info(context)
@@ -397,17 +374,11 @@ function M.lsp_client(ctx)
 end
 
 function M.debugger()
-  if not package.loaded['dap'] then
-    return ''
-  end
-  return require('dap').status()
+  return not package.loaded['dap'] and '' or require('dap').status()
 end
 
 local function printf(format, current, total)
-  if current == 0 and total == 0 then
-    return ''
-  end
-  return fn.printf(format, current, total)
+  return (current == 0 and total == 0) and '' or fn.printf(format, current, total)
 end
 
 -----------------------------------------------------------------------------//
@@ -418,9 +389,6 @@ function M.search_count()
   if vim.tbl_isempty(result) then
     return ''
   end
-  ---NOTE: the search term can be included in the output
-  --- using [%s] but this value seems flaky
-  -- local search_reg = fn.getreg("@/")
   if result.incomplete == 1 then -- timed out
     return printf(' ?/?? ')
   elseif result.incomplete == 2 then -- max count exceeded
@@ -448,7 +416,9 @@ function M.update_search_count(timer)
     end)
   end)
 end
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
+-- MODE
+----------------------------------------------------------------------------------------------------
 
 local function mode_highlight(mode)
   local visual_regex = vim.regex([[\(v\|V\|\)]])
@@ -621,7 +591,6 @@ function M.component(component, hl, opts)
   local after = opts.after or padding
   local prefix = opts.prefix and opts.prefix .. (opts.padding.prefix and padding or '') or ''
   local suffix = opts.suffix and (opts.padding.suffix and padding or '') .. opts.suffix or ''
-
   local prefix_color = opts.prefix_color
   local suffix_color = opts.suffix_color
   local prefix_item = (prefix ~= '' and prefix_color) and wrap(prefix_color) .. prefix or ''
