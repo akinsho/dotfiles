@@ -372,6 +372,7 @@ local function colorscheme_overrides()
     M.all({
       CursorLineNr = { foreground = { from = 'Keyword' } },
       LineNr = { background = 'NONE' },
+      WhichkeyFloat = { link = 'NormalFloat' },
     })
   end
 end
