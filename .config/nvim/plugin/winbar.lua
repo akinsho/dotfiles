@@ -1,19 +1,14 @@
 local gps = require('nvim-gps')
 local devicons = require('nvim-web-devicons')
 local highlights = require('as.highlights')
+local utils = require('as.utils.statusline')
 
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local icons = as.style.icons.misc
 
-local function hl(str)
-  return '%#' .. str .. '#'
-end
-
-local hl_end = '%*'
-
-local separator = hl('WinbarDirectory') .. fmt(' %s ', icons.chevron_right) .. hl_end
+local separator = icons.chevron_right
 
 local hl_map = {
   ['class'] = 'Class',
@@ -31,10 +26,10 @@ local hl_map = {
 
 local function get_icon_hl(t)
   if not t then
-    return hl('WinbarIcon')
+    return 'WinbarIcon'
   end
   local icon_type = vim.split(t, '-')[1]
-  return hl(hl_map[icon_type] or 'WinbarIcon')
+  return hl_map[icon_type] or 'WinbarIcon'
 end
 
 local hls = as.fold(
@@ -54,54 +49,50 @@ local hls = as.fold(
 
 highlights.plugin('winbar', hls)
 
---- TODO: if not the current window this should just show the fallback
---- Seeing the current symbol in a non-active window is pointless
 local function breadcrumbs()
+  local priority = 0
   local data = gps.is_available() and gps.get_data() or nil
   if not data or type(data) ~= 'table' or vim.tbl_isempty(data) then
-    return hl('NonText') .. '⋯'
+    return { { utils.item('⋯', 'NonText'), priority } }
   end
-  local winline = ''
-  for index, item in ipairs(data) do
-    winline = winline
-      .. get_icon_hl(item.type)
-      .. item.icon
-      .. ' '
-      .. hl_end
-      .. hl('WinbarCrumb')
-      .. item.text
-      .. hl_end
-      .. (next(data, index) and separator or '')
-  end
-  return winline
+  return as.fold(function(accum, item, index)
+    table.insert(accum, { utils.item(item.icon, get_icon_hl(item.type)), priority })
+    table.insert(accum, { utils.item(item.text, 'WinbarCrumb'), priority })
+    if next(data, index) then
+      table.insert(accum, { utils.item(separator, 'WinbarDirectory'), priority })
+    end
+    return accum
+  end, data, {})
 end
 
 ---@param current_win number the actual real window
 ---@return string
 function as.winbar(current_win)
+  local winbar = {}
+  local add = utils.winline(winbar)
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  local winline = ' '
   if bufname == '' then
-    return winline .. '[No name]'
+    return add({ utils.item('[No name]', 'Winbar'), 0 })
   end
   local is_current = current_win == api.nvim_get_current_win()
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
-  for idx, part in ipairs(parts) do
-    if next(parts, idx) then
-      winline = winline .. as.truncate(part, 20) .. separator
+  local width = api.nvim_win_get_width(api.nvim_get_current_win())
+  as.foreach(function(part, index)
+    local priority = #parts - index
+    if next(parts, index) then
+      add(
+        { utils.item(part, 'Winbar'), priority },
+        { utils.item(separator, 'WinbarDirectory'), priority }
+      )
     else
-      winline = winline
-        .. hl(color)
-        .. icon
-        .. ' '
-        .. hl('WinbarCurrent')
-        .. part
-        .. hl_end
-        .. (is_current and separator .. breadcrumbs() or '')
+      add({ utils.item(icon, color), priority }, { utils.item(part, 'WinbarCurrent'), priority })
+      if is_current then
+        add(unpack(breadcrumbs()))
+      end
     end
-  end
-  return winline
+  end, parts)
+  return utils.display(winbar, width)
 end
 
 local excluded = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' }
