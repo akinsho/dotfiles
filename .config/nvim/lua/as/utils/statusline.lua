@@ -522,6 +522,84 @@ function M.mode()
   return (mode_map[current_mode] or 'UNKNOWN'), hl
 end
 
+-----------------------------------------------------------------------------//
+-- Git/Github helper functions
+-----------------------------------------------------------------------------//
+
+---@param interval number
+---@param task function
+local function run_task_on_interval(interval, task)
+  local pending_job
+  local timer = luv.new_timer()
+  local function callback()
+    if pending_job then
+      fn.jobstop(pending_job)
+    end
+    pending_job = task()
+  end
+  local fail = timer:start(0, interval, vim.schedule_wrap(callback))
+  if fail ~= 0 then
+    vim.schedule(function()
+      vim.notify('Failed to start git update job: ' .. fail)
+    end)
+  end
+end
+
+---check if in a git repository
+---@return boolean
+local function is_git_repo()
+  return fn.isdirectory(fn.getcwd() .. '/' .. '.git') > 0
+end
+
+--- @param result string[]
+local function collect_data(result)
+  return function(_, data, _)
+    for _, item in ipairs(data) do
+      if item and item ~= '' then
+        table.insert(result, item)
+      end
+    end
+  end
+end
+
+-- Use git and the native job API to first get the head of the repo
+-- check the state of the repo head against the origin copy we have
+-- the result format is in the format: `1       0`
+-- the first value commits ahead by and the second is commits behind by
+local function git_update_job()
+  if not is_git_repo() then
+    return
+  end
+  local result = {}
+  fn.jobstart('git rev-list --count --left-right @{upstream}...HEAD', {
+    stdout_buffered = true,
+    on_stdout = collect_data(result),
+    on_exit = function(_, code, _)
+      if code > 0 and not result or not result[1] then
+        return
+      end
+      local parts = vim.split(result[1], '\t')
+      if parts and #parts > 1 then
+        local formatted = { behind = parts[1], ahead = parts[2] }
+        vim.g.git_statusline_updates = formatted
+      end
+    end,
+  })
+end
+
+function M.git_updates_refresh()
+  git_update_job()
+end
+
+--- starts a timer to check for the whether
+--- we are currently ahead or behind upstream
+function M.git_updates()
+  run_task_on_interval(10000, git_update_job)
+end
+
+----------------------------------------------------------------------------------------------------
+-- COMPONENTS
+----------------------------------------------------------------------------------------------------
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
 --- @param size number
@@ -602,7 +680,7 @@ function M.component_if(item, condition, hl, opts)
 end
 
 ----------------------------------------------------------------------------------------------------
--- WINLINE
+-- RENDER
 ----------------------------------------------------------------------------------------------------
 
 --- @param tbl table
@@ -639,82 +717,6 @@ function M.winline(tbl)
       append(tbl, unpack(item))
     end
   end
-end
-----------------------------------------------------------------------------------------------------
-
------------------------------------------------------------------------------//
--- Git/Github helper functions
------------------------------------------------------------------------------//
-
----@param interval number
----@param task function
-local function run_task_on_interval(interval, task)
-  local pending_job
-  local timer = luv.new_timer()
-  local function callback()
-    if pending_job then
-      fn.jobstop(pending_job)
-    end
-    pending_job = task()
-  end
-  local fail = timer:start(0, interval, vim.schedule_wrap(callback))
-  if fail ~= 0 then
-    vim.schedule(function()
-      vim.notify('Failed to start git update job: ' .. fail)
-    end)
-  end
-end
-
----check if in a git repository
----@return boolean
-local function is_git_repo()
-  return fn.isdirectory(fn.getcwd() .. '/' .. '.git') > 0
-end
-
---- @param result string[]
-local function collect_data(result)
-  return function(_, data, _)
-    for _, item in ipairs(data) do
-      if item and item ~= '' then
-        table.insert(result, item)
-      end
-    end
-  end
-end
-
--- Use git and the native job API to first get the head of the repo
--- check the state of the repo head against the origin copy we have
--- the result format is in the format: `1       0`
--- the first value commits ahead by and the second is commits behind by
-local function git_update_job()
-  if not is_git_repo() then
-    return
-  end
-  local result = {}
-  fn.jobstart('git rev-list --count --left-right @{upstream}...HEAD', {
-    stdout_buffered = true,
-    on_stdout = collect_data(result),
-    on_exit = function(_, code, _)
-      if code > 0 and not result or not result[1] then
-        return
-      end
-      local parts = vim.split(result[1], '\t')
-      if parts and #parts > 1 then
-        local formatted = { behind = parts[1], ahead = parts[2] }
-        vim.g.git_statusline_updates = formatted
-      end
-    end,
-  })
-end
-
-function M.git_updates_refresh()
-  git_update_job()
-end
-
---- starts a timer to check for the whether
---- we are currently ahead or behind upstream
-function M.git_updates()
-  run_task_on_interval(10000, git_update_job)
 end
 
 return M
