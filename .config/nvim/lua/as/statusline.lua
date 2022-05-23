@@ -84,8 +84,8 @@ end
 local separator = { '%=' }
 local end_marker = { '%<' }
 
-local item = utils.item
-local item_if = utils.item_if
+local component = utils.component
+local component_if = utils.component_if
 
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
@@ -123,31 +123,39 @@ function _G.__statusline()
   local add = utils.winline(statusline)
 
   add(
-    { item_if(icons.misc.block, not plain, 'StIndicator', { before = '', after = '' }), 0 },
-    { utils.spacer(1), 0 }
+    component_if(icons.misc.block, not plain, 'StIndicator', {
+      before = '',
+      after = '',
+      priority = 0,
+    }),
+
+    utils.spacer(1)
   )
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
   local segments = utils.file(ctx, plain)
   local dir, parent, file = segments.dir, segments.parent, segments.file
-  local dir_item = utils.item(dir.item, dir.hl, dir.opts)
-  local parent_item = utils.item(parent.item, parent.hl, parent.opts)
-  local file_item = utils.item(file.item, file.hl, file.opts)
+  local dir_component = utils.component(dir.item, dir.hl, dir.opts)
+  local parent_component = utils.component(parent.item, parent.hl, parent.opts)
+  local file_component = utils.component(file.item, file.hl, file.opts)
+
   local readonly_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomError', 'StError')
-  local readonly_item = utils.item(utils.readonly(ctx), readonly_hl)
+  local readonly_component = utils.component(utils.readonly(ctx), readonly_hl, { priority = 1 })
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
   if plain or not focused then
-    add({ readonly_item, 1 }, { dir_item, 3 }, { parent_item, 2 }, { file_item, 0 })
+    add(readonly_component, dir_component, parent_component, file_component)
     return utils.display(statusline, available_space)
   end
   -----------------------------------------------------------------------------//
   -- Variables
   -----------------------------------------------------------------------------//
+
+  local mode, mode_hl = utils.mode()
   local status = vim.b.gitsigns_status_dict or {}
   local updates = vim.g.git_statusline_updates or {}
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
@@ -164,25 +172,29 @@ function _G.__statusline()
   -- Left section
   -----------------------------------------------------------------------------//
   add(
-    { item_if(file_modified, ctx.modified, 'StModified'), 1 },
-    { readonly_item, 2 },
-    { item(utils.mode()), 0 },
-    { item_if(utils.search_count(), vim.v.hlsearch > 0, 'StCount'), 1 },
-    { dir_item, 3 },
-    { parent_item, 2 },
-    { file_item, 0 },
-    { item_if('Saving…', vim.g.is_saving, 'StComment', { before = ' ' }), 1 },
+    component_if(file_modified, ctx.modified, 'StModified', { priority = 1 }),
+
+    readonly_component,
+
+    component(mode, mode_hl, { priority = 0 }),
+
+    component_if(utils.search_count(), vim.v.hlsearch > 0, 'StCount', { priority = 1 }),
+
+    dir_component,
+    parent_component,
+    file_component,
+
+    component_if('Saving…', vim.g.is_saving, 'StComment', { before = ' ', priority = 1 }),
+
     -- Local plugin dev indicator
-    {
-      item_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, 'StComment', {
-        prefix = icons.misc.tools,
-        padding = 'none',
-        before = '  ',
-        prefix_color = 'StWarning',
-        small = 1,
-      }),
-      2,
-    },
+    component_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, 'StComment', {
+      prefix = icons.misc.tools,
+      padding = 'none',
+      before = '  ',
+      prefix_color = 'StWarning',
+      small = 1,
+      priority = 2,
+    }),
     { separator },
     -----------------------------------------------------------------------------//
     -- Middle section
@@ -195,84 +207,90 @@ function _G.__statusline()
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
-    { item(flutter.app_version, 'StMetadata'), 4 },
-    { item(flutter.device and flutter.device.name or '', 'StMetadata'), 4 },
-    { item(utils.lsp_client(ctx), 'StMetadata'), 4 },
-    { item(utils.debugger(), 'StMetadata', { prefix = icons.misc.bug }), 4 },
-    {
-      item_if(diagnostics.error.count, diagnostics.error, 'StError', {
-        prefix = diagnostics.error.sign,
-      }),
-      1,
-    },
-    {
-      item_if(diagnostics.warning.count, diagnostics.warning, 'StWarning', {
-        prefix = diagnostics.warning.sign,
-      }),
-      3,
-    },
-    {
-      item_if(diagnostics.info.count, diagnostics.info, 'StInfo', {
-        prefix = diagnostics.info.sign,
-      }),
-      4,
-    },
-    { item(notifications, 'StTitle'), 3 },
+    component(flutter.app_version, 'StMetadata', { priority = 4 }),
+
+    component(flutter.device and flutter.device.name or '', 'StMetadata', { priority = 4 }),
+
+    component(utils.lsp_client(ctx), 'StMetadata', { priority = 4 }),
+
+    component(utils.debugger(), 'StMetadata', { prefix = icons.misc.bug, priority = 4 }),
+
+    component_if(diagnostics.error.count, diagnostics.error, 'StError', {
+      prefix = diagnostics.error.sign,
+      priority = 1,
+    }),
+
+    component_if(diagnostics.warning.count, diagnostics.warning, 'StWarning', {
+      prefix = diagnostics.warning.sign,
+      priority = 3,
+    }),
+
+    component_if(diagnostics.info.count, diagnostics.info, 'StInfo', {
+      prefix = diagnostics.info.sign,
+      priority = 4,
+    }),
+
+    component(notifications, 'StTitle', { priority = 3 }),
+
     -- Git Status
-    { item(status.head, 'StBlue', { prefix = icons.git.logo, prefix_color = 'StGit' }), 1 },
-    { item(status.changed, 'StTitle', { prefix = icons.git.mod, prefix_color = 'StWarning' }), 3 },
-    {
-      item(status.removed, 'StTitle', {
-        prefix = icons.git.remove,
-        prefix_color = 'StError',
-      }),
-      3,
-    },
-    {
-      item(status.added, 'StTitle', {
-        prefix = icons.git.add,
-        prefix_color = 'StGreen',
-      }),
-      3,
-    },
-    {
-      item(ahead, 'StTitle', {
-        prefix = icons.misc.up,
-        prefix_color = 'StGreen',
-        before = '',
-      }),
-      5,
-    },
-    {
-      item(behind, 'StTitle', { prefix = icons.misc.down, prefix_color = 'StNumber', after = ' ' }),
-      5,
-    },
+    component(status.head, 'StBlue', {
+      prefix = icons.git.logo,
+      prefix_color = 'StGit',
+      priority = 1,
+    }),
+
+    component(status.changed, 'StTitle', {
+      prefix = icons.git.mod,
+      prefix_color = 'StWarning',
+      priority = 3,
+    }),
+
+    component(status.removed, 'StTitle', {
+      prefix = icons.git.remove,
+      prefix_color = 'StError',
+      priority = 3,
+    }),
+
+    component(status.added, 'StTitle', {
+      prefix = icons.git.add,
+      prefix_color = 'StGreen',
+      priority = 3,
+    }),
+
+    component(ahead, 'StTitle', {
+      prefix = icons.misc.up,
+      prefix_color = 'StGreen',
+      before = '',
+      priority = 5,
+    }),
+
+    component(behind, 'StTitle', {
+      prefix = icons.misc.down,
+      prefix_color = 'StNumber',
+      after = ' ',
+      priority = 5,
+    }),
     -- Current line number/total line number
-    {
-      utils.line_info({
-        prefix = icons.misc.line,
-        prefix_color = 'StMetadataPrefix',
-        current_hl = 'StTitle',
-        total_hl = 'StComment',
-        sep_hl = 'StComment',
-      }),
-      7,
-    },
-    { -- column
-      item('%-3c', 'StTitle', {
-        prefix = 'Col:',
-        prefix_color = 'StMetadataPrefix',
-      }),
-      7,
-    },
+    utils.line_info({
+      prefix = icons.misc.line,
+      prefix_color = 'StMetadataPrefix',
+      current_hl = 'StTitle',
+      total_hl = 'StComment',
+      sep_hl = 'StComment',
+      priority = 7,
+    }),
+    -- column
+    component('%-3c', 'StTitle', {
+      prefix = 'Col:',
+      prefix_color = 'StMetadataPrefix',
+      priority = 7,
+    }),
     -- (Unexpected) Indentation
-    {
-      item_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, 'StTitle', {
-        prefix = ctx.expandtab and icons.misc.indent or icons.misc.tab,
-        prefix_color = 'StatusLine',
-      }),
-      6,
-    },
+    component_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, 'StTitle', {
+      prefix = ctx.expandtab and icons.misc.indent or icons.misc.tab,
+      prefix_color = 'StatusLine',
+      priority = 6,
+    }),
     { end_marker }
   )
   -- removes 5 columns to add some padding

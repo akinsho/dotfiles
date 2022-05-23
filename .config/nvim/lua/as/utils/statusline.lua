@@ -348,24 +348,23 @@ function M.line_info(opts)
 
   local length = strwidth(prefix .. current .. sep .. last)
   return {
-    table.concat({
-      wrap(prefix_color),
-      prefix,
-      ' ',
-      wrap(current_hl),
-      current,
-      wrap(sep_hl),
-      sep,
-      wrap(total_hl),
-      last,
-      ' ',
-    }),
-    length,
+    {
+      table.concat({
+        wrap(prefix_color),
+        prefix,
+        ' ',
+        wrap(current_hl),
+        current,
+        wrap(sep_hl),
+        sep,
+        wrap(total_hl),
+        last,
+        ' ',
+      }),
+      length,
+    },
+    opts.priority,
   }
-end
-
-local function empty_opts()
-  return { before = '', after = '' }
 end
 
 ---Create the various segments of the current filename
@@ -387,7 +386,10 @@ function M.file(ctx, minimal)
 
   local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })
 
-  local file_opts, parent_opts, dir_opts = empty_opts(), empty_opts(), empty_opts()
+  local file_opts = { before = '', after = '', priority = 0 }
+  local parent_opts = { before = '', after = '', priority = 2 }
+  local dir_opts = { before = '', after = '', priority = 3 }
+
   local directory, parent, file = filename(ctx)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
@@ -551,27 +553,32 @@ end
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
 --- @param size number
---- @param filler string | nil
-function M.spacer(size, filler)
-  filler = filler or ' '
+--- @param opts table<string, any>
+function M.spacer(size, opts)
+  opts = opts or {}
+  local filler = opts.filler or ' '
+  local priority = opts.priority or 0
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
-    return { spacer, #spacer }
+    return { { spacer, strwidth(spacer) }, priority }
   else
-    return { '', 0 }
+    return { { '', 0 }, priority }
   end
 end
 
 --- @param component string
 --- @param hl string
 --- @param opts table
-function M.item(component, hl, opts)
+function M.component(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
   if not component or component == '' or component == 0 then
     return M.spacer()
   end
-  opts = opts or {}
+  assert(
+    opts and opts.priority,
+    fmt("each item's priority is required: %s is missing one", component)
+  )
   local padding = ' '
   local before = opts.before or ''
   local after = opts.after or padding
@@ -593,8 +600,11 @@ function M.item(component, hl, opts)
   end
 
   return {
-    table.concat({ before, prefix_item, wrap(hl), component, '%*', suffix_item, after }),
-    api.nvim_strwidth(component .. before .. after .. suffix .. prefix),
+    {
+      table.concat({ before, prefix_item, wrap(hl), component, '%*', suffix_item, after }),
+      api.nvim_strwidth(component .. before .. after .. suffix .. prefix),
+    },
+    opts.priority,
   }
 end
 
@@ -602,16 +612,17 @@ end
 --- @param condition boolean
 --- @param hl string
 --- @param opts table
-function M.item_if(item, condition, hl, opts)
+function M.component_if(item, condition, hl, opts)
   if not condition then
     return M.spacer()
   end
-  return M.item(item, hl, opts)
+  return M.component(item, hl, opts)
 end
 
 ----------------------------------------------------------------------------------------------------
 -- WINLINE
 ----------------------------------------------------------------------------------------------------
+
 --- @param tbl table
 --- @param next string
 --- @param priority table

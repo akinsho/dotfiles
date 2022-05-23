@@ -2,6 +2,7 @@ local gps = require('nvim-gps')
 local devicons = require('nvim-web-devicons')
 local highlights = require('as.highlights')
 local utils = require('as.utils.statusline')
+local component = utils.component
 
 local fn = vim.fn
 local api = vim.api
@@ -52,19 +53,20 @@ highlights.plugin('winbar', hls)
 local function breadcrumbs()
   local data = gps.is_available() and gps.get_data() or nil
   if not data or type(data) ~= 'table' or vim.tbl_isempty(data) then
-    return { { utils.item('⋯', 'NonText'), 0 } }
+    return { utils.component('⋯', 'NonText', { priority = 0 }) }
   end
   return as.fold(function(accum, item, index)
     local has_next = next(data, index) ~= nil
-    table.insert(accum, {
-      utils.item(item.text, 'WinbarCrumb', {
+    table.insert(
+      accum,
+      component(item.text, 'WinbarCrumb', {
         prefix = item.icon,
         prefix_color = get_icon_hl(item.type),
         suffix = has_next and separator or nil,
         suffix_color = has_next and 'WinbarDirectory' or nil,
-      }),
-      0,
-    })
+        priority = index,
+      })
+    )
     return accum
   end, data, {})
 end
@@ -79,7 +81,7 @@ function as.winbar(current_win)
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if bufname == '' then
-    return add({ utils.item('[No name]', 'Winbar'), 0 })
+    return add(component('[No name]', 'Winbar', { priority = 0 }))
   end
 
   local is_current = current_win == api.nvim_get_current_win()
@@ -87,17 +89,15 @@ function as.winbar(current_win)
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
 
   as.foreach(function(part, index)
-    local priority = #parts - index
+    local priority = (#parts - (index - 1)) * 2
     local has_next = next(parts, index)
-    add({
-      utils.item(part, has_next and 'Winbar' or 'WinbarCurrent', {
-        suffix = (has_next or is_current) and separator or nil,
-        suffix_color = (has_next or is_current) and 'WinbarDirectory' or nil,
-        prefix = not has_next and icon or nil,
-        prefix_color = not has_next and color or nil,
-      }),
-      priority,
-    })
+    add(component(part, has_next and 'Winbar' or 'WinbarCurrent', {
+      suffix = (has_next or is_current) and separator or nil,
+      suffix_color = (has_next or is_current) and 'WinbarDirectory' or nil,
+      prefix = not has_next and icon or nil,
+      prefix_color = not has_next and color or nil,
+      priority = priority,
+    }))
   end, parts)
   if is_current then
     add(unpack(breadcrumbs()))
