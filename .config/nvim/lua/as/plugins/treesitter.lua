@@ -9,7 +9,7 @@ function as.treesitter.ensure_parser_installed()
   if
     parsers.get_parser_configs()[lang]
     and not parsers.has_parser(lang)
-    and as.treesitter.ask_install[lang] ~= false
+    and not as.treesitter.ask_install[lang]
   then
     vim.defer_fn(function()
       vim.ui.select(
