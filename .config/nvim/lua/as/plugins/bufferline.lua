@@ -94,7 +94,10 @@ return function()
             icon = '',
             matcher = function(buf)
               local name = buf.filename
-              return name:match('%.sql$') == nil and name:match('_spec') or name:match('_test')
+              if name:match('%.sql$') == nil then
+                return false
+              end
+              return name:match('_spec') or name:match('_test')
             end,
           },
           {
