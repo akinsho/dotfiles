@@ -1,9 +1,45 @@
+as.treesitter = as.treesitter or { ask_install = {} }
+
+-- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
+function as.treesitter.ensure_parser_installed()
+  local parsers = require('nvim-treesitter.parsers')
+  local lang = parsers.get_buf_lang()
+  local fmt = string.format
+  if
+    parsers.get_parser_configs()[lang]
+    and not parsers.has_parser(lang)
+    and as.treesitter.ask_install[lang] ~= false
+  then
+    vim.defer_fn(function()
+      vim.ui.select(
+        { 'yes', 'no' },
+        { prompt = fmt('Install parser for %s? Y/n', lang) },
+        function(_, index)
+          if index == 1 then
+            vim.cmd('TSInstall ' .. lang)
+          else
+            as.treesitter.ask_install[lang] = false
+          end
+        end
+      )
+    end, 500)
+  end
+end
+
 return function()
   local parsers = require('nvim-treesitter.parsers')
   local rainbow_enabled = { 'dart' }
 
+  as.augroup('TSParserCheck', {
+    {
+      event = 'FileType',
+      desc = 'Treesitter: install missing parsers',
+      command = as.treesitter.ensure_parser_installed,
+    },
+  })
+
   require('nvim-treesitter.configs').setup({
-    ensure_installed = 'all',
+    ensure_installed = { 'lua' },
     ignore_install = { 'phpdoc' }, -- list of parser which cause issues or crashes
     highlight = {
       enable = true,
