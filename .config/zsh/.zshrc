@@ -106,6 +106,9 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR/zcompcache"
 
 zstyle ':completion:*:*:cdr:*:*' menu selection
+zstyle ':chpwd:*' recent-dirs-file $ZSH_CACHE_DIR/.chpwd-recent-dirs
+zstyle ':completion:*' recent-dirs-insert always
+zstyle ':chpwd:*' recent-dirs-default yes
 #-------------------------------------------------------------------------------
 #               OPTIONS
 #-------------------------------------------------------------------------------
