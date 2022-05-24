@@ -186,20 +186,29 @@ packer.startup({
     -----------------------------------------------------------------------------//
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
+    -- lspconfig is abominably slow to load and if loaded on BufReadPre seems to interact
+    -- with nvim-treesitter
     use({
-      'williamboman/nvim-lsp-installer',
-      requires = { { 'neovim/nvim-lspconfig', config = conf('lspconfig') } },
-      config = function()
-        as.augroup('LspInstallerConfig', {
-          {
-            event = 'Filetype',
-            pattern = 'lsp-installer',
-            command = function()
-              vim.api.nvim_win_set_config(0, { border = as.style.current.border })
-            end,
-          },
-        })
-      end,
+      'neovim/nvim-lspconfig',
+      config = conf('lspconfig'),
+      event = 'BufRead',
+      requires = {
+        {
+          'williamboman/nvim-lsp-installer',
+          module = 'nvim-lsp-installer',
+          config = function()
+            as.augroup('LspInstallerConfig', {
+              {
+                event = 'Filetype',
+                pattern = 'lsp-installer',
+                command = function()
+                  vim.api.nvim_win_set_config(0, { border = as.style.current.border })
+                end,
+              },
+            })
+          end,
+        },
+      },
     })
 
     use({
