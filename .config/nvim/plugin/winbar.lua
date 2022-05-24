@@ -78,7 +78,7 @@ local function breadcrumbs()
     return { utils.component(ellipsis, 'NonText', { priority = 0 }) }
   end
   return as.fold(function(accum, item, index)
-    local has_next = next(data, index) ~= nil
+    local has_next = index < #data
     table.insert(
       accum,
       component(item.text, 'WinbarCrumb', {
@@ -112,7 +112,7 @@ function as.winbar(current_win)
 
   as.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
-    local has_next = next(parts, index)
+    local has_next = index < #parts
     as.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, (not has_next and is_current) and 'WinbarCurrent' or nil, {
       id = priority,
