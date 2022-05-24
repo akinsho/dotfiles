@@ -2,6 +2,7 @@ as.treesitter = as.treesitter or { ask_install = {} }
 
 -- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
 function as.treesitter.ensure_parser_installed()
+  local WAIT_TIME = 1500
   local parsers = require('nvim-treesitter.parsers')
   local lang = parsers.get_buf_lang()
   local fmt = string.format
@@ -15,14 +16,14 @@ function as.treesitter.ensure_parser_installed()
         { 'yes', 'no' },
         { prompt = fmt('Install parser for %s? Y/n', lang) },
         function(_, index)
-          if index == 1 then
+          local should_install = index == 1
+          if should_install then
             vim.cmd('TSInstall ' .. lang)
-          else
-            as.treesitter.ask_install[lang] = false
           end
+          as.treesitter.ask_install[lang] = should_install
         end
       )
-    end, 500)
+    end, WAIT_TIME)
   end
 end
 
