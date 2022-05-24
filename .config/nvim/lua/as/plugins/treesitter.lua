@@ -14,7 +14,7 @@ function as.treesitter.ensure_parser_installed()
     vim.defer_fn(function()
       vim.ui.select(
         { 'yes', 'no' },
-        { prompt = fmt('Install parser for %s? Y/n', lang) },
+        { prompt = fmt('Install parser for %s? Y/n', lang), kind = 'treesitter' },
         function(_, index)
           local should_install = index == 1
           if should_install then
