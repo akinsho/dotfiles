@@ -587,8 +587,11 @@ packer.startup({
       end,
     })
 
-    -- TODO: causes blocking output in headless mode
-    use({ 'rcarriga/nvim-notify', cond = utils.not_headless, config = conf('notify') })
+    use({
+      'rcarriga/nvim-notify',
+      cond = utils.not_headless, -- TODO: causes blocking output in headless mode
+      config = as.block_reload(conf('notify')),
+    })
 
     use({
       'mbbill/undotree',
