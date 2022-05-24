@@ -79,8 +79,8 @@ local function colors()
   })
 end
 
-local separator = { C.ALIGN }
-local end_marker = { C.END }
+local separator = { component = C.ALIGN, length = 0, priority = 0 }
+local end_marker = { component = C.END, length = 0, priority = 0 }
 
 local component = utils.component
 local component_if = utils.component_if
@@ -117,18 +117,15 @@ function _G.__statusline()
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
-  local statusline = {}
-  local add = utils.winline(statusline)
-
-  add(
+  local statusline = {
     component_if(icons.misc.block, not plain, 'StIndicator', {
       before = '',
       after = '',
       priority = 0,
     }),
-
-    utils.spacer(1)
-  )
+    utils.spacer(1),
+  }
+  local add = utils.winline(statusline)
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
@@ -193,7 +190,7 @@ function _G.__statusline()
       small = 1,
       priority = 2,
     }),
-    { separator },
+    separator,
     -----------------------------------------------------------------------------//
     -- Middle section
     -----------------------------------------------------------------------------//
@@ -201,7 +198,7 @@ function _G.__statusline()
     -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
     -----------------------------------------------------------------------------//
     -- Start of the right side layout
-    { separator },
+    separator,
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//

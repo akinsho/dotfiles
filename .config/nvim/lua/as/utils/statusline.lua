@@ -566,9 +566,9 @@ function M.spacer(size, opts)
   local priority = opts.priority or 0
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
-    return { { spacer, strwidth(spacer) }, priority }
+    return { component = spacer, length = strwidth(spacer), priority = priority }
   else
-    return { { '', 0 }, priority }
+    return { component = '', length = 0, priority = priority }
   end
 end
 
@@ -609,22 +609,20 @@ function M.component(component, hl, opts)
   end
 
   return {
-    {
-      table.concat({
-        click_start,
-        before,
-        prefix_item,
-        constants.HL_END,
-        hl and wrap(hl) or '',
-        component,
-        constants.HL_END,
-        suffix_item,
-        after,
-        click_end,
-      }),
-      api.nvim_strwidth(component .. before .. after .. suffix .. prefix),
-    },
-    opts.priority,
+    component = table.concat({
+      click_start,
+      before,
+      prefix_item,
+      constants.HL_END,
+      hl and wrap(hl) or '',
+      component,
+      constants.HL_END,
+      suffix_item,
+      after,
+      click_end,
+    }),
+    length = strwidth(component .. before .. after .. suffix .. prefix),
+    priority = opts.priority,
   }
 end
 
@@ -643,24 +641,13 @@ end
 -- RENDER
 ----------------------------------------------------------------------------------------------------
 
---- @param tbl table
---- @param next string
---- @param priority table
-local function append(tbl, next, priority)
-  priority = priority or 0
-  local component, length = unpack(next)
-  if component and component ~= '' and next and tbl then
-    table.insert(tbl, { component = component, priority = priority, length = length })
-  end
-end
-
 --- @param statusline table
 --- @param available_space number
 function M.display(statusline, available_space)
   local str = ''
   local items = prioritize(statusline, available_space)
   for _, item in ipairs(items) do
-    if type(item.component) == 'string' then
+    if type(item.component) == 'string' and #item.component > 0 then
       str = str .. item.component
     end
   end
@@ -673,8 +660,7 @@ end
 function M.winline(tbl)
   return function(...)
     for i = 1, select('#', ...) do
-      local item = select(i, ...)
-      append(tbl, unpack(item))
+      tbl[#tbl + 1] = select(i, ...)
     end
   end
 end
