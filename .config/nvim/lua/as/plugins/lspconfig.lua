@@ -7,7 +7,6 @@ as.lsp = {}
 --- startup so things like the runtimepath for lua is correctly populated
 as.lsp.servers = {
   sourcekit = true,
-  sqls = true,
   tsserver = true,
   graphql = true,
   jsonls = true,
@@ -17,6 +16,16 @@ as.lsp.servers = {
   terraformls = true,
   rust_analyzer = true,
   gopls = false,
+  sqls = function()
+    return {
+      root_dir = require('lspconfig').util.root_pattern('.git'),
+      single_file_support = false,
+      on_new_config = function(new_config, new_rootdir)
+        table.insert(new_config.cmd, '-config')
+        table.insert(new_config.cmd, new_rootdir .. '/.config.yaml')
+      end,
+    }
+  end,
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
   sumneko_lua = function()
     local settings = {
