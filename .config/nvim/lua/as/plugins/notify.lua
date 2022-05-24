@@ -1,19 +1,6 @@
 return function()
   local api = vim.api
 
-  require('as.highlights').plugin('notify', {
-    NotifyERRORBorder = { bg = { from = 'NormalFloat' } },
-    NotifyWARNBorder = { bg = { from = 'NormalFloat' } },
-    NotifyINFOBorder = { bg = { from = 'NormalFloat' } },
-    NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } },
-    NotifyTRACEBorder = { bg = { from = 'NormalFloat' } },
-    NotifyERRORBody = { link = 'NormalFloat' },
-    NotifyWARNBody = { link = 'NormalFloat' },
-    NotifyINFOBody = { link = 'NormalFloat' },
-    NotifyDEBUGBody = { link = 'NormalFloat' },
-    NotifyTRACEBody = { link = 'NormalFloat' },
-  })
-
   local percent = function()
     return math.floor(vim.o.lines * 0.8)
   end
@@ -37,4 +24,17 @@ return function()
   })
   vim.notify = notify
   as.nnoremap('<leader>nd', notify.dismiss, { desc = 'dismiss notifications' })
+
+  require('as.highlights').plugin('notify', {
+    NotifyERRORBorder = { bg = { from = 'NormalFloat' } },
+    NotifyWARNBorder = { bg = { from = 'NormalFloat' } },
+    NotifyINFOBorder = { bg = { from = 'NormalFloat' } },
+    NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } },
+    NotifyTRACEBorder = { bg = { from = 'NormalFloat' } },
+    NotifyERRORBody = { link = 'NormalFloat' },
+    NotifyWARNBody = { link = 'NormalFloat' },
+    NotifyINFOBody = { link = 'NormalFloat' },
+    NotifyDEBUGBody = { link = 'NormalFloat' },
+    NotifyTRACEBody = { link = 'NormalFloat' },
+  })
 end

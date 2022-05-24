@@ -163,7 +163,7 @@ end
 ---------------------------------------------------------------------------------
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
----@vararg table<string, table> map of highlights
+---@param hls table<string, table> map of highlights
 function M.plugin(name, hls)
   name = name:gsub('^%l', string.upper) -- capitalise the name for autocommand convention sake
   M.all(hls)
