@@ -688,6 +688,7 @@ packer.startup({
       setup = function()
         vim.g.db_ui_use_nerd_fonts = 1
         vim.g.db_ui_show_database_icon = 1
+        as.nnoremap('<leader>db', '<cmd>DBUIToggle<CR>', 'dadbod: toggle')
       end,
     })
     use('tpope/vim-eunuch')
