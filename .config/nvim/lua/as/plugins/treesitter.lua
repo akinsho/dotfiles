@@ -40,7 +40,7 @@ return function()
   })
 
   require('nvim-treesitter.configs').setup({
-    ensure_installed = { 'lua' },
+    ensure_installed = { 'lua', 'go', 'dart', 'rust', 'typescript', 'javascript' },
     ignore_install = { 'phpdoc' }, -- list of parser which cause issues or crashes
     highlight = {
       enable = true,
