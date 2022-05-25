@@ -210,16 +210,19 @@ function as.statusline()
 
     component_if(diagnostics.error.count, diagnostics.error, 'StError', {
       prefix = diagnostics.error.sign,
+      prefix_color = 'StError',
       priority = 1,
     }),
 
     component_if(diagnostics.warning.count, diagnostics.warning, 'StWarning', {
       prefix = diagnostics.warning.sign,
+      prefix_color = 'StWarning',
       priority = 3,
     }),
 
     component_if(diagnostics.info.count, diagnostics.info, 'StInfo', {
       prefix = diagnostics.info.sign,
+      prefix_color = 'StInfo',
       priority = 4,
     }),
 
