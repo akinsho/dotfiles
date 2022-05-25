@@ -28,10 +28,8 @@ end
 
 local format_exclusions = { 'gopls', 'sumneko_lua' }
 
-local function formatting_filter(clients)
-  return vim.tbl_filter(function(c)
-    return not vim.tbl_contains(format_exclusions, c.name)
-  end, clients)
+local function formatting_filter(client)
+  return not vim.tbl_contains(format_exclusions, client.name)
 end
 
 --- Add lsp autocommands
@@ -44,13 +42,11 @@ local function setup_autocommands(client, bufnr)
         event = 'BufWritePre',
         bufnr = bufnr,
         command = function()
-          if fn.bufloaded(bufnr) then
-            vim.lsp.buf.format({
-              bufnr = bufnr,
-              async = false, -- NOTE: this is super dangerous
-              filter = formatting_filter,
-            })
-          end
+          vim.lsp.buf.format({
+            bufnr = bufnr,
+            async = false, -- NOTE: this is super dangerous
+            filter = formatting_filter,
+          })
         end,
       },
     })
