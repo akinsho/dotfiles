@@ -246,3 +246,4 @@ runtimepath
 namespaced
 protobuf
 Cognito
+istio
