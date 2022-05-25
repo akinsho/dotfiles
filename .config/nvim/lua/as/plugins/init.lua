@@ -53,7 +53,6 @@ packer.startup({
       config = function()
         require('project_nvim').setup({
           ignore_lsp = { 'null-ls' },
-          silent_chdir = false,
           patterns = { '.git' },
         })
       end,
