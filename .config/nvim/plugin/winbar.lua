@@ -3,6 +3,7 @@ local devicons = require('nvim-web-devicons')
 local highlights = require('as.highlights')
 local utils = require('as.utils.statusline')
 local component = utils.component
+local empty = as.empty
 
 local fn = vim.fn
 local api = vim.api
@@ -102,7 +103,7 @@ function as.winbar(current_win)
   add(utils.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if as.empty(bufname) then
+  if empty(bufname) then
     return add(component('[No name]', 'Winbar', { priority = 0 }))
   end
 
@@ -143,12 +144,15 @@ as.augroup('AttachWinbar', {
         local buf = api.nvim_win_get_buf(win)
         if
           not vim.tbl_contains(excluded, vim.bo[buf].filetype)
-          and as.empty(fn.win_gettype(win))
-          and as.empty(vim.bo[buf].buftype)
-          and not as.empty(vim.bo[buf].filetype)
+          and empty(fn.win_gettype(win))
+          and empty(vim.bo[buf].buftype)
+          and not empty(vim.bo[buf].filetype)
         then
           vim.wo[win].winbar = fmt('%%{%%v:lua.as.winbar(%d)%%}', current)
-        elseif not vim.tbl_contains(allow_list, vim.bo[buf].filetype) then
+        elseif
+          not empty(vim.wo[win].winbar)
+          and not vim.tbl_contains(allow_list, vim.bo[buf].filetype)
+        then
           vim.wo[win].winbar = ''
         end
       end
