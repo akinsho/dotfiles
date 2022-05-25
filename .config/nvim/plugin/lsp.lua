@@ -138,6 +138,16 @@ local function on_attach(client, bufnr)
   end
 end
 
+--- A set of custom overrides for specific lsp clients
+--- This is a way of adding functionality for specific lsps
+--- without putting all this logic in the general on_attach function
+local client_overrides = {
+  sqls = function(client, _)
+    client.server_capabilities.executeCommandProvider = true
+    client.server_capabilities.codeActionProvider = { resolveProvider = false }
+  end,
+}
+
 as.augroup('LspSetupCommands', {
   {
     event = 'LspAttach',
@@ -146,6 +156,9 @@ as.augroup('LspSetupCommands', {
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       on_attach(client, bufnr)
+      if client_overrides[client.name] then
+        client_overrides[client.name](client, bufnr)
+      end
     end,
   },
 })
