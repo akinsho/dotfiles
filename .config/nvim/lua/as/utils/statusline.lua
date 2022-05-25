@@ -236,7 +236,7 @@ local function filename(ctx, modifier)
     return '', '', name
   end
 
-  if not fname then
+  if not fname or as.empty(fname) then
     return '', '', 'No Name'
   end
 
