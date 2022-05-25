@@ -39,12 +39,7 @@ local function colors()
 
   H.all({
     StMetadata = { background = bg_color, inherit = 'Comment' },
-    StMetadataPrefix = {
-      background = bg_color,
-      inherit = 'Comment',
-      italic = false,
-      bold = false,
-    },
+    StMetadataPrefix = { background = bg_color, foreground = { from = 'Comment' } },
     StIndicator = { background = bg_color, foreground = indicator_color },
     StModified = { foreground = string_fg, background = bg_color },
     StGit = { foreground = P.light_red, background = bg_color },
@@ -64,12 +59,7 @@ local function colors()
     StWarning = { foreground = warning_fg, background = bg_color },
     StError = { foreground = error_color, background = bg_color },
     StFilename = { background = bg_color, foreground = 'LightGray', bold = true },
-    StFilenameInactive = {
-      foreground = P.comment_grey,
-      background = bg_color,
-      bold = true,
-      italic = true,
-    },
+    StFilenameInactive = { inherit = 'Comment', background = bg_color, bold = true },
     StModeNormal = { background = bg_color, foreground = P.whitesmoke, bold = true },
     StModeInsert = { background = bg_color, foreground = P.dark_blue, bold = true },
     StModeVisual = { background = bg_color, foreground = P.magenta, bold = true },
