@@ -32,7 +32,6 @@ local function colors()
   local pmenu_bg = H.get_hl('Pmenu', 'bg')
   local string_fg = H.get_hl('String', 'fg')
   local number_fg = H.get_hl('Number', 'fg')
-  local inc_search_bg = H.get_hl('Search', 'bg')
 
   local normal_bg = H.get_hl('Normal', 'bg')
   local dim_color = H.alter_color(normal_bg, 40)
@@ -88,10 +87,8 @@ local component_if = utils.component_if
 
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
-function _G.__statusline()
-  -- use the statusline global variable which is set inside of statusline
-  -- functions to the window for *that* statusline
-  local curwin = vim.g.statusline_winid or 0
+function as.statusline()
+  local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
 
   local available_space = vim.o.columns
@@ -307,17 +304,13 @@ local function setup_autocommands()
     {
       event = { 'VimEnter', 'ColorScheme' },
       pattern = { '*' },
-      command = function()
-        colors()
-      end,
+      command = colors,
     },
     {
       event = { 'BufReadPre' },
       once = true,
       pattern = { '*' },
-      command = function()
-        utils.git_updates()
-      end,
+      command = utils.git_updates,
     },
     {
       event = { 'BufWritePre' },
@@ -352,6 +345,6 @@ setup_autocommands()
 vim.g.qf_disable_statusline = 1
 
 -- set the statusline
-vim.o.statusline = '%!v:lua.__statusline()'
+vim.o.statusline = '%{%v:lua.as.statusline()%}'
 
 return M
