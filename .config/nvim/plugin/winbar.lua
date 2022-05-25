@@ -149,10 +149,7 @@ as.augroup('AttachWinbar', {
           and not empty(vim.bo[buf].filetype)
         then
           vim.wo[win].winbar = fmt('%%{%%v:lua.as.winbar(%d)%%}', current)
-        elseif
-          not empty(vim.wo[win].winbar)
-          and not vim.tbl_contains(allow_list, vim.bo[buf].filetype)
-        then
+        elseif not vim.tbl_contains(allow_list, vim.bo[buf].filetype) then
           vim.wo[win].winbar = ''
         end
       end
