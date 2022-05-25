@@ -14,20 +14,20 @@ function M.config()
     {
       event = 'BufEnter',
       pattern = pattern,
-      command = function()
+      command = function(args)
+        as.nmap(']t', '<Plug>(ultest-next-fail)', {
+          desc = 'ultest: next failure',
+          buffer = args.buf,
+        })
+        as.nmap('[t', '<Plug>(ultest-prev-fail)', {
+          desc = 'ultest: previous failure',
+          buffer = args.buf,
+        })
         vim.schedule(function()
           vim.cmd('Ultest')
         end)
       end,
     },
-  })
-  as.nmap(']t', '<Plug>(ultest-next-fail)', {
-    desc = 'ultest: next failure',
-    buffer = 0,
-  })
-  as.nmap('[t', '<Plug>(ultest-prev-fail)', {
-    desc = 'ultest: previous failure',
-    buffer = 0,
   })
 end
 
