@@ -299,7 +299,7 @@ nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdp
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
-nnoremap('<leader>cl', [[:let @"=expand("%:p")<CR>]], 'yank file path into the clipboard')
+nnoremap('<leader>yf', [[:let @*=expand("%:p")<CR>]], 'yank file path into the clipboard')
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
