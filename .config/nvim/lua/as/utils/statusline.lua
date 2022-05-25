@@ -421,13 +421,16 @@ end
 ----------------------------------------------------------------------------------------------------
 
 local function mode_highlight(mode)
-  local visual_regex = vim.regex([[\(v\|V\|\)]])
+  local visual_regex = vim.regex([[\(s\|S\|\)]])
+  local select_regex = vim.regex([[\(v\|V\|\)]])
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
   local replace_regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]])
   if mode == 'i' then
     return 'StModeInsert'
   elseif visual_regex:match_str(mode) then
     return 'StModeVisual'
+  elseif select_regex:match_str(mode) then
+    return 'StModeSelect'
   elseif replace_regex:match_str(mode) then
     return 'StModeReplace'
   elseif command_regex:match_str(mode) then
@@ -447,12 +450,15 @@ function M.mode()
     ['no'] = 'N·OPERATOR PENDING',
     ['nov'] = 'N·OPERATOR BLOCK',
     ['noV'] = 'N·OPERATOR LINE',
+    ['niI'] = 'N·INSERT',
+    ['niR'] = 'N·REPLACE',
+    ['niV'] = 'N·VISUAL',
     ['v'] = 'VISUAL',
     ['V'] = 'V·LINE',
     [''] = 'V·BLOCK',
     ['s'] = 'SELECT',
     ['S'] = 'S·LINE',
-    ['^S'] = 'S·BLOCK',
+    [''] = 'S·BLOCK',
     ['i'] = 'INSERT',
     ['R'] = 'REPLACE',
     ['Rv'] = 'V·REPLACE',
@@ -466,6 +472,8 @@ function M.mode()
     ['r?'] = 'CONFIRM',
     ['!'] = 'SHELL',
     ['t'] = 'TERMINAL',
+    ['nt'] = 'TERMINAL',
+    ['null'] = 'NONE',
   }
   return (mode_map[current_mode] or 'UNKNOWN'), hl
 end

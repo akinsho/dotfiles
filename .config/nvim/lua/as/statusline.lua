@@ -75,7 +75,8 @@ local function colors()
     StModeInsert = { background = bg_color, foreground = P.dark_blue, bold = true },
     StModeVisual = { background = bg_color, foreground = P.magenta, bold = true },
     StModeReplace = { background = bg_color, foreground = P.dark_red, bold = true },
-    StModeCommand = { background = bg_color, foreground = inc_search_bg, bold = true },
+    StModeCommand = { background = bg_color, foreground = P.bright_yellow, bold = true },
+    StModeSelect = { background = bg_color, foreground = P.teal, bold = true },
   })
 end
 
