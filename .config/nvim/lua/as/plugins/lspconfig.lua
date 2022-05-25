@@ -6,7 +6,7 @@ as.lsp = {}
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like the runtimepath for lua is correctly populated
 as.lsp.servers = {
-  sourcekit = true,
+  ccls = true,
   tsserver = true,
   graphql = true,
   jsonls = true,
@@ -16,6 +16,9 @@ as.lsp.servers = {
   terraformls = true,
   rust_analyzer = true,
   gopls = false,
+  sourcekit = {
+    filetypes = { 'swift', 'objective-c', 'objective-cpp' },
+  },
   sqls = function()
     return {
       root_dir = require('lspconfig').util.root_pattern('.git'),
