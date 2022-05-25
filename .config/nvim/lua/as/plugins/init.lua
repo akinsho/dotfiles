@@ -24,10 +24,9 @@ end
 -----------------------------------------------------------------------------//
 utils.bootstrap_packer()
 ----------------------------------------------------------------------------- }}}1
--- cfilter plugin allows filter down an existing quickfix list
+-- cfilter plugin allows filtering down an existing quickfix list
 vim.cmd('packadd! cfilter')
 
----@see: https://github.com/lewis6991/impatient.nvim/issues/35
 as.safe_require('impatient')
 
 local packer = require('packer')
@@ -115,26 +114,6 @@ packer.startup({
       end,
     })
 
-    -- NOTE: this and the plugin below it should never be active at the same time
-    -- so they have inverse conditions
-    use({
-      'christoomey/vim-tmux-navigator',
-      cond = function()
-        return vim.env.TMUX ~= nil
-      end,
-      config = function()
-        vim.g.tmux_navigator_no_mappings = 1
-        as.nnoremap('<C-H>', '<cmd>TmuxNavigateLeft<cr>')
-        as.nnoremap('<C-J>', '<cmd>TmuxNavigateDown<cr>')
-        as.nnoremap('<C-K>', '<cmd>TmuxNavigateUp<cr>')
-        as.nnoremap('<C-L>', '<cmd>TmuxNavigateRight<cr>')
-        -- Disable tmux navigator when zooming the Vim pane
-        vim.g.tmux_navigator_disable_when_zoomed = 1
-        vim.g.tmux_navigator_preserve_zoom = 1
-        vim.g.tmux_navigator_save_on_switch = 2
-      end,
-    })
-
     use({
       'knubie/vim-kitty-navigator',
       run = 'cp ./*.py ~/.config/kitty/',
@@ -215,9 +194,7 @@ packer.startup({
       'narutoxy/dim.lua',
       requires = { 'nvim-treesitter/nvim-treesitter', 'neovim/nvim-lspconfig' },
       config = function()
-        require('dim').setup({
-          disable_lsp_decorations = true,
-        })
+        require('dim').setup({ disable_lsp_decorations = true })
       end,
     })
 
