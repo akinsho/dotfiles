@@ -1,4 +1,6 @@
-as.treesitter = as.treesitter or { ask_install = {} }
+as.treesitter = as.treesitter or {
+  install_attempted = {},
+}
 
 -- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
 function as.treesitter.ensure_parser_installed()
@@ -9,26 +11,17 @@ function as.treesitter.ensure_parser_installed()
   if
     parsers.get_parser_configs()[lang]
     and not parsers.has_parser(lang)
-    and not as.treesitter.ask_install[lang]
-    and not as.treesitter.in_progress
+    and not as.treesitter.install_attempted[lang]
   then
-    -- sometimes this function is called multiple times in a row, so we check there is not a
-    -- request already in progress
-    as.treesitter.in_progress = true
-    vim.defer_fn(function()
-      vim.ui.select(
-        { 'yes', 'no' },
-        { prompt = fmt('Install parser for %s? Y/n', lang), kind = 'treesitter' },
-        function(_, index)
-          local should_install = index == 1
-          if should_install then
-            vim.cmd('TSInstall ' .. lang)
-          end
-          as.treesitter.ask_install[lang] = should_install
-          as.treesitter.in_progress = false
-        end
-      )
-    end, WAIT_TIME)
+    vim.schedule(function()
+      vim.cmd('TSInstall ' .. lang)
+      as.treesitter.install_attempted[lang] = true
+      vim.notify(fmt('Installing Treesitter parser for %s', lang), 'info', {
+        title = 'Nvim Treesitter',
+        icon = as.style.icons.misc.down,
+        timeout = WAIT_TIME,
+      })
+    end)
   end
 end
 
