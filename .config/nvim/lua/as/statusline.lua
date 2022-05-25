@@ -299,8 +299,20 @@ end
 
 local function setup_autocommands()
   as.augroup('CustomStatusline', {
-    { event = { 'FocusGained' }, pattern = { '*' }, command = 'let g:vim_in_focus = v:true' },
-    { event = { 'FocusLost' }, pattern = { '*' }, command = 'let g:vim_in_focus = v:false' },
+    {
+      event = { 'FocusGained' },
+      pattern = { '*' },
+      command = function()
+        vim.g.vim_in_focus = true
+      end,
+    },
+    {
+      event = { 'FocusLost' },
+      pattern = { '*' },
+      command = function()
+        vim.g.vim_in_focus = false
+      end,
+    },
     {
       event = { 'VimEnter', 'ColorScheme' },
       pattern = { '*' },
