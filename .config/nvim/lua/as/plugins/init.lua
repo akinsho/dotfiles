@@ -117,7 +117,7 @@ packer.startup({
       'knubie/vim-kitty-navigator',
       run = 'cp ./*.py ~/.config/kitty/',
       cond = function()
-        return vim.env.TMUX == nil
+        return not vim.env.TMUX
       end,
     })
 
