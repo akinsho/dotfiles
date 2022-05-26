@@ -405,7 +405,8 @@ local save_excluded = {
   'NeogitCommitMessage',
 }
 local function can_save()
-  return as.empty(vim.bo.buftype)
+  return as.empty(fn.win_gettype())
+    and as.empty(vim.bo.buftype)
     and not as.empty(vim.bo.filetype)
     and vim.bo.modifiable
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
