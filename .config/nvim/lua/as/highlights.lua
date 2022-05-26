@@ -122,9 +122,10 @@ function M.set_hl(name, opts)
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
+---If no attribute is specified return the entire highlight table
 ---in the right format
 ---@param group string
----@param attribute string
+---@param attribute string?
 ---@param fallback string?
 ---@return string
 function M.get_hl(group, attribute, fallback)
@@ -133,6 +134,9 @@ function M.get_hl(group, attribute, fallback)
     return 'NONE'
   end
   local hl = get_hl(group)
+  if not attribute then
+    return hl
+  end
   attribute = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
   local color = hl[attribute] or fallback
   if not color then
