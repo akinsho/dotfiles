@@ -220,6 +220,10 @@ vim.opt.sessionoptions = {
 }
 vim.opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 vim.opt.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
+-----------------------------------------------------------------------------//
+-- Jumplist
+-----------------------------------------------------------------------------//
+vim.opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
