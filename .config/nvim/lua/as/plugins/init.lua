@@ -713,6 +713,7 @@ packer.startup({
     })
 
     use({ 'ray-x/go.nvim', ft = 'go', config = conf('go') })
+    use('nanotee/sqls.nvim')
 
     use('dart-lang/dart-vim-plugin')
     use('mtdl9/vim-log-highlighting')

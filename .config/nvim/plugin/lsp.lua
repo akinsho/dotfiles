@@ -142,9 +142,8 @@ end
 --- This is a way of adding functionality for specific lsps
 --- without putting all this logic in the general on_attach function
 local client_overrides = {
-  sqls = function(client, _)
-    client.server_capabilities.executeCommandProvider = true
-    client.server_capabilities.codeActionProvider = { resolveProvider = false }
+  sqls = function(client, bufnr)
+    require('sqls').on_attach(client, bufnr)
   end,
 }
 
