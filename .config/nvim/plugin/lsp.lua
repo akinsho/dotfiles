@@ -32,6 +32,16 @@ local function formatting_filter(client)
   return not vim.tbl_contains(format_exclusions, client.name)
 end
 
+---@param opts table<string, any>
+local format = function(opts)
+  opts = opts or {}
+  vim.lsp.buf.format({
+    bufnr = opts.bufnr,
+    async = opts.async, -- NOTE: this is super dangerous
+    filter = formatting_filter,
+  })
+end
+
 --- Add lsp autocommands
 ---@param client table<string, any>
 ---@param bufnr number
@@ -41,12 +51,9 @@ local function setup_autocommands(client, bufnr)
       {
         event = 'BufWritePre',
         bufnr = bufnr,
+        desc = 'Format the current buffer on save',
         command = function()
-          vim.lsp.buf.format({
-            bufnr = bufnr,
-            async = false, -- NOTE: this is super dangerous
-            filter = formatting_filter,
-          })
+          format({ bufnr = bufnr, async = false })
         end,
       },
     })
@@ -105,7 +112,7 @@ local function setup_mappings(_)
   as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
   as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
 
-  as.nnoremap('<leader>rf', vim.lsp.buf.format, with_desc('lsp: format buffer'))
+  as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
   as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
   as.xnoremap('<leader>ca', vim.lsp.buf.range_code_action, with_desc('lsp: code action'))
   as.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
@@ -167,7 +174,7 @@ as.augroup('LspSetupCommands', {
 local command = as.command
 
 command('LspFormat', function()
-  vim.lsp.buf.format()
+  format({ bufnr = 0, async = false })
 end)
 
 -- A helper function to auto-update the quickfix list when new diagnostics come
