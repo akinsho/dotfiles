@@ -90,6 +90,8 @@ return function()
       deprecated = true,
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
+        -- truncate the width of the cmp menu
+        vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
         vim_item.kind = fmt('%s %s', as.style.lsp.codicons[vim_item.kind], vim_item.kind)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
