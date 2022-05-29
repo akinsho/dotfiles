@@ -13,3 +13,4 @@ automatic_backups/
 .zcompdump
 .zcompcache
 .chpwd-recent-dirs
+.zsh_sessions
