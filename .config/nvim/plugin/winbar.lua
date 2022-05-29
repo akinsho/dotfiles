@@ -74,8 +74,8 @@ local hls = as.fold(
 highlights.plugin('winbar', hls)
 
 local function breadcrumbs()
-  local data = gps.is_available() and gps.get_data() or nil
-  if not data or type(data) ~= 'table' or vim.tbl_isempty(data) then
+  local ok, data = pcall(gps.get_data)
+  if not ok or not data then
     return { utils.component(ellipsis, 'NonText', { priority = 0 }) }
   end
   return as.fold(function(accum, item, index)
