@@ -171,6 +171,8 @@ return function()
   --- from the setup call
   local builtins = require('telescope.builtin')
 
+  local previewers = require('telescope.previewers')
+
   local function project_files(opts)
     if not pcall(builtins.git_files, opts) then
       builtins.find_files(opts)
@@ -183,6 +185,30 @@ return function()
       cwd = vim.fn.stdpath('config'),
       file_ignore_patterns = { '.git/.*', 'dotbot/.*' },
     })
+  end
+
+  local delta = previewers.new_termopen_previewer({
+    get_command = function(entry)
+      return {
+        'git',
+        '-c',
+        'core.pager=delta',
+        '-c',
+        'delta.side-by-side=false',
+        'diff',
+        entry.value .. '^!',
+      }
+    end,
+  })
+
+  local function delta_git_bcommits(opts)
+    opts = opts or {}
+    opts.previewer = {
+      delta,
+      previewers.git_commit_message.new(opts),
+    }
+
+    builtins.git_commits(opts)
   end
 
   local function dotfiles()
@@ -253,7 +279,7 @@ return function()
       n = { notifications, 'notifications' },
       g = {
         name = '+git',
-        c = { builtins.git_commits, 'commits' },
+        c = { delta_git_bcommits, 'commits' },
         b = { builtins.git_branches, 'branches' },
         n = { gh_notifications, 'notifications' },
       },
