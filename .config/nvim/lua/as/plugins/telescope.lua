@@ -237,7 +237,7 @@ return function()
 
   local function installed_plugins()
     require('telescope.builtin').find_files({
-      prompt_title = '~ plugins ~',
+      prompt_title = 'Installed plugins',
       cwd = vim.fn.stdpath('data') .. '/site/pack/packer',
     })
   end
