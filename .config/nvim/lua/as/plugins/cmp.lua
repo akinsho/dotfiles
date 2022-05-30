@@ -91,7 +91,6 @@ return function()
       deprecated = true,
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
-        -- truncate the width of the cmp menu
         local MAX = 20
         vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
           or vim_item.abbr

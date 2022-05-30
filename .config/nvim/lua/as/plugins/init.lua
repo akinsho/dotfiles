@@ -353,7 +353,7 @@ packer.startup({
     use('milisims/nvim-luaref')
 
     -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
-    -- causes formatting bugs on save when updateevents are TextChanged{I}
+    -- causes formatting bugs on save when update events are TextChanged{I}
     use({
       'L3MON4D3/LuaSnip',
       event = 'InsertEnter',

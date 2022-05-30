@@ -37,7 +37,7 @@ local format = function(opts)
   opts = opts or {}
   vim.lsp.buf.format({
     bufnr = opts.bufnr,
-    async = opts.async, -- NOTE: this is super dangerous
+    async = opts.async,
     filter = formatting_filter,
   })
 end
