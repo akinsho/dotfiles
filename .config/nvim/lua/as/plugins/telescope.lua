@@ -8,19 +8,25 @@ return function()
 
   H.plugin('telescope', {
     TelescopePromptTitle = {
+      bg = as.style.palette.grey,
       fg = { from = 'Directory' },
       bold = true,
     },
     TelescopeResultsTitle = {
+      bg = as.style.palette.grey,
       fg = { from = 'Normal' },
       bold = true,
     },
     TelescopePreviewTitle = {
-      bg = { from = 'LineNr', attr = 'fg' },
+      bg = as.style.palette.grey,
       fg = { from = 'Normal' },
       bold = true,
     },
-
+    TelescopePreviewBorder = {
+      fg = as.style.palette.grey,
+      bg = { from = 'FloatBorder' },
+    },
+    TelescopePreviewNormal = { link = 'Pmenu' },
     TelescopePromptPrefix = { link = 'Statement' },
     TelescopeBorder = { foreground = as.style.palette.grey },
     TelescopeMatching = { link = 'Title' },
@@ -36,7 +42,8 @@ return function()
       borderchars = {
         prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
         results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
-        preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+        -- preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       },
     })
   end
@@ -50,7 +57,11 @@ return function()
   telescope.setup({
     defaults = {
       set_env = { ['TERM'] = vim.env.TERM },
-      borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+      borderchars = {
+        prompt = { ' ', '▕', '▁', '▏', '▏', '▕', '🭿', '🭼' },
+        results = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+        preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+      },
       dynamic_preview_title = true,
       prompt_prefix = icons.misc.telescope .. ' ',
       selection_caret = icons.misc.chevron_right .. ' ',
