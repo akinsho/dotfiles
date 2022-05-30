@@ -76,7 +76,7 @@ highlights.plugin('winbar', hls)
 local function breadcrumbs()
   local ok, data = pcall(gps.get_data)
   if not ok or not data then
-    return { utils.component(ellipsis, 'NonText', { priority = 0 }) }
+    return { component(ellipsis, 'NonText', { priority = 0 }) }
   end
   return as.fold(function(accum, item, index)
     local has_next = index < #data
