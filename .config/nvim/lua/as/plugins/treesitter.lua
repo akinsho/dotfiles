@@ -4,7 +4,7 @@ as.treesitter = as.treesitter or {
 
 -- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
 function as.treesitter.ensure_parser_installed()
-  local WAIT_TIME = 1500
+  local WAIT_TIME = 6000
   local parsers = require('nvim-treesitter.parsers')
   local lang = parsers.get_buf_lang()
   local fmt = string.format
@@ -55,6 +55,7 @@ return function()
     },
     indent = {
       enable = true,
+      disable = { 'yaml' },
     },
     textobjects = {
       lookahead = true,
