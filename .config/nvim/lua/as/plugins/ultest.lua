@@ -10,11 +10,11 @@ function M.config()
   vim.cmd('UpdateRemotePlugins')
   local pattern = { '*_test.*', '*_spec.*' }
   as.augroup('UltestTests', {
-    { event = 'BufWritePost', pattern = pattern, command = 'UltestNearest' },
     {
       event = 'BufEnter',
       pattern = pattern,
       command = function(args)
+        as.nnoremap('<leader>tu', '<Cmd>Ultest<CR>', { buffer = args.buf })
         as.nmap(']t', '<Plug>(ultest-next-fail)', {
           desc = 'ultest: next failure',
           buffer = args.buf,
@@ -23,9 +23,6 @@ function M.config()
           desc = 'ultest: previous failure',
           buffer = args.buf,
         })
-        vim.schedule(function()
-          vim.cmd('Ultest')
-        end)
       end,
     },
   })
