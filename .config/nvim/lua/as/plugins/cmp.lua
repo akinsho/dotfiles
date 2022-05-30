@@ -8,6 +8,7 @@ return function()
   local t = as.replace_termcodes
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.kind_highlights
+  local ellipsis = as.style.icons.misc.ellipsis
 
   -- Make the source information less prominent
   local faded = h.alter_color(h.get_hl('Pmenu', 'bg'), 30)
@@ -91,7 +92,9 @@ return function()
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
         -- truncate the width of the cmp menu
-        vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
+        local MAX = 20
+        vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
+          or vim_item.abbr
         vim_item.kind = fmt('%s %s', as.style.lsp.codicons[vim_item.kind], vim_item.kind)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
