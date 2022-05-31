@@ -95,14 +95,6 @@ packer.startup({
     use({ 'folke/which-key.nvim', config = conf('whichkey') })
 
     use({
-      'folke/trouble.nvim',
-      cmd = { 'TroubleToggle' },
-      requires = 'nvim-web-devicons',
-      setup = conf('trouble').setup,
-      config = conf('trouble').config,
-    })
-
-    use({
       'rmagatti/auto-session',
       config = function()
         require('auto-session').setup({
