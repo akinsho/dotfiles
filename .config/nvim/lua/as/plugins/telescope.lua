@@ -78,6 +78,7 @@ return function()
           ['<c-e>'] = layout_actions.toggle_preview,
           ['<c-l>'] = layout_actions.cycle_layout_next,
           ['<c-/>'] = actions.which_key,
+          ['<Tab>'] = actions.toggle_selection,
         },
         n = {
           ['<C-w>'] = actions.send_selected_to_qflist,
