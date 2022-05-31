@@ -492,8 +492,8 @@ packer.startup({
               -- FIXME: this issue should be handled inside the plugin rather than manually
               local langs = require('nvim-treesitter.parsers').available_parsers()
               if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
-                as.omap('m', ":<C-U>lua require('tsht').nodes()<CR>", {buffer = args.buf})
-                as.vnoremap('m', ":lua require('tsht').nodes()<CR>", {buffer = args.buf})
+                as.omap('u', ":<C-U>lua require('tsht').nodes()<CR>", { buffer = args.buf })
+                as.vnoremap('u', ":lua require('tsht').nodes()<CR>", { buffer = args.buf })
               end
             end,
           },
