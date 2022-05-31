@@ -493,8 +493,19 @@ packer.startup({
     use({
       'mfussenegger/nvim-treehopper',
       config = function()
-        as.omap('m', ":<C-U>lua require('tsht').nodes()<CR>")
-        as.vnoremap('m', ":lua require('tsht').nodes()<CR>")
+        as.augroup('TreehopperMaps', {
+          {
+            event = 'FileType',
+            command = function(args)
+              -- FIXME: this issue should be handled inside the plugin rather than manually
+              local langs = require('nvim-treesitter.parsers').available_parsers()
+              if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
+                as.omap('m', ":<C-U>lua require('tsht').nodes()<CR>", {buffer = args.buf})
+                as.vnoremap('m', ":lua require('tsht').nodes()<CR>", {buffer = args.buf})
+              end
+            end,
+          },
+        })
       end,
     })
 
