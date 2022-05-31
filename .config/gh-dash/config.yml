@@ -18,7 +18,7 @@ defaults:
     width: 50
   prsLimit: 20
   issuesLimit: 20
-  view: prs
+  view: issues
 repoPaths:
   neovim/neovim: $PROJECTS_DIR/contributing/neovim
   akinsho/bufferline.nvim: $PROJECTS_DIR/personal/bufferline.nvim
