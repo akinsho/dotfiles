@@ -1,3 +1,5 @@
+---@diagnostic disable: duplicate-doc-param
+
 local gps = require('nvim-gps')
 local devicons = require('nvim-web-devicons')
 local highlights = require('as.highlights')
