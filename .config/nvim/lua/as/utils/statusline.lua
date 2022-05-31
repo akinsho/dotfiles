@@ -371,7 +371,7 @@ function M.lsp_client(ctx)
     end
   end
   -- ﳠ is the mathematical symbol denoting an empty set i.e. sort of kinda null
-  return table.concat(names, ' ') .. (has_null_ls and ' ﳠ' or '')
+  return table.concat(names, ' '), (has_null_ls and 'ﳠ' or '')
 end
 
 function M.debugger()

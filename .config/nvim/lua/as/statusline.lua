@@ -151,6 +151,7 @@ function as.statusline()
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   local flutter = vim.g.flutter_tools_decorations or {}
+  local clients, lsp_suffix = utils.lsp_client(ctx)
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -194,7 +195,11 @@ function as.statusline()
 
     component(flutter.device and flutter.device.name or '', 'StMetadata', { priority = 4 }),
 
-    component(utils.lsp_client(ctx), 'StMetadata', { priority = 4 }),
+    component(clients, 'StMetadata', {
+      suffix = lsp_suffix,
+      suffix_color = 'StMetadataPrefix',
+      priority = 4,
+    }),
 
     component(utils.debugger(), 'StMetadata', { prefix = icons.misc.bug, priority = 4 }),
 
