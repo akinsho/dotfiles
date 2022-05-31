@@ -1,0 +1,26 @@
+prSections:
+  - title: My Pull Requests
+    filters: is:open author:@me
+  - title: Needs My Review
+    filters: is:open review-requested:@me
+  - title: Neovim Issues
+    filters: is:open repo:neovim/neovim
+issuesSections:
+  - title: My Issues
+    filters: is:open author:@me
+  - title: Assigned
+    filters: is:open assignee:@me
+  - title: Neovim Issues
+    filters: is:open repo:neovim/neovim
+defaults:
+  preview:
+    open: true
+    width: 50
+  prsLimit: 20
+  issuesLimit: 20
+  view: prs
+keybindings:
+  prs:
+    - key: c
+      command: cd {{.RepoPath}}; gh pr checkout {{.PrNumber}}
+repoPaths: {}
