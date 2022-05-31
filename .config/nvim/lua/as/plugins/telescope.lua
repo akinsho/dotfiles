@@ -6,6 +6,14 @@ return function()
   local H = require('as.highlights')
   local icons = as.style.icons
 
+  as.augroup('TelescopePreviews', {
+    {
+      event = 'User',
+      pattern = 'TelescopePreviewerLoaded',
+      command = 'setlocal number',
+    },
+  })
+
   H.plugin('telescope', {
     TelescopePromptTitle = {
       bg = as.style.palette.grey,
