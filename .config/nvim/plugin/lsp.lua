@@ -52,8 +52,8 @@ local function setup_autocommands(client, bufnr)
         event = 'BufWritePre',
         buffer = bufnr,
         desc = 'Format the current buffer on save',
-        command = function()
-          format({ bufnr = bufnr, async = false })
+        command = function(args)
+          format({ bufnr = args.buf, async = true })
         end,
       },
     })
