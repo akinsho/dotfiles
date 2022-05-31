@@ -130,9 +130,9 @@ return function()
       }),
       oldfiles = dropdown(),
       live_grep = {
-        -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
-        -- so filter out html.
+        -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping so filter out html.
         file_ignore_patterns = { '.git/', '%.html', '%.svg', '%.lock' },
+        max_results = 2000,
         on_input_filter_cb = function(prompt)
           -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
           return { prompt = prompt:gsub('%s', '.*') }
