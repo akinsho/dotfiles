@@ -266,7 +266,7 @@ function +vi-git-untracked() {
   emulate -L zsh
   if __in_git; then
     if [[ -n $(git ls-files --directory --no-empty-directory --exclude-standard --others 2> /dev/null) ]]; then
-      hook_com[unstaged]+="%F{blue} %f"
+      hook_com[unstaged]+="%F{blue} %f" # alternatives ●
     fi
   fi
 }
@@ -306,7 +306,7 @@ function +vi-git-compare() {
   # (j./.) the character representing each part is interchangeable, and the
   # middle character represents the string to use to join the items
   # https://zsh.sourceforge.io/Guide/zshguide05.html#l124
-  hook_com[misc]+="${(j: :)gitstatus}"
+  hook_com[misc]+=" ${(j: :)gitstatus}"
 }
 
 ## git: Show remote branch name for remote-tracking branches
