@@ -61,9 +61,9 @@ packer.startup({
     use({
       'nvim-telescope/telescope.nvim',
       cmd = 'Telescope',
-      keys = { '<c-p>', '<leader>fo', '<leader>ff', '<leader>fs' },
       module_pattern = 'telescope.*',
-      config = conf('telescope'),
+      setup = conf('telescope').setup,
+      config = conf('telescope').config,
       requires = {
         {
           'nvim-telescope/telescope-fzf-native.nvim',
