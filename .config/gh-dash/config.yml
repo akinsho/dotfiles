@@ -2,14 +2,14 @@ prSections:
   - title: My Pull Requests
     filters: is:open author:@me
   - title: Needs My Review
-    filters: is:open review-requested:@me
+    filters: is:pr is:open archived:false sort:updated-desc user:akinsho
   - title: Neovim Issues
     filters: is:open repo:neovim/neovim
 issuesSections:
+  - title: My Open Source Projects
+    filters: is:issue is:open archived:false sort:updated-desc user:akinsho
   - title: My Issues
     filters: is:open author:@me
-  - title: Assigned
-    filters: is:open assignee:@me
   - title: Neovim Issues
     filters: is:open repo:neovim/neovim
 defaults:
@@ -19,8 +19,11 @@ defaults:
   prsLimit: 20
   issuesLimit: 20
   view: prs
+repoPaths:
+  neovim/neovim: $PROJECTS_DIR/contributing/neovim
+  akinsho/bufferline.nvim: $PROJECTS_DIR/personal/bufferline.nvim
+  akinsho/toggleterm.nvim: $PROJECTS_DIR/personal/bufferline.nvim
 keybindings:
   prs:
     - key: c
       command: cd {{.RepoPath}}; gh pr checkout {{.PrNumber}}
-repoPaths: {}
