@@ -173,7 +173,6 @@ packer.startup({
       requires = {
         {
           'williamboman/nvim-lsp-installer',
-          module = 'nvim-lsp-installer',
           config = function()
             as.augroup('LspInstallerConfig', {
               {
