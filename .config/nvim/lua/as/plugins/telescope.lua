@@ -304,4 +304,5 @@ return function()
       ['?'] = { builtins.help_tags, 'help' },
     },
   })
+  vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
