@@ -596,14 +596,14 @@ function M.component(component, hl, opts)
   )
   opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
-  local before = opts.before or ''
-  local after = opts.after or padding
+  local before, after = opts.before or '', opts.after or padding
   local prefix = opts.prefix and opts.prefix .. (opts.padding.prefix and padding or '') or ''
   local suffix = opts.suffix and (opts.padding.suffix and padding or '') .. opts.suffix or ''
-  local prefix_color = opts.prefix_color and wrap(opts.prefix_color) or ''
-  local suffix_color = opts.suffix_color and wrap(opts.suffix_color) or ''
-  local prefix_item = not empty(prefix) and prefix_color .. prefix or ''
-  local suffix_item = not empty(suffix) and suffix_color .. suffix or ''
+  local prefix_color, suffix_color = opts.prefix_color or hl, opts.suffix_color or hl
+  local prefix_hl = not empty(prefix_color) and wrap(prefix_color) or ''
+  local suffix_hl = not empty(suffix_color) and wrap(suffix_color) or ''
+  local prefix_item = not empty(prefix) and prefix_hl .. prefix or ''
+  local suffix_item = not empty(suffix) and suffix_hl .. suffix or ''
 
   local click_start = opts.click and get_click_start(opts.click, opts.id) or ''
   local click_end = opts.click and constants.CLICK_END or ''
