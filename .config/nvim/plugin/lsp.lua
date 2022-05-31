@@ -50,7 +50,7 @@ local function setup_autocommands(client, bufnr)
     as.augroup('LspFormatting', {
       {
         event = 'BufWritePre',
-        bufnr = bufnr,
+        buffer = bufnr,
         desc = 'Format the current buffer on save',
         command = function()
           format({ bufnr = bufnr, async = false })
