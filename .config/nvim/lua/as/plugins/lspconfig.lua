@@ -12,12 +12,20 @@ as.lsp.servers = {
   jsonls = true,
   bashls = true,
   vimls = true,
-  yamlls = true,
   terraformls = true,
   rust_analyzer = true,
   gopls = false,
   sourcekit = {
     filetypes = { 'swift', 'objective-c', 'objective-cpp' },
+  },
+  yamlls = {
+    settings = {
+      yaml = {
+        customTags = {
+          '!reference sequence', -- necessary for gitlab-ci.yaml files
+        },
+      },
+    },
   },
   sqls = function()
     return {
