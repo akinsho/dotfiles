@@ -38,7 +38,7 @@ H.set_hl('ExtraWhitespace', { foreground = 'red' })
 as.augroup('WhitespaceMatch', {
   {
     event = { 'ColorScheme' },
-    description = 'Add extra whitespace highlight',
+    desc = 'Add extra whitespace highlight',
     pattern = { '*' },
     command = function()
       H.set_hl('ExtraWhitespace', { foreground = 'red' })
@@ -47,14 +47,14 @@ as.augroup('WhitespaceMatch', {
   {
     event = { 'BufEnter', 'FileType', 'InsertLeave' },
     pattern = { '*' },
-    description = 'Show extra whitespace on insert leave, buf enter or filetype',
+    desc = 'Show extra whitespace on insert leave, buf enter or filetype',
     command = function()
       toggle_trailing('n')
     end,
   },
   {
     event = { 'InsertEnter' },
-    description = 'Show extra whitespace on insert enter',
+    desc = 'Show extra whitespace on insert enter',
     pattern = { '*' },
     command = function()
       toggle_trailing('i')

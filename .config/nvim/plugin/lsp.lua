@@ -74,6 +74,7 @@ local function setup_autocommands(client, bufnr)
       {
         event = { 'CursorHold' },
         buffer = bufnr,
+        desc = 'Show diagnostics',
         command = function()
           diagnostic_popup()
         end,
@@ -81,14 +82,14 @@ local function setup_autocommands(client, bufnr)
       {
         event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
-        description = 'LSP: Document Highlight',
+        desc = 'LSP: Document Highlight',
         command = function()
           pcall(vim.lsp.buf.document_highlight)
         end,
       },
       {
         event = 'CursorMoved',
-        description = 'LSP: Document Highlight (Clear)',
+        desc = 'LSP: Document Highlight (Clear)',
         buffer = bufnr,
         command = function()
           vim.lsp.buf.clear_references()

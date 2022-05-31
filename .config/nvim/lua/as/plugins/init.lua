@@ -1039,7 +1039,7 @@ as.augroup('PackerSetupInit', {
   {
     event = 'BufWritePost',
     pattern = { '*/as/plugins/*.lua' },
-    description = 'Packer setup and reload',
+    desc = 'Packer setup and reload',
     command = function()
       as.invalidate('as.plugins', true)
       packer.compile()

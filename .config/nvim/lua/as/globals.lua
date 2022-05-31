@@ -229,7 +229,7 @@ function as.augroup(name, commands)
     api.nvim_create_autocmd(autocmd.event, {
       group = name,
       pattern = autocmd.pattern,
-      desc = autocmd.description,
+      desc = autocmd.desc,
       callback = is_callback and autocmd.command or nil,
       command = not is_callback and autocmd.command or nil,
       once = autocmd.once,
