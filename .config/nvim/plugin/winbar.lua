@@ -57,21 +57,19 @@ function as.winbar_click(id, _, _, _)
   end
 end
 
-local hls = as.fold(
-  function(accum, hl_name, name)
-    accum[fmt('Winbar%sIcon', name:gsub('^%l', string.upper))] = { foreground = { from = hl_name } }
-    return accum
-  end,
-  hl_map,
-  {
-    Winbar = { bold = true },
-    WinbarNC = { bold = false },
-    WinbarCrumb = { bold = true },
-    WinbarIcon = { inherit = 'Function' },
-    WinbarDirectory = { inherit = 'Directory' },
-    WinbarCurrent = { bold = true, underline = true, sp = { from = 'Directory', attr = 'fg' } },
-  }
-)
+local function append_icon_hl(accum, hl_name, name)
+  accum[fmt('Winbar%sIcon', name:gsub('^%l', string.upper))] = { foreground = { from = hl_name } }
+  return accum
+end
+
+local hls = as.fold(append_icon_hl, hl_map, {
+  Winbar = { bold = true },
+  WinbarNC = { bold = false },
+  WinbarCrumb = { bold = true },
+  WinbarIcon = { inherit = 'Function' },
+  WinbarDirectory = { inherit = 'Directory' },
+  WinbarCurrent = { bold = true, underline = true, sp = { from = 'Directory', attr = 'fg' } },
+})
 
 highlights.plugin('winbar', hls)
 
