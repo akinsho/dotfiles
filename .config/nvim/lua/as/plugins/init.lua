@@ -717,6 +717,16 @@ packer.startup({
     use({ 'ray-x/go.nvim', ft = 'go', config = conf('go') })
     use('nanotee/sqls.nvim')
 
+    use({
+      'tami5/xbase',
+      ft = { 'swift' },
+      run = 'make install',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope.nvim',
+      },
+    })
+
     use('dart-lang/dart-vim-plugin')
     use('mtdl9/vim-log-highlighting')
     use('fladson/vim-kitty')
