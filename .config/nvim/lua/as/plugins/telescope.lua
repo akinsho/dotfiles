@@ -77,6 +77,7 @@ return function()
           ['<c-k>'] = actions.cycle_history_prev,
           ['<c-e>'] = layout_actions.toggle_preview,
           ['<c-l>'] = layout_actions.cycle_layout_next,
+          ['<c-/>'] = actions.which_key,
         },
         n = {
           ['<C-w>'] = actions.send_selected_to_qflist,
