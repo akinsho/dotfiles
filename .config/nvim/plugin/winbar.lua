@@ -131,25 +131,30 @@ function as.winbar(current_win)
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
-local excluded = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' }
-local allow_list = { 'toggleterm' }
+local blocked = {
+  'NeogitStatus',
+  'NeogitCommitMessage',
+  'toggleterm',
+  'DressingInput',
+}
+local allowed = { 'toggleterm' }
 
 as.augroup('AttachWinbar', {
   {
-    event = { 'WinEnter', 'BufEnter', 'WinClosed' },
+    event = { 'BufWinEnter', 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
     command = function()
       local current = api.nvim_get_current_win()
       for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
         local buf = api.nvim_win_get_buf(win)
         if
-          not vim.tbl_contains(excluded, vim.bo[buf].filetype)
+          not vim.tbl_contains(blocked, vim.bo[buf].filetype)
           and empty(fn.win_gettype(win))
           and empty(vim.bo[buf].buftype)
           and not empty(vim.bo[buf].filetype)
         then
           vim.wo[win].winbar = fmt('%%{%%v:lua.as.winbar(%d)%%}', current)
-        elseif not vim.tbl_contains(allow_list, vim.bo[buf].filetype) then
+        elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
           vim.wo[win].winbar = ''
         end
       end
