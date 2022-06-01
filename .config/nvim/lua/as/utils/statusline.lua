@@ -587,7 +587,7 @@ end
 function M.component(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
-  if not component or component == '' or component == 0 then
+  if empty(component) then
     return M.spacer()
   end
   assert(
