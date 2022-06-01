@@ -119,12 +119,12 @@ function as.statusline()
   ----------------------------------------------------------------------------//
   local segments = utils.file(ctx, plain)
   local dir, parent, file = segments.dir, segments.parent, segments.file
-  local dir_component = utils.component(dir.item, dir.hl, dir.opts)
-  local parent_component = utils.component(parent.item, parent.hl, parent.opts)
-  local file_component = utils.component(file.item, file.hl, file.opts)
+  local dir_component = component(dir.item, dir.hl, dir.opts)
+  local parent_component = component(parent.item, parent.hl, parent.opts)
+  local file_component = component(file.item, file.hl, file.opts)
 
   local readonly_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomError', 'StError')
-  local readonly_component = utils.component(utils.readonly(ctx), readonly_hl, { priority = 1 })
+  local readonly_component = component(utils.readonly(ctx), readonly_hl, { priority = 1 })
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
