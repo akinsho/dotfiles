@@ -306,7 +306,7 @@ function +vi-git-compare() {
   # (j./.) the character representing each part is interchangeable, and the
   # middle character represents the string to use to join the items
   # https://zsh.sourceforge.io/Guide/zshguide05.html#l124
-  hook_com[misc]+=" ${(j: :)gitstatus}"
+  hook_com[misc]+="${(j: :)gitstatus}"
 }
 
 ## git: Show remote branch name for remote-tracking branches
