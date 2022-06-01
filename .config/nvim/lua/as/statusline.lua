@@ -10,6 +10,7 @@ local utils = require('as.utils.statusline')
 local H = require('as.highlights')
 
 local api = vim.api
+local fn = vim.fn
 local icons = as.style.icons
 local P = as.style.palette
 local C = utils.constants
@@ -121,6 +122,12 @@ function as.statusline()
   local dir, parent, file = segments.dir, segments.parent, segments.file
   local dir_component = component(dir.item, dir.hl, dir.opts)
   local parent_component = component(parent.item, parent.hl, parent.opts)
+
+  local is_git_repo = fn.isdirectory(fn.getcwd(curwin) .. '/.git') == 1
+  if is_git_repo then
+    file.opts.after = ' ' .. icons.git.repo
+    file.opts.after_color = 'StGit'
+  end
   local file_component = component(file.item, file.hl, file.opts)
 
   local readonly_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomError', 'StError')
