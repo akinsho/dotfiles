@@ -167,9 +167,9 @@ function M.config()
     },
     TelescopePreviewBorder = {
       fg = as.style.palette.grey,
-      bg = { from = 'FloatBorder' },
+      bg = { from = 'PanelBackground' },
     },
-    TelescopePreviewNormal = { link = 'Pmenu' },
+    TelescopePreviewNormal = { link = 'PanelBackground' },
     TelescopePromptPrefix = { link = 'Statement' },
     TelescopeBorder = { foreground = as.style.palette.grey },
     TelescopeMatching = { link = 'Title' },
