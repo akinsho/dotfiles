@@ -1,4 +1,5 @@
 return function()
+  local fn = vim.fn
   as.nnoremap('<localleader>oc', '<Cmd>Neorg gtd capture<CR>')
   as.nnoremap('<localleader>ov', '<Cmd>Neorg gtd views<CR>')
 
@@ -27,8 +28,9 @@ return function()
       ['core.norg.dirman'] = {
         config = {
           workspaces = {
-            notes = vim.fn.expand('$SYNC_DIR/neorg/main/'),
-            tasks = vim.fn.expand('$SYNC_DIR/neorg/tasks/'),
+            notes = fn.expand('$SYNC_DIR/neorg/notes/'),
+            tasks = fn.expand('$SYNC_DIR/neorg/tasks/'),
+            work = fn.expand('$SYNC_DIR/neorg/work/'),
           },
         },
       },
