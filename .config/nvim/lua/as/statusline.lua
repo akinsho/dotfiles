@@ -43,7 +43,7 @@ local function colors()
     StMetadataPrefix = { background = bg_color, foreground = { from = 'Comment' } },
     StIndicator = { background = bg_color, foreground = indicator_color },
     StModified = { foreground = string_fg, background = bg_color },
-    StGit = { foreground = normal_fg, background = bg_color },
+    StGit = { foreground = P.whitesmoke, background = bg_color },
     StGreen = { foreground = string_fg, background = bg_color },
     StBlue = { foreground = P.dark_blue, background = bg_color, bold = true },
     StNumber = { foreground = number_fg, background = bg_color },
@@ -126,7 +126,6 @@ function as.statusline()
   local is_git_repo = fn.isdirectory(fn.getcwd(curwin) .. '/.git') == 1
   if is_git_repo then
     file.opts.after = ' ' .. icons.git.repo
-    file.opts.after_color = 'StGit'
   end
   local file_component = component(file.item, file.hl, file.opts)
 
