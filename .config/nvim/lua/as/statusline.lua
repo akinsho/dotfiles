@@ -42,7 +42,7 @@ local function colors()
     StMetadataPrefix = { background = bg_color, foreground = { from = 'Comment' } },
     StIndicator = { background = bg_color, foreground = indicator_color },
     StModified = { foreground = string_fg, background = bg_color },
-    StGit = { foreground = P.light_red, background = bg_color },
+    StGit = { foreground = normal_fg, background = bg_color },
     StGreen = { foreground = string_fg, background = bg_color },
     StBlue = { foreground = P.dark_blue, background = bg_color, bold = true },
     StNumber = { foreground = number_fg, background = bg_color },
@@ -225,7 +225,7 @@ function as.statusline()
 
     -- Git Status
     component(status.head, 'StBlue', {
-      prefix = icons.git.logo,
+      prefix = icons.git.branch,
       prefix_color = 'StGit',
       priority = 1,
     }),
