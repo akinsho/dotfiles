@@ -40,6 +40,8 @@ brew "git-delta"
 brew "git-flow"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Database migrations CLI tool
+brew "golang-migrate"
 # Fast linters runner for Go
 brew "golangci-lint"
 # CLI email client written in Rust
@@ -52,10 +54,14 @@ brew "shared-mime-info"
 brew "imagemagick"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
 # Simple terminal UI for git commands
 brew "lazygit"
 # YAML Parser
 brew "libyaml"
+# Next-gen compiler infrastructure
+brew "llvm"
 # Powerful, lightweight programming language (v5.1.5)
 brew "lua@5.1"
 # Just-In-Time Compiler (JIT) for the Lua programming language
@@ -67,23 +73,25 @@ brew "mas"
 # Parser generator tool and incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 # Control nvim processes using `nvr` command-line tool
 brew "neovim-remote"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
+# Object-relational database system
+brew "postgresql", restart_service: true
 # Python version management
 brew "pyenv"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Powerful, clean, object-oriented scripting language
 brew "ruby"
+# Generate type safe Go from SQL
+brew "sqlc"
 # CLI utility for manipulating SQLite databases
 brew "sqlite-utils"
-# Cross-shell prompt for astronauts
-brew "starship"
 # Tool to build, change, and version infrastructure
 brew "terraform"
 # Programmatically correct mistyped console commands
@@ -94,6 +102,8 @@ brew "tmux"
 brew "tree"
 # Internet file retriever
 brew "wget"
+# Generate your Xcode project from a spec file and your folder structure
+brew "xcodegen"
 # General-purpose lossless data-compression library
 brew "zlib"
 # Shell extension to navigate your filesystem faster
@@ -118,6 +128,8 @@ cask "dash"
 cask "docker"
 # Tool to hide status bar icons
 cask "dozer"
+# Matrix collaboration client
+cask "element"
 # UI toolkit for building applications for mobile, web and desktop
 cask "flutter"
 # Web browser
@@ -132,8 +144,6 @@ cask "kitty"
 cask "microsoft-teams"
 # Collaboration platform for API development
 cask "postman"
-# Emoji picker optimized for blind people
-cask "rocket"
 # Team communication and collaboration software
 cask "slack"
 # Music streaming service
@@ -149,7 +159,7 @@ cask "webtorrent"
 mas "Amphetamine", id: 937984704
 mas "Color Picker", id: 1545870783
 mas "Dropover", id: 1355679052
-mas "GIPHY CAPTURE", id: 668208984
+mas "FlipClock", id: 1181028777
 mas "Hand Mirror", id: 1502839586
 mas "Microsoft Outlook", id: 985367838
 mas "Numbers", id: 409203825
