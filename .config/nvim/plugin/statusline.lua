@@ -6,8 +6,8 @@
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
-local utils = require('as.utils.statusline')
 local H = require('as.highlights')
+local utils = require('as.utils.statusline')
 
 local api = vim.api
 local fn = vim.fn
@@ -82,7 +82,7 @@ local component_if = utils.component_if
 
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
-function as.statusline()
+function as.ui.statusline()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
 
@@ -279,6 +279,7 @@ function as.statusline()
       prefix_color = 'StMetadataPrefix',
       priority = 7,
     }),
+    -- TODO: The following components throw errors
     component(api.nvim_buf_line_count(ctx.bufnum), 'StComment', {
       before = '',
       prefix = '/',
@@ -365,6 +366,6 @@ setup_autocommands()
 vim.g.qf_disable_statusline = 1
 
 -- set the statusline
-vim.o.statusline = '%{%v:lua.as.statusline()%}'
+vim.o.statusline = '%{%v:lua.as.ui.statusline()%}'
 
 return M
