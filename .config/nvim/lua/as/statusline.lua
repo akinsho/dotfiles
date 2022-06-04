@@ -1,6 +1,6 @@
---- =====================================================================
---- Resources:
---- =====================================================================
+----------------------------------------------------------------------------------------------------
+-- RESOURCES:
+----------------------------------------------------------------------------------------------------
 --- 1. https://gabri.me/blog/diy-vim-statusline
 --- 2. https://github.com/elenapan/dotfiles/blob/master/config/nvim/statusline.vim
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
@@ -70,8 +70,12 @@ local function colors()
   })
 end
 
-local separator = { component = C.ALIGN, length = 0, priority = 0 }
-local end_marker = { component = C.END, length = 0, priority = 0 }
+local separator = function()
+  return { component = C.ALIGN, length = 0, priority = 0 }
+end
+local end_marker = function()
+  return { component = C.END, length = 0, priority = 0 }
+end
 
 local component = utils.component
 local component_if = utils.component_if
@@ -185,7 +189,7 @@ function as.statusline()
       small = 1,
       priority = 2,
     }),
-    separator,
+    separator(),
     -----------------------------------------------------------------------------//
     -- Middle section
     -----------------------------------------------------------------------------//
@@ -193,7 +197,7 @@ function as.statusline()
     -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
     -----------------------------------------------------------------------------//
     -- Start of the right side layout
-    separator,
+    separator(),
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
@@ -295,7 +299,7 @@ function as.statusline()
       prefix_color = 'StatusLine',
       priority = 6,
     }),
-    { end_marker }
+    end_marker()
   )
   -- removes 5 columns to add some padding
   return utils.display(statusline, available_space - 5)
