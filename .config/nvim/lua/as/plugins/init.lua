@@ -768,7 +768,6 @@ packer.startup({
       local_path = 'contributing',
     })
 
-    use({ 'RRethy/nvim-treesitter-endwise' })
     use({ 'p00f/nvim-ts-rainbow' })
     use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
     use({
