@@ -306,61 +306,56 @@ function as.ui.statusline()
   return utils.display(statusline, available_space - 5)
 end
 
-local function setup_autocommands()
-  as.augroup('CustomStatusline', {
-    {
-      event = { 'FocusGained' },
-      pattern = { '*' },
-      command = function()
-        vim.g.vim_in_focus = true
-      end,
+as.augroup('CustomStatusline', {
+  {
+    event = { 'FocusGained' },
+    pattern = { '*' },
+    command = function()
+      vim.g.vim_in_focus = true
+    end,
+  },
+  {
+    event = { 'FocusLost' },
+    pattern = { '*' },
+    command = function()
+      vim.g.vim_in_focus = false
+    end,
+  },
+  {
+    event = { 'VimEnter', 'ColorScheme' },
+    pattern = { '*' },
+    command = colors,
+  },
+  {
+    event = { 'BufReadPre' },
+    once = true,
+    pattern = { '*' },
+    command = utils.git_updates,
+  },
+  {
+    event = { 'BufWritePre' },
+    pattern = { '*' },
+    command = function()
+      if not vim.g.is_saving and vim.bo.modified then
+        vim.g.is_saving = true
+        vim.defer_fn(function()
+          vim.g.is_saving = false
+        end, 1000)
+      end
+    end,
+  },
+  {
+    event = 'User',
+    pattern = {
+      'NeogitPushComplete',
+      'NeogitCommitComplete',
+      'NeogitStatusRefresh',
     },
-    {
-      event = { 'FocusLost' },
-      pattern = { '*' },
-      command = function()
-        vim.g.vim_in_focus = false
-      end,
-    },
-    {
-      event = { 'VimEnter', 'ColorScheme' },
-      pattern = { '*' },
-      command = colors,
-    },
-    {
-      event = { 'BufReadPre' },
-      once = true,
-      pattern = { '*' },
-      command = utils.git_updates,
-    },
-    {
-      event = { 'BufWritePre' },
-      pattern = { '*' },
-      command = function()
-        if not vim.g.is_saving and vim.bo.modified then
-          vim.g.is_saving = true
-          vim.defer_fn(function()
-            vim.g.is_saving = false
-          end, 1000)
-        end
-      end,
-    },
-    {
-      event = 'User',
-      pattern = {
-        'NeogitPushComplete',
-        'NeogitCommitComplete',
-        'NeogitStatusRefresh',
-      },
-      command = function()
-        utils.git_updates_refresh()
-      end,
-    },
-  })
-end
-
--- attach autocommands
-setup_autocommands()
+    command = function()
+      utils.git_updates_refresh()
+    end,
+  },
+})
 
 -- :h qf.vim, disable qf statusline
 vim.g.qf_disable_statusline = 1
