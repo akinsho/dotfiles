@@ -96,7 +96,7 @@ end
 
 ---@param current_win number the actual real window
 ---@return string
-function as.winbar(current_win)
+function as.ui.winbar(current_win)
   local winbar = {}
   local add = utils.winline(winbar)
 
@@ -153,7 +153,7 @@ as.augroup('AttachWinbar', {
           and empty(vim.bo[buf].buftype)
           and not empty(vim.bo[buf].filetype)
         then
-          vim.wo[win].winbar = fmt('%%{%%v:lua.as.winbar(%d)%%}', current)
+          vim.wo[win].winbar = fmt('%%{%%v:lua.as.ui.winbar(%d)%%}', current)
         elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
           vim.wo[win].winbar = ''
         end
