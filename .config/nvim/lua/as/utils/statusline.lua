@@ -576,9 +576,8 @@ function M.spacer(size, opts)
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
     return { component = spacer, length = strwidth(spacer), priority = priority }
-  else
-    return { component = '', length = 0, priority = priority }
   end
+  return { component = '', length = 0, priority = priority }
 end
 
 --- @param component string
