@@ -17,9 +17,9 @@ return function()
         vim.api.nvim_win_set_config(win, { border = as.style.current.border })
       end
     end,
-    render = function(bufnr, notif, highlights)
+    render = function(bufnr, notif, highlights, config)
       local style = notif.title[1] == '' and 'minimal' or 'default'
-      require('notify.render')[style](bufnr, notif, highlights)
+      require('notify.render')[style](bufnr, notif, highlights, config)
     end,
   })
   vim.notify = notify
