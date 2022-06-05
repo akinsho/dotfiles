@@ -149,6 +149,10 @@ function as.ui.statusline()
   -----------------------------------------------------------------------------//
 
   local mode, mode_hl = utils.mode()
+  local lnum, col = unpack(api.nvim_win_get_cursor(curwin))
+  local line_count = api.nvim_buf_line_count(ctx.bufnum)
+
+  -- Git state
   local status = vim.b.gitsigns_status_dict or {}
   local updates = vim.g.git_statusline_updates or {}
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
@@ -273,14 +277,14 @@ function as.ui.statusline()
     }),
 
     -- Current line number/total line number
-    component(api.nvim_win_get_cursor(0)[1], 'StTitle', {
+    component(lnum, 'StTitle', {
       after = '',
       prefix = icons.misc.line,
       prefix_color = 'StMetadataPrefix',
       priority = 7,
     }),
-    -- TODO: The following components throw errors
-    component(api.nvim_buf_line_count(ctx.bufnum), 'StComment', {
+
+    component(line_count, 'StComment', {
       before = '',
       prefix = '/',
       padding = { prefix = false, suffix = true },
@@ -289,7 +293,7 @@ function as.ui.statusline()
     }),
 
     -- column
-    component('%-3c', 'StTitle', {
+    component(col, 'StTitle', {
       prefix = 'Col:',
       prefix_color = 'StMetadataPrefix',
       priority = 7,
