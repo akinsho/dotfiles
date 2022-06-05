@@ -580,19 +580,16 @@ function M.spacer(size, opts)
   return { component = '', length = 0, priority = priority }
 end
 
---- @param component string
+--- @param item string
 --- @param hl string
 --- @param opts table
-function M.component(component, hl, opts)
+function M.component(item, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
-  if empty(component) then
+  if empty(item) then
     return M.spacer()
   end
-  assert(
-    opts and opts.priority,
-    fmt("each item's priority is required: %s is missing one", component)
-  )
+  assert(opts and opts.priority, fmt("each item's priority is required: %s is missing one", item))
   opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
   local before, after = opts.before or '', opts.after or padding
@@ -608,12 +605,12 @@ function M.component(component, hl, opts)
   local click_end = opts.click and constants.CLICK_END or ''
 
   --- handle numeric inputs etc.
-  if type(component) ~= 'string' then
-    component = tostring(component)
+  if type(item) ~= 'string' then
+    item = tostring(item)
   end
 
-  if opts.max_size and component and #component >= opts.max_size then
-    component = component:sub(1, opts.max_size - 1) .. '…'
+  if opts.max_size and item and #item >= opts.max_size then
+    item = item:sub(1, opts.max_size - 1) .. '…'
   end
 
   return {
@@ -623,13 +620,13 @@ function M.component(component, hl, opts)
       prefix_item,
       constants.HL_END,
       hl and wrap(hl) or '',
-      component,
+      item,
       constants.HL_END,
       suffix_item,
       after,
       click_end,
     }),
-    length = strwidth(component .. before .. after .. suffix .. prefix),
+    length = strwidth(item .. before .. after .. suffix .. prefix),
     priority = opts.priority,
   }
 end
