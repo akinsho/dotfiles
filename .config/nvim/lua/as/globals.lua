@@ -6,13 +6,14 @@ local fmt = string.format
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 
-_G.as = {
-  -- some vim mappings require a mixture of commandline commands and function calls
-  -- this table is place to store lua functions to be called in those mappings
-  mappings = {},
-  -- for UI elements like the winbar and statusline that need global references
-  ui = {},
-}
+_G.as = as
+  or {
+    -- some vim mappings require a mixture of commandline commands and function calls
+    -- this table is place to store lua functions to be called in those mappings
+    mappings = {},
+    -- for UI elements like the winbar and statusline that need global references
+    ui = {},
+  }
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
