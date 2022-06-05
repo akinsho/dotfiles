@@ -375,13 +375,9 @@ packer.startup({
             },
           },
         })
-        local function clip()
-          require('telescope').extensions.neoclip.default(
-            require('telescope.themes').get_dropdown()
-          )
-        end
-
-        as.nnoremap('<localleader>p', clip, 'neoclip: open yank history')
+        as.nnoremap('<localleader>p', function()
+          require('telescope').extensions.neoclip.default(as.telescope.dropdown())
+        end, 'neoclip: open yank history')
       end,
     })
 
