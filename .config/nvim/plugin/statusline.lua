@@ -77,14 +77,14 @@ local end_marker = function()
   return { component = C.END, length = 0, priority = 0 }
 end
 
-local component = utils.component
-local component_if = utils.component_if
-
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
 function as.ui.statusline()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
+
+  local component = utils.component
+  local component_if = utils.component_if
 
   local available_space = vim.o.columns
 
