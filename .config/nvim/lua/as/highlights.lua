@@ -211,6 +211,11 @@ local function general_overrides()
     markdownCode = { background = code_block },
     markdownCodeBlock = { background = code_block },
     -----------------------------------------------------------------------------//
+    CurSearch = {
+      background = { from = 'String', attr = 'fg' },
+      foreground = 'white',
+      bold = true,
+    },
     CursorLineNr = { bold = true },
     FoldColumn = { background = 'background' },
     Folded = { inherit = 'Comment', italic = true, bold = true },
