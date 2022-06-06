@@ -217,22 +217,24 @@ function M.config()
       },
       file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store' },
       path_display = { 'smart', 'absolute', 'truncate' },
+      winblend = 5,
+      history = {
+        path = vim.fn.stdpath('data') .. '/telescope_history.sqlite3',
+      },
       layout_strategy = 'flex',
       layout_config = {
         horizontal = {
           preview_width = 0.55,
         },
-        cursor = { -- FIXME: this does not change the size of the cursor layout
+        cursor = { -- TODO: I don't think this works but don't know why
           width = 0.4,
           height = function(self, _, max_lines)
             local results = #self.finder.results
-            return (results <= max_lines and results or max_lines - 10) + 4
+            local PADDING = 4 -- this represents the size of the telescope window
+            local LIMIT = math.floor(max_lines / 2)
+            return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
           end,
         },
-      },
-      winblend = 5,
-      history = {
-        path = vim.fn.stdpath('data') .. '/telescope_history.sqlite3',
       },
     },
     extensions = {
@@ -240,7 +242,6 @@ function M.config()
         workspaces = {
           conf = vim.env.DOTFILES,
           project = vim.env.PROJECTS_DIR,
-          wiki = vim.g.wiki_path,
         },
       },
       fzf = {
