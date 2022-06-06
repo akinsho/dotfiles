@@ -63,12 +63,11 @@ local function append_icon_hl(accum, hl_name, name)
 end
 
 local hls = as.fold(append_icon_hl, hl_map, {
-  Winbar = { bold = true },
+  Winbar = { bold = false },
   WinbarNC = { bold = false },
   WinbarCrumb = { bold = true },
   WinbarIcon = { inherit = 'Function' },
   WinbarDirectory = { inherit = 'Directory' },
-  WinbarCurrent = { bold = true, underline = true, sp = { from = 'Directory', attr = 'fg' } },
 })
 
 highlights.plugin('winbar', hls)
@@ -115,7 +114,7 @@ function as.ui.winbar(current_win)
     local priority = (#parts - (index - 1)) * 2
     local has_next = index < #parts
     as.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
-    add(component(part, (not has_next and is_current) and 'WinbarCurrent' or nil, {
+    add(component(part, 'Winbar', {
       id = priority,
       click = 'HandleWinbarClick',
       suffix = (has_next or is_current) and separator or nil,
