@@ -101,7 +101,7 @@ function M.setup()
   end
 
   local function builtins()
-    require('telescope.builtin').builtin()
+    require('telescope.builtin').builtin({ include_extensions = true })
   end
 
   local function find_files()
