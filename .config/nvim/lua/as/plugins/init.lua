@@ -160,8 +160,8 @@ packer.startup({
     -- with nvim-treesitter
     use({
       'neovim/nvim-lspconfig',
-      config = as.block_reload(conf('lspconfig')),
       event = 'BufRead',
+      config = as.block_reload(conf('lspconfig')),
       requires = { 'williamboman/nvim-lsp-installer' },
     })
 
