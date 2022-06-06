@@ -362,6 +362,7 @@ local sidebar_fts = {
   'neo-tree',
   'Outline',
   'dbui',
+  'neotest-summary',
 }
 
 local function on_sidebar_enter()

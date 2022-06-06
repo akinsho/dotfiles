@@ -241,18 +241,19 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       'vim-test/vim-test',
-      cmd = { 'TestFile', 'TestNearest', 'TestSuite' },
-      setup = conf('vim-test').setup,
       config = conf('vim-test').config,
     })
 
     use({
-      'rcarriga/vim-ultest',
-      wants = { 'vim-test' },
-      requires = { 'vim-test' },
-      event = 'CursorHold *_spec.*,*_test.*',
-      setup = conf('ultest').setup,
-      config = conf('ultest').config,
+      'rcarriga/neotest',
+      config = conf('neotest'),
+      requires = {
+        'rcarriga/neotest-plenary',
+        'rcarriga/neotest-vim-test',
+        'nvim-lua/plenary.nvim',
+        'nvim-treesitter/nvim-treesitter',
+        'antoinemadec/FixCursorHold.nvim',
+      },
     })
 
     use({

@@ -1,16 +1,5 @@
 local M = {}
 
-function M.setup()
-  require('which-key').register({
-    ['<localleader>t'] = {
-      name = '+vim-test',
-      f = { '<cmd>TestFile<CR>', 'test: file' },
-      n = { '<cmd>TestNearest<CR>', 'test: nearest' },
-      s = { '<cmd>TestSuite<CR>', 'test: suite' },
-    },
-  })
-end
-
 function M.config()
   local t = require('toggleterm')
   local terms = require('toggleterm.terminal')
