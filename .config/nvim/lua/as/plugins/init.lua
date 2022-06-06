@@ -623,7 +623,7 @@ packer.startup({
     use({
       'moll/vim-bbye',
       config = function()
-        as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>')
+        as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit')
       end,
     })
     -----------------------------------------------------------------------------//
