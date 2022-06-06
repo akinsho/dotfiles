@@ -48,6 +48,9 @@ packer.startup({
     -- @see: https://github.com/neovim/neovim/issues/12587
     use('antoinemadec/FixCursorHold.nvim')
 
+    -- THE LIBRARY
+    use('nvim-lua/plenary.nvim')
+
     use({
       'ahmedkhalf/project.nvim',
       config = function()
@@ -110,30 +113,6 @@ packer.startup({
       run = 'cp ./*.py ~/.config/kitty/',
       cond = function()
         return not vim.env.TMUX
-      end,
-    })
-
-    use({
-      'nvim-lua/plenary.nvim',
-      config = function()
-        as.augroup('PlenaryTests', {
-          {
-            event = 'BufEnter',
-            pattern = { '*/personal/*/tests/*_spec.lua' },
-            command = function()
-              require('which-key').register({
-                ['<localleader>t'] = {
-                  name = '+plenary',
-                  f = { '<Plug>PlenaryTestFile', 'test file' },
-                  d = {
-                    "<cmd>PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal.vim'}<CR>",
-                    'test directory',
-                  },
-                },
-              }, { buffer = 0 })
-            end,
-          },
-        })
       end,
     })
 
