@@ -278,6 +278,12 @@ function M.config()
       find_files = {
         hidden = true,
       },
+      keymaps = as.telescope.dropdown({
+        layout_config = {
+          height = 18,
+          width = 0.5,
+        },
+      }),
       git_branches = as.telescope.dropdown(),
       git_bcommits = {
         layout_config = {
