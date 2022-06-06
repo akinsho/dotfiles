@@ -28,11 +28,11 @@ function M.setup()
     })
   end
 
-  local function delta_opts(opts)
+  local function delta_opts(opts, is_buf)
     local previewers = require('telescope.previewers')
     local delta = previewers.new_termopen_previewer({
       get_command = function(entry)
-        return {
+        local args = {
           'git',
           '-c',
           'core.pager=delta',
@@ -41,6 +41,10 @@ function M.setup()
           'diff',
           entry.value .. '^!',
         }
+        if is_buf then
+          vim.list_extend(args, { '--', entry.current_file })
+        end
+        return args
       end,
     })
     opts = opts or {}
@@ -56,7 +60,7 @@ function M.setup()
   end
 
   local function delta_git_bcommits(opts)
-    require('telescope.builtin').git_bcommits(delta_opts(opts))
+    require('telescope.builtin').git_bcommits(delta_opts(opts, true))
   end
 
   local function dotfiles()
