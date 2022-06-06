@@ -195,6 +195,7 @@ function M.config()
       dynamic_preview_title = true,
       prompt_prefix = icons.misc.telescope .. ' ',
       selection_caret = icons.misc.chevron_right .. ' ',
+      cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
