@@ -780,13 +780,8 @@ packer.startup({
           TreesitterContext = { inherit = 'Normal' },
         })
         require('treesitter-context').setup({
-          -- TODO: exclude function calls in lua until the issue below is fixed
-          -- https://github.com/nvim-treesitter/nvim-treesitter-context/issues/116
-          exclude_patterns = {
-            lua = {
-              '^function_call$',
-            },
-          },
+          multiline_threshold = 4,
+          -- separator = { '─', 'NonText' },
         })
       end,
     })
