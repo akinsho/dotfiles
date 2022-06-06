@@ -162,22 +162,7 @@ packer.startup({
       'neovim/nvim-lspconfig',
       config = as.block_reload(conf('lspconfig')),
       event = 'BufRead',
-      requires = {
-        {
-          'williamboman/nvim-lsp-installer',
-          config = function()
-            as.augroup('LspInstallerConfig', {
-              {
-                event = 'Filetype',
-                pattern = 'lsp-installer',
-                command = function()
-                  vim.api.nvim_win_set_config(0, { border = as.style.current.border })
-                end,
-              },
-            })
-          end,
-        },
-      },
+      requires = { 'williamboman/nvim-lsp-installer' },
     })
 
     use({

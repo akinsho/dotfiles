@@ -62,7 +62,10 @@ as.lsp.servers = {
 }
 
 return function()
-  require('nvim-lsp-installer').setup({ automatic_installation = true })
+  require('nvim-lsp-installer').setup({
+    automatic_installation = true,
+    ui = { border = as.style.current.border },
+  })
   for name, config in pairs(as.lsp.servers) do
     if type(config) == 'boolean' then
       config = {}
