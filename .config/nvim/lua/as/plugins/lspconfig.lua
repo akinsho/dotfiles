@@ -1,68 +1,66 @@
-as.lsp = {}
-
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
 --- LSP server configs are setup dynamically as they need to be generated during
 --- startup so things like the runtimepath for lua is correctly populated
-as.lsp.servers = {
-  ccls = true,
-  tsserver = true,
-  graphql = true,
-  jsonls = true,
-  bashls = true,
-  vimls = true,
-  terraformls = true,
-  rust_analyzer = true,
-  gopls = false,
-  sourcekit = {
-    filetypes = { 'swift', 'objective-c', 'objective-cpp' },
-  },
-  yamlls = {
-    settings = {
-      yaml = {
-        customTags = {
-          '!reference sequence', -- necessary for gitlab-ci.yaml files
+return function()
+  local servers = {
+    ccls = true,
+    tsserver = true,
+    graphql = true,
+    jsonls = true,
+    bashls = true,
+    vimls = true,
+    terraformls = true,
+    rust_analyzer = true,
+    gopls = false,
+    sourcekit = {
+      filetypes = { 'swift', 'objective-c', 'objective-cpp' },
+    },
+    yamlls = {
+      settings = {
+        yaml = {
+          customTags = {
+            '!reference sequence', -- necessary for gitlab-ci.yaml files
+          },
         },
       },
     },
-  },
-  sqls = function()
-    return {
-      root_dir = require('lspconfig').util.root_pattern('.git'),
-      single_file_support = false,
-      on_new_config = function(new_config, new_rootdir)
-        table.insert(new_config.cmd, '-config')
-        table.insert(new_config.cmd, new_rootdir .. '/.config.yaml')
-      end,
-    }
-  end,
-  --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
-  sumneko_lua = function()
-    local settings = {
-      settings = {
-        Lua = {
-          format = { enable = false },
-          diagnostics = {
-            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
+    sqls = function()
+      return {
+        root_dir = require('lspconfig').util.root_pattern('.git'),
+        single_file_support = false,
+        on_new_config = function(new_config, new_rootdir)
+          table.insert(new_config.cmd, '-config')
+          table.insert(new_config.cmd, new_rootdir .. '/.config.yaml')
+        end,
+      }
+    end,
+    --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
+    sumneko_lua = function()
+      local settings = {
+        settings = {
+          Lua = {
+            format = { enable = false },
+            diagnostics = {
+              globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
+            },
+            completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
           },
-          completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         },
-      },
-    }
-    local ok, lua_dev = as.safe_require('lua-dev')
-    if not ok then
-      return settings
-    end
-    return lua_dev.setup({
-      library = { plugins = { 'plenary.nvim' } },
-      lspconfig = settings,
-    })
-  end,
-}
+      }
+      local ok, lua_dev = as.safe_require('lua-dev')
+      if not ok then
+        return settings
+      end
+      return lua_dev.setup({
+        library = { plugins = { 'plenary.nvim', 'neotest' } },
+        lspconfig = settings,
+      })
+    end,
+  }
 
-return function()
-  for name, config in pairs(as.lsp.servers) do
+  for name, config in pairs(servers) do
     if type(config) == 'boolean' then
       config = {}
     elseif config and type(config) == 'function' then
