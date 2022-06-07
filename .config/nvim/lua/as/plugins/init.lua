@@ -666,13 +666,14 @@ packer.startup({
     use('tpope/vim-eunuch')
     use('tpope/vim-sleuth')
     use('tpope/vim-repeat')
+
     use({
-      'tpope/vim-abolish',
+      'johmsalas/text-case.nvim',
       config = function()
-        local opts = { silent = false }
-        as.nnoremap('<localleader>[', ':S/<C-R><C-W>//<LEFT>', opts)
-        as.nnoremap('<localleader>]', ':%S/<C-r><C-w>//c<left><left>', opts)
-        as.xnoremap('<localleader>[', [["zy:%S/<C-r><C-o>"//c<left><left>]], opts)
+        require('textcase').setup()
+        as.nnoremap('<localleader>[', ':Subs/<C-R><C-W>//<LEFT>', { silent = false })
+        as.nnoremap('<localleader>]', ':%Subs/<C-r><C-w>//c<left><left>', { silent = false })
+        as.xnoremap('<localleader>[', [["zy:%Subs/<C-r><C-o>"//c<left><left>]], { silent = false })
       end,
     })
     -- sets searchable path for filetypes like go so 'gf' works
