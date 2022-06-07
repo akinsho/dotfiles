@@ -26,4 +26,4 @@ repoPaths:
 keybindings:
   prs:
     - key: c
-      command: cd {{.RepoPath}}; gh pr checkout {{.PrNumber}}
+      command: kitty @ launch --cwd={{.RepoPath}} zsh -c 'gh pr checkout {{.PrNumber}}; nvim'
