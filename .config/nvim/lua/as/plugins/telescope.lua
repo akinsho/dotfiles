@@ -24,7 +24,11 @@ function M.setup()
     require('telescope.builtin').find_files({
       prompt_title = '~ nvim config ~',
       cwd = vim.fn.stdpath('config'),
-      file_ignore_patterns = { '.git/.*', 'dotbot/.*' },
+      file_ignore_patterns = {
+        '.git/.*',
+        'dotbot/.*',
+        'zsh/plugins/.*',
+      },
     })
   end
 
@@ -215,7 +219,17 @@ function M.config()
           ['<C-w>'] = actions.send_selected_to_qflist,
         },
       },
-      file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store' },
+      file_ignore_patterns = {
+        '%.jpg',
+        '%.jpeg',
+        '%.png',
+        '%.otf',
+        '%.ttf',
+        '%.DS_Store',
+        '^.git/',
+        '^node_modules/',
+        '^site-packages/',
+      },
       path_display = { 'smart', 'absolute', 'truncate' },
       winblend = 5,
       history = {
