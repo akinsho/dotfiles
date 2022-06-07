@@ -12,7 +12,7 @@ local api = vim.api
 local fmt = string.format
 local icons = as.style.icons.misc
 
-local separator = icons.chevron_right
+local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
 
 local hl_map = {

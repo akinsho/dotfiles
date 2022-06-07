@@ -86,6 +86,7 @@ as.style = {
       bookmark = '',
       pencil = '',
       tools = '',
+      arrow_right = '',
       caret_right = '',
       chevron_right = '',
       double_chevron_right = '»',
