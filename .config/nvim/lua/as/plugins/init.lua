@@ -81,6 +81,7 @@ packer.startup({
           after = 'telescope.nvim',
           requires = 'tami5/sqlite.lua',
         },
+        { 'Zane-/howdoi.nvim' },
         {
           'nvim-telescope/telescope-smart-history.nvim',
           after = 'telescope.nvim',

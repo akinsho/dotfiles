@@ -262,6 +262,11 @@ function M.config()
         override_generic_sorter = true,
         override_file_sorter = true,
       },
+      howdoi = require('telescope.themes').get_ivy({
+        borderchars = {
+          preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+        },
+      }),
     },
     pickers = {
       buffers = as.telescope.dropdown({
@@ -351,6 +356,10 @@ function M.config()
     })
   end
 
+  local function howdoi()
+    telescope.extensions.howdoi.howdoi()
+  end
+
   which_key.register({
     ['<leader>f'] = {
       name = '+telescope',
@@ -362,6 +371,7 @@ function M.config()
         b = { builtins.git_branches, 'branches' },
         n = { gh_notifications, 'notifications' },
       },
+      H = { howdoi, 'howdoi' },
       l = {
         name = '+lsp',
         e = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
