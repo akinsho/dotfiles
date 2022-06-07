@@ -150,7 +150,7 @@ packer.startup({
         require('inc_rename').setup({ hl_group = 'Visual' })
         as.nnoremap('<leader>ri', function()
           return ':IncRename ' .. vim.fn.expand('<cword>')
-        end, { expr = true, desc = 'lsp: incremental rename' })
+        end, { expr = true, silent = false, desc = 'lsp: incremental rename' })
       end,
     })
 
