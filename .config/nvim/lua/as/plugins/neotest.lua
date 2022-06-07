@@ -1,6 +1,9 @@
 return function()
   local neotest = require('neotest')
   neotest.setup({
+    icons = {
+      running = as.style.icons.misc.clock
+    },
     adapters = {
       require('neotest-plenary'),
       require('neotest-vim-test')({ ignore_filetypes = { "python", "lua" } })

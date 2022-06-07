@@ -65,6 +65,7 @@ as.style = {
       tab = '⇥',
       bug = '', -- 'ﴫ'
       question = '',
+      clock = '',
       lock = '',
       circle = '',
       project = '',
