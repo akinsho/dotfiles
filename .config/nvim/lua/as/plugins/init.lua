@@ -136,21 +136,22 @@ packer.startup({
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
     use({
-      'williamboman/nvim-lsp-installer',
-      event = 'BufRead',
-      config = function()
-        require('nvim-lsp-installer').setup({
-          automatic_installation = true,
-          ui = { border = as.style.current.border },
-        })
-      end,
-    })
-
-    -- lspconfig is abominably slow to load and if loaded on BufReadPre seems to interact with nvim-treesitter
-    use({
-      'neovim/nvim-lspconfig',
-      after = 'nvim-lsp-installer',
-      config = conf('lspconfig'),
+      {
+        'williamboman/nvim-lsp-installer',
+        event = 'BufRead',
+        config = function()
+          require('nvim-lsp-installer').setup({
+            automatic_installation = true,
+            ui = { border = as.style.current.border },
+          })
+        end,
+      },
+      -- lspconfig is abominably slow to load and if loaded on BufReadPre seems to interact with nvim-treesitter
+      {
+        'neovim/nvim-lspconfig',
+        after = 'nvim-lsp-installer',
+        config = conf('lspconfig'),
+      },
     })
 
     use({
