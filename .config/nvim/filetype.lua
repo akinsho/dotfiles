@@ -9,6 +9,7 @@ vim.filetype.add({
     lock = 'yaml',
   },
   filename = {
+    ['go.mod'] = 'gomod',
     ['.gitignore'] = 'conf',
     ['launch.json'] = 'jsonc',
     Podfile = 'ruby',
