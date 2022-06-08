@@ -13,6 +13,7 @@ return function()
     vimls = true,
     terraformls = true,
     rust_analyzer = true,
+    marksman = true,
     gopls = false,
     sourcekit = {
       filetypes = { 'swift', 'objective-c', 'objective-cpp' },
