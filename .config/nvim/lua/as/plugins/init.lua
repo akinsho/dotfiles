@@ -1,5 +1,6 @@
 local utils = require('as.utils.plugins')
 
+local dev = utils.dev
 local conf = utils.conf
 local use_local = utils.use_local
 local packer_notify = utils.packer_notify
@@ -262,6 +263,7 @@ packer.startup({
         'rcarriga/neotest-plenary',
         'rcarriga/neotest-vim-test',
         'nvim-lua/plenary.nvim',
+        dev('personal/neotest-go'),
         'nvim-treesitter/nvim-treesitter',
         'antoinemadec/FixCursorHold.nvim',
       },
