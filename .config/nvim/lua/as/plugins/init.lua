@@ -771,14 +771,17 @@ packer.startup({
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
         local hl = require('as.highlights')
-        local dim = hl.alter_color(hl.get_hl('Normal', 'bg'), -12)
+        local norm_bg = hl.get_hl('Normal', 'bg')
+        local dim = hl.alter_color(norm_bg, 12)
+        local dimmer = hl.alter_color(norm_bg, 8)
         hl.plugin('treesitter-context', {
-          ContextBorder = { foreground = dim },
-          TreesitterContext = { inherit = 'Normal' },
+          ContextBorder = { foreground = dim, background = dimmer },
+          TreesitterContext = { inherit = 'Normal', background = dimmer },
+          TreesitterContextLineNumber = { inherit = 'LineNr', background = dimmer },
         })
         require('treesitter-context').setup({
           multiline_threshold = 4,
-          separator = { '─', 'ContextBorder' },
+          separator = { '▁', 'ContextBorder' },
         })
       end,
     })
