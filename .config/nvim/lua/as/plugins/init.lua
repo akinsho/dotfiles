@@ -840,9 +840,7 @@ packer.startup({
       end,
       config = function()
         require('diffview').setup({
-          default_args = {
-            DiffviewOpen = { 'origin/HEAD' },
-          },
+          default_args = { DiffviewOpen = { 'origin/HEAD' } },
           hooks = {
             diff_buf_read = function()
               vim.opt_local.wrap = false
@@ -852,15 +850,9 @@ packer.startup({
           },
           enhanced_diff_hl = true,
           keymaps = {
-            view = {
-              q = '<Cmd>DiffviewClose<CR>',
-            },
-            file_panel = {
-              q = '<Cmd>DiffviewClose<CR>',
-            },
-            file_history_panel = {
-              q = '<Cmd>DiffviewClose<CR>',
-            },
+            view = { q = '<Cmd>DiffviewClose<CR>' },
+            file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+            file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
           },
         })
       end,
