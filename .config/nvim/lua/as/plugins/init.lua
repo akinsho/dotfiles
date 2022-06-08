@@ -836,6 +836,7 @@ packer.startup({
       module = 'diffview',
       setup = function()
         as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
+        as.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
       end,
       config = function()
         require('diffview').setup({
