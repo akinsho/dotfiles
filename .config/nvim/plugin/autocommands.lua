@@ -81,6 +81,7 @@ local smart_close_filetypes = {
   'qf',
   'startuptime',
   'lspinfo',
+  'neotest-summary',
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
