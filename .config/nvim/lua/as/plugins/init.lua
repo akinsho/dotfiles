@@ -1039,6 +1039,8 @@ if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) t
   vim.g.packer_compiled_loaded = true
 end
 
+as.nnoremap('<leader>ps', '<Cmd>PackerSync<CR>', 'packer: sync')
+
 as.augroup('PackerSetupInit', {
   {
     event = 'BufWritePost',
