@@ -378,10 +378,6 @@ function M.debugger()
   return not package.loaded['dap'] and '' or require('dap').status()
 end
 
-local function printf(format, current, total)
-  return (current == 0 and total == 0) and '' or fn.printf(format, current, total)
-end
-
 -----------------------------------------------------------------------------//
 -- Last search count
 -----------------------------------------------------------------------------//
@@ -391,15 +387,15 @@ function M.search_count()
     return ''
   end
   if result.incomplete == 1 then -- timed out
-    return printf(' ?/?? ')
+    return ' ?/?? '
   elseif result.incomplete == 2 then -- max count exceeded
     if result.total > result.maxcount and result.current > result.maxcount then
-      return printf(' >%d/>%d ', result.current, result.total)
+      return fmt(' >%d/>%d ', result.current, result.total)
     elseif result.total > result.maxcount then
-      return printf(' %d/>%d ', result.current, result.total)
+      return fmt(' %d/>%d ', result.current, result.total)
     end
   end
-  return printf(' %d/%d ', result.current, result.total)
+  return fmt(' %d/%d ', result.current, result.total)
 end
 
 ---@type number
