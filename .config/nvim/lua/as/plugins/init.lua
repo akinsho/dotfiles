@@ -772,16 +772,15 @@ packer.startup({
       config = function()
         local hl = require('as.highlights')
         local norm_bg = hl.get_hl('Normal', 'bg')
-        local dim = hl.alter_color(norm_bg, 12)
-        local dimmer = hl.alter_color(norm_bg, 8)
+        local dim = hl.alter_color(norm_bg, 25)
         hl.plugin('treesitter-context', {
-          ContextBorder = { foreground = dim, background = dimmer },
-          TreesitterContext = { inherit = 'Normal', background = dimmer },
-          TreesitterContextLineNumber = { inherit = 'LineNr', background = dimmer },
+          ContextBorder = { foreground = dim },
+          TreesitterContext = { inherit = 'Normal' },
+          TreesitterContextLineNumber = { inherit = 'LineNr' },
         })
         require('treesitter-context').setup({
           multiline_threshold = 4,
-          separator = { '▁', 'ContextBorder' },
+          separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
         })
       end,
     })
