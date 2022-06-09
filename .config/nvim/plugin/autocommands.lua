@@ -293,14 +293,14 @@ end
 as.augroup('CustomColorColumn', {
   {
     -- Update the cursor column to match current window size
-    event = { 'WinEnter', 'BufEnter', 'VimResized', 'FileType' },
+    event = { 'BufWinEnter', 'VimResized', 'FileType' },
     pattern = '*',
     command = function()
       check_color_column()
     end,
   },
   {
-    event = { 'WinLeave' },
+    event = { 'BufWinLeave' },
     pattern = { '*' },
     command = function()
       check_color_column(true)
