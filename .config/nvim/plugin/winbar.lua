@@ -12,6 +12,7 @@ local api = vim.api
 local fmt = string.format
 local icons = as.style.icons.misc
 
+local dir_separator = '/'
 local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
 
@@ -106,25 +107,27 @@ function as.ui.winbar(current_win)
     return add(component('[No name]', 'Winbar', { priority = 0 }))
   end
 
-  local is_current = current_win == api.nvim_get_current_win()
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
 
   as.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
-    local has_next = index < #parts
+    local is_first = index == 1
+    local is_last = index == #parts
+    local sep = is_last and separator or dir_separator
+    local hl = is_last and 'Winbar' or 'NonText'
     as.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
-    add(component(part, 'Winbar', {
+    add(component(part, hl, {
       id = priority,
-      click = 'HandleWinbarClick',
-      suffix = (has_next or is_current) and separator or nil,
-      suffix_color = (has_next or is_current) and 'WinbarDirectory' or nil,
-      prefix = not has_next and icon or nil,
-      prefix_color = not has_next and color or nil,
       priority = priority,
+      click = 'HandleWinbarClick',
+      suffix = not is_last and sep or nil,
+      suffix_color = not is_last and 'NonText' or nil,
+      prefix = is_first and icon or nil,
+      prefix_color = is_first and color or nil,
     }))
   end, parts)
-  if is_current then
+  if current_win == api.nvim_get_current_win() then
     add(unpack(breadcrumbs()))
   end
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
