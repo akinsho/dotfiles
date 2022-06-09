@@ -20,7 +20,7 @@ return function()
       debug = {
         logging = true,
       },
-      truncation_style = { 'uncentered', 1 },
+      navigation = { mode = 'uncentered' },
       mode = 'buffers', -- tabs
       sort_by = 'insert_after_current',
       right_mouse_command = 'vert sbuffer %d',
