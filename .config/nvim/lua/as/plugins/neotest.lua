@@ -7,7 +7,6 @@ return function()
     adapters = {
       require('neotest-plenary'),
       require('neotest-go'),
-      -- require('neotest-vim-test')({ ignore_filetypes = { 'python', 'lua', 'go' } }),
     },
     floating = {
       border = as.style.current.border,
