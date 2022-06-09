@@ -357,23 +357,6 @@ function M.diagnostic_info(context)
   }
 end
 
-function M.lsp_client(ctx)
-  local names = {}
-  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
-  -- Show a special truncated symbol for null ls since showing it's full name
-  -- is a waste of space, I want to know it's running but not have it's name taking up space
-  local has_null_ls = false
-  for _, client in pairs(clients) do
-    local is_null = client.name:match('null')
-    has_null_ls = has_null_ls or is_null
-    if not is_null then
-      table.insert(names, client.name)
-    end
-  end
-  -- ﳠ is the mathematical symbol denoting an empty set i.e. sort of kinda null
-  return 'LSP(s): ' .. table.concat(names, ' │ '), (has_null_ls and '│ ﳠ ' or '')
-end
-
 function M.debugger()
   return not package.loaded['dap'] and '' or require('dap').status()
 end

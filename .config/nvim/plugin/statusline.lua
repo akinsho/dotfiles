@@ -30,7 +30,6 @@ local function colors()
   local error_color = as.style.lsp.colors.error
   local info_color = as.style.lsp.colors.info
   local normal_fg = H.get_hl('Normal', 'fg')
-  local pmenu_bg = H.get_hl('Pmenu', 'bg')
   local string_fg = H.get_hl('String', 'fg')
   local number_fg = H.get_hl('Number', 'fg')
 
@@ -48,7 +47,7 @@ local function colors()
     StBlue = { foreground = P.dark_blue, background = bg_color, bold = true },
     StNumber = { foreground = number_fg, background = bg_color },
     StCount = { foreground = 'bg', background = indicator_color, bold = true },
-    StPrefix = { background = pmenu_bg, foreground = normal_fg },
+    StClient = { background = bg_color, foreground = normal_fg, bold = true },
     StDirectory = { background = bg_color, foreground = 'Gray', italic = true },
     StDirectoryInactive = { background = bg_color, foreground = dim_color, italic = true },
     StParentDirectory = { background = bg_color, foreground = string_fg, bold = true },
@@ -165,7 +164,6 @@ function as.ui.statusline()
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   local flutter = vim.g.flutter_tools_decorations or {}
-  local clients, lsp_suffix = utils.lsp_client(ctx)
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -207,14 +205,29 @@ function as.ui.statusline()
     -----------------------------------------------------------------------------//
     component(flutter.app_version, 'StMetadata', { priority = 4 }),
 
-    component(flutter.device and flutter.device.name or '', 'StMetadata', { priority = 4 }),
+    component(flutter.device and flutter.device.name or '', 'StMetadata', { priority = 4 })
+  )
 
-    component(clients, 'StMetadata', {
-      suffix = lsp_suffix,
+  -----------------------------------------------------------------------------//
+  -- LSP Clients
+  -----------------------------------------------------------------------------//
+  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
+  local lsp_clients = as.map(function(client, index)
+    -- ﳠ is the mathematical symbol denoting an empty set i.e. sort of kinda null
+    local is_null = client.name:match('null')
+    client = is_null and 'ﳠ' or client.name
+    return component(client, 'StClient', {
+      prefix = index == 1 and ' LSP(s):' or nil,
+      prefix_color = index == 1 and 'StMetadata' or nil,
+      suffix = '│',
       suffix_color = 'StMetadataPrefix',
       priority = 4,
-    }),
+    })
+  end, clients)
+  add(unpack(lsp_clients))
+  -----------------------------------------------------------------------------//
 
+  add(
     component(utils.debugger(), 'StMetadata', { prefix = icons.misc.bug, priority = 4 }),
 
     component_if(diagnostics.error.count, diagnostics.error, 'StError', {
