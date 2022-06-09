@@ -2,12 +2,12 @@ return function()
   local neotest = require('neotest')
   neotest.setup({
     icons = {
-      running = as.style.icons.misc.clock
+      running = as.style.icons.misc.clock,
     },
     adapters = {
       require('neotest-plenary'),
       require('neotest-go'),
-      require('neotest-vim-test')({ ignore_filetypes = { 'python', 'lua', 'go' } }),
+      -- require('neotest-vim-test')({ ignore_filetypes = { 'python', 'lua', 'go' } }),
     },
     floating = {
       border = as.style.current.border,
