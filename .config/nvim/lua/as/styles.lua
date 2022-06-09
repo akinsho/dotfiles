@@ -26,6 +26,10 @@ as.style = {
     rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
   },
   icons = {
+    separators = {
+      vert_bottom_half_block = '▄',
+      vert_top_half_block = '▀',
+    },
     lsp = {
       error = '✗',
       warn = '',
