@@ -116,13 +116,14 @@ function as.ui.winbar(current_win)
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     local hl = is_last and 'Winbar' or 'NonText'
+    local suffix_hl = is_last and 'WinbarDirectory' or 'NonText'
     as.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, hl, {
       id = priority,
       priority = priority,
       click = 'HandleWinbarClick',
-      suffix = not is_last and sep or nil,
-      suffix_color = not is_last and 'NonText' or nil,
+      suffix = sep,
+      suffix_color = suffix_hl,
       prefix = is_first and icon or nil,
       prefix_color = is_first and color or nil,
     }))
