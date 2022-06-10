@@ -94,9 +94,8 @@ local function breadcrumbs()
   end, data, {})
 end
 
----@param current_win number the actual real window
 ---@return string
-function as.ui.winbar(current_win)
+function as.ui.winbar()
   local winbar = {}
   local add = utils.winline(winbar)
 
@@ -128,9 +127,7 @@ function as.ui.winbar(current_win)
       prefix_color = is_first and color or nil,
     }))
   end, parts)
-  if current_win == api.nvim_get_current_win() then
-    add(unpack(breadcrumbs()))
-  end
+  add(unpack(breadcrumbs()))
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
@@ -147,7 +144,6 @@ as.augroup('AttachWinbar', {
     event = { 'BufWinEnter', 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
     command = function()
-      local current = api.nvim_get_current_win()
       for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
         local buf = api.nvim_win_get_buf(win)
         if
@@ -156,7 +152,7 @@ as.augroup('AttachWinbar', {
           and empty(vim.bo[buf].buftype)
           and not empty(vim.bo[buf].filetype)
         then
-          vim.wo[win].winbar = fmt('%%{%%v:lua.as.ui.winbar(%d)%%}', current)
+          vim.wo[win].winbar = '%{%v:lua.as.ui.winbar()%}'
         elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
           vim.wo[win].winbar = ''
         end
