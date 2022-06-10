@@ -214,9 +214,8 @@ function as.ui.statusline()
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
   if #clients > 0 then
     local lsp_clients = as.map(function(client, index)
-      -- ﳠ is the mathematical symbol denoting an empty set i.e. sort of kinda null
       local is_null = client.name:match('null')
-      client = is_null and 'ﳠ' or client.name
+      client = is_null and 'ﳠ' or client.name -- the mathematical symbol denoting an empty set i.e. sort of kinda null
       return component(client, 'StClient', {
         prefix = index == 1 and ' LSP(s):' or nil,
         prefix_color = index == 1 and 'StMetadata' or nil,
