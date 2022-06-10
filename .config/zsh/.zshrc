@@ -483,6 +483,8 @@ add-zsh-hook chpwd () {
 add-zsh-hook preexec () {
   __timings_preexec
 }
+
+cdr # Jump to the most recently used directory on startup
 #-------------------------------------------------------------------------------
 #   LOCAL SCRIPTS
 #-------------------------------------------------------------------------------
