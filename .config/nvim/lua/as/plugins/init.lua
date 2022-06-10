@@ -781,6 +781,7 @@ packer.startup({
         require('treesitter-context').setup({
           multiline_threshold = 4,
           separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
+          mode = 'topline',
         })
       end,
     })
