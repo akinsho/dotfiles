@@ -219,7 +219,7 @@ function as.ui.statusline()
       return component(client, 'StClient', {
         prefix = index == 1 and ' LSP(s):' or nil,
         prefix_color = index == 1 and 'StMetadata' or nil,
-        suffix = '│',
+        suffix = '', -- │
         suffix_color = 'StMetadataPrefix',
         priority = 4,
       })
