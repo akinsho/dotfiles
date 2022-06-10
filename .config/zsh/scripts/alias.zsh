@@ -146,9 +146,3 @@ function grename() {
     git push --set-upstream origin "$2"
   fi
 }
-
-
-function gdnolock() {
-  git diff "$@" ":(exclude)package-lock.json" ":(exclude)*.lock"
-}
-compdef _git gdnolock=git-diff
