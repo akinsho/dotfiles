@@ -363,6 +363,7 @@ local sidebar_fts = {
   'Outline',
   'dbui',
   'neotest-summary',
+  'pr',
 }
 
 local function on_sidebar_enter()

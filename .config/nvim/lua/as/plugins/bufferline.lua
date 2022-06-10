@@ -33,6 +33,10 @@ return function()
       diagnostics_update_in_insert = false,
       offsets = {
         {
+          filetype = 'pr',
+          highlight = 'PanelHeading',
+        },
+        {
           filetype = 'dbui',
           highlight = 'PanelHeading',
         },
