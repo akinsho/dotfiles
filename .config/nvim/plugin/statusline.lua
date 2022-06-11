@@ -221,7 +221,7 @@ function as.ui.statusline()
         prefix_color = index == 1 and 'StMetadata' or nil,
         suffix = '', -- │
         suffix_color = 'StMetadataPrefix',
-        priority = 4,
+        priority = is_null and 7 or 4,
       })
     end, clients)
     add(unpack(lsp_clients))
