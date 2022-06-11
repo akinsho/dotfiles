@@ -210,7 +210,9 @@ vim.opt.titlelen = 70
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
 vim.opt.showmode = false
--- NOTE: Don't remember help files since that will error if they are from a lazy loaded plugin
+-- NOTE: Don't remember
+-- * help files since that will error if they are from a lazy loaded plugin
+-- * folds since they are created dynamically and might be missing on startup
 vim.opt.sessionoptions = {
   'globals',
   'buffers',
