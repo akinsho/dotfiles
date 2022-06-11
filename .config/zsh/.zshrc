@@ -27,10 +27,6 @@ if exists brew; then
   fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 fi
 
-# INIT COMPLETIONS
-autoload -Uz compinit
-compinit
-
 source $ZDOTDIR/plugins.zsh
 
 autoload -U colors && colors # Enable colors in prompt
@@ -48,6 +44,10 @@ autoload zmv # builtin zsh rename command
 #-------------------------------------------------------------------------------
 #               COMPLETION
 #-------------------------------------------------------------------------------
+# INIT COMPLETIONS
+autoload -Uz compinit
+compinit
+
 setopt ALWAYS_TO_END
 setopt AUTO_MENU
 setopt LIST_PACKED
