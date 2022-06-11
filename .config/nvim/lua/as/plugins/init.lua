@@ -159,10 +159,17 @@ packer.startup({
     use({
       'smjonas/inc-rename.nvim',
       config = function()
-        require('inc_rename').setup({ hl_group = 'Visual' })
+        require('inc_rename').setup({
+          hl_group = 'Visual',
+          multifile_preview = true,
+        })
         as.nnoremap('<leader>ri', function()
           return ':IncRename ' .. vim.fn.expand('<cword>')
-        end, { expr = true, silent = false, desc = 'lsp: incremental rename' })
+        end, {
+          expr = true,
+          silent = false,
+          desc = 'lsp: incremental rename',
+        })
       end,
     })
 
