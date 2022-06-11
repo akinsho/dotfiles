@@ -265,12 +265,13 @@ local function check_color_column()
   for _, win in ipairs(api.nvim_list_wins()) do
     local buffer = vim.bo[api.nvim_win_get_buf(win)]
     local window = vim.wo[win]
-    if fn.win_gettype() == '' and not vim.tbl_contains(column_exclude, buffer.filetype) then
+    local is_current = win == api.nvim_get_current_win()
+    if as.empty(fn.win_gettype()) and not vim.tbl_contains(column_exclude, buffer.filetype) then
       local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
       local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
       if is_excluded or too_small then
         window.colorcolumn = ''
-      elseif window.colorcolumn == '' then
+      elseif as.empty(window.colorcolumn) and is_current then
         window.colorcolumn = '+1'
       end
     end
