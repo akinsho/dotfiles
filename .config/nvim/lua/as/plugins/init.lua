@@ -367,21 +367,6 @@ packer.startup({
     })
 
     use({
-      'folke/todo-comments.nvim',
-      requires = 'nvim-lua/plenary.nvim',
-      config = function()
-        as.block_reload(function()
-          require('todo-comments').setup({
-            highlight = {
-              exclude = { 'org', 'orgagenda', 'vimwiki', 'markdown' },
-            },
-          })
-          as.nnoremap('<leader>lt', '<Cmd>TodoTrouble<CR>', 'trouble: todos')
-        end)
-      end,
-    })
-
-    use({
       'github/copilot.vim',
       config = function()
         vim.g.copilot_no_tab_map = true
