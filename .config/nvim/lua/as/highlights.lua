@@ -191,7 +191,10 @@ local function general_overrides()
   local hint_line = M.alter_color(L.hint, -70)
   local error_line = M.alter_color(L.error, -80)
   local warn_line = M.alter_color(L.warn, -80)
+  local dim = M.alter_color(normal_bg, 25)
+
   M.all({
+    Dim = { foreground = dim },
     VertSplit = { background = 'NONE', foreground = { from = 'NonText' } },
     WinSeparator = { background = 'NONE', foreground = { from = 'NonText' } },
     mkdLineBreak = { link = 'NONE' },
