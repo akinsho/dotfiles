@@ -264,13 +264,13 @@ packer.startup({
     })
 
     use({
-      'rcarriga/neotest',
+      'nvim-neotest/neotest',
       config = conf('neotest'),
       requires = {
+        dev('personal/neotest-go'),
         'rcarriga/neotest-plenary',
         'rcarriga/neotest-vim-test',
         'nvim-lua/plenary.nvim',
-        dev('personal/neotest-go'),
         'nvim-treesitter/nvim-treesitter',
         'antoinemadec/FixCursorHold.nvim',
       },
