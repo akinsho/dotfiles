@@ -100,6 +100,8 @@ as.style = {
       block = '▌',
     },
   },
+  -- LSP Kinds come via the LSP spec
+  -- @see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
   lsp = {
     colors = {
       error = palette.pale_red,
@@ -130,6 +132,16 @@ as.style = {
       Event = 'Variable',
       Operator = 'Operator',
       TypeParameter = 'Type',
+      Namespace = 'TSNamespace',
+      Package = 'Include',
+      String = 'String',
+      Number = 'Number',
+      Boolean = 'Boolean',
+      Array = 'StorageClass',
+      Object = 'Type',
+      Key = 'Field',
+      Null = 'ErrorMsg',
+      EnumMember = 'Field',
     },
     kinds = {
       codicons = {
@@ -158,6 +170,15 @@ as.style = {
         Event = '',
         Operator = '',
         TypeParameter = '',
+        Namespace = '?',
+        Package = '?',
+        String = '?',
+        Number = '?',
+        Boolean = '?',
+        Array = '?',
+        Object = '?',
+        Key = '?',
+        Null = '?',
       },
       nerdfonts = {
         Text = '',
@@ -185,6 +206,15 @@ as.style = {
         Event = '',
         Operator = '',
         TypeParameter = '',
+        Namespace = '?',
+        Package = '?',
+        String = '?',
+        Number = '?',
+        Boolean = '?',
+        Array = '?',
+        Object = '?',
+        Key = '?',
+        Null = '?',
       },
     },
   },
