@@ -432,9 +432,6 @@ packer.startup({
     use({
       'rainbowhxch/beacon.nvim',
       config = function()
-        require('as.highlights').plugin('beacon', {
-          Beacon = { link = 'Cursor' },
-        })
         local beacon = require('beacon')
         beacon.setup({
           minimal_jump = 20,
