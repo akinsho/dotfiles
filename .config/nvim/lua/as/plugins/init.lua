@@ -716,6 +716,7 @@ packer.startup({
         local misc = s.icons.misc
 
         highlights.set_hl('NavicText', { bold = true })
+        highlights.set_hl('NavicSeparator', { link = 'Directory' })
         local icons = as.map(function(icon, key)
           highlights.set_hl(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
           return icon .. ' '
