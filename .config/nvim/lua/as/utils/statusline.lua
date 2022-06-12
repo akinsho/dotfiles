@@ -559,9 +559,21 @@ function M.spacer(size, opts)
   return { component = '', length = 0, priority = priority }
 end
 
+--- @class ComponentOpts
+--- @field priority number
+--- @field click string
+--- @field suffix string
+--- @field suffix_color string
+--- @field prefix string
+--- @field prefix_color string
+--- @field before string
+--- @field after string
+--- @field id number
+--- @field max_size number
+
 --- @param item string
 --- @param hl string
---- @param opts table
+--- @param opts ComponentOpts
 function M.component(item, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
@@ -613,7 +625,7 @@ end
 --- @param item string
 --- @param condition boolean
 --- @param hl string
---- @param opts table
+--- @param opts ComponentOpts
 function M.component_if(item, condition, hl, opts)
   if not condition then
     return M.spacer()
