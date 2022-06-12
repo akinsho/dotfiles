@@ -161,7 +161,7 @@ packer.startup({
       config = function()
         require('inc_rename').setup({
           hl_group = 'Visual',
-          multifile_preview = true,
+          multifile_preview = false,
         })
         as.nnoremap('<leader>ri', function()
           return ':IncRename ' .. vim.fn.expand('<cword>')
