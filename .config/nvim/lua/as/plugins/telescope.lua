@@ -373,6 +373,7 @@ function M.config()
       v = {
         name = '+vim',
         h = { builtins.highlights, 'highlights' },
+        a = { builtins.autocommands, 'autocommands' },
         o = { builtins.vim_options, 'options' },
       },
       g = {
