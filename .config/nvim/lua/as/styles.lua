@@ -109,7 +109,7 @@ as.style = {
       hint = palette.bright_blue,
       info = palette.teal,
     },
-    kind_highlights = {
+    highlights = {
       Text = 'String',
       Method = 'Method',
       Function = 'Function',

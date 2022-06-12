@@ -7,7 +7,7 @@ return function()
   local fmt = string.format
   local t = as.replace_termcodes
   local border = as.style.current.border
-  local lsp_hls = as.style.lsp.kind_highlights
+  local lsp_hls = as.style.lsp.highlights
   local ellipsis = as.style.icons.misc.ellipsis
 
   -- Make the source information less prominent
