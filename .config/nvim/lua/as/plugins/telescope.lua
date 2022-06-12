@@ -366,6 +366,11 @@ function M.config()
       a = { builtins.builtin, 'builtins' },
       b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
       n = { notifications, 'notifications' },
+      v = {
+        name = '+vim',
+        h = { builtins.highlights, 'highlights' },
+        o = { builtins.vim_options, 'options' },
+      },
       g = {
         name = '+git',
         b = { builtins.git_branches, 'branches' },
