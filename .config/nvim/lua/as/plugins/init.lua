@@ -708,29 +708,24 @@ packer.startup({
     use('mtdl9/vim-log-highlighting')
     use('fladson/vim-kitty')
     use({
-      'SmiteshP/nvim-gps',
-      requires = 'nvim-treesitter/nvim-treesitter',
+      'SmiteshP/nvim-navic',
+      requires = 'neovim/nvim-lspconfig',
       config = function()
-        local icons = as.style.current.lsp_icons
-        local types = as.style.icons.type
-        require('nvim-gps').setup({
-          icons = {
-            ['class-name'] = icons.Class,
-            ['function-name'] = icons.Function,
-            ['method-name'] = icons.Method,
-            ['container-name'] = icons.Module,
-            ['tag-name'] = icons.Field,
-            ['array-name'] = icons.Value,
-            ['object-name'] = icons.Value,
-            ['null-name'] = icons.Null,
-            ['boolean-name'] = icons.Keyword,
-            ['number-name'] = icons.Value,
-            ['string-name'] = icons.Text,
-            ['mapping-name'] = types.object,
-            ['sequence-name'] = types.array,
-            ['integer-name'] = types.number,
-            ['float-name'] = types.float,
-          },
+        local highlights = require('as.highlights')
+        local s = as.style
+        local misc = s.icons.misc
+
+        highlights.set_hl('NavicText', { bold = true })
+        local icons = as.map(function(icon, key)
+          highlights.set_hl(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
+          return icon .. ' '
+        end, s.current.lsp_icons)
+
+        require('nvim-navic').setup({
+          icons = icons,
+          highlight = true,
+          depth_limit_indicator = misc.ellipsis,
+          separator = (' %s '):format(misc.arrow_right),
         })
       end,
     })

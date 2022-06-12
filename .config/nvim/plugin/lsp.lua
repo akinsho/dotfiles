@@ -129,6 +129,7 @@ end
 -----------------------------------------------------------------------------//
 -- Lsp setup/teardown
 -----------------------------------------------------------------------------//
+local navic_exclusions = { 'null-ls', 'copilot' }
 
 ---Add buffer local mappings, autocommands, tagfunc etc for attaching servers
 ---@param client table lsp client
@@ -136,6 +137,10 @@ end
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
+  local ok, navic = pcall(require, 'nvim-navic')
+  if ok and not vim.tbl_contains(navic_exclusions, client.name) then
+    navic.attach(client, bufnr)
+  end
 
   if client.server_capabilities.definitionProvider then
     vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
