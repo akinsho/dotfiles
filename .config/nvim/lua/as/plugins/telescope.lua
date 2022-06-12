@@ -19,6 +19,14 @@ function as.telescope.dropdown(opts)
   return require('telescope.themes').get_dropdown(rectangular_border(opts))
 end
 
+function as.telescope.ivy(opts)
+  return require('telescope.themes').get_ivy(vim.tbl_deep_extend('keep', opts or {}, {
+    borderchars = {
+      preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+    },
+  }))
+end
+
 function M.setup()
   local function nvim_config()
     require('telescope.builtin').find_files({
@@ -262,11 +270,7 @@ function M.config()
         override_generic_sorter = true,
         override_file_sorter = true,
       },
-      howdoi = require('telescope.themes').get_ivy({
-        borderchars = {
-          preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
-        },
-      }),
+      howdoi = as.telescope.ivy(),
     },
     pickers = {
       buffers = as.telescope.dropdown({
