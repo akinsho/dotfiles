@@ -426,6 +426,9 @@ packer.startup({
       end,
     })
 
+    -- Diff arbitrary blocks of text with each other
+    use({ 'AndrewRadev/linediff.vim', cmd = 'Linediff' })
+
     use({
       'rainbowhxch/beacon.nvim',
       config = function()
