@@ -711,7 +711,7 @@ packer.startup({
       'SmiteshP/nvim-gps',
       requires = 'nvim-treesitter/nvim-treesitter',
       config = function()
-        local icons = as.style.lsp.codicons
+        local icons = as.style.current.lsp_icons
         local types = as.style.icons.type
         require('nvim-gps').setup({
           icons = {

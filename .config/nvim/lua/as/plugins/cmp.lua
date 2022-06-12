@@ -94,7 +94,7 @@ return function()
         local MAX = 20
         vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
           or vim_item.abbr
-        vim_item.kind = fmt('%s %s', as.style.lsp.codicons[vim_item.kind], vim_item.kind)
+        vim_item.kind = fmt('%s %s', as.style.current.lsp_icons[vim_item.kind], vim_item.kind)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           nvim_lua = '[Lua]',
