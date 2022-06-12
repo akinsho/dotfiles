@@ -62,7 +62,7 @@ return function()
   }
 
   for name, config in pairs(servers) do
-    if type(config) == 'boolean' then
+    if config and type(config) == 'boolean' then
       config = {}
     elseif config and type(config) == 'function' then
       config = config()
