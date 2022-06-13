@@ -27,13 +27,16 @@ local function diagnostic_popup()
 end
 
 local function formatting_filter(client)
-  if vim.bo.filetype == 'go' and client.name == 'null-ls' then
-    return false
+  local exceptions = ({
+    lua = { 'sumneko_lua' },
+    go = { 'null-ls' },
+    proto = { 'null-ls' },
+  })[vim.bo.filetype]
+
+  if not exceptions then
+    return true
   end
-  if vim.bo.filetype == 'lua' and client.name == 'sumneko_lua' then
-    return false
-  end
-  return true
+  return not vim.tbl_contains(exceptions, client.name)
 end
 
 ---@param opts table<string, any>
