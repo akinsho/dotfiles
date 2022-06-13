@@ -973,6 +973,14 @@ packer.startup({
     })
 
     use_local({
+      'akinsho/org-bullets.nvim',
+      local_path = 'personal',
+      config = function()
+        require('org-bullets').setup()
+      end,
+    })
+
+    use_local({
       'akinsho/toggleterm.nvim',
       local_path = 'personal',
       config = conf('toggleterm'),
