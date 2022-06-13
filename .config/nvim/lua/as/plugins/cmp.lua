@@ -108,6 +108,7 @@ return function()
           cmdline = '[Cmd]',
           cmdline_history = '[Hist]',
           orgmode = '[Org]',
+          norg = '[Norg]',
           rg = '[Rg]',
           git = '[Git]',
         })[entry.source.name]
