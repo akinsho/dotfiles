@@ -94,6 +94,7 @@ local blocked = {
   'NeogitCommitMessage',
   'toggleterm',
   'DressingInput',
+  'org',
 }
 local allowed = { 'toggleterm' }
 

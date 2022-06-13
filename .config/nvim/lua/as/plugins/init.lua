@@ -641,6 +641,8 @@ packer.startup({
       config = conf('neorg'),
     })
 
+    use({ 'nvim-orgmode/orgmode', config = conf('orgmode') })
+
     use({
       'lukas-reineke/headlines.nvim',
       setup = conf('headlines').setup,

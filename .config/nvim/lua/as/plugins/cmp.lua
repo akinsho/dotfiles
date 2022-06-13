@@ -107,6 +107,7 @@ return function()
           spell = '[SP]',
           cmdline = '[Cmd]',
           cmdline_history = '[Hist]',
+          orgmode = '[Org]',
           rg = '[Rg]',
           git = '[Git]',
         })[entry.source.name]
