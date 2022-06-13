@@ -676,7 +676,7 @@ packer.startup({
         as.nnoremap('<leader>db', '<cmd>DBUIToggle<CR>', 'dadbod: toggle')
       end,
     })
-    use('tpope/vim-eunuch')
+    use({ 'tpope/vim-eunuch', cmd = { 'Remove', 'Move', 'Rename' } })
     use('tpope/vim-sleuth')
     use('tpope/vim-repeat')
 
