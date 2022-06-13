@@ -32,8 +32,8 @@ return function()
     on_open = float_handler,
   })
 
-  local htop = Terminal:new({
-    cmd = 'htop',
+  local btop = Terminal:new({
+    cmd = 'btop',
     hidden = true,
     direction = 'float',
     on_open = float_handler,
@@ -58,8 +58,8 @@ return function()
     gh_dash:toggle()
   end, 'toggleterm: toggle github dashboard')
 
-  as.command('Htop', function()
-    htop:toggle()
+  as.command('Btop', function()
+    btop:toggle()
   end)
 
   as.nnoremap('<leader>lg', function()
