@@ -5,7 +5,14 @@ return function()
     direction = 'horizontal',
     insert_mappings = false,
     start_in_insert = true,
-    float_opts = { border = 'rounded', winblend = 3 },
+    highlights = {
+      FloatBorder = { link = 'FloatBorder' },
+      NormalFloat = { link = 'NormalFloat' },
+    },
+    float_opts = {
+      border = as.style.current.border,
+      winblend = 3,
+    },
     size = function(term)
       if term.direction == 'horizontal' then
         return 15
@@ -37,6 +44,10 @@ return function()
     hidden = true,
     direction = 'float',
     on_open = float_handler,
+    highlights = {
+      FloatBorder = { guibg = 'Black', guifg = 'DarkGray' },
+      NormalFloat = { guibg = 'Black' },
+    },
   })
 
   local gh_dash = Terminal:new({
