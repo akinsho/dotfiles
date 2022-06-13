@@ -77,18 +77,18 @@ packer.startup({
             require('telescope').load_extension('fzf')
           end,
         },
-        { 'Zane-/howdoi.nvim' },
         {
           'nvim-telescope/telescope-smart-history.nvim',
+          requires = { { 'tami5/sqlite.lua', module = 'sqlite' } },
           after = 'telescope.nvim',
           config = function()
             require('telescope').load_extension('smart_history')
           end,
         },
+        { 'Zane-/howdoi.nvim' },
+        { 'ilAYAli/scMRU.nvim', module = 'mru' },
       },
     })
-
-    use({ 'ilAYAli/scMRU.nvim', module = 'mru' })
 
     use('kyazdani42/nvim-web-devicons')
 
@@ -292,7 +292,6 @@ packer.startup({
       },
     })
 
-    use({ 'jbyuki/one-small-step-for-vimkind', requires = 'nvim-dap' })
     use('folke/lua-dev.nvim')
 
     --}}}
@@ -327,6 +326,29 @@ packer.startup({
     -- as it implicitly loads telescope so needs to be delayed
     use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('dressing') })
 
+    use({
+      'SmiteshP/nvim-navic',
+      requires = 'neovim/nvim-lspconfig',
+      config = function()
+        local highlights = require('as.highlights')
+        local s = as.style
+        local misc = s.icons.misc
+
+        highlights.set_hl('NavicText', { bold = true })
+        highlights.set_hl('NavicSeparator', { link = 'Directory' })
+        local icons = as.map(function(icon, key)
+          highlights.set_hl(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
+          return icon .. ' '
+        end, s.current.lsp_icons)
+
+        require('nvim-navic').setup({
+          icons = icons,
+          highlight = true,
+          depth_limit_indicator = misc.ellipsis,
+          separator = (' %s '):format(misc.arrow_right),
+        })
+      end,
+    })
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     --------------------------------------------------------------------------------
@@ -345,6 +367,7 @@ packer.startup({
 
     use({
       'AckslD/nvim-neoclip.lua',
+      requires = { { 'tami5/sqlite.lua', module = 'sqlite' } },
       config = function()
         require('neoclip').setup({
           enable_persistent_history = true,
@@ -537,7 +560,6 @@ packer.startup({
 
     use({
       'j-hui/fidget.nvim',
-      local_path = 'contributing',
       config = function()
         require('fidget').setup({
           text = { spinner = 'moon' },
@@ -615,7 +637,7 @@ packer.startup({
     --------------------------------------------------------------------------------
     use({
       'vhyrro/neorg',
-      requires = { 'vhyrro/neorg-telescope', 'max397574/neorg-kanban' },
+      requires = { 'vhyrro/neorg-telescope' },
       config = conf('neorg'),
     })
 
@@ -702,29 +724,6 @@ packer.startup({
     use('dart-lang/dart-vim-plugin')
     use('mtdl9/vim-log-highlighting')
     use('fladson/vim-kitty')
-    use({
-      'SmiteshP/nvim-navic',
-      requires = 'neovim/nvim-lspconfig',
-      config = function()
-        local highlights = require('as.highlights')
-        local s = as.style
-        local misc = s.icons.misc
-
-        highlights.set_hl('NavicText', { bold = true })
-        highlights.set_hl('NavicSeparator', { link = 'Directory' })
-        local icons = as.map(function(icon, key)
-          highlights.set_hl(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
-          return icon .. ' '
-        end, s.current.lsp_icons)
-
-        require('nvim-navic').setup({
-          icons = icons,
-          highlight = true,
-          depth_limit_indicator = misc.ellipsis,
-          separator = (' %s '):format(misc.arrow_right),
-        })
-      end,
-    })
     -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{1
