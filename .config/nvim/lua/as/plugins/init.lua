@@ -77,11 +77,6 @@ packer.startup({
             require('telescope').load_extension('fzf')
           end,
         },
-        {
-          'nvim-telescope/telescope-frecency.nvim',
-          after = 'telescope.nvim',
-          requires = 'tami5/sqlite.lua',
-        },
         { 'Zane-/howdoi.nvim' },
         {
           'nvim-telescope/telescope-smart-history.nvim',

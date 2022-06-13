@@ -96,15 +96,6 @@ function M.setup()
     })
   end
 
-  local function frecency()
-    require('telescope').extensions.frecency.frecency(as.telescope.dropdown({
-      winblend = 10,
-      border = true,
-      previewer = false,
-      shorten_path = false,
-    }))
-  end
-
   local function project_files(opts)
     local builtin = require('telescope.builtin')
     if not pcall(builtin.git_files, opts) then
@@ -128,12 +119,26 @@ function M.setup()
     require('telescope.builtin').live_grep()
   end
 
+  local function MRU()
+    require('mru').display_cache(as.telescope.dropdown({
+      previewer = false,
+    }))
+  end
+
+  local function MFU()
+    require('mru').display_cache(
+      vim.tbl_extend('keep', { algorithm = 'mfu' }, as.telescope.dropdown({ previewer = false }))
+    )
+  end
+
   require('which-key').register({
     ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = '+telescope',
       a = { builtins, 'builtins' },
       f = { find_files, 'find files' },
+      r = { MRU, 'Most recently used files' },
+      h = { MFU, 'Most frequently used files' },
       g = {
         c = { delta_git_commits, 'commits' },
         B = { delta_git_bcommits, 'buffer commits' },
@@ -141,7 +146,6 @@ function M.setup()
       o = { buffers, 'buffers' },
       s = { live_grep, 'live grep' },
       d = { dotfiles, 'dotfiles' },
-      h = { frecency, 'Frecency' },
       c = { nvim_config, 'nvim config' },
       O = { orgfiles, 'org files' },
       N = { norgfiles, 'norg files' },
@@ -333,18 +337,6 @@ function M.config()
   --- from the setup call
   local builtins = require('telescope.builtin')
 
-  local function MRU()
-    require('mru').display_cache(as.telescope.dropdown({
-      previewer = false,
-    }))
-  end
-
-  local function MFU()
-    require('mru').display_cache(
-      vim.tbl_extend('keep', { algorithm = 'mfu' }, as.telescope.dropdown({ previewer = false }))
-    )
-  end
-
   local function notifications()
     telescope.extensions.notify.notify(as.telescope.dropdown())
   end
@@ -388,11 +380,8 @@ function M.config()
         d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
         s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
       },
-      m = { MRU, 'Most recently used files' },
-      F = { MFU, 'Most frequently used files' },
       p = { installed_plugins, 'plugins' },
-      R = { builtins.reloader, 'module reloader' },
-      r = { builtins.resume, 'resume last picker' },
+      R = { builtins.resume, 'resume last picker' },
       ['?'] = { builtins.help_tags, 'help' },
     },
   })
