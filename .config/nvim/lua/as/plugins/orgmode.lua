@@ -1,13 +1,29 @@
 return function()
   local fn = vim.fn
-  require('as.highlights').plugin('org', {
+  local fmt = string.format
+
+  local orgmode = require('orgmode')
+  local highlights = require('as.highlights')
+
+  highlights.plugin('org', {
     OrgDone = { fg = 'Green', bold = true },
     OrgAgendaScheduled = { fg = 'Teal' },
   })
-  require('orgmode').setup_ts_grammar()
-  require('orgmode').setup({
-    org_agenda_files = { fn.expand('$SYNC_DIR/org/*') },
-    org_default_notes_file = fn.expand('$SYNC_DIR/org/refile.org'),
+
+  local function sync(path)
+    return fmt('%s/%s', fn.expand('$SYNC_DIR'), path)
+  end
+
+  orgmode.setup_ts_grammar()
+
+  orgmode.setup({
+    org_agenda_files = { sync('org/**/*') },
+    org_default_notes_file = sync('org/refile.org'),
+    org_todo_keywords = { 'TODO(t)', 'WAITING', 'NEXT', '|', 'DONE', 'CANCELLED' },
+    org_todo_keyword_faces = {
+      NEXT = ':foreground royalblue :weight bold :slant italic',
+      CANCELLED = ':foreground red',
+    },
     org_hide_leading_stars = true,
     org_agenda_skip_scheduled_if_done = true,
     org_agenda_skip_deadline_if_done = true,
@@ -17,7 +33,12 @@ return function()
       p = {
         description = 'Project Todo',
         template = '* TODO %? \nSCHEDULED: %t',
-        target = fn.expand('$SYNC_DIR/org/projects.org'),
+        target = sync('org/projects.org'),
+      },
+    },
+    mappings = {
+      org = {
+        org_global_cycle = '<leader><S-TAB>',
       },
     },
     notifications = {
