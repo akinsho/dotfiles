@@ -126,6 +126,9 @@ return function()
       },
     },
     autopairs = { enable = true },
+    playground = {
+      persist_queries = true,
+    },
     query_linter = {
       enable = true,
       use_virtual_text = true,
