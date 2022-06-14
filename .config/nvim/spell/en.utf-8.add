@@ -247,3 +247,4 @@ namespaced
 protobuf
 Cognito
 istio
+GRPC
