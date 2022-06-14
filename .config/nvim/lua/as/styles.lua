@@ -4,6 +4,7 @@
 -- Consistent store of various UI items to reuse throughout my config
 
 local palette = {
+  pale_pink = '#b490c0',
   pale_red = '#E06C75',
   dark_red = '#be5046',
   light_red = '#c43e1f',
