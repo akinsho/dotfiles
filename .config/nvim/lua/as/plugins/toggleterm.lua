@@ -37,11 +37,6 @@ return function()
     hidden = true,
     direction = 'float',
     on_open = float_handler,
-    float_opts = { border = 'rounded' },
-    highlights = {
-      FloatBorder = { link = 'Normal' },
-      NormalFloat = { link = 'Normal' },
-    },
   })
 
   local btop = Terminal:new({
