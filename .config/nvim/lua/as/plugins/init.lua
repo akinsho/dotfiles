@@ -737,22 +737,23 @@ packer.startup({
       run = ':TSUpdate',
       config = conf('treesitter'),
       local_path = 'contributing',
+      requires = {
+        {
+          'nvim-treesitter/playground',
+          cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
+          setup = function()
+            as.nnoremap(
+              '<leader>E',
+              '<Cmd>TSHighlightCapturesUnderCursor<CR>',
+              'treesitter: cursor highlight'
+            )
+          end,
+        },
+      },
     })
 
     use({ 'p00f/nvim-ts-rainbow' })
     use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
-    use({
-      'nvim-treesitter/playground',
-      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-      setup = function()
-        as.nnoremap(
-          '<leader>E',
-          '<Cmd>TSHighlightCapturesUnderCursor<CR>',
-          'treesitter: highlight cursor group'
-        )
-      end,
-    })
-
     use({
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
@@ -766,6 +767,24 @@ packer.startup({
           multiline_threshold = 4,
           separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
           mode = 'topline',
+        })
+      end,
+    })
+
+    use({
+      'm-demare/hlargs.nvim',
+      config = function()
+        local highlights = require('as.highlights')
+        highlights.plugin('hlargs', {
+          Hlargs = { italic = true, bold = false },
+        })
+        require('hlargs').setup({
+          excluded_argnames = {
+            declarations = { 'use', 'use_rocks', '_' },
+            usages = {
+              lua = { 'self', 'use', 'use_rocks', '_' },
+            },
+          },
         })
       end,
     })
