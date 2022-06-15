@@ -268,7 +268,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
+    TSNamespace = { foreground = P.blue },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
