@@ -4,21 +4,22 @@
 -- Consistent store of various UI items to reuse throughout my config
 
 local palette = {
-  pale_pink = '#b490c0',
-  pale_red = '#E06C75',
-  dark_red = '#be5046',
-  light_red = '#c43e1f',
-  dark_orange = '#FF922B',
   green = '#98c379',
-  bright_yellow = '#FAB005',
-  light_yellow = '#e5c07b',
+  blue = '#82AAFE',
   dark_blue = '#4e88ff',
-  magenta = '#c678dd',
-  comment_grey = '#5c6370',
-  grey = '#3E4556',
-  whitesmoke = '#626262',
   bright_blue = '#51afef',
   teal = '#15AABF',
+  pale_pink = '#b490c0',
+  magenta = '#c678dd',
+  pale_red = '#E06C75',
+  light_red = '#c43e1f',
+  dark_red = '#be5046',
+  dark_orange = '#FF922B',
+  bright_yellow = '#FAB005',
+  light_yellow = '#e5c07b',
+  whitesmoke = '#626262',
+  comment_grey = '#5c6370',
+  grey = '#3E4556',
 }
 
 as.style = {
