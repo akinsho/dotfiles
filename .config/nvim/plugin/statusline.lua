@@ -211,21 +211,16 @@ function as.ui.statusline()
   -----------------------------------------------------------------------------//
   -- LSP Clients
   -----------------------------------------------------------------------------//
-  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
-  if #clients > 0 then
-    local lsp_clients = as.map(function(client, index)
-      local is_null = client.name:match('null')
-      client = is_null and 'ﳠ' or client.name -- the mathematical symbol denoting an empty set i.e. sort of kinda null
-      return component(client, 'StClient', {
-        prefix = index == 1 and ' LSP(s):' or nil,
-        prefix_color = index == 1 and 'StMetadata' or nil,
-        suffix = '', -- │
-        suffix_color = 'StMetadataPrefix',
-        priority = is_null and 7 or 4,
-      })
-    end, clients)
-    add(unpack(lsp_clients))
-  end
+  local lsp_clients = as.map(function(client, index)
+    return component(client.name, 'StClient', {
+      prefix = index == 1 and ' LSP(s):' or nil,
+      prefix_color = index == 1 and 'StMetadata' or nil,
+      suffix = '', -- │
+      suffix_color = 'StMetadataPrefix',
+      priority = client.priority,
+    })
+  end, utils.lsp_clients(ctx))
+  add(unpack(lsp_clients))
   -----------------------------------------------------------------------------//
 
   add(

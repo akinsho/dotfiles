@@ -458,6 +458,30 @@ function M.mode()
   return (mode_map[current_mode] or 'UNKNOWN'), hl
 end
 
+---Return a sorted list of lsp client names and their priorities
+---@param ctx table
+---@return table[]
+function M.lsp_clients(ctx)
+  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
+  if empty(clients) then
+    return { { name = 'No LSP clients available', priority = 7 } }
+  end
+  -- the mathematical symbol denoting an empty set i.e. sort of kinda null, is used to represent null-ls
+  local names = vim.tbl_map(function(client)
+    local is_null = client.name:match('null')
+    return is_null and { name = 'ﳠ', priority = 7 } or { name = client.name, priority = 4 }
+  end, clients)
+
+  table.sort(names, function(a, b)
+    if a.name == 'null-ls' then
+      return false
+    elseif b.name == 'null-ls' then
+      return true
+    end
+    return a.name < b.name
+  end)
+  return names
+end
 -----------------------------------------------------------------------------//
 -- Git/Github helper functions
 -----------------------------------------------------------------------------//
