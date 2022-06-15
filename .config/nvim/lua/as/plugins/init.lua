@@ -179,14 +179,14 @@ packer.startup({
     use({
       'kosayoda/nvim-lightbulb',
       config = function()
-        local lightbulb = require('nvim-lightbulb')
-        lightbulb.setup({
+        require('as.highlights').plugin('Lightbulb', {
+          LightBulbFloatWin = { foreground = { from = 'Type' } },
+        })
+        require('nvim-lightbulb').setup({
           ignore = { 'null-ls' },
           sign = { enabled = false },
-          float = { enabled = true, win_opts = { border = 'none' } },
-          autocmd = {
-            enabled = true,
-          },
+          float = { text = '', enabled = true, win_opts = { border = 'none' } }, -- 
+          autocmd = { enabled = true },
         })
       end,
     })
