@@ -772,14 +772,14 @@ packer.startup({
     use({
       'm-demare/hlargs.nvim',
       config = function()
-        local highlights = require('as.highlights')
-        highlights.plugin('hlargs', {
-          Hlargs = { italic = true, bold = false },
+        require('as.highlights').plugin('hlargs', {
+          Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
         })
         require('hlargs').setup({
           excluded_argnames = {
             declarations = { 'use', 'use_rocks', '_' },
             usages = {
+              go = { '_' },
               lua = { 'self', 'use', 'use_rocks', '_' },
             },
           },
