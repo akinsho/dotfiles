@@ -384,6 +384,7 @@ end
 local function colorscheme_overrides()
   if vim.g.colors_name == 'doom-one' then
     M.all({
+      TSVariable = { foreground = { from = 'Normal' } },
       CursorLineNr = { foreground = { from = 'Keyword' } },
       LineNr = { background = 'NONE' },
       WhichkeyFloat = { link = 'NormalFloat' },
