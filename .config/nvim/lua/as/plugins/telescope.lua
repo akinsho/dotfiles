@@ -27,132 +27,6 @@ function as.telescope.ivy(opts)
   }))
 end
 
-function M.setup()
-  local function nvim_config()
-    require('telescope.builtin').find_files({
-      prompt_title = '~ nvim config ~',
-      cwd = vim.fn.stdpath('config'),
-      file_ignore_patterns = {
-        '.git/.*',
-        'dotbot/.*',
-        'zsh/plugins/.*',
-      },
-    })
-  end
-
-  local function delta_opts(opts, is_buf)
-    local previewers = require('telescope.previewers')
-    local delta = previewers.new_termopen_previewer({
-      get_command = function(entry)
-        local args = {
-          'git',
-          '-c',
-          'core.pager=delta',
-          '-c',
-          'delta.side-by-side=false',
-          'diff',
-          entry.value .. '^!',
-        }
-        if is_buf then
-          vim.list_extend(args, { '--', entry.current_file })
-        end
-        return args
-      end,
-    })
-    opts = opts or {}
-    opts.previewer = {
-      delta,
-      previewers.git_commit_message.new(opts),
-    }
-    return opts
-  end
-
-  local function delta_git_commits(opts)
-    require('telescope.builtin').git_commits(delta_opts(opts))
-  end
-
-  local function delta_git_bcommits(opts)
-    require('telescope.builtin').git_bcommits(delta_opts(opts, true))
-  end
-
-  local function dotfiles()
-    require('telescope.builtin').find_files({
-      prompt_title = 'dotfiles',
-      cwd = vim.g.dotfiles,
-    })
-  end
-
-  local function orgfiles()
-    require('telescope.builtin').find_files({
-      prompt_title = 'Org',
-      cwd = vim.fn.expand('$SYNC_DIR/org/'),
-    })
-  end
-
-  local function norgfiles()
-    require('telescope.builtin').find_files({
-      prompt_title = 'Norg',
-      cwd = vim.fn.expand('$SYNC_DIR/neorg/'),
-    })
-  end
-
-  local function project_files(opts)
-    local builtin = require('telescope.builtin')
-    if not pcall(builtin.git_files, opts) then
-      builtin.find_files(opts)
-    end
-  end
-
-  local function builtins()
-    require('telescope.builtin').builtin({ include_extensions = true })
-  end
-
-  local function find_files()
-    require('telescope.builtin').find_files()
-  end
-
-  local function buffers()
-    require('telescope.builtin').buffers()
-  end
-
-  local function live_grep()
-    require('telescope.builtin').live_grep()
-  end
-
-  local function MRU()
-    require('mru').display_cache(as.telescope.dropdown({
-      previewer = false,
-    }))
-  end
-
-  local function MFU()
-    require('mru').display_cache(
-      vim.tbl_extend('keep', { algorithm = 'mfu' }, as.telescope.dropdown({ previewer = false }))
-    )
-  end
-
-  require('which-key').register({
-    ['<c-p>'] = { project_files, 'telescope: find files' },
-    ['<leader>f'] = {
-      name = '+telescope',
-      a = { builtins, 'builtins' },
-      f = { find_files, 'find files' },
-      r = { MRU, 'Most recently used files' },
-      h = { MFU, 'Most frequently used files' },
-      g = {
-        c = { delta_git_commits, 'commits' },
-        B = { delta_git_bcommits, 'buffer commits' },
-      },
-      o = { buffers, 'buffers' },
-      s = { live_grep, 'live grep' },
-      d = { dotfiles, 'dotfiles' },
-      c = { nvim_config, 'nvim config' },
-      O = { orgfiles, 'org files' },
-      N = { norgfiles, 'norg files' },
-    },
-  })
-end
-
 function M.config()
   local telescope = require('telescope')
   local actions = require('telescope.actions')
@@ -337,6 +211,109 @@ function M.config()
   --- from the setup call
   local builtins = require('telescope.builtin')
 
+  local function nvim_config()
+    require('telescope.builtin').find_files({
+      prompt_title = '~ nvim config ~',
+      cwd = vim.fn.stdpath('config'),
+      file_ignore_patterns = {
+        '.git/.*',
+        'dotbot/.*',
+        'zsh/plugins/.*',
+      },
+    })
+  end
+
+  local function delta_opts(opts, is_buf)
+    local previewers = require('telescope.previewers')
+    local delta = previewers.new_termopen_previewer({
+      get_command = function(entry)
+        local args = {
+          'git',
+          '-c',
+          'core.pager=delta',
+          '-c',
+          'delta.side-by-side=false',
+          'diff',
+          entry.value .. '^!',
+        }
+        if is_buf then
+          vim.list_extend(args, { '--', entry.current_file })
+        end
+        return args
+      end,
+    })
+    opts = opts or {}
+    opts.previewer = {
+      delta,
+      previewers.git_commit_message.new(opts),
+    }
+    return opts
+  end
+
+  local function delta_git_commits(opts)
+    require('telescope.builtin').git_commits(delta_opts(opts))
+  end
+
+  local function delta_git_bcommits(opts)
+    require('telescope.builtin').git_bcommits(delta_opts(opts, true))
+  end
+
+  local function dotfiles()
+    require('telescope.builtin').find_files({
+      prompt_title = 'dotfiles',
+      cwd = vim.g.dotfiles,
+    })
+  end
+
+  local function orgfiles()
+    require('telescope.builtin').find_files({
+      prompt_title = 'Org',
+      cwd = vim.fn.expand('$SYNC_DIR/org/'),
+    })
+  end
+
+  local function norgfiles()
+    require('telescope.builtin').find_files({
+      prompt_title = 'Norg',
+      cwd = vim.fn.expand('$SYNC_DIR/neorg/'),
+    })
+  end
+
+  local function project_files(opts)
+    local builtin = require('telescope.builtin')
+    if not pcall(builtin.git_files, opts) then
+      builtin.find_files(opts)
+    end
+  end
+
+  local function pickers()
+    require('telescope.builtin').builtin({ include_extensions = true })
+  end
+
+  local function find_files()
+    require('telescope.builtin').find_files()
+  end
+
+  local function buffers()
+    require('telescope.builtin').buffers()
+  end
+
+  local function live_grep()
+    require('telescope.builtin').live_grep()
+  end
+
+  local function MRU()
+    require('mru').display_cache(as.telescope.dropdown({
+      previewer = false,
+    }))
+  end
+
+  local function MFU()
+    require('mru').display_cache(
+      vim.tbl_extend('keep', { algorithm = 'mfu' }, as.telescope.dropdown({ previewer = false }))
+    )
+  end
+
   local function notifications()
     telescope.extensions.notify.notify(as.telescope.dropdown())
   end
@@ -357,9 +334,10 @@ function M.config()
   end
 
   which_key.register({
+    ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = '+telescope',
-      a = { builtins.builtin, 'builtins' },
+      a = { pickers, 'builtins' },
       b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
       n = { notifications, 'notifications' },
       v = {
@@ -367,11 +345,6 @@ function M.config()
         h = { builtins.highlights, 'highlights' },
         a = { builtins.autocommands, 'autocommands' },
         o = { builtins.vim_options, 'options' },
-      },
-      g = {
-        name = '+git',
-        b = { builtins.git_branches, 'branches' },
-        n = { gh_notifications, 'notifications' },
       },
       H = { howdoi, 'howdoi' },
       l = {
@@ -383,8 +356,25 @@ function M.config()
       p = { installed_plugins, 'plugins' },
       R = { builtins.resume, 'resume last picker' },
       ['?'] = { builtins.help_tags, 'help' },
+      f = { find_files, 'find files' },
+      r = { MRU, 'Most recently used files' },
+      h = { MFU, 'Most frequently used files' },
+      g = {
+        name = '+git',
+        b = { builtins.git_branches, 'branches' },
+        n = { gh_notifications, 'notifications' },
+        c = { delta_git_commits, 'commits' },
+        B = { delta_git_bcommits, 'buffer commits' },
+      },
+      o = { buffers, 'buffers' },
+      s = { live_grep, 'live grep' },
+      d = { dotfiles, 'dotfiles' },
+      c = { nvim_config, 'nvim config' },
+      O = { orgfiles, 'org files' },
+      N = { norgfiles, 'norg files' },
     },
   })
+
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
 

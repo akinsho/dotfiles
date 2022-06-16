@@ -66,8 +66,8 @@ packer.startup({
       'nvim-telescope/telescope.nvim',
       cmd = 'Telescope',
       module_pattern = 'telescope.*',
-      setup = conf('telescope').setup,
       config = conf('telescope').config,
+      event = 'CursorHold',
       requires = {
         {
           'nvim-telescope/telescope-fzf-native.nvim',
