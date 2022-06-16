@@ -16,7 +16,7 @@ return function()
     },
   })
   local function open()
-    neotest.output.open({ enter = false })
+    neotest.output.open({ enter = true, short = false })
   end
   local function run_file()
     neotest.run.run(vim.fn.expand('%'))
