@@ -81,6 +81,7 @@ return function()
           toggle_hidden_on_enter = true,
         },
         items = {
+          groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
           {
             name = 'Terraform',
