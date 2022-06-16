@@ -22,13 +22,12 @@ return function()
     org_todo_keywords = { 'TODO(t)', 'WAITING', 'NEXT', '|', 'DONE(d)', 'CANCELLED' },
     org_todo_keyword_faces = {
       NEXT = ':foreground royalblue :weight bold :slant italic',
-      CANCELLED = ':foreground red',
+      CANCELLED = ':foreground darkred :weight bold',
     },
     org_hide_leading_stars = true,
     org_agenda_skip_scheduled_if_done = true,
     org_agenda_skip_deadline_if_done = true,
     org_agenda_templates = {
-      t = { description = 'Task', template = '* TODO %?\n SCHEDULED: %t' },
       l = { description = 'Link', template = '* %?\n%a' },
       p = {
         description = 'Project Todo',
