@@ -56,7 +56,7 @@ local function colors()
     StatusLine = { background = bg_color },
     StatusLineNC = { link = 'VertSplit' },
     StInfo = { foreground = info_color, background = bg_color, bold = true },
-    StWarning = { foreground = warning_fg, background = bg_color },
+    StWarn = { foreground = warning_fg, background = bg_color },
     StError = { foreground = error_color, background = bg_color },
     StFilename = { background = bg_color, foreground = 'LightGray', bold = true },
     StFilenameInactive = { inherit = 'Comment', background = bg_color, bold = true },
@@ -187,7 +187,7 @@ function as.ui.statusline()
       prefix = icons.misc.tools,
       padding = 'none',
       before = '  ',
-      prefix_color = 'StWarning',
+      prefix_color = 'StWarn',
       small = 1,
       priority = 2,
     }),
@@ -227,19 +227,19 @@ function as.ui.statusline()
     component(utils.debugger(), 'StMetadata', { prefix = icons.misc.bug, priority = 4 }),
 
     component_if(diagnostics.error.count, diagnostics.error, 'StError', {
-      prefix = diagnostics.error.sign,
+      prefix = diagnostics.error.icon,
       prefix_color = 'StError',
       priority = 1,
     }),
 
-    component_if(diagnostics.warning.count, diagnostics.warning, 'StWarning', {
-      prefix = diagnostics.warning.sign,
-      prefix_color = 'StWarning',
+    component_if(diagnostics.warn.count, diagnostics.warn, 'StWarn', {
+      prefix = diagnostics.warn.icon,
+      prefix_color = 'StWarn',
       priority = 3,
     }),
 
     component_if(diagnostics.info.count, diagnostics.info, 'StInfo', {
-      prefix = diagnostics.info.sign,
+      prefix = diagnostics.info.icon,
       prefix_color = 'StInfo',
       priority = 4,
     }),
@@ -255,7 +255,7 @@ function as.ui.statusline()
 
     component(status.changed, 'StTitle', {
       prefix = icons.git.mod,
-      prefix_color = 'StWarning',
+      prefix_color = 'StWarn',
       priority = 3,
     }),
 

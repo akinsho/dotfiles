@@ -336,25 +336,25 @@ function M.file(ctx, minimal)
   }
 end
 
----Shim to handle getting diagnostics in nvim 0.5 and nightly
----@param buf number
----@param severity string
----@return number
-local function get_count(buf, severity)
-  return #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity[severity:upper()] })
-end
-
 function M.diagnostic_info(context)
-  local buf = context.bufnum
-  if vim.tbl_isempty(vim.lsp.get_active_clients({ bufnr = buf })) then
-    return { error = {}, warning = {}, info = {} }
-  end
-  local icons = as.style.icons.lsp
-  return {
-    error = { count = get_count(buf, 'Error'), sign = icons.error },
-    warning = { count = get_count(buf, 'Warning'), sign = icons.warn },
-    info = { count = get_count(buf, 'Information'), sign = icons.info },
+  local diagnostics = vim.diagnostic.get(context.bufnum)
+  local severities = vim.diagnostic.severity
+  local lsp = as.style.icons.lsp
+  local result = {
+    error = { count = 0, icon = lsp.error },
+    warn = { count = 0, icon = lsp.warn },
+    info = { count = 0, icon = lsp.info },
+    hint = { count = 0, icon = lsp.hint },
   }
+  if vim.tbl_isempty(diagnostics) then
+    return result
+  end
+  result = as.fold(function(accum, item)
+    local severity = severities[item.severity]:lower()
+    accum[severity].count = accum[severity].count + 1
+    return accum
+  end, diagnostics, result)
+  return result
 end
 
 function M.debugger()
