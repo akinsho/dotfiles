@@ -169,10 +169,9 @@ packer.startup({
     })
 
     use({
-      dev('contributing/dim.lua'), -- 'narutoxy/dim.lua',
-      requires = { 'nvim-treesitter/nvim-treesitter', 'neovim/nvim-lspconfig' },
+      'zbirenbaum/neodim',
       config = function()
-        require('dim').setup({ disable_lsp_decorations = true })
+        require('neodim').setup()
       end,
     })
 
