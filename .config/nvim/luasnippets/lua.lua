@@ -10,6 +10,21 @@ end
 return {
   snippet(
     {
+      trig = 'vs',
+      name = 'vim schedule',
+      dscr = 'Schedule a function on the vim event loop',
+    },
+    fmt(
+      [[
+        vim.schedule(function()
+          {}
+        end)
+      ]],
+      { i(1) }
+    )
+  ),
+  snippet(
+    {
       trig = 'req',
       name = 'require module',
       dscr = 'Require a module and set the import to the last word',
