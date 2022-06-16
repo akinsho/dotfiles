@@ -1,15 +1,18 @@
 return function()
   local neotest = require('neotest')
   neotest.setup({
+    diagnostic = {
+      enabled = false,
+    },
     icons = {
       running = as.style.icons.misc.clock,
+    },
+    floating = {
+      border = as.style.current.border,
     },
     adapters = {
       require('neotest-plenary'),
       require('neotest-go'),
-    },
-    floating = {
-      border = as.style.current.border,
     },
   })
   local function open()
