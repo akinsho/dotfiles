@@ -14,7 +14,7 @@
 \set ON_ERROR_ROLLBACK interactive
 \set HISTFILE ~/.psql_history-:DBNAME
 
-\set VERBOSITY verbose
+-- \set VERBOSITY verbose
 
 \pset border 2
 \pset linestyle 'unicode'
