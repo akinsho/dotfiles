@@ -1,0 +1,48 @@
+-- @reference: https://github.com/baburdick/psqlrc-files/blob/master/.psqlrc
+-- Prevent noisy loading of psqlrc file
+\set QUIET yes
+
+-- Customize prompt
+-- http://i-dba.blogspot.se/2014/02/colorizing-psql-prompt-guide.html
+-- %m -> short hostname; %M -> full hostname
+\set PROMPT1 '\n%[%033[1;31m%]➤ %[%033[2;37m%]%`\! date "+%F %I:%M %p %Z"`%[%033[0m%] %[%033[1;36m%]%n%[%033[34m%]@%[%033[1;36m%]%M:%>%[%033[1;33m%]/%/ %[%033[1;31m%]%x %[%033[K%]%[%033[0m%]\n%[%033[1;33m%]%R%#%[%033[0m%] '
+\set PROMPT2 '%[%033[1;33m%]%R%#%[%033[0m%] '
+-- Consider: http://petereisentraut.blogspot.c
+
+\x auto
+\set ON_ERROR_STOP on
+\set ON_ERROR_ROLLBACK interactive
+\set HISTFILE ~/.psql_history-:DBNAME
+
+\set VERBOSITY verbose
+
+\pset border 2
+\pset linestyle 'unicode'
+
+\pset unicode_border_linestyle single
+\pset unicode_column_linestyle single
+\pset unicode_header_linestyle single
+
+-- Show timing info for queries
+\timing
+
+-- Pager settings to support color
+\pset pager always
+
+-- Allow pasting of values to avoid stupid indenting
+\set paste
+
+-- Get rid of duplicates in history
+\set HISTCONTROL ignoredups
+
+-- Protect against results floods
+--\set FETCH_COUNT 1000
+
+-- Automatically upcase keywords (works only intermittently)
+--\set COMP_KEYWORD_CASE upper
+
+-- Show NULLs as: [NULL]
+--\pset null '[NULL]'
+
+-- Set noisyness back to normal
+\unset QUIET
