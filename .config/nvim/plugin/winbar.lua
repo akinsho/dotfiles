@@ -100,6 +100,7 @@ local blocked = {
   'toggleterm',
   'DressingInput',
   'org',
+  'sql',
 }
 local allowed = { 'toggleterm' }
 
