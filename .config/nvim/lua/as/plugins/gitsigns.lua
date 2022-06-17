@@ -29,6 +29,7 @@ return function()
           r = { gs.reset_hunk, 'reset current hunk' },
           b = { gs.toggle_current_line_blame, 'toggle current line blame' },
           d = { gs.toggle_deleted, 'show deleted lines' },
+          w = { gs.toggle_word_diff, 'gitsigns: toggle word diff' },
         },
         ['<localleader>g'] = {
           name = '+git',
@@ -40,7 +41,6 @@ return function()
           b = {
             name = '+blame',
             l = { gs.blame_line, 'gitsigns: blame current line' },
-            d = { gs.toggle_word_diff, 'gitsigns: toggle word diff' },
           },
         },
         ['<leader>lm'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
@@ -61,10 +61,10 @@ return function()
         return '<Ignore>'
       end, { expr = true, desc = 'go to previous git hunk' })
 
-      vim.keymap.set('v', '<leader>hs', function()
+      as.vnoremap('<leader>hs', function()
         gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
       end)
-      vim.keymap.set('v', '<leader>hr', function()
+      as.vnoremap('<leader>hr', function()
         gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
       end)
 
