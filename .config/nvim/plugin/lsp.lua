@@ -175,6 +175,10 @@ as.augroup('LspSetupCommands', {
     desc = 'setup the language server autocommands',
     command = function(args)
       local bufnr = args.buf
+      -- if the buffer is invalid we should not try and attach to it
+      if not api.nvim_buf_is_valid(args.buf) then
+        return
+      end
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       on_attach(client, bufnr)
       if client_overrides[client.name] then
