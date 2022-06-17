@@ -21,7 +21,7 @@ return function()
     org_default_notes_file = sync('org/refile.org'),
     org_todo_keywords = { 'TODO(t)', 'WAITING', 'NEXT', '|', 'DONE(d)', 'CANCELLED' },
     org_todo_keyword_faces = {
-      NEXT = ':foreground royalblue :weight bold :slant italic',
+      NEXT = ':foreground royalblue :weight bold',
       CANCELLED = ':foreground darkred :weight bold',
     },
     org_hide_leading_stars = true,
