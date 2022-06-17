@@ -171,7 +171,11 @@ packer.startup({
     use({
       'zbirenbaum/neodim',
       config = function()
-        require('neodim').setup()
+        require('neodim').setup({
+          hide = {
+            underline = false,
+          },
+        })
       end,
     })
 
