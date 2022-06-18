@@ -172,8 +172,10 @@ packer.startup({
       'zbirenbaum/neodim',
       config = function()
         require('neodim').setup({
+          blend_color = require('as.highlights').get_hl('Normal', 'bg'),
+          alpha = 0.45,
           hide = {
-            underline = true,
+            underline = false,
           },
         })
       end,
