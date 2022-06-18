@@ -1025,6 +1025,19 @@ packer.startup({
         })
       end,
     })
+
+    use_local({
+      'akinsho/clock.nvim',
+      local_path = 'personal',
+      config = function()
+        local f = vim.fn
+        local c = require('clock')
+        c.setup({ border = as.style.current.border })
+        if f.expand('$DOTFILES') == f.getcwd() then
+          c.Clock:new():count_up({ minutes = 30 })
+        end
+      end,
+    })
     --}}}
     ---------------------------------------------------------------------------------
   end,
