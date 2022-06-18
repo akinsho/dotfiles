@@ -20,6 +20,10 @@ return function()
         word = false,
         cyclic = true,
       }),
+      augend.case.new({
+        types = { 'camelCase', 'snake_case', 'PascalCase','SCREAMING_SNAKE_CASE' },
+        cyclic = true,
+      }),
     },
     dep_files = {
       augend.semver.alias.semver,
