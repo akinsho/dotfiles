@@ -356,6 +356,17 @@ packer.startup({
         })
       end,
     })
+
+    use({
+      'kevinhwang91/nvim-ufo',
+      requires = 'kevinhwang91/promise-async',
+      config = function()
+        require('as.highlights').plugin('Ufo', {
+          Folded = { bold = false, italic = false },
+        })
+        require('ufo').setup()
+      end,
+    })
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     --------------------------------------------------------------------------------
