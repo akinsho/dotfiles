@@ -173,7 +173,7 @@ packer.startup({
       config = function()
         require('neodim').setup({
           hide = {
-            underline = false,
+            underline = true,
           },
         })
       end,
