@@ -1038,7 +1038,10 @@ packer.startup({
         local c = require('clock')
         c.setup({ border = as.style.current.border })
         if f.expand('$DOTFILES') == f.getcwd() then
-          c.Clock:new():count_up({ minutes = 30 })
+          c.Clock:new():count_up({
+            duration = { minutes = 30 },
+            threshold = { late = '00:10:00' },
+          })
         end
       end,
     })
