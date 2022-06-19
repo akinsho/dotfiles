@@ -361,8 +361,10 @@ packer.startup({
       'kevinhwang91/nvim-ufo',
       requires = 'kevinhwang91/promise-async',
       config = function()
-        require('as.highlights').plugin('Ufo', {
-          Folded = { bold = false, italic = false },
+        local hl = require('as.highlights')
+        local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
+        hl.plugin('Ufo', {
+          Folded = { bold = false, italic = false, bg = bg },
         })
         vim.opt.foldlevelstart = 2
         vim.opt.foldlevel = 2
