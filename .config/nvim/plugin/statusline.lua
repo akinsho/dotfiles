@@ -157,10 +157,6 @@ function as.ui.statusline()
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
   local behind = updates.behind and tonumber(updates.behind) or 0
 
-  -- Github notifications
-  local ghn_ok, ghn = pcall(require, 'github-notifications')
-  local notifications = ghn_ok and ghn.statusline_notification_count() or ''
-
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   local flutter = vim.g.flutter_tools_decorations or {}
@@ -243,8 +239,6 @@ function as.ui.statusline()
       prefix_color = 'StInfo',
       priority = 4,
     }),
-
-    component(notifications, 'StTitle', { priority = 3 }),
 
     -- Git Status
     component(status.head, 'StBlue', {
