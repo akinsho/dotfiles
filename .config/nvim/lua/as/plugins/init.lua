@@ -847,13 +847,6 @@ packer.startup({
     })
 
     use({
-      'ldelossa/gh.nvim',
-      requires = 'ldelossa/litee.nvim',
-      cmd = { 'GHOpenPR' },
-      config = conf('gh'),
-    })
-
-    use({
       'sindrets/diffview.nvim',
       cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
       module = 'diffview',
