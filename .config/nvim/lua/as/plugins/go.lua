@@ -27,7 +27,7 @@ return function()
     },
     lsp_gofumpt = true,
     lsp_keymaps = false,
-    lsp_diag_virtual_text = false,
+    lsp_diag_virtual_text = true,
     dap_debug_keymap = false,
     textobjects = false,
   })
