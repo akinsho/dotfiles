@@ -364,7 +364,13 @@ packer.startup({
         require('as.highlights').plugin('Ufo', {
           Folded = { bold = false, italic = false },
         })
-        require('ufo').setup()
+        vim.opt.foldlevelstart = 2
+        vim.opt.foldlevel = 2
+        vim.opt.sessionoptions:append('folds')
+        local ufo = require('ufo')
+        ufo.setup()
+        as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
+        as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
       end,
     })
     --------------------------------------------------------------------------------
