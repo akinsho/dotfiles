@@ -258,8 +258,8 @@ local function highlight_ft_icon(hl, bg_hl)
   end
   local name = hl .. 'Statusline'
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
-  local fg_color = H.get_hl(hl, 'fg')
-  local bg_color = H.get_hl(bg_hl, 'bg')
+  local fg_color = H.get(hl, 'fg')
+  local bg_color = H.get(bg_hl, 'bg')
   if bg_color and fg_color then
     as.augroup(name, {
       {

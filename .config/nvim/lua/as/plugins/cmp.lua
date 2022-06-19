@@ -11,7 +11,7 @@ return function()
   local ellipsis = as.style.icons.misc.ellipsis
 
   -- Make the source information less prominent
-  local faded = h.alter_color(h.get_hl('Pmenu', 'bg'), 30)
+  local faded = h.alter_color(h.get('Pmenu', 'bg'), 30)
 
   local kind_hls = as.fold(
     function(accum, value, key)

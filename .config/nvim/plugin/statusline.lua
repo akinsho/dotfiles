@@ -29,11 +29,11 @@ local function colors()
 
   local error_color = as.style.lsp.colors.error
   local info_color = as.style.lsp.colors.info
-  local normal_fg = H.get_hl('Normal', 'fg')
-  local string_fg = H.get_hl('String', 'fg')
-  local number_fg = H.get_hl('Number', 'fg')
+  local normal_fg = H.get('Normal', 'fg')
+  local string_fg = H.get('String', 'fg')
+  local number_fg = H.get('Number', 'fg')
 
-  local normal_bg = H.get_hl('Normal', 'bg')
+  local normal_bg = H.get('Normal', 'bg')
   local dim_color = H.alter_color(normal_bg, 40)
   local bg_color = H.alter_color(normal_bg, -16)
 

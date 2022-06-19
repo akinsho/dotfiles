@@ -85,7 +85,7 @@ function M.adopt_winhighlight(win_id, target, name, fallback)
     return fallback
   end
   local hl_group = vim.split(found, ':')[2]
-  local bg = M.get_hl(hl_group, 'bg')
+  local bg = M.get(hl_group, 'bg')
   M.set_hl(win_hl_name, { background = bg, inherit = fallback })
   return win_hl_name
 end
@@ -103,7 +103,7 @@ end
 local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      opts[name] = M.get_hl(value.from, vim.F.if_nil(value.attr, name))
+      opts[name] = M.get(value.from, vim.F.if_nil(value.attr, name))
     end
   end
 end
@@ -128,7 +128,7 @@ end
 ---@param attribute string?
 ---@param fallback string?
 ---@return string
-function M.get_hl(group, attribute, fallback)
+function M.get(group, attribute, fallback)
   if not group then
     vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
     return 'NONE'
@@ -182,9 +182,9 @@ function M.plugin(name, hls)
 end
 
 local function general_overrides()
-  local comment_fg = M.get_hl('Comment', 'fg')
-  local keyword_fg = M.get_hl('Keyword', 'fg')
-  local normal_bg = M.get_hl('Normal', 'bg')
+  local comment_fg = M.get('Comment', 'fg')
+  local keyword_fg = M.get('Keyword', 'fg')
+  local normal_bg = M.get('Normal', 'bg')
   local code_block = M.alter_color(normal_bg, 30)
   local msg_area_bg = M.alter_color(normal_bg, -10)
   local info_line = M.alter_color(L.info, -70)
@@ -344,10 +344,10 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  local normal_bg = M.get_hl('Normal', 'bg')
-  local split_color = M.get_hl('VertSplit', 'fg')
+  local normal_bg = M.get('Normal', 'bg')
+  local split_color = M.get('VertSplit', 'fg')
   local bg_color = M.alter_color(normal_bg, -8)
-  local st_color = M.alter_color(M.get_hl('Visual', 'bg'), -20)
+  local st_color = M.alter_color(M.get('Visual', 'bg'), -20)
   M.all({
     PanelBackground = { background = bg_color },
     PanelHeading = { background = bg_color, bold = true },

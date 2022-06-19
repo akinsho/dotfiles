@@ -172,7 +172,7 @@ packer.startup({
       'zbirenbaum/neodim',
       config = function()
         require('neodim').setup({
-          blend_color = require('as.highlights').get_hl('Normal', 'bg'),
+          blend_color = require('as.highlights').get('Normal', 'bg'),
           alpha = 0.45,
           hide = {
             underline = false,
@@ -566,7 +566,7 @@ packer.startup({
     use({
       'itchyny/vim-highlighturl',
       config = function()
-        vim.g.highlighturl_guifg = require('as.highlights').get_hl('URL', 'fg')
+        vim.g.highlighturl_guifg = require('as.highlights').get('URL', 'fg')
       end,
     })
 
