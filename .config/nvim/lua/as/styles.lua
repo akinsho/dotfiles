@@ -33,7 +33,7 @@ as.style = {
       vert_top_half_block = '▀',
     },
     lsp = {
-      error = '✗',
+      error = '', -- '✗'
       warn = '',
       info = '', -- 
       hint = '', -- ⚑
