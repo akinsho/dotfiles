@@ -313,11 +313,11 @@ local function general_overrides()
       sp = L.info,
       foreground = 'none',
     },
-    DiagnosticSignInfoLine = { background = info_line },
-    DiagnosticSignHintLine = { background = hint_line },
-    DiagnosticSignErrorLine = { background = error_line },
-    DiagnosticSignWarnLine = { background = warn_line },
-    DiagnosticSignHintNr = {
+    DiagnosticVirtualTextInfo = { background = info_line },
+    DiagnosticVirtualTextHint = { background = hint_line },
+    DiagnosticVirtualTextError = { background = error_line },
+    DiagnosticVirtualTextWarn = { background = warn_line },
+    DiagnosticHintNr = {
       inherit = 'DiagnosticSignHintLine',
       foreground = { from = 'Normal' },
       bold = true,

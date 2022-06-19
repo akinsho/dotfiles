@@ -238,8 +238,6 @@ local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    numhl = fmt('%sNr', opts.highlight),
-    linehl = fmt('%sLine', opts.highlight),
   })
 end
 
@@ -305,7 +303,14 @@ diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
-  virtual_text = false,
+  virtual_text = {
+    spacing = 1,
+    prefix = '',
+    format = function(d)
+      local level = diagnostic.severity[d.severity]
+      return fmt('%s %s', icons[level:lower()], d.message)
+    end,
+  },
   float = {
     max_width = max_width,
     max_height = max_height,
