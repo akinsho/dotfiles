@@ -362,14 +362,12 @@ packer.startup({
       config = function()
         local hl = require('as.highlights')
         local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
-        hl.plugin('Ufo', {
-          Folded = { bold = false, italic = false, bg = bg },
-        })
+        hl.plugin('ufo', { Folded = { bold = false, italic = false, bg = bg } })
         vim.opt.foldlevelstart = 2
         vim.opt.foldlevel = 2
         vim.opt.sessionoptions:append('folds')
         local ufo = require('ufo')
-        ufo.setup()
+        ufo.setup({ open_fold_hl_timeout = 0 })
         as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
         as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
       end,
