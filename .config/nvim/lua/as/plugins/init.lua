@@ -1035,7 +1035,7 @@ packer.startup({
       config = function()
         local f = vim.fn
         local c = require('clock')
-        c.setup({ border = as.style.current.border })
+        c.setup({ border = as.style.current.border, row = vim.o.lines - 5 })
         if f.expand('$DOTFILES') == f.getcwd() then
           c.Clock:new():count_up({
             duration = { minutes = 30 },
