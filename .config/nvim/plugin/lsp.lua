@@ -276,16 +276,16 @@ local function max_diagnostic(callback)
   end
 end
 
-local signs_handler = vim.diagnostic.handlers.signs
-vim.diagnostic.handlers.signs = {
+local signs_handler = diagnostic.handlers.signs
+diagnostic.handlers.signs = {
   show = max_diagnostic(signs_handler.show),
   hide = function(_, bufnr)
     signs_handler.hide(ns, bufnr)
   end,
 }
 
-local virt_text_handler = vim.diagnostic.handlers.virtual_text
-vim.diagnostic.handlers.virtual_text = {
+local virt_text_handler = diagnostic.handlers.virtual_text
+diagnostic.handlers.virtual_text = {
   show = max_diagnostic(virt_text_handler.show),
   hide = function(_, bufnr)
     virt_text_handler.hide(ns, bufnr)
