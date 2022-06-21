@@ -1034,7 +1034,7 @@ packer.startup({
     use_local({
       'akinsho/clock.nvim',
       local_path = 'personal',
-      config = function()
+      config = as.block_reload(function()
         local f = vim.fn
         local c = require('clock')
         c.setup({ border = as.style.current.border, row = vim.o.lines - 5 })
@@ -1044,7 +1044,7 @@ packer.startup({
             threshold = { late = '00:10:00' },
           })
         end
-      end,
+      end),
     })
     --}}}
     ---------------------------------------------------------------------------------
