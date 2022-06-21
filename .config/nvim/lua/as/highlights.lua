@@ -220,6 +220,7 @@ local function general_overrides()
       bold = true,
     },
     CursorLineNr = { bold = true },
+    CursorLineSign = {link = 'CursorLine'},
     FoldColumn = { background = 'background' },
     TermCursor = { ctermfg = 'green', foreground = 'royalblue' },
     -- Add undercurl to existing spellbad highlight
