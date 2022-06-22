@@ -238,6 +238,7 @@ local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
+    culhl = opts.highlight .. 'Line',
   })
 end
 
