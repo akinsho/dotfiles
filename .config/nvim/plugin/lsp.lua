@@ -91,7 +91,7 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'LSP: Document Highlight',
         command = function()
-          pcall(vim.lsp.buf.document_highlight)
+          vim.lsp.buf.document_highlight()
         end,
       },
       {
