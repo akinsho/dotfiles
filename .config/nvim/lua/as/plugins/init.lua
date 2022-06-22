@@ -418,27 +418,6 @@ packer.startup({
     })
 
     use({
-      'github/copilot.vim',
-      config = function()
-        vim.g.copilot_no_tab_map = true
-        as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
-        as.inoremap('<M-]>', '<Plug>(copilot-next)')
-        as.inoremap('<M-[>', '<Plug>(copilot-previous)')
-        as.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
-
-        vim.g.copilot_filetypes = {
-          ['*'] = true,
-          gitcommit = false,
-          NeogitCommitMessage = false,
-          DressingInput = false,
-          TelescopePrompt = false,
-          ['neo-tree-popup'] = false,
-        }
-        require('as.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
-      end,
-    })
-
-    use({
       'simeji/winresizer',
       setup = function()
         vim.g.winresizer_start_key = '<leader>w'
