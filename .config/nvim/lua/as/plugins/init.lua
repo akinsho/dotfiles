@@ -119,11 +119,7 @@ packer.startup({
       end,
     })
 
-    use({
-      'lukas-reineke/indent-blankline.nvim',
-      branch = 'feature/extmark-priority',
-      config = conf('indentline'),
-    })
+    use({ 'lukas-reineke/indent-blankline.nvim', config = conf('indentline') })
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
