@@ -25,8 +25,6 @@ return function()
       sort_by = 'insert_after_current',
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
-      ---based on https://github.com/kovidgoyal/kitty/issues/957
-      -- separator_style = os.getenv('KITTY_WINDOW_ID') and 'slant' or 'padded_slant',
       show_buffer_close_icons = true,
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = diagnostics_indicator,
