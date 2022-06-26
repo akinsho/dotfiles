@@ -7,6 +7,7 @@ local L = vim.lsp.log_levels
 
 local icons = as.style.icons.lsp
 local border = as.style.current.border
+local AUGROUP = 'LspCommands'
 
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(L.DEBUG)
@@ -53,57 +54,57 @@ end
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
-  if client and client.server_capabilities.documentFormattingProvider then
-    as.augroup('LspFormatting', {
-      {
-        event = 'BufWritePre',
-        buffer = bufnr,
-        desc = 'Format the current buffer on save',
-        command = function(args)
-          format({ bufnr = args.buf, async = true })
-        end,
-      },
+  local cmds = {}
+  if not client then
+    local msg = fmt('Unable to setup LSP autocommands, client for %d is missing', bufnr)
+    return vim.notify(msg, 'error', { title = 'LSP Setup' })
+  end
+  if client.server_capabilities.documentFormattingProvider then
+    table.insert(cmds, {
+      event = 'BufWritePre',
+      buffer = bufnr,
+      desc = 'Format the current buffer on save',
+      command = function(args)
+        format({ bufnr = args.buf, async = true })
+      end,
     })
   end
-  if client and client.server_capabilities.codeLensProvider then
-    as.augroup('LspCodeLens', {
-      {
-        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-        buffer = bufnr,
-        command = function()
-          vim.lsp.codelens.refresh()
-        end,
-      },
+  if client.server_capabilities.codeLensProvider then
+    table.insert(cmds, {
+      event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+      buffer = bufnr,
+      command = function()
+        vim.lsp.codelens.refresh()
+      end,
     })
   end
-  if client and client.server_capabilities.documentHighlightProvider then
-    as.augroup('LspCursorCommands', {
-      {
-        event = { 'CursorHold' },
-        buffer = bufnr,
-        desc = 'Show diagnostics',
-        command = function()
-          diagnostic_popup()
-        end,
-      },
-      {
-        event = { 'CursorHold', 'CursorHoldI' },
-        buffer = bufnr,
-        desc = 'LSP: Document Highlight',
-        command = function()
-          vim.lsp.buf.document_highlight()
-        end,
-      },
-      {
-        event = 'CursorMoved',
-        desc = 'LSP: Document Highlight (Clear)',
-        buffer = bufnr,
-        command = function()
-          vim.lsp.buf.clear_references()
-        end,
-      },
+  if client.server_capabilities.documentHighlightProvider then
+    table.insert(cmds, {
+      event = { 'CursorHold' },
+      buffer = bufnr,
+      desc = 'Show diagnostics',
+      command = function()
+        diagnostic_popup()
+      end,
+    })
+    table.insert(cmds, {
+      event = { 'CursorHold', 'CursorHoldI' },
+      buffer = bufnr,
+      desc = 'LSP: Document Highlight',
+      command = function()
+        vim.lsp.buf.document_highlight()
+      end,
+    })
+    table.insert(cmds, {
+      event = 'CursorMoved',
+      desc = 'LSP: Document Highlight (Clear)',
+      buffer = bufnr,
+      command = function()
+        vim.lsp.buf.clear_references()
+      end,
     })
   end
+  as.augroup(AUGROUP, cmds)
 end
 
 -----------------------------------------------------------------------------//
@@ -176,7 +177,7 @@ as.augroup('LspSetupCommands', {
     command = function(args)
       local bufnr = args.buf
       -- if the buffer is invalid we should not try and attach to it
-      if not api.nvim_buf_is_valid(args.buf) then
+      if not api.nvim_buf_is_valid(args.buf) or not args.data then
         return
       end
       local client = vim.lsp.get_client_by_id(args.data.client_id)
