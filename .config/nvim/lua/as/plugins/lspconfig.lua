@@ -14,7 +14,21 @@ return function()
     terraformls = true,
     rust_analyzer = true,
     marksman = true,
-    gopls = false,
+    gopls = {
+      settings = {
+        gopls = {
+          codelenses = {
+            generate = true,
+            gc_details = false,
+            test = true,
+            tidy = true,
+          },
+          analyses = {
+            unusedparams = true,
+          },
+        },
+      },
+    },
     sourcekit = {
       filetypes = { 'swift', 'objective-c', 'objective-cpp' },
     },

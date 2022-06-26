@@ -719,7 +719,14 @@ packer.startup({
       config = conf('flutter-tools'),
     })
 
-    use({ 'ray-x/go.nvim', ft = 'go', config = conf('go') })
+    use({
+      'olexsmir/gopher.nvim',
+      ft = 'go',
+      requires = { -- dependencies
+        'nvim-lua/plenary.nvim',
+        'nvim-treesitter/nvim-treesitter',
+      },
+    })
     use('nanotee/sqls.nvim')
 
     use({
