@@ -316,7 +316,7 @@ packer.startup({
         require('satellite').setup({
           handlers = {
             gitsigns = {
-              enable = false,
+              enable = true,
             },
             marks = {
               enable = false,
