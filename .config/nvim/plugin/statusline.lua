@@ -9,8 +9,9 @@
 local H = require('as.highlights')
 local utils = require('as.utils.statusline')
 
-local api = vim.api
 local fn = vim.fn
+local api = vim.api
+local fmt = string.format
 local icons = as.style.icons
 local P = as.style.palette
 local C = utils.constants
@@ -126,9 +127,9 @@ function as.ui.statusline()
   local dir_component = component(dir.item, dir.hl, dir.opts)
   local parent_component = component(parent.item, parent.hl, parent.opts)
 
-  local is_git_repo = fn.isdirectory(fn.getcwd(curwin) .. '/.git') == 1
-  if is_git_repo then
-    file.opts.after = ' ' .. icons.git.repo
+  if not plain and utils.is_repo(ctx) then
+    file.opts.suffix = icons.git.repo
+    file.opts.suffix_color = 'StMetadata'
   end
   local file_component = component(file.item, file.hl, file.opts)
 

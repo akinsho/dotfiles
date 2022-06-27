@@ -198,6 +198,10 @@ local function special_buffers(ctx)
   return nil
 end
 
+function M.is_repo(ctx)
+  return fn.isdirectory(fmt('%s/.git', fn.getcwd(ctx.winid))) == 1
+end
+
 --- @param ctx table
 --- @param icon string | nil
 function M.modified(ctx, icon)
