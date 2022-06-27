@@ -1026,12 +1026,15 @@ packer.startup({
       'akinsho/clock.nvim',
       local_path = 'personal',
       config = as.block_reload(function()
-        local f = vim.fn
-        local c = require('clock')
-        c.setup({ border = as.style.current.border, row = vim.o.lines - 5 })
+        local c, f = require('clock'), vim.fn
+        c.setup({
+          style = 'fading',
+          border = as.style.current.border,
+          row = 8,
+        })
         if f.expand('$DOTFILES') == f.getcwd() then
           c.Clock:new():count_up({
-            duration = { minutes = 30 },
+            duration = { hours = 1 },
             threshold = { late = '00:10:00' },
           })
         end
