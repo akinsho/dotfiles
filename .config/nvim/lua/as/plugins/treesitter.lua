@@ -38,8 +38,17 @@ return function()
   })
 
   require('nvim-treesitter.configs').setup({
-    ensure_installed = { 'lua', 'go', 'dart', 'rust', 'typescript', 'javascript', 'comment' },
-    ignore_install = { 'phpdoc' }, -- list of parser which cause issues or crashes
+    ensure_installed = {
+      'lua',
+      'go',
+      'dart',
+      'rust',
+      'typescript',
+      'javascript',
+      'comment',
+      'markdown',
+      'markdown_inline',
+    },
     highlight = {
       enable = true,
     },
