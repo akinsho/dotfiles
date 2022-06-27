@@ -60,12 +60,6 @@ path+=(
 case `uname` in
   Darwin)
     export ANDROID_SDK_ROOT=${HOME}/Library/Android/sdk/
-    # Add LUA_PATH to the environment ensuring the lua version is set since
-    # luarocks from homebrew uses lua 5.4 by default so would otherwise add the
-    # wrong path
-    if which luarocks >/dev/null; then
-      eval "$(luarocks --lua-version=5.1 path)"
-    fi
   ;;
   Linux)
   # Java -----------------------------------------------------------------------
