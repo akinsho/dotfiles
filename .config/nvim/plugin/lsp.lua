@@ -187,6 +187,13 @@ as.augroup('LspSetupCommands', {
       end
     end,
   },
+  {
+    event = 'LspDetach',
+    desc = 'Clean up after detached LSP',
+    command = function(args)
+      api.nvim_clear_autocmds({ group = AUGROUP, buffer = args.buf })
+    end,
+  },
 })
 -----------------------------------------------------------------------------//
 -- Commands
