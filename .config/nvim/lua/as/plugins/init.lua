@@ -342,6 +342,7 @@ packer.startup({
       'SmiteshP/nvim-navic',
       requires = 'neovim/nvim-lspconfig',
       config = function()
+        vim.g.navic_silence = true
         local highlights = require('as.highlights')
         local s = as.style
         local misc = s.icons.misc
