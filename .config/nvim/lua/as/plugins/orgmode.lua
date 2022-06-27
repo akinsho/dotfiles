@@ -19,9 +19,16 @@ return function()
   orgmode.setup({
     org_agenda_files = { sync('org/**/*') },
     org_default_notes_file = sync('org/refile.org'),
-    org_todo_keywords = { 'TODO(t)', 'WAITING', 'NEXT', '|', 'DONE(d)', 'CANCELLED' },
+    org_todo_keywords = {
+      'TODO(t)',
+      'WAITING',
+      'IN-PROGRESS',
+      '|',
+      'DONE(d)',
+      'CANCELLED',
+    },
     org_todo_keyword_faces = {
-      NEXT = ':foreground royalblue :weight bold',
+      ['IN-PROGRESS'] = ':foreground royalblue :weight bold',
       CANCELLED = ':foreground darkred :weight bold',
     },
     org_hide_leading_stars = true,
