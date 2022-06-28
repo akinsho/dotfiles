@@ -15,6 +15,7 @@ return function()
   })
 
   Hydra({
+    name = 'Window management',
     config = {
       hint = {
         border = border,
@@ -54,6 +55,7 @@ return function()
 ]]
 
     Hydra({
+      name = 'Git Mode',
       hint = hint,
       config = {
         color = 'pink',
