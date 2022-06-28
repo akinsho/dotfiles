@@ -85,22 +85,20 @@ return function()
       swap = {
         enable = true,
         swap_next = {
-          ['[w'] = '@parameter.inner',
+          ['[w'] = { '@parameter.inner' },
         },
         swap_previous = {
-          [']w'] = '@parameter.inner',
+          [']w'] = { '@parameter.inner' },
         },
       },
       move = {
         enable = true,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
+          [']m'] = { '@function.outer', '@class.outer' },
         },
         goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
+          ['[m'] = { '@function.outer', '@class.outer' },
         },
       },
       lsp_interop = {
@@ -111,9 +109,6 @@ return function()
           ['<leader>dF'] = '@class.outer',
         },
       },
-    },
-    endwise = {
-      enable = true,
     },
     rainbow = {
       enable = true,
