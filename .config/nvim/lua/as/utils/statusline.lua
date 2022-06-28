@@ -365,6 +365,26 @@ function M.debugger()
   return not package.loaded['dap'] and '' or require('dap').status()
 end
 
+function M.hydra()
+  local ok, hydra = pcall(require, 'hydra.statusline')
+  if not ok then
+    return nil
+  end
+  local colors = {
+    red = 'HydraRedSt',
+    blue = 'HydraBlueSt',
+    amaranth = 'HydraAmaranthSt',
+    teal = 'HydraTealSt',
+    pink = 'HydraPinkSt',
+  }
+  local data = {
+    name = hydra.get_name() or 'UNKNOWN',
+    hint = hydra.get_hint(),
+    color = colors[hydra.get_color()],
+  }
+  return hydra.is_active(), data
+end
+
 -----------------------------------------------------------------------------//
 -- Last search count
 -----------------------------------------------------------------------------//

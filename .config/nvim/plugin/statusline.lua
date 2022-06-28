@@ -67,6 +67,12 @@ local function colors()
     StModeReplace = { background = bg_color, foreground = P.dark_red, bold = true },
     StModeCommand = { background = bg_color, foreground = P.light_yellow, bold = true },
     StModeSelect = { background = bg_color, foreground = P.teal, bold = true },
+    -- FOR HYDRA
+    HydraRedSt = { inherit = 'HydraRed', reverse = true },
+    HydraBlueSt = { inherit = 'HydraBlue', reverse = true },
+    HydraAmaranthSt = { inherit = 'HydraAmaranth', reverse = true },
+    HydraTealSt = { inherit = 'HydraTeal', reverse = true },
+    HydraPinkSt = { inherit = 'HydraPink', reverse = true },
   })
 end
 
@@ -161,6 +167,9 @@ function as.ui.statusline()
   -- LSP Diagnostics
   local diagnostics = utils.diagnostic_info(ctx)
   local flutter = vim.g.flutter_tools_decorations or {}
+
+  -- HYDRA
+  local hydra_active, hydra = utils.hydra()
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -195,6 +204,12 @@ function as.ui.statusline()
     -- Neovim allows unlimited alignment sections so we can put things in the
     -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
     -----------------------------------------------------------------------------//
+    component_if(hydra.name:upper(), hydra_active, hydra.color, {
+      prefix = string.rep(' ', 5) .. '🐙',
+      suffix = string.rep(' ', 5),
+      priority = 5,
+    }),
+
     -- Start of the right side layout
     separator(),
     -----------------------------------------------------------------------------//
