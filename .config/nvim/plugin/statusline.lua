@@ -9,9 +9,7 @@
 local H = require('as.highlights')
 local utils = require('as.utils.statusline')
 
-local fn = vim.fn
 local api = vim.api
-local fmt = string.format
 local icons = as.style.icons
 local P = as.style.palette
 local C = utils.constants
