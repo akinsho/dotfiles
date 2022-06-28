@@ -65,7 +65,6 @@ return function()
           border = border,
         },
         on_enter = function()
-          vim.bo.modifiable = false
           gitsigns.toggle_linehl(true)
           gitsigns.toggle_deleted(true)
         end,
@@ -73,7 +72,6 @@ return function()
           vim.bo.modifiable = true
           gitsigns.toggle_linehl(false)
           gitsigns.toggle_deleted(false)
-          vim.cmd('echo') -- clear the echo area
         end,
       },
       mode = { 'n', 'x' },
