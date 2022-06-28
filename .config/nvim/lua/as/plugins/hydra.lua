@@ -69,7 +69,6 @@ return function()
           gitsigns.toggle_deleted(true)
         end,
         on_exit = function()
-          vim.bo.modifiable = true
           gitsigns.toggle_linehl(false)
           gitsigns.toggle_deleted(false)
         end,
