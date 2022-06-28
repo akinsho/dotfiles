@@ -642,6 +642,7 @@ function M.component(item, hl, opts)
       item,
       constants.HL_END,
       suffix_item,
+      constants.HL_END,
       after,
       click_end,
     }),
