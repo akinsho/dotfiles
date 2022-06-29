@@ -2,7 +2,6 @@ return function()
   local cmp = require('cmp')
   local h = require('as.highlights')
 
-  local fn = vim.fn
   local api = vim.api
   local fmt = string.format
   local t = as.replace_termcodes
@@ -75,9 +74,6 @@ return function()
     mapping = {
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
-      ['<c-h>'] = cmp.mapping(function()
-        api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true)
-      end),
       ['<C-q>'] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
