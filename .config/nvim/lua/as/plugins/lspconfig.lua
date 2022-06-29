@@ -54,6 +54,9 @@ return function()
           analyses = {
             unusedparams = true,
           },
+          usePlaceholders = true,
+          completeUnimported = true,
+          staticcheck = true,
         },
       },
     },
