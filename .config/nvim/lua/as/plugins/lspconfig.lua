@@ -7,6 +7,9 @@ as.lsp = {}
 
 local fn = vim.fn
 
+-- This function allows reading a per project "settings.json" file in the `.vim` directory of the project.
+---@param client table<string, any>
+---@return boolean
 function as.lsp.on_init(client)
   local path = client.workspace_folders[1].name
   local config_path = path .. '/.vim/settings.json'
