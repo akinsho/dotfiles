@@ -1,6 +1,5 @@
 ---@diagnostic disable: duplicate-doc-param
 
-local devicons = require('nvim-web-devicons')
 local highlights = require('as.highlights')
 local utils = require('as.utils.statusline')
 local component = utils.component
@@ -70,11 +69,9 @@ function as.ui.winbar()
   end
 
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
-  local icon, color = devicons.get_icon(bufname, nil, { default = true })
 
   as.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
-    local is_first = index == 1
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     local hl = is_last and 'Winbar' or 'NonText'
@@ -86,8 +83,6 @@ function as.ui.winbar()
       click = 'HandleWinbarClick',
       suffix = sep,
       suffix_color = suffix_hl,
-      prefix = is_first and icon or nil,
-      prefix_color = is_first and color or nil,
     }))
   end, parts)
   add(unpack(breadcrumbs()))
