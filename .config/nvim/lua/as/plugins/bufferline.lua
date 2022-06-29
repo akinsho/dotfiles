@@ -127,7 +127,6 @@ return function()
     ['<S-tab>'] = { '<Cmd>BufferLineCyclePrev<CR>', 'bufferline: prev' },
     ['[b'] = { '<Cmd>BufferLineMoveNext<CR>', 'bufferline: move next' },
     [']b'] = { '<Cmd>BufferLineMovePrev<CR>', 'bufferline: move prev' },
-    ['<leader>bp'] = { '<Cmd>BufferLineTogglePin<CR>', 'bufferline: toggle pin' },
     ['<leader>1'] = { '<Cmd>BufferLineGoToBuffer 1<CR>', 'which_key_ignore' },
     ['<leader>2'] = { '<Cmd>BufferLineGoToBuffer 2<CR>', 'which_key_ignore' },
     ['<leader>3'] = { '<Cmd>BufferLineGoToBuffer 3<CR>', 'which_key_ignore' },

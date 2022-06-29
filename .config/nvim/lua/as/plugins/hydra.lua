@@ -3,6 +3,25 @@ return function()
   local border = as.style.current.border
 
   Hydra({
+    name = 'Buffer management',
+    mode = 'n',
+    body = '<leader>b',
+    invoke_on_body = true,
+    color = 'teal',
+    config = {
+      hint = { border = border },
+    },
+    heads = {
+      { 'l', '<Cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' } },
+      { 'h', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'Prev buffer' } },
+      { 'p', '<Cmd>BufferLineTogglePin<CR>', { desc = 'Pin buffer' } },
+      { 'c', '<Cmd>BufferLinePick<CR>', { desc = 'Pin buffer' } },
+      { 'd', '<Cmd>BufferLinePickClose<CR>', { desc = 'Pick buffer to close', exit = true } },
+      { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+    },
+  })
+
+  Hydra({
     name = 'Side scroll',
     mode = 'n',
     body = 'z',
