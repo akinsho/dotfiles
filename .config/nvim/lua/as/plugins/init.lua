@@ -689,6 +689,7 @@ packer.startup({
       end,
     })
 
+    use('tpope/vim-dotenv')
     use('tpope/vim-eunuch')
     use('tpope/vim-sleuth')
     use('tpope/vim-repeat')
