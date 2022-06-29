@@ -51,7 +51,7 @@ return function()
       -- Split
       { 's', '<C-w>s' },
       { 'v', '<C-w>v' },
-      { 'q', '<Cmd>try | close | catch | endtry<CR>', { desc = 'close window' } },
+      { 'q', '<Cmd>Bwipeout<CR>', { desc = 'close window' } },
       -- Size
       { '+', '2<C-w>+' },
       { '-', '2<C-w>-' },
