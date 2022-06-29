@@ -367,10 +367,12 @@ packer.startup({
       'kevinhwang91/nvim-ufo',
       requires = 'kevinhwang91/promise-async',
       config = function()
+        vim.opt.foldlevelstart = 99
+
         local hl = require('as.highlights')
         local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
         hl.plugin('ufo', { Folded = { bold = false, italic = false, bg = bg } })
-        vim.opt.sessionoptions:append('folds')
+
         local ufo = require('ufo')
         ufo.setup({ open_fold_hl_timeout = 0 })
         as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
