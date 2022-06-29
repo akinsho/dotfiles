@@ -368,6 +368,7 @@ packer.startup({
       requires = 'kevinhwang91/promise-async',
       config = function()
         vim.opt.foldlevelstart = 99
+        vim.opt.sessionoptions:append('folds')
 
         local hl = require('as.highlights')
         local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
