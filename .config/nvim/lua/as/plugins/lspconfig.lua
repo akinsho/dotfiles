@@ -65,6 +65,11 @@ return function()
           usePlaceholders = true,
           completeUnimported = true,
           staticcheck = true,
+          -- hints = {
+          --   assignVariableTypes = true,
+          --   constantValues = true,
+          --   functionTypeParameters = true,
+          -- },
         },
       },
     },
