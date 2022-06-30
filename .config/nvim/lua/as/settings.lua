@@ -221,7 +221,7 @@ vim.opt.virtualedit = 'block' -- allow cursor to move where there is no text in 
 -----------------------------------------------------------------------------//
 -- Jumplist
 -----------------------------------------------------------------------------//
-vim.opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
+vim.opt.jumpoptions = { 'stack', 'view' } -- make the jumplist behave like a browser stack
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
