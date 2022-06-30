@@ -262,7 +262,7 @@ local function general_overrides()
       background = 'NONE',
       foreground = 'NONE',
       bold = false,
-      underlineline = true,
+      underdouble = true,
       sp = 'white',
     },
     -----------------------------------------------------------------------------//
