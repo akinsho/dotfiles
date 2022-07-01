@@ -138,12 +138,6 @@ function M.config()
       },
     },
     extensions = {
-      frecency = {
-        workspaces = {
-          conf = vim.env.DOTFILES,
-          project = vim.env.PROJECTS_DIR,
-        },
-      },
       fzf = {
         override_generic_sorter = true,
         override_file_sorter = true,
