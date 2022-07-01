@@ -9,12 +9,15 @@ local function read_file(file, line_handler)
 end
 
 api.nvim_create_user_command('DotEnv', function()
-  local dir = fn.getcwd()
-  local sep, env_file = '/', '.env'
-  local filename = dir .. sep .. env_file
-  if fn.filereadable(filename) == 0 then
+  local files = vim.fs.find('.env', {
+    upward = true,
+    stop = fn.fnamemodify(fn.getcwd(), ':p:h:h'),
+    path = fn.expand('%:p:h'),
+  })
+  if vim.tbl_isempty(files) then
     return
   end
+  local filename = files[1]
   local lines = {}
   read_file(filename, function(line)
     if #line > 0 then
@@ -25,7 +28,7 @@ api.nvim_create_user_command('DotEnv', function()
       fn.setenv(name, value)
     end
   end)
-  local markdown = table.concat(vim.tbl_flatten({"", '```sh', lines, '```', "" }), '\n')
+  local markdown = table.concat(vim.tbl_flatten({ '', '```sh', lines, '```', '' }), '\n')
   vim.notify(fmt('Read **%s**\n', filename) .. markdown, 'info', {
     title = 'Nvim Env',
     on_open = function(win)
