@@ -109,6 +109,17 @@ packer.startup({
           auto_session_use_git_branch = false, -- This cause inconsistent results
         })
       end,
+      requires = {
+        {
+          'rmagatti/session-lens',
+          config = function()
+            require('session-lens').setup({
+              path_display = { 'smart', 'tail' },
+              previewer = false,
+            })
+          end,
+        },
+      },
     })
 
     use({
