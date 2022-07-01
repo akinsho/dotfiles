@@ -906,7 +906,7 @@ packer.startup({
 
     use({ 'Matt-A-Bennett/vim-surround-funk', config = conf('surround-funk') })
 
-    use('chaoren/vim-wordmotion')
+    use({ 'chaoren/vim-wordmotion', opt = true }) -- FIXME: breaks cmdheight=0
 
     use({
       'numToStr/Comment.nvim',
