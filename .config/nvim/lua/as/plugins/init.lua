@@ -386,7 +386,13 @@ packer.startup({
         hl.plugin('ufo', { Folded = { bold = false, italic = false, bg = bg } })
 
         local ufo = require('ufo')
-        ufo.setup({ open_fold_hl_timeout = 0 })
+        local ft_map = {}
+        ufo.setup({
+          open_fold_hl_timeout = 0,
+          provider_selector = function(_, filetype)
+            return ft_map[filetype] or { 'treesitter', 'indent' }
+          end,
+        })
         as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
         as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
       end,
