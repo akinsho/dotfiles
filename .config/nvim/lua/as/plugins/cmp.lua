@@ -4,7 +4,6 @@ return function()
 
   local api = vim.api
   local fmt = string.format
-  local t = as.replace_termcodes
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.highlights
   local ellipsis = as.style.icons.misc.ellipsis
@@ -61,6 +60,7 @@ return function()
     }, ','),
   }
   cmp.setup({
+    experimental = { ghost_text = true },
     preselect = cmp.PreselectMode.None,
     window = {
       completion = cmp.config.window.bordered(cmp_window),
