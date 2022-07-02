@@ -44,7 +44,6 @@ function M.setup()
 end
 
 function M.config()
-  local dap = require('dap')
   local fn = vim.fn
   local icons = as.style.icons
 
@@ -69,27 +68,6 @@ function M.config()
     DapBreakpoint = { foreground = as.style.palette.light_red },
     DapStopped = { foreground = as.style.palette.green },
   })
-
-  dap.configurations.lua = {
-    {
-      type = 'nlua',
-      request = 'attach',
-      name = 'Attach to running Neovim instance',
-      host = function()
-        local value = fn.input('Host [default: 127.0.0.1]: ')
-        return value ~= '' and value or '127.0.0.1'
-      end,
-      port = function()
-        local val = tonumber(fn.input('Port: '))
-        assert(val, 'Please provide a port number')
-        return val
-      end,
-    },
-  }
-
-  dap.adapters.nlua = function(callback, config)
-    callback({ type = 'server', host = config.host, port = config.port })
-  end
 
   -- DON'T automatically stop at exceptions
   -- dap.defaults.fallback.exception_breakpoints = {}
