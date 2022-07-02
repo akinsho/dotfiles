@@ -74,20 +74,15 @@ return function()
     mode = 'n',
     body = '<C-w>',
     heads = {
-      -- Move
-      { 'h', '<C-w>h' },
-      { 'j', '<C-w>j' },
-      { 'k', '<C-w>k' },
-      { 'l', '<C-w>l' },
       -- Split
-      { 's', '<C-w>s' },
-      { 'v', '<C-w>v' },
+      { 's', '<C-w>s', { desc = 'split horizontally' } },
+      { 'v', '<C-w>v', { desc = 'split vertically' } },
       { 'q', '<Cmd>Bwipeout<CR>', { desc = 'close window' } },
       -- Size
-      { '+', '2<C-w>+' },
-      { '-', '2<C-w>-' },
-      { '>', '5<C-w>>', { desc = 'increase width' } },
-      { '<', '5<C-w><', { desc = 'decrease width' } },
+      { 'j', '2<C-w>+', { desc = 'increase height' } },
+      { 'k', '2<C-w>-', { desc = 'decrease height' } },
+      { 'h', '5<C-w>>', { desc = 'increase width' } },
+      { 'l', '5<C-w><', { desc = 'decrease width' } },
       { '=', '<C-w>=', { desc = 'equalize' } },
       --
       { '<Esc>', nil, { exit = true } },
