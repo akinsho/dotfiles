@@ -1,16 +1,16 @@
 return function()
   local fn = vim.fn
+  local lsp = as.style.icons.lsp
 
   local function diagnostics_indicator(_, _, diagnostics)
-    local symbols = { error = ' ', warning = ' ', info = ' ' }
-    local result = {}
-    for name, count in pairs(diagnostics) do
+    local symbols = { error = lsp.error, warning = lsp.warn, hint = lsp.hint, info = lsp.info }
+    local result = as.fold(function(accum, count, name)
       if symbols[name] and count > 0 then
-        table.insert(result, symbols[name] .. count)
+        table.insert(accum, symbols[name] .. ' ' .. count)
       end
-    end
-    result = table.concat(result, ' ')
-    return #result > 0 and result or ''
+      return accum
+    end, diagnostics, {})
+    return table.concat(result, ' ')
   end
 
   local groups = require('bufferline.groups')
