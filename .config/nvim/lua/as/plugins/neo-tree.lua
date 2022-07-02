@@ -5,6 +5,7 @@ return function()
     NeoTreeNormalNC = { link = 'PanelBackground' },
     NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' },
     NeoTreeCursorLine = { link = 'Visual' },
+    NeoTreeStatusLine = { link = 'PanelSt' },
   })
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = as.style.icons
