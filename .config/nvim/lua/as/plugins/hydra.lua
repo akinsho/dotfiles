@@ -165,4 +165,64 @@ return function()
       },
     })
   end
+
+  local function run(method, args)
+    return function()
+      local dap = require('dap')
+      if dap[method] then
+        dap[method](args)
+      end
+    end
+  end
+
+  local hint = [[
+ _n_: step over   _s_: Continue/Start   _b_: Breakpoint     _K_: Eval
+ _i_: step into   _x_: Quit             ^ ^                 ^ ^
+ _o_: step out    _X_: Stop             ^ ^
+ _c_: to cursor   _C_: Close UI
+ ^
+ ^ ^              _q_: exit
+]]
+
+  local dap_hydra = Hydra({
+    hint = hint,
+    config = {
+      color = 'pink',
+      invoke_on_body = true,
+      hint = {
+        position = 'bottom',
+        border = 'rounded',
+      },
+    },
+    name = 'dap',
+    mode = { 'n', 'x' },
+    body = '<leader>dh',
+    heads = {
+      { 'n', run('step_over'), { silent = true } },
+      { 'i', run('step_into'), { silent = true } },
+      { 'o', run('step_out'), { silent = true } },
+      { 'c', run('run_to_cursor'), { silent = true } },
+      { 's', run('continue'), { silent = true } },
+      { 'x', run('disconnect', { terminateDebuggee = false }), { exit = true, silent = true } },
+      { 'X', run('close'), { silent = true } },
+      {
+        'C',
+        ":lua require('dapui').close()<cr>:DapVirtualTextForceRefresh<CR>",
+        { silent = true },
+      },
+      { 'b', run('toggle_breakpoint'), { silent = true } },
+      { 'K', ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
+      { 'q', nil, { exit = true, nowait = true } },
+    },
+  })
+
+  as.augroup("HydraDap", {
+    event = "User",
+    user = 'DapStarted',
+    command = function()
+      vim.schedule(function()
+        dap_hydra:activate()
+      end)
+    end,
+  })
 end

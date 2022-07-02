@@ -10,6 +10,7 @@ return function()
   local dap = require('dap')
   dap.listeners.after.event_initialized['dapui_config'] = function()
     require('dapui').open()
+    vim.api.nvim_exec_autocmds('User', 'DapStarted')
   end
   dap.listeners.before.event_terminated['dapui_config'] = function()
     require('dapui').close()
