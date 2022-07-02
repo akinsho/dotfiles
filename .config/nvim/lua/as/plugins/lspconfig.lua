@@ -51,6 +51,7 @@ return function()
     rust_analyzer = true,
     marksman = true,
     gopls = {
+      -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
       settings = {
         gopls = {
           codelenses = {
@@ -65,6 +66,7 @@ return function()
           usePlaceholders = true,
           completeUnimported = true,
           staticcheck = true,
+          directoryFilters = { '-node_modules' },
           -- hints = {
           --   assignVariableTypes = true,
           --   constantValues = true,
