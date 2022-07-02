@@ -11,7 +11,7 @@ local fmt = string.format
 local PACKER_COMPILED_PATH = fn.stdpath('cache') .. '/packer/packer_compiled.lua'
 
 ---Some plugins are not safe to be reloaded because their setup functions
----and are not idempotent. This wraps the setup calls of such plugins
+---are not idempotent. This wraps the setup calls of such plugins
 ---@param func fun()
 function as.block_reload(func)
   if vim.g.packer_compiled_loaded then
