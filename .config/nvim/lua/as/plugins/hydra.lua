@@ -3,20 +3,51 @@ return function()
   local border = as.style.current.border
 
   Hydra({
+    name = 'Folds',
+    mode = 'n',
+    body = '<leader>z',
+    color = 'teal',
+    config = {
+      invoke_on_body = true,
+      hint = { border = border },
+      on_enter = function()
+        vim.cmd('BeaconOff')
+      end,
+      on_exit = function()
+        vim.cmd('BeaconOn')
+      end,
+    },
+    heads = {
+      { 'j', 'zj', { desc = 'next fold' } },
+      { 'k', 'zk', { desc = 'previous fold' } },
+      { 'l', require('fold-cycle').open_all, { desc = 'open folds underneath' } },
+      { 'h', require('fold-cycle').close_all, { desc = 'close folds underneath' } },
+      { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+    },
+  })
+
+  Hydra({
     name = 'Buffer management',
     mode = 'n',
     body = '<leader>b',
-    invoke_on_body = true,
     color = 'teal',
     config = {
       hint = { border = border },
+      invoke_on_body = true,
+      on_enter = function()
+        vim.cmd('BeaconOff')
+      end,
+      on_exit = function()
+        vim.cmd('BeaconOn')
+      end,
     },
     heads = {
       { 'l', '<Cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' } },
       { 'h', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'Prev buffer' } },
       { 'p', '<Cmd>BufferLineTogglePin<CR>', { desc = 'Pin buffer' } },
       { 'c', '<Cmd>BufferLinePick<CR>', { desc = 'Pin buffer' } },
-      { 'd', '<Cmd>BufferLinePickClose<CR>', { desc = 'Pick buffer to close', exit = true } },
+      { 'd', '<Cmd>Bwipeout<CR>', { desc = 'delete buffer' } },
+      { 'D', '<Cmd>BufferLinePickClose<CR>', { desc = 'Pick buffer to close', exit = true } },
       { '<Esc>', nil, { exit = true, desc = 'Quit' } },
     },
   })
