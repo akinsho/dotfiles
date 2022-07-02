@@ -608,7 +608,7 @@ packer.startup({
     use({
       'norcalli/nvim-colorizer.lua',
       config = function()
-        require('colorizer').setup({ '*', '!dart' }, {
+        require('colorizer').setup({ 'lua', 'vim' }, {
           RGB = false,
           mode = 'background',
         })
