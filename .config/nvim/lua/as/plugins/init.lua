@@ -35,15 +35,13 @@ local packer = require('packer')
 --- passed to setup or config etc. cannot reference aliased functions
 --- or local variables
 packer.startup({
-  function(use, use_rocks)
+  function(use)
     -- FIXME: this no longer loads the local plugin since the compiled file now
     -- loads packer.nvim so the local alias(local-packer) does not work
     use_local({ 'wbthomason/packer.nvim', local_path = 'contributing', opt = true })
     -----------------------------------------------------------------------------//
     -- Core {{{3
     -----------------------------------------------------------------------------//
-    use_rocks('penlight')
-
     -- TODO: this fixes a bug in neovim core that prevents "CursorHold" from working
     -- hopefully one day when this issue is fixed this can be removed
     -- @see: https://github.com/neovim/neovim/issues/12587
