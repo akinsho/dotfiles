@@ -47,7 +47,13 @@ return function()
     provider_selector = function(_, filetype)
       return ft_map[filetype] or { 'treesitter', 'indent' }
     end,
+    preview = {
+      win_config = {
+        winhighlight = 'Normal:Normal,FloatBorder:Normal',
+      },
+    },
   })
   as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
   as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
+  as.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
 end
