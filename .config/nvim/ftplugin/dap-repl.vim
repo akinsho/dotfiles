@@ -9,3 +9,5 @@ setlocal nobuflisted " dap repl buffers should not pop up when doing :bn or :bp
 call s:adjust_height(10, 15)
 
 setlocal winfixheight
+setlocal signcolumn=yes
+setlocal colorcolumn=
