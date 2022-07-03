@@ -251,6 +251,7 @@ local column_block_list = {
   'startify',
   'vimwiki',
   'vim-plug',
+  'dap-repl',
   'help',
   'fugitive',
   'mail',
