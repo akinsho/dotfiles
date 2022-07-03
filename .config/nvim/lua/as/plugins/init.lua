@@ -263,10 +263,7 @@ packer.startup({
       wants = { 'nvim-treesitter' },
       after = { 'nvim-cmp' },
       config = function()
-        require('tabout').setup({
-          completion = false,
-          ignore_beginning = false,
-        })
+        require('tabout').setup()
       end,
     })
 
@@ -515,9 +512,7 @@ packer.startup({
             dart = { 'string' },
             javascript = { 'template_string' },
           },
-          fast_wrap = {
-            map = '<c-e>',
-          },
+          fast_wrap = { map = '<c-e>' },
         })
       end,
     })
