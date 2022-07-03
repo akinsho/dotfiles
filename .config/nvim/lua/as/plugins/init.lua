@@ -272,11 +272,6 @@ packer.startup({
     -- Testing and Debugging {{{1
     -----------------------------------------------------------------------------//
     use({
-      'vim-test/vim-test',
-      config = conf('vim-test').config,
-    })
-
-    use({
       'nvim-neotest/neotest',
       config = conf('neotest'),
       requires = {
@@ -828,12 +823,6 @@ packer.startup({
       'ruifm/gitlinker.nvim',
       requires = 'plenary.nvim',
       keys = { '<localleader>gu', '<localleader>go' },
-      setup = function()
-        require('which-key').register(
-          { gu = 'gitlinker: get line url', go = 'gitlinker: open repo url' },
-          { prefix = '<localleader>' }
-        )
-      end,
       config = function()
         local linker = require('gitlinker')
         linker.setup({ mappings = '<localleader>gu' })
