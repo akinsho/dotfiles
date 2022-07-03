@@ -77,7 +77,7 @@ packer.startup({
         },
         {
           'nvim-telescope/telescope-smart-history.nvim',
-          requires = { { 'tami5/sqlite.lua', module = 'sqlite' } },
+          requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
           after = 'telescope.nvim',
           config = function()
             require('telescope').load_extension('smart_history')
@@ -396,7 +396,7 @@ packer.startup({
 
     use({
       'AckslD/nvim-neoclip.lua',
-      requires = { { 'tami5/sqlite.lua', module = 'sqlite' } },
+      requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
       config = function()
         require('neoclip').setup({
           enable_persistent_history = true,
@@ -731,7 +731,7 @@ packer.startup({
     use('nanotee/sqls.nvim')
 
     use({
-      'tami5/xbase',
+      'xbase-lab/xbase',
       ft = { 'swift' },
       run = 'make install',
       requires = {
