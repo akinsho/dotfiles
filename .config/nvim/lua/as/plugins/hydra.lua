@@ -67,6 +67,7 @@ return function()
   Hydra({
     name = 'Window management',
     config = {
+      invoke_on_body = true,
       hint = {
         border = border,
       },
@@ -216,8 +217,8 @@ return function()
     },
   })
 
-  as.augroup("HydraDap", {
-    event = "User",
+  as.augroup('HydraDap', {
+    event = 'User',
     user = 'DapStarted',
     command = function()
       vim.schedule(function()
