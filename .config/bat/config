@@ -3,7 +3,7 @@
 # run `bat --help` to get a list of all possible configuration options.
 
 #  Run `bat --list-themes` for examples
---theme="GitHub"
+--theme="TwoDark"
 
 --italic-text=always
 
