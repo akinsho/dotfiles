@@ -175,7 +175,7 @@ vim.opt.autowriteall = true -- automatically :write before running commands and 
 vim.opt.clipboard = { 'unnamedplus' }
 vim.opt.laststatus = 3
 vim.opt.termguicolors = true
-vim.opt.guifont = 'Fira Code Regular Nerd Font Complete Mono:h14'
+vim.opt.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
 -----------------------------------------------------------------------------//
