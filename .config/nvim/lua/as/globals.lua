@@ -70,19 +70,27 @@ function as.find(haystack, matcher)
 end
 
 local installed
+
+function as.list_installed_plugins()
+  if installed then
+    return installed
+  end
+  local data_dir = fn.stdpath('data')
+  local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
+  local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
+  vim.list_extend(start, opt)
+  installed = vim.tbl_map(function(path)
+    return fn.fnamemodify(path, ':t')
+  end, start)
+  return installed
+end
+
 ---Check if a plugin is on the system not whether or not it is loaded
 ---@param plugin_name string
 ---@return boolean
 function as.plugin_installed(plugin_name)
-  if not installed then
-    local dirs = fn.expand(fn.stdpath('data') .. '/site/pack/packer/start/*', true, true)
-    local opt = fn.expand(fn.stdpath('data') .. '/site/pack/packer/opt/*', true, true)
-    vim.list_extend(dirs, opt)
-    installed = vim.tbl_map(function(path)
-      return fn.fnamemodify(path, ':t')
-    end, dirs)
-  end
-  return vim.tbl_contains(installed, plugin_name)
+  local list = installed or as.list_installed_plugins()
+  return vim.tbl_contains(list, plugin_name)
 end
 
 ---NOTE: this plugin returns the currently loaded state of a plugin given
