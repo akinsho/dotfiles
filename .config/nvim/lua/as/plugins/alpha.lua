@@ -39,9 +39,8 @@ return function()
 
   -- Make the header a bit more fun with some color!
   local function neovim_header()
-    local lines = {}
-    for i, chars in pairs(header) do
-      local line = {
+    return as.map(function(chars, i)
+      return {
         type = 'text',
         val = chars,
         opts = {
@@ -50,9 +49,7 @@ return function()
           position = 'center',
         },
       }
-      table.insert(lines, line)
-    end
-    return lines
+    end, header)
   end
 
   local installed_plugins = {
