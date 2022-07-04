@@ -1,36 +1,44 @@
 return function()
   local ufo = require('ufo')
   local hl = require('as.highlights')
-  local opt, fn, api = vim.opt, vim.fn, vim.api
+  local opt, get_width = vim.opt, vim.api.nvim_strwidth
 
-  local function handler(virt_text, lnum, end_lnum, width, truncate)
+  local function handler(virt_text, _, _, width, truncate, end_text)
     local result = {}
-    local _end = end_lnum - 1
-    local final_text = vim.trim(api.nvim_buf_get_text(0, _end, 0, _end, -1, {})[1])
-    local suffix = final_text:format(end_lnum - lnum)
-    local suffix_width = fn.strdisplaywidth(suffix)
-    local target_width = width - suffix_width
+    local padding = ''
     local cur_width = 0
+    local suffix_width = get_width(end_text.text)
+    local target_width = width - suffix_width
+
     for _, chunk in ipairs(virt_text) do
       local chunk_text = chunk[1]
-      local chunk_width = fn.strdisplaywidth(chunk_text)
+      local chunk_width = get_width(chunk_text)
       if target_width > cur_width + chunk_width then
         table.insert(result, chunk)
       else
         chunk_text = truncate(chunk_text, target_width - cur_width)
         local hl_group = chunk[2]
         table.insert(result, { chunk_text, hl_group })
-        chunk_width = fn.strdisplaywidth(chunk_text)
-        -- str width returned from truncate() may less than 2nd argument, need padding
+        chunk_width = get_width(chunk_text)
         if cur_width + chunk_width < target_width then
-          suffix = suffix .. (' '):rep(target_width - cur_width - chunk_width)
+          padding = padding .. (' '):rep(target_width - cur_width - chunk_width)
         end
         break
       end
       cur_width = cur_width + chunk_width
     end
+
+    -- reformat the end text to trim excess whitespace from indentation
+    local end_virt_text = vim.tbl_map(function(item)
+      item[1] = item[1]:gsub('%s+', function(m)
+        return #m > 1 and '' or ' '
+      end)
+      return item
+    end, end_text.end_virt_text)
+
     table.insert(result, { ' ⋯ ', 'NonText' })
-    table.insert(result, { suffix, 'TSPunctBracket' })
+    vim.list_extend(result, end_virt_text)
+    table.insert(result, { padding, '' })
     return result
   end
 
@@ -40,18 +48,14 @@ return function()
   local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
   hl.plugin('ufo', { Folded = { bold = false, italic = false, bg = bg } })
 
-  local ft_map = {}
   ufo.setup({
     open_fold_hl_timeout = 0,
     fold_virt_text_handler = handler,
-    provider_selector = function(_, filetype)
-      return ft_map[filetype] or { 'treesitter', 'indent' }
+    enable_fold_end_virt_text = true,
+    preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
+    provider_selector = function()
+      return { 'treesitter', 'indent' }
     end,
-    preview = {
-      win_config = {
-        winhighlight = 'Normal:Normal,FloatBorder:Normal',
-      },
-    },
   })
   as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
   as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
