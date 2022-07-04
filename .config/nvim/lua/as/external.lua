@@ -33,11 +33,11 @@ function M.kitty.get_colors()
   return colors
 end
 
-function M.kitty.set_colors()
+function M.kitty.set_colors(name)
   if not hl_ok then
     return
   end
-  local bg = H.get('BufferlineFill', 'bg')
+  local bg = H.get(name, 'bg')
   local colors = {
     active_tab_background = bg,
     inactive_tab_background = bg,

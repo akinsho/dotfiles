@@ -232,14 +232,13 @@ if vim.env.TMUX ~= nil then
 else
   as.augroup('KittyColors', {
     {
-      event = 'BufEnter',
-      once = true,
+      event = { 'VimEnter', 'FocusGained' },
       command = function()
-        require('as.external').kitty.set_colors()
+        require('as.external').kitty.set_colors('BufferlineFill')
       end,
     },
     {
-      event = { 'VimLeavePre' },
+      event = { 'VimLeavePre', 'FocusLost' },
       once = true,
       command = function()
         require('as.external').kitty.clear_colors()
