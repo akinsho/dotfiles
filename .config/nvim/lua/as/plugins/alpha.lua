@@ -4,6 +4,17 @@ return function()
   local fortune = require('alpha.fortune')
   local hl = require('as.highlights')
 
+  local f = string.format
+  local DOTFILES = vim.env.DOTFILES
+
+  local button = function(h, ...)
+    local btn = dashboard.button(...)
+    local details = select(2, ...)
+    local icon = details:match('[^%w%s]+') -- match non alphanumeric or space characters
+    btn.opts.hl = { { h, 0, #icon + 1 } } -- add one space padding
+    return btn
+  end
+
   hl.plugin('alpha', {
     StartLogo1 = { fg = '#1C506B' },
     StartLogo2 = { fg = '#1D5D68' },
@@ -27,7 +38,7 @@ return function()
   }
 
   -- Make the header a bit more fun with some color!
-  local function colorize_header()
+  local function neovim_header()
     local lines = {}
     for i, chars in pairs(header) do
       local line = {
@@ -46,26 +57,30 @@ return function()
 
   local installed_plugins = {
     type = 'text',
-    val = '  ' .. #as.list_installed_plugins() .. ' plugins in total',
-    opts = { position = 'center', hl = 'String' },
+    val = '  ' .. #as.list_installed_plugins() .. ' plugins installed',
+    opts = { position = 'center', hl = 'NonText' },
   }
 
   dashboard.section.buttons.val = {
-    dashboard.button('e', '  New file', ':ene | startinsert <CR>'),
-    dashboard.button('f', '  Find file', ':Telescope find_files<CR>'),
-    dashboard.button('r', ' Restore last session', '<Cmd>RestoreSession<CR>'),
-    dashboard.button('Q', '  Quit NVIM', ':qa<CR>'),
+    button('Directory', 'r', ' Restore last session', '<Cmd>RestoreSession<CR>'),
+    button('Todo', 'p', ' Pick a session', '<Cmd>SearchSession<CR>'),
+    button('Label', 'd', ' Open dotfiles', f('<Cmd>RestoreSessionFromFile %s<CR>', DOTFILES)),
+    button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
+    button('String', 'e', '  New file', ':ene | startinsert <CR>'),
+    button('ErrorMsg', 'Q', '  Quit NVIM', ':qa<CR>'),
   }
 
   dashboard.section.footer.val = fortune()
+  dashboard.section.footer.opts.hl = 'Todo'
 
   alpha.setup({
     layout = {
       { type = 'padding', val = 4 },
-      { type = 'group', val = colorize_header() },
+      { type = 'group', val = neovim_header() },
+      { type = 'padding', val = 1 },
+      installed_plugins,
       { type = 'padding', val = 2 },
       dashboard.section.buttons,
-      installed_plugins,
       dashboard.section.footer,
     },
     opts = { margin = 5 },
