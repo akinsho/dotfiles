@@ -44,6 +44,12 @@ return function()
     return lines
   end
 
+  local installed_plugins = {
+    type = 'text',
+    val = '  ' .. #as.list_installed_plugins() .. ' plugins in total',
+    opts = { position = 'center', hl = 'String' },
+  }
+
   dashboard.section.buttons.val = {
     dashboard.button('e', '  New file', ':ene | startinsert <CR>'),
     dashboard.button('f', '  Find file', ':Telescope find_files<CR>'),
@@ -51,7 +57,6 @@ return function()
     dashboard.button('Q', '  Quit NVIM', ':qa<CR>'),
   }
 
-  -- Everyone could use a good fortune cookie from time to time, right?
   dashboard.section.footer.val = fortune()
 
   alpha.setup({
@@ -60,10 +65,12 @@ return function()
       { type = 'group', val = colorize_header() },
       { type = 'padding', val = 2 },
       dashboard.section.buttons,
+      installed_plugins,
       dashboard.section.footer,
     },
     opts = { margin = 5 },
   })
+
   as.augroup('AlphaSettings', {
     {
       event = 'User ',
