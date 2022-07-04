@@ -53,7 +53,7 @@ return function()
   dashboard.section.buttons.val = {
     dashboard.button('e', '  New file', ':ene | startinsert <CR>'),
     dashboard.button('f', '  Find file', ':Telescope find_files<CR>'),
-    dashboard.button('g', '  Find word', ':Telescope live_grep<CR>'),
+    dashboard.button('r', ' Restore last session', '<Cmd>RestoreSession<CR>'),
     dashboard.button('Q', '  Quit NVIM', ':qa<CR>'),
   }
 

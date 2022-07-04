@@ -104,6 +104,8 @@ packer.startup({
         require('auto-session').setup({
           log_level = 'error',
           auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath('data')),
+          -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
+          auto_restore_enabled = not vim.startswith(vim.fn.getcwd(0), vim.env.PROJECTS_DIR),
           auto_session_use_git_branch = false, -- This cause inconsistent results
         })
       end,
