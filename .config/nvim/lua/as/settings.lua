@@ -198,7 +198,7 @@ vim.opt.guicursor = {
 function as.modified_icon()
   return vim.bo.modified and as.style.icons.misc.circle or ''
 end
-vim.opt.titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
+vim.opt.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
 vim.opt.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
 vim.opt.title = true
 vim.opt.titlelen = 70
