@@ -251,6 +251,7 @@ local column_block_list = {
   'startify',
   'vimwiki',
   'vim-plug',
+  'alpha',
   'dap-repl',
   'help',
   'fugitive',
@@ -353,11 +354,14 @@ as.augroup('WindowBehaviours', {
   },
 })
 
+local cursorline_exclude = { 'alpha' }
+
 local function should_show_cursorline()
   return vim.bo.buftype ~= 'terminal'
     and not vim.wo.previewwindow
     and vim.wo.winhighlight == ''
     and vim.bo.filetype ~= ''
+    and not vim.tbl_contains(cursorline_exclude, vim.bo.filetype)
 end
 
 as.augroup('Cursorline', {

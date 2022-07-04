@@ -128,6 +128,8 @@ packer.startup({
       end,
     })
 
+    use({ 'goolord/alpha-nvim', config = conf('alpha') })
+
     use({ 'lukas-reineke/indent-blankline.nvim', config = conf('indentline') })
 
     use({
