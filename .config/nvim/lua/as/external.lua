@@ -11,29 +11,26 @@ local H = mod
 local fn = vim.fn
 local fmt = string.format
 
---- Get the color of the current vim background and update tmux accordingly
----@param reset boolean?
-function M.tmux.set_statusline(reset)
-  if not hl_ok then
-    return
-  end
-  local hl = reset and 'Normal' or 'MsgArea'
-  local bg = H.get_hl(hl, 'bg')
-  -- TODO: we should correctly derive the previous bg value
-  fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
-end
-
-local function get_colors(color)
-  local colors = {
-    active_tab_background = color,
-    inactive_tab_background = color,
-    tab_bar_background = color,
-  }
-  local str = as.fold(function(acc, c, name)
-    acc = acc .. fmt(' %s=%s', name, c)
+local function colors_to_string(colors)
+  return as.fold(function(acc, c, name)
+    if c then
+      acc = acc .. fmt(' %s=%s', name, c)
+    end
     return acc
   end, colors, '')
-  return str, colors
+end
+
+function M.kitty.get_colors()
+  local txt = fn.system('kitty @ get-colors')
+  if not txt then
+    return
+  end
+  local colors = as.fold(function(acc, line)
+    local key, value = unpack(vim.split(line, '%s+'))
+    acc[key] = value
+    return acc
+  end, vim.split(txt, '\n'), {})
+  return colors
 end
 
 function M.kitty.set_colors()
@@ -41,8 +38,15 @@ function M.kitty.set_colors()
     return
   end
   local bg = H.get('BufferlineFill', 'bg')
+  local colors = {
+    active_tab_background = bg,
+    inactive_tab_background = bg,
+    tab_bar_background = bg,
+  }
   if vim.env.KITTY_LISTEN_ON then
-    fn.jobstart(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, get_colors(bg)))
+    fn.jobstart(
+      fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, colors_to_string(colors))
+    )
   end
 end
 
@@ -51,11 +55,17 @@ function M.kitty.clear_colors()
   if not hl_ok then
     return
   end
-  if vim.env.KITTY_LISTEN_ON then
-    local bg = H.get('Normal', 'bg')
-    -- this is intentionally synchronous so it has time to execute fully
-    fn.system(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, get_colors(bg)))
+  if not vim.env.KITTY_LISTEN_ON then
+    return
   end
+  local colors = M.kitty.get_colors()
+  local str = colors_to_string({
+    active_tab_background = colors.active_tab_background,
+    inactive_tab_background = colors.inactive_tab_background,
+    tab_bar_background = colors.tab_bar_background,
+  })
+  -- this is intentionally synchronous so it has time to execute fully
+  fn.system(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, str))
 end
 
 local function fileicon()
@@ -79,6 +89,18 @@ function M.title_string()
   end
   local has_tmux = vim.env.TMUX ~= nil
   return has_tmux and fmt('%s #[fg=%s]%s ', dir, H.get_hl(hl, 'fg'), icon) or dir .. ' ' .. icon
+end
+
+--- Get the color of the current vim background and update tmux accordingly
+---@param reset boolean?
+function M.tmux.set_statusline(reset)
+  if not hl_ok then
+    return
+  end
+  local hl = reset and 'Normal' or 'MsgArea'
+  local bg = H.get_hl(hl, 'bg')
+  -- TODO: we should correctly derive the previous bg value
+  fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 
 function M.tmux.clear_pane_title()
