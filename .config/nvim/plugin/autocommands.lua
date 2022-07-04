@@ -229,6 +229,23 @@ if vim.env.TMUX ~= nil then
       end,
     },
   })
+else
+  as.augroup('KittyColors', {
+    {
+      event = 'BufEnter',
+      once = true,
+      command = function()
+        require('as.external').kitty.set_colors()
+      end,
+    },
+    {
+      event = { 'VimLeavePre' },
+      once = true,
+      command = function()
+        require('as.external').kitty.clear_colors()
+      end,
+    },
+  })
 end
 
 as.augroup('TextYankHighlight', {

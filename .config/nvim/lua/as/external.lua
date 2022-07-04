@@ -3,7 +3,10 @@ local M = {
   kitty = {},
 }
 
-local hl_ok, H = as.safe_require('as.highlights', { silent = true })
+local hl_ok, mod = as.safe_require('as.highlights', { silent = true })
+
+---@module "as.highlights"
+local H = mod
 
 local fn = vim.fn
 local fmt = string.format
@@ -20,25 +23,38 @@ function M.tmux.set_statusline(reset)
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 
-function M.kitty.set_background()
+local function get_colors(color)
+  local colors = {
+    active_tab_background = color,
+    inactive_tab_background = color,
+    tab_bar_background = color,
+  }
+  local str = as.fold(function(acc, c, name)
+    acc = acc .. fmt(' %s=%s', name, c)
+    return acc
+  end, colors, '')
+  return str, colors
+end
+
+function M.kitty.set_colors()
   if not hl_ok then
     return
   end
+  local bg = H.get('BufferlineFill', 'bg')
   if vim.env.KITTY_LISTEN_ON then
-    local bg = H.get_hl('MsgArea', 'bg')
-    fn.jobstart(fmt('kitty @ --to %s set-colors background=%s', vim.env.KITTY_LISTEN_ON, bg))
+    fn.jobstart(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, get_colors(bg)))
   end
 end
 
 ---Reset the kitty terminal colors
-function M.kitty.clear_background()
+function M.kitty.clear_colors()
   if not hl_ok then
     return
   end
   if vim.env.KITTY_LISTEN_ON then
-    local bg = H.get_hl('Normal', 'bg')
+    local bg = H.get('Normal', 'bg')
     -- this is intentionally synchronous so it has time to execute fully
-    fn.system(fmt('kitty @ --to %s set-colors background=%s', vim.env.KITTY_LISTEN_ON, bg))
+    fn.system(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, get_colors(bg)))
   end
 end
 
