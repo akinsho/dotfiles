@@ -62,7 +62,6 @@ packer.startup({
 
     use({
       'nvim-telescope/telescope.nvim',
-      cmd = 'Telescope',
       module_pattern = 'telescope.*',
       config = conf('telescope').config,
       event = 'CursorHold',
