@@ -1030,7 +1030,6 @@ packer.startup({
         c.setup({
           style = 'fading',
           border = as.style.current.border,
-          row = 8,
         })
         if f.expand('$DOTFILES') == f.getcwd() then
           c.Clock:new():count_up({
