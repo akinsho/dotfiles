@@ -1,3 +1,4 @@
+---@diagnostic disable: redefined-local
 local utils = require('as.utils.plugins')
 
 local dev = utils.dev
