@@ -1,3 +1,8 @@
+local H = require('as.highlights')
+
+local fn = vim.fn
+local fmt = string.format
+
 local M = {
   tmux = {},
   kitty = {},
@@ -10,14 +15,6 @@ local hl_names = {
   light = 'Normal',
   dark = 'BufferLineFill',
 }
-
-local hl_ok, mod = as.safe_require('as.highlights', { silent = true })
-
----@module "as.highlights"
-local H = mod
-
-local fn = vim.fn
-local fmt = string.format
 
 local function colors_to_string(colors)
   return as.fold(function(acc, c, name)
@@ -81,9 +78,6 @@ end
 --- Sets the color of kitty's tab bar
 ---@param bg_type bg_type
 function M.kitty.set_colors(bg_type)
-  if not hl_ok then
-    return
-  end
   local name = hl_names[bg_type]
   local bg = H.get(name, 'bg')
   local colors = {
@@ -115,17 +109,12 @@ local function clear()
   fn.system(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, str))
 end
 
----Reset the kitty terminal colors
----@param event string
-function M.kitty.clear_colors(event)
-  if not hl_ok then
-    return
-  end
-  if event == 'FocusLost' then
-    vim.defer_fn(clear, 200)
-  else
-    clear()
-  end
+function M.kitty.clear_colors()
+  clear()
+end
+
+function M.kitty.delayed_clear_colors()
+  vim.defer_fn(clear, 200)
 end
 
 local function fileicon()
@@ -139,9 +128,6 @@ local function fileicon()
 end
 
 function M.title_string()
-  if not hl_ok then
-    return
-  end
   local dir = fn.fnamemodify(fn.getcwd(), ':t')
   local icon, hl = fileicon()
   if not hl then
@@ -154,9 +140,6 @@ end
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 function M.tmux.set_statusline(reset)
-  if not hl_ok then
-    return
-  end
   local hl = reset and 'Normal' or 'MsgArea'
   local bg = H.get_hl(hl, 'bg')
   -- TODO: we should correctly derive the previous bg value
