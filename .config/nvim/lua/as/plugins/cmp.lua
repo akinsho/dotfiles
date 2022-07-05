@@ -133,7 +133,6 @@ return function()
   })
 
   local search_sources = {
-    view = { entries = { name = 'custom', selection_order = 'near_cursor' } },
     sources = cmp.config.sources({
       { name = 'nvim_lsp_document_symbol' },
     }, {
@@ -146,8 +145,8 @@ return function()
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
       { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-      { name = 'cmdline_history' },
       { name = 'path' },
+      { name = 'cmdline_history' },
     }),
   })
 end
