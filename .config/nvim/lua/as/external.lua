@@ -92,12 +92,8 @@ function M.kitty.set_colors(bg_type)
   end
 end
 
-local function clear()
-  -- If the current window is an nvim window then do not bother doing anything
-  -- since the window will have it's own autocommands it's executing
-  if not vim.env.KITTY_LISTEN_ON or is_current_window_vim() then
-    return
-  end
+function M.kitty.clear_colors()
+  if not vim.env.KITTY_LISTEN_ON then return end
 
   local colors = M.kitty.get_colors()
   local str = colors_to_string({
@@ -109,12 +105,13 @@ local function clear()
   fn.system(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, str))
 end
 
-function M.kitty.clear_colors()
-  clear()
-end
-
 function M.kitty.delayed_clear_colors()
-  vim.defer_fn(clear, 200)
+  vim.defer_fn(function()
+    -- If the current window is an nvim window then do not bother doing anything
+    -- since the window will have it's own autocommands it's executing
+    if is_current_window_vim() then return end
+    M.kitty.clear_colors()
+  end, 200)
 end
 
 local function fileicon()
