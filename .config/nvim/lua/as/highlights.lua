@@ -276,6 +276,9 @@ local function general_overrides()
     commentTSWarning = { background = P.light_red, foreground = 'fg', bold = true },
     commentTSDanger = { background = L.hint, foreground = '#1B2229', bold = true },
     commentTSNote = { background = L.info, foreground = '#1B2229', bold = true },
+    CommentTasksTodo = { link = 'commentTSWarning' },
+    CommentTasksFixme = { link = 'commentTSDanger' },
+    CommentTasksNote = { link = 'commentTSNote' },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
