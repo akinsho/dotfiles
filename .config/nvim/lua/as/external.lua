@@ -3,6 +3,9 @@ local M = {
   kitty = {},
 }
 
+local LIGHT_BG = "Normal"
+local DARK_BG = "BufferLineFill"
+
 local hl_ok, mod = as.safe_require('as.highlights', { silent = true })
 
 ---@module "as.highlights"
@@ -33,10 +36,15 @@ function M.kitty.get_colors()
   return colors
 end
 
-function M.kitty.set_colors(name)
+---@alias bg_type "light" | "dark"
+
+--- Sets the color of kitty's tab bar
+---@param bg_type bg_type
+function M.kitty.set_colors(bg_type)
   if not hl_ok then
     return
   end
+  local name = bg_type == "light" and LIGHT_BG or DARK_BG
   local bg = H.get(name, 'bg')
   local colors = {
     active_tab_background = bg,

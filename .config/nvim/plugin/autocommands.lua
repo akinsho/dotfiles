@@ -234,7 +234,7 @@ else
     {
       event = { 'VimEnter', 'FocusGained' },
       command = function()
-        require('as.external').kitty.set_colors('BufferlineFill')
+        require('as.external').kitty.set_colors('dark')
       end,
     },
     {
