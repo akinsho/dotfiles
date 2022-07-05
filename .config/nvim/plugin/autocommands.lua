@@ -240,8 +240,8 @@ else
     {
       event = { 'VimLeavePre', 'FocusLost' },
       once = true,
-      command = function()
-        require('as.external').kitty.clear_colors()
+      command = function(args)
+        require('as.external').kitty.clear_colors(args.event)
       end,
     },
   })

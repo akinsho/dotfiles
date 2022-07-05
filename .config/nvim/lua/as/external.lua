@@ -28,6 +28,43 @@ local function colors_to_string(colors)
   end, colors, '')
 end
 
+---@alias Process { pid: number, cmdline: table<number, string> }
+---@alias KittyWindow { id: number, is_focused: boolean, is_self: boolean, foreground_processes: Process }
+---@alias KittyTab { id: number, is_focused: boolean, windows: KittyWindow[] }
+---@alias KittyWM { id: number, is_focused: boolean, tabs: KittyTab[] }
+---@alias KittyState KittyWM[]
+
+---@return KittyState
+function M.kitty.get_state()
+  local txt = vim.fn.system('kitty @ ls')
+  if txt == nil then
+    return
+  end
+  return vim.json.decode(txt)
+end
+
+---Search through nested kitty state to see if the current focused kitty window is an nvim window
+---@return boolean
+local function is_current_window_vim()
+  local state = M.kitty.get_state()
+  for _, wm in ipairs(state) do
+    if wm.is_focused then
+      for _, tab in ipairs(wm.tabs) do
+        if tab.is_focused then
+          for _, win in ipairs(tab.windows) do
+            if win.is_focused then
+              for _, process in ipairs(win.foreground_processes) do
+                return vim.tbl_contains(process.cmdline, 'nvim')
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  return false
+end
+
 function M.kitty.get_colors()
   local txt = fn.system('kitty @ get-colors')
   if not txt then
@@ -61,14 +98,13 @@ function M.kitty.set_colors(bg_type)
   end
 end
 
----Reset the kitty terminal colors
-function M.kitty.clear_colors()
-  if not hl_ok then
+local function clear()
+  -- If the current window is an nvim window then do not bother doing anything
+  -- since the window will have it's own autocommands it's executing
+  if not vim.env.KITTY_LISTEN_ON or is_current_window_vim() then
     return
   end
-  if not vim.env.KITTY_LISTEN_ON then
-    return
-  end
+
   local colors = M.kitty.get_colors()
   local str = colors_to_string({
     active_tab_background = colors.active_tab_background,
@@ -77,6 +113,19 @@ function M.kitty.clear_colors()
   })
   -- this is intentionally synchronous so it has time to execute fully
   fn.system(fmt('kitty @ --to %s set-colors %s', vim.env.KITTY_LISTEN_ON, str))
+end
+
+---Reset the kitty terminal colors
+---@param event string
+function M.kitty.clear_colors(event)
+  if not hl_ok then
+    return
+  end
+  if event == 'FocusLost' then
+    vim.defer_fn(clear, 200)
+  else
+    clear()
+  end
 end
 
 local function fileicon()
