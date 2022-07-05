@@ -358,7 +358,8 @@ cnoremap(
 cnoremap('w!!', [[w !sudo tee % >/dev/null]])
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
-cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
+-- FIXME: disable for now as this breaks nvim-surround
+-- 'cnoremap'('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
