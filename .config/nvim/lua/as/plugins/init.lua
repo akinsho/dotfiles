@@ -1096,6 +1096,14 @@ as.augroup('PackerSetupInit', {
       packer.compile()
     end,
   },
+  {
+    event = 'User',
+    pattern = 'PackerCompileDone',
+    command = function()
+      vim.cmd('LspStop')
+      packer_notify('Compilation complete', 'info')
+    end,
+  },
 })
 
 -- vim:foldmethod=marker

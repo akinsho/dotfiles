@@ -32,14 +32,6 @@ function as.lsp.on_init(client)
 end
 
 return function()
-  -- FIXME: prevent language servers from being reset because this causes errors
-  -- with in flight requests. Eventually this should be improved or allowed and so
-  -- this won't be necessary
-  if vim.g.lsp_config_complete then
-    return
-  end
-  vim.g.lsp_config_complete = true
-
   local servers = {
     ccls = true,
     tsserver = true,
