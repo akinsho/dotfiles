@@ -54,7 +54,7 @@ return function()
 
   local installed_plugins = {
     type = 'text',
-    val = '  ' .. #as.list_installed_plugins() .. ' plugins installed',
+    val = f(' %d plugins installed', #as.list_installed_plugins()),
     opts = { position = 'center', hl = 'NonText' },
   }
 
