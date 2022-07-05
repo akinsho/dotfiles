@@ -99,7 +99,7 @@ packer.startup({
     })
 
     use({
-      'rmagatti/auto-session',
+      dev('contributing/auto-session'),
       config = function()
         local fn = vim.fn
         local fmt = string.format
