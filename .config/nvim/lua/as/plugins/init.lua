@@ -100,11 +100,19 @@ packer.startup({
     use({
       'rmagatti/auto-session',
       config = function()
+        local fn = vim.fn
+        local fmt = string.format
+        local data = fn.stdpath('data')
         require('auto-session').setup({
           log_level = 'error',
-          auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath('data')),
+          auto_session_root_dir = fmt('%s/session/auto/', data),
           -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
-          auto_restore_enabled = not vim.startswith(vim.fn.getcwd(0), vim.env.PROJECTS_DIR),
+          auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
+          auto_session_suppress_dirs = {
+            fn.expand('~'),
+            fn.expand('~/Desktop/'),
+            unpack(as.list_installed_plugins()),
+          },
           auto_session_use_git_branch = false, -- This cause inconsistent results
         })
       end,
