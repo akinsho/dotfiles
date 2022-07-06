@@ -1094,8 +1094,7 @@ as.augroup('PackerSetupInit', {
     event = 'User',
     pattern = 'PackerCompileDone',
     command = function()
-      vim.cmd('LspStop')
-      packer_notify('Compilation complete', 'info')
+      packer_notify('Compilation finished', 'info')
     end,
   },
 })
