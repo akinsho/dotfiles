@@ -37,7 +37,13 @@ function M.kitty.get_state()
   if txt == nil then
     return
   end
-  return vim.json.decode(txt)
+  local ok, json = pcall(vim.json.decode, txt)
+  if not ok then
+    vim.notify_once('Failed to unmarshall kitty state from JSON', 'error', {
+      title = 'Kitty Integration',
+    })
+  end
+  return ok and json or {}
 end
 
 ---Search through nested kitty state to see if the current focused kitty window is an nvim window
@@ -93,7 +99,9 @@ function M.kitty.set_colors(bg_type)
 end
 
 function M.kitty.clear_colors()
-  if not vim.env.KITTY_LISTEN_ON then return end
+  if not vim.env.KITTY_LISTEN_ON then
+    return
+  end
 
   local colors = M.kitty.get_colors()
   local str = colors_to_string({
@@ -109,7 +117,9 @@ function M.kitty.delayed_clear_colors()
   vim.defer_fn(function()
     -- If the current window is an nvim window then do not bother doing anything
     -- since the window will have it's own autocommands it's executing
-    if is_current_window_vim() then return end
+    if is_current_window_vim() then
+      return
+    end
     M.kitty.clear_colors()
   end, 200)
 end
