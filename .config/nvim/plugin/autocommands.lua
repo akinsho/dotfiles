@@ -199,7 +199,7 @@ if vim.env.TMUX ~= nil then
       end,
     },
   })
-else
+elseif vim.env.KITTY_PID then
   as.augroup('KittyColors', {
     {
       event = 'BufEnter',
