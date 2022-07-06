@@ -3,11 +3,11 @@ return function()
   local hl = require('as.highlights')
   local opt, get_width = vim.opt, vim.api.nvim_strwidth
 
-  local function handler(virt_text, _, _, width, truncate, end_text)
+  local function handler(virt_text, _, _, width, truncate, ctx)
     local result = {}
     local padding = ''
     local cur_width = 0
-    local suffix_width = get_width(end_text.text)
+    local suffix_width = get_width(ctx.text)
     local target_width = width - suffix_width
 
     for _, chunk in ipairs(virt_text) do
