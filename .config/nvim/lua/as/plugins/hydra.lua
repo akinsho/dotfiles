@@ -70,7 +70,7 @@ return function()
       -- Split
       { 's', '<C-w>s', { desc = 'split horizontally' } },
       { 'v', '<C-w>v', { desc = 'split vertically' } },
-      { 'q', '<Cmd>Bwipeout<CR>', { desc = 'close window' } },
+      { 'q', '<C-w>c', { desc = 'close window' } },
       -- Size
       { 'j', '2<C-w>+', { desc = 'increase height' } },
       { 'k', '2<C-w>-', { desc = 'decrease height' } },
