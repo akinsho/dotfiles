@@ -45,8 +45,14 @@ return function()
   opt.foldlevelstart = 99
   opt.sessionoptions:append('folds')
 
-  local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
-  hl.plugin('ufo', { Folded = { bold = false, italic = false, bg = bg } })
+  hl.plugin('ufo', {
+    Folded = {
+      bold = false,
+      italic = false,
+      bg = hl.alter_color(hl.get('Normal', 'bg'), -7),
+    },
+  })
+
 
   ufo.setup({
     open_fold_hl_timeout = 0,
