@@ -28,16 +28,14 @@ return function()
       cur_width = cur_width + chunk_width
     end
 
-    -- reformat the end text to trim excess whitespace from indentation
-    local end_virt_text = vim.tbl_map(function(item)
-      item[1] = item[1]:gsub('%s+', function(m)
-        return #m > 1 and '' or ' '
-      end)
-      return item
-    end, end_text.end_virt_text)
+    local end_text = ctx.end_virt_text
+    -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
+    if end_text[1] and end_text[1][1] then
+      end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '')
+    end
 
     table.insert(result, { ' ⋯ ', 'NonText' })
-    vim.list_extend(result, end_virt_text)
+    vim.list_extend(result, end_text)
     table.insert(result, { padding, '' })
     return result
   end
