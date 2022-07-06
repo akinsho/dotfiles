@@ -251,6 +251,7 @@ vim.opt.spelllang:append('programming')
 -----------------------------------------------------------------------------//
 vim.opt.mouse = 'a'
 vim.opt.mousefocus = true
+vim.opt.mousescroll = { 'ver:1', 'hor:6' }
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
 vim.opt.secure = true -- Disable autocmd etc for project local vimrc files.
