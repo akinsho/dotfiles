@@ -398,9 +398,7 @@ function as.mappings.grep_operator(type)
   local winnr = fn.winnr()
   vim.cmd([[silent execute 'grep! ' . shellescape(@@) . ' .']])
   fn.setreg('@@', saved_unnamed_register)
-  if fn.winnr() ~= winnr then
-    vim.cmd([[wincmd p]])
-  end
+  if fn.winnr() ~= winnr then vim.cmd([[wincmd p]]) end
 end
 
 -- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
@@ -417,20 +415,14 @@ end
 -----------------------------------------------------------------------------//
 local function open_link()
   local file = fn.expand('<cfile>')
-  if fn.isdirectory(file) > 0 then
-    return vim.cmd('edit ' .. file)
-  end
+  if fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
 
-  if file:match('https://') then
-    return open(file)
-  end
+  if file:match('https://') then return open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
-  if link then
-    return open(fmt('https://www.github.com/%s', link))
-  end
+  if link then return open(fmt('https://www.github.com/%s', link)) end
 end
 nnoremap('gx', open_link)
 
@@ -446,9 +438,7 @@ function as.toggle_list(list_type)
   local prefix = is_location_target and 'l' or 'c'
   local L = vim.log.levels
   local is_open = as.is_vim_list_open()
-  if is_open then
-    return fn.execute(prefix .. 'close')
-  end
+  if is_open then return fn.execute(prefix .. 'close') end
   local list = is_location_target and fn.getloclist(0) or fn.getqflist()
   if vim.tbl_isempty(list) then
     local msg_prefix = (is_location_target and 'Location' or 'QuickFix')
@@ -457,17 +447,11 @@ function as.toggle_list(list_type)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. 'open')
-  if fn.winnr() ~= winnr then
-    vim.cmd('wincmd p')
-  end
+  if fn.winnr() ~= winnr then vim.cmd('wincmd p') end
 end
 
-nnoremap('<leader>ls', function()
-  as.toggle_list('quickfix')
-end)
-nnoremap('<leader>li', function()
-  as.toggle_list('location')
-end)
+nnoremap('<leader>ls', function() as.toggle_list('quickfix') end)
+nnoremap('<leader>li', function() as.toggle_list('location') end)
 
 -----------------------------------------------------------------------------//
 -- Completion
@@ -478,14 +462,13 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-command('ToggleBackground', function()
-  vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
-end)
+command(
+  'ToggleBackground',
+  function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end
+)
 ------------------------------------------------------------------------------
 command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
-command('ReloadModule', function(tbl)
-  require('plenary.reload').reload_module(tbl.args)
-end, {
+command('ReloadModule', function(tbl) require('plenary.reload').reload_module(tbl.args) end, {
   nargs = 1,
 })
 -- source https://superuser.com/a/540519
@@ -535,9 +518,11 @@ end
 command('AutoResize', auto_resize(), { nargs = '?' })
 -----------------------------------------------------------------------------//
 
-command('LuaInvalidate', function(pattern)
-  require('as.utils').invalidate(pattern, true)
-end, { nargs = 1 })
+command(
+  'LuaInvalidate',
+  function(pattern) require('as.utils').invalidate(pattern, true) end,
+  { nargs = 1 }
+)
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//

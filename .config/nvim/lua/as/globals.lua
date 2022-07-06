@@ -72,9 +72,7 @@ end
 as.list_installed_plugins = (function()
   local plugins
   return function()
-    if plugins then
-      return plugins
-    end
+    if plugins then return plugins end
     local data_dir = fn.stdpath('data')
     local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
     local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
@@ -88,9 +86,7 @@ end)()
 ---@return boolean
 function as.plugin_installed(plugin_name)
   for _, path in ipairs(as.list_installed_plugins()) do
-    if vim.endswith(path, plugin_name) then
-      return true
-    end
+    if vim.endswith(path, plugin_name) then return true end
   end
   return false
 end
@@ -112,9 +108,7 @@ function as.is_vim_list_open()
     local buf = api.nvim_win_get_buf(win)
     local location_list = fn.getloclist(0, { filewinid = 0 })
     local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == 'qf' or is_loc_list then
-      return true
-    end
+    if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
   end
   return false
 end
@@ -129,9 +123,7 @@ end
 ---@param item any
 ---@return boolean
 function as.empty(item)
-  if not item then
-    return true
-  end
+  if not item then return true end
   local item_type = type(item)
   if item_type == 'string' then
     return item == ''
@@ -180,17 +172,13 @@ function as.profile(filename)
   local base = '/tmp/config/profile/'
   fn.mkdir(base, 'p')
   local success, profile = pcall(require, 'plenary.profile.lua_profiler')
-  if not success then
-    vim.api.nvim_echo({ 'Plenary is not installed.', 'Title' }, true, {})
-  end
+  if not success then vim.api.nvim_echo({ 'Plenary is not installed.', 'Title' }, true, {}) end
   profile.start()
   return function()
     profile.stop()
     local logfile = base .. filename .. '.log'
     profile.report(logfile)
-    vim.defer_fn(function()
-      vim.cmd('tabedit ' .. logfile)
-    end, 1000)
+    vim.defer_fn(function() vim.cmd('tabedit ' .. logfile) end, 1000)
   end
 end
 
@@ -218,19 +206,17 @@ P = vim.pretty_print
 local function validate_autocmd(name, cmd)
   local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
   local incorrect = as.fold(function(accum, _, key)
-    if not vim.tbl_contains(keys, key) then
-      table.insert(accum, key)
-    end
+    if not vim.tbl_contains(keys, key) then table.insert(accum, key) end
     return accum
   end, cmd, {})
-  if #incorrect == 0 then
-    return
-  end
-  vim.schedule(function()
-    vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
-      title = fmt('Autocmd: %s', name),
-    })
-  end)
+  if #incorrect == 0 then return end
+  vim.schedule(
+    function()
+      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
+        title = fmt('Autocmd: %s', name),
+      })
+    end
+  )
 end
 
 ---@class Autocommand
@@ -295,23 +281,17 @@ end
 ---Check if a cmd is executable
 ---@param e string
 ---@return boolean
-function as.executable(e)
-  return fn.executable(e) > 0
-end
+function as.executable(e) return fn.executable(e) > 0 end
 
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return string
-function as.replace_termcodes(str)
-  return api.nvim_replace_termcodes(str, true, true, true)
-end
+function as.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
 
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function as.has(feature)
-  return vim.fn.has(feature) > 0
-end
+function as.has(feature) return vim.fn.has(feature) > 0 end
 
 ----------------------------------------------------------------------------------------------------
 -- Mappings

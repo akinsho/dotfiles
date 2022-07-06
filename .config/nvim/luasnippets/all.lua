@@ -3,9 +3,7 @@
 return {
   snippet({ trig = 'td', name = 'TODO' }, {
     d(1, function()
-      local function with_cmt(cmt)
-        return string.format(vim.bo.commentstring, ' ' .. cmt)
-      end
+      local function with_cmt(cmt) return string.format(vim.bo.commentstring, ' ' .. cmt) end
       return snippet('', {
         c(1, {
           t(with_cmt('TODO: ')),
@@ -32,9 +30,7 @@ return {
           local col = vim.bo.textwidth or 80
           return comment .. string.rep('-', col - #comment)
         end),
-        f(function()
-          return vim.bo.commentstring:gsub('%%s', '')
-        end),
+        f(function() return vim.bo.commentstring:gsub('%%s', '') end),
         i(1, 'HEADER'),
         i(0),
       }

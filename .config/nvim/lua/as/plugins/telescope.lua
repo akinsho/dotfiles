@@ -88,9 +88,7 @@ function M.config()
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
-          ['<c-c>'] = function()
-            vim.cmd('stopinsert!')
-          end,
+          ['<c-c>'] = function() vim.cmd('stopinsert!') end,
           ['<esc>'] = actions.close,
           ['<c-s>'] = actions.select_horizontal,
           ['<c-j>'] = actions.cycle_history_next,
@@ -229,9 +227,7 @@ function M.config()
           'diff',
           entry.value .. '^!',
         }
-        if is_buf then
-          vim.list_extend(args, { '--', entry.current_file })
-        end
+        if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
         return args
       end,
     })
@@ -243,9 +239,7 @@ function M.config()
     return opts
   end
 
-  local function delta_git_commits(opts)
-    require('telescope.builtin').git_commits(delta_opts(opts))
-  end
+  local function delta_git_commits(opts) require('telescope.builtin').git_commits(delta_opts(opts)) end
 
   local function delta_git_bcommits(opts)
     require('telescope.builtin').git_bcommits(delta_opts(opts, true))
@@ -274,26 +268,16 @@ function M.config()
 
   local function project_files(opts)
     local builtin = require('telescope.builtin')
-    if not pcall(builtin.git_files, opts) then
-      builtin.find_files(opts)
-    end
+    if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
   end
 
-  local function pickers()
-    require('telescope.builtin').builtin({ include_extensions = true })
-  end
+  local function pickers() require('telescope.builtin').builtin({ include_extensions = true }) end
 
-  local function find_files()
-    require('telescope.builtin').find_files()
-  end
+  local function find_files() require('telescope.builtin').find_files() end
 
-  local function buffers()
-    require('telescope.builtin').buffers()
-  end
+  local function buffers() require('telescope.builtin').buffers() end
 
-  local function live_grep()
-    require('telescope.builtin').live_grep()
-  end
+  local function live_grep() require('telescope.builtin').live_grep() end
 
   local function MRU()
     require('mru').display_cache(as.telescope.dropdown({
@@ -307,13 +291,9 @@ function M.config()
     )
   end
 
-  local function notifications()
-    telescope.extensions.notify.notify(as.telescope.dropdown())
-  end
+  local function notifications() telescope.extensions.notify.notify(as.telescope.dropdown()) end
 
-  local function gh_notifications()
-    telescope.extensions.ghn.ghn(as.telescope.dropdown())
-  end
+  local function gh_notifications() telescope.extensions.ghn.ghn(as.telescope.dropdown()) end
 
   local function installed_plugins()
     require('telescope.builtin').find_files({
@@ -322,9 +302,7 @@ function M.config()
     })
   end
 
-  local function howdoi()
-    telescope.extensions.howdoi.howdoi()
-  end
+  local function howdoi() telescope.extensions.howdoi.howdoi() end
 
   which_key.register({
     ['<c-p>'] = { project_files, 'telescope: find files' },

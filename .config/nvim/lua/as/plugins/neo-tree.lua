@@ -23,9 +23,7 @@ return function()
       },
       {
         event = 'neo_tree_buffer_leave',
-        handler = function()
-          vim.cmd('highlight! Cursor blend=0')
-        end,
+        handler = function() vim.cmd('highlight! Cursor blend=0') end,
       },
     },
     filesystem = {

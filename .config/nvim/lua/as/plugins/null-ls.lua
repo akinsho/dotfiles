@@ -13,9 +13,7 @@ return function()
       }),
       null_ls.builtins.formatting.prettier.with({
         filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
-        condition = function()
-          return as.executable('prettier')
-        end,
+        condition = function() return as.executable('prettier') end,
       }),
     },
   })

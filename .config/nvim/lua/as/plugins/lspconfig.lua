@@ -13,13 +13,9 @@ local fn = vim.fn
 function as.lsp.on_init(client)
   local path = client.workspace_folders[1].name
   local config_path = path .. '/.vim/settings.json'
-  if fn.filereadable(config_path) == 0 then
-    return true
-  end
+  if fn.filereadable(config_path) == 0 then return true end
   local ok, json = pcall(fn.readfile, config_path)
-  if not ok then
-    return
-  end
+  if not ok then return end
   local overrides = vim.json.decode(table.concat(json, '\n'))
   for name, config in pairs(overrides) do
     if name == client.name then
@@ -35,9 +31,7 @@ return function()
   -- FIXME: prevent language servers from being reset because this causes errors
   -- with in flight requests. Eventually this should be improved or allowed and so
   -- this won't be necessary
-  if vim.g.lsp_config_complete then
-    return
-  end
+  if vim.g.lsp_config_complete then return end
   vim.g.lsp_config_complete = true
 
   local servers = {
@@ -111,9 +105,7 @@ return function()
         },
       }
       local ok, lua_dev = as.safe_require('lua-dev')
-      if not ok then
-        return settings
-      end
+      if not ok then return settings end
       return lua_dev.setup({
         library = { plugins = { 'plenary.nvim', 'neotest' } },
         lspconfig = settings,
@@ -135,9 +127,7 @@ return function()
         lineFoldingOnly = true,
       }
       local ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
-      if ok then
-        cmp_nvim_lsp.update_capabilities(config.capabilities)
-      end
+      if ok then cmp_nvim_lsp.update_capabilities(config.capabilities) end
       require('lspconfig')[name].setup(config)
     end
   end

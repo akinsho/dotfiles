@@ -22,9 +22,7 @@ https://github.com/neovim/neovim/issues/5581
 map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', { expr = true })
 
 local function stop_hl()
-  if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then
-    return
-  end
+  if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
   api.nvim_feedkeys(as.replace_termcodes('<Plug>(StopHL)'), 'm', false)
 end
 
@@ -32,36 +30,26 @@ local function hl_search()
   local col = api.nvim_win_get_cursor(0)[2]
   local curr_line = api.nvim_get_current_line()
   local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg('/'), 0)
-  if not ok then
-    return vim.notify(match, 'error', { title = 'HL SEARCH' })
-  end
+  if not ok then return vim.notify(match, 'error', { title = 'HL SEARCH' }) end
   local _, p_start, p_end = unpack(match)
   -- if the cursor is in a search result, leave highlighting on
-  if col < p_start or col > p_end then
-    stop_hl()
-  end
+  if col < p_start or col > p_end then stop_hl() end
 end
 
 as.augroup('VimrcIncSearchHighlight', {
   {
     event = { 'CursorMoved' },
-    command = function()
-      hl_search()
-    end,
+    command = function() hl_search() end,
   },
   {
     event = { 'InsertEnter' },
-    command = function()
-      stop_hl()
-    end,
+    command = function() stop_hl() end,
   },
   {
     event = { 'OptionSet' },
     pattern = { 'hlsearch' },
     command = function()
-      vim.schedule(function()
-        vim.cmd('redrawstatus')
-      end)
+      vim.schedule(function() vim.cmd('redrawstatus') end)
     end,
   },
 })
@@ -86,9 +74,7 @@ local smart_close_filetypes = {
 local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
 
 local function smart_close()
-  if fn.winnr('$') ~= 1 then
-    api.nvim_win_close(0, true)
-  end
+  if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
 
 as.augroup('SmartClose', {
@@ -110,9 +96,7 @@ as.augroup('SmartClose', {
         or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
         or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
-      if is_eligible then
-        as.nnoremap('q', smart_close, { buffer = 0, nowait = true })
-      end
+      if is_eligible then as.nnoremap('q', smart_close, { buffer = 0, nowait = true }) end
     end,
   },
   {
@@ -131,9 +115,7 @@ as.augroup('SmartClose', {
     pattern = '*',
     nested = true,
     command = function()
-      if vim.bo.filetype ~= 'qf' then
-        vim.cmd('silent! lclose')
-      end
+      if vim.bo.filetype ~= 'qf' then vim.cmd('silent! lclose') end
     end,
   },
 })
@@ -143,9 +125,7 @@ as.augroup('ExternalCommands', {
     -- Open images in an image viewer (probably Preview)
     event = { 'BufEnter' },
     pattern = { '*.png', '*.jpg', '*.gif' },
-    command = function()
-      vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%')))
-    end,
+    command = function() vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%'))) end,
   },
 })
 
@@ -181,13 +161,9 @@ local function clear_commandline()
   --- deferred each time
   local timer
   return function()
-    if timer then
-      timer:stop()
-    end
+    if timer then timer:stop() end
     timer = vim.defer_fn(function()
-      if fn.mode() == 'n' then
-        vim.cmd([[echon '']])
-      end
+      if fn.mode() == 'n' then vim.cmd([[echon '']]) end
     end, 10000)
   end
 end
@@ -205,16 +181,12 @@ if vim.env.TMUX ~= nil then
     {
       event = { 'BufEnter' },
       pattern = '*',
-      command = function()
-        vim.o.titlestring = require('as.external').title_string()
-      end,
+      command = function() vim.o.titlestring = require('as.external').title_string() end,
     },
     {
       event = { 'VimLeavePre' },
       pattern = '*',
-      command = function()
-        require('as.external').tmux.set_statusline(true)
-      end,
+      command = function() require('as.external').tmux.set_statusline(true) end,
     },
     {
       event = { 'ColorScheme', 'FocusGained' },
@@ -223,9 +195,7 @@ if vim.env.TMUX ~= nil then
         -- NOTE: there is a race condition here as the colors
         -- for kitty to re-use need to be set AFTER the rest of the colorscheme
         -- overrides
-        vim.defer_fn(function()
-          require('as.external').tmux.set_statusline()
-        end, 1)
+        vim.defer_fn(function() require('as.external').tmux.set_statusline() end, 1)
       end,
     },
   })
@@ -234,27 +204,19 @@ else
     {
       event = 'BufEnter',
       once = true,
-      command = function()
-        require('as.external').kitty.set_colors('dark')
-      end,
+      command = function() require('as.external').kitty.set_colors('dark') end,
     },
     {
       event = { 'FocusGained' },
-      command = function()
-        require('as.external').kitty.set_colors('dark')
-      end,
+      command = function() require('as.external').kitty.set_colors('dark') end,
     },
     {
       event = 'FocusLost',
-      command = function()
-        require('as.external').kitty.delayed_clear_colors()
-      end,
+      command = function() require('as.external').kitty.delayed_clear_colors() end,
     },
     {
       event = 'VimLeavePre',
-      command = function()
-        require('as.external').kitty.clear_colors()
-      end,
+      command = function() require('as.external').kitty.clear_colors() end,
     },
   })
 end
@@ -367,17 +329,13 @@ as.augroup('WindowBehaviours', {
   {
     event = { 'BufWinEnter' },
     command = function(args)
-      if vim.wo.diff then
-        vim.diagnostic.disable(args.buf)
-      end
+      if vim.wo.diff then vim.diagnostic.disable(args.buf) end
     end,
   },
   {
     event = { 'BufWinLeave' },
     command = function(args)
-      if vim.wo.diff then
-        vim.diagnostic.enable(args.buf)
-      end
+      if vim.wo.diff then vim.diagnostic.enable(args.buf) end
     end,
   },
 })
@@ -396,16 +354,12 @@ as.augroup('Cursorline', {
   {
     event = { 'BufEnter' },
     pattern = { '*' },
-    command = function()
-      vim.wo.cursorline = should_show_cursorline()
-    end,
+    command = function() vim.wo.cursorline = should_show_cursorline() end,
   },
   {
     event = { 'BufLeave' },
     pattern = { '*' },
-    command = function()
-      vim.wo.cursorline = false
-    end,
+    command = function() vim.wo.cursorline = false end,
   },
 })
 
@@ -430,9 +384,7 @@ as.augroup('Utilities', {
     event = { 'BufReadCmd' },
     pattern = { 'file:///*' },
     nested = true,
-    command = function(args)
-      vim.cmd(fmt('bd!|edit %s', vim.uri_to_fname(args.file)))
-    end,
+    command = function(args) vim.cmd(fmt('bd!|edit %s', vim.uri_to_fname(args.file))) end,
   },
   {
     -- When editing a file, always jump to the last known cursor position.
@@ -469,9 +421,7 @@ as.augroup('Utilities', {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then
-        vim.cmd('silent! update')
-      end
+      if can_save() then vim.cmd('silent! update') end
     end,
   },
   {
@@ -496,9 +446,7 @@ as.augroup('TerminalAutocommands', {
     pattern = '*',
     command = function()
       --- automatically close a terminal if the job was successful
-      if not vim.v.event.status == 0 then
-        vim.cmd('bdelete! ' .. fn.expand('<abuf>'))
-      end
+      if not vim.v.event.status == 0 then vim.cmd('bdelete! ' .. fn.expand('<abuf>')) end
     end,
   },
 })

@@ -116,9 +116,7 @@ return function()
       disable = vim.tbl_filter(function(p)
         local disable = true
         for _, lang in pairs(rainbow_enabled) do
-          if p == lang then
-            disable = false
-          end
+          if p == lang then disable = false end
         end
         return disable
       end, parsers.available_parsers()),

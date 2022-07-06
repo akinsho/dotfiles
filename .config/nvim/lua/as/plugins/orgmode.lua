@@ -10,9 +10,7 @@ return function()
     OrgAgendaScheduled = { fg = 'Teal' },
   })
 
-  local function sync(path)
-    return fmt('%s/%s', fn.expand('$SYNC_DIR'), path)
-  end
+  local function sync(path) return fmt('%s/%s', fn.expand('$SYNC_DIR'), path) end
 
   orgmode.setup_ts_grammar()
 

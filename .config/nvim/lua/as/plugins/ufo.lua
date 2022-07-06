@@ -30,9 +30,7 @@ return function()
 
     local end_text = ctx.end_virt_text
     -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
-    if end_text[1] and end_text[1][1] then
-      end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '')
-    end
+    if end_text[1] and end_text[1][1] then end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '') end
 
     table.insert(result, { ' ⋯ ', 'NonText' })
     vim.list_extend(result, end_text)
@@ -55,9 +53,7 @@ return function()
     {
       event = 'FileType',
       pattern = { 'org' },
-      command = function()
-        ufo.detach()
-      end,
+      command = function() ufo.detach() end,
     },
   })
 
@@ -66,9 +62,7 @@ return function()
     fold_virt_text_handler = handler,
     enable_fold_end_virt_text = true,
     preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
-    provider_selector = function()
-      return { 'treesitter', 'indent' }
-    end,
+    provider_selector = function() return { 'treesitter', 'indent' } end,
   })
   as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
   as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')

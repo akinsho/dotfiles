@@ -7,9 +7,7 @@ M.is_home = not M.is_work
 
 ---A thin wrapper around vim.notify to add packer details to the message
 ---@param msg string
-function M.packer_notify(msg, level)
-  vim.notify(msg, level, { title = 'Packer' })
-end
+function M.packer_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
 -- Make sure packer is installed on the current machine and load
 -- the dev or upstream version depending on if we are at work or not
@@ -31,22 +29,14 @@ function M.bootstrap_packer()
   end
 end
 
-function M.not_headless()
-  return #vim.api.nvim_list_uis() > 0
-end
+function M.not_headless() return #vim.api.nvim_list_uis() > 0 end
 
 ---@param path string
-function M.dev(path)
-  return os.getenv('HOME') .. '/projects/' .. path
-end
+function M.dev(path) return os.getenv('HOME') .. '/projects/' .. path end
 
-function M.developing()
-  return vim.env.DEVELOPING ~= nil
-end
+function M.developing() return vim.env.DEVELOPING ~= nil end
 
-function M.not_developing()
-  return not vim.env.DEVELOPING
-end
+function M.not_developing() return not vim.env.DEVELOPING end
 
 --- Automagically register local and remote plugins as well as managing when they are enabled or disabled
 --- 1. Local plugins that I created should be used but specified with their git URLs so they are
@@ -60,9 +50,7 @@ function M.with_local(spec)
 
   local name = vim.split(spec[1], '/')[2]
   local path = M.dev(fmt('%s/%s', spec.local_path, name))
-  if fn.isdirectory(fn.expand(path)) < 1 then
-    return spec, nil
-  end
+  if fn.isdirectory(fn.expand(path)) < 1 then return spec, nil end
   local is_contributing = spec.local_path:match('contributing') ~= nil
 
   local local_spec = {
@@ -98,17 +86,13 @@ end
 function M.use_local(original)
   local use = require('packer').use
   local spec, local_spec = M.with_local(original)
-  if local_spec then
-    use(local_spec)
-  end
+  if local_spec then use(local_spec) end
   use(spec)
 end
 
 ---Require a plugin config
 ---@param name string
 ---@return any
-function M.conf(name)
-  return require(fmt('as.plugins.%s', name))
-end
+function M.conf(name) return require(fmt('as.plugins.%s', name)) end
 
 return M

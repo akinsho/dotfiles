@@ -5,9 +5,7 @@ function M.config()
   local terms = require('toggleterm.terminal')
 
   vim.g['test#custom_strategies'] = {
-    toggleterm = function(cmd)
-      t.exec(cmd, nil, nil, nil, 'float')
-    end,
+    toggleterm = function(cmd) t.exec(cmd, nil, nil, nil, 'float') end,
     toggleterm_close = function(cmd)
       local term_id = 0
       t.exec(cmd, term_id)

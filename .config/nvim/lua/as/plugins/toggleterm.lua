@@ -56,24 +56,14 @@ return function()
     direction = 'float',
     on_open = float_handler,
     float_opts = {
-      height = function()
-        return math.floor(vim.o.lines * 0.8)
-      end,
-      width = function()
-        return math.floor(vim.o.columns * 0.95)
-      end,
+      height = function() return math.floor(vim.o.lines * 0.8) end,
+      width = function() return math.floor(vim.o.columns * 0.95) end,
     },
   })
 
-  as.nnoremap('<leader>ld', function()
-    gh_dash:toggle()
-  end, 'toggleterm: toggle github dashboard')
+  as.nnoremap('<leader>ld', function() gh_dash:toggle() end, 'toggleterm: toggle github dashboard')
 
-  as.command('Btop', function()
-    btop:toggle()
-  end)
+  as.command('Btop', function() btop:toggle() end)
 
-  as.nnoremap('<leader>lg', function()
-    lazygit:toggle()
-  end, 'toggleterm: toggle lazygit')
+  as.nnoremap('<leader>lg', function() lazygit:toggle() end, 'toggleterm: toggle lazygit')
 end

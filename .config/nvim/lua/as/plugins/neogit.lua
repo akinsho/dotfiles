@@ -28,12 +28,8 @@ function M.config()
       diffview = true,
     },
   })
-  as.nnoremap('<localleader>gs', function()
-    neogit.open()
-  end)
-  as.nnoremap('<localleader>gc', function()
-    neogit.open({ 'commit' })
-  end)
+  as.nnoremap('<localleader>gs', function() neogit.open() end)
+  as.nnoremap('<localleader>gc', function() neogit.open({ 'commit' }) end)
   as.nnoremap('<localleader>gl', neogit.popups.pull.create)
   as.nnoremap('<localleader>gp', neogit.popups.push.create)
 end

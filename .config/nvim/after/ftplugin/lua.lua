@@ -1,6 +1,4 @@
-if not as then
-  return
-end
+if not as then return end
 
 local nnoremap = as.nnoremap
 local fn = vim.fn
@@ -9,9 +7,7 @@ local fmt = string.format
 local function find(word, ...)
   for _, str in ipairs({ ... }) do
     local match_start, match_end = string.find(word, str)
-    if match_start then
-      return str, match_start, match_end
-    end
+    if match_start then return str, match_start, match_end end
   end
 end
 
@@ -40,9 +36,7 @@ local function keyword(word, callback)
     return
   elseif fn_match then
     local _, finish = string.find(word, fn_match .. '.')
-    if not finish then
-      return
-    end
+    if not finish then return end
     local api_function = string.sub(word, finish + 1) .. '()'
 
     vim.cmd(string.format('help %s', api_function))

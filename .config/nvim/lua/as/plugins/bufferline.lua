@@ -5,9 +5,7 @@ return function()
   local function diagnostics_indicator(_, _, diagnostics)
     local symbols = { error = lsp.error, warning = lsp.warn, hint = lsp.hint, info = lsp.info }
     local result = as.fold(function(accum, count, name)
-      if symbols[name] and count > 0 then
-        table.insert(accum, symbols[name] .. ' ' .. count)
-      end
+      if symbols[name] and count > 0 then table.insert(accum, symbols[name] .. ' ' .. count) end
       return accum
     end, diagnostics, {})
     return table.concat(result, ' ')
@@ -83,24 +81,18 @@ return function()
           groups.builtin.ungrouped,
           {
             name = 'Terraform',
-            matcher = function(buf)
-              return buf.name:match('%.tf') ~= nil
-            end,
+            matcher = function(buf) return buf.name:match('%.tf') ~= nil end,
           },
           {
             name = 'SQL',
-            matcher = function(buf)
-              return buf.filename:match('%.sql$')
-            end,
+            matcher = function(buf) return buf.filename:match('%.sql$') end,
           },
           {
             name = 'tests',
             icon = '',
             matcher = function(buf)
               local name = buf.filename
-              if name:match('%.sql$') == nil then
-                return false
-              end
+              if name:match('%.sql$') == nil then return false end
               return name:match('_spec') or name:match('_test')
             end,
           },
@@ -109,9 +101,7 @@ return function()
             icon = '',
             matcher = function(buf)
               for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
-                if ext == fn.fnamemodify(buf.path, ':e') then
-                  return true
-                end
+                if ext == fn.fnamemodify(buf.path, ':e') then return true end
               end
             end,
           },

@@ -74,12 +74,8 @@ local function colors()
   })
 end
 
-local separator = function()
-  return { component = C.ALIGN, length = 0, priority = 0 }
-end
-local end_marker = function()
-  return { component = C.END, length = 0, priority = 0 }
-end
+local separator = function() return { component = C.ALIGN, length = 0, priority = 0 } end
+local end_marker = function() return { component = C.END, length = 0, priority = 0 } end
 
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
@@ -331,16 +327,12 @@ as.augroup('CustomStatusline', {
   {
     event = { 'FocusGained' },
     pattern = { '*' },
-    command = function()
-      vim.g.vim_in_focus = true
-    end,
+    command = function() vim.g.vim_in_focus = true end,
   },
   {
     event = { 'FocusLost' },
     pattern = { '*' },
-    command = function()
-      vim.g.vim_in_focus = false
-    end,
+    command = function() vim.g.vim_in_focus = false end,
   },
   {
     event = { 'VimEnter', 'ColorScheme' },
@@ -359,9 +351,7 @@ as.augroup('CustomStatusline', {
     command = function()
       if not vim.g.is_saving and vim.bo.modified then
         vim.g.is_saving = true
-        vim.defer_fn(function()
-          vim.g.is_saving = false
-        end, 1000)
+        vim.defer_fn(function() vim.g.is_saving = false end, 1000)
       end
     end,
   },
@@ -372,9 +362,7 @@ as.augroup('CustomStatusline', {
       'NeogitCommitComplete',
       'NeogitStatusRefresh',
     },
-    command = function()
-      utils.git_updates_refresh()
-    end,
+    command = function() utils.git_updates_refresh() end,
   },
 })
 

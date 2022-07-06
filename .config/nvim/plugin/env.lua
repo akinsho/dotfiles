@@ -14,15 +14,11 @@ api.nvim_create_user_command('DotEnv', function()
     stop = fn.fnamemodify(fn.getcwd(), ':p:h:h'),
     path = fn.expand('%:p:h'),
   })
-  if vim.tbl_isempty(files) then
-    return
-  end
+  if vim.tbl_isempty(files) then return end
   local filename = files[1]
   local lines = {}
   read_file(filename, function(line)
-    if #line > 0 then
-      table.insert(lines, line)
-    end
+    if #line > 0 then table.insert(lines, line) end
     if not vim.startswith(line, '#') then
       local name, value = unpack(vim.split(line, '='))
       fn.setenv(name, value)

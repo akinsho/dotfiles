@@ -109,28 +109,20 @@ local function wrap(hl)
 end
 
 local function sum_lengths(list)
-  return as.fold(function(acc, item)
-    return acc + (item.length or 0)
-  end, list, 0)
+  return as.fold(function(acc, item) return acc + (item.length or 0) end, list, 0)
 end
 
 local function is_lowest(item, lowest)
   -- if there hasn't been a lowest selected so far
   -- then the item is the lowest
-  if not lowest or not lowest.length then
-    return true
-  end
+  if not lowest or not lowest.length then return true end
   -- if the item doesn't have a priority or a length
   -- it is likely a special character so should never
   -- be the lowest
-  if not item.priority or not item.length then
-    return false
-  end
+  if not item.priority or not item.length then return false end
   -- if the item has the same priority as the lowest then if the item
   -- has a greater length it should become the lowest
-  if item.priority == lowest.priority then
-    return item.length > lowest.length
-  end
+  if item.priority == lowest.priority then return item.length > lowest.length end
 
   return item.priority > lowest.priority
 end
@@ -144,9 +136,7 @@ end
 --- @param length number
 local function prioritize(statusline, space, length)
   length = length or sum_lengths(statusline)
-  if length <= space then
-    return statusline
-  end
+  if length <= space then return statusline end
   local lowest
   local index_to_remove
   for idx, c in ipairs(statusline) do
@@ -160,9 +150,7 @@ local function prioritize(statusline, space, length)
 end
 
 local function matches(str, list)
-  return #vim.tbl_filter(function(item)
-    return item == str or string.match(str, item)
-  end, list) > 0
+  return #vim.tbl_filter(function(item) return item == str or string.match(str, item) end, list) > 0
 end
 
 --- @param ctx table
@@ -181,25 +169,15 @@ local function special_buffers(ctx)
   local is_loc_list = location_list.filewinid > 0
   local normal_term = ctx.buftype == 'terminal' and ctx.filetype == ''
 
-  if is_loc_list then
-    return 'Location List'
-  end
-  if ctx.buftype == 'quickfix' then
-    return 'Quickfix List'
-  end
-  if normal_term then
-    return 'Terminal(' .. fnamemodify(vim.env.SHELL, ':t') .. ')'
-  end
-  if ctx.preview then
-    return 'preview'
-  end
+  if is_loc_list then return 'Location List' end
+  if ctx.buftype == 'quickfix' then return 'Quickfix List' end
+  if normal_term then return 'Terminal(' .. fnamemodify(vim.env.SHELL, ':t') .. ')' end
+  if ctx.preview then return 'preview' end
 
   return nil
 end
 
-function M.is_repo(ctx)
-  return fn.isdirectory(fmt('%s/.git', fn.getcwd(ctx.winid))) == 1
-end
+function M.is_repo(ctx) return fn.isdirectory(fmt('%s/.git', fn.getcwd(ctx.winid))) == 1 end
 
 --- @param ctx table
 --- @param icon string | nil
@@ -209,40 +187,28 @@ end
 
 --- @param ctx table
 --- @param icon string | nil
-function M.readonly(ctx, icon)
-  return ctx.readonly and ' ' .. (icon or '') or ''
-end
+function M.readonly(ctx, icon) return ctx.readonly and ' ' .. (icon or '') or '' end
 
 --- @param bufnum number
 --- @param mod string
-local function buf_expand(bufnum, mod)
-  return expand('#' .. bufnum .. mod)
-end
+local function buf_expand(bufnum, mod) return expand('#' .. bufnum .. mod) end
 
 --- @param ctx table
 --- @param modifier string
 local function filename(ctx, modifier)
   modifier = modifier or ':t'
   local special_buf = special_buffers(ctx)
-  if special_buf then
-    return '', '', special_buf
-  end
+  if special_buf then return '', '', special_buf end
 
   local fname = buf_expand(ctx.bufnum, modifier)
 
   ---@type string|fun(fname: string, buf: number): string
   local name = exceptions.names[ctx.filetype]
-  if type(name) == 'function' then
-    return '', '', name(fname, ctx.bufnum)
-  end
+  if type(name) == 'function' then return '', '', name(fname, ctx.bufnum) end
 
-  if name then
-    return '', '', name
-  end
+  if name then return '', '', name end
 
-  if not fname or as.empty(fname) then
-    return '', '', 'No Name'
-  end
+  if not fname or as.empty(fname) then return '', '', 'No Name' end
 
   local path = (ctx.buftype == '' and not ctx.preview) and buf_expand(ctx.bufnum, ':~:.:h') or nil
   local is_root = path and #path == 1 -- "~" or "."
@@ -256,9 +222,7 @@ end
 --- @param hl string
 --- @param bg_hl string
 local function highlight_ft_icon(hl, bg_hl)
-  if not hl or not bg_hl then
-    return
-  end
+  if not hl or not bg_hl then return end
   local name = hl .. 'Statusline'
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
   local fg_color = H.get(hl, 'fg')
@@ -267,9 +231,7 @@ local function highlight_ft_icon(hl, bg_hl)
     as.augroup(name, {
       {
         event = 'ColorScheme',
-        command = function()
-          api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
-        end,
+        command = function() api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color }) end,
       },
     })
     api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
@@ -282,13 +244,9 @@ end
 --- @return string, string?
 local function filetype(ctx, opts)
   local ft_exception = exceptions.filetypes[ctx.filetype]
-  if ft_exception then
-    return ft_exception, opts.default
-  end
+  if ft_exception then return ft_exception, opts.default end
   local bt_exception = exceptions.buftypes[ctx.buftype]
-  if bt_exception then
-    return bt_exception, opts.default
-  end
+  if bt_exception then return bt_exception, opts.default end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ':e')
   local icons_loaded, devicons = as.safe_require('nvim-web-devicons')
@@ -349,9 +307,7 @@ function M.diagnostic_info(context)
     info = { count = 0, icon = lsp.info },
     hint = { count = 0, icon = lsp.hint },
   }
-  if vim.tbl_isempty(diagnostics) then
-    return result
-  end
+  if vim.tbl_isempty(diagnostics) then return result end
   result = as.fold(function(accum, item)
     local severity = severities[item.severity]:lower()
     accum[severity].count = accum[severity].count + 1
@@ -360,15 +316,11 @@ function M.diagnostic_info(context)
   return result
 end
 
-function M.debugger()
-  return not package.loaded['dap'] and '' or require('dap').status()
-end
+function M.debugger() return not package.loaded['dap'] and '' or require('dap').status() end
 
 function M.hydra()
   local ok, hydra = pcall(require, 'hydra.statusline')
-  if not ok then
-    return nil
-  end
+  if not ok then return nil end
   local colors = {
     red = 'HydraRedSt',
     blue = 'HydraBlueSt',
@@ -389,9 +341,7 @@ end
 -----------------------------------------------------------------------------//
 function M.search_count()
   local result = fn.searchcount({ recompute = 0 })
-  if vim.tbl_isempty(result) then
-    return ''
-  end
+  if vim.tbl_isempty(result) then return '' end
   if result.incomplete == 1 then -- timed out
     return ' ?/?? '
   elseif result.incomplete == 2 then -- max count exceeded
@@ -486,9 +436,7 @@ end
 ---@return table[]
 function M.lsp_clients(ctx)
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
-  if empty(clients) then
-    return { { name = 'No LSP clients available', priority = 7 } }
-  end
+  if empty(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   -- the mathematical symbol denoting an empty set i.e. sort of kinda null, is used to represent null-ls
   local names = vim.tbl_map(function(client)
     local is_null = client.name:match('null')
@@ -515,32 +463,24 @@ local function run_task_on_interval(interval, task)
   local pending_job
   local timer = luv.new_timer()
   local function callback()
-    if pending_job then
-      fn.jobstop(pending_job)
-    end
+    if pending_job then fn.jobstop(pending_job) end
     pending_job = task()
   end
   local fail = timer:start(0, interval, vim.schedule_wrap(callback))
   if fail ~= 0 then
-    vim.schedule(function()
-      vim.notify('Failed to start git update job: ' .. fail)
-    end)
+    vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end)
   end
 end
 
 ---check if in a git repository
 ---@return boolean
-local function is_git_repo()
-  return fn.isdirectory(fn.getcwd() .. '/' .. '.git') > 0
-end
+local function is_git_repo() return fn.isdirectory(fn.getcwd() .. '/' .. '.git') > 0 end
 
 --- @param result string[]
 local function collect_data(result)
   return function(_, data, _)
     for _, item in ipairs(data) do
-      if item and item ~= '' then
-        table.insert(result, item)
-      end
+      if item and item ~= '' then table.insert(result, item) end
     end
   end
 end
@@ -550,17 +490,13 @@ end
 -- the result format is in the format: `1       0`
 -- the first value commits ahead by and the second is commits behind by
 local function git_update_job()
-  if not is_git_repo() then
-    return
-  end
+  if not is_git_repo() then return end
   local result = {}
   fn.jobstart('git rev-list --count --left-right @{upstream}...HEAD', {
     stdout_buffered = true,
     on_stdout = collect_data(result),
     on_exit = function(_, code, _)
-      if code > 0 and not result or not result[1] then
-        return
-      end
+      if code > 0 and not result or not result[1] then return end
       local parts = vim.split(result[1], '\t')
       if parts and #parts > 1 then
         local formatted = { behind = parts[1], ahead = parts[2] }
@@ -570,15 +506,11 @@ local function git_update_job()
   })
 end
 
-function M.git_updates_refresh()
-  git_update_job()
-end
+function M.git_updates_refresh() git_update_job() end
 
 --- starts a timer to check for the whether
 --- we are currently ahead or behind upstream
-function M.git_updates()
-  run_task_on_interval(10000, git_update_job)
-end
+function M.git_updates() run_task_on_interval(10000, git_update_job) end
 
 ----------------------------------------------------------------------------------------------------
 -- COMPONENTS
@@ -587,9 +519,7 @@ end
 ---@param func_name string
 ---@param id string
 ---@return string
-local function get_click_start(func_name, id)
-  return '%' .. id .. '@' .. func_name .. '@'
-end
+local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_name .. '@' end
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
@@ -624,9 +554,7 @@ end
 function M.component(item, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
-  if empty(item) then
-    return M.spacer()
-  end
+  if empty(item) then return M.spacer() end
   assert(opts and opts.priority, fmt("each item's priority is required: %s is missing one", item))
   opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
@@ -643,9 +571,7 @@ function M.component(item, hl, opts)
   local click_end = opts.click and constants.CLICK_END or ''
 
   --- handle numeric inputs etc.
-  if type(item) ~= 'string' then
-    item = tostring(item)
-  end
+  if type(item) ~= 'string' then item = tostring(item) end
 
   if opts.max_size and item and #item >= opts.max_size then
     item = item:sub(1, opts.max_size - 1) .. '…'
@@ -675,9 +601,7 @@ end
 --- @param hl string
 --- @param opts ComponentOpts
 function M.component_if(item, condition, hl, opts)
-  if not condition then
-    return M.spacer()
-  end
+  if not condition then return M.spacer() end
   return M.component(item, hl, opts)
 end
 
@@ -713,9 +637,7 @@ function M.display(statusline, available_space)
   local str = ''
   local items = prioritize(statusline, available_space)
   for _, item in ipairs(items) do
-    if type(item.component) == 'string' and #item.component > 0 then
-      str = str .. item.component
-    end
+    if type(item.component) == 'string' and #item.component > 0 then str = str .. item.component end
   end
   return str
 end

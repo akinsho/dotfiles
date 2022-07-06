@@ -18,9 +18,7 @@ local hl_names = {
 
 local function colors_to_string(colors)
   return as.fold(function(acc, c, name)
-    if c then
-      acc = acc .. fmt(' %s=%s', name, c)
-    end
+    if c then acc = acc .. fmt(' %s=%s', name, c) end
     return acc
   end, colors, '')
 end
@@ -34,9 +32,7 @@ end
 ---@return KittyState
 function M.kitty.get_state()
   local txt = vim.fn.system('kitty @ ls')
-  if txt == nil then
-    return
-  end
+  if txt == nil then return end
   local ok, json = pcall(vim.json.decode, txt)
   if not ok then
     vim.notify_once('Failed to unmarshall kitty state from JSON', 'error', {
@@ -70,9 +66,7 @@ end
 
 function M.kitty.get_colors()
   local txt = fn.system('kitty @ get-colors')
-  if not txt then
-    return
-  end
+  if not txt then return end
   local colors = as.fold(function(acc, line)
     local key, value = unpack(vim.split(line, '%s+'))
     acc[key] = value
@@ -99,9 +93,7 @@ function M.kitty.set_colors(bg_type)
 end
 
 function M.kitty.clear_colors()
-  if not vim.env.KITTY_LISTEN_ON then
-    return
-  end
+  if not vim.env.KITTY_LISTEN_ON then return end
 
   local colors = M.kitty.get_colors()
   local str = colors_to_string({
@@ -117,9 +109,7 @@ function M.kitty.delayed_clear_colors()
   vim.defer_fn(function()
     -- If the current window is an nvim window then do not bother doing anything
     -- since the window will have it's own autocommands it's executing
-    if is_current_window_vim() then
-      return
-    end
+    if is_current_window_vim() then return end
     M.kitty.clear_colors()
   end, 200)
 end
@@ -137,9 +127,7 @@ end
 function M.title_string()
   local dir = fn.fnamemodify(fn.getcwd(), ':t')
   local icon, hl = fileicon()
-  if not hl then
-    return (icon or '') .. ' '
-  end
+  if not hl then return (icon or '') .. ' ' end
   local has_tmux = vim.env.TMUX ~= nil
   return has_tmux and fmt('%s #[fg=%s]%s ', dir, H.get_hl(hl, 'fg'), icon) or dir .. ' ' .. icon
 end
@@ -153,8 +141,6 @@ function M.tmux.set_statusline(reset)
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 
-function M.tmux.clear_pane_title()
-  fn.jobstart('tmux set-window-option automatic-rename on')
-end
+function M.tmux.clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
 
 return M

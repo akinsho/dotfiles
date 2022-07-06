@@ -20,9 +20,7 @@ function as.qf.delete(bufnr)
     local lastline = unpack(api.nvim_buf_get_mark(0, '>'))
     local result = {}
     for i, item in ipairs(qfl) do
-      if i < firstline or i > lastline then
-        table.insert(result, item)
-      end
+      if i < firstline or i > lastline then table.insert(result, item) end
     end
     qfl = result
   else

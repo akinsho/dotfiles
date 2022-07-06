@@ -33,9 +33,7 @@ vim.g.mapleader = ',' -- Remap leader key
 vim.g.maplocalleader = ' ' -- Local leader is <Space>
 
 local ok, reload = pcall(require, 'plenary.reload')
-RELOAD = ok and reload.reload_module or function(...)
-  return ...
-end
+RELOAD = ok and reload.reload_module or function(...) return ... end
 function R(name)
   RELOAD(name)
   return require(name)

@@ -67,9 +67,7 @@ return function()
       documentation = cmp.config.window.bordered(cmp_window),
     },
     snippet = {
-      expand = function(args)
-        require('luasnip').lsp_expand(args.body)
-      end,
+      expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),

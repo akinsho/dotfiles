@@ -6,13 +6,9 @@ vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4
 vim.opt_local.smarttab = true
 
-if not as then
-  return
-end
+if not as then return end
 local ok, whichkey = as.safe_require('which-key')
-if not ok then
-  return
-end
+if not ok then return end
 
 whichkey.register({
   ['<leader>g'] = {

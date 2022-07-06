@@ -2,30 +2,14 @@ local M = {}
 
 function M.setup()
   local fn = vim.fn
-  local function repl_toggle()
-    require('dap').repl.toggle(nil, 'botright split')
-  end
-  local function continue()
-    require('dap').continue()
-  end
-  local function step_out()
-    require('dap').step_out()
-  end
-  local function step_into()
-    require('dap').step_into()
-  end
-  local function step_over()
-    require('dap').step_over()
-  end
-  local function run_last()
-    require('dap').run_last()
-  end
-  local function toggle_breakpoint()
-    require('dap').toggle_breakpoint()
-  end
-  local function set_breakpoint()
-    require('dap').set_breakpoint(fn.input('Breakpoint condition: '))
-  end
+  local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
+  local function continue() require('dap').continue() end
+  local function step_out() require('dap').step_out() end
+  local function step_into() require('dap').step_into() end
+  local function step_over() require('dap').step_over() end
+  local function run_last() require('dap').run_last() end
+  local function toggle_breakpoint() require('dap').toggle_breakpoint() end
+  local function set_breakpoint() require('dap').set_breakpoint(fn.input('Breakpoint condition: ')) end
   require('which-key').register({
     d = {
       name = '+debugger',

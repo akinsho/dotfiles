@@ -9,9 +9,7 @@ vim.opt_local.syntax = ''
 
 -- Map flutter only commands in dart files
 local success, wk = pcall(require, 'which-key')
-if not success then
-  return
-end
+if not success then return end
 wk.register({
   cc = { '<Cmd>Telescope flutter commands<CR>', 'flutter: commands' },
   d = {

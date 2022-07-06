@@ -8,9 +8,7 @@ local H = require('as.highlights')
 
 local fn = vim.fn
 
-local function is_floating_win()
-  return vim.fn.win_gettype() == 'popup'
-end
+local function is_floating_win() return vim.fn.win_gettype() == 'popup' end
 
 local function is_invalid_buf()
   return vim.bo.filetype == '' or vim.bo.buftype ~= '' or not vim.bo.modifiable
@@ -21,9 +19,7 @@ local function toggle_trailing(mode)
     vim.wo.list = false
     return
   end
-  if not vim.wo.list then
-    vim.wo.list = true
-  end
+  if not vim.wo.list then vim.wo.list = true end
   local pattern = mode == 'i' and [[\s\+\%#\@<!$]] or [[\s\+$]]
   if vim.w.whitespace_match_number then
     fn.matchdelete(vim.w.whitespace_match_number)
@@ -40,24 +36,18 @@ as.augroup('WhitespaceMatch', {
     event = { 'ColorScheme' },
     desc = 'Add extra whitespace highlight',
     pattern = { '*' },
-    command = function()
-      H.set_hl('ExtraWhitespace', { foreground = 'red' })
-    end,
+    command = function() H.set_hl('ExtraWhitespace', { foreground = 'red' }) end,
   },
   {
     event = { 'BufEnter', 'FileType', 'InsertLeave' },
     pattern = { '*' },
     desc = 'Show extra whitespace on insert leave, buf enter or filetype',
-    command = function()
-      toggle_trailing('n')
-    end,
+    command = function() toggle_trailing('n') end,
   },
   {
     event = { 'InsertEnter' },
     desc = 'Show extra whitespace on insert enter',
     pattern = { '*' },
-    command = function()
-      toggle_trailing('i')
-    end,
+    command = function() toggle_trailing('i') end,
   },
 })

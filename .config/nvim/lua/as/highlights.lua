@@ -17,9 +17,7 @@ local function hex_to_rgb(color)
   return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
 end
 
-local function alter(attr, percent)
-  return math.floor(attr * (100 + percent) / 100)
-end
+local function alter(attr, percent) return math.floor(attr * (100 + percent) / 100) end
 
 ---@source https://stackoverflow.com/q/5560248
 ---@see: https://stackoverflow.com/a/37797380
@@ -29,9 +27,7 @@ end
 ---@return string
 function M.alter_color(color, percent)
   local r, g, b = hex_to_rgb(color)
-  if not r or not g or not b then
-    return 'NONE'
-  end
+  if not r or not g or not b then return 'NONE' end
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
   r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
   return fmt('#%02x%02x%02x', r, g, b)
@@ -45,9 +41,7 @@ end
 function M.winhighlight_exists(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
   for _, target in ipairs({ ... }) do
-    if win_hl:match(target) ~= nil then
-      return true, win_hl
-    end
+    if win_hl:match(target) ~= nil then return true, win_hl end
   end
   return false, win_hl
 end
@@ -74,16 +68,10 @@ function M.adopt_winhighlight(win_id, target, name, fallback)
   local win_hl_name = name .. win_id
   local _, win_hl = M.winhighlight_exists(win_id, target)
   local hl_exists = fn.hlexists(win_hl_name) > 0
-  if hl_exists then
-    return win_hl_name
-  end
+  if hl_exists then return win_hl_name end
   local parts = vim.split(win_hl, ',')
-  local found = as.find(parts, function(part)
-    return part:match(target)
-  end)
-  if not found then
-    return fallback
-  end
+  local found = as.find(parts, function(part) return part:match(target) end)
+  if not found then return fallback end
   local hl_group = vim.split(found, ':')[2]
   local bg = M.get(hl_group, 'bg')
   M.set_hl(win_hl_name, { background = bg, inherit = fallback })
@@ -116,9 +104,7 @@ function M.set_hl(name, opts)
   convert_hl_to_val(opts)
   opts.inherit = nil
   local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
-  if not ok then
-    vim.notify(fmt('Failed to set %s because: %s', name, msg))
-  end
+  if not ok then vim.notify(fmt('Failed to set %s because: %s', name, msg)) end
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
@@ -134,15 +120,13 @@ function M.get(group, attribute, fallback)
     return 'NONE'
   end
   local hl = get_hl(group)
-  if not attribute then
-    return hl
-  end
+  if not attribute then return hl end
   attribute = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
   local color = hl[attribute] or fallback
   if not color then
-    vim.schedule(function()
-      vim.notify(fmt('%s %s does not exist', group, attribute), levels.INFO)
-    end)
+    vim.schedule(
+      function() vim.notify(fmt('%s %s does not exist', group, attribute), levels.INFO) end
+    )
     return 'NONE'
   end
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
@@ -174,9 +158,7 @@ function M.plugin(name, hls)
   as.augroup(fmt('%sHighlightOverrides', name), {
     {
       event = 'ColorScheme',
-      command = function()
-        M.all(hls)
-      end,
+      command = function() M.all(hls) end,
     },
   })
 end
@@ -393,24 +375,18 @@ end
 as.augroup('UserHighlights', {
   {
     event = 'ColorScheme',
-    command = function()
-      user_highlights()
-    end,
+    command = function() user_highlights() end,
   },
   {
     event = 'FileType',
     pattern = sidebar_fts,
-    command = function()
-      on_sidebar_enter()
-    end,
+    command = function() on_sidebar_enter() end,
   },
 })
 
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-if as.plugin_installed('doom-one.nvim') then
-  vim.cmd('colorscheme doom-one')
-end
+if as.plugin_installed('doom-one.nvim') then vim.cmd('colorscheme doom-one') end
 
 return M

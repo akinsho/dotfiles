@@ -29,17 +29,13 @@ local function format_section(value)
 end
 
 local function is_ignored()
-  if vim.wo.diff then
-    return vim.wo.diff
-  end
+  if vim.wo.diff then return vim.wo.diff end
   return vim.tbl_contains(fold_exclusions, vim.bo.filetype)
 end
 
 ---@param item string
 ---@return boolean
-local function is_import(item)
-  return contains(item, '^import')
-end
+local function is_import(item) return contains(item, '^import') end
 
 --[[
   Naive regex to match closing delimiters (undoubtedly there are edge cases)
@@ -55,9 +51,7 @@ end
 
   value.Member{…}.Method()
 --]]
-local function contains_delimiter(value)
-  return contains(value, [[}\|)\|]\|`\|>\|<]])
-end
+local function contains_delimiter(value) return contains(value, [[}\|)\|]\|`\|>\|<]]) end
 
 --[[
   We initially check if the fold start text is an import by looking for the
@@ -82,16 +76,12 @@ local function get_fold_start(start_text, end_text, foldsymbol)
 end
 
 local function get_fold_end(item)
-  if not contains_delimiter(item) or is_import(item) then
-    return ''
-  end
+  if not contains_delimiter(item) or is_import(item) then return '' end
   return format_section(item)
 end
 
 function as.folds()
-  if is_ignored() then
-    return fn.foldtext()
-  end
+  if is_ignored() then return fn.foldtext() end
   local end_text = fn.getline(vim.v.foldend)
   local start_text = fn.getline(vim.v.foldstart)
   local line_end = get_fold_end(end_text)

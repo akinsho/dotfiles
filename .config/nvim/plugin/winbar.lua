@@ -29,9 +29,7 @@ as.winbar_state = {}
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
 function as.winbar_click(id, _, _, _)
-  if id then
-    vim.cmd('edit ' .. as.winbar_state[id])
-  end
+  if id then vim.cmd('edit ' .. as.winbar_state[id]) end
 end
 
 highlights.plugin('winbar', {
@@ -45,13 +43,9 @@ highlights.plugin('winbar', {
 local function breadcrumbs()
   local ok, navic = pcall(require, 'nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
-  if not ok or not navic.is_available() then
-    return empty_state
-  end
+  if not ok or not navic.is_available() then return empty_state end
   local location = navic.get_location()
-  if empty(location) then
-    return empty_state
-  end
+  if empty(location) then return empty_state end
   local win = api.nvim_get_current_win()
   return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
 end
@@ -64,9 +58,7 @@ function as.ui.winbar()
   add(utils.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if empty(bufname) then
-    return add(component('[No name]', 'Winbar', { priority = 0 }))
-  end
+  if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
 

@@ -15,9 +15,7 @@ local PACKER_COMPILED_PATH = fn.stdpath('cache') .. '/packer/packer_compiled.lua
 ---are not idempotent. This wraps the setup calls of such plugins
 ---@param func fun()
 function as.block_reload(func)
-  if vim.g.packer_compiled_loaded then
-    return
-  end
+  if vim.g.packer_compiled_loaded then return end
   func()
 end
 
@@ -71,17 +69,13 @@ packer.startup({
           'nvim-telescope/telescope-fzf-native.nvim',
           run = 'make',
           after = 'telescope.nvim',
-          config = function()
-            require('telescope').load_extension('fzf')
-          end,
+          config = function() require('telescope').load_extension('fzf') end,
         },
         {
           'nvim-telescope/telescope-smart-history.nvim',
           requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
           after = 'telescope.nvim',
-          config = function()
-            require('telescope').load_extension('smart_history')
-          end,
+          config = function() require('telescope').load_extension('smart_history') end,
         },
         { 'Zane-/howdoi.nvim' },
         { 'ilAYAli/scMRU.nvim', module = 'mru' },
@@ -133,9 +127,7 @@ packer.startup({
     use({
       'knubie/vim-kitty-navigator',
       run = 'cp ./*.py ~/.config/kitty/',
-      cond = function()
-        return not vim.env.TMUX
-      end,
+      cond = function() return not vim.env.TMUX end,
     })
 
     use({ 'goolord/alpha-nvim', config = conf('alpha') })
@@ -184,9 +176,7 @@ packer.startup({
         require('inc_rename').setup({
           hl_group = 'Visual',
         })
-        as.nnoremap('<leader>ri', function()
-          return ':IncRename ' .. vim.fn.expand('<cword>')
-        end, {
+        as.nnoremap('<leader>ri', function() return ':IncRename ' .. vim.fn.expand('<cword>') end, {
           expr = true,
           silent = false,
           desc = 'lsp: incremental rename',
@@ -274,9 +264,7 @@ packer.startup({
       'abecodes/tabout.nvim',
       wants = { 'nvim-treesitter' },
       after = { 'nvim-cmp' },
-      config = function()
-        require('tabout').setup({ completion = false })
-      end,
+      config = function() require('tabout').setup({ completion = false }) end,
     })
 
     -- }}}
@@ -310,9 +298,7 @@ packer.startup({
         {
           'theHamsta/nvim-dap-virtual-text',
           after = 'nvim-dap',
-          config = function()
-            require('nvim-dap-virtual-text').setup({ all_frames = true })
-          end,
+          config = function() require('nvim-dap-virtual-text').setup({ all_frames = true }) end,
         },
       },
     })
@@ -411,9 +397,11 @@ packer.startup({
             },
           },
         })
-        as.nnoremap('<localleader>p', function()
-          require('telescope').extensions.neoclip.default(as.telescope.dropdown())
-        end, 'neoclip: open yank history')
+        as.nnoremap(
+          '<localleader>p',
+          function() require('telescope').extensions.neoclip.default(as.telescope.dropdown()) end,
+          'neoclip: open yank history'
+        )
       end,
     })
 
@@ -430,9 +418,7 @@ packer.startup({
     use({
       'kevinhwang91/nvim-hclipboard',
       event = 'InsertCharPre',
-      config = function()
-        require('hclipboard').start()
-      end,
+      config = function() require('hclipboard').start() end,
     })
 
     use({ 'chentoast/marks.nvim', config = conf('marks') })
@@ -443,9 +429,7 @@ packer.startup({
       'jghauser/fold-cycle.nvim',
       config = function()
         require('fold-cycle').setup()
-        as.nnoremap('<BS>', function()
-          require('fold-cycle').open()
-        end)
+        as.nnoremap('<BS>', function() require('fold-cycle').open() end)
       end,
     })
 
@@ -473,9 +457,7 @@ packer.startup({
           {
             event = 'BufReadPre',
             pattern = '*.norg',
-            command = function()
-              beacon.beacon_off()
-            end,
+            command = function() beacon.beacon_off() end,
           },
         })
       end,
@@ -544,28 +526,20 @@ packer.startup({
 
     use({
       'itchyny/vim-highlighturl',
-      config = function()
-        vim.g.highlighturl_guifg = require('as.highlights').get('URL', 'fg')
-      end,
+      config = function() vim.g.highlighturl_guifg = require('as.highlights').get('URL', 'fg') end,
     })
 
     use({
       'danymat/neogen',
       requires = 'nvim-treesitter/nvim-treesitter',
       module = 'neogen',
-      setup = function()
-        as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
-      end,
-      config = function()
-        require('neogen').setup({ snippet_engine = 'luasnip' })
-      end,
+      setup = function() as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate') end,
+      config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
     })
 
     use({
       'j-hui/fidget.nvim',
-      config = function()
-        require('fidget').setup()
-      end,
+      config = function() require('fidget').setup() end,
     })
 
     use({
@@ -577,9 +551,7 @@ packer.startup({
     use({
       'mbbill/undotree',
       cmd = 'UndotreeToggle',
-      setup = function()
-        as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
-      end,
+      setup = function() as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle') end,
       config = function()
         vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
@@ -588,9 +560,7 @@ packer.startup({
 
     use({
       'iamcco/markdown-preview.nvim',
-      run = function()
-        vim.fn['mkdp#util#install']()
-      end,
+      run = function() vim.fn['mkdp#util#install']() end,
       ft = { 'markdown' },
       config = function()
         vim.g.mkdp_auto_start = 0
@@ -610,9 +580,7 @@ packer.startup({
 
     use({
       'moll/vim-bbye',
-      config = function()
-        as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit')
-      end,
+      config = function() as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit') end,
     })
     -----------------------------------------------------------------------------//
     -- Quickfix
@@ -815,9 +783,7 @@ packer.startup({
 
     use({
       'lewis6991/spellsitter.nvim',
-      config = function()
-        require('spellsitter').setup({ enable = true })
-      end,
+      config = function() require('spellsitter').setup({ enable = true }) end,
     })
 
     use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
@@ -832,9 +798,11 @@ packer.startup({
       config = function()
         local linker = require('gitlinker')
         linker.setup({ mappings = '<localleader>gu' })
-        as.nnoremap('<localleader>go', function()
-          linker.get_repo_url({ action_callback = require('gitlinker.actions').open_in_browser })
-        end, 'gitlinker: open in browser')
+        as.nnoremap(
+          '<localleader>go',
+          function() linker.get_repo_url({ action_callback = require('gitlinker.actions').open_in_browser }) end,
+          'gitlinker: open in browser'
+        )
       end,
     })
 
@@ -884,13 +852,13 @@ packer.startup({
       'AckslD/nvim-trevJ.lua',
       module = 'trevj',
       setup = function()
-        as.nnoremap('gS', function()
-          require('trevj').format_at_cursor()
-        end, { desc = 'splitjoin: split' })
+        as.nnoremap(
+          'gS',
+          function() require('trevj').format_at_cursor() end,
+          { desc = 'splitjoin: split' }
+        )
       end,
-      config = function()
-        require('trevj').setup()
-      end,
+      config = function() require('trevj').setup() end,
     })
 
     use({ 'Matt-A-Bennett/vim-surround-funk', config = conf('surround-funk') })
@@ -899,30 +867,18 @@ packer.startup({
 
     use({
       'numToStr/Comment.nvim',
-      config = function()
-        require('Comment').setup()
-      end,
+      config = function() require('Comment').setup() end,
     })
 
     use({
       'gbprod/substitute.nvim',
       config = function()
         require('substitute').setup()
-        as.nnoremap('S', function()
-          require('substitute').operator()
-        end)
-        as.xnoremap('S', function()
-          require('substitute').visual()
-        end)
-        as.nnoremap('X', function()
-          require('substitute.exchange').operator()
-        end)
-        as.xnoremap('X', function()
-          require('substitute.exchange').visual()
-        end)
-        as.nnoremap('Xc', function()
-          require('substitute.exchange').cancel()
-        end)
+        as.nnoremap('S', function() require('substitute').operator() end)
+        as.xnoremap('S', function() require('substitute').visual() end)
+        as.nnoremap('X', function() require('substitute.exchange').operator() end)
+        as.xnoremap('X', function() require('substitute.exchange').visual() end)
+        as.nnoremap('Xc', function() require('substitute.exchange').cancel() end)
       end,
     })
 
@@ -990,17 +946,13 @@ packer.startup({
           env = { YAML_DIR = '/opt/homebrew/Cellar/libyaml/0.2.5/' },
         },
       },
-      config = function()
-        require('pubspec-assist').setup()
-      end,
+      config = function() require('pubspec-assist').setup() end,
     })
 
     use_local({
       'akinsho/org-bullets.nvim',
       local_path = 'personal',
-      config = function()
-        require('org-bullets').setup()
-      end,
+      config = function() require('org-bullets').setup() end,
     })
 
     use_local({
@@ -1064,9 +1016,7 @@ packer.startup({
   },
 })
 
-as.command('PackerCompiledEdit', function()
-  vim.cmd(fmt('edit %s', PACKER_COMPILED_PATH))
-end)
+as.command('PackerCompiledEdit', function() vim.cmd(fmt('edit %s', PACKER_COMPILED_PATH)) end)
 
 as.command('PackerCompiledDelete', function()
   vim.fn.delete(PACKER_COMPILED_PATH)
@@ -1093,9 +1043,7 @@ as.augroup('PackerSetupInit', {
   {
     event = 'User',
     pattern = 'PackerCompileDone',
-    command = function()
-      packer_notify('Compilation finished', 'info')
-    end,
+    command = function() packer_notify('Compilation finished', 'info') end,
   },
 })
 

@@ -37,28 +37,20 @@ return function()
     },
   })
 
-  as.command('LuaSnipEdit', function()
-    require('luasnip.loaders.from_lua').edit_snippet_files()
-  end)
+  as.command('LuaSnipEdit', function() require('luasnip.loaders.from_lua').edit_snippet_files() end)
 
   -- <c-l> is selecting within a list of options.
   vim.keymap.set({ 's', 'i' }, '<c-l>', function()
-    if ls.choice_active() then
-      ls.change_choice(1)
-    end
+    if ls.choice_active() then ls.change_choice(1) end
   end)
 
   vim.keymap.set({ 's', 'i' }, '<c-j>', function()
-    if ls.expand_or_jumpable() then
-      ls.expand_or_jump()
-    end
+    if ls.expand_or_jumpable() then ls.expand_or_jump() end
   end)
 
   -- <C-K> is easier to hit but swallows the digraph key
   vim.keymap.set({ 's', 'i' }, '<c-b>', function()
-    if ls.jumpable(-1) then
-      ls.jump(-1)
-    end
+    if ls.jumpable(-1) then ls.jump(-1) end
   end)
 
   require('luasnip.loaders.from_lua').lazy_load()
