@@ -68,7 +68,7 @@ return function()
   }
 
   dashboard.section.footer.val = fortune()
-  dashboard.section.footer.opts.hl = 'TSEmphasis'
+  dashboard.section.footer.opts.hl = 'Type'
 
   alpha.setup({
     layout = {
