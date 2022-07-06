@@ -2,10 +2,6 @@ local ok_wk, which_key = as.safe_require('which-key')
 local ok_cmp, cmp = as.safe_require('cmp')
 vim.opt_local.spell = true
 
-if vim.fn.exists(':UfoDetach') > 0 then
-  vim.cmd('UfoDetach')
-end
-
 if ok_cmp then
   cmp.setup.filetype('org', {
     sources = cmp.config.sources({

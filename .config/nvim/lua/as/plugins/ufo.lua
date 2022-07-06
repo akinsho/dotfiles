@@ -53,6 +53,15 @@ return function()
     },
   })
 
+  as.augroup('UfoSettings', {
+    {
+      event = 'FileType',
+      pattern = { 'org' },
+      command = function()
+        ufo.detach()
+      end,
+    },
+  })
 
   ufo.setup({
     open_fold_hl_timeout = 0,
