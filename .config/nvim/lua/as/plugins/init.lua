@@ -418,26 +418,6 @@ packer.startup({
     })
 
     use({
-      'mrjones2014/smart-splits.nvim',
-      config = function()
-        local splits = require('smart-splits')
-        splits.setup({
-          resize_mode = {
-            hooks = {
-              on_enter = function()
-                vim.cmd('BeaconOff')
-              end,
-              on_leave = function()
-                vim.cmd('BeaconOn')
-              end,
-            },
-          },
-        })
-        as.nnoremap('<leader>w', splits.start_resize_mode, 'start resize mode')
-      end,
-    })
-
-    use({
       'klen/nvim-config-local',
       config = function()
         require('config-local').setup({
