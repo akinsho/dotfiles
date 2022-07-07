@@ -32,7 +32,7 @@ end
 ---@return KittyState
 function M.kitty.get_state()
   local txt = vim.fn.system('kitty @ ls')
-  if txt == nil then return end
+  if not txt then return {} end
   local ok, json = pcall(vim.json.decode, txt)
   if not ok then
     vim.notify_once('Failed to unmarshall kitty state from JSON', 'error', {
@@ -65,7 +65,7 @@ local function is_current_window_vim()
 end
 
 function M.kitty.get_colors()
-  local txt = fn.system('kitty @ get-colors')
+  local txt = fn.system(fmt('kitty @ --to %s get-colors', vim.env.KITTY_LISTEN_ON))
   if not txt then return end
   local colors = as.fold(function(acc, line)
     local key, value = unpack(vim.split(line, '%s+'))
