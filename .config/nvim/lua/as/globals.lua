@@ -132,6 +132,7 @@ function as.empty(item)
   elseif item_type == 'table' then
     return vim.tbl_isempty(item)
   end
+  return item ~= nil
 end
 
 ---Require a module using [pcall] and report any errors
@@ -149,7 +150,7 @@ end
 
 ---Reload lua modules
 ---@param path string
----@param recursive string
+---@param recursive boolean
 function as.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
