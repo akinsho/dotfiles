@@ -199,26 +199,6 @@ if vim.env.TMUX ~= nil then
       end,
     },
   })
-elseif vim.env.KITTY_PID then
-  as.augroup('KittyColors', {
-    {
-      event = 'BufEnter',
-      once = true,
-      command = function() require('as.external').kitty.set_colors('dark') end,
-    },
-    {
-      event = { 'FocusGained' },
-      command = function() require('as.external').kitty.set_colors('dark') end,
-    },
-    {
-      event = 'FocusLost',
-      command = function() require('as.external').kitty.delayed_clear_colors() end,
-    },
-    {
-      event = 'VimLeavePre',
-      command = function() require('as.external').kitty.clear_colors() end,
-    },
-  })
 end
 
 as.augroup('TextYankHighlight', {

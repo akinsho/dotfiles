@@ -95,8 +95,6 @@ return function()
         vim.opt_local.colorcolumn = ''
         vim.opt.laststatus = 0
         vim.opt.showtabline = 0
-        local external = require('as.external')
-        external.kitty.set_colors('light')
         as.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
@@ -104,7 +102,6 @@ return function()
           callback = function()
             vim.opt.laststatus = 3
             vim.opt.showtabline = 2
-            external.kitty.set_colors('dark')
           end,
         })
       end,
