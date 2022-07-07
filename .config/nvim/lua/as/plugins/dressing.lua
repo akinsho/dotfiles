@@ -19,16 +19,16 @@ return function()
     select = {
       get_config = function(opts)
         -- center the picker for treesitter prompts
-        if opts.kind == 'treesitter' then
+        if opts.kind == 'codeaction' then
           return {
             backend = 'telescope',
-            telescope = require('telescope.themes').get_dropdown({
+            telescope = require('telescope.themes').get_cursor({
               layout_config = { height = get_height },
             }),
           }
         end
       end,
-      telescope = require('telescope.themes').get_cursor({
+      telescope = require('telescope.themes').get_dropdown({
         layout_config = { height = get_height },
       }),
     },
