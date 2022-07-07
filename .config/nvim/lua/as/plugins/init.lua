@@ -505,7 +505,7 @@ packer.startup({
         require('cinnamon').setup({
           extra_keymaps = true,
           scroll_limit = 50,
-          default_delay = 5,
+          hide_cursor = true,
         })
       end,
     })
