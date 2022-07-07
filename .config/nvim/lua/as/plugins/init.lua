@@ -93,7 +93,7 @@ packer.startup({
     })
 
     use({
-      dev('contributing/auto-session'),
+      'rmagatti/auto-session',
       config = function()
         local fn = vim.fn
         local fmt = string.format
@@ -111,17 +111,6 @@ packer.startup({
           auto_session_use_git_branch = false, -- This cause inconsistent results
         })
       end,
-      requires = {
-        {
-          'rmagatti/session-lens',
-          config = function()
-            require('session-lens').setup({
-              path_display = { 'smart', 'tail' },
-              previewer = false,
-            })
-          end,
-        },
-      },
     })
 
     use({
