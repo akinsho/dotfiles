@@ -415,7 +415,7 @@ end
 -----------------------------------------------------------------------------//
 local function open_link()
   local file = fn.expand('<cfile>')
-  if fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
+  if not file or fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
 
   if file:match('https://') then return open(file) end
 
@@ -432,7 +432,7 @@ nnoremap('gf', '<Cmd>e <cfile><CR>')
 ---------------------------------------------------------------------------------
 --- Utility function to toggle the location or the quickfix list
 ---@param list_type '"quickfix"' | '"location"'
----@return nil
+---@return string?
 function as.toggle_list(list_type)
   local is_location_target = list_type == 'location'
   local prefix = is_location_target and 'l' or 'c'
