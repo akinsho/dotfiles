@@ -153,19 +153,20 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       {
-        'williamboman/nvim-lsp-installer',
+        'williamboman/mason.nvim',
         event = 'BufRead',
+        branch = 'alpha',
         config = function()
-          require('nvim-lsp-installer').setup({
+          require('mason').setup({ ui = { border = as.style.current.border } })
+          require('mason-lspconfig').setup({
             automatic_installation = true,
-            ui = { border = as.style.current.border },
           })
         end,
       },
       -- lspconfig is abominably slow to load and if loaded on BufReadPre seems to interact with nvim-treesitter
       {
         'neovim/nvim-lspconfig',
-        after = 'nvim-lsp-installer',
+        after = 'mason.nvim',
         config = conf('lspconfig'),
       },
     })
