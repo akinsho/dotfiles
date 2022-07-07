@@ -63,11 +63,11 @@ return function()
 
   dashboard.section.buttons.val = {
     button('Directory', 'r', ' Restore last session', '<Cmd>RestoreSession<CR>'),
-    button('Todo', 'p', ' Pick a session', '<Cmd>SearchSession<CR>'),
+    button('Todo', 'p', ' Pick a session', '<Cmd>Autosession search<CR>'),
     button('Label', 'd', ' Open dotfiles', f('<Cmd>RestoreSessionFromFile %s<CR>', DOTFILES)),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
     button('String', 'e', '  New file', ':ene | startinsert <CR>'),
-    button('ErrorMsg', 'Q', '  Quit NVIM', ':qa<CR>'),
+    button('ErrorMsg', 'q', '  Quit NVIM', ':qa<CR>'),
   }
 
   dashboard.section.footer.val = fortune()
