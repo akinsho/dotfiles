@@ -6,19 +6,20 @@ vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4
 vim.opt_local.smarttab = true
 
-if not as then return end
-local ok, whichkey = as.safe_require('which-key')
-if not ok then return end
-
-whichkey.register({
-  ['<leader>g'] = {
-    name = '+Go',
-    b = { '<Cmd>GoBuild<CR>', 'build' },
-    f = {
-      name = '+fix/fill',
-      s = { '<Cmd>GoFillStruct<CR>', 'fill struct' },
-      p = { '<Cmd>GoFixPlurals<CR>', 'fix plurals' },
-    },
-    ie = { '<Cmd>GoIfErr<CR>', 'if err' },
-  },
-})
+as.ftplugin_conf(
+  'which-key',
+  function(whichkey)
+    whichkey.register({
+      ['<leader>g'] = {
+        name = '+Go',
+        b = { '<Cmd>GoBuild<CR>', 'build' },
+        f = {
+          name = '+fix/fill',
+          s = { '<Cmd>GoFillStruct<CR>', 'fill struct' },
+          p = { '<Cmd>GoFixPlurals<CR>', 'fix plurals' },
+        },
+        ie = { '<Cmd>GoIfErr<CR>', 'if err' },
+      },
+    })
+  end
+)
