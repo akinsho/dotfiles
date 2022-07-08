@@ -493,9 +493,6 @@ done
 
 # reference - https://unix.stackexchange.com/questions/252166/how-to-configure-zshrc-for-specfic-os
 case `uname` in
-  Darwin)
-    source "$DOTFILES/macos/init.sh"
-    ;;
   Linux)
     source "$DOTFILES/linux/init.sh"
     ;;
