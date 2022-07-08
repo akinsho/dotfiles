@@ -114,7 +114,7 @@ function as.is_vim_list_open()
 end
 
 ---@param str string
----@param max_len number
+---@param max_len integer
 ---@return string
 function as.truncate(str, max_len)
   assert(str and max_len, 'string and max_len must be provided')
