@@ -610,6 +610,7 @@ packer.startup({
 
     use({
       'lukas-reineke/headlines.nvim',
+      ft = { 'org', 'norg', 'markdown', 'yaml' },
       setup = conf('headlines').setup,
       config = conf('headlines').config,
     })
