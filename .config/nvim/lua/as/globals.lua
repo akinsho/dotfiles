@@ -124,7 +124,7 @@ end
 
 ---Determine if a value of any type is empty
 ---@param item any
----@return boolean
+---@return boolean?
 function as.empty(item)
   if not item then return true end
   local item_type = type(item)
@@ -146,9 +146,7 @@ function as.safe_require(module, opts)
   opts = opts or { silent = false }
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
-    if opts.message then
-      result = opts.message .. "\n" .. result
-    end
+    if opts.message then result = opts.message .. '\n' .. result end
     vim.notify(result, vim.log.levels.ERROR, { title = fmt('Error requiring: %s', module) })
   end
   return ok, result
@@ -163,12 +161,12 @@ end
 ---@param name string | PluginTable
 ---@param callback fun(module: table)
 function as.ftplugin_conf(name, callback)
-  local plugin_name = type(name) == "table" and name.plugin or nil
+  local plugin_name = type(name) == 'table' and name.plugin or nil
   if plugin_name and not as.plugin_loaded(plugin_name) then return end
 
-  local module = type(name) == "table" and name[1] or name
-  local info = debug.getinfo(1,'S')
-  local ok, plugin = as.safe_require(module, {message = fmt("In file: %s", info.source)})
+  local module = type(name) == 'table' and name[1] or name
+  local info = debug.getinfo(1, 'S')
+  local ok, plugin = as.safe_require(module, { message = fmt('In file: %s', info.source) })
 
   if ok then callback(plugin) end
 end
