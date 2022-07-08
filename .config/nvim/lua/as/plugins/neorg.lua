@@ -30,6 +30,7 @@ return function()
             notes = fn.expand('$SYNC_DIR/neorg/notes/'),
             tasks = fn.expand('$SYNC_DIR/neorg/tasks/'),
             work = fn.expand('$SYNC_DIR/neorg/work/'),
+            dotfiles = fn.expand('$DOTFILES/neorg/'),
           },
         },
       },
