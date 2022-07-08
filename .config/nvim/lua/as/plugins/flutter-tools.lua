@@ -10,7 +10,7 @@ return function()
       statusline = { device = true, app_version = true },
     },
     widget_guides = { enabled = true, debug = true },
-    dev_log = { enabled = false, open_cmd = 'tabedit' },
+    dev_log = { enabled = true, open_cmd = 'tabedit' },
     lsp = {
       color = {
         enabled = true,
