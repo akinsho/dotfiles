@@ -35,6 +35,11 @@ return function()
     org_agenda_templates = {
       t = { description = 'Task', template = '* TODO %?\n %u' },
       l = { description = 'Link', template = '* %?\n%a' },
+      n = {
+        description = 'Note',
+        template = '* %?\n',
+        target = sync('org/notes.org'),
+      },
       p = {
         description = 'Project Todo',
         template = '* TODO %? \nSCHEDULED: %t',
