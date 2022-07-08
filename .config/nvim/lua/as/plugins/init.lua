@@ -668,6 +668,7 @@ packer.startup({
 
     use({
       'kylechui/nvim-surround',
+      branch = 'add-buffer-local-mappings',
       config = function()
         require('nvim-surround').setup({
           keymaps = {

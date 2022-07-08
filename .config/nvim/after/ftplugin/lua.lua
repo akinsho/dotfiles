@@ -48,9 +48,22 @@ local function keyword(word, callback)
   end
 end
 
--- This allows tpope's vim.surround to surround a text object with a function or conditional
-vim.b[fmt('surround_%s', fn.char2nr('F'))] = 'function \1function: \1() \r end'
-vim.b[fmt('surround_%s', fn.char2nr('i'))] = 'if \1if: \1 then \r end'
+as.ftplugin_conf('nvim-surround', function(surround)
+  local utils = require('nvim-surround.utils')
+  surround.buffer_setup({
+    delimiters = {
+      pairs = {
+        F = function()
+          return {
+            fmt('local function %s() ', utils.get_input('Enter a function name: ')),
+            ' end',
+          }
+        end,
+        i = function() return { fmt('if %s', utils.get_input('Enter a condition: '), ' then end') } end,
+      },
+    },
+  })
+end)
 
 nnoremap('gK', keyword, { buffer = 0 })
 nnoremap('<leader>so', function()
