@@ -1,19 +1,21 @@
 local ok_wk, which_key = as.safe_require('which-key')
-local ok_cmp, cmp = as.safe_require('cmp')
 vim.opt_local.spell = true
 
-if ok_cmp then
-  cmp.setup.filetype('org', {
-    sources = cmp.config.sources({
-      { name = 'orgmode' },
-      { name = 'dictionary' },
-      { name = 'spell' },
-      { name = 'emoji' },
-    }, {
-      { name = 'buffer' },
-    }),
-  })
-end
+as.ftplugin_conf(
+  'cmp',
+  function(cmp)
+    cmp.setup.filetype('org', {
+      sources = cmp.config.sources({
+        { name = 'orgmode' },
+        { name = 'dictionary' },
+        { name = 'spell' },
+        { name = 'emoji' },
+      }, {
+        { name = 'buffer' },
+      }),
+    })
+  end
+)
 
 if ok_wk then
   which_key.register({
