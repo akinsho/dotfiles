@@ -992,7 +992,6 @@ packer.startup({
   end,
   log = { level = 'info' },
   config = {
-    max_jobs = 30,
     compile_path = PACKER_COMPILED_PATH,
     display = {
       prompt_border = as.style.current.border,
