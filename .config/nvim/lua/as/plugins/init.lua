@@ -364,6 +364,17 @@ packer.startup({
     use('nanotee/luv-vimdocs')
     use('milisims/nvim-luaref')
 
+    use({
+      'kylechui/nvim-surround',
+      config = function()
+        require('nvim-surround').setup({
+          keymaps = {
+            visual = 's',
+          },
+        })
+      end,
+    })
+
     -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
     -- causes formatting bugs on save when update events are TextChanged{I}
     use({
@@ -659,28 +670,6 @@ packer.startup({
     -- sets searchable path for filetypes like go so 'gf' works
     use('tpope/vim-apathy')
     use({ 'tpope/vim-projectionist', config = conf('vim-projectionist') })
-
-    -- TODO: Remove one or the other of these plugins when the winner emerges!
-    use({
-      'tpope/vim-surround',
-      opt = true,
-      config = function()
-        as.xmap('s', '<Plug>VSurround')
-        as.xmap('s', '<Plug>VSurround')
-      end,
-    })
-
-    use({
-      'kylechui/nvim-surround',
-      branch = 'add-buffer-local-mappings',
-      config = function()
-        require('nvim-surround').setup({
-          keymaps = {
-            visual = 's',
-          },
-        })
-      end,
-    })
     -- }}}
     -----------------------------------------------------------------------------//
     -- Filetype Plugins {{{1
