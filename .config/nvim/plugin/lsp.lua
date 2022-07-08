@@ -250,16 +250,16 @@ local function max_diagnostic(callback)
 end
 
 local signs_handler = diagnostic.handlers.signs
-diagnostic.handlers.signs = {
+diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
   show = max_diagnostic(signs_handler.show),
   hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
-}
+})
 
 local virt_text_handler = diagnostic.handlers.virtual_text
-diagnostic.handlers.virtual_text = {
+diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
   show = max_diagnostic(virt_text_handler.show),
   hide = function(_, bufnr) virt_text_handler.hide(ns, bufnr) end,
-}
+})
 
 -----------------------------------------------------------------------------//
 -- Diagnostic Configuration
