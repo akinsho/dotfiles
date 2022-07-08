@@ -1,0 +1,47 @@
+@document.meta
+title: macos
+description: All things Mac specific
+authors: akin
+categories: OS
+created: 2022-07-08
+version: 0.0.11
+@end
+
+* TODO:
+- [ ] Symlink `limit.maxfiles.plist` to /Library/LaunchDaemons/
+
+* OS Development Tweaks
+** Fixing the "too many open files" issue in macOS
+   ~ Create a file called {@ /Library/LaunchDaemons/limit.maxfiles.plist}[limit.maxfiles.plist] in `/Library/LaunchDaemons/`
+   ~ Add the following content
+   #tangle ./macos/limit.maxfiles.plist
+   @code xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+         "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+   <plist version="1.0">
+   <dict>
+      <key>Label</key>
+      <string>limit.maxfiles</string>
+      <key>ProgramArguments</key>
+      <array>
+         <string>launchctl</string>
+         <string>limit</string>
+         <string>maxfiles</string>
+         <string>64000</string>
+         <string>524288</string>
+      </array>
+      <key>RunAtLoad</key>
+      <true/>
+      <key>ServiceIPC</key>
+      <false/>
+   </dict>
+   </plist>
+   @end
+   ~ `sudo chown root:wheel /Library/LaunchDaemons/limit.maxfiles.plist`
+   ~ `sudo launchctl load -w /Library/LaunchDaemons/limit.maxfiles.plist`
+
+**** Resources:
+     - https://discussions.apple.com/thread/253001317
+     - https://superuser.com/questions/1634286/how-do-i-increase-the-max-open-files-in-macos-big-sur
+     - https://unix.stackexchange.com/questions/108174/how-to-persistently-control-maximum-system-resource-consumption-on-mac/221988#221988
