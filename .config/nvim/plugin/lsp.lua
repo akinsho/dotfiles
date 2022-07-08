@@ -67,7 +67,9 @@ local function setup_autocommands(client, bufnr)
     table.insert(cmds, {
       event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
       buffer = bufnr,
-      command = function() vim.lsp.codelens.refresh() end,
+      command = function(args)
+        if api.nvim_buf_is_valid(args.buf) then vim.lsp.codelens.refresh() end
+      end,
     })
   end
   if client.server_capabilities.documentHighlightProvider then
