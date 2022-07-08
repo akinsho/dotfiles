@@ -60,7 +60,7 @@ end
 
 ---A mechanism to allow inheritance of the winhighlight of a specific
 ---group in a window
----@param win_id number
+---@param win_id integer
 ---@param target string
 ---@param name string
 ---@param fallback string
@@ -209,6 +209,7 @@ local function general_overrides()
     SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
     SpellRare = { undercurl = true },
     PmenuSbar = { background = P.grey },
+    PmenuThumb = { background = { from = 'Comment', attr = 'fg' } },
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
