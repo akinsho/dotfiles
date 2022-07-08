@@ -122,8 +122,8 @@ nnoremap('<localleader>,', modify_line_end_delimiter(','))
 nnoremap('<localleader>;', modify_line_end_delimiter(';'))
 -----------------------------------------------------------------------------//
 
-nmap('<ScrollWheelDown>', '<c-d>')
-nmap('<ScrollWheelUp>', '<c-u>')
+if as.empty(fn.mapcheck('<ScrollWheelDown>')) then nmap('<ScrollWheelDown>', '<c-d>') end
+if as.empty(fn.mapcheck('<ScrollWheelUp>')) then nmap('<ScrollWheelUp>', '<c-u>') end
 ------------------------------------------------------------------------------
 -- Buffers
 ------------------------------------------------------------------------------

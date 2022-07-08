@@ -496,7 +496,10 @@ packer.startup({
           extra_keymaps = true,
           scroll_limit = 50,
           hide_cursor = true,
+          always_scroll = true,
         })
+        vim.keymap.set({ 'n', 'x' }, '<ScrollWheelUp>', "<Cmd>lua Scroll('3k', 0, 0, 15)<CR>")
+        vim.keymap.set({ 'n', 'x' }, '<ScrollWheelDown>', "<Cmd>lua Scroll('3j', 0, 0, 15)<CR>")
       end,
     })
 
