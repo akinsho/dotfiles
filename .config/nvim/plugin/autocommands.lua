@@ -138,20 +138,6 @@ as.augroup('CheckOutsideTime', {
   },
 })
 
--- See :h skeleton
-as.augroup('Templates', {
-  {
-    event = { 'BufNewFile' },
-    pattern = { '*.sh' },
-    command = '0r $DOTFILES/.config/nvim/templates/skeleton.sh',
-  },
-  {
-    event = { 'BufNewFile' },
-    pattern = { '*.lua' },
-    command = '0r $DOTFILES/.config/nvim/templates/skeleton.lua',
-  },
-})
-
 --- automatically clear commandline messages after a few seconds delay
 --- source: http://unix.stackexchange.com/a/613645
 ---@return function
