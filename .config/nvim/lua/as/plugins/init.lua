@@ -771,6 +771,7 @@ packer.startup({
 
     use({
       'm-demare/hlargs.nvim',
+      branch = 'expected_lua_number',
       config = function()
         require('as.highlights').plugin('hlargs', {
           Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
