@@ -153,14 +153,14 @@ function M.config()
         },
       }),
       oldfiles = as.telescope.dropdown(),
-      live_grep = {
+      live_grep = as.telescope.ivy({
         file_ignore_patterns = { '.git/', '%.svg', '%.lock' },
         max_results = 2000,
         on_input_filter_cb = function(prompt)
           -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
           return { prompt = prompt:gsub('%s', '.*') }
         end,
-      },
+      }),
       current_buffer_fuzzy_find = as.telescope.dropdown({
         previewer = false,
         shorten_path = false,
