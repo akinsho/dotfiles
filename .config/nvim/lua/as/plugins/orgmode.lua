@@ -15,6 +15,7 @@ return function()
   orgmode.setup_ts_grammar()
 
   orgmode.setup({
+    win_split_mode = 'vertical',
     org_agenda_files = { sync('org/**/*') },
     org_default_notes_file = sync('org/refile.org'),
     org_todo_keywords = {
