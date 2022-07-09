@@ -139,7 +139,6 @@ function M.config()
         override_generic_sorter = true,
         override_file_sorter = true,
       },
-      howdoi = as.telescope.ivy(),
     },
     pickers = {
       buffers = as.telescope.dropdown({
@@ -302,8 +301,6 @@ function M.config()
     })
   end
 
-  local function howdoi() telescope.extensions.howdoi.howdoi() end
-
   which_key.register({
     ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
@@ -317,7 +314,6 @@ function M.config()
         a = { builtins.autocommands, 'autocommands' },
         o = { builtins.vim_options, 'options' },
       },
-      H = { howdoi, 'howdoi' },
       l = {
         name = '+lsp',
         e = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },

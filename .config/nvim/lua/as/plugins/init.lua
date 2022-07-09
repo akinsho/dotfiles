@@ -77,7 +77,6 @@ packer.startup({
           after = 'telescope.nvim',
           config = function() require('telescope').load_extension('smart_history') end,
         },
-        { 'Zane-/howdoi.nvim' },
         { 'ilAYAli/scMRU.nvim', module = 'mru' },
       },
     })
