@@ -103,8 +103,9 @@ packer.startup({
           -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
           auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
           auto_session_suppress_dirs = {
-            fn.expand('~'),
-            fn.expand('~/Desktop/'),
+            vim.env.HOME,
+            vim.env.HOME .. '/Desktop',
+            vim.env.PROJECTS_DIR,
             unpack(as.list_installed_plugins()),
           },
           auto_session_use_git_branch = false, -- This cause inconsistent results
