@@ -202,7 +202,7 @@ function M.config()
   local builtins = require('telescope.builtin')
 
   local function nvim_config()
-    require('telescope.builtin').find_files({
+    builtins.find_files({
       prompt_title = '~ nvim config ~',
       cwd = vim.fn.stdpath('config'),
       file_ignore_patterns = {
@@ -238,45 +238,42 @@ function M.config()
     return opts
   end
 
-  local function delta_git_commits(opts) require('telescope.builtin').git_commits(delta_opts(opts)) end
+  local function delta_git_commits(opts) builtins.git_commits(delta_opts(opts)) end
 
-  local function delta_git_bcommits(opts)
-    require('telescope.builtin').git_bcommits(delta_opts(opts, true))
-  end
+  local function delta_git_bcommits(opts) builtins.git_bcommits(delta_opts(opts, true)) end
 
   local function dotfiles()
-    require('telescope.builtin').find_files({
+    builtins.find_files({
       prompt_title = 'dotfiles',
       cwd = vim.g.dotfiles,
     })
   end
 
   local function orgfiles()
-    require('telescope.builtin').find_files({
+    builtins.find_files({
       prompt_title = 'Org',
       cwd = vim.fn.expand('$SYNC_DIR/org/'),
     })
   end
 
   local function norgfiles()
-    require('telescope.builtin').find_files({
+    builtins.find_files({
       prompt_title = 'Norg',
       cwd = vim.fn.expand('$SYNC_DIR/neorg/'),
     })
   end
 
   local function project_files(opts)
-    local builtin = require('telescope.builtin')
-    if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
+    if not pcall(builtins.git_files, opts) then builtins.find_files(opts) end
   end
 
-  local function pickers() require('telescope.builtin').builtin({ include_extensions = true }) end
+  local function pickers() builtins.builtin({ include_extensions = true }) end
 
-  local function find_files() require('telescope.builtin').find_files() end
+  local function find_files() builtins.find_files() end
 
-  local function buffers() require('telescope.builtin').buffers() end
+  local function buffers() builtins.buffers() end
 
-  local function live_grep() require('telescope.builtin').live_grep() end
+  local function live_grep() builtins.live_grep() end
 
   local function MRU()
     require('mru').display_cache(as.telescope.dropdown({
@@ -295,7 +292,7 @@ function M.config()
   local function gh_notifications() telescope.extensions.ghn.ghn(as.telescope.dropdown()) end
 
   local function installed_plugins()
-    require('telescope.builtin').find_files({
+    builtins.find_files({
       prompt_title = 'Installed plugins',
       cwd = vim.fn.stdpath('data') .. '/site/pack/packer',
     })
