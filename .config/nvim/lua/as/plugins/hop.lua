@@ -6,7 +6,8 @@ return function()
   hop.setup({ keys = 'etovxqpdygfbzcisuran' })
   as.nnoremap('s', function()
     -- TODO: Multi window mode is currently not working in nvim 0.8
-    hop.hint_char1({ multi_windows = true })
+    -- awaiting https://github.com/phaazon/hop.nvim/issues/278
+    hop.hint_char1({ multi_windows = false })
   end)
 
   -- NOTE: override F/f using hop motions
