@@ -78,6 +78,10 @@ function M.adopt_winhighlight(win_id, target, name, fallback)
   return win_hl_name
 end
 
+---@class HLAttrs
+---@field from string
+---@field attr 'foreground' | 'fg' | 'background' | 'bg'
+
 ---This helper takes a table of highlights and converts any highlights
 ---specified as `highlight_prop = { from = 'group'}` into the underlying colour
 ---by querying the highlight property of the from group so it can be used when specifying highlights
@@ -87,7 +91,7 @@ end
 ---  M.set_hl({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 ---```
 ---This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
----@param opts table<string, string|boolean|table<string,string>>
+---@param opts table<string, string|boolean|HLAttrs>
 local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
     if type(value) == 'table' and value.from then
