@@ -1,5 +1,6 @@
 return function()
   local fn = vim.fn
+  local fmt = string.format
   local lsp = as.style.icons.lsp
 
   local function diagnostics_indicator(_, _, diagnostics)
@@ -79,6 +80,13 @@ return function()
         items = {
           groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
+          {
+            name = 'Plugins',
+            highlight = { guifg = '#ECBE7B' },
+            matcher = function(buf)
+              return vim.startswith(buf.path, fmt('%s/site/pack/packer', fn.stdpath('data')))
+            end,
+          },
           {
             name = 'Terraform',
             matcher = function(buf) return buf.name:match('%.tf') ~= nil end,
