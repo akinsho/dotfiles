@@ -136,9 +136,6 @@ local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client)
   setup_plugins(client, bufnr)
-  if client.server_capabilities.definitionProvider then
-    vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
-  end
 
   if client.server_capabilities.documentFormattingProvider then
     vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
