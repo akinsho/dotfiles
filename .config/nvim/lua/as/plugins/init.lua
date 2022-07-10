@@ -724,7 +724,6 @@ packer.startup({
       },
     })
 
-    use('dart-lang/dart-vim-plugin')
     use('mtdl9/vim-log-highlighting')
     use('fladson/vim-kitty')
     -- }}}
