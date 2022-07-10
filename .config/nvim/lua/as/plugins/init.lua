@@ -9,7 +9,7 @@ local packer_notify = utils.packer_notify
 local fn = vim.fn
 local fmt = string.format
 
-local PACKER_COMPILED_PATH = fn.stdpath('cache') .. '/packer/packer_compiled.lua'
+local PACKER_COMPILED_PATH = fmt('%s/packer/packer_compiled.lua', fn.stdpath('cache'))
 
 ---Some plugins are not safe to be reloaded because their setup functions
 ---are not idempotent. This wraps the setup calls of such plugins
@@ -104,9 +104,10 @@ packer.startup({
           auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
           auto_session_suppress_dirs = {
             vim.env.HOME,
-            vim.env.HOME .. '/Desktop',
             vim.env.PROJECTS_DIR,
-            unpack(as.list_installed_plugins()),
+            fmt('%s/Desktop', vim.env.HOME),
+            fmt('%s/site/pack/packer/opt/*', data),
+            fmt('%s/site/pack/packer/start/*', data),
           },
           auto_session_use_git_branch = false, -- This cause inconsistent results
         })
