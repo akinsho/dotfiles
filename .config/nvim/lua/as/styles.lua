@@ -5,6 +5,7 @@
 
 local palette = {
   green = '#98c379',
+  dark_green = '#10B981',
   blue = '#82AAFE',
   dark_blue = '#4e88ff',
   bright_blue = '#51afef',
