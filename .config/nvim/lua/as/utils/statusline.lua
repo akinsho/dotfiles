@@ -320,7 +320,7 @@ function M.debugger() return not package.loaded['dap'] and '' or require('dap').
 
 function M.hydra()
   local ok, hydra = pcall(require, 'hydra.statusline')
-  if not ok then return nil end
+  if not ok then return false, {} end
   local colors = {
     red = 'HydraRedSt',
     blue = 'HydraBlueSt',
@@ -357,7 +357,6 @@ end
 ---@type number
 local search_count_timer
 --- Timer to update the search count as the file is travelled
----@return function
 function M.update_search_count(timer)
   search_count_timer = timer
   timer:start(0, 200, function()
@@ -548,7 +547,7 @@ end
 --- @field id number
 --- @field max_size number
 
---- @param item string
+--- @param item string | number
 --- @param hl string
 --- @param opts ComponentOpts
 function M.component(item, hl, opts)
@@ -596,8 +595,8 @@ function M.component(item, hl, opts)
   }
 end
 
---- @param item string
---- @param condition boolean
+--- @param item string | number
+--- @param condition table | string | number | boolean
 --- @param hl string
 --- @param opts ComponentOpts
 function M.component_if(item, condition, hl, opts)

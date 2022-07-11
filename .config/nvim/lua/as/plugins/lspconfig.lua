@@ -15,7 +15,7 @@ function as.lsp.on_init(client)
   local config_path = path .. '/.vim/settings.json'
   if fn.filereadable(config_path) == 0 then return true end
   local ok, json = pcall(fn.readfile, config_path)
-  if not ok then return end
+  if not ok then return true end
   local overrides = vim.json.decode(table.concat(json, '\n'))
   for name, config in pairs(overrides) do
     if name == client.name then
