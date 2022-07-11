@@ -1,20 +1,21 @@
 return function()
   local fn = vim.fn
   local fmt = string.format
-  local lsp = as.style.icons.lsp
-
-  local function diagnostics_indicator(_, _, diagnostics)
-    local symbols = { error = lsp.error, warning = lsp.warn, hint = lsp.hint, info = lsp.info }
-    local result = as.fold(function(accum, count, name)
-      if symbols[name] and count > 0 then table.insert(accum, symbols[name] .. ' ' .. count) end
-      return accum
-    end, diagnostics, {})
-    return table.concat(result, ' ')
-  end
 
   local groups = require('bufferline.groups')
 
   require('bufferline').setup({
+    highlights = function(defaults)
+      local h = defaults.highlights
+      return {
+        info = { guifg = h.info_selected.guifg, italic = true },
+        info_visible = { guifg = h.info_selected.guifg, italic = true },
+        warning = { guifg = h.warning_selected.guifg, italic = true },
+        warning_visible = { guifg = h.warning_selected.guifg, italic = true },
+        error = { guifg = h.error_selected.guifg, italic = true },
+        error_visible = { guifg = h.error_selected.guifg, italic = true },
+      }
+    end,
     options = {
       debug = {
         logging = true,
@@ -26,7 +27,7 @@ return function()
       show_close_icon = false,
       show_buffer_close_icons = true,
       diagnostics = 'nvim_lsp',
-      diagnostics_indicator = diagnostics_indicator,
+      diagnostics_indicator = false,
       diagnostics_update_in_insert = false,
       offsets = {
         {
