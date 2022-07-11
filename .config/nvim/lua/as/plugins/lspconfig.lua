@@ -44,6 +44,7 @@ return function()
     terraformls = true,
     rust_analyzer = true,
     marksman = true,
+    pyright = true,
     gopls = {
       -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
       settings = {
