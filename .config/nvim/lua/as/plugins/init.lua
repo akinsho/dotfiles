@@ -534,8 +534,9 @@ packer.startup({
           hide_cursor = true,
           always_scroll = true,
         })
-        vim.keymap.set({ 'n', 'x' }, '<ScrollWheelUp>', "<Cmd>lua Scroll('<c-e>', 0, 0, 3)<CR>")
-        vim.keymap.set({ 'n', 'x' }, '<ScrollWheelDown>', "<Cmd>lua Scroll('<c-y>', 0, 0, 3)<CR>")
+        local map = vim.keymap.set
+        map({ 'n', 'x' }, '<ScrollWheelUp>', "<Cmd>lua Scroll('<ScrollWheelUp>')<CR>")
+        map({ 'n', 'x' }, '<ScrollWheelDown>', "<Cmd>lua Scroll('<ScrollWheelDown>')<CR>")
       end,
     })
 
