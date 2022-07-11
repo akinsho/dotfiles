@@ -44,8 +44,8 @@ local function breadcrumbs()
   local ok, navic = pcall(require, 'nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
   if not ok or not navic.is_available() then return empty_state end
-  local location = navic.get_location()
-  if empty(location) then return empty_state end
+  local navic_ok, location = pcall(navic.get_location)
+  if not navic_ok or empty(location) then return empty_state end
   local win = api.nvim_get_current_win()
   return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
 end
