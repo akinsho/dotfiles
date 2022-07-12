@@ -16,10 +16,7 @@ return function()
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
-        handler = function()
-          vim.opt_local.signcolumn = 'no'
-          vim.cmd('highlight! Cursor blend=100')
-        end,
+        handler = function() vim.cmd('highlight! Cursor blend=100') end,
       },
       {
         event = 'neo_tree_buffer_leave',
