@@ -323,6 +323,7 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       'lewis6991/satellite.nvim',
+      opt = true,
       config = function()
         require('satellite').setup({
           handlers = {
