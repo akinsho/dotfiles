@@ -15,15 +15,6 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 -- Autocommands
 -----------------------------------------------------------------------------//
 
--- Show the popup diagnostics window, but only once for the current cursor location
--- by checking whether the word under the cursor has changed.
-local function diagnostic_popup()
-  local cword = vim.fn.expand('<cword>')
-  if cword ~= vim.w.lsp_diagnostics_cword then
-    vim.w.lsp_diagnostics_cword = cword
-    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
-  end
-end
 
 local function formatting_filter(client)
   local exceptions = ({
@@ -77,7 +68,7 @@ local function setup_autocommands(client, bufnr)
       event = { 'CursorHold' },
       buffer = bufnr,
       desc = 'Show diagnostics',
-      command = function() diagnostic_popup() end,
+      command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
     })
     table.insert(cmds, {
       event = { 'CursorHold', 'CursorHoldI' },
@@ -104,8 +95,16 @@ end
 local function setup_mappings(_)
   local function with_desc(desc) return { buffer = 0, desc = desc } end
 
-  as.nnoremap(']c', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
-  as.nnoremap('[c', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
+  as.nnoremap(
+    ']c',
+    function() vim.diagnostic.goto_prev({ float = false }) end,
+    with_desc('lsp: go to prev diagnostic')
+  )
+  as.nnoremap(
+    '[c',
+    function() vim.diagnostic.goto_next({ float = false }) end,
+    with_desc('lsp: go to next diagnostic')
+  )
 
   as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
   as.nnoremap('<leader>ca', vim.lsp.buf.code_action, with_desc('lsp: code action'))
