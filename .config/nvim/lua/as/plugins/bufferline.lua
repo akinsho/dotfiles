@@ -82,10 +82,11 @@ return function()
           groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
           {
-            name = 'Plugins',
+            name = 'Dependencies',
             highlight = { guifg = '#ECBE7B' },
             matcher = function(buf)
               return vim.startswith(buf.path, fmt('%s/site/pack/packer', fn.stdpath('data')))
+                or vim.startswith(buf.path, fn.expand('$VIMRUNTIME'))
             end,
           },
           {
