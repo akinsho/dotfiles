@@ -178,6 +178,11 @@ packer.startup({
     })
 
     use({
+      'andrewferrier/textobj-diagnostic.nvim',
+      config = function() require('textobj-diagnostic').setup() end,
+    })
+
+    use({
       'zbirenbaum/neodim',
       config = function()
         require('neodim').setup({
