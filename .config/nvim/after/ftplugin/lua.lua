@@ -60,10 +60,12 @@ as.ftplugin_conf('nvim-surround', function(surround)
             ' end',
           }
         end,
-        i = {
-          'if ',
-          { ' then', 'end' },
-        },
+        i = function()
+          return {
+            fmt('if %s then ', utils.get_input('Enter a condition:')),
+            ' end',
+          }
+        end,
       },
     },
   })
