@@ -1,5 +1,8 @@
 return function()
-  require('as.highlights').plugin('NeoTree', {
+  local icons = as.style.icons
+  local highlights = require('as.highlights')
+
+  highlights.plugin('NeoTree', {
     NeoTreeIndentMarker = { link = 'Comment' },
     NeoTreeNormal = { link = 'PanelBackground' },
     NeoTreeNormalNC = { link = 'PanelBackground' },
@@ -7,20 +10,22 @@ return function()
     NeoTreeCursorLine = { link = 'Visual' },
     NeoTreeStatusLine = { link = 'PanelSt' },
   })
+
   vim.g.neo_tree_remove_legacy_commands = 1
-  local icons = as.style.icons
+
   as.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')
+
   require('neo-tree').setup({
     enable_git_status = true,
     git_status_async = true,
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
-        handler = function() vim.cmd('highlight! Cursor blend=100') end,
+        handler = function() highlights.set_hl('Cursor', { blend = 100 }) end,
       },
       {
         event = 'neo_tree_buffer_leave',
-        handler = function() vim.cmd('highlight! Cursor blend=0') end,
+        handler = function() highlights.set_hl('Cursor', { blend = 0 }) end,
       },
     },
     filesystem = {
