@@ -15,7 +15,6 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 -- Autocommands
 -----------------------------------------------------------------------------//
 
-
 local function formatting_filter(client)
   local exceptions = ({
     lua = { 'sumneko_lua' },
@@ -51,7 +50,9 @@ local function setup_autocommands(client, bufnr)
       event = 'BufWritePre',
       buffer = bufnr,
       desc = 'Format the current buffer on save',
-      command = function(args) format({ bufnr = args.buf, async = true }) end,
+      command = function(args)
+        if not vim.g.formatting_disabled then format({ bufnr = args.buf, async = true }) end
+      end,
     })
   end
   if client.server_capabilities.codeLensProvider then
