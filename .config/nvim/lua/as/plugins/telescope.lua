@@ -313,7 +313,7 @@ function M.config()
       },
       l = {
         name = '+lsp',
-        e = { builtins.lsp_workspace_diagnostics, 'telescope: workspace diagnostics' },
+        e = { builtins.diagnostics, 'telescope: workspace diagnostics' },
         d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
         s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
       },
