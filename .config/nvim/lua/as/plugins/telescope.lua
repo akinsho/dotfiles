@@ -318,10 +318,10 @@ function M.config()
         s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
       },
       p = { installed_plugins, 'plugins' },
-      R = { builtins.resume, 'resume last picker' },
+      r = { builtins.resume, 'resume last picker' },
       ['?'] = { builtins.help_tags, 'help' },
       f = { find_files, 'find files' },
-      r = { MRU, 'Most recently used files' },
+      u = { MRU, 'Most recently used files' },
       h = { MFU, 'Most frequently used files' },
       g = {
         name = '+git',
