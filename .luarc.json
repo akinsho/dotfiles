@@ -1,6 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "Lua.diagnostics.disable": [
-        "missing-parameter"
+        "missing-parameter",
+        "return-type-mismatch"
     ]
 }
