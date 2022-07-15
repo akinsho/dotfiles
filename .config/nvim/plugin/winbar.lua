@@ -14,12 +14,6 @@ local dir_separator = '/'
 local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
 
-vim.cmd([[
-function! HandleWinbarClick(minwid, clicks, btn, modifiers) abort
-  call v:lua.as.winbar_click(a:minwid, a:clicks, a:btn, a:modifiers)
-endfunction
-]])
-
 --- A mapping of each winbar items ID to its path
 --- @type table<string, string>
 as.winbar_state = {}
@@ -72,7 +66,7 @@ function as.ui.winbar()
     add(component(part, hl, {
       id = priority,
       priority = priority,
-      click = 'HandleWinbarClick',
+      click = 'v:lua.as.winbar_click',
       suffix = sep,
       suffix_color = suffix_hl,
     }))
