@@ -522,7 +522,7 @@ local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_na
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
---- @param size number
+--- @param size integer
 --- @param opts table<string, any>
 function M.spacer(size, opts)
   opts = opts or {}
@@ -545,7 +545,7 @@ end
 --- @field before string
 --- @field after string
 --- @field id number
---- @field max_size number
+--- @field max_size integer
 
 --- @param item string | number
 --- @param hl string
@@ -566,7 +566,7 @@ function M.component(item, hl, opts)
   local prefix_item = not empty(prefix) and prefix_hl .. prefix or ''
   local suffix_item = not empty(suffix) and suffix_hl .. suffix or ''
 
-  local click_start = opts.click and get_click_start(opts.click, opts.id) or ''
+  local click_start = opts.click and get_click_start(opts.click, tostring(opts.id)) or ''
   local click_end = opts.click and constants.CLICK_END or ''
 
   --- handle numeric inputs etc.
