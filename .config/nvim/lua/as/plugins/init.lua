@@ -64,7 +64,7 @@ packer.startup({
       branch = '0.1.x',
       module_pattern = 'telescope.*',
       config = conf('telescope').config,
-      event = 'CursorHold',
+      event = 'CursorMoved',
       requires = {
         {
           'natecraddock/telescope-zf-native.nvim',
@@ -1004,10 +1004,15 @@ packer.startup({
           border = as.style.current.border,
         })
         if f.expand('$DOTFILES') == f.getcwd() then
-          c.Clock:new():count_up({
-            duration = { hours = 1 },
-            threshold = { late = '00:10:00' },
-          })
+          vim.defer_fn(
+            function()
+              c.Clock:new():count_up({
+                duration = { hours = 1 },
+                threshold = { late = '00:10:00' },
+              })
+            end,
+            5000
+          )
         end
       end),
     })
