@@ -5,6 +5,9 @@ return function()
     direction = 'horizontal',
     insert_mappings = false,
     start_in_insert = true,
+    winbar = {
+      enabled = true,
+    },
     highlights = {
       FloatBorder = { link = 'FloatBorder' },
       NormalFloat = { link = 'NormalFloat' },
