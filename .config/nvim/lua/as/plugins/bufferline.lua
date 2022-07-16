@@ -5,17 +5,17 @@ return function()
   local groups = require('bufferline.groups')
 
   require('bufferline').setup({
-    highlights = function(defaults)
-      local h = defaults.highlights
-      return {
-        info = { guifg = h.info_selected.guifg, italic = true },
-        info_visible = { guifg = h.info_selected.guifg, italic = true },
-        warning = { guifg = h.warning_selected.guifg, italic = true },
-        warning_visible = { guifg = h.warning_selected.guifg, italic = true },
-        error = { guifg = h.error_selected.guifg, italic = true },
-        error_visible = { guifg = h.error_selected.guifg, italic = true },
-      }
-    end,
+    highlights = {
+      info = { gui = 'undercurl' },
+      info_selected = { gui = 'undercurl' },
+      info_visible = { gui = 'undercurl' },
+      warning = { gui = 'undercurl' },
+      warning_selected = { gui = 'undercurl' },
+      warning_visible = { gui = 'undercurl' },
+      error = { gui = 'undercurl' },
+      error_selected = { gui = 'undercurl' },
+      error_visible = { gui = 'undercurl' },
+    },
     options = {
       debug = {
         logging = true,
