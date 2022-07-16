@@ -20,6 +20,7 @@ function M.config()
     org = {
       headline_highlights = false,
     },
+    norg = { codeblock_highlight = false },
   })
 end
 
