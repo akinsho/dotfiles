@@ -915,6 +915,25 @@ packer.startup({
         },
       },
     })
+
+    use({
+      'linty-org/readline.nvim',
+      event = 'CmdlineEnter',
+      config = function()
+        local readline = require('readline')
+        local map = vim.keymap.set
+        map('!', '<M-f>', readline.forward_word)
+        map('!', '<M-b>', readline.backward_word)
+        map('!', '<C-a>', readline.beginning_of_line)
+        map('!', '<C-e>', readline.end_of_line)
+        map('!', '<M-d>', readline.kill_word)
+        map('!', '<M-BS>', readline.backward_kill_word)
+        map('!', '<C-w>', readline.unix_word_rubout)
+        map('!', '<C-k>', readline.kill_line)
+        map('!', '<C-u>', readline.backward_kill_line)
+      end,
+    })
+
     -- }}}
     --------------------------------------------------------------------------------
     -- Search Tools {{{1
