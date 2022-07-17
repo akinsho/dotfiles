@@ -64,7 +64,7 @@ packer.startup({
       branch = '0.1.x',
       module_pattern = 'telescope.*',
       config = conf('telescope').config,
-      event = 'CursorMoved',
+      event = 'CursorHold',
       requires = {
         {
           'natecraddock/telescope-zf-native.nvim',
