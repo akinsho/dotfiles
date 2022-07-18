@@ -1,4 +1,5 @@
 return function()
+  local api, fn = vim.api, vim.fn
   require('toggleterm').setup({
     open_mapping = [[<c-\>]],
     shade_filetypes = { 'none' },
@@ -26,9 +27,9 @@ return function()
   })
 
   local float_handler = function(term)
-    if vim.fn.mapcheck('jk', 't') ~= '' then
-      vim.api.nvim_buf_del_keymap(term.bufnr, 't', 'jk')
-      vim.api.nvim_buf_del_keymap(term.bufnr, 't', '<esc>')
+    if fn.mapcheck('jk', 't') ~= '' then
+      api.nvim_buf_del_keymap(term.bufnr, 't', 'jk')
+      api.nvim_buf_del_keymap(term.bufnr, 't', '<esc>')
     end
   end
 
