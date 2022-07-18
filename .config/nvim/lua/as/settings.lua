@@ -75,8 +75,10 @@ opt.formatoptions = {
 -- Folds {{{1
 -----------------------------------------------------------------------------//
 opt.foldlevelstart = 2
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
-opt.foldmethod = 'expr'
+if not as.plugin_installed('nvim-ufo') then
+  opt.foldexpr = 'nvim_treesitter#foldexpr()'
+  opt.foldmethod = 'expr'
+end
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
