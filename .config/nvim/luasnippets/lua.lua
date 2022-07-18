@@ -10,6 +10,21 @@ end
 return {
   snippet(
     {
+      trig = 'cfg',
+      name = 'config key',
+      dscr = 'Packer config key',
+    },
+    fmt(
+      [[
+    , config = function()
+      require("{}").setup()
+    end
+    ]],
+      { i(1) }
+    )
+  ),
+  snippet(
+    {
       trig = 'vs',
       name = 'vim schedule',
       dscr = 'Schedule a function on the vim event loop',
