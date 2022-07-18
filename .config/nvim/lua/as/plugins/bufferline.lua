@@ -51,7 +51,7 @@ return function()
         {
           filetype = 'neo-tree',
           text = 'Explorer',
-          highlight = 'PanelHeading',
+          highlight = 'PanelDarkHeading',
         },
         {
           filetype = 'DiffviewFiles',

@@ -325,9 +325,12 @@ end
 local function set_sidebar_highlight()
   local normal_bg = M.get('Normal', 'bg')
   local split_color = M.get('VertSplit', 'fg')
+  local dark_bg = M.alter_color(normal_bg, -43)
   local bg_color = M.alter_color(normal_bg, -8)
   local st_color = M.alter_color(M.get('Visual', 'bg'), -20)
   M.all({
+    PanelDarkBackground = { bg = dark_bg },
+    PanelDarkHeading = { bg = dark_bg, bold = true },
     PanelBackground = { background = bg_color },
     PanelHeading = { background = bg_color, bold = true },
     PanelVertSplit = { foreground = split_color, background = bg_color },
