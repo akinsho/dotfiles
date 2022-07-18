@@ -12,7 +12,7 @@ return function()
 
   -- NOTE: override F/f using hop motions
   map(
-    { 'x', 'n' },
+    { 'x', 'n', 'o' },
     'F',
     function()
       hop.hint_char1({
@@ -24,7 +24,7 @@ return function()
   )
 
   map(
-    { 'x', 'n' },
+    { 'x', 'n', 'o' },
     'f',
     function()
       hop.hint_char1({
@@ -35,24 +35,26 @@ return function()
     end
   )
 
-  as.onoremap(
-    'F',
-    function()
-      hop.hint_char1({
-        direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
-        current_line_only = true,
-        inclusive_jump = true,
-      })
-    end
-  )
-
-  as.onoremap(
-    'f',
+  map(
+    { 'x', 'n' },
+    't',
     function()
       hop.hint_char1({
         direction = require('hop.hint').HintDirection.AFTER_CURSOR,
         current_line_only = true,
-        inclusive_jump = true,
+        hint_offset = -1,
+      })
+    end
+  )
+
+  map(
+    { 'x', 'n' },
+    'T',
+    function()
+      hop.hint_char1({
+        direction = require('hop.hint').HintDirection.BEFORE_CURSOR,
+        current_line_only = true,
+        hint_offset = 1,
       })
     end
   )
