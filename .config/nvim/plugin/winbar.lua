@@ -83,7 +83,7 @@ local blocked = {
   'org',
   'sql',
 }
-local allowed = { 'toggleterm' }
+local allowed = { 'toggleterm', 'neo-tree' }
 
 as.augroup('AttachWinbar', {
   {
