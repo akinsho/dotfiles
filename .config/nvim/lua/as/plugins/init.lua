@@ -85,11 +85,7 @@ packer.startup({
 
     use({ 'folke/which-key.nvim', config = conf('whichkey') })
 
-    use({
-      'anuvyklack/hydra.nvim',
-      requires = 'anuvyklack/keymap-layer.nvim',
-      config = as.block_reload(conf('hydra')),
-    })
+    use({ 'anuvyklack/hydra.nvim', config = as.block_reload(conf('hydra')) })
 
     use({
       'rmagatti/auto-session',
