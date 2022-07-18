@@ -146,14 +146,22 @@ packer.startup({
         require('mason').setup({ ui = { border = as.style.current.border } })
         require('mason-lspconfig').setup({ automatic_installation = true })
         require('mason-lspconfig').setup_handlers({
-          function(name) require('lspconfig')[name].setup(get_config(name)) end,
+          function(name)
+            local config = get_config(name)
+            if config then require('lspconfig')[name].setup(config) end
+          end,
         })
       end,
     })
 
-    -- lspconfig is abominably slow to load and if loaded on BufReadPre
-    -- seems to interact with nvim-treesitter.
-    use({ 'neovim/nvim-lspconfig', module = 'lspconfig' })
+    use({
+      'neovim/nvim-lspconfig',
+      module = 'lspconfig',
+      config = function()
+        local get_config = require('as.servers')
+        require('lspconfig').ccls.setup(get_config('ccls'))
+      end,
+    })
 
     use({
       'smjonas/inc-rename.nvim',
