@@ -45,6 +45,12 @@ local function setup_autocommands(client, bufnr)
     local msg = fmt('Unable to setup LSP autocommands, client for %d is missing', bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
+  table.insert(cmds, {
+    event = { 'CursorHold' },
+    buffer = bufnr,
+    desc = 'Show diagnostics',
+    command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
+  })
   if client.server_capabilities.documentFormattingProvider then
     table.insert(cmds, {
       event = 'BufWritePre',
@@ -65,12 +71,6 @@ local function setup_autocommands(client, bufnr)
     })
   end
   if client.server_capabilities.documentHighlightProvider then
-    table.insert(cmds, {
-      event = { 'CursorHold' },
-      buffer = bufnr,
-      desc = 'Show diagnostics',
-      command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
-    })
     table.insert(cmds, {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = bufnr,
