@@ -7,13 +7,16 @@ local L = vim.lsp.log_levels
 
 local icons = as.style.icons.lsp
 local border = as.style.current.border
-local AUGROUP = 'LspCommands'
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
+local get_augroup = function(bufnr)
+  assert(bufnr, 'A bufnr is required to create an lsp augroup')
+  return fmt('LspCommands_%d', bufnr)
+end
 
 local function formatting_filter(client)
   local exceptions = ({
@@ -40,11 +43,16 @@ end
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
-  local cmds = {}
   if not client then
     local msg = fmt('Unable to setup LSP autocommands, client for %d is missing', bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
+
+  local group = get_augroup(bufnr)
+  -- Clear pre-existing buffer autocommands
+  pcall(api.nvim_clear_autocmds, { group = group })
+
+  local cmds = {}
   table.insert(cmds, {
     event = { 'CursorHold' },
     buffer = bufnr,
@@ -84,7 +92,7 @@ local function setup_autocommands(client, bufnr)
       command = function() vim.lsp.buf.clear_references() end,
     })
   end
-  as.augroup(AUGROUP, cmds)
+  as.augroup(group, cmds)
 end
 
 -----------------------------------------------------------------------------//
@@ -129,10 +137,11 @@ local function setup_plugins(client, bufnr)
   if ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
 end
 
----Add buffer local mappings, autocommands, tagfunc etc for attaching servers
+---Add buffer local mappings, autocommands etc for attaching servers
 ---@param client table lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
+  -- TODO: Figure out how to prevent duplicate events per buffer
   setup_autocommands(client, bufnr)
   setup_mappings(client)
   setup_plugins(client, bufnr)
@@ -165,7 +174,7 @@ as.augroup('LspSetupCommands', {
   {
     event = 'LspDetach',
     desc = 'Clean up after detached LSP',
-    command = function(args) api.nvim_clear_autocmds({ group = AUGROUP, buffer = args.buf }) end,
+    command = function(args) api.nvim_clear_autocmds({ group = get_augroup(args.buf), buffer = args.buf }) end,
   },
 })
 -----------------------------------------------------------------------------//
