@@ -1025,15 +1025,10 @@ packer.startup({
           border = as.style.current.border,
         })
         if f.expand('$DOTFILES') == f.getcwd() then
-          vim.defer_fn(
-            function()
-              c.Clock:new():count_up({
-                duration = { hours = 1 },
-                threshold = { late = '00:10:00' },
-              })
-            end,
-            5000
-          )
+          c.Clock:new():count_up({
+            duration = { hours = 1 },
+            threshold = { late = '00:10:00' },
+          })
         end
       end),
     })
