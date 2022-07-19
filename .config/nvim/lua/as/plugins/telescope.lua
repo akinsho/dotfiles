@@ -113,7 +113,7 @@ function M.config()
         '^node_modules/',
         '^site-packages/',
       },
-      path_display = { 'smart', 'absolute', 'truncate' },
+      path_display = { 'truncate' },
       winblend = 5,
       history = {
         path = vim.fn.stdpath('data') .. '/telescope_history.sqlite3',
