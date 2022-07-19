@@ -221,7 +221,7 @@ opt.virtualedit = 'block' -- allow cursor to move where there is no text in visu
 -----------------------------------------------------------------------------//
 -- Jumplist
 -----------------------------------------------------------------------------//
-opt.jumpoptions = { 'stack', 'view' } -- make the jumplist behave like a browser stack
+opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
