@@ -141,6 +141,7 @@ packer.startup({
       'williamboman/mason.nvim',
       event = 'BufRead',
       branch = 'alpha',
+      requires = {'nvim-lspconfig'},
       config = function()
         local get_config = require('as.servers')
         require('mason').setup({ ui = { border = as.style.current.border } })

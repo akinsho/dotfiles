@@ -34,8 +34,8 @@ local servers = {
   rust_analyzer = true,
   marksman = true,
   pyright = true,
+  --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
-    -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
     settings = {
       gopls = {
         codelenses = {
