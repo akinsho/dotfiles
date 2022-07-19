@@ -132,19 +132,29 @@ end
 -- LSP SETUP/TEARDOWN
 -----------------------------------------------------------------------------//
 
+---@param client table
+---@param bufnr number
 local function setup_plugins(client, bufnr)
   local ok, navic = pcall(require, 'nvim-navic')
   if ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
 end
 
 ---Add buffer local mappings, autocommands etc for attaching servers
----@param client table lsp client
+---@param client table the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-  -- TODO: Figure out how to prevent duplicate events per buffer
+  -- Plugins should be setup for every client being attached
+  -- in case one of multiple is the target for that plugin
+  setup_plugins(client, bufnr)
+
+  -- Otherwise, if there is already an attached client then
+  -- mappings and other settings should not be re-applied
+  local active = vim.lsp.get_active_clients({ bufnr = bufnr })
+  local attached = vim.tbl_filter(function(c) return c.attached_buffers[bufnr] end, active)
+  if #attached > 0 then return end
+
   setup_autocommands(client, bufnr)
   setup_mappings(client)
-  setup_plugins(client, bufnr)
 
   if client.server_capabilities.documentFormattingProvider then
     vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
