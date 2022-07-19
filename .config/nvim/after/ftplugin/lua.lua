@@ -49,20 +49,24 @@ local function keyword(word, callback)
 end
 
 as.ftplugin_conf('nvim-surround', function(surround)
-  local utils = require('nvim-surround.utils')
+  local get_input = function(prompt)
+    local ok, input = pcall(vim.fn.input, prompt)
+    if not ok then return end
+    return input
+  end
   surround.buffer_setup({
     delimiters = {
       pairs = {
         l = { 'function () ', ' end' },
         F = function()
           return {
-            fmt('local function %s() ', utils.get_input('Enter a function name: ')),
+            fmt('local function %s() ', get_input('Enter a function name: ')),
             ' end',
           }
         end,
         i = function()
           return {
-            fmt('if %s then ', utils.get_input('Enter a condition:')),
+            fmt('if %s then ', get_input('Enter a condition:')),
             ' end',
           }
         end,
