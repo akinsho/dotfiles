@@ -101,8 +101,9 @@ end
 
 ---Setup mapping when an lsp attaches to a buffer
 ---@param _ table lsp client
-local function setup_mappings(_)
-  local function with_desc(desc) return { buffer = 0, desc = desc } end
+---@param bufnr number
+local function setup_mappings(_, bufnr)
+  local function with_desc(desc) return { buffer = bufnr, desc = desc } end
 
   as.nnoremap(
     ']c',
@@ -154,7 +155,7 @@ local function on_attach(client, bufnr)
   if #attached > 0 then return end
 
   setup_autocommands(client, bufnr)
-  setup_mappings(client)
+  setup_mappings(client, bufnr)
 
   if client.server_capabilities.documentFormattingProvider then
     vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
