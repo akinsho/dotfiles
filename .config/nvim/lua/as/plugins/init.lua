@@ -61,7 +61,7 @@ packer.startup({
 
     use({
       'nvim-telescope/telescope.nvim',
-      branch = '0.1.x',
+      branch = 'master', -- '0.1.x',
       module_pattern = 'telescope.*',
       config = conf('telescope').config,
       event = 'CursorHold',
@@ -141,7 +141,7 @@ packer.startup({
       'williamboman/mason.nvim',
       event = 'BufRead',
       branch = 'alpha',
-      requires = {'nvim-lspconfig'},
+      requires = { 'nvim-lspconfig' },
       config = function()
         local get_config = require('as.servers')
         require('mason').setup({ ui = { border = as.style.current.border } })
