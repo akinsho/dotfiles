@@ -38,6 +38,7 @@ local servers = {
   gopls = {
     settings = {
       gopls = {
+        gofumpt = true,
         codelenses = {
           generate = true,
           gc_details = false,
