@@ -401,6 +401,6 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-if as.plugin_installed('doom-one.nvim') then vim.cmd('colorscheme doom-one') end
+if as.plugin_installed('doom-one.nvim') then vim.cmd.colorscheme('doom-one') end
 
 return M

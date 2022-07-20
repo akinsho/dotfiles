@@ -25,7 +25,7 @@ end
 utils.bootstrap_packer()
 ----------------------------------------------------------------------------- }}}1
 -- cfilter plugin allows filtering down an existing quickfix list
-vim.cmd('packadd! cfilter')
+vim.cmd.packadd({ 'cfilter', bang = true })
 
 as.safe_require('impatient')
 
@@ -1047,7 +1047,7 @@ packer.startup({
   },
 })
 
-as.command('PackerCompiledEdit', function() vim.cmd(fmt('edit %s', PACKER_COMPILED_PATH)) end)
+as.command('PackerCompiledEdit', function() vim.cmd.edit(PACKER_COMPILED_PATH) end)
 
 as.command('PackerCompiledDelete', function()
   vim.fn.delete(PACKER_COMPILED_PATH)
@@ -1055,7 +1055,7 @@ as.command('PackerCompiledDelete', function()
 end)
 
 if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) then
-  as.source(PACKER_COMPILED_PATH)
+  vim.cmd.source(PACKER_COMPILED_PATH)
   vim.g.packer_compiled_loaded = true
 end
 
