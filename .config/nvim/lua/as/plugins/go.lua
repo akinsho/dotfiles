@@ -14,7 +14,7 @@ return function()
         require('go').setup({
           gopls_cmd = { 'gopls' },
           icons = false,
-          verbose = true,
+          verbose = false,
           lsp_cfg = get_config('gopls'),
           lsp_codelens = false,
           lsp_keymaps = false,
