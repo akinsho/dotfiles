@@ -52,11 +52,6 @@ local servers = {
         completeUnimported = true,
         staticcheck = true,
         directoryFilters = { '-node_modules' },
-        -- hints = {
-        --   assignVariableTypes = true,
-        --   constantValues = true,
-        --   functionTypeParameters = true,
-        -- },
       },
     },
   },

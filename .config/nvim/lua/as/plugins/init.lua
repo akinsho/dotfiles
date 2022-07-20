@@ -151,6 +151,7 @@ packer.startup({
             local config = get_config(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
+          gopls = require('as.plugins.go'),
         })
       end,
     })
@@ -715,14 +716,8 @@ packer.startup({
       config = conf('flutter-tools'),
     })
 
-    use({
-      'olexsmir/gopher.nvim',
-      ft = 'go',
-      requires = { -- dependencies
-        'nvim-lua/plenary.nvim',
-        'nvim-treesitter/nvim-treesitter',
-      },
-    })
+    use({ 'ray-x/go.nvim' })
+
     use('nanotee/sqls.nvim')
 
     use({
