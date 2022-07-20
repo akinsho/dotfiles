@@ -22,6 +22,9 @@ return function()
           dap_debug_keymap = false,
           textobjects = false,
           luasnip = true,
+          lsp_inlay_hints = {
+            enable = true,
+          },
         })
       end,
     },
