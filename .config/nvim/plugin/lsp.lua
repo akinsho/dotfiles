@@ -50,7 +50,7 @@ local function setup_autocommands(client, bufnr)
 
   local group = get_augroup(bufnr)
   -- Clear pre-existing buffer autocommands
-  pcall(api.nvim_clear_autocmds, { group = group })
+  pcall(api.nvim_clear_autocmds, { group = group, buffer = bufnr })
 
   local cmds = {}
   table.insert(cmds, {
