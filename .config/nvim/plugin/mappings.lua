@@ -399,7 +399,7 @@ function as.mappings.grep_operator(type)
   local winnr = fn.winnr()
   vim.cmd([[silent execute 'grep! ' . shellescape(@@) . ' .']])
   fn.setreg('@@', saved_unnamed_register)
-  if fn.winnr() ~= winnr then vim.cmd([[wincmd p]]) end
+  if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
 end
 
 -- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
@@ -416,7 +416,7 @@ end
 -----------------------------------------------------------------------------//
 local function open_link()
   local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
+  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
 
   if file:match('https://') then return open(file) end
 
@@ -448,7 +448,7 @@ function as.toggle_list(list_type)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. 'open')
-  if fn.winnr() ~= winnr then vim.cmd('wincmd p') end
+  if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
 end
 
 nnoremap('<leader>ls', function() as.toggle_list('quickfix') end)

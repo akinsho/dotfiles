@@ -363,7 +363,7 @@ function M.update_search_count(timer)
     vim.schedule(function()
       if timer == search_count_timer then
         fn.searchcount({ recompute = 1, maxcount = 0, timeout = 100 })
-        vim.cmd('redrawstatus')
+        vim.cmd.redrawstatus()
       end
     end)
   end)

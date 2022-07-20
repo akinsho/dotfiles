@@ -49,7 +49,7 @@ as.augroup('VimrcIncSearchHighlight', {
     event = { 'OptionSet' },
     pattern = { 'hlsearch' },
     command = function()
-      vim.schedule(function() vim.cmd('redrawstatus') end)
+      vim.schedule(function() vim.cmd.redrawstatus() end)
     end,
   },
 })
@@ -256,7 +256,7 @@ as.augroup('UpdateVim', {
     nested = true,
     command = function(args)
       local path = api.nvim_buf_get_name(args.buf)
-      vim.cmd('source ' .. path)
+      vim.cmd.source(path)
       local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
       msg = ok and fmt('sourced %s and %s', path, fn.fnamemodify(vim.env.MYVIMRC, ':t')) or msg
       vim.notify(msg)
@@ -415,7 +415,7 @@ as.augroup('TerminalAutocommands', {
     pattern = '*',
     command = function()
       --- automatically close a terminal if the job was successful
-      if not vim.v.event.status == 0 then vim.cmd('bdelete! ' .. fn.expand('<abuf>')) end
+      if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
     end,
   },
 })
