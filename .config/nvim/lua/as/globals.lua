@@ -173,12 +173,15 @@ end
 ---Reload lua modules
 ---@param path string
 ---@param recursive boolean
-function as.invalidate(path, recursive)
+---@param exclusions string[]?
+function as.invalidate(path, recursive, exclusions)
   if recursive then
     for key, value in pairs(package.loaded) do
       if key ~= '_G' and value and fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
+        if not exclusions or not vim.tbl_contains(exclusions, value) then
+          package.loaded[key] = nil
+          require(key)
+        end
       end
     end
   else

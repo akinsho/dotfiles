@@ -1072,7 +1072,7 @@ as.augroup('PackerSetupInit', {
     pattern = { '*/as/plugins/*.lua' },
     desc = 'Packer setup and reload',
     command = function()
-      as.invalidate('as.plugins', true)
+      as.invalidate('as.plugins', true, { 'mason' })
       packer.compile()
     end,
   },
