@@ -270,11 +270,17 @@ local function general_overrides()
     -- LSP
     -----------------------------------------------------------------------------//
     LspCodeLens = { link = 'NonText' },
-    LspReferenceText = { underline = true, background = 'NONE' },
-    LspReferenceRead = { underline = true, background = 'NONE' },
+    LspReferenceText = { underline = true, background = 'NONE', sp = P.comment_grey },
+    LspReferenceRead = { underline = true, background = 'NONE', sp = P.comment_grey },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
-    LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
+    LspReferenceWrite = {
+      underline = true,
+      bold = true,
+      italic = true,
+      background = 'NONE',
+      sp = P.whitesmoke,
+    },
     DiagnosticHint = { foreground = L.hint },
     DiagnosticError = { foreground = L.error },
     DiagnosticWarning = { foreground = L.warn },

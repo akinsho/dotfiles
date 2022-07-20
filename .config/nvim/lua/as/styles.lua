@@ -18,7 +18,8 @@ local palette = {
   dark_orange = '#FF922B',
   bright_yellow = '#FAB005',
   light_yellow = '#e5c07b',
-  whitesmoke = '#626262',
+  whitesmoke = '#9E9E9E',
+  light_gray = '#626262',
   comment_grey = '#5c6370',
   grey = '#3E4556',
 }
