@@ -109,11 +109,9 @@ local servers = {
 return function(name)
   local config = servers[name]
   if not config then return end
-  if config and type(config) == 'boolean' then
-    config = {}
-  elseif config and type(config) == 'function' then
-    config = config()
-  end
+  local t = type(config)
+  if t == 'boolean' then config = {} end
+  if t == 'function' then config = config() end
   config.on_init = on_init
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
   config.capabilities.textDocument.foldingRange = {
