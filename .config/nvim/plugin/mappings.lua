@@ -508,9 +508,11 @@ local auto_resize = function()
       auto_resize_on = true
       vim.notify('Auto resize ON')
     else
-      vim.cmd('let &winheight=30')
-      vim.cmd('let &winwidth=30')
-      vim.cmd('wincmd =')
+      vim.cmd([[
+      let &winheight=30
+      let &winwidth=30
+      wincmd =
+      ]])
       auto_resize_on = false
       vim.notify('Auto resize OFF')
     end

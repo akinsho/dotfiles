@@ -115,7 +115,7 @@ as.augroup('SmartClose', {
     pattern = '*',
     nested = true,
     command = function()
-      if vim.bo.filetype ~= 'qf' then vim.cmd('silent! lclose') end
+      if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ emsg_silent = true }) end
     end,
   },
 })
@@ -149,7 +149,7 @@ local function clear_commandline()
   return function()
     if timer then timer:stop() end
     timer = vim.defer_fn(function()
-      if fn.mode() == 'n' then vim.cmd([[echon '']]) end
+      if fn.mode() == 'n' then vim.cmd.echon("''") end
     end, 10000)
   end
 end
@@ -353,7 +353,9 @@ as.augroup('Utilities', {
     event = { 'BufReadCmd' },
     pattern = { 'file:///*' },
     nested = true,
-    command = function(args) vim.cmd(fmt('bd!|edit %s', vim.uri_to_fname(args.file))) end,
+    command = function(args)
+      vim.cmd.bdelete({ bang = true, nextcmd = 'edit ' .. vim.uri_to_fname(args.file) })
+    end,
   },
   {
     -- When editing a file, always jump to the last known cursor position.
@@ -390,7 +392,7 @@ as.augroup('Utilities', {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then vim.cmd('silent! update') end
+      if can_save() then vim.cmd.update({ emsg_silent = true }) end
     end,
   },
   {
