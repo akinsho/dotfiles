@@ -309,21 +309,23 @@ as.augroup('WindowBehaviours', {
   },
 })
 
-local cursorline_exclude = { 'alpha' }
+local cursorline_exclude = { 'alpha', 'toggleterm' }
 
-local function should_show_cursorline()
-  return vim.bo.buftype ~= 'terminal'
+---@param buf number
+---@return boolean
+local function should_show_cursorline(buf)
+  return vim.bo[buf].buftype ~= 'terminal'
     and not vim.wo.previewwindow
     and vim.wo.winhighlight == ''
-    and vim.bo.filetype ~= ''
-    and not vim.tbl_contains(cursorline_exclude, vim.bo.filetype)
+    and vim.bo[buf].filetype ~= ''
+    and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
 end
 
 as.augroup('Cursorline', {
   {
     event = { 'BufEnter' },
     pattern = { '*' },
-    command = function() vim.wo.cursorline = should_show_cursorline() end,
+    command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
   },
   {
     event = { 'BufLeave' },
