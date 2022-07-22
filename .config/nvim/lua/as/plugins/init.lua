@@ -1067,6 +1067,7 @@ as.augroup('PackerSetupInit', {
     pattern = { '*/as/plugins/*.lua' },
     desc = 'Packer setup and reload',
     command = function()
+      vim.cmd.doautocmd('LspDetach')
       as.invalidate('as.plugins', true)
       packer.compile()
     end,
