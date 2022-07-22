@@ -224,11 +224,20 @@ local function validate_autocmd(name, cmd)
   )
 end
 
+---@class AutocmdArgs
+---@field id number
+---@field event string
+---@field group string?
+---@field buf number
+---@field file string
+---@field match string | number
+---@field data any
+
 ---@class Autocommand
 ---@field desc string
 ---@field event  string[] list of autocommand events
 ---@field pattern string[] list of autocommand patterns
----@field command string | function
+---@field command string | fun(args: AutocmdArgs): boolean?
 ---@field nested  boolean
 ---@field once    boolean
 ---@field buffer  number
