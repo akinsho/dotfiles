@@ -638,9 +638,7 @@ packer.startup({
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        require('as.highlights').plugin('bqf', {
-          BqfPreviewBorder = { link = 'WinSeparator' },
-        })
+        require('as.highlights').plugin('bqf', { BqfPreviewBorder = { link = 'WinSeparator' } })
       end,
     })
     -- }}}
@@ -770,7 +768,7 @@ packer.startup({
         })
         require('treesitter-context').setup({
           multiline_threshold = 4,
-          separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
+          separator = { '─', 'ContextBorder' }, -- alternatives: ▁ ─ ▄
           mode = 'topline',
         })
       end,
