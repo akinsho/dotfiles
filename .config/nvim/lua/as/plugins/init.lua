@@ -141,7 +141,7 @@ packer.startup({
       'williamboman/mason.nvim',
       event = 'BufRead',
       branch = 'alpha',
-      requires = { 'nvim-lspconfig' },
+      requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
       config = function()
         local get_config = require('as.servers')
         require('mason').setup({ ui = { border = as.style.current.border } })
@@ -778,7 +778,6 @@ packer.startup({
 
     use({
       'm-demare/hlargs.nvim',
-      branch = 'expected_lua_number',
       config = function()
         require('as.highlights').plugin('hlargs', {
           Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
