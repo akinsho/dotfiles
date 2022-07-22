@@ -115,7 +115,7 @@ as.augroup('SmartClose', {
     pattern = '*',
     nested = true,
     command = function()
-      if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ emsg_silent = true }) end
+      if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { emsg_silent = true } }) end
     end,
   },
 })
@@ -354,7 +354,8 @@ as.augroup('Utilities', {
     pattern = { 'file:///*' },
     nested = true,
     command = function(args)
-      vim.cmd.bdelete({ bang = true, nextcmd = 'edit ' .. vim.uri_to_fname(args.file) })
+      vim.cmd.bdelete({ bang = true })
+      vim.cmd.edit(vim.uri_to_fname(args.file))
     end,
   },
   {
@@ -392,7 +393,7 @@ as.augroup('Utilities', {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then vim.cmd.update({ emsg_silent = true }) end
+      if can_save() then vim.cmd.update({ mods = { emsg_silent = true } }) end
     end,
   },
   {
