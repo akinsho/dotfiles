@@ -258,8 +258,8 @@ as.augroup('UpdateVim', {
       local path = api.nvim_buf_get_name(args.buf)
       vim.cmd.source(path)
       local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
-      msg = ok and fmt('sourced %s and %s', path, fn.fnamemodify(vim.env.MYVIMRC, ':t')) or msg
-      vim.notify(msg)
+      local m = ok and fmt('sourced %s and %s', path, fn.fnamemodify(vim.env.MYVIMRC, ':t')) or msg
+      if m then vim.notify(m) end
     end,
   },
   {
