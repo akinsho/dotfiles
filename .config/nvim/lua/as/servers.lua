@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local fn = vim.fn
+local fn, api = vim.fn, vim.api
 
 -- This function allows reading a per project "settings.json" file in the `.vim` directory of the project.
 ---@param client table<string, any>
@@ -79,23 +79,32 @@ local servers = {
   end,
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
   sumneko_lua = function()
-    local settings = {
+    local path = vim.split(package.path, ';')
+    table.insert(path, 'lua/?.lua')
+    table.insert(path, 'lua/?/init.lua')
+
+    return {
       settings = {
         Lua = {
+          runtime = {
+            path = path,
+            version = 'LuaJIT',
+          },
           format = { enable = false },
           diagnostics = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
+          workspace = {
+            -- TODO: Find a way to speed this up by using only items from vim's runtime
+            library = api.nvim_get_runtime_file('', true),
+          },
+          telemetry = {
+            enable = false,
+          },
         },
       },
     }
-    local ok, lua_dev = as.safe_require('lua-dev')
-    if not ok then return settings end
-    return lua_dev.setup({
-      library = { plugins = { 'plenary.nvim', 'neotest' } },
-      lspconfig = settings,
-    })
   end,
 }
 
