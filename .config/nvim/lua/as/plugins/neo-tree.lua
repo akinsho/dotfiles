@@ -21,15 +21,7 @@ return function()
 
   require('neo-tree').setup({
     source_selector = {
-      winbar = true, -- toggle to show selector on winbar
-      statusline = false, -- toggle to show selector on statusline
-      tabs_layout = 'start',
-      tab_labels = { -- falls back to source_name if nil
-        filesystem = ' Files',
-        buffers = ' Buffers',
-        git_status = ' Git',
-      },
-      tabs_min_width = 11,
+      winbar = true,
       separator = ' ',
       highlight_tab = 'NeoTreeTab',
       highlight_tab_active = 'NeoTreeActiveTab',
