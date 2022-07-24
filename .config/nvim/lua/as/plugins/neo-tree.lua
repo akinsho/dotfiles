@@ -53,6 +53,9 @@ return function()
       icon = {
         folder_empty = '',
       },
+      modified = {
+        symbol = icons.misc.circle .. ' ',
+      },
       git_status = {
         symbols = {
           added = icons.git.add,
