@@ -9,10 +9,10 @@ return function()
     NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' },
     NeoTreeCursorLine = { link = 'Visual' },
     NeoTreeStatusLine = { link = 'PanelSt' },
-    NeoTreeTabBackground = { link = 'PanelDarkBackground' },
-    NeoTreeTab = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
-    NeoTreeSeparator = { link = 'PanelDarkBackground' },
-    NeoTreeActiveTab = { bg = { from = 'PanelBackground' }, fg = 'fg', bold = true },
+    NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
+    NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
+    NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' },
+    NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
@@ -22,12 +22,6 @@ return function()
   require('neo-tree').setup({
     source_selector = {
       winbar = true,
-      separator = ' ',
-      highlight_tab = 'NeoTreeTab',
-      highlight_tab_active = 'NeoTreeActiveTab',
-      highlight_separator = 'NeoTreeSeparator',
-      highlight_separator_active = 'NeoTreeSeparator',
-      highlight_background = 'NeoTreeTabBackground',
     },
     enable_git_status = true,
     git_status_async = true,
