@@ -140,9 +140,8 @@ packer.startup({
     use({
       'williamboman/mason.nvim',
       event = 'BufRead',
-      branch = 'alpha',
       requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
-      config = function()
+      config = as.block_reload(function()
         local get_config = require('as.servers')
         require('mason').setup({ ui = { border = as.style.current.border } })
         require('mason-lspconfig').setup({ automatic_installation = true })
@@ -153,7 +152,7 @@ packer.startup({
           end,
           gopls = require('as.plugins.go'),
         })
-      end,
+      end),
     })
 
     use({
