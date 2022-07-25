@@ -138,7 +138,7 @@ function as.empty(item)
   return item ~= nil
 end
 
----Require a module using [pcall] and report any errors
+---Require a module using `pcall` and report any errors
 ---@param module string
 ---@param opts table?
 ---@return boolean, any

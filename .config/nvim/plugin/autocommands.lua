@@ -258,6 +258,7 @@ as.augroup('UpdateVim', {
       local path = api.nvim_buf_get_name(args.buf)
       vim.cmd.source(path)
       local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
+      if not ok then vim.notify(msg, 'error', { title = 'Sourcing init.lua' }) end
       local m = ok and fmt('sourced %s and %s', path, fn.fnamemodify(vim.env.MYVIMRC, ':t')) or msg
       if m then vim.notify(m) end
     end,

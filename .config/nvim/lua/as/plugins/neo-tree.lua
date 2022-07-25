@@ -9,7 +9,7 @@ return function()
     NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' },
     NeoTreeCursorLine = { link = 'Visual' },
     NeoTreeStatusLine = { link = 'PanelSt' },
-    NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
+    NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true },
     NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
     NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' },
     NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
