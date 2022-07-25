@@ -56,7 +56,7 @@ path+=(
   ${HOME}/.pub-cache/bin(N-/)
   ${GOPATH}/bin(N-/)
   # Add local build of neovim to path for development
-  ${HOME}/neovim/bin(N-/)
+  ${HOME}/nvim/bin(N-/)
 )
 
 
