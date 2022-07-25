@@ -83,6 +83,11 @@ local servers = {
     table.insert(path, 'lua/?.lua')
     table.insert(path, 'lua/?/init.lua')
 
+    local lib = vim.tbl_filter(function(p)
+      if p:match('emmy') then return true end
+      return not vim.startswith(p, fn.stdpath('data') .. '/site/')
+    end, api.nvim_get_runtime_file('', true))
+
     return {
       settings = {
         Lua = {
@@ -96,8 +101,7 @@ local servers = {
           },
           completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
           workspace = {
-            -- TODO: Find a way to speed this up by using only items from vim's runtime
-            library = api.nvim_get_runtime_file('', true),
+            library = lib,
           },
           telemetry = {
             enable = false,
