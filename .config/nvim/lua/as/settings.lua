@@ -93,7 +93,7 @@ end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-opt.wildcharm = fn.char2nr(as.replace_termcodes([[<Tab>]]))
+opt.wildcharm = ('\t'):byte()
 opt.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
 opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
