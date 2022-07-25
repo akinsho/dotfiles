@@ -20,6 +20,12 @@ return function()
   as.nnoremap('<c-n>', '<Cmd>Neotree toggle<CR>')
 
   require('neo-tree').setup({
+    sources = {
+      'filesystem',
+      'buffers',
+      'git_status',
+      'diagnostics',
+    },
     source_selector = {
       winbar = true,
     },

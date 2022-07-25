@@ -130,6 +130,7 @@ packer.startup({
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
         'kyazdani42/nvim-web-devicons',
+        { 'mrbjarksen/neo-tree-diagnostics.nvim', module = 'neo-tree.sources.diagnostics' },
         { 's1n7ax/nvim-window-picker', tag = 'v1.*', config = conf('window-picker') },
       },
     })
