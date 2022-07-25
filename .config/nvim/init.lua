@@ -39,6 +39,19 @@ function R(name)
 end
 
 ----------------------------------------------------------------------------------------------------
+-- Global namespace
+----------------------------------------------------------------------------------------------------
+local namespace = {
+  -- for UI elements like the winbar and statusline that need global references
+  ui = {},
+  -- some vim mappings require a mixture of commandline commands and function calls
+  -- this table is place to store lua functions to be called in those mappings
+  mappings = {},
+}
+
+_G.as = as or namespace
+
+----------------------------------------------------------------------------------------------------
 -- Plugin Configurations
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
