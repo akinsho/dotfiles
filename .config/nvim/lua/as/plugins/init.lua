@@ -443,14 +443,6 @@ packer.startup({
       end,
     })
 
-    use({
-      'glepnir/template.nvim',
-      config = function()
-        local temp = require('template')
-        temp.temp_dir = ('%s/templates/'):format(vim.g.vim_dir)
-      end,
-    })
-
     -- prevent select and visual mode from overwriting the clipboard
     use({
       'kevinhwang91/nvim-hclipboard',
