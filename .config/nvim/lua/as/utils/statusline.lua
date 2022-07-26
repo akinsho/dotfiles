@@ -524,8 +524,8 @@ local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_na
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
---- @param size integer
---- @param opts table<string, any>
+--- @param size integer?
+--- @param opts table<string, any>?
 function M.spacer(size, opts)
   opts = opts or {}
   local filler = opts.filler or ' '
