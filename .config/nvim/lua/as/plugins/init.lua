@@ -142,7 +142,6 @@ packer.startup({
     use({
       'williamboman/mason.nvim',
       event = 'BufRead',
-      branch = 'main',
       requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
       config = as.block_reload(function()
         local get_config = require('as.servers')
