@@ -108,7 +108,7 @@ function M.set_hl(name, opts)
   convert_hl_to_val(opts)
   opts.inherit = nil
   local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
-  if not ok then vim.notify(fmt('Failed to set %s because: %s', name, msg)) end
+  if not ok then vim.notify(fmt('Failed to set %s because - %s', name, msg)) end
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
