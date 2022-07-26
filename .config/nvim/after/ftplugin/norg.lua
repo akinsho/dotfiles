@@ -39,11 +39,11 @@ as.ftplugin_conf(
 as.ftplugin_conf('nvim-surround', function(surround)
   surround.buffer_setup({
     delimiters = {
-      pairs = {
-        ['l'] = function()
+      l = {
+        add = function()
           return {
-            '[',
-            ']{' .. vim.fn.getreg('*') .. '}',
+            { '[' },
+            { ']{' .. vim.fn.getreg('*') .. '}' },
           }
         end,
       },

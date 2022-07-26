@@ -56,18 +56,20 @@ as.ftplugin_conf('nvim-surround', function(surround)
   end
   surround.buffer_setup({
     delimiters = {
-      pairs = {
-        l = { 'function () ', ' end' },
-        F = function()
+      l = { add = function() return { { 'function () ' }, { ' end' } } end },
+      F = {
+        add = function()
           return {
-            fmt('local function %s() ', get_input('Enter a function name: ')),
-            ' end',
+            { fmt('local function %s() ', get_input('Enter a function name: ')) },
+            { ' end' },
           }
         end,
-        i = function()
+      },
+      i = {
+        add = function()
           return {
-            fmt('if %s then ', get_input('Enter a condition:')),
-            ' end',
+            { fmt('if %s then ', get_input('Enter a condition:')) },
+            { ' end' },
           }
         end,
       },
