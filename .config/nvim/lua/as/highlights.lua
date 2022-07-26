@@ -252,6 +252,9 @@ local function general_overrides()
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
+    -- FIXME: this should be removed once
+    -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
+    yamlTSError = { link = 'None' },
     -- highlight FIXME comments
     commentTSWarning = { background = P.teal, foreground = 'bg', bold = true },
     commentTSDanger = { background = L.hint, foreground = 'bg', bold = true },
