@@ -40,6 +40,7 @@ version: 0.0.11
    @end
    ~ `sudo chown root:wheel /Library/LaunchDaemons/limit.maxfiles.plist`
    ~ `sudo launchctl load -w /Library/LaunchDaemons/limit.maxfiles.plist`
+   ~ Restart your mac
 
 **** Resources:
      - https://discussions.apple.com/thread/253001317
