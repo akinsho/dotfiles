@@ -56,11 +56,16 @@ return function()
     )
   end
 
-  local version = vim.version()
-  local nvim_version_info = f('  Neovim v%d.%d.%d', version.major, version.minor, version.patch)
   local installed_plugins = {
     type = 'text',
-    val = f(' %d plugins installed, %s', #as.list_installed_plugins(), nvim_version_info),
+    val = f(' %d plugins installed', #as.list_installed_plugins()),
+    opts = { position = 'center', hl = 'NonText' },
+  }
+
+  local v = vim.version()
+  local version = {
+    type = 'text',
+    val = f(' v%d.%d.%d %s', v.major, v.minor, v.patch, v.prerelease and '(nightly)' or ''),
     opts = { position = 'center', hl = 'NonText' },
   }
 
@@ -82,6 +87,7 @@ return function()
       { type = 'group', val = neovim_header() },
       { type = 'padding', val = 1 },
       installed_plugins,
+      version,
       { type = 'padding', val = 2 },
       dashboard.section.buttons,
       dashboard.section.footer,
