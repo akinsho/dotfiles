@@ -1,13 +1,14 @@
 ---@diagnostic disable: duplicate-doc-param
 
+if not as.ui.winbar.enable then return end
+
 local highlights = require('as.highlights')
 local utils = require('as.utils.statusline')
+
+local fn, api = vim.fn, vim.api
 local component = utils.component
 local component_raw = utils.component_raw
 local empty = as.empty
-
-local fn = vim.fn
-local api = vim.api
 local icons = as.style.icons.misc
 
 local dir_separator = '/'
@@ -16,14 +17,14 @@ local ellipsis = icons.ellipsis
 
 --- A mapping of each winbar items ID to its path
 --- @type table<string, string>
-as.winbar_state = {}
+as.ui.winbar.state = {}
 
 ---@param id number
 ---@param _ number number of clicks
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
-function as.winbar_click(id, _, _, _)
-  if id then vim.cmd.edit(as.winbar_state[id]) end
+function as.ui.winbar.click(id, _, _, _)
+  if id then vim.cmd.edit(as.ui.winbar.state[id]) end
 end
 
 highlights.plugin('winbar', {
@@ -45,7 +46,7 @@ local function breadcrumbs()
 end
 
 ---@return string
-function as.ui.winbar()
+function as.ui.winbar.get()
   local winbar = {}
   local add = utils.winline(winbar)
 
@@ -62,11 +63,11 @@ function as.ui.winbar()
     local sep = is_last and separator or dir_separator
     local hl = is_last and 'Winbar' or 'NonText'
     local suffix_hl = is_last and 'WinbarDirectory' or 'NonText'
-    as.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+    as.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, hl, {
       id = priority,
       priority = priority,
-      click = 'v:lua.as.winbar_click',
+      click = 'v:lua.as.ui.winbar.click',
       suffix = sep,
       suffix_color = suffix_hl,
     }))
@@ -98,7 +99,7 @@ as.augroup('AttachWinbar', {
           and empty(vim.bo[buf].buftype)
           and not empty(vim.bo[buf].filetype)
         then
-          vim.wo[win].winbar = '%{%v:lua.as.ui.winbar()%}'
+          vim.wo[win].winbar = '%{%v:lua.as.ui.winbar.get()%}'
         elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
           vim.wo[win].winbar = nil
         end
