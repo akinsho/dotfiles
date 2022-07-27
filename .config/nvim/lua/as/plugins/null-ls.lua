@@ -5,7 +5,6 @@ return function()
     sources = {
       null_ls.builtins.diagnostics.buf,
       null_ls.builtins.diagnostics.zsh,
-      null_ls.builtins.diagnostics.golangci_lint,
       null_ls.builtins.formatting.stylua.with({
         condition = function() return as.executable('stylua') end,
       }),
