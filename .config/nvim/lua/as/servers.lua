@@ -84,9 +84,9 @@ local servers = {
     table.insert(path, 'lua/?.lua')
     table.insert(path, 'lua/?/init.lua')
 
-    local lib = vim.tbl_filter(function(p)
-      if p:match('emmy') then return true end
-      return not vim.startswith(p, fn.stdpath('data') .. '/site/')
+    local lib = vim.tbl_filter(function(dir)
+      if dir:match('emmy') then return true end
+      return not vim.startswith(dir, fn.stdpath('data') .. '/site/')
     end, api.nvim_get_runtime_file('', true))
 
     return {

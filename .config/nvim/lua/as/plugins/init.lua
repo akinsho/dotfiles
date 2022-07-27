@@ -169,9 +169,7 @@ packer.startup({
     use({
       'smjonas/inc-rename.nvim',
       config = function()
-        require('inc_rename').setup({
-          hl_group = 'Visual',
-        })
+        require('inc_rename').setup({ hl_group = 'Visual' })
         as.nnoremap('<leader>ri', function() return ':IncRename ' .. vim.fn.expand('<cword>') end, {
           expr = true,
           silent = false,
