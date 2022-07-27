@@ -143,7 +143,7 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table<string, table<string, boolean|string>>
+---@param hls table<string, table<string, boolean|string|HLAttrs>>
 function M.all(hls)
   for name, hl in pairs(hls) do
     M.set_hl(name, hl)

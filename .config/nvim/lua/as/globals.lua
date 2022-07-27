@@ -140,12 +140,12 @@ function as.safe_require(module, opts)
   return ok, result
 end
 
----@alias Plugin table<(string | number), string>
+---@alias Plug table<(string | number), string>
 
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
 --- TODO: find out if it's possible to annotate the plugin as a module
----@param name string | Plugin
+---@param name string | Plug
 ---@param callback fun(module: table)
 function as.ftplugin_conf(name, callback)
   local plugin_name = type(name) == 'table' and name.plugin or nil
@@ -223,8 +223,8 @@ end
 
 ---@class Autocommand
 ---@field desc string
----@field event  string[] list of autocommand events
----@field pattern string[] list of autocommand patterns
+---@field event  string | string[] list of autocommand events
+---@field pattern string | string[] list of autocommand patterns
 ---@field command string | fun(args: AutocmdArgs): boolean?
 ---@field nested  boolean
 ---@field once    boolean
