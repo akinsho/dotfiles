@@ -57,7 +57,7 @@ return function()
   end
 
   local version = vim.version()
-  local nvim_version_info = f('  Neovim v%d.%d.%d', version.major, version.minor, version.patch)
+  local nvim_version_info = f('  Neovim v%d.%d.%d', version.major, version.minor, version.patch)
   local installed_plugins = {
     type = 'text',
     val = f(' %d plugins installed, %s', #as.list_installed_plugins(), nvim_version_info),
