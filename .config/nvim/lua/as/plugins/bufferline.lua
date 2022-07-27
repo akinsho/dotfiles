@@ -5,17 +5,25 @@ return function()
   local groups = require('bufferline.groups')
 
   require('bufferline').setup({
-    highlights = {
-      info = { gui = 'undercurl' },
-      info_selected = { gui = 'undercurl' },
-      info_visible = { gui = 'undercurl' },
-      warning = { gui = 'undercurl' },
-      warning_selected = { gui = 'undercurl' },
-      warning_visible = { gui = 'undercurl' },
-      error = { gui = 'undercurl' },
-      error_selected = { gui = 'undercurl' },
-      error_visible = { gui = 'undercurl' },
-    },
+    highlights = function(opts)
+      local hl = opts.highlights
+      local visible = hl.buffer_visible.guifg
+      local selected = hl.buffer_selected.guifg
+      return {
+        info = { gui = 'undercurl', guifg = hl.info.guifg },
+        info_selected = { gui = 'undercurl,bold,italic', guifg = selected },
+        info_visible = { gui = 'undercurl', guifg = visible },
+        warning = { gui = 'undercurl', guifg = hl.warning.guifg },
+        warning_selected = { gui = 'undercurl,bold,italic', guifg = selected },
+        warning_visible = { gui = 'undercurl', guifg = visible },
+        error = { gui = 'undercurl', guifg = hl.error.guifg },
+        error_selected = { gui = 'undercurl,bold,italic', guifg = selected },
+        error_visible = { gui = 'undercurl', guifg = visible },
+        hint = { gui = 'undercurl', guifg = hl.hint.guifg },
+        hint_selected = { gui = 'undercurl,bold,italic', guifg = selected },
+        hint_visible = { gui = 'undercurl', guifg = visible },
+      }
+    end,
     options = {
       debug = {
         logging = true,
