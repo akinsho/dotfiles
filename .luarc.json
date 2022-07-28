@@ -4,5 +4,6 @@
         "missing-parameter",
         "return-type-mismatch",
         "param-type-mismatch"
-    ]
+    ],
+    "Lua.workspace.checkThirdParty": false
 }
