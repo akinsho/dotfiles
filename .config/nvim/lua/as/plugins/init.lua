@@ -832,6 +832,9 @@ packer.startup({
       end,
       config = function()
         require('diffview').setup({
+          default_args = {
+            DiffviewFileHistory = { '%' },
+          },
           hooks = {
             diff_buf_read = function()
               vim.opt_local.wrap = false
