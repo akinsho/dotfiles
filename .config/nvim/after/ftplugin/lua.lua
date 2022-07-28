@@ -56,7 +56,7 @@ as.ftplugin_conf('nvim-surround', function(surround)
   end
   surround.buffer_setup({
     delimiters = {
-      l = { add = function() return { { 'function () ' }, { ' end' } } end },
+      l = { add = { 'function () ', ' end' } },
       F = {
         add = function()
           return {
