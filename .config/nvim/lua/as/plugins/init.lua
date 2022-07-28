@@ -317,7 +317,6 @@ packer.startup({
       },
     })
 
-    use({ 'ii14/emmylua-nvim' })
 
     --}}}
     -----------------------------------------------------------------------------//
@@ -388,6 +387,7 @@ packer.startup({
     --------------------------------------------------------------------------------
     use('nanotee/luv-vimdocs')
     use('milisims/nvim-luaref')
+    use('ii14/emmylua-nvim')
 
     use({
       'kylechui/nvim-surround',
