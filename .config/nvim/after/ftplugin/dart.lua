@@ -7,6 +7,7 @@ vim.opt_local.formatoptions:remove('t')
 -- this still lets the syntax file be loaded for things like the LSP.
 vim.opt_local.syntax = ''
 
+if not as then return end
 as.ftplugin_conf(
   'which-key',
   function(wk)

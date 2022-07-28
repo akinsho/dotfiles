@@ -6,6 +6,7 @@ vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4
 vim.opt_local.smarttab = true
 
+if not as then return end
 as.ftplugin_conf(
   'which-key',
   function(whichkey)

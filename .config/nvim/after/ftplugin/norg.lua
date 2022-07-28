@@ -1,3 +1,5 @@
+if not as then return end
+
 as.ftplugin_conf(
   'which-key',
   function(wk)
