@@ -202,7 +202,6 @@ local function filename(ctx, modifier)
 
   local fname = buf_expand(ctx.bufnum, modifier)
 
-  ---@type string|fun(fname: string, buf: number): string
   local name = exceptions.names[ctx.filetype]
   if type(name) == 'function' then return '', '', name(fname, ctx.bufnum) end
 
@@ -212,7 +211,8 @@ local function filename(ctx, modifier)
 
   local path = (ctx.buftype == '' and not ctx.preview) and buf_expand(ctx.bufnum, ':~:.:h') or nil
   local is_root = path and #path == 1 -- "~" or "."
-  local dir = path and not is_root and fn.pathshorten(fnamemodify(path, ':h')) .. '/' or ''
+  local dir = path and not is_root and fn.fnamemodify(path, ':h') .. '/' or ''
+  if strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
   local parent = path and (is_root and path or fnamemodify(path, ':t')) or ''
   parent = parent ~= '' and parent .. '/' or ''
 
