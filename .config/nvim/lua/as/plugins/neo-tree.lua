@@ -31,6 +31,7 @@ return function()
     },
     source_selector = {
       winbar = true,
+      separator_active = ' ',
     },
     enable_git_status = true,
     git_status_async = true,
