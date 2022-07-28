@@ -659,6 +659,7 @@ packer.startup({
     use('lewis6991/impatient.nvim')
     use({
       'dstein64/vim-startuptime',
+      tag = '*',
       cmd = 'StartupTime',
       config = function()
         vim.g.startuptime_tries = 15
