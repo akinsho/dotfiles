@@ -826,7 +826,7 @@ packer.startup({
       cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
       module = 'diffview',
       setup = function()
-        as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
+        as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: open')
         as.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
         as.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
       end,
