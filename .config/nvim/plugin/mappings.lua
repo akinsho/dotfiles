@@ -386,6 +386,10 @@ xnoremap(
 ----------------------------------------------------------------------------------
 -- Grep Operator
 ----------------------------------------------------------------------------------
+-- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
+
+---@param type string
+---@return nil
 function as.mappings.grep_operator(type)
   local saved_unnamed_register = fn.getreg('@@')
   if type:match('v') then
@@ -395,16 +399,18 @@ function as.mappings.grep_operator(type)
   else
     return
   end
-  -- Use Winnr to check if the cursor has moved it if has restore it
-  local winnr = fn.winnr()
-  vim.cmd([[silent execute 'grep! ' . shellescape(@@) . ' .']])
+  -- Store the current window so if it changes we can restore it
+  local win = api.nvim_get_current_win()
+  vim.cmd.grep({ fn.shellescape(fn.getreg('@@')) .. ' .', bang = true, mods = { silent = true } })
   fn.setreg('@@', saved_unnamed_register)
-  if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
+  if api.nvim_get_current_win() ~= win then vim.cmd.wincmd('p') end
 end
 
--- http://travisjeffery.com/b/2011/10/m-x-occur-for-vim/
-nnoremap('<leader>g', [[:silent! set operatorfunc=v:lua.as.mappings.grep_operator<cr>g@]])
-xnoremap('<leader>g', [[:call v:lua.as.mappings.grep_operator(visualmode())<cr>]])
+nnoremap('<leader>g', function()
+  vim.opt.operatorfunc = 'v:lua.as.mappings.grep_operator'
+  return 'g@'
+end, { expr = true, desc = 'grep operator' })
+xnoremap('<leader>g', ':call v:lua.as.mappings.grep_operator(visualmode())<CR>')
 -----------------------------------------------------------------------------//
 
 local function open(path)
