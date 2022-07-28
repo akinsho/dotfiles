@@ -25,14 +25,14 @@ as.augroup('AddTerminalMappings', {
         local opts = { silent = false, buffer = 0 }
         tnoremap('<esc>', [[<C-\><C-n>]], opts)
         tnoremap('jk', [[<C-\><C-n>]], opts)
-        tnoremap('<C-h>', [[<C-\><C-n><C-W>h]], opts)
-        tnoremap('<C-j>', [[<C-\><C-n><C-W>j]], opts)
-        tnoremap('<C-k>', [[<C-\><C-n><C-W>k]], opts)
-        tnoremap('<C-l>', [[<C-\><C-n><C-W>l]], opts)
-        tnoremap(']t', [[<C-\><C-n>:tablast<CR>]])
-        tnoremap('[t', [[<C-\><C-n>:tabnext<CR>]])
-        tnoremap('<S-Tab>', [[<C-\><C-n>:bprev<CR>]])
-        tnoremap('<leader><Tab>', [[<C-\><C-n>:close \| :bnext<cr>]])
+        tnoremap('<C-h>', '<Cmd>wincmd h<CR>', opts)
+        tnoremap('<C-j>', '<Cmd>wincmd j<CR>', opts)
+        tnoremap('<C-k>', '<Cmd>wincmd k<CR>', opts)
+        tnoremap('<C-l>', '<Cmd>wincmd l<CR>', opts)
+        tnoremap(']t', '<Cmd>tablast<CR>')
+        tnoremap('[t', '<Cmd>tabnext<CR>')
+        tnoremap('<S-Tab>', '<Cmd>bprev<CR>')
+        tnoremap('<leader><Tab>', '<Cmd>close \\| :bnext<cr>')
       end
     end,
   },
