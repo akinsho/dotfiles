@@ -436,18 +436,17 @@ nnoremap('gf', '<Cmd>e <cfile><CR>')
 ---@return string?
 function as.toggle_list(list_type)
   local is_location_target = list_type == 'location'
-  local prefix = is_location_target and 'l' or 'c'
-  local L = vim.log.levels
+  local cmd = is_location_target and { 'lclose', 'lopen' } or { 'cclose', 'copen' }
   local is_open = as.is_vim_list_open()
-  if is_open then return fn.execute(prefix .. 'close') end
+  if is_open then return vim.cmd[cmd[1]]() end
   local list = is_location_target and fn.getloclist(0) or fn.getqflist()
   if vim.tbl_isempty(list) then
     local msg_prefix = (is_location_target and 'Location' or 'QuickFix')
-    return vim.notify(msg_prefix .. ' List is Empty.', L.WARN)
+    return vim.notify(msg_prefix .. ' List is Empty.', vim.log.levels.WARN)
   end
 
   local winnr = fn.winnr()
-  fn.execute(prefix .. 'open')
+  vim.cmd[cmd[2]]()
   if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
 end
 
