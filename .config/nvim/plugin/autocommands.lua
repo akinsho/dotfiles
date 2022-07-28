@@ -204,7 +204,7 @@ as.augroup('TextYankHighlight', {
 
 local column_exclude = { 'gitcommit' }
 local column_block_list = {
-  'DiffViewFileHistory',
+  'DiffviewFileHistory',
   'log',
   'norg',
   'startify',
