@@ -38,11 +38,11 @@ return function()
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
-        handler = function() highlights.set_hl('Cursor', { blend = 100 }) end,
+        handler = function() highlights.set('Cursor', { blend = 100 }) end,
       },
       {
         event = 'neo_tree_buffer_leave',
-        handler = function() highlights.set_hl('Cursor', { blend = 0 }) end,
+        handler = function() highlights.set('Cursor', { blend = 0 }) end,
       },
     },
     filesystem = {

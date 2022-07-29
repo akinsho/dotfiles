@@ -29,14 +29,14 @@ local function toggle_trailing(mode)
   end
 end
 
-H.set_hl('ExtraWhitespace', { foreground = 'red' })
+H.set('ExtraWhitespace', { foreground = 'red' })
 
 as.augroup('WhitespaceMatch', {
   {
     event = { 'ColorScheme' },
     desc = 'Add extra whitespace highlight',
     pattern = { '*' },
-    command = function() H.set_hl('ExtraWhitespace', { foreground = 'red' }) end,
+    command = function() H.set('ExtraWhitespace', { foreground = 'red' }) end,
   },
   {
     event = { 'BufEnter', 'FileType', 'InsertLeave' },
