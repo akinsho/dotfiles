@@ -7,9 +7,10 @@ local levels = vim.log.levels
 
 local M = {}
 
----@class HLAttrs
+---@class HighlightAttributes
 ---@field from string
 ---@field attr 'foreground' | 'fg' | 'background' | 'bg'
+---@field alter integer
 
 ---Convert a hex color to RGB
 ---@param color string
@@ -92,7 +93,7 @@ end
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param name string
----@param opts table<string, string|boolean|HLAttrs>
+---@param opts table<string, string|boolean|HighlightAttributes>
 function M.set(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
 
@@ -142,7 +143,7 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table<string, table<string, boolean|string|HLAttrs>>
+---@param hls table<string, table<string, boolean|string|HighlightAttributes>>
 function M.all(hls)
   for name, hl in pairs(hls) do
     M.set(name, hl)
@@ -170,11 +171,6 @@ function M.plugin(name, hls)
 end
 
 local function general_overrides()
-  local comment_fg = M.get('Comment', 'fg')
-  local keyword_fg = M.get('Keyword', 'fg')
-  local normal_bg = M.get('Normal', 'bg')
-  local msg_area_bg = M.alter_color(normal_bg, -10)
-
   M.all({
     Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } },
     VertSplit = { background = 'NONE', foreground = { from = 'NonText' } },
@@ -185,8 +181,8 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
-    MsgArea = { background = msg_area_bg },
-    MsgSeparator = { foreground = comment_fg, background = msg_area_bg },
+    MsgArea = { background = { from = 'Normal', alter = -10 } },
+    MsgSeparator = { link = 'MsgArea' },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
@@ -245,7 +241,7 @@ local function general_overrides()
     -- Treesitter
     -----------------------------------------------------------------------------//
     TSNamespace = { foreground = P.blue },
-    TSKeywordReturn = { italic = true, foreground = keyword_fg },
+    TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
     -- FIXME: this should be removed once
@@ -330,19 +326,16 @@ end
 
 local function set_sidebar_highlight()
   local normal_bg = M.get('Normal', 'bg')
-  local split_color = M.get('VertSplit', 'fg')
   local dark_bg = M.alter_color(normal_bg, -43)
   local bg_color = M.alter_color(normal_bg, -8)
-  local st_color = M.alter_color(M.get('Visual', 'bg'), -20)
   M.all({
     PanelDarkBackground = { bg = dark_bg },
     PanelDarkHeading = { bg = dark_bg, bold = true },
     PanelBackground = { background = bg_color },
     PanelHeading = { background = bg_color, bold = true },
-    PanelVertSplit = { foreground = split_color, background = bg_color },
-    PanelWinSeparator = { foreground = split_color, background = bg_color },
-    PanelStNC = { background = bg_color, foreground = split_color },
-    PanelSt = { background = st_color },
+    PanelWinSeparator = { foreground = { from = 'WinSeparator' }, background = bg_color },
+    PanelStNC = { link = 'PanelWinSeparator' },
+    PanelSt = { background = { from = 'Visual', alter = -20 } },
   })
 end
 

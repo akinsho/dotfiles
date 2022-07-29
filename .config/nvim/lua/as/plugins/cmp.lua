@@ -8,9 +8,6 @@ return function()
   local lsp_hls = as.style.lsp.highlights
   local ellipsis = as.style.icons.misc.ellipsis
 
-  -- Make the source information less prominent
-  local faded = h.alter_color(h.get('Pmenu', 'bg'), 30)
-
   local kind_hls = as.fold(
     function(accum, value, key)
       accum['CmpItemKind' .. key] = { foreground = { from = value } }
@@ -19,10 +16,15 @@ return function()
     lsp_hls,
     {
       CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
-      CmpItemMenu = { foreground = faded, italic = true, bold = false },
       CmpItemAbbrMatch = { foreground = { from = 'Keyword' } },
       CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
       CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
+      -- Make the source information less prominent
+      CmpItemMenu = {
+        foreground = { from = 'Pmenu', attr = 'bg', alter = 30 },
+        italic = true,
+        bold = false,
+      },
     }
   )
 
