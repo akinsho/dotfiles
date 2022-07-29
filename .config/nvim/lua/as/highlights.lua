@@ -155,11 +155,9 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table<string, table<string, boolean|string|HighlightAttributes>>
+---@param hls table<string, HighlightKeys>
 function M.all(hls)
-  for name, hl in pairs(hls) do
-    M.set(name, hl)
-  end
+  as.foreach(function(hl, name) M.set(name, hl) end, hls)
 end
 
 ---------------------------------------------------------------------------------
