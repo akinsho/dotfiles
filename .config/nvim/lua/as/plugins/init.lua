@@ -961,7 +961,8 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use_local({
       'akinsho/pubspec-assist.nvim',
-      ft = { 'dart', 'yaml' },
+      ft = { 'dart' },
+      event = 'BufEnter pubspec.yaml',
       local_path = 'personal',
       rocks = {
         {
