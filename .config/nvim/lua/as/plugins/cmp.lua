@@ -21,7 +21,7 @@ return function()
       CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
       -- Make the source information less prominent
       CmpItemMenu = {
-        foreground = { from = 'Pmenu', attr = 'bg', alter = 30 },
+        fg = { from = 'Pmenu', attr = 'bg', alter = 30 },
         italic = true,
         bold = false,
       },
@@ -88,8 +88,7 @@ return function()
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
         local MAX = math.floor(vim.o.columns * 0.5)
-        vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
-          or vim_item.abbr
+        if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
         vim_item.kind = fmt('%s %s', as.style.current.lsp_icons[vim_item.kind], vim_item.kind)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
