@@ -71,8 +71,6 @@ nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 -----------------------------------------------------------------------------//
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
-nnoremap('p', 'P')
-nnoremap('P', 'p')
 -- search visual selection
 vnoremap('//', [[y/<C-R>"<CR>]])
 
