@@ -31,9 +31,8 @@ local function colors()
   local normal_fg = H.get('Normal', 'fg')
   local string_fg = H.get('String', 'fg')
   local number_fg = H.get('Number', 'fg')
-
   local normal_bg = H.get('Normal', 'bg')
-  local dim_color = H.alter_color(normal_bg, 40)
+
   local bg_color = H.alter_color(normal_bg, -16)
 
   H.all({
@@ -48,7 +47,11 @@ local function colors()
     StCount = { foreground = 'bg', background = indicator_color, bold = true },
     StClient = { background = bg_color, foreground = normal_fg, bold = true },
     StDirectory = { background = bg_color, foreground = 'Gray', italic = true },
-    StDirectoryInactive = { background = bg_color, foreground = dim_color, italic = true },
+    StDirectoryInactive = {
+      background = bg_color,
+      italic = true,
+      foreground = { from = 'Normal', alter = 40 },
+    },
     StParentDirectory = { background = bg_color, foreground = string_fg, bold = true },
     StTitle = { background = bg_color, foreground = 'LightGray', bold = true },
     StComment = { background = bg_color, inherit = 'Comment' },

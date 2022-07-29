@@ -45,7 +45,7 @@ return function()
     Folded = {
       bold = false,
       italic = false,
-      bg = hl.alter_color(hl.get('Normal', 'bg'), -7),
+      bg = { from = 'Normal', alter = -7 },
     },
   })
 

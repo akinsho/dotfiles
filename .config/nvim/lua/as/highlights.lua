@@ -96,6 +96,7 @@ local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
     if type(value) == 'table' and value.from then
       opts[name] = M.get(value.from, vim.F.if_nil(value.attr, name))
+      if value.alter then opts[name] = M.alter_color(opts[name], value.alter) end
     end
   end
 end
@@ -171,16 +172,10 @@ local function general_overrides()
   local comment_fg = M.get('Comment', 'fg')
   local keyword_fg = M.get('Keyword', 'fg')
   local normal_bg = M.get('Normal', 'bg')
-  local code_block = M.alter_color(normal_bg, 30)
   local msg_area_bg = M.alter_color(normal_bg, -10)
-  local info_line = M.alter_color(L.info, -70)
-  local hint_line = M.alter_color(L.hint, -70)
-  local error_line = M.alter_color(L.error, -80)
-  local warn_line = M.alter_color(L.warn, -80)
-  local dim = M.alter_color(normal_bg, 25)
 
   M.all({
-    Dim = { foreground = dim },
+    Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } },
     VertSplit = { background = 'NONE', foreground = { from = 'NonText' } },
     WinSeparator = { background = 'NONE', foreground = { from = 'NonText' } },
     mkdLineBreak = { link = 'NONE' },
@@ -196,9 +191,9 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     NormalFloat = { inherit = 'Pmenu' },
     FloatBorder = { inherit = 'NormalFloat', foreground = { from = 'NonText' } },
-    CodeBlock = { background = code_block },
-    markdownCode = { background = code_block },
-    markdownCodeBlock = { background = code_block },
+    CodeBlock = { background = { from = 'Normal', alter = 30 } },
+    markdownCode = { link = 'CodeBlock' },
+    markdownCodeBlock = { link = 'CodeBlock' },
     -----------------------------------------------------------------------------//
     CurSearch = {
       background = { from = 'String', attr = 'fg' },
@@ -305,10 +300,18 @@ local function general_overrides()
       sp = L.info,
       foreground = 'none',
     },
-    DiagnosticVirtualTextInfo = { background = info_line },
-    DiagnosticVirtualTextHint = { background = hint_line },
-    DiagnosticVirtualTextError = { background = error_line },
-    DiagnosticVirtualTextWarn = { background = warn_line },
+    DiagnosticVirtualTextInfo = {
+      background = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 },
+    },
+    DiagnosticVirtualTextHint = {
+      background = { from = 'DiagnosticHint', attr = 'fg', alter = -70 },
+    },
+    DiagnosticVirtualTextError = {
+      background = { from = 'DiagnosticError', attr = 'fg', alter = -80 },
+    },
+    DiagnosticVirtualTextWarn = {
+      background = { from = 'DiagnosticWarn', attr = 'fg', alter = -80 },
+    },
     DiagnosticSignWarn = { link = 'DiagnosticWarn' },
     DiagnosticSignInfo = { link = 'DiagnosticInfo' },
     DiagnosticSignHint = { link = 'DiagnosticHint' },
