@@ -1,0 +1,35 @@
+@document.meta
+title: kitty-icon-automation
+description: Auto updating kitty's Icon
+authors: akin
+categories: Productivity
+created: 2022-07-29
+version: 0.0.11
+@end
+
+To automatically change the icon for kitty following updates I created an `Automator Folder Action`
+
+The steps include:
+~ Open `Automator`
+~ Create a new action specifying a `Folder Action`
+~ Set `/Users/<name>/Applications/` as the target folder
+~ Choose `Run Shell Script as the action`
+~ Set the input to be passed in as `Arguments`
+~ Paste the block below into the space for the script
+@code zsh
+for f in "$@"
+do
+  if [[ $f == *"kitty"* ]] then
+    cp $SYNC_DIR/kitty/icons/kitty-light.icns /Applications/kitty.app/Contents/Resources/kitty.icns
+    rm /var/folders/*/*/*/com.apple.dock.iconcache
+    touch /Applications/kitty.app
+    killall Dock && killall Finder
+
+    osascript -e "display notification \"Updated Kitty icon\""
+  fi
+done
+@end
+
+** References:
+- https://www.sethvargo.com/replace-icons-osx
+- https://github.com/DinkDonk/kitty-icon#installation
