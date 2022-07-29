@@ -16,7 +16,7 @@ local fmt = string.format
 function as.fold(callback, list, accum)
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
-    assert(accum, 'The accumulator must be returned on each iteration')
+    assert(accum ~= nil, 'The accumulator must be returned on each iteration')
   end
   return accum
 end
@@ -39,6 +39,18 @@ function as.foreach(callback, list)
   for k, v in pairs(list) do
     callback(v, k)
   end
+end
+
+--- Check if the target matches  any item in the list.
+---@param target string
+---@param list string[]
+---@return boolean
+function as.any(target, list)
+  return as.fold(function(accum, item)
+    if accum then return accum end
+    if target:match(item) then return true end
+    return accum
+  end, list, false)
 end
 
 ---Find an item in a list
