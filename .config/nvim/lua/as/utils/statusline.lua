@@ -542,8 +542,8 @@ end
 --- @field click string
 --- @field suffix string
 --- @field suffix_color string
---- @field prefix string
---- @field prefix_color string
+--- @field prefix string?
+--- @field prefix_color string?
 --- @field before string
 --- @field after string
 --- @field id number
