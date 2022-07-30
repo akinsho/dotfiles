@@ -207,7 +207,7 @@ local function general_overrides()
       foreground = 'white',
       bold = true,
     },
-    CursorLineNr = { bold = true },
+    CursorLineNr = { inherit = 'CursorLine', bold = true },
     CursorLineSign = { link = 'CursorLine' },
     FoldColumn = { background = 'background' },
     TermCursor = { ctermfg = 'green', foreground = 'royalblue' },
