@@ -315,15 +315,12 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  local normal_bg = M.get('Normal', 'bg')
-  local dark_bg = M.alter_color(normal_bg, -43)
-  local bg_color = M.alter_color(normal_bg, -8)
   M.all({
-    PanelDarkBackground = { bg = dark_bg },
-    PanelDarkHeading = { bg = dark_bg, bold = true },
-    PanelBackground = { background = bg_color },
-    PanelHeading = { background = bg_color, bold = true },
-    PanelWinSeparator = { foreground = { from = 'WinSeparator' }, background = bg_color },
+    PanelDarkBackground = { bg = { from = 'Normal', -43 } },
+    PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true },
+    PanelBackground = { background = { from = 'Normal', -8 } },
+    PanelHeading = { inherit = 'PanelBackground', bold = true },
+    PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
     PanelStNC = { link = 'PanelWinSeparator' },
     PanelSt = { background = { from = 'Visual', alter = -20 } },
   })
@@ -373,8 +370,8 @@ end
 
 local function user_highlights()
   general_overrides()
-  colorscheme_overrides()
   set_sidebar_highlight()
+  colorscheme_overrides()
 end
 
 as.augroup('UserHighlights', {
