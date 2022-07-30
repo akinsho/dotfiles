@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local fn, api = vim.fn, vim.api
+local fn = vim.fn
 
 -- This function allows reading a per project "settings.json" file in the `.vim` directory of the project.
 ---@param client table<string, any>
