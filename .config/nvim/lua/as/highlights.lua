@@ -196,8 +196,8 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
-    NormalFloat = { inherit = 'Pmenu' },
-    FloatBorder = { inherit = 'NormalFloat', foreground = { from = 'NonText' } },
+    NormalFloat = { background = { from = 'Normal', alter = -15 } },
+    FloatBorder = { inherit = 'NormalFloat', foreground = { from = 'Comment' } },
     CodeBlock = { background = { from = 'Normal', alter = 30 } },
     markdownCode = { link = 'CodeBlock' },
     markdownCodeBlock = { link = 'CodeBlock' },
