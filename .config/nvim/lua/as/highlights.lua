@@ -362,8 +362,7 @@ local function colorscheme_overrides()
       LineNr = { background = 'NONE' },
       TabLineSel = { foreground = P.bright_blue },
       -- panel window overrides
-      PanelDarkBackground = { bg = { from = 'Normal', alter = -20 } },
-      PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true },
+      PanelDarkBackground = { background = { from = 'Normal', alter = -20 } },
       PanelBackground = { link = 'Normal' },
       PanelHeading = { inherit = 'Normal', bold = true },
       PanelWinSeparator = { foreground = { from = 'WinSeparator' }, inherit = 'PanelBackground' },
