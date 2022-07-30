@@ -198,10 +198,10 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     NormalFloat = { background = { from = 'Normal', alter = -15 } },
     FloatBorder = { inherit = 'NormalFloat', foreground = { from = 'Comment' } },
+    -----------------------------------------------------------------------------//
     CodeBlock = { background = { from = 'Normal', alter = 30 } },
     markdownCode = { link = 'CodeBlock' },
     markdownCodeBlock = { link = 'CodeBlock' },
-    -----------------------------------------------------------------------------//
     CurSearch = {
       background = { from = 'String', attr = 'fg' },
       foreground = 'white',
@@ -359,9 +359,18 @@ local function colorscheme_overrides()
     ['horizon'] = {
       Normal = { fg = '#C1C1C1' }, -- TODO: Upstream Normal foreground colour is incorrect
       WinSeparator = { foreground = '#4b4c53' },
-      WhichkeyFloat = { link = 'NormalFloat' },
       LineNr = { background = 'NONE' },
       TabLineSel = { foreground = P.bright_blue },
+      -- panel window overrides
+      PanelDarkBackground = { bg = { from = 'Normal', alter = -20 } },
+      PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true },
+      PanelBackground = { link = 'Normal' },
+      PanelHeading = { inherit = 'Normal', bold = true },
+      PanelWinSeparator = { foreground = { from = 'WinSeparator' }, inherit = 'PanelBackground' },
+      -- plugin overrides
+      Headline = { background = { from = 'Normal', alter = 20 } }, -- TODO: set ColorColumn instead as this normally links to that
+      WhichkeyFloat = { link = 'NormalFloat' },
+      NeoTreeWinSeparator = { inherit = 'Normal', fg = 'bg' },
     },
   }
   local hls = overrides[vim.g.colors_name]

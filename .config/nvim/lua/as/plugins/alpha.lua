@@ -71,7 +71,7 @@ return function()
 
   dashboard.section.buttons.val = {
     button('Directory', 'r', ' Restore last session', '<Cmd>RestoreSession<CR>'),
-    button('Todo', 'p', ' Pick a session', '<Cmd>Autosession search<CR>'),
+    button('Type', 'p', ' Pick a session', '<Cmd>Autosession search<CR>'),
     button('Label', 'd', ' Open dotfiles', f('<Cmd>RestoreSessionFromFile %s<CR>', DOTFILES)),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
     button('String', 'e', '  New file', ':ene | startinsert <CR>'),
