@@ -218,6 +218,17 @@ packer.startup({
     })
 
     use({
+      'lvimuser/lsp-inlayhints.nvim',
+      config = function()
+        require('lsp-inlayhints').setup({
+          inlay_hints = {
+            highlight = 'Comment',
+          },
+        })
+      end,
+    })
+
+    use({
       'ray-x/lsp_signature.nvim',
       config = function()
         require('lsp_signature').setup({

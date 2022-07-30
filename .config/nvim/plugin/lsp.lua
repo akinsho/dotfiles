@@ -135,8 +135,12 @@ end
 ---@param client table
 ---@param bufnr number
 local function setup_plugins(client, bufnr)
-  local ok, navic = pcall(require, 'nvim-navic')
-  if ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
+  local navic_ok, navic = pcall(require, 'nvim-navic')
+  if navic_ok and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+  local hints_ok, hints = pcall(require, 'lsp-inlayhints')
+  if hints_ok then hints.on_attach(bufnr, client) end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
