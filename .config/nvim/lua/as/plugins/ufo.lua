@@ -32,7 +32,7 @@ return function()
     -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
     if end_text[1] and end_text[1][1] then end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '') end
 
-    table.insert(result, { ' ⋯ ', 'NonText' })
+    table.insert(result, { ' ⋯ ', 'UfoFoldedEllipsis' })
     vim.list_extend(result, end_text)
     table.insert(result, { padding, '' })
     return result
