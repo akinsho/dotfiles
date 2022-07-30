@@ -347,6 +347,16 @@ packer.startup({
       end,
     })
 
+    use({
+      'lukas-reineke/virt-column.nvim',
+      config = function()
+        require('as.highlights').plugin('virt_column', {
+          VirtColumn = { bg = 'None', inherit = 'Dim' },
+        })
+        require('virt-column').setup({ char = '▕' })
+      end,
+    })
+
     -- NOTE: Defer loading till telescope is loaded this
     -- as it implicitly loads telescope so needs to be delayed
     use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('dressing') })
