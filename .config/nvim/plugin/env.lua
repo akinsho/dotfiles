@@ -1,5 +1,4 @@
-local api = vim.api
-local fn = vim.fn
+local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format
 
 local function read_file(file, line_handler)
@@ -9,7 +8,7 @@ local function read_file(file, line_handler)
 end
 
 api.nvim_create_user_command('DotEnv', function()
-  local files = vim.fs.find('.env', {
+  local files = fs.find('.env', {
     upward = true,
     stop = fn.fnamemodify(fn.getcwd(), ':p:h:h'),
     path = fn.expand('%:p:h'),
@@ -28,8 +27,9 @@ api.nvim_create_user_command('DotEnv', function()
   vim.notify(fmt('Read **%s**\n', filename) .. markdown, 'info', {
     title = 'Nvim Env',
     on_open = function(win)
-      local buf = vim.api.nvim_win_get_buf(win)
-      vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      local buf = api.nvim_win_get_buf(win)
+      if not api.nvim_buf_is_valid(buf) then return end
+      api.nvim_buf_set_option(buf, 'filetype', 'markdown')
     end,
   })
 end, {})
