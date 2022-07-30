@@ -317,7 +317,6 @@ packer.startup({
       },
     })
 
-
     --}}}
     -----------------------------------------------------------------------------//
     -- UI {{{1
@@ -808,7 +807,10 @@ packer.startup({
     use({
       'ruifm/gitlinker.nvim',
       requires = 'plenary.nvim',
-      keys = { '<localleader>gu', '<localleader>go' },
+      keys = {
+        { 'n', '<localleader>gu', 'gitlinker: copy to clipboard' },
+        { 'n', '<localleader>go', 'gitlinker: open in browser' },
+      },
       config = function()
         local linker = require('gitlinker')
         linker.setup({ mappings = '<localleader>gu' })
