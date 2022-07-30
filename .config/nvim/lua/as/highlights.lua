@@ -352,14 +352,23 @@ local function on_sidebar_enter()
 end
 
 local function colorscheme_overrides()
-  if vim.g.colors_name == 'doom-one' then
-    M.all({
+  local overrides = {
+    ['doom-one'] = {
       TSVariable = { foreground = { from = 'Normal' } },
       CursorLineNr = { foreground = { from = 'Keyword' } },
       LineNr = { background = 'NONE' },
       WhichkeyFloat = { link = 'NormalFloat' },
-    })
-  end
+    },
+    ['horizon'] = {
+      Normal = { fg = '#C1C1C1' }, -- TODO: Upstream Normal foreground colour is incorrect
+      WinSeparator = { foreground = '#4b4c53' },
+      WhichkeyFloat = { link = 'NormalFloat' },
+      LineNr = { background = 'NONE' },
+      TabLineSel = { foreground = P.bright_blue },
+    },
+  }
+  local hls = overrides[vim.g.colors_name]
+  if hls then M.all(hls) end
 end
 
 local function user_highlights()
