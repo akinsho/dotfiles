@@ -948,9 +948,11 @@ packer.startup({
     --------------------------------------------------------------------------------
     -- Themes  {{{1
     --------------------------------------------------------------------------------
+    use({ 'LunarVim/horizon.nvim' })
     use('EdenEast/nightfox.nvim')
     use({
       'NTBBloodbath/doom-one.nvim',
+      module = 'doom-one',
       config = function()
         require('doom-one').setup({
           pumblend = {
