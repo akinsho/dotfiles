@@ -18,6 +18,8 @@ alias dots="cd $DOTFILES"
 alias cl='clear'
 alias src="exec $SHELL"
 alias dnd='do-not-disturb toggle'
+
+alias kitty-icon="$DOTFILES/macos/kitty-icon.zsh"
 #-------------------------------------------------------------------------------
 #  APP ALIASES
 #-------------------------------------------------------------------------------
