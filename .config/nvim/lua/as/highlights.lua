@@ -219,9 +219,9 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    DiffAdd = { background = '#26332c', foreground = 'NONE' },
-    DiffDelete = { background = '#572E33', foreground = '#5c6370' },
-    DiffChange = { background = '#273842', foreground = 'NONE' },
+    DiffAdd = { background = '#26332c', foreground = 'NONE', underline = false },
+    DiffDelete = { background = '#572E33', foreground = '#5c6370', underline = false },
+    DiffChange = { background = '#273842', foreground = 'NONE', underline = false },
     DiffText = { background = '#314753', foreground = 'NONE' },
     diffAdded = { link = 'DiffAdd' },
     diffChanged = { link = 'DiffChange' },
@@ -370,6 +370,7 @@ local function colorscheme_overrides()
       Headline = { background = { from = 'Normal', alter = 20 } }, -- TODO: set ColorColumn instead as this normally links to that
       WhichkeyFloat = { link = 'NormalFloat' },
       NeoTreeWinSeparator = { inherit = 'Normal', fg = 'bg' },
+      GitSignsCurrentLineBlame = { link = 'Comment' },
     },
   }
   local hls = overrides[vim.g.colors_name]
