@@ -20,7 +20,7 @@ return function()
 
   vim.g.neo_tree_remove_legacy_commands = 1
 
-  as.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')
+  as.nnoremap('<C-N>', '<Cmd>Neotree toggle reveal<CR>')
 
   require('neo-tree').setup({
     sources = {
