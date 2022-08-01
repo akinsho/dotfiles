@@ -359,8 +359,10 @@ local function colorscheme_overrides()
     ['horizon'] = {
       Normal = { fg = '#C1C1C1' }, -- TODO: Upstream Normal foreground colour is incorrect
       WinSeparator = { foreground = '#4b4c53' },
+      NonText = { fg = { from = 'Comment' } },
       LineNr = { background = 'NONE' },
-      TabLineSel = { foreground = P.bright_blue },
+      TabLineSel = { foreground = { from = 'SpecialKey' } },
+      LspCodeLens = { inherit = 'Comment', bold = true, italic = false },
       -- panel window overrides
       PanelDarkBackground = { background = { from = 'Normal', alter = -20 } },
       PanelBackground = { link = 'Normal' },
@@ -370,7 +372,6 @@ local function colorscheme_overrides()
       Headline = { background = { from = 'Normal', alter = 20 } }, -- TODO: set ColorColumn instead as this normally links to that
       WhichkeyFloat = { link = 'NormalFloat' },
       NeoTreeWinSeparator = { inherit = 'Normal', fg = 'bg' },
-      GitSignsCurrentLineBlame = { link = 'Comment' },
     },
   }
   local hls = overrides[vim.g.colors_name]
