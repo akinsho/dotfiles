@@ -267,7 +267,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
-    LspCodeLens = { link = 'NonText' },
+    LspCodeLens = { inherit = 'Comment', bold = true, italic = false },
     LspReferenceText = { underline = true, background = 'NONE', sp = P.comment_grey },
     LspReferenceRead = { underline = true, background = 'NONE', sp = P.comment_grey },
     -- This represents when a reference is assigned which is more interesting than regular
@@ -362,7 +362,6 @@ local function colorscheme_overrides()
       NonText = { fg = { from = 'Comment' } },
       LineNr = { background = 'NONE' },
       TabLineSel = { foreground = { from = 'SpecialKey' } },
-      LspCodeLens = { inherit = 'Comment', bold = true, italic = false },
       -- panel window overrides
       PanelDarkBackground = { background = { from = 'Normal', alter = -20 } },
       PanelBackground = { link = 'Normal' },
