@@ -399,6 +399,6 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-vim.cmd.colorscheme('horizon')
+if as.plugin_installed('horizon.nvim') then vim.cmd.colorscheme('horizon') end
 
 return M
