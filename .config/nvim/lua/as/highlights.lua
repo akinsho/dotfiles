@@ -358,6 +358,7 @@ local function colorscheme_overrides()
     },
     ['horizon'] = {
       Normal = { fg = '#C1C1C1' }, -- TODO: Upstream Normal foreground colour is incorrect
+      TSVariable = { foreground = '#C1C1C1' },
       WinSeparator = { foreground = '#4b4c53' },
       NonText = { fg = { from = 'Comment' } },
       LineNr = { background = 'NONE' },
