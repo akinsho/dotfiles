@@ -375,10 +375,12 @@ local function colorscheme_overrides()
     ['horizon'] = {
       { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream Normal foreground colour is incorrect
       { WinSeparator = { foreground = '#4b4c53' } },
-      { TSVariable = { foreground = { from = 'Normal' } } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { foreground = { from = 'SpecialKey' } } },
+      -- Treesitter
+      { commentTSConstant = { inherit = 'Constant', bold = true } },
+      { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       -- panel window overrides
       { PanelBackground = { link = 'Normal' } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
@@ -390,6 +392,8 @@ local function colorscheme_overrides()
       { Headline = { background = { from = 'Normal', alter = 20 } } }, -- TODO: set ColorColumn instead as this normally links to that
       { WhichkeyFloat = { link = 'NormalFloat' } },
       { NeoTreeWinSeparator = { inherit = 'Normal', fg = 'bg' } },
+      { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },
+      { IndentBlanklineContextStart = { sp = { from = 'Directory', attr = 'fg' } } },
     },
   }
   local hls = overrides[vim.g.colors_name]
