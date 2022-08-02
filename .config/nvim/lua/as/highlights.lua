@@ -374,8 +374,8 @@ local function colorscheme_overrides()
     },
     ['horizon'] = {
       { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream Normal foreground colour is incorrect
-      { TSVariable = { foreground = '#C1C1C1' } },
       { WinSeparator = { foreground = '#4b4c53' } },
+      { TSVariable = { foreground = { from = 'Normal' } } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { foreground = { from = 'SpecialKey' } } },
@@ -384,10 +384,7 @@ local function colorscheme_overrides()
       { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
       {
-        PanelWinSeparator = {
-          inherit = 'PanelBackground',
-          foreground = { from = 'WinSeparator' },
-        },
+        PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
       },
       -- plugin overrides
       { Headline = { background = { from = 'Normal', alter = 20 } } }, -- TODO: set ColorColumn instead as this normally links to that
