@@ -6,16 +6,18 @@ return function()
   local tab_bg = highlights.alter_color(panel_dark_bg, 15)
 
   highlights.plugin('NeoTree', {
-    NeoTreeIndentMarker = { link = 'Comment' },
-    NeoTreeNormal = { link = 'PanelBackground' },
-    NeoTreeNormalNC = { link = 'PanelBackground' },
-    NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' },
-    NeoTreeCursorLine = { link = 'Visual' },
-    NeoTreeStatusLine = { link = 'PanelSt' },
-    NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true },
-    NeoTreeTabInactive = { bg = tab_bg, fg = { from = 'Comment' } },
-    NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg },
-    NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
+    { NeoTreeIndentMarker = { link = 'Comment' } },
+    { NeoTreeNormal = { link = 'PanelBackground' } },
+    { NeoTreeNormalNC = { link = 'PanelBackground' } },
+    { NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' } },
+    { NeoTreeCursorLine = { link = 'Visual' } },
+    { NeoTreeStatusLine = { link = 'PanelSt' } },
+    { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
+    { NeoTreeTabInactive = { bg = tab_bg, fg = { from = 'Comment' } } },
+    { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
+    {
+      NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
+    },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1

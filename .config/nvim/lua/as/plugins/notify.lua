@@ -23,15 +23,15 @@ return function()
   as.nnoremap('<leader>nd', notify.dismiss, { desc = 'dismiss notifications' })
 
   require('as.highlights').plugin('notify', {
-    NotifyERRORBorder = { bg = { from = 'NormalFloat' } },
-    NotifyWARNBorder = { bg = { from = 'NormalFloat' } },
-    NotifyINFOBorder = { bg = { from = 'NormalFloat' } },
-    NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } },
-    NotifyTRACEBorder = { bg = { from = 'NormalFloat' } },
-    NotifyERRORBody = { link = 'NormalFloat' },
-    NotifyWARNBody = { link = 'NormalFloat' },
-    NotifyINFOBody = { link = 'NormalFloat' },
-    NotifyDEBUGBody = { link = 'NormalFloat' },
-    NotifyTRACEBody = { link = 'NormalFloat' },
+    { NotifyERRORBorder = { bg = { from = 'NormalFloat' } } },
+    { NotifyWARNBorder = { bg = { from = 'NormalFloat' } } },
+    { NotifyINFOBorder = { bg = { from = 'NormalFloat' } } },
+    { NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } } },
+    { NotifyTRACEBorder = { bg = { from = 'NormalFloat' } } },
+    { NotifyERRORBody = { link = 'NormalFloat' } },
+    { NotifyWARNBody = { link = 'NormalFloat' } },
+    { NotifyINFOBody = { link = 'NormalFloat' } },
+    { NotifyDEBUGBody = { link = 'NormalFloat' } },
+    { NotifyTRACEBody = { link = 'NormalFloat' } },
   })
 end

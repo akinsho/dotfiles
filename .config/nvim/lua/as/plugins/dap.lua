@@ -49,8 +49,8 @@ function M.config()
   })
 
   require('as.highlights').plugin('dap', {
-    DapBreakpoint = { foreground = as.style.palette.light_red },
-    DapStopped = { foreground = as.style.palette.green },
+    { DapBreakpoint = { foreground = as.style.palette.light_red } },
+    { DapStopped = { foreground = as.style.palette.green } },
   })
 
   -- DON'T automatically stop at exceptions

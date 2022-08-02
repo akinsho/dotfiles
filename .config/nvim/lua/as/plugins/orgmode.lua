@@ -6,8 +6,8 @@ return function()
   local highlights = require('as.highlights')
 
   highlights.plugin('org', {
-    OrgDone = { fg = 'Green', bold = true },
-    OrgAgendaScheduled = { fg = 'Teal' },
+    { OrgDone = { fg = 'Green', bold = true } },
+    { OrgAgendaScheduled = { fg = 'Teal' } },
   })
 
   local function sync(path) return fmt('%s/%s', fn.expand('$SYNC_DIR'), path) end

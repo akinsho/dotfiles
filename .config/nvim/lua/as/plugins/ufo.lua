@@ -42,11 +42,7 @@ return function()
   opt.sessionoptions:append('folds')
 
   hl.plugin('ufo', {
-    Folded = {
-      bold = false,
-      italic = false,
-      bg = { from = 'Normal', alter = -7 },
-    },
+    { Folded = { bold = false, italic = false, bg = { from = 'Normal', alter = -7 } } },
   })
 
   as.augroup('UfoSettings', {

@@ -1,7 +1,7 @@
 return function()
   require('as.highlights').plugin('marks', {
-    MarkSignHL = { link = 'Directory' },
-    MarkSignNumHL = { link = 'Directory' },
+    { MarkSignHL = { link = 'Directory' } },
+    { MarkSignNumHL = { link = 'Directory' } },
   })
   require('which-key').register({
     m = {

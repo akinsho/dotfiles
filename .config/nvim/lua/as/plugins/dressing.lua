@@ -9,7 +9,10 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require('as.highlights').plugin('dressing', { FloatTitle = { inherit = 'Visual', bold = true } })
+  require('as.highlights').plugin(
+    'dressing',
+    { { FloatTitle = { inherit = 'Visual', bold = true } } }
+  )
   require('dressing').setup({
     input = {
       insert_only = false,

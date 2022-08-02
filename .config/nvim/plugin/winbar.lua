@@ -28,11 +28,11 @@ function as.ui.winbar.click(id, _, _, _)
 end
 
 highlights.plugin('winbar', {
-  Winbar = { bold = false },
-  WinbarNC = { bold = false },
-  WinbarCrumb = { bold = true },
-  WinbarIcon = { inherit = 'Function' },
-  WinbarDirectory = { inherit = 'Directory' },
+  { Winbar = { bold = false } },
+  { WinbarNC = { bold = false } },
+  { WinbarCrumb = { bold = true } },
+  { WinbarIcon = { inherit = 'Function' } },
+  { WinbarDirectory = { inherit = 'Directory' } },
 })
 
 local function breadcrumbs()

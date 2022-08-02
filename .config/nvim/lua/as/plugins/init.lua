@@ -190,7 +190,7 @@ packer.startup({
       'kosayoda/nvim-lightbulb',
       config = function()
         require('as.highlights').plugin('Lightbulb', {
-          LightBulbFloatWin = { foreground = { from = 'Type' } },
+          { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         })
         require('nvim-lightbulb').setup({
           ignore = { 'null-ls' },
@@ -351,7 +351,7 @@ packer.startup({
       'lukas-reineke/virt-column.nvim',
       config = function()
         require('as.highlights').plugin('virt_column', {
-          VirtColumn = { bg = 'None', inherit = 'Comment' },
+          { VirtColumn = { bg = 'None', inherit = 'Comment' } },
         })
         require('virt-column').setup({ char = '▕' })
       end,
@@ -631,7 +631,7 @@ packer.startup({
       'https://gitlab.com/yorickpeterse/nvim-pqf',
       event = 'BufReadPre',
       config = function()
-        require('as.highlights').plugin('pqf', { qfPosition = { link = 'Todo' } })
+        require('as.highlights').plugin('pqf', { { qfPosition = { link = 'Todo' } } })
         require('pqf').setup()
       end,
     })
@@ -640,7 +640,7 @@ packer.startup({
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        require('as.highlights').plugin('bqf', { BqfPreviewBorder = { link = 'WinSeparator' } })
+        require('as.highlights').plugin('bqf', { { BqfPreviewBorder = { link = 'WinSeparator' } } })
       end,
     })
     -- }}}
@@ -768,9 +768,9 @@ packer.startup({
       config = function()
         local hl = require('as.highlights')
         hl.plugin('treesitter-context', {
-          ContextBorder = { link = 'Dim' },
-          TreesitterContext = { inherit = 'Normal' },
-          TreesitterContextLineNumber = { inherit = 'LineNr' },
+          { ContextBorder = { link = 'Dim' } },
+          { TreesitterContext = { inherit = 'Normal' } },
+          { TreesitterContextLineNumber = { inherit = 'LineNr' } },
         })
         require('treesitter-context').setup({
           multiline_threshold = 4,
@@ -784,7 +784,7 @@ packer.startup({
       'm-demare/hlargs.nvim',
       config = function()
         require('as.highlights').plugin('hlargs', {
-          Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
+          { Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' } },
         })
         require('hlargs').setup({
           excluded_argnames = {
