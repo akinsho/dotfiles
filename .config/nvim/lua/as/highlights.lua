@@ -399,6 +399,7 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-if as.plugin_installed('horizon.nvim') then vim.cmd.colorscheme('horizon') end
+local ok, msg = pcall(vim.cmd.colorscheme, 'horizon')
+if not ok then vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end
 
 return M
