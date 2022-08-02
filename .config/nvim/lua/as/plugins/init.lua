@@ -10,15 +10,6 @@ local fn = vim.fn
 local fmt = string.format
 
 local PACKER_COMPILED_PATH = fmt('%s/packer/packer_compiled.lua', fn.stdpath('cache'))
-
----Some plugins are not safe to be reloaded because their setup functions
----are not idempotent. This wraps the setup calls of such plugins
----@param func fun()
-function as.block_reload(func)
-  if vim.g.packer_compiled_loaded then return end
-  func()
-end
-
 -----------------------------------------------------------------------------//
 -- Bootstrap Packer {{{3
 -----------------------------------------------------------------------------//
@@ -86,7 +77,7 @@ packer.startup({
 
     use({ 'folke/which-key.nvim', config = conf('whichkey') })
 
-    use({ 'anuvyklack/hydra.nvim', config = as.block_reload(conf('hydra')) })
+    use({ 'anuvyklack/hydra.nvim', config = conf('hydra') })
 
     use({
       'rmagatti/auto-session',
@@ -143,7 +134,7 @@ packer.startup({
       'williamboman/mason.nvim',
       event = 'BufRead',
       requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
-      config = as.block_reload(function()
+      config = function()
         local get_config = require('as.servers')
         require('mason').setup({ ui = { border = as.style.current.border } })
         require('mason-lspconfig').setup({ automatic_installation = true })
@@ -153,7 +144,7 @@ packer.startup({
             if config then require('lspconfig')[name].setup(config) end
           end,
         })
-      end),
+      end,
     })
 
     use({
@@ -596,7 +587,7 @@ packer.startup({
     use({
       'rcarriga/nvim-notify',
       cond = utils.not_headless, -- TODO: causes blocking output in headless mode
-      config = as.block_reload(conf('notify')),
+      config = conf('notify'),
     })
 
     use({
@@ -1033,7 +1024,7 @@ packer.startup({
     use_local({
       'akinsho/clock.nvim',
       local_path = 'personal',
-      config = as.block_reload(function()
+      config = function()
         local c, f = require('clock'), vim.fn
         c.setup({
           style = 'fading',
@@ -1045,7 +1036,7 @@ packer.startup({
             threshold = { late = '00:10:00' },
           })
         end
-      end),
+      end,
     })
     --}}}
     ---------------------------------------------------------------------------------
