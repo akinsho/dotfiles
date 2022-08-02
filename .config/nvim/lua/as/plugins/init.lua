@@ -158,7 +158,7 @@ packer.startup({
 
     use({
       'neovim/nvim-lspconfig',
-      module = 'lspconfig',
+      module_pattern = 'lspconfig.*',
       config = function()
         local get_config = require('as.servers')
         require('lspconfig').ccls.setup(get_config('ccls'))
