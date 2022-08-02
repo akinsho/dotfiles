@@ -31,7 +31,7 @@ return function()
   h.plugin('Cmp', kind_hls)
 
   local function tab(fallback)
-    local ok, luasnip = as.safe_require('luasnip', { silent = true })
+    local ok, luasnip = as.require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
@@ -42,7 +42,7 @@ return function()
   end
 
   local function shift_tab(fallback)
-    local ok, luasnip = as.safe_require('luasnip', { silent = true })
+    local ok, luasnip = as.require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then

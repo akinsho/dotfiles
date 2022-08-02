@@ -138,7 +138,7 @@ end
 ---@param module string
 ---@param opts table?
 ---@return boolean, any
-function as.safe_require(module, opts)
+function as.require(module, opts)
   opts = opts or { silent = false }
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
@@ -161,7 +161,7 @@ function as.ftplugin_conf(name, callback)
 
   local module = type(name) == 'table' and name[1] or name
   local info = debug.getinfo(1, 'S')
-  local ok, plugin = as.safe_require(module, { message = fmt('In file: %s', info.source) })
+  local ok, plugin = as.require(module, { message = fmt('In file: %s', info.source) })
 
   if ok then callback(plugin) end
 end

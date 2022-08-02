@@ -27,7 +27,7 @@ utils.bootstrap_packer()
 -- cfilter plugin allows filtering down an existing quickfix list
 vim.cmd.packadd({ 'cfilter', bang = true })
 
-as.safe_require('impatient')
+as.require('impatient')
 
 local packer = require('packer')
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions

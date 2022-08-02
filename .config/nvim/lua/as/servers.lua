@@ -136,7 +136,7 @@ return function(name)
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
-  local ok, cmp_nvim_lsp = as.safe_require('cmp_nvim_lsp')
+  local ok, cmp_nvim_lsp = as.require('cmp_nvim_lsp')
   if ok then cmp_nvim_lsp.update_capabilities(config.capabilities) end
   return config
 end

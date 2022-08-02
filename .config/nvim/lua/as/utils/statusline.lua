@@ -249,7 +249,7 @@ local function filetype(ctx, opts)
   if bt_exception then return bt_exception, opts.default end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ':e')
-  local icons_loaded, devicons = as.safe_require('nvim-web-devicons')
+  local icons_loaded, devicons = as.require('nvim-web-devicons')
   if icons_loaded then
     icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
     hl = highlight_ft_icon(hl, opts.icon_bg)

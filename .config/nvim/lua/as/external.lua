@@ -117,7 +117,7 @@ end
 local function fileicon()
   local name = fn.bufname()
   local icon, hl
-  local loaded, devicons = as.safe_require('nvim-web-devicons')
+  local loaded, devicons = as.require('nvim-web-devicons')
   if loaded then
     icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ':e'), { default = true })
   end
