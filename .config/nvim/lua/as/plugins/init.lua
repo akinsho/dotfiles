@@ -351,7 +351,7 @@ packer.startup({
       'lukas-reineke/virt-column.nvim',
       config = function()
         require('as.highlights').plugin('virt_column', {
-          { VirtColumn = { bg = 'None', inherit = 'Comment' } },
+          { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
         })
         require('virt-column').setup({ char = '▕' })
       end,
