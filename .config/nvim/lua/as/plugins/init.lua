@@ -187,6 +187,11 @@ packer.startup({
     })
 
     use({
+      'j-hui/fidget.nvim',
+      config = function() require('fidget').setup() end,
+    })
+
+    use({
       'kosayoda/nvim-lightbulb',
       config = function()
         require('as.highlights').plugin('Lightbulb', {
@@ -580,11 +585,6 @@ packer.startup({
     })
 
     use({
-      'j-hui/fidget.nvim',
-      config = function() require('fidget').setup() end,
-    })
-
-    use({
       'rcarriga/nvim-notify',
       cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = conf('notify'),
@@ -597,16 +597,6 @@ packer.startup({
       config = function()
         vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
-      end,
-    })
-
-    use({
-      'iamcco/markdown-preview.nvim',
-      run = function() vim.fn['mkdp#util#install']() end,
-      ft = { 'markdown' },
-      config = function()
-        vim.g.mkdp_auto_start = 0
-        vim.g.mkdp_auto_close = 1
       end,
     })
 
@@ -724,6 +714,16 @@ packer.startup({
     })
 
     use('nanotee/sqls.nvim')
+
+    use({
+      'iamcco/markdown-preview.nvim',
+      run = function() vim.fn['mkdp#util#install']() end,
+      ft = { 'markdown' },
+      config = function()
+        vim.g.mkdp_auto_start = 0
+        vim.g.mkdp_auto_close = 1
+      end,
+    })
 
     use({
       'xbase-lab/xbase',
