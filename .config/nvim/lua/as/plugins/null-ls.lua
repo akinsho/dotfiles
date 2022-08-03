@@ -10,7 +10,13 @@ return function()
         condition = function() return as.executable('cbfmt') end,
       }),
       null_ls.builtins.formatting.stylua.with({
-        condition = function() return as.executable('stylua') end,
+        condition = function()
+          return as.executable('stylua')
+            and not vim.tbl_isempty(vim.fs.find({ '.stylua.toml', 'stylua.toml' }, {
+              path = vim.fn.expand('%:p'),
+              upward = true,
+            }))
+        end,
       }),
       null_ls.builtins.formatting.prettier.with({
         filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
