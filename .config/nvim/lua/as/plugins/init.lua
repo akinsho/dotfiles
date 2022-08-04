@@ -585,6 +585,16 @@ packer.startup({
     })
 
     use({
+      'mizlan/iswap.nvim',
+      cmd = { 'ISwap', 'ISwapWith' },
+      config = function() require('iswap').setup() end,
+      setup = function()
+        as.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'ISwap: swap with')
+        as.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'ISwap: swap any')
+      end,
+    })
+
+    use({
       'rcarriga/nvim-notify',
       cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = conf('notify'),
