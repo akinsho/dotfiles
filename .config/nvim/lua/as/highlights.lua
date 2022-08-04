@@ -371,27 +371,26 @@ local function colorscheme_overrides()
       { CursorLineNr = { foreground = { from = 'Keyword' } } },
       { LineNr = { background = 'NONE' } },
       { WhichkeyFloat = { link = 'NormalFloat' } },
+      { NeoTreeIndentMarker = { link = 'Comment' } },
+      { NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' } },
     },
     ['horizon'] = {
-      { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream Normal foreground colour is incorrect
+      { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream normal foreground color
       { WinSeparator = { foreground = '#4b4c53' } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { foreground = { from = 'SpecialKey' } } },
-      -- Treesitter
       { commentTSConstant = { inherit = 'Constant', bold = true } },
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
-      -- panel window overrides
       { PanelBackground = { link = 'Normal' } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
       {
         PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
       },
-      -- plugin overrides
-      { Headline = { background = { from = 'Normal', alter = 20 } } }, -- TODO: set ColorColumn instead as this normally links to that
+      -- TODO: set ColorColumn instead as this normally links to that
+      { Headline = { background = { from = 'Normal', alter = 20 } } },
       { WhichkeyFloat = { link = 'NormalFloat' } },
-      { NeoTreeWinSeparator = { inherit = 'Normal', fg = 'bg' } },
       { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },
       { IndentBlanklineContextStart = { sp = { from = 'Directory', attr = 'fg' } } },
     },
