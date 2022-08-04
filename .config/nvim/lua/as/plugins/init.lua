@@ -1030,24 +1030,6 @@ packer.startup({
         })
       end,
     })
-
-    use_local({
-      'akinsho/clock.nvim',
-      local_path = 'personal',
-      config = function()
-        local c, f = require('clock'), vim.fn
-        c.setup({
-          style = 'fading',
-          border = as.style.current.border,
-        })
-        if f.expand('$DOTFILES') == f.getcwd() then
-          c.Clock:new():count_up({
-            duration = { hours = 1 },
-            threshold = { late = '00:10:00' },
-          })
-        end
-      end,
-    })
     --}}}
     ---------------------------------------------------------------------------------
   end,
