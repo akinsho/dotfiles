@@ -32,7 +32,7 @@ as.ftplugin_conf(
 
 as.ftplugin_conf('nvim-surround', function(surround)
   surround.buffer_setup({
-    delimiters = {
+    surrounds = {
       l = {
         add = function()
           return {
