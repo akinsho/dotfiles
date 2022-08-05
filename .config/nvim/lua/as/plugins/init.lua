@@ -290,7 +290,7 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       'nvim-neotest/neotest',
-      module = 'neotest',
+      module_pattern = 'neotest.*',
       setup = conf('neotest').setup,
       config = conf('neotest').config,
       requires = {
@@ -955,7 +955,7 @@ packer.startup({
     --------------------------------------------------------------------------------
     use({
       'phaazon/hop.nvim',
-      tag = 'v2.*',
+      tag = 'v2.*', -- branch = 'fix-multi-window-floats',
       keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
       config = conf('hop'),
     })
