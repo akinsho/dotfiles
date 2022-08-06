@@ -406,7 +406,6 @@ packer.startup({
 
     use({
       'kylechui/nvim-surround',
-      branch = 'pattern-matching',
       config = function()
         require('nvim-surround').setup({
           move_cursor = false,
