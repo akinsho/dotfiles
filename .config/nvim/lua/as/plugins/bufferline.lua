@@ -7,21 +7,21 @@ return function()
   require('bufferline').setup({
     highlights = function(opts)
       local hl = opts.highlights
-      local visible = hl.buffer_visible.guifg
-      local selected = hl.buffer_selected.guifg
+      local visible = hl.buffer_visible.fg
+      local selected = hl.buffer_selected.fg
       return {
-        info = { gui = 'undercurl', guifg = hl.info.guifg },
-        info_selected = { gui = 'undercurl,bold,italic', guifg = selected },
-        info_visible = { gui = 'undercurl', guifg = visible },
-        warning = { gui = 'undercurl', guifg = hl.warning.guifg },
-        warning_selected = { gui = 'undercurl,bold,italic', guifg = selected },
-        warning_visible = { gui = 'undercurl', guifg = visible },
-        error = { gui = 'undercurl', guifg = hl.error.guifg },
-        error_selected = { gui = 'undercurl,bold,italic', guifg = selected },
-        error_visible = { gui = 'undercurl', guifg = visible },
-        hint = { gui = 'undercurl', guifg = hl.hint.guifg },
-        hint_selected = { gui = 'undercurl,bold,italic', guifg = selected },
-        hint_visible = { gui = 'undercurl', guifg = visible },
+        info = { undercurl = true, fg = hl.info.fg },
+        info_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+        info_visible = { undercurl = true, fg = visible },
+        warning = { undercurl = true, fg = hl.warning.fg },
+        warning_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+        warning_visible = { undercurl = true, fg = visible },
+        error = { undercurl = true, fg = hl.error.fg },
+        error_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+        error_visible = { undercurl = true, fg = visible },
+        hint = { undercurl = true, fg = hl.hint.fg },
+        hint_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+        hint_visible = { undercurl = true, fg = visible },
       }
     end,
     options = {
@@ -91,7 +91,7 @@ return function()
           groups.builtin.ungrouped,
           {
             name = 'Dependencies',
-            highlight = { guifg = '#ECBE7B' },
+            highlight = { fg = '#ECBE7B' },
             matcher = function(buf)
               return vim.startswith(buf.path, fmt('%s/site/pack/packer', fn.stdpath('data')))
                 or vim.startswith(buf.path, fn.expand('$VIMRUNTIME'))
@@ -100,6 +100,10 @@ return function()
           {
             name = 'Terraform',
             matcher = function(buf) return buf.name:match('%.tf') ~= nil end,
+          },
+          {
+            name = 'Kubernetes',
+            matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
           },
           {
             name = 'SQL',
