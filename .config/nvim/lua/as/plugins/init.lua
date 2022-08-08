@@ -400,7 +400,6 @@ packer.startup({
     -- Utilities {{{1
     --------------------------------------------------------------------------------
     use('nanotee/luv-vimdocs')
-    use('milisims/nvim-luaref')
     use('ii14/emmylua-nvim')
 
     use({
