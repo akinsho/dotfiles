@@ -272,17 +272,25 @@ local function general_overrides()
     -- LSP
     -----------------------------------------------------------------------------//
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
-    { LspReferenceText = { underline = true, background = 'NONE', sp = P.comment_grey } },
-    { LspReferenceRead = { underline = true, background = 'NONE', sp = P.comment_grey } },
+    {
+      LspReferenceText = {
+        underline = false,
+        background = '#2D2F3B',
+      },
+    },
+    {
+      LspReferenceRead = {
+        underline = false,
+        background = '#2D2F3B',
+      },
+    },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     {
       LspReferenceWrite = {
-        underline = true,
         bold = true,
         italic = true,
-        background = 'NONE',
-        sp = P.whitesmoke,
+        background = '#2D2F3B',
       },
     },
     { DiagnosticHint = { foreground = L.hint } },
@@ -376,7 +384,6 @@ local function colorscheme_overrides()
     },
     ['horizon'] = {
       { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream normal foreground color
-      { TSVariable = { fg = { from = 'Normal' } } },
       { WinSeparator = { foreground = '#4b4c53' } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
