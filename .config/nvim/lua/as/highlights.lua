@@ -171,8 +171,15 @@ end
 function M.plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
   -- definition otherwise use the opts as is
-  if opts.theme then
-    opts = vim.tbl_extend('keep', opts.theme[vim.g.colors_name] or {}, opts['*'] or {})
+  local theme = opts.theme
+  if theme then
+    local res, seen = {}, {}
+    for _, hl in ipairs(vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})) do
+      local n = next(hl)
+      if not seen[n] then res[#res + 1] = hl end
+      seen[n] = true
+    end
+    opts = res
     if not next(opts) then return end
   end
   -- capitalise the name for autocommand convention sake
