@@ -8,14 +8,13 @@ return function()
   highlights.plugin('NeoTree', {
     { NeoTreeNormal = { link = 'PanelBackground' } },
     { NeoTreeNormalNC = { link = 'PanelBackground' } },
+    { NeoTreeRootName = { underline = true } },
     { NeoTreeCursorLine = { link = 'Visual' } },
     { NeoTreeStatusLine = { link = 'PanelSt' } },
     { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
     { NeoTreeTabInactive = { bg = tab_bg, fg = { from = 'Comment' } } },
     { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
-    {
-      NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
-    },
+    { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
