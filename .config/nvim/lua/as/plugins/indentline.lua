@@ -1,4 +1,12 @@
 return function()
+  require('as.highlights').plugin('indentline', {
+    theme = {
+      horizon = {
+        { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },
+        { IndentBlanklineContextStart = { sp = { from = 'Directory', attr = 'fg' } } },
+      },
+    },
+  })
   require('indent_blankline').setup({
     char = '│', -- ┆ ┊ 
     show_foldtext = false,

@@ -1,4 +1,6 @@
 return function()
+  require('as.highlights').plugin('whichkey', { { WhichkeyFloat = { link = 'NormalFloat' } } })
+
   local wk = require('which-key')
   wk.setup({
     plugins = {
