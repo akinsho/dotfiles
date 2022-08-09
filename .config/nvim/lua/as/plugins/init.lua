@@ -965,14 +965,9 @@ packer.startup({
     use('EdenEast/nightfox.nvim')
     use({
       'NTBBloodbath/doom-one.nvim',
-      module = 'doom-one',
       config = function()
-        require('doom-one').setup({
-          pumblend = {
-            enable = true,
-            transparency_amount = 3,
-          },
-        })
+        vim.g.doom_one_pumblend_enable = true
+        vim.g.doom_one_pumblend_transparency = 3
       end,
     })
     -- }}}
