@@ -439,6 +439,8 @@ as.augroup('UserHighlights', {
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
 local ok, msg = pcall(vim.cmd.colorscheme, 'horizon')
-if not ok then vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end
+if not ok then
+  vim.schedule(function() vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end)
+end
 
 return M
