@@ -216,9 +216,7 @@ packer.startup({
       'lvimuser/lsp-inlayhints.nvim',
       config = function()
         require('lsp-inlayhints').setup({
-          inlay_hints = {
-            highlight = 'Comment',
-          },
+          inlay_hints = { highlight = 'Comment' },
         })
       end,
     })
@@ -399,7 +397,6 @@ packer.startup({
     --------------------------------------------------------------------------------
     -- Utilities {{{1
     --------------------------------------------------------------------------------
-    use('nanotee/luv-vimdocs')
     use('ii14/emmylua-nvim')
 
     use({
