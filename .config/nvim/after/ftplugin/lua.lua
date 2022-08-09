@@ -50,7 +50,7 @@ end
 
 as.ftplugin_conf('nvim-surround', function(surround)
   local get_input = function(prompt)
-    local ok, input = pcall(vim.fn.input, prompt)
+    local ok, input = pcall(vim.fn.input, fmt('%s: ', prompt))
     if not ok then return end
     return input
   end
@@ -60,7 +60,7 @@ as.ftplugin_conf('nvim-surround', function(surround)
       F = {
         add = function()
           return {
-            { fmt('local function %s() ', get_input('Enter a function name: ')) },
+            { fmt('local function %s() ', get_input('Enter a function name')) },
             { ' end' },
           }
         end,
@@ -68,8 +68,16 @@ as.ftplugin_conf('nvim-surround', function(surround)
       i = {
         add = function()
           return {
-            { fmt('if %s then ', get_input('Enter a condition:')) },
+            { fmt('if %s then ', get_input('Enter a condition')) },
             { ' end' },
+          }
+        end,
+      },
+      t = {
+        add = function()
+          return {
+            { fmt('{ %s = { ', get_input('Enter a field name')) },
+            { ' }}' },
           }
         end,
       },
