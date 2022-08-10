@@ -3,7 +3,6 @@ local fn = vim.fn
 local api = vim.api
 local P = as.style.palette
 local L = as.style.lsp.colors
-local levels = vim.log.levels
 
 local M = {}
 
@@ -66,13 +65,11 @@ end
 ---@param group_name string A highlight group name
 local function get_hl(group_name)
   local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
-  if ok then
-    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
-    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
-    hl[true] = nil -- BUG: API returns a true key which errors during the merge
-    return hl
-  end
-  return {}
+  if not ok then return {} end
+  hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
+  hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
+  hl[true] = nil -- BUG: API returns a true key which errors during the merge
+  return hl
 end
 
 ---A mechanism to allow inheritance of the winhighlight of a specific
@@ -133,22 +130,15 @@ end
 ---@param fallback string?
 ---@return string
 function M.get(group, attribute, fallback)
-  if not group then
-    vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
-    return 'NONE'
-  end
-  local hl = get_hl(group)
-  if not attribute then return hl end
-  attribute = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
-  local color = hl[attribute] or fallback
-  if not color then
-    vim.schedule(
-      function() vim.notify(fmt('%s %s does not exist', group, attribute), levels.INFO) end
-    )
-    return 'NONE'
-  end
-  -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
-  return color
+  assert(group, 'cannot get a highlight without specifying a group name')
+  local data = get_hl(group)
+  if not attribute then return data end
+  local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
+  local color = data[attr] or fallback
+  if color then return color end
+  local msg = fmt("%s's %s does not exist", group, attr)
+  vim.schedule(function() vim.notify(msg, 'error') end)
+  return 'NONE'
 end
 
 function M.clear_hl(name)
