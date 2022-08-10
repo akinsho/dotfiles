@@ -227,7 +227,7 @@ local function general_overrides()
     },
     { CursorLineNr = { inherit = 'CursorLine', bold = true } },
     { CursorLineSign = { link = 'CursorLine' } },
-    { FoldColumn = { background = 'background' } },
+    { FoldColumn = { background = 'bg' } },
     { TermCursor = { ctermfg = 'green', foreground = 'royalblue' } },
     -- Add undercurl to existing spellbad highlight
     { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
@@ -397,6 +397,7 @@ local function colorscheme_overrides()
     },
     ['horizon'] = {
       { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream normal foreground color
+      { Constant = { bold = true } },
       { WinSeparator = { foreground = '#4b4c53' } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
