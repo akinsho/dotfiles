@@ -268,7 +268,6 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { TSNamespace = { foreground = P.blue } },
     { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
     { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
     { TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' } },
@@ -389,6 +388,7 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['doom-one'] = {
+      { TSNamespace = { foreground = P.blue } },
       { TSVariable = { foreground = { from = 'Normal' } } },
       { CursorLineNr = { foreground = { from = 'Keyword' } } },
       { LineNr = { background = 'NONE' } },
