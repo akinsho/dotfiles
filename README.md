@@ -1,6 +1,7 @@
 # .dotfiles
 
-<img width="1719" alt="dotfiles" src="https://user-images.githubusercontent.com/22454918/164985104-93e4ecc6-4b92-4e6a-9483-439bc88e397b.png">
+
+<img width="1728" alt="dotfiles" src="https://user-images.githubusercontent.com/22454918/183880278-d9762976-07a9-457e-8542-d2685a8a26b4.png">
 
 My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in case of laptop armageddon).
 
