@@ -1,5 +1,4 @@
 local fmt = string.format
-local fn = vim.fn
 local api = vim.api
 local P = as.style.palette
 local L = as.style.lsp.colors
@@ -130,14 +129,14 @@ end
 function M.adopt_win_highlight(win_id, target, name, fallback)
   local win_hl_name = name .. win_id
   local _, win_hl = M.has_win_highlight(win_id, target)
-  local hl_exists = fn.hlexists(win_hl_name) > 0
-  if hl_exists then return win_hl_name end
-  local parts = vim.split(win_hl, ',')
-  local found = as.find(parts, function(part) return part:match(target) end)
-  if not found then return fallback end
-  local hl_group = vim.split(found, ':')[2]
-  local bg = M.get(hl_group, 'bg')
-  M.set(win_hl_name, { background = bg, inherit = fallback })
+
+  if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then return win_hl_name end
+
+  local hl = as.find(function(part) return part:match(target) end, vim.split(win_hl, ','))
+  if not hl then return fallback end
+
+  local hl_group = vim.split(hl, ':')[2]
+  M.set(win_hl_name, { inherit = fallback, background = { from = hl_group, attr = 'bg' } })
   return win_hl_name
 end
 

@@ -55,10 +55,10 @@ end
 
 ---Find an item in a list
 ---@generic T
----@param haystack T[]
 ---@param matcher fun(arg: T):boolean
+---@param haystack T[]
 ---@return T
-function as.find(haystack, matcher)
+function as.find(matcher, haystack)
   local found
   for _, needle in ipairs(haystack) do
     if matcher(needle) then
