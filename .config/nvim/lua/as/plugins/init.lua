@@ -248,19 +248,6 @@ packer.startup({
         { 'f3fora/cmp-spell', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-        {
-          'uga-rosa/cmp-dictionary',
-          after = 'nvim-cmp',
-          config = function()
-            require('cmp_dictionary').setup({
-              async = true,
-              dic = {
-                ['*'] = { '/usr/share/dict/words' },
-              },
-            })
-            require('cmp_dictionary').update()
-          end,
-        },
         { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
         { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
         { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
