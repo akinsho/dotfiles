@@ -410,6 +410,11 @@ packer.startup({
     })
 
     use({
+      'andrewferrier/debugprint.nvim',
+      config = function() require('debugprint').setup() end,
+    })
+
+    use({
       'AckslD/nvim-neoclip.lua',
       requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
       config = function()
