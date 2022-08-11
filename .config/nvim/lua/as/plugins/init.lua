@@ -75,6 +75,7 @@ packer.startup({
 
     use('kyazdani42/nvim-web-devicons')
 
+    -- TODO: Revisit mg979/vim-visual-multi when which key interaction is fixed
     use({ 'folke/which-key.nvim', config = conf('whichkey') })
 
     use({ 'anuvyklack/hydra.nvim', config = conf('hydra') })
@@ -539,20 +540,6 @@ packer.startup({
     })
 
     use({
-      'mg979/vim-visual-multi',
-      config = function()
-        vim.g.VM_highlight_matches = 'underline'
-        vim.g.VM_theme = 'codedark'
-        vim.g.VM_maps = {
-          ['Find Under'] = '<M-e>',
-          ['Find Subword Under'] = '<M-e>',
-          ['Select Cursor Down'] = '\\j',
-          ['Select Cursor Up'] = '\\k',
-        }
-      end,
-    })
-
-    use({
       'itchyny/vim-highlighturl',
       config = function() vim.g.highlighturl_guifg = require('as.highlights').get('URL', 'fg') end,
     })
@@ -714,16 +701,6 @@ packer.startup({
         vim.g.mkdp_auto_start = 0
         vim.g.mkdp_auto_close = 1
       end,
-    })
-
-    use({
-      'xbase-lab/xbase',
-      ft = { 'swift' },
-      run = 'make install',
-      requires = {
-        'nvim-lua/plenary.nvim',
-        'nvim-telescope/telescope.nvim',
-      },
     })
 
     use('mtdl9/vim-log-highlighting')
