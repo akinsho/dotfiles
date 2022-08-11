@@ -820,7 +820,7 @@ packer.startup({
       end,
     })
 
-    use({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('gitsigns') })
+    use({ 'lewis6991/gitsigns.nvim', event = 'BufRead', config = conf('gitsigns') })
 
     use({
       'TimUntersberger/neogit',
@@ -904,6 +904,7 @@ packer.startup({
         'kana/vim-operator-user',
         {
           'glts/vim-textobj-comment',
+          event = 'CursorHold',
           config = function()
             vim.g.textobj_comment_no_default_key_mappings = 1
             as.xmap('ax', '<Plug>(textobj-comment-a)')
