@@ -138,7 +138,7 @@ function as.ui.statusline()
   end
   local file_component = component(file.item, file.hl, file.opts)
 
-  local readonly_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomError', 'StError')
+  local readonly_hl = H.adopt_win_highlight(curwin, 'StatusLine', 'StCustomError', 'StError')
   local readonly_component = component(utils.readonly(ctx), readonly_hl, { priority = 1 })
   ----------------------------------------------------------------------------//
   -- Mode

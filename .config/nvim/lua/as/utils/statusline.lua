@@ -1,4 +1,4 @@
-local H = require('as.highlights')
+local highlights = require('as.highlights')
 
 local fn = vim.fn
 local api = vim.api
@@ -225,8 +225,8 @@ local function highlight_ft_icon(hl, bg_hl)
   if not hl or not bg_hl then return end
   local name = hl .. 'Statusline'
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
-  local fg_color = H.get(hl, 'fg')
-  local bg_color = H.get(bg_hl, 'bg')
+  local fg_color = highlights.get(hl, 'fg')
+  local bg_color = highlights.get(bg_hl, 'bg')
   if bg_color and fg_color then
     as.augroup(name, {
       {
@@ -262,16 +262,16 @@ end
 ---@param minimal boolean
 ---@return table
 function M.file(ctx, minimal)
-  local curwin = ctx.winid
+  local win = ctx.winid
   -- highlight the filename components separately
   local filename_hl = minimal and 'StFilenameInactive' or 'StFilename'
   local directory_hl = minimal and 'StDirectoryInactive' or 'StDirectory'
   local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
-  if H.winhighlight_exists(curwin, 'Normal', 'StatusLine') then
-    directory_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
-    filename_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
-    parent_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
+  if highlights.has_win_highlight(win, 'Normal', 'StatusLine') then
+    directory_hl = highlights.adopt_win_highlight(win, 'StatusLine', 'StCustomDirectory', 'StTitle')
+    filename_hl = highlights.adopt_win_highlight(win, 'StatusLine', 'StCustomFilename', 'StTitle')
+    parent_hl = highlights.adopt_win_highlight(win, 'StatusLine', 'StCustomParentDir', 'StTitle')
   end
 
   local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })
