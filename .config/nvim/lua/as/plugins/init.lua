@@ -276,15 +276,10 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       'nvim-neotest/neotest',
-      module = 'neotest',
-      setup = conf('neotest').setup,
       config = conf('neotest').config,
       requires = {
-        'plenary.nvim',
-        'nvim-treesitter',
-        'FixCursorHold.nvim',
-        'rcarriga/neotest-plenary',
-        dev('personal/neotest-go'),
+        { 'rcarriga/neotest-plenary', module = 'neotest-plenary' },
+        { dev('personal/neotest-go'), module = 'neotest-go' },
       },
     })
 
