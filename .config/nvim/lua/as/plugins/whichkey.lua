@@ -28,7 +28,9 @@ return function()
     },
     ['g>'] = 'show message history',
     ['<leader>'] = {
+      c = { name = '+code-action' },
       d = {
+        name = '+treesitter: peek',
         f = 'treesitter: peek function definition',
         F = 'treesitter: peek class definition',
       },
@@ -54,6 +56,7 @@ return function()
         i = 'toggle location list',
         s = 'toggle quickfix',
       },
+      i = { name = '+iswap' },
       e = {
         name = '+edit',
         v = 'open vimrc in a vertical split',
@@ -61,6 +64,7 @@ return function()
         z = 'open zshrc in a vertical split',
         t = 'open tmux config in a vertical split',
       },
+      r = { name = '+lsp-refactor' },
       o = {
         name = '+only',
         n = 'close all other buffers',
@@ -70,9 +74,13 @@ return function()
         c = 'tab close',
         n = 'tab edit current buffer',
       },
-      sw = 'swap buffers horizontally',
-      so = 'source current buffer',
-      sv = 'source init.vim',
+      s = {
+        name = '+source/swap',
+        w = 'swap buffers horizontally',
+        o = 'source current buffer',
+        v = 'source init.vim',
+      },
+      y = { name = '+yank' },
       U = 'uppercase all word',
       ['<CR>'] = 'repeat previous macro',
       [','] = 'go to previous buffer',
@@ -87,6 +95,9 @@ return function()
     },
     ['<localleader>'] = {
       name = 'local leader',
+      n = { name = '+neogen' },
+      o = { name = '+neorg' },
+      t = { name = '+neotest' },
       w = {
         name = '+window',
         h = 'change two vertically split windows to horizontal splits',
