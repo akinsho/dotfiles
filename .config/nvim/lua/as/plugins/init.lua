@@ -291,7 +291,7 @@ packer.startup({
     use({
       'mfussenegger/nvim-dap',
       module = 'dap',
-      tag = '0.1.*',
+      tag = '*',
       setup = conf('dap').setup,
       config = conf('dap').config,
       requires = {
