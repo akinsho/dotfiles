@@ -252,6 +252,7 @@ packer.startup({
       module = 'cmp',
       event = 'InsertEnter',
       config = conf('cmp'),
+      want = { 'LuaSnip' },
       requires = {
         { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
         { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },

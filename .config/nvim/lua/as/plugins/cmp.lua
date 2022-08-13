@@ -7,6 +7,7 @@ return function()
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.highlights
   local ellipsis = as.style.icons.misc.ellipsis
+  local luasnip = require('luasnip')
 
   local kind_hls = as.fold(
     function(accum, value, key)
@@ -33,10 +34,9 @@ return function()
   h.plugin('Cmp', kind_hls)
 
   local function tab(fallback)
-    local ok, luasnip = as.require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
-    elseif ok and luasnip.expand_or_locally_jumpable() then
+    elseif luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
     else
       fallback()
@@ -44,10 +44,9 @@ return function()
   end
 
   local function shift_tab(fallback)
-    local ok, luasnip = as.require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_prev_item()
-    elseif ok and luasnip.jumpable(-1) then
+    elseif luasnip.jumpable(-1) then
       luasnip.jump(-1)
     else
       fallback()
