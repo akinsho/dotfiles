@@ -32,7 +32,7 @@ end
 function M.not_headless() return #vim.api.nvim_list_uis() > 0 end
 
 ---@param path string
-function M.dev(path) return os.getenv('HOME') .. '/projects/' .. path end
+function M.dev(path) return vim.env.HOME .. '/projects/' .. path end
 
 function M.developing() return vim.env.DEVELOPING ~= nil end
 
