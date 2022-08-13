@@ -44,7 +44,7 @@ end
 local namespace = {
   -- for UI elements like the winbar and statusline that need global references
   ui = {
-    winbar = { enable = false },
+    winbar = { enable = true },
   },
   -- some vim mappings require a mixture of commandline commands and function calls
   -- this table is place to store lua functions to be called in those mappings
