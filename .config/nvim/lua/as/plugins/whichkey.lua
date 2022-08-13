@@ -30,9 +30,7 @@ return function()
     ['<leader>'] = {
       c = { name = '+code-action' },
       d = {
-        name = '+treesitter: peek',
-        f = 'treesitter: peek function definition',
-        F = 'treesitter: peek class definition',
+        name = '+debug/database',
       },
       n = {
         name = '+new',

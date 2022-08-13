@@ -69,14 +69,6 @@ return function()
           ['[m'] = { '@function.outer', '@class.outer' },
         },
       },
-      lsp_interop = {
-        enable = true,
-        border = as.style.current.border,
-        peek_definition_code = {
-          ['<leader>df'] = '@function.outer',
-          ['<leader>dF'] = '@class.outer',
-        },
-      },
     },
     rainbow = {
       enable = true,

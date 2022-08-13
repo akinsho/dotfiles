@@ -419,7 +419,21 @@ packer.startup({
 
     use({
       'andrewferrier/debugprint.nvim',
-      config = function() require('debugprint').setup() end,
+      config = function()
+        local dp = require('debugprint')
+        dp.setup({ create_keymaps = false })
+
+        as.nnoremap(
+          '<leader>dp',
+          function() return dp.debugprint({ variable = true }) end,
+          { desc = 'debugprint: cursor', expr = true }
+        )
+        as.nnoremap(
+          '<leader>do',
+          function() return dp.debugprint({ motion = true }) end,
+          { desc = 'debugprint: operator', expr = true }
+        )
+      end,
     })
 
     use({
