@@ -5,6 +5,7 @@ return function()
     sources = {
       null_ls.builtins.diagnostics.buf,
       null_ls.builtins.diagnostics.zsh,
+      null_ls.builtins.formatting.goimports,
       null_ls.builtins.diagnostics.golangci_lint,
       null_ls.builtins.formatting.cbfmt:with({
         condition = function() return as.executable('cbfmt') end,
