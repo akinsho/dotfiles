@@ -28,7 +28,6 @@ return function()
       debug = {
         logging = true,
       },
-      navigation = { mode = 'uncentered' },
       mode = 'buffers', -- tabs
       sort_by = 'insert_after_current',
       right_mouse_command = 'vert sbuffer %d',
