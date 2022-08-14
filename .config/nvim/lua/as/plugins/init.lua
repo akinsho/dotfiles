@@ -626,7 +626,12 @@ packer.startup({
       'https://gitlab.com/yorickpeterse/nvim-pqf',
       event = 'BufReadPre',
       config = function()
-        require('as.highlights').plugin('pqf', { { qfPosition = { link = 'Todo' } } })
+        require('as.highlights').plugin('pqf', {
+          theme = {
+            ['doom-one'] = { { qfPosition = { link = 'Todo' } } },
+            ['horizon'] = { { qfPosition = { link = 'String' } } },
+          },
+        })
         require('pqf').setup()
       end,
     })
