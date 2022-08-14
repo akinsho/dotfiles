@@ -163,7 +163,8 @@ function M.plugin(name, opts)
   local theme = opts.theme
   if theme then
     local res, seen = {}, {}
-    for _, hl in ipairs(vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})) do
+    local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})
+    for _, hl in ipairs(list) do
       local n = next(hl)
       if not seen[n] then res[#res + 1] = hl end
       seen[n] = true
@@ -277,13 +278,13 @@ local function general_overrides()
     {
       LspReferenceText = {
         underline = false,
-        background = '#2D2F3B',
+        background = { from = 'Comment', attr = 'fg' },
       },
     },
     {
       LspReferenceRead = {
         underline = false,
-        background = '#2D2F3B',
+        background = { from = 'Comment', attr = 'fg' },
       },
     },
     -- This represents when a reference is assigned which is more interesting than regular
@@ -292,7 +293,7 @@ local function general_overrides()
       LspReferenceWrite = {
         bold = true,
         italic = true,
-        background = '#2D2F3B',
+        background = { from = 'Comment', attr = 'fg' },
       },
     },
     { DiagnosticHint = { foreground = L.hint } },
@@ -399,6 +400,9 @@ local function colorscheme_overrides()
       {
         PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
       },
+      { LspReferenceWrite = { background = '#2D2F3B' } },
+      { LspReferenceRead = { background = '#2D2F3B' } },
+      { LspReferenceText = { background = '#2D2F3B' } },
       -- TODO: set ColorColumn instead as this normally links to that
       { Headline = { background = { from = 'Normal', alter = 20 } } },
     },
