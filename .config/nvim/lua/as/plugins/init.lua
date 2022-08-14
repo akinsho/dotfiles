@@ -433,6 +433,7 @@ packer.startup({
           function() return dp.debugprint({ motion = true }) end,
           { desc = 'debugprint: operator', expr = true }
         )
+        as.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
       end,
     })
 
