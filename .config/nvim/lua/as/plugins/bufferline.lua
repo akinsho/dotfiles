@@ -57,7 +57,8 @@ return function()
         },
         {
           filetype = 'neo-tree',
-          text = 'Explorer',
+          text = '📁 EXPLORER',
+          text_align = 'left',
           highlight = 'PanelDarkHeading',
         },
         {
