@@ -43,42 +43,51 @@ function M.config()
   })
 
   H.plugin('telescope', {
-    {
-      TelescopePromptTitle = {
-        bg = as.style.palette.grey,
-        fg = { from = 'Directory' },
-        bold = true,
+    theme = {
+      ['*'] = {
+        {
+          TelescopePromptTitle = {
+            bg = as.style.palette.grey,
+            fg = { from = 'Directory' },
+            bold = true,
+          },
+        },
+        {
+          TelescopeResultsTitle = {
+            bg = as.style.palette.grey,
+            fg = { from = 'Normal' },
+            bold = true,
+          },
+        },
+        {
+          TelescopePreviewTitle = {
+            bg = as.style.palette.grey,
+            fg = { from = 'Normal' },
+            bold = true,
+          },
+        },
+        {
+          TelescopePreviewBorder = {
+            fg = as.style.palette.grey,
+            bg = { from = 'PanelBackground' },
+          },
+        },
+        { TelescopePreviewNormal = { link = 'PanelBackground' } },
+        { TelescopePromptPrefix = { link = 'Statement' } },
+        { TelescopeBorder = { foreground = as.style.palette.grey } },
+        { TelescopeTitle = { inherit = 'Normal', bold = true } },
+        {
+          TelescopeSelectionCaret = {
+            fg = { from = 'Identifier' },
+            bg = { from = 'TelescopeSelection' },
+          },
+        },
       },
-    },
-    {
-      TelescopeResultsTitle = {
-        bg = as.style.palette.grey,
-        fg = { from = 'Normal' },
-        bold = true,
+      ['horizon'] = {
+        { TelescopeMatching = { bold = false, foreground = { from = 'Variable', attr = 'fg' } } },
       },
-    },
-    {
-      TelescopePreviewTitle = {
-        bg = as.style.palette.grey,
-        fg = { from = 'Normal' },
-        bold = true,
-      },
-    },
-    {
-      TelescopePreviewBorder = {
-        fg = as.style.palette.grey,
-        bg = { from = 'PanelBackground' },
-      },
-    },
-    { TelescopePreviewNormal = { link = 'PanelBackground' } },
-    { TelescopePromptPrefix = { link = 'Statement' } },
-    { TelescopeBorder = { foreground = as.style.palette.grey } },
-    { TelescopeMatching = { link = 'Title' } },
-    { TelescopeTitle = { inherit = 'Normal', bold = true } },
-    {
-      TelescopeSelectionCaret = {
-        fg = { from = 'Identifier' },
-        bg = { from = 'TelescopeSelection' },
+      ['doom-one'] = {
+        { TelescopeMatching = { link = 'Title' } },
       },
     },
   })
