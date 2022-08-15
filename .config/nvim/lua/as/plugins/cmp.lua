@@ -149,4 +149,9 @@ return function()
       { name = 'cmdline_history', priority = 10, max_item_count = 5 },
     }),
   })
+  require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
+    sources = {
+      { name = 'dap' },
+    },
+  })
 end
