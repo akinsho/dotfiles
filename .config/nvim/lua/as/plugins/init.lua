@@ -554,18 +554,8 @@ packer.startup({
     })
 
     use({
-      'declancm/cinnamon.nvim', -- NOTE: alternative: 'karb94/neoscroll.nvim'
-      config = function()
-        require('cinnamon').setup({
-          scroll_limit = 50,
-          hide_cursor = true,
-          extra_keymaps = false,
-          always_scroll = false,
-        })
-        local map = vim.keymap.set
-        map({ 'n', 'x' }, '<ScrollWheelUp>', "<Cmd>lua Scroll('<ScrollWheelUp>')<CR>")
-        map({ 'n', 'x' }, '<ScrollWheelDown>', "<Cmd>lua Scroll('<ScrollWheelDown>')<CR>")
-      end,
+      'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
+      config = function() require('neoscroll').setup() end,
     })
 
     use({
