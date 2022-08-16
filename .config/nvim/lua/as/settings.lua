@@ -136,15 +136,6 @@ opt.signcolumn = 'auto:2-5'
 opt.ruler = false
 opt.cmdheight = 0
 opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
---- This is used to handle markdown code blocks where the language might
---- be set to a value that isn't equivalent to a vim filetype
-vim.g.markdown_fenced_languages = {
-  'js=javascript',
-  'ts=typescript',
-  'shell=sh',
-  'bash=sh',
-  'console=sh',
-}
 -----------------------------------------------------------------------------//
 -- List chars {{{1
 -----------------------------------------------------------------------------//
@@ -152,14 +143,14 @@ opt.list = true -- invisible chars
 opt.listchars = {
   eol = nil,
   tab = '  ', -- Alternatives: '▷▷',
-  extends = '›', -- Alternatives: … »
-  precedes = '‹', -- Alternatives: … «
+  extends = '»', -- Alternatives: … ›
+  precedes = '«', -- Alternatives: … ‹
   trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-opt.wrap = true
+opt.wrap = false
 opt.wrapmargin = 2
 opt.textwidth = 80
 opt.autoindent = true
