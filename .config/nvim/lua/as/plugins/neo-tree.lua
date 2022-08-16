@@ -32,6 +32,7 @@ return function()
       },
       horizon = {
         { NeoTreeDirectoryIcon = { fg = '#C09553' } },
+        { NeoTreeWinSeparator = { link = 'WinSeparator' } },
       },
     },
   })

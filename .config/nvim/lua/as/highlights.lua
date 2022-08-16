@@ -189,8 +189,8 @@ end
 local function general_overrides()
   M.all({
     { Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } } },
-    { VertSplit = { background = 'NONE', foreground = { from = 'NonText' } } },
-    { WinSeparator = { background = 'NONE', foreground = { from = 'NonText' } } },
+    { VertSplit = { fg = { from = 'Comment' } } },
+    { WinSeparator = { fg = { from = 'Comment' } } },
     { mkdLineBreak = { link = 'NONE' } },
     { Directory = { inherit = 'Keyword', bold = true } },
     { URL = { inherit = 'Keyword', underline = true } },
@@ -350,12 +350,7 @@ local function set_sidebar_highlight()
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
-    {
-      PanelWinSeparator = {
-        inherit = 'PanelBackground',
-        foreground = { from = 'WinSeparator' },
-      },
-    },
+    { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
     { PanelStNC = { link = 'PanelWinSeparator' } },
     { PanelSt = { background = { from = 'Visual', alter = -20 } } },
   })
@@ -396,22 +391,16 @@ local function colorscheme_overrides()
     ['horizon'] = {
       { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream normal foreground color
       { Constant = { bold = true } },
-      { WinSeparator = { foreground = '#4b4c53' } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { foreground = { from = 'SpecialKey' } } },
       { commentTSConstant = { inherit = 'Constant', bold = true } },
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },
+      { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
       { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-      {
-        PanelWinSeparator = {
-          inherit = 'PanelBackground',
-          foreground = { from = 'PanelBackground', attr = 'bg' },
-        },
-      },
       -- TODO: set ColorColumn instead as this normally links to that
       { Headline = { background = { from = 'Normal', alter = 20 } } },
     },
