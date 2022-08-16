@@ -38,22 +38,15 @@ return function()
       diagnostics_update_in_insert = false,
       offsets = {
         {
-          filetype = 'pr',
-          highlight = 'PanelHeading',
-        },
-        {
           filetype = 'dbui',
           highlight = 'PanelHeading',
+          padding = 1,
         },
         {
           filetype = 'undotree',
           text = 'Undotree',
           highlight = 'PanelHeading',
-        },
-        {
-          filetype = 'NvimTree',
-          text = 'Explorer',
-          highlight = 'PanelHeading',
+          padding = 1,
         },
         {
           filetype = 'neo-tree',
@@ -65,21 +58,19 @@ return function()
           filetype = 'DiffviewFiles',
           text = 'Diff View',
           highlight = 'PanelHeading',
+          padding = 1,
         },
         {
           filetype = 'flutterToolsOutline',
           text = 'Flutter Outline',
           highlight = 'PanelHeading',
-        },
-        {
-          filetype = 'Outline',
-          text = 'Symbols',
-          highlight = 'PanelHeading',
+          padding = 1,
         },
         {
           filetype = 'packer',
           text = 'Packer',
           highlight = 'PanelHeading',
+          padding = 1,
         },
       },
       groups = {

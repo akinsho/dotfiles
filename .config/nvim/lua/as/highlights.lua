@@ -351,7 +351,10 @@ local function set_sidebar_highlight()
     { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
     {
-      PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
+      PanelWinSeparator = {
+        inherit = 'PanelBackground',
+        foreground = { from = 'WinSeparator' },
+      },
     },
     { PanelStNC = { link = 'PanelWinSeparator' } },
     { PanelSt = { background = { from = 'Visual', alter = -20 } } },
@@ -402,6 +405,12 @@ local function colorscheme_overrides()
       { PanelBackground = { link = 'Normal' } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
+      {
+        PanelWinSeparator = {
+          inherit = 'PanelBackground',
+          foreground = { from = 'PanelBackground', attr = 'bg' },
+        },
+      },
       -- TODO: set ColorColumn instead as this normally links to that
       { Headline = { background = { from = 'Normal', alter = 20 } } },
     },
