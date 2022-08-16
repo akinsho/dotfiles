@@ -2,9 +2,6 @@ return function()
   local icons = as.style.icons
   local highlights = require('as.highlights')
 
-  local panel_dark_bg = highlights.get('PanelDarkBackground', 'bg')
-  local tab_bg = highlights.alter_color(panel_dark_bg, 15)
-
   highlights.plugin('NeoTree', {
     theme = {
       ['*'] = {
@@ -14,9 +11,24 @@ return function()
         { NeoTreeCursorLine = { link = 'Visual' } },
         { NeoTreeStatusLine = { link = 'PanelSt' } },
         { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
-        { NeoTreeTabInactive = { bg = tab_bg, fg = { from = 'Comment' } } },
-        { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
-        { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
+        {
+          NeoTreeTabInactive = {
+            bg = { from = 'PanelDarkBackground', alter = 15 },
+            fg = { from = 'Comment' },
+          },
+        },
+        {
+          NeoTreeTabSeparatorInactive = {
+            inherit = 'NeoTreeTabInactive',
+            fg = { from = 'PanelDarkBackground', attr = 'bg' },
+          },
+        },
+        {
+          NeoTreeTabSeparatorActive = {
+            inherit = 'PanelBackground',
+            fg = { from = 'Comment' },
+          },
+        },
       },
       horizon = {
         { NeoTreeDirectoryIcon = { fg = '#C09553' } },

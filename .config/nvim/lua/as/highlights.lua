@@ -346,7 +346,7 @@ end
 
 local function set_sidebar_highlight()
   M.all({
-    { PanelDarkBackground = { bg = { from = 'Normal', alter = -43 } } },
+    { PanelDarkBackground = { bg = { from = 'Normal', alter = -42 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
