@@ -275,6 +275,7 @@ local function general_overrides()
     -- LSP
     -----------------------------------------------------------------------------//
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
+    { LspCodeLensSeparator = { bold = false, italic = false } },
     {
       LspReferenceText = {
         underline = true,
