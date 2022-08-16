@@ -395,11 +395,8 @@ local function colorscheme_overrides()
       { commentTSConstant = { inherit = 'Constant', bold = true } },
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },
-      { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
-      {
-        PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
-      },
+      { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
       { LspReferenceWrite = { background = '#2D2F3B' } },
       { LspReferenceRead = { background = '#2D2F3B' } },
       { LspReferenceText = { background = '#2D2F3B' } },
