@@ -73,6 +73,12 @@ packer.startup({
       },
     })
 
+    use({
+      'benfowler/telescope-luasnip.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('luasnip') end,
+    })
+
     use('kyazdani42/nvim-web-devicons')
 
     -- TODO: Revisit mg979/vim-visual-multi when which key interaction is fixed

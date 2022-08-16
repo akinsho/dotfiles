@@ -308,7 +308,7 @@ function M.config()
 
   local function notifications() telescope.extensions.notify.notify(as.telescope.dropdown()) end
 
-  local function gh_notifications() telescope.extensions.ghn.ghn(as.telescope.dropdown()) end
+  local function luasnips() require('telescope').extensions.luasnip.luasnip(as.telescope.dropdown()) end
 
   local function installed_plugins()
     builtins.find_files({
@@ -336,6 +336,7 @@ function M.config()
         d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
         s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
       },
+      L = { luasnips, 'luasnip: available snippets' },
       p = { installed_plugins, 'plugins' },
       r = { builtins.resume, 'resume last picker' },
       ['?'] = { builtins.help_tags, 'help' },
@@ -345,7 +346,6 @@ function M.config()
       g = {
         name = '+git',
         b = { builtins.git_branches, 'branches' },
-        n = { gh_notifications, 'notifications' },
         c = { delta_git_commits, 'commits' },
         B = { delta_git_bcommits, 'buffer commits' },
       },
