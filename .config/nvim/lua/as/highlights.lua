@@ -277,14 +277,16 @@ local function general_overrides()
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     {
       LspReferenceText = {
-        underline = false,
-        background = { from = 'Comment', attr = 'fg' },
+        underline = true,
+        background = 'NONE',
+        special = { from = 'Comment', attr = 'fg' },
       },
     },
     {
       LspReferenceRead = {
-        underline = false,
-        background = { from = 'Comment', attr = 'fg' },
+        underline = true,
+        background = 'NONE',
+        special = { from = 'Comment', attr = 'fg' },
       },
     },
     -- This represents when a reference is assigned which is more interesting than regular
@@ -293,7 +295,9 @@ local function general_overrides()
       LspReferenceWrite = {
         bold = true,
         italic = true,
-        background = { from = 'Comment', attr = 'fg' },
+        background = 'NONE',
+        underline = true,
+        special = { from = 'Comment', attr = 'fg' },
       },
     },
     { DiagnosticHint = { foreground = L.hint } },
@@ -397,9 +401,6 @@ local function colorscheme_overrides()
       { PanelBackground = { link = 'Normal' } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
-      { LspReferenceWrite = { background = '#2D2F3B' } },
-      { LspReferenceRead = { background = '#2D2F3B' } },
-      { LspReferenceText = { background = '#2D2F3B' } },
       -- TODO: set ColorColumn instead as this normally links to that
       { Headline = { background = { from = 'Normal', alter = 20 } } },
     },
