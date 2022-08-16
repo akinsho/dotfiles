@@ -404,7 +404,8 @@ local function colorscheme_overrides()
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },
       { PanelHeading = { inherit = 'Normal', bold = true } },
-      { PanelDarkBackground = { background = { from = 'Normal', alter = -20 } } },
+      { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
+      { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
       {
         PanelWinSeparator = {
           inherit = 'PanelBackground',
