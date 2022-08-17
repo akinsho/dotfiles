@@ -885,8 +885,6 @@ packer.startup({
       config = function() require('trevj').setup() end,
     })
 
-    use({ 'chaoren/vim-wordmotion', opt = true }) -- FIXME: breaks cmdheight=0
-
     use({
       'numToStr/Comment.nvim',
       config = function() require('Comment').setup() end,
