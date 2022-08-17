@@ -4,15 +4,6 @@ return function()
 
   local groups = require('bufferline.groups')
 
-  local function offset(name, ft)
-    return {
-      filetype = ft,
-      text = name,
-      text_align = 'left',
-      highlight = 'PanelDarkHeading',
-    }
-  end
-
   require('bufferline').setup({
     highlights = function(opts)
       local hl = opts.highlights
@@ -46,12 +37,17 @@ return function()
       diagnostics_indicator = false,
       diagnostics_update_in_insert = false,
       offsets = {
-        offset('DATABASE VIEWER', 'dbui'),
-        offset('UNDOTREE', 'undotree'),
-        offset('📁 EXPLORER', 'neo-tree'),
-        offset('DIFF VIEW', 'DiffviewFiles'),
-        offset('FLUTTER OUTLINE', 'flutterToolsOutline'),
-        offset('PACKER', 'packer'),
+        {
+          text = '📁 EXPLORER',
+          filetype = 'neo-tree',
+          highlight = 'PanelDarkHeading',
+          text_align = 'left',
+        },
+        { text = 'PACKER', filetype = 'packer', highlight = 'PanelHeading' },
+        { text = 'UNDOTREE', filetype = 'undotree', highlight = 'PanelHeading' },
+        { text = 'DATABASE VIEWER', filetype = 'dbui', highlight = 'PanelHeading' },
+        { text = 'DIFF VIEW', filetype = 'DiffviewFiles', highlight = 'PanelHeading' },
+        { text = 'FLUTTER OUTLINE', filetype = 'flutterToolsOutline', highlight = 'PanelHeading' },
       },
       groups = {
         options = {
