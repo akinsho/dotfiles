@@ -16,6 +16,9 @@ function M.config()
   as.nnoremap(']n', prev_failed, 'jump to previous failed test')
 
   require('neotest').setup({
+    discovery = {
+      enabled = false,
+    },
     diagnostic = {
       enabled = false,
     },
