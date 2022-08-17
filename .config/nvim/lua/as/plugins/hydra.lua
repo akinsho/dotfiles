@@ -48,6 +48,11 @@ return function()
     name = 'Side scroll',
     mode = 'n',
     body = 'z',
+    config = {
+      hint = { border = border },
+      on_enter = function() vim.cmd('IndentBlanklineDisable') end,
+      on_exit = function() vim.cmd('IndentBlanklineEnable') end,
+    },
     heads = {
       { 'h', '5zh' },
       { 'l', '5zl', { desc = '←/→' } },
