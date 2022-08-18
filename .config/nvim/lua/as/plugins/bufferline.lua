@@ -3,43 +3,55 @@ return function()
   local fmt = string.format
 
   local groups = require('bufferline.groups')
-  local P = as.style.palette
+  local normal = require('as.highlights').get('Normal', 'bg')
 
   require('bufferline').setup({
-    highlights = function(opts)
-      local hl = opts.highlights
-      local visible = hl.buffer_visible.fg
-      local selected = hl.buffer_selected.fg
-      return {
-        -- offset_separator = { bg = hl.buffer.bg },
-        fill = { bg = hl.buffer.bg },
-        modified_selected = { sp = P.blue, underline = true },
-        buffer_selected = { sp = P.blue, underline = true },
-        close_button_selected = { sp = P.blue, underline = true },
-        indicator_selected = { sp = P.blue, underline = true },
-        info = { undercurl = true, fg = hl.info.fg },
-        info_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-        info_visible = { undercurl = true, fg = visible },
-        warning = { undercurl = true, fg = hl.warning.fg },
-        warning_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-        warning_visible = { undercurl = true, fg = visible },
-        error = { undercurl = true, fg = hl.error.fg },
-        error_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-        error_visible = { undercurl = true, fg = visible },
-        hint = { undercurl = true, fg = hl.hint.fg },
-        hint_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-        hint_visible = { undercurl = true, fg = visible },
-      }
-    end,
+    highlights = {
+      -- offset_separator = { bg = hl.buffer.bg },
+      tab = { bg = normal },
+      fill = { bg = normal },
+      pick = { bg = normal },
+      buffer = { bg = normal },
+      buffer_visible = { bg = normal, bold = true, italic = true },
+      buffer_selected = { bg = normal },
+      indicator_visible = { bg = normal },
+      numbers_visible = { bg = normal },
+      numbers_selected = { bg = normal },
+      pick_selected = { bg = normal },
+      pick_visible = { bg = normal },
+      duplicate = { bg = normal },
+      duplicate_visible = { bg = normal },
+      duplicate_selected = { bg = normal },
+      background = { bg = normal },
+      tab_separator = { bg = normal, fg = normal },
+      tab_separator_selected = { bg = normal, fg = normal },
+      separator = { bg = normal, fg = normal },
+      separator_visible = { bg = normal, fg = normal },
+      separator_selected = { bg = normal, fg = normal },
+      modified_selected = { bg = normal },
+      close_button = { bg = normal },
+      close_button_visible = { bg = normal },
+      close_button_selected = { bg = normal },
+      info = { bg = normal },
+      info_visible = { bg = normal },
+      info_selected = { bg = normal },
+      warning = { bg = normal },
+      warning_visible = { bg = normal },
+      warning_selected = { bg = normal },
+      error = { bg = normal },
+      error_visible = { bg = normal },
+      error_selected = { bg = normal },
+      hint = { bg = normal },
+      hint_visible = { bg = normal },
+      hint_selected = { bg = normal },
+    },
     options = {
-      debug = {
-        logging = true,
-      },
+      debug = { logging = true },
       mode = 'buffers', -- tabs
       sort_by = 'insert_after_current',
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
-      indicator_icon = ' ',
+      indicator = { style = 'underline' },
       show_buffer_close_icons = true,
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = false,
