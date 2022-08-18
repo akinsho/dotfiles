@@ -23,6 +23,15 @@ local M = {}
 ---@field underline boolean
 ---@field underdot boolean
 
+---@class NvimHighlightData
+---@field foreground string
+---@field background string
+---@field bold boolean
+---@field italic boolean
+---@field undercurl boolean
+---@field underline boolean
+---@field underdot boolean
+
 ---Convert a hex color to RGB
 ---@param color string
 ---@return number
@@ -65,6 +74,7 @@ end
 ---@param attribute string?
 ---@param fallback string?
 ---@return string
+---@overload fun(group: string): NvimHighlightData
 function M.get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
   local data = get_highlight(group)
