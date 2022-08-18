@@ -11,7 +11,7 @@ return function()
 
   require('bufferline').setup({
     highlights = {
-      -- offset_separator = { bg = hl.buffer.bg },
+      offset_separator = { bg = normal_bg },
       group_separator = { bg = normal_bg },
       tab = { bg = normal_bg },
       fill = { bg = normal_bg },
@@ -67,16 +67,38 @@ return function()
           filetype = 'neo-tree',
           highlight = 'PanelHeading',
           text_align = 'left',
+          separator = true,
         },
         {
           text = ' FLUTTER OUTLINE',
           filetype = 'flutterToolsOutline',
           highlight = 'PanelHeading',
+          separator = true,
         },
-        { text = 'UNDOTREE', filetype = 'undotree', highlight = 'PanelHeading' },
-        { text = ' PACKER', filetype = 'packer', highlight = 'PanelHeading' },
-        { text = ' DATABASE VIEWER', filetype = 'dbui', highlight = 'PanelHeading' },
-        { text = ' DIFF VIEW', filetype = 'DiffviewFiles', highlight = 'PanelHeading' },
+        {
+          text = 'UNDOTREE',
+          filetype = 'undotree',
+          highlight = 'PanelHeading',
+          separator = true,
+        },
+        {
+          text = ' PACKER',
+          filetype = 'packer',
+          highlight = 'PanelHeading',
+          separator = true,
+        },
+        {
+          text = ' DATABASE VIEWER',
+          filetype = 'dbui',
+          highlight = 'PanelHeading',
+          separator = true,
+        },
+        {
+          text = ' DIFF VIEW',
+          filetype = 'DiffviewFiles',
+          highlight = 'PanelHeading',
+          separator = true,
+        },
       },
       groups = {
         options = {
