@@ -3,6 +3,7 @@ return function()
   local fmt = string.format
 
   local groups = require('bufferline.groups')
+  local P = as.style.palette
 
   require('bufferline').setup({
     highlights = function(opts)
@@ -10,8 +11,12 @@ return function()
       local visible = hl.buffer_visible.fg
       local selected = hl.buffer_selected.fg
       return {
+        -- offset_separator = { bg = hl.buffer.bg },
         fill = { bg = hl.buffer.bg },
-        offset_separator = { bg = hl.buffer.bg },
+        modified_selected = { sp = P.blue, underline = true },
+        buffer_selected = { sp = P.blue, underline = true },
+        close_button_selected = { sp = P.blue, underline = true },
+        indicator_selected = { sp = P.blue, underline = true },
         info = { undercurl = true, fg = hl.info.fg },
         info_selected = { undercurl = true, bold = true, italic = true, fg = selected },
         info_visible = { undercurl = true, fg = visible },
