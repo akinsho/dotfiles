@@ -414,7 +414,7 @@ local function colorscheme_overrides()
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
-      { TabLineSel = { foreground = P.blue } },
+      { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
       { commentTSConstant = { inherit = 'Constant', bold = true } },
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },
