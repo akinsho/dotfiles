@@ -43,11 +43,15 @@ return function()
           highlight = 'PanelDarkHeading',
           text_align = 'left',
         },
-        { text = 'PACKER', filetype = 'packer', highlight = 'PanelHeading' },
+        {
+          text = ' FLUTTER OUTLINE',
+          filetype = 'flutterToolsOutline',
+          highlight = 'PanelHeading',
+        },
         { text = 'UNDOTREE', filetype = 'undotree', highlight = 'PanelHeading' },
-        { text = 'DATABASE VIEWER', filetype = 'dbui', highlight = 'PanelHeading' },
-        { text = 'DIFF VIEW', filetype = 'DiffviewFiles', highlight = 'PanelHeading' },
-        { text = 'FLUTTER OUTLINE', filetype = 'flutterToolsOutline', highlight = 'PanelHeading' },
+        { text = ' PACKER', filetype = 'packer', highlight = 'PanelHeading' },
+        { text = ' DATABASE VIEWER', filetype = 'dbui', highlight = 'PanelHeading' },
+        { text = ' DIFF VIEW', filetype = 'DiffviewFiles', highlight = 'PanelHeading' },
       },
       groups = {
         options = {
@@ -58,6 +62,7 @@ return function()
           groups.builtin.ungrouped,
           {
             name = 'Dependencies',
+            icon = '',
             highlight = { fg = '#ECBE7B' },
             matcher = function(buf)
               return vim.startswith(buf.path, fmt('%s/site/pack/packer', fn.stdpath('data')))
