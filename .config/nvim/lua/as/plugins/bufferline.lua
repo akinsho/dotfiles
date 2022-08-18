@@ -10,6 +10,8 @@ return function()
       local visible = hl.buffer_visible.fg
       local selected = hl.buffer_selected.fg
       return {
+        fill = { bg = hl.buffer.bg },
+        offset_separator = { bg = hl.buffer.bg },
         info = { undercurl = true, fg = hl.info.fg },
         info_selected = { undercurl = true, bold = true, italic = true, fg = selected },
         info_visible = { undercurl = true, fg = visible },
@@ -32,6 +34,7 @@ return function()
       sort_by = 'insert_after_current',
       right_mouse_command = 'vert sbuffer %d',
       show_close_icon = false,
+      indicator_icon = ' ',
       show_buffer_close_icons = true,
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = false,
