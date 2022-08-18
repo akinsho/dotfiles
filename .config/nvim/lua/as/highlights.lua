@@ -419,7 +419,7 @@ local function colorscheme_overrides()
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },
       { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
-      { PanelHeading = { inherit = 'Normal', bold = true } },
+      { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
       { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
       -- TODO: set ColorColumn instead as this normally links to that

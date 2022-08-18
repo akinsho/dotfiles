@@ -33,6 +33,20 @@ return function()
       horizon = {
         { NeoTreeDirectoryIcon = { fg = '#C09553' } },
         { NeoTreeWinSeparator = { link = 'WinSeparator' } },
+        { NeoTreeTabInactive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } } },
+        { NeoTreeTabActive = { bg = { from = 'PanelBackground', alter = 10 }, bold = true } },
+        {
+          NeoTreeTabSeparatorActive = {
+            bg = { from = 'PanelBackground', alter = 10 },
+            fg = { from = 'Comment' },
+          },
+        },
+        {
+          NeoTreeTabSeparatorInactive = {
+            inherit = 'NeoTreeTabInactive',
+            fg = { from = 'PanelBackground', attr = 'bg' },
+          },
+        },
       },
     },
   })

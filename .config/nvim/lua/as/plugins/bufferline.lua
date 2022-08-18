@@ -63,9 +63,9 @@ return function()
       diagnostics_update_in_insert = false,
       offsets = {
         {
-          text = '📁 EXPLORER',
+          text = 'EXPLORER',
           filetype = 'neo-tree',
-          highlight = 'PanelDarkHeading',
+          highlight = 'PanelHeading',
           text_align = 'left',
         },
         {
