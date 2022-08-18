@@ -88,10 +88,16 @@ end
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param name string
 ---@param opts HighlightKeys
-function M.set(name, opts)
+---@overload fun(namespace: integer, name: string, opts: HighlightKeys)
+function M.set(namespace, name, opts)
+  if type(namespace) == 'string' and type(name) == 'table' then
+    opts, name, namespace = name, namespace, 0
+  end
+
   assert(name and opts, "Both 'name' and 'opts' must be specified")
   assert(type(name) == 'string', fmt("Name must be a string but got '%s'", name))
   assert(type(opts) == 'table', fmt("Opts must be a table but got '%s'", vim.inspect(opts)))
+  assert(namespace, 'You must specify a valid namespace, you passed %s', vim.inspect(namespace))
 
   local hl = get_highlight(opts.inherit or name)
   opts.inherit = nil
@@ -103,7 +109,7 @@ function M.set(name, opts)
     end
   end
 
-  local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_extend('force', hl, opts))
+  local ok, msg = pcall(api.nvim_set_hl, namespace, name, vim.tbl_extend('force', hl, opts))
   if not ok then vim.notify(fmt('Failed to set %s because - %s', name, msg)) end
 end
 
@@ -147,8 +153,9 @@ end
 
 ---Apply a list of highlights
 ---@param hls table<string, HighlightKeys>
-function M.all(hls)
-  as.foreach(function(hl) M.set(next(hl)) end, hls)
+---@param namespace integer?
+function M.all(hls, namespace)
+  as.foreach(function(hl) M.set(namespace or 0, next(hl)) end, hls)
 end
 
 ---------------------------------------------------------------------------------
@@ -366,16 +373,20 @@ local sidebar_fts = {
   'pr',
 }
 
+local SIDEBAR_NS = api.nvim_create_namespace('sidebars')
+
 local function on_sidebar_enter()
-  vim.wo.winhighlight = table.concat({
-    'Normal:PanelBackground',
-    'EndOfBuffer:PanelBackground',
-    'StatusLine:PanelSt',
-    'StatusLineNC:PanelStNC',
-    'SignColumn:PanelBackground',
-    'VertSplit:PanelVertSplit',
-    'WinSeparator:PanelWinSeparator',
-  }, ',')
+  ---@diagnostic disable-next-line: undefined-field
+  api.nvim_win_set_hl_ns(api.nvim_get_current_win(), SIDEBAR_NS)
+  M.all({
+    { Normal = { link = 'PanelBackground' } },
+    { EndOfBuffer = { link = 'PanelBackground' } },
+    { StatusLine = { link = 'PanelSt' } },
+    { StatusLineNC = { link = 'PanelStNC' } },
+    { SignColumn = { link = 'PanelBackground' } },
+    { VertSplit = { link = 'PanelVertSplit' } },
+    { WinSeparator = { link = 'PanelWinSeparator' } },
+  }, SIDEBAR_NS)
 end
 
 local function colorscheme_overrides()
