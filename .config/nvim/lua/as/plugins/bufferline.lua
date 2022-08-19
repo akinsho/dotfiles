@@ -1,6 +1,7 @@
 return function()
   local fn = vim.fn
   local fmt = string.format
+  local icons = as.style.icons.lsp
 
   local highlights = require('as.highlights')
   local groups = require('bufferline.groups')
@@ -69,7 +70,7 @@ return function()
       indicator = { style = 'underline' },
       show_buffer_close_icons = true,
       diagnostics = 'nvim_lsp',
-      diagnostics_indicator = false,
+      diagnostics_indicator = function(count, level) return (icons[level] or '?') .. ' ' .. count end,
       diagnostics_update_in_insert = false,
       offsets = {
         {
