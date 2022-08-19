@@ -617,6 +617,12 @@ packer.startup({
       'moll/vim-bbye',
       config = function() as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit') end,
     })
+
+    use({
+      'nacro90/numb.nvim',
+      event = 'CmdlineEnter',
+      config = function() require('numb').setup() end,
+    })
     -----------------------------------------------------------------------------//
     -- Quickfix
     -----------------------------------------------------------------------------//
