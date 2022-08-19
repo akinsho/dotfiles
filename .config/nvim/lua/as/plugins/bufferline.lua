@@ -12,55 +12,27 @@ return function()
   local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
   require('bufferline').setup({
-    highlights = { -- TODO: use a function to change these values based on the current theme
-      offset_separator = { bg = normal_bg },
-      group_separator = { bg = normal_bg },
-      tab = { bg = normal_bg },
-      fill = { bg = normal_bg },
-      pick = { bg = normal_bg },
-      buffer = { bg = normal_bg },
-      buffer_visible = { bg = normal_bg, fg = visible, bold = true, italic = true },
-      buffer_selected = { bg = normal_bg },
-      indicator_visible = { bg = normal_bg },
-      numbers_visible = { bg = normal_bg },
-      numbers_selected = { bg = normal_bg },
-      pick_selected = { bg = normal_bg },
-      pick_visible = { bg = normal_bg },
-      duplicate = { bg = normal_bg },
-      duplicate_visible = { bg = normal_bg },
-      duplicate_selected = { bg = normal_bg },
-      background = { bg = normal_bg },
-      tab_selected = { bg = visible_tab, bold = true },
-      tab_separator = { bg = normal_bg, fg = normal_bg },
-      tab_separator_selected = { bg = visible_tab, fg = normal_bg },
-      separator = { bg = normal_bg, fg = normal_bg },
-      separator_visible = { bg = normal_bg, fg = normal_bg },
-      separator_selected = { bg = normal_bg, fg = normal_bg },
-      modified_selected = { bg = normal_bg },
-      close_button = { bg = normal_bg },
-      close_button_visible = { bg = normal_bg },
-      close_button_selected = { bg = normal_bg },
-      info = { bg = normal_bg },
-      info_visible = { bg = normal_bg },
-      info_selected = { bg = normal_bg },
-      info_diagnostic = { bg = normal_bg },
-      info_diagnostic_visible = { bg = normal_bg },
-      warning = { bg = normal_bg },
-      warning_visible = { bg = normal_bg },
-      warning_selected = { bg = normal_bg },
-      warning_diagnostic = { bg = normal_bg },
-      warning_diagnostic_visible = { bg = normal_bg },
-      error = { bg = normal_bg },
-      error_visible = { bg = normal_bg },
-      error_selected = { bg = normal_bg },
-      error_diagnostic = { bg = normal_bg },
-      error_diagnostic_visible = { bg = normal_bg },
-      hint = { bg = normal_bg },
-      hint_visible = { bg = normal_bg },
-      hint_selected = { bg = normal_bg },
-      hint_diagnostic = { bg = normal_bg },
-      hint_diagnostic_visible = { bg = normal_bg },
-    },
+    highlights = function(defaults)
+      local hl = as.fold(function(accum, attrs, name)
+        local formatted = name:lower()
+        local is_group = formatted:match('group')
+        local is_offset = formatted:match('offset')
+        local is_separator = formatted:match('separator')
+        if not is_group or (is_group and is_separator) then attrs.bg = normal_bg end
+        if not is_group and not is_offset and is_separator then attrs.fg = normal_bg end
+        accum[name] = attrs
+        return accum
+      end, defaults.highlights)
+
+      -- Make the visible buffers and selected tab more "visible"
+      hl.buffer_visible.bold = true
+      hl.buffer_visible.italic = true
+      hl.buffer_visible.fg = visible
+      hl.tab_selected.bold = true
+      hl.tab_selected.bg = visible_tab
+      hl.tab_separator_selected.bg = visible_tab
+      return hl
+    end,
     options = {
       debug = { logging = true },
       mode = 'buffers', -- tabs
