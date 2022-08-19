@@ -37,6 +37,7 @@ as.style = {
     lsp = {
       error = '', -- '✗'
       warn = '',
+      warning = '',
       info = '', -- 
       hint = '', -- ⚑
     },
