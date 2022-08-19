@@ -18,6 +18,9 @@ return function()
         local is_group = formatted:match('group')
         local is_offset = formatted:match('offset')
         local is_separator = formatted:match('separator')
+        local diagnostic =
+          vim.regex([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
+        if diagnostic:match_str(formatted) then attrs.fg = normal_fg end
         if not is_group or (is_group and is_separator) then attrs.bg = normal_bg end
         if not is_group and not is_offset and is_separator then attrs.fg = normal_bg end
         accum[name] = attrs
