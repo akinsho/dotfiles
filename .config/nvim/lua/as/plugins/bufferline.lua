@@ -11,7 +11,7 @@ return function()
   local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
   require('bufferline').setup({
-    highlights = {
+    highlights = { -- TODO: use a function to change these values based on the current theme
       offset_separator = { bg = normal_bg },
       group_separator = { bg = normal_bg },
       tab = { bg = normal_bg },
