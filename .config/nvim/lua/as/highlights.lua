@@ -415,6 +415,7 @@ local function colorscheme_overrides()
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
+      { VisibleTab = { background = { from = 'Normal', alter = 20 }, bold = true } },
       { commentTSConstant = { inherit = 'Constant', bold = true } },
       { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },

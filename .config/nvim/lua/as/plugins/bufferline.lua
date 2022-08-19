@@ -8,6 +8,7 @@ return function()
   local data = highlights.get('Normal')
   local normal_bg, normal_fg = data.background, data.foreground
   local visible = highlights.alter_color(normal_fg, -40)
+  local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
   require('bufferline').setup({
     highlights = {
@@ -28,8 +29,9 @@ return function()
       duplicate_visible = { bg = normal_bg },
       duplicate_selected = { bg = normal_bg },
       background = { bg = normal_bg },
+      tab_selected = { bg = visible_tab, bold = true },
       tab_separator = { bg = normal_bg, fg = normal_bg },
-      tab_separator_selected = { bg = normal_bg, fg = normal_bg },
+      tab_separator_selected = { bg = visible_tab, fg = normal_bg },
       separator = { bg = normal_bg, fg = normal_bg },
       separator_visible = { bg = normal_bg, fg = normal_bg },
       separator_selected = { bg = normal_bg, fg = normal_bg },
