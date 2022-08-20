@@ -6,13 +6,14 @@ return function()
   local highlights = require('as.highlights')
   local groups = require('bufferline.groups')
 
-  local data = highlights.get('Normal')
-  local normal_bg, normal_fg = data.background, data.foreground
-  local visible = highlights.alter_color(normal_fg, -40)
   local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
   require('bufferline').setup({
     highlights = function(defaults)
+      local data = highlights.get('Normal')
+      local normal_bg, normal_fg = data.background, data.foreground
+      local visible = highlights.alter_color(normal_fg, -40)
+
       local hl = as.fold(function(accum, attrs, name)
         local formatted = name:lower()
         local is_group = formatted:match('group')
@@ -87,9 +88,7 @@ return function()
         },
       },
       groups = {
-        options = {
-          toggle_hidden_on_enter = true,
-        },
+        options = { toggle_hidden_on_enter = true },
         items = {
           groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
