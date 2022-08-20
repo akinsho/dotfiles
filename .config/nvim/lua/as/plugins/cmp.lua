@@ -2,8 +2,9 @@ return function()
   local cmp = require('cmp')
   local h = require('as.highlights')
 
-  local api = vim.api
+  local api, fn = vim.api, vim.fn
   local fmt = string.format
+  local t = as.replace_termcodes
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.highlights
   local ellipsis = as.style.icons.misc.ellipsis
@@ -63,7 +64,7 @@ return function()
     }, ','),
   }
   cmp.setup({
-    experimental = { ghost_text = true },
+    experimental = { ghost_text = false },
     preselect = cmp.PreselectMode.None,
     window = {
       completion = cmp.config.window.bordered(cmp_window),
@@ -73,6 +74,9 @@ return function()
       expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
+      ['<C-h>'] = cmp.mapping(
+        function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
+      ),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
       ['<C-q>'] = cmp.mapping({
