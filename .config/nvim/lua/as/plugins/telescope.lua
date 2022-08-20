@@ -91,6 +91,12 @@ function M.config()
       },
     },
   })
+  local function stopinsert(callback)
+    return function(prompt_bufnr)
+      vim.cmd.stopinsert()
+      vim.schedule(function() callback(prompt_bufnr) end)
+    end
+  end
 
   telescope.setup({
     defaults = {
@@ -107,7 +113,7 @@ function M.config()
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
-          ['<c-c>'] = function() vim.cmd.stopinsert({ bang = true }) end,
+          ['<c-c>'] = function() vim.cmd.stopinsert() end,
           ['<esc>'] = actions.close,
           ['<c-s>'] = actions.select_horizontal,
           ['<c-j>'] = actions.cycle_history_next,
@@ -116,6 +122,7 @@ function M.config()
           ['<c-l>'] = layout_actions.cycle_layout_next,
           ['<c-/>'] = actions.which_key,
           ['<Tab>'] = actions.toggle_selection,
+          ['<CR>'] = stopinsert(actions.select_default),
         },
         n = {
           ['<C-w>'] = actions.send_selected_to_qflist,
