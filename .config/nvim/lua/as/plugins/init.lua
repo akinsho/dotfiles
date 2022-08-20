@@ -371,6 +371,16 @@ packer.startup({
     })
 
     use({
+      'norcalli/nvim-colorizer.lua',
+      config = function()
+        require('colorizer').setup({ 'lua', 'vim', 'kitty', 'conf' }, {
+          RGB = false,
+          mode = 'background',
+        })
+      end,
+    })
+
+    use({
       'lukas-reineke/virt-column.nvim',
       config = function()
         require('as.highlights').plugin('virt_column', {
@@ -627,12 +637,12 @@ packer.startup({
     })
 
     use({
-      'norcalli/nvim-colorizer.lua',
+      'johmsalas/text-case.nvim',
       config = function()
-        require('colorizer').setup({ 'lua', 'vim', 'kitty', 'conf' }, {
-          RGB = false,
-          mode = 'background',
-        })
+        require('textcase').setup()
+        as.nnoremap('<localleader>[', ':Subs/<C-R><C-W>//<LEFT>', { silent = false })
+        as.nnoremap('<localleader>]', ':%Subs/<C-r><C-w>//c<left><left>', { silent = false })
+        as.xnoremap('<localleader>[', [["zy:%Subs/<C-r><C-o>"//c<left><left>]], { silent = false })
       end,
     })
 
@@ -721,16 +731,6 @@ packer.startup({
     use('tpope/vim-eunuch')
     use('tpope/vim-sleuth')
     use('tpope/vim-repeat')
-
-    use({
-      'johmsalas/text-case.nvim',
-      config = function()
-        require('textcase').setup()
-        as.nnoremap('<localleader>[', ':Subs/<C-R><C-W>//<LEFT>', { silent = false })
-        as.nnoremap('<localleader>]', ':%Subs/<C-r><C-w>//c<left><left>', { silent = false })
-        as.xnoremap('<localleader>[', [["zy:%Subs/<C-r><C-o>"//c<left><left>]], { silent = false })
-      end,
-    })
     -- sets searchable path for filetypes like go so 'gf' works
     use('tpope/vim-apathy')
     use({ 'tpope/vim-projectionist', config = conf('vim-projectionist') })
