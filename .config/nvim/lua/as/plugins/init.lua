@@ -545,7 +545,10 @@ packer.startup({
     use({
       'windwp/nvim-autopairs',
       after = 'nvim-cmp',
+      requires = 'nvim-cmp',
       config = function()
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
         require('nvim-autopairs').setup({
           close_triple_quotes = true,
           check_ts = true,
