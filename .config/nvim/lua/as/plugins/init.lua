@@ -381,6 +381,11 @@ packer.startup({
     })
 
     use({
+      'B4mbus/todo-comments.nvim',
+      config = function() require('todo-comments').setup() end,
+    })
+
+    use({
       'lukas-reineke/virt-column.nvim',
       config = function()
         require('as.highlights').plugin('virt_column', {
