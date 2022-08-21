@@ -11,6 +11,11 @@ local function find(word, ...)
   end
 end
 
+local function open_help(tag)
+  local ok, err = pcall(vim.cmd.help, tag)
+  if not ok then vim.notify(err, 'error') end
+end
+
 --- Stolen from nlua.nvim this function attempts to open
 --- vim help docs if an api or vim.fn function otherwise it
 --- shows the lsp hover doc
@@ -24,28 +29,18 @@ local function keyword(word, callback)
 
   vim.bo.iskeyword = original_iskeyword
 
-  -- TODO: This is a sub par work around, since I usually rename `vim.api` -> `api` or similar
-  -- consider maybe using treesitter in the future
-  local api_match = find(word, 'api', 'vim.api')
-  local fn_match = find(word, 'fn', 'vim.fn')
-  if api_match then
-    local _, finish = string.find(word, api_match .. '.')
-    local api_function = string.sub(word, finish + 1)
+  local match, _, end_idx = find(word, 'api.', 'vim.api.')
+  if match and end_idx then return open_help(word:sub(end_idx + 1)) end
 
-    vim.cmd.help(api_function)
-    return
-  elseif fn_match then
-    local _, finish = string.find(word, fn_match .. '.')
-    if not finish then return end
-    local api_function = string.sub(word, finish + 1) .. '()'
+  match, _, end_idx = find(word, 'fn.', 'vim.fn.')
+  if match and end_idx then return open_help(word:sub(end_idx + 1) .. '()') end
 
-    vim.cmd.help(api_function)
-    return
-  elseif callback then
-    callback()
-  else
-    vim.lsp.buf.hover()
-  end
+  match, _, end_idx = find(word, '^vim.(%w+)')
+  if match and end_idx then return open_help(word:sub(1, end_idx)) end
+
+  if callback then return callback() end
+
+  vim.lsp.buf.hover()
 end
 
 as.ftplugin_conf('nvim-surround', function(surround)
