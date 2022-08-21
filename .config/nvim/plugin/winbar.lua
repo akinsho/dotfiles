@@ -91,20 +91,19 @@ local allowed = {
 }
 
 local function set_winbar()
-  as.foreach(function(win)
-    local buf = api.nvim_win_get_buf(win)
-    local ft, bt = vim.bo[buf].filetype, vim.bo[buf].buftype
-    local is_diff = vim.wo[win].diff
+  as.foreach(function(w)
+    local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
+    local buftype, filetype, is_diff = buf.buftype, buf.filetype, win.diff
     if
-      not vim.tbl_contains(blocked, ft)
-      and fn.win_gettype(win) == ''
-      and bt == ''
-      and ft ~= ''
+      not vim.tbl_contains(blocked, filetype)
+      and fn.win_gettype(api.nvim_win_get_number(w)) == ''
+      and buftype == ''
+      and filetype ~= ''
       and not is_diff
     then
-      vim.wo[win].winbar = '%{%v:lua.as.ui.winbar.get()%}'
-    elseif is_diff or not vim.tbl_contains(allowed, ft) then
-      vim.wo[win].winbar = nil
+      win.winbar = '%{%v:lua.as.ui.winbar.get()%}'
+    elseif is_diff or not vim.tbl_contains(allowed, filetype) then
+      win.winbar = nil
     end
   end, api.nvim_tabpage_list_wins(0))
 end
