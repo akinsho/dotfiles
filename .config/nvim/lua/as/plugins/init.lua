@@ -382,7 +382,13 @@ packer.startup({
 
     use({
       'B4mbus/todo-comments.nvim',
-      config = function() require('todo-comments').setup() end,
+      config = function()
+        require('todo-comments').setup()
+        as.command(
+          'TodoDots',
+          string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
+        )
+      end,
     })
 
     use({
@@ -440,9 +446,7 @@ packer.startup({
       config = function()
         require('nvim-surround').setup({
           move_cursor = false,
-          keymaps = {
-            visual = 's',
-          },
+          keymaps = { visual = 's' },
         })
       end,
     })
