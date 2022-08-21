@@ -125,13 +125,15 @@ end
 
 --- Check if the current window has a winhighlight
 --- which includes the specific target highlight
+--- FIXME: setting a window highlight with `nvim_win_set_hl_ns` will cause this check to fail as
+--- a winhighlight is not set and the win namespace cannot be detected
 --- @param win_id integer
 --- @vararg string
 --- @return boolean, string
 function M.has_win_highlight(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
   for _, target in ipairs({ ... }) do
-    if win_hl:match(target) ~= nil then return true, win_hl end
+    if win_hl:match(target) then return true, win_hl end
   end
   return false, win_hl
 end
@@ -383,20 +385,16 @@ local sidebar_fts = {
   'pr',
 }
 
-local SIDEBAR_NS = api.nvim_create_namespace('sidebars')
-
 local function on_sidebar_enter()
-  ---@diagnostic disable-next-line: undefined-field
-  api.nvim_win_set_hl_ns(api.nvim_get_current_win(), SIDEBAR_NS)
-  M.all({
-    { Normal = { link = 'PanelBackground' } },
-    { EndOfBuffer = { link = 'PanelBackground' } },
-    { StatusLine = { link = 'PanelSt' } },
-    { StatusLineNC = { link = 'PanelStNC' } },
-    { SignColumn = { link = 'PanelBackground' } },
-    { VertSplit = { link = 'PanelVertSplit' } },
-    { WinSeparator = { link = 'PanelWinSeparator' } },
-  }, SIDEBAR_NS)
+  vim.wo.winhighlight = table.concat({
+    'Normal:PanelBackground',
+    'EndOfBuffer:PanelBackground',
+    'StatusLine:PanelSt',
+    'StatusLineNC:PanelStNC',
+    'SignColumn:PanelBackground',
+    'VertSplit:PanelVertSplit',
+    'WinSeparator:PanelWinSeparator',
+  }, ',')
 end
 
 local function colorscheme_overrides()
