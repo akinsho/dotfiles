@@ -90,10 +90,6 @@ local allowed = {
   'neo-tree',
 }
 
-local function set(win, value)
-  return pcall(api.nvim_set_option_value, 'winbar', value, { win = win, scope = 'local' })
-end
-
 local function set_winbar()
   as.foreach(function(win)
     local buf = api.nvim_win_get_buf(win)
@@ -106,9 +102,9 @@ local function set_winbar()
       and ft ~= ''
       and not is_diff
     then
-      set(win, '%{%v:lua.as.ui.winbar.get()%}')
+      vim.wo[win].winbar = '%{%v:lua.as.ui.winbar.get()%}'
     elseif is_diff or not vim.tbl_contains(allowed, ft) then
-      set(win, nil)
+      vim.wo[win].winbar = nil
     end
   end, api.nvim_tabpage_list_wins(0))
 end
