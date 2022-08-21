@@ -8,6 +8,7 @@ local fnamemodify = fn.fnamemodify
 local luv = vim.loop
 local fmt = string.format
 local empty = as.empty
+local win_hl = highlights.win_hl
 
 local M = {}
 
@@ -268,10 +269,10 @@ function M.file(ctx, minimal)
   local directory_hl = minimal and 'StDirectoryInactive' or 'StDirectory'
   local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
-  if highlights.has_win_highlight(win, 'Normal', 'StatusLine') then
-    directory_hl = highlights.adopt_win_highlight(win, 'StatusLine', 'StCustomDirectory', 'StTitle')
-    filename_hl = highlights.adopt_win_highlight(win, 'StatusLine', 'StCustomFilename', 'StTitle')
-    parent_hl = highlights.adopt_win_highlight(win, 'StatusLine', 'StCustomParentDir', 'StTitle')
+  if win_hl.exists(win, 'Normal', 'StatusLine') then
+    directory_hl = win_hl.adopt(win, 'StatusLine', 'StCustomDirectory', 'StTitle')
+    filename_hl = win_hl.adopt(win, 'StatusLine', 'StCustomFilename', 'StTitle')
+    parent_hl = win_hl.adopt(win, 'StatusLine', 'StCustomParentDir', 'StTitle')
   end
 
   local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })

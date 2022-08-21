@@ -3,7 +3,7 @@ local api = vim.api
 local P = as.style.palette
 local L = as.style.lsp.colors
 
-local M = {}
+local M = { win_hl = {} }
 
 ---@class HighlightAttributes
 ---@field from string
@@ -130,7 +130,7 @@ end
 --- @param win_id integer
 --- @vararg string
 --- @return boolean, string
-function M.has_win_highlight(win_id, ...)
+function M.win_hl.exists(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
   for _, target in ipairs({ ... }) do
     if win_hl:match(target) then return true, win_hl end
@@ -144,9 +144,9 @@ end
 ---@param target string
 ---@param name string
 ---@param fallback string
-function M.adopt_win_highlight(win_id, target, name, fallback)
+function M.win_hl.adopt(win_id, target, name, fallback)
   local win_hl_name = name .. win_id
-  local _, win_hl = M.has_win_highlight(win_id, target)
+  local _, win_hl = M.win_hl.exists(win_id, target)
 
   if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then return win_hl_name end
 
