@@ -104,10 +104,11 @@ function M.set(namespace, name, opts)
     opts, name, namespace = name, namespace, 0
   end
 
-  assert(name and opts, "Both 'name' and 'opts' must be specified")
-  assert(type(name) == 'string', fmt("Name must be a string but got '%s'", name))
-  assert(type(opts) == 'table', fmt("Opts must be a table but got '%s'", vim.inspect(opts)))
-  assert(namespace, 'You must specify a valid namespace, you passed %s', vim.inspect(namespace))
+  vim.validate({
+    opts = { opts, 'table' },
+    name = { name, 'string' },
+    namespace = { namespace, 'number' },
+  })
 
   local hl = get_highlight(opts.inherit or name)
   opts.inherit = nil
@@ -329,24 +330,16 @@ local function general_overrides()
     { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, foreground = 'none' } },
     { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, foreground = 'none' } },
     {
-      DiagnosticVirtualTextInfo = {
-        background = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 },
-      },
+      DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 } },
     },
     {
-      DiagnosticVirtualTextHint = {
-        background = { from = 'DiagnosticHint', attr = 'fg', alter = -70 },
-      },
+      DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -70 } },
     },
     {
-      DiagnosticVirtualTextError = {
-        background = { from = 'DiagnosticError', attr = 'fg', alter = -80 },
-      },
+      DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -80 } },
     },
     {
-      DiagnosticVirtualTextWarn = {
-        background = { from = 'DiagnosticWarn', attr = 'fg', alter = -80 },
-      },
+      DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -80 } },
     },
     { DiagnosticSignWarn = { link = 'DiagnosticWarn' } },
     { DiagnosticSignInfo = { link = 'DiagnosticInfo' } },
