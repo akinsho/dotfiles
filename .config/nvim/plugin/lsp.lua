@@ -61,6 +61,8 @@ local function format(opts)
 end
 
 --- Check that a buffer is valid and loaded before calling a callback
+--- TODO: neovim upstream should validate the buffer itself rather than
+-- each user having to implement this logic
 ---@param callback function
 ---@param buf integer
 local function valid_call(callback, buf)
@@ -93,7 +95,9 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'LSP: Format on save',
         command = function(args)
-          if not vim.g.formatting_disabled then format({ bufnr = args.buf, async = false }) end
+          if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
+            format({ bufnr = args.buf, async = false })
+          end
         end,
       },
     })
