@@ -34,6 +34,7 @@ local servers = {
   rust_analyzer = true,
   marksman = true,
   pyright = true,
+  bufls = true,
   prosemd_lsp = true,
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
