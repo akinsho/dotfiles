@@ -246,6 +246,7 @@ end
 ---@return number
 function as.augroup(name, commands)
   assert(name ~= 'User', 'The name of an augroup CANNOT be User')
+  assert(#commands > 0, fmt('You must specify at least one autocommand for %s', name))
   local id = api.nvim_create_augroup(name, { clear = true })
   for _, autocmd in ipairs(commands) do
     validate_autocmd(name, autocmd)
