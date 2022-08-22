@@ -42,6 +42,7 @@ end
 
 local function formatting_filter(client)
   local exceptions = ({
+    sql = { 'sqls' },
     lua = { 'sumneko_lua' },
     proto = { 'null-ls' },
   })[vim.bo.filetype]
