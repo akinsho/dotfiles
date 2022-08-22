@@ -13,9 +13,31 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
-local get_augroup = function(bufnr)
+--[[
+Autocommands are created per buffer per feature, i.e. if buffer 8 attaches an LSP server
+then an augroup with the pattern `LspCommands_8_{FEATURE}` will be created. These augroups are
+localised to a buffer because the features are local to only that buffer and when we detach we need to delete
+the augroups by buffer so as not to turn off the LSP for other buffers. The commands are also localised
+to features because each autocommand for a feature e.g. formatting needs to be created in an idempotent
+fashion because this is called n number of times for each client that attaches.
+
+So if there are 3 clients and 1 supports formatting and another code lenses, and the last only references.
+All three features should work and be setup. If only one augroup is used per buffer for all features then each time
+a client detaches all lsp features will be disabled. Or the augroup will be recreated for the new client but
+as a client might not support functionality that was already in place, the augroup will be deleted and recreated
+without the commands for the features that that client does not support.
+--]]
+
+local features = {
+  FORMATTING = 'formatting',
+  CODELENS = 'codelens',
+  DIAGNOSTICS = 'diagnostics',
+  REFERENCES = 'references',
+}
+
+local get_augroup = function(bufnr, method)
   assert(bufnr, 'A bufnr is required to create an lsp augroup')
-  return fmt('LspCommands_%d', bufnr)
+  return fmt('LspCommands_%d_%s', bufnr, method)
 end
 
 local function formatting_filter(client)
@@ -29,7 +51,7 @@ local function formatting_filter(client)
 end
 
 ---@param opts table<string, any>
-local format = function(opts)
+local function format(opts)
   opts = opts or {}
   vim.lsp.buf.format({
     bufnr = opts.bufnr,
@@ -55,49 +77,55 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  local group = get_augroup(bufnr)
-  -- Clear pre-existing buffer autocommands
-  pcall(api.nvim_clear_autocmds, { group = group, buffer = bufnr })
-
-  local cmds = {}
-  table.insert(cmds, {
-    event = { 'CursorHold' },
-    buffer = bufnr,
-    desc = 'Show diagnostics',
-    command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
+  as.augroup(get_augroup(bufnr, features.DIAGNOSTICS), {
+    {
+      event = { 'CursorHold' },
+      buffer = bufnr,
+      desc = 'LSP: Show diagnostics',
+      command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
+    },
   })
+
   if client.server_capabilities.documentFormattingProvider then
-    table.insert(cmds, {
-      event = 'BufWritePre',
-      buffer = bufnr,
-      desc = 'Format the current buffer on save',
-      command = function(args)
-        if not vim.g.formatting_disabled then format({ bufnr = args.buf, async = true }) end
-      end,
+    as.augroup(get_augroup(bufnr, features.FORMATTING), {
+      {
+        event = 'BufWritePre',
+        buffer = bufnr,
+        desc = 'LSP: Format on save',
+        command = function(args)
+          if not vim.g.formatting_disabled then format({ bufnr = args.buf, async = false }) end
+        end,
+      },
     })
   end
+
   if client.server_capabilities.codeLensProvider then
-    table.insert(cmds, {
-      event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-      buffer = bufnr,
-      command = function(args) valid_call(vim.lsp.codelens.refresh, args.buf) end,
+    as.augroup(get_augroup(bufnr, features.CODELENS), {
+      {
+        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+        desc = 'LSP: Code Lens',
+        buffer = bufnr,
+        command = function(args) valid_call(vim.lsp.codelens.refresh, args.buf) end,
+      },
     })
   end
+
   if client.server_capabilities.documentHighlightProvider then
-    table.insert(cmds, {
-      event = { 'CursorHold', 'CursorHoldI' },
-      buffer = bufnr,
-      desc = 'LSP: Document Highlight',
-      command = function(args) valid_call(vim.lsp.buf.document_highlight, args.buf) end,
-    })
-    table.insert(cmds, {
-      event = 'CursorMoved',
-      desc = 'LSP: Document Highlight (Clear)',
-      buffer = bufnr,
-      command = function(args) valid_call(vim.lsp.buf.clear_references, args.buf) end,
+    as.augroup(get_augroup(bufnr, features.REFERENCES), {
+      {
+        event = { 'CursorHold', 'CursorHoldI' },
+        buffer = bufnr,
+        desc = 'LSP: References',
+        command = function(args) valid_call(vim.lsp.buf.document_highlight, args.buf) end,
+      },
+      {
+        event = 'CursorMoved',
+        desc = 'LSP: References Clear',
+        buffer = bufnr,
+        command = function(args) valid_call(vim.lsp.buf.clear_references, args.buf) end,
+      },
     })
   end
-  as.augroup(group, cmds)
 end
 
 -----------------------------------------------------------------------------//
@@ -182,7 +210,19 @@ as.augroup('LspSetupCommands', {
   {
     event = 'LspDetach',
     desc = 'Clean up after detached LSP',
-    command = function(args) api.nvim_clear_autocmds({ group = get_augroup(args.buf), buffer = args.buf }) end,
+    command = function(args)
+      -- Only clear autocommands if there are no other clients attached to the buffer
+      if next(vim.lsp.get_active_clients({ bufnr = args.buf })) then return end
+      as.foreach(
+        function(feature)
+          pcall(api.nvim_clear_autocmds, {
+            group = get_augroup(args.buf, feature),
+            buffer = args.buf,
+          })
+        end,
+        features
+      )
+    end,
   },
 })
 -----------------------------------------------------------------------------//
