@@ -28,7 +28,7 @@ as a client might not support functionality that was already in place, the augro
 without the commands for the features that that client does not support.
 --]]
 
-local features = {
+local FEATURES = {
   FORMATTING = 'formatting',
   CODELENS = 'codelens',
   DIAGNOSTICS = 'diagnostics',
@@ -80,7 +80,7 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  as.augroup(get_augroup(bufnr, features.DIAGNOSTICS), {
+  as.augroup(get_augroup(bufnr, FEATURES.DIAGNOSTICS), {
     {
       event = { 'CursorHold' },
       buffer = bufnr,
@@ -90,7 +90,7 @@ local function setup_autocommands(client, bufnr)
   })
 
   if client.server_capabilities.documentFormattingProvider then
-    as.augroup(get_augroup(bufnr, features.FORMATTING), {
+    as.augroup(get_augroup(bufnr, FEATURES.FORMATTING), {
       {
         event = 'BufWritePre',
         buffer = bufnr,
@@ -105,7 +105,7 @@ local function setup_autocommands(client, bufnr)
   end
 
   if client.server_capabilities.codeLensProvider then
-    as.augroup(get_augroup(bufnr, features.CODELENS), {
+    as.augroup(get_augroup(bufnr, FEATURES.CODELENS), {
       {
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         desc = 'LSP: Code Lens',
@@ -116,7 +116,7 @@ local function setup_autocommands(client, bufnr)
   end
 
   if client.server_capabilities.documentHighlightProvider then
-    as.augroup(get_augroup(bufnr, features.REFERENCES), {
+    as.augroup(get_augroup(bufnr, FEATURES.REFERENCES), {
       {
         event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
@@ -225,7 +225,7 @@ as.augroup('LspSetupCommands', {
             buffer = args.buf,
           })
         end,
-        features
+        FEATURES
       )
     end,
   },
