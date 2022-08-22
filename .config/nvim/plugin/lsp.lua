@@ -38,6 +38,14 @@ local format = function(opts)
   })
 end
 
+--- Check that a buffer is valid and loaded before calling a callback
+---@param callback function
+---@param buf integer
+local function valid_call(callback, buf)
+  if not buf or not api.nvim_buf_is_loaded(buf) or not api.nvim_buf_is_valid(buf) then return end
+  callback()
+end
+
 --- Add lsp autocommands
 ---@param client table<string, any>
 ---@param bufnr number
@@ -72,9 +80,7 @@ local function setup_autocommands(client, bufnr)
     table.insert(cmds, {
       event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
       buffer = bufnr,
-      command = function(args)
-        if api.nvim_buf_is_valid(args.buf) then vim.lsp.codelens.refresh() end
-      end,
+      command = function(args) valid_call(vim.lsp.codelens.refresh, args.buf) end,
     })
   end
   if client.server_capabilities.documentHighlightProvider then
@@ -82,13 +88,13 @@ local function setup_autocommands(client, bufnr)
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = bufnr,
       desc = 'LSP: Document Highlight',
-      command = function() vim.lsp.buf.document_highlight() end,
+      command = function(args) valid_call(vim.lsp.buf.document_highlight, args.buf) end,
     })
     table.insert(cmds, {
       event = 'CursorMoved',
       desc = 'LSP: Document Highlight (Clear)',
       buffer = bufnr,
-      command = function() vim.lsp.buf.clear_references() end,
+      command = function(args) valid_call(vim.lsp.buf.clear_references, args.buf) end,
     })
   end
   as.augroup(group, cmds)
@@ -193,7 +199,8 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
-    if not api.nvim_buf_is_valid(0) then return end
+    local buf = api.nvim_get_current_buf()
+    if not api.nvim_buf_is_valid(buf) and api.nvim_buf_is_loaded(buf) then return end
     pcall(vim.diagnostic.setqflist, { open = false })
     as.toggle_list('quickfix')
     if not as.is_vim_list_open() and cmd_id then
