@@ -11,10 +11,7 @@ local function find(word, ...)
   end
 end
 
-local function open_help(tag)
-  local ok, err = pcall(vim.cmd.help, tag)
-  if not ok then vim.notify(err, 'error') end
-end
+local function open_help(tag) as.wrap_err(vim.cmd.help, tag) end
 
 --- Stolen from nlua.nvim this function attempts to open
 --- vim help docs if an api or vim.fn function otherwise it
