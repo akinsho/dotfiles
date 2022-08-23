@@ -135,10 +135,8 @@ return function(name)
   if t == 'function' then config = config() end
   config.on_init = on_init
   config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
-  config.capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
+  config.capabilities.textDocument.foldingRange =
+    { dynamicRegistration = false, lineFoldingOnly = true }
   local ok, cmp_nvim_lsp = as.require('cmp_nvim_lsp')
   if ok then cmp_nvim_lsp.update_capabilities(config.capabilities) end
   return config

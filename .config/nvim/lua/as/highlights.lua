@@ -397,6 +397,7 @@ local function colorscheme_overrides()
     },
     ['horizon'] = {
       { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream normal foreground color
+      { NormalNC = { fg = { from = 'Normal', alter = -10 } } },
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { background = 'NONE' } },
