@@ -215,7 +215,15 @@ packer.startup({
 
     use({
       'j-hui/fidget.nvim',
-      config = function() require('fidget').setup() end,
+      config = function()
+        require('fidget').setup()
+        as.augroup('CloseFidget', {
+          {
+            event = 'VimLeavePre',
+            command = 'silent! FidgetClose',
+          },
+        })
+      end,
     })
 
     use({
@@ -802,8 +810,7 @@ packer.startup({
     use({
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
-        local hl = require('as.highlights')
-        hl.plugin('treesitter-context', {
+        require('as.highlights').plugin('treesitter-context', {
           { ContextBorder = { link = 'Dim' } },
           { TreesitterContext = { inherit = 'Normal' } },
           { TreesitterContextLineNumber = { inherit = 'LineNr' } },
