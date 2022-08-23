@@ -152,24 +152,30 @@ end
 
 --- Call the given function and use [vim.notify] to notify of any errors
 ---@param func function
+---@param msg string?
 ---@vararg any
 ---@return boolean, any
-function as.wrap_err(func, ...)
+local function wrap_err(func, msg, ...)
   return xpcall(func, function(err)
-    vim.schedule(function() vim.notify(err, l.ERROR, { title = 'Error' }) end)
+    msg = msg and fmt('%s:\n%s', msg, err) or err
+    local info = debug.getinfo(2, 'S')
+    local title = fmt('ERROR(%s:%d)', fn.fnamemodify(info.short_src, ':~:.'), info.linedefined)
+    vim.schedule(function() vim.notify(msg, l.ERROR, { title = title }) end)
   end, ...)
 end
 
---- Call the given function and use [vim.notify] to notify of any errors
+--- Call the given function and use `vim.notify` to notify of any errors
+---@param func function
+---@vararg any
+---@return boolean, any
+function as.wrap_err(func, ...) return wrap_err(func, nil, ...) end
+
+--- Call the given function and use `vim.notify` to notify of any errors
 ---@param func function
 ---@param msg string
 ---@vararg any
 ---@return boolean, any
-function as.wrap_err_msg(func, msg, ...)
-  return xpcall(func, function(err)
-    vim.schedule(function() vim.notify(fmt('%s:\n %s', msg, err), l.ERROR, { title = 'Error' }) end)
-  end, ...)
-end
+function as.wrap_err_msg(func, msg, ...) return wrap_err(func, msg, ...) end
 
 ---@alias Plug table<(string | number), string>
 
