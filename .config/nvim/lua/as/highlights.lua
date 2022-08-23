@@ -120,13 +120,8 @@ function M.set(namespace, name, opts)
     end
   end
 
-  as.wrap_err_msg(
-    api.nvim_set_hl,
-    fmt('Failed to set %s because', name),
-    namespace,
-    name,
-    vim.tbl_extend('force', hl, opts)
-  )
+  local new = vim.tbl_extend('force', hl, opts)
+  as.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, new)
 end
 
 --- Check if the current window has a winhighlight
@@ -441,6 +436,6 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-as.wrap_err_msg(vim.cmd.colorscheme, 'Theme failed to load because', 'horizon')
+as.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')
 
 return M

@@ -3,7 +3,8 @@
     "Lua.diagnostics.disable": [
         "missing-parameter",
         "return-type-mismatch",
-        "param-type-mismatch"
+        "param-type-mismatch",
+        "cast-local-type"
     ],
     "Lua.workspace.checkThirdParty": false
 }
