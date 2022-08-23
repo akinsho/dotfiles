@@ -97,7 +97,11 @@ local function setup_autocommands(client, bufnr)
         desc = 'LSP: Format on save',
         command = function(args)
           if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
-            format({ bufnr = args.buf, async = false })
+            local multiple_formatters = #vim.tbl_filter(
+              function(c) return c.server_capabilities.documentFormattingProvider end,
+              lsp.get_active_clients({ buffer = bufnr })
+            ) > 1
+            format({ bufnr = args.buf, async = not multiple_formatters })
           end
         end,
       },
