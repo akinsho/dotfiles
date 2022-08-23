@@ -33,6 +33,7 @@ function M.config()
   local layout_actions = require('telescope.actions.layout')
   local which_key = require('which-key')
   local icons = as.style.icons
+  local P = as.style.palette
   local fmt, fn = string.format, vim.fn
 
   as.augroup('TelescopePreviews', {
@@ -46,36 +47,13 @@ function M.config()
   H.plugin('telescope', {
     theme = {
       ['*'] = {
-        {
-          TelescopePromptTitle = {
-            bg = as.style.palette.grey,
-            fg = { from = 'Directory' },
-            bold = true,
-          },
-        },
-        {
-          TelescopeResultsTitle = {
-            bg = as.style.palette.grey,
-            fg = { from = 'Normal' },
-            bold = true,
-          },
-        },
-        {
-          TelescopePreviewTitle = {
-            bg = as.style.palette.grey,
-            fg = { from = 'Normal' },
-            bold = true,
-          },
-        },
-        {
-          TelescopePreviewBorder = {
-            fg = as.style.palette.grey,
-            bg = { from = 'PanelBackground' },
-          },
-        },
+        { TelescopePromptTitle = { bg = P.grey, fg = { from = 'Directory' }, bold = true } },
+        { TelescopeResultsTitle = { bg = P.grey, fg = { from = 'Normal' }, bold = true } },
+        { TelescopePreviewTitle = { bg = P.grey, fg = { from = 'Normal' }, bold = true } },
+        { TelescopePreviewBorder = { fg = P.grey, bg = { from = 'PanelBackground' } } },
         { TelescopePreviewNormal = { link = 'PanelBackground' } },
         { TelescopePromptPrefix = { link = 'Statement' } },
-        { TelescopeBorder = { foreground = as.style.palette.grey } },
+        { TelescopeBorder = { foreground = P.grey } },
         { TelescopeTitle = { inherit = 'Normal', bold = true } },
         {
           TelescopeSelectionCaret = {
@@ -85,7 +63,10 @@ function M.config()
         },
       },
       ['horizon'] = {
+        { TelescopePromptTitle = { bg = P.grey, fg = 'fg', bold = true } },
         { TelescopeMatching = { bold = false, foreground = { from = 'Variable', attr = 'fg' } } },
+        { TelescopePreviewBorder = { fg = P.grey, bg = { from = 'PanelDarkBackground' } } },
+        { TelescopePreviewNormal = { link = 'PanelDarkBackground' } },
       },
       ['doom-one'] = {
         { TelescopeMatching = { link = 'Title' } },
