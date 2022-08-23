@@ -89,7 +89,12 @@ packer.startup({
           after = 'telescope.nvim',
           config = function() require('telescope').load_extension('smart_history') end,
         },
-        { 'ilAYAli/scMRU.nvim', module = 'mru' },
+        {
+          'nvim-telescope/telescope-frecency.nvim',
+          after = 'telescope.nvim',
+          requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
+          config = function() require('telescope').load_extension('frecency') end,
+        },
       },
     })
 

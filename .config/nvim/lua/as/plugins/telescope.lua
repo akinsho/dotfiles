@@ -166,6 +166,15 @@ function M.config()
         override_generic_sorter = true,
         override_file_sorter = true,
       },
+      frecency = {
+        default_workspace = 'LSP',
+        show_unindexed = false, -- Show all files or only those that have been indexed
+        ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
+        workspaces = {
+          conf = vim.env.DOTFILES,
+          project = vim.env.PROJECTS_DIR,
+        },
+      },
     },
     pickers = {
       buffers = as.telescope.dropdown({
@@ -302,16 +311,10 @@ function M.config()
 
   local function live_grep() builtins.live_grep() end
 
-  local function MRU()
-    require('mru').display_cache(as.telescope.dropdown({
+  local function frecency()
+    require('telescope').extensions.frecency.frecency(as.telescope.dropdown({
       previewer = false,
     }))
-  end
-
-  local function MFU()
-    require('mru').display_cache(
-      vim.tbl_extend('keep', { algorithm = 'mfu' }, as.telescope.dropdown({ previewer = false }))
-    )
   end
 
   local function notifications() telescope.extensions.notify.notify(as.telescope.dropdown()) end
@@ -358,8 +361,7 @@ function M.config()
       ['?'] = { builtins.help_tags, 'help' },
       f = { find_files, 'find files' },
       fn = { find_near_files, 'find near files' },
-      u = { MRU, 'Most recently used files' },
-      h = { MFU, 'Most frequently used files' },
+      h = { frecency, 'Most (f)recently used files' },
       g = {
         name = '+git',
         b = { builtins.git_branches, 'branches' },
