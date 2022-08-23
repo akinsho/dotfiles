@@ -27,12 +27,13 @@ function as.telescope.ivy(opts)
 end
 
 function M.config()
+  local H = require('as.highlights')
   local telescope = require('telescope')
   local actions = require('telescope.actions')
   local layout_actions = require('telescope.actions.layout')
   local which_key = require('which-key')
-  local H = require('as.highlights')
   local icons = as.style.icons
+  local fmt, fn = string.format, vim.fn
 
   as.augroup('TelescopePreviews', {
     {
@@ -317,6 +318,14 @@ function M.config()
 
   local function luasnips() require('telescope').extensions.luasnip.luasnip(as.telescope.dropdown()) end
 
+  local function find_near_files()
+    local cwd = require('telescope.utils').buffer_dir()
+    builtins.find_files({
+      prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
+      cwd = cwd,
+    })
+  end
+
   local function installed_plugins()
     builtins.find_files({
       prompt_title = 'Installed plugins',
@@ -348,6 +357,7 @@ function M.config()
       r = { builtins.resume, 'resume last picker' },
       ['?'] = { builtins.help_tags, 'help' },
       f = { find_files, 'find files' },
+      fn = { find_near_files, 'find near files' },
       u = { MRU, 'Most recently used files' },
       h = { MFU, 'Most frequently used files' },
       g = {
