@@ -238,6 +238,8 @@ as.augroup('LspSetupCommands', {
     command = function(args)
       -- Only clear autocommands if there are no other clients attached to the buffer
       if next(lsp.get_active_clients({ bufnr = args.buf })) then return end
+      -- TODO: when an LSP detaches if it is the last client to support a method then
+      -- the autocommand for it should be unregistered.
       as.foreach(
         function(feature)
           as.wrap_err(
@@ -377,7 +379,7 @@ diagnostic.config({
   },
 })
 
--- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
+-- NOTE: the hover handler returns the bufnr, winnr so can be used for mappings
 lsp.handlers['textDocument/hover'] =
   lsp.with(lsp.handlers.hover, { border = border, max_width = max_width, max_height = max_height })
 
