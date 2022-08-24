@@ -53,8 +53,9 @@ packer.startup({
 
     use({
       'github/copilot.vim',
+      after = 'nvim-cmp',
+      setup = function() vim.g.copilot_no_tab_map = true end,
       config = function()
-        vim.g.copilot_no_tab_map = true
         as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
         as.inoremap('<M-]>', '<Plug>(copilot-next)')
         as.inoremap('<M-[>', '<Plug>(copilot-previous)')
