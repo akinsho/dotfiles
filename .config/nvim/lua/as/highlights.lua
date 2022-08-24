@@ -82,8 +82,7 @@ function M.get(group, attribute, fallback)
   local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
   local color = data[attr] or fallback
   if color then return color end
-  local msg = fmt("%s's %s does not exist", group, attr)
-  vim.schedule(function() vim.notify(msg, 'error') end)
+  vim.schedule(function() vim.notify(fmt("%s's %s does not exist", group, attr), 'error') end)
   return 'NONE'
 end
 
@@ -110,7 +109,7 @@ function M.set(namespace, name, opts)
     namespace = { namespace, 'number' },
   })
 
-  local hl = get_highlight(opts.inherit or name)
+  local parent_hl = get_highlight(opts.inherit or name)
   opts.inherit = nil
 
   for attr, value in pairs(opts) do
@@ -120,8 +119,8 @@ function M.set(namespace, name, opts)
     end
   end
 
-  local new = vim.tbl_extend('force', hl, opts)
-  as.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, new)
+  local hl = vim.tbl_extend('force', parent_hl, opts)
+  as.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, hl)
 end
 
 --- Check if the current window has a winhighlight
