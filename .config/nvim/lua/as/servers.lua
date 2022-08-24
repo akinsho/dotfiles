@@ -1,23 +1,30 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local fn = vim.fn
+local fn, fmt = vim.fn, string.format
 
 -- This function allows reading a per project "settings.json" file in the `.vim` directory of the project.
 ---@param client table<string, any>
 ---@return boolean
 local function on_init(client)
-  local path = client.workspace_folders[1].name
-  local config_path = path .. '/.vim/settings.json'
-  if fn.filereadable(config_path) == 0 then return true end
-  local ok, json = pcall(fn.readfile, config_path)
+  local settings = client.workspace_folders[1].name .. '/.vim/settings.json'
+
+  if fn.filereadable(settings) == 0 then return true end
+  local ok, json = pcall(fn.readfile, settings)
   if not ok then return true end
+
   local overrides = vim.json.decode(table.concat(json, '\n'))
+
   for name, config in pairs(overrides) do
     if name == client.name then
-      local original = client.config
-      client.config = vim.tbl_deep_extend('force', original, config)
+      client.config = vim.tbl_deep_extend('force', client.config, config)
       client.notify('workspace/didChangeConfiguration')
+
+      vim.schedule(function()
+        local path = fn.fnamemodify(settings, ':~:.')
+        local msg = fmt('loaded local settings for %s from %s', client.name, path)
+        vim.notify_once(msg, 'info', { title = 'LSP Settings' })
+      end)
     end
   end
   return true
