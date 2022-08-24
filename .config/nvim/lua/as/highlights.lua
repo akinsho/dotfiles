@@ -173,22 +173,28 @@ end
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
+--- Takes the overrides for each theme and merges the lists, avoiding duplicates and ensuring
+--- priority is given to specific themes rather than the fallback
+---@param theme table<string, table<string, string>>
+---@return table<string, string>
+local function add_theme_overrides(theme)
+  local res, seen = {}, {}
+  local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})
+  for _, hl in ipairs(list) do
+    local n = next(hl)
+    if not seen[n] then res[#res + 1] = hl end
+    seen[n] = true
+  end
+  return res
+end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
 ---@param opts table<string, table> map of highlights
 function M.plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
   -- definition otherwise use the opts as is
-  local theme = opts.theme
-  if theme then
-    local res, seen = {}, {}
-    local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})
-    for _, hl in ipairs(list) do
-      local n = next(hl)
-      if not seen[n] then res[#res + 1] = hl end
-      seen[n] = true
-    end
-    opts = res
+  if opts.theme then
+    opts = add_theme_overrides(opts.theme)
     if not next(opts) then return end
   end
   -- capitalise the name for autocommand convention sake
