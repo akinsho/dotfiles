@@ -182,7 +182,7 @@ local function setup_plugins(client, bufnr)
     navic.attach(client, bufnr)
   end
   local hints_ok, hints = pcall(require, 'lsp-inlayhints')
-  if hints_ok then hints.on_attach(bufnr, client) end
+  if hints_ok then hints.on_attach(client, bufnr) end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
