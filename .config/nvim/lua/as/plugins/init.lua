@@ -67,6 +67,7 @@ packer.startup({
           DressingInput = false,
           TelescopePrompt = false,
           ['neo-tree-popup'] = false,
+          ['dap-repl'] = false,
         }
         require('as.highlights').plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
       end,
