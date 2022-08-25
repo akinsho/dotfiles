@@ -262,15 +262,17 @@ as.augroup('UpdateVim', {
     -- it correctly sources $MYVIMRC but all the other files that it
     -- requires will need to be resourced or reloaded themselves
     event = 'BufWritePost',
-    pattern = { '$DOTFILES/**/nvim/plugin/*.{lua,vim}', fn.expand('$MYVIMRC') },
+    pattern = { vim.g.vim_dir .. '/plugin/*.{lua,vim}', vim.env.MYVIMRC },
     nested = true,
     command = function(args)
       local path = api.nvim_buf_get_name(args.buf)
+      vim.cmd.source(fn.expand('$MYVIMRC'))
       vim.cmd.source(path)
-      local ok, msg = pcall(vim.cmd, 'source $MYVIMRC | redraw | silent doautocmd ColorScheme')
-      if not ok then vim.notify(msg, 'error', { title = 'Sourcing init.lua' }) end
-      local m = ok and fmt('sourced %s and %s', path, fn.fnamemodify(vim.env.MYVIMRC, ':t')) or msg
-      if m then vim.notify(m) end
+      vim.cmd.redraw()
+      api.nvim_exec_autocmds('ColorScheme', {})
+      api.nvim_exec_autocmds('User', { pattern = 'VimrcReloaded' })
+      local msg = fmt('sourced %s and %s', vim.fs.basename(path), vim.fs.basename(vim.env.MYVIMRC))
+      vim.notify(msg, 'info', { title = 'Sourcing init.lua' })
     end,
   },
   {

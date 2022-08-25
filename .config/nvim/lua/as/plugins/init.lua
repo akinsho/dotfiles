@@ -1100,16 +1100,23 @@ end
 
 as.nnoremap('<leader>ps', '<Cmd>PackerSync<CR>', 'packer: sync')
 
+local function reload()
+  as.invalidate('as.plugins', true)
+  packer.compile()
+end
+
 as.augroup('PackerSetupInit', {
   {
     event = 'BufWritePost',
     pattern = { '*/as/plugins/*.lua' },
     desc = 'Packer setup and reload',
-    command = function()
-      vim.cmd.doautocmd('LspDetach')
-      as.invalidate('as.plugins', true)
-      packer.compile()
-    end,
+    command = reload,
+  },
+  {
+    event = 'User',
+    pattern = { 'VimrcReloaded' },
+    desc = 'Packer setup and reload',
+    command = reload,
   },
   {
     event = 'User',
