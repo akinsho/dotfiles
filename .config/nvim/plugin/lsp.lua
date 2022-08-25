@@ -71,16 +71,21 @@ local function clients_by_capability(bufnr, capability)
   )
 end
 
+---@param buf integer
+---@return boolean
+local function is_buffer_valid(buf)
+  return buf and api.nvim_buf_is_loaded(buf) and api.nvim_buf_is_valid(buf)
+end
+
 --- TODO: neovim upstream should validate the buffer itself rather than each user having to implement this logic
 --- Check that a buffer is valid and loaded before calling a callback
 --- it also ensures that a client which supports the capability is attached
----@param callback function
 ---@param buf integer
-local function check_valid_request(callback, buf, capability)
-  if not buf or not api.nvim_buf_is_loaded(buf) or not api.nvim_buf_is_valid(buf) then return end
+---@return boolean, table[]
+local function check_valid_client(buf, capability)
+  if not is_buffer_valid(buf) then return false, {} end
   local clients = clients_by_capability(buf, capability)
-  if not next(clients) then return end
-  callback()
+  return next(clients) ~= nil, clients
 end
 
 --- Add lsp autocommands
@@ -109,11 +114,8 @@ local function setup_autocommands(client, bufnr)
         desc = 'LSP: Format on save',
         command = function(args)
           if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
-            check_valid_request(
-              function() format({ bufnr = args.buf, async = false }) end,
-              args.buf,
-              'documentFormattingProvider'
-            )
+            local is_valid, clients = check_valid_client(args.buf, 'documentFormattingProvider')
+            if is_valid then format({ bufnr = args.buf, async = #clients == 1 }) end
           end
         end,
       },
@@ -126,7 +128,9 @@ local function setup_autocommands(client, bufnr)
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         desc = 'LSP: Code Lens',
         buffer = bufnr,
-        command = function(args) check_valid_request(lsp.codelens.refresh, args.buf, 'codeLensProvider') end,
+        command = function(args)
+          if check_valid_client(args.buf, 'codeLensProvider') then lsp.codelens.refresh() end
+        end,
       },
     })
   end
@@ -138,7 +142,9 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'LSP: References',
         command = function(args)
-          check_valid_request(lsp.buf.document_highlight, args.buf, 'documentHighlightProvider')
+          if check_valid_client(args.buf, 'documentHighlightProvider') then
+            lsp.buf.document_highlight()
+          end
         end,
       },
       {
@@ -146,7 +152,9 @@ local function setup_autocommands(client, bufnr)
         desc = 'LSP: References Clear',
         buffer = bufnr,
         command = function(args)
-          check_valid_request(lsp.buf.clear_references, args.buf, 'documentHighlightProvider')
+          if check_valid_client(args.buf, 'documentHighlightProvider') then
+            lsp.buf.clear_references()
+          end
         end,
       },
     })
@@ -267,8 +275,7 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
-    local buf = api.nvim_get_current_buf()
-    if not api.nvim_buf_is_valid(buf) and api.nvim_buf_is_loaded(buf) then return end
+    if not is_buffer_valid(api.nvim_get_current_buf()) then return end
     as.wrap_err(vim.diagnostic.setqflist, { open = false })
     as.toggle_list('quickfix')
     if not as.is_vim_list_open() and cmd_id then
