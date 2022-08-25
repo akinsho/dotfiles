@@ -246,12 +246,15 @@ packer.startup({
       config = function()
         require('as.highlights').plugin('Lightbulb', {
           { LightBulbFloatWin = { foreground = { from = 'Type' } } },
+          { LightBulbVirtualText = { foreground = { from = 'Type' } } },
         })
+        local icon = as.style.icons.misc.lightbulb
         require('nvim-lightbulb').setup({
           ignore = { 'null-ls' },
-          sign = { enabled = false },
-          float = { text = '', enabled = true, win_opts = { border = 'none' } }, -- 
           autocmd = { enabled = true },
+          sign = { enabled = false },
+          virtual_text = { enabled = true, text = icon, hl_mode = 'blend' },
+          float = { text = icon, enabled = false, win_opts = { border = 'none' } }, -- 
         })
       end,
     })
