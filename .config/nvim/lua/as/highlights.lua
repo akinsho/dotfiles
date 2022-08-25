@@ -95,6 +95,8 @@ end
 ---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
+---  NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
+--- is updated
 ---@param name string
 ---@param opts HighlightKeys
 ---@overload fun(namespace: integer, name: string, opts: HighlightKeys)
@@ -109,17 +111,17 @@ function M.set(namespace, name, opts)
     namespace = { namespace, 'number' },
   })
 
-  local parent_hl = get_highlight(opts.inherit or name)
-  opts.inherit = nil
+  local hl = get_highlight(opts.inherit or name)
 
   for attr, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      opts[attr] = M.get(value.from, value.attr or attr)
-      if value.alter then opts[attr] = M.alter_color(opts[attr], value.alter) end
+      hl[attr] = M.get(value.from, value.attr or attr)
+      if value.alter then hl[attr] = M.alter_color(hl[attr], value.alter) end
+    elseif attr ~= 'inherit' then
+      hl[attr] = value
     end
   end
 
-  local hl = vim.tbl_extend('force', parent_hl, opts)
   as.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, hl)
 end
 
