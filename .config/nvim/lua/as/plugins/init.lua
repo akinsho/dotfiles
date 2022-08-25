@@ -222,7 +222,15 @@ packer.startup({
     use({
       'j-hui/fidget.nvim',
       config = function()
-        require('fidget').setup()
+        require('fidget').setup({
+          align = {
+            bottom = false,
+            right = true,
+          },
+          fmt = {
+            stack_upwards = false,
+          },
+        })
         as.augroup('CloseFidget', {
           {
             event = 'VimLeavePre',
