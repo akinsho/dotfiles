@@ -170,7 +170,7 @@ return function()
  ^ ^              _q_: exit
 ]]
 
-  local dap_hydra = Hydra({
+  Hydra({
     hint = hint,
     config = {
       color = 'pink',
@@ -199,16 +199,6 @@ return function()
       { 'b', run('toggle_breakpoint'), { silent = true } },
       { 'K', ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
       { 'q', nil, { exit = true, nowait = true } },
-    },
-  })
-
-  as.augroup('HydraDap', {
-    {
-      event = 'User',
-      pattern = 'DapStarted',
-      command = function()
-        vim.schedule(function() dap_hydra:activate() end)
-      end,
     },
   })
 end
