@@ -398,7 +398,11 @@ local function colorscheme_overrides()
       { NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' } },
     },
     ['horizon'] = {
-      { Normal = { fg = '#C1C1C1' } }, -- TODO: Upstream normal foreground color
+      -----------------------------------------------------------------------------------------------
+      --- TODO: upstream these highlights to horizon.nvim
+      -----------------------------------------------------------------------------------------------
+      { Normal = { fg = '#C1C1C1' } },
+      -----------------------------------------------------------------------------------------------
       { NormalNC = { fg = { from = 'Normal', alter = -10 } } },
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
