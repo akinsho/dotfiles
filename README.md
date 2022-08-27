@@ -1,6 +1,5 @@
 # .dotfiles
 
-
 <img width="1728" alt="dotfiles" src="https://user-images.githubusercontent.com/22454918/183880278-d9762976-07a9-457e-8542-d2685a8a26b4.png">
 
 My dotfiles including _zsh_, _(n)vim_ and _tmux_ config files (stashed away in case of laptop armageddon).
@@ -14,15 +13,15 @@ some inspiration, _not complete duplication_. If you see something weird or wron
 ### Installation
 
 The installation script is out of date and doesn't work anymore.
-To setup a new machine instead follow these instructions:
+To set up a new machine instead follow these instructions:
 
 1. Check `git` is installed.
-2. (Mac OS) Install homebrew using the most recent instructions.
+2. (macOS) Install homebrew using the most recent instructions.
 
 #### dependencies:
 
 - `neovim`
-- `hombrew` (MacOS)
+- `hombrew` (macOS)
 - `ripgrep`
 - `fzf`
 - `delta`
@@ -41,7 +40,7 @@ To setup a new machine instead follow these instructions:
 
 ### Setup
 
-I manage my setup using [dotbot](https://github.com/anishathalye/dotbot). To setup symlinks run
+I manage my setup using [dotbot](https://github.com/anishathalye/dotbot). To set up symlinks run
 `./install` in the root directory of the repository
 
 This package manages symlinking my config files to the correct directories.
