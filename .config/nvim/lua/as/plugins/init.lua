@@ -413,10 +413,7 @@ packer.startup({
       'B4mbus/todo-comments.nvim',
       config = function()
         require('todo-comments').setup()
-        as.command(
-          'TodoDots',
-          string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
-        )
+        as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
       end,
     })
 
@@ -430,8 +427,7 @@ packer.startup({
       end,
     })
 
-    -- NOTE: Defer loading till telescope is loaded this
-    -- as it implicitly loads telescope so needs to be delayed
+    -- NOTE: Defer loading till telescope is loaded this as it implicitly loads telescope so needs to be delayed
     use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('dressing') })
 
     use({
@@ -942,19 +938,14 @@ packer.startup({
       'AckslD/nvim-trevJ.lua',
       module = 'trevj',
       setup = function()
-        as.nnoremap(
-          'gS',
-          function() require('trevj').format_at_cursor() end,
-          { desc = 'splitjoin: split' }
-        )
+        as.nnoremap('gS', function() require('trevj').format_at_cursor() end, {
+          desc = 'splitjoin: split',
+        })
       end,
       config = function() require('trevj').setup() end,
     })
 
-    use({
-      'numToStr/Comment.nvim',
-      config = function() require('Comment').setup() end,
-    })
+    use({ 'numToStr/Comment.nvim', config = function() require('Comment').setup() end })
 
     use({
       'gbprod/substitute.nvim',
