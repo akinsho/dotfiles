@@ -185,8 +185,11 @@ packer.startup({
       'neovim/nvim-lspconfig',
       module_pattern = 'lspconfig.*',
       config = function()
-        local get_config = require('as.servers')
-        require('lspconfig').ccls.setup(get_config('ccls'))
+        require('as.highlights').plugin('lspconfig', {
+          { LspInfoBorder = { link = 'FloatBorder' } },
+        })
+        require('lspconfig.ui.windows').default_options.border = as.style.current.border
+        require('lspconfig').ccls.setup(require('as.servers')('ccls'))
       end,
     })
 
