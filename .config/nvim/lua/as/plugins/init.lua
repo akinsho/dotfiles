@@ -439,8 +439,10 @@ packer.startup({
         local s = as.style
         local misc = s.icons.misc
 
-        highlights.set('NavicText', { bold = true })
-        highlights.set('NavicSeparator', { link = 'Directory' })
+        require('as.highlights').plugin('navic', {
+          { NavicText = { bold = true } },
+          { NavicSeparator = { link = 'Directory' } },
+        })
         local icons = as.map(function(icon, key)
           highlights.set(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
           return icon .. ' '
