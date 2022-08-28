@@ -143,12 +143,8 @@ function M.config()
       },
     },
     extensions = {
-      fzf = {
-        override_generic_sorter = true,
-        override_file_sorter = true,
-      },
       frecency = {
-        default_workspace = 'LSP',
+        default_workspace = 'CWD',
         show_unindexed = false, -- Show all files or only those that have been indexed
         ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
         workspaces = {
@@ -173,10 +169,6 @@ function M.config()
       live_grep = as.telescope.ivy({
         file_ignore_patterns = { '.git/', '%.svg', '%.lock' },
         max_results = 2000,
-        on_input_filter_cb = function(prompt)
-          -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
-          return { prompt = prompt:gsub('%s', '.*') }
-        end,
       }),
       current_buffer_fuzzy_find = as.telescope.dropdown({
         previewer = false,
