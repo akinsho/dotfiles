@@ -1,8 +1,7 @@
 ---@diagnostic disable: redefined-local
 local utils = require('as.utils.plugins')
 
-local dev = utils.dev
-local conf = utils.conf
+local with_local, conf = utils.with_local, utils.conf
 local use_local = utils.use_local
 local packer_notify = utils.packer_notify
 
@@ -355,7 +354,11 @@ packer.startup({
       requires = {
         { 'rcarriga/neotest-plenary', module = 'neotest-plenary' },
         { 'sidlatau/neotest-dart', module = 'neotest-dart' },
-        { dev('personal/neotest-go'), module = 'neotest-go' },
+        with_local({
+          'neotest/neotest-go',
+          module = 'neotest-go',
+          local_path = 'personal',
+        }),
       },
     })
 
@@ -665,10 +668,11 @@ packer.startup({
       end,
     })
 
-    use({
+    use_local({
       'rcarriga/nvim-notify',
-      cond = utils.not_headless, -- TODO: causes blocking output in headless mode
       config = conf('notify'),
+      local_path = 'contributing',
+      local_enabled = true,
     })
 
     use({
