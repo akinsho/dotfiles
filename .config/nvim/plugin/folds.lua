@@ -3,6 +3,8 @@
 -----------------------------------------------------------------------------//
 -- CREDIT: https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
 
+if not as.ui.foldtext.enable then return end
+
 local fn = vim.fn
 local api = vim.api
 
