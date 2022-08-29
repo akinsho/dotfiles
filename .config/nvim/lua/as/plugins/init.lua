@@ -349,9 +349,12 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       'nvim-neotest/neotest',
+      setup = conf('neotest').setup,
       config = conf('neotest').config,
+      module = 'neotest',
       requires = {
         { 'rcarriga/neotest-plenary', module = 'neotest-plenary' },
+        { 'sidlatau/neotest-dart', module = 'neotest-dart' },
         { dev('personal/neotest-go'), module = 'neotest-go' },
       },
     })

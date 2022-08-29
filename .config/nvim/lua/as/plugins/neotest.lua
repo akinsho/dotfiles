@@ -1,6 +1,6 @@
 local M = {}
 
-function M.config()
+function M.setup()
   local function open() require('neotest').output.open({ enter = true, short = false }) end
   local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
   local function run_file_sync()
@@ -20,13 +20,15 @@ function M.config()
   as.nnoremap('<localleader>ts', cancel, 'neotest: cancel')
   as.nnoremap('[n', next_failed, 'jump to next failed test')
   as.nnoremap(']n', prev_failed, 'jump to previous failed test')
+end
 
+function M.config()
   require('neotest').setup({
     discovery = {
-      enabled = false,
+      enabled = false, -- TODO: Set this per project
     },
     diagnostic = {
-      enabled = false,
+      enabled = true,
     },
     icons = {
       running = as.style.icons.misc.clock,
@@ -36,6 +38,9 @@ function M.config()
     },
     adapters = {
       require('neotest-plenary'),
+      require('neotest-dart')({
+        command = 'flutter',
+      }),
       require('neotest-go')({
         experimental = {
           test_table = true,
