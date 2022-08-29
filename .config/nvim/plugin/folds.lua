@@ -100,4 +100,4 @@ function as.folds()
   return fold_start .. string.rep(' ', api.nvim_win_get_width(0) - text_length - 7) .. fold_end
 end
 
-vim.opt.foldtext = 'v:lua.as.folds()'
+vim.o.foldtext = 'v:lua.as.folds()'

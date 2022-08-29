@@ -1,4 +1,4 @@
-local opt, fn = vim.opt, vim.fn
+local o, opt, fn = vim.o, vim.opt, vim.fn
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -17,19 +17,19 @@ opt.shortmess = {
 -----------------------------------------------------------------------------//
 -- Timings {{{1
 -----------------------------------------------------------------------------//
-opt.updatetime = 300
-opt.timeout = true
-opt.timeoutlen = 500
-opt.ttimeoutlen = 10
+o.updatetime = 300
+o.timeout = true
+o.timeoutlen = 500
+o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-opt.splitbelow = true
-opt.splitright = true
-opt.eadirection = 'hor'
+o.splitbelow = true
+o.splitright = true
+o.eadirection = 'hor'
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
-vim.o.switchbuf = 'useopen,uselast'
+o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
   fold = ' ',
   eob = ' ', -- suppress ~ at EndOfBuffer
@@ -74,10 +74,10 @@ opt.formatoptions = {
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
-opt.foldlevelstart = 2
+o.foldlevelstart = 2
 if not as.plugin_installed('nvim-ufo') then
-  opt.foldexpr = 'nvim_treesitter#foldexpr()'
-  opt.foldmethod = 'expr'
+  o.foldexpr = 'nvim_treesitter#foldexpr()'
+  o.foldmethod = 'expr'
 end
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
@@ -93,9 +93,9 @@ end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-opt.wildcharm = ('\t'):byte()
-opt.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
-opt.wildignorecase = true -- Ignore case when completing file names and directories
+o.wildcharm = ('\t'):byte()
+o.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
+o.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
 opt.wildignore = {
   '*.aux',
@@ -123,23 +123,23 @@ opt.wildignore = {
   '.DS_Store',
   'tags.lock',
 }
-opt.wildoptions = 'pum'
-opt.pumblend = 3 -- Make popup window translucent
+o.wildoptions = 'pum'
+o.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
-opt.conceallevel = 2
-opt.breakindentopt = 'sbr'
-opt.linebreak = true -- lines wrap at words rather than random characters
-opt.synmaxcol = 1024 -- don't syntax highlight long lines
-opt.signcolumn = 'auto:2-5'
-opt.ruler = false
-opt.cmdheight = 0
-opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
+o.conceallevel = 2
+o.breakindentopt = 'sbr'
+o.linebreak = true -- lines wrap at words rather than random characters
+o.synmaxcol = 1024 -- don't syntax highlight long lines
+o.signcolumn = 'auto:2-5'
+o.ruler = false
+o.cmdheight = 0
+o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
 -----------------------------------------------------------------------------//
-opt.list = true -- invisible chars
+o.list = true -- invisible chars
 opt.listchars = {
   eol = nil,
   tab = '  ', -- Alternatives: '▷▷',
@@ -150,32 +150,32 @@ opt.listchars = {
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-opt.wrap = false
-opt.wrapmargin = 2
-opt.textwidth = 80
-opt.autoindent = true
-opt.shiftround = true
-opt.expandtab = true
-opt.shiftwidth = 2
+o.wrap = false
+o.wrapmargin = 2
+o.textwidth = 80
+o.autoindent = true
+o.shiftround = true
+o.expandtab = true
+o.shiftwidth = 2
 -----------------------------------------------------------------------------//
 -- vim.o.debug = "msg"
-opt.gdefault = true
-opt.pumheight = 15
-opt.confirm = true -- make vim prompt me to save before doing destructive things
+o.gdefault = true
+o.pumheight = 15
+o.confirm = true -- make vim prompt me to save before doing destructive things
 opt.completeopt = { 'menuone', 'noselect' }
-opt.hlsearch = true
-opt.autowriteall = true -- automatically :write before running commands and changing files
+o.hlsearch = true
+o.autowriteall = true -- automatically :write before running commands and changing files
 opt.clipboard = { 'unnamedplus' }
-opt.laststatus = 3
-opt.termguicolors = true
-opt.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
+o.laststatus = 3
+o.termguicolors = true
+o.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
 -----------------------------------------------------------------------------//
 -- emoji is true by default but makes (n)vim treat all emoji as double width
 -- which breaks rendering so we turn this off.
 -- CREDIT: https://www.youtube.com/watch?v=F91VWOelFNE
-opt.emoji = false
+o.emoji = false
 -----------------------------------------------------------------------------//
 -- Cursor {{{1
 -----------------------------------------------------------------------------//
@@ -189,14 +189,14 @@ opt.guicursor = {
 -- Title {{{1
 -----------------------------------------------------------------------------//
 function as.modified_icon() return vim.bo.modified and as.style.icons.misc.circle or '' end
-opt.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
-opt.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
-opt.title = true
-opt.titlelen = 70
+o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
+o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
+o.title = true
+o.titlelen = 70
 -----------------------------------------------------------------------------//
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
-opt.showmode = false
+o.showmode = false
 -- NOTE: Don't remember
 -- * help files since that will error if they are from a lazy loaded plugin
 -- * folds since they are created dynamically and might be missing on startup
@@ -208,7 +208,7 @@ opt.sessionoptions = {
   'tabpages',
 }
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
-opt.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
+o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
 -----------------------------------------------------------------------------//
 -- Jumplist
 -----------------------------------------------------------------------------//
@@ -216,19 +216,19 @@ opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
-opt.backup = false
-opt.undofile = true
-opt.swapfile = false
+o.backup = false
+o.undofile = true
+o.swapfile = false
 --}}}
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
 -----------------------------------------------------------------------------//
-opt.ignorecase = true
-opt.smartcase = true
-opt.wrapscan = true -- Searches wrap around the end of the file
-opt.scrolloff = 9
-opt.sidescrolloff = 10
-opt.sidescroll = 1
+o.ignorecase = true
+o.smartcase = true
+o.wrapscan = true -- Searches wrap around the end of the file
+o.scrolloff = 9
+o.sidescrolloff = 10
+o.sidescroll = 1
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
@@ -240,12 +240,12 @@ opt.spelllang:append('programming')
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
-opt.mousefocus = true
+o.mousefocus = true
 opt.mousescroll = { 'ver:1', 'hor:6' }
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
-opt.secure = true -- Disable autocmd etc for project local vimrc files.
-opt.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
+o.secure = true -- Disable autocmd etc for project local vimrc files.
+o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//

@@ -54,11 +54,11 @@ as.augroup('VimrcIncSearchHighlight', {
   },
   {
     event = 'RecordingEnter',
-    command = function() vim.opt.hlsearch = false end,
+    command = function() vim.o.hlsearch = false end,
   },
   {
     event = 'RecordingLeave',
-    command = function() vim.opt.hlsearch = true end,
+    command = function() vim.o.hlsearch = true end,
   },
 })
 

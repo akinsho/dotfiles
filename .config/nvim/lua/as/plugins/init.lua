@@ -927,9 +927,9 @@ packer.startup({
           },
           hooks = {
             diff_buf_read = function()
-              vim.opt_local.wrap = false
-              vim.opt_local.list = false
-              vim.opt_local.colorcolumn = ''
+              vim.wo.wrap = false
+              vim.wo.list = false
+              vim.wo.colorcolumn = ''
             end,
           },
           enhanced_diff_hl = true,

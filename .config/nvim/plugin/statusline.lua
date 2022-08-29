@@ -91,7 +91,7 @@ function as.ui.statusline()
   local component = utils.component
   local component_if = utils.component_if
 
-  local available_space = vim.opt.columns:get()
+  local available_space = vim.o.columns
 
   local ctx = {
     bufnum = curbuf,

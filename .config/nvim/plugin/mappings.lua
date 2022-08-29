@@ -405,7 +405,7 @@ function as.mappings.grep_operator(type)
 end
 
 nnoremap('<leader>g', function()
-  vim.opt.operatorfunc = 'v:lua.as.mappings.grep_operator'
+  vim.o.operatorfunc = 'v:lua.as.mappings.grep_operator'
   return 'g@'
 end, { expr = true, desc = 'grep operator' })
 xnoremap('<leader>g', ':call v:lua.as.mappings.grep_operator(visualmode())<CR>')

@@ -86,5 +86,5 @@ nnoremap('<leader>so', function()
   vim.notify('Sourced ' .. fn.expand('%'))
 end)
 
-vim.opt_local.textwidth = 100
+vim.bo.textwidth = 100
 vim.opt_local.formatoptions:remove('o')

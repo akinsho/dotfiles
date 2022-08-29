@@ -1,4 +1,4 @@
-vim.opt_local.spell = true
+vim.wo.spell = true
 
 if not as then return end
 as.ftplugin_conf(
