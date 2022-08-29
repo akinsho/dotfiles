@@ -104,6 +104,7 @@ local servers = {
     local emmy = ('%s/start/emmylua-nvim'):format(plugins)
     local plenary = ('%s/start/plenary.nvim'):format(plugins)
     local packer = ('%s/opt/packer.nvim'):format(plugins)
+    local neotest = ('%s/opt/neotest'):format(plugins)
 
     return {
       settings = {
@@ -115,11 +116,19 @@ local servers = {
           hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
           diagnostics = {
-            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
+            globals = {
+              'vim',
+              'P',
+              'describe',
+              'it',
+              'before_each',
+              'after_each',
+              'packer_plugins',
+            },
           },
           completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
           workspace = {
-            library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary },
+            library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary, neotest },
             checkThirdParty = false,
           },
           telemetry = {
