@@ -482,6 +482,7 @@ packer.startup({
 
     use({
       'kylechui/nvim-surround',
+      tag = '*',
       config = function()
         require('nvim-surround').setup({
           move_cursor = false,
