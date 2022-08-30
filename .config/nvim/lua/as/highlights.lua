@@ -318,34 +318,64 @@ local function general_overrides()
         special = { from = 'Comment', attr = 'fg' },
       },
     },
+    -- Base colours
     { DiagnosticHint = { foreground = L.hint } },
     { DiagnosticError = { foreground = L.error } },
     { DiagnosticWarning = { foreground = L.warn } },
     { DiagnosticInfo = { foreground = L.info } },
+    -- Underline
     { DiagnosticUnderlineError = { undercurl = true, sp = L.error, foreground = 'none' } },
     { DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, foreground = 'none' } },
     { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, foreground = 'none' } },
     { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, foreground = 'none' } },
-    {
-      DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 } },
-    },
-    {
-      DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -70 } },
-    },
+    -- Virtual Text
+    { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 } } },
+    { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -70 } } },
+    { DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -80 } } },
     {
       DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -80 } },
     },
+    -- Sign column line
+    { DiagnosticSignInfoLine = { inherit = 'DiagnosticVirtualTextInfo', fg = 'NONE' } },
+    { DiagnosticSignHintLine = { inherit = 'DiagnosticVirtualTextHint', fg = 'NONE' } },
+    { DiagnosticSignErrorLine = { inherit = 'DiagnosticVirtualTextError', fg = 'NONE' } },
+    { DiagnosticSignWarnLine = { inherit = 'DiagnosticVirtualTextWarn', fg = 'NONE' } },
+    -- Sign column signs
     {
-      DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -80 } },
+      DiagnosticSignWarn = {
+        bg = { from = 'DiagnosticVirtualTextWarn' },
+        fg = { from = 'DiagnosticWarn' },
+      },
     },
-    { DiagnosticSignWarn = { link = 'DiagnosticWarn' } },
-    { DiagnosticSignInfo = { link = 'DiagnosticInfo' } },
-    { DiagnosticSignHint = { link = 'DiagnosticHint' } },
-    { DiagnosticSignError = { link = 'DiagnosticError' } },
-    { DiagnosticSignWarnLine = { inherit = 'DiagnosticWarn', bg = { from = 'CursorLine' } } },
-    { DiagnosticSignInfoLine = { inherit = 'DiagnosticInfo', bg = { from = 'CursorLine' } } },
-    { DiagnosticSignHintLine = { inherit = 'DiagnosticHint', bg = { from = 'CursorLine' } } },
-    { DiagnosticSignErrorLine = { inherit = 'DiagnosticError', bg = { from = 'CursorLine' } } },
+    {
+      DiagnosticSignInfo = {
+        bg = { from = 'DiagnosticVirtualTextInfo' },
+        fg = { from = 'DiagnosticInfo' },
+      },
+    },
+    {
+      DiagnosticSignHint = {
+        bg = { from = 'DiagnosticVirtualTextHint' },
+        fg = { from = 'DiagnosticHint' },
+      },
+    },
+    {
+      DiagnosticSignError = {
+        bg = { from = 'DiagnosticVirtualTextError' },
+        fg = { from = 'DiagnosticError' },
+      },
+    },
+    -- Sign column line number
+    { DiagnosticSignWarnNr = { link = 'DiagnosticSignWarn' } },
+    { DiagnosticSignInfoNr = { link = 'DiagnosticSignInfo' } },
+    { DiagnosticSignHintNr = { link = 'DiagnosticSignHint' } },
+    { DiagnosticSignErrorNr = { link = 'DiagnosticSignError' } },
+    -- Sign column cursor line number
+    { DiagnosticSignWarnCursorNr = { inherit = 'DiagnosticSignWarn', bold = true } },
+    { DiagnosticSignInfoCursorNr = { inherit = 'DiagnosticSignInfo', bold = true } },
+    { DiagnosticSignHintCursorNr = { inherit = 'DiagnosticSignHint', bold = true } },
+    { DiagnosticSignErrorCursorNr = { inherit = 'DiagnosticSignError', bold = true } },
+    -- Floating windows
     { DiagnosticFloatingWarn = { link = 'DiagnosticWarn' } },
     { DiagnosticFloatingInfo = { link = 'DiagnosticInfo' } },
     { DiagnosticFloatingHint = { link = 'DiagnosticHint' } },

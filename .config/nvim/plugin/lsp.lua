@@ -304,7 +304,9 @@ local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    culhl = opts.highlight .. 'Line',
+    numhl = opts.highlight .. 'Nr',
+    culhl = opts.highlight .. 'CursorNr',
+    linehl = opts.highlight .. 'Line',
   })
 end
 
@@ -359,19 +361,23 @@ diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
+--- Save options for virtual text for future use
+---@diagnostic disable-next-line: unused-local
+local virtual_text_opts = {
+  spacing = 1,
+  prefix = '',
+  format = function(d)
+    local level = diagnostic.severity[d.severity]
+    return fmt('%s %s', icons[level:lower()], d.message)
+  end,
+}
+
 diagnostic.config({
   signs = true,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
-  virtual_text = {
-    spacing = 1,
-    prefix = '',
-    format = function(d)
-      local level = diagnostic.severity[d.severity]
-      return fmt('%s %s', icons[level:lower()], d.message)
-    end,
-  },
+  virtual_text = false,
   float = {
     max_width = max_width,
     max_height = max_height,
