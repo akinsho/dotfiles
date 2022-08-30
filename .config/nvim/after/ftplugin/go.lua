@@ -1,4 +1,3 @@
--- vim.wo.spell = true
 vim.bo.expandtab = false
 vim.bo.textwidth = 0 -- Go doesn't specify a max line length so don't force one
 vim.bo.softtabstop = 0

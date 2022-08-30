@@ -1,4 +1,3 @@
-vim.wo.spell = true
 -- no distractions in markdown files
 vim.wo.number = false
 vim.wo.relativenumber = false

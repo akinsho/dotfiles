@@ -1,7 +1,6 @@
 vim.wo.list = false
 vim.wo.number = false
 vim.wo.relativenumber = false
-vim.wo.spell = true
 vim.bo.spelllang = 'en_gb'
 --  Set color column at maximum commit summary length
 vim.wo.colorcolumn = '50,72'
