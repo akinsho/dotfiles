@@ -276,7 +276,7 @@ local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
     if not is_buffer_valid(api.nvim_get_current_buf()) then return end
-    as.wrap_err(vim.diagnostic.setqflist, { open = false })
+    vim.diagnostic.setqflist({ open = false })
     as.toggle_list('quickfix')
     if not as.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
@@ -286,7 +286,7 @@ local function make_diagnostic_qf_updater()
     cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if as.is_vim_list_open() then
-          as.wrap_err(vim.diagnostic.setqflist, { open = false })
+          vim.diagnostic.setqflist({ open = false })
           if #fn.getqflist() == 0 then as.toggle_list('quickfix') end
         end
       end,
