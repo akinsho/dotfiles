@@ -10,6 +10,7 @@ local component = utils.component
 local component_raw = utils.component_raw
 local empty = as.empty
 local icons = as.style.icons.misc
+local contains = vim.tbl_contains
 
 local dir_separator = '/'
 local separator = icons.arrow_right
@@ -86,21 +87,25 @@ local blocked_fts = {
 }
 
 local allowed_fts = { 'toggleterm', 'neo-tree' }
+local allowed_buftypes = { 'terminal' }
 
 local function set_winbar()
   as.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
-    local buftype, filetype, is_diff = buf.buftype, buf.filetype, win.diff
-    if
-      not vim.tbl_contains(blocked_fts, filetype)
-      and fn.win_gettype(api.nvim_win_get_number(w)) == ''
-      and buftype == ''
-      and filetype ~= ''
-      and not is_diff
-    then
-      win.winbar = '%{%v:lua.as.ui.winbar.get()%}'
-    elseif is_diff or not vim.tbl_contains(allowed_fts, filetype) then
-      win.winbar = nil
+    local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
+    local ignored = contains(allowed_fts, ft) or contains(allowed_buftypes, bt)
+    if not ignored then
+      if
+        not contains(blocked_fts, ft)
+        and fn.win_gettype(api.nvim_win_get_number(w)) == ''
+        and bt == ''
+        and ft ~= ''
+        and not is_diff
+      then
+        win.winbar = '%{%v:lua.as.ui.winbar.get()%}'
+      elseif is_diff then
+        win.winbar = nil
+      end
     end
   end, api.nvim_tabpage_list_wins(0))
 end
