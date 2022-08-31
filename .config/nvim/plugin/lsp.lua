@@ -250,8 +250,7 @@ as.augroup('LspSetupCommands', {
       -- the autocommand for it should be unregistered.
       as.foreach(
         function(feature)
-          as.wrap_err(
-            fmt('failed to clear buffer %d augroup for %s', args.buf, feature),
+          pcall(
             api.nvim_clear_autocmds,
             { group = get_augroup(args.buf, feature), buffer = args.buf }
           )
