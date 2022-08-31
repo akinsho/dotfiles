@@ -13,20 +13,6 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
---[[
-Autocommands are created per buffer per feature, i.e. if buffer 8 attaches an LSP server
-then an augroup with the pattern `LspCommands_8_{FEATURE}` will be created. These augroups are
-localised to a buffer because the features are local to only that buffer and when we detach we need to delete
-the augroups by buffer so as not to turn off the LSP for other buffers. The commands are also localised
-to features because each autocommand for a feature e.g. formatting needs to be created in an idempotent
-fashion because this is called n number of times for each client that attaches.
-
-So if there are 3 clients and 1 supports formatting and another code lenses, and the last only references.
-All three features should work and be setup. If only one augroup is used per buffer for all features then each time
-a client detaches all lsp features will be disabled. Or the augroup will be recreated for the new client but
-as a client might not support functionality that was already in place, the augroup will be deleted and recreated
-without the commands for the features that that client does not support.
---]]
 
 local FEATURES = {
   FORMATTING = 'formatting',
@@ -34,32 +20,6 @@ local FEATURES = {
   DIAGNOSTICS = 'diagnostics',
   REFERENCES = 'references',
 }
-
-local get_augroup = function(bufnr, method)
-  assert(bufnr, 'A bufnr is required to create an lsp augroup')
-  return fmt('LspCommands_%d_%s', bufnr, method)
-end
-
-local function formatting_filter(client)
-  local exceptions = ({
-    sql = { 'sqls' },
-    lua = { 'sumneko_lua' },
-    proto = { 'null-ls' },
-  })[vim.bo.filetype]
-
-  if not exceptions then return true end
-  return not vim.tbl_contains(exceptions, client.name)
-end
-
----@param opts table<string, any>
-local function format(opts)
-  opts = opts or {}
-  vim.lsp.buf.format({
-    bufnr = opts.bufnr,
-    async = opts.async,
-    filter = formatting_filter,
-  })
-end
 
 ---@param bufnr integer
 ---@param capability string
@@ -88,7 +48,53 @@ local function check_valid_client(buf, capability)
   return next(clients) ~= nil, clients
 end
 
---- Add lsp autocommands
+--- Create augroups for each LSP feature and track which capabilities each client
+--- registers in a buffer local table
+---@param bufnr integer
+---@param client_id integer
+---@param events table
+---@return fun(feature: string, commands: Autocommand[])
+local function augroup_factory(bufnr, client_id, events)
+  return function(feature, commands)
+    events[feature].group_id = as.augroup(fmt('LspCommands_%d_%s', bufnr, feature), commands)
+    table.insert(events[feature].clients, client_id)
+  end
+end
+
+local function formatting_filter(client)
+  local exceptions = ({
+    sql = { 'sqls' },
+    lua = { 'sumneko_lua' },
+    proto = { 'null-ls' },
+  })[vim.bo.filetype]
+
+  if not exceptions then return true end
+  return not vim.tbl_contains(exceptions, client.name)
+end
+
+---@param opts table<string, any>
+local function format(opts)
+  opts = opts or {}
+  vim.lsp.buf.format({
+    bufnr = opts.bufnr,
+    async = opts.async,
+    filter = formatting_filter,
+  })
+end
+
+--- Autocommands are created per buffer per feature, i.e. if buffer 8 attaches an LSP server
+--- then an augroup with the pattern `LspCommands_8_{FEATURE}` will be created. These augroups are
+--- localised to a buffer because the features are local to only that buffer and when we detach we need to delete
+--- the augroups by buffer so as not to turn off the LSP for other buffers. The commands are also localised
+--- to features because each autocommand for a feature e.g. formatting needs to be created in an idempotent
+--- fashion because this is called n number of times for each client that attaches.
+---
+--- So if there are 3 clients and 1 supports formatting and another code lenses, and the last only references.
+--- All three features should work and be setup. If only one augroup is used per buffer for all features then each time
+--- a client detaches all lsp features will be disabled. Or the augroup will be recreated for the new client but
+--- as a client might not support functionality that was already in place, the augroup will be deleted and recreated
+--- without the commands for the features that that client does not support.
+--- TODO: find a way to make this less complex...
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
@@ -97,7 +103,16 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  as.augroup(get_augroup(bufnr, FEATURES.DIAGNOSTICS), {
+  local events = vim.F.if_nil(vim.b.lsp_events, {
+    [FEATURES.CODELENS] = { clients = {}, group_id = nil },
+    [FEATURES.FORMATTING] = { clients = {}, group_id = nil },
+    [FEATURES.DIAGNOSTICS] = { clients = {}, group_id = nil },
+    [FEATURES.REFERENCES] = { clients = {}, group_id = nil },
+  })
+
+  local lsp_augroup = augroup_factory(bufnr, client.id, events)
+
+  lsp_augroup(FEATURES.DIAGNOSTICS, {
     {
       event = { 'CursorHold' },
       buffer = bufnr,
@@ -107,7 +122,7 @@ local function setup_autocommands(client, bufnr)
   })
 
   if client.server_capabilities.documentFormattingProvider then
-    as.augroup(get_augroup(bufnr, FEATURES.FORMATTING), {
+    lsp_augroup(FEATURES.FORMATTING, {
       {
         event = 'BufWritePre',
         buffer = bufnr,
@@ -123,7 +138,7 @@ local function setup_autocommands(client, bufnr)
   end
 
   if client.server_capabilities.codeLensProvider then
-    as.augroup(get_augroup(bufnr, FEATURES.CODELENS), {
+    lsp_augroup(FEATURES.CODELENS, {
       {
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         desc = 'LSP: Code Lens',
@@ -136,7 +151,7 @@ local function setup_autocommands(client, bufnr)
   end
 
   if client.server_capabilities.documentHighlightProvider then
-    as.augroup(get_augroup(bufnr, FEATURES.REFERENCES), {
+    lsp_augroup(FEATURES.REFERENCES, {
       {
         event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
@@ -159,6 +174,7 @@ local function setup_autocommands(client, bufnr)
       },
     })
   end
+  vim.b.lsp_events = events
 end
 
 -----------------------------------------------------------------------------//
@@ -244,19 +260,14 @@ as.augroup('LspSetupCommands', {
     event = 'LspDetach',
     desc = 'Clean up after detached LSP',
     command = function(args)
-      -- Only clear autocommands if there are no other clients attached to the buffer
-      if next(lsp.get_active_clients({ bufnr = args.buf })) then return end
-      -- TODO: when an LSP detaches if it is the last client to support a method then
-      -- the autocommand for it should be unregistered.
-      as.foreach(
-        function(feature)
-          pcall(
-            api.nvim_clear_autocmds,
-            { group = get_augroup(args.buf, feature), buffer = args.buf }
-          )
-        end,
-        FEATURES
-      )
+      local client_id = args.data.client_id
+      if not vim.b.lsp_events or not client_id then return end
+      for _, state in pairs(vim.b.lsp_events) do
+        if #state.clients == 1 and state.clients[1] == client_id then
+          api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
+        end
+        vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
+      end
     end,
   },
 })
