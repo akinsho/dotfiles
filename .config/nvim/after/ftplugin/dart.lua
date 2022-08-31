@@ -4,30 +4,18 @@
 vim.bo.syntax = ''
 
 if not as then return end
-as.ftplugin_conf(
-  'which-key',
-  function(wk)
-    wk.register({
-      cc = { '<Cmd>Telescope flutter commands<CR>', 'flutter: commands' },
-      d = {
-        name = '+flutter',
-        d = { '<Cmd>FlutterDevices<CR>', 'flutter: devices' },
-        b = {
-          "<cmd>TermExec cmd='flutter pub run build_runner build --delete-conflicting-outputs'<CR>",
-          'flutter: run code generation',
-        },
-        e = { '<Cmd>FlutterEmulators<CR>', 'flutter: emulators' },
-        o = { '<Cmd>FlutterOutline<CR>', 'flutter: outline' },
-        q = { '<Cmd>FlutterQuit<CR>', 'flutter: quit' },
-        r = {
-          name = '+dev-server',
-          n = { '<Cmd>FlutterRun<CR>', 'run' },
-          s = { '<Cmd>FlutterRestart<CR>', 'restart' },
-        },
-      },
-    }, {
-      prefix = '<leader>',
-      buffer = vim.api.nvim_get_current_buf(),
-    })
-  end
+
+local function with_desc(desc) return { buffer = 0, desc = desc } end
+
+as.nnoremap('<leader>cc', '<Cmd>Telescope flutter commands<CR>', with_desc('flutter: commands'))
+as.nnoremap('<leader>dd', '<Cmd>FlutterDevices<CR>', with_desc('flutter: devices'))
+as.nnoremap(
+  '<leader>db',
+  "<cmd>TermExec cmd='flutter pub run build_runner build --delete-conflicting-outputs'<CR>",
+  'flutter: run code generation'
 )
+as.nnoremap('<leader>de', '<Cmd>FlutterEmulators<CR>', with_desc('flutter: emulators'))
+as.nnoremap('<leader>do', '<Cmd>FlutterOutline<CR>', with_desc('flutter: outline'))
+as.nnoremap('<leader>dq', '<Cmd>FlutterQuit<CR>', with_desc('flutter: quit'))
+as.nnoremap('<leader>drn', '<Cmd>FlutterRun<CR>', with_desc('flutter: server run'))
+as.nnoremap('<leader>drs', '<Cmd>FlutterRestart<CR>', with_desc('flutter: server restart'))
