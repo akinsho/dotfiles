@@ -111,6 +111,14 @@ packer.startup({
       config = function() require('telescope').load_extension('luasnip') end,
     })
 
+    use({
+      'wincent/command-t',
+      run = 'cd lua/wincent/commandt/lib && make',
+      cmd = { 'CommandT', 'CommandTRipgrep' },
+      setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
+      config = function() require('wincent.commandt').setup() end,
+    })
+
     use('kyazdani42/nvim-web-devicons')
 
     -- TODO: Revisit mg979/vim-visual-multi when which key interaction is fixed
