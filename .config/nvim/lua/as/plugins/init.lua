@@ -1094,6 +1094,7 @@ packer.startup({
   log = { level = 'info' },
   config = {
     compile_path = PACKER_COMPILED_PATH,
+    preview_updates = true,
     display = {
       prompt_border = as.style.current.border,
       open_cmd = 'silent topleft 65vnew',
