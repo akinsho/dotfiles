@@ -15,10 +15,10 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 -----------------------------------------------------------------------------//
 
 local FEATURES = {
-  FORMATTING = 'formatting',
-  CODELENS = 'codelens',
-  DIAGNOSTICS = 'diagnostics',
-  REFERENCES = 'references',
+  DIAGNOSTICS = { name = 'diagnostics' },
+  CODELENS = { name = 'codelens', provider = 'codeLens' },
+  FORMATTING = { name = 'formatting', provider = 'documentFormatting' },
+  REFERENCES = { name = 'references', provider = 'documentHighlight' },
 }
 
 ---@param bufnr integer
@@ -51,13 +51,16 @@ end
 --- Create augroups for each LSP feature and track which capabilities each client
 --- registers in a buffer local table
 ---@param bufnr integer
----@param client_id integer
+---@param client table
 ---@param events table
----@return fun(feature: string, commands: Autocommand[])
-local function augroup_factory(bufnr, client_id, events)
+---@return fun(feature: string, commands: fun(string): Autocommand[])
+local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
-    events[feature].group_id = as.augroup(fmt('LspCommands_%d_%s', bufnr, feature), commands)
-    table.insert(events[feature].clients, client_id)
+    local cmds = commands(feature.provider)
+    if not feature.provider or client.server_capabilities[feature.provider] then
+      events[feature.name].group_id = as.augroup(fmt('LspCommands_%d_%s', bufnr, feature), cmds)
+      table.insert(events[feature.name].clients, client.id)
+    end
   end
 end
 
@@ -104,62 +107,62 @@ local function setup_autocommands(client, bufnr)
   end
 
   local events = vim.F.if_nil(vim.b.lsp_events, {
-    [FEATURES.CODELENS] = { clients = {}, group_id = nil },
-    [FEATURES.FORMATTING] = { clients = {}, group_id = nil },
-    [FEATURES.DIAGNOSTICS] = { clients = {}, group_id = nil },
-    [FEATURES.REFERENCES] = { clients = {}, group_id = nil },
+    [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
+    [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
+    [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
+    [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
   })
 
-  local lsp_augroup = augroup_factory(bufnr, client.id, events)
+  local lsp_augroup = augroup_factory(bufnr, client, events)
 
-  lsp_augroup(FEATURES.DIAGNOSTICS, {
-    {
-      event = { 'CursorHold' },
-      buffer = bufnr,
-      desc = 'LSP: Show diagnostics',
-      command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
-    },
-  })
+  lsp_augroup(FEATURES.DIAGNOSTICS, function()
+    return {
+      {
+        event = { 'CursorHold' },
+        buffer = bufnr,
+        desc = 'LSP: Show diagnostics',
+        command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
+      },
+    }
+  end)
 
-  if client.server_capabilities.documentFormattingProvider then
-    lsp_augroup(FEATURES.FORMATTING, {
+  lsp_augroup(FEATURES.FORMATTING, function(provider)
+    return {
       {
         event = 'BufWritePre',
         buffer = bufnr,
         desc = 'LSP: Format on save',
         command = function(args)
           if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
-            local is_valid, clients = check_valid_client(args.buf, 'documentFormattingProvider')
+            local is_valid, clients = check_valid_client(args.buf, provider)
             if is_valid then format({ bufnr = args.buf, async = #clients == 1 }) end
           end
         end,
       },
-    })
-  end
+    }
+  end)
 
-  if client.server_capabilities.codeLensProvider then
-    lsp_augroup(FEATURES.CODELENS, {
+  lsp_augroup(FEATURES.CODELENS, function(provider)
+    return {
       {
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         desc = 'LSP: Code Lens',
         buffer = bufnr,
         command = function(args)
-          if check_valid_client(args.buf, 'codeLensProvider') then lsp.codelens.refresh() end
+          if check_valid_client(args.buf, provider) then lsp.codelens.refresh() end
         end,
       },
-    })
-  end
+    }
+  end)
 
-  if client.server_capabilities.documentHighlightProvider then
-    lsp_augroup(FEATURES.REFERENCES, {
+  lsp_augroup(FEATURES.REFERENCES, function(provider)
+    return {
       {
         event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
         desc = 'LSP: References',
         command = function(args)
-          if check_valid_client(args.buf, 'documentHighlightProvider') then
-            lsp.buf.document_highlight()
-          end
+          if check_valid_client(args.buf, provider) then lsp.buf.document_highlight() end
         end,
       },
       {
@@ -167,13 +170,11 @@ local function setup_autocommands(client, bufnr)
         desc = 'LSP: References Clear',
         buffer = bufnr,
         command = function(args)
-          if check_valid_client(args.buf, 'documentHighlightProvider') then
-            lsp.buf.clear_references()
-          end
+          if check_valid_client(args.buf, provider) then lsp.buf.clear_references() end
         end,
       },
-    })
-  end
+    }
+  end)
   vim.b.lsp_events = events
 end
 
