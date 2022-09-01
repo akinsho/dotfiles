@@ -123,19 +123,13 @@ return function()
         name = 'rg',
         keyword_length = 4,
         max_item_count = 10,
-        option = { additional_arguments = '--max-depth 8'},
+        option = { additional_arguments = '--max-depth 8' },
       },
     }, {
       {
         name = 'buffer',
         options = {
-          get_bufnrs = function()
-            local bufs = {}
-            for _, win in ipairs(api.nvim_list_wins()) do
-              bufs[api.nvim_win_get_buf(win)] = true
-            end
-            return vim.tbl_keys(bufs)
-          end,
+          get_bufnrs = function() return vim.api.nvim_list_bufs() end,
         },
       },
       { name = 'spell' },
