@@ -60,12 +60,4 @@ return function()
       scheduled_reminder = true,
     },
   })
-  local which_key = require('which-key')
-  which_key.register({
-    ['<leader>o'] = {
-      name = '+org',
-      a = 'agenda',
-      c = 'capture',
-    },
-  })
 end

@@ -10,21 +10,14 @@ function M.setup()
   local function run_last() require('dap').run_last() end
   local function toggle_breakpoint() require('dap').toggle_breakpoint() end
   local function set_breakpoint() require('dap').set_breakpoint(fn.input('Breakpoint condition: ')) end
-  require('which-key').register({
-    d = {
-      name = '+debugger',
-      b = { toggle_breakpoint, 'dap: toggle breakpoint' },
-      B = { set_breakpoint, 'dap: set breakpoint' },
-      c = { continue, 'dap: continue or start debugging' },
-      e = { step_out, 'dap: step out' },
-      i = { step_into, 'dap: step into' },
-      o = { step_over, 'dap: step over' },
-      l = { run_last, 'dap REPL: run last' },
-      t = { repl_toggle, 'dap REPL: toggle' },
-    },
-  }, {
-    prefix = '<localleader>',
-  })
+  as.nnoremap("<localleader>db", toggle_breakpoint, 'dap: toggle breakpoint')
+  as.nnoremap("<localleader>dB", set_breakpoint, 'dap: set breakpoint')
+  as.nnoremap("<localleader>dc", continue, 'dap: continue or start debugging')
+  as.nnoremap("<localleader>de", step_out, 'dap: step out')
+  as.nnoremap("<localleader>di", step_into, 'dap: step into')
+  as.nnoremap("<localleader>do", step_over, 'dap: step over')
+  as.nnoremap("<localleader>dl", run_last, 'dap REPL: run last')
+  as.nnoremap("<localleader>dt", repl_toggle, 'dap REPL: toggle')
 end
 
 function M.config()

@@ -121,8 +121,6 @@ packer.startup({
 
     use('kyazdani42/nvim-web-devicons')
 
-    -- TODO: Revisit mg979/vim-visual-multi when which key interaction is fixed
-    use({ 'folke/which-key.nvim', config = conf('whichkey') })
 
     use({ 'anuvyklack/hydra.nvim', config = conf('hydra') })
 
@@ -920,8 +918,7 @@ packer.startup({
       cmd = 'Neogit',
       keys = { '<localleader>gs', '<localleader>gl', '<localleader>gp' },
       requires = 'plenary.nvim',
-      setup = conf('neogit').setup,
-      config = conf('neogit').config,
+      config = conf('neogit'),
     })
 
     use({

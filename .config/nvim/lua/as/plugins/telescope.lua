@@ -31,7 +31,6 @@ function M.config()
   local telescope = require('telescope')
   local actions = require('telescope.actions')
   local layout_actions = require('telescope.actions.layout')
-  local which_key = require('which-key')
   local icons = as.style.icons
   local P = as.style.palette
   local fmt, fn = string.format, vim.fn
@@ -309,46 +308,33 @@ function M.config()
     })
   end
 
-  which_key.register({
-    ['<c-p>'] = { project_files, 'telescope: find files' },
-    ['<leader>f'] = {
-      name = '+telescope',
-      a = { pickers, 'builtins' },
-      b = { builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find' },
-      n = { notifications, 'notifications' },
-      v = {
-        name = '+vim',
-        h = { builtins.highlights, 'highlights' },
-        a = { builtins.autocommands, 'autocommands' },
-        o = { builtins.vim_options, 'options' },
-      },
-      l = {
-        name = '+lsp',
-        e = { builtins.diagnostics, 'telescope: workspace diagnostics' },
-        d = { builtins.lsp_document_symbols, 'telescope: document symbols' },
-        s = { builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols' },
-      },
-      L = { luasnips, 'luasnip: available snippets' },
-      p = { installed_plugins, 'plugins' },
-      r = { builtins.resume, 'resume last picker' },
-      ['?'] = { builtins.help_tags, 'help' },
-      f = { find_files, 'find files' },
-      fn = { find_near_files, 'find near files' },
-      h = { frecency, 'Most (f)recently used files' },
-      g = {
-        name = '+git',
-        b = { builtins.git_branches, 'branches' },
-        c = { delta_git_commits, 'commits' },
-        B = { delta_git_bcommits, 'buffer commits' },
-      },
-      o = { buffers, 'buffers' },
-      s = { live_grep, 'live grep' },
-      d = { dotfiles, 'dotfiles' },
-      c = { nvim_config, 'nvim config' },
-      O = { orgfiles, 'org files' },
-      N = { norgfiles, 'norg files' },
-    },
-  })
+  as.nnoremap('<c-p>', project_files, 'telescope: find files')
+  as.nnoremap('<leader>fa', pickers, 'builtins')
+  as.nnoremap('<leader>fb', builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find')
+  as.nnoremap('<leader>fn', notifications, 'notifications')
+  as.nnoremap('<leader>fvh', builtins.highlights, 'highlights')
+  as.nnoremap('<leader>fva', builtins.autocommands, 'autocommands')
+  as.nnoremap('<leader>fvo', builtins.vim_options, 'options')
+  as.nnoremap('<leader>fvk', builtins.keymaps, 'autocommands')
+  as.nnoremap('<leader>fle', builtins.diagnostics, 'telescope: workspace diagnostics')
+  as.nnoremap('<leader>fld', builtins.lsp_document_symbols, 'telescope: document symbols')
+  as.nnoremap('<leader>fls', builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols')
+  as.nnoremap('<leader>fL', luasnips, 'luasnip: available snippets')
+  as.nnoremap('<leader>fp', installed_plugins, 'plugins')
+  as.nnoremap('<leader>fr', builtins.resume, 'resume last picker')
+  as.nnoremap('<leader>f?', builtins.help_tags, 'help')
+  as.nnoremap('<leader>ff', find_files, 'find files')
+  as.nnoremap('<leader>ffn', find_near_files, 'find near files')
+  as.nnoremap('<leader>fh', frecency, 'Most (f)recently used files')
+  as.nnoremap('<leader>fgb', builtins.git_branches, 'branches')
+  as.nnoremap('<leader>fgc', delta_git_commits, 'commits')
+  as.nnoremap('<leader>fgB', delta_git_bcommits, 'buffer commits')
+  as.nnoremap('<leader>fo', buffers, 'buffers')
+  as.nnoremap('<leader>fs', live_grep, 'live grep')
+  as.nnoremap('<leader>fd', dotfiles, 'dotfiles')
+  as.nnoremap('<leader>fc', nvim_config, 'nvim config')
+  as.nnoremap('<leader>fO', orgfiles, 'org files')
+  as.nnoremap('<leader>fN', norgfiles, 'norg files')
 
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end

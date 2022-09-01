@@ -56,14 +56,7 @@ return function()
     },
   }
 
-  require('which-key').register({
-    A = { '<cmd>A<CR>', 'projectionist: edit alternate' },
-    a = {
-      name = '+projectionist',
-      v = { '<cmd>AV<CR>', 'projectionist: vsplit alternate' },
-      t = { '<cmd>Vtest<CR>', 'projectionist: vsplit test' },
-    },
-  }, {
-    prefix = '<leader>',
-  })
+  as.nnoremap('<leader>A', '<cmd>A<CR>', 'projectionist: edit alternate')
+  as.nnoremap('<leader>av', '<cmd>AV<CR>', 'projectionist: vsplit alternate')
+  as.nnoremap('<leader>at', '<cmd>Vtest<CR>', 'projectionist: vsplit test')
 end
