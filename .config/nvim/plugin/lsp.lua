@@ -16,9 +16,9 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
 local FEATURES = {
   DIAGNOSTICS = { name = 'diagnostics' },
-  CODELENS = { name = 'codelens', provider = 'codeLens' },
-  FORMATTING = { name = 'formatting', provider = 'documentFormatting' },
-  REFERENCES = { name = 'references', provider = 'documentHighlight' },
+  CODELENS = { name = 'codelens', provider = 'codeLensProvider' },
+  FORMATTING = { name = 'formatting', provider = 'documentFormattingProvider' },
+  REFERENCES = { name = 'references', provider = 'documentHighlightProvider' },
 }
 
 ---@param bufnr integer
@@ -56,10 +56,10 @@ end
 ---@return fun(feature: string, commands: fun(string): Autocommand[])
 local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
-    local cmds = commands(feature.provider)
-    if not feature.provider or client.server_capabilities[feature.provider] then
-      events[feature.name].group_id = as.augroup(fmt('LspCommands_%d_%s', bufnr, feature), cmds)
-      table.insert(events[feature.name].clients, client.id)
+    local provider, name = feature.provider, feature.name
+    if not provider or client.server_capabilities[provider] then
+      events[name].group_id = as.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
+      table.insert(events[name].clients, client.id)
     end
   end
 end
