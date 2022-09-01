@@ -121,6 +121,19 @@ packer.startup({
 
     use('kyazdani42/nvim-web-devicons')
 
+    use({
+      'mg979/vim-visual-multi',
+      config = function()
+        vim.g.VM_highlight_matches = 'underline'
+        vim.g.VM_theme = 'codedark'
+        vim.g.VM_maps = {
+          ['Find Under'] = '<C-e>',
+          ['Find Subword Under'] = '<C-e>',
+          ['Select Cursor Down'] = '\\j',
+          ['Select Cursor Up'] = '\\k',
+        }
+      end,
+    })
 
     use({ 'anuvyklack/hydra.nvim', config = conf('hydra') })
 
