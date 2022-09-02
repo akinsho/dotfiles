@@ -1,6 +1,8 @@
 return function()
   local cwd = vim.fn.getcwd()
   require('gitsigns').setup({
+    _threaded_diff = true,
+    _extmark_signs = true,
     signs = {
       add = { hl = 'GitSignsAdd', text = '▌' },
       change = { hl = 'GitSignsChange', text = '▌' },
@@ -8,7 +10,6 @@ return function()
       topdelete = { hl = 'GitSignsDelete', text = '▌' },
       changedelete = { hl = 'GitSignsChange', text = '▌' },
     },
-    _threaded_diff = true, -- NOTE: experimental but I'm curious
     word_diff = false,
     current_line_blame = not cwd:match('personal') and not cwd:match('dotfiles'),
     numhl = false,
