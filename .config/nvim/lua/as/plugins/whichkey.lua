@@ -28,10 +28,13 @@ return function()
     },
     ['g>'] = 'show message history',
     ['<leader>'] = {
+      a = { name = '+projectionist' },
+      b = 'buffer management hydra',
       c = { name = '+code-action' },
-      d = {
-        name = '+debug/database',
-      },
+      d = { name = '+debug/database', h = 'dap hydra' },
+      f = { name = '+telescope' },
+      h = { name = '+git-action' },
+      z = 'window scroll hydra',
       n = {
         name = '+new',
         f = 'create a new file',
@@ -93,6 +96,9 @@ return function()
     },
     ['<localleader>'] = {
       name = 'local leader',
+      d = { name = '+dap' },
+      g = { name = '+git' },
+      G = 'Git hydra',
       n = { name = '+neogen' },
       o = { name = '+neorg' },
       t = { name = '+neotest' },
