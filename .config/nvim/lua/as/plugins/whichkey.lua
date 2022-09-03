@@ -1,5 +1,14 @@
 return function()
-  require('as.highlights').plugin('whichkey', { { WhichkeyFloat = { link = 'NormalFloat' } } })
+  require('as.highlights').plugin('whichkey', {
+    theme = {
+      ['*'] = {
+        { WhichkeyFloat = { link = 'NormalFloat' } },
+      },
+      horizon = {
+        { WhichKeySeparator = { link = 'Todo' } },
+      },
+    },
+  })
 
   local wk = require('which-key')
   wk.setup({
