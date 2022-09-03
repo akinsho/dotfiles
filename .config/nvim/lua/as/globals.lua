@@ -48,11 +48,10 @@ end
 ---@param list string[]
 ---@return boolean
 function as.any(target, list)
-  return as.fold(function(accum, item)
-    if accum then return accum end
+  for _, item in ipairs(list) do
     if target:match(item) then return true end
-    return accum
-  end, list, false)
+  end
+  return false
 end
 
 ---Find an item in a list
