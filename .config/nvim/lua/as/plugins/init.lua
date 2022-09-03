@@ -124,7 +124,7 @@ packer.startup({
     use_local({
       'folke/which-key.nvim',
       local_path = 'contributing',
-      local_enabled = true,
+      local_enabled = false,
       config = conf('whichkey'),
     })
 
