@@ -3,9 +3,6 @@ return function()
   null_ls.setup({
     debounce = 150,
     sources = {
-      null_ls.builtins.diagnostics.todo_comments:with({
-        filetypes = { 'go', 'lua', 'json' },
-      }),
       null_ls.builtins.diagnostics.buf,
       null_ls.builtins.diagnostics.zsh,
       null_ls.builtins.formatting.goimports,
