@@ -670,7 +670,7 @@ packer.startup({
 
     use({
       'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-      config = function() require('neoscroll').setup() end,
+      config = function() require('neoscroll').setup({ hide_cursor = true }) end,
     })
 
     use({
@@ -910,6 +910,7 @@ packer.startup({
     })
 
     use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
+    use('melvio/medical-spell-files')
     ---}}}
     --------------------------------------------------------------------------------
     -- Git {{{1
