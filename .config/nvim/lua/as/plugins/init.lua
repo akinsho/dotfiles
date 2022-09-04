@@ -710,12 +710,7 @@ packer.startup({
       end,
     })
 
-    use_local({
-      'rcarriga/nvim-notify',
-      config = conf('notify'),
-      local_path = 'contributing',
-      local_enabled = true,
-    })
+    use({ 'rcarriga/nvim-notify', tag = '*', config = conf('notify') })
 
     use({
       'mbbill/undotree',
