@@ -27,13 +27,7 @@ packer.startup({
   function(use)
     -- FIXME: this no longer loads the local plugin since the compiled file now
     -- loads packer.nvim so the local alias(local-packer) does not work
-    -- use_local({ 'wbthomason/packer.nvim', local_path = 'contributing', opt = true })
-    use_local({
-      'AckslD/packer.nvim',
-      branch = 'diff-preview',
-      local_path = 'contributing',
-      opt = true,
-    })
+    use_local({ 'wbthomason/packer.nvim', local_path = 'contributing', opt = true })
     -----------------------------------------------------------------------------//
     -- Core {{{3
     -----------------------------------------------------------------------------//
