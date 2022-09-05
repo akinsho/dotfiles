@@ -3,7 +3,9 @@ local api = vim.api
 local P = as.style.palette
 local L = as.style.lsp.colors
 
-local M = { win_hl = {} }
+local M = {
+  win_hl = {},
+}
 
 ---@class HighlightAttributes
 ---@field from string
@@ -123,6 +125,16 @@ function M.set(namespace, name, opts)
   end
 
   as.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, hl)
+end
+
+--- Set window local highlights
+---@param name string
+---@param win_id number
+---@param hls HighlightKeys[]
+function M.win_hl.set(name, win_id, hls)
+  local namespace = api.nvim_create_namespace(name)
+  M.all(hls, namespace)
+  api.nvim_win_set_hl_ns(win_id, namespace)
 end
 
 --- Check if the current window has a winhighlight
