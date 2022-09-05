@@ -4,6 +4,7 @@ return function()
     open_mapping = [[<c-\>]],
     shade_filetypes = { 'none' },
     direction = 'horizontal',
+    autochdir = true,
     persist_mode = true,
     insert_mappings = false,
     start_in_insert = true,
