@@ -463,7 +463,7 @@ packer.startup({
     })
 
     use({
-      'B4mbus/todo-comments.nvim',
+      'folke/todo-comments.nvim',
       config = function()
         require('todo-comments').setup()
         as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
