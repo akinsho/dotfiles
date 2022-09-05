@@ -1,1 +1,1 @@
-vim.wo.foldlevel = 99
+vim.opt_local.foldlevel = 99

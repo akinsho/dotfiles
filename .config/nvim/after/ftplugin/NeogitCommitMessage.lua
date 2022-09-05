@@ -1,9 +1,9 @@
-vim.wo.list = false
-vim.wo.number = false
-vim.wo.relativenumber = false
+vim.opt_local.list = false
+vim.opt_local.number = false
+vim.opt_local.relativenumber = false
 vim.bo.spelllang = 'en_gb'
 --  Set color column at maximum commit summary length
-vim.wo.colorcolumn = '50,72'
+vim.opt_local.colorcolumn = '50,72'
 
 if not as then return end
 as.ftplugin_conf(
