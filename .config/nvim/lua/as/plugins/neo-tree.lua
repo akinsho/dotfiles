@@ -91,6 +91,14 @@ return function()
       icon = {
         folder_empty = '',
       },
+      diagnostics = {
+        highlights = {
+          hint = 'DiagnosticHint',
+          info = 'DiagnosticInfo',
+          warn = 'DiagnosticWarn',
+          error = 'DiagnosticError',
+        },
+      },
       modified = {
         symbol = icons.misc.circle .. ' ',
       },
