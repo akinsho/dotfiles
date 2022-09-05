@@ -5,6 +5,15 @@ vim.bo.spelllang = 'en_gb'
 --  Set color column at maximum commit summary length
 vim.opt_local.colorcolumn = '50,72'
 
+-- Schedule this call as highlights are not set correctly if there is not a delay
+vim.schedule(
+  function()
+    require('as.highlights').win_hl.set('gitcommit', 0, {
+      { VirtColumn = { fg = { from = 'Variable' } } },
+    })
+  end
+)
+
 if not as then return end
 as.ftplugin_conf(
   'cmp',
