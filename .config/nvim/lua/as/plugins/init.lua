@@ -448,7 +448,7 @@ packer.startup({
       config = function()
         require('tint').setup({
           amt = -35,
-          ignore = { 'WinSeparator', 'Status.*', 'Comment', 'Beacon.*', 'Panel.*' },
+          ignore = { 'WinSeparator', 'Status.*', 'Comment', 'Beacon.*', 'Panel.*', 'Telescope.*' },
           ignorefunc = function(win_id)
             if vim.fn.win_gettype(win_id) ~= '' then return true end
             local buf = vim.api.nvim_win_get_buf(win_id)
