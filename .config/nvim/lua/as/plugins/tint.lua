@@ -1,6 +1,6 @@
 return function()
   require('tint').setup({
-    tint = -35,
+    tint = -30,
     highlight_ignore_patterns = {
       'WinSeparator',
       'St.*',
@@ -9,7 +9,7 @@ return function()
       'Telescope.*',
     },
     window_ignore_function = function(win_id)
-      if vim.fn.win_gettype(win_id) ~= '' then return true end
+      if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= '' then return true end
       local buf = vim.api.nvim_win_get_buf(win_id)
       local b = vim.bo[buf]
       local ignore_bt = { 'terminal', 'prompt', 'nofile' }
