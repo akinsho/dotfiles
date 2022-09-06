@@ -48,6 +48,7 @@ return function()
       diagnostics = 'nvim_lsp',
       diagnostics_indicator = function(count, level) return (icons[level] or '?') .. ' ' .. count end,
       diagnostics_update_in_insert = false,
+      hover = { enabled = true, reveal = { 'close' } },
       offsets = {
         {
           text = 'EXPLORER',
