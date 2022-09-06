@@ -870,11 +870,6 @@ packer.startup({
       end,
     })
 
-    use({
-      'lewis6991/spellsitter.nvim',
-      config = function() require('spellsitter').setup({ enable = true }) end,
-    })
-
     use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
     use('melvio/medical-spell-files')
     ---}}}
