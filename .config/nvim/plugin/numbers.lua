@@ -1,3 +1,5 @@
+if not as then return end
+
 -- Inspiration
 -- 1. vim-relativity
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim

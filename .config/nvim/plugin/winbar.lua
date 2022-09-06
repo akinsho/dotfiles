@@ -1,6 +1,6 @@
 ---@diagnostic disable: duplicate-doc-param
 
-if not as.ui.winbar.enable then return end
+if not as or not as.ui.winbar.enable then return end
 
 local highlights = require('as.highlights')
 local utils = require('as.utils.statusline')

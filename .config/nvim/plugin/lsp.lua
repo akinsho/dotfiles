@@ -1,3 +1,5 @@
+if not as then return end
+
 local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
