@@ -241,6 +241,7 @@ opt.spelllang:append('programming')
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
 o.mousefocus = true
+o.mousemoveevent = true
 opt.mousescroll = { 'ver:1', 'hor:6' }
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
