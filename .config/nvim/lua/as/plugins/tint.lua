@@ -3,9 +3,8 @@ return function()
     tint = -35,
     highlight_ignore_patterns = {
       'WinSeparator',
-      'Status.*',
+      'St.*',
       'Comment',
-      'Beacon.*',
       'Panel.*',
       'Telescope.*',
     },

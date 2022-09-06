@@ -442,7 +442,7 @@ packer.startup({
       end,
     })
 
-    use({ 'levouh/tint.nvim', config = conf('tint') })
+    use({ 'levouh/tint.nvim', event = 'BufRead', config = conf('tint') })
 
     use({
       'folke/todo-comments.nvim',
