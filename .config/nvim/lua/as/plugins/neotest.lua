@@ -23,6 +23,15 @@ function M.setup()
 end
 
 function M.config()
+  local namespace = vim.api.nvim_create_namespace('neotest')
+  vim.diagnostic.config({
+    virtual_text = {
+      format = function(diagnostic)
+        return diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+      end,
+    },
+  }, namespace)
+
   require('neotest').setup({
     discovery = {
       enabled = false, -- TODO: Set this per project
