@@ -445,6 +445,8 @@ packer.startup({
 
     use({
       'folke/todo-comments.nvim',
+      after = 'nvim-treesitter',
+      requires = { 'nvim-treesitter' },
       config = function()
         require('todo-comments').setup()
         as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
