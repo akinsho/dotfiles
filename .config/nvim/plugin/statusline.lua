@@ -342,7 +342,7 @@ as.augroup('CustomStatusline', {
     command = function() vim.g.vim_in_focus = false end,
   },
   {
-    event = { 'VimEnter', 'ColorScheme' },
+    event = { 'ColorScheme' },
     pattern = { '*' },
     command = colors,
   },
@@ -372,6 +372,9 @@ as.augroup('CustomStatusline', {
     command = function() utils.git_updates_refresh() end,
   },
 })
+
+-- set colors during nvim's initialisation
+colors()
 
 -- :h qf.vim, disable qf statusline
 vim.g.qf_disable_statusline = 1
