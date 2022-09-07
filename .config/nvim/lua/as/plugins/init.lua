@@ -115,12 +115,7 @@ packer.startup({
 
     use('kyazdani42/nvim-web-devicons')
 
-    use_local({
-      'folke/which-key.nvim',
-      local_path = 'contributing',
-      local_enabled = false,
-      config = conf('whichkey'),
-    })
+    use({ 'folke/which-key.nvim', config = conf('whichkey') })
 
     use({
       'mg979/vim-visual-multi',
