@@ -33,9 +33,7 @@ function M.config()
   }, namespace)
 
   require('neotest').setup({
-    discovery = {
-      enabled = false, -- TODO: Set this per project
-    },
+    discovery = { enabled = true },
     diagnostic = {
       enabled = true,
     },
