@@ -363,6 +363,7 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use({
       'nvim-neotest/neotest',
+      tag = '*',
       setup = conf('neotest').setup,
       config = conf('neotest').config,
       module = 'neotest',
