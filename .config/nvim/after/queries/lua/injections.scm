@@ -1,3 +1,4 @@
+; extends
 (function_call
   name: (dot_index_expression
           field: ((identifier) (#match? "augroup")))

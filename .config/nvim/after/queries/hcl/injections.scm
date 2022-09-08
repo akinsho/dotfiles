@@ -1,3 +1,4 @@
+; extends
 (function_call
   ((identifier) (#match? "yamldecode")
   (function_arguments
