@@ -717,7 +717,9 @@ packer.startup({
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        require('as.highlights').plugin('bqf', { { BqfPreviewBorder = { link = 'WinSeparator' } } })
+        require('as.highlights').plugin('bqf', {
+          { BqfPreviewBorder = { fg = { from = 'Comment' } } },
+        })
       end,
     })
     -- }}}
