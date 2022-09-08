@@ -1,8 +1,6 @@
 return function()
   local cwd = vim.fn.getcwd()
   require('gitsigns').setup({
-    _threaded_diff = true,
-    _extmark_signs = true,
     signs = {
       add = { hl = 'GitSignsAdd', text = '▌' },
       change = { hl = 'GitSignsChange', text = '▌' },
@@ -10,12 +8,13 @@ return function()
       topdelete = { hl = 'GitSignsDelete', text = '▌' },
       changedelete = { hl = 'GitSignsChange', text = '▌' },
     },
+    _threaded_diff = true,
+    _extmark_signs = true,
     word_diff = false,
     current_line_blame = not cwd:match('personal') and not cwd:match('dotfiles'),
+    current_line_blame_formatter = ' <author>, <author_time> · <summary>',
     numhl = false,
-    preview_config = {
-      border = as.style.current.border,
-    },
+    preview_config = { border = as.style.current.border },
     on_attach = function()
       local gs = package.loaded.gitsigns
 
