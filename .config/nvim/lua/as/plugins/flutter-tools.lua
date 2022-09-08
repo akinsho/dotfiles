@@ -4,6 +4,7 @@ return function()
     debugger = {
       enabled = true,
       run_via_dap = true,
+      exception_breakpoints = {},
     },
     outline = { auto_open = false },
     decorations = {

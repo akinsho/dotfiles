@@ -44,8 +44,6 @@ function M.config()
 
   -- DON'T automatically stop at exceptions
   -- dap.defaults.fallback.exception_breakpoints = {}
-  require('dap').defaults.dart.exception_breakpoints = {}
-  -- NOTE: the window options can be set directly in this function
 end
 
 return M
