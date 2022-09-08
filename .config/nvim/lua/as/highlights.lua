@@ -418,15 +418,15 @@ local sidebar_fts = {
 }
 
 local function on_sidebar_enter()
-  vim.wo.winhighlight = table.concat({
-    'Normal:PanelBackground',
-    'EndOfBuffer:PanelBackground',
-    'StatusLine:PanelSt',
-    'StatusLineNC:PanelStNC',
-    'SignColumn:PanelBackground',
-    'VertSplit:PanelVertSplit',
-    'WinSeparator:PanelWinSeparator',
-  }, ',')
+  vim.opt_local.winhighlight:append({
+    Normal = 'PanelBackground',
+    EndOfBuffer = 'PanelBackground',
+    StatusLine = 'PanelSt',
+    StatusLineNC = 'PanelStNC',
+    SignColumn = 'PanelBackground',
+    VertSplit = 'PanelVertSplit',
+    WinSeparator = 'PanelWinSeparator',
+  })
 end
 
 local function colorscheme_overrides()
