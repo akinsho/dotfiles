@@ -2,6 +2,12 @@ return function()
   local Hydra = require('hydra')
   local border = as.style.current.border
 
+  local hint_opts = {
+    position = 'bottom',
+    border = border,
+    type = 'window',
+  }
+
   Hydra({
     name = 'Folds',
     mode = 'n',
@@ -9,7 +15,7 @@ return function()
     color = 'teal',
     config = {
       invoke_on_body = true,
-      hint = { border = border },
+      hint = hint_opts,
       on_enter = function() vim.cmd('BeaconOff') end,
       on_exit = function() vim.cmd('BeaconOn') end,
     },
@@ -28,7 +34,7 @@ return function()
     body = '<leader>b',
     color = 'teal',
     config = {
-      hint = { border = border },
+      hint = hint_opts,
       invoke_on_body = true,
       on_enter = function() vim.cmd('BeaconOff') end,
       on_exit = function() vim.cmd('BeaconOn') end,
@@ -49,7 +55,7 @@ return function()
     mode = 'n',
     body = 'z',
     config = {
-      hint = { border = border },
+      hint = hint_opts,
       on_enter = function() vim.cmd('IndentBlanklineDisable') end,
       on_exit = function() vim.cmd('IndentBlanklineEnable') end,
     },
@@ -65,9 +71,7 @@ return function()
     name = 'Window management',
     config = {
       invoke_on_body = false,
-      hint = {
-        border = border,
-      },
+      hint = hint_opts,
     },
     mode = 'n',
     body = '<C-w>',
@@ -103,10 +107,7 @@ return function()
       config = {
         color = 'pink',
         invoke_on_body = true,
-        hint = {
-          position = 'bottom',
-          border = border,
-        },
+        hint = hint_opts,
         on_enter = function()
           gitsigns.toggle_linehl(true)
           gitsigns.toggle_deleted(true)
@@ -175,10 +176,7 @@ return function()
     config = {
       color = 'pink',
       invoke_on_body = true,
-      hint = {
-        position = 'bottom',
-        border = 'rounded',
-      },
+      hint = hint_opts,
     },
     name = 'dap',
     mode = { 'n', 'x' },
