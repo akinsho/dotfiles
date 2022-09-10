@@ -942,14 +942,13 @@ packer.startup({
     -- Text Objects {{{1
     --------------------------------------------------------------------------------
     use({
-      'AckslD/nvim-trevJ.lua',
-      module = 'trevj',
+      'aarondiel/spread.nvim',
+      after = 'nvim-treesitter',
+      module = 'spread',
       setup = function()
-        as.nnoremap('gS', function() require('trevj').format_at_cursor() end, {
-          desc = 'splitjoin: split',
-        })
+        as.nnoremap('gS', function() require('spread').out() end, 'spread: expand')
+        as.nnoremap('gJ', function() require('spread').combine() end, 'spread: combine')
       end,
-      config = function() require('trevj').setup() end,
     })
 
     use({ 'numToStr/Comment.nvim', config = function() require('Comment').setup() end })
