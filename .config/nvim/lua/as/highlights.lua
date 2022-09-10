@@ -299,7 +299,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
     { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
-    { TSError = { foreground = 'NONE', background = 'NONE', undercurl = true, sp = 'DarkRed' } },
+    { TSError = { foreground = 'fg', background = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
