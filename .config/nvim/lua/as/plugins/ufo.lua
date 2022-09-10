@@ -53,12 +53,16 @@ return function()
     },
   })
 
+  local ft_map = {
+    dart = { 'lsp', 'treesitter' },
+  }
+
   ufo.setup({
     open_fold_hl_timeout = 0,
     fold_virt_text_handler = handler,
     enable_fold_end_virt_text = true,
     preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
-    provider_selector = function() return { 'treesitter', 'indent' } end,
+    provider_selector = function(_, filetype) return ft_map[filetype] or { 'treesitter', 'indent' } end,
   })
   as.nnoremap('zR', ufo.openAllFolds, 'open all folds')
   as.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
