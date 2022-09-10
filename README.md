@@ -21,7 +21,7 @@ To set up a new machine instead follow these instructions:
 #### dependencies:
 
 - `neovim`
-- `hombrew` (macOS)
+- `homebrew` (macOS)
 - `ripgrep`
 - `fzf`
 - `delta`
