@@ -37,12 +37,7 @@ function M.config()
     diagnostic = {
       enabled = true,
     },
-    icons = {
-      running = as.style.icons.misc.clock,
-    },
-    floating = {
-      border = as.style.current.border,
-    },
+    floating = { border = as.style.current.border },
     adapters = {
       require('neotest-plenary'),
       require('neotest-dart')({
