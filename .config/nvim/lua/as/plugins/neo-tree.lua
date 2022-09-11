@@ -124,6 +124,8 @@ return function()
         ['<CR>'] = 'open_with_window_picker',
         ['<c-s>'] = 'split_with_window_picker',
         ['<c-v>'] = 'vsplit_with_window_picker',
+        ['<esc>'] = 'revert_preview',
+        ['P'] = { 'toggle_preview', config = { use_float = true } },
       },
     },
   })
