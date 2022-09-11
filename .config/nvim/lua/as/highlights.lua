@@ -445,7 +445,7 @@ local function colorscheme_overrides()
       -----------------------------------------------------------------------------------------------
       { Normal = { fg = '#C1C1C1' } },
       -----------------------------------------------------------------------------------------------
-      -- { NormalNC = { link = 'Normal' } },
+      { NormalNC = { inherit = 'Normal' } },
       { WinSeparator = { fg = '#353647' } },
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
