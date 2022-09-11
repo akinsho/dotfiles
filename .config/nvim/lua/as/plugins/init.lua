@@ -786,10 +786,12 @@ packer.startup({
     -----------------------------------------------------------------------------//
     use_local({
       'akinsho/flutter-tools.nvim',
-      requires = { 'nvim-dap', 'plenary.nvim' },
       local_path = 'personal',
       config = conf('flutter-tools'),
+      requires = { 'nvim-dap', 'plenary.nvim' },
     })
+
+    use('RobertBrunhage/flutter-riverpod-snippets')
 
     use({
       'olexsmir/gopher.nvim',
