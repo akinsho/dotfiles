@@ -172,7 +172,7 @@ packer.startup({
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
-      branch = 'main', -- 'v2.x',
+      branch = 'v2.x',
       config = conf('neo-tree'),
       keys = { '<C-N>' },
       cmd = { 'NeoTree' },
