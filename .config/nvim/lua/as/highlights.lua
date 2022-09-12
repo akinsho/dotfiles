@@ -459,8 +459,6 @@ local function colorscheme_overrides()
       { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
       { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-      -- TODO: set ColorColumn instead as this normally links to that
-      { Headline = { background = { from = 'Normal', alter = 20 } } },
     },
   }
   local hls = overrides[vim.g.colors_name]
