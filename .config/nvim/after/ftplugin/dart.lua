@@ -2,6 +2,7 @@
 -- disable syntax based highlighting for dart and use only treesitter
 -- this still lets the syntax file be loaded for things like the LSP.
 vim.bo.syntax = ''
+vim.bo.textwidth = 100
 
 if not as then return end
 

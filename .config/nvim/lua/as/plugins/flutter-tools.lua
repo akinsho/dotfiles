@@ -21,6 +21,9 @@ return function()
       settings = {
         showTodos = true,
         renameFilesWithClasses = 'prompt',
+        updateImportsOnRename = true,
+        completeFunctionCalls = true,
+        lineLength = 100,
       },
     },
   })
