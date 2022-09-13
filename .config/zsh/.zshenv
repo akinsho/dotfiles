@@ -39,9 +39,6 @@ fi
 
 # NOTE: for signing commits with GPG (for work)
 export GPG_TTY=$(tty)
-
-# FIXME: use gcc 11 when compiling c, this is required by nvim-neorg treesitter parser
-export CC=gcc-11
 #-------------------------------------------------------------------------------
 # Go
 #-------------------------------------------------------------------------------
