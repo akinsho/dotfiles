@@ -270,3 +270,5 @@ termguicolors
 cterm
 gotchas
 ripgrep
+dap
+REPL
