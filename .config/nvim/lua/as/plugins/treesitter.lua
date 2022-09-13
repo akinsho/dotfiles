@@ -70,11 +70,11 @@ return function()
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
           [']m'] = '@function.outer',
-          [']c'] = '@class.outer',
+          [']M'] = '@class.outer',
         },
         goto_previous_start = {
           ['[m'] = '@function.outer',
-          ['[c'] = '@class.outer',
+          ['[M'] = '@class.outer',
         },
       },
     },
