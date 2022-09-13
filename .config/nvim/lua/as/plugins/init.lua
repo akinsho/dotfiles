@@ -448,7 +448,11 @@ packer.startup({
       after = 'nvim-treesitter',
       requires = { 'nvim-treesitter' },
       config = function()
-        require('todo-comments').setup()
+        require('todo-comments').setup({
+          highlight = {
+            exclude = { 'dart' },
+          },
+        })
         as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
       end,
     })
