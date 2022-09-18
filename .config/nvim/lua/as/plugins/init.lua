@@ -31,11 +31,6 @@ packer.startup({
     -----------------------------------------------------------------------------//
     -- Core {{{3
     -----------------------------------------------------------------------------//
-    -- TODO: this fixes a bug in neovim core that prevents "CursorHold" from working
-    -- hopefully one day when this issue is fixed this can be removed
-    -- @see: https://github.com/neovim/neovim/issues/12587
-    use('antoinemadec/FixCursorHold.nvim')
-
     -- THE LIBRARY
     use('nvim-lua/plenary.nvim')
 
