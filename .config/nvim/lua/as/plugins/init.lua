@@ -184,20 +184,38 @@ packer.startup({
     -- LSP,Completion & Debugger {{{1
     -----------------------------------------------------------------------------//
     use({
-      'williamboman/mason.nvim',
-      event = 'BufRead',
-      requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
-      config = function()
-        local get_config = require('as.servers')
-        require('mason').setup({ ui = { border = as.style.current.border } })
-        require('mason-lspconfig').setup({ automatic_installation = true })
-        require('mason-lspconfig').setup_handlers({
-          function(name)
-            local config = get_config(name)
-            if config then require('lspconfig')[name].setup(config) end
-          end,
-        })
-      end,
+      {
+        'williamboman/mason.nvim',
+        event = 'BufRead',
+        requires = {
+          'nvim-lspconfig',
+          'williamboman/mason-lspconfig.nvim',
+        },
+        config = function()
+          local get_config = require('as.servers')
+          require('mason').setup({ ui = { border = as.style.current.border } })
+          require('mason-lspconfig').setup({ automatic_installation = true })
+          require('mason-lspconfig').setup_handlers({
+            function(name)
+              local config = get_config(name)
+              if config then require('lspconfig')[name].setup(config) end
+            end,
+          })
+        end,
+      },
+      {
+        'jayp0521/mason-null-ls.nvim',
+        requires = {
+          'williamboman/mason.nvim',
+          'jose-elias-alvarez/null-ls.nvim',
+        },
+        after = 'mason.nvim',
+        config = function()
+          require('mason-null-ls').setup({
+            automatic_installation = true,
+          })
+        end,
+      },
     })
 
     use({
