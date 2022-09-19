@@ -1135,4 +1135,4 @@ as.augroup('PackerSetupInit', {
   },
 })
 
--- vim:foldmethod=marker
+-- vim:foldmethod=marker nospell
