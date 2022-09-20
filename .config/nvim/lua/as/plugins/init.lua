@@ -101,6 +101,11 @@ packer.startup({
           after = 'telescope.nvim',
           config = function() require('telescope').load_extension('luasnip') end,
         },
+        {
+          'nvim-telescope/telescope-live-grep-args.nvim',
+          after = 'telescope.nvim',
+          config = function() require('telescope').load_extension('live_grep_args') end,
+        },
       },
     })
 

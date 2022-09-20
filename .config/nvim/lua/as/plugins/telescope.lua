@@ -277,8 +277,6 @@ function M.config()
 
   local function pickers() builtins.builtin({ include_extensions = true }) end
 
-  local function live_grep() builtins.live_grep() end
-
   local function frecency()
     require('telescope').extensions.frecency.frecency(as.telescope.dropdown({
       previewer = false,
@@ -304,6 +302,10 @@ function M.config()
     })
   end
 
+  local function live_grep_args()
+    telescope.extensions.live_grep_args.live_grep_args(as.telescope.ivy())
+  end
+
   as.nnoremap('<c-p>', project_files, 'telescope: find files')
   as.nnoremap('<leader>fa', pickers, 'builtins')
   as.nnoremap('<leader>fb', builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find')
@@ -326,6 +328,7 @@ function M.config()
   as.nnoremap('<leader>fgc', delta_git_commits, 'commits')
   as.nnoremap('<leader>fgB', delta_git_bcommits, 'buffer commits')
   as.nnoremap('<leader>fo', builtins.buffers, 'buffers')
+  as.nnoremap('<leader>fs', live_grep_args, 'live grep')
   as.nnoremap('<leader>fd', dotfiles, 'dotfiles')
   as.nnoremap('<leader>fc', nvim_config, 'nvim config')
   as.nnoremap('<leader>fO', orgfiles, 'org files')
