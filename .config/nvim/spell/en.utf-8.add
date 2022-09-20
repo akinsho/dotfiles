@@ -272,3 +272,5 @@ gotchas
 ripgrep
 dap
 REPL
+url
+auth
