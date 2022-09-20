@@ -277,10 +277,6 @@ function M.config()
 
   local function pickers() builtins.builtin({ include_extensions = true }) end
 
-  local function find_files() builtins.find_files() end
-
-  local function buffers() builtins.buffers() end
-
   local function live_grep() builtins.live_grep() end
 
   local function frecency()
@@ -323,14 +319,13 @@ function M.config()
   as.nnoremap('<leader>fp', installed_plugins, 'plugins')
   as.nnoremap('<leader>fr', builtins.resume, 'resume last picker')
   as.nnoremap('<leader>f?', builtins.help_tags, 'help')
-  as.nnoremap('<leader>ff', find_files, 'find files')
+  as.nnoremap('<leader>ff', builtins.find_files, 'find files')
   as.nnoremap('<leader>ffn', find_near_files, 'find near files')
   as.nnoremap('<leader>fh', frecency, 'Most (f)recently used files')
   as.nnoremap('<leader>fgb', builtins.git_branches, 'branches')
   as.nnoremap('<leader>fgc', delta_git_commits, 'commits')
   as.nnoremap('<leader>fgB', delta_git_bcommits, 'buffer commits')
-  as.nnoremap('<leader>fo', buffers, 'buffers')
-  as.nnoremap('<leader>fs', live_grep, 'live grep')
+  as.nnoremap('<leader>fo', builtins.buffers, 'buffers')
   as.nnoremap('<leader>fd', dotfiles, 'dotfiles')
   as.nnoremap('<leader>fc', nvim_config, 'nvim config')
   as.nnoremap('<leader>fO', orgfiles, 'org files')
