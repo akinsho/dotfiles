@@ -1,6 +1,9 @@
 return function()
   require('dapui').setup({
     windows = { indent = 2 },
+    floating = {
+      border = as.style.current.border,
+    },
   })
   as.nnoremap('<localleader>duc', function() require('dapui').close() end, 'dap-ui: close')
   as.nnoremap('<localleader>dut', function() require('dapui').toggle() end, 'dap-ui: toggle')
