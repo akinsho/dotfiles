@@ -416,17 +416,28 @@ packer.startup({
     -----------------------------------------------------------------------------//
     -- UI {{{1
     -----------------------------------------------------------------------------//
+    use({ 'levouh/tint.nvim', event = 'BufRead', config = conf('tint') })
+
     use({
-      'norcalli/nvim-colorizer.lua',
+      'uga-rosa/ccc.nvim',
+      opt = true,
       config = function()
-        require('colorizer').setup({ 'lua', 'vim', 'kitty', 'conf' }, {
-          RGB = false,
-          mode = 'background',
+        local ccc = require('ccc')
+        ccc.setup({
+          pickers = {
+            ccc.picker.hex,
+            ccc.picker.css_rgb,
+            ccc.picker.css_hsl,
+          },
+          win_opts = { border = as.style.current.border },
+          highlighter = {
+            auto_enable = true,
+            excludes = { 'dart' },
+          },
         })
       end,
     })
 
-    use({ 'levouh/tint.nvim', event = 'BufRead', config = conf('tint') })
 
     use({
       'folke/todo-comments.nvim',
