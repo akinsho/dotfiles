@@ -109,14 +109,6 @@ packer.startup({
       },
     })
 
-    use({
-      'wincent/command-t',
-      run = 'cd lua/wincent/commandt/lib && make',
-      cmd = { 'CommandT', 'CommandTRipgrep' },
-      setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
-      config = function() require('wincent.commandt').setup() end,
-    })
-
     use('kyazdani42/nvim-web-devicons')
 
     use({ 'folke/which-key.nvim', config = conf('whichkey') })
@@ -259,7 +251,7 @@ packer.startup({
           blend_color = require('as.highlights').get('Normal', 'bg'),
           alpha = 0.45,
           hide = {
-            underline = false,
+            underline = true,
           },
         })
       end,
@@ -425,31 +417,6 @@ packer.startup({
     -- UI {{{1
     -----------------------------------------------------------------------------//
     use({
-      'lewis6991/satellite.nvim',
-      opt = true,
-      config = function()
-        require('satellite').setup({
-          handlers = {
-            gitsigns = {
-              enable = true,
-            },
-            marks = {
-              enable = false,
-            },
-          },
-          excluded_filetypes = {
-            'packer',
-            'neo-tree',
-            'norg',
-            'neo-tree-popup',
-            'dapui_scopes',
-            'dapui_stacks',
-          },
-        })
-      end,
-    })
-
-    use({
       'norcalli/nvim-colorizer.lua',
       config = function()
         require('colorizer').setup({ 'lua', 'vim', 'kitty', 'conf' }, {
@@ -502,7 +469,7 @@ packer.startup({
       tag = '*',
       config = function()
         require('nvim-surround').setup({
-          move_cursor = false,
+          move_cursor = true,
           keymaps = { visual = 's' },
         })
       end,
