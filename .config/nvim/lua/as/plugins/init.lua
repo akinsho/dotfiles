@@ -728,8 +728,12 @@ packer.startup({
     --------------------------------------------------------------------------------
     use({
       'vhyrro/neorg',
-      requires = { 'vhyrro/neorg-telescope' },
+      tag = '*',
+      ft = 'norg',
       config = conf('neorg'),
+      run = ':Neorg sync-parsers',
+      requires = { 'vhyrro/neorg-telescope' },
+      after = { 'nvim-treesitter', 'telescope.nvim' },
     })
 
     use({ 'nvim-orgmode/orgmode', config = conf('orgmode') })
