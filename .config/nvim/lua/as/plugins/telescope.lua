@@ -119,6 +119,7 @@ function M.config()
         '^.git/',
         '^node_modules/',
         '^site-packages/',
+        '^.yarn/',
       },
       path_display = { 'truncate' },
       winblend = 5,
