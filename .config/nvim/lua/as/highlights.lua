@@ -243,6 +243,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -15 } } },
     { FloatBorder = { bg = { from = 'Normal', alter = -15 }, fg = { from = 'Comment' } } },
+    { Pmenu = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { background = { from = 'Normal', alter = 30 } } },
     { markdownCode = { link = 'CodeBlock' } },
