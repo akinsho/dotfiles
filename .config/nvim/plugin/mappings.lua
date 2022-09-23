@@ -472,6 +472,10 @@ command('MoveAppend', [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>de
   complete = 'file',
 })
 
+command('Reverse', '<line1>,<line2>g/^/m<line1>-1', {
+  range = '%',
+  bar = true,
+})
 -----------------------------------------------------------------------------//
 -- Autoresize
 -----------------------------------------------------------------------------//
