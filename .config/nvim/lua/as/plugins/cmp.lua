@@ -136,16 +136,16 @@ return function()
     }),
   })
 
-  local search_sources = {
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp_document_symbol' },
-    }, {
-      { name = 'buffer' },
-    }),
-  }
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      sources = cmp.config.sources(
+        { { name = 'nvim_lsp_document_symbol' } },
+        { { name = 'buffer' } }
+      ),
+    },
+  })
 
-  cmp.setup.cmdline('/', search_sources)
-  cmp.setup.cmdline('?', search_sources)
   cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
       { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
@@ -154,8 +154,6 @@ return function()
     }),
   })
   require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
-    sources = {
-      { name = 'dap' },
-    },
+    sources = { { name = 'dap' } },
   })
 end
