@@ -621,12 +621,12 @@ function M.component_raw(item, opts)
   local priority = opts.priority or 0
   local win_id = opts.win_id or 0
   local container_type = opts.type or 'statusline'
-  ---@type table
-  local data = api.nvim_eval_statusline(item, {
+  local ok, data = pcall(api.nvim_eval_statusline, item, {
     use_winbar = container_type == 'winbar',
     use_tabline = container_type == 'tabline',
     winid = win_id,
   })
+  if not ok then return { component = '', length = 0, priority = priority } end
   return { component = item, length = data.width, priority = priority }
 end
 
