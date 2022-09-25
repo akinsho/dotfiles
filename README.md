@@ -30,7 +30,7 @@ To set up a new machine instead follow these instructions:
 
 ### Highlights / Tools
 
-- [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU accelerated terminal emulators
+- [Kitty](https://sw.kovidgoyal.net/kitty/index.html)/[Alacritty](https://github.com/alacritty/alacritty) GPU-accelerated terminal emulators
 - [Nvim](https://github.com/neovim/neovim)
 - Language server support using [`Neovim's LSP`](https://neovim.io/doc/user/lsp.html)
 
