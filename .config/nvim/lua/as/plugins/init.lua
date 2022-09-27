@@ -876,20 +876,10 @@ packer.startup({
     --------------------------------------------------------------------------------
     use({
       'ruifm/gitlinker.nvim',
+      module = 'gitlinker',
       requires = 'plenary.nvim',
-      keys = {
-        { 'n', '<localleader>gu', 'gitlinker: copy to clipboard' },
-        { 'n', '<localleader>go', 'gitlinker: open in browser' },
-      },
-      config = function()
-        local linker = require('gitlinker')
-        linker.setup({ mappings = '<localleader>gu' })
-        as.nnoremap(
-          '<localleader>go',
-          function() linker.get_repo_url({ action_callback = require('gitlinker.actions').open_in_browser }) end,
-          'gitlinker: open in browser'
-        )
-      end,
+      setup = conf('gitlinker').setup,
+      config = conf('gitlinker').config,
     })
 
     use({ 'lewis6991/gitsigns.nvim', event = 'BufRead', config = conf('gitsigns') })
