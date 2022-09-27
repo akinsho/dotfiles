@@ -165,6 +165,11 @@ function M.config()
           n = { ['<c-x>'] = 'delete_buffer' },
         },
       }),
+      registers = as.telescope.dropdown({
+        layout_config = {
+          height = 25,
+        },
+      }),
       oldfiles = as.telescope.dropdown(),
       live_grep = as.telescope.ivy({
         file_ignore_patterns = { '.git/', '%.svg', '%.lock' },
