@@ -119,8 +119,8 @@ packer.startup({
         vim.g.VM_highlight_matches = 'underline'
         vim.g.VM_theme = 'codedark'
         vim.g.VM_maps = {
-          ['Find Under'] = '<C-E>',
-          ['Find Subword Under'] = '<C-E>',
+          ['Find Under'] = '<C-e>',
+          ['Find Subword Under'] = '<C-e>',
           ['Select Cursor Down'] = '\\j',
           ['Select Cursor Up'] = '\\k',
         }
