@@ -724,7 +724,6 @@ packer.startup({
       tag = '*',
       ft = 'norg',
       config = conf('neorg'),
-      run = ':Neorg sync-parsers',
       requires = { 'vhyrro/neorg-telescope' },
       after = { 'nvim-treesitter', 'telescope.nvim' },
     })
