@@ -896,31 +896,8 @@ packer.startup({
       'sindrets/diffview.nvim',
       cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
       module = 'diffview',
-      setup = function()
-        as.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: open')
-        as.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
-        as.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
-      end,
-      config = function()
-        require('diffview').setup({
-          default_args = {
-            DiffviewFileHistory = { '%' },
-          },
-          hooks = {
-            diff_buf_read = function()
-              vim.wo.wrap = false
-              vim.wo.list = false
-              vim.wo.colorcolumn = ''
-            end,
-          },
-          enhanced_diff_hl = true,
-          keymaps = {
-            view = { q = '<Cmd>DiffviewClose<CR>' },
-            file_panel = { q = '<Cmd>DiffviewClose<CR>' },
-            file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
-          },
-        })
-      end,
+      setup = conf('diffview').setup,
+      config = conf('diffview').config,
     })
     ---}}}
     --------------------------------------------------------------------------------
