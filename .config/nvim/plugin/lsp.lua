@@ -112,7 +112,10 @@ local function setup_autocommands(client, bufnr)
         event = { 'CursorHold' },
         buffer = bufnr,
         desc = 'LSP: Show diagnostics',
-        command = function(args) vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false }) end,
+        command = function(args)
+          if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
+          vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false })
+        end,
       },
     }
   end)
@@ -392,9 +395,14 @@ diagnostic.config({
   },
 })
 
--- NOTE: the hover handler returns the bufnr, winnr so can be used for mappings
-lsp.handlers['textDocument/hover'] =
-  lsp.with(lsp.handlers.hover, { border = border, max_width = max_width, max_height = max_height })
+lsp.handlers['textDocument/hover'] = function(...)
+  local hover_handler = lsp.with(lsp.handlers.hover, {
+    border = border,
+    max_width = max_width,
+    max_height = max_height,
+  })
+  vim.b.lsp_hover_buf, vim.b.lsp_hover_win = hover_handler(...)
+end
 
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
   border = border,
