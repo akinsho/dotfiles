@@ -431,7 +431,6 @@ packer.startup({
       end,
     })
 
-
     use({
       'folke/todo-comments.nvim',
       after = 'nvim-treesitter',
@@ -467,6 +466,14 @@ packer.startup({
     -- Utilities {{{1
     --------------------------------------------------------------------------------
     use('ii14/emmylua-nvim')
+
+    use({
+      'chaoren/vim-wordmotion',
+      setup = function()
+        vim.g.wordmotion_prefix = '<leader>'
+        vim.g.wordmotion_spaces = { '-', '_', '\\/', '\\.' }
+      end,
+    })
 
     use({
       'kylechui/nvim-surround',
