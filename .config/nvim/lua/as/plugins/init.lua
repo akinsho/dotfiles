@@ -976,10 +976,33 @@ packer.startup({
     -- Search Tools {{{1
     --------------------------------------------------------------------------------
     use({
-      'phaazon/hop.nvim',
-      tag = 'v2.*', -- branch = 'fix-multi-window-floats',
-      keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
-      config = conf('hop'),
+      'ggandor/leap.nvim',
+      keys = { { 'n', 's' } },
+      config = function()
+        require('as.highlights').plugin('leap', {
+          theme = {
+            ['*'] = {
+              { LeapBackdrop = { fg = '#707070' } },
+            },
+            horizon = {
+              { LeapLabelPrimary = { fg = '#ccff88', italic = true } },
+              { LeapLabelSecondary = { fg = '#99ccff' } },
+              { LeapLabelSelected = { fg = 'Magenta' } },
+            },
+          },
+        })
+        require('leap').setup({
+          equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' },
+        })
+        as.nnoremap('s', function()
+          require('leap').leap({
+            target_windows = vim.tbl_filter(
+              function(win) return as.empty(vim.fn.win_gettype(win)) end,
+              vim.api.nvim_tabpage_list_wins(0)
+            ),
+          })
+        end)
+      end,
     })
 
     -- }}}
