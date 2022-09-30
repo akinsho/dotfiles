@@ -727,7 +727,6 @@ packer.startup({
       ft = 'norg',
       config = conf('neorg'),
       requires = { 'vhyrro/neorg-telescope' },
-      after = { 'nvim-treesitter', 'telescope.nvim' },
     })
 
     use({ 'nvim-orgmode/orgmode', config = conf('orgmode') })
