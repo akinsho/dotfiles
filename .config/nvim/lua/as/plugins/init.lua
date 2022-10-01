@@ -468,6 +468,12 @@ packer.startup({
     use('ii14/emmylua-nvim')
 
     use({
+      'folke/noice.nvim',
+      event = { 'CursorHold', 'CmdlineEnter' },
+      config = function() require('noice').setup() end,
+    })
+
+    use({
       'chaoren/vim-wordmotion',
       setup = function()
         vim.g.wordmotion_prefix = '<leader>'
