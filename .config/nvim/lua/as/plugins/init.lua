@@ -991,9 +991,9 @@ packer.startup({
               { LeapBackdrop = { fg = '#707070' } },
             },
             horizon = {
-              { LeapLabelPrimary = { fg = '#ccff88', italic = true } },
-              { LeapLabelSecondary = { fg = '#99ccff' } },
-              { LeapLabelSelected = { fg = 'Magenta' } },
+              { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
+              { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
+              { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
             },
           },
         })
