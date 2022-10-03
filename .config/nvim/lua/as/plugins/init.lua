@@ -703,7 +703,11 @@ packer.startup({
       config = function() require('numb').setup() end,
     })
 
-    use({ 'ja-ford/delaytrain.nvim', config = function() require('delaytrain').setup() end })
+    use({
+      'ja-ford/delaytrain.nvim',
+      opt = true,
+      config = function() require('delaytrain').setup() end,
+    })
     -----------------------------------------------------------------------------//
     -- Quickfix
     -----------------------------------------------------------------------------//
