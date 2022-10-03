@@ -1015,7 +1015,17 @@ packer.startup({
       end,
     })
 
-    use({ 'ggandor/flit.nvim', config = function() require('flit').setup() end })
+    use({
+      'ggandor/flit.nvim',
+      keys = { { 'n', 'f' } },
+      wants = { 'leap.nvim' },
+      after = 'leap.nvim',
+      config = function()
+        require('flit').setup({
+          multiline = false,
+        })
+      end,
+    })
 
     -- }}}
     --------------------------------------------------------------------------------
