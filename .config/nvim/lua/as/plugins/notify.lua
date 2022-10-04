@@ -21,7 +21,6 @@ return function()
     stages = 'fade_in_slide_out',
     top_down = false,
     background_colour = 'NormalFloat',
-    min_width = function() return math.floor(vim.o.columns * 0.4) end,
     max_width = function() return math.floor(vim.o.columns * 0.4) end,
     max_height = function() return math.floor(vim.o.lines * 0.8) end,
     on_open = function(win)
