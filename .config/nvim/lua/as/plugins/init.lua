@@ -525,24 +525,10 @@ packer.startup({
     })
 
     use({
-      'AckslD/nvim-neoclip.lua',
+      'gbprod/yanky.nvim',
+      keys = { 'p', 'P', '<localleader>p' },
       requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
-      config = function()
-        require('neoclip').setup({
-          enable_persistent_history = true,
-          keys = {
-            telescope = {
-              i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
-              n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
-            },
-          },
-        })
-        as.nnoremap(
-          '<localleader>p',
-          function() require('telescope').extensions.neoclip.default(as.telescope.dropdown()) end,
-          'neoclip: open yank history'
-        )
-      end,
+      config = conf('yanky'),
     })
 
     use({
