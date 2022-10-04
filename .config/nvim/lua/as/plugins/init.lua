@@ -469,24 +469,8 @@ packer.startup({
 
     use({
       'folke/noice.nvim',
-      event = { 'VimEnter' },
-      config = function()
-        require('noice').setup({
-          views = {
-            split = {
-              win_options = {
-                winhighlight = { Normal = 'Normal' },
-              },
-            },
-          },
-          routes = {
-            {
-              filter = { event = 'msg_show', kind = 'search_count' },
-              opts = { skip = true },
-            },
-          },
-        })
-      end,
+      event = { 'CursorHold', 'CmdlineEnter' },
+      config = conf('noice'),
     })
 
     use({
