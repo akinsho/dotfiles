@@ -251,7 +251,7 @@ packer.startup({
           blend_color = require('as.highlights').get('Normal', 'bg'),
           alpha = 0.45,
           hide = {
-            underline = true,
+            underline = false,
           },
         })
       end,
