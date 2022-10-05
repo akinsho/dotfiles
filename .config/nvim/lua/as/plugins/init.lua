@@ -1006,6 +1006,7 @@ packer.startup({
       after = 'leap.nvim',
       config = function()
         require('flit').setup({
+          labeled_modes = 'nvo',
           multiline = false,
         })
       end,
