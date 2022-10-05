@@ -92,11 +92,6 @@ packer.startup({
           config = function() require('telescope').load_extension('frecency') end,
         },
         {
-          'ptethng/telescope-makefile',
-          after = 'telescope.nvim',
-          config = function() require('telescope').load_extension('make') end,
-        },
-        {
           'benfowler/telescope-luasnip.nvim',
           after = 'telescope.nvim',
           config = function() require('telescope').load_extension('luasnip') end,
