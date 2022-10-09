@@ -493,7 +493,6 @@ packer.startup({
       'L3MON4D3/LuaSnip',
       event = 'InsertEnter',
       module = 'luasnip',
-      branch = 'parse_from_ast',
       requires = 'rafamadriz/friendly-snippets',
       config = conf('luasnip'),
       rocks = { 'jsregexp' },
