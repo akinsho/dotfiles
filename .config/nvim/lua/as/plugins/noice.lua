@@ -1,7 +1,7 @@
 return function()
   require('noice').setup({
     popupmenu = {
-        backend = 'cmp',
+      backend = 'cmp',
     },
     views = {
       split = {
@@ -17,13 +17,6 @@ return function()
         size = {
           width = 60,
           height = 'auto',
-        },
-        border = {
-          style = 'none',
-          padding = { 1, 2 },
-        },
-        win_options = {
-          winhighlight = { NormalFloat = 'NormalFloat', FloatBorder = 'FloatBorder' },
         },
       },
       popupmenu = {
