@@ -14,10 +14,6 @@ return function()
           row = 10,
           col = '50%',
         },
-        size = {
-          width = 60,
-          height = 'auto',
-        },
       },
       popupmenu = {
         relative = 'editor',
