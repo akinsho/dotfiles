@@ -298,9 +298,9 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
-    { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
-    { TSError = { foreground = 'fg', background = 'NONE' } },
+    { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
+    { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
+    { ['@error'] = { foreground = 'fg', background = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
@@ -433,8 +433,8 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['doom-one'] = {
-      { TSNamespace = { foreground = P.blue } },
-      { TSVariable = { foreground = { from = 'Normal' } } },
+      { ['@namespace'] = { foreground = P.blue } },
+      { ['@variable'] = { foreground = { from = 'Normal' } } },
       { CursorLineNr = { foreground = { from = 'Keyword' } } },
       { LineNr = { background = 'NONE' } },
       { NeoTreeIndentMarker = { link = 'Comment' } },
@@ -453,8 +453,8 @@ local function colorscheme_overrides()
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
       { VisibleTab = { background = { from = 'Normal', alter = 40 }, bold = true } },
-      { commentTSConstant = { inherit = 'Constant', bold = true } },
-      { luaTSConstructor = { inherit = 'Type', italic = false, bold = false } },
+      { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
+      { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
       { PanelBackground = { link = 'Normal' } },
       { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
       { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
