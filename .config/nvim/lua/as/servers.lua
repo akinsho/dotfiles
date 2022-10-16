@@ -154,6 +154,6 @@ return function(name)
   config.capabilities.textDocument.foldingRange =
     { dynamicRegistration = false, lineFoldingOnly = true }
   local ok, cmp_nvim_lsp = as.require('cmp_nvim_lsp')
-  if ok then cmp_nvim_lsp.update_capabilities(config.capabilities) end
+  if ok then cmp_nvim_lsp.default_capabilities(config.capabilities) end
   return config
 end
