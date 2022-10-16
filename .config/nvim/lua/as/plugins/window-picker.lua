@@ -1,5 +1,6 @@
 return function()
   require('window-picker').setup({
+    use_winbar = 'smart',
     autoselect_one = true,
     include_current = false,
     filter_rules = {
