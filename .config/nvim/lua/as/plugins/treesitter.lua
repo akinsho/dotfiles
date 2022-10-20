@@ -14,6 +14,7 @@ return function()
       'go',
       'dart',
       'rust',
+      'diff',
       'typescript',
       'javascript',
       'comment',
