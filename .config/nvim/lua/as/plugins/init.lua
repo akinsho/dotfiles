@@ -464,7 +464,7 @@ packer.startup({
 
     use({
       'folke/noice.nvim',
-      event = { 'CursorHold', 'CmdlineEnter' },
+      opt = true,
       config = conf('noice'),
     })
 
