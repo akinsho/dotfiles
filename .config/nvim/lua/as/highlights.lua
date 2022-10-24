@@ -301,6 +301,8 @@ local function general_overrides()
     { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
     { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
     { ['@error'] = { foreground = 'fg', background = 'NONE' } },
+    { ['@text.diff.add'] = { link = 'DiffAdd' } },
+    { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
