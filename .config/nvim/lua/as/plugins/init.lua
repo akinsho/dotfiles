@@ -441,25 +441,26 @@ packer.startup({
       config = function()
         require('as.highlights').plugin('codewindow', {
           { CodewindowBorder = { link = 'WinSeparator' } },
-          { CodewindowError = { bg = 'NONE', fg = { from = 'DiagnosticSignError', attr = 'bg' } } },
           { CodewindowWarn = { bg = 'NONE', fg = { from = 'DiagnosticSignWarn', attr = 'bg' } } },
+          { CodewindowError = { bg = 'NONE', fg = { from = 'DiagnosticSignError', attr = 'bg' } } },
         })
-        local codewindow = require('codewindow')
-        codewindow.setup({
+        require('codewindow').setup({
           z_index = 25,
           auto_enable = true,
           exclude_filetypes = {
+            'qf',
+            'git',
+            'help',
             'alpha',
             'packer',
+            'gitcommit',
             'NeogitStatus',
             'neo-tree',
             'neo-tree-popup',
             'NeogitCommitMessage',
-            'gitcommit',
             '',
           },
         })
-        codewindow.apply_default_keybinds()
       end,
     })
 
