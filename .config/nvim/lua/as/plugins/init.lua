@@ -437,6 +437,32 @@ packer.startup({
     })
 
     use({
+      'gorbit99/codewindow.nvim',
+      config = function()
+        require('as.highlights').plugin('codewindow', {
+          { CodewindowBorder = { link = 'WinSeparator' } },
+          { CodewindowError = { bg = 'NONE', fg = { from = 'DiagnosticSignError', attr = 'bg' } } },
+          { CodewindowWarn = { bg = 'NONE', fg = { from = 'DiagnosticSignWarn', attr = 'bg' } } },
+        })
+        local codewindow = require('codewindow')
+        codewindow.setup({
+          z_index = 25,
+          auto_enable = true,
+          exclude_filetypes = {
+            'packer',
+            'NeogitStatus',
+            'neo-tree',
+            'neo-tree-popup',
+            'NeogitCommitMessage',
+            'gitcommit',
+            '',
+          },
+        })
+        codewindow.apply_default_keybinds()
+      end,
+    })
+
+    use({
       'lukas-reineke/virt-column.nvim',
       config = function()
         require('as.highlights').plugin('virt_column', {
