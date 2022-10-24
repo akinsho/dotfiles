@@ -449,6 +449,7 @@ packer.startup({
           z_index = 25,
           auto_enable = true,
           exclude_filetypes = {
+            'alpha',
             'packer',
             'NeogitStatus',
             'neo-tree',
