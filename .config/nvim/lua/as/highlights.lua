@@ -491,6 +491,7 @@ as.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
+vim.cmd.packadd({ 'local-horizon.nvim', bang = true })
 as.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')
 
 return M
