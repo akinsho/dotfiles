@@ -1038,7 +1038,6 @@ packer.startup({
     --------------------------------------------------------------------------------
     -- Themes  {{{1
     --------------------------------------------------------------------------------
-    use('EdenEast/nightfox.nvim')
     use_local({
       'LunarVim/horizon.nvim',
       local_path = 'contributing',
