@@ -17,6 +17,7 @@ return function()
       'diff',
       'typescript',
       'javascript',
+      'git_rebase',
       'comment',
       'markdown',
       'markdown_inline',
