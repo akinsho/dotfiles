@@ -444,7 +444,9 @@ packer.startup({
           { CodewindowWarn = { bg = 'NONE', fg = { from = 'DiagnosticSignWarn', attr = 'bg' } } },
           { CodewindowError = { bg = 'NONE', fg = { from = 'DiagnosticSignError', attr = 'bg' } } },
         })
-        require('codewindow').setup({
+        local codewindow = require('codewindow')
+        as.command('CodewindowToggle', codewindow.toggle_minimap)
+        codewindow.setup({
           z_index = 25,
           auto_enable = true,
           exclude_filetypes = {
