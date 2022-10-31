@@ -21,7 +21,7 @@ return function()
       local function qf_list_modified() gs.setqflist('all') end
 
       as.nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
-      as.nnoremap('<leader>hp', gs.preview_hunk, 'preview current hunk')
+      as.nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview current hunk')
       as.nnoremap('<leader>hs', gs.stage_hunk, 'stage current hunk')
       as.nnoremap('<leader>hr', gs.reset_hunk, 'reset current hunk')
       as.nnoremap('<leader>hb', gs.toggle_current_line_blame, 'toggle current line blame')
