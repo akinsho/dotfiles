@@ -494,7 +494,7 @@ packer.startup({
 
     use({
       'folke/noice.nvim',
-      opt = true,
+      disable = true,
       config = conf('noice'),
     })
 
