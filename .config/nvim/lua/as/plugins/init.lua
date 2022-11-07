@@ -1034,11 +1034,7 @@ packer.startup({
     --------------------------------------------------------------------------------
     -- Themes  {{{1
     --------------------------------------------------------------------------------
-    use_local({
-      'LunarVim/horizon.nvim',
-      local_path = 'contributing',
-      local_enabled = true,
-    })
+    use_local({ 'LunarVim/horizon.nvim', local_path = 'contributing', local_enabled = false })
 
     use({
       'NTBBloodbath/doom-one.nvim',
