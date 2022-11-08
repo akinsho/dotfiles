@@ -152,6 +152,17 @@ function M.config()
           project = vim.env.PROJECTS_DIR,
         },
       },
+      live_grep_args = (function()
+        local lga_actions = require('telescope-live-grep-args.actions')
+        return {
+          mappings = { -- extend mappings
+            i = {
+              ['<C-k>'] = lga_actions.quote_prompt(),
+              ['<C-i>'] = lga_actions.quote_prompt({ postfix = ' --iglob ' }),
+            },
+          },
+        }
+      end)(),
     },
     pickers = {
       buffers = as.telescope.dropdown({
