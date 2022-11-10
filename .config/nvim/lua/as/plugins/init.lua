@@ -459,6 +459,7 @@ packer.startup({
             'NeogitStatus',
             'neo-tree',
             'neo-tree-popup',
+            'neotest-summary',
             'NeogitCommitMessage',
             '',
           },
