@@ -1,0 +1,15 @@
+set number
+set relativenumber
+set surround
+set multiple-cursors
+
+set ideajoin
+set ideaput
+
+let g:mapleader = ","
+
+nmap <C-e> <Action>(RecentFiles)
+nmap [c <Action>(GotoNextError)
+nmap ]c <Action>(GotoPreviousError)
+nmap <leader>fo <Action>(Switcher)
+nmap <leader>rn <Action>(RenameElement)

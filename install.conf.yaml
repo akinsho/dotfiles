@@ -18,6 +18,7 @@
     ~/.zshenv: .config/zsh/.zshenv
     ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
+    ~/.config/ideavim/: .config/ideavim
     ~/.config/kitty:
       force: true
       path: .config/kitty
