@@ -9,55 +9,95 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+set wrapscan
+set timeoutlen=5000
+
+" Leader key
+let g:mapleader = ","
+let g:maplocalleader = ' '
 
 " Plugins
 set surround
 set multiple-cursors
 set which-key
 set highlightedyank
-set sneak
+set easymotion
 set nerdtree
+set commentary
 
+nmap <S-C-n> <Plug>NextWholeOccurrence
+xmap <S-C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+nmap <C-q> <Plug>SkipOccurrence
+xmap <C-q> <plug>SkipOccurrence
+nmap <C-x> <Plug>RemoveOccurrence
+xmap <C-x> <Plug>RemoveOccurrence
 " IDEAVIM config options
 set ideajoin
-set ideaput
-
-" Leader key
-let g:mapleader = ","
-let g:maplocalleader = " "
 
 " Mappings
 inoremap jk <Esc>
 nnoremap <Leader><Tab> :tabnext<CR>
 nnoremap <S-Tab> :tabprev<CR>\
+
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
 
-" Folding
-map <leader>zc :action CollapseAllRegions<CR>
-map <leader>zo :action ExpandAllRegions<CR>
+nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
+nnoremap <leader>ev :e ~/.config/ideavim/ideavimrc<CR>
+nnoremap <space>l    :nohlsearch<CR>
 
-" Popup Menu
-inoremap <C-j> <Action>(PopupMenu-selectNext)
-inoremap <C-k> <Action>(PopupMenu-selectPrev)
+nmap <Leader>q <Action>(CloseContent)
+nmap <Leader>qa <Action>(CloseAllEditors)
+
+" Distraction Free Mode
+nmap <c-z> <Action>(ToggleDistractionFreeMode)
+
+" Terminal
+nmap <c-\> <Action>(ActivateTerminalToolWindow)
+nmap <leader>t :action Terminal.OpenInTerminal<CR>
+
+" Jump around with easymotion
+map s <Plug>(easymotion-s)
+
+nmap <CR> <Action>(Tree-selectNextExtendSelection)
+nmap <S-CR> <Action>(Tree-selectPrevExtendSelection)
+
+" Folding
+nmap <leader>zc <Action>(CollapseAllRegions)
+nmap <leader>zo <Action>(ExpandAllRegions)
 
 " Actions
 nmap [c <Action>(GotoNextError)
 nmap ]c <Action>(GotoPreviousError)
 
-map <leader>ff <action>(GotoFile)
-map <leader>fr <action>(RecentFiles)
-nmap <leader>fo <Action>(Switcher)
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>fo <Action>(RecentFiles)
+nmap <leader>ff <Action>(FindInPath)
+nmap <leader><leader> <Action>(Switcher)
+nmap <leader>fr <Action>(FindUsages)
+nmap <leader>b <Action>(ShowNavBar)
+nmap <leader>A <Action>(GotoTest)
+nmap <leader>mv <Action>(Move)
+xmap <leader>mv <Action>(Move)
+nmap gb <Action>(Back)
+nmap gf <Action>(Forward)
+
+nmap <M-p> <Action>(JumpToLastWindow)
+nmap <M-x> <Action>(HideAllWindows)
 
 nmap <leader>rn <Action>(RenameElement)
 nmap <leader>rf <Action>(ReformatCode)
-map <leader>ca <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 " File Explorer
-map <C-N> :NERDTreeToggle<CR>
+nmap <C-N> :NERDTreeToggle<CR>
 
 " Git
-map <localleader>gc <Action>(CheckinProject)
-map <localleader>gs <Action>(ActivateVersionControlToolWindow)
-map <localleader>gb <Action>(Git.Branches)
+nmap <space>gc <Action>(CheckinProject)
+nmap <space>gs <Action>(ActivateVersionControlToolWindow)
+nmap <space>gb <Action>(Git.Branches)
