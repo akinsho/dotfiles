@@ -1,15 +1,63 @@
 set number
 set relativenumber
+set showmode
+set showcmd
+set visualbell
+set clipboard+=unnamed
+set scrolloff=10
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+" Plugins
 set surround
 set multiple-cursors
+set which-key
+set highlightedyank
+set sneak
+set nerdtree
 
+" IDEAVIM config options
 set ideajoin
 set ideaput
 
+" Leader key
 let g:mapleader = ","
+let g:maplocalleader = " "
 
-nmap <C-e> <Action>(RecentFiles)
+" Mappings
+inoremap jk <Esc>
+nnoremap <Leader><Tab> :tabnext<CR>
+nnoremap <S-Tab> :tabprev<CR>\
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" Folding
+map <leader>zc :action CollapseAllRegions<CR>
+map <leader>zo :action ExpandAllRegions<CR>
+
+" Popup Menu
+inoremap <C-j> <Action>(PopupMenu-selectNext)
+inoremap <C-k> <Action>(PopupMenu-selectPrev)
+
+" Actions
 nmap [c <Action>(GotoNextError)
 nmap ]c <Action>(GotoPreviousError)
+
+map <leader>ff <action>(GotoFile)
+map <leader>fr <action>(RecentFiles)
 nmap <leader>fo <Action>(Switcher)
+
 nmap <leader>rn <Action>(RenameElement)
+nmap <leader>rf <Action>(ReformatCode)
+map <leader>ca <Action>(Refactorings.QuickListPopupAction)
+" File Explorer
+map <C-N> :NERDTreeToggle<CR>
+
+" Git
+map <localleader>gc <Action>(CheckinProject)
+map <localleader>gs <Action>(ActivateVersionControlToolWindow)
+map <localleader>gb <Action>(Git.Branches)
