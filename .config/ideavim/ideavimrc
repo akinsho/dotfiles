@@ -23,11 +23,12 @@ set highlightedyank
 set easymotion
 set nerdtree
 set commentary
+set argtextobj
+set exchange
 
 " TODO: which-key plugins does not recognise , as leader !?
 let g:WhichKey_ShowVimActions = "false"
 let g:WhichKey_SortOrder = "by_key_prefix_first"
-
 let g:WhichKeyDesc_redraw = "<Space>l Redraw screen"
 let g:WhickKeyDesc_test = ",A Go to Test File"
 
@@ -85,7 +86,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
 
 " Switch between alternate buffers
-nmap <leader><leader> :b#<CR>
+nnoremap <leader><leader> :b#<CR>
 
 nmap <leader>sv :source ~/.config/ideavim/ideavimrc<CR>
 nnoremap <leader>ev :e ~/.config/ideavim/ideavimrc<CR>
@@ -143,3 +144,5 @@ nmap <C-N> :NERDTreeToggle<CR>
 nmap <space>gc <Action>(ActivateCommitToolWindow)
 nmap <space>gs <Action>(ActivateVersionControlToolWindow)
 nmap <space>gb <Action>(Git.Branches)
+nmap [h <Action>(VcsShowNextChangeMarker)
+nmap ]h <Action>(VcsShowPrevChangeMarker)
