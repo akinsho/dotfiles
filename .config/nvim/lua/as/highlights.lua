@@ -47,7 +47,7 @@ end
 local function alter(attr, percent) return math.floor(attr * (100 + percent) / 100) end
 
 ---@source https://stackoverflow.com/q/5560248
----@see: https://stackoverflow.com/a/37797380
+---see: https://stackoverflow.com/a/37797380
 ---@param color string A hex color
 ---@param percent integer a negative number darkens and a positive one brightens
 ---@return string
