@@ -20,6 +20,7 @@
   editor = "nvr --remote-wait-silent" # or nvim
   excludesfile ="~/.dotfiles/git/.gitignore_global"
   pager = delta
+  autocrlf = input
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 [alias]
