@@ -59,5 +59,5 @@ _G.as = as or namespace
 R('as.globals')
 R('as.styles')
 R('as.settings')
-R('as.highlights')
 R('as.plugins')
+R('as.highlights')
