@@ -10,9 +10,7 @@ as.onoremap('ah', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>]], 
 as.onoremap('aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
 as.onoremap('ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args)
 
-if as.plugin_loaded('markdown-preview.nvim') then
-  as.nmap('<localleader>p', '<Plug>MarkdownPreviewToggle', args)
-end
+as.nmap('<localleader>p', '<Plug>MarkdownPreviewToggle', args)
 
 as.ftplugin_conf(
   'cmp',
