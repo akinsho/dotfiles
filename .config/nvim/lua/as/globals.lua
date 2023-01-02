@@ -70,17 +70,13 @@ function as.find(matcher, haystack)
   return found
 end
 
-as.list_installed_plugins = (function()
-  local plugins
-  return function()
-    if plugins then return plugins end
-    local data_dir = fn.stdpath('data')
-    local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
-    local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
-    plugins = vim.list_extend(start, opt)
-    return plugins
+function as.installed_plugins ()
+  local ok, lazy = pcall(require, "lazy")
+  if not ok then
+    return 0
   end
-end)()
+  return lazy.stats().count
+end
 
 ---Check if a plugin is on the system not whether or not it is loaded
 ---@param plugin_name string
