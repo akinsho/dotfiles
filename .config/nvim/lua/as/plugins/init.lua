@@ -807,7 +807,9 @@ require('lazy').setup(
         })
       end,
     },
-    { 'psliwka/vim-dirtytalk', build = ':DirtytalkUpdate' }, -- FIXME: this doesn't save spell files in the right place
+    { 'psliwka/vim-dirtytalk', build = ':DirtytalkUpdate', config = function ()
+      vim.opt.spelllang:append('programming')
+    end },
     'melvio/medical-spell-files',
     ---}}}
     --------------------------------------------------------------------------------
