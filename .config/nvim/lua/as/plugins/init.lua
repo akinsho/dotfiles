@@ -945,7 +945,7 @@ require('lazy').setup(
     --------------------------------------------------------------------------------
     -- Themes  {{{1
     --------------------------------------------------------------------------------
-    { 'LunarVim/horizon.nvim', lazy = true },
+    { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
     {
       'NTBBloodbath/doom-one.nvim',
       config = function()
