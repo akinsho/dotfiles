@@ -135,7 +135,9 @@ as.augroup('ExternalCommands', {
     -- Open images in an image viewer (probably Preview)
     event = { 'BufEnter' },
     pattern = { '*.png', '*.jpg', '*.gif' },
-    command = function() vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%'))) end,
+    command = function()
+      vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%')))
+    end,
   },
 })
 
@@ -378,7 +380,7 @@ as.augroup('Utilities', {
       'markdown',
     },
     -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
-    command = function(args) vim.opt_local.spell = true end,
+    command = function() vim.opt_local.spell = true end,
   },
   {
     event = { 'BufWritePre', 'FileWritePre' },
