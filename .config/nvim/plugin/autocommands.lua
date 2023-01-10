@@ -260,24 +260,6 @@ as.augroup('CustomColorColumn', {
 })
 as.augroup('UpdateVim', {
   {
-    -- TODO: not clear what effect this has in the post vimscript world
-    -- it correctly sources $MYVIMRC but all the other files that it
-    -- requires will need to be resourced or reloaded themselves
-    event = 'BufWritePost',
-    pattern = { vim.g.vim_dir .. '/plugin/*.{lua,vim}', vim.env.MYVIMRC },
-    nested = true,
-    command = function(args)
-      local path = api.nvim_buf_get_name(args.buf)
-      vim.cmd.source(fn.expand('$MYVIMRC'))
-      vim.cmd.source(path)
-      vim.cmd.redraw()
-      api.nvim_exec_autocmds('ColorScheme', {})
-      api.nvim_exec_autocmds('User', { pattern = 'VimrcReloaded' })
-      local msg = fmt('sourced %s and %s', vim.fs.basename(path), vim.fs.basename(vim.env.MYVIMRC))
-      vim.notify(msg, 'info', { title = 'Sourcing init.lua' })
-    end,
-  },
-  {
     event = { 'FocusLost' },
     pattern = { '*' },
     command = 'silent! wall',
