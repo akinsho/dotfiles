@@ -10,6 +10,7 @@ return function()
     },
     _threaded_diff = true,
     _extmark_signs = true,
+    _signs_staged_enable = true,
     word_diff = false,
     current_line_blame = not cwd:match('personal') and not cwd:match('dotfiles'),
     current_line_blame_formatter = ' <author>, <author_time> · <summary>',
