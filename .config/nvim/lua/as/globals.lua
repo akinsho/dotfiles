@@ -70,33 +70,16 @@ function as.find(matcher, haystack)
   return found
 end
 
-function as.installed_plugins ()
-  local ok, lazy = pcall(require, "lazy")
-  if not ok then
-    return 0
-  end
+function as.installed_plugins()
+  local ok, lazy = pcall(require, 'lazy')
+  if not ok then return 0 end
   return lazy.stats().count
 end
 
----Check if a plugin is on the system not whether or not it is loaded
----@param plugin_name string
----@return boolean
-function as.plugin_installed(plugin_name)
-  for _, path in ipairs(as.list_installed_plugins()) do
-    if vim.endswith(path, plugin_name) then return true end
-  end
-  return false
-end
-
----NOTE: this plugin returns the currently loaded state of a plugin given
----given certain assumptions i.e. it will only be true if the plugin has been
----loaded e.g. lazy loading will return false
 ---@param plugin_name string
 ---@return boolean?
-function as.plugin_loaded(plugin_name)
-  local plugins = packer_plugins or {}
-  return plugins[plugin_name] and plugins[plugin_name].loaded
-end
+-- TODO: figure out how to do this using lazy.nvim
+function as.plugin_loaded(plugin_name) return true end
 
 ---Check whether or not the location or quickfix list is open
 ---@return boolean
