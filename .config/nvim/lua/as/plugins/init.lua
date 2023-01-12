@@ -765,13 +765,6 @@ require('lazy').setup(
         {
           'nvim-treesitter/playground',
           cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-          init = function()
-            as.nnoremap(
-              '<leader>E',
-              '<Cmd>TSHighlightCapturesUnderCursor<CR>',
-              'treesitter: cursor highlight'
-            )
-          end,
         },
       },
     },

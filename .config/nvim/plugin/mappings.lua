@@ -122,6 +122,9 @@ end
 
 nnoremap('<localleader>,', modify_line_end_delimiter(','))
 nnoremap('<localleader>;', modify_line_end_delimiter(';'))
+
+-----------------------------------------------------------------------------//
+nnoremap('<leader>E', '<Cmd>Inspect<CR>', 'Inspect the cursor position')
 -----------------------------------------------------------------------------//
 
 if as.empty(fn.mapcheck('<ScrollWheelDown>')) then nmap('<ScrollWheelDown>', '<c-d>') end
