@@ -16,8 +16,10 @@ return function()
   require('dressing').setup({
     input = {
       insert_only = false,
-      winblend = 2,
       border = as.style.current.border,
+      win_options = {
+        winblend = 2,
+      }
     },
     select = {
       get_config = function(opts)
