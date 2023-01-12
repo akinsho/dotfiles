@@ -102,10 +102,13 @@ require('lazy').setup(
     { 'folke/which-key.nvim', config = conf('whichkey') },
     {
       'mg979/vim-visual-multi',
+      lazy = true,
+      keys = { '<C-E>' },
       config = function()
         vim.g.VM_highlight_matches = 'underline'
         vim.g.VM_theme = 'codedark'
         vim.g.VM_maps = {
+          ['Find Word'] = '<M-N>',
           ['Find Under'] = '<c-e>',
           ['Find Subword Under'] = '<c-e>',
           ['Select Cursor Down'] = '\\j',
@@ -144,7 +147,9 @@ require('lazy').setup(
       'nvim-neo-tree/neo-tree.nvim',
       branch = 'v2.x',
       config = conf('neo-tree'),
-      keys = { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'Neotree' },
+      keys = {
+        { '<C-N>', '<Cmd>Neotree toggle<CR>', desc = 'NeoTree' },
+      },
       cmd = { 'Neotree toggle reveal' },
       dependencies = {
         'nvim-lua/plenary.nvim',
