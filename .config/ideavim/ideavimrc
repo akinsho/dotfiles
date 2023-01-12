@@ -103,7 +103,7 @@ nmap <c-\> <Action>(ActivateTerminalToolWindow)
 nmap <leader>t :action Terminal.OpenInTerminal<CR>
 
 " Jump around with easymotion
-map s <Plug>(easymotion-s)
+nmap s <Plug>(easymotion-s)
 
 nmap <CR> <Action>(Tree-selectNextExtendSelection)
 nmap <S-CR> <Action>(Tree-selectPrevExtendSelection)
