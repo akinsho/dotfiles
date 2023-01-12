@@ -840,11 +840,15 @@ require('lazy').setup(
     -- Text Objects {{{1
     --------------------------------------------------------------------------------
     {
-      'aarondiel/spread.nvim',
-      after = 'nvim-treesitter',
-      init = function()
-        as.nnoremap('gS', function() require('spread').out() end, 'spread: expand')
-        as.nnoremap('gJ', function() require('spread').combine() end, 'spread: combine')
+      'Wansmer/treesj',
+      dependencies = { 'nvim-treesitter' },
+      keys = { 'gS', 'gJ' },
+      config = function()
+        require('treesj').setup({
+          use_default_keymaps = false,
+        })
+        as.nnoremap('gS', '<Cmd>TSJSplit', 'split expression to multiple lines')
+        as.nnoremap('gJ', '<Cmd>TSJJoin', 'join expression to single line')
       end,
     },
     { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
