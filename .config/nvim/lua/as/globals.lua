@@ -190,6 +190,11 @@ function as.ftplugin_conf(name, callback)
   if ok then callback(plugin) end
 end
 
+local LATEST_NIGHTLY_MINOR = 9
+function as.nightly()
+  return vim.version().minor >= LATEST_NIGHTLY_MINOR
+end
+
 ---Reload lua modules
 ---@param path string
 ---@param recursive boolean
