@@ -24,6 +24,7 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
+if o.splitkeep then o.splitkeep = 'screen' end
 o.splitbelow = true
 o.splitright = true
 o.eadirection = 'hor'
@@ -31,12 +32,12 @@ o.eadirection = 'hor'
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
-  fold = ' ',
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
+  fold = ' ',
   foldopen = '▾',
-  foldsep = '│',
+  foldsep = ' ',
   foldclose = '▸',
 }
 -----------------------------------------------------------------------------//
@@ -53,6 +54,7 @@ opt.diffopt = opt.diffopt
     'algorithm:histogram',
     'indent-heuristic',
   }
+if as.nightly() then opt.diffopt:append({ 'linematch:60' }) end
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
