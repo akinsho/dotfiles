@@ -98,7 +98,7 @@ require('lazy').setup(
         },
       },
     },
-    'kyazdani42/nvim-web-devicons',
+    'nvim-tree/nvim-web-devicons',
     { 'folke/which-key.nvim', config = conf('whichkey') },
     {
       'mg979/vim-visual-multi',
@@ -154,7 +154,7 @@ require('lazy').setup(
       dependencies = {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
-        'kyazdani42/nvim-web-devicons',
+        'nvim-tree/nvim-web-devicons',
         { 'mrbjarksen/neo-tree-diagnostics.nvim' },
         { 's1n7ax/nvim-window-picker', config = conf('window-picker') },
       },
@@ -993,7 +993,7 @@ require('lazy').setup(
       'akinsho/bufferline.nvim',
       config = conf('bufferline'),
       dev = true,
-      dependencies = { 'kyazdani42/nvim-web-devicons' },
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
     },
     {
       'akinsho/git-conflict.nvim',
