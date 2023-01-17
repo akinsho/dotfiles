@@ -847,8 +847,8 @@ require('lazy').setup(
         require('treesj').setup({
           use_default_keymaps = false,
         })
-        as.nnoremap('gS', '<Cmd>TSJSplit', 'split expression to multiple lines')
-        as.nnoremap('gJ', '<Cmd>TSJJoin', 'join expression to single line')
+        as.nnoremap('gS', '<Cmd>TSJSplit<CR>', 'split expression to multiple lines')
+        as.nnoremap('gJ', '<Cmd>TSJJoin<CR>', 'join expression to single line')
       end,
     },
     { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
