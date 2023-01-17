@@ -11,7 +11,10 @@ function as.statuscolumn.fdm()
   return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '⏵') or ' '
 end
 
-function as.statuscolumn.nr() return (not as.empty(v.relnum) and v.relnum or v.lnum) end
+function as.statuscolumn.nr()
+  local num = (not as.empty(v.relnum) and v.relnum or v.lnum)
+  return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
+end
 
 local excluded = {
   'neo-tree',
