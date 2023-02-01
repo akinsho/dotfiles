@@ -108,7 +108,9 @@ return function()
           },
           {
             name = 'Kubernetes',
-            matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
+            matcher = function(buf)
+              return buf.name:match('kubernetes') and buf.name:match('%.yaml')
+            end,
           },
           {
             name = 'SQL',
@@ -137,7 +139,7 @@ return function()
     },
   })
 
-  as.nnoremap('gD', '<Cmd>BufferLinePickClose<CR>', 'bufferline: delete buffer')
+  -- as.nnoremap('gD', '<Cmd>BufferLinePickClose<CR>', 'bufferline: delete buffer')
   as.nnoremap('gb', '<Cmd>BufferLinePick<CR>', 'bufferline: pick buffer')
   as.nnoremap('<leader><tab>', '<Cmd>BufferLineCycleNext<CR>', 'bufferline: next')
   as.nnoremap('<S-tab>', '<Cmd>BufferLineCyclePrev<CR>', 'bufferline: prev')
