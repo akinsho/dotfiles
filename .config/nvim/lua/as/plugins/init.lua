@@ -145,16 +145,13 @@ require('lazy').setup(
       'nvim-neo-tree/neo-tree.nvim',
       branch = 'v2.x',
       config = conf('neo-tree'),
-      keys = {
-        { '<C-N>', '<Cmd>Neotree toggle<CR>', desc = 'NeoTree' },
-      },
-      cmd = { 'Neotree toggle reveal' },
+      keys = { { '<C-N>', '<Cmd>Neotree toggle<CR>', desc = 'NeoTree' } },
       dependencies = {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
         'nvim-tree/nvim-web-devicons',
         { 'mrbjarksen/neo-tree-diagnostics.nvim' },
-        { 's1n7ax/nvim-window-picker', config = conf('window-picker') },
+        { 's1n7ax/nvim-window-picker', version = '*', config = conf('window-picker') },
       },
     },
     -- }}}
