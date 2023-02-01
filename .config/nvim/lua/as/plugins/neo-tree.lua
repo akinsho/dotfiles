@@ -63,6 +63,9 @@ return function()
     },
     enable_git_status = true,
     git_status_async = true,
+    nesting_rules = {
+      ['dart'] = { 'freezed.dart', 'g.dart' },
+    },
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
