@@ -191,9 +191,7 @@ function as.ftplugin_conf(name, callback)
 end
 
 local LATEST_NIGHTLY_MINOR = 9
-function as.nightly()
-  return vim.version().minor >= LATEST_NIGHTLY_MINOR
-end
+function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
 ---Reload lua modules
 ---@param path string
