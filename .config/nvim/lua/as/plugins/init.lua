@@ -102,15 +102,13 @@ require('lazy').setup(
     { 'folke/which-key.nvim', config = conf('whichkey') },
     {
       'mg979/vim-visual-multi',
-      lazy = true,
-      keys = { '<C-E>' },
-      config = function()
+      init = function()
         vim.g.VM_highlight_matches = 'underline'
         vim.g.VM_theme = 'codedark'
         vim.g.VM_maps = {
-          ['Find Word'] = '<M-N>',
-          ['Find Under'] = '<c-e>',
-          ['Find Subword Under'] = '<c-e>',
+          ['Find Word'] = '<C-E>',
+          ['Find Under'] = '<C-E>',
+          ['Find Subword Under'] = '<C-E>',
           ['Select Cursor Down'] = '\\j',
           ['Select Cursor Up'] = '\\k',
         }
@@ -207,7 +205,16 @@ require('lazy').setup(
         require('lspconfig').ccls.setup(require('as.servers')('ccls'))
       end,
     },
-    { 'DNLHC/glance.nvim', config = function() require('glance').setup() end },
+    {
+      'DNLHC/glance.nvim',
+      config = function()
+        require('glance').setup()
+        as.nnoremap('gD', '<Cmd>Glance definitions<CR>', { desc = 'lsp: glance definitions' })
+        as.nnoremap('gR', '<Cmd>Glance references<CR>', { desc = 'lsp: glance references' })
+        as.nnoremap('gY', '<CMD>Glance type_definitions<CR>')
+        as.nnoremap('gM', '<CMD>Glance implementations<CR>')
+      end,
+    },
     {
       'smjonas/inc-rename.nvim',
       config = function()
@@ -601,7 +608,21 @@ require('lazy').setup(
     },
     {
       'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-      config = function() require('neoscroll').setup({ hide_cursor = true }) end,
+      config = function()
+        require('neoscroll').setup({
+          mappings = {
+            '<C-u>',
+            '<C-d>',
+            '<C-b>',
+            '<C-f>',
+            '<C-y>',
+            'zt',
+            'zz',
+            'zb',
+          },
+          hide_cursor = true,
+        })
+      end,
     },
     {
       'itchyny/vim-highlighturl',
