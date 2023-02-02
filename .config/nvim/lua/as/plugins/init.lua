@@ -39,7 +39,7 @@ require('lazy').setup(
     },
     {
       'github/copilot.vim',
-      after = 'nvim-cmp',
+      dependencies = { 'nvim-cmp' },
       init = function() vim.g.copilot_no_tab_map = true end,
       config = function()
         as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
@@ -67,30 +67,24 @@ require('lazy').setup(
       dependencies = {
         {
           'natecraddock/telescope-zf-native.nvim',
-          enabled = false,
-          after = 'telescope.nvim',
           config = function() require('telescope').load_extension('zf-native') end,
         },
         {
           'nvim-telescope/telescope-smart-history.nvim',
           dependencies = { { 'kkharji/sqlite.lua' } },
-          after = 'telescope.nvim',
           config = function() require('telescope').load_extension('smart_history') end,
         },
         {
           'nvim-telescope/telescope-frecency.nvim',
-          after = 'telescope.nvim',
           dependencies = { { 'kkharji/sqlite.lua' } },
           config = function() require('telescope').load_extension('frecency') end,
         },
         {
           'benfowler/telescope-luasnip.nvim',
-          after = 'telescope.nvim',
           config = function() require('telescope').load_extension('luasnip') end,
         },
         {
           'nvim-telescope/telescope-live-grep-args.nvim',
-          after = 'telescope.nvim',
           config = function() require('telescope').load_extension('live_grep_args') end,
         },
       },
@@ -181,7 +175,6 @@ require('lazy').setup(
           'williamboman/mason.nvim',
           'jose-elias-alvarez/null-ls.nvim',
         },
-        after = 'mason.nvim',
         config = function()
           require('mason-null-ls').setup({
             automatic_installation = true,
@@ -317,31 +310,29 @@ require('lazy').setup(
       config = conf('cmp'),
       dependencies = {
         { 'hrsh7th/cmp-nvim-lsp' },
-        { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
-        { 'f3fora/cmp-spell', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
-        -- { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
-        { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-        { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
-        { 'lukas-reineke/cmp-rg', after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
+        { 'hrsh7th/cmp-cmdline' },
+        { 'f3fora/cmp-spell' },
+        { 'hrsh7th/cmp-path' },
+        { 'hrsh7th/cmp-buffer' },
+        { 'hrsh7th/cmp-emoji' },
+        -- { 'rcarriga/cmp-dap' },
+        { 'saadparwaiz1/cmp_luasnip' },
+        { 'dmitmel/cmp-cmdline-history' },
+        { 'lukas-reineke/cmp-rg' },
         {
           'petertriho/cmp-git',
-          after = 'nvim-cmp',
           config = function()
             require('cmp_git').setup({ filetypes = { 'gitcommit', 'NeogitCommitMessage' } })
           end,
         },
+        {
+          'abecodes/tabout.nvim', -- Use <Tab> to escape from pairs such as ""|''|() etc.
+          config = function()
+            require('tabout').setup({ ignore_beginning = false, completion = false })
+          end,
+        },
       },
-    },
-    -- Use <Tab> to escape from pairs such as ""|''|() etc.
-    {
-      'abecodes/tabout.nvim',
-      wants = { 'nvim-treesitter' },
-      after = { 'nvim-cmp' },
-      config = function() require('tabout').setup({ ignore_beginning = false, completion = false }) end,
     },
     -- }}}
     -----------------------------------------------------------------------------//
@@ -398,8 +389,6 @@ require('lazy').setup(
     },
     {
       'folke/todo-comments.nvim',
-      enabled = true,
-      after = 'nvim-treesitter',
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
       config = function()
         require('todo-comments').setup()
@@ -583,7 +572,6 @@ require('lazy').setup(
     },
     {
       'windwp/nvim-autopairs',
-      after = 'hrsh7th/nvim-cmp',
       dependencies = { 'hrsh7th/nvim-cmp' },
       config = function()
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
@@ -966,8 +954,7 @@ require('lazy').setup(
     {
       'ggandor/flit.nvim',
       keys = { 'f' },
-      wants = { 'leap.nvim' },
-      after = 'leap.nvim',
+      dependencies = { 'ggandor/leap.nvim' },
       config = function()
         require('flit').setup({
           labeled_modes = 'nvo',
