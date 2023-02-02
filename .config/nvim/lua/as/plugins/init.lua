@@ -444,8 +444,7 @@ require('lazy').setup(
         require('virt-column').setup({ char = '▕' })
       end,
     },
-    -- NOTE: Defer loading till telescope is loaded this as it implicitly loads telescope so needs to be delayed
-    { 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('dressing') },
+    { 'stevearc/dressing.nvim', event = 'VeryLazy', config = conf('dressing') },
     { 'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' }, config = conf('navic') },
     {
       'kevinhwang91/nvim-ufo',
@@ -486,7 +485,7 @@ require('lazy').setup(
       module = 'luasnip',
       dependencies = { 'rafamadriz/friendly-snippets' },
       config = conf('luasnip'),
-      rocks = { 'jsregexp' },
+      build = 'make install_jsregexp',
     },
     {
       'andrewferrier/debugprint.nvim',
@@ -811,10 +810,10 @@ require('lazy').setup(
         })
         require('hlargs').setup({
           excluded_argnames = {
-            declarations = { 'use', 'use_rocks', '_' },
+            declarations = { 'use', '_' },
             usages = {
               go = { '_' },
-              lua = { 'self', 'use', 'use_rocks', '_' },
+              lua = { 'self', 'use', '_' },
             },
           },
         })
