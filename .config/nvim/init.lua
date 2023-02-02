@@ -47,7 +47,7 @@ local namespace = {
   },
   -- some vim mappings require a mixture of commandline commands and function calls
   -- this table is place to store lua functions to be called in those mappings
-  mappings = {},
+  mappings = { enable = true },
 }
 
 _G.as = as or namespace
