@@ -1,12 +1,13 @@
 return function()
   local cwd = vim.fn.getcwd()
+  local right_block = '🮉'
   require('gitsigns').setup({
     signs = {
-      add = { hl = 'GitSignsAdd', text = '▌' },
-      change = { hl = 'GitSignsChange', text = '▌' },
-      delete = { hl = 'GitSignsDelete', text = '▌' },
-      topdelete = { hl = 'GitSignsDelete', text = '▌' },
-      changedelete = { hl = 'GitSignsChange', text = '▌' },
+      add = { hl = 'GitSignsAdd', text = right_block },
+      change = { hl = 'GitSignsChange', text = right_block },
+      delete = { hl = 'GitSignsDelete', text = right_block },
+      topdelete = { hl = 'GitSignsDelete', text = right_block },
+      changedelete = { hl = 'GitSignsChange', text = right_block },
     },
     _threaded_diff = true,
     _extmark_signs = false,
