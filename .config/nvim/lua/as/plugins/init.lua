@@ -238,6 +238,7 @@ require('lazy').setup(
     },
     {
       'j-hui/fidget.nvim',
+      enabled = not as.nightly(),
       config = function()
         require('fidget').setup({
           align = {
@@ -458,7 +459,7 @@ require('lazy').setup(
     'ii14/emmylua-nvim',
     {
       'folke/noice.nvim',
-      enabled = false,
+      enabled = as.nightly(),
       config = conf('noice'),
     },
     {

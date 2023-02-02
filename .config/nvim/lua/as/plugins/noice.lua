@@ -1,7 +1,20 @@
 return function()
   require('noice').setup({
+    cmdline = {
+      format = {
+        cmdline = { title = '' },
+        lua = { title = '' },
+        -- search_down = { title = '' },
+        -- search_up = { title = '' },
+        -- filter = { title = '' },
+        -- help = { title = '' },
+      },
+    },
     lsp = {
       signature = {
+        enabled = false,
+      },
+      hover = {
         enabled = false,
       },
     },
@@ -56,6 +69,10 @@ return function()
         filter = { event = 'msg_show', kind = '', find = 'written' },
         opts = { skip = true },
       },
+    },
+    presets = {
+      inc_rename = true,
+      long_message_to_split = true,
     },
   })
 
