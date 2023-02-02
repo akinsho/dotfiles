@@ -11,6 +11,8 @@ return function()
   require('nvim-treesitter.configs').setup({
     ensure_installed = {
       'lua',
+      'regex',
+      'bash',
       'go',
       'dart',
       'rust',
