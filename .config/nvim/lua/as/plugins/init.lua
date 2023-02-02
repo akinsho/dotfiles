@@ -414,6 +414,7 @@ require('lazy').setup(
     {
       'folke/noice.nvim',
       enabled = as.nightly(),
+      dependencies = { 'MunifTanjim/nui.nvim' },
       config = conf('noice'),
     },
     {
@@ -953,18 +954,11 @@ require('lazy').setup(
       ft = { 'dart' },
       event = 'BufEnter pubspec.yaml',
       dev = true,
-      rocks = {
-        {
-          'lyaml',
-          server = 'http://rocks.moonscript.org',
-          env = { YAML_DIR = '/opt/homebrew/Cellar/libyaml/0.2.5/' },
-        },
-      },
       config = function() require('pubspec-assist').setup() end,
     },
     {
       'akinsho/org-bullets.nvim',
-      local_path = 'personal',
+      dev = true,
       config = function() require('org-bullets').setup() end,
     },
     {
@@ -972,7 +966,6 @@ require('lazy').setup(
       dev = true,
       config = conf('toggleterm'),
     },
-
     {
       'akinsho/bufferline.nvim',
       config = conf('bufferline'),
