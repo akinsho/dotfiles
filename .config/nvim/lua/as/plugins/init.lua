@@ -981,7 +981,7 @@ require('lazy').setup(
     },
     {
       'akinsho/git-conflict.nvim',
-      enabled = false,
+      event = 'VeryLazy',
       dev = true,
       config = function()
         require('git-conflict').setup({
