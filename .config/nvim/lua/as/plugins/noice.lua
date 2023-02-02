@@ -11,11 +11,18 @@ return function()
       },
     },
     lsp = {
-      signature = {
-        enabled = false,
+      documentation = {
+        opts = {
+          border = { style = as.style.current.border },
+          position = { row = 2 },
+        },
       },
-      hover = {
-        enabled = false,
+      signature = { enabled = true },
+      hover = { enabled = true },
+      override = {
+        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+        ['vim.lsp.util.stylize_markdown'] = true,
+        ['cmp.entry.get_documentation'] = true,
       },
     },
     views = {
@@ -73,6 +80,7 @@ return function()
     presets = {
       inc_rename = true,
       long_message_to_split = true,
+      lsp_doc_border = true,
     },
   })
 

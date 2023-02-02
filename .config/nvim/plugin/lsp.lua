@@ -44,7 +44,7 @@ end
 ---@param bufnr integer
 ---@param client table
 ---@param events table
----@return fun(feature: string, commands: fun(string): Autocommand[])
+---@return fun(feature: {provider: string, name: string}, commands: fun(string): Autocommand[])
 local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
     local provider, name = feature.provider, feature.name
@@ -328,7 +328,7 @@ the most severe diagnostic is shown per line
 local ns = api.nvim_create_namespace('severe-diagnostics')
 
 --- Restricts nvim's diagnostic signs to only the single most severe one per line
---- @see `:help vim.diagnostic`
+--- see `:help vim.diagnostic`
 local function max_diagnostic(callback)
   return function(_, bufnr, _, opts)
     -- Get all diagnostics from the whole buffer rather than just the
@@ -394,28 +394,3 @@ diagnostic.config({
     end,
   },
 })
-
-lsp.handlers['textDocument/hover'] = function(...)
-  local hover_handler = lsp.with(lsp.handlers.hover, {
-    border = border,
-    max_width = max_width,
-    max_height = max_height,
-  })
-  vim.b.lsp_hover_buf, vim.b.lsp_hover_win = hover_handler(...)
-end
-
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
-  border = border,
-  max_width = max_width,
-  max_height = max_height,
-})
-
-lsp.handlers['window/showMessage'] = function(_, result, ctx)
-  local client = lsp.get_client_by_id(ctx.client_id)
-  local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
-  vim.notify(result.message, lvl, {
-    title = 'LSP | ' .. client.name,
-    timeout = 8000,
-    keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
-  })
-end

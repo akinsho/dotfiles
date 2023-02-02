@@ -230,27 +230,6 @@ require('lazy').setup(
       end,
     },
     {
-      'j-hui/fidget.nvim',
-      enabled = not as.nightly(),
-      config = function()
-        require('fidget').setup({
-          align = {
-            bottom = false,
-            right = true,
-          },
-          fmt = {
-            stack_upwards = false,
-          },
-        })
-        as.augroup('CloseFidget', {
-          {
-            event = { 'VimLeavePre', 'LspDetach' },
-            command = 'silent! FidgetClose',
-          },
-        })
-      end,
-    },
-    {
       'kosayoda/nvim-lightbulb',
       config = function()
         require('as.highlights').plugin('Lightbulb', {
@@ -287,20 +266,6 @@ require('lazy').setup(
               remove_colon_start = true,
             },
           },
-        })
-      end,
-    },
-    {
-      'ray-x/lsp_signature.nvim',
-      config = function()
-        require('lsp_signature').setup({
-          bind = true,
-          fix_pos = false,
-          auto_close_after = 15, -- close after 15 seconds
-          hint_enable = false,
-          handler_opts = { border = as.style.current.border },
-          toggle_key = '<C-K>',
-          select_signature_key = '<M-N>',
         })
       end,
     },
