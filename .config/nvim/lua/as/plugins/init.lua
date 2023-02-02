@@ -871,6 +871,19 @@ require('lazy').setup(
         as.nnoremap('gJ', '<Cmd>TSJJoin<CR>', 'join expression to single line')
       end,
     },
+    {
+      'Wansmer/sibling-swap.nvim',
+      dependencies = { 'nvim-treesitter' },
+      config = function()
+        require('sibling-swap').setup({
+          use_default_keymaps = false,
+          keymaps = {
+            [']w'] = 'swap_with_right',
+            ['[w'] = 'swap_with_left',
+          },
+        })
+      end,
+    },
     { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
     {
       'gbprod/substitute.nvim',
