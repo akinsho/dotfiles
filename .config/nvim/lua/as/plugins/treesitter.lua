@@ -80,13 +80,7 @@ return function()
         end
         return disable
       end, parsers.available_parsers()),
-      colors = {
-        'royalblue3',
-        'darkorange3',
-        'seagreen3',
-        'firebrick',
-        'darkorchid3',
-      },
+      query = 'rainbow-parens',
     },
     autopairs = { enable = true },
     playground = {
