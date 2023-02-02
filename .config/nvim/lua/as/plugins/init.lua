@@ -1,4 +1,4 @@
-local fn, fmt = vim.fn, string.format
+local opt, cmd, api, fn, fmt = vim.opt, vim.cmd, vim.api, vim.fn, string.format
 ---Require a plugin config
 ---@param name string
 ---@return any
@@ -18,11 +18,8 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
-vim.opt.runtimepath:prepend(lazypath)
+opt.runtimepath:prepend(lazypath)
 ----------------------------------------------------------------------------- }}}1
--- cfilter plugin allows filtering down an existing quickfix list
-vim.cmd.packadd({ 'cfilter', bang = true })
-
 require('lazy').setup(
   {
     -----------------------------------------------------------------------------//
@@ -823,9 +820,14 @@ require('lazy').setup(
         })
       end,
     },
-    { 'psliwka/vim-dirtytalk', build = ':DirtytalkUpdate', config = function ()
-      vim.opt.spelllang:append('programming')
-    end },
+    {
+      'psliwka/vim-dirtytalk',
+      build = ':DirtytalkUpdate',
+      config = function()
+        opt.spelllang:append('programming')
+        opt.rtp:append(fn.stdpath('data') .. '/site') -- Line of interest
+      end,
+    },
     'melvio/medical-spell-files',
     ---}}}
     --------------------------------------------------------------------------------
@@ -942,7 +944,7 @@ require('lazy').setup(
           require('leap').leap({
             target_windows = vim.tbl_filter(
               function(win) return as.empty(vim.fn.win_gettype(win)) end,
-              vim.api.nvim_tabpage_list_wins(0)
+              api.nvim_tabpage_list_wins(0)
             ),
           })
         end)
@@ -1027,6 +1029,9 @@ require('lazy').setup(
   ---------------------------------------------------------------------------------
   {
     defaults = {},
+    rtp = {
+      paths = { fn.stdpath('data') .. '/site' },
+    },
     ui = {
       border = as.style.current.border,
     },
@@ -1039,5 +1044,8 @@ require('lazy').setup(
     },
   }
 )
+
+-- cfilter plugin allows filtering down an existing quickfix list
+cmd.packadd('cfilter')
 
 -- vim:foldmethod=marker nospell
