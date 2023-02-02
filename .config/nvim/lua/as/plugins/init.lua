@@ -1,6 +1,4 @@
 local opt, cmd, api, fn, fmt = vim.opt, vim.cmd, vim.api, vim.fn, string.format
-
-local hl = require('as.highlights')
 ---Require a plugin config
 ---@param name string
 ---@return any
@@ -57,7 +55,7 @@ require('lazy').setup(
           ['neo-tree-popup'] = false,
           ['dap-repl'] = false,
         }
-        hl.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
+        require('as.highlights').plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
       end,
     },
     {
@@ -194,7 +192,9 @@ require('lazy').setup(
     {
       'neovim/nvim-lspconfig',
       config = function()
-        hl.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
+        require('as.highlights').plugin('lspconfig', {
+          { LspInfoBorder = { link = 'FloatBorder' } },
+        })
         require('lspconfig.ui.windows').default_options.border = as.style.current.border
         require('lspconfig').ccls.setup(require('as.servers')('ccls'))
       end,
@@ -228,7 +228,7 @@ require('lazy').setup(
       'zbirenbaum/neodim',
       config = function()
         require('neodim').setup({
-          blend_color = hl.get('Normal', 'bg'),
+          blend_color = require('as.highlights').get('Normal', 'bg'),
           alpha = 0.45,
           hide = {
             underline = false,
@@ -260,7 +260,7 @@ require('lazy').setup(
     {
       'kosayoda/nvim-lightbulb',
       config = function()
-        hl.plugin('Lightbulb', {
+        require('as.highlights').plugin('Lightbulb', {
           { LightBulbFloatWin = { foreground = { from = 'Type' } } },
           { LightBulbVirtualText = { foreground = { from = 'Type' } } },
         })
@@ -410,7 +410,7 @@ require('lazy').setup(
       'gorbit99/codewindow.nvim',
       enabled = false,
       config = function()
-        hl.plugin('codewindow', {
+        require('as.highlights').plugin('codewindow', {
           { CodewindowBorder = { link = 'WinSeparator' } },
           { CodewindowWarn = { bg = 'NONE', fg = { from = 'DiagnosticSignWarn', attr = 'bg' } } },
           { CodewindowError = { bg = 'NONE', fg = { from = 'DiagnosticSignError', attr = 'bg' } } },
@@ -439,7 +439,7 @@ require('lazy').setup(
     {
       'lukas-reineke/virt-column.nvim',
       config = function()
-        hl.plugin('virt_column', {
+        require('as.highlights').plugin('virt_column', {
           { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
         })
         require('virt-column').setup({ char = '▕' })
@@ -620,7 +620,7 @@ require('lazy').setup(
     },
     {
       'itchyny/vim-highlighturl',
-      config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
+      config = function() vim.g.highlighturl_guifg = require('as.highlights').get('URL', 'fg') end,
     },
     {
       'danymat/neogen',
@@ -666,7 +666,7 @@ require('lazy').setup(
       url = 'https://gitlab.com/yorickpeterse/nvim-pqf',
       event = 'BufReadPre',
       config = function()
-        hl.plugin('pqf', {
+        require('as.highlights').plugin('pqf', {
           theme = {
             ['doom-one'] = { { qfPosition = { link = 'Todo' } } },
             ['horizon'] = { { qfPosition = { link = 'String' } } },
@@ -679,7 +679,7 @@ require('lazy').setup(
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        hl.plugin('bqf', {
+        require('as.highlights').plugin('bqf', {
           { BqfPreviewBorder = { fg = { from = 'Comment' } } },
         })
       end,
@@ -783,12 +783,12 @@ require('lazy').setup(
         },
       },
     },
-    { 'HiPhish/nvim-ts-rainbow2' },
+    { 'p00f/nvim-ts-rainbow' },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     {
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
-        hl.plugin('treesitter-context', {
+        require('as.highlights').plugin('treesitter-context', {
           { ContextBorder = { link = 'Dim' } },
           { TreesitterContext = { inherit = 'Normal' } },
           { TreesitterContextLineNumber = { inherit = 'LineNr' } },
@@ -803,7 +803,7 @@ require('lazy').setup(
     {
       'm-demare/hlargs.nvim',
       config = function()
-        hl.plugin('hlargs', {
+        require('as.highlights').plugin('hlargs', {
           theme = {
             ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
             ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
@@ -938,7 +938,7 @@ require('lazy').setup(
       'ggandor/leap.nvim',
       keys = { 's' },
       config = function()
-        hl.plugin('leap', {
+        require('as.highlights').plugin('leap', {
           theme = {
             ['*'] = {
               { LeapBackdrop = { fg = '#707070' } },
