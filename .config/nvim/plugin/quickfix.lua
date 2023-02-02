@@ -1,7 +1,6 @@
 if not as then return end
 
-local fn = vim.fn
-local api = vim.api
+local api, fn = vim.api, vim.fn
 
 as.qf = {}
 
