@@ -35,7 +35,7 @@ function as.map(callback, list)
 end
 
 ---@generic T : table
----@param callback fun(T, key: string | number): T
+---@param callback fun(T, key: string | number)
 ---@param list T[]
 function as.foreach(callback, list)
   for k, v in pairs(list) do
@@ -76,10 +76,10 @@ function as.installed_plugins()
   return lazy.stats().count
 end
 
----@param plugin_name string
+---@param _ string
 ---@return boolean?
 -- TODO: figure out how to do this using lazy.nvim
-function as.plugin_loaded(plugin_name) return true end
+function as.plugin_loaded(_) return true end
 
 ---Check whether or not the location or quickfix list is open
 ---@return boolean
