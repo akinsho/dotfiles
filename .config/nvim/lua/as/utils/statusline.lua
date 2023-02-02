@@ -233,7 +233,9 @@ local function highlight_ft_icon(hl, bg_hl)
     as.augroup(name, {
       {
         event = 'ColorScheme',
-        command = function() api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color }) end,
+        command = function()
+          api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
+        end,
       },
     })
     api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
@@ -322,7 +324,7 @@ function M.debugger() return not package.loaded['dap'] and '' or require('dap').
 
 function M.hydra()
   local ok, hydra = pcall(require, 'hydra.statusline')
-  if not ok then return false, {} end
+  if not ok then return false, { name = '' } end
   local colors = {
     red = 'HydraRedSt',
     blue = 'HydraBlueSt',
