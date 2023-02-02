@@ -1,7 +1,9 @@
 return function()
   require('noice').setup({
-    popupmenu = {
-      backend = 'cmp',
+    lsp = {
+      signature = {
+        enabled = false,
+      },
     },
     views = {
       split = {
@@ -11,14 +13,22 @@ return function()
       },
       cmdline_popup = {
         position = {
-          row = 10,
+          row = 5,
           col = '50%',
+        },
+        size = {
+          width = 60,
+          height = 'auto',
+        },
+        border = {
+          style = as.style.current.border,
+          padding = { 0, 1 },
         },
       },
       popupmenu = {
         relative = 'editor',
         position = {
-          row = 13,
+          row = 9,
           col = '50%',
         },
         size = {
@@ -30,7 +40,10 @@ return function()
           padding = { 0, 1 },
         },
         win_options = {
-          winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' },
+          winhighlight = {
+            Normal = 'NormalFloat',
+            FloatBorder = 'FloatBorder',
+          },
         },
       },
     },
@@ -44,5 +57,42 @@ return function()
         opts = { skip = true },
       },
     },
+  })
+
+  require('as.highlights').plugin('noice', {
+    {
+      NoicePopupBaseGroup = {
+        bg = { from = 'NormalFloat' },
+        fg = { from = 'DiagnosticSignInfo' },
+      },
+    },
+    {
+      NoicePopupWarnBaseGroup = {
+        bg = { from = 'NormalFloat' },
+        fg = { from = 'Float' },
+      },
+    },
+    {
+      NoicePopupInfoBaseGroup = {
+        bg = { from = 'NormalFloat' },
+        fg = { from = 'Conditional' },
+      },
+    },
+    { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
+    { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
+    { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
+    { NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlineIconCmdline = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlineIconSearch = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlineIconFilter = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlineIconHelp = { link = 'NoicePopupInfoBaseGroup' } },
+    { NoiceCmdlineIconIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlineIconInput = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlineIconLua = { link = 'NoicePopupBaseGroup' } },
   })
 end
