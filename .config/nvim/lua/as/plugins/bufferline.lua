@@ -97,10 +97,7 @@ return function()
             name = 'Dependencies',
             icon = '',
             highlight = { fg = '#ECBE7B' },
-            matcher = function(buf)
-              return vim.startswith(buf.path, fmt('%s/site/pack/packer', fn.stdpath('data')))
-                or vim.startswith(buf.path, fn.expand('$VIMRUNTIME'))
-            end,
+            matcher = function(buf) return vim.startswith(buf.path, vim.env.VIMRUNTIME) end,
           },
           {
             name = 'Terraform',
