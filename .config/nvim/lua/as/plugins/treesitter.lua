@@ -1,9 +1,5 @@
 return function()
-  -- This option, which currently doesn't work upstream, disables linking treesitter highlights
-  -- to the new capture highlights which color schemes and plugins depend on. By toggling it
-  -- I can see which highlights still need to be supported in upstream plugins.
-  -- NOTE: this is currently broken, do not set to true
-  vim.g.skip_ts_default_groups = false
+  require('nvim-treesitter.install').compilers = { 'gcc-12' }
 
   local parsers = require('nvim-treesitter.parsers')
   local rainbow_enabled = { 'dart' }
