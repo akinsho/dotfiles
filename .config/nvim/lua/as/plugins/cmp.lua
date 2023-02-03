@@ -73,7 +73,7 @@ return function()
       expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
-      ['<C-h>'] = cmp.mapping(
+      ['<C-]>'] = cmp.mapping(
         function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
       ),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
