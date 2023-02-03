@@ -1,10 +1,7 @@
 local M = {}
 
 function M.setup()
-  local highlights = require('as.highlights')
-  -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
-  -- NOTE: this must be set in the setup function or it will crash nvim...
-  highlights.plugin('Headlines', {
+  require('as.highlights').plugin('Headlines', {
     theme = {
       ['*'] = {
         { Headline1 = { background = '#003c30', foreground = 'White' } },
@@ -24,10 +21,11 @@ function M.config()
     markdown = {
       headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
     },
-    org = {
-      headline_highlights = false,
+    org = { headline_highlights = false },
+    norg = {
+      headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
+      codeblock_highlight = false,
     },
-    norg = { codeblock_highlight = false },
   })
 end
 
