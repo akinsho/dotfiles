@@ -39,6 +39,7 @@ require('lazy').setup(
     },
     {
       'github/copilot.vim',
+      event = 'InsertEnter',
       dependencies = { 'nvim-cmp' },
       init = function() vim.g.copilot_no_tab_map = true end,
       config = function()
@@ -61,7 +62,6 @@ require('lazy').setup(
     {
       'nvim-telescope/telescope.nvim',
       branch = 'master', -- '0.1.x',
-      lazy = true,
       config = conf('telescope').config,
       event = 'CursorHold',
       dependencies = {
@@ -109,6 +109,7 @@ require('lazy').setup(
     { 'anuvyklack/hydra.nvim', config = conf('hydra') },
     {
       'rmagatti/auto-session',
+      lazy = false,
       config = function()
         local data = fn.stdpath('data')
         require('auto-session').setup({
@@ -127,11 +128,12 @@ require('lazy').setup(
     },
     {
       'knubie/vim-kitty-navigator',
+      event = 'VeryLazy',
       build = 'cp ./*.py ~/.config/kitty/',
       cond = function() return not vim.env.TMUX end,
     },
     { 'goolord/alpha-nvim', config = conf('alpha') },
-    { 'lukas-reineke/indent-blankline.nvim', config = conf('indentline') },
+    { 'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = conf('indentline') },
     {
       'nvim-neo-tree/neo-tree.nvim',
       branch = 'v2.x',
@@ -152,7 +154,7 @@ require('lazy').setup(
     {
       {
         'williamboman/mason.nvim',
-        event = 'BufRead',
+        event = 'VeryLazy',
         dependencies = {
           'neovim/nvim-lspconfig',
           'williamboman/mason-lspconfig.nvim',
@@ -171,6 +173,7 @@ require('lazy').setup(
       },
       {
         'jayp0521/mason-null-ls.nvim',
+        event = 'VeryLazy',
         dependencies = {
           'williamboman/mason.nvim',
           'jose-elias-alvarez/null-ls.nvim',
@@ -305,7 +308,6 @@ require('lazy').setup(
     -----------------------------------------------------------------------------//
     {
       'nvim-neotest/neotest',
-      lazy = true,
       init = conf('neotest').setup,
       config = conf('neotest').config,
       dependencies = {
@@ -323,7 +325,6 @@ require('lazy').setup(
       'mfussenegger/nvim-dap',
       init = conf('dap').setup,
       config = conf('dap').config,
-      lazy = true,
       dependencies = {
         {
           'rcarriga/nvim-dap-ui',
@@ -339,7 +340,7 @@ require('lazy').setup(
     -----------------------------------------------------------------------------//
     -- UI {{{1
     -----------------------------------------------------------------------------//
-    { 'levouh/tint.nvim', event = 'BufRead', config = conf('tint') },
+    { 'levouh/tint.nvim', event = 'VeryLazy', config = conf('tint') },
     {
       'uga-rosa/ccc.nvim',
       config = function()
@@ -354,6 +355,7 @@ require('lazy').setup(
     },
     {
       'folke/todo-comments.nvim',
+      event = 'VeryLazy',
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
       config = function()
         require('todo-comments').setup()
@@ -392,6 +394,7 @@ require('lazy').setup(
     },
     {
       'lukas-reineke/virt-column.nvim',
+      event = 'VeryLazy',
       config = function()
         require('as.highlights').plugin('virt_column', {
           { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
@@ -400,9 +403,14 @@ require('lazy').setup(
       end,
     },
     { 'stevearc/dressing.nvim', event = 'VeryLazy', config = conf('dressing') },
-    { 'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' }, config = conf('navic') },
+    {
+      'SmiteshP/nvim-navic',
+      dependencies = { 'neovim/nvim-lspconfig' },
+      config = conf('navic'),
+    },
     {
       'kevinhwang91/nvim-ufo',
+      event = 'VeryLazy',
       dependencies = { 'kevinhwang91/promise-async' },
       config = conf('ufo'),
     },
@@ -413,6 +421,7 @@ require('lazy').setup(
     'ii14/emmylua-nvim',
     {
       'folke/noice.nvim',
+      event = 'VeryLazy',
       enabled = as.nightly(),
       dependencies = { 'MunifTanjim/nui.nvim' },
       config = conf('noice'),
@@ -538,6 +547,7 @@ require('lazy').setup(
     },
     {
       'windwp/nvim-autopairs',
+      event = 'InsertEnter',
       dependencies = { 'hrsh7th/nvim-cmp' },
       config = function()
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
@@ -556,6 +566,7 @@ require('lazy').setup(
     },
     {
       'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
+      event = 'VeryLazy',
       config = function()
         require('neoscroll').setup({
           mappings = {
@@ -606,6 +617,7 @@ require('lazy').setup(
     },
     {
       'moll/vim-bbye',
+      event = 'VeryLazy',
       config = function() as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit') end,
     },
     {
@@ -648,7 +660,7 @@ require('lazy').setup(
       config = conf('neorg'),
       dependencies = { 'vhyrro/neorg-telescope' },
     },
-    { 'nvim-orgmode/orgmode', lazy = true, config = conf('orgmode') },
+    { 'nvim-orgmode/orgmode', config = conf('orgmode') },
     {
       'lukas-reineke/headlines.nvim',
       ft = { 'org', 'norg', 'markdown', 'yaml' },
@@ -794,7 +806,7 @@ require('lazy').setup(
       init = conf('gitlinker').setup,
       config = conf('gitlinker').config,
     },
-    { 'lewis6991/gitsigns.nvim', event = 'BufRead', config = conf('gitsigns') },
+    { 'lewis6991/gitsigns.nvim', event = 'VeryLazy', config = conf('gitsigns') },
     {
       'TimUntersberger/neogit',
       cmd = 'Neogit',
@@ -841,6 +853,11 @@ require('lazy').setup(
     { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
     {
       'gbprod/substitute.nvim',
+      keys = {
+        { 'S', mode = { 'n', 'x' } },
+        { 'X', mode = { 'n', 'x' } },
+        { 'Xc', mode = { 'n', 'x' } },
+      },
       config = function()
         require('substitute').setup()
         as.nnoremap('S', function() require('substitute').operator() end)
@@ -853,8 +870,9 @@ require('lazy').setup(
     'wellle/targets.vim',
     {
       'kana/vim-textobj-user',
+      lazy = false,
       dependencies = {
-        'kana/vim-operator-user',
+        { 'kana/vim-operator-user' },
         {
           'glts/vim-textobj-comment',
           config = function()
@@ -963,11 +981,13 @@ require('lazy').setup(
     },
     {
       'akinsho/toggleterm.nvim',
+      event = 'VeryLazy',
       dev = true,
       config = conf('toggleterm'),
     },
     {
       'akinsho/bufferline.nvim',
+      event = 'VeryLazy',
       config = conf('bufferline'),
       dev = true,
       dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -986,7 +1006,9 @@ require('lazy').setup(
   --}}}
   ---------------------------------------------------------------------------------
   {
-    defaults = {},
+    defaults = {
+      lazy = true,
+    },
     rtp = {
       paths = { fn.stdpath('data') .. '/site' },
     },
