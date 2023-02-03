@@ -30,13 +30,11 @@ require('lazy').setup(
     'nvim-lua/plenary.nvim',
     {
       'ahmedkhalf/project.nvim',
-      config = function()
-        require('project_nvim').setup({
-          detection_methods = { 'pattern', 'lsp' },
-          ignore_lsp = { 'null-ls' },
-          patterns = { '.git' },
-        })
-      end,
+      opts = {
+        detection_methods = { 'pattern', 'lsp' },
+        ignore_lsp = { 'null-ls' },
+        patterns = { '.git' },
+      },
     },
     {
       'github/copilot.vim',
@@ -179,11 +177,9 @@ require('lazy').setup(
           'williamboman/mason.nvim',
           'jose-elias-alvarez/null-ls.nvim',
         },
-        config = function()
-          require('mason-null-ls').setup({
-            automatic_installation = true,
-          })
-        end,
+        opts = {
+          automatic_installation = true,
+        },
       },
     },
     {
@@ -198,13 +194,12 @@ require('lazy').setup(
     },
     {
       'DNLHC/glance.nvim',
-      config = function()
-        require('glance').setup()
-        as.nnoremap('gD', '<Cmd>Glance definitions<CR>', { desc = 'lsp: glance definitions' })
-        as.nnoremap('gR', '<Cmd>Glance references<CR>', { desc = 'lsp: glance references' })
-        as.nnoremap('gY', '<CMD>Glance type_definitions<CR>')
-        as.nnoremap('gM', '<CMD>Glance implementations<CR>')
-      end,
+      keys = {
+        { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+        { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+        { 'gY', '<CMD>Glance type_definitions<CR>' },
+        { 'gM', '<CMD>Glance implementations<CR>' },
+      },
     },
     {
       'smjonas/inc-rename.nvim',
@@ -217,21 +212,16 @@ require('lazy').setup(
         })
       end,
     },
-    {
-      'andrewferrier/textobj-diagnostic.nvim',
-      config = function() require('textobj-diagnostic').setup() end,
-    },
+    { 'andrewferrier/textobj-diagnostic.nvim', config = true },
     {
       'zbirenbaum/neodim',
-      config = function()
-        require('neodim').setup({
-          blend_color = require('as.highlights').get('Normal', 'bg'),
-          alpha = 0.45,
-          hide = {
-            underline = false,
-          },
-        })
-      end,
+      opts = {
+        blend_color = require('as.highlights').get('Normal', 'bg'),
+        alpha = 0.45,
+        hide = {
+          underline = false,
+        },
+      },
     },
     {
       'kosayoda/nvim-lightbulb',
@@ -257,21 +247,19 @@ require('lazy').setup(
     },
     {
       'lvimuser/lsp-inlayhints.nvim',
-      config = function()
-        require('lsp-inlayhints').setup({
-          inlay_hints = {
-            highlight = 'Comment',
-            labels_separator = ' ⏐ ',
-            parameter_hints = {
-              prefix = '',
-            },
-            type_hints = {
-              prefix = '=> ',
-              remove_colon_start = true,
-            },
+      opts = {
+        inlay_hints = {
+          highlight = 'Comment',
+          labels_separator = ' ⏐ ',
+          parameter_hints = {
+            prefix = '',
           },
-        })
-      end,
+          type_hints = {
+            prefix = '=> ',
+            remove_colon_start = true,
+          },
+        },
+      },
     },
     {
       'hrsh7th/nvim-cmp',
@@ -291,16 +279,10 @@ require('lazy').setup(
         { 'lukas-reineke/cmp-rg' },
         {
           'petertriho/cmp-git',
-          config = function()
-            require('cmp_git').setup({ filetypes = { 'gitcommit', 'NeogitCommitMessage' } })
-          end,
+          opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } },
         },
-        {
-          'abecodes/tabout.nvim', -- Use <Tab> to escape from pairs such as ""|''|() etc.
-          config = function()
-            require('tabout').setup({ ignore_beginning = false, completion = false })
-          end,
-        },
+        -- Use <Tab> to escape from pairs such as ""|''|() etc.
+        { 'abecodes/tabout.nvim', opts = { ignore_beginning = false, completion = false } },
       },
     },
     -- }}}
@@ -331,10 +313,7 @@ require('lazy').setup(
           'rcarriga/nvim-dap-ui',
           config = conf('dapui'),
         },
-        {
-          'theHamsta/nvim-dap-virtual-text',
-          config = function() require('nvim-dap-virtual-text').setup({ all_frames = true }) end,
-        },
+        { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       },
     },
     --}}}
@@ -344,15 +323,13 @@ require('lazy').setup(
     { 'levouh/tint.nvim', event = 'VeryLazy', config = conf('tint') },
     {
       'uga-rosa/ccc.nvim',
-      config = function()
-        require('ccc').setup({
-          win_opts = { border = as.style.current.border },
-          highlighter = {
-            auto_enable = true,
-            excludes = { 'dart' },
-          },
-        })
-      end,
+      opts = {
+        win_opts = { border = as.style.current.border },
+        highlighter = {
+          auto_enable = true,
+          excludes = { 'dart' },
+        },
+      },
     },
     {
       'folke/todo-comments.nvim',
@@ -361,36 +338,6 @@ require('lazy').setup(
       config = function()
         require('todo-comments').setup()
         as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
-      end,
-    },
-    {
-      'gorbit99/codewindow.nvim',
-      enabled = false,
-      config = function()
-        require('as.highlights').plugin('codewindow', {
-          { CodewindowBorder = { link = 'WinSeparator' } },
-          { CodewindowWarn = { bg = 'NONE', fg = { from = 'DiagnosticSignWarn', attr = 'bg' } } },
-          { CodewindowError = { bg = 'NONE', fg = { from = 'DiagnosticSignError', attr = 'bg' } } },
-        })
-        local codewindow = require('codewindow')
-        as.command('CodewindowToggle', codewindow.toggle_minimap)
-        codewindow.setup({
-          z_index = 25,
-          auto_enable = true,
-          exclude_filetypes = {
-            'qf',
-            'git',
-            'help',
-            'alpha',
-            'gitcommit',
-            'NeogitStatus',
-            'neo-tree',
-            'neo-tree-popup',
-            'neotest-summary',
-            'NeogitCommitMessage',
-            '',
-          },
-        })
       end,
     },
     {
@@ -436,12 +383,10 @@ require('lazy').setup(
     },
     {
       'kylechui/nvim-surround',
-      config = function()
-        require('nvim-surround').setup({
-          move_cursor = true,
-          keymaps = { visual = 's' },
-        })
-      end,
+      opts = {
+        move_cursor = true,
+        keymaps = { visual = 's' },
+      },
     },
     -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
     -- causes formatting bugs on save when update events are TextChanged{I}
@@ -455,6 +400,7 @@ require('lazy').setup(
     },
     {
       'andrewferrier/debugprint.nvim',
+      keys = { '<leader>dp' },
       config = function()
         local dp = require('debugprint')
         dp.setup({ create_keymaps = false })
@@ -568,21 +514,19 @@ require('lazy').setup(
     {
       'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
       event = 'VeryLazy',
-      config = function()
-        require('neoscroll').setup({
-          mappings = {
-            '<C-u>',
-            '<C-d>',
-            '<C-b>',
-            '<C-f>',
-            '<C-y>',
-            'zt',
-            'zz',
-            'zb',
-          },
-          hide_cursor = true,
-        })
-      end,
+      opts = {
+        mappings = {
+          '<C-u>',
+          '<C-d>',
+          '<C-b>',
+          '<C-f>',
+          '<C-y>',
+          'zt',
+          'zz',
+          'zb',
+        },
+        hide_cursor = true,
+      },
     },
     {
       'itchyny/vim-highlighturl',
@@ -595,12 +539,12 @@ require('lazy').setup(
       init = function()
         as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
       end,
-      config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
+      opts = { snippet_engine = 'luasnip' },
     },
     {
       'mizlan/iswap.nvim',
       cmd = { 'ISwap', 'ISwapWith' },
-      config = function() require('iswap').setup() end,
+      config = true,
       init = function()
         as.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'ISwap: swap with')
         as.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'ISwap: swap any')
@@ -621,11 +565,7 @@ require('lazy').setup(
       event = 'VeryLazy',
       config = function() as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit') end,
     },
-    {
-      'nacro90/numb.nvim',
-      event = 'CmdlineEnter',
-      config = function() require('numb').setup() end,
-    },
+    { 'nacro90/numb.nvim', event = 'CmdlineEnter', config = true },
     -----------------------------------------------------------------------------//
     -- Quickfix
     -----------------------------------------------------------------------------//
@@ -841,17 +781,15 @@ require('lazy').setup(
     {
       'Wansmer/sibling-swap.nvim',
       dependencies = { 'nvim-treesitter' },
-      config = function()
-        require('sibling-swap').setup({
-          use_default_keymaps = false,
-          keymaps = {
-            [']w'] = 'swap_with_right',
-            ['[w'] = 'swap_with_left',
-          },
-        })
-      end,
+      opts = {
+        use_default_keymaps = false,
+        keymaps = {
+          [']w'] = 'swap_with_right',
+          ['[w'] = 'swap_with_left',
+        },
+      },
     },
-    { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
+    { 'numToStr/Comment.nvim', config = true },
     {
       'gbprod/substitute.nvim',
       keys = {
@@ -876,8 +814,8 @@ require('lazy').setup(
         { 'kana/vim-operator-user' },
         {
           'glts/vim-textobj-comment',
+          init = function() vim.g.textobj_comment_no_default_key_mappings = 1 end,
           config = function()
-            vim.g.textobj_comment_no_default_key_mappings = 1
             as.xmap('ax', '<Plug>(textobj-comment-a)')
             as.omap('ax', '<Plug>(textobj-comment-a)')
             as.xmap('ix', '<Plug>(textobj-comment-i)')
@@ -940,12 +878,10 @@ require('lazy').setup(
       'ggandor/flit.nvim',
       keys = { 'f' },
       dependencies = { 'ggandor/leap.nvim' },
-      config = function()
-        require('flit').setup({
-          labeled_modes = 'nvo',
-          multiline = false,
-        })
-      end,
+      opts = {
+        labeled_modes = 'nvo',
+        multiline = false,
+      },
     },
     -- }}}
     --------------------------------------------------------------------------------
@@ -973,12 +909,12 @@ require('lazy').setup(
       ft = { 'dart' },
       event = 'BufEnter pubspec.yaml',
       dev = true,
-      config = function() require('pubspec-assist').setup() end,
+      config = true,
     },
     {
       'akinsho/org-bullets.nvim',
       dev = true,
-      config = function() require('org-bullets').setup() end,
+      config = true,
     },
     {
       'akinsho/toggleterm.nvim',
@@ -997,11 +933,9 @@ require('lazy').setup(
       'akinsho/git-conflict.nvim',
       event = 'VeryLazy',
       dev = true,
-      config = function()
-        require('git-conflict').setup({
-          disable_diagnostics = true,
-        })
-      end,
+      opts = {
+        disable_diagnostics = true,
+      },
     },
   },
   --}}}
