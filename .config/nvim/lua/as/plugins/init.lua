@@ -571,6 +571,7 @@ require('lazy').setup(
     {
       'vhyrro/neorg',
       ft = 'norg',
+      build = ':Neorg sync-parsers',
       config = conf('neorg'),
       dependencies = { 'vhyrro/neorg-telescope' },
     },

@@ -34,11 +34,6 @@ return function()
           },
         },
       },
-      ['core.gtd.base'] = {
-        config = {
-          workspace = 'tasks',
-        },
-      },
     },
   })
 end
