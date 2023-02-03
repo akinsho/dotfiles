@@ -103,6 +103,7 @@ return function()
         fg = { from = 'Conditional' },
       },
     },
+    { NoiceMini = { inherit = 'MsgArea', bg = { from = 'Normal' } } },
     { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
     { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
     { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },

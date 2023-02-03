@@ -216,6 +216,7 @@ as.augroup('TextYankHighlight', {
 
 local column_exclude = { 'gitcommit' }
 local column_block_list = {
+  'noice',
   'NeogitCommitSelectView',
   'DiffviewFileHistory',
   'log',
