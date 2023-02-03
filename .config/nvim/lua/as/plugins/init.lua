@@ -760,7 +760,7 @@ require('lazy').setup(
         },
       },
     },
-    { 'numToStr/Comment.nvim', config = true },
+    { 'numToStr/Comment.nvim', event = 'VeryLazy', config = true },
     {
       'gbprod/substitute.nvim',
       keys = {
