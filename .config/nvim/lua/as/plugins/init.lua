@@ -94,6 +94,7 @@ require('lazy').setup(
     { 'folke/which-key.nvim', event = 'VeryLazy', config = conf('whichkey') },
     {
       'mg979/vim-visual-multi',
+      event = 'VeryLazy',
       init = function()
         vim.g.VM_highlight_matches = 'underline'
         vim.g.VM_theme = 'codedark'
@@ -382,23 +383,21 @@ require('lazy').setup(
     },
     {
       'andrewferrier/debugprint.nvim',
-      keys = { '<leader>dp' },
-      config = function()
-        local dp = require('debugprint')
-        dp.setup({ create_keymaps = false })
-
-        as.nnoremap(
+      opts = { create_keymaps = false },
+      keys = {
+        {
           '<leader>dp',
-          function() return dp.debugprint({ variable = true }) end,
-          { desc = 'debugprint: cursor', expr = true }
-        )
-        as.nnoremap(
+          function() return require('debugprint').debugprint({ variable = true }) end,
+          desc = 'debugprint: cursor',
+          expr = true,
+        },
+        {
           '<leader>do',
-          function() return dp.debugprint({ motion = true }) end,
-          { desc = 'debugprint: operator', expr = true }
-        )
-        as.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
-      end,
+          function() return require('debugprint').debugprint({ motion = true }) end,
+          { desc = 'debugprint: operator', expr = true },
+        },
+        { '<leader>dC', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
+      },
     },
     {
       'gbprod/yanky.nvim',
@@ -509,25 +508,29 @@ require('lazy').setup(
     {
       'danymat/neogen',
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
-      init = function()
-        as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
-      end,
       opts = { snippet_engine = 'luasnip' },
+      keys = {
+        {
+          '<localleader>nc',
+          function() require('neogen').generate() end,
+          desc = 'comment: generate',
+        },
+      },
     },
     {
       'mizlan/iswap.nvim',
-      cmd = { 'ISwap', 'ISwapWith' },
       config = true,
-      init = function()
-        as.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'ISwap: swap with')
-        as.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'ISwap: swap any')
-      end,
+      cmd = { 'ISwap', 'ISwapWith' },
+      keys = {
+        { '<leader>iw', '<Cmd>ISwapWith<CR>', desc = 'ISwap: swap with' },
+        { '<leader>ia', '<Cmd>ISwap<CR>', desc = 'ISwap: swap any' },
+      },
     },
     { 'rcarriga/nvim-notify', config = conf('notify') },
     {
       'mbbill/undotree',
       cmd = 'UndotreeToggle',
-      init = function() as.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle') end,
+      keys = { { '<leader>u', '<Cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' } },
       config = function()
         vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
         vim.g.undotree_SetFocusWhenToggle = 1
@@ -559,9 +562,7 @@ require('lazy').setup(
       'kevinhwang91/nvim-bqf',
       ft = 'qf',
       config = function()
-        highlights.plugin('bqf', {
-          { BqfPreviewBorder = { fg = { from = 'Comment' } } },
-        })
+        highlights.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
       end,
     },
     -- }}}
@@ -570,7 +571,7 @@ require('lazy').setup(
     --------------------------------------------------------------------------------
     {
       'vhyrro/neorg',
-      ft = 'norg',
+      event = 'VeryLazy',
       build = ':Neorg sync-parsers',
       config = conf('neorg'),
       dependencies = { 'vhyrro/neorg-telescope' },
@@ -608,20 +609,21 @@ require('lazy').setup(
         as.nnoremap('<leader>db', '<cmd>DBUIToggle<CR>', 'dadbod: toggle')
       end,
     },
-    'tpope/vim-eunuch',
-    'tpope/vim-sleuth',
-    'tpope/vim-repeat',
+    { 'tpope/vim-eunuch', event = 'VeryLazy' },
+    { 'tpope/vim-sleuth', event = 'VeryLazy' },
+    { 'tpope/vim-repeat', event = 'VeryLazy' },
+    { 'tpope/vim-apathy', event = 'VeryLazy' },
+    -- sets searchable path for filetypes like go so 'gf' works
+    { 'tpope/vim-projectionist', config = conf('vim-projectionist'), event = 'VeryLazy' },
     {
       'tpope/vim-abolish',
-      config = function()
-        as.nnoremap('<localleader>[', ':S/<C-R><C-W>//<LEFT>', { silent = false })
-        as.nnoremap('<localleader>]', ':%S/<C-r><C-w>//c<left><left>', { silent = false })
-        as.xnoremap('<localleader>[', [["zy:'<'>S/<C-r><C-o>"//c<left><left>]], { silent = false })
-      end,
+      event = 'VeryLazy',
+      keys = {
+        { '<localleader>[', ':S/<C-R><C-W>//<LEFT>', mode = 'n', silent = false },
+        { '<localleader>]', ':%S/<C-r><C-w>//c<left><left>', mode = 'n', silent = false },
+        { '<localleader>[', [["zy:'<'>S/<C-r><C-o>"//c<left><left>]], mode = 'x', silent = false },
+      },
     },
-    -- sets searchable path for filetypes like go so 'gf' works
-    'tpope/vim-apathy',
-    { 'tpope/vim-projectionist', config = conf('vim-projectionist') },
     -- }}}
     -----------------------------------------------------------------------------//
     -- Filetype Plugins {{{1
@@ -740,14 +742,11 @@ require('lazy').setup(
     {
       'Wansmer/treesj',
       dependencies = { 'nvim-treesitter' },
-      keys = { 'gS', 'gJ' },
-      config = function()
-        require('treesj').setup({
-          use_default_keymaps = false,
-        })
-        as.nnoremap('gS', '<Cmd>TSJSplit<CR>', 'split expression to multiple lines')
-        as.nnoremap('gJ', '<Cmd>TSJJoin<CR>', 'join expression to single line')
-      end,
+      opts = { use_default_keymaps = false },
+      keys = {
+        { 'gS', '<Cmd>TSJSplit<CR>', desc = 'split expression to multiple lines' },
+        { 'gJ', '<Cmd>TSJJoin<CR>', desc = 'join expression to single line' },
+      },
     },
     {
       'Wansmer/sibling-swap.nvim',
@@ -763,21 +762,16 @@ require('lazy').setup(
     { 'numToStr/Comment.nvim', event = 'VeryLazy', config = true },
     {
       'gbprod/substitute.nvim',
+      config = true,
       keys = {
-        { 'S', mode = { 'n', 'x' } },
-        { 'X', mode = { 'n', 'x' } },
-        { 'Xc', mode = { 'n', 'x' } },
+        { 'S', function() require('substitute').visual() end, mode = 'x' },
+        { 'S', function() require('substitute').operator() end, mode = 'n' },
+        { 'X', function() require('substitute.exchange').operator() end, mode = 'n' },
+        { 'X', function() require('substitute.exchange').visual() end, mode = 'x' },
+        { 'Xc', function() require('substitute.exchange').cancel() end, mode = { 'n', 'x' } },
       },
-      config = function()
-        require('substitute').setup()
-        as.nnoremap('S', function() require('substitute').operator() end)
-        as.xnoremap('S', function() require('substitute').visual() end)
-        as.nnoremap('X', function() require('substitute.exchange').operator() end)
-        as.xnoremap('X', function() require('substitute.exchange').visual() end)
-        as.nnoremap('Xc', function() require('substitute.exchange').cancel() end)
-      end,
     },
-    'wellle/targets.vim',
+    { 'wellle/targets.vim', event = 'VeryLazy' },
     {
       'kana/vim-textobj-user',
       lazy = false,
@@ -786,12 +780,10 @@ require('lazy').setup(
         {
           'glts/vim-textobj-comment',
           init = function() vim.g.textobj_comment_no_default_key_mappings = 1 end,
-          config = function()
-            as.xmap('ax', '<Plug>(textobj-comment-a)')
-            as.omap('ax', '<Plug>(textobj-comment-a)')
-            as.xmap('ix', '<Plug>(textobj-comment-i)')
-            as.omap('ix', '<Plug>(textobj-comment-i)')
-          end,
+          keys = {
+            { 'ax', '<Plug>(textobj-comment-a)', mode = { 'x', 'o' } },
+            { 'ix', '<Plug>(textobj-comment-i)', mode = { 'x', 'o' } },
+          },
         },
       },
     },
@@ -881,6 +873,7 @@ require('lazy').setup(
     },
     {
       'akinsho/org-bullets.nvim',
+      lazy = false,
       dev = true,
       config = true,
     },
