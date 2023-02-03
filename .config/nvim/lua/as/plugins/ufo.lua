@@ -38,7 +38,7 @@ return function()
     return result
   end
 
-  opt.foldlevelstart = 2
+  opt.foldlevelstart = 3
   -- Don't add folds to sessions because they are added asynchronously and if the file does not
   -- exist on a git branch for which the folds where saved it will cause an error on startup
   -- opt.sessionoptions:append('folds')
