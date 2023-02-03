@@ -373,9 +373,6 @@ as.augroup('CustomStatusline', {
   },
 })
 
--- set colors during nvim's initialisation
-colors()
-
 -- :h qf.vim, disable qf statusline
 vim.g.qf_disable_statusline = 1
 

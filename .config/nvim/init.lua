@@ -60,4 +60,7 @@ R('as.globals')
 R('as.styles')
 R('as.settings')
 R('as.plugins')
-R('as.highlights')
+-----------------------------------------------------------------------------//
+-- Color Scheme {{{1
+-----------------------------------------------------------------------------//
+as.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')

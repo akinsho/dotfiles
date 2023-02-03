@@ -264,8 +264,3 @@ as.augroup('UserHighlights', {
     command = function() on_sidebar_enter() end,
   },
 })
-
------------------------------------------------------------------------------//
--- Color Scheme {{{1
------------------------------------------------------------------------------//
-as.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')
