@@ -322,9 +322,10 @@ end
 
 function M.debugger() return not package.loaded['dap'] and '' or require('dap').status() end
 
+---@return boolean, {name: string, hint: string, color: string}
 function M.hydra()
   local ok, hydra = pcall(require, 'hydra.statusline')
-  if not ok then return false, { name = '' } end
+  if not ok then return false, { name = '', color = '' } end
   local colors = {
     red = 'HydraRedSt',
     blue = 'HydraBlueSt',
