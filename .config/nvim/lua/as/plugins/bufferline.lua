@@ -1,7 +1,6 @@
 return function()
   local fn = vim.fn
   local r = vim.regex
-  local fmt = string.format
   local icons = as.style.icons.lsp
 
   local highlights = require('as.highlights')
