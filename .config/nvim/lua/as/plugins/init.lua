@@ -30,11 +30,13 @@ require('lazy').setup(
     'nvim-lua/plenary.nvim',
     {
       'ahmedkhalf/project.nvim',
-      opts = {
-        detection_methods = { 'pattern', 'lsp' },
-        ignore_lsp = { 'null-ls' },
-        patterns = { '.git' },
-      },
+      config = function()
+        require('project_nvim').setup({
+          detection_methods = { 'pattern', 'lsp' },
+          ignore_lsp = { 'null-ls' },
+          patterns = { '.git' },
+        })
+      end,
     },
     {
       'github/copilot.vim',
@@ -89,7 +91,7 @@ require('lazy').setup(
       },
     },
     'nvim-tree/nvim-web-devicons',
-    { 'folke/which-key.nvim', config = conf('whichkey') },
+    { 'folke/which-key.nvim', event = 'VeryLazy', config = conf('whichkey') },
     {
       'mg979/vim-visual-multi',
       init = function()
@@ -131,7 +133,7 @@ require('lazy').setup(
       build = 'cp ./*.py ~/.config/kitty/',
       cond = function() return not vim.env.TMUX end,
     },
-    { 'goolord/alpha-nvim', config = conf('alpha') },
+    { 'goolord/alpha-nvim', lazy = false, config = conf('alpha') },
     { 'lukas-reineke/indent-blankline.nvim', event = 'VeryLazy', config = conf('indentline') },
     {
       'nvim-neo-tree/neo-tree.nvim',
@@ -153,10 +155,17 @@ require('lazy').setup(
     {
       {
         'williamboman/mason.nvim',
-        event = 'VeryLazy',
+        event = 'BufRead', -- NOTE: cannot be loaded with VeryLazy as this will not load the lsp servers
         dependencies = {
-          'neovim/nvim-lspconfig',
           'williamboman/mason-lspconfig.nvim',
+          {
+            'neovim/nvim-lspconfig',
+            config = function()
+              highlights.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
+              require('lspconfig.ui.windows').default_options.border = as.style.current.border
+              require('lspconfig').ccls.setup(require('as.servers')('ccls'))
+            end,
+          },
         },
         config = function()
           local get_config = require('as.servers')
@@ -183,17 +192,8 @@ require('lazy').setup(
       },
     },
     {
-      'neovim/nvim-lspconfig',
-      config = function()
-        highlights.plugin('lspconfig', {
-          { LspInfoBorder = { link = 'FloatBorder' } },
-        })
-        require('lspconfig.ui.windows').default_options.border = as.style.current.border
-        require('lspconfig').ccls.setup(require('as.servers')('ccls'))
-      end,
-    },
-    {
       'DNLHC/glance.nvim',
+      config = true,
       keys = {
         { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
         { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
@@ -203,14 +203,16 @@ require('lazy').setup(
     },
     {
       'smjonas/inc-rename.nvim',
-      config = function()
-        require('inc_rename').setup({ hl_group = 'Visual' })
-        as.nnoremap('<leader>ri', function() return ':IncRename ' .. vim.fn.expand('<cword>') end, {
+      opts = { hl_group = 'Visual' },
+      keys = {
+        {
+          '<leader>ri',
+          function() return ':IncRename ' .. fn.expand('<cword>') end,
           expr = true,
           silent = false,
           desc = 'lsp: incremental rename',
-        })
-      end,
+        },
+      },
     },
     { 'andrewferrier/textobj-diagnostic.nvim', config = true },
     {
@@ -298,12 +300,7 @@ require('lazy').setup(
       dependencies = {
         { 'rcarriga/neotest-plenary' },
         { 'sidlatau/neotest-dart' },
-        {
-          'neotest/neotest-go',
-          dev = true,
-          module = 'neotest-go',
-          local_path = 'personal',
-        },
+        { 'neotest/neotest-go', dev = true },
       },
     },
     {
@@ -311,10 +308,7 @@ require('lazy').setup(
       init = conf('dap').setup,
       config = conf('dap').config,
       dependencies = {
-        {
-          'rcarriga/nvim-dap-ui',
-          config = conf('dapui'),
-        },
+        { 'rcarriga/nvim-dap-ui', config = conf('dapui') },
         { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       },
     },
@@ -327,10 +321,7 @@ require('lazy').setup(
       'uga-rosa/ccc.nvim',
       opts = {
         win_opts = { border = as.style.current.border },
-        highlighter = {
-          auto_enable = true,
-          excludes = { 'dart' },
-        },
+        highlighter = { auto_enable = true, excludes = { 'dart' } },
       },
     },
     {
@@ -353,11 +344,7 @@ require('lazy').setup(
       end,
     },
     { 'stevearc/dressing.nvim', event = 'VeryLazy', config = conf('dressing') },
-    {
-      'SmiteshP/nvim-navic',
-      dependencies = { 'neovim/nvim-lspconfig' },
-      config = conf('navic'),
-    },
+    { 'SmiteshP/nvim-navic', dependencies = { 'neovim/nvim-lspconfig' }, config = conf('navic') },
     {
       'kevinhwang91/nvim-ufo',
       event = 'VeryLazy',
@@ -383,19 +370,12 @@ require('lazy').setup(
         vim.g.wordmotion_spaces = { '-', '_', '\\/', '\\.' }
       end,
     },
-    {
-      'kylechui/nvim-surround',
-      opts = {
-        move_cursor = true,
-        keymaps = { visual = 's' },
-      },
-    },
+    { 'kylechui/nvim-surround', opts = { move_cursor = true, keymaps = { visual = 's' } } },
     -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
     -- causes formatting bugs on save when update events are TextChanged{I}
     {
       'L3MON4D3/LuaSnip',
       event = 'InsertEnter',
-      module = 'luasnip',
       dependencies = { 'rafamadriz/friendly-snippets' },
       config = conf('luasnip'),
       build = 'make install_jsregexp',
@@ -444,15 +424,16 @@ require('lazy').setup(
     { 'monaqa/dial.nvim', config = conf('dial') },
     {
       'jghauser/fold-cycle.nvim',
-      config = function()
-        require('fold-cycle').setup()
-        as.nnoremap('<BS>', function() require('fold-cycle').open() end)
-      end,
+      config = true,
+      keys = {
+        { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
+      },
     },
     -- Diff arbitrary blocks of text with each other
     { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
     {
       'rainbowhxch/beacon.nvim',
+      event = 'VeryLazy',
       config = function()
         local beacon = require('beacon')
         beacon.setup({
@@ -504,12 +485,12 @@ require('lazy').setup(
         require('nvim-autopairs').setup({
           close_triple_quotes = true,
           check_ts = true,
+          fast_wrap = { map = '<c-e>' },
           ts_config = {
             lua = { 'string' },
             dart = { 'string' },
             javascript = { 'template_string' },
           },
-          fast_wrap = { map = '<c-e>' },
         })
       end,
     },
@@ -517,16 +498,7 @@ require('lazy').setup(
       'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
       event = 'VeryLazy',
       opts = {
-        mappings = {
-          '<C-u>',
-          '<C-d>',
-          '<C-b>',
-          '<C-f>',
-          '<C-y>',
-          'zt',
-          'zz',
-          'zb',
-        },
+        mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', 'zt', 'zz', 'zb' },
         hide_cursor = true,
       },
     },
@@ -537,7 +509,6 @@ require('lazy').setup(
     {
       'danymat/neogen',
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
-      module = 'neogen',
       init = function()
         as.nnoremap('<localleader>nc', require('neogen').generate, 'comment: generate')
       end,
@@ -564,8 +535,8 @@ require('lazy').setup(
     },
     {
       'moll/vim-bbye',
-      event = 'VeryLazy',
-      config = function() as.nnoremap('<leader>qq', '<Cmd>Bwipeout<CR>', 'bbye: quit') end,
+      cmd = 'Bwipeout',
+      keys = { { '<leader>qq', '<Cmd>Bwipeout<CR>', desc = 'bbye: quit' } },
     },
     { 'nacro90/numb.nvim', event = 'CmdlineEnter', config = true },
     -----------------------------------------------------------------------------//
@@ -603,7 +574,7 @@ require('lazy').setup(
       config = conf('neorg'),
       dependencies = { 'vhyrro/neorg-telescope' },
     },
-    { 'nvim-orgmode/orgmode', config = conf('orgmode') },
+    { 'nvim-orgmode/orgmode', lazy = false, config = conf('orgmode') },
     {
       'lukas-reineke/headlines.nvim',
       ft = { 'org', 'norg', 'markdown', 'yaml' },
@@ -656,27 +627,29 @@ require('lazy').setup(
     -----------------------------------------------------------------------------//
     {
       'akinsho/flutter-tools.nvim',
+      lazy = false,
       dev = true,
       config = conf('flutter-tools'),
       dependencies = { 'nvim-lua/plenary.nvim' },
     },
-    'RobertBrunhage/flutter-riverpod-snippets',
+    { 'RobertBrunhage/flutter-riverpod-snippets', lazy = false },
     {
       'olexsmir/gopher.nvim',
+      ft = 'go',
       dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
     },
     'nanotee/sqls.nvim',
     {
       'iamcco/markdown-preview.nvim',
-      build = function() vim.fn['mkdp#util#install']() end,
+      build = function() fn['mkdp#util#install']() end,
       ft = { 'markdown' },
       config = function()
         vim.g.mkdp_auto_start = 0
         vim.g.mkdp_auto_close = 1
       end,
     },
-    'mtdl9/vim-log-highlighting',
-    'fladson/vim-kitty',
+    { 'fladson/vim-kitty', lazy = false },
+    { 'mtdl9/vim-log-highlighting', lazy = false },
     -- }}}
     --------------------------------------------------------------------------------
     -- Syntax {{{1
@@ -686,14 +659,11 @@ require('lazy').setup(
       build = ':TSUpdate',
       config = conf('treesitter'),
       dependencies = {
-        {
-          'nvim-treesitter/playground',
-          cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-        },
+        { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
+        { 'nvim-treesitter/nvim-treesitter-textobjects' },
+        { 'p00f/nvim-ts-rainbow' },
       },
     },
-    { 'p00f/nvim-ts-rainbow' },
-    { 'nvim-treesitter/nvim-treesitter-textobjects' },
     {
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
@@ -744,7 +714,6 @@ require('lazy').setup(
     --------------------------------------------------------------------------------
     {
       'ruifm/gitlinker.nvim',
-      module = 'gitlinker',
       dependencies = { 'nvim-lua/plenary.nvim' },
       init = conf('gitlinker').setup,
       config = conf('gitlinker').config,
@@ -760,7 +729,6 @@ require('lazy').setup(
     {
       'sindrets/diffview.nvim',
       cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
-      module = 'diffview',
       init = conf('diffview').setup,
       config = conf('diffview').config,
     },
@@ -869,7 +837,7 @@ require('lazy').setup(
         as.nnoremap('s', function()
           require('leap').leap({
             target_windows = vim.tbl_filter(
-              function(win) return as.empty(vim.fn.win_gettype(win)) end,
+              function(win) return as.empty(fn.win_gettype(win)) end,
               api.nvim_tabpage_list_wins(0)
             ),
           })
@@ -880,10 +848,7 @@ require('lazy').setup(
       'ggandor/flit.nvim',
       keys = { 'f' },
       dependencies = { 'ggandor/leap.nvim' },
-      opts = {
-        labeled_modes = 'nvo',
-        multiline = false,
-      },
+      opts = { labeled_modes = 'nvo', multiline = false },
     },
     -- }}}
     --------------------------------------------------------------------------------
@@ -935,9 +900,7 @@ require('lazy').setup(
       'akinsho/git-conflict.nvim',
       event = 'VeryLazy',
       dev = true,
-      opts = {
-        disable_diagnostics = true,
-      },
+      opts = { disable_diagnostics = true },
     },
   },
   --}}}
