@@ -215,13 +215,15 @@ require('lazy').setup(
     { 'andrewferrier/textobj-diagnostic.nvim', config = true },
     {
       'zbirenbaum/neodim',
-      opts = {
-        blend_color = require('as.highlights').get('Normal', 'bg'),
-        alpha = 0.45,
-        hide = {
-          underline = false,
-        },
-      },
+      config = function()
+        require('neodim').setup({
+          blend_color = highlights.get('Normal', 'bg'),
+          alpha = 0.45,
+          hide = {
+            underline = false,
+          },
+        })
+      end,
     },
     {
       'kosayoda/nvim-lightbulb',
@@ -342,7 +344,7 @@ require('lazy').setup(
     },
     {
       'lukas-reineke/virt-column.nvim',
-      event = 'VeryLazy',
+      lazy = false,
       config = function()
         highlights.plugin('virt_column', {
           { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
@@ -571,7 +573,7 @@ require('lazy').setup(
     -----------------------------------------------------------------------------//
     {
       url = 'https://gitlab.com/yorickpeterse/nvim-pqf',
-      event = 'BufReadPre',
+      event = 'VeryLazy',
       config = function()
         highlights.plugin('pqf', {
           theme = {
