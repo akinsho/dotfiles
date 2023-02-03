@@ -946,6 +946,14 @@ require('lazy').setup(
     },
     rtp = {
       paths = { fn.stdpath('data') .. '/site' },
+      disabled_plugins = {
+        'netrw',
+        'netrwPlugin',
+        'tarPlugin',
+        'tutor',
+        'tohtml',
+        'logipat',
+      },
     },
     ui = {
       border = as.style.current.border,
@@ -962,5 +970,4 @@ require('lazy').setup(
 
 -- cfilter plugin allows filtering down an existing quickfix list
 cmd.packadd('cfilter')
-
 -- vim:foldmethod=marker nospell
