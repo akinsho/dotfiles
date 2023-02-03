@@ -571,7 +571,7 @@ require('lazy').setup(
     --------------------------------------------------------------------------------
     {
       'vhyrro/neorg',
-      event = 'VeryLazy',
+      ft = 'norg',
       build = ':Neorg sync-parsers',
       config = conf('neorg'),
       dependencies = { 'vhyrro/neorg-telescope' },
@@ -885,7 +885,7 @@ require('lazy').setup(
     },
     {
       'akinsho/bufferline.nvim',
-      event = 'VeryLazy',
+      event = 'BufReadPre',
       config = conf('bufferline'),
       dev = true,
       dependencies = { 'nvim-tree/nvim-web-devicons' },
