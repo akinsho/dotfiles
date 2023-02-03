@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 # ALIASES
 #------------------------------------------------------------------------------
-alias ls="ls --color=auto --hyperlink=auto $@"
+# alias ls="ls --color=auto --hyperlink=auto $@"
 if [[ $+commands[exa] ]]; then
   alias l="exa --long --all --git --color=always --group-directories-first --icons $@"
   alias lt="exa --icons --all --color=always -T $@"
