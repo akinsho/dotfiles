@@ -271,10 +271,11 @@ return {
     },
   },
   {
-    'klen/nvim-config-local',
+    'klen/nvim-config-local', -- TODO: remove once 0.9 is stable
+    enabled = as.nightly(),
     config = function()
       require('config-local').setup({
-        config_files = { '.localrc.lua', '.vimrc', '.vimrc.lua' },
+        config_files = { '.localrc.lua', '.vimrc', '.nvim.lua' },
       })
     end,
   },

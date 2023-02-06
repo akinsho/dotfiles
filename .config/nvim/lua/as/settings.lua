@@ -243,7 +243,8 @@ opt.mousescroll = { 'ver:1', 'hor:6' }
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
-o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
+-- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
+o.exrc = as.nightly()
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
