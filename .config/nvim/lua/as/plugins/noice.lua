@@ -125,6 +125,8 @@ local function config()
     { NoiceCmdlineIconIncRename = { link = 'NoicePopupWarnBaseGroup' } },
     { NoiceCmdlineIconInput = { link = 'NoicePopupBaseGroup' } },
     { NoiceCmdlineIconLua = { link = 'NoicePopupBaseGroup' } },
+    { NoiceConfirm = { bg = { from = 'NormalFloat' } } },
+    { NoiceConfirmBorder = { link = 'NoicePopupBaseGroup' } },
   })
 end
 
