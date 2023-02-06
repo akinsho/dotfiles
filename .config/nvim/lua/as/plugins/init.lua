@@ -1,5 +1,6 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
 local highlights = require('as.highlights')
+local data = fn.stdpath('data')
 
 return {
   -----------------------------------------------------------------------------//
@@ -57,21 +58,18 @@ return {
   {
     'rmagatti/auto-session',
     lazy = false,
-    config = function()
-      local data = fn.stdpath('data')
-      require('auto-session').setup({
-        log_level = 'error',
-        auto_session_root_dir = fmt('%s/session/auto/', data),
-        -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
-        auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
-        auto_session_suppress_dirs = {
-          vim.env.HOME,
-          vim.env.PROJECTS_DIR,
-          fmt('%s/Desktop', vim.env.HOME),
-        },
-        auto_session_use_git_branch = false, -- This cause inconsistent results
-      })
-    end,
+    opts = {
+      log_level = 'error',
+      auto_session_root_dir = fmt('%s/session/auto/', data),
+      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
+      auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
+      auto_session_suppress_dirs = {
+        vim.env.HOME,
+        vim.env.PROJECTS_DIR,
+        fmt('%s/Desktop', vim.env.HOME),
+      },
+      auto_session_use_git_branch = false, -- This cause inconsistent results
+    },
   },
   {
     'knubie/vim-kitty-navigator',
@@ -99,11 +97,11 @@ return {
         },
       },
       config = function()
-        local get_config = require('as.servers')
         require('mason').setup({ ui = { border = as.style.current.border } })
         require('mason-lspconfig').setup({ automatic_installation = true })
         require('mason-lspconfig').setup_handlers({
           function(name)
+            local get_config = require('as.servers')
             local config = get_config(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
@@ -113,13 +111,8 @@ return {
     {
       'jayp0521/mason-null-ls.nvim',
       event = 'VeryLazy',
-      dependencies = {
-        'williamboman/mason.nvim',
-        'jose-elias-alvarez/null-ls.nvim',
-      },
-      opts = {
-        automatic_installation = true,
-      },
+      dependencies = { 'williamboman/mason.nvim', 'jose-elias-alvarez/null-ls.nvim' },
+      opts = { automatic_installation = true },
     },
   },
   {
@@ -496,7 +489,7 @@ return {
     build = ':DirtytalkUpdate',
     config = function()
       opt.spelllang:append('programming')
-      opt.rtp:append(fn.stdpath('data') .. '/site') -- Line of interest
+      opt.rtp:append(data .. '/site') -- Line of interest
     end,
   },
   'melvio/medical-spell-files',
