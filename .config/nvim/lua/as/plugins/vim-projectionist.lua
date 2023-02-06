@@ -1,4 +1,4 @@
-return function()
+local function config()
   vim.g.projectionist_heuristics = {
     ['*.go'] = {
       ['*.go'] = { alternate = '{}_test.go', ['type'] = 'source' },
@@ -60,3 +60,5 @@ return function()
   as.nnoremap('<leader>av', '<cmd>AV<CR>', 'projectionist: vsplit alternate')
   as.nnoremap('<leader>at', '<cmd>Vtest<CR>', 'projectionist: vsplit test')
 end
+
+return { { 'tpope/vim-projectionist', config = config, event = 'VeryLazy' } }

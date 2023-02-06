@@ -1,41 +1,44 @@
-return function()
-  local fn = vim.fn
-  local r = vim.regex
-  local icons = as.style.icons.lsp
+local highlights = require('as.highlights')
+local r = vim.regex
 
-  local highlights = require('as.highlights')
-  local groups = require('bufferline.groups')
-
+local function flat_highlights(defaults)
   local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
+  local data = highlights.get('Normal')
+  local normal_bg, normal_fg = data.background, data.foreground
+  local visible = highlights.alter_color(normal_fg, -40)
+  local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
+
+  local hl = as.fold(function(accum, attrs, name)
+    local formatted = name:lower()
+    local is_group = formatted:match('group')
+    local is_offset = formatted:match('offset')
+    local is_separator = formatted:match('separator')
+    if diagnostic:match_str(formatted) then attrs.fg = normal_fg end
+    if not is_group or (is_group and is_separator) then attrs.bg = normal_bg end
+    if not is_group and not is_offset and is_separator then attrs.fg = normal_bg end
+    accum[name] = attrs
+    return accum
+  end, defaults.highlights)
+
+  -- Make the visible buffers and selected tab more "visible"
+  hl.buffer_visible.bold = true
+  hl.buffer_visible.italic = true
+  hl.buffer_visible.fg = visible
+  hl.tab_selected.bold = true
+  hl.tab_selected.bg = visible_tab
+  hl.tab_separator_selected.bg = visible_tab
+  return hl
+end
+
+local function config()
+  local fn = vim.fn
+  local icons = as.style.icons.lsp
+
+  local groups = require('bufferline.groups')
+
   require('bufferline').setup({
-    highlights = function(defaults)
-      local data = highlights.get('Normal')
-      local normal_bg, normal_fg = data.background, data.foreground
-      local visible = highlights.alter_color(normal_fg, -40)
-      local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
-
-      local hl = as.fold(function(accum, attrs, name)
-        local formatted = name:lower()
-        local is_group = formatted:match('group')
-        local is_offset = formatted:match('offset')
-        local is_separator = formatted:match('separator')
-        if diagnostic:match_str(formatted) then attrs.fg = normal_fg end
-        if not is_group or (is_group and is_separator) then attrs.bg = normal_bg end
-        if not is_group and not is_offset and is_separator then attrs.fg = normal_bg end
-        accum[name] = attrs
-        return accum
-      end, defaults.highlights)
-
-      -- Make the visible buffers and selected tab more "visible"
-      hl.buffer_visible.bold = true
-      hl.buffer_visible.italic = true
-      hl.buffer_visible.fg = visible
-      hl.tab_selected.bold = true
-      hl.tab_selected.bg = visible_tab
-      hl.tab_separator_selected.bg = visible_tab
-      return hl
-    end,
+    highlights = flat_highlights,
     options = {
       debug = { logging = true },
       mode = 'buffers', -- tabs
@@ -151,3 +154,13 @@ return function()
   as.nnoremap('<leader>8', '<Cmd>BufferLineGoToBuffer 8<CR>')
   as.nnoremap('<leader>9', '<Cmd>BufferLineGoToBuffer 9<CR>')
 end
+
+return {
+  {
+    'akinsho/bufferline.nvim',
+    event = 'BufReadPre',
+    config = config,
+    dev = true,
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
+}

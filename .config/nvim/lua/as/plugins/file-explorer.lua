@@ -1,4 +1,4 @@
-return function()
+local function config()
   local icons = as.style.icons
   local highlights = require('as.highlights')
 
@@ -137,3 +137,34 @@ return function()
     },
   })
 end
+
+local function picker_config()
+  require('window-picker').setup({
+    use_winbar = 'smart',
+    autoselect_one = true,
+    include_current = false,
+    filter_rules = {
+      bo = {
+        filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+        buftype = { 'terminal', 'quickfix', 'nofile' },
+      },
+    },
+    other_win_hl_color = require('as.highlights').get('Visual', 'bg'),
+  })
+end
+
+return {
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v2.x',
+    config = config,
+    keys = { { '<C-N>', '<Cmd>Neotree toggle<CR>', desc = 'NeoTree' } },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons',
+      { 'mrbjarksen/neo-tree-diagnostics.nvim' },
+      { 's1n7ax/nvim-window-picker', version = '*', config = picker_config },
+    },
+  },
+}

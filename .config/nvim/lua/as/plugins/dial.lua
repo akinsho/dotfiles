@@ -1,4 +1,4 @@
-return function()
+local function config()
   local dial = require('dial.map')
   local augend = require('dial.augend')
   local map = vim.keymap.set
@@ -34,7 +34,11 @@ return function()
     {
       event = 'FileType',
       pattern = { 'yaml', 'toml' },
-      command = function() map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true }) end,
+      command = function()
+        map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true })
+      end,
     },
   })
 end
+
+return { { 'monaqa/dial.nvim', config = config } }

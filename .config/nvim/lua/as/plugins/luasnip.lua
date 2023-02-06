@@ -1,5 +1,4 @@
-return function()
-  local api = vim.api
+local function config()
   local ls = require('luasnip')
   local types = require('luasnip.util.types')
   local extras = require('luasnip.extras')
@@ -61,3 +60,15 @@ return function()
 
   ls.filetype_extend('dart', { 'flutter' })
 end
+
+return {
+  -- FIXME: https://github.com/L3MON4D3/LuaSnip/issues/129
+  -- causes formatting bugs on save when update events are TextChanged{I}
+  {
+    'L3MON4D3/LuaSnip',
+    event = 'InsertEnter',
+    dependencies = { 'rafamadriz/friendly-snippets' },
+    config = config,
+    build = 'make install_jsregexp',
+  },
+}

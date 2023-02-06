@@ -5,6 +5,8 @@
 --  _/    _/  _/  _/
 -- _/    _/  _/    _/
 ----------------------------------------------------------------------------------------------------
+local fn, opt = vim.fn, vim.opt
+
 vim.g.os = vim.loop.os_uname().sysname
 vim.g.open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
 vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand('~/.dotfiles')
@@ -42,13 +44,51 @@ local namespace = {
 _G.as = as or namespace
 
 ----------------------------------------------------------------------------------------------------
--- Plugin Configurations
+-- Settings
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
 R('as.globals')
 R('as.styles')
 R('as.settings')
 R('as.plugins')
+-----------------------------------------------------------------------------//
+-- Plugins
+-----------------------------------------------------------------------------//
+local lazypath = fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+  fn.system({
+    'git',
+    'clone',
+    '--filter=blob:none',
+    '--single-branch',
+    'https://github.com/folke/lazy.nvim.git',
+    lazypath,
+  })
+end
+opt.runtimepath:prepend(lazypath)
+-----------------------------------------------------------------------------
+require('lazy').setup('as.plugins', {
+  defaults = { lazy = true },
+  rtp = {
+    paths = { fn.stdpath('data') .. '/site' },
+    disabled_plugins = {
+      'netrw',
+      'netrwPlugin',
+      'tarPlugin',
+      'tutor',
+      'tohtml',
+      'logipat',
+    },
+  },
+  ui = { border = as.style.current.border },
+  dev = { path = '~/projects/personal/', patterns = { 'akinsho' } },
+  install = { colorscheme = { 'horizon' } },
+})
+-----------------------------------------------------------------------------//
+-- Builtin Packages
+-----------------------------------------------------------------------------//
+-- cfilter plugin allows filtering down an existing quickfix list
+vim.cmd.packadd('cfilter')
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//

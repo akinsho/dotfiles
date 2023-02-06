@@ -1,6 +1,4 @@
-local M = {}
-
-function M.setup()
+local function init()
   require('as.highlights').plugin('Headlines', {
     theme = {
       ['*'] = {
@@ -16,7 +14,7 @@ function M.setup()
   })
 end
 
-function M.config()
+local function config()
   require('headlines').setup({
     markdown = {
       headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
@@ -29,4 +27,11 @@ function M.config()
   })
 end
 
-return M
+return {
+  {
+    'lukas-reineke/headlines.nvim',
+    ft = { 'org', 'norg', 'markdown', 'yaml' },
+    init = init,
+    config = config,
+  },
+}

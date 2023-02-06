@@ -1,5 +1,3 @@
-local M = {}
-
 as.telescope = {}
 
 local function rectangular_border(opts)
@@ -26,7 +24,7 @@ function as.telescope.ivy(opts)
   }))
 end
 
-function M.config()
+local function config()
   local H = require('as.highlights')
   local telescope = require('telescope')
   local actions = require('telescope.actions')
@@ -354,4 +352,35 @@ function M.config()
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
 
-return M
+return {
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = 'master', -- '0.1.x',
+    config = config,
+    event = 'CursorHold',
+    dependencies = {
+      {
+        'natecraddock/telescope-zf-native.nvim',
+        config = function() require('telescope').load_extension('zf-native') end,
+      },
+      {
+        'nvim-telescope/telescope-smart-history.nvim',
+        dependencies = { { 'kkharji/sqlite.lua' } },
+        config = function() require('telescope').load_extension('smart_history') end,
+      },
+      {
+        'nvim-telescope/telescope-frecency.nvim',
+        dependencies = { { 'kkharji/sqlite.lua' } },
+        config = function() require('telescope').load_extension('frecency') end,
+      },
+      {
+        'benfowler/telescope-luasnip.nvim',
+        config = function() require('telescope').load_extension('luasnip') end,
+      },
+      {
+        'nvim-telescope/telescope-live-grep-args.nvim',
+        config = function() require('telescope').load_extension('live_grep_args') end,
+      },
+    },
+  },
+}

@@ -1,4 +1,4 @@
-return function()
+local function config()
   local cwd = vim.fn.getcwd()
   local right_block = '🮉'
   require('gitsigns').setup({
@@ -58,3 +58,5 @@ return function()
     end,
   })
 end
+
+return { { 'lewis6991/gitsigns.nvim', event = 'VeryLazy', config = config } }

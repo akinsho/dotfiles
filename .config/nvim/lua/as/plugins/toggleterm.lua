@@ -1,4 +1,4 @@
-return function()
+local function config()
   local fn = vim.fn
   require('toggleterm').setup({
     open_mapping = [[<c-\>]],
@@ -71,3 +71,5 @@ return function()
 
   as.nnoremap('<leader>lg', function() lazygit:toggle() end, 'toggleterm: toggle lazygit')
 end
+
+return { { 'akinsho/toggleterm.nvim', event = 'VeryLazy', dev = true, config = config } }

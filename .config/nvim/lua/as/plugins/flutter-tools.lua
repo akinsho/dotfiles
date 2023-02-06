@@ -1,4 +1,4 @@
-return function()
+local function config()
   require('flutter-tools').setup({
     ui = { border = as.style.current.border },
     debugger = {
@@ -28,3 +28,16 @@ return function()
     },
   })
 end
+
+return {
+  {
+    'akinsho/flutter-tools.nvim',
+    lazy = false,
+    dev = true,
+    config = config,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'RobertBrunhage/flutter-riverpod-snippets', lazy = false },
+    },
+  },
+}

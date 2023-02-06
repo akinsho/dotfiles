@@ -1,4 +1,4 @@
-return function()
+local function config()
   local api = vim.api
 
   require('as.highlights').plugin('notify', {
@@ -37,3 +37,5 @@ return function()
   vim.notify = notify
   as.nnoremap('<leader>nd', notify.dismiss, { desc = 'dismiss notifications' })
 end
+
+return { { 'rcarriga/nvim-notify', config = config } }

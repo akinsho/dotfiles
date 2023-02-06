@@ -1,4 +1,4 @@
-return function()
+local function config()
   local Hydra = require('hydra')
   local border = as.style.current.border
 
@@ -200,3 +200,5 @@ return function()
     },
   })
 end
+
+return { { 'anuvyklack/hydra.nvim', config = config } }

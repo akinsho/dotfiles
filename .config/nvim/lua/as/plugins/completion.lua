@@ -1,4 +1,4 @@
-return function()
+local function config()
   local cmp = require('cmp')
   local h = require('as.highlights')
 
@@ -159,3 +159,30 @@ return function()
     sources = { { name = 'dap' } },
   })
 end
+
+return {
+  {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    config = config,
+    dependencies = {
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-cmdline', enabled = not as.nightly() },
+      { 'dmitmel/cmp-cmdline-history', enabled = not as.nightly() },
+      { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = not as.nightly() },
+      { 'f3fora/cmp-spell' },
+      { 'hrsh7th/cmp-path' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-emoji' },
+      { 'rcarriga/cmp-dap' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'lukas-reineke/cmp-rg' },
+      {
+        'petertriho/cmp-git',
+        opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } },
+      },
+      -- Use <Tab> to escape from pairs such as ""|''|() etc.
+      { 'abecodes/tabout.nvim', opts = { ignore_beginning = false, completion = false } },
+    },
+  },
+}

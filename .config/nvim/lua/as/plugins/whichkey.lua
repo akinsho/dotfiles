@@ -1,4 +1,4 @@
-return function()
+local function config()
   require('as.highlights').plugin('whichkey', {
     theme = {
       ['*'] = {
@@ -132,3 +132,5 @@ return function()
     },
   })
 end
+
+return { { 'folke/which-key.nvim', event = 'VeryLazy', config = config } }

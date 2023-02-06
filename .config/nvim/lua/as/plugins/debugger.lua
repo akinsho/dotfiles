@@ -1,6 +1,25 @@
-local M = {}
+local function dapui_config()
+  require('dapui').setup({
+    windows = { indent = 2 },
+    floating = {
+      border = as.style.current.border,
+    },
+  })
+  as.nnoremap('<localleader>duc', function() require('dapui').close() end, 'dap-ui: close')
+  as.nnoremap('<localleader>dut', function() require('dapui').toggle() end, 'dap-ui: toggle')
 
-function M.setup()
+  local exclusions = { 'dart' }
+  local dap = require('dap')
+  dap.listeners.after.event_initialized['dapui_config'] = function()
+    if vim.tbl_contains(exclusions, vim.bo.filetype) then return end
+    require('dapui').open()
+    vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+  end
+  dap.listeners.before.event_terminated['dapui_config'] = function() require('dapui').close() end
+  dap.listeners.before.event_exited['dapui_config'] = function() require('dapui').close() end
+end
+
+local function init()
   local fn = vim.fn
 
   local function dap() return require('dap') end
@@ -26,7 +45,7 @@ function M.setup()
   as.nnoremap('<localleader>dt', repl_toggle, 'dap REPL: toggle')
 end
 
-function M.config()
+local function config()
   local fn, icons = vim.fn, as.style.icons
 
   require('dap') -- Dap must be loaded before the signs can be tweaked
@@ -57,4 +76,17 @@ function M.config()
   -- dap.defaults.fallback.exception_breakpoints = {}
 end
 
-return M
+return {
+  {
+    'mfussenegger/nvim-dap',
+    init = init,
+    config = config,
+    dependencies = {
+      {
+        'rcarriga/nvim-dap-ui',
+        config = dapui_config,
+        { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
+      },
+    },
+  },
+}

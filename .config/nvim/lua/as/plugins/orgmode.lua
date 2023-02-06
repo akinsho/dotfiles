@@ -1,4 +1,4 @@
-return function()
+local function config()
   local fn = vim.fn
   local fmt = string.format
 
@@ -61,3 +61,5 @@ return function()
     },
   })
 end
+
+return { { 'nvim-orgmode/orgmode', lazy = false, config = config } }

@@ -1,6 +1,4 @@
-local M = {}
-
-function M.setup()
+local function init()
   local function open() require('neotest').output.open({ enter = true, short = false }) end
   local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
   local function run_file_sync()
@@ -22,7 +20,7 @@ function M.setup()
   as.nnoremap(']n', prev_failed, 'jump to previous failed test')
 end
 
-function M.config()
+local function config()
   local namespace = vim.api.nvim_create_namespace('neotest')
   vim.diagnostic.config({
     virtual_text = {
@@ -52,4 +50,15 @@ function M.config()
   })
 end
 
-return M
+return {
+  {
+    'nvim-neotest/neotest',
+    init = init,
+    config = config,
+    dependencies = {
+      { 'rcarriga/neotest-plenary' },
+      { 'sidlatau/neotest-dart' },
+      { 'neotest/neotest-go', dev = true },
+    },
+  },
+}

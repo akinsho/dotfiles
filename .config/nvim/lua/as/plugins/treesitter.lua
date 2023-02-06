@@ -1,4 +1,6 @@
-return function()
+local highlights = require('as.highlights')
+
+local function config()
   require('nvim-treesitter.install').compilers = { 'gcc-12' }
 
   local parsers = require('nvim-treesitter.parsers')
@@ -91,3 +93,31 @@ return function()
     },
   })
 end
+
+return {
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = config,
+    dependencies = {
+      { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
+      { 'nvim-treesitter/nvim-treesitter-textobjects' },
+      { 'p00f/nvim-ts-rainbow' },
+    },
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      highlights.plugin('treesitter-context', {
+        { ContextBorder = { link = 'Dim' } },
+        { TreesitterContext = { inherit = 'Normal' } },
+        { TreesitterContextLineNumber = { inherit = 'LineNr' } },
+      })
+      require('treesitter-context').setup({
+        multiline_threshold = 4,
+        separator = { '─', 'ContextBorder' }, -- alternatives: ▁ ─ ▄
+        mode = 'topline',
+      })
+    end,
+  },
+}

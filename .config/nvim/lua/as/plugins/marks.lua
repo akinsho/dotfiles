@@ -1,4 +1,4 @@
-return function()
+local function config()
   require('as.highlights').plugin('marks', {
     { MarkSignHL = { link = 'Directory' } },
     { MarkSignNumHL = { link = 'Directory' } },
@@ -19,3 +19,5 @@ return function()
     },
   })
 end
+
+return { { 'chentoast/marks.nvim', config = config } }

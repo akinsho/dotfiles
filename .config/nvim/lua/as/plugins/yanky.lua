@@ -1,4 +1,4 @@
-return function()
+local function config()
   local map = vim.keymap.set
   local utils = require('yanky.utils')
   local mapping = require('yanky.telescope.mapping')
@@ -40,3 +40,12 @@ return function()
     'yanky: open yank history'
   )
 end
+
+return {
+    {
+      'gbprod/yanky.nvim',
+      keys = { 'p', 'P', '<localleader>p' },
+      dependencies = { 'kkharji/sqlite.lua' },
+      config = config,
+    },
+}

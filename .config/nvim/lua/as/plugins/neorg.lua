@@ -1,4 +1,4 @@
-return function()
+local function config()
   local fn = vim.fn
   as.nnoremap('<localleader>oc', '<Cmd>Neorg gtd capture<CR>')
   as.nnoremap('<localleader>ov', '<Cmd>Neorg gtd views<CR>')
@@ -37,3 +37,13 @@ return function()
     },
   })
 end
+
+return {
+  {
+    'vhyrro/neorg',
+    ft = 'norg',
+    build = ':Neorg sync-parsers',
+    config = config,
+    dependencies = { 'vhyrro/neorg-telescope' },
+  },
+}

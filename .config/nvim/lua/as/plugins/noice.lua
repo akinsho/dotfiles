@@ -1,4 +1,4 @@
-return function()
+local function config()
   require('noice').setup({
     cmdline = {
       format = {
@@ -77,6 +77,11 @@ return function()
         opts = { skip = true },
       },
     },
+    commands = {
+      history = {
+        view = 'vsplit',
+      },
+    },
     presets = {
       inc_rename = true,
       long_message_to_split = true,
@@ -122,3 +127,13 @@ return function()
     { NoiceCmdlineIconLua = { link = 'NoicePopupBaseGroup' } },
   })
 end
+
+return {
+  {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    enabled = as.nightly(),
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    config = config,
+  },
+}
