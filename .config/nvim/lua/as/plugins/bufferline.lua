@@ -4,7 +4,9 @@ local r = vim.regex
 local function flat_highlights(defaults)
   local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
-  local data = highlights.get('Normal')
+  local data, err = highlights.get('Normal')
+  if as.empty(data) or err then return defaults.highlights end
+
   local normal_bg, normal_fg = data.background, data.foreground
   local visible = highlights.alter_color(normal_fg, -40)
   local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
