@@ -1,9 +1,9 @@
 local fmt = string.format
-local api = vim.api
+local api, notify = vim.api, vim.notify
 
-local M = {
-  win_hl = {},
-}
+local M = { win_hl = {} }
+
+---@alias ErrorMsg {msg: string}
 
 ---@class HighlightAttributes
 ---@field from string
@@ -73,8 +73,8 @@ end
 ---@param group string
 ---@param attribute string?
 ---@param fallback string?
----@return string
----@overload fun(group: string): NvimHighlightData
+---@return string, ErrorMsg?
+---@overload fun(group: string): NvimHighlightData, ErrorMsg?
 function M.get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
   local data = get_highlight(group)
@@ -82,8 +82,7 @@ function M.get(group, attribute, fallback)
   local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
   local color = data[attr] or fallback
   if color then return color end
-  vim.schedule(function() vim.notify(fmt("%s's %s does not exist", group, attr), 'error') end)
-  return 'NONE'
+  return 'NONE', { msg = fmt('failed to get highlight %s for attribute %s', group, attribute) }
 end
 
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
@@ -95,11 +94,12 @@ end
 ---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
----  NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
+--- NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
 --- is updated
 ---@param name string
 ---@param opts HighlightKeys
----@overload fun(namespace: integer, name: string, opts: HighlightKeys)
+---@overload fun(namespace: integer, name: string, opts: HighlightKeys): ErrorMsg[]?
+---@return ErrorMsg[]?
 function M.set(namespace, name, opts)
   if type(namespace) == 'string' and type(name) == 'table' then
     opts, name, namespace = name, namespace, 0
@@ -112,17 +112,23 @@ function M.set(namespace, name, opts)
   })
 
   local hl = get_highlight(opts.inherit or name)
+  local errs = {}
 
   for attr, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      hl[attr] = M.get(value.from, value.attr or attr)
-      if value.alter then hl[attr] = M.alter_color(hl[attr], value.alter) end
+      local new_attr, err = M.get(value.from, value.attr or attr)
+      if value.alter then hl[attr] = M.alter_color(new_attr, value.alter) end
+      if err then table.insert(errs, err) end
+      hl[attr] = new_attr
     elseif attr ~= 'inherit' then
       hl[attr] = value
     end
   end
 
-  as.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, hl)
+  if not pcall(api.nvim_set_hl, namespace, name, hl) then
+    table.insert(errs, { msg = fmt('failed to set highlight %s with values %s', name, hl) })
+  end
+  if #errs > 0 then return errs end
 end
 
 --- Set window local highlights
@@ -179,7 +185,14 @@ end
 ---@param hls table<string, HighlightKeys>
 ---@param namespace integer?
 function M.all(hls, namespace)
-  as.foreach(function(hl) M.set(namespace or 0, next(hl)) end, hls)
+  local errors = as.fold(function(errors, hl)
+    local curr_errors = M.set(namespace or 0, next(hl))
+    if curr_errors then vim.list_extend(errors, curr_errors) end
+    return errors
+  end, hls)
+  if #errors > 0 then
+    notify(as.fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
+  end
 end
 
 ---------------------------------------------------------------------------------
