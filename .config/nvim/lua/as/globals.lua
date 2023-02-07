@@ -76,11 +76,6 @@ function as.installed_plugins()
   return lazy.stats().count
 end
 
----@param _ string
----@return boolean?
--- TODO: figure out how to do this using lazy.nvim
-function as.plugin_loaded(_) return true end
-
 ---Check whether or not the location or quickfix list is open
 ---@return boolean
 function as.is_vim_list_open()
@@ -180,13 +175,9 @@ end
 ---@param name string | Plug
 ---@param callback fun(module: table)
 function as.ftplugin_conf(name, callback)
-  local plugin_name = type(name) == 'table' and name.plugin or nil
-  if plugin_name and not as.plugin_loaded(plugin_name) then return end
-
   local module = type(name) == 'table' and name[1] or name
   local info = debug.getinfo(1, 'S')
   local ok, plugin = as.require(module, { message = fmt('In file: %s', info.source) })
-
   if ok then callback(plugin) end
 end
 

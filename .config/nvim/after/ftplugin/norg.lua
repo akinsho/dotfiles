@@ -1,7 +1,7 @@
 if not as then return end
 
 as.ftplugin_conf(
-  { 'cmp', plugin = 'nvim-cmp' },
+  'cmp',
   function(cmp)
     cmp.setup.filetype('norg', {
       sources = cmp.config.sources({
