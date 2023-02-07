@@ -137,5 +137,6 @@ return {
     enabled = as.nightly(),
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = config,
+    version = '*',
   },
 }
