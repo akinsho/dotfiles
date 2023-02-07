@@ -174,9 +174,7 @@ return {
       inlay_hints = {
         highlight = 'Comment',
         labels_separator = ' ⏐ ',
-        parameter_hints = {
-          prefix = '',
-        },
+        parameter_hints = { prefix = '' },
         type_hints = {
           prefix = '=> ',
           remove_colon_start = true,
@@ -265,7 +263,8 @@ return {
       {
         '<leader>do',
         function() return require('debugprint').debugprint({ motion = true }) end,
-        { desc = 'debugprint: operator', expr = true },
+        desc = 'debugprint: operator',
+        expr = true,
       },
       { '<leader>dC', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
