@@ -1,4 +1,6 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
+local border = as.style.current.border
+
 local highlights = require('as.highlights')
 local data = fn.stdpath('data')
 
@@ -91,13 +93,13 @@ return {
           'neovim/nvim-lspconfig',
           config = function()
             highlights.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
-            require('lspconfig.ui.windows').default_options.border = as.style.current.border
+            require('lspconfig.ui.windows').default_options.border = border
             require('lspconfig').ccls.setup(require('as.servers')('ccls'))
           end,
         },
       },
       config = function()
-        require('mason').setup({ ui = { border = as.style.current.border } })
+        require('mason').setup({ ui = { border = border } })
         require('mason-lspconfig').setup({ automatic_installation = true })
         require('mason-lspconfig').setup_handlers({
           function(name)
@@ -189,7 +191,7 @@ return {
   {
     'uga-rosa/ccc.nvim',
     opts = {
-      win_opts = { border = as.style.current.border },
+      win_opts = { border = border },
       highlighter = { auto_enable = true, excludes = { 'dart' } },
     },
   },

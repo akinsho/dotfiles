@@ -5,20 +5,23 @@
 --  _/    _/  _/  _/
 -- _/    _/  _/    _/
 ----------------------------------------------------------------------------------------------------
-local fn, opt = vim.fn, vim.opt
+local g, fn, opt, loop, env = vim.g, vim.fn, vim.opt, vim.loop, vim.env
+local data = fn.stdpath('data')
 
-vim.g.os = vim.loop.os_uname().sysname
-vim.g.open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
-vim.g.dotfiles = vim.env.DOTFILES or vim.fn.expand('~/.dotfiles')
-vim.g.vim_dir = vim.g.dotfiles .. '/.config/nvim'
+g.os = loop.os_uname().sysname
+g.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
+
+g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
+g.vim_dir = g.dotfiles .. '/.config/nvim'
+g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
 ----------------------------------------------------------------------------------------------------
 -- Ensure all autocommands are cleared
 vim.api.nvim_create_augroup('vimrc', {})
 ----------------------------------------------------------------------------------------------------
 -- Leader bindings
 ----------------------------------------------------------------------------------------------------
-vim.g.mapleader = ',' -- Remap leader key
-vim.g.maplocalleader = ' ' -- Local leader is <Space>
+g.mapleader = ',' -- Remap leader key
+g.maplocalleader = ' ' -- Local leader is <Space>
 
 local ok, reload = pcall(require, 'plenary.reload')
 RELOAD = ok and reload.reload_module or function(...) return ... end
@@ -54,8 +57,8 @@ R('as.plugins')
 -----------------------------------------------------------------------------//
 -- Plugins
 -----------------------------------------------------------------------------//
-local lazypath = fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+local lazypath = data .. '/lazy/lazy.nvim'
+if not loop.fs_stat(lazypath) then
   fn.system({
     'git',
     'clone',
@@ -70,7 +73,7 @@ opt.runtimepath:prepend(lazypath)
 require('lazy').setup('as.plugins', {
   defaults = { lazy = true },
   rtp = {
-    paths = { fn.stdpath('data') .. '/site' },
+    paths = { data .. '/site' },
     disabled_plugins = {
       'netrw',
       'netrwPlugin',
@@ -81,7 +84,7 @@ require('lazy').setup('as.plugins', {
     },
   },
   ui = { border = as.style.current.border },
-  dev = { path = '~/projects/personal/', patterns = { 'akinsho' } },
+  dev = { path = g.projects_dir .. '/personal/', patterns = { 'akinsho' } },
   install = { colorscheme = { 'horizon' } },
 })
 -----------------------------------------------------------------------------//
