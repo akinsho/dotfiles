@@ -117,7 +117,7 @@ function M.set(namespace, name, opts)
   for attr, value in pairs(opts) do
     if type(value) == 'table' and value.from then
       local new_attr, err = M.get(value.from, value.attr or attr)
-      if value.alter then hl[attr] = M.alter_color(new_attr, value.alter) end
+      if value.alter then new_attr = M.alter_color(new_attr, value.alter) end
       if err then table.insert(errs, err) end
       hl[attr] = new_attr
     elseif attr ~= 'inherit' then
