@@ -80,7 +80,13 @@ local function config()
         end
         return disable
       end, parsers.available_parsers()),
-      query = 'rainbow-parens',
+      colors = {
+        'royalblue3',
+        'darkorange3',
+        'seagreen3',
+        'firebrick',
+        'darkorchid3',
+      },
     },
     autopairs = { enable = true },
     playground = {
@@ -102,7 +108,7 @@ return {
     dependencies = {
       { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'p00f/nvim-ts-rainbow' },
+      { 'mrjones2014/nvim-ts-rainbow' },
     },
   },
   {
