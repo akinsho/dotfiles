@@ -321,21 +321,23 @@ return {
   },
   {
     'mfussenegger/nvim-treehopper',
-    config = function()
-      as.augroup('TreehopperMaps', {
-        {
-          event = 'FileType',
-          command = function(args)
-            -- FIXME: this issue should be handled inside the plugin rather than manually
-            local langs = require('nvim-treesitter.parsers').available_parsers()
-            if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
-              as.omap('u', ":<C-U>lua require('tsht').nodes()<CR>", { buffer = args.buf })
-              as.vnoremap('u', ":lua require('tsht').nodes()<CR>", { buffer = args.buf })
-            end
-          end,
-        },
-      })
-    end,
+    keys = {
+      {
+        'u',
+        function() require('tsht').nodes() end,
+        desc = 'treehopper: toggle',
+        mode = 'o',
+        noremap = false,
+        silent = true,
+      },
+      {
+        'u',
+        ":lua require('tsht').nodes()<CR>",
+        desc = 'treehopper: toggle',
+        mode = 'x',
+        silent = true,
+      },
+    },
   },
   {
     'windwp/nvim-autopairs',
