@@ -45,6 +45,12 @@ local function config()
           padding = { 0, 1 },
         },
       },
+      confirm = {
+        border = {
+          style = as.style.current.border,
+          padding = { 0, 1 },
+        },
+      },
       popupmenu = {
         relative = 'editor',
         position = {
