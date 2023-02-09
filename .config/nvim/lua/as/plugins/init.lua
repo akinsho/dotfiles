@@ -557,7 +557,7 @@ return {
       { 'Xc', function() require('substitute.exchange').cancel() end, mode = { 'n', 'x' } },
     },
   },
-  { 'wellle/targets.vim', event = 'VeryLazy' },
+  { 'echasnovski/mini.ai', config = true },
   {
     'kana/vim-textobj-user',
     lazy = false,
