@@ -5,7 +5,7 @@
 --  _/    _/  _/  _/
 -- _/    _/  _/    _/
 ----------------------------------------------------------------------------------------------------
-local g, fn, opt, loop, env = vim.g, vim.fn, vim.opt, vim.loop, vim.env
+local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.loop, vim.env, vim.cmd
 local data = fn.stdpath('data')
 
 g.os = loop.os_uname().sysname
@@ -95,8 +95,8 @@ as.nnoremap('<leader>pc', '<Cmd>Lazy clean<CR>')
 -- Builtin Packages
 -----------------------------------------------------------------------------//
 -- cfilter plugin allows filtering down an existing quickfix list
-vim.cmd.packadd('cfilter')
+cmd.packadd('cfilter')
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-as.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')
+as.wrap_err('theme failed to load because', cmd.colorscheme, 'horizon')
