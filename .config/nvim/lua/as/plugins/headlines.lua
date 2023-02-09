@@ -1,5 +1,5 @@
 local function init()
-  require('as.highlights').plugin('Headlines', {
+  as.highlight.plugin('Headlines', {
     theme = {
       ['*'] = {
         { Headline1 = { background = '#003c30', foreground = 'White' } },

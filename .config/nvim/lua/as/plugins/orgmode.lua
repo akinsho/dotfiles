@@ -3,7 +3,7 @@ local function config()
   local fmt = string.format
 
   local orgmode = require('orgmode')
-  local highlights = require('as.highlights')
+  local highlights = as.highlight
 
   highlights.plugin('org', {
     { OrgDone = { fg = 'Green', bold = true } },

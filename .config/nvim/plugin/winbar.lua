@@ -2,7 +2,6 @@
 
 if not as or not as.ui.winbar.enable then return end
 
-local highlights = require('as.highlights')
 local utils = require('as.utils.statusline')
 
 local fn, api = vim.fn, vim.api
@@ -28,7 +27,7 @@ function as.ui.winbar.click(id, _, _, _)
   if id then vim.cmd.edit(as.ui.winbar.state[id]) end
 end
 
-highlights.plugin('winbar', {
+as.highlight.plugin('winbar', {
   { Winbar = { bold = false } },
   { WinbarNC = { bold = false } },
   { WinbarCrumb = { bold = true } },

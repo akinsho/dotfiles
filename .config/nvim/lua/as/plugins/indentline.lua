@@ -3,7 +3,7 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
-      require('as.highlights').plugin('indentline', {
+      as.highlight.plugin('indentline', {
         theme = {
           horizon = {
             { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },

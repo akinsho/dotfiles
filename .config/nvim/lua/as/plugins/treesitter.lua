@@ -1,5 +1,3 @@
-local highlights = require('as.highlights')
-
 local function config()
   require('nvim-treesitter.install').compilers = { 'gcc-12' }
 
@@ -114,7 +112,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
-      highlights.plugin('treesitter-context', {
+      as.highlight.plugin('treesitter-context', {
         { ContextBorder = { link = 'Dim' } },
         { TreesitterContext = { inherit = 'Normal' } },
         { TreesitterContextLineNumber = { inherit = 'LineNr' } },

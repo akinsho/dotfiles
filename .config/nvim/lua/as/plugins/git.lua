@@ -50,7 +50,7 @@ return {
       },
     },
     config = function()
-      require('as.highlights').plugin('diffview', {
+      as.highlight.plugin('diffview', {
         { DiffAddedChar = { bg = 'NONE', fg = { from = 'diffAdded', attr = 'bg', alter = 30 } } },
         {
           DiffChangedChar = { bg = 'NONE', fg = { from = 'diffChanged', attr = 'bg', alter = 30 } },

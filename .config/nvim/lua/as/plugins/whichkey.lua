@@ -1,5 +1,5 @@
 local function config()
-  require('as.highlights').plugin('whichkey', {
+  as.highlight.plugin('whichkey', {
     theme = {
       ['*'] = {
         { WhichkeyFloat = { link = 'NormalFloat' } },

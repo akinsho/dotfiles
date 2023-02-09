@@ -1,14 +1,13 @@
-local highlights = require('as.highlights')
 local r = vim.regex
 
 local function flat_highlights(defaults)
   local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
-  local data, err = highlights.get('Normal')
+  local data, err = as.highlight.get('Normal')
   if as.empty(data) or err then return defaults.highlights end
 
   local normal_bg, normal_fg = data.background, data.foreground
-  local visible = highlights.alter_color(normal_fg, -40)
+  local visible = as.highlight.alter_color(normal_fg, -40)
   local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
 
   local hl = as.fold(function(accum, attrs, name)

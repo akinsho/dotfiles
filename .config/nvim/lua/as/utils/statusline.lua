@@ -1,5 +1,3 @@
-local highlights = require('as.highlights')
-
 local fn = vim.fn
 local api = vim.api
 local expand = fn.expand
@@ -8,7 +6,7 @@ local fnamemodify = fn.fnamemodify
 local luv = vim.loop
 local fmt = string.format
 local empty = as.empty
-local win_hl = highlights.win_hl
+local win_hl = as.highlight.win_hl
 
 local M = {}
 
@@ -227,8 +225,8 @@ local function highlight_ft_icon(hl, bg_hl)
   if not hl or not bg_hl then return end
   local name = hl .. 'Statusline'
   -- TODO: find a mechanism to cache this so it isn't repeated constantly
-  local fg_color = highlights.get(hl, 'fg')
-  local bg_color = highlights.get(bg_hl, 'bg')
+  local fg_color = as.highlight.get(hl, 'fg')
+  local bg_color = as.highlight.get(bg_hl, 'bg')
   if bg_color and fg_color then
     as.augroup(name, {
       {

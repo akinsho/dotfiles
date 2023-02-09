@@ -2,7 +2,7 @@ return {
   {
     'chentoast/marks.nvim',
     config = function()
-      require('as.highlights').plugin('marks', {
+      as.highlight.plugin('marks', {
         { MarkSignHL = { link = 'Directory' } },
         { MarkSignNumHL = { link = 'Directory' } },
       })

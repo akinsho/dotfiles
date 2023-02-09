@@ -1,5 +1,3 @@
-local H = require('as.highlights')
-
 local fn = vim.fn
 local fmt = string.format
 
@@ -79,7 +77,7 @@ end
 ---@param bg_type bg_type
 function M.kitty.set_colors(bg_type)
   local name = hl_names[bg_type]
-  local bg = H.get(name, 'bg')
+  local bg = as.highlight.get(name, 'bg')
   local colors = {
     active_tab_background = bg,
     inactive_tab_background = bg,
@@ -129,14 +127,15 @@ function M.title_string()
   local icon, hl = fileicon()
   if not hl then return (icon or '') .. ' ' end
   local has_tmux = vim.env.TMUX ~= nil
-  return has_tmux and fmt('%s #[fg=%s]%s ', dir, H.get_hl(hl, 'fg'), icon) or dir .. ' ' .. icon
+  return has_tmux and fmt('%s #[fg=%s]%s ', dir, as.highlight.get(hl, 'fg'), icon)
+    or dir .. ' ' .. icon
 end
 
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 function M.tmux.set_statusline(reset)
   local hl = reset and 'Normal' or 'MsgArea'
-  local bg = H.get_hl(hl, 'bg')
+  local bg = as.highlight.get(hl, 'bg')
   -- TODO: we should correctly derive the previous bg value
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end

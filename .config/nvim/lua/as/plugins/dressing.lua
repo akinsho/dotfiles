@@ -13,10 +13,7 @@ return {
     'stevearc/dressing.nvim',
     event = 'VeryLazy',
     config = function()
-      require('as.highlights').plugin(
-        'dressing',
-        { { FloatTitle = { inherit = 'Visual', bold = true } } }
-      )
+      as.highlight.plugin('dressing', { { FloatTitle = { inherit = 'Visual', bold = true } } })
       require('dressing').setup({
         input = {
           insert_only = false,

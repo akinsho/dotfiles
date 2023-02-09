@@ -1,7 +1,6 @@
-local fmt = string.format
-local api, notify = vim.api, vim.notify
+local api, notify, fmt = vim.api, vim.notify, string.format
 
-local M = { win_hl = {} }
+as.highlight = { win_hl = {} }
 
 ---@alias ErrorMsg {msg: string}
 
@@ -49,7 +48,7 @@ local function alter(attr, percent) return math.floor(attr * (100 + percent) / 1
 ---@param color string A hex color
 ---@param percent integer a negative number darkens and a positive one brightens
 ---@return string
-function M.alter_color(color, percent)
+function as.highlight.alter_color(color, percent)
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then return 'NONE' end
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
@@ -75,7 +74,7 @@ end
 ---@param fallback string?
 ---@return string, ErrorMsg?
 ---@overload fun(group: string): NvimHighlightData, ErrorMsg?
-function M.get(group, attribute, fallback)
+function as.highlight.get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
   local data = get_highlight(group)
   if not attribute then return data end
@@ -100,7 +99,7 @@ end
 ---@param opts HighlightKeys
 ---@overload fun(namespace: integer, name: string, opts: HighlightKeys): ErrorMsg[]?
 ---@return ErrorMsg[]?
-function M.set(namespace, name, opts)
+function as.highlight.set(namespace, name, opts)
   if type(namespace) == 'string' and type(name) == 'table' then
     opts, name, namespace = name, namespace, 0
   end
@@ -116,8 +115,8 @@ function M.set(namespace, name, opts)
 
   for attr, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      local new_attr, err = M.get(value.from, value.attr or attr)
-      if value.alter then new_attr = M.alter_color(new_attr, value.alter) end
+      local new_attr, err = as.highlight.get(value.from, value.attr or attr)
+      if value.alter then new_attr = as.highlight.alter_color(new_attr, value.alter) end
       if err then table.insert(errs, err) end
       hl[attr] = new_attr
     elseif attr ~= 'inherit' then
@@ -135,9 +134,9 @@ end
 ---@param name string
 ---@param win_id number
 ---@param hls HighlightKeys[]
-function M.win_hl.set(name, win_id, hls)
+function as.highlight.win_hl.set(name, win_id, hls)
   local namespace = api.nvim_create_namespace(name)
-  M.all(hls, namespace)
+  as.highlight.all(hls, namespace)
   api.nvim_win_set_hl_ns(win_id, namespace)
 end
 
@@ -148,7 +147,7 @@ end
 --- @param win_id integer
 --- @vararg string
 --- @return boolean, string
-function M.win_hl.exists(win_id, ...)
+function as.highlight.win_hl.exists(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
   for _, target in ipairs({ ... }) do
     if win_hl:match(target) then return true, win_hl end
@@ -162,9 +161,9 @@ end
 ---@param target string
 ---@param name string
 ---@param fallback string
-function M.win_hl.adopt(win_id, target, name, fallback)
+function as.highlight.win_hl.adopt(win_id, target, name, fallback)
   local win_hl_name = name .. win_id
-  local _, win_hl = M.win_hl.exists(win_id, target)
+  local _, win_hl = as.highlight.win_hl.exists(win_id, target)
 
   if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then return win_hl_name end
 
@@ -172,11 +171,14 @@ function M.win_hl.adopt(win_id, target, name, fallback)
   if not hl then return fallback end
 
   local hl_group = vim.split(hl, ':')[2]
-  M.set(win_hl_name, { inherit = fallback, background = { from = hl_group, attr = 'bg' } })
+  as.highlight.set(
+    win_hl_name,
+    { inherit = fallback, background = { from = hl_group, attr = 'bg' } }
+  )
   return win_hl_name
 end
 
-function M.clear(name)
+function as.highlight.clear(name)
   assert(name, 'name is required to clear a highlight')
   api.nvim_set_hl(0, name, {})
 end
@@ -184,9 +186,9 @@ end
 ---Apply a list of highlights
 ---@param hls table<string, HighlightKeys>
 ---@param namespace integer?
-function M.all(hls, namespace)
+function as.highlight.all(hls, namespace)
   local errors = as.fold(function(errors, hl)
-    local curr_errors = M.set(namespace or 0, next(hl))
+    local curr_errors = as.highlight.set(namespace or 0, next(hl))
     if curr_errors then vim.list_extend(errors, curr_errors) end
     return errors
   end, hls)
@@ -215,7 +217,7 @@ end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
 ---@param opts table<string, table> map of highlights
-function M.plugin(name, opts)
+function as.highlight.plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
   -- definition otherwise use the opts as is
   if opts.theme then
@@ -224,16 +226,14 @@ function M.plugin(name, opts)
   end
   -- capitalise the name for autocommand convention sake
   name = name:gsub('^%l', string.upper)
-  M.all(opts)
+  as.highlight.all(opts)
   as.augroup(fmt('%sHighlightOverrides', name), {
     {
       event = 'ColorScheme',
       command = function()
         -- Defer resetting these highlights to ensure they apply after other overrides
-        vim.defer_fn(function() M.all(opts) end, 1)
+        vim.defer_fn(function() as.highlight.all(opts) end, 1)
       end,
     },
   })
 end
-
-return M

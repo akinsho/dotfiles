@@ -8,7 +8,6 @@ if not as then return end
 --- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 --- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
-local H = require('as.highlights')
 local utils = require('as.utils.statusline')
 
 local api = vim.api
@@ -30,14 +29,14 @@ local function colors()
 
   local error_color = as.style.lsp.colors.error
   local info_color = as.style.lsp.colors.info
-  local normal_fg = H.get('Normal', 'fg')
-  local string_fg = H.get('String', 'fg')
-  local number_fg = H.get('Number', 'fg')
-  local normal_bg = H.get('Normal', 'bg')
+  local normal_fg = as.highlight.get('Normal', 'fg')
+  local string_fg = as.highlight.get('String', 'fg')
+  local number_fg = as.highlight.get('Number', 'fg')
+  local normal_bg = as.highlight.get('Normal', 'bg')
 
-  local bg_color = H.alter_color(normal_bg, -16)
+  local bg_color = as.highlight.alter_color(normal_bg, -16)
 
-  H.all({
+  as.highlight.all({
     { StMetadata = { background = bg_color, inherit = 'Comment' } },
     { StMetadataPrefix = { background = bg_color, foreground = { from = 'Comment' } } },
     { StIndicator = { background = bg_color, foreground = indicator_color } },
@@ -140,7 +139,7 @@ function as.ui.statusline()
   end
   local file_component = component(file.item, file.hl, file.opts)
 
-  local readonly_hl = H.win_hl.adopt(curwin, 'StatusLine', 'StCustomError', 'StError')
+  local readonly_hl = as.highlight.win_hl.adopt(curwin, 'StatusLine', 'StCustomError', 'StError')
   local readonly_component = component(utils.readonly(ctx), readonly_hl, { priority = 1 })
   ----------------------------------------------------------------------------//
   -- Mode

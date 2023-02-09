@@ -50,7 +50,7 @@ local function config()
 
   require('dap') -- Dap must be loaded before the signs can be tweaked
 
-  require('as.highlights').plugin('dap', {
+  as.highlight.plugin('dap', {
     { DapBreakpoint = { foreground = as.style.palette.light_red } },
     { DapStopped = { foreground = as.style.palette.green } },
   })

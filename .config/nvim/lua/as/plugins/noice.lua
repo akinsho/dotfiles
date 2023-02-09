@@ -95,7 +95,7 @@ local function config()
     },
   })
 
-  require('as.highlights').plugin('noice', {
+  as.highlight.plugin('noice', {
     {
       NoicePopupBaseGroup = {
         bg = { from = 'NormalFloat' },

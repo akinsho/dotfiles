@@ -2,7 +2,6 @@ local function config()
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
-  local hl = require('as.highlights')
 
   local f = string.format
   local DOTFILES = vim.env.DOTFILES
@@ -16,7 +15,7 @@ local function config()
     return btn
   end
 
-  hl.plugin('alpha', {
+  as.highlight.plugin('alpha', {
     { StartLogo1 = { fg = '#1C506B' } },
     { StartLogo2 = { fg = '#1D5D68' } },
     { StartLogo3 = { fg = '#1E6965' } },

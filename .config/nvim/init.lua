@@ -51,6 +51,7 @@ _G.as = as or namespace
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
 R('as.globals')
+R('as.highlights')
 R('as.styles')
 R('as.settings')
 R('as.plugins')

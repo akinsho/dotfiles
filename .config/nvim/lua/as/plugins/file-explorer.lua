@@ -1,8 +1,7 @@
 local function config()
   local icons = as.style.icons
-  local highlights = require('as.highlights')
 
-  highlights.plugin('NeoTree', {
+  as.highlight.plugin('NeoTree', {
     theme = {
       ['*'] = {
         { NeoTreeNormal = { link = 'PanelBackground' } },
@@ -69,11 +68,11 @@ local function config()
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
-        handler = function() highlights.set('Cursor', { blend = 100 }) end,
+        handler = function() as.highlight.set('Cursor', { blend = 100 }) end,
       },
       {
         event = 'neo_tree_buffer_leave',
-        handler = function() highlights.set('Cursor', { blend = 0 }) end,
+        handler = function() as.highlight.set('Cursor', { blend = 0 }) end,
       },
     },
     filesystem = {
@@ -149,7 +148,7 @@ local function picker_config()
         buftype = { 'terminal', 'quickfix', 'nofile' },
       },
     },
-    other_win_hl_color = require('as.highlights').get('Visual', 'bg'),
+    other_win_hl_color = as.highlight.get('Visual', 'bg'),
   })
 end
 

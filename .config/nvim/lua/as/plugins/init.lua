@@ -1,7 +1,6 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
-local border = as.style.current.border
+local border, highlight = as.style.current.border, as.highlight
 
-local highlights = require('as.highlights')
 local data = fn.stdpath('data')
 
 return {
@@ -38,7 +37,7 @@ return {
         ['neo-tree-popup'] = false,
         ['dap-repl'] = false,
       }
-      highlights.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
+      highlight.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
     end,
   },
   'nvim-tree/nvim-web-devicons',
@@ -87,7 +86,7 @@ return {
     {
       'neovim/nvim-lspconfig',
       config = function()
-        highlights.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
+        highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
         require('lspconfig.ui.windows').default_options.border = border
         require('lspconfig').ccls.setup(require('as.servers')('ccls'))
       end,
@@ -149,7 +148,7 @@ return {
     'zbirenbaum/neodim',
     config = function()
       require('neodim').setup({
-        blend_color = highlights.get('Normal', 'bg'),
+        blend_color = highlight.get('Normal', 'bg'),
         alpha = 0.45,
         hide = {
           underline = false,
@@ -160,7 +159,7 @@ return {
   {
     'kosayoda/nvim-lightbulb',
     config = function()
-      highlights.plugin('Lightbulb', {
+      highlight.plugin('Lightbulb', {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         { LightBulbVirtualText = { foreground = { from = 'Type' } } },
       })
@@ -207,12 +206,12 @@ return {
       local s = as.style
       local misc = s.icons.misc
 
-      highlights.plugin('navic', {
+      highlight.plugin('navic', {
         { NavicText = { bold = true } },
         { NavicSeparator = { link = 'Directory' } },
       })
       local icons = as.map(function(icon, key)
-        highlights.set(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
+        highlight.set(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
         return icon .. ' '
       end, s.current.lsp_icons)
 
@@ -237,7 +236,7 @@ return {
     'lukas-reineke/virt-column.nvim',
     lazy = false,
     config = function()
-      highlights.plugin('virt_column', {
+      highlight.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
       })
       require('virt-column').setup({ char = '▕' })
@@ -374,7 +373,7 @@ return {
   },
   {
     'itchyny/vim-highlighturl',
-    config = function() vim.g.highlighturl_guifg = highlights.get('URL', 'fg') end,
+    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
   },
   {
     'danymat/neogen',
@@ -419,7 +418,7 @@ return {
     url = 'https://gitlab.com/yorickpeterse/nvim-pqf',
     event = 'VeryLazy',
     config = function()
-      highlights.plugin('pqf', {
+      highlight.plugin('pqf', {
         theme = {
           ['doom-one'] = { { qfPosition = { link = 'Todo' } } },
           ['horizon'] = { { qfPosition = { link = 'String' } } },
@@ -432,7 +431,7 @@ return {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     config = function()
-      highlights.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
+      highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
     end,
   },
   -- }}}
@@ -503,7 +502,7 @@ return {
   {
     'm-demare/hlargs.nvim',
     config = function()
-      highlights.plugin('hlargs', {
+      highlight.plugin('hlargs', {
         theme = {
           ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
           ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },

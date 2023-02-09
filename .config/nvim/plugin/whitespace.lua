@@ -6,8 +6,6 @@ if not as then return end
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local H = require('as.highlights')
-
 local fn = vim.fn
 
 local function is_floating_win() return vim.fn.win_gettype() == 'popup' end
@@ -31,14 +29,14 @@ local function toggle_trailing(mode)
   end
 end
 
-H.set('ExtraWhitespace', { foreground = 'red' })
+as.highlight.set('ExtraWhitespace', { foreground = 'red' })
 
 as.augroup('WhitespaceMatch', {
   {
     event = { 'ColorScheme' },
     desc = 'Add extra whitespace highlight',
     pattern = { '*' },
-    command = function() H.set('ExtraWhitespace', { foreground = 'red' }) end,
+    command = function() as.highlight.set('ExtraWhitespace', { foreground = 'red' }) end,
   },
   {
     event = { 'BufEnter', 'FileType', 'InsertLeave' },

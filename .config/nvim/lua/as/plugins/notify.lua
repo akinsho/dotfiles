@@ -1,7 +1,7 @@
 local function config()
   local api = vim.api
 
-  require('as.highlights').plugin('notify', {
+  as.highlight.plugin('notify', {
     { NotifyERRORBorder = { bg = { from = 'NormalFloat' } } },
     { NotifyWARNBorder = { bg = { from = 'NormalFloat' } } },
     { NotifyINFOBorder = { bg = { from = 'NormalFloat' } } },

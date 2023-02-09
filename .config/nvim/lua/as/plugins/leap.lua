@@ -1,6 +1,5 @@
 local api = vim.api
 local fn = vim.fn
-local highlights = require('as.highlights')
 
 local function leap_keys()
   require('leap').leap({
@@ -12,7 +11,7 @@ local function leap_keys()
 end
 
 local function leap_config()
-  highlights.plugin('leap', {
+  as.highlight.plugin('leap', {
     theme = {
       ['*'] = { { LeapBackdrop = { fg = '#707070' } } },
       horizon = {

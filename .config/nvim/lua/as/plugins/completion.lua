@@ -1,6 +1,5 @@
 local function config()
   local cmp = require('cmp')
-  local h = require('as.highlights')
 
   local api, fn = vim.api, vim.fn
   local fmt = string.format
@@ -32,7 +31,7 @@ local function config()
     }
   )
 
-  h.plugin('Cmp', kind_hls)
+  as.highlight.plugin('Cmp', kind_hls)
 
   local function tab(fallback)
     if cmp.visible() then

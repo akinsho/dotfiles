@@ -25,7 +25,6 @@ function as.telescope.ivy(opts)
 end
 
 local function config()
-  local H = require('as.highlights')
   local telescope = require('telescope')
   local actions = require('telescope.actions')
   local layout_actions = require('telescope.actions.layout')
@@ -41,7 +40,7 @@ local function config()
     },
   })
 
-  H.plugin('telescope', {
+  as.highlight.plugin('telescope', {
     theme = {
       ['*'] = {
         { TelescopePromptTitle = { bg = P.grey, fg = { from = 'Directory' }, bold = true } },
