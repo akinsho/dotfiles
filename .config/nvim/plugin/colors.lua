@@ -72,6 +72,7 @@ local function general_overrides()
     -- if either are specified this can lead to issues when a winhighlight is set
     { SignColumn = { background = 'NONE' } },
     { EndOfBuffer = { background = 'NONE' } },
+    { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//

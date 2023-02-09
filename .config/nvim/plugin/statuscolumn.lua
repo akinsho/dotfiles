@@ -2,12 +2,20 @@ if not as or not vim.o.statuscolumn then return end
 
 local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
 
+---@alias SignColumnItem {name:string, text:string, texthl:string}
+
+local sep_hl = '%#StatusColSep#'
 local space = ' '
 local separator = '▏' -- '│'
 
 as.statuscolumn = {}
 
----@return {name:string, text:string, texthl:string}[]
+---@param group string
+---@param text string
+---@return string
+local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
+
+---@return SignColumnItem[]
 local function get_signs()
   local buf = api.nvim_win_get_buf(g.statusline_winid)
   return vim.tbl_map(
@@ -23,16 +31,8 @@ end
 
 local function nr()
   local is_relative = vim.wo[g.statusline_winid].relativenumber
-  local num = ((is_relative and not as.empty(v.relnum)) and v.relnum or v.lnum)
+  local num = (is_relative and not as.empty(v.relnum)) and v.relnum or v.lnum
   return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
-end
-
--- Format the git sign i.e. remove the extra padding that is added
----@param sign {texthl: string, text: string}
----@return string
-local function format_git_sign(sign)
-  if not sign then return ' ' end
-  return '%#' .. sign.texthl .. '#' .. sign.text:gsub(' ', '') .. '%*'
 end
 
 function as.statuscolumn.render()
@@ -46,11 +46,12 @@ function as.statuscolumn.render()
     end
   end
   local components = {
-    sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or ' ',
+    sign and hl(sign.texthl, sign.text) or space,
     [[%=]],
     nr(),
     space,
-    format_git_sign(git_sign),
+    git_sign and hl(git_sign.texthl, git_sign.text:gsub(space, '')) or space,
+    as.empty(v.relnum) and sep_hl or '',
     separator,
     fdm(),
     space,
