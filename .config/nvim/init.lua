@@ -87,6 +87,9 @@ require('lazy').setup('as.plugins', {
   dev = { path = g.projects_dir .. '/personal/', patterns = { 'akinsho' } },
   install = { colorscheme = { 'horizon' } },
 })
+
+as.nnoremap('<leader>ps', '<Cmd>Lazy<CR>')
+as.nnoremap('<leader>pc', '<Cmd>Lazy clean<CR>')
 -----------------------------------------------------------------------------//
 -- Builtin Packages
 -----------------------------------------------------------------------------//
