@@ -1,6 +1,6 @@
 if not as or not vim.o.statuscolumn then return end
 
-local fn, v, api = vim.fn, vim.v, vim.api
+local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
 
 local space = ' '
 local separator = '▏' -- '│'
@@ -9,7 +9,7 @@ as.statuscolumn = {}
 
 ---@return {name:string, text:string, texthl:string}[]
 local function get_signs()
-  local buf = api.nvim_win_get_buf(vim.g.statusline_winid)
+  local buf = api.nvim_win_get_buf(g.statusline_winid)
   return vim.tbl_map(
     function(sign) return fn.sign_getdefined(sign.name)[1] end,
     fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs
@@ -22,7 +22,8 @@ local function fdm()
 end
 
 local function nr()
-  local num = (not as.empty(v.relnum) and v.relnum or v.lnum)
+  local is_relative = vim.wo[g.statusline_winid].relativenumber
+  local num = ((is_relative and not as.empty(v.relnum)) and v.relnum or v.lnum)
   return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
 end
 
