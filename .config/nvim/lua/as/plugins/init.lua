@@ -145,9 +145,7 @@ return {
       require('neodim').setup({
         blend_color = highlight.get('Normal', 'bg'),
         alpha = 0.45,
-        hide = {
-          underline = false,
-        },
+        hide = { underline = false },
       })
     end,
   },
@@ -175,10 +173,7 @@ return {
         highlight = 'Comment',
         labels_separator = ' ⏐ ',
         parameter_hints = { prefix = '' },
-        type_hints = {
-          prefix = '=> ',
-          remove_colon_start = true,
-        },
+        type_hints = { prefix = '=> ', remove_colon_start = true },
       },
     },
   },
