@@ -1,6 +1,14 @@
+as.augroup('marks', {
+  {
+    event = 'BufRead',
+    command = ':delm a-zA-Z0-9',
+  },
+})
+
 return {
   {
     'chentoast/marks.nvim',
+    event = 'VeryLazy',
     config = function()
       as.highlight.plugin('marks', {
         { MarkSignHL = { link = 'Directory' } },
