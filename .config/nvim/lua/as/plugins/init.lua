@@ -120,7 +120,10 @@ return {
   },
   {
     'DNLHC/glance.nvim',
-    opts = { theme = { enable = true, mode = 'darken' } },
+    opts = {
+      preview_win_opts = { relativenumber = false },
+      theme = { enable = true, mode = 'darken' },
+    },
     keys = {
       { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
       { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
