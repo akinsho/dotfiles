@@ -232,7 +232,7 @@ return {
   },
   {
     'lukas-reineke/virt-column.nvim',
-    event = 'VeryLazy',
+    lazy = false,
     config = function()
       highlights.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
