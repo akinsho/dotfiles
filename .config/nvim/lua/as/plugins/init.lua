@@ -124,8 +124,8 @@ return {
     keys = {
       { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
       { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
-      { 'gY', '<CMD>Glance type_definitions<CR>' },
-      { 'gM', '<CMD>Glance implementations<CR>' },
+      { 'gY', '<Cmd>Glance type_definitions<CR>' },
+      { 'gM', '<Cmd>Glance implementations<CR>' },
     },
   },
   {
