@@ -5,6 +5,8 @@ local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
 local space = ' '
 local shade = '░'
 local separator = '▏' -- '│'
+local fold_opened = '▼'
+local fold_closed = '▶'
 local sep_hl = '%#StatusColSep#'
 
 as.statuscolumn = {}
@@ -13,6 +15,8 @@ as.statuscolumn = {}
 ---@param text string
 ---@return string
 local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
+
+local function click(name, item) return '%@v:lua.as.statuscolumn.' .. name .. '@' .. item end
 
 ---@return {name:string, text:string, texthl:string}[]
 local function get_signs()
@@ -23,9 +27,22 @@ local function get_signs()
   )
 end
 
+function as.statuscolumn.toggle_breakpoint(_, _, _, mods)
+  local ok, dap = pcall(require, 'dap')
+  if not ok then return end
+  if mods:find('c') then
+    vim.ui.input(
+      { prompt = 'Breakpoint condition: ' },
+      function(input) dap.set_breakpoint(input) end
+    )
+  else
+    dap.toggle_breakpoint()
+  end
+end
+
 local function fdm()
-  local is_folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
-  return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '⏵') or ' '
+  if fn.foldlevel(v.lnum) <= fn.foldlevel(v.lnum - 1) then return space end
+  return fn.foldclosed(v.lnum) == -1 and fold_closed or fold_opened
 end
 
 local function is_virt_line() return v.virtnum < 0 end
@@ -34,7 +51,8 @@ local function nr()
   if is_virt_line() then return shade end -- virtual line
   local is_relative = vim.wo[g.statusline_winid].relativenumber
   local num = (is_relative and not as.empty(v.relnum)) and v.relnum or v.lnum
-  return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
+  local lnum = fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
+  return click('toggle_breakpoint', lnum)
 end
 
 local function sep()
