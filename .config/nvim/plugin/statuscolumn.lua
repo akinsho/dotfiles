@@ -1,6 +1,6 @@
 if not as or not vim.o.statuscolumn then return end
 
-local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
+local fn, v, api = vim.fn, vim.v, vim.api
 
 local space = ' '
 local shade = '░'
@@ -18,9 +18,9 @@ local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
 
 local function click(name, item) return '%@v:lua.as.statuscolumn.' .. name .. '@' .. item end
 
+---@param buf number
 ---@return {name:string, text:string, texthl:string}[]
-local function get_signs()
-  local buf = api.nvim_win_get_buf(g.statusline_winid)
+local function get_signs(buf)
   return vim.tbl_map(
     function(sign) return fn.sign_getdefined(sign.name)[1] end,
     fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs
@@ -47,12 +47,13 @@ end
 
 local function is_virt_line() return v.virtnum < 0 end
 
-local function nr()
+local function nr(win)
   if is_virt_line() then return shade end -- virtual line
-  local is_relative = vim.wo[g.statusline_winid].relativenumber
-  local num = (is_relative and not as.empty(v.relnum)) and v.relnum or v.lnum
+  local num = vim.wo[win].relativenumber and not as.empty(v.relnum) and v.relnum or v.lnum
   local lnum = fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
-  return click('toggle_breakpoint', lnum)
+  local num_width = (vim.wo[win].numberwidth - 1) - api.nvim_strwidth(lnum)
+  local padding = string.rep(space, num_width)
+  return click('toggle_breakpoint', padding .. lnum)
 end
 
 local function sep()
@@ -61,9 +62,11 @@ local function sep()
 end
 
 function as.statuscolumn.render()
+  local curwin = api.nvim_get_current_win()
+  local curbuf = api.nvim_win_get_buf(curwin)
+
   local sign, git_sign
-  -- This is dependent on using normal signs (rather than extmarks) for git signs
-  for _, s in ipairs(get_signs()) do
+  for _, s in ipairs(get_signs(curbuf)) do
     if s.name:find('GitSign') then
       git_sign = s
     else
@@ -71,9 +74,10 @@ function as.statuscolumn.render()
     end
   end
   local components = {
-    sign and hl(sign.texthl, sign.text) or space,
+    sign and hl(sign.texthl, sign.text:gsub(space, '')) or space,
     '%=',
-    nr(),
+    space,
+    nr(curwin),
     space,
     git_sign and hl(git_sign.texthl, git_sign.text:gsub(space, '')) or space,
     sep(),
@@ -109,7 +113,7 @@ local excluded = {
   'NeogitRebaseTodo',
 }
 
-vim.o.statuscolumn = [[%!v:lua.as.statuscolumn.render()]]
+vim.o.statuscolumn = '%{%v:lua.as.statuscolumn.render()%}'
 
 as.augroup('StatusCol', {
   {
