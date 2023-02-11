@@ -5,10 +5,8 @@ node_modules
 tags
 tags.lock
 tags.temp
-vim-markdown-preview.html
 *.un~
 Session.vim
-.xmark.README.md.html
 # Compiled source #
 ###################
 *.com
@@ -67,6 +65,7 @@ _deps
 # Vim Wiki tag files
 .vimwiki_tags
 
+.nvim.lua
 .localrc.lua
 .exrc
 .ignore
