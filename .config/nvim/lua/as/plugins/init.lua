@@ -508,11 +508,9 @@ return {
   },
   {
     'psliwka/vim-dirtytalk',
+    lazy = false,
     build = ':DirtytalkUpdate',
-    config = function()
-      opt.spelllang:append('programming')
-      opt.rtp:append(data .. '/site') -- Line of interest
-    end,
+    config = function() opt.spelllang:append('programming') end,
   },
   'melvio/medical-spell-files',
   ---}}}

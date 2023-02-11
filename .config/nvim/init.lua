@@ -73,19 +73,25 @@ opt.runtimepath:prepend(lazypath)
 -----------------------------------------------------------------------------
 require('lazy').setup('as.plugins', {
   defaults = { lazy = true },
-  rtp = {
-    paths = { data .. '/site' },
-    disabled_plugins = {
-      'netrw',
-      'netrwPlugin',
-      'tarPlugin',
-      'tutor',
-      'tohtml',
-      'logipat',
+  performance = {
+    rtp = {
+      paths = { data .. '/site' },
+      disabled_plugins = {
+        'netrw',
+        'netrwPlugin',
+        'tarPlugin',
+        'tutor',
+        'tohtml',
+        'logipat',
+      },
     },
   },
   ui = { border = as.style.current.border },
-  dev = { path = g.projects_dir .. '/personal/', patterns = { 'akinsho' } },
+  dev = {
+    path = g.projects_dir .. '/personal/',
+    patterns = { 'akinsho' },
+    fallback = true,
+  },
   install = { colorscheme = { 'horizon' } },
 })
 
