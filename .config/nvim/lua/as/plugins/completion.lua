@@ -62,6 +62,9 @@ local function config()
   }
   cmp.setup({
     experimental = { ghost_text = false },
+    matching = {
+      disallow_partial_fuzzy_matching = false,
+    },
     window = {
       completion = cmp.config.window.bordered(cmp_window),
       documentation = cmp.config.window.bordered(cmp_window),
