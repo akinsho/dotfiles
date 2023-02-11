@@ -201,7 +201,7 @@ return {
         { NavicSeparator = { link = 'Directory' } },
       })
       local icons = as.map(function(icon, key)
-        highlight.set(('NavicIcons%s'):format(key), { link = s.lsp.highlights[key] })
+        highlight.set(fmt('NavicIcons%s', key), { link = s.lsp.highlights[key] })
         return icon .. ' '
       end, s.current.lsp_icons)
 
@@ -549,7 +549,11 @@ return {
       { 'Xc', function() require('substitute.exchange').cancel() end, mode = { 'n', 'x' } },
     },
   },
-  { 'echasnovski/mini.ai', config = true },
+  {
+    'echasnovski/mini.ai',
+    event = 'VeryLazy',
+    config = function() require('mini.ai').setup() end,
+  },
   {
     'kana/vim-textobj-user',
     lazy = false,
