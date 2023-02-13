@@ -76,14 +76,7 @@ require('lazy').setup('as.plugins', {
   performance = {
     rtp = {
       paths = { data .. '/site' },
-      disabled_plugins = {
-        'netrw',
-        'netrwPlugin',
-        'tarPlugin',
-        'tutor',
-        'tohtml',
-        'logipat',
-      },
+      disabled_plugins = { 'netrw', 'netrwPlugin', 'tarPlugin', 'tutor', 'tohtml', 'logipat' },
     },
   },
   ui = { border = as.style.current.border, icons = { lazy = '鈴' } },
