@@ -72,6 +72,10 @@ local function general_overrides()
     { SignColumn = { background = 'NONE' } },
     { EndOfBuffer = { background = 'NONE' } },
     { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
+    ------------------------------------------------------------------------------//
+    --  Semantic tokens
+    ------------------------------------------------------------------------------//
+    { ['@global'] = { bold = true, italic = true, inherit = '@namespace' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
