@@ -86,7 +86,7 @@ require('lazy').setup('as.plugins', {
       },
     },
   },
-  ui = { border = as.style.current.border },
+  ui = { border = as.style.current.border, icons = { lazy = '鈴' } },
   dev = {
     path = g.projects_dir .. '/personal/',
     patterns = { 'akinsho' },
