@@ -111,6 +111,7 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    event = 'VeryLazy',
     config = function()
       as.highlight.plugin('treesitter-context', {
         { ContextBorder = { link = 'Dim' } },
