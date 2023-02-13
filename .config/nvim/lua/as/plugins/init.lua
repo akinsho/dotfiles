@@ -19,21 +19,26 @@ return {
     end,
   },
   {
-    'zbirenbaum/copilot.lua',
+    'github/copilot.vim',
     event = 'InsertEnter',
-    opts = {
-      suggestion = {
-        auto_trigger = true,
-        keymap = { accept = '<C-]>', next = '<M-]>', prev = '<M-[>', dismiss = '<C-\\>' },
-      },
-      filetypes = {
+    dependencies = { 'nvim-cmp' },
+    init = function() vim.g.copilot_no_tab_map = true end,
+    config = function()
+      as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
+      as.inoremap('<M-]>', '<Plug>(copilot-next)')
+      as.inoremap('<M-[>', '<Plug>(copilot-previous)')
+      as.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
+      vim.g.copilot_filetypes = {
+        ['*'] = true,
+        gitcommit = false,
         NeogitCommitMessage = false,
         DressingInput = false,
         TelescopePrompt = false,
         ['neo-tree-popup'] = false,
         ['dap-repl'] = false,
-      },
-    },
+      }
+      highlight.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
+    end,
   },
   'nvim-tree/nvim-web-devicons',
   {

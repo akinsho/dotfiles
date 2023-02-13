@@ -1,7 +1,9 @@
 local function config()
   local cmp = require('cmp')
 
+  local api, fn = vim.api, vim.fn
   local fmt = string.format
+  local t = as.replace_termcodes
   local border = as.style.current.border
   local lsp_hls = as.style.lsp.highlights
   local ellipsis = as.style.icons.misc.ellipsis
@@ -73,6 +75,9 @@ local function config()
       expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
+      ['<C-]>'] = cmp.mapping(
+        function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
+      ),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
       ['<C-q>'] = cmp.mapping({
