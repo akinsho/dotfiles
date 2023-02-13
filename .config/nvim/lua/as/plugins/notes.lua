@@ -5,7 +5,7 @@ local function sync(path) return fmt('%s/%s', fn.expand('$SYNC_DIR'), path) end
 return {
   {
     'vhyrro/neorg',
-    event = 'VeryLazy',
+    ft = 'norg',
     build = ':Neorg sync-parsers',
     dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
@@ -40,7 +40,7 @@ return {
   },
   {
     'nvim-orgmode/orgmode',
-    lazy = false,
+    ft = 'org',
     config = function()
       local orgmode = require('orgmode')
 
