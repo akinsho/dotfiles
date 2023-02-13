@@ -95,7 +95,7 @@ local servers = {
     }
   end,
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
-  sumneko_lua = function()
+  lua_ls = function()
     local path = vim.split(package.path, ';')
     table.insert(path, 'lua/?.lua')
     table.insert(path, 'lua/?/init.lua')
