@@ -540,7 +540,14 @@ return {
       keymaps = { [']w'] = 'swap_with_right', ['[w'] = 'swap_with_left' },
     },
   },
-  { 'numToStr/Comment.nvim', event = 'VeryLazy', config = true },
+  {
+    'numToStr/Comment.nvim',
+    event = 'VeryLazy',
+    opts = function(_, opts)
+      opts.pre_hook =
+        require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+    end,
+  },
   {
     'gbprod/substitute.nvim',
     config = true,

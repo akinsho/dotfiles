@@ -95,6 +95,7 @@ local function config()
       use_virtual_text = true,
       lint_events = { 'BufWrite', 'CursorHold' },
     },
+    context_commentstring = { enable = true },
   })
 end
 
@@ -125,4 +126,5 @@ return {
       })
     end,
   },
+  'JoosepAlviste/nvim-ts-context-commentstring',
 }
