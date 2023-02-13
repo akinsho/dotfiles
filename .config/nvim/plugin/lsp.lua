@@ -230,6 +230,10 @@ end
 --- without putting all this logic in the general on_attach function
 local client_overrides = {
   sqls = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+  -- NOTE: To disable semantic token
+  -- lua_ls = function (client, bufnr)
+  --   client.server_capabilities.semanticTokensProvider = nil
+  -- end
 }
 
 as.augroup('LspSetupCommands', {
