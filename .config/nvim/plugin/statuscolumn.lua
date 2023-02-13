@@ -111,6 +111,7 @@ local excluded = {
   'Trouble',
   'NeogitCommitMessage',
   'NeogitRebaseTodo',
+  'norg',
 }
 
 vim.o.statuscolumn = '%{%v:lua.as.statuscolumn.render()%}'
