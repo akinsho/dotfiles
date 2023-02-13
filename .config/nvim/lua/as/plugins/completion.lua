@@ -152,7 +152,7 @@ local function config()
     })
   end
 
-  require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
+  cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
     sources = { { name = 'dap' } },
   })
 end
