@@ -9,7 +9,34 @@ local fold_opened = '▼'
 local fold_closed = '▶'
 local sep_hl = '%#StatusColSep#'
 
-as.statuscolumn = {}
+as.statuscolumn = {
+  excluded = {
+    'neo-tree',
+    'NeogitStatus',
+    'NeogitCommitMessage',
+    'undotree',
+    'log',
+    'man',
+    'dap-repl',
+    'markdown',
+    'vimwiki',
+    'vim-plug',
+    'gitcommit',
+    'toggleterm',
+    'fugitive',
+    'list',
+    'NvimTree',
+    'startify',
+    'help',
+    'orgagenda',
+    'org',
+    'himalaya',
+    'Trouble',
+    'NeogitCommitMessage',
+    'NeogitRebaseTodo',
+    'norg',
+  },
+}
 
 ---@param group string
 ---@param text string
@@ -87,33 +114,6 @@ function as.statuscolumn.render()
   return table.concat(components, '')
 end
 
-local excluded = {
-  'neo-tree',
-  'NeogitStatus',
-  'NeogitCommitMessage',
-  'undotree',
-  'log',
-  'man',
-  'dap-repl',
-  'markdown',
-  'vimwiki',
-  'vim-plug',
-  'gitcommit',
-  'toggleterm',
-  'fugitive',
-  'list',
-  'NvimTree',
-  'startify',
-  'help',
-  'orgagenda',
-  'org',
-  'himalaya',
-  'Trouble',
-  'NeogitCommitMessage',
-  'NeogitRebaseTodo',
-  'norg',
-}
-
 vim.o.statuscolumn = '%{%v:lua.as.statuscolumn.render()%}'
 
 as.augroup('StatusCol', {
@@ -121,7 +121,9 @@ as.augroup('StatusCol', {
     event = { 'BufEnter', 'FileType' },
     command = function(args)
       local buf = vim.bo[args.buf]
-      if buf.bt ~= '' or vim.tbl_contains(excluded, buf.ft) then vim.opt_local.statuscolumn = '' end
+      if buf.bt ~= '' or vim.tbl_contains(as.statuscolumn.excluded, buf.ft) then
+        vim.opt_local.statuscolumn = ''
+      end
     end,
   },
 })
