@@ -1,3 +1,5 @@
+local highlight = as.highlight
+
 local function config()
   local cmp = require('cmp')
 
@@ -31,7 +33,7 @@ local function config()
     }
   )
 
-  as.highlight.plugin('Cmp', kind_hls)
+  highlight.plugin('Cmp', kind_hls)
 
   local function tab(fallback)
     if cmp.visible() then
@@ -186,5 +188,27 @@ return {
       -- Use <Tab> to escape from pairs such as ""|''|() etc.
       { 'abecodes/tabout.nvim', opts = { ignore_beginning = false, completion = false } },
     },
+  },
+  {
+    'github/copilot.vim',
+    event = 'InsertEnter',
+    dependencies = { 'nvim-cmp' },
+    init = function() vim.g.copilot_no_tab_map = true end,
+    config = function()
+      as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
+      as.inoremap('<M-]>', '<Plug>(copilot-next)')
+      as.inoremap('<M-[>', '<Plug>(copilot-previous)')
+      as.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
+      vim.g.copilot_filetypes = {
+        ['*'] = true,
+        gitcommit = false,
+        NeogitCommitMessage = false,
+        DressingInput = false,
+        TelescopePrompt = false,
+        ['neo-tree-popup'] = false,
+        ['dap-repl'] = false,
+      }
+      highlight.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
+    end,
   },
 }
