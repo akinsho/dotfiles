@@ -82,8 +82,7 @@ return {
         require('mason-lspconfig').setup({ automatic_installation = true })
         require('mason-lspconfig').setup_handlers({
           function(name)
-            local get_config = require('as.servers')
-            local config = get_config(name)
+            local config = require('as.servers')(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
         })
