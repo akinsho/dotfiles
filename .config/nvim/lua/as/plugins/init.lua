@@ -456,14 +456,14 @@ return {
       as.nnoremap('<leader>db', '<cmd>DBUIToggle<CR>', 'dadbod: toggle')
     end,
   },
-  { 'tpope/vim-eunuch', event = 'VeryLazy' },
+  { 'tpope/vim-eunuch', cmd = { 'Move', 'Rename', 'Remove', 'Delete', 'Mkdir' } },
   { 'tpope/vim-sleuth', event = 'VeryLazy' },
   { 'tpope/vim-repeat', event = 'VeryLazy' },
-  { 'tpope/vim-apathy', event = 'VeryLazy' },
   -- sets searchable path for filetypes like go so 'gf' works
+  { 'tpope/vim-apathy', event = 'VeryLazy' },
   {
     'tpope/vim-abolish',
-    event = 'VeryLazy',
+    event = 'CmdlineEnter',
     keys = {
       { '<localleader>[', ':S/<C-R><C-W>//<LEFT>', mode = 'n', silent = false },
       { '<localleader>]', ':%S/<C-r><C-w>//c<left><left>', mode = 'n', silent = false },
@@ -533,12 +533,15 @@ return {
     },
   },
   {
-    'Wansmer/sibling-swap.nvim', -- FIXME: not working, mysteriously
+    'Wansmer/sibling-swap.nvim',
+    keys = { ']w', '[w' },
     dependencies = { 'nvim-treesitter' },
-    keys = { '[w', ']w' },
     opts = {
-      use_default_keymaps = false,
-      keymaps = { [']w'] = 'swap_with_right', ['[w'] = 'swap_with_left' },
+      use_default_keymaps = true,
+      keymaps = {
+        [']w'] = 'swap_with_left',
+        ['[w'] = 'swap_with_right',
+      },
     },
   },
   {
