@@ -41,19 +41,13 @@ return {
         floating = { border = as.style.current.border },
         adapters = {
           require('neotest-plenary'),
-          require('neotest-dart')({
-            command = 'flutter',
-          }),
-          require('neotest-go')({
-            experimental = {
-              test_table = true,
-            },
-          }),
+          require('neotest-dart')({ command = 'flutter' }),
+          require('neotest-go')({ experimental = { test_table = true } }),
         },
       })
     end,
     dependencies = {
-      { 'rcarriga/neotest-plenary' },
+      { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
       { 'sidlatau/neotest-dart' },
       { 'neotest/neotest-go', dev = true },
     },
