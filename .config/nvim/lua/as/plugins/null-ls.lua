@@ -1,7 +1,13 @@
 return {
   {
+    'jay-babu/mason-null-ls.nvim',
+    dependencies = { 'mason.nvim' },
+    opts = { automatic_installation = true },
+  },
+  {
     'jose-elias-alvarez/null-ls.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'mason-null-ls.nvim' },
     config = function()
       local null_ls = require('null-ls')
       null_ls.setup({

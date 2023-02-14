@@ -62,22 +62,25 @@ return {
   -----------------------------------------------------------------------------//
   {
     {
-      'neovim/nvim-lspconfig',
-      config = function()
-        highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
-        require('lspconfig.ui.windows').default_options.border = border
-        require('lspconfig').ccls.setup(require('as.servers')('ccls'))
-      end,
-    },
-    {
       'williamboman/mason.nvim',
-      lazy = false,
+      cmd = 'Mason',
       opts = { ui = { border = border } },
-      dependencies = { 'mason-lspconfig.nvim', 'mason-null-ls.nvim' },
     },
     {
       'williamboman/mason-lspconfig.nvim',
-      dependencies = { 'neovim/nvim-lspconfig' },
+      event = { 'BufReadPre', 'BufNewFile' },
+      dependencies = {
+        'mason.nvim',
+        {
+          'neovim/nvim-lspconfig',
+          dependencies = { 'mason-lspconfig.nvim' },
+          config = function()
+            highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
+            require('lspconfig.ui.windows').default_options.border = border
+            require('lspconfig').ccls.setup(require('as.servers')('ccls'))
+          end,
+        },
+      },
       config = function()
         require('mason-lspconfig').setup({ automatic_installation = true })
         require('mason-lspconfig').setup_handlers({
@@ -87,11 +90,6 @@ return {
           end,
         })
       end,
-    },
-    {
-      'jayp0521/mason-null-ls.nvim',
-      dependencies = { 'jose-elias-alvarez/null-ls.nvim' },
-      opts = { automatic_installation = true },
     },
   },
   {
