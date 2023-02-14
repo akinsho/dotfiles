@@ -467,6 +467,11 @@ return {
       vim.g.mkdp_auto_close = 1
     end,
   },
+  {
+    'jose-elias-alvarez/typescript.nvim',
+    ft = { 'typescript', 'typescriptreact' },
+    config = function() require('typescript').setup({ server = require('as.servers')(true) }) end,
+  },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}

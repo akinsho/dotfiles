@@ -13,9 +13,6 @@ return {
           null_ls.builtins.formatting.goimports,
           null_ls.builtins.diagnostics.golangci_lint,
           null_ls.builtins.formatting.pg_format,
-          null_ls.builtins.formatting.cbfmt:with({
-            condition = function() return as.executable('cbfmt') end,
-          }),
           null_ls.builtins.formatting.stylua.with({
             condition = function()
               return as.executable('stylua')
@@ -29,6 +26,7 @@ return {
             filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
             condition = function() return as.executable('prettier') end,
           }),
+          require('typescript.extensions.null-ls.code-actions'),
         },
       })
     end,
