@@ -31,18 +31,17 @@ local function on_init(client)
 end
 
 local servers = {
-  ccls = true,
-  tsserver = true,
-  graphql = true,
-  jsonls = true,
-  bashls = true,
-  vimls = true,
-  terraformls = true,
-  rust_analyzer = true,
-  marksman = true,
-  pyright = true,
-  bufls = true,
-  prosemd_lsp = true,
+  ccls = {},
+  graphql = {},
+  jsonls = {},
+  bashls = {},
+  vimls = {},
+  terraformls = {},
+  rust_analyzer = {},
+  marksman = {},
+  pyright = {},
+  bufls = {},
+  prosemd_lsp = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
@@ -146,14 +145,12 @@ local servers = {
 return function(name)
   local config = servers[name]
   if not config then return end
-  local t = type(config)
-  if t == 'boolean' then config = {} end
-  if t == 'function' then config = config() end
+  if type(config) == 'function' then config = config() end
   config.on_init = on_init
-  config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
-  config.capabilities.textDocument.foldingRange =
-    { dynamicRegistration = false, lineFoldingOnly = true }
   local ok, cmp_nvim_lsp = as.require('cmp_nvim_lsp')
-  if ok then cmp_nvim_lsp.default_capabilities(config.capabilities) end
+  if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
+  config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, {
+    textDocument = { foldingRange = { dynamicRegistration = false, lineFoldingOnly = true } },
+  })
   return config
 end
