@@ -35,7 +35,11 @@ local function config()
     end,
   })
   vim.notify = notify
-  as.nnoremap('<leader>nd', notify.dismiss, { desc = 'dismiss notifications' })
+  as.nnoremap(
+    '<leader>nd',
+    function() notify.dismiss({ silent = true, pending = true }) end,
+    { desc = 'dismiss notifications' }
+  )
 end
 
 return { { 'rcarriga/nvim-notify', config = config } }
