@@ -30,7 +30,7 @@ return {
         b = 'buffer management hydra',
         c = { name = '+code-action' },
         d = { name = '+debug/database', h = 'dap hydra' },
-        f = { name = '+telescope' },
+        f = { name = '+picker' },
         h = { name = '+git-action' },
         z = 'window scroll hydra',
         n = { name = '+new' },

@@ -1,6 +1,6 @@
 if not as then return end
 local settings, highlight = as.filetype_settings, as.highlight
-local cmd, fn, api, env, opt_l = vim.cmd, vim.fn, vim.api, vim.env, vim.opt_local
+local cmd, fn, api, env, keymap, opt_l = vim.cmd, vim.fn, vim.api, vim.env, vim.keymap, vim.opt_local
 
 settings({
   checkhealth = {
@@ -34,6 +34,13 @@ settings({
         desc = 'flutter: run code generation',
       },
     },
+  },
+  fzf = {
+    function(args)
+      -- Remove the default terminal mappings
+      keymap.del('t', '<esc>', { buffer = args.buf })
+      keymap.del('t', 'jk', { buffer = args.buf })
+    end,
   },
   [{ 'gitcommit', 'gitrebase' }] = {
     bo = { bufhidden = 'delete' },

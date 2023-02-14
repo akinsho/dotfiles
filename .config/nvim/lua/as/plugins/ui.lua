@@ -62,7 +62,7 @@ return {
     opts = {
       input = { enabled = false },
       select = {
-        telescope = as.telescope.adaptive_dropdown(),
+        backend = { 'fzf_lua', 'builtin' },
         builtin = {
           border = border,
           min_height = 10,
@@ -70,9 +70,7 @@ return {
           mappings = { n = { ['q'] = 'Close' } },
         },
         nui = { min_height = 10, win_options = { winblend = 10 } },
-        get_config = function(opts)
-          if opts.kind == 'codeaction' then return { backend = 'telescope', telescope = as.telescope.cursor() } end
-        end,
+        fzf_lua = { winopts = { width = 0.3, height = 0.33 } },
       },
     },
   },

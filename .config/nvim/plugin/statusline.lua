@@ -149,6 +149,7 @@ local identifiers = {
     quickfix = '',
   },
   filetypes = as.p_table({
+    ['fzf'] = '',
     ['log'] = '',
     ['org'] = '',
     ['orgagenda'] = '',
@@ -172,6 +173,7 @@ local identifiers = {
     ['toggleterm'] = ' ',
   }),
   names = as.p_table({
+    ['fzf'] = 'FZF',
     ['orgagenda'] = 'Org',
     ['himalaya-msg-list'] = 'Inbox',
     ['mail'] = 'Mail',

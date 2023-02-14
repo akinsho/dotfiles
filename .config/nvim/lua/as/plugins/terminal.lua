@@ -6,7 +6,7 @@ return {
   dev = true,
   opts = {
     open_mapping = [[<c-\>]],
-    shade_filetypes = { 'none' },
+    shade_filetypes = {},
     direction = 'horizontal',
     autochdir = true,
     persist_mode = true,

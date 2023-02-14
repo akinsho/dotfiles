@@ -25,7 +25,6 @@ as.augroup('AddTerminalMappings', {
   event = { 'TermOpen' },
   pattern = { 'term://*' },
   command = function()
-    -- FIXME: this still sets mappings on terminal buffers like fzf
     if vim.bo.filetype == '' or vim.bo.filetype == 'toggleterm' then
       local opts = { silent = false, buffer = 0 }
       tnoremap('<esc>', [[<C-\><C-n>]], opts)
