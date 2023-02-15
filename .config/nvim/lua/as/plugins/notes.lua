@@ -41,6 +41,7 @@ return {
   {
     'nvim-orgmode/orgmode',
     ft = 'org',
+    keys = { '<leader>oa', '<leader>oc' },
     config = function()
       local orgmode = require('orgmode')
 
@@ -56,7 +57,7 @@ return {
         org_todo_keywords = { 'TODO(t)', 'WAITING', 'IN-PROGRESS', '|', 'DONE(d)', 'CANCELLED' },
         org_todo_keyword_faces = {
           ['IN-PROGRESS'] = ':foreground royalblue :weight bold',
-          CANCELLED = ':foreground darkred :weight bold',
+          ['CANCELLED'] = ':foreground darkred :weight bold',
         },
         org_hide_leading_stars = true,
         org_agenda_skip_scheduled_if_done = true,
