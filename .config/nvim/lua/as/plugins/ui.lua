@@ -17,6 +17,8 @@ return {
           search_up = { title = '' },
           filter = { title = '' },
           help = { title = '' },
+          input = { title = '' },
+          confirm = { title = '' },
         },
       },
       lsp = {
