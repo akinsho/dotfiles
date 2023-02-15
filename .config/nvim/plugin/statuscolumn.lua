@@ -1,4 +1,4 @@
-if not as or not vim.o.statuscolumn then return end
+if not as or not as.has('nvim-0.9') then return end
 
 local fn, v, api = vim.fn, vim.v, vim.api
 
