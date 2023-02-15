@@ -238,7 +238,11 @@ return {
       vim.g.wordmotion_spaces = { '-', '_', '\\/', '\\.' }
     end,
   },
-  { 'kylechui/nvim-surround', opts = { move_cursor = true, keymaps = { visual = 's' } } },
+  {
+    'kylechui/nvim-surround',
+    keys = { '<C-g>s', '<C-g>S', 'ys', 'yss', 'yS', 'cs', 'ds', 'gS' },
+    opts = { move_cursor = true, keymaps = { visual = 's' } },
+  },
   {
     'andrewferrier/debugprint.nvim',
     opts = { create_keymaps = false },
