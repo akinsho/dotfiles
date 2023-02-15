@@ -1,5 +1,7 @@
 as.telescope = {}
 
+local fmt, fn, highlight = string.format, vim.fn, as.highlight
+
 local function rectangular_border(opts)
   return vim.tbl_deep_extend('force', opts or {}, {
     borderchars = {
@@ -30,7 +32,6 @@ local function config()
   local layout_actions = require('telescope.actions.layout')
   local icons = as.style.icons
   local P = as.style.palette
-  local fmt, fn = string.format, vim.fn
 
   as.augroup('TelescopePreviews', {
     {
@@ -40,7 +41,7 @@ local function config()
     },
   })
 
-  as.highlight.plugin('telescope', {
+  highlight.plugin('telescope', {
     theme = {
       ['*'] = {
         { TelescopePromptTitle = { bg = P.grey, fg = { from = 'Directory' }, bold = true } },
@@ -217,146 +218,120 @@ local function config()
       reloader = as.telescope.dropdown(),
     },
   })
-
-  --- NOTE: this must be required after setting up telescope
-  --- otherwise the result will be cached without the updates
-  --- from the setup call
-  local builtins = require('telescope.builtin')
-
-  local function nvim_config()
-    builtins.find_files({
-      prompt_title = '~ nvim config ~',
-      cwd = vim.fn.stdpath('config'),
-      file_ignore_patterns = {
-        '.git/.*',
-        'dotbot/.*',
-        'zsh/plugins/.*',
-      },
-    })
-  end
-
-  local function delta_opts(opts, is_buf)
-    local previewers = require('telescope.previewers')
-    local delta = previewers.new_termopen_previewer({
-      get_command = function(entry)
-        local args = {
-          'git',
-          '-c',
-          'core.pager=delta',
-          '-c',
-          'delta.side-by-side=false',
-          'diff',
-          entry.value .. '^!',
-        }
-        if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
-        return args
-      end,
-    })
-    opts = opts or {}
-    opts.previewer = {
-      delta,
-      previewers.git_commit_message.new(opts),
-    }
-    return opts
-  end
-
-  local function delta_git_commits(opts) builtins.git_commits(delta_opts(opts)) end
-
-  local function delta_git_bcommits(opts) builtins.git_bcommits(delta_opts(opts, true)) end
-
-  local function dotfiles()
-    builtins.find_files({
-      prompt_title = 'dotfiles',
-      cwd = vim.g.dotfiles,
-    })
-  end
-
-  local function orgfiles()
-    builtins.find_files({
-      prompt_title = 'Org',
-      cwd = vim.fn.expand('$SYNC_DIR/org/'),
-    })
-  end
-
-  local function norgfiles()
-    builtins.find_files({
-      prompt_title = 'Norg',
-      cwd = vim.fn.expand('$SYNC_DIR/neorg/'),
-    })
-  end
-
-  local function project_files(opts)
-    if not pcall(builtins.git_files, opts) then builtins.find_files(opts) end
-  end
-
-  local function pickers() builtins.builtin({ include_extensions = true }) end
-
-  local function frecency()
-    require('telescope').extensions.frecency.frecency(as.telescope.dropdown({
-      previewer = false,
-    }))
-  end
-
-  local function notifications() telescope.extensions.notify.notify(as.telescope.dropdown()) end
-
-  local function luasnips() require('telescope').extensions.luasnip.luasnip(as.telescope.dropdown()) end
-
-  local function find_near_files()
-    local cwd = require('telescope.utils').buffer_dir()
-    builtins.find_files({
-      prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
-      cwd = cwd,
-    })
-  end
-
-  local function installed_plugins()
-    builtins.find_files({
-      prompt_title = 'Installed plugins',
-      cwd = vim.fn.stdpath('data') .. '/site/pack/packer',
-    })
-  end
-
-  local function live_grep_args()
-    telescope.extensions.live_grep_args.live_grep_args(as.telescope.ivy())
-  end
-
-  as.nnoremap('<c-p>', project_files, 'telescope: find files')
-  as.nnoremap('<leader>fa', pickers, 'builtins')
-  as.nnoremap('<leader>fb', builtins.current_buffer_fuzzy_find, 'current buffer fuzzy find')
-  as.nnoremap('<leader>fn', notifications, 'notifications')
-  as.nnoremap('<leader>fvh', builtins.highlights, 'highlights')
-  as.nnoremap('<leader>fva', builtins.autocommands, 'autocommands')
-  as.nnoremap('<leader>fvo', builtins.vim_options, 'options')
-  as.nnoremap('<leader>fvk', builtins.keymaps, 'autocommands')
-  as.nnoremap('<leader>fle', builtins.diagnostics, 'telescope: workspace diagnostics')
-  as.nnoremap('<leader>fld', builtins.lsp_document_symbols, 'telescope: document symbols')
-  as.nnoremap('<leader>fls', builtins.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols')
-  as.nnoremap('<leader>fL', luasnips, 'luasnip: available snippets')
-  as.nnoremap('<leader>fp', installed_plugins, 'plugins')
-  as.nnoremap('<leader>fr', builtins.resume, 'resume last picker')
-  as.nnoremap('<leader>f?', builtins.help_tags, 'help')
-  as.nnoremap('<leader>ff', builtins.find_files, 'find files')
-  as.nnoremap('<leader>ffn', find_near_files, 'find near files')
-  as.nnoremap('<leader>fh', frecency, 'Most (f)recently used files')
-  as.nnoremap('<leader>fgb', builtins.git_branches, 'branches')
-  as.nnoremap('<leader>fgc', delta_git_commits, 'commits')
-  as.nnoremap('<leader>fgB', delta_git_bcommits, 'buffer commits')
-  as.nnoremap('<leader>fo', builtins.buffers, 'buffers')
-  as.nnoremap('<leader>fs', live_grep_args, 'live grep')
-  as.nnoremap('<leader>fd', dotfiles, 'dotfiles')
-  as.nnoremap('<leader>fc', nvim_config, 'nvim config')
-  as.nnoremap('<leader>fO', orgfiles, 'org files')
-  as.nnoremap('<leader>fN', norgfiles, 'norg files')
-
-  vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
+
+local function builtins() return require('telescope.builtin') end
+local function telescope() return require('telescope') end
+
+local function delta_opts(opts, is_buf)
+  local previewers = require('telescope.previewers')
+  local delta = previewers.new_termopen_previewer({
+    get_command = function(entry)
+      local args = {
+        'git',
+        '-c',
+        'core.pager=delta',
+        '-c',
+        'delta.side-by-side=false',
+        'diff',
+        entry.value .. '^!',
+      }
+      if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
+      return args
+    end,
+  })
+  opts = opts or {}
+  opts.previewer = { delta, previewers.git_commit_message.new(opts) }
+  return opts
+end
+
+local function nvim_config()
+  builtins().find_files({
+    prompt_title = '~ nvim config ~',
+    cwd = vim.fn.stdpath('config'),
+    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+  })
+end
+
+local function find_near_files()
+  local cwd = require('telescope.utils').buffer_dir()
+  builtins().find_files({
+    prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
+    cwd = cwd,
+  })
+end
+
+local function live_grep_args()
+  telescope().extensions.live_grep_args.live_grep_args(as.telescope.ivy())
+end
+
+local function orgfiles()
+  builtins().find_files({ prompt_title = 'Org', cwd = vim.fn.expand('$SYNC_DIR/org/') })
+end
+
+local function norgfiles()
+  builtins().find_files({ prompt_title = 'Norg', cwd = vim.fn.expand('$SYNC_DIR/neorg/') })
+end
+
+local function project_files(opts)
+  if not pcall(builtins().git_files, opts) then builtins().find_files(opts) end
+end
+
+local function frecency()
+  telescope().extensions.frecency.frecency(as.telescope.dropdown({ previewer = false }))
+end
+
+local function pickers() builtins().builtin({ include_extensions = true }) end
+local function dotfiles() builtins().find_files({ prompt_title = 'dotfiles', cwd = vim.g.dotfiles }) end
+local function notifications() telescope().extensions.notify.notify(as.telescope.dropdown()) end
+local function luasnips() telescope().extensions.luasnip.luasnip(as.telescope.dropdown()) end
+local function delta_git_commits(opts) builtins().git_commits(delta_opts(opts)) end
+local function delta_git_bcommits(opts) builtins().git_bcommits(delta_opts(opts, true)) end
 
 return {
   {
     'nvim-telescope/telescope.nvim',
-    branch = 'master', -- '0.1.x',
     config = config,
-    event = 'CursorHold',
+    keys = {
+      { '<c-p>', project_files, desc = 'find files' },
+      { '<leader>fa', pickers, desc = 'builtins' },
+      {
+        '<leader>fb',
+        function() builtins().current_buffer_fuzzy_find() end,
+        desc = 'current buffer fuzzy find',
+      },
+      { '<leader>fn', notifications, desc = 'notifications' },
+      { '<leader>fvh', function() builtins().highlights() end, desc = 'highlights' },
+      { '<leader>fva', function() builtins().autocommands() end, desc = 'autocommands' },
+      { '<leader>fvo', function() builtins().vim_options() end, desc = 'options' },
+      { '<leader>fvk', function() builtins().keymaps() end, desc = 'autocommands' },
+      { '<leader>fle', function() builtins().diagnostics() end, desc = 'workspace diagnostics' },
+      {
+        '<leader>fld',
+        function() builtins().lsp_document_symbols() end,
+        desc = 'document symbols',
+      },
+      {
+        '<leader>fls',
+        function() builtins().lsp_dynamic_workspace_symbols() end,
+        desc = 'workspace symbols',
+      },
+      { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
+      { '<leader>fr', function() builtins().resume() end, desc = 'resume last picker' },
+      { '<leader>f?', function() builtins().help_tags() end, desc = 'help' },
+      { '<leader>ff', function() builtins().find_files() end, desc = 'find files' },
+      { '<leader>ffn', find_near_files, desc = 'find near files' },
+      { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+      { '<leader>fgb', function() builtins().git_branches() end, desc = 'branches' },
+      { '<leader>fgc', delta_git_commits, desc = 'commits' },
+      { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
+      { '<leader>fo', function() builtins().buffers() end, desc = 'buffers' },
+      { '<leader>fs', live_grep_args, desc = 'live grep' },
+      { '<leader>fd', dotfiles, desc = 'dotfiles' },
+      { '<leader>fc', nvim_config, desc = 'nvim config' },
+      { '<leader>fO', orgfiles, desc = 'org files' },
+      { '<leader>fN', norgfiles, desc = 'norg files' },
+    },
     dependencies = {
       {
         'natecraddock/telescope-zf-native.nvim',
