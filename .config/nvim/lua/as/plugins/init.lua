@@ -64,7 +64,7 @@ return {
     {
       'williamboman/mason.nvim',
       cmd = 'Mason',
-      opts = { ui = { border = border } },
+      opts = { ui = { border = border, height = 0.8 } },
     },
     {
       'williamboman/mason-lspconfig.nvim',
