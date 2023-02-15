@@ -47,7 +47,6 @@ export GOPATH=$HOME/go
 
 path+=(
   /usr/local/bin
-  ${HOME}/.local/share/neovim/bin(N-/)
   ${HOME}/.npm/bin(N-/)
   ${HOME}/.local/bin(N-/)
   # Dart -----------------------------------------------------------------------
