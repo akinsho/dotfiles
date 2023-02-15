@@ -227,66 +227,104 @@ local lsp = {
 }
 
 ----------------------------------------------------------------------------------------------------
--- Global style settings
+-- UI Settings
 ----------------------------------------------------------------------------------------------------
--- Some styles can be tweaked here to apply globally i.e. by setting the current value for that style
+---@class UiSetting {
+---@field winbar boolean
+---@field number boolean
+---@field statusline 'minimal' | boolean
+---@field statuscolumn boolean
+---@field colorcolumn boolean
 
--- The current styles for various UI elements
-local current = {
-  border = border.line,
-  lsp_icons = lsp.kinds.codicons,
+---@alias UiSettings {buftypes: table<string, UiSetting>, filetypes: table<string, UiSetting>}
+
+---@class UiSetting
+local Preset = {}
+
+---@param o UiSetting
+function Preset:new(o)
+  assert(o, 'a present must be defined')
+  self.__index = self
+  return setmetatable(o, self)
+end
+
+--- WARNING: deep extend does not copy lua meta methods
+function Preset:with(o) return vim.tbl_deep_extend('force', self, o) end
+
+---@type table<string, UiSetting>
+local presets = {
+  statusline_only = Preset:new({
+    number = false,
+    winbar = false,
+    colorcolumn = false,
+    statusline = true,
+    statuscolumn = false,
+  }),
+  minimal_editing = Preset:new({
+    number = false,
+    winbar = true,
+    colorcolumn = false,
+    statusline = true,
+    statuscolumn = false,
+  }),
+  tool_panel = Preset:new({
+    number = false,
+    winbar = false,
+    colorcolumn = false,
+    statusline = 'minimal',
+    statuscolumn = false,
+  }),
 }
 
----@alias UISpec {statusline: 'minimal' | boolean, winbar: boolean, statuscolumn: boolean, number: boolean}
----@alias UISettings {buftypes: table<string, UISpec>, filetypes: table<string, UISpec>}
+local commit_buffer = presets.minimal_editing:with({
+  colorcolumn = true,
+  winbar = false,
+})
 
--- stylua: ignore
----@type UISettings
+---@type UiSettings
 local settings = {
   buftypes = {
-    ['terminal'] = { statuscolumn = true, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['quickfix'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['nofile'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['nowrite'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['acwrite'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['terminal'] = presets.tool_panel,
+    ['quickfix'] = presets.tool_panel,
+    ['nofile'] = presets.tool_panel,
+    ['nowrite'] = presets.tool_panel,
+    ['acwrite'] = presets.tool_panel,
   },
   filetypes = {
-    ['NeogitCommitSelectView'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['DiffviewFileHistory'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['mail'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['noice'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['diff'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['qf'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['alpha'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['netrw'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['coc-explorer'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
-    ['coc-list'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['NeogitStatus'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['undotree'] = { statuscolumn = false, winbar = true, statusline = 'minimal', number = false, colorcolumn = false },
-    ['minimap'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['tsplayground'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['dapui'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
-    ['neo-tree'] = { statuscolumn = false, winbar = true, statusline = true, colorcolumn = false },
-    ['log'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['man'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['dap-repl'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['markdown'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['vimwiki'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['vim-plug'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['gitcommit'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['toggleterm'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['fugitive'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['list'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['NvimTree'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['startify'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['help'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['orgagenda'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['org'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['himalaya'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['Trouble'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['norg'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
-    ['NeogitCommitMessage'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['NeogitRebaseTodo'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['help'] = presets.tool_panel,
+    ['dapui'] = presets.tool_panel,
+    ['minimap'] = presets.tool_panel,
+    ['Trouble'] = presets.tool_panel,
+    ['dap-repl'] = presets.tool_panel,
+    ['tsplayground'] = presets.tool_panel,
+    ['toggleterm'] = presets.tool_panel,
+    ['list'] = presets.tool_panel,
+    ['netrw'] = presets.tool_panel,
+    ['NvimTree'] = presets.tool_panel,
+    ['undotree'] = presets.tool_panel,
+    ['NeogitPopup'] = presets.tool_panel,
+    ['NeogitStatus'] = presets.tool_panel,
+    ['neo-tree'] = presets.tool_panel:with({ winbar = true }),
+    ['NeogitCommitSelectView'] = presets.tool_panel,
+    ['NeogitRebaseTodo'] = presets.tool_panel,
+    ['DiffviewFileHistory'] = presets.statusline_only,
+    ['mail'] = presets.statusline_only,
+    ['noice'] = presets.statusline_only,
+    ['diff'] = presets.statusline_only,
+    ['qf'] = presets.statusline_only,
+    ['alpha'] = presets.statusline_only,
+    ['vimwiki'] = presets.statusline_only,
+    ['vim-plug'] = presets.statusline_only,
+    ['fugitive'] = presets.statusline_only,
+    ['startify'] = presets.statusline_only,
+    ['man'] = presets.minimal_editing,
+    ['org'] = presets.minimal_editing,
+    ['norg'] = presets.minimal_editing,
+    ['markdown'] = presets.minimal_editing,
+    ['himalaya'] = presets.minimal_editing,
+    ['orgagenda'] = presets.minimal_editing,
+    ['gitcommit'] = commit_buffer,
+    ['NeogitCommitMessage'] = commit_buffer,
   },
 }
 
@@ -300,6 +338,9 @@ function settings.get(key, setting, t)
   if t == 'ft' then return settings.filetypes[key] and settings.filetypes[key][setting] end
   if t == 'bt' then return settings.buftypes[key] and settings.buftypes[key][setting] end
 end
+
+----------------------------------------------------------------------------------------------------
+local current = { border = border.line, lsp_icons = lsp.kinds.codicons }
 
 as.ui.icons = icons
 as.ui.lsp = lsp
