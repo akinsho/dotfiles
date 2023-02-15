@@ -25,12 +25,7 @@ local function is_blocked()
   local win_type = vim.fn.win_gettype()
 
   if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then return true end
-
-  if vim.wo.diff then return true end
-
-  if win_type == 'command' then return true end
-
-  if vim.wo.previewwindow then return true end
+  if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
 
   local ft_settings = ui.settings.filetypes[vim.bo.ft]
   local bt_settings = ui.settings.buftypes[vim.bo.buftype]
