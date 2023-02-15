@@ -309,7 +309,7 @@ function as.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, 
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function as.has(feature) return vim.fn.has(feature) > 0 end
+function as.has(feature) return fn.has(feature) > 0 end
 
 ----------------------------------------------------------------------------------------------------
 -- Mappings

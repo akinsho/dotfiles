@@ -54,7 +54,7 @@ opt.diffopt = opt.diffopt
     'algorithm:histogram',
     'indent-heuristic',
   }
-if as and as.nightly() then opt.diffopt:append({ 'linematch:60' }) end
+if as and as.has('nvim-0.9') then opt.diffopt:append({ 'linematch:60' }) end
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
@@ -244,7 +244,7 @@ opt.mousescroll = { 'ver:1', 'hor:6' }
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
 -- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
-o.exrc = as.nightly()
+o.exrc = as.has('nvim-0.9')
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
