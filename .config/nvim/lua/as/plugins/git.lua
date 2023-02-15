@@ -1,7 +1,7 @@
 local cwd = vim.fn.getcwd
 local highlight = as.highlight
-local border = as.style.current.border
-local icons = as.style.icons.separators
+local border = as.ui.current.border
+local icons = as.ui.icons.separators
 
 local function linker() return require('gitlinker') end
 local function neogit() return require('neogit') end

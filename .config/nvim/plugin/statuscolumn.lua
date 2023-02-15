@@ -9,41 +9,14 @@ local fold_opened = '▼'
 local fold_closed = '▶'
 local sep_hl = '%#StatusColSep#'
 
-as.statuscolumn = {
-  excluded = {
-    'neo-tree',
-    'NeogitStatus',
-    'NeogitCommitMessage',
-    'undotree',
-    'log',
-    'man',
-    'dap-repl',
-    'markdown',
-    'vimwiki',
-    'vim-plug',
-    'gitcommit',
-    'toggleterm',
-    'fugitive',
-    'list',
-    'NvimTree',
-    'startify',
-    'help',
-    'orgagenda',
-    'org',
-    'himalaya',
-    'Trouble',
-    'NeogitCommitMessage',
-    'NeogitRebaseTodo',
-    'norg',
-  },
-}
+as.ui.statuscolumn = {}
 
 ---@param group string
 ---@param text string
 ---@return string
 local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
 
-local function click(name, item) return '%@v:lua.as.statuscolumn.' .. name .. '@' .. item end
+local function click(name, item) return '%@v:lua.as.ui.statuscolumn.' .. name .. '@' .. item end
 
 ---@param buf number
 ---@return {name:string, text:string, texthl:string}[]
@@ -54,7 +27,7 @@ local function get_signs(buf)
   )
 end
 
-function as.statuscolumn.toggle_breakpoint(_, _, _, mods)
+function as.ui.statuscolumn.toggle_breakpoint(_, _, _, mods)
   local ok, dap = pcall(require, 'dap')
   if not ok then return end
   if mods:find('c') then
@@ -88,7 +61,7 @@ local function sep()
   return separator_hl .. separator
 end
 
-function as.statuscolumn.render()
+function as.ui.statuscolumn.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
 
@@ -114,16 +87,15 @@ function as.statuscolumn.render()
   return table.concat(components, '')
 end
 
-vim.o.statuscolumn = '%{%v:lua.as.statuscolumn.render()%}'
+vim.o.statuscolumn = '%{%v:lua.as.ui.statuscolumn.render()%}'
 
 as.augroup('StatusCol', {
   {
     event = { 'BufEnter', 'FileType' },
     command = function(args)
       local buf = vim.bo[args.buf]
-      if buf.bt ~= '' or vim.tbl_contains(as.statuscolumn.excluded, buf.ft) then
-        vim.opt_local.statuscolumn = ''
-      end
+      local exclusion = as.ui.settings.filetypes[buf.ft]
+      if exclusion and not exclusion.statuscolumn then vim.opt_local.statuscolumn = '' end
     end,
   },
 })

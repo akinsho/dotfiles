@@ -13,7 +13,7 @@ local function config()
     lsp = {
       documentation = {
         opts = {
-          border = { style = as.style.current.border },
+          border = { style = as.ui.current.border },
           position = { row = 2 },
         },
       },
@@ -41,13 +41,13 @@ local function config()
           height = 'auto',
         },
         border = {
-          style = as.style.current.border,
+          style = as.ui.current.border,
           padding = { 0, 1 },
         },
       },
       confirm = {
         border = {
-          style = as.style.current.border,
+          style = as.ui.current.border,
           padding = { 0, 1 },
         },
       },
@@ -62,7 +62,7 @@ local function config()
           height = 10,
         },
         border = {
-          style = as.style.current.border,
+          style = as.ui.current.border,
           padding = { 0, 1 },
         },
         win_options = {

@@ -1,6 +1,6 @@
 if not as then return end
-local P = as.style.palette
-local L = as.style.lsp.colors
+local P = as.ui.palette
+local L = as.ui.lsp.colors
 
 local function general_overrides()
   as.highlight.all({

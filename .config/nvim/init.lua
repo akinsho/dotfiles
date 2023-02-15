@@ -36,7 +36,6 @@ end
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
-  -- for UI elements like the winbar and statusline that need global references
   ui = {
     winbar = { enable = true },
     foldtext = { enable = false },
@@ -46,6 +45,8 @@ local namespace = {
   mappings = { enable = true },
 }
 
+-- This table is a globally accessible store to facilitating accessing
+-- helper functions and variables throughout my config
 _G.as = as or namespace
 
 ----------------------------------------------------------------------------------------------------
@@ -54,7 +55,7 @@ _G.as = as or namespace
 -- Order matters here as globals needs to be instantiated first etc.
 R('as.globals')
 R('as.highlights')
-R('as.styles')
+R('as.ui')
 R('as.settings')
 R('as.plugins')
 -----------------------------------------------------------------------------//
@@ -81,7 +82,7 @@ require('lazy').setup('as.plugins', {
       disabled_plugins = { 'netrw', 'netrwPlugin', 'tarPlugin', 'tutor', 'tohtml', 'logipat' },
     },
   },
-  ui = { border = as.style.current.border, icons = { lazy = '鈴' } },
+  ui = { border = as.ui.current.border, icons = { lazy = '鈴' } },
   dev = {
     path = g.projects_dir .. '/personal/',
     patterns = { 'akinsho' },

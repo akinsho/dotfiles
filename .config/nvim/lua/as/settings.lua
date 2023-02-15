@@ -186,7 +186,7 @@ opt.guicursor = {
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
-function as.modified_icon() return vim.bo.modified and as.style.icons.misc.circle or '' end
+function as.modified_icon() return vim.bo.modified and as.ui.icons.misc.circle or '' end
 o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
 o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
 o.title = true

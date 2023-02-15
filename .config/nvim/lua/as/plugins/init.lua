@@ -1,5 +1,5 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
-local border, highlight = as.style.current.border, as.highlight
+local border, highlight = as.ui.current.border, as.highlight
 
 local data = fn.stdpath('data')
 
@@ -113,7 +113,7 @@ return {
       fix_pos = false,
       auto_close_after = 15, -- close after 15 seconds
       hint_enable = false,
-      handler_opts = { border = as.style.current.border },
+      handler_opts = { border = as.ui.current.border },
       toggle_key = '<C-K>',
       select_signature_key = '<M-N>',
     },
@@ -149,7 +149,7 @@ return {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         { LightBulbVirtualText = { foreground = { from = 'Type' } } },
       })
-      local icon = as.style.icons.misc.lightbulb
+      local icon = as.ui.icons.misc.lightbulb
       require('nvim-lightbulb').setup({
         ignore = { 'null-ls' },
         autocmd = { enabled = true },
@@ -187,7 +187,7 @@ return {
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function()
       vim.g.navic_silence = true
-      local s = as.style
+      local s = as.ui
       local misc = s.icons.misc
 
       highlight.plugin('navic', {

@@ -3,7 +3,7 @@ return {
     'anuvyklack/hydra.nvim',
     config = function()
       local Hydra = require('hydra')
-      local border = as.style.current.border
+      local border = as.ui.current.border
       local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
       Hydra({

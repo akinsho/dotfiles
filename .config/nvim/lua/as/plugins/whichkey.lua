@@ -18,7 +18,7 @@ local function config()
       },
     },
     window = {
-      border = as.style.current.border,
+      border = as.ui.current.border,
     },
     layout = {
       align = 'center',

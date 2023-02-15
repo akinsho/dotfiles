@@ -7,8 +7,8 @@ local fmt = string.format
 local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
-local icons = as.style.icons.lsp
-local border = as.style.current.border
+local icons = as.ui.icons.lsp
+local border = as.ui.current.border
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 

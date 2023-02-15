@@ -6,9 +6,9 @@ local function config()
   local api, fn = vim.api, vim.fn
   local fmt = string.format
   local t = as.replace_termcodes
-  local border = as.style.current.border
-  local lsp_hls = as.style.lsp.highlights
-  local ellipsis = as.style.icons.misc.ellipsis
+  local border = as.ui.current.border
+  local lsp_hls = as.ui.lsp.highlights
+  local ellipsis = as.ui.icons.misc.ellipsis
   local luasnip = require('luasnip')
 
   local kind_hls = as.fold(
@@ -97,7 +97,7 @@ local function config()
       format = function(entry, vim_item)
         local MAX = math.floor(vim.o.columns * 0.5)
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
-        vim_item.kind = fmt('%s %s', as.style.current.lsp_icons[vim_item.kind], vim_item.kind)
+        vim_item.kind = fmt('%s %s', as.ui.current.lsp_icons[vim_item.kind], vim_item.kind)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
           nvim_lua = '[Lua]',

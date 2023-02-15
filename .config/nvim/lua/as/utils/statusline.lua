@@ -30,32 +30,6 @@ local function get_neotree_name(fname, _)
   return fmt('Neo Tree(%s)', parts[2])
 end
 
-local plain = {
-  filetypes = {
-    'help',
-    'minimap',
-    'Trouble',
-    'tsplayground',
-    'NvimTree',
-    'undotree',
-    'neoterm',
-    'startify',
-    'markdown',
-    'norg',
-    'neo-tree',
-    'NeogitStatus',
-    'dap-repl',
-    'dapui',
-  },
-  buftypes = {
-    'terminal',
-    'quickfix',
-    'nofile',
-    'nowrite',
-    'acwrite',
-  },
-}
-
 local exceptions = {
   buftypes = {
     terminal = ' ',
@@ -149,15 +123,13 @@ local function prioritize(statusline, space, length)
   return prioritize(statusline, space, length - lowest.length)
 end
 
-local function matches(str, list)
-  return #vim.tbl_filter(function(item) return item == str or string.match(str, item) end, list) > 0
-end
-
 --- @param ctx table
 function M.is_plain(ctx)
-  return matches(ctx.filetype, plain.filetypes)
-    or matches(ctx.buftype, plain.buftypes)
-    or ctx.preview
+  local ft = as.ui.settings.filetypes[ctx.filetype]
+  local bt = as.ui.settings.buftypes[ctx.buftype]
+  local is_plain_ft = ft and ft.statusline == 'minimal'
+  local is_plain_buftype = bt and bt.statusline == 'minimal'
+  return is_plain_ft or is_plain_buftype or ctx.preview
 end
 
 --- This function allow me to specify titles for special case buffers
@@ -302,7 +274,7 @@ end
 function M.diagnostic_info(context)
   local diagnostics = vim.diagnostic.get(context.bufnum)
   local severities = vim.diagnostic.severity
-  local lsp = as.style.icons.lsp
+  local lsp = as.ui.icons.lsp
   local result = {
     error = { count = 0, icon = lsp.error },
     warn = { count = 0, icon = lsp.warn },

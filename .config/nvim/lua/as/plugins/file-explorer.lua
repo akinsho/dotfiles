@@ -1,5 +1,5 @@
 local highlight = as.highlight
-local icons = as.style.icons
+local icons = as.ui.icons
 
 return {
   {

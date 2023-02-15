@@ -30,8 +30,8 @@ local function config()
   local telescope = require('telescope')
   local actions = require('telescope.actions')
   local layout_actions = require('telescope.actions.layout')
-  local icons = as.style.icons
-  local P = as.style.palette
+  local icons = as.ui.icons
+  local P = as.ui.palette
 
   as.augroup('TelescopePreviews', {
     {

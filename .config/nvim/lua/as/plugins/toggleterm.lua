@@ -14,7 +14,7 @@ local function config()
       NormalFloat = { link = 'NormalFloat' },
     },
     float_opts = {
-      border = as.style.current.border,
+      border = as.ui.current.border,
       winblend = 3,
     },
     size = function(term)

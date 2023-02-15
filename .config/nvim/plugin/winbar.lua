@@ -8,7 +8,7 @@ local fn, api = vim.fn, vim.api
 local component = utils.component
 local component_raw = utils.component_raw
 local empty = as.empty
-local icons = as.style.icons.misc
+local icons = as.ui.icons.misc
 local contains = vim.tbl_contains
 
 local dir_separator = '/'

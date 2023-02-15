@@ -108,7 +108,7 @@ return {
       require('dressing').setup({
         input = {
           insert_only = false,
-          border = as.style.current.border,
+          border = as.ui.current.border,
           win_options = {
             winblend = 2,
           },
@@ -159,7 +159,7 @@ return {
         max_height = function() return math.floor(vim.o.lines * 0.8) end,
         on_open = function(win)
           if api.nvim_win_is_valid(win) then
-            api.nvim_win_set_config(win, { border = as.style.current.border })
+            api.nvim_win_set_config(win, { border = as.ui.current.border })
           end
         end,
         render = function(...)

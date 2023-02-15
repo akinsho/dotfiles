@@ -2,7 +2,7 @@ local function dapui_config()
   require('dapui').setup({
     windows = { indent = 2 },
     floating = {
-      border = as.style.current.border,
+      border = as.ui.current.border,
     },
   })
   as.nnoremap('<localleader>duc', function() require('dapui').close() end, 'dap-ui: close')
@@ -46,13 +46,13 @@ local function init()
 end
 
 local function config()
-  local fn, icons = vim.fn, as.style.icons
+  local fn, icons = vim.fn, as.ui.icons
 
   require('dap') -- Dap must be loaded before the signs can be tweaked
 
   as.highlight.plugin('dap', {
-    { DapBreakpoint = { foreground = as.style.palette.light_red } },
-    { DapStopped = { foreground = as.style.palette.green } },
+    { DapBreakpoint = { foreground = as.ui.palette.light_red } },
+    { DapStopped = { foreground = as.ui.palette.green } },
   })
 
   fn.sign_define({

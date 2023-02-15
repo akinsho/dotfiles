@@ -11,8 +11,8 @@ if not as then return end
 local utils = require('as.utils.statusline')
 
 local api = vim.api
-local icons = as.style.icons
-local P = as.style.palette
+local icons = as.ui.icons
+local P = as.ui.palette
 local C = utils.constants
 
 local M = {}
@@ -25,10 +25,10 @@ local function colors()
   --- but this is not universal across terminals so should be avoided
 
   local indicator_color = P.bright_blue
-  local warning_fg = as.style.lsp.colors.warn
+  local warning_fg = as.ui.lsp.colors.warn
 
-  local error_color = as.style.lsp.colors.error
-  local info_color = as.style.lsp.colors.info
+  local error_color = as.ui.lsp.colors.error
+  local info_color = as.ui.lsp.colors.info
   local normal_fg = as.highlight.get('Normal', 'fg')
   local string_fg = as.highlight.get('String', 'fg')
   local number_fg = as.highlight.get('Number', 'fg')

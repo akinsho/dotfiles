@@ -1,4 +1,5 @@
 if not as then return end
+local ui = as.ui
 
 -- Inspiration
 -- 1. vim-relativity
@@ -6,32 +7,6 @@ if not as then return end
 
 local api = vim.api
 local M = {}
-
-local number_filetype_exclusions = {
-  'netrw',
-  'undotree',
-  'log',
-  'man',
-  'dap-repl',
-  'markdown',
-  'vimwiki',
-  'vim-plug',
-  'gitcommit',
-  'toggleterm',
-  'fugitive',
-  'coc-explorer',
-  'coc-list',
-  'list',
-  'NvimTree',
-  'startify',
-  'help',
-  'orgagenda',
-  'org',
-  'himalaya',
-  'Trouble',
-  'NeogitCommitMessage',
-  'NeogitRebaseTodo',
-}
 
 local number_buftype_exclusions = {
   'prompt',
@@ -66,11 +41,11 @@ local function is_blocked()
 
   if vim.wo.previewwindow then return true end
 
-  for _, ft in ipairs(number_filetype_exclusions) do
-    if vim.bo.ft == ft or string.match(vim.bo.ft, ft) then return true end
+  local ft_settings = ui.settings.filetypes[vim.bo.ft]
+  local bt_settings = ui.settings.buftypes[vim.bo.buftype]
+  if (ft_settings and not ft_settings.number) or (bt_settings and not bt_settings.number) then
+    return true
   end
-
-  if vim.tbl_contains(number_buftype_exclusions, vim.bo.buftype) then return true end
   return false
 end
 

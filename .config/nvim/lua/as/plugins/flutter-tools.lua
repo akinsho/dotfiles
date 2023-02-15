@@ -1,6 +1,6 @@
 local function config()
   require('flutter-tools').setup({
-    ui = { border = as.style.current.border },
+    ui = { border = as.ui.current.border },
     debugger = {
       enabled = true,
       run_via_dap = true,

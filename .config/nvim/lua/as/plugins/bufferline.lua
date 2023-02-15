@@ -34,7 +34,7 @@ end
 
 local function config()
   local fn = vim.fn
-  local icons = as.style.icons.lsp
+  local icons = as.ui.icons.lsp
 
   local groups = require('bufferline.groups')
 
