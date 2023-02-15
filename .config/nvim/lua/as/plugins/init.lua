@@ -123,7 +123,7 @@ return {
     opts = { hl_group = 'Visual' },
     keys = {
       {
-        '<leader>ri',
+        '<leader>rn',
         function() return ':IncRename ' .. fn.expand('<cword>') end,
         expr = true,
         silent = false,
