@@ -629,12 +629,6 @@ return {
     config = true,
   },
   {
-    'akinsho/org-bullets.nvim',
-    lazy = false,
-    dev = true,
-    config = true,
-  },
-  {
     'akinsho/git-conflict.nvim',
     event = 'VeryLazy',
     dev = true,
