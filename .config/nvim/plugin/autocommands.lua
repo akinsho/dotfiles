@@ -166,13 +166,15 @@ local function clear_commandline()
   end
 end
 
-as.augroup('ClearCommandMessages', {
-  {
-    event = { 'CmdlineLeave', 'CmdlineChanged' },
-    pattern = { ':' },
-    command = clear_commandline(),
-  },
-})
+if not as.has('nvim-0.9') then --  TODO: remove this when 0.9 is released
+  as.augroup('ClearCommandMessages', {
+    {
+      event = { 'CmdlineLeave', 'CmdlineChanged' },
+      pattern = { ':' },
+      command = clear_commandline(),
+    },
+  })
+end
 
 if vim.env.TMUX ~= nil then
   as.augroup('External', {
