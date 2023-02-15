@@ -114,7 +114,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    event = 'VeryLazy',
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
         add = { text = icons.right_block },
@@ -124,12 +124,8 @@ return {
         changedelete = { text = icons.right_block },
         untracked = { text = icons.medium_shade_block },
       },
-      numhl = false,
-      word_diff = false,
       -- Experimental ------------------------------------------------------------------------------
-      _threaded_diff = true,
-      _extmark_signs = false,
-      _signs_staged_enable = true,
+      -- _signs_staged_enable = true,
       ----------------------------------------------------------------------------------------------
       current_line_blame = not cwd():match('personal') and not cwd():match('dotfiles'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
