@@ -17,7 +17,7 @@ local function config()
           position = { row = 2 },
         },
       },
-      signature = { enabled = true },
+      signature = { enabled = false },
       hover = { enabled = true },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,

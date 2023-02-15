@@ -106,6 +106,19 @@ return {
     },
   },
   {
+    'ray-x/lsp_signature.nvim',
+    event = 'InsertEnter',
+    opts = {
+      bind = true,
+      fix_pos = false,
+      auto_close_after = 15, -- close after 15 seconds
+      hint_enable = false,
+      handler_opts = { border = as.style.current.border },
+      toggle_key = '<C-K>',
+      select_signature_key = '<M-N>',
+    },
+  },
+  {
     'smjonas/inc-rename.nvim',
     opts = { hl_group = 'Visual' },
     keys = {
