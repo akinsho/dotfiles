@@ -484,7 +484,7 @@ return {
   {
     'jose-elias-alvarez/typescript.nvim',
     ft = { 'typescript', 'typescriptreact' },
-    config = function() require('typescript').setup({ server = require('as.servers')(true) }) end,
+    config = function() require('typescript').setup({ server = require('as.servers')('tsserver') }) end,
   },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
