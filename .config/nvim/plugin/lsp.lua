@@ -196,7 +196,7 @@ local function setup_mappings(_, bufnr)
   as.nnoremap('gi', lsp.buf.implementation, with_desc('lsp: implementation'))
   as.nnoremap('<leader>gd', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   as.nnoremap('<leader>cl', lsp.codelens.run, with_desc('lsp: run code lens'))
-  as.nnoremap('<leader>rn', lsp.buf.rename, with_desc('lsp: rename'))
+  as.nnoremap('<leader>ri', lsp.buf.rename, with_desc('lsp: rename'))
 end
 
 -----------------------------------------------------------------------------//
