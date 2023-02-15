@@ -1,4 +1,10 @@
+local cwd = vim.fn.getcwd
+local highlight = as.highlight
+local border = as.style.current.border
+local icons = as.style.icons.separators
+
 local function linker() return require('gitlinker') end
+local function neogit() return require('neogit') end
 local function browser_open()
   return { action_callback = require('gitlinker.actions').open_in_browser }
 end
@@ -7,34 +13,28 @@ return {
   {
     'TimUntersberger/neogit',
     cmd = 'Neogit',
-    keys = { '<localleader>gs', '<localleader>gl', '<localleader>gp' },
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      local neogit = require('neogit')
-      neogit.setup({
-        disable_signs = false,
-        disable_hint = true,
-        disable_commit_confirmation = true,
-        disable_builtin_notifications = true,
-        disable_insert_on_commit = false,
-        signs = {
-          section = { '', '' }, -- "", ""
-          item = { '▸', '▾' },
-          hunk = { '樂', '' },
-        },
-        integrations = {
-          diffview = true,
-        },
-      })
-      as.nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
-      as.nnoremap(
-        '<localleader>gc',
-        function() neogit.open({ 'commit' }) end,
-        'neogit: open commit buffer'
-      )
-      as.nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
-      as.nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
-    end,
+    keys = {
+      { '<localleader>gs', function() neogit().open() end, 'open status buffer' },
+      { '<localleader>gc', function() neogit().open({ 'commit' }) end, 'open commit buffer' },
+      { '<localleader>gl', function() neogit().popups.pull.create() end, 'open pull popup' },
+      { '<localleader>gp', function() neogit().popups.push.create() end, 'open push popup' },
+    },
+    opts = {
+      disable_signs = false,
+      disable_hint = true,
+      disable_commit_confirmation = true,
+      disable_builtin_notifications = true,
+      disable_insert_on_commit = false,
+      signs = {
+        section = { '', '' }, -- "", ""
+        item = { '▸', '▾' },
+        hunk = { '樂', '' },
+      },
+      integrations = {
+        diffview = true,
+      },
+    },
   },
   {
     'sindrets/diffview.nvim',
@@ -50,7 +50,7 @@ return {
       },
     },
     config = function()
-      as.highlight.plugin('diffview', {
+      highlight.plugin('diffview', {
         { DiffAddedChar = { bg = 'NONE', fg = { from = 'diffAdded', attr = 'bg', alter = 30 } } },
         {
           DiffChangedChar = { bg = 'NONE', fg = { from = 'diffChanged', attr = 'bg', alter = 30 } },
@@ -62,17 +62,16 @@ return {
         { DiffviewStatusUntracked = { link = 'DiffAddedChar' } },
       })
       require('diffview').setup({
-        default_args = {
-          DiffviewFileHistory = { '%' },
-        },
+        default_args = { DiffviewFileHistory = { '%' } },
+        enhanced_diff_hl = true,
         hooks = {
           diff_buf_read = function()
-            vim.wo.wrap = false
-            vim.wo.list = false
-            vim.wo.colorcolumn = ''
+            vim.opt_local.wrap = false
+            vim.opt_local.list = false
+            vim.opt_local.colorcolumn = ''
+            vim.opt_local.relativenumber = false
           end,
         },
-        enhanced_diff_hl = true,
         keymaps = {
           view = { q = '<Cmd>DiffviewClose<CR>' },
           file_panel = { q = '<Cmd>DiffviewClose<CR>' },
@@ -116,65 +115,57 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
-    config = function()
-      local cwd = vim.fn.getcwd()
-      local right_block = '🮉'
-      require('gitsigns').setup({
-        signs = {
-          add = { hl = 'GitSignsAdd', text = right_block },
-          change = { hl = 'GitSignsChange', text = right_block },
-          delete = { hl = 'GitSignsDelete', text = right_block },
-          topdelete = { hl = 'GitSignsDelete', text = right_block },
-          changedelete = { hl = 'GitSignsChange', text = right_block },
-        },
-        _threaded_diff = true,
-        _extmark_signs = false,
-        _signs_staged_enable = true,
-        word_diff = false,
-        current_line_blame = not cwd:match('personal') and not cwd:match('dotfiles'),
-        current_line_blame_formatter = ' <author>, <author_time> · <summary>',
-        numhl = false,
-        preview_config = { border = as.style.current.border },
-        on_attach = function()
-          local gs = package.loaded.gitsigns
+    opts = {
+      signs = {
+        add = { text = icons.right_block },
+        change = { text = icons.right_block },
+        delete = { text = icons.right_block },
+        topdelete = { text = icons.right_block },
+        changedelete = { text = icons.right_block },
+        untracked = { text = icons.medium_shade_block },
+      },
+      numhl = false,
+      word_diff = false,
+      -- Experimental ------------------------------------------------------------------------------
+      _threaded_diff = true,
+      _extmark_signs = false,
+      _signs_staged_enable = true,
+      ----------------------------------------------------------------------------------------------
+      current_line_blame = not cwd():match('personal') and not cwd():match('dotfiles'),
+      current_line_blame_formatter = ' <author>, <author_time> · <summary>',
+      preview_config = { border = border },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
 
-          local function qf_list_modified() gs.setqflist('all') end
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
 
-          as.nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
-          as.nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview current hunk')
-          as.nnoremap('<leader>hs', gs.stage_hunk, 'stage current hunk')
-          as.nnoremap('<leader>hr', gs.reset_hunk, 'reset current hunk')
-          as.nnoremap('<leader>hb', gs.toggle_current_line_blame, 'toggle current line blame')
-          as.nnoremap('<leader>hd', gs.toggle_deleted, 'show deleted lines')
-          as.nnoremap('<leader>hw', gs.toggle_word_diff, 'gitsigns: toggle word diff')
-          as.nnoremap('<localleader>gw', gs.stage_buffer, 'gitsigns: stage entire buffer')
-          as.nnoremap('<localleader>gre', gs.reset_buffer, 'gitsigns: reset entire buffer')
-          as.nnoremap('<localleader>gbl', gs.blame_line, 'gitsigns: blame current line')
-          as.nnoremap('<leader>lm', qf_list_modified, 'gitsigns: list modified in quickfix')
+        as.nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
+        as.nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview current hunk')
+        as.nnoremap('<leader>hb', gs.toggle_current_line_blame, 'toggle current line blame')
+        as.nnoremap('<leader>hd', gs.toggle_deleted, 'show deleted lines')
+        as.nnoremap('<leader>hw', gs.toggle_word_diff, 'toggle word diff')
+        as.nnoremap('<localleader>gw', gs.stage_buffer, 'stage entire buffer')
+        as.nnoremap('<localleader>gre', gs.reset_buffer, 'reset entire buffer')
+        as.nnoremap('<localleader>gbl', gs.blame_line, 'blame current line')
+        as.nnoremap('<leader>lm', function() gs.setqflist('all') end, 'list modified in quickfix')
+        map({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
+        map({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
+        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
-          -- Navigation
-          as.nnoremap('[h', function()
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-          end, { expr = true, desc = 'go to next git hunk' })
+        as.nnoremap('[h', function()
+          vim.schedule(function() gs.next_hunk() end)
+          return '<Ignore>'
+        end, { expr = true, desc = 'go to next git hunk' })
 
-          as.nnoremap(']h', function()
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-          end, { expr = true, desc = 'go to previous git hunk' })
-
-          as.vnoremap(
-            '<leader>hs',
-            function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
-          )
-          as.vnoremap(
-            '<leader>hr',
-            function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
-          )
-
-          vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-        end,
-      })
-    end,
+        as.nnoremap(']h', function()
+          vim.schedule(function() gs.prev_hunk() end)
+          return '<Ignore>'
+        end, { expr = true, desc = 'go to previous git hunk' })
+      end,
+    },
   },
 }
