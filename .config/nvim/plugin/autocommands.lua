@@ -214,37 +214,15 @@ as.augroup('TextYankHighlight', {
   },
 })
 
-local column_exclude = { 'gitcommit' }
-local column_block_list = {
-  'noice',
-  'NeogitCommitSelectView',
-  'DiffviewFileHistory',
-  'log',
-  'norg',
-  'startify',
-  'vimwiki',
-  'vim-plug',
-  'alpha',
-  'dap-repl',
-  'help',
-  'fugitive',
-  'mail',
-  'org',
-  'orgagenda',
-  'NeogitStatus',
-  'norg',
-}
-
 ---Set or unset the color column depending on the filetype of the buffer and its eligibility
 local function check_color_column()
   for _, win in ipairs(api.nvim_list_wins()) do
     local buffer = vim.bo[api.nvim_win_get_buf(win)]
     local window = vim.wo[win]
     local is_current = win == api.nvim_get_current_win()
-    if as.empty(fn.win_gettype()) and not vim.tbl_contains(column_exclude, buffer.filetype) then
+    if as.empty(fn.win_gettype()) then
       local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
-      -- TODO: This should do a pattern match against a string rather than direct comparison
-      local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
+      local is_excluded = as.ui.settings.get(buffer.filetype, 'colorcolumn', 'ft') == false
       if is_excluded or too_small then
         window.colorcolumn = ''
       elseif as.empty(window.colorcolumn) and is_current then

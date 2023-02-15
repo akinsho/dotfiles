@@ -24,12 +24,12 @@ local palette = {
   grey = '#3E4556',
 }
 
-as.ui.border = {
+local border = {
   line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
   rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
 }
 
-as.ui.icons = {
+local icons = {
   separators = {
     vert_bottom_half_block = '▄',
     vert_top_half_block = '▀',
@@ -109,7 +109,7 @@ as.ui.icons = {
 }
 -- LSP Kinds come via the LSP spec
 -- @see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
-as.ui.lsp = {
+local lsp = {
   colors = {
     error = palette.pale_red,
     warn = palette.dark_orange,
@@ -226,74 +226,84 @@ as.ui.lsp = {
   },
 }
 
-as.ui.palette = palette
-
 ----------------------------------------------------------------------------------------------------
 -- Global style settings
 ----------------------------------------------------------------------------------------------------
 -- Some styles can be tweaked here to apply globally i.e. by setting the current value for that style
 
 -- The current styles for various UI elements
-as.ui.current = {
-  border = as.ui.border.line,
-  lsp_icons = as.ui.lsp.kinds.codicons,
+local current = {
+  border = border.line,
+  lsp_icons = lsp.kinds.codicons,
 }
 
 ---@alias UISpec {statusline: 'minimal' | boolean, winbar: boolean, statuscolumn: boolean, number: boolean}
 ---@alias UISettings {buftypes: table<string, UISpec>, filetypes: table<string, UISpec>}
 
+-- stylua: ignore
 ---@type UISettings
-as.ui.settings = {
+local settings = {
   buftypes = {
-    ['terminal'] = { statuscolumn = true, winbar = true, statusline = 'minimal' },
-    ['quickfix'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['nofile'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['nowrite'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['acwrite'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
+    ['terminal'] = { statuscolumn = true, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['quickfix'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['nofile'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['nowrite'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['acwrite'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
   },
   filetypes = {
-    ['diff'] = { statuscolumn = false, winbar = false, statusline = true, number = false },
-    ['qf'] = { statuscolumn = false, winbar = false, statusline = true, number = false },
-    ['alpha'] = { statuscolumn = false, winbar = false, statusline = true, number = false },
-    ['netrw'] = { statuscolumn = false, winbar = false, statusline = true, number = false },
-    ['coc-explorer'] = { statuscolumn = false, winbar = false, statusline = true, number = false },
-    ['coc-list'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['NeogitStatus'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['undotree'] = { statuscolumn = false, winbar = true, statusline = 'minimal', number = false },
-    ['minimap'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['tsplayground'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['neoterm'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['dapui'] = { statuscolumn = false, winbar = true, statusline = 'minimal' },
-    ['neo-tree'] = { statuscolumn = false, winbar = true, statusline = true },
-    ['log'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['NeogitCommitSelectView'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['DiffviewFileHistory'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['mail'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['noice'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['diff'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['qf'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['alpha'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['netrw'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['coc-explorer'] = { statuscolumn = false, winbar = false, statusline = true, number = false, colorcolumn = false },
+    ['coc-list'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
+    ['NeogitStatus'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['undotree'] = { statuscolumn = false, winbar = true, statusline = 'minimal', number = false, colorcolumn = false },
+    ['minimap'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['tsplayground'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['dapui'] = { statuscolumn = false, winbar = true, statusline = 'minimal', colorcolumn = false },
+    ['neo-tree'] = { statuscolumn = false, winbar = true, statusline = true, colorcolumn = false },
+    ['log'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
     ['man'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['dap-repl'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['dap-repl'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
     ['markdown'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['vimwiki'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['vim-plug'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['vimwiki'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
+    ['vim-plug'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
     ['gitcommit'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
     ['toggleterm'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['fugitive'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['fugitive'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
     ['list'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
     ['NvimTree'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['startify'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['help'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['orgagenda'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['org'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['startify'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
+    ['help'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
+    ['orgagenda'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
+    ['org'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
     ['himalaya'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
     ['Trouble'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['norg'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
-    ['NeogitCommitMessage'] = {
-      statuscolumn = false,
-      winbar = true,
-      statusline = true,
-      number = false,
-    },
-    ['NeogitRebaseTodo'] = {
-      statuscolumn = false,
-      winbar = true,
-      statusline = true,
-      number = false,
-    },
+    ['norg'] = { statuscolumn = false, winbar = true, statusline = true, number = false, colorcolumn = false },
+    ['NeogitCommitMessage'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
+    ['NeogitRebaseTodo'] = { statuscolumn = false, winbar = true, statusline = true, number = false },
   },
 }
+
+---Get the UI setting for a particular filetype
+---@param key string
+---@param setting 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
+---@param t 'ft'|'bt'
+---@return (boolean | string)?
+function settings.get(key, setting, t)
+  if not key or not setting then return nil end
+  if t == 'ft' then return settings.filetypes[key] and settings.filetypes[key][setting] end
+  if t == 'bt' then return settings.buftypes[key] and settings.buftypes[key][setting] end
+end
+
+as.ui.icons = icons
+as.ui.lsp = lsp
+as.ui.border = border
+as.ui.current = current
+as.ui.palette = palette
+as.ui.settings = settings

@@ -8,15 +8,6 @@ local ui = as.ui
 local api = vim.api
 local M = {}
 
-local number_buftype_exclusions = {
-  'prompt',
-  'terminal',
-  'help',
-  'nofile',
-  'acwrite',
-  'quickfix',
-}
-
 local number_buftype_ignored = { 'quickfix' }
 
 local function is_floating_win() return vim.fn.win_gettype() == 'popup' end

@@ -1,6 +1,7 @@
 if not as or not as.has('nvim-0.9') then return end
 
 local fn, v, api = vim.fn, vim.v, vim.api
+local ui = as.ui
 
 local space = ' '
 local shade = '░'
@@ -9,7 +10,7 @@ local fold_opened = '▼'
 local fold_closed = '▶'
 local sep_hl = '%#StatusColSep#'
 
-as.ui.statuscolumn = {}
+ui.statuscolumn = {}
 
 ---@param group string
 ---@param text string
@@ -27,7 +28,7 @@ local function get_signs(buf)
   )
 end
 
-function as.ui.statuscolumn.toggle_breakpoint(_, _, _, mods)
+function ui.statuscolumn.toggle_breakpoint(_, _, _, mods)
   local ok, dap = pcall(require, 'dap')
   if not ok then return end
   if mods:find('c') then
@@ -61,7 +62,7 @@ local function sep()
   return separator_hl .. separator
 end
 
-function as.ui.statuscolumn.render()
+function ui.statuscolumn.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
 
@@ -94,8 +95,9 @@ as.augroup('StatusCol', {
     event = { 'BufEnter', 'FileType' },
     command = function(args)
       local buf = vim.bo[args.buf]
-      local exclusion = as.ui.settings.filetypes[buf.ft]
-      if exclusion and not exclusion.statuscolumn then vim.opt_local.statuscolumn = '' end
+      if ui.settings.get(buf.ft, 'statuscolumn', 'ft') == false then
+        vim.opt_local.statuscolumn = ''
+      end
     end,
   },
 })
