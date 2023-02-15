@@ -1,3 +1,4 @@
+if not as then return end
 local P = as.style.palette
 local L = as.style.lsp.colors
 
