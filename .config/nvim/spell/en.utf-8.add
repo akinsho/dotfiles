@@ -274,3 +274,5 @@ REPL
 url
 auth
 Spotify
+colorcolumn
+statuscolumn
