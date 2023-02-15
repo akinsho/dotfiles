@@ -1,5 +1,5 @@
-local api = vim.api
-local fn = vim.fn
+local api, fn = vim.api, vim.fn
+local highlight = as.highlight
 
 local function leap_keys()
   require('leap').leap({
@@ -10,28 +10,27 @@ local function leap_keys()
   })
 end
 
-local function leap_config()
-  as.highlight.plugin('leap', {
-    theme = {
-      ['*'] = { { LeapBackdrop = { fg = '#707070' } } },
-      horizon = {
-        { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
-        { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
-        { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
-      },
-    },
-  })
-  require('leap').setup({ equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } })
-end
-
 --------------------------------------------------------------------------------
 -- Search Tools {{{1
 --------------------------------------------------------------------------------
 return {
   {
     'ggandor/leap.nvim',
-    keys = { { 's', leap_keys } },
-    config = leap_config,
+    keys = { { 's', leap_keys, mode = 'n' } },
+    opts = { equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } },
+    config = function(_, opts)
+      highlight.plugin('leap', {
+        theme = {
+          ['*'] = { { LeapBackdrop = { fg = '#707070' } } },
+          horizon = {
+            { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
+            { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
+            { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
+          },
+        },
+      })
+      require('leap').setup(opts)
+    end,
   },
   {
     'ggandor/flit.nvim',
