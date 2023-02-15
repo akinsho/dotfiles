@@ -291,6 +291,7 @@ local function delta_git_bcommits(opts) builtins().git_bcommits(delta_opts(opts,
 return {
   {
     'nvim-telescope/telescope.nvim',
+    cmd = { 'Telescope' },
     config = config,
     keys = {
       { '<c-p>', project_files, desc = 'find files' },
