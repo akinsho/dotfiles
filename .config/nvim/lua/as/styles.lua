@@ -33,6 +33,8 @@ as.style = {
     separators = {
       vert_bottom_half_block = '▄',
       vert_top_half_block = '▀',
+      right_block = '🮉',
+      medium_shade_block = '▒',
     },
     lsp = {
       error = '', -- '✗'
