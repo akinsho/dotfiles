@@ -30,7 +30,7 @@ local function get_neotree_name(fname, _)
   return fmt('Neo Tree(%s)', parts[2])
 end
 
-local exceptions = {
+local identifiers = {
   buftypes = {
     terminal = ' ',
     quickfix = '',
@@ -174,7 +174,7 @@ local function filename(ctx, modifier)
 
   local fname = buf_expand(ctx.bufnum, modifier)
 
-  local name = exceptions.names[ctx.filetype]
+  local name = identifiers.names[ctx.filetype]
   if type(name) == 'function' then return '', '', name(fname, ctx.bufnum) end
 
   if name then return '', '', name end
@@ -217,9 +217,9 @@ end
 --- @param opts table
 --- @return string, string?
 local function filetype(ctx, opts)
-  local ft_exception = exceptions.filetypes[ctx.filetype]
+  local ft_exception = identifiers.filetypes[ctx.filetype]
   if ft_exception then return ft_exception, opts.default end
-  local bt_exception = exceptions.buftypes[ctx.buftype]
+  local bt_exception = identifiers.buftypes[ctx.buftype]
   if bt_exception then return bt_exception, opts.default end
   local icon, hl
   local extension = fnamemodify(ctx.bufname, ':e')
