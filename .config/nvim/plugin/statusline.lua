@@ -16,21 +16,18 @@ if not as then return end
 ---@field fileformat string
 ---@field shiftwidth number
 ---@field expandtab boolean
-
 ----------------------------------------------------------------------------------------------------
--- RESOURCES:
-----------------------------------------------------------------------------------------------------
---- 1. https://gabri.me/blog/diy-vim-statusline
---- 2. https://github.com/elenapan/dotfiles/blob/master/config/nvim/statusline.vim
---- 3. https://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
---- 4. Right sided truncation - https://stackoverflow.com/a/20899652
 
 local str = require('as.format_string')
 
+local icons, lsp, highlight, win_hl = as.ui.icons, as.ui.lsp, as.highlight, as.highlight.win_hl
 local api, fn, fmt = vim.api, vim.fn, string.format
-local icons, highlight, win_hl = as.ui.icons, as.highlight, as.highlight.win_hl
 local P = as.ui.palette
 local C = str.constants
+
+----------------------------------------------------------------------------------------------------
+--  Colors
+----------------------------------------------------------------------------------------------------
 
 local hydra_colors = {
   red = 'HydraRedSt',
@@ -48,19 +45,19 @@ local function colors()
   --- but this is not universal across terminals so should be avoided
 
   local indicator_color = P.bright_blue
-  local warning_fg = as.ui.lsp.colors.warn
+  local warning_fg = lsp.colors.warn
 
-  local error_color = as.ui.lsp.colors.error
-  local info_color = as.ui.lsp.colors.info
-  local normal_fg = as.highlight.get('Normal', 'fg')
-  local string_fg = as.highlight.get('String', 'fg')
-  local number_fg = as.highlight.get('Number', 'fg')
-  local normal_bg = as.highlight.get('Normal', 'bg')
+  local error_color = lsp.colors.error
+  local info_color = lsp.colors.info
+  local normal_fg = highlight.get('Normal', 'fg')
+  local string_fg = highlight.get('String', 'fg')
+  local number_fg = highlight.get('Number', 'fg')
+  local normal_bg = highlight.get('Normal', 'bg')
 
-  local bg_color = as.highlight.alter_color(normal_bg, -16)
+  local bg_color = highlight.alter_color(normal_bg, -16)
 
   -- stylua: ignore
-  as.highlight.all({
+  highlight.all({
     { StMetadata = { background = bg_color, inherit = 'Comment' } },
     { StMetadataPrefix = { background = bg_color, foreground = { from = 'Comment' } } },
     { StIndicator = { background = bg_color, foreground = indicator_color } },
@@ -139,10 +136,12 @@ local identifiers = {
     ['NvimTree'] = 'Nvim Tree',
     ['dap-repl'] = 'Debugger REPL',
     ['DiffviewFiles'] = 'Diff view',
+
     ['neo-tree'] = function(fname, _)
       local parts = vim.split(fname, ' ')
       return fmt('Neo Tree(%s)', parts[2])
     end,
+
     ['toggleterm'] = function(_, buf)
       local shell = fn.fnamemodify(vim.env.SHELL, ':t')
       return fmt('Terminal(%s)[%s]', shell, api.nvim_buf_get_var(buf, 'toggle_number'))
@@ -189,6 +188,7 @@ local function special_buffers(ctx)
 end
 
 --- @param ctx StatuslineContext
+--- @return string, string, string
 local function filename(ctx)
   local buf, bt, ft, preview = ctx.bufnum, ctx.buftype, ctx.filetype, ctx.preview
   local special_buf = special_buffers(ctx)
@@ -253,12 +253,12 @@ end
 local function diagnostic_info(context)
   local diagnostics = vim.diagnostic.get(context.bufnum)
   local severities = vim.diagnostic.severity
-  local lsp = as.ui.icons.lsp
+  local lsp_icons = as.ui.icons.lsp
   local result = {
-    error = { count = 0, icon = lsp.error },
-    warn = { count = 0, icon = lsp.warn },
-    info = { count = 0, icon = lsp.info },
-    hint = { count = 0, icon = lsp.hint },
+    error = { count = 0, icon = lsp_icons.error },
+    warn = { count = 0, icon = lsp_icons.warn },
+    info = { count = 0, icon = lsp_icons.info },
+    hint = { count = 0, icon = lsp_icons.hint },
   }
   if vim.tbl_isempty(diagnostics) then return result end
   return as.fold(function(accum, item)
@@ -391,9 +391,10 @@ local function stl_lsp_clients(ctx)
     return { name = client.name, priority = 4 }
   end, clients)
 end
------------------------------------------------------------------------------//
--- Git/Github helper functions
------------------------------------------------------------------------------//
+
+----------------------------------------------------------------------------------------------------
+--  Git components
+----------------------------------------------------------------------------------------------------
 
 ---@param interval number
 ---@param task function
@@ -754,28 +755,29 @@ end)()
 
 as.augroup('CustomStatusline', {
   {
-    event = { 'FocusGained' },
+    event = 'FocusGained',
     command = function() vim.g.vim_in_focus = true end,
   },
   {
-    event = { 'FocusLost' },
+    event = 'FocusLost',
     command = function() vim.g.vim_in_focus = false end,
   },
   {
-    event = { 'ColorScheme' },
+    event = 'ColorScheme',
     command = colors,
   },
   {
-    event = { 'FileType' },
+    event = 'FileType',
     command = function(args) set_statusline_ft_icon_hls(args.buf, args.match) end,
   },
   {
-    event = { 'BufReadPre' },
+  {
+    event = 'BufReadPre',
     once = true,
     command = git_updates,
   },
   {
-    event = { 'BufWritePre' },
+    event = 'BufWritePre',
     pattern = { '*' },
     command = function()
       if not vim.g.is_saving and vim.bo.modified then
