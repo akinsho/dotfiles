@@ -20,6 +20,7 @@ return {
           help = { title = '' },
           input = { title = '' },
           confirm = { title = '' },
+          rename = { title = '' },
         },
       },
       lsp = {
@@ -172,7 +173,8 @@ return {
       show_current_context_start = true,
       show_current_context_start_on_current_line = false,
       show_first_indent_level = true,
-      filetype_exclude = {
+      buftype_exclude = { 'terminal', 'nofile' },
+      filetype_exclude = { -- TODO: should these filetypes be added to the UI Settings
         'dbout',
         'neo-tree-popup',
         'dap-repl',
@@ -197,7 +199,6 @@ return {
         'orgagenda',
         '', -- for all buffers without a file type
       },
-      buftype_exclude = { 'terminal', 'nofile' },
     },
   },
   {
@@ -232,13 +233,16 @@ return {
   {
     'stevearc/dressing.nvim',
     init = function()
-      vim.ui.select = function(...)
-        require('lazy').load({ plugins = { 'dressing.nvim' } })
-        return vim.ui.select(...)
-      end
+      ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.input = function(...)
         require('lazy').load({ plugins = { 'dressing.nvim' } })
         return vim.ui.input(...)
+      end
+
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require('lazy').load({ plugins = { 'dressing.nvim' } })
+        return vim.ui.select(...)
       end
     end,
     config = function()
@@ -369,6 +373,7 @@ return {
     },
     opts = {
       open_fold_hl_timeout = 0,
+      preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
       enable_get_fold_virt_text = true,
       fold_virt_text_handler = function(virt_text, _, end_lnum, width, truncate, ctx)
         local result = {}
@@ -408,7 +413,6 @@ return {
 
         return result
       end,
-      preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
       provider_selector = function(_, filetype)
         local ufo_ft_map = { dart = { 'lsp', 'treesitter' } }
         return ufo_ft_map[filetype] or { 'treesitter', 'indent' }
