@@ -96,23 +96,9 @@ local servers = {
   end,
   --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
   lua_ls = function()
-    local path = vim.split(package.path, ';')
-    table.insert(path, 'lua/?.lua')
-    table.insert(path, 'lua/?/init.lua')
-
-    local plugins = ('%s/site/pack/packer'):format(fn.stdpath('data'))
-    local emmy = ('%s/start/emmylua-nvim'):format(plugins)
-    local plenary = ('%s/start/plenary.nvim'):format(plugins)
-    local packer = ('%s/opt/packer.nvim'):format(plugins)
-    local neotest = ('%s/opt/neotest'):format(plugins)
-
     return {
       settings = {
         Lua = {
-          runtime = {
-            path = path,
-            version = 'LuaJIT',
-          },
           hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
           diagnostics = {
@@ -127,13 +113,8 @@ local servers = {
             },
           },
           completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
-          workspace = {
-            library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary, neotest },
-            checkThirdParty = false,
-          },
-          telemetry = {
-            enable = false,
-          },
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
         },
       },
     }

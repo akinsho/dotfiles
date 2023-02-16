@@ -73,7 +73,7 @@ return {
         'mason.nvim',
         {
           'neovim/nvim-lspconfig',
-          dependencies = { 'mason-lspconfig.nvim' },
+          dependencies = { { 'folke/neodev.nvim', opts = { library = { plugins = false } } } },
           config = function()
             highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
             require('lspconfig.ui.windows').default_options.border = border
@@ -230,7 +230,6 @@ return {
   --------------------------------------------------------------------------------
   -- Utilities {{{1
   --------------------------------------------------------------------------------
-  'ii14/emmylua-nvim',
   {
     'chaoren/vim-wordmotion',
     lazy = false,
