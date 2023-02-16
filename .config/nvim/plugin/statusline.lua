@@ -745,8 +745,11 @@ local function adopt_window_highlights()
   if as.empty(curr_winhl) or not curr_winhl.StatusLine then return end
 
   for _, part in pairs(winhl) do
+    local name = part.hl(api.nvim_get_current_win())
+    local hl = highlight.get(name)
+    if not as.empty(hl) then return end
     highlight.set(
-      part.hl(api.nvim_get_current_win()),
+      name,
       { inherit = part.fallback, background = { from = curr_winhl.StatusLine, attr = 'bg' } }
     )
   end
