@@ -1,4 +1,5 @@
 local border, highlight = as.ui.current.border, as.highlight
+local map = vim.keymap.set
 
 return {
   'folke/noice.nvim',
@@ -18,12 +19,7 @@ return {
         input = { title = '' },
         confirm = { title = '' },
         rename = { title = '' },
-        substitute = {
-          pattern = '^:%%?s/',
-          icon = '🔁',
-          ft = 'regex',
-          opts = { border = { text = { top = ' substitute (old/new/) ' } } },
-        },
+        substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
       },
     },
     lsp = {
@@ -88,31 +84,17 @@ return {
     require('noice').setup(opts)
 
     highlight.plugin('noice', {
-      {
-        NoicePopupBaseGroup = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'DiagnosticSignInfo' },
-        },
-      },
-      {
-        NoicePopupWarnBaseGroup = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Float' },
-        },
-      },
-      {
-        NoicePopupInfoBaseGroup = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Conditional' },
-        },
-      },
       { NoiceMini = { inherit = 'MsgArea', bg = { from = 'Normal' } } },
+      { NoicePopupBaseGroup = { inherit = 'NormalFloat', fg = { from = 'DiagnosticSignInfo' } } },
+      { NoicePopupWarnBaseGroup = { inherit = 'NormalFloat', fg = { from = 'Float' } } },
+      { NoicePopupInfoBaseGroup = { inherit = 'NormalFloat', fg = { from = 'Conditional' } } },
       { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
       { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
       { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
       { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
+      { NoiceCmdlinePopupBorderSubstitute = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
       { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
@@ -121,10 +103,19 @@ return {
       { NoiceCmdlineIconFilter = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlineIconHelp = { link = 'NoicePopupInfoBaseGroup' } },
       { NoiceCmdlineIconIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlineIconSubstitute = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlineIconInput = { link = 'NoicePopupBaseGroup' } },
       { NoiceCmdlineIconLua = { link = 'NoicePopupBaseGroup' } },
       { NoiceConfirm = { bg = { from = 'NormalFloat' } } },
       { NoiceConfirmBorder = { link = 'NoicePopupBaseGroup' } },
     })
+
+    map({ 'n', 'i', 's' }, '<c-f>', function()
+      if not require('noice.lsp').scroll(4) then return '<c-f>' end
+    end, { silent = true, expr = true })
+
+    map({ 'n', 'i', 's' }, '<c-b>', function()
+      if not require('noice.lsp').scroll(-4) then return '<c-b>' end
+    end, { silent = true, expr = true })
   end,
 }

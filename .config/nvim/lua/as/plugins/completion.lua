@@ -86,7 +86,7 @@ local function config()
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-space>'] = cmp.mapping.complete(),
       ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
