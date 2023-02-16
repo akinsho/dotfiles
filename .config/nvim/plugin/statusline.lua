@@ -1,6 +1,23 @@
 if not as then return end
 
 ----------------------------------------------------------------------------------------------------
+--  Types
+----------------------------------------------------------------------------------------------------
+
+---@class StatuslineContext
+---@field bufnum number
+---@field winid number
+---@field bufname string
+---@field preview boolean
+---@field readonly boolean
+---@field filetype string
+---@field buftype string
+---@field modified boolean
+---@field fileformat string
+---@field shiftwidth number
+---@field expandtab boolean
+
+----------------------------------------------------------------------------------------------------
 -- RESOURCES:
 ----------------------------------------------------------------------------------------------------
 --- 1. https://gabri.me/blog/diy-vim-statusline
@@ -150,7 +167,7 @@ end
 --- This function allow me to specify titles for special case buffers
 --- like the preview window or a quickfix window
 --- CREDIT: https://vi.stackexchange.com/a/18090
---- @param ctx table
+--- @param ctx StatuslineContext
 local function special_buffers(ctx)
   local location_list = fn.getloclist(0, { filewinid = 0 })
   local is_loc_list = location_list.filewinid > 0
@@ -164,7 +181,7 @@ local function special_buffers(ctx)
   return nil
 end
 
---- @param ctx table
+--- @param ctx StatuslineContext
 local function filename(ctx)
   local buf, bt, ft, preview = ctx.bufnum, ctx.buftype, ctx.filetype, ctx.preview
   local special_buf = special_buffers(ctx)
@@ -186,7 +203,7 @@ local function filename(ctx)
 end
 
 ---Create the various segments of the current filename
----@param ctx table
+---@param ctx StatuslineContext
 ---@param minimal boolean
 ---@return table
 local function stl_file(ctx, minimal)
@@ -344,7 +361,7 @@ end
 ----------------------------------------------------------------------------------------------------
 
 ---Return a sorted list of lsp client names and their priorities
----@param ctx table
+---@param ctx StatuslineContext
 ---@return table[]
 local function stl_lsp_clients(ctx)
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
@@ -429,7 +446,7 @@ local function git_updates() run_task_on_interval(10000, update_git_status) end
 --  Utility functions
 ----------------------------------------------------------------------------------------------------
 
---- @param ctx table
+--- @param ctx StatuslineContext
 local function is_plain(ctx)
   local ft = as.ui.settings.filetypes[ctx.filetype]
   local bt = as.ui.settings.buftypes[ctx.buftype]
@@ -438,13 +455,13 @@ local function is_plain(ctx)
   return is_plain_ft or is_plain_buftype or ctx.preview
 end
 
---- @param ctx table
+--- @param ctx StatuslineContext
 --- @param icon string | nil
 local function is_modified(ctx, icon)
   return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or ''
 end
 
---- @param ctx table
+--- @param ctx StatuslineContext
 --- @param icon string | nil
 local function is_readonly(ctx, icon) return ctx.readonly and ' ' .. (icon or '') or '' end
 
@@ -466,6 +483,7 @@ function as.ui.statusline()
 
   local available_space = vim.o.columns
 
+  ---@type StatuslineContext
   local ctx = {
     bufnum = curbuf,
     winid = curwin,
