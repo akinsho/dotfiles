@@ -98,8 +98,6 @@ local function colors()
   })
 end
 
-local function get_ft_icon_hl_name(hl) return hl .. 'StatusLine' end
-
 local identifiers = {
   buftypes = {
     terminal = ' ',
@@ -152,16 +150,25 @@ local identifiers = {
   },
 }
 
---- @param ctx table
+local function get_ft_icon_hl_name(hl) return hl .. 'StatusLine' end
+
+--- @param buf number
+--- @return string, string?
+local function get_buffer_icon(buf)
+  local ok, devicons = pcall(require, 'nvim-web-devicons')
+  if not ok then return '', nil end
+  local path = api.nvim_buf_get_name(buf)
+  local name, ext = fn.fnamemodify(path, ':t'), fn.fnamemodify(path, ':e')
+  return devicons.get_icon(name, ext, { default = true })
+end
+
+--- @param ctx StatuslineContext
 --- @return string, string?
 local function filetype(ctx)
   local ft, bt = identifiers.filetypes[ctx.filetype], identifiers.buftypes[ctx.buftype]
   if ft then return ft end
   if bt then return bt end
-  local ok, devicons = pcall(require, 'nvim-web-devicons')
-  if not ok then return '', nil end
-  local ext = fn.fnamemodify(ctx.bufname, ':e')
-  return devicons.get_icon(ctx.bufname, ext, { default = true })
+  return get_buffer_icon(ctx.bufnum)
 end
 
 --- This function allow me to specify titles for special case buffers
@@ -735,13 +742,11 @@ local set_statusline_ft_icon_hls = (function()
   ---@param buf number
   ---@param ft string
   return function(buf, ft)
-    local ok, devicons = pcall(require, 'nvim-web-devicons')
-    if not ok then return end
-    local path = api.nvim_buf_get_name(buf)
-    local ext = fn.fnamemodify(path, ':e')
-    local _, hl = devicons.get_icon(vim.fs.basename(path), ext, { default = true })
+    if as.empty(ft) then return end
+    local _, hl = get_buffer_icon(buf)
+    if not hl then return end
     local fg, bg = highlight.get(hl, 'fg'), highlight.get('StatusLine', 'bg')
-    if not bg or not fg then return end
+    if not bg and not fg then return end
     hl_cache[ft] = { bg = bg, fg = fg }
     highlight.set(get_ft_icon_hl_name(hl), { fg = fg, bg = bg })
   end
