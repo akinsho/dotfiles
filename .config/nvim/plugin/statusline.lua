@@ -165,27 +165,23 @@ local function special_buffers(ctx)
 end
 
 --- @param ctx table
---- @param modifier string
-local function filename(ctx, modifier)
-  local function buf_expand(bufnum, mod) return fn.expand('#' .. bufnum .. mod) end
-  modifier = modifier or ':t'
+local function filename(ctx)
+  local buf, bt, ft, preview = ctx.bufnum, ctx.buftype, ctx.filetype, ctx.preview
   local special_buf = special_buffers(ctx)
   if special_buf then return '', '', special_buf end
 
-  local fname = buf_expand(ctx.bufnum, modifier)
-
-  local name = identifiers.names[ctx.filetype]
-  if type(name) == 'function' then return '', '', name(fname, ctx.bufnum) end
+  local fname = fn.expand('#' .. buf .. ':t')
+  local name = identifiers.names[ft]
+  if type(name) == 'function' then return '', '', name(fname, buf) end
   if name then return '', '', name end
   if not fname or as.empty(fname) then return '', '', 'No Name' end
 
-  local path = (ctx.buftype == '' and not ctx.preview) and buf_expand(ctx.bufnum, ':~:.:h') or nil
+  local path = (bt == '' and not preview) and fn.expand('#' .. buf .. ':~:.:h') or nil
   local is_root = path and #path == 1 -- "~" or "."
   local dir = path and not is_root and fn.fnamemodify(path, ':h') .. '/' or ''
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
   local parent = path and (is_root and path or fn.fnamemodify(path, ':t')) or ''
   parent = parent ~= '' and parent .. '/' or ''
-
   return dir, parent, fname
 end
 
