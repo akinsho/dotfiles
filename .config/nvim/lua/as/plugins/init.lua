@@ -358,6 +358,7 @@ return {
   },
   {
     'itchyny/vim-highlighturl',
+    event = 'VeryLazy',
     config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
   },
   {
