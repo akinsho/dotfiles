@@ -243,7 +243,7 @@ local Preset = {}
 
 ---@param o UiSetting
 function Preset:new(o)
-  assert(o, 'a present must be defined')
+  assert(o, 'a preset must be defined')
   self.__index = self
   return setmetatable(o, self)
 end
