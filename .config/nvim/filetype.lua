@@ -7,8 +7,6 @@ vim.filetype.add({
   filename = {
     ['NEOGIT_COMMIT_EDITMSG'] = 'NeogitCommitMessage',
     ['.psqlrc'] = 'conf', -- TODO: find a better filetype
-    ['go.mod'] = 'gomod',
-    ['.gitignore'] = 'conf',
     ['launch.json'] = 'jsonc',
     Podfile = 'ruby',
     Brewfile = 'ruby',
