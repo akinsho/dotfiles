@@ -6,7 +6,7 @@ if not as then return end
 
 ---@class StatuslineContext
 ---@field bufnum number
----@field winid number
+---@field win number
 ---@field bufname string
 ---@field preview boolean
 ---@field readonly boolean
@@ -16,11 +16,12 @@ if not as then return end
 ---@field fileformat string
 ---@field shiftwidth number
 ---@field expandtab boolean
+---@field winhl boolean
 ----------------------------------------------------------------------------------------------------
 
 local str = require('as.format_string')
 
-local icons, lsp, highlight, win_hl = as.ui.icons, as.ui.lsp, as.highlight, as.highlight.win_hl
+local icons, lsp, highlight = as.ui.icons, as.ui.lsp, as.highlight
 local api, fn, fmt = vim.api, vim.fn, string.format
 local P = as.ui.palette
 local C = str.constants
@@ -29,12 +30,25 @@ local C = str.constants
 --  Colors
 ----------------------------------------------------------------------------------------------------
 
-local hydra_colors = {
+local hydra_hls = {
   red = 'HydraRedSt',
   blue = 'HydraBlueSt',
   amaranth = 'HydraAmaranthSt',
   teal = 'HydraTealSt',
   pink = 'HydraPinkSt',
+}
+
+---@param hl string
+---@return fun(id: number): string
+local function with_win_id(hl)
+  return function(id) return hl .. id end
+end
+
+local winhl = {
+  filename = { hl = with_win_id('StCustomFilename'), fallback = 'StTitle' },
+  directory = { hl = with_win_id('StCustomDirectory'), fallback = 'StTitle' },
+  parent = { hl = with_win_id('StCustomParentDirectory'), fallback = 'StTitle' },
+  readonly = { hl = with_win_id('StCustomError'), fallback = 'StError' },
 }
 
 local function colors()
@@ -87,11 +101,11 @@ local function colors()
     { StModeCommand = { background = bg_color, foreground = P.light_yellow, bold = true } },
     { StModeSelect = { background = bg_color, foreground = P.teal, bold = true } },
     -- FOR HYDRA
-    { [hydra_colors.red] = { inherit = 'HydraRed', reverse = true } },
-    { [hydra_colors.blue] = { inherit = 'HydraBlue', reverse = true } },
-    { [hydra_colors.amaranth] = { inherit = 'HydraAmaranth', reverse = true } },
-    { [hydra_colors.teal] = { inherit = 'HydraTeal', reverse = true } },
-    { [hydra_colors.pink] = { inherit = 'HydraPink', reverse = true } },
+    { [hydra_hls.red] = { inherit = 'HydraRed', reverse = true } },
+    { [hydra_hls.blue] = { inherit = 'HydraBlue', reverse = true } },
+    { [hydra_hls.amaranth] = { inherit = 'HydraAmaranth', reverse = true } },
+    { [hydra_hls.teal] = { inherit = 'HydraTeal', reverse = true } },
+    { [hydra_hls.pink] = { inherit = 'HydraPink', reverse = true } },
   })
 end
 
@@ -214,20 +228,18 @@ end
 ---@param minimal boolean
 ---@return table
 local function stl_file(ctx, minimal)
-  local win = ctx.winid
   -- highlight the filename components separately
-  local filename_hl = minimal and 'StFilenameInactive' or 'StFilename'
-  local directory_hl = minimal and 'StDirectoryInactive' or 'StDirectory'
-  local parent_hl = minimal and directory_hl or 'StParentDirectory'
+  local filename_hl = ctx.winhl and winhl.filename.hl(ctx.win)
+    or (minimal and 'StFilenameInactive' or 'StFilename')
 
-  if win_hl.exists(win, 'Normal', 'StatusLine') then
-    directory_hl = win_hl.adopt(win, 'StatusLine', 'StCustomDirectory', 'StTitle')
-    filename_hl = win_hl.adopt(win, 'StatusLine', 'StCustomFilename', 'StTitle')
-    parent_hl = win_hl.adopt(win, 'StatusLine', 'StCustomParentDir', 'StTitle')
-  end
+  local directory_hl = ctx.winhl and winhl.directory.hl(ctx.win)
+    or (minimal and 'StDirectoryInactive' or 'StDirectory')
+
+  local parent_hl = ctx.winhl and winhl.parent.hl(ctx.win)
+    or (minimal and directory_hl or 'StParentDirectory')
 
   local ft_icon, icon_highlight = filetype(ctx)
-  icon_highlight = icon_highlight and get_ft_icon_hl_name(icon_highlight) or 'StComment'
+  local ft_hl = icon_highlight and get_ft_icon_hl_name(icon_highlight) or 'StComment'
 
   local file_opts = { before = '', after = '', priority = 0 }
   local parent_opts = { before = '', after = '', priority = 2 }
@@ -237,12 +249,11 @@ local function stl_file(ctx, minimal)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
   local dir_empty, parent_empty = as.empty(directory), as.empty(parent)
-  local to_update = dir_empty and parent_empty and file_opts
+  local to_update = (dir_empty and parent_empty) and file_opts
     or dir_empty and parent_opts
     or dir_opts
 
-  to_update.prefix = ft_icon
-  to_update.prefix_color = not minimal and icon_highlight or nil
+  to_update.prefix, to_update.prefix_color = ft_icon, not minimal and ft_hl or nil
   return {
     file = { item = file, hl = filename_hl, opts = file_opts },
     dir = { item = directory, hl = directory_hl, opts = dir_opts },
@@ -277,7 +288,7 @@ local function stl_hydra()
   local data = {
     name = hydra.get_name() or 'UNKNOWN',
     hint = hydra.get_hint(),
-    color = hydra_colors[hydra.get_color()],
+    color = hydra_hls[hydra.get_color()],
   }
   return hydra.is_active(), data
 end
@@ -494,7 +505,7 @@ function as.ui.statusline()
   ---@type StatuslineContext
   local ctx = {
     bufnum = curbuf,
-    winid = curwin,
+    win = curwin,
     bufname = api.nvim_buf_get_name(curbuf),
     preview = vim.wo[curwin].previewwindow,
     readonly = vim.bo[curbuf].readonly,
@@ -504,6 +515,7 @@ function as.ui.statusline()
     fileformat = vim.bo[curbuf].fileformat,
     shiftwidth = vim.bo[curbuf].shiftwidth,
     expandtab = vim.bo[curbuf].expandtab,
+    winhl = vim.wo[curwin].winhl:match('StatusLine') ~= nil,
   }
   ----------------------------------------------------------------------------//
   -- Modifiers
@@ -531,13 +543,14 @@ function as.ui.statusline()
   local dir_component = component(dir.item, dir.hl, dir.opts)
   local parent_component = component(parent.item, parent.hl, parent.opts)
 
-  if not plain and is_git_repo(ctx.winid) then
+  if not plain and is_git_repo(ctx.win) then
     file.opts.suffix = icons.git.repo
     file.opts.suffix_color = 'StMetadata'
   end
+
   local file_component = component(file.item, file.hl, file.opts)
 
-  local readonly_hl = as.highlight.win_hl.adopt(curwin, 'StatusLine', 'StCustomError', 'StError')
+  local readonly_hl = ctx.winhl and winhl.readonly.hl(ctx.win) or winhl.readonly.fallback
   local readonly_component = component(is_readonly(ctx), readonly_hl, { priority = 1 })
   ----------------------------------------------------------------------------//
   -- Mode
@@ -727,6 +740,18 @@ function as.ui.statusline()
   return str.display(statusline, available_space - 5)
 end
 
+local function adopt_window_highlights()
+  local curr_winhl = vim.opt_local.winhighlight:get()
+  if as.empty(curr_winhl) or not curr_winhl.StatusLine then return end
+
+  for _, part in pairs(winhl) do
+    highlight.set(
+      part.hl(api.nvim_get_current_win()),
+      { inherit = part.fallback, background = { from = curr_winhl.StatusLine, attr = 'bg' } }
+    )
+  end
+end
+
 local set_statusline_ft_icon_hls = (function()
   local hl_cache = {}
   as.augroup('StatuslineFtIcons', {
@@ -771,6 +796,9 @@ as.augroup('CustomStatusline', {
     command = function(args) set_statusline_ft_icon_hls(args.buf, args.match) end,
   },
   {
+    event = 'WinEnter',
+    command = adopt_window_highlights,
+  },
   {
     event = 'BufReadPre',
     once = true,

@@ -134,48 +134,10 @@ end
 ---@param name string
 ---@param win_id number
 ---@param hls HighlightKeys[]
-function as.highlight.win_hl.set(name, win_id, hls)
+function as.highlight.set_winhl(name, win_id, hls)
   local namespace = api.nvim_create_namespace(name)
   as.highlight.all(hls, namespace)
   api.nvim_win_set_hl_ns(win_id, namespace)
-end
-
---- Check if the current window has a winhighlight
---- which includes the specific target highlight
---- FIXME: setting a window highlight with `nvim_win_set_hl_ns` will cause this check to fail as
---- a winhighlight is not set and the win namespace cannot be detected
---- @param win_id integer
---- @vararg string
---- @return boolean, string
-function as.highlight.win_hl.exists(win_id, ...)
-  local win_hl = vim.wo[win_id].winhighlight
-  for _, target in ipairs({ ... }) do
-    if win_hl:match(target) then return true, win_hl end
-  end
-  return false, win_hl
-end
-
----A mechanism to allow inheritance of the winhighlight of a specific
----group in a window
----@param win_id integer
----@param target string
----@param name string
----@param fallback string
-function as.highlight.win_hl.adopt(win_id, target, name, fallback)
-  local win_hl_name = name .. win_id
-  local _, win_hl = as.highlight.win_hl.exists(win_id, target)
-
-  if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then return win_hl_name end
-
-  local hl = as.find(function(part) return part:match(target) end, vim.split(win_hl, ','))
-  if not hl then return fallback end
-
-  local hl_group = vim.split(hl, ':')[2]
-  as.highlight.set(
-    win_hl_name,
-    { inherit = fallback, background = { from = hl_group, attr = 'bg' } }
-  )
-  return win_hl_name
 end
 
 function as.highlight.clear(name)
