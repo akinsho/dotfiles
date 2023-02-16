@@ -56,8 +56,8 @@ return {
               ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
               ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
               ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
-              ['aA'] = { query = '@assignment.inner', desc = 'ts: assignment inner' },
               ['iA'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
+              ['aA'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
             },
           },
           move = {
