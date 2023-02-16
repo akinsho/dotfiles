@@ -11,7 +11,7 @@ if not as then return end
 local str = require('as.format_string')
 
 local api, fn, fmt = vim.api, vim.fn, string.format
-local icons, win_hl = as.ui.icons, as.highlight.win_hl
+local icons, highlight, win_hl = as.ui.icons, as.highlight, as.highlight.win_hl
 local P = as.ui.palette
 local C = str.constants
 
@@ -81,6 +81,8 @@ local function colors()
   })
 end
 
+local function get_ft_icon_hl_name(hl) return hl .. 'StatusLine' end
+
 local identifiers = {
   buftypes = {
     terminal = ' ',
@@ -133,44 +135,16 @@ local identifiers = {
   },
 }
 
---- @param hl string
---- @param bg_hl string
-local function highlight_ft_icon(hl, bg_hl)
-  if not hl or not bg_hl then return end
-  local name = hl .. 'Statusline'
-  -- TODO: find a mechanism to cache this so it isn't repeated constantly
-  local fg_color = as.highlight.get(hl, 'fg')
-  local bg_color = as.highlight.get(bg_hl, 'bg')
-  if bg_color and fg_color then
-    as.augroup(name, {
-      {
-        event = 'ColorScheme',
-        command = function()
-          api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
-        end,
-      },
-    })
-    api.nvim_set_hl(0, name, { foreground = fg_color, background = bg_color })
-  end
-  return name
-end
-
 --- @param ctx table
---- @param opts table
 --- @return string, string?
-local function filetype(ctx, opts)
-  local ft_exception = identifiers.filetypes[ctx.filetype]
-  if ft_exception then return ft_exception, opts.default end
-  local bt_exception = identifiers.buftypes[ctx.buftype]
-  if bt_exception then return bt_exception, opts.default end
-  local icon, hl
-  local extension = fn.fnamemodify(ctx.bufname, ':e')
-  local icons_loaded, devicons = as.require('nvim-web-devicons')
-  if icons_loaded then
-    icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
-    hl = highlight_ft_icon(hl, opts.icon_bg)
-  end
-  return icon, hl
+local function filetype(ctx)
+  local ft, bt = identifiers.filetypes[ctx.filetype], identifiers.buftypes[ctx.buftype]
+  if ft then return ft end
+  if bt then return bt end
+  local ok, devicons = pcall(require, 'nvim-web-devicons')
+  if not ok then return '', nil end
+  local ext = fn.fnamemodify(ctx.bufname, ':e')
+  return devicons.get_icon(ctx.bufname, ext, { default = true })
 end
 
 --- This function allow me to specify titles for special case buffers
@@ -232,7 +206,8 @@ local function stl_file(ctx, minimal)
     parent_hl = win_hl.adopt(win, 'StatusLine', 'StCustomParentDir', 'StTitle')
   end
 
-  local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })
+  local ft_icon, icon_highlight = filetype(ctx)
+  icon_highlight = icon_highlight and get_ft_icon_hl_name(icon_highlight) or 'StComment'
 
   local file_opts = { before = '', after = '', priority = 0 }
   local parent_opts = { before = '', after = '', priority = 2 }
@@ -730,6 +705,34 @@ function as.ui.statusline()
   return str.display(statusline, available_space - 5)
 end
 
+local set_statusline_ft_icon_hls = (function()
+  local hl_cache = {}
+  as.augroup('StatuslineFtIcons', {
+    {
+      event = 'ColorScheme',
+      command = function()
+        for ft, hl in pairs(hl_cache) do
+          highlight.set(get_ft_icon_hl_name(ft), hl)
+        end
+      end,
+    },
+  })
+
+  ---@param buf number
+  ---@param ft string
+  return function(buf, ft)
+    local ok, devicons = pcall(require, 'nvim-web-devicons')
+    if not ok then return end
+    local path = api.nvim_buf_get_name(buf)
+    local ext = fn.fnamemodify(path, ':e')
+    local _, hl = devicons.get_icon(vim.fs.basename(path), ext, { default = true })
+    local fg, bg = highlight.get(hl, 'fg'), highlight.get('StatusLine', 'bg')
+    if not bg or not fg then return end
+    hl_cache[ft] = { bg = bg, fg = fg }
+    highlight.set(get_ft_icon_hl_name(hl), { fg = fg, bg = bg })
+  end
+end)()
+
 as.augroup('CustomStatusline', {
   {
     event = { 'FocusGained' },
@@ -742,6 +745,10 @@ as.augroup('CustomStatusline', {
   {
     event = { 'ColorScheme' },
     command = colors,
+  },
+  {
+    event = { 'FileType' },
+    command = function(args) set_statusline_ft_icon_hls(args.buf, args.match) end,
   },
   {
     event = { 'BufReadPre' },
