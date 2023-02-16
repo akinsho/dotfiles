@@ -3,13 +3,13 @@
 if not as or not as.ui.winbar.enable then return end
 
 local utils = require('as.utils.statusline')
+local settings = as.ui.settings
 
 local fn, api = vim.fn, vim.api
 local component = utils.component
 local component_raw = utils.component_raw
 local empty = as.empty
 local icons = as.ui.icons.misc
-local contains = vim.tbl_contains
 
 local dir_separator = '/'
 local separator = icons.arrow_right
@@ -76,26 +76,16 @@ function as.ui.winbar.get()
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
-local blocked_fts = {
-  'NeogitStatus',
-  'DiffviewFiles',
-  'NeogitCommitMessage',
-  'toggleterm',
-  'DressingInput',
-  'org',
-}
-
-local allowed_fts = { 'toggleterm', 'neo-tree' }
-local allowed_buftypes = { 'terminal' }
-
 local function set_winbar()
   as.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
-    local ignored = contains(allowed_fts, ft) or contains(allowed_buftypes, bt)
+    local ft_setting = settings.get(ft, 'winbar', 'ft')
+    local bt_setting = settings.get(bt, 'winbar', 'bt')
+    local ignored = ft_setting == 'ignore' or bt_setting == 'ignore'
     if not ignored then
       if
-        not contains(blocked_fts, ft)
+        not ft_setting
         and fn.win_gettype(api.nvim_win_get_number(w)) == ''
         and bt == ''
         and ft ~= ''
