@@ -176,31 +176,6 @@ if not as.has('nvim-0.9') then --  TODO: remove this when 0.9 is released
   })
 end
 
-if vim.env.TMUX ~= nil then
-  as.augroup('External', {
-    {
-      event = { 'BufEnter' },
-      pattern = '*',
-      command = function() vim.o.titlestring = require('as.external').title_string() end,
-    },
-    {
-      event = { 'VimLeavePre' },
-      pattern = '*',
-      command = function() require('as.external').tmux.set_statusline(true) end,
-    },
-    {
-      event = { 'ColorScheme', 'FocusGained' },
-      pattern = '*',
-      command = function()
-        -- NOTE: there is a race condition here as the colors
-        -- for kitty to re-use need to be set AFTER the rest of the colorscheme
-        -- overrides
-        vim.defer_fn(function() require('as.external').tmux.set_statusline() end, 1)
-      end,
-    },
-  })
-end
-
 as.augroup('TextYankHighlight', {
   {
     -- don't execute silently in case of errors
