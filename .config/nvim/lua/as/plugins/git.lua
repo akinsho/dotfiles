@@ -35,6 +35,19 @@ return {
         diffview = true,
       },
     },
+    config = function(_, opts)
+      require('neogit').setup(opts)
+      -- NOTE: highlights must be set AFTER neogit's setup
+      highlight.plugin('neogit', {
+        { NeogitDiffAdd = { link = 'DiffAdd' } },
+        { NeogitDiffDelete = { link = 'DiffDelete' } },
+        { NeogitDiffAddHighlight = { link = 'DiffAdd' } },
+        { NeogitDiffDeleteHighlight = { link = 'DiffDelete' } },
+        { NeogitDiffContextHighlight = { link = 'NormalFloat' } },
+        { NeogitHunkHeader = { link = 'TabLine' } },
+        { NeogitHunkHeaderHighlight = { link = 'DiffText' } },
+      })
+    end,
   },
   {
     'sindrets/diffview.nvim',
