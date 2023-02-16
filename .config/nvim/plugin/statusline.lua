@@ -733,23 +733,19 @@ end
 as.augroup('CustomStatusline', {
   {
     event = { 'FocusGained' },
-    pattern = { '*' },
     command = function() vim.g.vim_in_focus = true end,
   },
   {
     event = { 'FocusLost' },
-    pattern = { '*' },
     command = function() vim.g.vim_in_focus = false end,
   },
   {
     event = { 'ColorScheme' },
-    pattern = { '*' },
     command = colors,
   },
   {
     event = { 'BufReadPre' },
     once = true,
-    pattern = { '*' },
     command = git_updates,
   },
   {
@@ -764,11 +760,7 @@ as.augroup('CustomStatusline', {
   },
   {
     event = 'User',
-    pattern = {
-      'NeogitPushComplete',
-      'NeogitCommitComplete',
-      'NeogitStatusRefresh',
-    },
+    pattern = { 'NeogitPushComplete', 'NeogitCommitComplete', 'NeogitStatusRefresh' },
     command = update_git_status,
   },
 })
