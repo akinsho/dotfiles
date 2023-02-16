@@ -233,10 +233,8 @@ return {
   'ii14/emmylua-nvim',
   {
     'chaoren/vim-wordmotion',
-    init = function()
-      vim.g.wordmotion_prefix = '<leader>'
-      vim.g.wordmotion_spaces = { '-', '_', '\\/', '\\.' }
-    end,
+    lazy = false,
+    init = function() vim.g.wordmotion_spaces = { '-', '_', '\\/', '\\.' } end,
   },
   {
     'kylechui/nvim-surround',
