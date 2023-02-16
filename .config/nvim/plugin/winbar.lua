@@ -2,12 +2,12 @@
 
 if not as or not as.ui.winbar.enable then return end
 
-local utils = require('as.utils.statusline')
+local str = require('as.format_string')
 local settings = as.ui.settings
 
 local fn, api = vim.fn, vim.api
-local component = utils.component
-local component_raw = utils.component_raw
+local component = str.component
+local component_raw = str.component_raw
 local empty = as.empty
 local icons = as.ui.icons.misc
 
@@ -48,9 +48,9 @@ end
 ---@return string
 function as.ui.winbar.get()
   local winbar = {}
-  local add = utils.winline(winbar)
+  local add = str.winline(winbar)
 
-  add(utils.spacer(1))
+  add(str.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
@@ -73,7 +73,7 @@ function as.ui.winbar.get()
     }))
   end, parts)
   add(unpack(breadcrumbs()))
-  return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
+  return str.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
 local function set_winbar()
