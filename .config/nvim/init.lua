@@ -83,11 +83,7 @@ require('lazy').setup('as.plugins', {
     },
   },
   ui = { border = as.ui.current.border, icons = { lazy = '鈴' } },
-  dev = {
-    path = g.projects_dir .. '/personal/',
-    patterns = { 'akinsho' },
-    fallback = true,
-  },
+  dev = { path = g.projects_dir .. '/personal/', patterns = { 'akinsho' }, fallback = true },
   install = { colorscheme = { 'horizon' } },
 })
 
