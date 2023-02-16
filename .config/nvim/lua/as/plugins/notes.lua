@@ -41,6 +41,7 @@ return {
   {
     'nvim-orgmode/orgmode',
     ft = { 'org' },
+    event = 'VeryLazy',
     dependencies = {
       { 'akinsho/org-bullets.nvim', dev = true, config = true },
       { 'nvim-treesitter/nvim-treesitter' },
