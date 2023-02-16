@@ -14,3 +14,5 @@ as.ftplugin_conf(
     })
   end
 )
+
+as.ftplugin_conf('ufo', function(ufo) ufo.detach() end)

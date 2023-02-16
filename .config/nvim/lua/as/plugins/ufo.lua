@@ -56,15 +56,5 @@ return {
         return ufo_ft_map[filetype] or { 'treesitter', 'indent' }
       end,
     },
-    config = function(_, opts)
-      as.augroup('UfoSettings', {
-        {
-          event = 'FileType',
-          pattern = { 'org' },
-          command = function() require('ufo').detach() end,
-        },
-      })
-      require('ufo').setup(opts)
-    end,
   },
 }
