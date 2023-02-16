@@ -1,44 +1,62 @@
-local function config()
-  local dial = require('dial.map')
-  local augend = require('dial.augend')
-  local map = vim.keymap.set
-  map('n', '<C-a>', dial.inc_normal(), { remap = false })
-  map('n', '<C-x>', dial.dec_normal(), { remap = false })
-  map('v', '<C-a>', dial.inc_visual(), { remap = false })
-  map('v', '<C-x>', dial.dec_visual(), { remap = false })
-  map('v', 'g<C-a>', dial.inc_gvisual(), { remap = false })
-  map('v', 'g<C-x>', dial.dec_gvisual(), { remap = false })
-  require('dial.config').augends:register_group({
-    -- default augends used when no group name is specified
-    default = {
-      augend.integer.alias.decimal,
-      augend.integer.alias.hex,
-      augend.date.alias['%Y/%m/%d'],
-      augend.constant.alias.bool,
-      augend.constant.new({
-        elements = { '&&', '||' },
-        word = false,
-        cyclic = true,
-      }),
-      augend.case.new({
-        types = { 'camelCase', 'snake_case', 'PascalCase', 'SCREAMING_SNAKE_CASE' },
-        cyclic = true,
-      }),
-    },
-    dep_files = {
-      augend.semver.alias.semver,
-    },
-  })
+return {
+  'monaqa/dial.nvim',
+  keys = {
+    { '<C-a>', '<Plug>(dial-increment)', mode = 'n' },
+    { '<C-x>', '<Plug>(dial-decrement)', mode = 'n' },
+    { '<C-a>', '<Plug>(dial-increment)', mode = 'v' },
+    { '<C-x>', '<Plug>(dial-decrement)', mode = 'v' },
+    { 'g<C-a>', 'g<Plug>(dial-increment)', mode = 'v' },
+    { 'g<C-x>', 'g<Plug>(dial-decrement)', mode = 'v' },
+  },
+  config = function()
+    local augend = require('dial.augend')
+    local config = require('dial.config')
 
-  as.augroup('DialMaps', {
-    {
-      event = 'FileType',
-      pattern = { 'yaml', 'toml' },
-      command = function()
-        map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true })
-      end,
-    },
-  })
-end
+    local operators = augend.constant.new({
+      elements = { '&&', '||' },
+      word = false,
+      cyclic = true,
+    })
 
-return { { 'monaqa/dial.nvim', config = config } }
+    local casing = augend.case.new({
+      types = { 'camelCase', 'snake_case', 'PascalCase', 'SCREAMING_SNAKE_CASE' },
+      cyclic = true,
+    })
+
+    config.augends:register_group({
+      default = {
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
+        augend.date.alias['%Y/%m/%d'],
+        augend.constant.alias.bool,
+        casing,
+      },
+    })
+
+    config.augends:on_filetype({
+      go = {
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
+        augend.constant.alias.bool,
+        operators,
+      },
+      typescript = {
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
+        augend.constant.alias.bool,
+        augend.constant.new({ elements = { 'let', 'const' } }),
+        casing,
+      },
+      markdown = {
+        augend.integer.alias.decimal,
+        augend.misc.alias.markdown_header,
+      },
+      yaml = {
+        augend.semver.alias.semver,
+      },
+      toml = {
+        augend.semver.alias.semver,
+      },
+    })
+  end,
+}
