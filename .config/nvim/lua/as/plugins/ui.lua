@@ -5,7 +5,7 @@ local highlight = as.highlight
 return {
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     init = function()
       highlight.plugin('indentline', {
         theme = {
