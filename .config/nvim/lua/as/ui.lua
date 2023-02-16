@@ -305,6 +305,7 @@ local settings = {
     ['NeogitStatus'] = presets.tool_panel,
     ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
     ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
+    ['NeogitConsole'] = presets.tool_panel,
     ['NeogitCommitSelectView'] = presets.tool_panel,
     ['NeogitRebaseTodo'] = presets.tool_panel,
     ['DiffviewFiles'] = presets.tool_panel,
