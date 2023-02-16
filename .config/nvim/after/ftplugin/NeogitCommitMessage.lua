@@ -14,6 +14,11 @@ vim.schedule(
   end
 )
 
+as.ftplugin_conf('nvim-treesitter.parsers', function(parsers)
+  -- make sure neogit commits use the treesitter parser
+  parsers.filetype_to_parsername['NeogitCommitMessage'] = 'gitcommit'
+end)
+
 if not as then return end
 as.ftplugin_conf(
   'cmp',
