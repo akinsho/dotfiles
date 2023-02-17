@@ -22,7 +22,6 @@ return {
           'regex',
           'git_rebase',
           'gitcommit',
-          'comment',
           'markdown',
           'markdown_inline',
         },
