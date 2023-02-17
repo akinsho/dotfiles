@@ -30,12 +30,40 @@ local C = str.constants
 --  Colors
 ----------------------------------------------------------------------------------------------------
 
-local hydra_hls = {
-  red = 'HydraRedSt',
-  blue = 'HydraBlueSt',
-  amaranth = 'HydraAmaranthSt',
-  teal = 'HydraTealSt',
-  pink = 'HydraPinkSt',
+local hls = {
+  statusline = 'StatusLine',
+  statusline_nc = 'StatusLineNC',
+  metadata = 'StMetadata',
+  metadata_prefix = 'StMetadataPrefix',
+  indicator = 'StIndicator',
+  modified = 'StModified',
+  git = 'StGit',
+  green = 'StGreen',
+  blue = 'StBlue',
+  number = 'StNumber',
+  count = 'StCount',
+  client = 'StClient',
+  directory = 'StDirectory',
+  directory_inactive = 'StDirectoryInactive',
+  parent_directory = 'StParentDirectory',
+  title = 'StTitle',
+  comment = 'StComment',
+  info = 'StInfo',
+  warn = 'StWarn',
+  error = 'StError',
+  filename = 'StFilename',
+  filename_inactive = 'StFilenameInactive',
+  mode_normal = 'StModeNormal',
+  mode_insert = 'StModeInsert',
+  mode_visual = 'StModeVisual',
+  mode_replace = 'StModeReplace',
+  mode_command = 'StModeCommand',
+  mode_select = 'StModeSelect',
+  hydra_red = 'HydraRedSt',
+  hydra_blue = 'HydraBlueSt',
+  hydra_amaranth = 'HydraAmaranthSt',
+  hydra_teal = 'HydraTealSt',
+  hydra_pink = 'HydraPinkSt',
 }
 
 ---@param hl string
@@ -45,10 +73,10 @@ local function with_win_id(hl)
 end
 
 local stl_winhl = {
-  filename = { hl = with_win_id('StCustomFilename'), fallback = 'StTitle' },
-  directory = { hl = with_win_id('StCustomDirectory'), fallback = 'StTitle' },
-  parent = { hl = with_win_id('StCustomParentDirectory'), fallback = 'StTitle' },
-  readonly = { hl = with_win_id('StCustomError'), fallback = 'StError' },
+  filename = { hl = with_win_id('StCustomFilename'), fallback = hls.title },
+  directory = { hl = with_win_id('StCustomDirectory'), fallback = hls.title },
+  parent = { hl = with_win_id('StCustomParentDirectory'), fallback = hls.title },
+  readonly = { hl = with_win_id('StCustomError'), fallback = hls.error },
 }
 
 local function colors()
@@ -72,40 +100,39 @@ local function colors()
 
   -- stylua: ignore
   highlight.all({
-    { StMetadata = { background = bg_color, inherit = 'Comment' } },
-    { StMetadataPrefix = { background = bg_color, foreground = { from = 'Comment' } } },
-    { StIndicator = { background = bg_color, foreground = indicator_color } },
-    { StModified = { foreground = string_fg, background = bg_color } },
-    { StGit = { foreground = P.light_gray, background = bg_color } },
-    { StGreen = { foreground = string_fg, background = bg_color } },
-    { StBlue = { foreground = P.dark_blue, background = bg_color, bold = true } },
-    { StNumber = { foreground = number_fg, background = bg_color } },
-    { StCount = { foreground = 'bg', background = indicator_color, bold = true } },
-    { StClient = { background = bg_color, foreground = normal_fg, bold = true } },
-    { StDirectory = { background = bg_color, foreground = 'Gray', italic = true } },
-    { StDirectoryInactive = { background = bg_color, italic = true, foreground = { from = 'Normal', alter = 40 } } },
-    { StParentDirectory = { background = bg_color, foreground = string_fg, bold = true } },
-    { StTitle = { background = bg_color, foreground = 'LightGray', bold = true } },
-    { StComment = { background = bg_color, inherit = 'Comment' } },
-    { StatusLine = { background = bg_color } },
-    { StatusLineNC = { link = 'VertSplit' } },
-    { StInfo = { foreground = info_color, background = bg_color, bold = true } },
-    { StWarn = { foreground = warning_fg, background = bg_color } },
-    { StError = { foreground = error_color, background = bg_color } },
-    { StFilename = { background = bg_color, foreground = 'LightGray', bold = true } },
-    { StFilenameInactive = { inherit = 'Comment', background = bg_color, bold = true } },
-    { StModeNormal = { background = bg_color, foreground = P.light_gray, bold = true } },
-    { StModeInsert = { background = bg_color, foreground = P.dark_blue, bold = true } },
-    { StModeVisual = { background = bg_color, foreground = P.magenta, bold = true } },
-    { StModeReplace = { background = bg_color, foreground = P.dark_red, bold = true } },
-    { StModeCommand = { background = bg_color, foreground = P.light_yellow, bold = true } },
-    { StModeSelect = { background = bg_color, foreground = P.teal, bold = true } },
-    -- FOR HYDRA
-    { [hydra_hls.red] = { inherit = 'HydraRed', reverse = true } },
-    { [hydra_hls.blue] = { inherit = 'HydraBlue', reverse = true } },
-    { [hydra_hls.amaranth] = { inherit = 'HydraAmaranth', reverse = true } },
-    { [hydra_hls.teal] = { inherit = 'HydraTeal', reverse = true } },
-    { [hydra_hls.pink] = { inherit = 'HydraPink', reverse = true } },
+    { [hls.metadata] = { background = bg_color, inherit = 'Comment' } },
+    { [hls.metadata_prefix] = { background = bg_color, foreground = { from = 'Comment' } } },
+    { [hls.indicator] = { background = bg_color, foreground = indicator_color } },
+    { [hls.modified] = { foreground = string_fg, background = bg_color } },
+    { [hls.git] = { foreground = P.light_gray, background = bg_color } },
+    { [hls.green] = { foreground = string_fg, background = bg_color } },
+    { [hls.blue] = { foreground = P.dark_blue, background = bg_color, bold = true } },
+    { [hls.number] = { foreground = number_fg, background = bg_color } },
+    { [hls.count] = { foreground = 'bg', background = indicator_color, bold = true } },
+    { [hls.client] = { background = bg_color, foreground = normal_fg, bold = true } },
+    { [hls.directory] = { background = bg_color, foreground = 'Gray', italic = true } },
+    { [hls.directory_inactive] = { background = bg_color, italic = true, foreground = { from = 'Normal', alter = 40 } } },
+    { [hls.parent_directory] = { background = bg_color, foreground = string_fg, bold = true } },
+    { [hls.title] = { background = bg_color, foreground = 'LightGray', bold = true } },
+    { [hls.comment] = { background = bg_color, inherit = 'Comment' } },
+    { [hls.statusline] = { background = bg_color } },
+    { [hls.statusline_nc] = { link = 'VertSplit' } },
+    { [hls.info] = { foreground = info_color, background = bg_color, bold = true } },
+    { [hls.warn] = { foreground = warning_fg, background = bg_color } },
+    { [hls.error] = { foreground = error_color, background = bg_color } },
+    { [hls.filename] = { background = bg_color, foreground = 'LightGray', bold = true } },
+    { [hls.filename_inactive] = { inherit = 'Comment', background = bg_color, bold = true } },
+    { [hls.mode_normal] = { background = bg_color, foreground = P.light_gray, bold = true } },
+    { [hls.mode_insert] = { background = bg_color, foreground = P.dark_blue, bold = true } },
+    { [hls.mode_visual] = { background = bg_color, foreground = P.magenta, bold = true } },
+    { [hls.mode_replace] = { background = bg_color, foreground = P.dark_red, bold = true } },
+    { [hls.mode_command] = { background = bg_color, foreground = P.light_yellow, bold = true } },
+    { [hls.mode_select] = { background = bg_color, foreground = P.teal, bold = true } },
+    { [hls.hydra_red] = { inherit = 'HydraRed', reverse = true } },
+    { [hls.hydra_blue] = { inherit = 'HydraBlue', reverse = true } },
+    { [hls.hydra_amaranth] = { inherit = 'HydraAmaranth', reverse = true } },
+    { [hls.hydra_teal] = { inherit = 'HydraTeal', reverse = true } },
+    { [hls.hydra_pink] = { inherit = 'HydraPink', reverse = true } },
   })
 end
 
@@ -163,7 +190,7 @@ local identifiers = {
   },
 }
 
-local function get_ft_icon_hl_name(hl) return hl .. 'StatusLine' end
+local function get_ft_icon_hl_name(hl) return hl .. hls.statusline end
 
 --- @param buf number
 --- @param opts { default: boolean }
@@ -231,16 +258,16 @@ end
 local function stl_file(ctx, minimal)
   -- highlight the filename components separately
   local filename_hl = ctx.winhl and stl_winhl.filename.hl(ctx.win)
-    or (minimal and 'StFilenameInactive' or 'StFilename')
+    or (minimal and hls.filename_inactive or hls.filename)
 
   local directory_hl = ctx.winhl and stl_winhl.directory.hl(ctx.win)
-    or (minimal and 'StDirectoryInactive' or 'StDirectory')
+    or (minimal and hls.directory_inactive or hls.directory)
 
   local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win)
-    or (minimal and directory_hl or 'StParentDirectory')
+    or (minimal and directory_hl or hls.parent_directory)
 
   local ft_icon, icon_highlight = filetype(ctx)
-  local ft_hl = icon_highlight and get_ft_icon_hl_name(icon_highlight) or 'StComment'
+  local ft_hl = icon_highlight and get_ft_icon_hl_name(icon_highlight) or hls.comment
 
   local file_opts = { before = '', after = '', priority = 0 }
   local parent_opts = { before = '', after = '', priority = 2 }
@@ -289,7 +316,7 @@ local function stl_hydra()
   local data = {
     name = hydra.get_name() or 'UNKNOWN',
     hint = hydra.get_hint(),
-    color = hydra_hls[hydra.get_color()],
+    color = hls[fmt('hydra_%s', hydra.get_color())],
   }
   return hydra.is_active(), data
 end
@@ -323,17 +350,17 @@ local function mode_highlight(mode)
   local command_regex = vim.regex([[\(c\|cv\|ce\)]])
   local replace_regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]])
   if mode == 'i' then
-    return 'StModeInsert'
+    return hls.mode_insert
   elseif visual_regex and visual_regex:match_str(mode) then
-    return 'StModeVisual'
+    return hls.mode_visual
   elseif select_regex and select_regex:match_str(mode) then
-    return 'StModeSelect'
+    return hls.mode_select
   elseif replace_regex and replace_regex:match_str(mode) then
-    return 'StModeReplace'
+    return hls.mode_replace
   elseif command_regex and command_regex:match_str(mode) then
-    return 'StModeCommand'
+    return hls.mode_command
   else
-    return 'StModeNormal'
+    return hls.mode_normal
   end
 end
 
@@ -516,7 +543,7 @@ function as.ui.statusline()
     fileformat = vim.bo[curbuf].fileformat,
     shiftwidth = vim.bo[curbuf].shiftwidth,
     expandtab = vim.bo[curbuf].expandtab,
-    winhl = vim.wo[curwin].winhl:match('StatusLine') ~= nil,
+    winhl = vim.wo[curwin].winhl:match(hls.statusline) ~= nil,
   }
   ----------------------------------------------------------------------------//
   -- Modifiers
@@ -528,7 +555,7 @@ function as.ui.statusline()
   -- Setup
   ----------------------------------------------------------------------------//
   local statusline = {
-    component_if(icons.misc.block, not plain, 'StIndicator', {
+    component_if(icons.misc.block, not plain, hls.indicator, {
       before = '',
       after = '',
       priority = 0,
@@ -546,7 +573,7 @@ function as.ui.statusline()
 
   if not plain and is_git_repo(ctx.win) then
     file.opts.suffix = icons.git.repo
-    file.opts.suffix_color = 'StMetadata'
+    file.opts.suffix_color = hls.metadata
   end
 
   local file_component = component(file.item, file.hl, file.opts)
@@ -586,26 +613,26 @@ function as.ui.statusline()
   -- Left section
   -----------------------------------------------------------------------------//
   add(
-    component_if(file_modified, ctx.modified, 'StModified', { priority = 1 }),
+    component_if(file_modified, ctx.modified, hls.modified, { priority = 1 }),
 
     readonly_component,
 
     component(mode, mode_hl, { priority = 0 }),
 
-    component_if(search_count(), vim.v.hlsearch > 0, 'StCount', { priority = 1 }),
+    component_if(search_count(), vim.v.hlsearch > 0, hls.count, { priority = 1 }),
 
     dir_component,
     parent_component,
     file_component,
 
-    component_if('Saving…', vim.g.is_saving, 'StComment', { before = ' ', priority = 1 }),
+    component_if('Saving…', vim.g.is_saving, hls.comment, { before = ' ', priority = 1 }),
 
     -- Local plugin dev indicator
-    component_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, 'StComment', {
+    component_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, hls.comment, {
       prefix = icons.misc.tools,
       padding = 'none',
       before = '  ',
-      prefix_color = 'StWarn',
+      prefix_color = hls.warn,
       small = 1,
       priority = 2,
     }),
@@ -627,20 +654,20 @@ function as.ui.statusline()
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
-    component(flutter.app_version, 'StMetadata', { priority = 4 }),
+    component(flutter.app_version, hls.metadata, { priority = 4 }),
 
-    component(flutter.device and flutter.device.name or '', 'StMetadata', { priority = 4 })
+    component(flutter.device and flutter.device.name or '', hls.metadata, { priority = 4 })
   )
 
   -----------------------------------------------------------------------------//
   -- LSP Clients
   -----------------------------------------------------------------------------//
   local lsp_clients = as.map(function(client, index)
-    return component(client.name, 'StClient', {
+    return component(client.name, hls.client, {
       prefix = index == 1 and ' LSP(s):' or nil,
-      prefix_color = index == 1 and 'StMetadata' or nil,
+      prefix_color = index == 1 and hls.metadata or nil,
       suffix = '', -- │
-      suffix_color = 'StMetadataPrefix',
+      suffix_color = hls.metadata_prefix,
       priority = client.priority,
     })
   end, stl_lsp_clients(ctx))
@@ -648,91 +675,91 @@ function as.ui.statusline()
   -----------------------------------------------------------------------------//
 
   add(
-    component(debugger(), 'StMetadata', { prefix = icons.misc.bug, priority = 4 }),
+    component(debugger(), hls.metadata, { prefix = icons.misc.bug, priority = 4 }),
 
-    component_if(diagnostics.error.count, diagnostics.error, 'StError', {
+    component_if(diagnostics.error.count, diagnostics.error, hls.error, {
       prefix = diagnostics.error.icon,
-      prefix_color = 'StError',
+      prefix_color = hls.error,
       priority = 1,
     }),
 
-    component_if(diagnostics.warn.count, diagnostics.warn, 'StWarn', {
+    component_if(diagnostics.warn.count, diagnostics.warn, hls.warn, {
       prefix = diagnostics.warn.icon,
-      prefix_color = 'StWarn',
+      prefix_color = hls.warn,
       priority = 3,
     }),
 
-    component_if(diagnostics.info.count, diagnostics.info, 'StInfo', {
+    component_if(diagnostics.info.count, diagnostics.info, hls.info, {
       prefix = diagnostics.info.icon,
-      prefix_color = 'StInfo',
+      prefix_color = hls.info,
       priority = 4,
     }),
 
     -- Git Status
-    component(status.head, 'StBlue', {
+    component(status.head, hls.blue, {
       prefix = icons.git.branch,
-      prefix_color = 'StGit',
+      prefix_color = hls.git,
       priority = 1,
     }),
 
-    component(status.changed, 'StTitle', {
+    component(status.changed, hls.title, {
       prefix = icons.git.mod,
-      prefix_color = 'StWarn',
+      prefix_color = hls.warn,
       priority = 3,
     }),
 
-    component(status.removed, 'StTitle', {
+    component(status.removed, hls.title, {
       prefix = icons.git.remove,
-      prefix_color = 'StError',
+      prefix_color = hls.error,
       priority = 3,
     }),
 
-    component(status.added, 'StTitle', {
+    component(status.added, hls.title, {
       prefix = icons.git.add,
-      prefix_color = 'StGreen',
+      prefix_color = hls.green,
       priority = 3,
     }),
 
-    component(ahead, 'StTitle', {
+    component(ahead, hls.title, {
       prefix = icons.misc.up,
-      prefix_color = 'StGreen',
+      prefix_color = hls.green,
       before = '',
       priority = 5,
     }),
 
-    component(behind, 'StTitle', {
+    component(behind, hls.title, {
       prefix = icons.misc.down,
-      prefix_color = 'StNumber',
+      prefix_color = hls.number,
       after = ' ',
       priority = 5,
     }),
 
     -- Current line number/total line number
-    component(lnum, 'StTitle', {
+    component(lnum, hls.title, {
       after = '',
       prefix = icons.misc.line,
-      prefix_color = 'StMetadataPrefix',
+      prefix_color = hls.metadata_prefix,
       priority = 7,
     }),
 
-    component(line_count, 'StComment', {
+    component(line_count, hls.comment, {
       before = '',
       prefix = '/',
       padding = { prefix = false, suffix = true },
-      prefix_color = 'StComment',
+      prefix_color = hls.comment,
       priority = 7,
     }),
 
     -- column
-    component(col, 'StTitle', {
+    component(col, hls.title, {
       prefix = 'Col:',
-      prefix_color = 'StMetadataPrefix',
+      prefix_color = hls.metadata_prefix,
       priority = 7,
     }),
     -- (Unexpected) Indentation
-    component_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, 'StTitle', {
+    component_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, hls.title, {
       prefix = ctx.expandtab and icons.misc.indent or icons.misc.tab,
-      prefix_color = 'StatusLine',
+      prefix_color = hls.statusline,
       priority = 6,
     }),
     end_marker()
