@@ -81,6 +81,7 @@ local servers = {
               'before_each',
               'after_each',
               'packer_plugins',
+              'pending',
             },
           },
           completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
