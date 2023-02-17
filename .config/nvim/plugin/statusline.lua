@@ -44,7 +44,7 @@ local function with_win_id(hl)
   return function(id) return hl .. id end
 end
 
-local winhl = {
+local stl_winhl = {
   filename = { hl = with_win_id('StCustomFilename'), fallback = 'StTitle' },
   directory = { hl = with_win_id('StCustomDirectory'), fallback = 'StTitle' },
   parent = { hl = with_win_id('StCustomParentDirectory'), fallback = 'StTitle' },
@@ -229,13 +229,13 @@ end
 ---@return table
 local function stl_file(ctx, minimal)
   -- highlight the filename components separately
-  local filename_hl = ctx.winhl and winhl.filename.hl(ctx.win)
+  local filename_hl = ctx.winhl and stl_winhl.filename.hl(ctx.win)
     or (minimal and 'StFilenameInactive' or 'StFilename')
 
-  local directory_hl = ctx.winhl and winhl.directory.hl(ctx.win)
+  local directory_hl = ctx.winhl and stl_winhl.directory.hl(ctx.win)
     or (minimal and 'StDirectoryInactive' or 'StDirectory')
 
-  local parent_hl = ctx.winhl and winhl.parent.hl(ctx.win)
+  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win)
     or (minimal and directory_hl or 'StParentDirectory')
 
   local ft_icon, icon_highlight = filetype(ctx)
@@ -550,7 +550,7 @@ function as.ui.statusline()
 
   local file_component = component(file.item, file.hl, file.opts)
 
-  local readonly_hl = ctx.winhl and winhl.readonly.hl(ctx.win) or winhl.readonly.fallback
+  local readonly_hl = ctx.winhl and stl_winhl.readonly.hl(ctx.win) or stl_winhl.readonly.fallback
   local readonly_component = component(is_readonly(ctx), readonly_hl, { priority = 1 })
   ----------------------------------------------------------------------------//
   -- Mode
@@ -744,7 +744,7 @@ local function adopt_window_highlights()
   local curr_winhl = vim.opt_local.winhighlight:get()
   if as.empty(curr_winhl) or not curr_winhl.StatusLine then return end
 
-  for _, part in pairs(winhl) do
+  for _, part in pairs(stl_winhl) do
     local name = part.hl(api.nvim_get_current_win())
     local hl = highlight.get(name)
     if not as.empty(hl) then return end
