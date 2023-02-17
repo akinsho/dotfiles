@@ -166,13 +166,14 @@ local identifiers = {
 local function get_ft_icon_hl_name(hl) return hl .. 'StatusLine' end
 
 --- @param buf number
+--- @param opts { default: boolean }
 --- @return string, string?
-local function get_buffer_icon(buf)
+local function get_buffer_icon(buf, opts)
   local ok, devicons = pcall(require, 'nvim-web-devicons')
   if not ok then return '', nil end
   local path = api.nvim_buf_get_name(buf)
   local name, ext = fn.fnamemodify(path, ':t'), fn.fnamemodify(path, ':e')
-  return devicons.get_icon(name, ext, { default = true })
+  return devicons.get_icon(name, ext, opts)
 end
 
 --- @param ctx StatuslineContext
@@ -181,7 +182,7 @@ local function filetype(ctx)
   local ft, bt = identifiers.filetypes[ctx.filetype], identifiers.buftypes[ctx.buftype]
   if ft then return ft end
   if bt then return bt end
-  return get_buffer_icon(ctx.bufnum)
+  return get_buffer_icon(ctx.bufnum, { default = true })
 end
 
 --- This function allow me to specify titles for special case buffers
@@ -755,19 +756,8 @@ local function adopt_window_highlights()
   end
 end
 
-local set_statusline_ft_icon_hls = (function()
+local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
   local hl_cache = {}
-  as.augroup('StatuslineFtIcons', {
-    {
-      event = 'ColorScheme',
-      command = function()
-        for ft, hl in pairs(hl_cache) do
-          highlight.set(get_ft_icon_hl_name(ft), hl)
-        end
-      end,
-    },
-  })
-
   ---@param buf number
   ---@param ft string
   return function(buf, ft)
@@ -778,6 +768,10 @@ local set_statusline_ft_icon_hls = (function()
     if not bg and not fg then return end
     hl_cache[ft] = { bg = bg, fg = fg }
     highlight.set(get_ft_icon_hl_name(hl), { fg = fg, bg = bg })
+  end, function()
+    for ft, hl in pairs(hl_cache) do
+      highlight.set(get_ft_icon_hl_name(ft), hl)
+    end
   end
 end)()
 
@@ -795,8 +789,12 @@ as.augroup('CustomStatusline', {
     command = colors,
   },
   {
+    event = 'ColorScheme',
+    command = reset_stl_ft_icon_hls,
+  },
+  {
     event = 'FileType',
-    command = function(args) set_statusline_ft_icon_hls(args.buf, args.match) end,
+    command = function(args) set_stl_ft_icon_hls(args.buf, args.match) end,
   },
   {
     event = 'WinEnter',
