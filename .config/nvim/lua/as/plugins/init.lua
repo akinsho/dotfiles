@@ -73,7 +73,14 @@ return {
         'mason.nvim',
         {
           'neovim/nvim-lspconfig',
-          dependencies = { { 'folke/neodev.nvim', opts = { library = { plugins = false } } } },
+          dependencies = {
+            { 'folke/neodev.nvim', opts = { library = { plugins = false } } },
+            {
+              'folke/neoconf.nvim',
+              cmd = { 'Neoconf' },
+              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+            },
+          },
           config = function()
             highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
             require('lspconfig.ui.windows').default_options.border = border
