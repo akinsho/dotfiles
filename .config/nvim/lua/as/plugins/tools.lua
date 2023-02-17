@@ -32,7 +32,6 @@ return {
             filetypes = { 'html', 'json', 'yaml', 'graphql', 'markdown' },
             condition = function() return as.executable('prettier') end,
           }),
-          require('typescript.extensions.null-ls.code-actions'),
         },
       })
     end,

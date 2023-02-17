@@ -10,6 +10,7 @@ return {
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   {
     'ahmedkhalf/project.nvim',
+    event = 'LspAttach',
     config = function()
       require('project_nvim').setup({
         detection_methods = { 'pattern', 'lsp' },
@@ -138,19 +139,9 @@ return {
       },
     },
   },
-  { 'andrewferrier/textobj-diagnostic.nvim', config = true },
-  {
-    'zbirenbaum/neodim',
-    config = function()
-      require('neodim').setup({
-        blend_color = highlight.get('Normal', 'bg'),
-        alpha = 0.45,
-        hide = { underline = false },
-      })
-    end,
-  },
   {
     'kosayoda/nvim-lightbulb',
+    event = 'LspAttach',
     config = function()
       highlight.plugin('Lightbulb', {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
@@ -489,7 +480,13 @@ return {
   {
     'jose-elias-alvarez/typescript.nvim',
     ft = { 'typescript', 'typescriptreact' },
-    config = function() require('typescript').setup({ server = require('as.servers')('tsserver') }) end,
+    dependencies = { 'jose-elias-alvarez/null-ls.nvim' },
+    config = function()
+      require('typescript').setup({ server = require('as.servers')('tsserver') })
+      require('null-ls').register({
+        sources = { require('typescript.extensions.null-ls.code-actions') },
+      })
+    end,
   },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
