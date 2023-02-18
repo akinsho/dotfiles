@@ -8,6 +8,7 @@ return {
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
     config = function()
       highlight.plugin('NeoTree', {
+        -- stylua: ignore
         theme = {
           ['*'] = {
             { NeoTreeNormal = { link = 'PanelBackground' } },
@@ -16,38 +17,17 @@ return {
             { NeoTreeCursorLine = { link = 'Visual' } },
             { NeoTreeStatusLine = { link = 'PanelSt' } },
             { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
-            {
-              NeoTreeTabInactive = {
-                bg = { from = 'PanelDarkBackground', alter = 15 },
-                fg = { from = 'Comment' },
-              },
-            },
-            {
-              NeoTreeTabSeparatorInactive = {
-                inherit = 'NeoTreeTabInactive',
-                fg = { from = 'PanelDarkBackground', attr = 'bg' },
-              },
-            },
-            {
-              NeoTreeTabSeparatorActive = {
-                inherit = 'PanelBackground',
-                fg = { from = 'Comment' },
-              },
-            },
+            { NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground', alter = 15 }, fg = { from = 'Comment' } } },
+            { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelDarkBackground', attr = 'bg' } } },
+            { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
           },
           horizon = {
             { NeoTreeDirectoryIcon = { fg = '#C09553' } },
             { NeoTreeWinSeparator = { link = 'WinSeparator' } },
-            {
-              NeoTreeTabInactive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
-            },
+            { NeoTreeTabInactive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } } },
             { NeoTreeTabActive = { link = 'VisibleTab' } },
             { NeoTreeTabSeparatorActive = { link = 'VisibleTab' } },
-            {
-              NeoTreeTabSeparatorInactive = {
-                inherit = 'NeoTreeTabInactive',
-                fg = { from = 'PanelBackground', attr = 'bg' },
-              },
+            { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelBackground', attr = 'bg' } },
             },
           },
         },
