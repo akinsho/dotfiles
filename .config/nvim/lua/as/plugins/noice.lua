@@ -17,7 +17,7 @@ return {
         help = { title = '' },
         input = { title = '' },
         confirm = { title = '' },
-        rename = { title = '' },
+        IncRename = { title = '' },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
       },
     },
