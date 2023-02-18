@@ -154,7 +154,7 @@ return {
   },
   {
     'levouh/tint.nvim',
-    event = 'VeryLazy',
+    event = 'WinNew',
     config = function()
       require('tint').setup({
         tint = -30,
