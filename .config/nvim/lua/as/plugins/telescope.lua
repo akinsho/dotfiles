@@ -176,7 +176,6 @@ return {
 
     require('telescope').setup({
       defaults = {
-        set_env = { ['TERM'] = vim.env.TERM },
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         dynamic_preview_title = true,
         prompt_prefix = icons.misc.telescope .. ' ',
