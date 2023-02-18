@@ -1,6 +1,6 @@
-local fmt, fn, highlight = string.format, vim.fn, as.highlight
-local icons = as.ui.icons
-local P = as.ui.palette
+local fmt, fn, highlight, ui = string.format, vim.fn, as.highlight, as.ui
+local icons = ui.icons
+local P = ui.palette
 
 local function b() return require('telescope.builtin') end
 local function t() return require('telescope') end
@@ -148,7 +148,12 @@ return {
       {
         event = 'User',
         pattern = 'TelescopePreviewerLoaded',
-        command = 'setlocal number',
+        command = function(args)
+          --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
+          local bufname = vim.tbl_get(args, 'data', 'bufname')
+          local ft = bufname and require('plenary.filetype').detect(bufname) or nil
+          vim.opt_local.number = not ft or ui.settings.get(ft, 'number', 'ft') ~= false
+        end,
       },
     })
 
