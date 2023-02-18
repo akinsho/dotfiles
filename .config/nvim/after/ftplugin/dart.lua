@@ -8,15 +8,16 @@ if not as then return end
 
 local function with_desc(desc) return { buffer = 0, desc = desc } end
 
-as.nnoremap('<leader>cc', '<Cmd>Telescope flutter commands<CR>', with_desc('flutter: commands'))
-as.nnoremap('<leader>dd', '<Cmd>FlutterDevices<CR>', with_desc('flutter: devices'))
-as.nnoremap(
+map('n', '<leader>cc', '<Cmd>Telescope flutter commands<CR>', with_desc('flutter: commands'))
+map('n', '<leader>dd', '<Cmd>FlutterDevices<CR>', with_desc('flutter: devices'))
+map('n', '<leader>de', '<Cmd>FlutterEmulators<CR>', with_desc('flutter: emulators'))
+map('n', '<leader>do', '<Cmd>FlutterOutline<CR>', with_desc('flutter: outline'))
+map('n', '<leader>dq', '<Cmd>FlutterQuit<CR>', with_desc('flutter: quit'))
+map('n', '<leader>drn', '<Cmd>FlutterRun<CR>', with_desc('flutter: server run'))
+map('n', '<leader>drs', '<Cmd>FlutterRestart<CR>', with_desc('flutter: server restart'))
+map(
+  'n',
   '<leader>db',
   "<cmd>TermExec cmd='flutter pub run build_runner build --delete-conflicting-outputs'<CR>",
   'flutter: run code generation'
 )
-as.nnoremap('<leader>de', '<Cmd>FlutterEmulators<CR>', with_desc('flutter: emulators'))
-as.nnoremap('<leader>do', '<Cmd>FlutterOutline<CR>', with_desc('flutter: outline'))
-as.nnoremap('<leader>dq', '<Cmd>FlutterQuit<CR>', with_desc('flutter: quit'))
-as.nnoremap('<leader>drn', '<Cmd>FlutterRun<CR>', with_desc('flutter: server run'))
-as.nnoremap('<leader>drs', '<Cmd>FlutterRestart<CR>', with_desc('flutter: server restart'))

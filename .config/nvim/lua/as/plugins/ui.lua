@@ -145,7 +145,8 @@ return {
         end,
       })
       vim.notify = notify
-      as.nnoremap(
+      map(
+        'n',
         '<leader>nd',
         function() notify.dismiss({ silent = true, pending = true }) end,
         { desc = 'dismiss notifications' }

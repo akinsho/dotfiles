@@ -56,9 +56,9 @@ local function config()
     },
   }
 
-  as.nnoremap('<leader>A', '<cmd>A<CR>', 'projectionist: edit alternate')
-  as.nnoremap('<leader>av', '<cmd>AV<CR>', 'projectionist: vsplit alternate')
-  as.nnoremap('<leader>at', '<cmd>Vtest<CR>', 'projectionist: vsplit test')
+  map('n', '<leader>A', '<cmd>A<CR>', { desc = 'projectionist: edit alternate' })
+  map('n', '<leader>av', '<cmd>AV<CR>', { desc = 'projectionist: vsplit alternate' })
+  map('n', '<leader>at', '<cmd>Vtest<CR>', { desc = 'projectionist: vsplit test' })
 end
 
 return { { 'tpope/vim-projectionist', config = config, event = 'VeryLazy' } }

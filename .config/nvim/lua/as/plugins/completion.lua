@@ -195,10 +195,15 @@ return {
     dependencies = { 'nvim-cmp' },
     init = function() vim.g.copilot_no_tab_map = true end,
     config = function()
-      as.imap('<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
-      as.inoremap('<M-]>', '<Plug>(copilot-next)')
-      as.inoremap('<M-[>', '<Plug>(copilot-previous)')
-      as.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
+      map(
+        'i',
+        '<Plug>(as-copilot-accept)',
+        "copilot#Accept('<Tab>')",
+        { expr = true, remap = true }
+      )
+      map('i', '<M-]>', '<Plug>(copilot-next)')
+      map('i', '<M-[>', '<Plug>(copilot-previous)')
+      map('i', '<C-\\>', '<Cmd>vertical Copilot panel<CR>')
       vim.g.copilot_filetypes = {
         ['*'] = true,
         gitcommit = false,

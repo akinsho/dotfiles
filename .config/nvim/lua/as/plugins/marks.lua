@@ -14,9 +14,9 @@ return {
         { MarkSignHL = { link = 'Directory' } },
         { MarkSignNumHL = { link = 'Directory' } },
       })
-      as.nnoremap('<leader>mb', '<Cmd>MarksListBuf<CR>', 'list buffer')
-      as.nnoremap('<leader>mg', '<Cmd>MarksQFListGlobal<CR>', 'list global')
-      as.nnoremap('<leader>m0', '<Cmd>BookmarksQFList 0<CR>', 'list bookmark')
+      map('n', '<leader>mb', '<Cmd>MarksListBuf<CR>', { desc = 'list buffer' })
+      map('n', '<leader>mg', '<Cmd>MarksQFListGlobal<CR>', { desc = 'list global' })
+      map('n', '<leader>m0', '<Cmd>BookmarksQFList 0<CR>', { desc = 'list bookmark' })
 
       require('marks').setup({
         force_write_shada = false, -- This can cause data loss

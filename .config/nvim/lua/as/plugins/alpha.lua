@@ -103,7 +103,7 @@ local function config()
         vim.opt_local.colorcolumn = ''
         vim.o.laststatus = 0
         vim.o.showtabline = 0
-        as.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
+        map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
           buffer = args.buf,

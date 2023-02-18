@@ -4,6 +4,7 @@ return {
   {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
+    build = 'make install_jsregexp',
     dependencies = { 'rafamadriz/friendly-snippets' },
     config = function()
       local ls = require('luasnip')
@@ -49,28 +50,28 @@ return {
       )
 
       -- <c-l> is selecting within a list of options.
-      vim.keymap.set({ 's', 'i' }, '<c-l>', function()
+      map({ 's', 'i' }, '<c-l>', function()
         if ls.choice_active() then ls.change_choice(1) end
       end)
 
-      vim.keymap.set({ 's', 'i' }, '<c-j>', function()
+      map({ 's', 'i' }, '<c-j>', function()
         if ls.expand_or_jumpable() then ls.expand_or_jump() end
       end)
 
       -- <C-K> is easier to hit but swallows the digraph key
-      vim.keymap.set({ 's', 'i' }, '<c-b>', function()
+      map({ 's', 'i' }, '<c-b>', function()
         if ls.jumpable(-1) then ls.jump(-1) end
       end)
 
       require('luasnip.loaders.from_lua').lazy_load()
       -- NOTE: the loader is called twice so it picks up the defaults first then my custom textmate
-      -- snippets. @see: https://github.com/L3MON4D3/LuaSnip/issues/364
+      -- snippets.
+      -- see: https://github.com/L3MON4D3/LuaSnip/issues/364
       require('luasnip.loaders.from_vscode').lazy_load()
       require('luasnip.loaders.from_vscode').lazy_load({ paths = './snippets/textmate' })
 
       ls.filetype_extend('dart', { 'flutter' })
     end,
-    build = 'make install_jsregexp',
   },
   {
     'benfowler/telescope-luasnip.nvim',

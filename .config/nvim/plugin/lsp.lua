@@ -176,27 +176,29 @@ end
 local function setup_mappings(_, bufnr)
   local function with_desc(desc) return { buffer = bufnr, desc = desc } end
 
-  as.nnoremap(
+  map(
+    'n',
     ']c',
     function() vim.diagnostic.goto_prev({ float = false }) end,
     with_desc('lsp: go to prev diagnostic')
   )
-  as.nnoremap(
+  map(
+    'n',
     '[c',
     function() vim.diagnostic.goto_next({ float = false }) end,
     with_desc('lsp: go to next diagnostic')
   )
 
-  vim.keymap.set({ 'n', 'x' }, '<leader>ca', lsp.buf.code_action, with_desc('lsp: code action'))
-  as.nnoremap('<leader>rf', format, with_desc('lsp: format buffer'))
-  as.nnoremap('gd', lsp.buf.definition, with_desc('lsp: definition'))
-  as.nnoremap('gr', lsp.buf.references, with_desc('lsp: references'))
-  as.nnoremap('K', lsp.buf.hover, with_desc('lsp: hover'))
-  as.nnoremap('gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
-  as.nnoremap('gi', lsp.buf.implementation, with_desc('lsp: implementation'))
-  as.nnoremap('<leader>gd', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
-  as.nnoremap('<leader>cl', lsp.codelens.run, with_desc('lsp: run code lens'))
-  as.nnoremap('<leader>ri', lsp.buf.rename, with_desc('lsp: rename'))
+  map({ 'n', 'x' }, '<leader>ca', lsp.buf.code_action, with_desc('lsp: code action'))
+  map('n', '<leader>rf', format, with_desc('lsp: format buffer'))
+  map('n', 'gd', lsp.buf.definition, with_desc('lsp: definition'))
+  map('n', 'gr', lsp.buf.references, with_desc('lsp: references'))
+  map('n', 'K', lsp.buf.hover, with_desc('lsp: hover'))
+  map('n', 'gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  map('n', 'gi', lsp.buf.implementation, with_desc('lsp: implementation'))
+  map('n', '<leader>gd', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+  map('n', '<leader>cl', lsp.codelens.run, with_desc('lsp: run code lens'))
+  map('n', '<leader>ri', lsp.buf.rename, with_desc('lsp: rename'))
 end
 
 -----------------------------------------------------------------------------//
@@ -301,7 +303,7 @@ do
       })
   end
   command('LspDiagnostics', smart_quickfix_diagnostics)
-  as.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostics')
+  map('n', '<leader>ll', '<Cmd>LspDiagnostics<CR>', { desc = 'toggle quickfix diagnostics' })
 end
 
 -----------------------------------------------------------------------------//

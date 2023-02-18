@@ -13,13 +13,13 @@ opt.winfixheight = true
 ----------------------------------------------------------------------------------
 -- Helper functions
 ----------------------------------------------------------------------------------
-as.nnoremap('dd', as.qf.delete, { desc = 'delete current quickfix entry', buffer = 0 })
-as.vnoremap('d', as.qf.delete, { desc = 'delete selected quickfix entry', buffer = 0 })
+map('n', 'dd', as.qf.delete, { desc = 'delete current quickfix entry', buffer = 0 })
+map('v', 'd', as.qf.delete, { desc = 'delete selected quickfix entry', buffer = 0 })
 ----------------------------------------------------------------------------------
 -- Mappings
 ----------------------------------------------------------------------------------
-as.nnoremap('H', ':colder<CR>', { buffer = 0 })
-as.nnoremap('L', ':cnewer<CR>', { buffer = 0 })
+map('n', 'H', ':colder<CR>', { buffer = 0 })
+map('n', 'L', ':cnewer<CR>', { buffer = 0 })
 
 -- Resources and inspiration
 -- 2. https://github.com/romainl/vim-qf/blob/2e385e6d157314cb7d0385f8da0e1594a06873c5/autoload/qf.vim#L22

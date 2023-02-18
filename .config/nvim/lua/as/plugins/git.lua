@@ -146,31 +146,36 @@ return {
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
-        local function map(mode, l, r, opts)
+        local function bmap(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
           vim.keymap.set(mode, l, r, opts)
         end
 
-        as.nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
-        as.nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview current hunk')
-        as.nnoremap('<leader>hb', gs.toggle_current_line_blame, 'toggle current line blame')
-        as.nnoremap('<leader>hd', gs.toggle_deleted, 'show deleted lines')
-        as.nnoremap('<leader>hw', gs.toggle_word_diff, 'toggle word diff')
-        as.nnoremap('<localleader>gw', gs.stage_buffer, 'stage entire buffer')
-        as.nnoremap('<localleader>gre', gs.reset_buffer, 'reset entire buffer')
-        as.nnoremap('<localleader>gbl', gs.blame_line, 'blame current line')
-        as.nnoremap('<leader>lm', function() gs.setqflist('all') end, 'list modified in quickfix')
-        map({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
-        map({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
-        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
+        map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
+        map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview current hunk' })
+        map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle current line blame' })
+        map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
+        map('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
+        map('n', '<localleader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
+        map('n', '<localleader>gre', gs.reset_buffer, { desc = 'reset entire buffer' })
+        map('n', '<localleader>gbl', gs.blame_line, { desc = 'blame current line' })
+        map(
+          'n',
+          '<leader>lm',
+          function() gs.setqflist('all') end,
+          { desc = 'list modified in quickfix' }
+        )
+        bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
+        bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
+        bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
-        as.nnoremap('[h', function()
+        map('n', '[h', function()
           vim.schedule(function() gs.next_hunk() end)
           return '<Ignore>'
         end, { expr = true, desc = 'go to next git hunk' })
 
-        as.nnoremap(']h', function()
+        map('n', ']h', function()
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
         end, { expr = true, desc = 'go to previous git hunk' })

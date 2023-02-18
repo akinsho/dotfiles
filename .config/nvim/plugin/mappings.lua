@@ -5,15 +5,21 @@ local api = vim.api
 local command = as.command
 local fmt = string.format
 
-local nmap = as.nmap
-local imap = as.imap
-local nnoremap = as.nnoremap
-local xnoremap = as.xnoremap
-local vnoremap = as.vnoremap
-local inoremap = as.inoremap
-local onoremap = as.onoremap
-local cnoremap = as.cnoremap
-local tnoremap = as.tnoremap
+local recursive_map = function(mode, lhs, rhs, opts)
+  opts = opts or {}
+  opts.remap = true
+  map(mode, lhs, rhs, opts)
+end
+
+local nmap = function(...) recursive_map('n', ...) end
+local imap = function(...) recursive_map('i', ...) end
+local nnoremap = function(...) map('n', ...) end
+local xnoremap = function(...) map('x', ...) end
+local vnoremap = function(...) map('v', ...) end
+local inoremap = function(...) map('i', ...) end
+local onoremap = function(...) map('o', ...) end
+local cnoremap = function(...) map('c', ...) end
+local tnoremap = function(...) map('t', ...) end
 
 -----------------------------------------------------------------------------//
 -- Terminal {{{
@@ -124,7 +130,7 @@ nnoremap('<localleader>,', modify_line_end_delimiter(','))
 nnoremap('<localleader>;', modify_line_end_delimiter(';'))
 
 -----------------------------------------------------------------------------//
-nnoremap('<leader>E', '<Cmd>Inspect<CR>', 'Inspect the cursor position')
+nnoremap('<leader>E', '<Cmd>Inspect<CR>', { desc = 'Inspect the cursor position' })
 -----------------------------------------------------------------------------//
 
 if as.empty(fn.mapcheck('<ScrollWheelDown>')) then nmap('<ScrollWheelDown>', '<c-d>') end
@@ -301,7 +307,7 @@ nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdp
 
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
 nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
-nnoremap('<leader>yf', [[:let @*=expand("%:p")<CR>]], 'yank file path into the clipboard')
+nnoremap('<leader>yf', ":let @*=expand('%:p')<CR>", { desc = 'yank file path into the clipboard' })
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//

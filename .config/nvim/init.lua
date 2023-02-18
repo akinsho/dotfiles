@@ -49,6 +49,7 @@ local namespace = {
 -- helper functions and variables throughout my config
 _G.as = as or namespace
 
+_G.map = vim.keymap.set
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
@@ -87,8 +88,8 @@ require('lazy').setup('as.plugins', {
   install = { colorscheme = { 'horizon' } },
 })
 
-as.nnoremap('<leader>ps', '<Cmd>Lazy<CR>')
-as.nnoremap('<leader>pc', '<Cmd>Lazy clean<CR>')
+map('n', '<leader>ps', '<Cmd>Lazy<CR>')
+map('n', '<leader>pc', '<Cmd>Lazy clean<CR>')
 -----------------------------------------------------------------------------//
 -- Builtin Packages
 -----------------------------------------------------------------------------//

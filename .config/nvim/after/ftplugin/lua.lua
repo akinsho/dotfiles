@@ -1,6 +1,5 @@
 if not as then return end
 
-local nnoremap = as.nnoremap
 local fn = vim.fn
 local fmt = string.format
 
@@ -80,8 +79,8 @@ as.ftplugin_conf('nvim-surround', function(surround)
   })
 end)
 
-nnoremap('gK', keyword, { buffer = 0 })
-nnoremap('<leader>so', function()
+map('n', 'gK', keyword, { buffer = 0 })
+map('n', '<leader>so', function()
   vim.cmd.luafile('%')
   vim.notify('Sourced ' .. fn.expand('%'))
 end)

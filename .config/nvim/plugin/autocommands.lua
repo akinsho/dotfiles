@@ -1,7 +1,6 @@
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local map = vim.keymap.set
 
 if not as then return end
 
@@ -106,7 +105,7 @@ as.augroup('SmartClose', {
         or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
         or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
-      if is_eligible then as.nnoremap('q', smart_close, { buffer = 0, nowait = true }) end
+      if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
     end,
   },
   {

@@ -71,14 +71,14 @@ return {
       },
     })
 
-    as.nnoremap(
+    map(
+      'n',
       '<leader>ld',
       function() gh_dash:toggle() end,
-      'toggleterm: toggle github dashboard'
+      { desc = 'toggleterm: toggle github dashboard' }
     )
+    map('n', '<leader>lg', function() lazygit:toggle() end, { desc = 'toggleterm: toggle lazygit' })
 
     as.command('Btop', function() btop:toggle() end)
-
-    as.nnoremap('<leader>lg', function() lazygit:toggle() end, 'toggleterm: toggle lazygit')
   end,
 }

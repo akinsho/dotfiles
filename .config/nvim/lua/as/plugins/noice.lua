@@ -1,5 +1,4 @@
 local border, highlight = as.ui.current.border, as.highlight
-local map = vim.keymap.set
 
 return {
   'folke/noice.nvim',
