@@ -8,17 +8,6 @@ return {
   -- Core {{{3
   -----------------------------------------------------------------------------//
   'nvim-lua/plenary.nvim', -- THE LIBRARY
-  {
-    'ahmedkhalf/project.nvim',
-    event = 'LspAttach',
-    config = function()
-      require('project_nvim').setup({
-        detection_methods = { 'pattern', 'lsp' },
-        ignore_lsp = { 'null-ls' },
-        patterns = { '.git' },
-      })
-    end,
-  },
   'nvim-tree/nvim-web-devicons',
   {
     'rmagatti/auto-session',
@@ -46,6 +35,16 @@ return {
   -----------------------------------------------------------------------------//
   -- LSP,Completion & Debugger {{{1
   -----------------------------------------------------------------------------//
+  {
+    'ahmedkhalf/project.nvim',
+    name = 'project_nvim',
+    lazy = false,
+    opts = {
+      detection_methods = { 'pattern', 'lsp' },
+      ignore_lsp = { 'null-ls' },
+      patterns = { '.git' },
+    },
+  },
   {
     {
       'williamboman/mason.nvim',
