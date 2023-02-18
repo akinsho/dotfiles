@@ -38,10 +38,9 @@ local icons = {
   },
   lsp = {
     error = '', -- '✗'
-    warn = '',
-    warning = '',
-    info = '', -- 
-    hint = '', -- ⚑
+    warn = '',
+    info = '', -- 
+    hint = '', --  ⚑
   },
   git = {
     add = '', -- '',
@@ -68,13 +67,15 @@ local icons = {
     float = '',
   },
   misc = {
+    -- 
+    plus = '',
     ellipsis = '…',
     up = '⇡',
     down = '⇣',
     line = 'ℓ', -- ''
     indent = 'Ξ',
     tab = '⇥',
-    bug = '', -- 'ﴫ'
+    bug = '', --  'ﴫ'
     question = '',
     clock = '',
     lock = '',
@@ -96,7 +97,7 @@ local icons = {
     fire = '',
     note = '',
     bookmark = '',
-    pencil = '',
+    pencil = '', -- '',
     tools = '',
     arrow_right = '',
     caret_right = '',
