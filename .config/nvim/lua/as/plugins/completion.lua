@@ -181,10 +181,7 @@ return {
       { 'rcarriga/cmp-dap' },
       { 'saadparwaiz1/cmp_luasnip' },
       { 'lukas-reineke/cmp-rg' },
-      {
-        'petertriho/cmp-git',
-        opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } },
-      },
+      { 'petertriho/cmp-git', opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } } },
       -- Use <Tab> to escape from pairs such as ""|''|() etc.
       { 'abecodes/tabout.nvim', opts = { ignore_beginning = false, completion = false } },
     },
