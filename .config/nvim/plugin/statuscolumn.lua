@@ -6,8 +6,8 @@ local ui = as.ui
 local space = ' '
 local shade = '░'
 local separator = '▏' -- '│'
-local fold_opened = '▼'
-local fold_closed = '▶'
+local fold_opened = '▽' -- '▼'
+local fold_closed = '▷' -- '▶'
 local sep_hl = '%#StatusColSep#'
 
 ui.statuscolumn = {}
@@ -75,10 +75,11 @@ function ui.statuscolumn.render()
     end
   end
   local components = {
-    sign and hl(sign.texthl, sign.text:gsub(space, '')) or space,
     '%=',
     space,
     nr(curwin),
+    space,
+    sign and hl(sign.texthl, sign.text:gsub(space, '')) or space,
     space,
     git_sign and hl(git_sign.texthl, git_sign.text:gsub(space, '')) or space,
     sep(),
