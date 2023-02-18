@@ -21,21 +21,6 @@ return {
   },
   'nvim-tree/nvim-web-devicons',
   {
-    'mg979/vim-visual-multi',
-    event = 'VeryLazy',
-    init = function()
-      vim.g.VM_highlight_matches = 'underline'
-      vim.g.VM_theme = 'codedark'
-      vim.g.VM_maps = {
-        ['Find Word'] = '<C-E>',
-        ['Find Under'] = '<C-E>',
-        ['Find Subword Under'] = '<C-E>',
-        ['Select Cursor Down'] = '\\j',
-        ['Select Cursor Up'] = '\\k',
-      }
-    end,
-  },
-  {
     'rmagatti/auto-session',
     lazy = false,
     opts = {
@@ -228,6 +213,21 @@ return {
   --------------------------------------------------------------------------------
   -- Utilities {{{1
   --------------------------------------------------------------------------------
+  {
+    'mg979/vim-visual-multi',
+    keys = { '<C-E>', '\\j', '\\k' },
+    init = function()
+      vim.g.VM_highlight_matches = 'underline'
+      vim.g.VM_theme = 'codedark'
+      vim.g.VM_maps = {
+        ['Find Word'] = '<C-E>',
+        ['Find Under'] = '<C-E>',
+        ['Find Subword Under'] = '<C-E>',
+        ['Select Cursor Down'] = '\\j',
+        ['Select Cursor Up'] = '\\k',
+      }
+    end,
+  },
   {
     'chaoren/vim-wordmotion',
     lazy = false,
