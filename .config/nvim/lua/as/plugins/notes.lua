@@ -40,8 +40,7 @@ return {
   },
   {
     'nvim-orgmode/orgmode',
-    ft = { 'org' },
-    event = 'VeryLazy',
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       { 'akinsho/org-bullets.nvim', dev = true, config = true },
       { 'nvim-treesitter/nvim-treesitter' },
