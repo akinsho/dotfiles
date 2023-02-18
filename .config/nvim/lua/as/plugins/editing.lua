@@ -10,9 +10,7 @@ return {
       { '<m-p>', '<Plug>(YankyCycleBackward)' },
       {
         '<localleader>p',
-        function()
-          require('telescope').extensions.yank_history.yank_history(as.telescope.dropdown())
-        end,
+        function() require('telescope').extensions.yank_history.yank_history() end,
         desc = 'yanky: open yank history',
       },
     },
