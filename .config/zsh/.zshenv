@@ -20,7 +20,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 
-export SYNC_DIR=${HOME}/notes
+export SYNC_DIR=${HOME}/Dropbox
 export DOTFILES=${HOME}/.dotfiles
 export PROJECTS_DIR=${HOME}/projects
 export PERSONAL_PROJECTS_DIR=${PROJECTS_DIR}/personal

@@ -1,6 +1,6 @@
 local fmt, fn = string.format, vim.fn
 local highlight = as.highlight
-local function sync(path) return fmt('%s/%s', fn.expand('$SYNC_DIR'), path) end
+local function sync(path) return fmt('%s/%s/notes', fn.expand('$SYNC_DIR'), path) end
 
 return {
   {

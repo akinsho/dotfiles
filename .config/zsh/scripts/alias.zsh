@@ -43,7 +43,7 @@ alias vim='nvim'
 alias dv='DEVELOPING=1 nvim'
 alias lvim="VIMRUNTIME=runtime $PROJECTS_DIR/contributing/neovim/build/bin/nvim"
 alias minimalvim="nvim -u ~/minimal.vim"
-alias notes="cd $SYNC_DIR/neorg/ && nvim"
+alias notes="cd $SYNC_DIR/notes/neorg/ && nvim"
 #-------------------------------------------------------------------------------
 #  DIRECTORIES
 #-------------------------------------------------------------------------------
