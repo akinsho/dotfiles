@@ -317,7 +317,7 @@ local settings = {
     ['noice'] = presets.statusline_only,
     ['diff'] = presets.statusline_only,
     ['qf'] = presets.statusline_only,
-    ['alpha'] = presets.statusline_only,
+    ['alpha'] = presets.tool_panel:with({ statusline = false }),
     ['fugitive'] = presets.statusline_only,
     ['startify'] = presets.statusline_only,
     ['man'] = presets.minimal_editing,
