@@ -1,11 +1,11 @@
 if not as or not as.has('nvim-0.9') then return end
 
 local fn, v, api = vim.fn, vim.v, vim.api
-local ui = as.ui
+local ui, separators = as.ui, as.ui.icons.separators
 
 local space = ' '
-local shade = '░'
-local separator = '▏' -- '│'
+local shade = separators.light_shade_block
+local separator = separators.left_thin_block -- '│'
 local fold_opened = '▽' -- '▼'
 local fold_closed = '▷' -- '▶'
 local sep_hl = '%#StatusColSep#'

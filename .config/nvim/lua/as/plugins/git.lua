@@ -135,7 +135,7 @@ return {
         delete = { text = icons.right_block },
         topdelete = { text = icons.right_block },
         changedelete = { text = icons.right_block },
-        untracked = { text = icons.medium_shade_block },
+        untracked = { text = icons.light_shade_block },
       },
       -- Experimental ------------------------------------------------------------------------------
       -- _signs_staged_enable = true,
