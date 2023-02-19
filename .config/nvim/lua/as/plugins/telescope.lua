@@ -1,9 +1,8 @@
-local fmt, fn, highlight, ui = string.format, vim.fn, as.highlight, as.ui
+local fn, highlight, ui = vim.fn, as.highlight, as.ui
 local icons = ui.icons
 local P = ui.palette
 
-local function b() return require('telescope.builtin') end
-local function t() return require('telescope') end
+local function extensions(name) return require('telescope').extensions[name] end
 
 ---@param opts table
 ---@return table
@@ -18,67 +17,35 @@ local function dropdown(opts)
   return require('telescope.themes').get_dropdown(opts)
 end
 
-local function delta_opts(opts, is_buf)
-  opts = opts or {}
-  local previewers = require('telescope.previewers')
-  local delta = previewers.new_termopen_previewer({
-    get_command = function(entry)
-      local args = {
-        'git',
-        '-c',
-        'core.pager=delta',
-        '-c',
-        'delta.side-by-side=false',
-        'diff',
-        entry.value .. '^!',
-      }
-      if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
-      return args
-    end,
-  })
-  opts.previewer = { delta, previewers.git_commit_message.new(opts) }
-  return opts
-end
+local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
+local function find_files(opts) return extensions('menufacture').find_files(opts) end
 
-local function nvim_config()
-  b().find_files({
-    prompt_title = '~ nvim config ~',
-    cwd = vim.fn.stdpath('config'),
-    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
-  })
-end
-
-local function find_near_files()
-  local cwd = require('telescope.utils').buffer_dir()
-  b().find_files({
-    prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
-    cwd = cwd,
-  })
-end
-
-local function live_grep_args()
-  t().extensions.live_grep_args.live_grep_args(require('telescope.themes').get_ivy())
+local function project_files()
+  if not pcall(require('telescope.builtin').git_files, { show_untracked = true }) then
+    find_files()
+  end
 end
 
 local function orgfiles()
-  b().find_files({ prompt_title = 'Org', cwd = vim.fn.expand('$SYNC_DIR/notes/org/') })
+  find_files({ prompt_title = 'Org', cwd = fn.expand('$SYNC_DIR/notes/org/') })
 end
 
 local function norgfiles()
-  b().find_files({ prompt_title = 'Norg', cwd = vim.fn.expand('$SYNC_DIR/notes/neorg/') })
+  find_files({ prompt_title = 'Norg', cwd = fn.expand('$SYNC_DIR/notes/neorg/') })
 end
 
-local function project_files()
-  if not pcall(b().git_files, { show_untracked = true }) then b().find_files() end
-end
+local function frecency() extensions('frecency').frecency(dropdown({ previewer = false })) end
+local function luasnips() extensions('luasnip').luasnip(dropdown()) end
+local function notifications() extensions('notify').notify(dropdown()) end
+local function pickers() require('telescope.builtin').builtin({ include_extensions = true }) end
 
-local function frecency() t().extensions.frecency.frecency(dropdown({ previewer = false })) end
-local function pickers() b().builtin({ include_extensions = true }) end
-local function dotfiles() b().find_files({ prompt_title = 'dotfiles', cwd = vim.g.dotfiles }) end
-local function notifications() t().extensions.notify.notify(dropdown()) end
-local function luasnips() t().extensions.luasnip.luasnip(dropdown()) end
-local function delta_git_commits(opts) b().git_commits(delta_opts(opts)) end
-local function delta_git_bcommits(opts) b().git_bcommits(delta_opts(opts, true)) end
+local function dotfiles()
+  find_files({
+    prompt_title = 'dotfiles',
+    cwd = vim.g.dotfiles,
+    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+  })
+end
 
 local function stopinsert(callback)
   return function(prompt_bufnr)
@@ -87,55 +54,59 @@ local function stopinsert(callback)
   end
 end
 
+local function b(picker) return require('telescope.builtin')[picker] end
+
 return {
   'nvim-telescope/telescope.nvim',
   cmd = 'Telescope',
   keys = {
-    { '<c-p>', project_files, desc = 'find files' },
     { '<leader>fa', pickers, desc = 'builtins' },
-    { '<leader>fn', notifications, desc = 'notifications' },
-    { '<leader>fb', function() b().current_buffer_fuzzy_find() end, desc = 'search buffer' },
-    { '<leader>fls', function() b().lsp_dynamic_workspace_symbols() end, desc = 'symbols' },
-    { '<leader>fld', function() b().lsp_document_symbols() end, desc = 'document symbols' },
-    { '<leader>fle', function() b().diagnostics() end, desc = 'workspace diagnostics' },
-    { '<leader>fva', function() b().autocommands() end, desc = 'autocommands' },
-    { '<leader>fvh', function() b().highlights() end, desc = 'highlights' },
-    { '<leader>fvk', function() b().keymaps() end, desc = 'autocommands' },
-    { '<leader>fvo', function() b().vim_options() end, desc = 'options' },
-    { '<leader>fr', function() b().resume() end, desc = 'resume last picker' },
-    { '<leader>ff', function() b().find_files() end, desc = 'find files' },
-    { '<leader>f?', function() b().help_tags() end, desc = 'help' },
-    { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
-    { '<leader>ffn', find_near_files, desc = 'find near files' },
-    { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
-    { '<leader>fgc', delta_git_commits, desc = 'commits' },
-    { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
-    { '<leader>fgb', function() b().git_branches() end, desc = 'branches' },
-    { '<leader>fo', function() b().buffers() end, desc = 'buffers' },
-    { '<leader>fs', live_grep_args, desc = 'live grep' },
     { '<leader>fd', dotfiles, desc = 'dotfiles' },
-    { '<leader>fc', nvim_config, desc = 'nvim config' },
+    { '<leader>fs', live_grep, desc = 'live grep' },
     { '<leader>fO', orgfiles, desc = 'org files' },
     { '<leader>fN', norgfiles, desc = 'norg files' },
+    { '<leader>ff', find_files, desc = 'find files' },
+    { '<c-p>', project_files, desc = 'find project files' },
+    { '<leader>fn', notifications, desc = 'notifications' },
+    { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
+    { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+    { '<leader>fls', b('lsp_dynamic_workspace_symbols'), desc = 'symbols' },
+    { '<leader>fld', b('lsp_document_symbols'), desc = 'document symbols' },
+    { '<leader>fle', b('diagnostics'), desc = 'workspace diagnostics' },
+    { '<leader>fva', b('autocommands'), desc = 'autocommands' },
+    { '<leader>fvh', b('highlights'), desc = 'highlights' },
+    { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
+    { '<leader>fvo', b('vim_options'), desc = 'options' },
+    { '<leader>fgc', b('git_commits'), desc = 'commits' },
+    { '<leader>fgB', b('git_bcommits'), desc = 'buffer commits' },
+    { '<leader>fgb', b('git_branches'), desc = 'branches' },
+    { '<leader>fr', b('resume'), desc = 'resume last picker' },
+    { '<leader>f?', b('help_tags'), desc = 'help' },
+    { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'search buffer' },
+    { '<leader>fo', b('buffers'), desc = 'buffers' },
   },
   dependencies = {
     {
       'natecraddock/telescope-zf-native.nvim',
-      config = function() t().load_extension('zf-native') end,
+      config = function() require('telescope').load_extension('zf-native') end,
     },
     {
       'nvim-telescope/telescope-smart-history.nvim',
       dependencies = { { 'kkharji/sqlite.lua' } },
-      config = function() t().load_extension('smart_history') end,
+      config = function() require('telescope').load_extension('smart_history') end,
     },
     {
       'nvim-telescope/telescope-frecency.nvim',
       dependencies = { { 'kkharji/sqlite.lua' } },
-      config = function() t().load_extension('frecency') end,
+      config = function() require('telescope').load_extension('frecency') end,
     },
     {
       'nvim-telescope/telescope-live-grep-args.nvim',
-      config = function() t().load_extension('live_grep_args') end,
+      config = function() require('telescope').load_extension('live_grep_args') end,
+    },
+    {
+      'molecule-man/telescope-menufacture',
+      config = function() require('telescope').load_extension('menufacture') end,
     },
   },
   config = function()
@@ -213,7 +184,7 @@ return {
         },
         path_display = { 'truncate' },
         winblend = 5,
-        history = { path = vim.fn.stdpath('data') .. '/telescope_history.sqlite3' },
+        history = { path = fn.stdpath('data') .. '/telescope_history.sqlite3' },
         layout_strategy = 'flex',
         layout_config = {
           horizontal = { preview_width = 0.55 },
@@ -243,6 +214,9 @@ return {
               ['<C-i>'] = lga_actions.quote_prompt({ postfix = ' --iglob ' }),
             },
           },
+        },
+        ['zf-native'] = {
+          generic = { enable = true, match_filename = true },
         },
       },
       pickers = {
