@@ -1,4 +1,4 @@
-local opt = vim.opt_local
+local opt, highlight = vim.opt_local, as.highlight
 
 opt.list = false
 opt.spelllang = 'en_gb'
@@ -7,9 +7,7 @@ opt.colorcolumn = '50,72'
 -- Schedule this call as highlights are not set correctly if there is not a delay
 vim.schedule(
   function()
-    as.highlight.set_winhl('gitcommit', 0, {
-      { VirtColumn = { fg = { from = 'Variable' } } },
-    })
+    highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } })
   end
 )
 
