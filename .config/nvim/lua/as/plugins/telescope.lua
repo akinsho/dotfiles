@@ -1,6 +1,7 @@
 local fn, highlight, ui = vim.fn, as.highlight, as.ui
 local icons = ui.icons
 local P = ui.palette
+as.telescope = {}
 
 local function extensions(name) return require('telescope').extensions[name] end
 
@@ -16,6 +17,7 @@ local function dropdown(opts)
   }
   return require('telescope.themes').get_dropdown(opts)
 end
+as.telescope.dropdown = dropdown
 
 local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
 local function find_files(opts) return extensions('menufacture').find_files(opts) end
@@ -245,5 +247,8 @@ return {
         reloader = dropdown(),
       },
     })
+
+    -- Extensions
+    require('telescope').load_extension('persisted')
   end,
 }

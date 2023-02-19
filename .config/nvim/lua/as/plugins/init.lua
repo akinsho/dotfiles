@@ -1,8 +1,6 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
 local border, highlight = as.ui.current.border, as.highlight
 
-local data = fn.stdpath('data')
-
 return {
   -----------------------------------------------------------------------------//
   -- Core {{{3
@@ -10,19 +8,20 @@ return {
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   'nvim-tree/nvim-web-devicons',
   {
-    'rmagatti/auto-session',
+    'olimorris/persisted.nvim',
     lazy = false,
+    init = function()
+      as.command(
+        'ListSessions',
+        function() require('telescope').extensions.persisted.persisted(as.telescope.dropdown()) end
+      )
+    end,
     opts = {
-      log_level = 'error',
-      auto_session_root_dir = fmt('%s/session/auto/', data),
-      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
-      auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
-      auto_session_suppress_dirs = {
-        vim.env.HOME,
-        vim.env.PROJECTS_DIR,
-        fmt('%s/Desktop', vim.env.HOME),
-      },
-      auto_session_use_git_branch = false, -- This cause inconsistent results
+      use_git_branch = true,
+      autoload = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
+      allowed_dirs = { vim.g.dotfiles },
+      should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
+      telescope = { before_source = function() vim.cmd('%bd') end },
     },
   },
   {

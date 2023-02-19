@@ -625,6 +625,7 @@ function as.ui.statusline()
     parent_component,
     file_component,
 
+    component_if('', vim.g.persisting, hls.blue, { before = ' ', priority = 1 }),
     component_if('Saving…', vim.g.is_saving, hls.comment, { before = ' ', priority = 1 }),
 
     separator(),
