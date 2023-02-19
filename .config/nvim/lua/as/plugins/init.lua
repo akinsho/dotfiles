@@ -204,7 +204,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'mg979/vim-visual-multi',
-    keys = { '<C-E>', '\\j', '\\k' },
+    keys = { { '<C-E>', mode = { 'n', 'x' } }, '\\j', '\\k' },
     init = function()
       vim.g.VM_highlight_matches = 'underline'
       vim.g.VM_theme = 'codedark'
@@ -535,7 +535,7 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    keys = { 'gcc', 'gc' },
+    keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
       local ok, integration = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
       if ok then opts.pre_hook = integration.create_pre_hook() end
