@@ -158,10 +158,11 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
-    event = 'VeryLazy',
+    ft = { 'lua', 'vim', 'typescriptreact', 'javascriptreact' },
+    cmd = { 'CccHighlighterToggle' },
     opts = {
       win_opts = { border = border },
-      highlighter = { auto_enable = true, excludes = { 'dart' } },
+      highlighter = { auto_enable = true, excludes = { 'dart', 'lazy' } },
     },
   },
   {
