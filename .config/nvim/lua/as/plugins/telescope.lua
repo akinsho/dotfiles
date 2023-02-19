@@ -68,8 +68,8 @@ local function norgfiles()
   b().find_files({ prompt_title = 'Norg', cwd = vim.fn.expand('$SYNC_DIR/notes/neorg/') })
 end
 
-local function project_files(opts)
-  if not pcall(b().git_files, opts) then b().find_files(opts) end
+local function project_files()
+  if not pcall(b().git_files, { show_untracked = true }) then b().find_files() end
 end
 
 local function frecency() t().extensions.frecency.frecency(dropdown({ previewer = false })) end
