@@ -1,8 +1,4 @@
--- no distractions in markdown files
-vim.opt_local.number = false
-vim.opt_local.relativenumber = false
-
-local args = { buffer = 0 }
+local args = { buffer = 0, silent = true }
 
 if not as then return end
 map('o', 'ih', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>]], args)
@@ -10,7 +6,7 @@ map('o', 'ah', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>]], arg
 map('o', 'aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
 map('o', 'ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args)
 
-as.nmap('<localleader>p', '<Plug>MarkdownPreviewToggle', args)
+map('n', '<localleader>p', '<Plug>MarkdownPreviewToggle', args)
 
 as.ftplugin_conf(
   'cmp',
