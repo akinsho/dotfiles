@@ -159,9 +159,7 @@ local function config()
     })
   end
 
-  cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
-    sources = { { name = 'dap' } },
-  })
+  cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, { sources = { { name = 'dap' } } })
 end
 
 return {
@@ -192,12 +190,11 @@ return {
     dependencies = { 'nvim-cmp' },
     init = function() vim.g.copilot_no_tab_map = true end,
     config = function()
-      map(
-        'i',
-        '<Plug>(as-copilot-accept)',
-        "copilot#Accept('<Tab>')",
-        { expr = true, remap = true }
-      )
+      map('i', '<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", {
+        expr = true,
+        remap = true,
+        silent = true,
+      })
       map('i', '<M-]>', '<Plug>(copilot-next)')
       map('i', '<M-[>', '<Plug>(copilot-previous)')
       map('i', '<C-\\>', '<Cmd>vertical Copilot panel<CR>')
