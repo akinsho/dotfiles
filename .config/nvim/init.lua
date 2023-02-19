@@ -83,7 +83,7 @@ require('lazy').setup('as.plugins', {
       disabled_plugins = { 'netrw', 'netrwPlugin', 'tarPlugin', 'tutor', 'tohtml', 'logipat' },
     },
   },
-  ui = { border = as.ui.current.border, icons = { lazy = '鈴' } },
+  ui = { border = as.ui.current.border },
   dev = { path = g.projects_dir .. '/personal/', patterns = { 'akinsho' }, fallback = true },
   install = { colorscheme = { 'horizon' } },
 })
