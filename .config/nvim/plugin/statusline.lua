@@ -627,15 +627,6 @@ function as.ui.statusline()
 
     component_if('Saving…', vim.g.is_saving, hls.comment, { before = ' ', priority = 1 }),
 
-    -- Local plugin dev indicator
-    component_if(available_space > 100 and 'local dev' or '', vim.env.DEVELOPING ~= nil, hls.comment, {
-      prefix = icons.misc.tools,
-      padding = 'none',
-      before = '  ',
-      prefix_color = hls.warn,
-      small = 1,
-      priority = 2,
-    }),
     separator(),
     -----------------------------------------------------------------------------//
     -- Middle section
