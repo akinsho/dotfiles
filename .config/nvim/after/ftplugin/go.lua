@@ -1,7 +1,6 @@
 local opt = vim.opt_local
 
 opt.expandtab = false
-opt.textwidth = 0 -- Go doesn't specify a max line length so don't force one
 opt.softtabstop = 0
 opt.tabstop = 4
 opt.shiftwidth = 4
