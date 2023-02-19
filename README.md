@@ -45,3 +45,8 @@ I manage my setup using [dotbot](https://github.com/anishathalye/dotbot). To set
 
 This package manages symlinking my config files to the correct directories.
 It's a little more complex than `GNU Stow` but much less than `Ansible`
+
+#### Fonts
+
+- [Cartograph CF](https://connary.com/cartograph.html) — This beautiful font is not patched as it is a paid font.
+- [Fira Code Mono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode) — This is my fallback font and is patched with Nerd Fonts, so literally works as a fallback for Cartograph when used with Kitty Terminal
