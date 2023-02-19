@@ -36,16 +36,6 @@ return {
   -- LSP,Completion & Debugger {{{1
   -----------------------------------------------------------------------------//
   {
-    'ahmedkhalf/project.nvim',
-    name = 'project_nvim',
-    lazy = false,
-    opts = {
-      detection_methods = { 'pattern', 'lsp' },
-      ignore_lsp = { 'null-ls' },
-      patterns = { '.git' },
-    },
-  },
-  {
     {
       'williamboman/mason.nvim',
       cmd = 'Mason',
