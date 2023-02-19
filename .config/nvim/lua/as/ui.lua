@@ -293,6 +293,7 @@ local settings = {
     ['terminal'] = presets.tool_panel,
   },
   filetypes = {
+    ['checkhealth'] = presets.tool_panel,
     ['help'] = presets.tool_panel,
     ['dapui'] = presets.tool_panel,
     ['minimap'] = presets.tool_panel,
