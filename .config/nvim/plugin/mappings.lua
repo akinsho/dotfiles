@@ -29,6 +29,7 @@ as.augroup('AddTerminalMappings', {
     event = { 'TermOpen' },
     pattern = { 'term://*' },
     command = function()
+      -- FIXME: this still sets mappings on terminal buffers like fzf
       if vim.bo.filetype == '' or vim.bo.filetype == 'toggleterm' then
         local opts = { silent = false, buffer = 0 }
         tnoremap('<esc>', [[<C-\><C-n>]], opts)
@@ -252,7 +253,7 @@ cnoremap('/', [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 -- Save
 -----------------------------------------------------------------------------//
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
--- even if the file isn't change so that things like hot reload work
+-- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write<CR>')
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap('qa', '<cmd>qa<CR>')
@@ -515,11 +516,7 @@ end
 command('AutoResize', auto_resize(), { nargs = '?' })
 -----------------------------------------------------------------------------//
 
-command(
-  'LuaInvalidate',
-  function(pattern) require('as.utils').invalidate(pattern, true) end,
-  { nargs = 1 }
-)
+command('TreeInspect', function() vim.treesitter.show_tree() end)
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//
