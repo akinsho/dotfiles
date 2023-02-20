@@ -69,12 +69,21 @@ return {
         opts = { skip = true },
       },
       {
-        filter = { event = 'msg_show', kind = '', find = 'written' },
+        filter = {
+          any = {
+            { event = 'msg_show', kind = '', find = 'written' },
+            { event = 'msg_show', kind = '', find = '%d+ lines, %d+ bytes' },
+          },
+        },
         opts = { skip = true },
       },
       {
         view = 'vsplit',
         filter = { event = 'msg_show', min_height = 20 },
+      },
+      {
+        view = 'mini',
+        filter = { event = 'msg_show', max_height = 2 },
       },
     },
     commands = {
