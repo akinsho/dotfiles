@@ -1,4 +1,4 @@
-local border, highlight = as.ui.current.border, as.highlight
+local border, highlight, L = as.ui.current.border, as.highlight, vim.log.levels
 
 return {
   'folke/noice.nvim',
@@ -80,8 +80,16 @@ return {
         filter = { event = 'msg_show', min_height = 20 },
       },
       {
-        view = 'mini',
-        filter = { event = 'msg_show', max_height = 2 },
+        view = 'notify',
+        opts = { title = 'Error', level = L.ERROR, merge = true, replace = false },
+        filter = {
+          any = {
+            { error = true },
+            { event = 'msg_show', find = '^Error' },
+            { event = 'msg_show', find = '^E%d+:' },
+          },
+        },
+      },
       },
     },
     commands = {
