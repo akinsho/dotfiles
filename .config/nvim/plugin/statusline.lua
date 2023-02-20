@@ -609,6 +609,11 @@ function as.ui.statusline()
 
   -- HYDRA
   local hydra_active, hydra = stl_hydra()
+
+  -- NOICE
+  local ok, noice = pcall(require, 'noice')
+  local noice_mode = ok and noice.api.status.mode.get() or nil
+  local has_noice_mode = ok and noice.api.status.mode.has() or nil
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -635,6 +640,7 @@ function as.ui.statusline()
     -- Neovim allows unlimited alignment sections so we can put things in the
     -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
     -----------------------------------------------------------------------------//
+    component_if(noice_mode, has_noice_mode, hls.title, { before = ' ', priority = 1 }),
     component_if(hydra.name:upper(), hydra_active, hydra.color, {
       prefix = string.rep(' ', 5) .. '🐙',
       suffix = string.rep(' ', 5),
