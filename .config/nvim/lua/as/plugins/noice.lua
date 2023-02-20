@@ -90,6 +90,10 @@ return {
           },
         },
       },
+      {
+        view = 'notify',
+        opts = { title = '' },
+        filter = { kind = { 'emsg', 'echo', 'echomsg' } },
       },
     },
     commands = {
