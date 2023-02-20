@@ -26,7 +26,7 @@ return {
       show_current_context_start_on_current_line = false,
       show_first_indent_level = true,
       buftype_exclude = { 'terminal', 'nofile' },
-      filetype_exclude = { -- TODO: should these filetypes be added to the UI Settings
+      filetype_exclude = {
         'dbout',
         'neo-tree-popup',
         'dap-repl',
@@ -57,12 +57,6 @@ return {
     'stevearc/dressing.nvim',
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require('lazy').load({ plugins = { 'dressing.nvim' } })
-        return vim.ui.input(...)
-      end
-
-      ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
         require('lazy').load({ plugins = { 'dressing.nvim' } })
         return vim.ui.select(...)
@@ -82,16 +76,9 @@ return {
       end
 
       require('dressing').setup({
-        input = {
-          insert_only = false,
-          border = as.ui.current.border,
-          win_options = {
-            winblend = 2,
-          },
-        },
+        input = { enabled = false },
         select = {
           get_config = function(opts)
-            -- center the picker for treesitter prompts
             if opts.kind == 'codeaction' then
               return {
                 backend = 'telescope',
@@ -101,9 +88,7 @@ return {
               }
             end
           end,
-          telescope = require('telescope.themes').get_dropdown({
-            layout_config = { height = get_height },
-          }),
+          telescope = as.telescope.dropdown({ layout_config = { height = get_height } }),
         },
       })
     end,
@@ -144,6 +129,7 @@ return {
           require('notify.render')[style](...)
         end,
       })
+      -- this is actually take over by Noice
       vim.notify = notify
       map(
         'n',
