@@ -1,7 +1,8 @@
 if not as then return end
-as.ftplugin_conf(
-  'cmp',
-  function(cmp)
+
+as.ftplugin_conf({
+  ufo = function(ufo) ufo.detach() end,
+  cmp = function(cmp)
     cmp.setup.filetype('org', {
       sources = cmp.config.sources({
         { name = 'orgmode' },
@@ -12,7 +13,19 @@ as.ftplugin_conf(
         { name = 'buffer' },
       }),
     })
-  end
-)
-
-as.ftplugin_conf('ufo', function(ufo) ufo.detach() end)
+  end,
+  ['nvim-surround'] = function(surround)
+    surround.buffer_setup({
+      surrounds = {
+        l = {
+          add = function()
+            return {
+              { '[[' .. vim.fn.getreg('*') .. '][' },
+              { ']]' },
+            }
+          end,
+        },
+      },
+    })
+  end,
+})

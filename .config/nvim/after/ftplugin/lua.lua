@@ -1,6 +1,6 @@
 if not as then return end
 
-local fn = vim.fn
+local fn, opt = vim.fn, vim.opt_local
 local fmt = string.format
 
 local function find(word, ...)
@@ -39,45 +39,47 @@ local function keyword(word, callback)
   vim.lsp.buf.hover()
 end
 
-as.ftplugin_conf('nvim-surround', function(surround)
-  local get_input = function(prompt)
-    local ok, input = pcall(vim.fn.input, fmt('%s: ', prompt))
-    if not ok then return end
-    return input
-  end
-  surround.buffer_setup({
-    surrounds = {
-      s = {
-        add = { "['", "']" },
+as.ftplugin_conf({
+  ['nvim-surround'] = function(surround)
+    local get_input = function(prompt)
+      local ok, input = pcall(vim.fn.input, fmt('%s: ', prompt))
+      if not ok then return end
+      return input
+    end
+    surround.buffer_setup({
+      surrounds = {
+        s = {
+          add = { "['", "']" },
+        },
+        l = { add = { 'function () ', ' end' } },
+        F = {
+          add = function()
+            return {
+              { fmt('local function %s() ', get_input('Enter a function name')) },
+              { ' end' },
+            }
+          end,
+        },
+        i = {
+          add = function()
+            return {
+              { fmt('if %s then ', get_input('Enter a condition')) },
+              { ' end' },
+            }
+          end,
+        },
+        t = {
+          add = function()
+            return {
+              { fmt('{ %s = { ', get_input('Enter a field name')) },
+              { ' }}' },
+            }
+          end,
+        },
       },
-      l = { add = { 'function () ', ' end' } },
-      F = {
-        add = function()
-          return {
-            { fmt('local function %s() ', get_input('Enter a function name')) },
-            { ' end' },
-          }
-        end,
-      },
-      i = {
-        add = function()
-          return {
-            { fmt('if %s then ', get_input('Enter a condition')) },
-            { ' end' },
-          }
-        end,
-      },
-      t = {
-        add = function()
-          return {
-            { fmt('{ %s = { ', get_input('Enter a field name')) },
-            { ' }}' },
-          }
-        end,
-      },
-    },
-  })
-end)
+    })
+  end,
+})
 
 map('n', 'gK', keyword, { buffer = 0 })
 map('n', '<leader>so', function()
@@ -85,5 +87,5 @@ map('n', '<leader>so', function()
   vim.notify('Sourced ' .. fn.expand('%'))
 end)
 
-vim.bo.textwidth = 100
-vim.opt_local.formatoptions:remove('o')
+opt.textwidth = 100
+opt.formatoptions:remove('o')

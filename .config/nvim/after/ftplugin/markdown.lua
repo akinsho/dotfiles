@@ -8,9 +8,8 @@ map('o', 'ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args
 
 map('n', '<localleader>p', '<Plug>MarkdownPreviewToggle', args)
 
-as.ftplugin_conf(
-  'cmp',
-  function(cmp)
+as.ftplugin_conf({
+  cmp = function(cmp)
     cmp.setup.filetype('markdown', {
       sources = cmp.config.sources({
         { name = 'dictionary' },
@@ -20,20 +19,19 @@ as.ftplugin_conf(
         { name = 'buffer' },
       }),
     })
-  end
-)
-
-as.ftplugin_conf('nvim-surround', function(surround)
-  surround.buffer_setup({
-    surrounds = {
-      l = {
-        add = function()
-          return {
-            { '[' },
-            { '](' .. vim.fn.getreg('*') .. ')' },
-          }
-        end,
+  end,
+  ['nvim-surround'] = function(surround)
+    surround.buffer_setup({
+      surrounds = {
+        l = {
+          add = function()
+            return {
+              { '[' },
+              { '](' .. vim.fn.getreg('*') .. ')' },
+            }
+          end,
+        },
       },
-    },
-  })
-end)
+    })
+  end,
+})
