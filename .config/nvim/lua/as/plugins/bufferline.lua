@@ -44,7 +44,7 @@ return {
       highlights = flat_highlights,
       options = {
         debug = { logging = true },
-        mode = 'buffers', -- tabs
+        mode = 'buffers',
         sort_by = 'insert_after_current',
         right_mouse_command = 'vert sbuffer %d',
         show_close_icon = false,
