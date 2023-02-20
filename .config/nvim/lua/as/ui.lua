@@ -304,13 +304,9 @@ local settings = {
     ['netrw'] = presets.tool_panel,
     ['NvimTree'] = presets.tool_panel,
     ['undotree'] = presets.tool_panel,
-    ['NeogitPopup'] = presets.tool_panel,
-    ['NeogitStatus'] = presets.tool_panel,
     ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
     ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['NeogitConsole'] = presets.tool_panel,
-    ['NeogitCommitSelectView'] = presets.tool_panel,
-    ['NeogitRebaseTodo'] = presets.tool_panel,
+    ['^Neogit.*'] = presets.tool_panel,
     ['DiffviewFiles'] = presets.tool_panel,
     ['DiffviewFileHistory'] = presets.tool_panel,
     ['mail'] = presets.statusline_only,
@@ -330,6 +326,18 @@ local settings = {
     ['NeogitCommitMessage'] = commit_buffer,
   },
 }
+
+--- When searching through the filetypes table if a match can't be found then search
+--- again but check if there is matching lua pattern. This is useful for filetypes for
+--- plugins like Neogit which have a filetype of Neogit<something>.
+setmetatable(settings.filetypes, {
+  __index = function(tbl, key)
+    if not key then return end
+    for k, v in pairs(tbl) do
+      if key:match(k) then return v end
+    end
+  end,
+})
 
 ---Get the UI setting for a particular filetype
 ---@param key string
