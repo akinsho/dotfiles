@@ -1,9 +1,10 @@
 if not as then return end
 local P = as.ui.palette
 local L = as.ui.lsp.colors
+local highlight = as.highlight
 
 local function general_overrides()
-  as.highlight.all({
+  highlight.all({
     { Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } } },
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
@@ -181,7 +182,7 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  as.highlight.all({
+  highlight.all({
     { PanelDarkBackground = { bg = { from = 'Normal', alter = -42 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
@@ -249,7 +250,7 @@ local function colorscheme_overrides()
   local hls = overrides[vim.g.colors_name]
   if not hls then return end
 
-  as.highlight.all(hls)
+  highlight.all(hls)
 end
 
 local function user_highlights()
