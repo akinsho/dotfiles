@@ -16,7 +16,6 @@ return {
         filter = { title = '' },
         help = { title = '' },
         input = { title = '' },
-        confirm = { title = '' },
         IncRename = { title = '' },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
       },
@@ -51,7 +50,7 @@ return {
         border = { style = border, padding = { 0, 1 } },
       },
       confirm = {
-        border = { style = border, padding = { 0, 1 } },
+        border = { style = border, padding = { 0, 1 }, text = { top = '' } },
       },
       popupmenu = {
         relative = 'editor',
