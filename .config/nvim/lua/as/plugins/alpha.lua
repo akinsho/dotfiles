@@ -1,3 +1,6 @@
+local api, opt, f = vim.api, vim.opt_local, string.format
+local highlight = as.highlight
+
 return {
   'goolord/alpha-nvim',
   lazy = false,
@@ -5,8 +8,6 @@ return {
     local alpha = require('alpha')
     local dashboard = require('alpha.themes.dashboard')
     local fortune = require('alpha.fortune')
-
-    local f = string.format
 
     local button = function(h, ...)
       local btn = dashboard.button(...)
@@ -17,7 +18,7 @@ return {
       return btn
     end
 
-    as.highlight.plugin('alpha', {
+    highlight.plugin('alpha', {
       { StartLogo1 = { fg = '#1C506B' } },
       { StartLogo2 = { fg = '#1D5D68' } },
       { StartLogo3 = { fg = '#1E6965' } },
@@ -39,7 +40,6 @@ return {
       [[██████  █████████████████████ ████ █████ █████ ████ ██████]],
     }
 
-    -- Make the header a bit more fun with some color!
     local function neovim_header()
       return as.map(
         function(chars, i)
@@ -96,14 +96,14 @@ return {
         event = 'User ',
         pattern = 'AlphaReady',
         command = function(args)
-          vim.opt_local.foldenable = false
-          vim.o.laststatus, vim.o.showtabline = 0, 0
+          opt.foldenable = false
+          opt.laststatus, opt.showtabline = 0, 0
           map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
-          vim.api.nvim_create_autocmd('BufUnload', {
+          api.nvim_create_autocmd('BufUnload', {
             buffer = args.buf,
             callback = function()
-              vim.o.laststatus, vim.o.showtabline = 3, 2
+              opt.laststatus, opt.showtabline = 3, 2
               vim.cmd('SessionStart')
             end,
           })
