@@ -37,6 +37,9 @@ return {
       },
     },
     views = {
+      vsplit = {
+        size = { width = 'auto' },
+      },
       split = {
         win_options = {
           winhighlight = { Normal = 'Normal' },
@@ -68,6 +71,10 @@ return {
       {
         filter = { event = 'msg_show', kind = '', find = 'written' },
         opts = { skip = true },
+      },
+      {
+        view = 'vsplit',
+        filter = { event = 'msg_show', min_height = 20 },
       },
     },
     commands = {
