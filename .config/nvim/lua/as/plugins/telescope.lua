@@ -1,9 +1,6 @@
 local fn, highlight, ui = vim.fn, as.highlight, as.ui
 local icons = ui.icons
 local P = ui.palette
-as.telescope = {}
-
-local function extensions(name) return require('telescope').extensions[name] end
 
 ---@param opts table
 ---@return table
@@ -17,15 +14,17 @@ local function dropdown(opts)
   }
   return require('telescope.themes').get_dropdown(opts)
 end
-as.telescope.dropdown = dropdown
+
+as.telescope = { dropdown = dropdown }
+
+local function extensions(name) return require('telescope').extensions[name] end
 
 local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
 local function find_files(opts) return extensions('menufacture').find_files(opts) end
+local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 local function project_files()
-  if not pcall(require('telescope.builtin').git_files, { show_untracked = true }) then
-    find_files()
-  end
+  if not pcall(git_files, { show_untracked = true }) then find_files() end
 end
 
 local function orgfiles()
@@ -219,6 +218,11 @@ return {
         },
         ['zf-native'] = {
           generic = { enable = true, match_filename = true },
+        },
+        menufacture = {
+          mappings = {
+            main_menu = { [{ 'i', 'n' }] = '<C-;>' },
+          },
         },
       },
       pickers = {
