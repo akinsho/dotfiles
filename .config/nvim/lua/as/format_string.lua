@@ -183,7 +183,7 @@ end
 --- @param available_space number
 function M.display(statusline, available_space)
   local str = ''
-  local items = prioritize(statusline, available_space)
+  local items = available_space and prioritize(statusline, available_space) or statusline
   for _, item in ipairs(items) do
     if type(item.component) == 'string' and #item.component > 0 then str = str .. item.component end
   end
