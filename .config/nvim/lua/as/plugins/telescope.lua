@@ -150,7 +150,7 @@ return {
       defaults = {
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         dynamic_preview_title = true,
-        prompt_prefix = icons.misc.telescope .. ' ',
+        prompt_prefix = ' ' .. icons.misc.telescope .. ' ',
         selection_caret = icons.misc.chevron_right .. ' ',
         cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
         mappings = {
@@ -189,7 +189,6 @@ return {
         layout_strategy = 'flex',
         layout_config = {
           horizontal = { preview_width = 0.55 },
-          -- TODO: I don't think this works but don't know why
           cursor = {
             width = 0.4,
             height = function(self, _, max_lines)
