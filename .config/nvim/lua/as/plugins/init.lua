@@ -583,6 +583,7 @@ return {
   --------------------------------------------------------------------------------
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'catppuccin/nvim', lazy = false, name = 'catppuccin' },
+  { 'igorgue/danger', lazy = false },
   {
     'NTBBloodbath/doom-one.nvim',
     lazy = false,
