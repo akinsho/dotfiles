@@ -250,6 +250,21 @@ cnoremap('<C-d>', '<Del>')
 -- see :h cmdline-editing
 cnoremap('<Esc>b', [[<S-Left>]])
 cnoremap('<Esc>f', [[<S-Right>]])
+
+-- smooth searching, allow tabbing between search results similar to using <c-g>
+-- or <c-t> the main difference being tab is easier to hit and remapping those keys
+-- to these would swallow up a tab mapping
+local function search(direction_key, default)
+  local cmd = fn.getcmdtype()
+  return (cmd == '/' or cmd == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
+end
+cnoremap('<Tab>', function() return search('/', '<Tab>') end, { expr = true })
+cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true })
+-- Smart mappings on the command line
+cnoremap('w!!', [[w !sudo tee % >/dev/null]])
+-- insert path of current file into a command
+cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
+cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -----------------------------------------------------------------------------//
 -- Save
 -----------------------------------------------------------------------------//
@@ -348,27 +363,6 @@ xnoremap(
   [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
 )
------------------------------------------------------------------------------//
--- Command mode related
------------------------------------------------------------------------------//
--- smooth searching, allow tabbing between search results similar to using <c-g>
--- or <c-t> the main difference being tab is easier to hit and remapping those keys
--- to these would swallow up a tab mapping
-cnoremap(
-  '<Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<Tab>"]],
-  { expr = true }
-)
-cnoremap(
-  '<S-Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-  { expr = true }
-)
--- Smart mappings on the command line
-cnoremap('w!!', [[w !sudo tee % >/dev/null]])
--- insert path of current file into a command
-cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
-cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
