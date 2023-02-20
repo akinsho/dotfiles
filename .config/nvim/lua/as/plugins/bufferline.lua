@@ -51,7 +51,10 @@ return {
         show_buffer_close_icons = true,
         indicator = { style = 'underline' },
         diagnostics = 'nvim_lsp',
-        diagnostics_indicator = function(count, level) return (icons[level] or '?') .. ' ' .. count end,
+        diagnostics_indicator = function(count, level)
+          level = level:match('warn') and 'warn' or level
+          return (icons[level] or '?') .. ' ' .. count
+        end,
         diagnostics_update_in_insert = false,
         hover = { enabled = true, reveal = { 'close' } },
         offsets = {
