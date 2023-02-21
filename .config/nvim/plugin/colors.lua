@@ -11,6 +11,7 @@ local function general_overrides()
     { mkdLineBreak = { link = 'NONE' } },
     { Directory = { inherit = 'Keyword', bold = true } },
     { URL = { inherit = 'Keyword', underline = true } },
+    { ErrorMsg = { background = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
