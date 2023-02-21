@@ -82,8 +82,8 @@ return {
     keys = {
       { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
       { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
-      { 'gY', '<Cmd>Glance type_definitions<CR>' },
-      { 'gM', '<Cmd>Glance implementations<CR>' },
+      { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+      { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
     },
   },
   {
@@ -94,7 +94,7 @@ return {
       fix_pos = false,
       auto_close_after = 15, -- close after 15 seconds
       hint_enable = false,
-      handler_opts = { border = as.ui.current.border },
+      handler_opts = { border = border },
       toggle_key = '<C-K>',
       select_signature_key = '<M-N>',
     },

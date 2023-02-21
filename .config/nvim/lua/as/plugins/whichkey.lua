@@ -60,7 +60,7 @@ return {
         },
         E = 'show token under the cursor',
         p = {
-          name = '+packer',
+          name = '+packages',
           c = 'clean',
           s = 'sync',
         },
