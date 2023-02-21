@@ -614,6 +614,10 @@ function as.ui.statusline()
   local ok, noice = pcall(require, 'noice')
   local noice_mode = ok and noice.api.status.mode.get() or nil
   local has_noice_mode = ok and noice.api.status.mode.has() or nil
+
+  local lazy_ok, lazy = pcall(require, 'lazy.status')
+  local pending_updates = lazy_ok and lazy.updates() or nil
+  local has_pending_updates = lazy_ok and lazy.has_updates() or nil
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -652,8 +656,8 @@ function as.ui.statusline()
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
+    component_if(pending_updates, has_pending_updates, hls.title, { after = ' ', priority = 3 }),
     component(flutter.app_version, hls.metadata, { priority = 4 }),
-
     component(flutter.device and flutter.device.name or '', hls.metadata, { priority = 4 })
   )
 
