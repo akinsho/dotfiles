@@ -109,8 +109,8 @@ local icons = {
     block = '▌',
   },
 }
--- LSP Kinds come via the LSP spec
--- @see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
+--- LSP Kinds come via the LSP spec
+--- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
 local lsp = {
   colors = {
     error = palette.pale_red,
@@ -278,10 +278,7 @@ local presets = {
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({
-  colorcolumn = true,
-  winbar = false,
-})
+local commit_buffer = presets.minimal_editing:with({ colorcolumn = true, winbar = false })
 
 ---@type UiSettings
 local settings = {
