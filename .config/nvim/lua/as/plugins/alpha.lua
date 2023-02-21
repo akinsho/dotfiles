@@ -3,7 +3,7 @@ local highlight = as.highlight
 
 return {
   'goolord/alpha-nvim',
-  lazy = false,
+  event = 'VimEnter',
   config = function()
     local alpha = require('alpha')
     local dashboard = require('alpha.themes.dashboard')
