@@ -3,8 +3,14 @@ local highlight = as.highlight
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    event = 'VeryLazy',
     build = ':TSUpdate',
     config = function()
+      -- NOTE: orgmode's grammar must be setup before nvim-treesitter is configured
+      -- @see: https://github.com/nvim-orgmode/orgmode/issues/481
+      local ok, orgmode = pcall(require, 'orgmode')
+      if ok then orgmode.setup_ts_grammar() end
+
       require('nvim-treesitter.install').compilers = { 'gcc-12' }
       local parsers = require('nvim-treesitter.parsers')
       local rainbow_enabled = { 'dart' }

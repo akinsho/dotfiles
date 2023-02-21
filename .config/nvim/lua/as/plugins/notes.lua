@@ -40,10 +40,9 @@ return {
   },
   {
     'nvim-orgmode/orgmode',
-    event = { 'BufReadPre', 'BufNewFile' },
+    keys = { '<leader>oa', '<leader>oc' },
     dependencies = {
-      { 'akinsho/org-bullets.nvim', dev = true, config = true },
-      { 'nvim-treesitter/nvim-treesitter' },
+      { 'akinsho/org-bullets.nvim', config = true, dev = true },
     },
     opts = {
       org_agenda_files = { sync('org/**/*') },

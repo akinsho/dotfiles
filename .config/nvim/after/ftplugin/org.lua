@@ -1,3 +1,5 @@
+vim.opt_local.signcolumn = 'yes'
+
 if not as then return end
 
 as.ftplugin_conf({
