@@ -603,14 +603,27 @@ function as.ui.statusline()
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
   local behind = updates.behind and tonumber(updates.behind) or 0
 
-  -- LSP Diagnostics
-  local diagnostics = diagnostic_info(ctx)
+  -----------------------------------------------------------------------------//
+  -- LSP
+  -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
-
-  -- HYDRA
+  local diagnostics = diagnostic_info(ctx)
+  local lsp_clients = as.map(function(client, index)
+    return component(client.name, hls.client, {
+      prefix = index == 1 and ' LSP(s):' or nil,
+      prefix_color = index == 1 and hls.metadata or nil,
+      suffix = '', -- │
+      suffix_color = hls.metadata_prefix,
+      priority = client.priority,
+    })
+  end, stl_lsp_clients(ctx))
+  -----------------------------------------------------------------------------//
+  -- Hydra
+  -----------------------------------------------------------------------------//
   local hydra_active, hydra = stl_hydra()
-
-  -- NOICE
+  -----------------------------------------------------------------------------//
+  -- Noice
+  -----------------------------------------------------------------------------//
   local ok, noice = pcall(require, 'noice')
   local noice_mode = ok and noice.api.status.mode.get() or nil
   local has_noice_mode = ok and noice.api.status.mode.has() or nil
@@ -656,26 +669,20 @@ function as.ui.statusline()
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
-    component_if(pending_updates, has_pending_updates, hls.title, { after = ' ', priority = 3 }),
+    component_if(pending_updates, has_pending_updates, hls.title, {
+      prefix = 'updates:',
+      prefix_color = hls.comment,
+      after = ' ',
+      priority = 3,
+    }),
     component(flutter.app_version, hls.metadata, { priority = 4 }),
     component(flutter.device and flutter.device.name or '', hls.metadata, { priority = 4 })
   )
-
   -----------------------------------------------------------------------------//
   -- LSP Clients
   -----------------------------------------------------------------------------//
-  local lsp_clients = as.map(function(client, index)
-    return component(client.name, hls.client, {
-      prefix = index == 1 and ' LSP(s):' or nil,
-      prefix_color = index == 1 and hls.metadata or nil,
-      suffix = '', -- │
-      suffix_color = hls.metadata_prefix,
-      priority = client.priority,
-    })
-  end, stl_lsp_clients(ctx))
   add(unpack(lsp_clients))
   -----------------------------------------------------------------------------//
-
   add(
     component(debugger(), hls.metadata, { prefix = icons.misc.bug, priority = 4 }),
 
