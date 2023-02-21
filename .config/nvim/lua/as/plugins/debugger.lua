@@ -1,5 +1,5 @@
-local fn, api = vim.fn, vim.api
-local icons, highlight = as.ui.icons, as.highlight
+local fn = vim.fn
+local icons, highlight, border = as.ui.icons, as.highlight, as.ui.current.border
 
 local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
 local function continue() require('dap').continue() end
@@ -26,9 +26,11 @@ return {
       { '<localleader>do', step_over, desc = 'dap: step over' },
       { '<localleader>dl', run_last, desc = 'dap REPL: run last' },
       { '<localleader>dt', repl_toggle, desc = 'dap REPL: toggle' },
+      { '<localleader>duc', function() require('dapui').close() end, desc = 'dap ui: close' },
+      { '<localleader>dut', function() require('dapui').toggle() end, desc = 'dap ui: toggle' },
     },
     config = function()
-      require('dap') -- Dap must be loaded before the signs can be tweaked
+      require('dap') -- NOTE: Must be loaded before the signs can be tweaked
 
       highlight.plugin('dap', {
         { DapBreakpoint = { foreground = as.ui.palette.light_red } },
@@ -58,28 +60,20 @@ return {
     dependencies = {
       {
         'rcarriga/nvim-dap-ui',
-        keys = {
-          { '<localleader>duc', function() require('dapui').close() end, desc = 'dap-ui: close' },
-          { '<localleader>dut', function() require('dapui').toggle() end, desc = 'dap-ui: toggle' },
-        },
         config = function()
-          require('dapui').setup({
-            windows = { indent = 2 },
-            floating = { border = as.ui.current.border },
-          })
-          local exclusions = { 'dart' }
           local dap = require('dap')
-          dap.listeners.after.event_initialized['dapui_config'] = function()
-            if vim.tbl_contains(exclusions, vim.bo.filetype) then return end
-            require('dapui').open()
-            api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-          end
-          dap.listeners.before.event_terminated['dapui_config'] = function()
-            require('dapui').close()
-          end
-          dap.listeners.before.event_exited['dapui_config'] = function() require('dapui').close() end
-        end,
+          local dapui = require('dapui')
 
+          local exclusions = { 'dart' }
+
+          dapui.setup({ windows = { indent = 2 }, floating = { border = border } })
+
+          dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+          dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+          if not vim.tbl_contains(exclusions, vim.bo.filetype) then
+            dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+          end
+        end,
         { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       },
     },
