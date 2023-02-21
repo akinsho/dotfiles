@@ -1,5 +1,6 @@
-local api, opt, f = vim.api, vim.opt_local, string.format
-local highlight = as.highlight
+local api, fn, opt, f, rep = vim.api, vim.fn, vim.opt_local, string.format, string.rep
+local icons, highlight = as.ui.icons, as.highlight
+local strwidth = api.nvim_strwidth
 
 return {
   'goolord/alpha-nvim',
@@ -28,6 +29,16 @@ return {
       { StartLogo7 = { fg = '#239B59' } },
       { StartLogo8 = { fg = '#24A755' } },
     })
+
+    ------------------------------------------------------------------------------------------------
+    --  Components
+    ------------------------------------------------------------------------------------------------
+
+    local separator = {
+      type = 'text',
+      val = string.rep('─', vim.o.columns - 2),
+      opts = { position = 'center', hl = 'NonText' },
+    }
 
     local header = {
       [[                                                                   ]],
@@ -66,38 +77,104 @@ return {
       opts = { position = 'center', hl = 'NonText' },
     }
 
-    local separator = {
-      type = 'text',
-      val = string.rep('─', vim.o.columns - 2),
-      opts = { position = 'center', hl = 'NonText' },
-    }
+    local SESSION_WIDTH = 50
+
+    ---Each session file that can be loaded
+    ---@param item {dir_path: string, name: string, file_path: string, branch: string}
+    ---@param index integer
+    ---@return table
+    local function session_button(item, index)
+      local icon = icons.misc.note
+      local name = '  ' .. icon .. ' ' .. as.truncate(fn.fnamemodify(item.name, ':t'), 30)
+      local indent = rep(' ', SESSION_WIDTH - strwidth(name))
+      return {
+        type = 'button',
+        val = name .. indent,
+        on_press = function() vim.cmd(f('SessionLoadFromFile %s', item.file_path)) end,
+        keymap = { 'n', tostring(index), f('<Cmd>SessionLoadFromFile %s<CR>', item.file_path) },
+        opts = {
+          width = SESSION_WIDTH,
+          position = 'center',
+          -- shortcut = f('[%d]', index),
+          -- align_shortcut = 'right',
+          -- hl_shortcut = 'Title',
+          -- hl = '@text',
+        },
+      }
+    end
+
+    local function get_sessions(count)
+      local ok, persisted = pcall(require, 'persisted')
+      if not ok or not persisted then return {} end
+      local items = as.fold(function(accum, item, index)
+        if not accum[item.dir_path] then
+          local name = icons.git.repo .. ' ' .. item.dir_path
+          local indent = rep(' ', SESSION_WIDTH - strwidth(name))
+          accum[item.dir_path] = {
+            type = 'group',
+            val = {
+              {
+                type = 'text',
+                val = name .. indent,
+                opts = { width = SESSION_WIDTH, position = 'center', hl = 'Directory' },
+              },
+            },
+          }
+        end
+        table.insert(accum[item.dir_path].val, session_button(item, index))
+        return accum
+      end, vim.list_slice(persisted.list(), 1, count))
+      return { type = 'group', val = items }
+    end
+
+    local sessions = function(count)
+      return {
+        type = 'group',
+        val = {
+          {
+            type = 'text',
+            val = 'Sessions',
+            opts = {
+              hl = 'SpecialComment',
+              position = 'center',
+              width = SESSION_WIDTH,
+            },
+          },
+          { type = 'group', val = function() return { get_sessions(count) } end },
+          { type = 'padding', val = 1 },
+        },
+      }
+    end
 
     dashboard.section.buttons.val = {
-      button('Directory', 'r', ' Restore last session', '<Cmd>SessionLoad<CR>'),
       button('Type', 'p', ' Pick a session', '<Cmd>ListSessions<CR>'),
       button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
-      button('String', 'e', '  New file', ':ene | startinsert <CR>'),
       button('ErrorMsg', 'q', '  Quit NVIM', ':qa<CR>'),
     }
 
     dashboard.section.footer.val = fortune()
     dashboard.section.footer.opts.hl = 'TSEmphasis'
 
+    ------------------------------------------------------------------------------------------------
+    --  Setup
+    ------------------------------------------------------------------------------------------------
     alpha.setup({
       layout = {
-        { type = 'padding', val = 4 },
+        { type = 'padding', val = 2 },
         { type = 'group', val = neovim_header() },
         { type = 'padding', val = 1 },
         installed_plugins,
         version,
         { type = 'padding', val = 1 },
         separator,
+        sessions(5),
+        separator,
         { type = 'padding', val = 1 },
         dashboard.section.buttons,
         separator,
         dashboard.section.footer,
       },
-      opts = { margin = 5 },
+      opts = { margin = 10 },
     })
 
     as.augroup('AlphaSettings', {
