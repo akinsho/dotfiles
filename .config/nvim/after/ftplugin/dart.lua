@@ -19,5 +19,5 @@ map(
   'n',
   '<leader>db',
   "<cmd>TermExec cmd='flutter pub run build_runner build --delete-conflicting-outputs'<CR>",
-  'flutter: run code generation'
+  with_desc('flutter: run code generation')
 )
