@@ -59,10 +59,16 @@ return {
       opts = { position = 'center', hl = 'NonText' },
     }
 
-    local v = vim.version()
+    local v = vim.version() or {}
     local version = {
       type = 'text',
       val = f(' v%d.%d.%d %s', v.major, v.minor, v.patch, v.prerelease and '(nightly)' or ''),
+      opts = { position = 'center', hl = 'NonText' },
+    }
+
+    local separator = {
+      type = 'text',
+      val = string.rep('─', vim.o.columns - 2),
       opts = { position = 'center', hl = 'NonText' },
     }
 
@@ -84,8 +90,11 @@ return {
         { type = 'padding', val = 1 },
         installed_plugins,
         version,
-        { type = 'padding', val = 2 },
+        { type = 'padding', val = 1 },
+        separator,
+        { type = 'padding', val = 1 },
         dashboard.section.buttons,
+        separator,
         dashboard.section.footer,
       },
       opts = { margin = 5 },
