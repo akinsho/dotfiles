@@ -534,6 +534,11 @@ return {
     },
   },
   {
+    'cshuaimin/ssr.nvim',
+    keys = { { '<leader>sr', function() require('ssr').open() end, mode = { 'n', 'x' } } },
+    opts = { border = border },
+  },
+  {
     'numToStr/Comment.nvim',
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)

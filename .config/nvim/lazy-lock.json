@@ -98,6 +98,7 @@
   "sibling-swap.nvim": { "branch": "main", "commit": "71eb9daa5233cd576ce8119bc2dbfa67d4d35462" },
   "sqlite.lua": { "branch": "master", "commit": "93ff5824682ecc874200e338fd8ca9ccd08508f8" },
   "sqls.nvim": { "branch": "main", "commit": "a0048b7018c99b68456f91b4aa42ce288f0c0774" },
+  "ssr.nvim": { "branch": "main", "commit": "97a9e1e319eec2d7e9731be4c6ac9638a1a2d79d" },
   "substitute.nvim": { "branch": "main", "commit": "8acd0acbff80b0ab0a8b61068bd4aca3f3f96b98" },
   "tabout.nvim": { "branch": "master", "commit": "c37ce26f316a2df693140450b8def41e89c0f57e" },
   "telescope-frecency.nvim": { "branch": "master", "commit": "e5696afabd8753d772987ea48434d9c0d8b0aa6b" },
