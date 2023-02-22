@@ -79,6 +79,8 @@ return {
       opts = { position = 'center', hl = 'NonText' },
     }
 
+    -- the width of the buttons as well as the headers MUST be the same in order for centering
+    -- to work. This is a workaround due to the lack of a proper mechanism in alpha.nvim
     local SESSION_WIDTH = 50
 
     ---Each session file that can be loaded
