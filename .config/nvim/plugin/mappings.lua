@@ -158,8 +158,8 @@ inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 -- nmap('˚', '<a-k>')
 nnoremap('<a-k>', '<cmd>move-2<CR>==')
 nnoremap('<a-j>', '<cmd>move+<CR>==')
-xnoremap('<a-k>', ":move-2<CR>='[gv")
-xnoremap('<a-j>', ":move'>+<CR>='[gv")
+xnoremap('<a-k>', ":move-2<CR>='[gv", { silent = true })
+xnoremap('<a-j>', ":move'>+<CR>='[gv", { silent = true })
 ----------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------
