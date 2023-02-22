@@ -111,7 +111,7 @@ return {
     ---@param item Session
     ---@return table
     local function session_header(item)
-      local name = icons.git.repo .. ' ' .. item.dir_path
+      local name = icons.git.repo .. ' ' .. item.dir_path:gsub('projects/%w+/', '')
       local indent = rep(' ', SESSION_WIDTH - strwidth(name))
       return {
         type = 'group',
@@ -129,7 +129,7 @@ return {
     ---@param b Session
     ---@return boolean
     local function sort_by_projects(a, b)
-      local a_name, b_name = vim.pesc(fs.basename(a.dir_path)), vim.pesc(fs.basename(b.dir_path))
+      local a_name, b_name = vim.pesc(a.dir_path), vim.pesc(b.dir_path)
       local projects = { 'projects', 'work', '%.dotfiles' }
       local a_score, b_score = 0, 0
       for score, project in ipairs(projects) do
