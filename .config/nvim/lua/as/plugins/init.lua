@@ -11,17 +11,23 @@ return {
     'olimorris/persisted.nvim',
     lazy = false,
     init = function()
-      as.command(
-        'ListSessions',
-        function() require('telescope').extensions.persisted.persisted(as.telescope.dropdown()) end
-      )
+      as.command('ListSessions', function()
+        local theme = as.telescope.dropdown()
+        require('telescope').extensions.persisted.persisted(theme)
+      end)
+      as.augroup('PersistedEvents', {
+        {
+          event = 'User',
+          pattern = 'PersistedTelescopeLoadPre',
+          command = function() vim.cmd('%bd') end,
+        },
+      })
     end,
     opts = {
       use_git_branch = true,
       autoload = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
       allowed_dirs = { vim.g.dotfiles },
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
-      telescope = { before_source = function() vim.cmd('%bd') end },
     },
   },
   {
