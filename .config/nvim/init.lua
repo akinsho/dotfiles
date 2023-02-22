@@ -76,9 +76,9 @@ end
 opt.runtimepath:prepend(lazypath)
 -----------------------------------------------------------------------------
 require('lazy').setup('as.plugins', {
-  defaults = { lazy = true },
   ui = { border = as.ui.current.border },
-  install = { colorscheme = { 'horizon' } },
+  defaults = { lazy = true },
+  change_detection = { notify = false },
   checker = {
     enabled = true,
     concurrency = 30,
