@@ -120,7 +120,6 @@ return {
             type = 'text',
             val = name .. indent,
             opts = { width = SESSION_WIDTH, position = 'center', hl = 'Directory' },
-            dir_path = item.dir_path,
           },
         },
       }
@@ -147,25 +146,20 @@ return {
       local sessions = persisted.list()
       table.sort(sessions, sort_by_projects)
 
-      local sorted_session_names = as.fold(function(accum, item)
-        local path = item.dir_path
-        if not accum.seen[path] then
-          accum.seen[path], accum.lookup[path] = true, #accum.lookup + 1
-          table.insert(accum.lookup, path)
-        end
-        return accum
-      end, sessions, { seen = {}, lookup = {} }).lookup
-
+      -- this depends on the fact that the sessions are sorted by project
       local sessions_by_dir = as.fold(function(accum, item, index)
-        local position = accum.lookup[item.dir_path]
-        if accum.size >= limit then return accum end
-        if not accum.result[position] then accum.result[position] = session_header(item) end
-        accum.size = accum.size + 1
-        table.insert(accum.result[position].val, session_button(item, index))
+        if not accum.lookup[item.dir_path] then
+          accum.count = accum.count + 1
+          accum.lookup[item.dir_path] = accum.count
+        end
+        local position, sections = accum.count, accum.result
+        if position >= limit then return accum end
+        if not sections[position] then sections[position] = session_header(item) end
+        table.insert(sections[position].val, session_button(item, index))
         return accum
-      end, sessions, { result = {}, lookup = sorted_session_names, size = 0 }).result
+      end, sessions, { count = 0, lookup = {}, result = {} })
 
-      return { type = 'group', val = sessions_by_dir }
+      return { type = 'group', val = sessions_by_dir.result }
     end
 
     local sessions = function(count)
