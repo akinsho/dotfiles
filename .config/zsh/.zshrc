@@ -27,9 +27,15 @@ if exists brew; then
   fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
 fi
 
-source $ZDOTDIR/plugins.zsh
+fpath=($ZDOTDIR/funcs $fpath)
 
+# Load all autoload function in the first item in the fpath
+# which happens to be $ZDOTDIR/funcs
+autoload -Uz $fpath[1]/*(.:t)
 autoload -U colors && colors # Enable colors in prompt
+
+check_node_cwd
+last_working_dir
 #-------------------------------------------------------------------------------
 #           SOURCE PLUGINS
 #-------------------------------------------------------------------------------
@@ -476,17 +482,15 @@ add-zsh-hook chpwd
 
 add-zsh-hook chpwd () {
   _git_status_prompt="" # clear current vcs_info
+  chpwd_last_working_dir
   chpwd_recent_dirs
+  check_node_cwd
 }
 
 
 add-zsh-hook preexec () {
   __timings_preexec
 }
-
-if [[ -z "$NVIM" ]]; then
-  cdr
-fi
 #-------------------------------------------------------------------------------
 #   LOCAL SCRIPTS
 #-------------------------------------------------------------------------------
