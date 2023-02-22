@@ -2,6 +2,8 @@ local api, opt, fs, f, rep = vim.api, vim.opt_local, vim.fs, string.format, stri
 local icons, highlight = as.ui.icons, as.highlight
 local strwidth = api.nvim_strwidth
 
+---@alias Session {dir_path: string, name: string, file_path: string, branch: string}
+
 return {
   'goolord/alpha-nvim',
   event = 'VimEnter',
@@ -80,7 +82,7 @@ return {
     local SESSION_WIDTH = 50
 
     ---Each session file that can be loaded
-    ---@param item {dir_path: string, name: string, file_path: string, branch: string}
+    ---@param item Session
     ---@param index integer
     ---@return table
     local function session_button(item, index)
@@ -106,28 +108,64 @@ return {
       }
     end
 
-    local function get_sessions(count)
+    ---@param item Session
+    ---@return table
+    local function session_header(item)
+      local name = icons.git.repo .. ' ' .. item.dir_path
+      local indent = rep(' ', SESSION_WIDTH - strwidth(name))
+      return {
+        type = 'group',
+        val = {
+          {
+            type = 'text',
+            val = name .. indent,
+            opts = { width = SESSION_WIDTH, position = 'center', hl = 'Directory' },
+            dir_path = item.dir_path,
+          },
+        },
+      }
+    end
+
+    ---@param a Session
+    ---@param b Session
+    ---@return boolean
+    local function sort_by_projects(a, b)
+      local a_name, b_name = vim.pesc(fs.basename(a.dir_path)), vim.pesc(fs.basename(b.dir_path))
+      local projects = { 'projects', 'work', '%.dotfiles' }
+      local a_score, b_score = 0, 0
+      for score, project in ipairs(projects) do
+        if a_score < score and a_name:match(project) then a_score = score end
+        if b_score < score and b_name:match(project) then b_score = score end
+      end
+      return a_score > b_score
+    end
+
+    local function get_sessions(limit)
       local ok, persisted = pcall(require, 'persisted')
-      if not ok or not persisted then return {} end
-      local items = as.fold(function(accum, item, index)
-        if not accum[item.dir_path] then
-          local name = icons.git.repo .. ' ' .. item.dir_path
-          local indent = rep(' ', SESSION_WIDTH - strwidth(name))
-          accum[item.dir_path] = {
-            type = 'group',
-            val = {
-              {
-                type = 'text',
-                val = name .. indent,
-                opts = { width = SESSION_WIDTH, position = 'center', hl = 'Directory' },
-              },
-            },
-          }
+      if not ok then return {} end
+
+      local sessions = persisted.list()
+      table.sort(sessions, sort_by_projects)
+
+      local sorted_session_names = as.fold(function(accum, item)
+        local path = item.dir_path
+        if not accum.seen[path] then
+          accum.seen[path], accum.lookup[path] = true, #accum.lookup + 1
+          table.insert(accum.lookup, path)
         end
-        table.insert(accum[item.dir_path].val, session_button(item, index))
         return accum
-      end, vim.list_slice(persisted.list(), 1, count))
-      return { type = 'group', val = items }
+      end, sessions, { seen = {}, lookup = {} }).lookup
+
+      local sessions_by_dir = as.fold(function(accum, item, index)
+        local position = accum.lookup[item.dir_path]
+        if accum.size >= limit then return accum end
+        if not accum.result[position] then accum.result[position] = session_header(item) end
+        accum.size = accum.size + 1
+        table.insert(accum.result[position].val, session_button(item, index))
+        return accum
+      end, sessions, { result = {}, lookup = sorted_session_names, size = 0 }).result
+
+      return { type = 'group', val = sessions_by_dir }
     end
 
     local sessions = function(count)
@@ -170,7 +208,7 @@ return {
         version,
         { type = 'padding', val = 1 },
         separator,
-        sessions(5),
+        sessions(6),
         separator,
         { type = 'padding', val = 1 },
         dashboard.section.buttons,
