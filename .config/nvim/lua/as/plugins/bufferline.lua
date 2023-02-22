@@ -36,7 +36,7 @@ end
 return {
   'akinsho/bufferline.nvim',
   dev = true,
-  event = 'BufReadPre',
+  event = 'VimEnter',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     local groups = require('bufferline.groups')
