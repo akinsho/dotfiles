@@ -89,21 +89,27 @@ return {
       local icon = icons.misc.note
       local tail = fs.basename(item.name)
       local proj, branch = unpack(vim.split(tail, '@@'))
+      local shortcut, file_indent = f('[%d]', index), rep(' ', 8)
       local name =
-        f('  %s %s %s', icon, proj, branch and f('(%s %s)', icons.git.branch, branch) or '')
-      local indent = rep(' ', SESSION_WIDTH - strwidth(name))
+        f('%s %s %s', icon, proj, branch and f('(%s %s)', icons.git.branch, branch) or '')
+      local trailing_indent = rep(' ', SESSION_WIDTH - strwidth(name))
       return {
         type = 'button',
-        val = name .. indent,
+        val = file_indent .. name .. trailing_indent,
         on_press = function() vim.cmd(f('SessionLoadFromFile %s', item.file_path)) end,
-        keymap = { 'n', tostring(index), f('<Cmd>SessionLoadFromFile %s<CR>', item.file_path) },
         opts = {
-          width = SESSION_WIDTH,
+          width = SESSION_WIDTH + strwidth(file_indent .. shortcut),
           position = 'center',
-          -- shortcut = f('[%d]', index),
-          -- align_shortcut = 'right',
-          -- hl_shortcut = 'Title',
-          -- hl = '@text',
+          shortcut = shortcut,
+          align_shortcut = 'right',
+          hl_shortcut = 'Title',
+          hl = '@text',
+          keymap = {
+            'n',
+            tostring(index),
+            f('<Cmd>SessionLoadFromFile %s<CR>', item.file_path),
+            { noremap = true, silent = true, nowait = true },
+          },
         },
       }
     end
