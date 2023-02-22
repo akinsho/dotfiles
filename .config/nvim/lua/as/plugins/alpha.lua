@@ -1,4 +1,4 @@
-local api, fn, opt, f, rep = vim.api, vim.fn, vim.opt_local, string.format, string.rep
+local api, opt, fs, f, rep = vim.api, vim.opt_local, vim.fs, string.format, string.rep
 local icons, highlight = as.ui.icons, as.highlight
 local strwidth = api.nvim_strwidth
 
@@ -85,7 +85,10 @@ return {
     ---@return table
     local function session_button(item, index)
       local icon = icons.misc.note
-      local name = '  ' .. icon .. ' ' .. as.truncate(fn.fnamemodify(item.name, ':t'), 30)
+      local tail = fs.basename(item.name)
+      local proj, branch = unpack(vim.split(tail, '@@'))
+      local name =
+        f('  %s %s %s', icon, proj, branch and f('(%s %s)', icons.git.branch, branch) or '')
       local indent = rep(' ', SESSION_WIDTH - strwidth(name))
       return {
         type = 'button',
