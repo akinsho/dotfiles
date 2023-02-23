@@ -347,6 +347,21 @@ function settings.get(key, setting, t)
   if t == 'bt' then return settings.buftypes[key] and settings.buftypes[key][setting] end
 end
 
+---A helper to set the value of the colorcolumn option, to my preferences, this can be used
+---in an autocommand to set the `vim.opt_local.colorcolumn` or by a plugin such as `virtcolumn.nvim`
+---to set it's virtual column
+---@param bufnr integer
+---@param fn fun(virtcolumn: string)
+function settings.set_colorcolumn(bufnr, fn)
+  local buf = vim.bo[bufnr]
+  local ft_ccol = settings.get(buf.ft, 'colorcolumn', 'ft')
+  local bt_ccol = settings.get(buf.bt, 'colorcolumn', 'bt')
+  if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
+  local ccol = ft_ccol or bt_ccol or ''
+  local virtcolumn = not as.empty(ccol) and ccol or '+1'
+  if vim.is_callable(fn) then fn(virtcolumn) end
+end
+
 ----------------------------------------------------------------------------------------------------
 local current = { border = border.line, lsp_icons = lsp.kinds.codicons }
 

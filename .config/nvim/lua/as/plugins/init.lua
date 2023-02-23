@@ -180,13 +180,10 @@ return {
         {
           event = { 'BufEnter', 'WinEnter' },
           command = function(args)
-            local buf = vim.bo[args.buf]
-            local ft_ccol = ui.settings.get(buf.ft, 'colorcolumn', 'ft')
-            local bt_ccol = ui.settings.get(buf.bt, 'colorcolumn', 'bt')
-            if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
-            local ccol = ft_ccol or bt_ccol or ''
-            local virtcolumn = not as.empty(ccol) and ccol or '+1'
-            require('virt-column').setup_buffer({ virtcolumn = virtcolumn })
+            ui.settings.set_colorcolumn(
+              args.buf,
+              function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
+            )
           end,
         },
       })
