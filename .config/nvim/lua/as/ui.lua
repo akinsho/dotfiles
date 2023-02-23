@@ -1,9 +1,8 @@
 ----------------------------------------------------------------------------------------------------
 -- Styles
 ----------------------------------------------------------------------------------------------------
--- Consistent store of various UI items to reuse throughout my config
 
-local palette = {
+as.ui.palette = {
   green = '#98c379',
   dark_green = '#10B981',
   blue = '#82AAFE',
@@ -24,12 +23,12 @@ local palette = {
   grey = '#3E4556',
 }
 
-local border = {
+as.ui.border = {
   line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
   rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
 }
 
-local icons = {
+as.ui.icons = {
   separators = {
     left_thin_block = '▏',
     vert_bottom_half_block = '▄',
@@ -111,12 +110,12 @@ local icons = {
 }
 --- LSP Kinds come via the LSP spec
 --- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
-local lsp = {
+as.ui.lsp = {
   colors = {
-    error = palette.pale_red,
-    warn = palette.dark_orange,
-    hint = palette.bright_blue,
-    info = palette.teal,
+    error = as.ui.palette.pale_red,
+    warn = as.ui.palette.dark_orange,
+    hint = as.ui.palette.bright_blue,
+    info = as.ui.palette.teal,
   },
   highlights = {
     Text = 'String',
@@ -280,54 +279,58 @@ local presets = {
 
 local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
 
+local buftypes = {
+  ['quickfix'] = presets.tool_panel,
+  ['nofile'] = presets.tool_panel,
+  ['nowrite'] = presets.tool_panel,
+  ['acwrite'] = presets.tool_panel,
+  ['terminal'] = presets.tool_panel,
+}
+
+local filetypes = {
+  ['checkhealth'] = presets.tool_panel,
+  ['help'] = presets.tool_panel,
+  ['dapui'] = presets.tool_panel,
+  ['minimap'] = presets.tool_panel,
+  ['Trouble'] = presets.tool_panel,
+  ['tsplayground'] = presets.tool_panel,
+  ['list'] = presets.tool_panel,
+  ['netrw'] = presets.tool_panel,
+  ['NvimTree'] = presets.tool_panel,
+  ['undotree'] = presets.tool_panel,
+  ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['^Neogit.*'] = presets.tool_panel,
+  ['DiffviewFiles'] = presets.tool_panel,
+  ['DiffviewFileHistory'] = presets.tool_panel,
+  ['mail'] = presets.statusline_only,
+  ['noice'] = presets.statusline_only,
+  ['diff'] = presets.statusline_only,
+  ['qf'] = presets.statusline_only,
+  ['alpha'] = presets.tool_panel:with({ statusline = false }),
+  ['fugitive'] = presets.statusline_only,
+  ['startify'] = presets.statusline_only,
+  ['man'] = presets.minimal_editing,
+  ['org'] = presets.minimal_editing,
+  ['norg'] = presets.minimal_editing,
+  ['markdown'] = presets.minimal_editing,
+  ['himalaya'] = presets.minimal_editing,
+  ['orgagenda'] = presets.minimal_editing,
+  ['gitcommit'] = commit_buffer,
+  ['NeogitCommitMessage'] = commit_buffer,
+}
+
 ---@type UiSettings
-local decorations = {
-  buftypes = {
-    ['quickfix'] = presets.tool_panel,
-    ['nofile'] = presets.tool_panel,
-    ['nowrite'] = presets.tool_panel,
-    ['acwrite'] = presets.tool_panel,
-    ['terminal'] = presets.tool_panel,
-  },
-  filetypes = {
-    ['checkhealth'] = presets.tool_panel,
-    ['help'] = presets.tool_panel,
-    ['dapui'] = presets.tool_panel,
-    ['minimap'] = presets.tool_panel,
-    ['Trouble'] = presets.tool_panel,
-    ['tsplayground'] = presets.tool_panel,
-    ['list'] = presets.tool_panel,
-    ['netrw'] = presets.tool_panel,
-    ['NvimTree'] = presets.tool_panel,
-    ['undotree'] = presets.tool_panel,
-    ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['^Neogit.*'] = presets.tool_panel,
-    ['DiffviewFiles'] = presets.tool_panel,
-    ['DiffviewFileHistory'] = presets.tool_panel,
-    ['mail'] = presets.statusline_only,
-    ['noice'] = presets.statusline_only,
-    ['diff'] = presets.statusline_only,
-    ['qf'] = presets.statusline_only,
-    ['alpha'] = presets.tool_panel:with({ statusline = false }),
-    ['fugitive'] = presets.statusline_only,
-    ['startify'] = presets.statusline_only,
-    ['man'] = presets.minimal_editing,
-    ['org'] = presets.minimal_editing,
-    ['norg'] = presets.minimal_editing,
-    ['markdown'] = presets.minimal_editing,
-    ['himalaya'] = presets.minimal_editing,
-    ['orgagenda'] = presets.minimal_editing,
-    ['gitcommit'] = commit_buffer,
-    ['NeogitCommitMessage'] = commit_buffer,
-  },
+as.ui.decorations = {
+  filetypes = filetypes,
+  buftypes = buftypes,
 }
 
 --- When searching through the filetypes table if a match can't be found then search
 --- again but check if there is matching lua pattern. This is useful for filetypes for
 --- plugins like Neogit which have a filetype of Neogit<something>.
-setmetatable(decorations.filetypes, {
+setmetatable(filetypes, {
   __index = function(tbl, key)
     if not key then return end
     for k, v in pairs(tbl) do
@@ -336,15 +339,15 @@ setmetatable(decorations.filetypes, {
   end,
 })
 
----Get the UI setting for a particular filetype
+---Get the as.ui setting for a particular filetype
 ---@param key string
 ---@param setting 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
 ---@param t 'ft'|'bt'
 ---@return (boolean | string)?
-function decorations.get(key, setting, t)
+function as.ui.decorations.get(key, setting, t)
   if not key or not setting then return nil end
-  if t == 'ft' then return decorations.filetypes[key] and decorations.filetypes[key][setting] end
-  if t == 'bt' then return decorations.buftypes[key] and decorations.buftypes[key][setting] end
+  if t == 'ft' then return filetypes[key] and filetypes[key][setting] end
+  if t == 'bt' then return buftypes[key] and buftypes[key][setting] end
 end
 
 ---A helper to set the value of the colorcolumn option, to my preferences, this can be used
@@ -352,10 +355,10 @@ end
 ---to set it's virtual column
 ---@param bufnr integer
 ---@param fn fun(virtcolumn: string)
-function decorations.set_colorcolumn(bufnr, fn)
+function as.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
-  local ft_ccol = decorations.get(buf.ft, 'colorcolumn', 'ft')
-  local bt_ccol = decorations.get(buf.bt, 'colorcolumn', 'bt')
+  local ft_ccol = as.ui.decorations.get(buf.ft, 'colorcolumn', 'ft')
+  local bt_ccol = as.ui.decorations.get(buf.bt, 'colorcolumn', 'bt')
   if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
   local ccol = ft_ccol or bt_ccol or ''
   local virtcolumn = not as.empty(ccol) and ccol or '+1'
@@ -363,11 +366,4 @@ function decorations.set_colorcolumn(bufnr, fn)
 end
 
 ----------------------------------------------------------------------------------------------------
-local current = { border = border.line, lsp_icons = lsp.kinds.codicons }
-
-as.ui.icons = icons
-as.ui.lsp = lsp
-as.ui.border = border
-as.ui.current = current
-as.ui.palette = palette
-as.ui.decorations = decorations
+as.ui.current = { border = as.ui.border.line, lsp_icons = as.ui.lsp.kinds.codicons }
