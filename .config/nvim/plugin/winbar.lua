@@ -3,7 +3,7 @@
 if not as or not as.ui.winbar.enable then return end
 
 local str = require('as.format_string')
-local settings = as.ui.settings
+local decorations = as.ui.decorations
 
 local fn, api = vim.fn, vim.api
 local component = str.component
@@ -80,8 +80,8 @@ local function set_winbar()
   as.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
-    local ft_setting = settings.get(ft, 'winbar', 'ft')
-    local bt_setting = settings.get(bt, 'winbar', 'bt')
+    local ft_setting = decorations.get(ft, 'winbar', 'ft')
+    local bt_setting = decorations.get(bt, 'winbar', 'bt')
     local ignored = ft_setting == 'ignore' or bt_setting == 'ignore'
     if not ignored then
       if

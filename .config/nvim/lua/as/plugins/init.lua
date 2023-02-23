@@ -180,7 +180,7 @@ return {
         {
           event = { 'BufEnter', 'WinEnter' },
           command = function(args)
-            ui.settings.set_colorcolumn(
+            ui.decorations.set_colorcolumn(
               args.buf,
               function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
             )

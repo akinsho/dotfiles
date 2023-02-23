@@ -495,8 +495,8 @@ local function git_updates() run_task_on_interval(10000, update_git_status) end
 
 --- @param ctx StatuslineContext
 local function is_plain(ctx)
-  local ft = as.ui.settings.filetypes[ctx.filetype]
-  local bt = as.ui.settings.buftypes[ctx.buftype]
+  local ft = as.ui.decorations.filetypes[ctx.filetype]
+  local bt = as.ui.decorations.buftypes[ctx.buftype]
   local is_plain_ft = ft and ft.statusline == 'minimal'
   local is_plain_buftype = bt and bt.statusline == 'minimal'
   return is_plain_ft or is_plain_buftype or ctx.preview
