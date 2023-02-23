@@ -23,10 +23,10 @@ return {
         },
       })
     end,
-    opts = {
+    config = {
+      autoload = true,
       use_git_branch = true,
-      autoload = not vim.startswith(fn.getcwd(), vim.env.PROJECTS_DIR),
-      allowed_dirs = { vim.g.dotfiles },
+      allowed_dirs = { vim.g.dotfiles, vim.g.work_dir },
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
   },
