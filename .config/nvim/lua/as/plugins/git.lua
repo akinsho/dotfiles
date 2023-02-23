@@ -123,7 +123,15 @@ return {
         desc = 'gitlinker: open current selection in browser',
       },
     },
-    opts = { mappings = nil },
+    config = {
+      mappings = nil,
+      callbacks = {
+        ['github-work'] = function(url_data) -- Resolve the host for work repostories
+          url_data.host = 'github.com'
+          return require('gitlinker.hosts').get_github_type_url(url_data)
+        end,
+      },
+    },
   },
   {
     'lewis6991/gitsigns.nvim',
