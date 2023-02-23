@@ -2,6 +2,7 @@
 -- Language servers
 -----------------------------------------------------------------------------//
 local servers = {
+  eslint = {},
   tsserver = {},
   ccls = {},
   graphql = {},
@@ -14,6 +15,7 @@ local servers = {
   pyright = {},
   bufls = {},
   prosemd_lsp = {},
+  docker_compose_language_service = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
