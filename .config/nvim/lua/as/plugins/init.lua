@@ -19,7 +19,9 @@ return {
         {
           event = 'User',
           pattern = 'PersistedTelescopeLoadPre',
-          command = function() vim.cmd('%bd') end,
+          command = function()
+            vim.schedule(function() vim.cmd('%bd') end)
+          end,
         },
       })
     end,
