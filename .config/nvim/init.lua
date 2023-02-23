@@ -107,8 +107,9 @@ require('lazy').setup('as.plugins', {
   },
 })
 
-map('n', '<leader>ps', '<Cmd>Lazy<CR>')
-map('n', '<leader>pc', '<Cmd>Lazy clean<CR>')
+map('n', '<leader>pm', '<Cmd>Lazy<CR>', { desc = 'package manger: open' })
+map('n', '<leader>ps', '<Cmd>Lazy sync<CR>', { desc = 'package manger: sync' })
+map('n', '<leader>pc', '<Cmd>Lazy clean<CR>', { desc = 'package manger: clean' })
 -----------------------------------------------------------------------------//
 -- Builtin Packages
 -----------------------------------------------------------------------------//
