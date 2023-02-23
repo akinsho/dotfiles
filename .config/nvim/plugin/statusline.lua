@@ -425,7 +425,7 @@ local function stl_lsp_clients(ctx)
     if client.name:match('null') then
       local sources = require('null-ls.sources').get_available(vim.bo[ctx.bufnum].filetype)
       local source_names = vim.tbl_map(function(s) return s.name end, sources)
-      return { name = table.concat(source_names, ', '), priority = 7 }
+      return { name = '␀ ' .. table.concat(source_names, ', '), priority = 7 }
     end
     return { name = client.name, priority = 4 }
   end, clients)
