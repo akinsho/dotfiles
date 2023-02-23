@@ -43,6 +43,7 @@ local hls = {
   number = 'StNumber',
   count = 'StCount',
   client = 'StClient',
+  env = 'StError',
   directory = 'StDirectory',
   directory_inactive = 'StDirectoryInactive',
   parent_directory = 'StParentDirectory',
@@ -229,18 +230,35 @@ local function special_buffers(ctx)
   return nil
 end
 
+---@param directory string
+---@return string directory
+---@return string custom_dir
+local function dir_context(directory)
+  if not directory then return '', '' end
+  local paths = {
+    [vim.env.DOTFILES] = '$DOTFILES',
+    [vim.g.work_dir] = '$WORK',
+    [vim.g.projects_dir] = '$PROJECTS',
+  }
+  for dir, replacement in pairs(paths) do
+    local match, count = fn.expand(directory):gsub(vim.pesc(dir), '')
+    if count == 1 then return match, replacement end
+  end
+  return directory, ''
+end
+
 --- @param ctx StatuslineContext
---- @return string, string, string
+--- @return {env: string, dir: string, parent: string, fname: string}
 local function filename(ctx)
   local buf, bt, ft, preview = ctx.bufnum, ctx.buftype, ctx.filetype, ctx.preview
   local special_buf = special_buffers(ctx)
-  if special_buf then return '', '', special_buf end
+  if special_buf then return { fname = special_buf } end
 
   local fname = fn.expand('#' .. buf .. ':t')
   local name = identifiers.names[ft]
-  if type(name) == 'function' then return '', '', name(fname, buf) end
-  if name then return '', '', name end
-  if not fname or as.empty(fname) then return '', '', 'No Name' end
+  if type(name) == 'function' then return { fname = name(fname, buf) } end
+  if name then return { fname = name } end
+  if not fname or as.empty(fname) then return { fname = 'No Name' } end
 
   --- NOTE: add ":." to the expansion i.e. to make the directory path relative to the current vim directory
   local path = (bt == '' and not preview) and fn.expand('#' .. buf .. ':~:h') or nil
@@ -249,7 +267,9 @@ local function filename(ctx)
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
   local parent = path and (is_root and path or fn.fnamemodify(path, ':t')) or ''
   parent = parent ~= '' and parent .. '/' or ''
-  return dir, parent, fname
+
+  local d, env = dir_context(dir)
+  return { env = env, dir = d, parent = parent, fname = fname }
 end
 
 ---Create the various segments of the current filename
@@ -273,20 +293,23 @@ local function stl_file(ctx, minimal)
   local file_opts = { before = '', after = '', priority = 0 }
   local parent_opts = { before = '', after = '', priority = 2 }
   local dir_opts = { before = '', after = '', priority = 3 }
+  local env_opts = { before = '', after = '', priority = 4 }
 
-  local directory, parent, file = filename(ctx)
+  local p = filename(ctx)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
-  local dir_empty, parent_empty = as.empty(directory), as.empty(parent)
-  local to_update = (dir_empty and parent_empty) and file_opts
-    or dir_empty and parent_opts
-    or dir_opts
+  local env_empty, dir_empty, parent_empty = as.empty(p.env), as.empty(p.dir), as.empty(p.parent)
+  local to_update = (env_empty and dir_empty and parent_empty) and file_opts
+    or (env_empty and dir_empty) and parent_opts
+    or env_empty and dir_opts
+    or env_opts
 
   to_update.prefix, to_update.prefix_color = ft_icon, not minimal and ft_hl or nil
   return {
-    file = { item = file, hl = filename_hl, opts = file_opts },
-    dir = { item = directory, hl = directory_hl, opts = dir_opts },
-    parent = { item = parent, hl = parent_hl, opts = parent_opts },
+    env = { item = p.env, hl = hls.env, opts = env_opts },
+    file = { item = p.fname, hl = filename_hl, opts = file_opts },
+    dir = { item = p.dir, hl = directory_hl, opts = dir_opts },
+    parent = { item = p.parent, hl = parent_hl, opts = parent_opts },
   }
 end
 
@@ -566,7 +589,8 @@ function as.ui.statusline()
   -- Filename
   ----------------------------------------------------------------------------//
   local segments = stl_file(ctx, plain)
-  local dir, parent, file = segments.dir, segments.parent, segments.file
+  local env, dir, parent, file = segments.env, segments.dir, segments.parent, segments.file
+  local env_component = component(env.item, env.hl, env.opts)
   local dir_component = component(dir.item, dir.hl, dir.opts)
   local parent_component = component(parent.item, parent.hl, parent.opts)
 
@@ -585,7 +609,7 @@ function as.ui.statusline()
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
   if plain or not focused then
-    add(readonly_component, dir_component, parent_component, file_component)
+    add(readonly_component, env_component, dir_component, parent_component, file_component)
     return str.display(statusline, available_space)
   end
   -----------------------------------------------------------------------------//
@@ -642,6 +666,7 @@ function as.ui.statusline()
 
     component_if(search_count(), vim.v.hlsearch > 0, hls.count, { priority = 1 }),
 
+    env_component,
     dir_component,
     parent_component,
     file_component,
