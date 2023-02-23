@@ -21,7 +21,7 @@ if not as then return end
 
 local str = require('as.format_string')
 
-local icons, lsp, highlight = as.ui.icons, as.ui.lsp, as.highlight
+local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
 local api, fn, fmt = vim.api, vim.fn, string.format
 local P = as.ui.palette
 local C = str.constants
@@ -496,11 +496,9 @@ local function git_updates() run_task_on_interval(10000, update_git_status) end
 
 --- @param ctx StatuslineContext
 local function is_plain(ctx)
-  local ft = as.ui.decorations.filetypes[ctx.filetype]
-  local bt = as.ui.decorations.buftypes[ctx.buftype]
-  local is_plain_ft = ft and ft.statusline == 'minimal'
-  local is_plain_buftype = bt and bt.statusline == 'minimal'
-  return is_plain_ft or is_plain_buftype or ctx.preview
+  local is_plain_ft = decorations.get(ctx.filetype, 'statusline', 'ft') == 'minimal'
+  local is_plain_bt = decorations.get(ctx.buftype, 'statusline', 'bt') == 'minimal'
+  return is_plain_ft or is_plain_bt or ctx.preview
 end
 
 --- @param ctx StatuslineContext
