@@ -153,6 +153,7 @@ return {
           'Telescope.*',
           'Bqf.*',
           'VirtColumn',
+          'Headline.*',
         },
         window_ignore_function = function(win_id)
           if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= '' then return true end
