@@ -80,6 +80,14 @@ return {
         filter = { event = 'msg_show', min_height = 20 },
       },
       {
+        view = 'mini',
+        filter = {
+          any = {
+            { event = 'msg_show', find = '^E486:' }, -- minimise pattern not found messages
+          },
+        },
+      },
+      {
         view = 'notify',
         opts = { title = 'Error', level = L.ERROR, merge = true, replace = false },
         filter = {
