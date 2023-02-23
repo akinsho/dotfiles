@@ -16,6 +16,7 @@ g.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
 g.vim_dir = g.dotfiles .. '/.config/nvim'
 g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
+g.work_dir = vim.env.PROJECTS_DIR .. '/work'
 ----------------------------------------------------------------------------------------------------
 -- Ensure all autocommands are cleared
 vim.api.nvim_create_augroup('vimrc', {})
