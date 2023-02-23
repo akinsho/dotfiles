@@ -242,7 +242,8 @@ local function filename(ctx)
   if name then return '', '', name end
   if not fname or as.empty(fname) then return '', '', 'No Name' end
 
-  local path = (bt == '' and not preview) and fn.expand('#' .. buf .. ':~:.:h') or nil
+  --- NOTE: add ":." to the expansion i.e. to make the directory path relative to the current vim directory
+  local path = (bt == '' and not preview) and fn.expand('#' .. buf .. ':~:h') or nil
   local is_root = path and #path == 1 -- "~" or "."
   local dir = path and not is_root and fn.fnamemodify(path, ':h') .. '/' or ''
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
