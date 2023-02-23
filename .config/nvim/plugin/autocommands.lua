@@ -190,31 +190,6 @@ as.augroup('TextYankHighlight', {
   },
 })
 
----Set or unset the color column depending on the filetype of the buffer and its eligibility
-local function check_color_column()
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buffer = vim.bo[api.nvim_win_get_buf(win)]
-    local window = vim.wo[win]
-    local is_current = win == api.nvim_get_current_win()
-    if as.empty(fn.win_gettype()) then
-      local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
-      local is_excluded = as.ui.settings.get(buffer.filetype, 'colorcolumn', 'ft') == false
-      if is_excluded or too_small then
-        window.colorcolumn = ''
-      elseif as.empty(window.colorcolumn) and is_current then
-        window.colorcolumn = '+1'
-      end
-    end
-  end
-end
-
-as.augroup('CustomColorColumn', {
-  {
-    -- Update the cursor column to match current window size
-    event = { 'BufEnter', 'WinNew', 'WinClosed', 'FileType', 'VimResized' },
-    command = check_color_column,
-  },
-})
 as.augroup('UpdateVim', {
   {
     event = { 'FocusLost' },

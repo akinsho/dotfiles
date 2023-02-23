@@ -23,6 +23,8 @@ if vim.startswith(fn.expand('%'), vim.env.VIMRUNTIME) or vim.bo.readonly then
 else
   opt.spell, opt.spelllang = true, 'en_gb'
   opt.textwidth = 78
-  opt.colorcolumn = '+1'
+  as.ftplugin_conf({
+    ['virt-column'] = function(col) col.setup_buffer({ virtcolumn = '+1' }) end,
+  })
   map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
 end

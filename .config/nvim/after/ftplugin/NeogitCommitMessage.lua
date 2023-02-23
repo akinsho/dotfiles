@@ -2,7 +2,6 @@ local opt, highlight = vim.opt_local, as.highlight
 
 opt.list = false
 opt.spelllang = 'en_gb'
-opt.colorcolumn = '50,72'
 
 -- Schedule this call as highlights are not set correctly if there is not a delay
 vim.schedule(

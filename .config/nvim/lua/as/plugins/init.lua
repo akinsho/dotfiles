@@ -1,5 +1,5 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
-local border, highlight = as.ui.current.border, as.highlight
+local border, highlight, ui = as.ui.current.border, as.highlight, as.ui
 
 return {
   -----------------------------------------------------------------------------//
@@ -182,12 +182,27 @@ return {
   },
   {
     'lukas-reineke/virt-column.nvim',
-    lazy = false,
-    config = function()
-      highlight.plugin('virt_column', {
-        { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
+    event = 'VimEnter',
+    opts = { char = '▕' },
+    init = function()
+      highlight.plugin(
+        'virt_column',
+        { { VirtColumn = { fg = { from = 'Comment', alter = 10 } } } }
+      )
+      as.augroup('VirtCol', {
+        {
+          event = { 'BufEnter', 'WinEnter' },
+          command = function(args)
+            local buf = vim.bo[args.buf]
+            local ft_ccol = ui.settings.get(buf.ft, 'colorcolumn', 'ft')
+            local bt_ccol = ui.settings.get(buf.bt, 'colorcolumn', 'bt')
+            if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
+            local ccol = ft_ccol or bt_ccol or ''
+            local virtcolumn = not as.empty(ccol) and ccol or '+1'
+            require('virt-column').setup_buffer({ virtcolumn = virtcolumn })
+          end,
+        },
       })
-      require('virt-column').setup({ char = '▕' })
     end,
   },
   -- }}}

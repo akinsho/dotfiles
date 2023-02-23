@@ -236,7 +236,7 @@ local lsp = {
 ---@field number boolean
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
----@field colorcolumn boolean
+---@field colorcolumn boolean | string
 
 ---@alias UiSettings {buftypes: table<string, UiSetting>, filetypes: table<string, UiSetting>}
 
@@ -278,7 +278,7 @@ local presets = {
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({ colorcolumn = true, winbar = false })
+local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
 
 ---@type UiSettings
 local settings = {
