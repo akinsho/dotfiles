@@ -27,7 +27,12 @@ return {
           position = { row = 2 },
         },
       },
-      signature = { enabled = false },
+      signature = {
+        enabled = true,
+        opts = {
+          position = { row = 2 },
+        },
+      },
       hover = { enabled = true },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
