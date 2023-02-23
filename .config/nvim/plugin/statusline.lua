@@ -250,7 +250,7 @@ end
 --- @param ctx StatuslineContext
 --- @return {env: string, dir: string, parent: string, fname: string}
 local function filename(ctx)
-  local buf, bt, ft, preview = ctx.bufnum, ctx.buftype, ctx.filetype, ctx.preview
+  local buf, ft = ctx.bufnum, ctx.filetype
   local special_buf = special_buffers(ctx)
   if special_buf then return { fname = special_buf } end
 
@@ -261,7 +261,7 @@ local function filename(ctx)
   if not fname or as.empty(fname) then return { fname = 'No Name' } end
 
   --- NOTE: add ":." to the expansion i.e. to make the directory path relative to the current vim directory
-  local path = (bt == '' and not preview) and fn.expand('#' .. buf .. ':~:h') or nil
+  local path = fn.expand('#' .. buf .. ':~:h')
   local is_root = path and #path == 1 -- "~" or "."
   local dir = path and not is_root and fn.fnamemodify(path, ':h') .. '/' or ''
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
