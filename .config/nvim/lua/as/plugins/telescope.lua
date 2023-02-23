@@ -105,10 +105,7 @@ return {
       'nvim-telescope/telescope-live-grep-args.nvim',
       config = function() require('telescope').load_extension('live_grep_args') end,
     },
-    {
-      'molecule-man/telescope-menufacture',
-      config = function() require('telescope').load_extension('menufacture') end,
-    },
+    'molecule-man/telescope-menufacture',
   },
   config = function()
     local actions = require('telescope.actions')
@@ -201,6 +198,11 @@ return {
         },
       },
       extensions = {
+        menufacture = {
+          mappings = {
+            main_menu = { [{ 'i', 'n' }] = '<C-;>' },
+          },
+        },
         frecency = {
           default_workspace = 'CWD',
           show_unindexed = false, -- Show all files or only those that have been indexed
@@ -217,11 +219,6 @@ return {
         },
         ['zf-native'] = {
           generic = { enable = true, match_filename = true },
-        },
-        menufacture = {
-          mappings = {
-            main_menu = { [{ 'i', 'n' }] = '<C-;>' },
-          },
         },
       },
       pickers = {
@@ -251,8 +248,9 @@ return {
       },
     })
 
-    -- Extensions
+    -- Extensions (sometimes need to be explicitly loaded after telescope is setup)
     require('telescope').load_extension('noice')
     require('telescope').load_extension('persisted')
+    require('telescope').load_extension('menufacture')
   end,
 }
