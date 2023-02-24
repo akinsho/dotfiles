@@ -43,13 +43,18 @@ return {
           require('neotest-plenary'),
           require('neotest-dart')({ command = 'flutter' }),
           require('neotest-go')({ experimental = { test_table = true } }),
+          require('neotest-jest')({
+            jestCommand = 'npm test --',
+            jestConfigFile = 'jest.config.js',
+          }),
         },
       })
     end,
     dependencies = {
-      { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
       { 'sidlatau/neotest-dart' },
+      { 'haydenmeade/neotest-jest' },
       { 'neotest/neotest-go', dev = true },
+      { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
   },
 }
