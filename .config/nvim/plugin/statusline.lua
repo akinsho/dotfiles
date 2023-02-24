@@ -259,15 +259,6 @@ local function dir_env(directory)
   return result, env
 end
 
----@generic T
----@param list T[]
----@return T
-local function pop(list)
-  local last = list[#list]
-  list[#list] = nil
-  return last
-end
-
 --- @param ctx StatuslineContext
 --- @return {env: string, dir: string, parent: string, fname: string}
 local function filename(ctx)
@@ -279,12 +270,12 @@ local function filename(ctx)
   if as.empty(path) then return { fname = 'No Name' } end
   --- add ":." to the expansion i.e. to make the directory path relative to the current vim directory
   local parts = vim.split(fn.fnamemodify(path, ':~'), sep)
-  local fname = pop(parts)
+  local fname = table.remove(parts)
 
   local name = identifiers.names[ft]
   if name then return { fname = vim.is_callable(name) and name(fname, buf) or name } end
 
-  local parent = pop(parts)
+  local parent = table.remove(parts)
   fname = fn.isdirectory(fname) == 1 and fname .. sep or fname
   if as.empty(parent) then return { fname = fname } end
 
