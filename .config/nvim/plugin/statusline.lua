@@ -26,6 +26,8 @@ local api, fn, fmt = vim.api, vim.fn, string.format
 local P = as.ui.palette
 local C = str.constants
 
+local sep = package.config:sub(1, 1)
+
 ----------------------------------------------------------------------------------------------------
 --  Colors
 ----------------------------------------------------------------------------------------------------
@@ -43,7 +45,7 @@ local hls = {
   number = 'StNumber',
   count = 'StCount',
   client = 'StClient',
-  env = 'StError',
+  env = 'StEnv',
   directory = 'StDirectory',
   directory_inactive = 'StDirectoryInactive',
   parent_directory = 'StParentDirectory',
@@ -111,6 +113,7 @@ local function colors()
     { [hls.number] = { foreground = number_fg, background = bg_color } },
     { [hls.count] = { foreground = 'bg', background = indicator_color, bold = true } },
     { [hls.client] = { background = bg_color, foreground = normal_fg, bold = true } },
+    { [hls.env] = { background = bg_color, foreground = error_color, italic = true, bold = true } },
     { [hls.directory] = { background = bg_color, foreground = 'Gray', italic = true } },
     { [hls.directory_inactive] = { background = bg_color, italic = true, foreground = { from = 'Normal', alter = 40 } } },
     { [hls.parent_directory] = { background = bg_color, foreground = string_fg, bold = true } },
@@ -247,6 +250,15 @@ local function dir_context(directory)
   return directory, ''
 end
 
+---@generic T
+---@param list T[]
+---@return T
+local function remove_last(list)
+  local last = list[#list]
+  list[#list] = nil
+  return last
+end
+
 --- @param ctx StatuslineContext
 --- @return {env: string, dir: string, parent: string, fname: string}
 local function filename(ctx)
@@ -254,19 +266,18 @@ local function filename(ctx)
   local special_buf = special_buffers(ctx)
   if special_buf then return { fname = special_buf } end
 
-  local fname = fn.expand('#' .. buf .. ':t')
-  local name = identifiers.names[ft]
-  if type(name) == 'function' then return { fname = name(fname, buf) } end
-  if name then return { fname = name } end
-  if not fname or as.empty(fname) then return { fname = 'No Name' } end
+  local path = api.nvim_buf_get_name(buf)
+  if as.empty(path) then return { fname = 'No Name' } end
+  --- add ":." to the expansion i.e. to make the directory path relative to the current vim directory
+  local parts = vim.split(fn.fnamemodify(path, ':~'), sep)
+  local fname = remove_last(parts)
 
-  --- NOTE: add ":." to the expansion i.e. to make the directory path relative to the current vim directory
-  local path = fn.expand('#' .. buf .. ':~:h')
-  local is_root = path and #path == 1 -- "~" or "."
-  local dir = path and not is_root and fn.fnamemodify(path, ':h') .. '/' or ''
+  local name = identifiers.names[ft]
+  if name then return { fname = vim.is_callable(name) and name(fname, buf) or name } end
+
+  local parent = remove_last(parts) .. sep
+  local dir = table.concat(parts, sep) .. sep
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
-  local parent = path and (is_root and path or fn.fnamemodify(path, ':t')) or ''
-  parent = parent ~= '' and parent .. '/' or ''
 
   local d, env = dir_context(dir)
   return { env = env, dir = d, parent = parent, fname = fname }
