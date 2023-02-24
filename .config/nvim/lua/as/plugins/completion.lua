@@ -80,14 +80,14 @@ local function config()
       ['<C-]>'] = cmp.mapping(
         function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
       ),
-      ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
-      ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
+      ['<Tab>'] = cmp.mapping(tab, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's' }),
       ['<C-q>'] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
       ['<C-space>'] = cmp.mapping.complete(),
       ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
     },
