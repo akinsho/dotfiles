@@ -29,6 +29,7 @@ return {
       autoload = true,
       use_git_branch = true,
       allowed_dirs = { vim.g.dotfiles, vim.g.work_dir },
+      ignored_dirs = { fn.stdpath('data') },
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
   },
