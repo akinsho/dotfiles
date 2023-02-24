@@ -301,6 +301,7 @@ local filetypes = {
   ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
   ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
   ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['neotest.*'] = presets.tool_panel,
   ['^Neogit.*'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
   ['DiffviewFileHistory'] = presets.tool_panel,
