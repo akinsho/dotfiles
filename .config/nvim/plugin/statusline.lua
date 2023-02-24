@@ -262,7 +262,7 @@ end
 ---@generic T
 ---@param list T[]
 ---@return T
-local function remove_last(list)
+local function pop(list)
   local last = list[#list]
   list[#list] = nil
   return last
@@ -279,12 +279,12 @@ local function filename(ctx)
   if as.empty(path) then return { fname = 'No Name' } end
   --- add ":." to the expansion i.e. to make the directory path relative to the current vim directory
   local parts = vim.split(fn.fnamemodify(path, ':~'), sep)
-  local fname = remove_last(parts)
+  local fname = pop(parts)
 
   local name = identifiers.names[ft]
   if name then return { fname = vim.is_callable(name) and name(fname, buf) or name } end
 
-  local parent = remove_last(parts)
+  local parent = pop(parts)
   fname = fn.isdirectory(fname) and fname .. sep or fname
   if as.empty(parent) then return { fname = fname } end
 
