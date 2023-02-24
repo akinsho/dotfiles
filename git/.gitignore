@@ -34,9 +34,6 @@ Thumbs.db
 gin-bin
 .tern-port
 
-# Oni Config Dir #
-.oni
-
 # VSCode workspaces
 *.code-workspace
 .vscode

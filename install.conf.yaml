@@ -8,11 +8,12 @@
     - ~/.config
     - ~/projects
 
-- clean: ["~"]
+- clean: [ "~" ]
 
 - link:
     ~/.dotfiles: ""
     ~/.tmux.conf: tmux/.tmux.conf
+    ~/.gitignore: git/.gitignore
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
     ~/.zshenv: .config/zsh/.zshenv
@@ -39,5 +40,8 @@
       path: .config/karabiner
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
-    - [cp -n ./git/config.template ~/.gitconfig.local]
+    - [
+        git submodule update --init --recursive,
+        Installing submodules
+      ]
+    - [ cp -n ./git/config.template ~/.gitconfig.local ]
