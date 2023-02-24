@@ -283,7 +283,11 @@ local function filename(ctx)
   local name = identifiers.names[ft]
   if name then return { fname = vim.is_callable(name) and name(fname, buf) or name } end
 
-  local parent = remove_last(parts) .. sep
+  local parent = remove_last(parts)
+  fname = fn.isdirectory(fname) and fname .. sep or fname
+  if as.empty(parent) then return { fname = fname } end
+
+  parent = parent .. sep
   local dir = table.concat(parts, sep) .. sep
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
 
@@ -500,7 +504,7 @@ end
 ---@return boolean
 local function is_git_repo(win_id)
   win_id = win_id or api.nvim_get_current_win()
-  return fn.isdirectory(fmt('%s/.git', fn.getcwd(win_id))) == 1
+  return vim.loop.fs_stat(fmt('%s/.git', fn.getcwd(win_id)))
 end
 
 -- Use git and the native job API to first get the head of the repo
