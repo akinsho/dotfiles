@@ -285,7 +285,7 @@ local function filename(ctx)
   if name then return { fname = vim.is_callable(name) and name(fname, buf) or name } end
 
   local parent = pop(parts)
-  fname = fn.isdirectory(fname) and fname .. sep or fname
+  fname = fn.isdirectory(fname) == 1 and fname .. sep or fname
   if as.empty(parent) then return { fname = fname } end
 
   parent = parent .. sep
