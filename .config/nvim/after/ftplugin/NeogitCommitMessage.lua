@@ -10,13 +10,10 @@ vim.schedule(
   end
 )
 
+if as.nightly() then vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage') end
+
 if not as then return end
 as.ftplugin_conf({
-  ['nvim-treesitter.parsers'] = function(parsers)
-    -- make sure neogit commits use the treesitter parser
-    -- awaiting https://github.com/nvim-treesitter/nvim-treesitter/pull/4296
-    parsers.filetype_to_parsername['NeogitCommitMessage'] = 'gitcommit'
-  end,
   cmp = function(cmp)
     cmp.setup.filetype('NeogitCommitMessage', {
       sources = cmp.config.sources({
