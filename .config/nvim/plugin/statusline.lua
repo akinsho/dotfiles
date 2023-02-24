@@ -200,9 +200,10 @@ local function get_ft_icon_hl_name(hl) return hl .. hls.statusline end
 --- @param opts { default: boolean }
 --- @return string, string?
 local function get_buffer_icon(buf, opts)
+  local path = api.nvim_buf_get_name(buf)
+  if fn.isdirectory(path) == 1 then return '', nil end
   local ok, devicons = pcall(require, 'nvim-web-devicons')
   if not ok then return '', nil end
-  local path = api.nvim_buf_get_name(buf)
   local name, ext = fn.fnamemodify(path, ':t'), fn.fnamemodify(path, ':e')
   return devicons.get_icon(name, ext, opts)
 end
