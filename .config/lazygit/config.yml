@@ -23,6 +23,8 @@ gui:
       - blue
   commitLength:
     show: true
+services:
+  'github-work': 'github:github.com'
 git:
   paging:
     colorArg: always
