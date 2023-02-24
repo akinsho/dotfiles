@@ -251,9 +251,9 @@ local function dir_env(directory)
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
-    local match, count = fn.expand(directory):gsub(vim.pesc(dir), '')
+    local match, count = fn.expand(directory):gsub(vim.pesc(dir .. sep), '')
     if count == 1 and #dir > #prev_match then
-      result, env, prev_match = match, alias, dir
+      result, env, prev_match = match, alias .. sep, dir
     end
   end
   return result, env
@@ -279,12 +279,11 @@ local function filename(ctx)
   fname = fn.isdirectory(fname) == 1 and fname .. sep or fname
   if as.empty(parent) then return { fname = fname } end
 
-  parent = parent .. sep
   local dir = table.concat(parts, sep) .. sep
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
 
-  local d, env = dir_env(dir)
-  return { env = env, dir = d, parent = parent, fname = fname }
+  local new_dir, env = dir_env(dir)
+  return { env = env, dir = new_dir, parent = parent .. sep, fname = fname }
 end
 
 ---Create the various segments of the current filename
