@@ -1,14 +1,19 @@
 [user]
   name = "Akin Sowemimo"
   email = 22454918+akinsho@users.noreply.github.com
+
 [include]
   path = ~/.gitconfig.local
+
 [includeIf "gitdir:~/projects/work/"]
   path = ~/projects/work/.gitconfig.work
+
 [status]
   submoduleSummary = true
+
 [commit]
   template = ~/.gitmessage
+
 [color]
   ui = auto
   status = auto
@@ -16,53 +21,134 @@
   branch = auto
   showBranch = auto
   interactive = auto
+
 [core]
   editor = "nvr --remote-wait-silent" # or nvim
-  excludesfile ="~/.dotfiles/git/.gitignore_global"
+  excludesfile ="~/.gitignore"
   pager = delta
   autocrlf = input
+
+  # Make `git rebase` safer on macOS.
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+
+  # Speed up commands involving untracked files such as `git status`.
+  # https://git-scm.com/docs/git-update-index#_untracked_cache
+  untrackedCache = true
+
 [format]
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
+
 [alias]
-  sc = smart-checkout
-  pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; } ; f"
+  # View abbreviated SHA, description, and history graph of the latest 20 commits.
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+
+  # View the current working tree status using the short format.
+  s = status -s
+
+  # Show the diff between the latest commit and the current state.
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state.
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+  # Pull in remote changes for the current repository and all its submodules.
+  pl = pull --recurse-submodules
+
+  # Commit all changes.
+  ca = !git add -A && git commit -av
+
+  # Switch to a branch, creating it if necessary.
+  br = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch --all
+  remotes = remote --verbose
+
   fix='$EDITOR `git diff --name-only | uniq`'
+
   # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
   aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
-  # Destroy all local changes and reset to HEAD.
-  fuckit = reset --hard HEAD
+
   fall = fetch --all
+
+  # Destroy all local changes and reset to HEAD.
+  hreset = reset --hard HEAD
+
   # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
   uncommit = reset --soft HEAD^
+
   reset-up = reset --hard $(git upstream)
-  sl = log --oneline --decorate -20
-  new = checkout -b
+
+  # Remove branches that have already been merged with main.
+  # a.k.a. ‘delete merged’
+  dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+  # Show the user email for the current repository.
+  whoami = config user.email
+[branch]
+  # Show most recently changed branches first.
+  sort = -committerdate
+
 [diff]
   colorMoved = default
   navigate = true  # use n and N to move between diff sections
+  renames = copies # Detect copies as well as renames.
+
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+
 [delta]
   features = line-numbers decorations
-  # hyperlinks = true  NOTE: this breaks inside neovim
+
 [delta "decorations"]
   commit-decoration-style = bold yellow box ul
   file-style = bold yellow ul
+
 [interactive]
   diffFilter = delta --color-only
+
 [push]
   default = current
-[push]
   followTags = true
+
 [pull]
   rebase = true
+
 [rebase]
   autoStash = true
+
 [fetch]
   prune = true
+
 [gitsh]
   prompt = "\n%D %c(%b%#)%w ➜"
+
 [rerere]
   enabled = true
-[hub]
-  protocol = ssh
+
+[help]
+  # Automatically correct and execute mistyped commands.
+  autocorrect = 1
+
+# URL shorthands
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+  insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+
 [init]
   defaultBranch = main
