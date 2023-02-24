@@ -233,21 +233,29 @@ local function special_buffers(ctx)
   return nil
 end
 
+--- Replace the directory path with an identifier if it matches a commonly visited
+--- directory of mine such as my projects directory or my work directory
+--- since almost all my project directories are nested underneath one of these paths
+--- this should match often and reduce the unnecessary boilerplate in my path as
+--- I know where these directories are generally
 ---@param directory string
 ---@return string directory
 ---@return string custom_dir
-local function dir_context(directory)
+local function dir_env(directory)
   if not directory then return '', '' end
   local paths = {
     [vim.env.DOTFILES] = '$DOTFILES',
     [vim.g.work_dir] = '$WORK',
     [vim.g.projects_dir] = '$PROJECTS',
   }
-  for dir, replacement in pairs(paths) do
+  local result, env, prev_match = directory, '', ''
+  for dir, alias in pairs(paths) do
     local match, count = fn.expand(directory):gsub(vim.pesc(dir), '')
-    if count == 1 then return match, replacement end
+    if count == 1 and #dir > #prev_match then
+      result, env, prev_match = match, alias, dir
+    end
   end
-  return directory, ''
+  return result, env
 end
 
 ---@generic T
@@ -279,7 +287,7 @@ local function filename(ctx)
   local dir = table.concat(parts, sep) .. sep
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
 
-  local d, env = dir_context(dir)
+  local d, env = dir_env(dir)
   return { env = env, dir = d, parent = parent, fname = fname }
 end
 
