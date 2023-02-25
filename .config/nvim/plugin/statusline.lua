@@ -19,7 +19,7 @@ if not as then return end
 ---@field winhl boolean
 ----------------------------------------------------------------------------------------------------
 
-local str = require('as.format_string')
+local str = require('as.strings')
 
 local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
 local api, fn, fmt = vim.api, vim.fn, string.format

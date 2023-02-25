@@ -2,7 +2,7 @@
 
 if not as or not as.ui.winbar.enable then return end
 
-local str = require('as.format_string')
+local str = require('as.strings')
 local decorations = as.ui.decorations
 
 local fn, api = vim.fn, vim.api
