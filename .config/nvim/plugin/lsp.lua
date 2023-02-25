@@ -1,9 +1,6 @@
 if not as then return end
 
-local lsp = vim.lsp
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
+local lsp, fs, fn, api, fmt = vim.lsp, vim.fs, vim.fn, vim.api, string.format
 local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
 
@@ -97,7 +94,8 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  local events = vim.F.if_nil(vim.b.lsp_events, {
+  local b = vim.b --[[@as table<string, any>]]
+  local events = vim.F.if_nil(b.lsp_events, {
     [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
     [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
     [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
@@ -113,7 +111,7 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'LSP: Show diagnostics',
         command = function(args)
-          if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
+          if b.lsp_hover_win and api.nvim_win_is_valid(b.lsp_hover_win) then return end
           vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false })
         end,
       },
@@ -127,7 +125,7 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'LSP: Format on save',
         command = function(args)
-          if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
+          if not vim.g.formatting_disabled and not b.formatting_disabled then
             local clients = clients_by_capability(args.buf, provider)
             format({ bufnr = args.buf, async = #clients == 1 })
           end
