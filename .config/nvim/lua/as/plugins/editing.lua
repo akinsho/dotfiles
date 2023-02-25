@@ -10,7 +10,9 @@ return {
       { '<m-p>', '<Plug>(YankyCycleBackward)' },
       {
         '<localleader>p',
-        function() require('telescope').extensions.yank_history.yank_history() end,
+        function()
+          require('telescope').extensions.yank_history.yank_history(as.telescope.dropdown())
+        end,
         desc = 'yanky: open yank history',
       },
     },
@@ -25,7 +27,7 @@ return {
             mappings = {
               default = mapping.put('p'),
               i = {
-                ['<c-p>'] = mapping.put('p'),
+                ['<CR>'] = mapping.put('p'),
                 ['<c-k>'] = mapping.put('P'),
                 ['<c-x>'] = mapping.delete(),
                 ['<c-r>'] = mapping.set_register(utils.get_default_register()),
