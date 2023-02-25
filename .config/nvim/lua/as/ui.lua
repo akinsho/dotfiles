@@ -296,6 +296,7 @@ local filetypes = {
   ['tsplayground'] = presets.tool_panel,
   ['list'] = presets.tool_panel,
   ['netrw'] = presets.tool_panel,
+  ['flutter.*'] = presets.tool_panel,
   ['NvimTree'] = presets.tool_panel,
   ['undotree'] = presets.tool_panel,
   ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
