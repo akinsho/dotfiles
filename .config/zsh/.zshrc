@@ -480,7 +480,6 @@ add-zsh-hook chpwd () {
   _git_status_prompt="" # clear current vcs_info
   chpwd_last_working_dir
   chpwd_recent_dirs
-  check_node_cwd
 }
 
 
@@ -500,7 +499,6 @@ done
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-check_node_cwd
 last_working_dir
 
 # TODO: also need to check for the existence of ~/.fzf/
