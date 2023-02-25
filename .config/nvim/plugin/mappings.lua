@@ -260,8 +260,6 @@ local function search(direction_key, default)
 end
 cnoremap('<Tab>', function() return search('/', '<Tab>') end, { expr = true })
 cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true })
--- Smart mappings on the command line
-cnoremap('w!!', [[w !sudo tee % >/dev/null]])
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
