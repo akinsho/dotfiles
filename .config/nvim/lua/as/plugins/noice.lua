@@ -96,6 +96,18 @@ return {
       },
       {
         view = 'notify',
+        filter = {
+          any = {
+            { warning = true },
+            { event = 'msg_show', find = '^Warn' },
+            { event = 'msg_show', find = '^W%d+:' },
+            { event = 'msg_show', find = '^No hunks$' },
+          },
+        },
+        opts = { title = 'Warning', level = L.WARN, merge = false, replace = false },
+      },
+      {
+        view = 'notify',
         opts = { title = 'Error', level = L.ERROR, merge = true, replace = false },
         filter = {
           any = {
