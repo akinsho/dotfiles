@@ -166,6 +166,29 @@ local function setup_autocommands(client, bufnr)
   vim.b[bufnr].lsp_events = events
 end
 
+---@param data { old_name: string, new_name: string }
+local function prepare_rename(data)
+  local bufnr = fn.bufnr(data.old_name)
+  for _, client in pairs(lsp.get_active_clients({ bufnr = bufnr })) do
+    local rename_path = { 'server_capabilities', 'workspace', 'fileOperations', 'willRename' }
+    if not vim.tbl_get(client, rename_path) then
+      vim.notify(fmt('%s does not support rename files'), 'error', { title = 'LSP' })
+    end
+    local params = {
+      files = { { newUri = 'file://' .. data.new_name, oldUri = 'file://' .. data.old_name } },
+    }
+    local resp = client.request_sync('workspace/willRenameFiles', params, 1000)
+    vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
+  end
+end
+
+local function rename_file()
+  local old_name = api.nvim_buf_get_name(0)
+  local new_name = fmt('%s/%s', fs.dirname(old_name), fn.input('New name: '))
+  prepare_rename({ old_name = old_name, new_name })
+  lsp.util.rename(old_name, new_name)
+end
+
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -199,6 +222,7 @@ local function setup_mappings(_, bufnr)
   map('n', '<leader>gd', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   map('n', '<leader>cl', lsp.codelens.run, with_desc('lsp: run code lens'))
   map('n', '<leader>ri', lsp.buf.rename, with_desc('lsp: rename'))
+  map('n', '<leader>rN', rename_file, with_desc('lsp: rename with input'))
 end
 
 -----------------------------------------------------------------------------//
