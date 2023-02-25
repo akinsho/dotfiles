@@ -494,13 +494,6 @@ add-zsh-hook preexec () {
 for script in $ZDOTDIR/scripts/*; do
   source $script
 done
-
-# reference - https://unix.stackexchange.com/questions/252166/how-to-configure-zshrc-for-specfic-os
-case `uname` in
-  Linux)
-    source "$DOTFILES/linux/init.sh"
-    ;;
-esac
 #-------------------------------------------------------------------------------
 #  PLUGINS
 #-------------------------------------------------------------------------------
