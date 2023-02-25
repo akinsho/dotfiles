@@ -2,7 +2,8 @@ local opt, fn, api = vim.opt, vim.fn, vim.api
 
 local opts = { buffer = 0, silent = true }
 
-vim.opt_local.list = false
+opt.list = false
+opt.wrap = false
 
 -- if this a vim help file create mappings to make navigation easier
 -- otherwise enable preferred editing settings
