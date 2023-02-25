@@ -41,14 +41,8 @@ return {
       },
     },
     views = {
-      vsplit = {
-        size = { width = 'auto' },
-      },
-      split = {
-        win_options = {
-          winhighlight = { Normal = 'Normal' },
-        },
-      },
+      vsplit = { size = { width = 'auto' } },
+      split = { win_options = { winhighlight = { Normal = 'Normal' } } },
       cmdline_popup = {
         position = { row = 5, col = '50%' },
         size = { width = 'auto', height = 'auto' },
@@ -62,9 +56,7 @@ return {
         position = { row = 9, col = '50%' },
         size = { width = 60, height = 10 },
         border = { style = border, padding = { 0, 1 } },
-        win_options = {
-          winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' },
-        },
+        win_options = { winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' } },
       },
     },
     routes = {
