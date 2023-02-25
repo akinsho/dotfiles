@@ -14,6 +14,7 @@
 #  t   : tail of the path
 # CREDIT: @ahmedelgabri
 #--------------------------------------------------------------------------------
+export CLICOLOR=1 # enable color support for ls.
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 
