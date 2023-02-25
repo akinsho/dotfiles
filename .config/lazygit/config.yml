@@ -7,6 +7,7 @@ gui:
   mouseEvents: true
   skipUnstageLineWarning: false
   skipStashWarning: true
+  showIcons: true
   sidePanelWidth: 0.3333
   theme:
     lightTheme: false
@@ -24,7 +25,7 @@ gui:
   commitLength:
     show: true
 services:
-  'github-work': 'github:github.com'
+  "github-work": "github:github.com"
 git:
   paging:
     colorArg: always
