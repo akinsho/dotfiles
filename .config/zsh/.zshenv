@@ -56,6 +56,8 @@ path+=(
   ${GOPATH}/bin(N-/)
   # Add local build of neovim to path for development
   ${HOME}/nvim/bin(N-/)
+  # package manager for neovim
+  ${HOME}/.local/share/bob/nvim-bin(N-/)
 )
 
 
