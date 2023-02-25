@@ -287,10 +287,11 @@ local function filename(ctx)
   return { env = env, dir = new_dir, parent = parent .. sep, fname = fname }
 end
 
+---@alias FilenamePart {item: string, hl: string, opts: ComponentOpts}
 ---Create the various segments of the current filename
 ---@param ctx StatuslineContext
 ---@param minimal boolean
----@return table
+---@return {file: FilenamePart, parent: FilenamePart, dir: FilenamePart, env: FilenamePart}
 local function stl_file(ctx, minimal)
   -- highlight the filename components separately
   local filename_hl = ctx.winhl and stl_winhl.filename.hl(ctx.win)
@@ -307,7 +308,7 @@ local function stl_file(ctx, minimal)
   local ft_icon, icon_highlight = filetype(ctx)
   local ft_hl = icon_highlight and get_ft_icon_hl_name(icon_highlight) or hls.comment
 
-  local file_opts = { before = '', after = '', priority = 0 }
+  local file_opts = { before = '', after = ' ', priority = 0 }
   local parent_opts = { before = '', after = '', priority = 2 }
   local dir_opts = { before = '', after = '', priority = 3 }
   local env_opts = { before = '', after = '', priority = 4 }
@@ -610,12 +611,6 @@ function as.ui.statusline()
   local env_component = component(env.item, env.hl, env.opts)
   local dir_component = component(dir.item, dir.hl, dir.opts)
   local parent_component = component(parent.item, parent.hl, parent.opts)
-
-  if not plain and is_git_repo(ctx.win) then
-    file.opts.suffix = icons.git.repo
-    file.opts.suffix_color = hls.metadata
-  end
-
   local file_component = component(file.item, file.hl, file.opts)
 
   local readonly_hl = ctx.winhl and stl_winhl.readonly.hl(ctx.win) or stl_winhl.readonly.fallback
@@ -688,7 +683,24 @@ function as.ui.statusline()
     parent_component,
     file_component,
 
-    component_if('', vim.g.persisting, hls.blue, { before = ' ', priority = 1 }),
+    component_if(diagnostics.error.count, diagnostics.error, hls.error, {
+      prefix = diagnostics.error.icon,
+      prefix_color = hls.error,
+      priority = 1,
+    }),
+
+    component_if(diagnostics.warn.count, diagnostics.warn, hls.warn, {
+      prefix = diagnostics.warn.icon,
+      prefix_color = hls.warn,
+      priority = 3,
+    }),
+
+    component_if(diagnostics.info.count, diagnostics.info, hls.info, {
+      prefix = diagnostics.info.icon,
+      prefix_color = hls.info,
+      priority = 4,
+    }),
+
     component_if('Saving…', vim.g.is_saving, hls.comment, { before = ' ', priority = 1 }),
 
     separator(),
@@ -726,24 +738,6 @@ function as.ui.statusline()
   -----------------------------------------------------------------------------//
   add(
     component(debugger(), hls.metadata, { prefix = icons.misc.bug, priority = 4 }),
-
-    component_if(diagnostics.error.count, diagnostics.error, hls.error, {
-      prefix = diagnostics.error.icon,
-      prefix_color = hls.error,
-      priority = 1,
-    }),
-
-    component_if(diagnostics.warn.count, diagnostics.warn, hls.warn, {
-      prefix = diagnostics.warn.icon,
-      prefix_color = hls.warn,
-      priority = 3,
-    }),
-
-    component_if(diagnostics.info.count, diagnostics.info, hls.info, {
-      prefix = diagnostics.info.icon,
-      prefix_color = hls.info,
-      priority = 4,
-    }),
 
     -- Git Status
     component(status.head, hls.blue, {
