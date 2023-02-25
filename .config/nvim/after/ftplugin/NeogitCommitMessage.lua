@@ -10,7 +10,9 @@ vim.schedule(
   end
 )
 
-if as.nightly() then vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage') end
+if vim.treesitter.language.register then
+  vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
+end
 
 if not as then return end
 as.ftplugin_conf({
