@@ -1,5 +1,5 @@
 local fmt, fn = string.format, vim.fn
-local highlight = as.highlight
+local highlight, border = as.highlight, as.ui.current.border
 local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path) end
 
 return {
@@ -39,7 +39,8 @@ return {
     },
   },
   {
-    'nvim-orgmode/orgmode',
+    'jgollenz/orgmode', -- nvim-orgmode/orgmode
+    branch = 'feat/config-win-border',
     keys = { '<leader>oa', '<leader>oc' },
     dependencies = {
       { 'akinsho/org-bullets.nvim', config = true, dev = true },
@@ -65,6 +66,7 @@ return {
           target = sync('org/projects.org'),
         },
       },
+      win_border = border,
       mappings = { org = { org_global_cycle = '<leader><S-TAB>' } },
       notifications = {
         enabled = true,
