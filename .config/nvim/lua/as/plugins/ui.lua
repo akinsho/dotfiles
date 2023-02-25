@@ -225,10 +225,7 @@ return {
 
         return result
       end,
-      provider_selector = function(_, filetype)
-        local ufo_ft_map = { dart = { 'lsp', 'treesitter' } }
-        return ufo_ft_map[filetype] or { 'treesitter', 'indent' }
-      end,
+      provider_selector = function() return { 'treesitter', 'indent' } end,
     },
   },
 }
