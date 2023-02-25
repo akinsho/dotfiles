@@ -46,10 +46,9 @@ local function fdm()
   return fn.foldclosed(v.lnum) == -1 and fold_closed or fold_opened
 end
 
-local function is_virt_line() return v.virtnum < 0 end
-
 local function nr(win)
-  if is_virt_line() then return shade end -- virtual line
+  if v.virtnum < 0 then return shade end -- virtual line
+  if v.virtnum > 0 then return space end -- wrapped line
   local num = vim.wo[win].relativenumber and not as.empty(v.relnum) and v.relnum or v.lnum
   local lnum = fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
   local num_width = (vim.wo[win].numberwidth - 1) - api.nvim_strwidth(lnum)
@@ -58,7 +57,7 @@ local function nr(win)
 end
 
 local function sep()
-  local separator_hl = not is_virt_line() and as.empty(v.relnum) and sep_hl or ''
+  local separator_hl = v.virtnum >= 0 and as.empty(v.relnum) and sep_hl or ''
   return separator_hl .. separator
 end
 
