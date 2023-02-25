@@ -33,14 +33,10 @@ fpath=($ZDOTDIR/funcs $fpath)
 # which happens to be $ZDOTDIR/funcs
 autoload -Uz $fpath[1]/*(.:t)
 autoload -U colors && colors # Enable colors in prompt
-
-check_node_cwd
-last_working_dir
 #-------------------------------------------------------------------------------
 #           SOURCE PLUGINS
 #-------------------------------------------------------------------------------
 # These should be source *BEFORE* setting up hooks
-zsh_add_plugin    "zsh-users/zsh-syntax-highlighting"
 zsh_add_plugin    "zsh-users/zsh-autosuggestions"
 zsh_add_plugin    "zsh-users/zsh-completions"
 zsh_add_plugin    "djui/alias-tips"
@@ -511,6 +507,9 @@ esac
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
+check_node_cwd
+last_working_dir
+
 # TODO: also need to check for the existence of ~/.fzf/
 if [ ! -f $HOME/.fzf.zsh ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
@@ -545,13 +544,6 @@ if exists pyenv; then
   # but I don't write python so don't need this and it slows down the shell
   # eval "$(pyenv init - --no-rehash zsh)"
 fi
-
-if [[ -n $KITTY_INSTALLATION_DIR ]]; then
-  export KITTY_SHELL_INTEGRATION="enabled"
-  autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-  kitty-integration
-  unfunction kitty-integration
-fi
 #-------------------------------------------------------------------------------
 #               MAPPINGS
 #-------------------------------------------------------------------------------
@@ -559,9 +551,16 @@ export KEYTIMEOUT=1
 bindkey ‘^R’ history-incremental-search-backward
 bindkey '^P' up-history
 bindkey '^N' down-history
-bindkey '^U' autosuggest-accept
 bindkey '^]' clear-screen
 # Edit line in vim with v whilst in normal mod in vi mode
 autoload -Uz edit-command-line;
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
+
+#-------------------------------------------------------------------------------
+#  Syntax Highlighting
+#-------------------------------------------------------------------------------
+# NOTE: syntax highlighting must load after all the zsh widgets are setup
+zsh_add_plugin  "zsh-users/zsh-syntax-highlighting"
+
+bindkey '^U' autosuggest-accept
