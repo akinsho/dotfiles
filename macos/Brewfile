@@ -3,65 +3,93 @@ tap "buo/cask-upgrade"
 tap "craciuncezar/tap"
 tap "datawire/blackbird"
 tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
 tap "homebrew/services"
 tap "jesseduffield/lazygit"
 tap "neovim/neovim"
+# General-purpose data compression with high compression ratio
+brew "xz"
+# Color management engine supporting ICC profiles
+brew "little-cms2"
+# Tool for generating GNU Standards-compliant Makefiles
+brew "automake"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # GNU compiler collection
 brew "gcc"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Library for command-line editing
-brew "readline"
-# General-purpose data compression with high compression ratio
-brew "xz"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
-# Platform built on V8 to build network applications
-brew "node"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# Manage compile and link flags for libraries
+brew "pkg-config"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.10"
+brew "python@3.9"
+# Vector graphics library with cross-device output support
+brew "cairo"
+# Next-gen compiler infrastructure
+brew "llvm"
+# C/C++/ObjC language server
+brew "ccls"
+# Cross-platform make
+brew "cmake"
+# OpenType text shaping engine
+brew "harfbuzz"
 # LLVM bytecode to JavaScript compiler
 brew "emscripten"
 # Modern replacement for 'ls'
 brew "exa"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Generic library support script
+brew "libtool"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
+# GNU compiler collection
+brew "gcc@11"
 # GitHub command-line tool
 brew "gh"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # Extensions to follow Vincent Driessen's branching model
 brew "git-flow"
+# Open-source GitLab command-line tool
+brew "glab"
+# GNU Pretty Good Privacy (PGP) package
+brew "gnupg"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
 # Database migrations CLI tool
 brew "golang-migrate"
 # Fast linters runner for Go
 brew "golangci-lint"
+# Post-modern modal text editor
+brew "helix"
 # CLI email client written in Rust
 brew "himalaya"
 # Improved top (interactive process viewer)
 brew "htop"
+# Configurable static site generator
+brew "hugo"
 # Database of common MIME types
 brew "shared-mime-info"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Generic command-line non-JVM Apache Kafka producer and consumer
+brew "kcat"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
 # Template-free customization of Kubernetes YAML manifests
 brew "kustomize"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Library that implements the rsync remote-delta algorithm
+brew "librsync"
 # YAML Parser
 brew "libyaml"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Powerful, lightweight programming language (v5.1.5)
 brew "lua@5.1"
 # Just-In-Time Compiler (JIT) for the Lua programming language
@@ -70,18 +98,30 @@ brew "luajit", args: ["HEAD"]
 brew "mackup"
 # Mac App Store command-line interface
 brew "mas"
+# Node version management
+brew "n"
 # Parser generator tool and incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim", args: ["HEAD"]
 # Control nvim processes using `nvr` command-line tool
 brew "neovim-remote"
+# Small build system for use with gyp or CMake
+brew "ninja"
+# Platform built on V8 to build network applications
+brew "node@16"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
+# PostgreSQL syntax beautifier
+brew "pgformatter"
+# Pinentry for GPG on Mac
+brew "pinentry-mac"
+# 📦🚀 Fast, disk space efficient package manager
+brew "pnpm"
 # Object-relational database system
-brew "postgresql", restart_service: true
+brew "postgresql@14"
 # Python version management
 brew "pyenv"
 # Search tool like grep and The Silver Searcher
@@ -92,10 +132,16 @@ brew "ruby"
 brew "sqlc"
 # CLI utility for manipulating SQLite databases
 brew "sqlite-utils"
+# Opinionated Lua code formatter
+brew "stylua"
+# Send macOS User Notifications from the command-line
+brew "terminal-notifier"
 # Tool to build, change, and version infrastructure
 brew "terraform"
 # Programmatically correct mistyped console commands
 brew "thefuck"
+# Simplified and community-driven man pages
+brew "tldr"
 # Terminal multiplexer
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
@@ -114,12 +160,8 @@ brew "zsh-completions"
 brew "bufbuild/buf/buf"
 # A git command extension for switching git branches more efficiently.
 brew "craciuncezar/tap/git-smart-checkout"
-# Local dev environment attached to a remote Kubernetes cluster
-brew "datawire/blackbird/telepresence-arm64"
 # Enable Windows-like alt-tab
 cask "alt-tab"
-# Tools for building Android applications
-cask "android-studio"
 # Open links in any browser
 cask "choosy"
 # API documentation browser and code snippet manager
@@ -159,13 +201,11 @@ cask "webtorrent"
 mas "Amphetamine", id: 937984704
 mas "Color Picker", id: 1545870783
 mas "Dropover", id: 1355679052
-mas "FlipClock", id: 1181028777
+mas "GIF Brewery 3", id: 1081413713
 mas "Hand Mirror", id: 1502839586
 mas "Microsoft Outlook", id: 985367838
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Prime Video", id: 545519333
 mas "Shortery", id: 1594183810
-mas "Spark", id: 1176895641
-mas "Todoist", id: 585829637
 mas "Xcode", id: 497799835
