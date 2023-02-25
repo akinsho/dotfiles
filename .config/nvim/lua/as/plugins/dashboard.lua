@@ -10,7 +10,6 @@ return {
   config = function()
     local alpha = require('alpha')
     local dashboard = require('alpha.themes.dashboard')
-    local fortune = require('alpha.fortune')
 
     local button = function(h, ...)
       local btn = dashboard.button(...)
@@ -195,7 +194,11 @@ return {
       button('ErrorMsg', 'q', '  Quit NVIM', ':qa<CR>'),
     }
 
-    dashboard.section.footer.val = fortune()
+    local handle = io.popen('fortune')
+    local fortune = handle and handle:read('*a') or require('alpha.fortune')
+    if handle then handle:close() end
+
+    dashboard.section.footer.val = fortune
     dashboard.section.footer.opts.hl = 'TSEmphasis'
 
     ------------------------------------------------------------------------------------------------
