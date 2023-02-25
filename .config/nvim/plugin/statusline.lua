@@ -235,6 +235,11 @@ local function special_buffers(ctx)
   return nil
 end
 
+---Only append the path separator if the path is not empty
+---@param path string
+---@return string
+local function path_sep(path) return not as.empty(path) and path .. sep or path end
+
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
 --- since almost all my project directories are nested underneath one of these paths
@@ -252,9 +257,9 @@ local function dir_env(directory)
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
-    local match, count = fn.expand(directory):gsub(vim.pesc(dir .. sep), '')
+    local match, count = fn.expand(directory):gsub(vim.pesc(path_sep(dir)), '')
     if count == 1 and #dir > #prev_match then
-      result, env, prev_match = match, alias .. sep, dir
+      result, env, prev_match = match, path_sep(alias), dir
     end
   end
   return result, env
@@ -280,11 +285,11 @@ local function filename(ctx)
   fname = fn.isdirectory(fname) == 1 and fname .. sep or fname
   if as.empty(parent) then return { fname = fname } end
 
-  local dir = table.concat(parts, sep) .. sep
+  local dir = path_sep(table.concat(parts, sep))
   if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
 
   local new_dir, env = dir_env(dir)
-  return { env = env, dir = new_dir, parent = parent .. sep, fname = fname }
+  return { env = env, dir = new_dir, parent = path_sep(parent), fname = fname }
 end
 
 ---@alias FilenamePart {item: string, hl: string, opts: ComponentOpts}
