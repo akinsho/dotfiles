@@ -80,6 +80,7 @@ local stl_winhl = {
   directory = { hl = with_win_id('StCustomDirectory'), fallback = hls.title },
   parent = { hl = with_win_id('StCustomParentDirectory'), fallback = hls.title },
   readonly = { hl = with_win_id('StCustomError'), fallback = hls.error },
+  env = { hl = with_win_id('StCustomEnv'), fallback = hls.env },
 }
 
 local function colors()
@@ -301,6 +302,8 @@ local function stl_file(ctx, minimal)
   local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win)
     or (minimal and directory_hl or hls.parent_directory)
 
+  local env_hl = ctx.winhl and stl_winhl.env.hl(ctx.win) or (minimal and directory_hl or hls.env)
+
   local ft_icon, icon_highlight = filetype(ctx)
   local ft_hl = icon_highlight and get_ft_icon_hl_name(icon_highlight) or hls.comment
 
@@ -320,7 +323,7 @@ local function stl_file(ctx, minimal)
 
   to_update.prefix, to_update.prefix_color = ft_icon, not minimal and ft_hl or nil
   return {
-    env = { item = p.env, hl = hls.env, opts = env_opts },
+    env = { item = p.env, hl = env_hl, opts = env_opts },
     file = { item = p.fname, hl = filename_hl, opts = file_opts },
     dir = { item = p.dir, hl = directory_hl, opts = dir_opts },
     parent = { item = p.parent, hl = parent_hl, opts = parent_opts },
