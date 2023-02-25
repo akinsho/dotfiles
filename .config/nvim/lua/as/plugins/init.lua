@@ -529,8 +529,15 @@ return {
   },
   {
     'cshuaimin/ssr.nvim',
-    keys = { { '<leader>sr', function() require('ssr').open() end, mode = { 'n', 'x' } } },
     opts = { border = border },
+    keys = {
+      {
+        '<leader>sr',
+        function() require('ssr').open() end,
+        mode = { 'n', 'x' },
+        desc = 'structured search and replace',
+      },
+    },
   },
   {
     'numToStr/Comment.nvim',
