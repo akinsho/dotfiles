@@ -12,6 +12,7 @@
 
 - link:
     ~/.dotfiles: ""
+    ~/.ssh/config: ssh/config
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.gitignore: git/.gitignore
     ~/.gitconfig: git/.gitconfig

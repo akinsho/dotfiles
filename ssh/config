@@ -1,0 +1,18 @@
+# personal
+Host github.com
+  HostName github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
+  PreferredAuthentications publickey
+
+# work
+Host github-work
+  HostName github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519_work
+  IdentitiesOnly yes
+  PreferredAuthentications publickey
+  # UseKeychain yes
+
+# vim: ft=sshconfig
