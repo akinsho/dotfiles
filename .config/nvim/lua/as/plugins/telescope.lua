@@ -106,6 +106,7 @@ return {
     { '<leader>f?', b('help_tags'), desc = 'help' },
     { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'search buffer' },
     { '<leader>fo', b('buffers'), desc = 'buffers' },
+    { '<localleader>p', b('registers'), desc = 'registers' },
   },
   dependencies = {
     {
