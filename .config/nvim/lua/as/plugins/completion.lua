@@ -175,14 +175,27 @@ return {
     dependencies = { 'nvim-cmp' },
     init = function() vim.g.copilot_no_tab_map = true end,
     config = function()
+      local function accept_word()
+        fn['copilot#Accept']('')
+        local bar = fn['copilot#TextQueuedForInsertion']()
+        return fn.split(bar, [[[ .]\zs]])[1]
+      end
+
+      local function accept_line()
+        fn['copilot#Accept']('')
+        local bar = fn['copilot#TextQueuedForInsertion']()
+        return fn.split(bar, [[[\n]\zs]])[1]
+      end
       map('i', '<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", {
         expr = true,
         remap = true,
         silent = true,
       })
-      map('i', '<M-]>', '<Plug>(copilot-next)')
-      map('i', '<M-[>', '<Plug>(copilot-previous)')
-      map('i', '<C-\\>', '<Cmd>vertical Copilot panel<CR>')
+      map('i', '<M-]>', '<Plug>(copilot-next)', { desc = 'next suggestion' })
+      map('i', '<M-[>', '<Plug>(copilot-previous)', { desc = 'previous suggestion' })
+      map('i', '<C-\\>', '<Cmd>vertical Copilot panel<CR>', { desc = 'open copilot panel' })
+      map('i', '<M-w>', accept_word, { expr = true, remap = false, desc = 'accept word' })
+      map('i', '<M-l>', accept_line, { expr = true, remap = false, desc = 'accept line' })
       vim.g.copilot_filetypes = {
         ['*'] = true,
         gitcommit = false,
