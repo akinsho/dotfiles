@@ -104,20 +104,6 @@ local function setup_autocommands(client, bufnr)
 
   local augroup = augroup_factory(bufnr, client, events)
 
-  augroup(FEATURES.DIAGNOSTICS, function()
-    return {
-      {
-        event = { 'CursorHold' },
-        buffer = bufnr,
-        desc = 'LSP: Show diagnostics',
-        command = function(args)
-          if b.lsp_hover_win and api.nvim_win_is_valid(b.lsp_hover_win) then return end
-          vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false })
-        end,
-      },
-    }
-  end)
-
   augroup(FEATURES.FORMATTING, function(provider)
     return {
       {
@@ -200,13 +186,13 @@ local function setup_mappings(_, bufnr)
   map(
     'n',
     ']c',
-    function() vim.diagnostic.goto_prev({ float = false }) end,
+    function() vim.diagnostic.goto_prev({ float = true }) end,
     with_desc('lsp: go to prev diagnostic')
   )
   map(
     'n',
     '[c',
-    function() vim.diagnostic.goto_next({ float = false }) end,
+    function() vim.diagnostic.goto_next({ float = true }) end,
     with_desc('lsp: go to next diagnostic')
   )
 
