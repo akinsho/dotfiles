@@ -39,6 +39,12 @@ return {
     build = 'cp ./*.py ~/.config/kitty/',
     cond = function() return not vim.env.TMUX end,
   },
+  {
+    'aserowy/tmux.nvim',
+    cond = function() return vim.env.TMUX end,
+    event = 'VeryLazy',
+    config = true,
+  },
   -- }}}
   -----------------------------------------------------------------------------//
   -- LSP,Completion & Debugger {{{1
