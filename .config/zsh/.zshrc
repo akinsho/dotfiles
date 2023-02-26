@@ -29,6 +29,14 @@ fi
 
 fpath=($ZDOTDIR/funcs $fpath)
 
+# NOTE: autoloaded functions wrap the contents of these files in a function
+# block with the same name as the file. This means that the function is NOT
+# called when autoloaded. When the function is called it will be defined and
+# contents of the file executed. This means that if the contents are wrapped
+# in function blocks they will not be executed till the second time the function
+# is called.
+# see: https://unix.stackexchange.com/a/33898
+#
 # Load all autoload functions alternatively this could
 # be done as fpath[1]/*(.:t) i.e autload the functions
 # in the first item in the fpath.
