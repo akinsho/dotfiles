@@ -146,7 +146,7 @@ local identifiers = {
     terminal = ' ',
     quickfix = '',
   },
-  filetypes = {
+  filetypes = as.p_table({
     ['org'] = '',
     ['orgagenda'] = '',
     ['himalaya-msg-list'] = '',
@@ -165,8 +165,8 @@ local identifiers = {
     ['minimap'] = '',
     ['octo'] = '',
     ['dap-repl'] = '',
-  },
-  names = {
+  }),
+  names = as.p_table({
     ['orgagenda'] = 'Org',
     ['himalaya-msg-list'] = 'Inbox',
     ['mail'] = 'Mail',
@@ -181,7 +181,7 @@ local identifiers = {
     ['octo'] = 'Octo',
     ['NvimTree'] = 'Nvim Tree',
     ['dap-repl'] = 'Debugger REPL',
-    ['DiffviewFiles'] = 'Diff view',
+    ['Diffview.*'] = 'Diff view',
 
     ['neo-tree'] = function(fname, _)
       local parts = vim.split(fname, ' ')
@@ -192,7 +192,7 @@ local identifiers = {
       local shell = fn.fnamemodify(vim.env.SHELL, ':t')
       return fmt('Terminal(%s)[%s]', shell, api.nvim_buf_get_var(buf, 'toggle_number'))
     end,
-  },
+  }),
 }
 
 local function get_ft_icon_hl_name(hl) return hl .. hls.statusline end

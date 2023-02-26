@@ -287,7 +287,10 @@ local buftypes = {
   ['terminal'] = presets.tool_panel,
 }
 
-local filetypes = {
+--- When searching through the filetypes table if a match can't be found then search
+--- again but check if there is matching lua pattern. This is useful for filetypes for
+--- plugins like Neogit which have a filetype of Neogit<something>.
+local filetypes = as.p_table({
   ['checkhealth'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
@@ -321,25 +324,13 @@ local filetypes = {
   ['orgagenda'] = presets.minimal_editing,
   ['gitcommit'] = commit_buffer,
   ['NeogitCommitMessage'] = commit_buffer,
-}
+})
 
 ---@type UiSettings
 as.ui.decorations = {
   filetypes = filetypes,
   buftypes = buftypes,
 }
-
---- When searching through the filetypes table if a match can't be found then search
---- again but check if there is matching lua pattern. This is useful for filetypes for
---- plugins like Neogit which have a filetype of Neogit<something>.
-setmetatable(filetypes, {
-  __index = function(tbl, key)
-    if not key then return end
-    for k, v in pairs(tbl) do
-      if key:match(k) then return v end
-    end
-  end,
-})
 
 ---Get the as.ui setting for a particular filetype
 ---@param key string

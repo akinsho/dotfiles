@@ -220,7 +220,7 @@ end
 ---@return unknown
 function as.version(major, minor, _)
   assert(major and minor, 'major and minor must be provided')
-  local v = vim.version()
+  local v = vim.version() or {}
   return major >= v.major and minor >= v.minor
 end
 
@@ -317,3 +317,19 @@ function as.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, 
 ---@param feature string
 ---@return boolean
 function as.has(feature) return fn.has(feature) > 0 end
+
+---@generic T
+---Given a table return a new table which if the key is not found will search
+---all the table's keys for a match using `string.match`
+---@param map T
+---@return T
+function as.p_table(map)
+  return setmetatable(map, {
+    __index = function(tbl, key)
+      if not key then return end
+      for k, v in pairs(tbl) do
+        if key:match(k) then return v end
+      end
+    end,
+  })
+end
