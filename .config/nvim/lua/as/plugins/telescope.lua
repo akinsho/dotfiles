@@ -2,20 +2,41 @@ local fn, highlight, ui = vim.fn, as.highlight, as.ui
 local icons = ui.icons
 local P = ui.palette
 
+-- A helper function to limit the size of a telescope window to fit the maximum available
+-- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
+local function fit_to_available_height(self, _, max_lines)
+  local results, PADDING = #self.finder.results, 4 -- this represents the size of the telescope window
+  local LIMIT = math.floor(max_lines / 2)
+  return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
+end
+
 ---@param opts table
 ---@return table
 local function dropdown(opts)
-  opts = opts or {}
-  opts.borderchars = {
-    { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-    prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
-    results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
-    preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-  }
-  return require('telescope.themes').get_dropdown(opts)
+  return require('telescope.themes').get_dropdown(vim.tbl_extend('keep', opts or {}, {
+    borderchars = {
+      { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+      prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
+      results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
+      preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    },
+  }))
 end
 
-as.telescope = { dropdown = dropdown }
+local function cursor(opts)
+  return require('telescope.themes').get_cursor(vim.tbl_extend('keep', opts or {}, {
+    layout_config = {
+      width = 0.4,
+      height = fit_to_available_height,
+    },
+  }))
+end
+
+as.telescope = {
+  cursor = cursor,
+  dropdown = dropdown,
+  adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
+}
 
 local function extensions(name) return require('telescope').extensions[name] end
 
@@ -185,15 +206,6 @@ return {
         layout_strategy = 'flex',
         layout_config = {
           horizontal = { preview_width = 0.55 },
-          cursor = {
-            width = 0.4,
-            height = function(self, _, max_lines)
-              local results = #self.finder.results
-              local PADDING = 4 -- this represents the size of the telescope window
-              local LIMIT = math.floor(max_lines / 2)
-              return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
-            end,
-          },
         },
       },
       extensions = {
@@ -233,7 +245,7 @@ return {
           previewer = false,
           mappings = { i = { ['<c-x>'] = 'delete_buffer' }, n = { ['<c-x>'] = 'delete_buffer' } },
         }),
-        registers = dropdown({ layout_config = { height = 25 } }),
+        registers = cursor(),
         oldfiles = dropdown(),
         live_grep = themes.get_ivy({
           file_ignore_patterns = { '.git/', '%.svg', '%.lock' },
