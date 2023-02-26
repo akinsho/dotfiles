@@ -108,6 +108,7 @@
   "telescope-zf-native.nvim": { "branch": "master", "commit": "9b80268377baca222fb04fa9e6c61adcc017a070" },
   "telescope.nvim": { "branch": "master", "commit": "a3f17d3baf70df58b9d3544ea30abe52a7a832c2" },
   "tint.nvim": { "branch": "master", "commit": "f6a259861ba8c0d88afc2ef05140ddf345eb0296" },
+  "tmux.nvim": { "branch": "main", "commit": "feafcf8f48c49c720ee64e745648d69d42cb9c5a" },
   "todo-comments.nvim": { "branch": "main", "commit": "74c7d28cb50b0713c881ef69bcb6cdd77d8907d1" },
   "treesj": { "branch": "main", "commit": "dae056ccceacb9750ea645b17bc4c00d37780e09" },
   "typescript.nvim": { "branch": "main", "commit": "f66d4472606cb24615dfb7dbc6557e779d177624" },
@@ -129,8 +130,7 @@
   "vim-textobj-comment": { "branch": "master", "commit": "58ae4571b76a5bf74850698f23d235eef991dd4b" },
   "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" },
   "vim-visual-multi": { "branch": "master", "commit": "724bd53adfbaf32e129b001658b45d4c5c29ca1a" },
-  "vim-wordmotion": { "branch": "master", "commit": "5aef66141cf09e875bf94744e73b08f9e98cec31" },
+  "vim-wordmotion": { "branch": "master", "commit": "81d9bd298376ab0dc465c85d55afa4cb8d5f47a1" },
   "virt-column.nvim": { "branch": "master", "commit": "93b40ea038f676f5a72d7d1f2336fe7b051fc0ce" },
-  "which-key.nvim": { "branch": "main", "commit": "5224c261825263f46f6771f1b644cae33cd06995" },
-  "yanky.nvim": { "branch": "main", "commit": "c41e4c31990ae1f5f3517de8dc006e4da235a043" }
+  "which-key.nvim": { "branch": "main", "commit": "5224c261825263f46f6771f1b644cae33cd06995" }
 }
