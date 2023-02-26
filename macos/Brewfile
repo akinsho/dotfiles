@@ -93,7 +93,7 @@ brew "libyaml"
 # Powerful, lightweight programming language (v5.1.5)
 brew "lua@5.1"
 # Just-In-Time Compiler (JIT) for the Lua programming language
-brew "luajit", args: ["HEAD"]
+brew "luajit"
 # Keep your Mac's application settings in sync
 brew "mackup"
 # Mac App Store command-line interface
@@ -102,8 +102,6 @@ brew "mas"
 brew "n"
 # Parser generator tool and incremental parsing library
 brew "tree-sitter"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim", args: ["HEAD"]
 # Control nvim processes using `nvr` command-line tool
 brew "neovim-remote"
 # Small build system for use with gyp or CMake
