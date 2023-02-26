@@ -134,7 +134,6 @@ return {
           { TelescopeTitle = { inherit = 'Normal', bold = true } },
           { TelescopePromptTitle = { fg = { from = 'Normal' }, bold = true } },
           { TelescopeResultsTitle = { fg = { from = 'Normal' }, bold = true } },
-          { TelescopeMatching = { bold = false, foreground = { from = 'Variable', attr = 'fg' } } },
           { TelescopePreviewTitle = { fg = { from = 'Normal' }, bold = true } },
         },
         ['doom-one'] = {
