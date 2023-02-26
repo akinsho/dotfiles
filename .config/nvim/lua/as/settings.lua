@@ -141,14 +141,14 @@ o.list = true -- invisible chars
 opt.listchars = {
   eol = nil,
   tab = '  ', -- Alternatives: '▷▷',
-  extends = '›', -- Alternatives: … »
-  precedes = '‹', -- Alternatives: … «
+  extends = '…', -- Alternatives: … » ›
+  precedes = '░', -- Alternatives: … « ‹
   trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
-o.wrap = true
+o.wrap = false
 o.wrapmargin = 2
 o.textwidth = 80
 o.autoindent = true
