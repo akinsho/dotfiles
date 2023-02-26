@@ -24,7 +24,7 @@ local function find_files(opts) return extensions('menufacture').find_files(opts
 local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 local function project_files()
-  if not pcall(git_files, { show_untracked = true }) then find_files() end
+  if not pcall(git_files) then find_files() end
 end
 
 local function orgfiles()
@@ -222,6 +222,10 @@ return {
         },
       },
       pickers = {
+        git_files = dropdown({
+          show_untracked = true,
+          previewer = false,
+        }),
         buffers = dropdown({
           sort_mru = true,
           sort_lastused = true,
