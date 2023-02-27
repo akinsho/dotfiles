@@ -42,8 +42,15 @@ return {
   {
     'aserowy/tmux.nvim',
     event = 'VeryLazy',
-    opts = { sync_clipboard = false },
     cond = function() return vim.env.TMUX end,
+    opts = {
+      copy_sync = { sync_clipboard = false },
+      navigation = {
+        enabled = true,
+        persist_zoom = true,
+        enable_default_keybindings = true,
+      },
+    },
   },
   -- }}}
   -----------------------------------------------------------------------------//
