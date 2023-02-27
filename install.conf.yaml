@@ -13,11 +13,11 @@
 - link:
     ~/.dotfiles: ""
     ~/.ssh/config: ssh/config
-    ~/.tmux.conf: tmux/.tmux.conf
     ~/.gitignore: git/.gitignore
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
     ~/.zshenv: .config/zsh/.zshenv
+    ~/.config/tmux: .config/tmux
     ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
     ~/.config/ideavim/: .config/ideavim
