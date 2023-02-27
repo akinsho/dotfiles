@@ -7,7 +7,7 @@ return {
     'vhyrro/neorg',
     ft = 'norg',
     build = ':Neorg sync-parsers',
-    dependencies = { 'vhyrro/neorg-telescope', 'nvim-treesitter/nvim-treesitter' },
+    dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
       configure_parsers = true,
       load = {
