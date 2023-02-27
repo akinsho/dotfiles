@@ -8,6 +8,7 @@ node
 session/
 packer_compiled.vim
 automatic_backups/
+.config/tmux/plugins/
 
 .zsh_history
 .zcompdump
