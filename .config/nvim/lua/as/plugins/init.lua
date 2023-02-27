@@ -436,8 +436,6 @@ return {
   { 'tpope/vim-eunuch', cmd = { 'Move', 'Rename', 'Remove', 'Delete', 'Mkdir' } },
   { 'tpope/vim-sleuth', event = 'VeryLazy' },
   { 'tpope/vim-repeat', event = 'VeryLazy' },
-  -- sets searchable path for filetypes like go so 'gf' works
-  { 'tpope/vim-apathy', event = 'VeryLazy' },
   {
     'tpope/vim-abolish',
     event = 'CmdlineEnter',
