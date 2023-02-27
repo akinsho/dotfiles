@@ -41,9 +41,9 @@ return {
   },
   {
     'aserowy/tmux.nvim',
-    cond = function() return vim.env.TMUX end,
     event = 'VeryLazy',
-    config = true,
+    opts = { sync_clipboard = false },
+    cond = function() return vim.env.TMUX end,
   },
   -- }}}
   -----------------------------------------------------------------------------//
