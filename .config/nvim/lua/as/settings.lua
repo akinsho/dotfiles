@@ -1,4 +1,4 @@
-local o, opt, fn = vim.o, vim.opt, vim.fn
+local o, opt, fn, icons = vim.o, vim.opt, vim.fn, as.ui.icons
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -186,8 +186,8 @@ opt.guicursor = {
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
-function as.modified_icon() return vim.bo.modified and as.ui.icons.misc.circle or '' end
-o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.as.modified_icon()}'
+function as.modified_icon() return vim.bo.modified and icons.misc.circle or '' end
+o.titlestring = '%{fnamemodify(getcwd(), ":t")}%( %{v:lua.as.modified_icon()}%)'
 o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
 o.title = true
 o.titlelen = 70
