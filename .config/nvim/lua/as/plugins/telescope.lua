@@ -210,6 +210,7 @@ return {
         },
       },
       extensions = {
+        persisted = dropdown(),
         menufacture = {
           mappings = {
             main_menu = { [{ 'i', 'n' }] = '<C-;>' },

@@ -11,10 +11,7 @@ return {
     'olimorris/persisted.nvim',
     lazy = false,
     init = function()
-      as.command('ListSessions', function()
-        local theme = as.telescope.dropdown()
-        require('telescope').extensions.persisted.persisted(theme)
-      end)
+      as.command('ListSessions', 'Telescope persisted')
       as.augroup('PersistedEvents', {
         {
           event = 'User',
