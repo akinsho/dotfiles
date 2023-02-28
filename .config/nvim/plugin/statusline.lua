@@ -22,7 +22,7 @@ if not as then return end
 local str = require('as.strings')
 
 local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
-local api, fn, fmt = vim.api, vim.fn, string.format
+local api, fn, fs, fmt = vim.api, vim.fn, vim.fs, string.format
 local P = as.ui.palette
 local C = str.constants
 
@@ -251,13 +251,14 @@ local function path_sep(path) return not as.empty(path) and path .. sep or path 
 local function dir_env(directory)
   if not directory then return '', '' end
   local paths = {
-    [vim.env.DOTFILES] = '$DOTFILES',
+    [vim.g.dotfiles] = '$DOTFILES',
     [vim.g.work_dir] = '$WORK',
     [vim.g.projects_dir] = '$PROJECTS',
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
-    local match, count = fn.expand(directory):gsub(vim.pesc(path_sep(dir)), '')
+    -- NOTE: using vim.fn.expand causes the commandline to get stuck completing
+    local match, count = fs.normalize(directory):gsub(vim.pesc(path_sep(dir)), '')
     if count == 1 and #dir > #prev_match then
       result, env, prev_match = match, path_sep(alias), dir
     end
