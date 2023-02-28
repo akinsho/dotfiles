@@ -142,7 +142,7 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
-    ft = { 'lua', 'vim', 'typescriptreact', 'javascriptreact' },
+    ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact' },
     cmd = { 'CccHighlighterToggle' },
     opts = {
       win_opts = { border = border },
@@ -482,6 +482,7 @@ return {
       })
     end,
   },
+  { 'windwp/nvim-ts-autotag', event = 'VeryLazy', config = true },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}

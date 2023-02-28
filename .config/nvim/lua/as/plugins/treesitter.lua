@@ -23,6 +23,8 @@ return {
           'dart',
           'rust',
           'typescript',
+          'tsx',
+          'jsdoc',
           'javascript',
           'diff',
           'regex',
