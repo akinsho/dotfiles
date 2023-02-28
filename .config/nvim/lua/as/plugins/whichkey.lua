@@ -6,28 +6,16 @@ return {
   config = function()
     highlight.plugin('whichkey', {
       theme = {
-        ['*'] = {
-          { WhichkeyFloat = { link = 'NormalFloat' } },
-        },
-        horizon = {
-          { WhichKeySeparator = { link = 'Todo' } },
-        },
+        ['*'] = { { WhichkeyFloat = { link = 'NormalFloat' } } },
+        horizon = { { WhichKeySeparator = { link = 'Todo' } } },
       },
     })
 
     local wk = require('which-key')
     wk.setup({
-      plugins = {
-        spelling = {
-          enabled = true,
-        },
-      },
-      window = {
-        border = as.ui.current.border,
-      },
-      layout = {
-        align = 'center',
-      },
+      plugins = { spelling = { enabled = true } },
+      window = { border = as.ui.current.border },
+      layout = { align = 'center' },
     })
 
     wk.register({
