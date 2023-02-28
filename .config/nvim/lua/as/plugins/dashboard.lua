@@ -194,11 +194,7 @@ return {
       button('ErrorMsg', 'q', '  Quit NVIM', ':qa<CR>'),
     }
 
-    local handle = io.popen('fortune')
-    local fortune = handle and handle:read('*a') or require('alpha.fortune')
-    if handle then handle:close() end
-
-    dashboard.section.footer.val = fortune
+    dashboard.section.footer.val = require('alpha.fortune')
     dashboard.section.footer.opts.hl = 'TSEmphasis'
 
     ------------------------------------------------------------------------------------------------
