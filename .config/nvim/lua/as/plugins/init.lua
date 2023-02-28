@@ -253,15 +253,6 @@ return {
       { '<leader>dC', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
   },
-  {
-    'klen/nvim-config-local', -- TODO: remove once 0.9 is stable
-    enabled = as.nightly(),
-    config = function()
-      require('config-local').setup({
-        config_files = { '.localrc.lua', '.vimrc', '.nvim.lua' },
-      })
-    end,
-  },
   -- prevent select and visual mode from overwriting the clipboard
   {
     'kevinhwang91/nvim-hclipboard',
@@ -367,27 +358,6 @@ return {
     'itchyny/vim-highlighturl',
     event = 'VeryLazy',
     config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
-  },
-  {
-    'danymat/neogen',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = { snippet_engine = 'luasnip' },
-    keys = {
-      {
-        '<localleader>nc',
-        function() require('neogen').generate() end,
-        desc = 'comment: generate',
-      },
-    },
-  },
-  {
-    'mizlan/iswap.nvim',
-    config = true,
-    cmd = { 'ISwap', 'ISwapWith' },
-    keys = {
-      { '<leader>iw', '<Cmd>ISwapWith<CR>', desc = 'ISwap: swap with' },
-      { '<leader>ia', '<Cmd>ISwap<CR>', desc = 'ISwap: swap any' },
-    },
   },
   {
     'mbbill/undotree',
