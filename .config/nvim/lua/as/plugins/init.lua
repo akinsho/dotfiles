@@ -37,17 +37,23 @@ return {
     cond = function() return not vim.env.TMUX end,
   },
   {
-    'aserowy/tmux.nvim',
-    event = 'VeryLazy',
-    cond = function() return vim.env.TMUX end,
-    opts = {
-      copy_sync = { sync_clipboard = false },
-      navigation = {
-        enabled = true,
-        persist_zoom = true,
-        enable_default_keybindings = true,
-      },
+    'mrjones2014/smart-splits.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<A-h>', function() require('smart-splits').resize_left() end },
+      { '<A-l>', function() require('smart-splits').resize_right() end },
+      -- moving between splits
+      { '<C-h>', function() require('smart-splits').move_cursor_left() end },
+      { '<C-j>', function() require('smart-splits').move_cursor_down() end },
+      { '<C-k>', function() require('smart-splits').move_cursor_up() end },
+      { '<C-l>', function() require('smart-splits').move_cursor_right() end },
+      -- swapping buffers between windows
+      { '<leader><leader>h', function() require('smart-splits').swap_buf_left() end, desc = { 'swap left' } },
+      { '<leader><leader>j', function() require('smart-splits').swap_buf_down() end, { desc = 'swap down' } },
+      { '<leader><leader>k', function() require('smart-splits').swap_buf_up() end, { desc = 'swap up' } },
+      { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, { desc = 'swap right' } },
     },
+    config = true,
   },
   -- }}}
   -----------------------------------------------------------------------------//
