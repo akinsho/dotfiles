@@ -102,12 +102,16 @@ return {
       })
     end,
     dependencies = {
-      { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'mrjones2014/nvim-ts-rainbow' },
     },
   },
   'JoosepAlviste/nvim-ts-context-commentstring',
+  {
+    'nvim-treesitter/playground',
+    cmd = { 'TSPlaygroundToggle' },
+    dependencies = { 'nvim-treesitter' },
+  },
   {
     'nvim-treesitter/nvim-treesitter-context',
     event = 'VeryLazy',
