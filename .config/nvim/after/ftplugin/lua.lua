@@ -3,6 +3,9 @@ if not as then return end
 local fn, opt = vim.fn, vim.opt_local
 local fmt = string.format
 
+opt.textwidth = 100
+opt.formatoptions:remove('o')
+
 local function find(word, ...)
   for _, str in ipairs({ ... }) do
     local match_start, match_end = string.find(word, str)
@@ -38,6 +41,12 @@ local function keyword(word, callback)
 
   vim.lsp.buf.hover()
 end
+
+map('n', 'gK', keyword, { buffer = 0 })
+map('n', '<leader>so', function()
+  vim.cmd.luafile('%')
+  vim.notify('Sourced ' .. fn.expand('%'))
+end)
 
 as.ftplugin_conf({
   ['nvim-surround'] = function(surround)
@@ -80,12 +89,3 @@ as.ftplugin_conf({
     })
   end,
 })
-
-map('n', 'gK', keyword, { buffer = 0 })
-map('n', '<leader>so', function()
-  vim.cmd.luafile('%')
-  vim.notify('Sourced ' .. fn.expand('%'))
-end)
-
-opt.textwidth = 100
-opt.formatoptions:remove('o')
