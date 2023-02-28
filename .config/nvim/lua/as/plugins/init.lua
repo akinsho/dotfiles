@@ -579,21 +579,6 @@ return {
     },
   },
   -- }}}
-  --------------------------------------------------------------------------------
-  -- Themes  {{{1
-  --------------------------------------------------------------------------------
-  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
-  { 'catppuccin/nvim', lazy = false, name = 'catppuccin' },
-  { 'igorgue/danger', lazy = false },
-  {
-    'NTBBloodbath/doom-one.nvim',
-    lazy = false,
-    config = function()
-      vim.g.doom_one_pumblend_enable = true
-      vim.g.doom_one_pumblend_transparency = 3
-    end,
-  },
-  -- }}}
   ---------------------------------------------------------------------------------
   -- Dev plugins  {{{1
   ---------------------------------------------------------------------------------
