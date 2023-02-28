@@ -1,7 +1,10 @@
 #------------------------------------------------------------------------------
 # ALIASES
 #------------------------------------------------------------------------------
-# alias ls="ls --color=auto --hyperlink=auto $@"
+#-- gls is GNU ls
+if [[ $+commands[gls] ]]; then
+  alias ls="gls --color=auto --hyperlink=auto $@"
+fi
 if [[ $+commands[exa] ]]; then
   alias l="exa --long --all --git --color=always --group-directories-first --icons $@"
   alias lt="exa --icons --all --color=always -T $@"
@@ -9,7 +12,7 @@ else
   alias l='ls -lFh'     # size,show type,human readable
 fi
 alias ez="${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc"
-alias et="${=EDITOR} ${ZDOTDIR:-$HOME}/.tmux.conf"
+alias et="${=EDITOR} ${XDG_CONFIG_HOME}/tmux/tmux.conf"
 alias grep='grep --color'
 alias x="exit"
 alias del="rm -rf"
