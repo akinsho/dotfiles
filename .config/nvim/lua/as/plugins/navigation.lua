@@ -3,6 +3,27 @@ local icons = as.ui.icons
 
 return {
   {
+    'chentoast/marks.nvim',
+    init = function() as.augroup('marks', { { event = 'BufRead', command = ':delm a-zA-Z0-9' } }) end,
+    event = 'VeryLazy',
+    config = function()
+      as.highlight.plugin('marks', {
+        { MarkSignHL = { link = 'Directory' } },
+        { MarkSignNumHL = { link = 'Directory' } },
+      })
+      map('n', '<leader>mb', '<Cmd>MarksListBuf<CR>', { desc = 'list buffer' })
+      map('n', '<leader>mg', '<Cmd>MarksQFListGlobal<CR>', { desc = 'list global' })
+      map('n', '<leader>m0', '<Cmd>BookmarksQFList 0<CR>', { desc = 'list bookmark' })
+
+      require('marks').setup({
+        force_write_shada = false, -- This can cause data loss
+        excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
+        bookmark_0 = { sign = '⚑', virt_text = '' },
+        mappings = { annotate = 'm?' },
+      })
+    end,
+  },
+  {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v2.x',
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
