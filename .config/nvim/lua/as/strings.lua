@@ -27,7 +27,21 @@ end
 ---@param func_name string
 ---@param id string
 ---@return string
-local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_name .. '@' end
+local function get_click_start(func_name, id)
+  if not id then
+    vim.schedule(
+      function()
+        vim.notify_once(
+          fmt('An ID is needed to enable click handler %s to work', func_name),
+          vim.log.levels.ERROR,
+          { title = 'Statusline' }
+        )
+      end
+    )
+    return ''
+  end
+  return '%' .. id .. '@' .. func_name .. '@'
+end
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component

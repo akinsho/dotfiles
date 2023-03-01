@@ -1,5 +1,8 @@
 if not as then return end
 
+as.ui.statusline = {}
+
+local state = { lsp_clients_visible = true }
 ----------------------------------------------------------------------------------------------------
 --  Types
 ----------------------------------------------------------------------------------------------------
@@ -453,12 +456,21 @@ end
 ----------------------------------------------------------------------------------------------------
 --  LSP Clients
 ----------------------------------------------------------------------------------------------------
+local LSP_COMPONENT_ID = 2000
+local MAX_LSP_SERVER_COUNT = 3
+
+function as.ui.statusline.lsp_client_click()
+  state.lsp_clients_visible = not state.lsp_clients_visible
+end
 
 ---Return a sorted list of lsp client names and their priorities
 ---@param ctx StatuslineContext
 ---@return table[]
 local function stl_lsp_clients(ctx)
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
+  if not state.lsp_clients_visible then
+    return { { name = fmt('%d attached', #clients), priority = 7 } }
+  end
   if as.empty(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then
@@ -567,7 +579,7 @@ local end_marker = function() return { component = C.END, length = 0, priority =
 
 ---A very over-engineered statusline, heavily inspired by doom-modeline
 ---@return string
-function as.ui.statusline()
+function as.ui.statusline.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
 
@@ -651,10 +663,12 @@ function as.ui.statusline()
   local diagnostics = diagnostic_info(ctx)
   local lsp_clients = as.map(function(client, index)
     return component(client.name, hls.client, {
+      id = LSP_COMPONENT_ID, -- the unique id of the component
       prefix = index == 1 and ' LSP(s):' or nil,
       prefix_color = index == 1 and hls.metadata or nil,
       suffix = '', -- │
       suffix_color = hls.metadata_prefix,
+      click = 'v:lua.as.ui.statusline.lsp_client_click',
       priority = client.priority,
     })
   end, stl_lsp_clients(ctx))
@@ -885,6 +899,13 @@ as.augroup('CustomStatusline', {
     command = git_updates,
   },
   {
+    event = 'LspAttach',
+    command = function(args)
+      local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
+      if #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
+    end,
+  },
+  {
     event = 'BufWritePre',
     pattern = { '*' },
     command = function()
@@ -905,4 +926,4 @@ as.augroup('CustomStatusline', {
 vim.g.qf_disable_statusline = 1
 
 -- set the statusline
-vim.o.statusline = '%{%v:lua.as.ui.statusline()%}'
+vim.o.statusline = '%{%v:lua.as.ui.statusline.render()%}'
