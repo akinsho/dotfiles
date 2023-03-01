@@ -472,7 +472,6 @@ return {
       })
     end,
   },
-  { 'windwp/nvim-ts-autotag', event = 'VeryLazy', config = true },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}

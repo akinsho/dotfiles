@@ -106,7 +106,13 @@ return {
       { 'mrjones2014/nvim-ts-rainbow' },
     },
   },
-  'JoosepAlviste/nvim-ts-context-commentstring',
+  { 'JoosepAlviste/nvim-ts-context-commentstring' },
+  {
+    'windwp/nvim-ts-autotag',
+    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = true,
+  },
   {
     'nvim-treesitter/playground',
     cmd = { 'TSPlaygroundToggle' },
