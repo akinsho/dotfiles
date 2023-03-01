@@ -651,7 +651,7 @@ function as.ui.statusline.render()
   local line_count = api.nvim_buf_line_count(ctx.bufnum)
 
   -- Git state
-  local status = vim.b.gitsigns_status_dict or {}
+  local status = vim.b[curbuf].gitsigns_status_dict or {}
   local updates = vim.g.git_statusline_updates or {}
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
   local behind = updates.behind and tonumber(updates.behind) or 0

@@ -94,16 +94,16 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  local b = vim.b --[[@as table<string, any>]]
-  local events = vim.F.if_nil(b.lsp_events, {
+  local b = vim.b[bufnr]
+  -- stylua: ignore
+  local events = b.lsp_events or {
     [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
     [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
     [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
     [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
-  })
+  }
 
   local augroup = augroup_factory(bufnr, client, events)
-
   augroup(FEATURES.FORMATTING, function(provider)
     return {
       {
@@ -147,7 +147,7 @@ local function setup_autocommands(client, bufnr)
       },
     }
   end)
-  vim.b[bufnr].lsp_events = events
+  b.lsp_events = events
 end
 
 ---@param data { old_name: string, new_name: string }
@@ -263,13 +263,13 @@ as.augroup('LspSetupCommands', {
     event = 'LspDetach',
     desc = 'Clean up after detached LSP',
     command = function(args)
-      local client_id = args.data.client_id
-      if not vim.b.lsp_events or not client_id then return end
-      for _, state in pairs(vim.b.lsp_events) do
+      local client_id, b = args.data.client_id, vim.b[args.buf]
+      if not b.lsp_events or not client_id then return end
+      for _, state in pairs(b.lsp_events) do
         if #state.clients == 1 and state.clients[1] == client_id then
           api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
         end
-        vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
+        state.clients = vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
       end
     end,
   },
