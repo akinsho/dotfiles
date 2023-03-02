@@ -143,6 +143,26 @@ return {
     'simrat39/rust-tools.nvim',
     dependencies = { 'nvim-lspconfig' },
   },
+  {
+    'saecki/crates.nvim',
+    version = '*',
+    ft = { 'rust', 'toml' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      popup = { border = border },
+      null_ls = { enabled = true },
+    },
+    config = function(_, opts)
+      as.augroup('CmpSourceCargo', {
+        {
+          event = 'BufRead',
+          pattern = 'Cargo.toml',
+          command = function() require('cmp').setup.buffer({ sources = { { name = 'crates' } } }) end,
+        },
+      })
+      require('crates').setup(opts)
+    end,
+  },
   -- }}}
   -----------------------------------------------------------------------------//
   -- UI {{{1
