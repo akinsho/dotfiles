@@ -43,6 +43,9 @@ return {
     views = {
       vsplit = { size = { width = 'auto' } },
       split = { win_options = { winhighlight = { Normal = 'Normal' } } },
+      popup = {
+        border = { style = border, padding = { 0, 1 } },
+      },
       cmdline_popup = {
         position = { row = 5, col = '50%' },
         size = { width = 'auto', height = 'auto' },
