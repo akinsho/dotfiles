@@ -238,7 +238,7 @@ return {
   },
   {
     'kylechui/nvim-surround',
-    keys = { '<C-g>s', '<C-g>S', 'ys', 'yss', 'yS', 'cs', 'ds' },
+    keys = { { 's', mode = 'v' }, '<C-g>s', '<C-g>S', 'ys', 'yss', 'yS', 'cs', 'ds' },
     opts = { move_cursor = true, keymaps = { visual = 's' } },
   },
   {
