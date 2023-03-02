@@ -31,11 +31,6 @@ if which rg >/dev/null; then
   export RIPGREP_CONFIG_PATH=${DOTFILES}/.config/rg/.ripgreprc
 fi
 
-# Added by n-install (see http://git.io/n-install-repo).
-if [ -d "$HOME/n" ]; then
-  export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
-fi
-
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # NOTE: for signing commits with GPG (for work)

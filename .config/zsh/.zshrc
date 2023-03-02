@@ -489,7 +489,6 @@ add-zsh-hook chpwd () {
   _git_status_prompt="" # clear current vcs_info
   chpwd_last_working_dir
   chpwd_recent_dirs
-  check_node_cwd
 }
 
 
@@ -509,19 +508,17 @@ done
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-check_node_cwd
 last_working_dir
 
 # TODO: also need to check for the existence of ~/.fzf/
+# 1. change this to being a brew install
 if [ ! -f $HOME/.fzf.zsh ]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
   $HOME/.fzf/install
+else
+  source $HOME/.fzf.zsh
 fi
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
-if exists hub; then
-  eval "$(hub alias -s)" # Aliases 'hub' to git
-fi
 
 if [[ ! "$(exists nvr)" && "$(exists pip3)" ]]; then
   echo "Installing neovim-remote"
@@ -535,6 +532,11 @@ fi
 if exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
+
+if exists fnm; then
+  eval "$(fnm env --use-on-cd)"
+fi
+
 #-------------------------------------------------------------------------------
 #               MAPPINGS
 #-------------------------------------------------------------------------------

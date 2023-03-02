@@ -25,8 +25,8 @@ To set up a new machine instead follow these instructions:
 - `ripgrep`
 - `fzf`
 - `delta`
-- `prettier`
-- `stylua`
+- `fnm`
+- `zoxide`
 
 ### Highlights / Tools
 
