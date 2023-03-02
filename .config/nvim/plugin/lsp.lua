@@ -150,6 +150,10 @@ local function setup_autocommands(client, bufnr)
   b.lsp_events = events
 end
 
+----------------------------------------------------------------------------------------------------
+--  LSP file Rename
+----------------------------------------------------------------------------------------------------
+
 ---@param data { old_name: string, new_name: string }
 local function prepare_rename(data)
   local bufnr = fn.bufnr(data.old_name)
