@@ -95,13 +95,13 @@ local function setup_autocommands(client, bufnr)
   end
 
   local b = vim.b[bufnr]
-  -- stylua: ignore
-  local events = b.lsp_events or {
-    [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
-    [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
-    [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
-    [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
-  }
+  local events = b.lsp_events
+    or {
+      [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
+      [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
+      [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
+      [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
+    }
 
   local augroup = augroup_factory(bufnr, client, events)
   augroup(FEATURES.FORMATTING, function(provider)

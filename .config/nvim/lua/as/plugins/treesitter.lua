@@ -92,13 +92,13 @@ return {
           colors = { 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3' },
         },
         autopairs = { enable = true },
+        context_commentstring = { enable = true },
         playground = { persist_queries = true },
         query_linter = {
           enable = true,
           use_virtual_text = true,
           lint_events = { 'BufWrite', 'CursorHold' },
         },
-        context_commentstring = { enable = true },
       })
     end,
     dependencies = {
