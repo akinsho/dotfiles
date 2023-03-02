@@ -13,13 +13,11 @@ return {
     init = function()
       as.command('ListSessions', 'Telescope persisted')
       as.augroup('PersistedEvents', {
-        {
-          event = 'User',
-          pattern = 'PersistedTelescopeLoadPre',
-          command = function()
-            vim.schedule(function() vim.cmd('%bd') end)
-          end,
-        },
+        event = 'User',
+        pattern = 'PersistedTelescopeLoadPre',
+        command = function()
+          vim.schedule(function() vim.cmd('%bd') end)
+        end,
       })
     end,
     config = {
@@ -154,11 +152,9 @@ return {
     },
     config = function(_, opts)
       as.augroup('CmpSourceCargo', {
-        {
-          event = 'BufRead',
-          pattern = 'Cargo.toml',
-          command = function() require('cmp').setup.buffer({ sources = { { name = 'crates' } } }) end,
-        },
+        event = 'BufRead',
+        pattern = 'Cargo.toml',
+        command = function() require('cmp').setup.buffer({ sources = { { name = 'crates' } } }) end,
       })
       require('crates').setup(opts)
     end,
@@ -220,15 +216,13 @@ return {
         { { VirtColumn = { fg = { from = 'Comment', alter = 10 } } } }
       )
       as.augroup('VirtCol', {
-        {
-          event = { 'BufEnter', 'WinEnter' },
-          command = function(args)
-            ui.decorations.set_colorcolumn(
-              args.buf,
-              function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
-            )
-          end,
-        },
+        event = { 'BufEnter', 'WinEnter' },
+        command = function(args)
+          ui.decorations.set_colorcolumn(
+            args.buf,
+            function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
+          )
+        end,
       })
     end,
   },
@@ -313,11 +307,9 @@ return {
         },
       })
       as.augroup('BeaconCmds', {
-        {
-          event = 'BufReadPre',
-          pattern = '*.norg',
-          command = function() beacon.beacon_off() end,
-        },
+        event = 'BufReadPre',
+        pattern = '*.norg',
+        command = function() beacon.beacon_off() end,
       })
     end,
   },

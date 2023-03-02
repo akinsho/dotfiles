@@ -38,29 +38,23 @@ local function hl_search()
 end
 
 as.augroup('VimrcIncSearchHighlight', {
-  {
-    event = { 'CursorMoved' },
-    command = function() hl_search() end,
-  },
-  {
-    event = { 'InsertEnter' },
-    command = function() stop_hl() end,
-  },
-  {
-    event = { 'OptionSet' },
-    pattern = { 'hlsearch' },
-    command = function()
-      vim.schedule(function() vim.cmd.redrawstatus() end)
-    end,
-  },
-  {
-    event = 'RecordingEnter',
-    command = function() vim.o.hlsearch = false end,
-  },
-  {
-    event = 'RecordingLeave',
-    command = function() vim.o.hlsearch = true end,
-  },
+  event = { 'CursorMoved' },
+  command = function() hl_search() end,
+}, {
+  event = { 'InsertEnter' },
+  command = function() stop_hl() end,
+}, {
+  event = { 'OptionSet' },
+  pattern = { 'hlsearch' },
+  command = function()
+    vim.schedule(function() vim.cmd.redrawstatus() end)
+  end,
+}, {
+  event = 'RecordingEnter',
+  command = function() vim.o.hlsearch = false end,
+}, {
+  event = 'RecordingLeave',
+  command = function() vim.o.hlsearch = true end,
 })
 
 local smart_close_filetypes = {
@@ -87,66 +81,57 @@ local function smart_close()
 end
 
 as.augroup('SmartClose', {
-  {
-    -- Auto open grep quickfix window
-    event = { 'QuickFixCmdPost' },
-    pattern = { '*grep*' },
-    command = 'cwindow',
-  },
-  {
-    -- Close certain filetypes by pressing q.
-    event = { 'FileType' },
-    pattern = '*',
-    command = function()
-      local is_unmapped = fn.hasmapto('q', 'n') == 0
+  -- Auto open grep quickfix window
+  event = { 'QuickFixCmdPost' },
+  pattern = { '*grep*' },
+  command = 'cwindow',
+}, {
+  -- Close certain filetypes by pressing q.
+  event = { 'FileType' },
+  pattern = '*',
+  command = function()
+    local is_unmapped = fn.hasmapto('q', 'n') == 0
 
-      local is_eligible = is_unmapped
-        or vim.wo.previewwindow
-        or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
-        or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
+    local is_eligible = is_unmapped
+      or vim.wo.previewwindow
+      or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
+      or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
-      if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
-    end,
-  },
-  {
-    -- Close quick fix window if the file containing it was closed
-    event = { 'BufEnter' },
-    pattern = '*',
-    command = function()
-      if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
-        api.nvim_buf_delete(0, { force = true })
-      end
-    end,
-  },
-  {
-    -- automatically close corresponding loclist when quitting a window
-    event = { 'QuitPre' },
-    pattern = '*',
-    nested = true,
-    command = function()
-      if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { silent = true } }) end
-    end,
-  },
+    if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
+  end,
+}, {
+  -- Close quick fix window if the file containing it was closed
+  event = { 'BufEnter' },
+  pattern = '*',
+  command = function()
+    if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
+      api.nvim_buf_delete(0, { force = true })
+    end
+  end,
+}, {
+  -- automatically close corresponding loclist when quitting a window
+  event = { 'QuitPre' },
+  pattern = '*',
+  nested = true,
+  command = function()
+    if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { silent = true } }) end
+  end,
 })
 
 as.augroup('ExternalCommands', {
-  {
-    -- Open images in an image viewer (probably Preview)
-    event = { 'BufEnter' },
-    pattern = { '*.png', '*.jpg', '*.gif' },
-    command = function()
-      vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%')))
-    end,
-  },
+  -- Open images in an image viewer (probably Preview)
+  event = { 'BufEnter' },
+  pattern = { '*.png', '*.jpg', '*.gif' },
+  command = function()
+    vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%')))
+  end,
 })
 
 as.augroup('CheckOutsideTime', {
-  {
-    -- automatically check for changed files outside vim
-    event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
-    pattern = '*',
-    command = 'silent! checktime',
-  },
+  -- automatically check for changed files outside vim
+  event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
+  pattern = '*',
+  command = 'silent! checktime',
 })
 
 --- automatically clear commandline messages after a few seconds delay
@@ -167,75 +152,59 @@ end
 
 if not as.has('nvim-0.9') then --  TODO: remove this when 0.9 is released
   as.augroup('ClearCommandMessages', {
-    {
-      event = { 'CmdlineLeave', 'CmdlineChanged' },
-      pattern = { ':' },
-      command = clear_commandline(),
-    },
+    event = { 'CmdlineLeave', 'CmdlineChanged' },
+    pattern = { ':' },
+    command = clear_commandline(),
   })
 end
 
 as.augroup('TextYankHighlight', {
-  {
-    -- don't execute silently in case of errors
-    event = { 'TextYankPost' },
-    pattern = '*',
-    command = function()
-      vim.highlight.on_yank({
-        timeout = 500,
-        on_visual = false,
-        higroup = 'Visual',
-      })
-    end,
-  },
+  -- don't execute silently in case of errors
+  event = { 'TextYankPost' },
+  pattern = '*',
+  command = function()
+    vim.highlight.on_yank({
+      timeout = 500,
+      on_visual = false,
+      higroup = 'Visual',
+    })
+  end,
 })
 
 as.augroup('UpdateVim', {
-  {
-    event = { 'FocusLost' },
-    pattern = { '*' },
-    command = 'silent! wall',
-  },
-  -- Make windows equal size when vim resizes
-  {
-    event = { 'VimResized' },
-    pattern = { '*' },
-    command = 'wincmd =',
-  },
+  event = { 'FocusLost' },
+  pattern = { '*' },
+  command = 'silent! wall',
+}, {
+  event = { 'VimResized' },
+  pattern = { '*' },
+  command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
 as.augroup('WindowBehaviours', {
-  {
-    -- map q to close command window on quit
-    event = { 'CmdwinEnter' },
-    pattern = { '*' },
-    command = 'nnoremap <silent><buffer><nowait> q <C-W>c',
-  },
-  -- Automatically jump into the quickfix window on open
-  {
-    event = { 'QuickFixCmdPost' },
-    pattern = { '[^l]*' },
-    nested = true,
-    command = 'cwindow',
-  },
-  {
-    event = { 'QuickFixCmdPost' },
-    pattern = { 'l*' },
-    nested = true,
-    command = 'lwindow',
-  },
-  {
-    event = { 'BufWinEnter' },
-    command = function(args)
-      if vim.wo.diff then vim.diagnostic.disable(args.buf) end
-    end,
-  },
-  {
-    event = { 'BufWinLeave' },
-    command = function(args)
-      if vim.wo.diff then vim.diagnostic.enable(args.buf) end
-    end,
-  },
+  event = { 'CmdwinEnter' }, -- map q to close command window on quit
+  pattern = { '*' },
+  command = 'nnoremap <silent><buffer><nowait> q <C-W>c',
+}, {
+  event = { 'QuickFixCmdPost' }, -- Automatically jump into the quickfix window on open
+  pattern = { '[^l]*' },
+  nested = true,
+  command = 'cwindow',
+}, {
+  event = { 'QuickFixCmdPost' },
+  pattern = { 'l*' },
+  nested = true,
+  command = 'lwindow',
+}, {
+  event = { 'BufWinEnter' },
+  command = function(args)
+    if vim.wo.diff then vim.diagnostic.disable(args.buf) end
+  end,
+}, {
+  event = { 'BufWinLeave' },
+  command = function(args)
+    if vim.wo.diff then vim.diagnostic.enable(args.buf) end
+  end,
 })
 
 local cursorline_exclude = { 'alpha', 'toggleterm' }
@@ -251,16 +220,13 @@ local function should_show_cursorline(buf)
 end
 
 as.augroup('Cursorline', {
-  {
-    event = { 'BufEnter' },
-    pattern = { '*' },
-    command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
-  },
-  {
-    event = { 'BufLeave' },
-    pattern = { '*' },
-    command = function() vim.wo.cursorline = false end,
-  },
+  event = { 'BufEnter' },
+  pattern = { '*' },
+  command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
+}, {
+  event = { 'BufLeave' },
+  pattern = { '*' },
+  command = function() vim.wo.cursorline = false end,
 })
 
 local save_excluded = {
@@ -279,74 +245,65 @@ local function can_save()
 end
 
 as.augroup('Utilities', {
-  {
-    -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
-    event = { 'BufReadCmd' },
-    pattern = { 'file:///*' },
-    nested = true,
-    command = function(args)
-      vim.cmd.bdelete({ bang = true })
-      vim.cmd.edit(vim.uri_to_fname(args.file))
-    end,
+  -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
+  event = { 'BufReadCmd' },
+  pattern = { 'file:///*' },
+  nested = true,
+  command = function(args)
+    vim.cmd.bdelete({ bang = true })
+    vim.cmd.edit(vim.uri_to_fname(args.file))
+  end,
+}, {
+  event = { 'FileType' },
+  pattern = { 'gitcommit', 'gitrebase' },
+  command = 'set bufhidden=delete',
+}, {
+  event = { 'FileType' },
+  pattern = {
+    'lua',
+    'vim',
+    'dart',
+    'python',
+    'javascript',
+    'typescript',
+    'rust',
+    'org',
+    'NeogitCommitMessage',
+    'go',
+    'markdown',
   },
-  {
-    event = { 'FileType' },
-    pattern = { 'gitcommit', 'gitrebase' },
-    command = 'set bufhidden=delete',
-  },
-  {
-    event = { 'FileType' },
-    pattern = {
-      'lua',
-      'vim',
-      'dart',
-      'python',
-      'javascript',
-      'typescript',
-      'rust',
-      'org',
-      'NeogitCommitMessage',
-      'go',
-      'markdown',
-    },
-    -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
-    command = function() vim.opt_local.spell = true end,
-  },
-  {
-    event = { 'BufWritePre', 'FileWritePre' },
-    pattern = { '*' },
-    command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
-  },
-  {
-    event = { 'BufLeave' },
-    pattern = { '*' },
-    command = function()
-      if can_save() then vim.cmd.update({ mods = { silent = true } }) end
-    end,
-  },
-  {
-    event = { 'BufWritePost' },
-    pattern = { '*' },
-    nested = true,
-    command = function()
-      if as.empty(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
-        vim.cmd([[
-            unlet! b:ftdetect
-            filetype detect
-            echom 'Filetype set to ' . &ft
-          ]])
-      end
-    end,
-  },
+  -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
+  command = function() vim.opt_local.spell = true end,
+}, {
+  event = { 'BufWritePre', 'FileWritePre' },
+  pattern = { '*' },
+  command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
+}, {
+  event = { 'BufLeave' },
+  pattern = { '*' },
+  command = function()
+    if can_save() then vim.cmd.update({ mods = { silent = true } }) end
+  end,
+}, {
+  event = { 'BufWritePost' },
+  pattern = { '*' },
+  nested = true,
+  command = function()
+    if as.empty(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
+      vim.cmd([[
+        unlet! b:ftdetect
+        filetype detect
+        echom 'Filetype set to ' . &ft
+      ]])
+    end
+  end,
 })
 
 as.augroup('TerminalAutocommands', {
-  {
-    event = { 'TermClose' },
-    pattern = '*',
-    command = function()
-      --- automatically close a terminal if the job was successful
-      if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
-    end,
-  },
+  event = { 'TermClose' },
+  pattern = '*',
+  command = function()
+    --- automatically close a terminal if the job was successful
+    if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
+  end,
 })

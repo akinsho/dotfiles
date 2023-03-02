@@ -265,10 +265,11 @@ end
 
 ---Create an autocommand
 ---returns the group ID so that it can be cleared or manipulated.
----@param name string
----@param commands Autocommand[]
+---@param name string The name of the autocommand group
+---@param ... Autocommand A list of autocommands to create
 ---@return number
-function as.augroup(name, commands)
+function as.augroup(name, ...)
+  local commands = { ... }
   assert(name ~= 'User', 'The name of an augroup CANNOT be User')
   assert(#commands > 0, fmt('You must specify at least one autocommand for %s', name))
   local id = api.nvim_create_augroup(name, { clear = true })

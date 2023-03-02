@@ -220,23 +220,21 @@ return {
     })
 
     as.augroup('AlphaSettings', {
-      {
-        event = 'User ',
-        pattern = 'AlphaReady',
-        command = function(args)
-          opt.foldenable = false
-          opt.laststatus, opt.showtabline = 0, 0
-          map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
+      event = 'User ',
+      pattern = 'AlphaReady',
+      command = function(args)
+        opt.foldenable = false
+        opt.laststatus, opt.showtabline = 0, 0
+        map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
-          api.nvim_create_autocmd('BufUnload', {
-            buffer = args.buf,
-            callback = function()
-              opt.laststatus, opt.showtabline = 3, 2
-              vim.cmd('SessionStart')
-            end,
-          })
-        end,
-      },
+        api.nvim_create_autocmd('BufUnload', {
+          buffer = args.buf,
+          callback = function()
+            opt.laststatus, opt.showtabline = 3, 2
+            vim.cmd('SessionStart')
+          end,
+        })
+      end,
     })
   end,
 }

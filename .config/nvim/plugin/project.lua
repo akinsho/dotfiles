@@ -53,4 +53,4 @@ local function set_root(args)
   fn.chdir(root)
 end
 
-as.augroup('FindProjectRoot', { { event = 'BufEnter', command = set_root } })
+as.augroup('FindProjectRoot', { event = 'BufEnter', command = set_root })

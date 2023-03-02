@@ -4,7 +4,7 @@ local icons = as.ui.icons
 return {
   {
     'chentoast/marks.nvim',
-    init = function() as.augroup('marks', { { event = 'BufRead', command = ':delm a-zA-Z0-9' } }) end,
+    init = function() as.augroup('marks', { event = 'BufRead', command = ':delm a-zA-Z0-9' }) end,
     event = 'VeryLazy',
     config = function()
       as.highlight.plugin('marks', {

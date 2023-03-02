@@ -869,57 +869,46 @@ local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
 end)()
 
 as.augroup('CustomStatusline', {
-  {
-    event = 'FocusGained',
-    command = function() vim.g.vim_in_focus = true end,
-  },
-  {
-    event = 'FocusLost',
-    command = function() vim.g.vim_in_focus = false end,
-  },
-  {
-    event = 'ColorScheme',
-    command = colors,
-  },
-  {
-    event = 'ColorScheme',
-    command = reset_stl_ft_icon_hls,
-  },
-  {
-    event = 'FileType',
-    command = function(args) set_stl_ft_icon_hls(args.buf, args.match) end,
-  },
-  {
-    event = 'WinEnter',
-    command = adopt_window_highlights,
-  },
-  {
-    event = 'BufReadPre',
-    once = true,
-    command = git_updates,
-  },
-  {
-    event = 'LspAttach',
-    command = function(args)
-      local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
-      if #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
-    end,
-  },
-  {
-    event = 'BufWritePre',
-    pattern = { '*' },
-    command = function()
-      if not vim.g.is_saving and vim.bo.modified then
-        vim.g.is_saving = true
-        vim.defer_fn(function() vim.g.is_saving = false end, 1000)
-      end
-    end,
-  },
-  {
-    event = 'User',
-    pattern = { 'NeogitPushComplete', 'NeogitCommitComplete', 'NeogitStatusRefresh' },
-    command = update_git_status,
-  },
+  event = 'FocusGained',
+  command = function() vim.g.vim_in_focus = true end,
+}, {
+  event = 'FocusLost',
+  command = function() vim.g.vim_in_focus = false end,
+}, {
+  event = 'ColorScheme',
+  command = colors,
+}, {
+  event = 'ColorScheme',
+  command = reset_stl_ft_icon_hls,
+}, {
+  event = 'FileType',
+  command = function(args) set_stl_ft_icon_hls(args.buf, args.match) end,
+}, {
+  event = 'WinEnter',
+  command = adopt_window_highlights,
+}, {
+  event = 'BufReadPre',
+  once = true,
+  command = git_updates,
+}, {
+  event = 'LspAttach',
+  command = function(args)
+    local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
+    if #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
+  end,
+}, {
+  event = 'BufWritePre',
+  pattern = { '*' },
+  command = function()
+    if not vim.g.is_saving and vim.bo.modified then
+      vim.g.is_saving = true
+      vim.defer_fn(function() vim.g.is_saving = false end, 1000)
+    end
+  end,
+}, {
+  event = 'User',
+  pattern = { 'NeogitPushComplete', 'NeogitCommitComplete', 'NeogitStatusRefresh' },
+  command = update_git_status,
 })
 
 -- :h qf.vim, disable qf statusline

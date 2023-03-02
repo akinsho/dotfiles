@@ -136,16 +136,14 @@ return {
     local lga_actions = require('telescope-live-grep-args.actions')
 
     as.augroup('TelescopePreviews', {
-      {
-        event = 'User',
-        pattern = 'TelescopePreviewerLoaded',
-        command = function(args)
-          --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
-          local bufname = vim.tbl_get(args, 'data', 'bufname')
-          local ft = bufname and require('plenary.filetype').detect(bufname) or nil
-          vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
-        end,
-      },
+      event = 'User',
+      pattern = 'TelescopePreviewerLoaded',
+      command = function(args)
+        --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
+        local bufname = vim.tbl_get(args, 'data', 'bufname')
+        local ft = bufname and require('plenary.filetype').detect(bufname) or nil
+        vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
+      end,
     })
 
     highlight.plugin('telescope', {

@@ -100,15 +100,12 @@ local function set_winbar()
 end
 
 as.augroup('AttachWinbar', {
-  {
-    event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
-    desc = 'Toggle winbar',
-    command = set_winbar,
-  },
-  {
-    event = 'User',
-    pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
-    desc = 'Toggle winbar',
-    command = set_winbar,
-  },
+  event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
+  desc = 'Toggle winbar',
+  command = set_winbar,
+}, {
+  event = 'User',
+  pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
+  desc = 'Toggle winbar',
+  command = set_winbar,
 })

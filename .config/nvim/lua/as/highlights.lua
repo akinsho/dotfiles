@@ -190,12 +190,10 @@ function as.highlight.plugin(name, opts)
   name = name:gsub('^%l', string.upper)
   as.highlight.all(opts)
   as.augroup(fmt('%sHighlightOverrides', name), {
-    {
-      event = 'ColorScheme',
-      command = function()
-        -- Defer resetting these highlights to ensure they apply after other overrides
-        vim.defer_fn(function() as.highlight.all(opts) end, 1)
-      end,
-    },
+    event = 'ColorScheme',
+    command = function()
+      -- Defer resetting these highlights to ensure they apply after other overrides
+      vim.defer_fn(function() as.highlight.all(opts) end, 1)
+    end,
   })
 end
