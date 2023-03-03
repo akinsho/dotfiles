@@ -206,26 +206,6 @@ return {
       as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
     end,
   },
-  {
-    'lukas-reineke/virt-column.nvim',
-    event = 'VimEnter',
-    opts = { char = '▕' },
-    init = function()
-      highlight.plugin(
-        'virt_column',
-        { { VirtColumn = { fg = { from = 'Comment', alter = 10 } } } }
-      )
-      as.augroup('VirtCol', {
-        event = { 'BufEnter', 'WinEnter' },
-        command = function(args)
-          ui.decorations.set_colorcolumn(
-            args.buf,
-            function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
-          )
-        end,
-      })
-    end,
-  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Utilities {{{1

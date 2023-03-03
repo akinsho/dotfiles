@@ -1,9 +1,29 @@
 local r, api, fn, fmt = vim.regex, vim.api, vim.fn, string.format
 local strwidth = api.nvim_strwidth
-local highlight = as.highlight
-local icons = as.ui.icons.lsp
+local highlight, ui = as.highlight, as.ui
+local icons = ui.icons.lsp
 
 return {
+  {
+    'lukas-reineke/virt-column.nvim',
+    event = 'VimEnter',
+    opts = { char = '▕' },
+    init = function()
+      highlight.plugin(
+        'virt_column',
+        { { VirtColumn = { fg = { from = 'Comment', alter = 10 } } } }
+      )
+      as.augroup('VirtCol', {
+        event = { 'BufEnter', 'WinEnter' },
+        command = function(args)
+          ui.decorations.set_colorcolumn(
+            args.buf,
+            function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
+          )
+        end,
+      })
+    end,
+  },
   {
     'lukas-reineke/indent-blankline.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
