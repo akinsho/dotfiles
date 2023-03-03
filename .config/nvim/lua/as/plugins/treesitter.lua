@@ -15,6 +15,10 @@ return {
 
       require('nvim-treesitter.configs').setup({
         ensure_installed = {
+          'c',
+          'vim',
+          'help',
+          'query',
           'lua',
           'bash',
           'go',
@@ -23,11 +27,9 @@ return {
           'typescript',
           'tsx',
           'jsdoc',
-          'javascript',
           'diff',
           'regex',
           'git_rebase',
-          'gitcommit',
           'markdown',
           'markdown_inline',
         },
