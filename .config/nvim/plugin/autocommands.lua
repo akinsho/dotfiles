@@ -131,30 +131,6 @@ as.augroup('CheckOutsideTime', {
   command = 'silent! checktime',
 })
 
---- automatically clear commandline messages after a few seconds delay
---- source: http://unix.stackexchange.com/a/613645
----@return function
-local function clear_commandline()
-  --- Track the timer object and stop any previous timers before setting
-  --- a new one so that each change waits for 10secs and that 10secs is
-  --- deferred each time
-  local timer
-  return function()
-    if timer then timer:stop() end
-    timer = vim.defer_fn(function()
-      if fn.mode() == 'n' then vim.cmd.echon("''") end
-    end, 10000)
-  end
-end
-
-if not as.has('nvim-0.9') then --  TODO: remove this when 0.9 is released
-  as.augroup('ClearCommandMessages', {
-    event = { 'CmdlineLeave', 'CmdlineChanged' },
-    pattern = { ':' },
-    command = clear_commandline(),
-  })
-end
-
 as.augroup('TextYankHighlight', {
   -- don't execute silently in case of errors
   event = { 'TextYankPost' },
