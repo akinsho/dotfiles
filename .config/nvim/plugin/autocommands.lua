@@ -89,7 +89,6 @@ as.augroup('SmartClose', {
 }, {
   -- Close certain filetypes by pressing q.
   event = { 'FileType' },
-  pattern = '*',
   command = function()
     local is_unmapped = fn.hasmapto('q', 'n') == 0
 
@@ -103,7 +102,6 @@ as.augroup('SmartClose', {
 }, {
   -- Close quick fix window if the file containing it was closed
   event = { 'BufEnter' },
-  pattern = '*',
   command = function()
     if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
       api.nvim_buf_delete(0, { force = true })
@@ -112,7 +110,6 @@ as.augroup('SmartClose', {
 }, {
   -- automatically close corresponding loclist when quitting a window
   event = { 'QuitPre' },
-  pattern = '*',
   nested = true,
   command = function()
     if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { silent = true } }) end
@@ -131,7 +128,6 @@ as.augroup('ExternalCommands', {
 as.augroup('CheckOutsideTime', {
   -- automatically check for changed files outside vim
   event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
-  pattern = '*',
   command = 'silent! checktime',
 })
 
@@ -162,7 +158,6 @@ end
 as.augroup('TextYankHighlight', {
   -- don't execute silently in case of errors
   event = { 'TextYankPost' },
-  pattern = '*',
   command = function()
     vim.highlight.on_yank({
       timeout = 500,
@@ -302,7 +297,6 @@ as.augroup('Utilities', {
 
 as.augroup('TerminalAutocommands', {
   event = { 'TermClose' },
-  pattern = '*',
   command = function()
     --- automatically close a terminal if the job was successful
     if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
