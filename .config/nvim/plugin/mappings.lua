@@ -507,7 +507,14 @@ end
 command('AutoResize', auto_resize(), { nargs = '?' })
 -----------------------------------------------------------------------------//
 
-command('TreeInspect', function() vim.treesitter.show_tree() end)
+command( -- TODO: find a way to replace the native command with this implementation
+  'TreeInspect',
+  function()
+    vim.treesitter.inspect_tree({
+      command = fmt('botright %dvnew', math.min(math.floor(vim.o.columns * 0.25), 80)),
+    })
+  end
+)
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//

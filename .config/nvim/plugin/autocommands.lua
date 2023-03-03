@@ -59,6 +59,7 @@ as.augroup('VimrcIncSearchHighlight', {
 
 local smart_close_filetypes = {
   'help',
+  'query',
   'git-status',
   'git-log',
   'gitcommit',
