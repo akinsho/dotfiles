@@ -12,8 +12,6 @@ return {
       if ok then orgmode.setup_ts_grammar() end
 
       require('nvim-treesitter.install').compilers = { 'gcc-12' }
-      local parsers = require('nvim-treesitter.parsers')
-      local rainbow_enabled = { 'dart' }
 
       require('nvim-treesitter.configs').setup({
         ensure_installed = {
@@ -82,14 +80,9 @@ return {
         },
         rainbow = {
           enable = true,
-          disable = vim.tbl_filter(function(p)
-            local disable = true
-            for _, lang in pairs(rainbow_enabled) do
-              if p == lang then disable = false end
-            end
-            return disable
-          end, parsers.available_parsers()),
-          colors = { 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3' },
+          query = 'rainbow-parens',
+          disable = { 'typescriptreact' },
+          strategy = { require('ts-rainbow.strategy.local') },
         },
         autopairs = { enable = true },
         context_commentstring = { enable = true },
@@ -103,7 +96,7 @@ return {
     end,
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'mrjones2014/nvim-ts-rainbow' },
+      { 'HiPhish/nvim-ts-rainbow2' },
     },
   },
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
