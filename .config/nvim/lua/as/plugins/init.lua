@@ -144,7 +144,7 @@ return {
   {
     'saecki/crates.nvim',
     version = '*',
-    ft = { 'rust', 'toml' },
+    event = 'BufRead Cargo.toml',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {
       popup = { border = border },
