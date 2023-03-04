@@ -74,6 +74,10 @@ return {
             event = 'neo_tree_buffer_leave',
             handler = function() highlight.set('Cursor', { blend = 0 }) end,
           },
+          {
+            event = 'neo_tree_window_after_close',
+            handler = function() highlight.set('Cursor', { blend = 0 }) end,
+          },
         },
         filesystem = {
           hijack_netrw_behavior = 'open_current',
