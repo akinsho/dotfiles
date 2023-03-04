@@ -26,6 +26,7 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v2.x',
+    cmd = { 'Neotree' },
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
     config = function()
       highlight.plugin('NeoTree', {
@@ -53,6 +54,7 @@ return {
           },
         },
       })
+
       vim.g.neo_tree_remove_legacy_commands = 1
 
       require('neo-tree').setup({
