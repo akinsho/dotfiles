@@ -43,7 +43,11 @@ return {
     branch = 'feat/config-win-border',
     keys = { '<leader>oa', '<leader>oc' },
     dependencies = {
-      { 'akinsho/org-bullets.nvim', config = true, dev = true },
+      {
+        'akinsho/org-bullets.nvim',
+        dev = true,
+        opts = { symbols = { checkboxes = { todo = { '⛌', 'OrgTODO' } } } },
+      },
     },
     opts = {
       org_agenda_files = { sync('org/**/*') },
