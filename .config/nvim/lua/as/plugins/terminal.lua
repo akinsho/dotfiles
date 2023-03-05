@@ -33,6 +33,7 @@ return {
     require('toggleterm').setup(opts)
 
     local float_handler = function(term)
+      vim.wo.sidescrolloff = 0
       if not as.empty(fn.mapcheck('jk', 't')) then
         vim.keymap.del('t', 'jk', { buffer = term.bufnr })
         vim.keymap.del('t', '<esc>', { buffer = term.bufnr })
@@ -71,14 +72,12 @@ return {
       },
     })
 
-    map(
-      'n',
-      '<leader>ld',
-      function() gh_dash:toggle() end,
-      { desc = 'toggleterm: toggle github dashboard' }
-    )
-    map('n', '<leader>lg', function() lazygit:toggle() end, { desc = 'toggleterm: toggle lazygit' })
-
+    map('n', '<leader>ld', function() gh_dash:toggle() end, {
+      desc = 'toggleterm: toggle github dashboard',
+    })
+    map('n', '<leader>lg', function() lazygit:toggle() end, {
+      desc = 'toggleterm: toggle lazygit',
+    })
     as.command('Btop', function() btop:toggle() end)
   end,
 }
