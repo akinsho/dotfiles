@@ -16,8 +16,8 @@
     ~/.gitignore: git/.gitignore
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
+    ~/.hammerspoon: hammerspoon
     ~/.zshenv: .config/zsh/.zshenv
-    ~/.hammerspoon: .config/hammerspoon
     ~/.config/stylua: .config/stylua
     ~/.config/tmux: .config/tmux
     ~/.config/zsh: .config/zsh
