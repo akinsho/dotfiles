@@ -16,6 +16,7 @@
         "after_each",
         "packer_plugins",
         "pending",
-        "hs"
+        "hs",
+        "spoon"
     ]
 }
