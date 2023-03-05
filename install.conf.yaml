@@ -17,6 +17,7 @@
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
     ~/.zshenv: .config/zsh/.zshenv
+    ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/stylua: .config/stylua
     ~/.config/tmux: .config/tmux
     ~/.config/zsh: .config/zsh

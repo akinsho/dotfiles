@@ -6,5 +6,16 @@
         "param-type-mismatch",
         "cast-local-type"
     ],
-    "Lua.workspace.checkThirdParty": false
+    "Lua.workspace.checkThirdParty": false,
+    "diagnostics.globals": [
+        "vim",
+        "P",
+        "describe",
+        "it",
+        "before_each",
+        "after_each",
+        "packer_plugins",
+        "pending",
+        "hs"
+    ]
 }
