@@ -14,24 +14,10 @@ return {
       require('nvim-treesitter.install').compilers = { 'gcc-12' }
 
       require('nvim-treesitter.configs').setup({
+        -- stylua: ignore
         ensure_installed = {
-          'c',
-          'vim',
-          'help',
-          'query',
-          'lua',
-          'bash',
-          'go',
-          'dart',
-          'rust',
-          'typescript',
-          'tsx',
-          'jsdoc',
-          'diff',
-          'regex',
-          'git_rebase',
-          'markdown',
-          'markdown_inline',
+          'c', 'vim', 'help', 'query', 'lua', 'luap', 'bash', 'go', 'dart', 'rust', 'typescript',
+          'tsx', 'jsdoc', 'diff', 'regex', 'git_rebase', 'markdown', 'markdown_inline',
         },
         auto_install = true,
         highlight = {
@@ -69,15 +55,9 @@ return {
           },
           move = {
             enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              [']m'] = '@function.outer',
-              [']M'] = '@class.outer',
-            },
-            goto_previous_start = {
-              ['[m'] = '@function.outer',
-              ['[M'] = '@class.outer',
-            },
+            set_jumps = true,
+            goto_next_start = { [']m'] = '@function.outer', [']M'] = '@class.outer' },
+            goto_previous_start = { ['[m'] = '@function.outer', ['[M'] = '@class.outer' },
           },
         },
         rainbow = {
