@@ -1,5 +1,5 @@
 local opt, fn, fmt = vim.opt, vim.fn, string.format
-local border, highlight = as.ui.current.border, as.highlight
+local ui, border, highlight = as.ui, as.ui.current.border, as.highlight
 
 return {
   -----------------------------------------------------------------------------//
@@ -177,17 +177,16 @@ return {
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function()
       vim.g.navic_silence = true
-      local s = as.ui
-      local misc = s.icons.misc
+      local misc = ui.icons.misc
 
       highlight.plugin('navic', {
         { NavicText = { bold = true } },
         { NavicSeparator = { link = 'Directory' } },
       })
       local icons = as.map(function(icon, key)
-        highlight.set(fmt('NavicIcons%s', key), { link = s.lsp.highlights[key] })
+        highlight.set(fmt('NavicIcons%s', key), { link = ui.lsp.highlights[key] })
         return icon .. ' '
-      end, s.current.lsp_icons)
+      end, ui.current.lsp_icons)
 
       require('nvim-navic').setup({
         icons = icons,
@@ -494,7 +493,6 @@ return {
     build = ':DirtytalkUpdate',
     config = function() opt.spelllang:append('programming') end,
   },
-  'melvio/medical-spell-files',
   ---}}}
   --------------------------------------------------------------------------------
   -- Editing {{{1
@@ -548,18 +546,12 @@ return {
     end,
   },
   {
-    'kana/vim-textobj-user',
-    lazy = false,
-    dependencies = {
-      { 'kana/vim-operator-user' },
-      {
-        'glts/vim-textobj-comment',
-        init = function() vim.g.textobj_comment_no_default_key_mappings = 1 end,
-        keys = {
-          { 'ax', '<Plug>(textobj-comment-a)', mode = { 'x', 'o' } },
-          { 'ix', '<Plug>(textobj-comment-i)', mode = { 'x', 'o' } },
-        },
-      },
+    'glts/vim-textobj-comment',
+    dependencies = { { 'kana/vim-textobj-user', dependencies = { 'kana/vim-operator-user' } } },
+    init = function() vim.g.textobj_comment_no_default_key_mappings = 1 end,
+    keys = {
+      { 'ax', '<Plug>(textobj-comment-a)', mode = { 'x', 'o' } },
+      { 'ix', '<Plug>(textobj-comment-i)', mode = { 'x', 'o' } },
     },
   },
   {
