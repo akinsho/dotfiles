@@ -20,7 +20,7 @@ return {
         end,
       })
     end,
-    config = {
+    opts = {
       autoload = true,
       use_git_branch = true,
       allowed_dirs = { vim.g.dotfiles, vim.g.work_dir },

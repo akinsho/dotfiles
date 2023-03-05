@@ -123,7 +123,7 @@ return {
         desc = 'gitlinker: open current selection in browser',
       },
     },
-    config = {
+    opts = {
       mappings = nil,
       callbacks = {
         ['github-work'] = function(url_data) -- Resolve the host for work repostories
