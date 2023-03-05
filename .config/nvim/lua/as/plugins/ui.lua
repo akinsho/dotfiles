@@ -26,7 +26,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
+    lazy = false,
     init = function()
       highlight.plugin('indentline', {
         theme = {
@@ -138,8 +138,11 @@ return {
       },
       window_ignore_function = function(win_id)
         local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
+        -- TODO: ideally tint should just ignore all buffers with a special type other than maybe "acwrite"
+        -- since if there is a custom buftype it's probably a special buffer we always want to pay
+        -- attention to whilst its open.
+        -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
         if win.diff or not as.empty(fn.win_gettype(win_id)) then return true end
-        -- BUG: neotree cannot be ignore as either nofile or by filetype as this causes tinting bugs
         local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
         local ignore_ft = as.p_table({
           ['Telescope.*'] = true,
