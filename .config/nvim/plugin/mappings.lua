@@ -149,7 +149,6 @@ nnoremap('<leader><leader>', [[<c-^>]], { desc = 'switch to last buffer' })
 -- Capitalize
 -----------------------------------------------------------------------------//
 nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
-inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR><Right>', { desc = 'capitalize word' })
 ------------------------------------------------------------------------------
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
@@ -174,23 +173,24 @@ nnoremap('<localleader>wv', '<C-W>t <C-W>H', {
 -- vim doesn't have a native mapping for this as <C-w>f normally
 -- opens a horizontal split
 nnoremap('<C-w>f', '<C-w>vgf', { desc = 'open file in vertical split' })
--- find visually selected text
-vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
 nnoremap('<leader>qw', '<cmd>bd!<CR>', { desc = 'Close current buffer (and window)' })
-----------------------------------------------------------------------------------
--- Operators
-----------------------------------------------------------------------------------
--- Yank from the cursor to the end of the line, to be consistent with C and D.
-nnoremap('Y', 'y$')
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
-local noisy = { silent = false }
-nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
-nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
-vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], noisy)
+nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], {
+  silent = false,
+  desc = 'replace word under the cursor(file)',
+})
+nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], {
+  silent = false,
+  desc = 'replace word under the cursor (line)',
+})
+vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], {
+  silent = false,
+  desc = 'replace word under the cursor (visual)',
+})
 -- Visual shifting (does not exit Visual mode)
 vnoremap('<', '<gv')
 vnoremap('>', '>gv')
@@ -205,12 +205,6 @@ nnoremap('<leader>ns', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {
   silent = false,
   desc = 'Split to a new file in the same directory',
 })
-
-nnoremap(
-  '<localleader>l',
-  [[<cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><c-l>]],
-  { desc = 'Clear search highlights' }
-)
 -----------------------------------------------------------------------------//
 -- Window bindings
 -----------------------------------------------------------------------------//
@@ -230,9 +224,6 @@ inoremap('<up>', '<nop>')
 inoremap('<down>', '<nop>')
 inoremap('<left>', '<nop>')
 inoremap('<right>', '<nop>')
--- Repeat last substitute with flags
-nnoremap('&', '<cmd>&&<CR>')
-xnoremap('&', '<cmd>&&<CR>')
 ----------------------------------------------------------------------------------
 -- Commandline mappings
 ----------------------------------------------------------------------------------
