@@ -238,11 +238,11 @@ return {
   {
     'cbochs/grapple.nvim',
     cmd = { 'Grapple', 'GrapplePopup' },
+    opts = { popup_options = { border = border } },
     keys = {
       { '<leader>mt', function() require('grapple').toggle() end, desc = 'grapple: toggle mark' },
-      { '<leader>mm', '<Cmd>GrapplePopup tags<CR>', desc = 'grapple: menu' },
+      { '<leader>mm', function() require('grapple').popup_tags() end, desc = 'grapple: menu' },
     },
-    opts = { popup_options = { border = border } },
   },
   -- }}}
   --------------------------------------------------------------------------------
