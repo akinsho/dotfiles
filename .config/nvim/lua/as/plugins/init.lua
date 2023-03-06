@@ -1,4 +1,4 @@
-local opt, fn, fmt = vim.opt, vim.fn, string.format
+local opt, api, fn, fmt = vim.opt, vim.api, vim.fn, string.format
 local ui, border, highlight = as.ui, as.ui.current.border, as.highlight
 
 return {
@@ -205,6 +205,44 @@ return {
       require('todo-comments').setup()
       as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
     end,
+  },
+  {
+    'cbochs/portal.nvim',
+    cmd = { 'Portal' },
+    keys = {
+      { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
+      { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
+      { '<leader>jg', '<cmd>Portal grapple<cr>', desc = 'jump: grapple' },
+    },
+    dependencies = { 'cbochs/grapple.nvim' },
+    opts = {
+      filter = function(v)
+        local file_path = api.nvim_buf_get_name(v.buffer)
+        return vim.startswith(file_path, fn.getcwd())
+      end,
+      window_options = {
+        -- TODO: this grapple/portal.nvim should allow customising the border highlights
+        border = {
+          { '┌', 'Label' },
+          { '─', 'Label' },
+          { '┐', 'Label' },
+          { '│', 'Label' },
+          { '┘', 'Label' },
+          { '─', 'Label' },
+          { '└', 'Label' },
+          { '│', 'Label' },
+        },
+      },
+    },
+  },
+  {
+    'cbochs/grapple.nvim',
+    cmd = { 'Grapple', 'GrapplePopup' },
+    keys = {
+      { '<leader>mt', function() require('grapple').toggle() end, desc = 'grapple: toggle mark' },
+      { '<leader>mm', '<Cmd>GrapplePopup tags<CR>', desc = 'grapple: menu' },
+    },
+    opts = { popup_options = { border = border } },
   },
   -- }}}
   --------------------------------------------------------------------------------

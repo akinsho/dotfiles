@@ -47,6 +47,7 @@ return {
           s = 'create new file in a split',
         },
         E = 'show token under the cursor',
+        j = { name = '+jump' },
         p = { name = '+packages' },
         q = {
           name = '+quit',

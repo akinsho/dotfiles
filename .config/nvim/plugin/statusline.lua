@@ -549,6 +549,18 @@ end
 --- we are currently ahead or behind upstream
 local function git_updates() run_task_on_interval(10000, update_git_status) end
 
+--  Grapple
+----------------------------------------------------------------------------------------------------
+---@return boolean
+---@return {icon: string?, name: string?}
+local function grapple_stl()
+  local ok, grapple = pcall(require, 'grapple')
+  if not ok then return false, {} end
+  local exists = grapple.exists()
+  if not exists then return false, {} end
+  return grapple.exists(), { name = fmt('[%s]', grapple.key()), icon = '' }
+end
+
 ----------------------------------------------------------------------------------------------------
 --  Utility functions
 ----------------------------------------------------------------------------------------------------
@@ -657,6 +669,8 @@ function as.ui.statusline.render()
   local behind = updates.behind and tonumber(updates.behind) or 0
 
   -----------------------------------------------------------------------------//
+  local grapple_ok, grapple = grapple_stl()
+  -----------------------------------------------------------------------------//
   -- LSP
   -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
@@ -718,6 +732,12 @@ function as.ui.statusline.render()
     component_if(diagnostics.info.count, diagnostics.info, hls.info, {
       prefix = diagnostics.info.icon,
       prefix_color = hls.info,
+      priority = 4,
+    }),
+
+    component_if(grapple.name, grapple_ok, hls.comment, {
+      prefix = grapple.icon,
+      prefix_color = hls.directory,
       priority = 4,
     }),
 
