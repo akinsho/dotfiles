@@ -73,8 +73,12 @@ onoremap('il', [[<cmd>normal! ^vg_<CR>]])
 -----------------------------------------------------------------------------//
 -- Add Empty space above and below
 -----------------------------------------------------------------------------//
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], {
+  desc = 'add space above',
+})
+nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
+  desc = 'add space below',
+})
 -----------------------------------------------------------------------------//
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
@@ -82,15 +86,16 @@ xnoremap('p', 'pgvy')
 vnoremap('//', [[y/<C-R>"<CR>]])
 
 -- Credit: Justinmk
-nnoremap('g>', [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
-
--- Enter key should repeat the last macro recorded or just act as enter
-nnoremap('<leader><CR>', [[empty(&buftype) ? '@@' : '<CR>']], { expr = true })
+nnoremap('g>', [[<cmd>set nomore<bar>40messages<bar>set more<CR>]], {
+  desc = 'show message history',
+})
 
 -- Evaluates whether there is a fold on the current line if so unfold it else return a normal space
-nnoremap('<space><space>', [[@=(foldlevel('.')?'za':"\<Space>")<CR>]])
+nnoremap('<space><space>', [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], {
+  desc = 'toggle fold under cursor',
+})
 -- Refocus folds
-nnoremap('<localleader>z', [[zMzvzz]])
+nnoremap('<localleader>z', [[zMzvzz]], { desc = 'center viewport' })
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
 nnoremap('zO', [[zCzO]])
@@ -125,8 +130,8 @@ local function modify_line_end_delimiter(character)
   end
 end
 
-nnoremap('<localleader>,', modify_line_end_delimiter(','))
-nnoremap('<localleader>;', modify_line_end_delimiter(';'))
+nnoremap('<localleader>,', modify_line_end_delimiter(','), { desc = "add ',' to end of line" })
+nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = "add ';' to end of line" })
 
 -----------------------------------------------------------------------------//
 nnoremap('<leader>E', '<Cmd>Inspect<CR>', { desc = 'Inspect the cursor position' })
@@ -137,16 +142,14 @@ if as.empty(fn.mapcheck('<ScrollWheelUp>')) then nmap('<ScrollWheelUp>', '<c-u>'
 ------------------------------------------------------------------------------
 -- Buffers
 ------------------------------------------------------------------------------
-nnoremap('<leader>on', [[<cmd>w <bar> %bd <bar> e#<CR>]])
--- Use wildmenu to cycle tabs
-nnoremap('<localleader><tab>', [[:b <Tab>]], { silent = false })
--- Switch between the last two files
-nnoremap('<leader><leader>', [[<c-^>]])
+nnoremap('<leader>on', [[<cmd>w <bar> %bd <bar> e#<CR>]], { desc = 'close all other buffers' })
+nnoremap('<localleader><tab>', [[:b <Tab>]], { silent = false, desc = 'open buffer list' })
+nnoremap('<leader><leader>', [[<c-^>]], { desc = 'switch to last buffer' })
 -----------------------------------------------------------------------------//
 -- Capitalize
 -----------------------------------------------------------------------------//
-nnoremap('<leader>U', 'gUiw`]')
-inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
+nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
+inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR><Right>', { desc = 'capitalize word' })
 ------------------------------------------------------------------------------
 -- Moving lines/visual block
 ------------------------------------------------------------------------------
@@ -161,19 +164,21 @@ xnoremap('<a-j>', ":move'>+<CR>='[gv", { silent = true })
 ----------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------
--- Change two horizontally split windows to vertical splits
-nnoremap('<localleader>wh', '<C-W>t <C-W>K')
--- Change two vertically split windows to horizontal splits
-nnoremap('<localleader>wv', '<C-W>t <C-W>H')
+nnoremap('<localleader>wh', '<C-W>t <C-W>K', {
+  desc = 'change two horizontally split windows to vertical splits',
+})
+nnoremap('<localleader>wv', '<C-W>t <C-W>H', {
+  desc = 'change two vertically split windows to horizontal splits',
+})
 -- equivalent to gf but opens the window in a vertical split
 -- vim doesn't have a native mapping for this as <C-w>f normally
 -- opens a horizontal split
-nnoremap('<C-w>f', '<C-w>vgf')
+nnoremap('<C-w>f', '<C-w>vgf', { desc = 'open file in vertical split' })
 -- find visually selected text
 vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
-nnoremap('<leader>qw', '<cmd>bd!<CR>')
+nnoremap('<leader>qw', '<cmd>bd!<CR>', { desc = 'Close current buffer (and window)' })
 ----------------------------------------------------------------------------------
 -- Operators
 ----------------------------------------------------------------------------------
@@ -192,14 +197,19 @@ vnoremap('>', '>gv')
 --Remap back tick for jumping to marks more quickly back
 nnoremap("'", '`')
 -----------------------------------------------------------------------------//
---open a new file in the same directory
-nnoremap('<leader>nf', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { silent = false })
---open a new file in the same directory
-nnoremap('<leader>ns', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], { silent = false })
---Open command line window - :<c-f>
+nnoremap('<leader>nf', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {
+  silent = false,
+  desc = 'Open a new file in the same directory',
+})
+nnoremap('<leader>ns', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {
+  silent = false,
+  desc = 'Split to a new file in the same directory',
+})
+
 nnoremap(
   '<localleader>l',
-  [[<cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><c-l>]]
+  [[<cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><c-l>]],
+  { desc = 'Clear search highlights' }
 )
 -----------------------------------------------------------------------------//
 -- Window bindings
@@ -209,11 +219,6 @@ if fn.bufwinnr(1) then
   nnoremap('<a-h>', '<C-W><')
   nnoremap('<a-l>', '<C-W>>')
 end
------------------------------------------------------------------------------//
--- Open Common files
------------------------------------------------------------------------------//
-nnoremap('<leader>ez', ':e $ZDOTDIR/.zshrc<cr>')
-nnoremap('<leader>et', ':e ~/.tmux.conf<cr>')
 -----------------------------------------------------------------------------//
 -- Arrows
 -----------------------------------------------------------------------------//
@@ -313,22 +318,30 @@ nmap(
   { expr = true }
 )
 
+-----------------------------------------------------------------------------//
+-- Open Common files
+-----------------------------------------------------------------------------//
+nnoremap('<leader>ez', ':e $ZDOTDIR/.zshrc<cr>', { desc = 'open zshrc' })
+nnoremap('<leader>et', ':e ~/.tmux.conf<cr>', { desc = 'open tmux.conf' })
 -- This line opens the vimrc in a vertical split
-nnoremap('<leader>ev', [[<Cmd>vsplit $MYVIMRC<cr>]])
+nnoremap('<leader>ev', [[<Cmd>vsplit $MYVIMRC<cr>]], { desc = 'open $VIMRC' })
 -- This line opens my plugins file in a vertical split
-nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdpath('config')))
-
+nnoremap('<leader>ep', fmt('<Cmd>vsplit %s/lua/as/plugins/init.lua<CR>', fn.stdpath('config')), {
+  desc = 'open plugins file',
+})
 -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
+nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], {
+  desc = 'source $VIMRC',
+})
 nnoremap('<leader>yf', ":let @*=expand('%:p')<CR>", { desc = 'yank file path into the clipboard' })
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
-nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]])
-nnoremap('<leader>`', [[ciw`<c-r>"`<esc>]])
-nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]])
-nnoremap('<leader>)', [[ciw(<c-r>")<esc>]])
-nnoremap('<leader>}', [[ciw{<c-r>"}<esc>]])
+nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]], { desc = 'surround with double quotes' })
+nnoremap('<leader>`', [[ciw`<c-r>"`<esc>]], { desc = 'surround with backticks' })
+nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { desc = 'surround with single quotes' })
+nnoremap('<leader>)', [[ciw(<c-r>")<esc>]], { desc = 'surround with parentheses' })
+nnoremap('<leader>}', [[ciw{<c-r>"}<esc>]], { desc = 'surround with curly braces' })
 -----------------------------------------------------------------------------//
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -358,28 +371,6 @@ xnoremap(
   'cQ',
   [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
-)
-------------------------------------------------------------------------------
--- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
-------------------------------------------------------------------------------
-function as.mappings.google(pat, lucky)
-  local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
-  query = fn.substitute(query, '[[:punct:] ]', [[\=printf("%%%02X", char2nr(submatch(0)))]], 'g')
-  fn.system(
-    fn.printf(
-      vim.g.open_command .. ' "https://www.google.com/search?%sq=%s"',
-      lucky and 'btnI&' or '',
-      query
-    )
-  )
-end
-
-nnoremap('<localleader>?', [[:lua as.mappings.google(vim.fn.expand("<cWORD>"), false)<cr>]])
-nnoremap('<localleader>!', [[:lua as.mappings.google(vim.fn.expand("<cWORD>"), true)<cr>]])
-xnoremap('<localleader>?', [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
-xnoremap(
-  '<localleader>!',
-  [["gy:lua as.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]]
 )
 ----------------------------------------------------------------------------------
 -- Grep Operator
@@ -433,8 +424,8 @@ nnoremap('gx', open_link)
 
 nnoremap('gf', '<Cmd>e <cfile><CR>')
 
-nnoremap('<leader>ls', as.toggle_qf_list)
-nnoremap('<leader>li', as.toggle_loc_list)
+nnoremap('<leader>ls', as.toggle_qf_list, { desc = 'toggle quickfix list' })
+nnoremap('<leader>li', as.toggle_loc_list, { desc = 'toggle location list' })
 
 -----------------------------------------------------------------------------//
 -- Completion
