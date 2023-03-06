@@ -1,7 +1,7 @@
 ; extends
 (function_call
   name: (dot_index_expression
-          field: ((identifier) (#match? "augroup")))
+          field: ((identifier) (#lua-match? "augroup")))
   arguments: (arguments
         (table_constructor
           (field

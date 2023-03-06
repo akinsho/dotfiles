@@ -231,7 +231,7 @@ return {
           buffer = args.buf,
           callback = function()
             opt.laststatus, opt.showtabline = 3, 2
-            vim.cmd('SessionStart')
+            vim.cmd.SessionStart()
           end,
         })
       end,
