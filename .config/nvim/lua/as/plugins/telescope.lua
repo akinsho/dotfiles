@@ -39,7 +39,6 @@ as.telescope = {
 }
 
 local function extensions(name) return require('telescope').extensions[name] end
-
 local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
 local function find_files(opts) return extensions('menufacture').find_files(opts) end
 local function git_files(opts) return extensions('menufacture').git_files(opts) end
@@ -76,7 +75,9 @@ local function stopinsert(callback)
   end
 end
 
-local function b(picker) return require('telescope.builtin')[picker] end
+local function b(picker)
+  return function() require('telescope.builtin')[picker]() end
+end
 
 return {
   'nvim-telescope/telescope.nvim',
