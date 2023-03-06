@@ -47,11 +47,7 @@ return {
           s = 'create new file in a split',
         },
         E = 'show token under the cursor',
-        p = {
-          name = '+packages',
-          c = 'clean',
-          s = 'sync',
-        },
+        p = { name = '+packages' },
         q = {
           name = '+quit',
           w = 'close window (and buffer)',
