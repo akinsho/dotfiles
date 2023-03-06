@@ -144,12 +144,7 @@ return {
         -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
         if win.diff or not as.empty(fn.win_gettype(win_id)) then return true end
         local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
-        local ignore_ft = as.p_table({
-          ['Telescope.*'] = true,
-          ['neo-tree'] = false,
-          ['Neogit.*'] = true,
-          ['qf'] = true,
-        })
+        local ignore_ft = as.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
         local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
         return has_bt or has_ft
       end,
