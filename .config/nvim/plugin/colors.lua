@@ -22,6 +22,8 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -15 } } },
     { FloatBorder = { bg = { from = 'Normal', alter = -15 }, fg = { from = 'Comment' } } },
+    { FloatTitle = { inherit = 'FloatBorder', reverse = true, bold = true, bg = 'white' } },
+    { Pmenu = { link = 'NormalFloat' } },
     { Pmenu = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { background = { from = 'Normal', alter = 30 } } },

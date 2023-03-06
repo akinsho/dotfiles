@@ -64,20 +64,17 @@ return {
         return vim.ui.select(...)
       end
     end,
-    config = function()
-      highlight.plugin('dressing', { { FloatTitle = { inherit = 'Visual', bold = true } } })
-      require('dressing').setup({
-        input = { enabled = false },
-        select = {
-          telescope = as.telescope.adaptive_dropdown(),
-          get_config = function(opts)
-            if opts.kind == 'codeaction' then
-              return { backend = 'telescope', telescope = as.telescope.cursor() }
-            end
-          end,
-        },
-      })
-    end,
+    opts = {
+      input = { enabled = false },
+      select = {
+        telescope = as.telescope.adaptive_dropdown(),
+        get_config = function(opts)
+          if opts.kind == 'codeaction' then
+            return { backend = 'telescope', telescope = as.telescope.cursor() }
+          end
+        end,
+      },
+    },
   },
   {
     'rcarriga/nvim-notify',
