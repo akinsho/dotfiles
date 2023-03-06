@@ -549,6 +549,9 @@ end
 --- we are currently ahead or behind upstream
 local function git_updates() run_task_on_interval(10000, update_git_status) end
 
+----------------------------------------------------------------------------------------------------
+--  PLUGINS
+----------------------------------------------------------------------------------------------------
 --  Grapple
 ----------------------------------------------------------------------------------------------------
 ---@return boolean
@@ -669,6 +672,16 @@ function as.ui.statusline.render()
   local behind = updates.behind and tonumber(updates.behind) or 0
 
   -----------------------------------------------------------------------------//
+  local hydra_active, hydra = stl_hydra()
+  -----------------------------------------------------------------------------//
+  local ok, noice = pcall(require, 'noice')
+  local noice_mode = ok and noice.api.status.mode.get() or nil
+  local has_noice_mode = ok and noice.api.status.mode.has() or nil
+  -----------------------------------------------------------------------------//
+  local lazy_ok, lazy = pcall(require, 'lazy.status')
+  local pending_updates = lazy_ok and lazy.updates() or nil
+  local has_pending_updates = lazy_ok and lazy.has_updates() or nil
+  -----------------------------------------------------------------------------//
   local grapple_ok, grapple = grapple_stl()
   -----------------------------------------------------------------------------//
   -- LSP
@@ -686,20 +699,6 @@ function as.ui.statusline.render()
       priority = client.priority,
     })
   end, stl_lsp_clients(ctx))
-  -----------------------------------------------------------------------------//
-  -- Hydra
-  -----------------------------------------------------------------------------//
-  local hydra_active, hydra = stl_hydra()
-  -----------------------------------------------------------------------------//
-  -- Noice
-  -----------------------------------------------------------------------------//
-  local ok, noice = pcall(require, 'noice')
-  local noice_mode = ok and noice.api.status.mode.get() or nil
-  local has_noice_mode = ok and noice.api.status.mode.has() or nil
-
-  local lazy_ok, lazy = pcall(require, 'lazy.status')
-  local pending_updates = lazy_ok and lazy.updates() or nil
-  local has_pending_updates = lazy_ok and lazy.has_updates() or nil
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
