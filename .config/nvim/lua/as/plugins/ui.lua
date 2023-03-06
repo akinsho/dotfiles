@@ -1,4 +1,4 @@
-local r, api, fn, fmt = vim.regex, vim.api, vim.fn, string.format
+local r, api, fn = vim.regex, vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 local highlight, ui = as.highlight, as.ui
 local icons = ui.icons.lsp
@@ -277,12 +277,6 @@ return {
               separator = true,
             },
             {
-              text = ' PACKER',
-              filetype = 'packer',
-              highlight = 'PanelHeading',
-              separator = true,
-            },
-            {
               text = ' DATABASE VIEWER',
               filetype = 'dbui',
               highlight = 'PanelHeading',
@@ -352,9 +346,6 @@ return {
       map('n', 'gbd', '<Cmd>BufferLinePickClose<CR>', { desc = 'bufferline: delete buffer' })
       map('n', '<S-tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'bufferline: prev' })
       map('n', '<leader><tab>', '<Cmd>BufferLineCycleNext<CR>', { desc = 'bufferline: next' })
-      for i = 1, 9 do
-        map('n', fmt('<leader>%d', i), fmt('<Cmd>BufferLineGoToBuffer %d<CR>', i))
-      end
     end,
   },
 }
